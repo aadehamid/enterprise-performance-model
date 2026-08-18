@@ -1,0 +1,7 @@
+o2c_unbilled:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: o2c.duckdb
+      threads: 4

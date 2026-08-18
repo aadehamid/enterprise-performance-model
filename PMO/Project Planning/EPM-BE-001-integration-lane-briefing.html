@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-BE-001 — Integration lane briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B131C;
+  --bg-elev: #121C28;
+  --bg-card: #162230;
+  --line: #243344;
+  --line-strong: #2E4456;
+  --text: #E6EEF4;
+  --muted: #93A4B3;
+  --faint: #6B7C8C;
+  --teal: #3DB8A8;
+  --teal-dim: rgba(61,184,168,.14);
+  --teal-line: rgba(61,184,168,.42);
+  --amber: #D4A017;
+  --red: #E05A5A;
+  --red-dim: rgba(224,90,90,.12);
+  --green: #4CAF7A;
+  --green-dim: rgba(76,175,122,.12);
+  --open: #E8B84A;
+  --locked: #3DB8A8;
+  --max: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px 80px; }
+
+/* topbar */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(11,19,28,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 10px 28px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; letter-spacing: .02em;
+  color: var(--teal); font-size: 13px; white-space: nowrap;
+}
+nav.toc { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+nav.toc a {
+  color: var(--muted); font-size: 12px; padding: 4px 8px;
+  border-radius: 4px; text-decoration: none;
+}
+nav.toc a:hover { color: var(--text); background: var(--teal-dim); }
+.search {
+  display: flex; align-items: center; gap: 6px;
+}
+.search input {
+  background: var(--bg-elev); border: 1px solid var(--line);
+  color: var(--text); border-radius: 6px; padding: 5px 10px;
+  font: 13px "IBM Plex Sans", sans-serif; width: 180px;
+}
+.search input:focus { outline: 1px solid var(--teal); border-color: var(--teal); }
+.search-count { font-size: 11px; color: var(--faint); min-width: 2ch; }
+
+/* header */
+header.doc {
+  padding: 36px 0 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px; color: var(--teal); letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 32px; line-height: 1.2;
+  margin: 0 0 18px; letter-spacing: -0.02em;
+}
+.meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px; font-size: 13.5px; color: var(--muted);
+}
+.meta b { color: var(--text); font-weight: 600; }
+.lede {
+  font-size: 17.5px; color: var(--text); margin: 22px 0 0;
+  max-width: 72ch;
+}
+
+/* badges */
+.badge {
+  display: inline-block; font-family: "IBM Plex Mono", monospace;
+  font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; border: 1px solid;
+  vertical-align: middle; white-space: nowrap;
+}
+.badge.open { color: var(--open); border-color: var(--open); background: rgba(232,184,74,.1); }
+.badge.locked { color: var(--locked); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.fixed { color: var(--teal); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.variable { color: #8EC8FF; border-color: #3A5A78; background: rgba(142,200,255,.08); }
+.badge.block { color: var(--red); border-color: var(--red); background: var(--red-dim); }
+.badge.stated { color: #9AD4C8; border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.rec { color: #C9B27A; border-color: #5A4E2E; background: rgba(201,178,122,.1); }
+.badge.phase { color: var(--muted); border-color: var(--line-strong); }
+.badge.us { color: #8EC8FF; border-color: #3A5A78; background: rgba(142,200,255,.08); }
+.badge.joint { color: var(--teal); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.client { color: #E0A060; border-color: #6A4A28; background: rgba(224,160,96,.1); }
+.badge.hamid { color: #D4A0E0; border-color: #5A3A68; background: rgba(212,160,224,.1); }
+
+/* callouts */
+.callout {
+  border: 1px solid var(--teal-line);
+  background: var(--teal-dim);
+  border-left: 4px solid var(--teal);
+  padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;
+}
+.callout.locks { margin: 24px 0 32px; }
+.callout.warn {
+  border-color: rgba(224,90,90,.4); background: var(--red-dim);
+  border-left-color: var(--red);
+}
+.callout.note {
+  border-color: var(--line-strong); background: var(--bg-elev);
+  border-left-color: var(--muted);
+}
+.callout.hamid {
+  border-color: var(--teal); background: var(--bg-card);
+  border-left-width: 6px; padding: 18px 22px;
+}
+.callout h3, .callout .label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--teal); margin: 0 0 8px;
+}
+.callout.warn .label { color: var(--red); }
+.callout.hamid .label { color: var(--teal); font-size: 14px; }
+.callout ul { margin: 6px 0 0; padding-left: 18px; }
+.callout li { margin: 5px 0; }
+.callout p { margin: 6px 0; }
+
+/* sections */
+section { margin: 42px 0 28px; }
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px; font-weight: 600; margin: 0 0 12px;
+  padding-top: 18px; border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+}
+h2 .num { color: var(--teal); margin-right: 8px; }
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px; font-weight: 600; margin: 26px 0 10px;
+}
+h4 { font-size: 15px; margin: 16px 0 8px; color: var(--text); }
+p { margin: 10px 0; }
+.intro { color: var(--muted); max-width: 78ch; }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px;
+  background: var(--bg-elev);
+}
+th, td {
+  border: 1px solid var(--line); padding: 8px 10px;
+  text-align: left; vertical-align: top;
+}
+th {
+  background: #1A2836; color: var(--teal);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 12px; letter-spacing: .03em;
+  text-transform: uppercase;
+}
+tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+td.ref {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px;
+  color: var(--teal); white-space: nowrap;
+}
+caption {
+  caption-side: top; text-align: left; font-weight: 600;
+  padding: 0 0 8px; color: var(--text); font-size: 14px;
+}
+
+/* workshop cards */
+details.ws {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 8px; margin: 10px 0; overflow: hidden;
+}
+details.ws[open] { border-color: var(--teal-line); }
+details.ws summary {
+  cursor: pointer; padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  list-style: none;
+}
+details.ws summary::-webkit-details-marker { display: none; }
+details.ws summary:hover { background: var(--teal-dim); }
+.ws-id {
+  font-family: "IBM Plex Mono", monospace; color: var(--teal);
+  font-weight: 500; min-width: 7ch;
+}
+.ws-name { font-weight: 600; }
+.ws-body { padding: 4px 16px 16px; border-top: 1px solid var(--line); }
+.ws-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px 16px; font-size: 13px; color: var(--muted); margin: 10px 0 12px;
+}
+.ws-meta b { color: var(--text); }
+.agenda { margin: 8px 0; padding-left: 0; list-style: none; }
+.agenda li {
+  font-size: 13.5px; padding: 3px 0 3px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.agenda .t {
+  font-family: "IBM Plex Mono", monospace; color: var(--teal);
+  font-size: 12px; margin-right: 8px;
+}
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+.att { font-size: 13.5px; }
+.att b { display: block; color: var(--teal); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* gates strip */
+.gates {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px;
+}
+.gate {
+  flex: 1 1 140px; background: var(--bg-card);
+  border: 1px solid var(--line); border-top: 3px solid var(--teal);
+  padding: 10px 12px; border-radius: 0 0 6px 6px; font-size: 12.5px;
+}
+.gate strong {
+  display: block; font-family: "IBM Plex Mono", monospace;
+  color: var(--teal); font-size: 13px; margin-bottom: 4px;
+}
+
+/* sequence */
+ol.seq { padding-left: 22px; }
+ol.seq li { margin: 8px 0; }
+ol.seq .who { margin-left: 6px; }
+.phase-head {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--teal); font-size: 14px; letter-spacing: .04em;
+  text-transform: uppercase; margin: 22px 0 8px;
+}
+.slice-stop {
+  border: 2px solid var(--red); background: var(--red-dim);
+  padding: 12px 16px; margin: 16px 0; border-radius: 6px;
+  font-weight: 600;
+}
+
+/* footer */
+footer {
+  margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--faint);
+}
+footer code { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+mark.hit { background: rgba(61,184,168,.35); color: inherit; padding: 0 2px; }
+
+/* print */
+@media print {
+  :root { --bg: #fff; --bg-elev: #fff; --bg-card: #f7f7f7; --text: #111; --muted: #333; --faint: #444; --line: #ccc; --line-strong: #999; }
+  body { background: #fff; color: #111; font-size: 11pt; }
+  .topbar { position: static; background: #fff; }
+  nav.toc, .search { display: none; }
+  a { color: #0a5; text-decoration: none; }
+  details.ws { break-inside: avoid; border-color: #bbb; }
+  details.ws { open: true; }
+  details.ws[open] .ws-body, details.ws .ws-body { display: block !important; }
+  details.ws:not([open]) .ws-body { display: block; }
+  .callout, .gate, table { break-inside: avoid; }
+  h2 { break-after: avoid; }
+  header.doc { border-bottom-color: #999; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">EPM-BE-001</div>
+    <nav class="toc">
+      <a href="#s00">How to read</a>
+      <a href="#s01">Open questions</a>
+      <a href="#s02">Workshops</a>
+      <a href="#s05">Client</a>
+      <a href="#s03">Deliverables</a>
+      <a href="#s04">Activities</a>
+    </nav>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search this briefing…" aria-label="Search this briefing">
+      <span class="search-count" id="qc"></span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<header class="doc">
+  <div class="kicker">Integration lane · briefing · research and planning only · no build</div>
+  <h1>Integration lane — open questions, workshops, deliverables, and the path from kickoff to running sync</h1>
+  <div class="meta">
+    <div><b>Artifact</b> EPM-BE-001 <span class="badge open">unregistered briefing</span><br>Not a formal EPM artifact</div>
+    <div><b>Audience</b> Hamid · Ontologist · KPI Store Engineer · Chief of Staff<br><b>Author</b> Backend Engineer · <b>Date</b> 2026-08-14 (America/Chicago)</div>
+    <div><b>Sources</b> EPM-MOD-000 v0.5 · EPM-DEL-002 v0.3 · metadata-systems-index · 02 / 04 / 06 research notes</div>
+    <div><b>Status</b> Research/planning briefing only. No build. No publish.</div>
+  </div>
+  <p class="lede">This is the backend / integration lane only: graph store operation, the ontology-to-Silver projection, metadata sync to Purview / ER/Studio / Unity / Excel, access, and pipelines. It is not ontology meaning. It is not KPI formulas. Nothing here invents a workshop, a gate, or a format. Where the planning docs name a form, that form is quoted. Where they say “register” or “running pipelines” without naming Word vs git vs a deck, that gap is marked and a working recommendation is given.</p>
+</header>
+
+<div class="callout locks">
+  <div class="label">Locks — compact, once</div>
+  <ul>
+    <li><b>C-10 / C-11:</b> ontology = meaning SoT; Store + consumption SL = certified formula SoT; Purview = pointer after DP-18, never SoT, never the expression. Never say “semantic layer” unqualified — say <em>ontology layer</em> or <em>consumption semantic layer</em>.</li>
+    <li><b>Databricks</b> = programme compiler (Metric Views + Databricks SQL warehouse on Azure + Unity Catalog). <b>MetricFlow</b> = Unbilled / Demo 2 (Databricks Free) only. Do not edit demos.</li>
+    <li><b>Azure warehouse</b> is physical / estate, not meaning. Synapse and Fabric are estate inventory, not in the demo pack.</li>
+    <li><b>Excel</b> = staging only (C-08). Provenance flag + named migration target on every Excel-sourced item.</li>
+    <li><b>Silver</b> = one-way projection of the Store catalog + ontology IRIs, not editable.</li>
+    <li>Do not pick GraphDB vs Jena. Neo4j is serving only (<code>02-ontology-graphs.md</code>). D-M11 is operability, not features.</li>
+    <li><b>Harvest Terms</b> = sense-inventory only (D-M19). Do not turn on Harvest Terms or Team Server ↔ Purview sync.</li>
+    <li><b>DP-18</b> gates Turtle / Purview publish / CW11+. Workshops through CW2 / P1 stay fine.</li>
+    <li>ER/Studio ↔ Purview is bidirectional, Purview default master, if ever turned on. Do not turn it on.</li>
+    <li>The official UC connector is a documented scan, not an estate fact. P1.1 still inventories whether it already ran.</li>
+    <li>No P2P mesh recommendation. No topology pick. Leave design to Chief Architect later.</li>
+  </ul>
+</div>
+<section id="s00">
+  <h2><span class="num">00</span> How to read this</h2>
+  <p class="intro">Four things, in this order. Same spirit as EPM-ONT-001, filtered to the integration lane.</p>
+  <ol>
+    <li><b>Open questions you own or share</b> — decisions and estate facts that gate access, load, publish, or the form of a running system. Ontology-only questions (D-M12–D-M15 IRI / modules / validation) stay on the ontology briefing except where they gate a load: Turtle waits on DP-18 and a signed CV.</li>
+    <li><b>Workshops you attend or own</b> — only the DEL-002 sessions where backend is in the room or owns a slice. Agendas are quoted. No invented CW. P4.5 sync is a workstream, not a workshop number.</li>
+    <li><b>Deliverables and the form each one takes</b> — stated form from DEL-002 §13 and the activity table where it exists; a working recommendation where the docs say only “register” or “running pipelines.” Formats sit in §06.</li>
+    <li><b>The activity sequence</b> from kickoff to completion of <em>integration</em> work — P0→P5 filtered to backend. Build does not start in this briefing.</li>
+  </ol>
+  <p>Client roles sit with the workshops and again as a standalone ask in §05. DEL-002 §09 already names the backend seat: “Graph store operation, the ontology-to-Silver projection, metadata sync connectors, Excel ingestion with provenance.”</p>
+</section>
+
+<section id="s01">
+  <h2><span class="num">01</span> Open questions you own or share</h2>
+  <p class="intro">IDs are quoted from MOD-000 §08–§09 and DEL-002 §11 / §15. Status is Open unless a lock already closed it. Backend-relevant only. D-M12–D-M15 (vocabulary reuse, SHACL+OWL, IRI, modules) are ontology-owned; they appear here only as a load gate: Turtle is not a backend authoring deliverable, and a load waits on DP-18 plus a signed CV.</p>
+
+  <h3>Table A — Open, you own or share</h3>
+  <div class="table-wrap">
+  <table>
+    <caption>Decisions and questions that change access, attendees, load path, or deliverable form. Shared ownership is named.</caption>
+    <thead>
+      <tr><th>Ref</th><th>Question</th><th>Why it matters on this lane</th><th>Who else</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">D-M11</td>
+        <td>Graph persistence — dedicated RDF store, or an existing platform with an RDF layer</td>
+        <td>Operability, not features. MOD-000: “A component nobody can run in production is not an asset.” Prefer a dedicated RDF store if the ontology is client-owned and reasoning matters; prefer the existing platform if one is already operated. Product (GraphDB vs Jena) is <b>not</b> picked here. Neo4j, if used, is serving only.</td>
+        <td>Shared with Ontologist + EA. Client digital / engineering decides. Q-05 feeds it.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Q-03</td>
+        <td>Client-owned deliverable vs internal technique</td>
+        <td>Branches whether platform ops must be in CW7 (b). Client-owned → platform ops, support, and handover training in the room, and G6 includes operable pipelines. Internal technique → narrower modeling audience; local files can stay sufficient. Same question as B-10.</td>
+        <td>Asked at CW1. Must-leave-with.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Q-05</td>
+        <td>Does a graph platform already exist, and who operates it?</td>
+        <td>Decides D-M11 on operability grounds. Asked in the CW1 “People, access, and governance” block. If none exists, DP-05 is optional sandbox only — not a G2 gate.</td>
+        <td>Digital / engineering. Shared with Ontologist + EA.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Q-27</td>
+        <td>Documents, models, running systems, or all three?</td>
+        <td>Asked at CW1. Closes the Word / HTML / “running pipelines” gap that DEL-002 §13 leaves open. Shapes whether G6 handover is a pack of registers or an operable store-plus-sync.</td>
+        <td>Client. Asked at CW1.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-04</td>
+        <td>ER/Studio licences and repository</td>
+        <td>Needed by P1.1. DEL-002: “Modeling proceeds on paper; rework to import later” if late. Backend inventories published models; unpublished <code>.dm1</code> is invisible to API and connectors.</td>
+        <td>Client. ER/Studio admin.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-05</td>
+        <td>Graph platform provisioned (optional sandbox)</td>
+        <td>P2.3 / CW7 (b). G2 does <em>not</em> require a running triple store. Local files are sufficient. Sandbox is not a gate.</td>
+        <td>Client. Optional. Backend owns the spike if it happens.</td>
+        <td><span class="badge open">Open · optional</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-06</td>
+        <td>Purview read, then write</td>
+        <td>Read at P1.1 (both glossaries, sense-inventory). Write at P3A.6, still behind DP-18. Thin publish from the ontology, never the formula.</td>
+        <td>Client. Purview owner.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-07</td>
+        <td>Unity Catalog metadata read</td>
+        <td>Needed by P1.1. DEL-002: “Binding demonstration blocked” if late. Inventory native UC vs <code>hive_metastore</code> vs foreign. Comments and tags are noisy inventory, not meaning.</td>
+        <td>Client. Databricks / UC engineer.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-16</td>
+        <td>Formula-authoring home named before CW10</td>
+        <td>KPI Store owns the name (consumption SL / Store catalog). Backend must not let Silver or Excel become the accidental SoT. C-10 split collapses if this is still open when CW10 closes.</td>
+        <td>KPI Store lead names it. Backend contains Silver / Excel.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">DP-18</td>
+        <td>Hamid slice gate before CW11+ / Turtle / Purview publish</td>
+        <td>Workshops through CW2 and P1 assessment stay fine. Conceptual build, Turtle load, and Purview write wait. A load is not an authoring act; it still waits on the slice plus a signed CV.</td>
+        <td>Hamid.</td>
+        <td><span class="badge open">Open · Hamid</span></td>
+      </tr>
+      <tr>
+        <td class="ref">D8</td>
+        <td>Store Excel policy — consume-only vs watermarked local “management adjustments”</td>
+        <td>Still open on the Store brief. Not closed here. Backend containment is C-08: Excel authors nothing; staging only, provenance flag, named migration target. D8 is about certified <em>numbers</em>, not terms.</td>
+        <td>KPI Store. Backend holds C-08.</td>
+        <td><span class="badge open">Open · Store</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Table B — Locked. Do not reopen</h3>
+  <div class="table-wrap">
+  <table>
+    <caption>Closed by C-10. Listed so it is not re-litigated as an integration design choice.</caption>
+    <thead>
+      <tr><th>Ref</th><th>Question</th><th>Locked position</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Q-08</td>
+        <td>Is the Silver KPI-metadata table intended as editable, or a generated projection?</td>
+        <td>Locked by C-10. Silver is a one-way projection of the Store catalog plus ontology IRIs, not editable. Backend owns the projection <em>pipeline</em>, not an edit UI.</td>
+        <td><span class="badge locked">Locked</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Table C — Estate / connector facts. Inventory; do not turn on</h3>
+  <div class="table-wrap">
+  <table>
+    <caption>Not decisions to invent. P1.1 inventories whether they already ran. Quoted from the metadata pack and <code>06-data-flows.md</code>.</caption>
+    <thead>
+      <tr><th>Fact</th><th>What P1.1 must answer</th><th>What this lane does not do</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Harvest Terms / Team Server ↔ Purview / Collibra-as-master</td>
+        <td>Whether Harvest Terms already ran. Whether the Purview or Collibra connector is already on. Damage to inventory if yes.</td>
+        <td>Do not turn Harvest Terms on. Do not turn Team Server ↔ Purview sync on. That connector is bidirectional, Purview default master, and overwrites the non-master. D-M19: harvest is sense-inventory, not a label-copy.</td>
+      </tr>
+      <tr>
+        <td>Official UC / Fabric / Synapse Purview scans</td>
+        <td>Whether the official Azure Databricks Unity Catalog connector already ran. Whether the Fabric tenant scan or either Synapse Purview source (workspace and/or formerly-SQL-DW) already ran.</td>
+        <td>The official UC connector is a documented scan, not an estate fact. Direction is UC → Purview. No Purview → Unity write-back. Synapse and Fabric stay estate inventory, not demo.</td>
+      </tr>
+      <tr>
+        <td>Connectors that do not exist as official hops</td>
+        <td>Any private BigEye → Purview path the estate might have bought (still assumed; no official page).</td>
+        <td>No official BigEye → Purview. No Purview → Unity write-back. No Store-catalog vendor connector. No Turtle → Purview. No YAML → Purview. Do not invent one.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout note">
+    <div class="label">Load gate, not an ontology question on this page</div>
+    <p>D-M12–D-M15 stay on EPM-ONT-001. Backend does not author Turtle. A load — SPARQL Update <code>LOAD</code> or Graph Store PUT/POST, store not picked — waits on DP-18 and a signed CV. Do not start a load from an unsigned harvest of “Customer.”</p>
+  </div>
+</section>
+<section id="s02">
+  <h2><span class="num">02</span> Workshops and agendas — backend attends or owns</h2>
+  <p class="intro">Only the DEL-002 sessions where backend is in the room or owns a slice. Agendas are quoted. The other CWs (CW3–CW5 inherited walkthroughs, CW8–CW9 boundaries, CW11–CW15 / CW17–CW23 / CW25 conceptual and gates, CW28 lessons) are ontology and modeling. They are not this lane. Do not invent a CW for sync: P4.5 is a workstream.</p>
+
+  <h3>Gates — quoted from DEL-002 §12, backend notes</h3>
+  <div class="gates">
+    <div class="gate"><strong>G0</strong> Mobilised. CW1 + CW2 done; calendar published. Backend: access requests raised (P0.5) with owners and dates.</div>
+    <div class="gate"><strong>G1</strong> Disposition register accepted (after CW3–CW5). Backend feeds sense-inventory (P1.1); does not own disposition.</div>
+    <div class="gate"><strong>G2</strong> MOD-001 / 002 / 003 / 006 Candidate. <b>A running triple store is not required</b> — sandbox only, optional.</div>
+    <div class="gate"><strong>G3</strong> Customer approved. Needs signed Customer CV/CQ. Backend: <b>SAP binding demonstrated</b> (P3A.5 / CW16).</div>
+    <div class="gate"><strong>G4</strong> Constraints approved. Needs signed Constraints CV/CQ. Backend: source binding at CW24 (LP / spec / tank / maintenance).</div>
+    <div class="gate"><strong>G5</strong> 1–2 Store pilots (CW27). Backend: mapping register (P4.4) + projection (P4.6) sit on this path.</div>
+    <div class="gate"><strong>G6</strong> Handover. Client steward adds an entity unaided (CW28). If Q-03 = client-owned, handover includes operable pipelines.</div>
+  </div>
+
+  <h3>Activities that sit next to workshops — not new CWs</h3>
+  <p>Quoted from DEL-002 §03. These are activity IDs, not workshop numbers.</p>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Ref</th><th>Activity (quoted)</th><th>Sits next to</th><th>Backend role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="ref">P0.5</td><td>Raise all access requests: ER/Studio, Purview, Unity Catalog, SAP, LP planning system, graph platform, source documentation</td><td>CW1 close / week 1</td><td>Client raises; backend names the targets</td></tr>
+      <tr><td class="ref">P1.1</td><td>Inventory ER/Studio, Purview glossary, Unity Catalog schemas</td><td>After access; before CW3</td><td>Us. Sense-inventory, both Purview glossaries, not label-copy</td></tr>
+      <tr><td class="ref">P2.3</td><td>Optional platform spike — sandbox only; not a G2 gate</td><td>CW7 (b)</td><td>Backend owns the spike if it happens</td></tr>
+      <tr><td class="ref">P2.9</td><td>Backend engineering: stand up the projection and sync scaffolding</td><td>After CW10 / P2.7</td><td>Us. Output: pipeline skeleton</td></tr>
+      <tr><td class="ref">P3A.6</td><td>Publish terms to Purview from the ontology</td><td>After signed Customer CV/CQ</td><td>Us. Platform state. After DP-18. Thin. Never the formula</td></tr>
+      <tr><td class="ref">P4.4</td><td>Build and publish the ontology-to-model mapping register</td><td>After CW26 path</td><td>Ontologist authors meaning side; backend automates projection</td></tr>
+      <tr><td class="ref">P4.5</td><td>Build the metadata synchronisation to Purview, ER/Studio, Unity Catalog; define Excel containment</td><td>P4 workstream — not a CW</td><td>Us. Stated form: Sync implementation / Running pipelines</td></tr>
+      <tr><td class="ref">P4.6</td><td>KPI Store binding: traceability matrix and the Silver-metadata projection design</td><td>CW27</td><td>Shared. Backend owns the projection pipeline, not the formula</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <details class="ws" open>
+    <summary>
+      <span class="ws-id">CW1</span>
+      <span class="ws-name">Kickoff — attend. Last block is access</span>
+      <span class="badge phase">P0</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day preferred · half day min</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Scope, boundaries, Q-02 / Q-03, role nominations, five sizing variables. No modeling.</div>
+        <div><b>Backend lens</b> Last block is “Access, tooling, cadence, and close” — access requests and owners, SAP specifically, graph platform. P0.5 follows the same day.</div>
+        <div><b>Output / gate</b> Must leave with Q-02, Q-03, Technology in-or-out, role nominations, five sizing variables, access requests understood and owned. Feeds G0.</div>
+      </div>
+      <h4>Agenda — quoted from DEL-002 §05. Access block highlighted</h4>
+      <ul class="agenda">
+        <li><span class="t">0:00–0:20</span> Opening and framing (no modeling)</li>
+        <li><span class="t">0:20–1:00</span> Scope, played back</li>
+        <li><span class="t">1:00–1:45</span> Customer domain — high-level boundary (sizing variable 1)</li>
+        <li><span class="t">2:00–2:45</span> Constraints domain — high-level boundary (sizing variable 2)</li>
+        <li><span class="t">2:45–3:30</span> Consuming programmes — Q-02 dates and form</li>
+        <li><span class="t">3:30–4:15</span> Inherited models (sizing variable 3)</li>
+        <li><span class="t">4:30–5:30</span> People — the role request</li>
+        <li><span class="t">5:30–6:00</span> <b>Access, tooling, cadence, and close</b> — access requests and owners. SAP specifically. Graph platform. Meeting cadence. Recap of actions with names and dates.</li>
+      </ul>
+      <p>DEL-002 leaving-the-room form for the access log: “System, requester, owner, target date. Circulated same day.”</p>
+      <div class="two-col">
+        <div class="att"><b>Must</b> Executive sponsor · O2C lead · P2P lead · EDG lead · Commercial leadership · Refinery technical / planning leadership · EA</div>
+        <div class="att"><b>Should</b> Party model lead · data platform · SAP functional · MDM · IT security · KPI Store lead (Should CW1; Must CW10 / CW27)</div>
+      </div>
+      <p class="att" style="margin-top:8px;"><b>Optional</b> Finance / SC modeling leads · Purview owner · TAS SME · OT / ISA-95</p>
+      <p><b>Must not</b> model. Not one entity, not one whiteboard box.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW2</span>
+      <span class="ws-name">Named commitments — attend</span>
+      <span class="badge phase">P0</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Convert CW1 nominations to named commitments. Book the LP economist for CW18–CW24 as named sessions (not a retainer). Book the conceptual series.</div>
+        <div><b>Backend lens</b> Convert access owners to named commitments; schedule. A department name is not an access owner. Security / access administrator is front-loaded (DEL-002 §08).</div>
+        <div><b>Output / gate</b> Named owners. Access owners dated. Feeds G0.</div>
+      </div>
+      <h4>Agenda — quoted from DEL-002 §06</h4>
+      <ul class="agenda">
+        <li><span class="t">0:00–0:15</span> Recap CW1 decisions</li>
+        <li><span class="t">0:15–1:15</span> Walk each role and confirm the holder — name, accepted or not, hours, duration</li>
+        <li><span class="t">1:15–1:45</span> Constraints ownership conversation (federated structure)</li>
+        <li><span class="t">1:45–2:15</span> Decision rights and escalation (RACI)</li>
+        <li><span class="t">2:15–2:45</span> Cadence and calendar — issue the full workshop schedule</li>
+        <li><span class="t">2:45–3:00</span> Actions and close — anything still unconfirmed becomes a named escalation with a date</li>
+      </ul>
+      <p class="att"><b>Must</b> Day-to-day counterpart plus the nominated owners from CW1, enough to convert names to diary commitments. Backend cares that Purview owner, ER/Studio admin, Databricks / UC engineer, graph platform owner (if exists), and security / access are named, not titled.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW6</span>
+      <span class="ws-name">Modeling standards ratification — attend</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Ratify naming, keys, levels, relationships, definition quality, metadata, versioning.</div>
+        <div><b>Backend lens</b> ER/Studio admin + Purview owner in the room. Backend is not the ratifier. EDG ratifies. Attend so the later mapping register and Purview pointer path are not surprised by a naming rule.</div>
+        <div><b>Output / gate</b> Feeds MOD-003 / G2.</div>
+      </div>
+      <p class="att"><b>Must</b> Our modelers + ontologist · ER/Studio admin · Purview owner · EDG · one steward per domain · EA</p>
+      <p>Method (quoted): test every convention live against ten real entities — five from Customer, five from Constraints. Timebox naming at ninety minutes; Domain Modeling Lead decides and records it.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW7</span>
+      <span class="ws-name">Ontology design standard + optional sandbox</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Split day. (a) MOD-006 / IRI / modules / SHACL+OWL + CQ <em>method</em> — this is the G2 gate, ontologist-owned. (b) optional platform spike / sandbox — backend owns the spike if it happens. Not a G2 gate.</div>
+        <div><b>Output / gate</b> MOD-006 Candidate. G2 does not require a running triple store. Local files are sufficient. CW7 is not CQ sign-off.</div>
+      </div>
+      <p><b>(a)</b> Ontologist owns MOD-006. Backend attends. Do not pick GraphDB vs Jena in the room. D-M11 stays operability.</p>
+      <p><b>(b)</b> Optional. P2.3: “Sandbox if useful; local files are sufficient for G2.” Platform ops only if Q-03 = client-owned <em>and</em> (b) is in play.</p>
+      <p class="att"><b>Must</b> Ontologist · backend engineers · EA · EDG · DM Lead</p>
+      <p class="att"><b>Platform ops</b> only if Q-03 = client-owned and (b) is in play.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW10</span>
+      <span class="ws-name">Authoring-home matrix — core for this lane</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Tool responsibility and metadata integration boundaries. Six locations + three Store seats. Excel containment. Silver one-way. C-10. Formula-authoring home named before close.</div>
+        <div><b>Output / gate</b> Authoring-home matrix (P2.7). Formula-authoring home named (DP-16). Feeds G2. Unlocks P2.9 pipeline skeleton.</div>
+      </div>
+      <p>DEL-002 §07, quoted: “Establish one authoring home per fact type across six locations plus three Store seats — ontology, ER/Studio, Purview, Unity Catalog, Silver, Excel, plus Store metadata dimension, consumption semantic layer, and Gold fact.”</p>
+      <p>Four things to settle (quoted): the Excel containment rule — staging only, provenance flagged, migration target named. Silver as a one-way projection of the Store catalog plus ontology IRIs, not editable. The C-10 split. And the formula-authoring home — named before CW10 closes; the Store / analytics engineer is the formula author.</p>
+      <p class="att"><b>Must</b> All platform owners · ontologist · backend engineers · EDG · EA · <b>KPI Store lead</b> (Must at CW10 / CW27; only Should at CW1)</p>
+      <p>Backend job in the room: keep Silver and Excel from becoming accidental SoT. Do not let a “we will just put the formula in Purview / a Unity comment / a workbook” sentence close the session.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW16 / CW24</span>
+      <span class="ws-name">Source binding — attend</span>
+      <span class="badge phase">P3A / P3B</span>
+      <span class="badge variable">Variable</span>
+      <span class="badge">Half day × 1–3 / 1–2</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Bind the signed vocabulary to running systems. Backend cares about SAP / source access and what binds to Unity / graph — not the meaning freeze.</div>
+        <div><b>Output / gate</b> Source-binding notes for MOD-008 later. G3 needs SAP binding demonstrated.</div>
+      </div>
+      <p><b>CW16 — Customer</b> (P3A.5). Quoted attendees: SAP functional lead, CRM owner, credit system owner, card platform owner, Databricks engineer. Expect the same party under different identifiers across systems with no reliable join key — that is a finding, not a failure.</p>
+      <p><b>CW24 — Constraints</b> (P3B.6). Quoted attendees: LP planner, scheduler, quality / lab, tank farm, maintenance planner. Bind to LP model, spec library, permit register, tank register, maintenance plan. Expect values held in planning-model files rather than databases.</p>
+      <p>Rule for both (quoted): “Record gaps explicitly. A binding session that produces no gaps has not looked hard enough.”</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW26</span>
+      <span class="ws-name">Operate — validation against the live graph</span>
+      <span class="badge phase">P4</span>
+      <span class="badge">Usual (in binding-and-trace)</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Shared-meaning checklist first, then reasoner and SPARQL. Execute every CQ live. P4.2 / P4.3.</div>
+        <div><b>Backend lens</b> Keep the store / load path up. Ontologist owns the CQs. Do not pick the store in this session; operate whatever D-M11 already decided, or local files if Q-03 kept the ontology internal.</div>
+        <div><b>Output / gate</b> Combined modules pass reasoner + SHACL + live CQs. Feeds G5 path.</div>
+      </div>
+      <p class="att"><b>Must</b> Ontologist · backend · DM Lead · Domain Data Owner Customer · Coordinating owner Constraints · independent reviewer as needed</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW27</span>
+      <span class="ws-name">Shared — KPI traceability + Silver projection</span>
+      <span class="badge phase">P4</span>
+      <span class="badge variable">Variable · 1–2</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> 1–2 Store pilots. KPI traceability + Silver-metadata projection design (P4.6). Backend owns the projection <em>pipeline</em>, not the formula.</div>
+        <div><b>Output / gate</b> G5 — 1–2 Store pilots. MOD-005 matrix + projection design.</div>
+      </div>
+      <p>Quoted: “1–2 certified Store pilots, not three process metrics. For each pilot, record <code>customer_grain</code> (payer / sold-to / site).” LimitValue pattern reuse. Store KPIs reference constraints; they do not subclass them.</p>
+      <p class="att"><b>Must</b> KPI Store lead · KPI owner per pilot · Store / analytics engineer (formula author) · backend (projection pipeline)</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">P4.5</span>
+      <span class="ws-name">Metadata sync workstream — not a workshop number</span>
+      <span class="badge phase">P4</span>
+      <span class="badge">Workstream · not a CW</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Quoted activity</b> P4.5 — “Build the metadata synchronisation to Purview, ER/Studio, Unity Catalog; define Excel containment.”</div>
+        <div><b>Stated form</b> Activity table: “Sync implementation.” §13: “Running pipelines.”</div>
+      </div>
+      <p>This is not a new CW. Do not invent a workshop for it. It is the P4 integration workstream that produces running pipelines after MOD-008 exists and after DP-18 has opened Purview write. Excel containment is C-08, defined at CW10, implemented here.</p>
+      <p>What it is not: a point-to-point mesh diagram as the SoT. A topology pick. A Harvest Terms job. A Team Server ↔ Purview autonomous sync. A BigEye → Purview connector. A Purview → Unity write-back. Those hops are either absent or fight C-10. Chief Architect designs later.</p>
+    </div>
+  </details>
+</section>
+<section id="s03">
+  <h2><span class="num">03</span> Deliverables based on what we know</h2>
+  <p class="intro">Backend-owned or shared. Quoted from DEL-002 §13 and the §03 activity table. Ontology Turtle is not a backend deliverable — we load it; the Ontologist authors it. Formats and the stated-vs-rec split sit in §06.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>What this lane produces. Stated form is the DEL-002 word. Ownership is this briefing’s reading of §03 / §09, not a new RACI.</caption>
+    <thead>
+      <tr><th>ID</th><th>Deliverable</th><th>Phase</th><th>Stated form (quote)</th><th>Lane note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">P0.5</td>
+        <td>Access request log</td>
+        <td>P0</td>
+        <td>“Access request log with target dates”</td>
+        <td>Client raises. Backend names targets: ER/Studio, both Purview planes, Unity, SAP, LP, optional graph. Same-day CW1 output: system, requester, owner, target date.</td>
+      </tr>
+      <tr>
+        <td class="ref">P1.1</td>
+        <td>Environment baseline</td>
+        <td>P1</td>
+        <td>“Environment baseline”</td>
+        <td>ER/Studio published models, <b>both</b> Purview glossaries (classic + Unified), Unity schemas (native vs HMS vs foreign). Sense-inventory, not label-copy (D-M19). Also inventory whether Harvest Terms / Team Server sync / official UC / Fabric / Synapse scans already ran.</td>
+      </tr>
+      <tr>
+        <td class="ref">P0.8</td>
+        <td>Three seeded logs</td>
+        <td>P0</td>
+        <td>“Three seeded logs”</td>
+        <td>Decision log, issues log, source register. Programme control, not a catalog.</td>
+      </tr>
+      <tr>
+        <td class="ref">P2.3</td>
+        <td>Sandbox</td>
+        <td>P2</td>
+        <td>“Sandbox if useful; local files are sufficient for G2”</td>
+        <td>Optional. Not a G2 gate. Backend owns the spike if it happens. Store product not picked.</td>
+      </tr>
+      <tr>
+        <td class="ref">P2.9</td>
+        <td>Pipeline skeleton</td>
+        <td>P2</td>
+        <td>“Pipeline skeleton”</td>
+        <td>Projection and sync scaffolding. After CW10 / P2.7. Not a running publish. Not a mesh diagram.</td>
+      </tr>
+      <tr>
+        <td class="ref">P3A.6</td>
+        <td>Published glossary terms in Purview</td>
+        <td>P3–P4</td>
+        <td>“Published glossary terms” = Platform state</td>
+        <td>After DP-18. Thin. From the ontology. Never the formula. One published term per signed concept. Backend applies the write; Ontologist owns the wording.</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-008</td>
+        <td>Ontology-to-model mapping register</td>
+        <td>P4</td>
+        <td>“MOD-008” = Register</td>
+        <td>P4.4. Ontologist authors the meaning side (ontology IRI · ER/Studio entity / attribute · Purview term). Backend automates the projection.</td>
+      </tr>
+      <tr>
+        <td class="ref">P4.5</td>
+        <td>Metadata synchronisation implementation</td>
+        <td>P4</td>
+        <td>“Sync implementation” / “Running pipelines”</td>
+        <td>To Purview, ER/Studio, Unity Catalog; Excel containment defined. One-way. Not Harvest Terms. Not Team Server autonomous sync.</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-005</td>
+        <td>KPI-to-domain traceability</td>
+        <td>P4</td>
+        <td>“MOD-005” = Matrix + projection design</td>
+        <td>P4.6 / CW27. Shared with KPI Store. Backend owns the Silver projection pipeline. Store owns the formula.</td>
+      </tr>
+      <tr>
+        <td class="ref">C-08</td>
+        <td>Excel containment</td>
+        <td>P2 define / P4 implement</td>
+        <td>Containment rule (MOD-000 C-08); implemented under P4.5</td>
+        <td>Staging files with provenance flag and named migration target. Never SoT. D8 (certified-number workbooks) stays Store-open.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout note">
+    <div class="label">Not a backend deliverable</div>
+    <p>MOD-007 Turtle files + validation suite — Ontologist authors. Backend loads a tagged release (SPARQL Update LOAD or Graph Store PUT/POST; store not picked) after DP-18 and a signed CV. A Neo4j dump is not a deliverable and not a second meaning SoT.</p>
+  </div>
+</section>
+<section id="s04">
+  <h2><span class="num">04</span> Logical activity list — kickoff to completion of integration work</h2>
+  <p class="intro">Numbered. Chronological. Filtered from DEL-002 P0→P5 to backend. Each step is marked <span class="badge us">Us</span> / <span class="badge joint">Joint</span> / <span class="badge client">Client</span> / <span class="badge hamid">Hamid</span>. Items that author or publish meaning, or load Turtle, are marked <span class="badge block">Blocked on DP-18</span>. This briefing does not start build.</p>
+
+  <div class="phase-head">P0 — Mobilise</div>
+  <ol class="seq">
+    <li>Attend CW1. Do not model. Protect the 5:30–6:00 access block: requests and owners, SAP specifically, graph platform (Q-05). Leave with Q-03. <span class="badge joint who">Joint</span></li>
+    <li>P0.5 — raise access week 1 (ER/Studio, Purview, Unity, SAP, LP, optional graph). Log: system, requester, owner, target date. <span class="badge client who">Client</span></li>
+    <li>P0.8 — seed the three logs (decision, issues, source register). <span class="badge us who">Us</span></li>
+    <li>Attend CW2. Convert access owners to named commitments. Schedule. <span class="badge joint who">Joint</span></li>
+  </ol>
+  <p><b>G0</b> — mobilised. Access requests raised.</p>
+
+  <div class="phase-head">P1 — Inventory (fine before the slice)</div>
+  <ol class="seq" start="5">
+    <li>P1.1 — environment baseline. ER/Studio published models, both Purview glossaries, Unity schemas. Sense-inventory, not label-copy of “Customer.” Inventory Harvest Terms / Team Server sync / official UC / Fabric / Synapse scans if already on. Do not turn them on. <span class="badge us who">Us</span></li>
+  </ol>
+  <p>CW3–CW5 and G1 are ontology / modeling. Backend’s P1 job is the baseline, not the disposition register.</p>
+
+  <div class="phase-head">P2 — Standards and scaffolding (still no publish)</div>
+  <ol class="seq" start="6">
+    <li>Attend CW6. ER/Studio admin + Purview owner in the room. Backend is not the ratifier. <span class="badge joint who">Joint</span></li>
+    <li>CW7 (a) — attend MOD-006. Optional (b) / P2.3 sandbox — backend owns the spike if it happens. Not a G2 gate. Local files sufficient. Platform ops only if Q-03 = client-owned and (b) is in play. <span class="badge joint who">Joint</span></li>
+    <li>P2.7 / CW10 — authoring-home matrix. Six locations + three Store seats. Excel containment. Silver one-way. C-10. Formula-authoring home named before close (DP-16). KPI Store lead Must. All platform owners + backend. <span class="badge joint who">Joint</span></li>
+    <li>P2.9 — pipeline skeleton. Projection and sync scaffolding only. <span class="badge us who">Us</span></li>
+  </ol>
+  <p><b>G2</b> — foundations ratified. No running triple store required.</p>
+
+  <div class="slice-stop">
+    DP-18 Hamid slice gate. Stop Turtle load / Purview write / CW11+ conceptual build until Hamid opens a slice.
+    Workshops through CW2 and P1 stay fine. P2 scaffolding (skeleton, not publish) stays fine.
+    <span class="badge hamid">Hamid</span>
+    <span class="badge block">Blocked on slice</span>
+  </div>
+
+  <div class="phase-head">P3 — After the slice: bind and thin-publish</div>
+  <ol class="seq" start="10">
+    <li>Wait. Signed Customer CV/CQ is an ontologist / Domain Data Owner gate. Do not load unsigned harvest. <span class="badge block">Blocked on DP-18</span></li>
+    <li>P3A.5 / CW16 — bind SAP and Customer sources. Databricks engineer in the room. G3 needs SAP binding demonstrated. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on DP-18</span></li>
+    <li>P3A.6 — Purview publish, thin, from the ontology, never the formula. Platform state. <span class="badge us who">Us</span> <span class="badge block">Blocked on DP-18</span></li>
+    <li>P3B.6 / CW24 — bind Constraints sources (LP, spec, tank, maintenance). <span class="badge joint who">Joint</span> <span class="badge block">Blocked on DP-18</span></li>
+  </ol>
+
+  <div class="phase-head">P4 — Operate, map, sync, project</div>
+  <ol class="seq" start="14">
+    <li>P4.2 / CW26 — operate the graph for validation. Keep the store / load path up. Ontologist owns the CQs. <span class="badge joint who">Joint</span></li>
+    <li>P4.4 — MOD-008 mapping register. Ontologist authors meaning side; backend automates projection. <span class="badge us who">Us</span></li>
+    <li>P4.5 — sync to Purview / ER/Studio / Unity + Excel containment. Running pipelines. One-way. No mesh pick. <span class="badge us who">Us</span> <span class="badge block">Purview write still behind DP-18</span></li>
+    <li>P4.6 + CW27 — Silver projection design + 1–2 Store pilots. Backend owns the projection pipeline, not the formula. <span class="badge joint who">Joint</span></li>
+  </ol>
+  <p><b>G5</b> — mapping register + 1–2 Store pilots + projection.</p>
+
+  <div class="phase-head">P5 — Closeout / operable handover</div>
+  <ol class="seq" start="18">
+    <li>P5 closeout. If Q-03 = client-owned, handover includes operable pipelines (load jobs, runbooks, one-way apply). If Q-03 = internal technique, handover is registers plus the skeleton, not a client-operated store. <span class="badge joint who">Joint</span></li>
+  </ol>
+  <p><b>G6</b> — handover. Steward unaided on the ontology side. Operable pipelines only on the Q-03 = client-owned branch.</p>
+</section>
+<section id="s05">
+  <h2><span class="num">05</span> What we need from the client</h2>
+  <p class="intro">Filtered from DEL-002 §08 to integration. Named individuals, not role titles left blank. The full ontology SME list (channel reps, LP economist as primary, family stewards) is needed in the room for binding, not owned by backend.</p>
+
+  <h3>Platform owners — this lane’s must-name list</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Role</th><th>Contribution (quoted / filtered)</th><th>When</th><th>Front-loaded?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Purview owner</td>
+        <td>Glossary structure, custom attributes, publication rights. Both classic and Unified planes.</td>
+        <td>P1.1 read; P3A.6 write after DP-18. In the room at CW6 and CW10.</td>
+        <td>Partly</td>
+      </tr>
+      <tr>
+        <td>ER/Studio admin</td>
+        <td>Repository, licences, workspaces, version control. DP-04.</td>
+        <td>P0–P1 heavy. CW6 Must.</td>
+        <td><span class="badge block">Yes — procurement</span></td>
+      </tr>
+      <tr>
+        <td>Databricks / UC engineer</td>
+        <td>Schema access for binding; the Silver projection target. DP-07.</td>
+        <td>Part time from P2. CW10 Must. CW16.</td>
+        <td>Partly</td>
+      </tr>
+      <tr>
+        <td>Graph platform owner (if one exists)</td>
+        <td>Provisioning and operation. Answers Q-05; feeds D-M11.</td>
+        <td>P2 onward. CW7 (b) only if Q-03 = client-owned and the spike is in play.</td>
+        <td>Yes, if the platform exists</td>
+      </tr>
+      <tr>
+        <td>Security / access administrator</td>
+        <td>Provisions everything above.</td>
+        <td>Week 1. CW1 Should.</td>
+        <td><span class="badge block">Yes</span></td>
+      </tr>
+      <tr>
+        <td>Enterprise architect</td>
+        <td>Consistency with wider platform direction. Shares D-M11. Does not pick topology in this briefing.</td>
+        <td>Review points. CW1 Must. CW6, CW7, CW10.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Day-to-day counterpart</td>
+        <td>Unblocks access and diaries. Daily availability.</td>
+        <td>From CW1 / CW2.</td>
+        <td>Yes</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Source-system seats — needed in the room for binding, not owned by backend</h3>
+  <ul>
+    <li><b>SAP functional (SD / MM / IS-Oil)</b> — CW16. DP-02. “Business partner structure, partner functions, account groups, hierarchies. Critical to Customer.” Front-loaded for access.</li>
+    <li><b>LP planning system owner</b> — CW24. DP-03. Access to the constraint set already formalised in the planning model. Front-loaded for access.</li>
+    <li>Channel reps, credit, tax / excise, TAS, family stewards, and the LP economist as primary Constraints SME are ontology / modeling seats. They sit in binding rooms. Backend does not own them.</li>
+  </ul>
+
+  <h3>Store seats this lane cannot substitute</h3>
+  <ul>
+    <li><b>KPI Store lead</b> — Should CW1; Must CW10 / CW27. Named by CW2 (DP-15).</li>
+    <li><b>Store / analytics engineer (formula author)</b> — named before CW10 (DP-16). Authors how the certified number is computed. Backend does not become the formula author by owning Silver.</li>
+    <li><b>KPI owner per pilot</b> — Must CW27. Owns Thresholds (RAG), not Constraints.</li>
+  </ul>
+
+  <h3>IT security</h3>
+  <p>IT security / access administrator provisions DP-02 through DP-07. Typical lead time is a CW1 question (DEL-002 “People, access, and governance”). Raise in week 1; do not wait for scope to be final (DEL-002 P0 risk: “All requests raised week 1, before scope is even final”).</p>
+
+  <h3>Access DPs — quoted from DEL-002 §11</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Ref</th><th>Dependency</th><th>Needed by</th><th>If late</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="ref">DP-02</td><td>SAP access and functional lead availability</td><td>P3A start</td><td>Customer model is built from downstream copies. Escalate rather than absorb.</td></tr>
+      <tr><td class="ref">DP-03</td><td>LP planning model and specification library access</td><td>P1.2</td><td>Constraints modeling has no empirical basis; CW18 becomes speculative.</td></tr>
+      <tr><td class="ref">DP-04</td><td>ER/Studio licences and repository</td><td>P1.1</td><td>Modeling proceeds on paper; rework to import later.</td></tr>
+      <tr><td class="ref">DP-05</td><td>Graph platform provisioned (optional sandbox)</td><td>P2.3 optional</td><td>None for G2 — local files are sufficient.</td></tr>
+      <tr><td class="ref">DP-06</td><td>Purview read, then write access</td><td>P1.1 / P3A.6</td><td>Term publication blocked; glossary reconciliation deferred.</td></tr>
+      <tr><td class="ref">DP-07</td><td>Unity Catalog metadata read</td><td>P1.1</td><td>Binding demonstration blocked.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout warn">
+    <div class="label">What this lane does not request as its own SME pack</div>
+    <p>Do not dump the full ontology SME list here. Channel representatives, the LP economist as the single highest-value Constraints participant, family stewards, credit, tax / excise, and TAS are needed in the room for binding. They are not owned by backend. See EPM-ONT-001 §03 and DEL-002 §08.</p>
+  </div>
+</section>
+<section id="s06">
+  <h2><span class="num">06</span> Format of each deliverable</h2>
+  <p class="intro">DEL-002 §13 names a Form. It does not say PowerPoint or Word for most rows. Q-27 (documents, models, running systems, or all three) is still open and is asked at CW1. Every row below marks <span class="badge stated">stated</span> vs <span class="badge rec">working recommendation</span>.</p>
+
+  <div class="callout hamid">
+    <div class="label">Hamid — “Is this PowerPoint, Excel, Word?”</div>
+    <ul>
+      <li><b>Pipelines:</b> git-controlled config (load jobs, SPARQL / GSP or equivalent, Unity / Databricks SQL, Purview REST after DP-18), CI that applies one way, runbooks. Not slides. Not a point-to-point mesh diagram as the SoT.</li>
+      <li><b>Registers:</b> governed tables in git (Markdown / HTML / CSV), not Excel-as-SoT. Excel may stage with a provenance flag and a named migration target (C-08).</li>
+      <li><b>Purview:</b> platform state — published terms — not an authored glossary and never the formula.</li>
+      <li><b>Excel:</b> staging only. Never meaning SoT. Never formula SoT. D8 (watermarked certified-number workbooks) stays Store-open.</li>
+      <li><b>Sandbox:</b> optional. Local files are sufficient for G2. Not a gate.</li>
+      <li><b>Slides:</b> never the source of truth. Same rule as EPM-ONT-001. Use a deck only if the client’s forum requires one; the SoT stays the git table or the running pipeline.</li>
+      <li><b>Turtle loads:</b> SPARQL Update <code>LOAD</code> / Graph Store PUT/POST. Do not pick GraphDB or Jena in this briefing.</li>
+      <li><b>Metric View YAML</b> in git is the programme compile input (estate). MetricFlow YAML is demo only. Do not edit demos.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Integration-lane deliverables. Stated form is quoted from DEL-002 §13 or the §03 activity table. Working recommendation is ours where the form is generic.</caption>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Deliverable</th>
+        <th>Phase</th>
+        <th>Stated form</th>
+        <th>Working recommendation if generic</th>
+        <th>Who consumes</th>
+        <th>Predecessor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">P0.5</td>
+        <td>Access request log</td>
+        <td>P0</td>
+        <td>Access request log with target dates <span class="badge stated">stated</span></td>
+        <td>Table: system · requester · owner · target date. Same-day CW1 circulation. Governed Markdown / HTML / CSV in git. Excel only as staging. <span class="badge rec">working rec</span></td>
+        <td>Programme · security · Hamid · day-to-day counterpart</td>
+        <td>CW1 access block</td>
+      </tr>
+      <tr>
+        <td class="ref">P1.1</td>
+        <td>Environment baseline</td>
+        <td>P1</td>
+        <td>Environment baseline <span class="badge stated">stated</span></td>
+        <td>Document + inventory tables in git. Both Purview glossaries, ER/Studio published objects, Unity <code>information_schema</code> split (native / HMS / foreign), scan-already-ran flags. Not a slide pack. Not a label-copy glossary. <span class="badge rec">working rec</span></td>
+        <td>Ontologist (harvest) · backend · EA · CW10</td>
+        <td>P0.5 access (DP-04, DP-06, DP-07)</td>
+      </tr>
+      <tr>
+        <td class="ref">P0.8</td>
+        <td>Three seeded logs</td>
+        <td>P0</td>
+        <td>Three seeded logs <span class="badge stated">stated</span></td>
+        <td>Decision log, issues log, source register — three tables in git. Same family as EPM-DEC-001 / ISS-001 / SRC-001 if those IDs exist. <span class="badge rec">working rec</span></td>
+        <td>Programme · steering</td>
+        <td>P0 start</td>
+      </tr>
+      <tr>
+        <td class="ref">P2.3</td>
+        <td>Optional sandbox</td>
+        <td>P2</td>
+        <td>Sandbox if useful; local files are sufficient for G2 <span class="badge stated">stated</span></td>
+        <td>Optional running endpoint behind the team’s access, or local RDF files. Product not picked. Not gate evidence. <span class="badge rec">working rec</span></td>
+        <td>Ontologist · backend · (platform ops only on Q-03 = client-owned)</td>
+        <td>CW7 (b) · Q-03 · Q-05 / D-M11</td>
+      </tr>
+      <tr>
+        <td class="ref">P2.9</td>
+        <td>Pipeline skeleton</td>
+        <td>P2</td>
+        <td>Pipeline skeleton <span class="badge stated">stated</span></td>
+        <td>Git-controlled config stubs: load job, one-way apply, no live Purview write. Not slides. Not a mesh diagram. <span class="badge rec">working rec</span></td>
+        <td>Backend · later P4.5</td>
+        <td>P2.3 (optional) + P2.7 / CW10</td>
+      </tr>
+      <tr>
+        <td class="ref">P3A.6</td>
+        <td>Published glossary terms in Purview</td>
+        <td>P3–P4</td>
+        <td>Platform state <span class="badge stated">stated</span></td>
+        <td>Pointer: preferred term + signed definition or short form + IRI URL. Never the formula. After DP-18. Unified Catalog path. Classic is inventory only. <span class="badge rec">working rec</span></td>
+        <td>Business search in Purview</td>
+        <td>Signed CV/CQ + DP-18 + DP-06 write + git tag</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-008</td>
+        <td>Mapping register</td>
+        <td>P4</td>
+        <td>Register <span class="badge stated">stated</span></td>
+        <td>Governed table in git (Markdown / HTML / CSV). Excel allowed only as staging (C-08). Columns: ontology IRI · ER/Studio entity / attribute · Purview term. <span class="badge rec">working rec</span></td>
+        <td>Mappers · Purview publish · Store pilots</td>
+        <td>MOD-007 (Ontologist) + MOD-004 + CW16 / CW24 notes</td>
+      </tr>
+
+      <tr>
+        <td class="ref">P4.5</td>
+        <td>Metadata synchronisation implementation</td>
+        <td>P4</td>
+        <td>Running pipelines <span class="badge stated">stated</span></td>
+        <td>Git-controlled config (load jobs, SPARQL / GSP or equivalent, Unity / Databricks SQL, Purview REST after DP-18), CI that applies one way, runbooks. Not slides. Not a P2P mesh diagram as the SoT. <span class="badge rec">working rec</span></td>
+        <td>Platform ops · G6 handover if Q-03 = client-owned</td>
+        <td>MOD-008 + DP-06 / DP-07 + DP-18 for Purview write</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-005</td>
+        <td>KPI-to-domain traceability</td>
+        <td>P4</td>
+        <td>Matrix + projection design <span class="badge stated">stated</span></td>
+        <td>Store-owned matrix; backend-owned Silver projection design. IRIs and Constraint refs from the ontology. Not a formula document. Not a deck. <span class="badge rec">working rec</span></td>
+        <td>KPI Store · backend (pipeline) · CW27</td>
+        <td>Store lane + MOD-007 IRIs + DP-10 / DP-16</td>
+      </tr>
+      <tr>
+        <td class="ref">C-08</td>
+        <td>Excel containment</td>
+        <td>P2 define / P4 implement</td>
+        <td>Ingestion and staging only (MOD-000 C-08) <span class="badge stated">stated</span></td>
+        <td>Staging files with provenance flag + named migration target. Never the SoT. A later read-template, if any, is a projection — same rule as Silver. Do not design one in this briefing. <span class="badge rec">working rec</span></td>
+        <td>Anyone staging harvest or mappings</td>
+        <td>CW10 rule · P4.5 implementation</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Disposition register</td>
+        <td>P1</td>
+        <td>Disposition register <span class="badge stated">stated</span></td>
+        <td>MOD-009 owns it. Backend does not author disposition. Listed because G1 consumes it and P1.1 inventory feeds the harvest side. Table, not slides. <span class="badge rec">working rec</span></td>
+        <td>G1 · CW8 / CW9</td>
+        <td>CW3–CW5 (ontology / modeling)</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Turtle load (not authoring)</td>
+        <td>P3–P4</td>
+        <td>Not a §13 backend row <span class="badge rec">working rec</span></td>
+        <td>SPARQL Update LOAD or Graph Store PUT/POST of a tagged <code>.ttl</code>. Store not picked. Live store is a deployment of a git tag, not the SoT. Blocked on DP-18 + signed CV.</td>
+        <td>CW26 live CQs · optional serving</td>
+        <td>D-M11 · Q-03 · DP-18 · signed CV</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Metric View YAML (estate compile input)</td>
+        <td>Store lane; estate</td>
+        <td>Not a §13 Domain-Modeling row <span class="badge rec">working rec</span></td>
+        <td>Git YAML is the programme compile input into Unity Catalog Metric Views. MetricFlow YAML is Unbilled / Demo 2 only. Do not edit demos. Backend does not author the certified formula.</td>
+        <td>Databricks SQL warehouse · Store catalog</td>
+        <td>DP-16 named home · Store certification</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout note">
+    <div class="label">What this briefing is not</div>
+    <ul>
+      <li>Not a pick of GraphDB vs Jena. Not a Neo4j-as-SoT design. Neo4j is serving only.</li>
+      <li>Not a P2P mesh recommendation. Not a hub / bus / anti-corruption-layer pick. Chief Architect later.</li>
+      <li>Not a build of connectors, Turtle, or Purview writes.</li>
+      <li>Not an ontology-meaning briefing and not a KPI-formula briefing.</li>
+      <li>Not a restaging of the Unbilled MetricFlow demo. Databricks is the programme compiler; MetricFlow stays demo-only.</li>
+      <li>Not a new workshop, gate, or activity ID. Every CW, G, P, DP, Q, and D-M on this page is quoted from DEL-002 or MOD-000.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>EPM-BE-001</b> · unregistered briefing · 2026-08-14 (America/Chicago) · Backend Engineer for Hamid · Status: briefing, research and planning only, no build, no publish.</p>
+  <p>Sources (quoted, not extended):</p>
+  <ul>
+    <li><code>/workspace/domain-ontology-kpi/planning/</code> — EPM-MOD-000 v0.5 (filename v0.3), EPM-DEL-002 v0.3 (filename v0.1)</li>
+    <li><code>/workspace/domain-ontology-kpi/research/metadata-systems-index.md</code></li>
+    <li><code>/workspace/domain-ontology-kpi/research/meta-integration-draft/02-ontology-graphs.md</code> (locks only — no store pick)</li>
+    <li><code>/workspace/domain-ontology-kpi/research/meta-integration-draft/04-systems-and-surfaces.md</code> and <code>06-data-flows.md</code> (connector facts)</li>
+    <li>C-08 / C-10 / C-11 · D-M11 · D-M19 · DP-18</li>
+  </ul>
+  <p>Nothing in this file invents a workshop ID, a gate, or a deliverable form. Where DEL-002 §13 says “register” or “running pipelines,” the gap is marked and a working recommendation is given. Q-27 remains the client close on documents vs models vs running systems. Demos were not touched.</p>
+</footer>
+</div>
+<script>
+(function () {
+  var input = document.getElementById("q");
+  var count = document.getElementById("qc");
+  var root = document.querySelector(".wrap");
+  if (!input || !root) return;
+  function clearMarks(node) {
+    var marks = node.querySelectorAll("mark.hit");
+    for (var i = 0; i < marks.length; i++) {
+      var m = marks[i];
+      var t = document.createTextNode(m.textContent);
+      m.parentNode.replaceChild(t, m);
+    }
+    node.normalize();
+  }
+  function walk(node, re, acc) {
+    if (node.nodeType === 3) {
+      var text = node.nodeValue;
+      if (!text || !re.test(text)) return;
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0;
+      var m;
+      while ((m = re.exec(text))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var mark = document.createElement("mark");
+        mark.className = "hit";
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        acc.n++;
+        last = m.index + m[0].length;
+        if (m[0].length === 0) break;
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+      return;
+    }
+    if (node.nodeType !== 1) return;
+    if (node.tagName === "SCRIPT" || node.tagName === "STYLE" || node.tagName === "MARK") return;
+    var kids = Array.prototype.slice.call(node.childNodes);
+    for (var i = 0; i < kids.length; i++) walk(kids[i], re, acc);
+  }
+  input.addEventListener("input", function () {
+    clearMarks(root);
+    var q = input.value.trim();
+    if (q.length < 2) { count.textContent = ""; return; }
+    var acc = { n: 0 };
+    var re;
+    try { re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"); }
+    catch (e) { count.textContent = ""; return; }
+    walk(root, re, acc);
+    count.textContent = acc.n ? String(acc.n) : "0";
+  });
+})();
+</script>
+</body>
+</html>

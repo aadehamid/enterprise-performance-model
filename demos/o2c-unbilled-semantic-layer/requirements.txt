@@ -1,0 +1,7 @@
+# Pin set verified on the Linux box (Python 3.12).
+# dbt-metricflow 0.11.0 requires dbt-core>=1.10.4,<1.11 and Python <3.13.
+# Do NOT upgrade to dbt-metricflow 0.13 — different line; YAML/pins break.
+# Use Python 3.11 or 3.12.
+dbt-core==1.10.23
+dbt-duckdb==1.10.1
+dbt-metricflow==0.11.0

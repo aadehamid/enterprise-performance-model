@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Enterprise Performance Model — Integrated Architecture Handbook</title>
+<style>
+:root{
+  --bg:#f3f6fa;
+  --paper:#ffffff;
+  --ink:#172033;
+  --muted:#667085;
+  --navy:#17365d;
+  --blue:#286da8;
+  --blue-soft:#eaf4fc;
+  --teal:#0f766e;
+  --teal-soft:#e8f7f4;
+  --purple:#6b46c1;
+  --purple-soft:#f1ecfb;
+  --amber:#a66a13;
+  --amber-soft:#fff6df;
+  --green:#2e7d32;
+  --green-soft:#ebf7ec;
+  --red:#b42318;
+  --line:#d9e2ec;
+  --soft:#f8fafc;
+  --shadow:0 14px 36px rgba(16,42,67,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  line-height:1.58;
+}
+.layout{
+  display:grid;
+  grid-template-columns:300px minmax(0,1fr);
+  min-height:100vh;
+}
+aside{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  background:#102a43;
+  color:#e8f1f8;
+  padding:26px 20px 32px;
+}
+aside h1{
+  font-size:18px;
+  line-height:1.25;
+  margin:0 0 6px;
+}
+aside p{
+  margin:0 0 18px;
+  color:#b7c7d6;
+  font-size:13px;
+}
+.nav-label{
+  margin:18px 0 8px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#8fb3cf;
+}
+aside a{
+  display:block;
+  text-decoration:none;
+  color:#dbeafe;
+  padding:8px 10px;
+  margin:2px 0;
+  border-radius:8px;
+  font-size:14px;
+}
+aside a:hover{background:#1f4568}
+main{padding:34px}
+.article{
+  max-width:1220px;
+  margin:0 auto;
+}
+.hero{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:38px 42px;
+  box-shadow:var(--shadow);
+  margin-bottom:24px;
+}
+.eyebrow{
+  font-size:12px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:var(--blue);
+}
+h1{
+  margin:8px 0 10px;
+  color:var(--navy);
+  font-size:42px;
+  line-height:1.12;
+}
+.hero p{
+  margin:0;
+  color:var(--muted);
+  max-width:950px;
+  font-size:18px;
+}
+section{
+  scroll-margin-top:18px;
+  margin:24px 0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:30px 34px;
+  box-shadow:var(--shadow);
+}
+h2{
+  color:var(--navy);
+  margin:0 0 10px;
+  font-size:28px;
+}
+h3{
+  color:#234e77;
+  margin:24px 0 10px;
+  font-size:21px;
+}
+h4{
+  margin:0 0 8px;
+  color:var(--navy);
+}
+p{margin:8px 0 14px}
+.lead{font-size:17px;color:#3c4a5d}
+.callout{
+  background:var(--blue-soft);
+  border-left:5px solid var(--blue);
+  border-radius:10px;
+  padding:16px 18px;
+  margin:16px 0;
+}
+.callout.teal{background:var(--teal-soft);border-left-color:var(--teal)}
+.callout.amber{background:var(--amber-soft);border-left-color:var(--amber)}
+.diagram{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  margin:22px auto;
+}
+.node{
+  width:min(920px,100%);
+  border:2px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  padding:15px 18px;
+  text-align:center;
+}
+.node strong{display:block;color:var(--navy)}
+.node small{display:block;color:var(--muted);margin-top:4px}
+.node.business{border-color:#6fa7d5;background:#eef7fd}
+.node.performance{border-color:#7fc7bb;background:#eefaf7}
+.node.semantic{border-color:#a68bd5;background:#f6f2fc}
+.node.data{border-color:#d5a55c;background:#fff8ea}
+.node.consumption{border-color:#7eb77e;background:#f0f8f0}
+.arrow{font-size:22px;color:#7b8794;line-height:1}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:17px;
+  background:#fff;
+}
+.card p{color:var(--muted);font-size:14px}
+.card.business{border-top:5px solid var(--blue)}
+.card.performance{border-top:5px solid var(--teal)}
+.card.semantic{border-top:5px solid var(--purple)}
+.card.ontology{border-top:5px solid #8557c8}
+.card.data{border-top:5px solid var(--amber)}
+.card.product{border-top:5px solid #c78636}
+.card.consumption{border-top:5px solid var(--green)}
+.card.integration{border-top:5px solid #4d7aa8}
+.card.governance{border-top:5px solid #4f5b67}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.badge{
+  padding:4px 8px;
+  border-radius:999px;
+  background:#edf2f7;
+  color:#344054;
+  font-size:11px;
+}
+.pillar{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pillar-title{
+  padding:12px 14px;
+  border-radius:10px;
+  color:#fff;
+  font-weight:800;
+  text-align:center;
+}
+.pillar.domain .pillar-title{background:var(--blue)}
+.pillar.kpi .pillar-title{background:var(--teal)}
+.pillar.integration .pillar-title{background:var(--purple)}
+.flow-row{
+  display:grid;
+  grid-template-columns:1fr 70px 1fr 70px 1fr;
+  gap:10px;
+  align-items:stretch;
+  margin:22px 0;
+}
+.flow-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#7b8794;
+  font-size:26px;
+}
+.step{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  background:#fff;
+}
+.step strong{color:var(--navy)}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:18px 0;
+  font-size:14px;
+}
+th{
+  background:var(--navy);
+  color:#fff;
+  text-align:left;
+  padding:10px;
+}
+td{
+  border:1px solid var(--line);
+  padding:10px;
+  vertical-align:top;
+}
+tr:nth-child(even) td{background:#fafcfe}
+.codebox{
+  background:#102a43;
+  color:#e8f1f8;
+  border-radius:12px;
+  padding:18px;
+  font-family:SFMono-Regular,Consolas,monospace;
+  white-space:pre-wrap;
+  overflow:auto;
+}
+.platform-stack{
+  display:grid;
+  gap:12px;
+}
+.platform-row{
+  display:grid;
+  grid-template-columns:220px 50px 1fr;
+  gap:10px;
+  align-items:center;
+}
+.platform-name{
+  background:#102a43;
+  color:#fff;
+  border-radius:10px;
+  padding:14px;
+  text-align:center;
+  font-weight:800;
+}
+.platform-arrow{text-align:center;color:#7b8794;font-size:24px}
+.platform-detail{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  background:#fff;
+  font-size:14px;
+}
+.mini strong{display:block;color:var(--navy);margin-bottom:4px}
+.workstream{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:17px;
+  background:#fff;
+}
+.workstream h4{margin-bottom:5px}
+.workstream ul{margin:8px 0 0;padding-left:18px}
+.hierarchy{
+  border-left:3px solid var(--blue);
+  margin-left:8px;
+  padding-left:18px;
+}
+.hierarchy .level{
+  margin:10px 0;
+  padding:11px 13px;
+  border-radius:10px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+}
+.matrix-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+.matrix-wrap table{min-width:1100px;margin:0}
+.footer{
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+  margin:24px 0 10px;
+}
+@media(max-width:980px){
+  .layout{display:block}
+  aside{position:relative;height:auto}
+  main{padding:18px}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .flow-row{grid-template-columns:1fr}
+  .flow-arrow{transform:rotate(90deg)}
+  .platform-row{grid-template-columns:1fr}
+  .platform-arrow{transform:rotate(90deg)}
+  h1{font-size:34px}
+  .hero{padding:28px 24px}
+  section{padding:24px 20px}
+}
+
+.visual-map{margin:24px 0}
+.visual-root{
+  max-width:520px;margin:0 auto 22px;padding:17px 20px;text-align:center;
+  background:var(--navy);color:#fff;border-radius:14px;font-weight:800;
+  box-shadow:0 10px 24px rgba(16,42,67,.16)
+}
+.branch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;position:relative}
+.branch-column{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+.branch-title{padding:13px 15px;color:#fff;font-weight:800;text-align:center}
+.branch-column:nth-child(1) .branch-title{background:var(--blue)}
+.branch-column:nth-child(2) .branch-title{background:var(--purple)}
+.branch-column:nth-child(3) .branch-title{background:var(--teal)}
+.branch-items{padding:12px}
+.branch-item{padding:9px 11px;margin:7px 0;border-radius:9px;background:var(--soft);border:1px solid var(--line);font-size:14px}
+.flow-visual{display:flex;flex-direction:column;align-items:center;margin:22px 0}
+.flow-box{
+  width:min(760px,100%);padding:14px 18px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;text-align:center;position:relative
+}
+.flow-box strong{display:block;color:var(--navy)}
+.flow-box small{display:block;color:var(--muted);margin-top:3px}
+.flow-link{
+  width:3px;height:27px;background:var(--line);position:relative
+}
+.flow-link:after{
+  content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--line)
+}
+.flow-link.bidirectional:before{
+  content:"";position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid var(--line)
+}
+.relationship-label{
+  margin:-4px 0 4px;padding:3px 8px;border-radius:999px;background:var(--blue-soft);
+  color:var(--navy);font-size:11px;font-weight:700
+}
+.composition{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:center;margin:20px 0
+}
+.composition .piece{
+  padding:13px 10px;border:1px solid var(--line);border-radius:10px;text-align:center;background:#fff;font-size:13px
+}
+.composition .plus,.composition .equals{text-align:center;font-size:23px;color:var(--muted);font-weight:800}
+.semantic-result{
+  margin:16px auto 0;max-width:560px;padding:18px;border-radius:13px;background:var(--purple-soft);
+  border:2px solid #a68bd5;text-align:center;font-weight:800;color:var(--navy)
+}
+.arch-stack{display:grid;gap:11px;margin:22px auto;max-width:900px}
+.arch-row{
+  display:grid;grid-template-columns:250px 1fr;gap:12px;align-items:stretch
+}
+.arch-name{
+  display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;
+  border-radius:11px;padding:13px;font-weight:800
+}
+.arch-desc{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fff}
+.arch-row:nth-child(1) .arch-name{background:var(--blue)}
+.arch-row:nth-child(2) .arch-name{background:var(--teal)}
+.arch-row:nth-child(3) .arch-name{background:var(--purple)}
+.arch-row:nth-child(4) .arch-name{background:#8557c8}
+.arch-row:nth-child(5) .arch-name{background:var(--amber)}
+.arch-row:nth-child(6) .arch-name{background:#c78636}
+.arch-row:nth-child(7) .arch-name{background:var(--green)}
+.arch-row:nth-child(8) .arch-name{background:#4d7aa8}
+.arch-row:nth-child(9) .arch-name{background:#4f5b67}
+.pipeline{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0
+}
+.pipeline-step{
+  position:relative;padding:15px;border:1px solid var(--line);border-radius:12px;background:#fff;
+  min-height:94px
+}
+.pipeline-step strong{display:block;color:var(--navy);margin-bottom:4px}
+.pipeline-step:not(:nth-child(3n)):after{
+  content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:22px;font-weight:800;z-index:2
+}
+.disposition-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-top:14px
+}
+.disposition{
+  padding:9px;border-radius:9px;background:var(--soft);border:1px solid var(--line);
+  text-align:center;font-size:12px
+}
+@media(max-width:980px){
+  .branch-grid,.composition,.pipeline{grid-template-columns:1fr}
+  .composition .plus,.composition .equals{transform:rotate(90deg)}
+  .arch-row{grid-template-columns:1fr}
+  .pipeline-step:not(:nth-child(3n)):after{display:none}
+}
+
+/* Added detailed workstream and integration visuals */
+.workstream-map{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  max-width:980px;
+  margin:22px auto;
+}
+.workstream-root{
+  background:var(--navy);
+  color:#fff;
+  font-weight:800;
+  text-align:center;
+  padding:16px 18px;
+  border-radius:13px;
+}
+.workstream-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:12px;
+}
+.workstream-item{
+  border:1px solid var(--line);
+  border-left:5px solid var(--blue);
+  border-radius:11px;
+  padding:14px 15px;
+  background:#fff;
+}
+.workstream-item strong{color:var(--navy)}
+.workstream-item.cross{
+  border-left-color:var(--teal);
+  background:var(--teal-soft);
+}
+.sync-map{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin:22px 0;
+}
+.sync-card{
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#fff;
+  overflow:hidden;
+}
+.sync-card h4{
+  margin:0;
+  color:#fff;
+  background:var(--navy);
+  padding:12px 14px;
+  font-size:16px;
+}
+.sync-card ul{
+  margin:0;
+  padding:13px 18px 15px 32px;
+}
+.sync-card.semantic h4{background:var(--purple)}
+.sync-card.model h4{background:var(--blue)}
+.sync-card.governance h4{background:#4f5b67}
+.sync-card.lineage h4{background:#4d7aa8}
+.sync-card.quality h4{background:var(--teal)}
+.sync-card.automation h4{background:var(--amber)}
+.three-pillar-flow{
+  display:grid;
+  grid-template-columns:1fr 80px 1fr 80px 1fr;
+  align-items:stretch;
+  gap:12px;
+  margin:24px 0;
+}
+.pillar-box{
+  border:2px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+  background:#fff;
+}
+.pillar-box h4{
+  text-align:center;
+  padding-bottom:9px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:12px;
+}
+.pillar-box.domain{border-color:#6fa7d5;background:#f4faff}
+.pillar-box.kpi{border-color:#7fc7bb;background:#f3fbf8}
+.pillar-box.integration{border-color:#a68bd5;background:#f8f5fc}
+.pillar-connector{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:var(--muted);
+  text-align:center;
+  font-size:12px;
+}
+.pillar-connector .arr{font-size:26px;color:var(--blue)}
+.integration-topology{
+  display:grid;
+  gap:16px;
+  margin:24px 0;
+}
+.topology-root{
+  max-width:520px;
+  margin:0 auto;
+  border:2px solid #a68bd5;
+  background:var(--purple-soft);
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+}
+.topology-root strong{display:block;color:var(--navy);font-size:18px}
+.topology-grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.topology-grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  max-width:820px;
+  margin:0 auto;
+}
+.topology-node{
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#fff;
+  padding:16px;
+}
+.topology-node h4{
+  margin:0 0 8px;
+  color:var(--navy);
+}
+.topology-link-label{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+.topology-down{
+  width:3px;
+  height:28px;
+  background:var(--line);
+  margin:0 auto;
+  position:relative;
+}
+.topology-down:after{
+  content:"";
+  position:absolute;
+  bottom:-1px;
+  left:50%;
+  transform:translateX(-50%);
+  border-left:7px solid transparent;
+  border-right:7px solid transparent;
+  border-top:9px solid var(--line);
+}
+.topology-kpi{
+  max-width:580px;
+  margin:0 auto;
+  border:2px solid #7fc7bb;
+  background:var(--teal-soft);
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+}
+.topology-consumption{
+  max-width:640px;
+  margin:0 auto;
+  border:2px solid #7eb77e;
+  background:var(--green-soft);
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+}
+@media(max-width:980px){
+  .sync-map,.topology-grid-3,.topology-grid-2{grid-template-columns:1fr}
+  .three-pillar-flow{grid-template-columns:1fr}
+  .pillar-connector .arr{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+<h1>Enterprise Performance Model</h1>
+<p>Integrated Architecture Handbook</p>
+<div class="nav-label">Orientation</div>
+<a href="#overall">1. Updated overall visual</a>
+<a href="#hierarchy">2. Complete hierarchy</a>
+<a href="#condensed">3. Condensed hierarchy</a>
+<div class="nav-label">Architecture</div>
+<a href="#families-workstreams">4. Families to workstreams</a>
+<a href="#families">5. Architecture families</a>
+<a href="#pillars">6. Three implementation pillars</a>
+<div class="nav-label">Implementation pillars</div>
+<a href="#domain">7. Domain Modeling</a>
+<a href="#kpi">8. KPI Store &amp; EPM</a>
+<a href="#system-integration">9. System Integration</a>
+<div class="nav-label">Platforms and execution</div>
+<a href="#tool-placement">10. Tool placement</a>
+<a href="#integration-view">11. Integration view</a>
+<a href="#platforms">12. Platform contributions</a>
+<a href="#integration-workstream">13. Integration workstream</a>
+<a href="#interaction">14. Workstream interaction</a>
+<a href="#tableau">15. Tableau-to-Power BI discovery</a>
+</aside>
+<main>
+<div class="article">
+<div class="hero">
+<div class="eyebrow">Enterprise Performance Model Master Index</div>
+<h1>Integrated Architecture, Workstreams, and Platform Model</h1>
+<p>This handbook shows how the primary architecture chain, architecture families, delivery workstreams, implementation pillars, and enterprise platforms fit together as one governed system.</p>
+</div>
+<section id="overall">
+<h2>1. Updated overall visual</h2>
+<p class="lead">The Enterprise Performance Model is the umbrella that connects business context, performance management, semantic meaning, data products, platform integration, and consumption.</p>
+<div class="diagram">
+<div class="node business"><strong>Enterprise Strategy &amp; Objectives</strong><small>What the enterprise is trying to achieve</small></div>
+<div class="arrow">↓</div>
+<div class="node business"><strong>Domains, Value Streams, Capabilities, Processes, Activities &amp; Decisions</strong><small>How the enterprise creates value and performs work</small></div>
+<div class="arrow">↓</div>
+<div class="node performance"><strong>Measurements, Metrics, KPIs, Targets, Thresholds &amp; Outcomes</strong><small>How performance is observed, explained, and governed</small></div>
+<div class="arrow">↓</div>
+<div class="node data"><strong>Foundational &amp; Derived Data Products</strong><small>Trusted business facts and decision-ready analytical products</small></div>
+<div class="arrow">↓</div>
+<div class="node semantic"><strong>Semantic Model, Ontology, KPI Store, Metadata &amp; Lineage</strong><small>Shared meaning, governance, formalization, and persistence</small></div>
+<div class="arrow">↓</div>
+<div class="node consumption"><strong>Semantic Views, Power BI, APIs, Automation, Analytics &amp; AI</strong><small>Governed consumption and decision support</small></div>
+<div class="arrow">↓</div>
+<div class="node business"><strong>Decisions, Actions, Learning &amp; Continuous Improvement</strong><small>Closed-loop enterprise performance management</small></div>
+</div>
+<div class="callout">
+<strong>Interpretation:</strong> the chain is the end-to-end enterprise story. Architecture families organize the story into disciplines. Workstreams build those disciplines. Platforms implement selected responsibilities. Governance keeps the whole system coherent.
+    </div>
+</section>
+<section id="hierarchy">
+<h2>2. Complete hierarchy</h2>
+<p>The EPM should not be forced into one simple parent-child tree. It is a set of connected hierarchies and overlays.</p>
+<div class="hierarchy">
+<div class="level"><strong>Enterprise</strong><br/>Overall organization and strategic direction</div>
+<div class="level"><strong>Business Domain</strong><br/>Commercial, Refining, Midstream, Corporate, and other durable areas</div>
+<div class="level"><strong>Value Stream</strong><br/>End-to-end flow from trigger to stakeholder value</div>
+<div class="level"><strong>Value-Stream Stage</strong><br/>Major outcome-oriented step in the flow</div>
+<div class="level"><strong>Capability / Sub-capability</strong><br/>Enduring business abilities used by value-stream stages</div>
+<div class="level"><strong>Business Process</strong><br/>Repeatable flow that realizes a capability</div>
+<div class="level"><strong>Business Activity</strong><br/>Discrete work step performed by a person or system</div>
+<div class="level"><strong>Business Decision</strong><br/>Choice that changes action, allocation, exposure, or outcome</div>
+<div class="level"><strong>Measurement</strong><br/>Observed or calculated value</div>
+<div class="level"><strong>Metric</strong><br/>Standardized measure used for monitoring or diagnosis</div>
+<div class="level"><strong>Enterprise KPI</strong><br/>Governed metric used to evaluate an objective or critical outcome</div>
+<div class="level"><strong>Foundational &amp; Derived Data Products</strong><br/>Trusted facts and decision-ready analytical products</div>
+<div class="level"><strong>KPI Store</strong><br/>Official KPI values, targets, thresholds, status, versions, and lineage</div>
+<div class="level"><strong>Semantic / Consumption Layer</strong><br/>Approved SQL views and consumer contracts</div>
+<div class="level"><strong>Power BI Semantic Models, Reports, APIs, Automation &amp; AI</strong><br/>Analytical and operational consumption</div>
+</div>
+<div class="callout teal">
+<strong>Important:</strong> KPIs are a performance overlay. A KPI may measure an objective, value stream, stage, capability, process, or outcome. It is not simply the next structural level beneath an activity.
+    </div>
+</section>
+<section id="condensed">
+<h2>3. Condensed hierarchical visual</h2>
+<div aria-label="Enterprise Performance Model condensed hierarchy" class="visual-map">
+<div class="visual-root">Enterprise Performance Model</div>
+<div class="branch-grid">
+<div class="branch-column">
+<div class="branch-title">Primary Architecture Chain</div>
+<div class="branch-items">
+<div class="branch-item">Strategy &amp; Objectives</div>
+<div class="branch-item">Domains</div>
+<div class="branch-item">Value Streams &amp; Stages</div>
+<div class="branch-item">Capabilities &amp; Sub-capabilities</div>
+<div class="branch-item">Processes, Activities &amp; Decisions</div>
+<div class="branch-item">Measurements, Metrics &amp; KPIs</div>
+<div class="branch-item">Data Products &amp; KPI Store</div>
+<div class="branch-item">Semantic Views, Power BI, APIs &amp; AI</div>
+</div>
+</div>
+<div class="branch-column">
+<div class="branch-title">Architecture Families</div>
+<div class="branch-items">
+<div class="branch-item">Business Architecture</div>
+<div class="branch-item">Performance Architecture</div>
+<div class="branch-item">Semantic Architecture</div>
+<div class="branch-item">Ontology Architecture</div>
+<div class="branch-item">Data Architecture</div>
+<div class="branch-item">Data-Product Architecture</div>
+<div class="branch-item">Consumption Architecture</div>
+<div class="branch-item">Integration &amp; Governance</div>
+</div>
+</div>
+<div class="branch-column">
+<div class="branch-title">Delivery Workstreams</div>
+<div class="branch-items">
+<div class="branch-item">KPI Store &amp; EPM</div>
+<div class="branch-item">Domain Modeling</div>
+<div class="branch-item">System Integration</div>
+<div class="branch-item">Tableau-to-Power BI Discovery</div>
+<div class="branch-item">Data Product Portfolio</div>
+<div class="branch-item">Semantic &amp; Consumption Layer</div>
+<div class="branch-item">Ontology &amp; Knowledge Graph</div>
+<div class="branch-item">Causal Performance, Automation &amp; L&amp;D</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="families-workstreams">
+<h2>4. Architecture families to workstreams</h2>
+<p>Architecture families describe enduring disciplines. Workstreams are delivery mechanisms that build and operationalize those disciplines.</p>
+<div class="workstream-map">
+<div class="workstream-root">Enterprise Performance Model Workstreams</div>
+<div class="workstream-list">
+<div class="workstream-item"><strong>1. KPI Store &amp; Enterprise Performance Management</strong><br/>Measurement governance, KPI definitions, targets, thresholds, values, status, and enterprise performance consumption.</div>
+<div class="workstream-item"><strong>2. Domain Modeling</strong><br/>Domains, value streams, capabilities, processes, activities, decisions, concepts, entities, relationships, and models.</div>
+<div class="workstream-item"><strong>3. System Integration &amp; Metadata Automation</strong><br/>Purview, ER/Studio, Unity Catalog, Bigeye, lineage, quality, metadata synchronization, and automation.</div>
+<div class="workstream-item"><strong>4. Tableau-to-Power BI Measurement Discovery</strong><br/>Legacy calculation inventory, classification, reconciliation, consolidation, and retirement.</div>
+<div class="workstream-item"><strong>5. Data Product Portfolio</strong><br/>Foundational and derived products, ownership, contracts, quality, service levels, and reuse.</div>
+<div class="workstream-item"><strong>6. Semantic &amp; Consumption Layer</strong><br/>SQL semantic views, Power BI semantic models, security, reusable measures, APIs, and consumer contracts.</div>
+<div class="workstream-item"><strong>7. Ontology &amp; Knowledge Graph</strong><br/>Classes, properties, constraints, graph instances, validation, and competency questions.</div>
+<div class="workstream-item"><strong>8. Causal Performance, Analytics, Automation &amp; L&amp;D</strong><br/>KPI drivers, variance analysis, causal models, alerts, workflows, AI context, and learning journeys.</div>
+<div class="workstream-item cross"><strong>Cross-cutting: Data, Metadata &amp; Performance Governance</strong><br/>Definitions, ownership, stewardship, quality, lineage, security, certification, change control, and retirement.</div>
+</div>
+</div><div class="matrix-wrap">
+<table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>Business</th>
+<th>Performance</th>
+<th>Semantic</th>
+<th>Ontology</th>
+<th>Data</th>
+<th>Data Product</th>
+<th>Consumption</th>
+<th>Integration</th>
+<th>Governance</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>KPI Store &amp; EPM</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td></tr>
+<tr><td>Domain Modeling</td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td>Support</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td></tr>
+<tr><td>System Integration</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td></tr>
+<tr><td>Tableau-to-Power BI Measurement Discovery</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Limited</td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td></tr>
+<tr><td>Data Product Portfolio</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td>Limited</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td>Support</td><td><strong>Primary</strong></td></tr>
+<tr><td>Semantic &amp; Consumption Layer</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td>Limited</td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td></tr>
+<tr><td>Ontology &amp; Knowledge Graph</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td></tr>
+<tr><td>Causal Performance, Analytics &amp; L&amp;D</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td>Support</td><td><strong>Primary</strong></td><td><strong>Primary</strong></td><td>Support</td><td><strong>Primary</strong></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="families">
+<h2>5. Architecture families</h2>
+<p class="lead">
+    Each architecture family is a coherent discipline with its own concepts, relationships, decisions, artifacts, and implementation responsibilities.
+    Together they describe the full Enterprise Performance Model from business intent to governed consumption.
+  </p>
+<div class="callout">
+<strong>How to read this section:</strong> the numbered items under each family are the principal concepts or layers that belong to that architecture family.
+    They are not always a simple parent-child hierarchy; some are related through many-to-many or overlay relationships.
+  </div>
+<h3>5.1 Business Architecture</h3>
+<div class="card business">
+<p><strong>Purpose:</strong> describes how the enterprise creates, delivers, and protects value through domains, value streams, capabilities, work, and decisions.</p>
+<ol>
+<li><strong>Enterprise</strong> — the organization as a whole, including its strategic direction, operating boundaries, and stakeholders.</li>
+<li><strong>Business Domain</strong> — a durable area of business responsibility, expertise, language, data, and decision-making, such as Commercial, Refining, Midstream, or Corporate.</li>
+<li><strong>Value Stream</strong> — the end-to-end flow from a trigger or opportunity to a realized stakeholder outcome.</li>
+<li><strong>Value-Stream Stage</strong> — a major outcome-oriented step in the value stream.</li>
+<li><strong>Capability</strong> — an enduring ability the organization must possess.</li>
+<li><strong>Sub-capability</strong> — a more specific capability decomposed beneath a broader capability.</li>
+<li><strong>Business Process</strong> — an ordered flow of work that realizes one or more capabilities.</li>
+<li><strong>Business Activity</strong> — a discrete unit of work performed by a person, team, system, or combination of them.</li>
+<li><strong>Business Decision</strong> — a choice among alternatives that changes action, resource allocation, exposure, or outcome.</li>
+<li><strong>Business Event</strong> — something that occurs and triggers, changes, or records business activity, such as an order receipt, refinery outage, nomination rejection, or price publication.</li>
+<li><strong>Business Outcome</strong> — the operational, financial, customer, risk, or strategic result produced by the business architecture.</li>
+<li><strong>Role and Organization</strong> — accountable actors, teams, or organizational units that own capabilities, processes, activities, decisions, and outcomes.</li>
+</ol>
+<div class="flow-visual"><div class="flow-box business"><strong>Enterprise</strong><small>The organization as a whole</small></div><div class="flow-link"></div><div class="flow-box business"><strong>Business Domain</strong><small>A durable area such as Commercial</small></div><div class="relationship-label">contains</div><div class="flow-link"></div><div class="flow-box business"><strong>Value Stream</strong><small>End-to-end stakeholder value flow</small></div><div class="relationship-label">contains</div><div class="flow-link"></div><div class="flow-box business"><strong>Value-Stream Stage</strong><small>Major outcome-oriented step</small></div><div class="relationship-label">uses</div><div class="flow-link bidirectional"></div><div class="flow-box semantic"><strong>Capability</strong><small>Enduring business ability</small></div><div class="relationship-label">decomposes into</div><div class="flow-link"></div><div class="flow-box semantic"><strong>Sub-capability</strong><small>More specific component ability</small></div><div class="relationship-label">realized through</div><div class="flow-link"></div><div class="flow-box semantic"><strong>Business Process</strong><small>Ordered flow of work</small></div><div class="relationship-label">contains</div><div class="flow-link"></div><div class="flow-box data"><strong>Business Activity</strong><small>Discrete work step</small></div><div class="relationship-label">responds to / generates</div><div class="flow-link"></div><div class="flow-box data"><strong>Business Event</strong><small>Trigger or recorded occurrence</small></div><div class="relationship-label">supports</div><div class="flow-link"></div><div class="flow-box performance"><strong>Business Decision</strong><small>Choice among alternatives</small></div><div class="relationship-label">influences</div><div class="flow-link"></div><div class="flow-box performance"><strong>Business Outcome</strong><small>Operational, financial, customer, risk, or strategic result</small></div></div>
+</div>
+<h3>5.2 Performance Architecture</h3>
+<div class="card performance">
+<p><strong>Purpose:</strong> defines how performance is observed, interpreted, explained, evaluated, governed, and acted upon.</p>
+<ol>
+<li><strong>Strategic Objective</strong> — a result the enterprise intends to achieve.</li>
+<li><strong>Performance Outcome</strong> — an observable result related to the objective.</li>
+<li><strong>Performance Driver</strong> — a condition or factor that influences an outcome or KPI.</li>
+<li><strong>Measurement</strong> — an observed or calculated value describing an event, object, condition, or result.</li>
+<li><strong>Raw Measurement</strong> — a value directly recorded from a source event or system.</li>
+<li><strong>Derived Measurement</strong> — a value calculated from one or more measurements.</li>
+<li><strong>Metric</strong> — a standardized, repeatable measure used to describe, compare, monitor, or diagnose performance.</li>
+<li><strong>Operational Metric</strong> — a measure of routine operating performance.</li>
+<li><strong>Diagnostic Metric</strong> — a measure used to explain why another metric or KPI changed.</li>
+<li><strong>Performance Indicator</strong> — an important monitored measure that may not yet be governed as an enterprise KPI.</li>
+<li><strong>Candidate KPI</strong> — a proposed performance indicator undergoing governance review.</li>
+<li><strong>Enterprise KPI</strong> — a governed metric used to evaluate an objective or critical outcome and trigger accountability or action.</li>
+<li><strong>Target</strong> — the desired value or expected condition.</li>
+<li><strong>Threshold</strong> — warning, critical, or other evaluation boundary used to determine status.</li>
+<li><strong>Status</strong> — the evaluated condition of the KPI, such as On Target, Warning, or Critical.</li>
+<li><strong>Performance Variance</strong> — the difference between actual and target, plan, budget, forecast, benchmark, or prior period.</li>
+<li><strong>Performance Action</strong> — the intervention, escalation, or management response triggered by performance.</li>
+</ol>
+<div class="flow-visual"><div class="flow-box business"><strong>Strategic Objective</strong><small>Desired enterprise result</small></div><div class="flow-link"></div><div class="flow-box performance"><strong>Enterprise KPI</strong><small>Governed evaluation of the objective</small></div><div class="relationship-label">evaluated by</div><div class="flow-link"></div><div class="flow-box performance"><strong>Target &amp; Thresholds</strong><small>Expected value and status boundaries</small></div><div class="relationship-label">compared with</div><div class="flow-link"></div><div class="flow-box semantic"><strong>Indicators &amp; Diagnostic Metrics</strong><small>Explain movement and variance</small></div><div class="relationship-label">explained by</div><div class="flow-link"></div><div class="flow-box data"><strong>Raw &amp; Derived Measurements</strong><small>Observed and calculated values</small></div><div class="relationship-label">calculated from</div><div class="flow-link"></div><div class="flow-box business"><strong>Business Events, Processes, Activities &amp; Decisions</strong><small>Generate the measurements</small></div><div class="relationship-label">generated by</div><div class="flow-link"></div><div class="flow-box consumption"><strong>Performance Action</strong><small>Intervention, escalation, or management response</small></div></div>
+</div>
+<h3>5.3 Semantic Architecture</h3>
+<div class="card semantic">
+<p><strong>Purpose:</strong> establishes the authoritative system of business meaning shared by people, metadata platforms, data products, analytical models, APIs, and AI.</p>
+<ol>
+<li><strong>Business Concept</strong> — a meaningful type of thing in the enterprise, such as Customer, Trade, Shipment, KPI, or Capability.</li>
+<li><strong>Concept Definition</strong> — the authoritative written meaning of the concept.</li>
+<li><strong>Preferred Term</strong> — the approved business name for the concept.</li>
+<li><strong>Synonym and Alias</strong> — alternate names linked to the preferred term.</li>
+<li><strong>Classification</strong> — the category to which a concept belongs, such as Metric, KPI, Foundational Data Product, or Business Process.</li>
+<li><strong>Relationship Type</strong> — the defined semantic connection between concepts, such as measures, supplies, realizes, or consumes.</li>
+<li><strong>Business Rule</strong> — a statement governing valid meaning, behavior, calculation, or classification.</li>
+<li><strong>Constraint</strong> — a condition that must hold, such as required ownership or cardinality.</li>
+<li><strong>Hierarchy</strong> — a parent-child or broader-narrower structure among concepts.</li>
+<li><strong>Scope</strong> — the business, geography, product, legal entity, or organizational boundary within which the meaning applies.</li>
+<li><strong>Context</strong> — the conditions that qualify interpretation, including grain, time, unit, dimensions, or process stage.</li>
+<li><strong>Identifier</strong> — the stable unique identity of a semantic concept across implementations.</li>
+<li><strong>Version and Effective Period</strong> — the time-bounded version of the approved meaning.</li>
+<li><strong>Ownership and Stewardship</strong> — accountability for definition, quality, interpretation, and change.</li>
+<li><strong>Semantic Mapping</strong> — the link from the authoritative concept to Purview terms, ontology classes, SQL fields, KPI metadata, Power BI measures, APIs, and AI context.</li>
+</ol>
+<div class="visual-map">
+<div class="composition">
+<div class="piece">Concepts &amp; Definitions</div><div class="plus">+</div>
+<div class="piece">Classifications &amp; Relationships</div><div class="plus">+</div>
+<div class="piece">Rules &amp; Constraints</div>
+<div class="piece">Scope &amp; Context</div><div class="plus">+</div>
+<div class="piece">Identifiers &amp; Versions</div><div class="plus">+</div>
+<div class="piece">Ownership &amp; Stewardship</div>
+</div>
+<div class="semantic-result">Governed Enterprise Performance Semantic Model</div>
+</div>
+</div>
+<h3>5.4 Ontology Architecture</h3>
+<div class="card ontology">
+<p><strong>Purpose:</strong> formalizes the approved semantic model into a machine-readable representation that supports validation, querying, graph construction, and reasoning.</p>
+<ol>
+<li><strong>Ontology Namespace</strong> — the controlled identity space for ontology resources.</li>
+<li><strong>Class</strong> — a formal category of things, such as EnterpriseKPI, BusinessProcess, or DataProduct.</li>
+<li><strong>Subclass</strong> — a more specialized class inheriting the meaning of a broader class.</li>
+<li><strong>Individual or Instance</strong> — a specific enterprise object, such as Gasoline Netback CPG or Order-to-Cash.</li>
+<li><strong>Object Property</strong> — a formal relationship between instances, such as evaluatesObjective or suppliedBy.</li>
+<li><strong>Data Property</strong> — a property holding a literal value, such as targetValue, timeGrain, or effectiveFrom.</li>
+<li><strong>Domain and Range</strong> — constraints specifying which classes a property connects.</li>
+<li><strong>Cardinality</strong> — minimum, maximum, or exact relationship counts.</li>
+<li><strong>Inheritance</strong> — the propagation of class meaning and constraints to subclasses.</li>
+<li><strong>Axiom</strong> — a formal statement that is logically asserted in the ontology.</li>
+<li><strong>Controlled Vocabulary</strong> — an approved set of values, statuses, types, or relationship names.</li>
+<li><strong>SHACL Shape</strong> — a validation structure used to test whether graph data meets governance rules.</li>
+<li><strong>Knowledge Graph</strong> — the populated network of ontology-governed instances and relationships.</li>
+<li><strong>Competency Question</strong> — a business question the ontology and knowledge graph should be able to answer.</li>
+<li><strong>Ontology Mapping</strong> — links from ontology resources to Purview terms, ER/Studio entities, Unity Catalog assets, KPI metadata, and Power BI objects.</li>
+</ol>
+</div>
+<h3>5.5 Data Architecture</h3>
+<div class="card data">
+<p><strong>Purpose:</strong> defines how data is sourced, ingested, standardized, integrated, stored, protected, governed, traced, and made available for reuse.</p>
+<ol>
+<li><strong>Source System</strong> — an operational, market, financial, technical, or external system that originates data.</li>
+<li><strong>Source Data Contract</strong> — expectations governing source structure, delivery, semantics, and service behavior.</li>
+<li><strong>Ingestion</strong> — movement of data from source into the platform.</li>
+<li><strong>Raw / Bronze Layer</strong> — source-oriented preserved data supporting auditability, replay, and lineage.</li>
+<li><strong>Silver Layer</strong> — cleaned, standardized, conformed, quality-controlled business facts and dimensions.</li>
+<li><strong>Gold Layer</strong> — integrated, reusable, decision-ready domain and analytical structures.</li>
+<li><strong>KPI Store</strong> — governed persistence of official KPI values and evaluation metadata.</li>
+<li><strong>Semantic / Consumption Layer</strong> — approved views and interfaces available to consumers.</li>
+<li><strong>Data Asset</strong> — a table, view, file, stream, model, or other governed technical object.</li>
+<li><strong>Data Model</strong> — the conceptual, logical, or physical structure of data.</li>
+<li><strong>Master and Reference Data</strong> — shared identities, hierarchies, codes, and classifications.</li>
+<li><strong>Data Lineage</strong> — traceability from source through transformation to consumption.</li>
+<li><strong>Data Quality</strong> — fitness for purpose across completeness, accuracy, consistency, timeliness, validity, and uniqueness.</li>
+<li><strong>Security and Access Control</strong> — policies and mechanisms controlling data use.</li>
+<li><strong>Retention and Lifecycle</strong> — rules for preservation, archival, supersession, and retirement.</li>
+<li><strong>Metadata</strong> — descriptive, technical, operational, semantic, governance, and lineage information about data.</li>
+</ol>
+</div>
+<h3>5.6 Data-Product Architecture</h3>
+<div class="card product">
+<p><strong>Purpose:</strong> packages trusted data and reusable business logic into managed products with clear ownership, contracts, quality, service levels, and consumers.</p>
+<ol>
+<li><strong>Data Product</strong> — a managed reusable asset designed for defined consumers and use cases.</li>
+<li><strong>Foundational Data Product</strong> — a trusted reusable representation of core entities, events, or transactions.</li>
+<li><strong>Derived Data Product</strong> — a decision-ready product combining foundational products and higher-order business logic.</li>
+<li><strong>Product Purpose</strong> — the business problem or decision the product serves.</li>
+<li><strong>Business Owner</strong> — accountability for business meaning, priority, and value.</li>
+<li><strong>Data Product Owner</strong> — accountability for product delivery, lifecycle, and service.</li>
+<li><strong>Consumer</strong> — a person, team, report, model, application, API, workflow, or agent using the product.</li>
+<li><strong>Product Interface</strong> — SQL view, table, API, event stream, file, model endpoint, or semantic model through which the product is consumed.</li>
+<li><strong>Data Contract</strong> — agreed structure, meaning, quality, service level, and change behavior.</li>
+<li><strong>Grain and Keys</strong> — the unit of observation and identity structure.</li>
+<li><strong>Quality Rules</strong> — product-specific checks and acceptance conditions.</li>
+<li><strong>Service Level Objective</strong> — freshness, availability, latency, recovery, and support expectations.</li>
+<li><strong>Security Classification</strong> — rules governing permitted use and access.</li>
+<li><strong>Lineage and Dependencies</strong> — source products, transformations, downstream consumers, and KPI dependencies.</li>
+<li><strong>Adoption and Value Measures</strong> — indicators showing product use, reuse, reliability, and business benefit.</li>
+<li><strong>Lifecycle Status</strong> — proposed, active, certified, deprecated, superseded, or retired.</li>
+</ol>
+</div>
+<h3>5.7 Consumption Architecture</h3>
+<div class="card consumption">
+<p><strong>Purpose:</strong> defines how governed data and meaning are securely presented to users, applications, analytical tools, automation, and AI.</p>
+<ol>
+<li><strong>Consumer</strong> — a person, team, report, application, API, workflow, or AI agent.</li>
+<li><strong>Consumption Use Case</strong> — the decision, analysis, monitoring, action, or experience being supported.</li>
+<li><strong>Semantic SQL View</strong> — a stable governed SQL contract exposing approved business data.</li>
+<li><strong>Power BI Semantic Model</strong> — an analytical implementation containing tables, relationships, measures, hierarchies, formatting, and security.</li>
+<li><strong>Report and Dashboard</strong> — a visual analytical experience serving defined users and decisions.</li>
+<li><strong>Scorecard</strong> — a focused view of KPIs, targets, status, trends, and accountability.</li>
+<li><strong>API</strong> — a programmatic interface exposing governed data or performance information.</li>
+<li><strong>Data Service</strong> — a reusable service providing data, calculations, or domain logic.</li>
+<li><strong>Alert</strong> — notification generated by an event, anomaly, or threshold condition.</li>
+<li><strong>Automation Workflow</strong> — an orchestrated response triggered by data or performance conditions.</li>
+<li><strong>Analytical Model</strong> — statistical, optimization, forecasting, or machine-learning model consuming governed data.</li>
+<li><strong>AI Application or Agent</strong> — an AI-enabled consumer using governed semantic and data context.</li>
+<li><strong>Security Context</strong> — row-level, object-level, attribute-level, or identity-aware access behavior.</li>
+<li><strong>Presentation Logic</strong> — visual or interaction-specific behavior that does not redefine core business logic.</li>
+<li><strong>Usage Telemetry</strong> — evidence about adoption, performance, consumer behavior, and value.</li>
+</ol>
+</div>
+<h3>5.8 Integration Architecture</h3>
+<div class="card integration">
+<p><strong>Purpose:</strong> connects systems, metadata, models, lineage, quality, governance, and implementations so that the EPM remains consistent across platforms.</p>
+<ol>
+<li><strong>Integration Endpoint</strong> — a source or target participating in metadata or data exchange.</li>
+<li><strong>Integration Pattern</strong> — batch, event-driven, API, file-based, database, message, or metadata synchronization approach.</li>
+<li><strong>Metadata Exchange</strong> — movement or synchronization of technical, semantic, governance, quality, and lineage metadata.</li>
+<li><strong>Semantic Synchronization</strong> — alignment of definitions, identifiers, classifications, and relationships across systems.</li>
+<li><strong>Model Synchronization</strong> — alignment among conceptual, logical, physical, ontology, and platform models.</li>
+<li><strong>Lineage Synchronization</strong> — connection of source, transformation, data-product, KPI, semantic-view, and report lineage.</li>
+<li><strong>Quality Synchronization</strong> — exchange of quality rules, results, incidents, and product-health status.</li>
+<li><strong>Ownership Synchronization</strong> — alignment of business owner, data owner, product owner, and steward information.</li>
+<li><strong>Certification Synchronization</strong> — propagation of approved, certified, deprecated, or retired status.</li>
+<li><strong>Identity Mapping</strong> — reconciliation of object identifiers across Purview, ER/Studio, Unity Catalog, Bigeye, KPI metadata, Power BI, and ontology resources.</li>
+<li><strong>Transformation and Orchestration</strong> — governed movement, generation, and sequencing of data and metadata.</li>
+<li><strong>API and Event Contract</strong> — technical agreement governing message structure, semantics, versioning, and failure behavior.</li>
+<li><strong>Error and Exception Handling</strong> — detection, routing, retry, reconciliation, and issue ownership.</li>
+<li><strong>Observability</strong> — monitoring of integration freshness, latency, failures, volume, and health.</li>
+<li><strong>Automation</strong> — metadata-driven generation of SQL, views, registrations, lineage, quality checks, and graph updates.</li>
+</ol>
+</div>
+<h3>5.9 Governance Architecture</h3>
+<div class="card governance">
+<p><strong>Purpose:</strong> establishes the decision rights, policies, controls, accountability, and lifecycle management required to keep the EPM trusted and coherent.</p>
+<ol>
+<li><strong>Governance Scope</strong> — the domains, concepts, assets, products, metrics, KPIs, systems, and consumers subject to governance.</li>
+<li><strong>Policy</strong> — a mandatory principle or rule governing behavior.</li>
+<li><strong>Standard</strong> — an approved method, format, naming rule, or implementation expectation.</li>
+<li><strong>Business Owner</strong> — accountability for business definition, outcome, or KPI.</li>
+<li><strong>Data Owner</strong> — accountability for data within a defined scope.</li>
+<li><strong>Data Steward</strong> — operational responsibility for definition, quality, issue resolution, and metadata.</li>
+<li><strong>Data Product Owner</strong> — accountability for product value, delivery, service, and lifecycle.</li>
+<li><strong>Decision Right</strong> — authority to approve, reject, change, certify, or retire an item.</li>
+<li><strong>Approval Workflow</strong> — the sequence of review and authorization steps.</li>
+<li><strong>Certification</strong> — formal confirmation that a concept, KPI, product, or consumer interface is approved for use.</li>
+<li><strong>Quality Control</strong> — checks, thresholds, monitoring, and issue management for trusted use.</li>
+<li><strong>Lineage Control</strong> — assurance that origin, transformation, and consumption are traceable.</li>
+<li><strong>Security and Privacy Control</strong> — governance over access, sensitivity, retention, and permitted use.</li>
+<li><strong>Version and Effective Dating</strong> — controlled management of changes over time.</li>
+<li><strong>Issue and Exception Management</strong> — identification, ownership, escalation, remediation, and waiver handling.</li>
+<li><strong>Change Control</strong> — assessment and approval of changes to definitions, models, formulas, data products, and interfaces.</li>
+<li><strong>Lifecycle Management</strong> — proposal, draft, approval, active use, deprecation, supersession, and retirement.</li>
+<li><strong>Audit Evidence</strong> — records demonstrating compliance, approval, quality, lineage, and implementation state.</li>
+</ol>
+</div>
+<h3>5.10 Cross-family relationship summary</h3>
+<div class="arch-stack">
+<div class="arch-row"><div class="arch-name">Business Architecture</div><div class="arch-desc">Defines how value is created and decisions are made.</div></div>
+<div class="arch-row"><div class="arch-name">Performance Architecture</div><div class="arch-desc">Defines how success is measured, explained, and governed.</div></div>
+<div class="arch-row"><div class="arch-name">Semantic Architecture</div><div class="arch-desc">Defines the authoritative meaning of concepts and relationships.</div></div>
+<div class="arch-row"><div class="arch-name">Ontology Architecture</div><div class="arch-desc">Formalizes approved meaning for machines.</div></div>
+<div class="arch-row"><div class="arch-name">Data Architecture</div><div class="arch-desc">Organizes trusted data, controls, and lineage.</div></div>
+<div class="arch-row"><div class="arch-name">Data-Product Architecture</div><div class="arch-desc">Packages reusable facts and analytical logic.</div></div>
+<div class="arch-row"><div class="arch-name">Consumption Architecture</div><div class="arch-desc">Delivers governed information to users and systems.</div></div>
+<div class="arch-row"><div class="arch-name">Integration Architecture</div><div class="arch-desc">Synchronizes platforms, metadata, models, quality, and lineage.</div></div>
+<div class="arch-row"><div class="arch-name">Governance Architecture</div><div class="arch-desc">Controls ownership, standards, security, versions, approval, and change.</div></div>
+</div>
+</section>
+<section id="pillars">
+<h2>6. The three implementation pillars</h2>
+<div class="grid-3">
+<div class="pillar domain">
+<div class="pillar-title">Domain Modeling</div>
+<div class="card"><p>Defines the business structure and meaning needed to understand data, KPIs, and decisions.</p></div>
+</div>
+<div class="pillar kpi">
+<div class="pillar-title">KPI Store &amp; EPM</div>
+<div class="card"><p>Defines, governs, calculates, persists, and exposes official performance results.</p></div>
+</div>
+<div class="pillar integration">
+<div class="pillar-title">System Integration</div>
+<div class="card"><p>Synchronizes the tools, metadata, lineage, quality, ownership, and implementations.</p></div>
+</div>
+</div>
+<table>
+<thead><tr><th>Pillar</th><th>Core question answered</th></tr></thead>
+<tbody>
+<tr><td>Domain Modeling</td><td>What business concepts, entities, relationships, value streams, capabilities, processes, activities, and decisions exist?</td></tr>
+<tr><td>KPI Store &amp; EPM</td><td>How do we define, calculate, govern, store, evaluate, and consume enterprise performance?</td></tr>
+<tr><td>System Integration</td><td>How do platforms exchange and maintain consistent metadata, lineage, quality, models, ownership, and governance status?</td></tr>
+</tbody>
+</table>
+</section>
+<section id="domain">
+<h2>7. Where Domain Modeling fits</h2>
+<p class="lead">Domain Modeling sits primarily in Business Architecture and Semantic Architecture, while also supplying the ontology, data products, KPI definitions, and implementation models.</p>
+<div class="diagram">
+<div class="node business"><strong>Business Domain</strong><small>Commercial</small></div>
+<div class="arrow">↓</div>
+<div class="node business"><strong>Value Stream</strong><small>Order to Cash</small></div>
+<div class="arrow">↓</div>
+<div class="node business"><strong>Value-Stream Stages</strong><small>Receive Order → Validate → Fulfill → Deliver → Invoice → Collect → Reconcile</small></div>
+<div class="arrow">↕</div>
+<div class="node semantic"><strong>Capabilities</strong><small>Order Management, Credit Management, Inventory Management, Transportation Management, Billing, Receivables Management</small></div>
+<div class="arrow">↓</div>
+<div class="node semantic"><strong>Processes, Activities &amp; Decisions</strong><small>Validate order, allocate inventory, release order, schedule shipment, issue invoice, resolve dispute</small></div>
+<div class="arrow">↓</div>
+<div class="node data"><strong>Business Concepts &amp; Entities</strong><small>Customer, Order, Order Line, Product, Location, Shipment, Delivery, Invoice, Payment, Contract</small></div>
+<div class="arrow">↓</div>
+<div class="node data"><strong>Conceptual, Logical &amp; Physical Models</strong><small>Authoritative definitions and implementation structures</small></div>
+</div>
+<h3>What Domain Modeling delivers</h3>
+<div class="grid-auto">
+<div class="card"><h4>Business context</h4><p>Domains, value streams, stages, capabilities, processes, activities, decisions, and outcomes.</p></div>
+<div class="card"><h4>Semantic concepts</h4><p>Business terms, definitions, entities, attributes, relationships, and cardinality.</p></div>
+<div class="card"><h4>Model artifacts</h4><p>Conceptual, logical, and physical data models.</p></div>
+<div class="card"><h4>Rules and constraints</h4><p>Business rules, lifecycle states, keys, ownership, and valid relationships.</p></div>
+<div class="card"><h4>KPI context</h4><p>What the KPI measures, which dimensions apply, and which decisions it supports.</p></div>
+<div class="card"><h4>Data-product context</h4><p>Which business facts and entities a foundational or derived product represents.</p></div>
+</div>
+<div class="callout amber">
+<strong>Order-to-Cash example:</strong> without Domain Modeling, fields such as Customer_Id, Order_Id, Shipment_Id, Invoice_Id, and Payment_Id are technical columns. Domain Modeling explains what each concept means, how they relate, where they sit in the value stream, and which decisions and KPIs depend on them.
+    </div>
+</section>
+<section id="kpi">
+<h2>8. Where the KPI Store fits</h2>
+<p>The KPI Store sits at the intersection of Performance Architecture, Data Architecture, Data-Product Architecture, Semantic Architecture, Consumption Architecture, and Governance.</p>
+<div class="diagram">
+<div class="node performance"><strong>Objective</strong><small>Improve Order-to-Cash reliability, margin, and working capital</small></div>
+<div class="arrow">↓</div>
+<div class="node performance"><strong>KPI Definition</strong><small>OTIF, Order Cycle Time, Invoice Accuracy, Days Sales Outstanding, Cash Collection Effectiveness</small></div>
+<div class="arrow">↓</div>
+<div class="node semantic"><strong>Approved Formula, Grain, Dimensions, Target &amp; Thresholds</strong><small>Governed meaning and evaluation logic</small></div>
+<div class="arrow">↓</div>
+<div class="node data"><strong>Foundational &amp; Derived Data Products</strong><small>Orders, Shipments, Deliveries, Invoices, Payments, Credit, Customer, Product, Location</small></div>
+<div class="arrow">↓</div>
+<div class="node data"><strong>KPI Calculation Pipeline</strong><small>Backfill, daily refresh, validation, reconciliation, lineage</small></div>
+<div class="arrow">↓</div>
+<div class="node performance"><strong>KPI Store</strong><small>Official KPI values and governance metadata</small></div>
+<div class="arrow">↓</div>
+<div class="node consumption"><strong>Semantic KPI Views, Power BI, Alerts, APIs &amp; AI</strong><small>Governed enterprise consumption</small></div>
+</div>
+<h3>The KPI Store should contain</h3>
+<div class="grid-auto">
+<div class="card"><h4>Identity</h4><p>KPI identifier, name, version, owner, status, effective dates.</p></div>
+<div class="card"><h4>Performance value</h4><p>Period, grain, dimensions, unit, currency, and official value.</p></div>
+<div class="card"><h4>Evaluation</h4><p>Target, warning and critical thresholds, evaluation direction, and status.</p></div>
+<div class="card"><h4>Lineage</h4><p>Source systems, data products, calculation version, expression hash, source run, and load metadata.</p></div>
+<div class="card"><h4>Quality</h4><p>Reconciliation status, completeness, uniqueness, threshold coverage, and source health.</p></div>
+<div class="card"><h4>Governance</h4><p>Definition, steward, approval, review cadence, and required response.</p></div>
+</div>
+<h3>The KPI Store depends on Domain Modeling</h3>
+<div class="flow-row">
+<div class="step"><strong>Domain Modeling defines</strong><br/>Customer, Order, Shipment, Delivery, Invoice, Payment, Product, Location, Contract, relationships, lifecycle states, and dimensional meaning.</div>
+<div class="flow-arrow">→</div>
+<div class="step"><strong>KPI definitions use</strong><br/>Those concepts to specify grain, filters, dimensions, ownership, process scope, and business interpretation.</div>
+<div class="flow-arrow">→</div>
+<div class="step"><strong>KPI Store persists</strong><br/>Official KPI values tied to those governed concepts and dimensions.</div>
+</div>
+<div class="callout">
+<strong>Order-to-Cash example:</strong> an OTIF KPI depends on agreed definitions of Order, Delivery Commitment, Shipment, Delivery, Customer, Product, Location, and On-Time/In-Full logic. Domain Modeling defines those concepts and relationships; the KPI Store persists the approved result.
+    </div>
+</section>
+<section id="system-integration">
+<h2>9. Where System Integration fits</h2>
+<p class="lead">System Integration is a major workstream and an architecture family. It connects meaning, models, assets, quality, lineage, security, and consumption across tools.</p>
+<div class="flow-visual"><div class="flow-box semantic"><strong>Business Definitions &amp; Semantic Model</strong><small>Authoritative business meaning</small></div><div class="flow-link"></div><div class="flow-box business"><strong>Domain Models &amp; Data Models</strong><small>Conceptual, logical, and physical structures</small></div><div class="relationship-label">synchronize</div><div class="flow-link"></div><div class="flow-box data"><strong>Physical Data Assets &amp; Data Products</strong><small>Platform implementation and reusable products</small></div><div class="relationship-label">map to</div><div class="flow-link"></div><div class="flow-box data"><strong>Data Quality &amp; Observability</strong><small>Freshness, volume, anomalies, and quality evidence</small></div><div class="relationship-label">monitor with</div><div class="flow-link"></div><div class="flow-box semantic"><strong>Ownership, Certification, Lineage &amp; Access</strong><small>Governance controls and traceability</small></div><div class="relationship-label">govern through</div><div class="flow-link"></div><div class="flow-box consumption"><strong>KPI Store, Semantic Views, Power BI, APIs, Automation &amp; AI</strong><small>Operationalized performance and consumption</small></div></div>
+<p>System Integration is not simply ETL or moving records between applications. It includes metadata exchange and governance synchronization.</p>
+</section>
+<section id="tool-placement">
+<h2>10. Tool placement</h2>
+<div class="platform-stack">
+<div class="platform-row">
+<div class="platform-name">EPM Foundation &amp; Semantic Model</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>Purpose</strong>Authoritative concepts, definitions, relationships, KPI meaning, architecture rules, and governance principles.</div>
+</div>
+</div>
+<div class="platform-row">
+<div class="platform-name">Purview</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>Business glossary</strong>Terms, definitions, owners, stewards, classifications.</div>
+<div class="mini"><strong>Catalog and lineage</strong>Discovery, certification, and links from terms to technical assets.</div>
+</div>
+</div>
+<div class="platform-row">
+<div class="platform-name">ER/Studio</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>Domain and data models</strong>Conceptual, logical, and physical models.</div>
+<div class="mini"><strong>Structure</strong>Entities, attributes, keys, relationships, and cardinality.</div>
+</div>
+</div>
+<div class="platform-row">
+<div class="platform-name">Unity Catalog</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>Platform assets</strong>Catalogs, schemas, tables, views, data products, ownership.</div>
+<div class="mini"><strong>Controls</strong>Permissions, tags, classifications, technical lineage, discoverability.</div>
+</div>
+</div>
+<div class="platform-row">
+<div class="platform-name">Bigeye</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>Observability</strong>Freshness, volume, schema change, anomalies, incidents.</div>
+<div class="mini"><strong>Quality evidence</strong>Operational health of data products and KPI inputs.</div>
+</div>
+</div>
+<div class="platform-row">
+<div class="platform-name">KPI Store &amp; Consumption</div>
+<div class="platform-arrow">→</div>
+<div class="platform-detail">
+<div class="mini"><strong>KPI Store</strong>Official KPI values, targets, thresholds, versions, status, and lineage.</div>
+<div class="mini"><strong>Semantic views</strong>Approved SQL consumer contracts.</div>
+<div class="mini"><strong>Power BI</strong>Analytical semantic models, scorecards, diagnostics, and drill paths.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="integration-view">
+<h2>11. More accurate integration view</h2>
+<p>The integration is multi-directional. Meaning flows downward into implementation, while lineage, quality, and technical reality flow upward into governance and model refinement.</p>
+<div class="integration-topology">
+<div class="topology-root">
+<strong>EPM Semantic Model</strong>
+<div>Concepts · Definitions · Relationships · Rules · KPI meaning</div>
+</div>
+<div class="topology-link-label">governs</div>
+<div class="topology-down"></div>
+<div class="topology-grid-3">
+<div class="topology-node">
+<h4>Purview</h4>
+<ul>
+<li>Business terms</li>
+<li>Owners and stewards</li>
+<li>Lineage</li>
+<li>Classification</li>
+<li>Certification</li>
+</ul>
+</div>
+<div class="topology-node">
+<h4>ER/Studio</h4>
+<ul>
+<li>Conceptual model</li>
+<li>Logical model</li>
+<li>Physical model</li>
+<li>Entities and attributes</li>
+<li>Relationships and cardinality</li>
+</ul>
+</div>
+<div class="topology-node">
+<h4>EPM Ontology / Knowledge Graph</h4>
+<ul>
+<li>Classes</li>
+<li>Relationships</li>
+<li>Constraints</li>
+<li>Identifiers</li>
+<li>Enterprise instances</li>
+</ul>
+</div>
+</div>
+<div class="topology-link-label">maps to and synchronizes with</div>
+<div class="topology-down"></div>
+<div class="topology-grid-2">
+<div class="topology-node">
+<h4>Unity Catalog</h4>
+<ul>
+<li>Tables and views</li>
+<li>Data products</li>
+<li>Permissions</li>
+<li>Technical lineage</li>
+<li>Platform metadata</li>
+</ul>
+</div>
+<div class="topology-node">
+<h4>Bigeye</h4>
+<ul>
+<li>Quality rules</li>
+<li>Freshness</li>
+<li>Volume</li>
+<li>Anomalies</li>
+<li>Incidents</li>
+</ul>
+</div>
+</div>
+<div class="topology-link-label">assures and supplies</div>
+<div class="topology-down"></div>
+<div class="topology-kpi">
+<h4>KPI Store</h4>
+<div>KPI metadata · KPI values · Targets and thresholds · Versions · Data-quality status · Calculation lineage</div>
+</div>
+<div class="topology-down"></div>
+<div class="topology-consumption">
+<h4>Semantic / Consumption Layer</h4>
+<div>SQL semantic views · Power BI models · Reports and scorecards · APIs · Alerts · Automation · AI</div>
+</div>
+</div>
+</section>
+<section id="platforms">
+<h2>12. What each named platform contributes</h2>
+<table>
+<thead><tr><th>Platform</th><th>Primary contribution</th><th>What it should not independently redefine</th></tr></thead>
+<tbody>
+<tr><td>Purview</td><td>Glossary, business definitions, owners, stewards, classifications, catalog discovery, certification, and lineage links.</td><td>Core KPI formula, domain relationships, or Power BI-specific analytics without governance.</td></tr>
+<tr><td>ER/Studio</td><td>Conceptual, logical, and physical models; entities, attributes, relationships, keys, and cardinality.</td><td>Business glossary ownership, KPI values, or platform quality monitoring.</td></tr>
+<tr><td>Unity Catalog</td><td>Data-platform catalogs, schemas, tables, views, data-product assets, permissions, tags, ownership, and technical lineage.</td><td>Enterprise business meaning independently of the semantic model.</td></tr>
+<tr><td>Bigeye</td><td>Freshness, volume, schema changes, distribution anomalies, data-quality checks, incident detection, and data-product health.</td><td>Business definitions or KPI governance.</td></tr>
+<tr><td>KPI Store</td><td>Official KPI metadata and time-series values, targets, thresholds, status, versions, dimensional context, and calculation lineage.</td><td>Detailed domain facts and diagnostic records that belong in data products.</td></tr>
+<tr><td>Power BI</td><td>Analytical semantic models, reusable DAX measures, hierarchies, formatting, security, scorecards, and diagnostics.</td><td>Core KPI definitions that are already governed elsewhere.</td></tr>
+</tbody>
+</table>
+</section>
+<section id="integration-workstream">
+<h2>13. System Integration workstream</h2>
+<div class="sync-map">
+<div class="sync-card semantic">
+<h4>Semantic synchronization</h4>
+<ul>
+<li>EPM definitions</li>
+<li>Purview glossary</li>
+<li>Ontology identifiers</li>
+<li>KPI metadata</li>
+</ul>
+</div>
+<div class="sync-card model">
+<h4>Model synchronization</h4>
+<ul>
+<li>ER/Studio conceptual models</li>
+<li>ER/Studio logical models</li>
+<li>Physical schemas</li>
+<li>Unity Catalog assets</li>
+</ul>
+</div>
+<div class="sync-card governance">
+<h4>Governance synchronization</h4>
+<ul>
+<li>Owners</li>
+<li>Stewards</li>
+<li>Classifications</li>
+<li>Certifications</li>
+<li>Access policies</li>
+</ul>
+</div>
+<div class="sync-card lineage">
+<h4>Lineage synchronization</h4>
+<ul>
+<li>Sources</li>
+<li>Pipelines</li>
+<li>Data products</li>
+<li>KPI calculations</li>
+<li>Semantic views</li>
+<li>Power BI models and reports</li>
+</ul>
+</div>
+<div class="sync-card quality">
+<h4>Quality synchronization</h4>
+<ul>
+<li>Bigeye rules</li>
+<li>DQ results</li>
+<li>KPI quality status</li>
+<li>Data-product health</li>
+</ul>
+</div>
+<div class="sync-card automation">
+<h4>Automation</h4>
+<ul>
+<li>YAML / JSON metadata</li>
+<li>SQL generation</li>
+<li>KPI view generation</li>
+<li>Catalog registration</li>
+<li>Lineage publication</li>
+<li>Ontology / graph updates</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="interaction">
+<h2>14. How the three workstreams interact</h2>
+<div class="three-pillar-flow">
+<div class="pillar-box domain">
+<h4>Domain Modeling</h4>
+<p><strong>Defines:</strong></p>
+<ul>
+<li>Concepts</li>
+<li>Entities</li>
+<li>Relationships</li>
+<li>Processes</li>
+<li>Decisions</li>
+<li>Business rules</li>
+</ul>
+</div>
+<div class="pillar-connector">
+<div>supplies business context to</div>
+<div class="arr">→</div>
+</div>
+<div class="pillar-box kpi">
+<h4>KPI Store &amp; EPM</h4>
+<p><strong>Defines:</strong></p>
+<ul>
+<li>Objectives</li>
+<li>Measurements</li>
+<li>Metrics</li>
+<li>KPIs</li>
+<li>Formulas</li>
+<li>Targets and thresholds</li>
+<li>Dimensional scope</li>
+</ul>
+</div>
+<div class="pillar-connector">
+<div>operationalized and synchronized through</div>
+<div class="arr">→</div>
+</div>
+<div class="pillar-box integration">
+<h4>System Integration</h4>
+<p><strong>Connects:</strong></p>
+<ul>
+<li>Purview</li>
+<li>ER/Studio</li>
+<li>Unity Catalog</li>
+<li>Bigeye</li>
+<li>KPI metadata</li>
+<li>Data products</li>
+<li>Semantic views</li>
+<li>Power BI</li>
+<li>Ontology and knowledge graph</li>
+</ul>
+</div>
+</div>
+<div class="callout teal">
+<strong>Feedback loop:</strong> System Integration reports technical lineage, data quality, and implementation reality. KPI Store and EPM reveal missing or unreliable measurements. Domain Modeling then clarifies or adjusts concepts and relationships. The approved changes flow back into integrated implementations.
+    </div>
+</section>
+<section id="tableau">
+<h2>15. What Tableau-to-Power BI Measurement Discovery contributes</h2>
+<p class="lead">This workstream is not simply a technical XML extraction exercise. It is the evidence-gathering and reconciliation mechanism that helps build the Measurement Catalog, KPI Catalog, semantic model, data-product requirements, and retirement decisions.</p>
+<h3>Its specific contributions</h3>
+<div class="grid-auto">
+<div class="card"><h4>Legacy logic inventory</h4><p>Extracts calculated fields, parameters, filters, dependencies, worksheets, and workbook usage from Tableau XML.</p></div>
+<div class="card"><h4>Formula normalization</h4><p>Standardizes formula text so equivalent or near-equivalent logic can be compared.</p></div>
+<div class="card"><h4>Duplicate detection</h4><p>Finds multiple names or implementations of the same measure across reports and teams.</p></div>
+<div class="card"><h4>Power BI reconciliation</h4><p>Compares historical Tableau logic with the current Power BI implementation to identify migrated changes, omissions, and drift.</p></div>
+<div class="card"><h4>Business-context mapping</h4><p>Maps calculations to domain, value stream, stage, capability, process, decision, objective, data product, and source system.</p></div>
+<div class="card"><h4>Measurement classification</h4><p>Classifies each item as raw measurement, derived measurement, operational metric, diagnostic metric, performance indicator, candidate KPI, benchmark, helper, duplicate, or retired item.</p></div>
+<div class="card"><h4>KPI candidate discovery</h4><p>Surfaces measures that may warrant governance review but does not automatically promote them to KPIs.</p></div>
+<div class="card"><h4>Semantic-model evidence</h4><p>Reveals business terminology, repeated concepts, calculation dependencies, grain assumptions, and inconsistent definitions.</p></div>
+<div class="card"><h4>Data-product requirements</h4><p>Shows which reusable facts and calculations should move from reports into foundational or derived data products.</p></div>
+<div class="card"><h4>Retirement and consolidation</h4><p>Supports explicit decisions to merge, standardize, retain locally, replace, or retire calculations.</p></div>
+</div>
+<h3>End-to-end discovery pipeline</h3>
+<div class="visual-map">
+<div class="pipeline">
+<div class="pipeline-step"><strong>1. Tableau XML Extraction</strong>Calculated fields, parameters, filters, worksheets, and workbook usage.</div>
+<div class="pipeline-step"><strong>2. Calculation Inventory</strong>Formulas, dependencies, source fields, and usage frequency.</div>
+<div class="pipeline-step"><strong>3. Formula Normalization</strong>Canonicalized expressions for comparison.</div>
+<div class="pipeline-step"><strong>4. Duplicate Detection</strong>Exact, semantic, and near-duplicate logic.</div>
+<div class="pipeline-step"><strong>5. Power BI Reconciliation</strong>Compare legacy Tableau logic with current implementation.</div>
+<div class="pipeline-step"><strong>6. Business Context Mapping</strong>Domain, value stream, capability, process, decision, data product.</div>
+<div class="pipeline-step"><strong>7. Measurement Classification</strong>Measurement, metric, KPI candidate, benchmark, helper, duplicate, or retired.</div>
+<div class="pipeline-step"><strong>8. KPI Assessment</strong>Objective, ownership, target, thresholds, cadence, and action.</div>
+<div class="pipeline-step"><strong>9. Owner &amp; Steward Review</strong>Business validation and governance decision.</div>
+</div>
+<h4 style="text-align:center;margin-top:22px">Disposition outcomes</h4>
+<div class="disposition-grid">
+<div class="disposition">Approved KPI</div>
+<div class="disposition">Governed Metric</div>
+<div class="disposition">Local Measure</div>
+<div class="disposition">Technical Helper</div>
+<div class="disposition">Duplicate / Merge</div>
+<div class="disposition">Superseded</div>
+<div class="disposition">Retired</div>
+<div class="disposition">Further Review</div>
+</div>
+<h4 style="text-align:center;margin-top:22px">Implementation destinations</h4>
+<div class="disposition-grid">
+<div class="disposition">Foundational Data Product</div>
+<div class="disposition">Derived Data Product</div>
+<div class="disposition">KPI Store</div>
+<div class="disposition">Semantic SQL View</div>
+<div class="disposition">Power BI Semantic Model</div>
+<div class="disposition">Power BI Report</div>
+</div>
+</div>
+<div class="callout amber">
+<strong>Critical boundary:</strong> Tableau-to-Power BI Measurement Discovery contributes evidence and classification. It does not define business meaning by itself, approve KPIs, or become the system of record. Those responsibilities remain with Domain Modeling, the Semantic Model, KPI Governance, and the KPI Store.
+    </div>
+</section>
+<div class="footer">Enterprise Performance Model · Integrated Architecture Handbook · Working Baseline</div>
+</div>
+</main>
+</div>
+</body>
+</html>

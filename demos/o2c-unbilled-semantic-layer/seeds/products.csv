@@ -1,0 +1,4 @@
+product_code,product_name,product_family,contract_price_usd,list_price_usd,expansion_per_f,uom
+RBOB,RBOB Gasoline,gasoline,2.184,2.269,0.00069,US gallon
+ULSD,Ultra-Low Sulfur Diesel,distillate,2.312,2.407,0.00045,US gallon
+JETA,Jet-A,aviation,2.156,2.248,0.00051,US gallon

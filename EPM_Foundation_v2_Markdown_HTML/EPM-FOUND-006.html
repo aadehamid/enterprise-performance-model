@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-006 — Enterprise Data Product and Consumption Model</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-006</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#purpose">Purpose</a>
+<a href="#foundational-data-product">Foundational data product</a>
+<a href="#derived-data-product">Derived data product</a>
+<a href="#relationship-to-kpis">Relationship to KPIs</a>
+<a href="#medallion-alignment">Medallion alignment</a>
+<a href="#your-semantic-layer">Your semantic layer</a>
+<a href="#semantic-model-in-this-context">Semantic model in this context</a>
+<a href="#where-logic-belongs">Where logic belongs</a>
+<a href="#worked-example-gasoline-netback-cpg">Worked example: Gasoline Netback CPG</a>
+<a href="#data-product-minimum-contract">Data-product minimum contract</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-006 · Version 2.0 Draft</div>
+<h1>Enterprise Data Product and Consumption Model</h1>
+<div class="subtitle">Foundational and derived products, medallion alignment, semantic views, and Power BI</div>
+<section id="purpose"><h2>Purpose</h2><p>This artifact distinguishes data-product purpose from physical medallion processing layers and defines how trusted data reaches consumers.</p></section><section id="foundational-data-product"><h2>Foundational data product</h2><p>A <strong>foundational data product</strong> provides a trusted, reusable representation of core business entities, events, or transactions.</p>
+<p>It answers:</p>
+<blockquote>What happened, to which business object, when, where, and under what conditions?</blockquote>
+<p>Examples:</p>
+<ul>
+<li>Trade and Position</li>
+<li>Sales Transaction</li>
+<li>Product Movement</li>
+<li>Inventory</li>
+<li>Market Price</li>
+<li>Customer and Contract</li>
+<li>Transportation Cost</li>
+<li>Refinery Production</li>
+<li>Asset and Unit Availability</li>
+<li>Product and Location Master</li>
+</ul>
+<p>Foundational does not mean raw. A foundational product is cleaned, standardized, conformed, governed, discoverable, and reusable.</p></section><section id="derived-data-product"><h2>Derived data product</h2><p>A <strong>derived data product</strong> combines foundational products and applies higher-order business logic to support decisions, analysis, or performance management.</p>
+<p>It answers:</p>
+<blockquote>What decision-ready insight or performance view can be produced from trusted business facts?</blockquote>
+<p>Examples:</p>
+<ul>
+<li>Commercial Margin</li>
+<li>Netback Performance</li>
+<li>Risk Exposure</li>
+<li>P&amp;L Attribution</li>
+<li>Forecast Performance</li>
+<li>Pricing Performance</li>
+<li>Logistics Performance</li>
+<li>Customer Profitability</li>
+</ul></section><section id="relationship-to-kpis"><h2>Relationship to KPIs</h2><pre><code>Foundational Data Products
+        ↓ supply trusted events and entities
+Derived Data Products
+        ↓ calculate reusable measures and diagnostics
+KPI Store
+        ↓ persists official KPI results, targets, thresholds, versions, and status
+Semantic / Consumption Views
+        ↓ expose governed contracts
+Power BI Semantic Models
+        ↓ add analytical relationships, measures, hierarchies, formatting, and security
+Reports, APIs, AI, Automation</code></pre>
+<p>One data product may support multiple KPIs. One KPI may depend on multiple data products.</p></section><section id="medallion-alignment"><h2>Medallion alignment</h2><p>Medallion architecture describes <strong>processing maturity and physical organization</strong>.</p>
+<p>Data-product categories describe <strong>business purpose and reuse</strong>.</p>
+<p>They are related but not equivalent.</p>
+<table><thead><tr><th>Layer</th><th>Primary purpose</th><th>Typical product relationship</th></tr></thead><tbody>
+<tr><td>Raw / Bronze</td><td>Preserve source data, auditability, replay, and lineage</td><td>Usually not yet a business data product</td></tr>
+<tr><td>Silver</td><td>Clean, standardize, conform, and quality-check entities and events</td><td>Primary implementation area for many foundational products</td></tr>
+<tr><td>Gold</td><td>Integrate domains, apply business rules, and create decision-ready structures</td><td>Primary implementation area for derived products and some integrated foundational products</td></tr>
+<tr><td>Semantic / Consumption</td><td>Expose approved views and stable consumer contracts</td><td>Consumer interfaces for products and KPI results</td></tr>
+</tbody></table></section><section id="your-semantic-layer"><h2>Your semantic layer</h2><p>Your architecture is:</p>
+<pre><code>Raw
+  ↓
+Silver
+  ↓
+Gold
+  ↓
+Semantic / Consumption Layer
+  ↓
+Consumers</code></pre>
+<p>Consumers access only the semantic layer. This is a sound governed-access pattern.</p>
+<p>The individual SQL objects are <strong>semantic views</strong>. Collectively, they implement consumer-facing portions of the enterprise semantic model.</p>
+<p>They may provide:</p>
+<ul>
+<li>business-friendly names;</li>
+<li>stable joins and conformed identifiers;</li>
+<li>current-record logic;</li>
+<li>security predicates;</li>
+<li>approved row-level calculations;</li>
+<li>KPI value, target, threshold, and status exposure;</li>
+<li>stable interfaces insulated from Gold implementation changes.</li>
+</ul></section><section id="semantic-model-in-this-context"><h2>Semantic model in this context</h2><p>The term must be used carefully.</p>
+<ul>
+<li>The <strong>Enterprise Performance Semantic Model</strong> is the authoritative system of business meaning.</li>
+<li>The <strong>SQL semantic layer</strong> is the physical consumption boundary implementing selected semantics through views.</li>
+<li>A <strong>Power BI semantic model</strong> is an analytical implementation on top of those views.</li>
+</ul>
+<p>A view is not, by itself, the entire semantic model. It is one implementation artifact.</p></section><section id="where-logic-belongs"><h2>Where logic belongs</h2><table><thead><tr><th>Logic</th><th>Preferred home</th></tr></thead><tbody>
+<tr><td>Source cleansing and code normalization</td><td>Silver</td></tr>
+<tr><td>Entity conformance and reusable detailed business facts</td><td>Silver foundational product</td></tr>
+<tr><td>Cross-source integration and reusable row-level business calculations</td><td>Gold data product</td></tr>
+<tr><td>Official KPI value, target, threshold, version, and status</td><td>Gold KPI Store</td></tr>
+<tr><td>Stable consumer-facing contract and security filter</td><td>Semantic SQL view</td></tr>
+<tr><td>Dynamic time intelligence, analytical measures, hierarchies, formatting</td><td>Power BI semantic model</td></tr>
+<tr><td>Visual-only labels and interactions</td><td>Power BI report</td></tr>
+</tbody></table></section><section id="worked-example-gasoline-netback-cpg"><h2>Worked example: Gasoline Netback CPG</h2><h3>Raw</h3>
+<ul>
+<li>RightAngle sales transactions</li>
+<li>MPR pricing details</li>
+<li>transportation charges</li>
+<li>OPIS observations</li>
+<li>RIN and ethanol prices</li>
+<li>product and location source tables</li>
+</ul>
+<h3>Silver foundational products</h3>
+<ul>
+<li>Sales Transaction</li>
+<li>Market Price Observation</li>
+<li>Transportation Cost</li>
+<li>Renewable Compliance Cost</li>
+<li>Product Master</li>
+<li>Location Master</li>
+<li>Customer and Contract</li>
+</ul>
+<h3>Gold derived product</h3>
+<p><strong>Commercial Margin / Netback</strong></p>
+<p>Calculates and retains diagnostic detail for:</p>
+<ul>
+<li>realized sales price;</li>
+<li>product cost;</li>
+<li>freight;</li>
+<li>RIN and renewable components;</li>
+<li>terminal and blending costs;</li>
+<li>gross margin;</li>
+<li>netback;</li>
+<li>price, cost, freight, and mix variances.</li>
+</ul>
+<h3>Gold KPI Store</h3>
+<p>Persists:</p>
+<ul>
+<li>Gasoline Netback CPG;</li>
+<li>ULSD Netback CPG;</li>
+<li>target;</li>
+<li>thresholds;</li>
+<li>status;</li>
+<li>KPI version;</li>
+<li>source run and lineage.</li>
+</ul>
+<h3>Semantic / Consumption layer</h3>
+<ul>
+<li><code>CONSUMPTION.v_kpi_values</code></li>
+<li>Commercial Margin semantic views</li>
+<li>conformed dimensions and security-filtered contracts</li>
+</ul>
+<h3>Power BI</h3>
+<ul>
+<li>Enterprise KPI semantic model</li>
+<li>Commercial Performance semantic model</li>
+<li>executive scorecard</li>
+<li>diagnostic drill-through report</li>
+</ul></section><section id="data-product-minimum-contract"><h2>Data-product minimum contract</h2><p>Each data product should define:</p>
+<ul>
+<li>purpose and scope;</li>
+<li>business owner and product owner;</li>
+<li>consumers and use cases;</li>
+<li>business concepts and definitions;</li>
+<li>interface and schema;</li>
+<li>grain and keys;</li>
+<li>refresh and service expectations;</li>
+<li>data-quality rules;</li>
+<li>security and privacy;</li>
+<li>lineage;</li>
+<li>known limitations;</li>
+<li>lifecycle status;</li>
+<li>adoption and value measures.</li>
+</ul></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>

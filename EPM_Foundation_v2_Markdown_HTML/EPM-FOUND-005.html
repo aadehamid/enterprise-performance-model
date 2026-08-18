@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-005 — Enterprise Measurement and KPI Model</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-005</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#purpose">Purpose</a>
+<a href="#core-distinctions">Core distinctions</a>
+<a href="#taxonomy">Taxonomy</a>
+<a href="#promotion-test">Promotion test</a>
+<a href="#worked-example-delivery-performance">Worked example: delivery performance</a>
+<a href="#worked-example-forecasting">Worked example: forecasting</a>
+<a href="#tableau-xml-classification-pipeline">Tableau XML classification pipeline</a>
+<a href="#required-inventory-fields">Required inventory fields</a>
+<a href="#kpi-store-boundary">KPI Store boundary</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-005 · Version 2.0 Draft</div>
+<h1>Enterprise Measurement and KPI Model</h1>
+<div class="subtitle">Classification, governance, promotion, and Tableau extraction rules</div>
+<section id="purpose"><h2>Purpose</h2><p>This artifact creates a precise measurement taxonomy so that extracted report calculations can be classified consistently and only a small, governed subset becomes enterprise KPIs.</p></section><section id="core-distinctions"><h2>Core distinctions</h2><h3>Measurement</h3>
+<p>An observed or calculated value describing a business object, event, condition, or result.</p>
+<p>Examples:</p>
+<ul>
+<li>120,000 gallons shipped</li>
+<li>$18,000 transportation cost</li>
+<li>42 late deliveries</li>
+<li>98,000 barrels inventory</li>
+<li>six hours of unit downtime</li>
+</ul>
+<p>A measurement normally has a value, unit, time, and dimensional context.</p>
+<h3>Metric</h3>
+<p>A measurement or calculation with a repeatable business definition used to describe, compare, monitor, or diagnose performance.</p>
+<p>Examples:</p>
+<ul>
+<li>Transportation Cost per Gallon</li>
+<li>Inventory Days of Supply</li>
+<li>Average Delivery Cycle Time</li>
+<li>Forecast Error</li>
+<li>Refinery Utilization</li>
+</ul>
+<h3>KPI</h3>
+<p>A governed metric selected to evaluate progress toward an objective or critical outcome and to trigger accountability or action.</p>
+<p>Examples:</p>
+<ul>
+<li>Gasoline Netback CPG</li>
+<li>OTIF Delivery</li>
+<li>Three-Month-Out Forecast Accuracy</li>
+<li>Unplanned Refinery Downtime</li>
+</ul></section><section id="taxonomy"><h2>Taxonomy</h2><table><thead><tr><th>Class</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+<tr><td>Raw Measurement</td><td>Directly observed from an event or system</td><td>Gallons delivered</td></tr>
+<tr><td>Derived Measurement</td><td>Calculated from other measurements</td><td>Delivery delay minutes</td></tr>
+<tr><td>Operational Metric</td><td>Monitors routine operation</td><td>Terminal throughput</td></tr>
+<tr><td>Diagnostic Metric</td><td>Explains why performance changed</td><td>Freight cost variance</td></tr>
+<tr><td>Performance Indicator</td><td>Important monitored measure, not yet enterprise-governed</td><td>Pricing publication timeliness</td></tr>
+<tr><td>Candidate KPI</td><td>Proposed measure undergoing governance review</td><td>Forecast Hit Rate</td></tr>
+<tr><td>Approved Enterprise KPI</td><td>Governed indicator with objective, owner, target, and response</td><td>Gasoline Netback CPG</td></tr>
+<tr><td>External Benchmark</td><td>Market or reference input</td><td>OPIS rack benchmark</td></tr>
+<tr><td>Technical Calculation</td><td>Data-processing helper</td><td>Null-handling flag</td></tr>
+<tr><td>Presentation Calculation</td><td>Visual-only helper</td><td>Dynamic chart label</td></tr>
+<tr><td>Duplicate</td><td>Equivalent to an existing governed item</td><td>Alternate Netback calculation</td></tr>
+<tr><td>Obsolete or Retired</td><td>No longer valid or used</td><td>Legacy Tableau-only calculation</td></tr>
+</tbody></table></section><section id="promotion-test"><h2>Promotion test</h2><p>A candidate normally becomes an approved KPI only when most or all of the following are true:</p>
+<ol>
+<li>1. It measures progress toward a defined objective or critical outcome.</li>
+<li>2. It has an accountable business owner.</li>
+<li>3. It has an agreed business definition.</li>
+<li>4. It has an approved calculation and dimensional behavior.</li>
+<li>5. It has a target, expected range, or explicit evaluation rule.</li>
+<li>6. It has warning and critical thresholds where appropriate.</li>
+<li>7. It is reviewed through an established management cadence.</li>
+<li>8. A material change causes a decision, intervention, or escalation.</li>
+<li>9. It is sufficiently important or reusable to govern centrally.</li>
+<li>10. Required data can be supplied with acceptable quality and timeliness.</li>
+</ol>
+<p>Failure to qualify as a KPI does not imply low value. The item may remain an important governed metric.</p></section><section id="worked-example-delivery-performance"><h2>Worked example: delivery performance</h2><h3>Measurements</h3>
+<ul>
+<li>Planned delivery timestamp</li>
+<li>Actual delivery timestamp</li>
+<li>Ordered gallons</li>
+<li>Delivered gallons</li>
+<li>Freight cost</li>
+<li>Delivery status</li>
+</ul>
+<h3>Derived measurements</h3>
+<ul>
+<li>Delivery delay minutes</li>
+<li>On-time flag</li>
+<li>In-full flag</li>
+<li>Cost per delivery</li>
+</ul>
+<h3>Metrics</h3>
+<ul>
+<li>On-time delivery rate</li>
+<li>In-full delivery rate</li>
+<li>Average delay duration</li>
+<li>Freight cost per gallon</li>
+<li>Failed delivery count</li>
+</ul>
+<h3>KPI</h3>
+<p><strong>OTIF Delivery Performance</strong>, when it is formally used to evaluate the objective of reliably fulfilling customer commitments and has an owner, target, threshold, cadence, and corrective response.</p></section><section id="worked-example-forecasting"><h2>Worked example: forecasting</h2><h3>Measurements</h3>
+<ul>
+<li>Forecast quantity</li>
+<li>Actual quantity</li>
+</ul>
+<h3>Derived measurements</h3>
+<ul>
+<li>Forecast error</li>
+<li>Absolute error</li>
+<li>Percentage error</li>
+</ul>
+<h3>Metrics</h3>
+<ul>
+<li>MAPE</li>
+<li>WAPE</li>
+<li>Forecast bias</li>
+<li>Accuracy by product</li>
+<li>Accuracy by region</li>
+<li>Forecast hit rate</li>
+</ul>
+<h3>Potential KPIs</h3>
+<ul>
+<li>Three-Month-Out Forecast Accuracy</li>
+<li>Forecast Bias</li>
+</ul>
+<p>These become KPIs only through governance and management use—not because they are mathematically sophisticated.</p></section><section id="tableau-xml-classification-pipeline"><h2>Tableau XML classification pipeline</h2><pre><code>Legacy Tableau calculation
+        ↓
+Technical extraction and parsing
+        ↓
+Normalization and dependency analysis
+        ↓
+Duplicate and near-duplicate detection
+        ↓
+Mapping to current Power BI implementation
+        ↓
+Business-context assignment
+        ↓
+Measurement classification
+        ↓
+Candidate KPI assessment
+        ↓
+Owner and steward review
+        ↓
+Approved metric, approved KPI, local measure,
+technical calculation, duplicate, or retired item
+        ↓
+Implementation in data product, KPI Store,
+semantic view, Power BI model, or report</code></pre></section><section id="required-inventory-fields"><h2>Required inventory fields</h2><p>Each extracted item should capture:</p>
+<ul>
+<li>workbook, dashboard, worksheet, and field name;</li>
+<li>original formula and normalized formula;</li>
+<li>dependencies, parameters, filters, and usage count;</li>
+<li>source fields and systems;</li>
+<li>grain, unit, dimensions, and time behavior;</li>
+<li>domain, value stream, stage, capability, process, activity, and decision;</li>
+<li>candidate classification;</li>
+<li>duplicate group;</li>
+<li>current Power BI equivalent;</li>
+<li>supporting data product;</li>
+<li>candidate KPI relationship;</li>
+<li>business owner and steward;</li>
+<li>validation status and disposition.</li>
+</ul></section><section id="kpi-store-boundary"><h2>KPI Store boundary</h2><p>The KPI Store receives only approved KPI values and governance metadata.</p>
+<p>The Measurement Catalog receives normalized reusable measurements and metrics.</p>
+<p>The semantic layer exposes approved consumer contracts.</p>
+<p>Power BI reports should not recreate governed KPI logic locally.</p></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-001 — Enterprise Business Architecture</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-001</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#purpose">Purpose</a>
+<a href="#core-concepts">Core concepts</a>
+<a href="#capability-versus-process">Capability versus process</a>
+<a href="#value-stream-versus-capability">Value stream versus capability</a>
+<a href="#commercial-example">Commercial example</a>
+<a href="#relationship-rules">Relationship rules</a>
+<a href="#modeling-guidance">Modeling guidance</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-001 · Version 2.0 Draft</div>
+<h1>Enterprise Business Architecture</h1>
+<div class="subtitle">Domains, value streams, capabilities, processes, activities, and decisions</div>
+<section id="purpose"><h2>Purpose</h2><p>This artifact defines the business context required to interpret downstream measurements and KPIs. It deliberately separates <strong>value flow</strong> from <strong>organizational ability</strong>.</p>
+<p>A value stream is not a sequence of capabilities. A value stream consists of outcome-oriented stages. Each stage uses one or more capabilities, and each capability can support multiple stages.</p></section><section id="core-concepts"><h2>Core concepts</h2><h3>Enterprise</h3>
+<p>The whole organization and its strategic direction.</p>
+<h3>Business domain</h3>
+<p>A major area of business responsibility, expertise, language, data, and decision-making.</p>
+<p>Illustrative downstream domains:</p>
+<ul>
+<li>Commercial</li>
+<li>Refining</li>
+<li>Midstream</li>
+<li>Retail</li>
+<li>Corporate</li>
+<li>Health, Safety, Security, and Environment</li>
+<li>Digital and Technology</li>
+</ul>
+<p>A domain is not necessarily identical to an organizational department. It is a durable partition of business meaning and accountability.</p>
+<h3>Value stream</h3>
+<p>An end-to-end flow that begins with a trigger or need and ends with value delivered to a stakeholder.</p>
+<p>A value stream asks:</p>
+<blockquote>How does value move from an initial opportunity or need to a realized outcome?</blockquote>
+<p>Illustrative Commercial value stream:</p>
+<pre><code>Sense Market and Customer Demand
+        ↓
+Form Commercial Plan
+        ↓
+Secure Supply and Market Position
+        ↓
+Fulfill Product Commitment
+        ↓
+Invoice and Settle
+        ↓
+Evaluate and Optimize Performance</code></pre>
+<h3>Value-stream stage</h3>
+<p>A major outcome-oriented step within a value stream. Stages should be phrased as value-creating outcomes, not merely department or capability names.</p>
+<h3>Capability</h3>
+<p>An enduring ability the enterprise must possess.</p>
+<p>A capability asks:</p>
+<blockquote>What must the organization be able to do?</blockquote>
+<p>Examples:</p>
+<ul>
+<li>Market Intelligence</li>
+<li>Demand Forecasting</li>
+<li>Physical Trading</li>
+<li>Pricing Management</li>
+<li>Transportation Management</li>
+<li>Inventory Management</li>
+<li>Commercial Risk Management</li>
+<li>Refinery Reliability Management</li>
+</ul>
+<p>Capabilities are relatively stable even when organizations, systems, or processes change.</p>
+<h3>Sub-capability</h3>
+<p>A capability decomposed beneath a broader capability. Capability and sub-capability are the same type of concept at different levels of abstraction.</p>
+<p>Example:</p>
+<pre><code>Commercial Risk Management
+├── Market Risk Management
+├── Credit Risk Management
+├── Liquidity Risk Management
+├── Position and Exposure Management
+├── Risk Limit Management
+├── Valuation Management
+└── P&amp;L Attribution</code></pre>
+<h3>Business process</h3>
+<p>An ordered flow of work with a trigger, inputs, activities, outputs, owner, and end condition.</p>
+<p>A process asks:</p>
+<blockquote>How is the capability performed in a defined context?</blockquote>
+<p>Example:</p>
+<pre><code>Calculate and Publish Rack Prices
+1. Acquire market prices
+2. Validate market inputs
+3. Calculate proposed prices
+4. Apply governed adjustments
+5. Approve prices
+6. Publish prices
+7. Confirm distribution
+8. Resolve exceptions</code></pre>
+<h3>Business activity</h3>
+<p>A discrete unit of work performed by a person, team, system, or combination of them.</p>
+<p>Examples:</p>
+<ul>
+<li>Validate OPIS price timestamp</li>
+<li>Submit pipeline nomination</li>
+<li>Assign carrier</li>
+<li>Approve rack-price override</li>
+<li>Reconcile freight invoice</li>
+</ul>
+<h3>Business decision</h3>
+<p>A choice among alternatives that changes business action, resource allocation, exposure, or outcome.</p>
+<p>Examples:</p>
+<ul>
+<li>Increase diesel yield</li>
+<li>Export product rather than retain it domestically</li>
+<li>Change supply source</li>
+<li>Reroute a shipment</li>
+<li>Reprice a rack market</li>
+<li>Hedge a regional basis exposure</li>
+</ul></section><section id="capability-versus-process"><h2>Capability versus process</h2><table><thead><tr><th>Test</th><th>Capability</th><th>Process</th></tr></thead><tbody>
+<tr><td>Core question</td><td>What must we be able to do?</td><td>How do we do it?</td></tr>
+<tr><td>Typical wording</td><td>Noun or noun phrase</td><td>Verb-led flow</td></tr>
+<tr><td>Stability</td><td>Relatively stable</td><td>Changes with policy, technology, and operating design</td></tr>
+<tr><td>Sequence</td><td>No inherent sequence</td><td>Has a beginning, flow, and end</td></tr>
+<tr><td>Example</td><td>Transportation Management</td><td>Plan and Execute Product Movement</td></tr>
+<tr><td>Technology relationship</td><td>Enabled by systems</td><td>Executed through steps using systems</td></tr>
+</tbody></table>
+<p>A practical stopping rule for capability decomposition: stop when the capability is distinct, meaningful to an owner, measurable, supported by identifiable processes and technology, and still larger than an individual task.</p></section><section id="value-stream-versus-capability"><h2>Value stream versus capability</h2><pre><code>Value Stream
+    ↓ contains
+Value-Stream Stages
+    ↕ use
+Capabilities
+    ↓ realized through
+Processes
+    ↓ contain
+Activities
+    ↓ support
+Decisions</code></pre>
+<p>This is a many-to-many model:</p>
+<ul>
+<li>One value-stream stage uses many capabilities.</li>
+<li>One capability supports many value streams or stages.</li>
+<li>Capabilities should not be arranged as though they were process steps.</li>
+</ul></section><section id="commercial-example"><h2>Commercial example</h2><table><thead><tr><th>Business architecture element</th><th>Example</th></tr></thead><tbody>
+<tr><td>Domain</td><td>Commercial</td></tr>
+<tr><td>Value stream</td><td>Convert Market Opportunity into Realized Commercial Value</td></tr>
+<tr><td>Stage</td><td>Fulfill Product Commitment</td></tr>
+<tr><td>Capabilities used</td><td>Supply Scheduling, Transportation Management, Inventory Management, Terminal Operations</td></tr>
+<tr><td>Process</td><td>Plan and Execute Product Movement</td></tr>
+<tr><td>Activities</td><td>Submit nomination, assign carrier, create loading order, track movement, confirm delivery</td></tr>
+<tr><td>Decisions</td><td>Reroute product, expedite delivery, substitute supply location, prioritize customer</td></tr>
+<tr><td>Potential KPIs</td><td>OTIF, Supply Reliability, Logistics Cost per Gallon, Demurrage Cost</td></tr>
+<tr><td>Supporting metrics</td><td>Transit time, late-load count, freight cost, terminal inventory, capacity utilization</td></tr>
+</tbody></table></section><section id="relationship-rules"><h2>Relationship rules</h2><table><thead><tr><th>Relationship</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>domain contains capability</td><td>A capability is primarily governed within a domain</td></tr>
+<tr><td>value stream contains stage</td><td>A stage contributes to the end-to-end flow of value</td></tr>
+<tr><td>stage uses capability</td><td>A stage depends on an enduring organizational ability</td></tr>
+<tr><td>capability decomposes into sub-capability</td><td>A broader ability is divided into coherent component abilities</td></tr>
+<tr><td>capability is realized through process</td><td>The ability is operationalized through repeatable work</td></tr>
+<tr><td>process contains activity</td><td>The process is executed through discrete work steps</td></tr>
+<tr><td>activity supports decision</td><td>The activity provides information or action needed for a choice</td></tr>
+<tr><td>decision affects outcome</td><td>The choice influences operational, financial, customer, risk, or strategic results</td></tr>
+</tbody></table></section><section id="modeling-guidance"><h2>Modeling guidance</h2><ul>
+<li>Do not use the same label at multiple levels without qualification.</li>
+<li>Prefer outcome language for value-stream stages.</li>
+<li>Prefer noun phrases for capabilities.</li>
+<li>Prefer verb-led names for processes and activities.</li>
+<li>Do not treat organization units as capabilities unless the name genuinely describes an enduring ability.</li>
+<li>Do not treat applications as capabilities.</li>
+<li>A KPI may measure a value stream, stage, capability, process, or outcome; it is not a structural child of the activity hierarchy.</li>
+</ul></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>

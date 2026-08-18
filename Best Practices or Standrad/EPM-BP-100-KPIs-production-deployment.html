@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-BP-100-KPIs-PROD — Production deployment of ~100 enterprise KPIs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B131C;
+  --bg-elev: #121C28;
+  --bg-card: #162230;
+  --line: #243344;
+  --line-strong: #2E4456;
+  --text: #E6EEF4;
+  --muted: #93A4B3;
+  --faint: #6B7C8C;
+  --teal: #3DB8A8;
+  --teal-dim: rgba(61,184,168,.14);
+  --teal-line: rgba(61,184,168,.42);
+  --amber: #D4A017;
+  --red: #E05A5A;
+  --red-dim: rgba(224,90,90,.12);
+  --green: #4CAF7A;
+  --green-dim: rgba(76,175,122,.12);
+  --open: #E8B84A;
+  --locked: #3DB8A8;
+  --max: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px 80px; }
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(11,19,28,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 10px 28px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; letter-spacing: .02em;
+  color: var(--teal); font-size: 13px; white-space: nowrap;
+}
+nav.toc { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+nav.toc a {
+  color: var(--muted); font-size: 12px; padding: 4px 8px;
+  border-radius: 4px; text-decoration: none;
+}
+nav.toc a:hover { color: var(--text); background: var(--teal-dim); }
+header.doc {
+  padding: 36px 0 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px; color: var(--teal); letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 32px; line-height: 1.2;
+  margin: 0 0 18px; letter-spacing: -0.02em;
+}
+.meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px; font-size: 13.5px; color: var(--muted);
+}
+.meta b { color: var(--text); font-weight: 600; }
+.lede {
+  font-size: 17.5px; color: var(--text); margin: 22px 0 0;
+  max-width: 72ch;
+}
+.badge {
+  display: inline-block; font-family: "IBM Plex Mono", monospace;
+  font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; border: 1px solid;
+  vertical-align: middle; white-space: nowrap;
+}
+.badge.open { color: var(--open); border-color: var(--open); background: rgba(232,184,74,.1); }
+.badge.locked { color: var(--locked); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.rec { color: #C9B27A; border-color: #5A4E2E; background: rgba(201,178,122,.1); }
+.badge.stated { color: #9AD4C8; border-color: var(--teal-line); background: var(--teal-dim); }
+.callout {
+  border: 1px solid var(--teal-line);
+  background: var(--teal-dim);
+  border-left: 4px solid var(--teal);
+  padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;
+}
+.callout.locks { margin: 24px 0 32px; }
+.callout.warn {
+  border-color: rgba(224,90,90,.4); background: var(--red-dim);
+  border-left-color: var(--red);
+}
+.callout.note {
+  border-color: var(--line-strong); background: var(--bg-elev);
+  border-left-color: var(--muted);
+}
+.callout .label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--teal); margin: 0 0 8px;
+}
+.callout.warn .label { color: var(--red); }
+.callout ul { margin: 6px 0 0; padding-left: 18px; }
+.callout li { margin: 5px 0; }
+.callout p { margin: 6px 0; }
+section { margin: 42px 0 28px; }
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px; font-weight: 600; margin: 0 0 12px;
+  padding-top: 18px; border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+}
+h2 .num { color: var(--teal); margin-right: 8px; }
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px; font-weight: 600; margin: 26px 0 10px;
+}
+p { margin: 10px 0; }
+.intro { color: var(--muted); max-width: 78ch; }
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px;
+  background: var(--bg-elev);
+}
+th, td {
+  border: 1px solid var(--line); padding: 8px 10px;
+  text-align: left; vertical-align: top;
+}
+th {
+  background: #1A2836; color: var(--teal);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 12px; letter-spacing: .03em;
+  text-transform: uppercase;
+}
+tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+td.ref {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px;
+  color: var(--teal); white-space: nowrap;
+}
+caption {
+  caption-side: top; text-align: left; font-weight: 600;
+  padding: 0 0 8px; color: var(--text); font-size: 14px;
+}
+.gates { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+.gate {
+  flex: 1 1 200px; background: var(--bg-card);
+  border: 1px solid var(--line); border-top: 3px solid var(--teal);
+  padding: 10px 12px; border-radius: 0 0 6px 6px; font-size: 13px;
+}
+.gate strong {
+  display: block; font-family: "IBM Plex Mono", monospace;
+  color: var(--teal); font-size: 13px; margin-bottom: 4px;
+}
+ol.seq { padding-left: 22px; }
+ol.seq li { margin: 8px 0; }
+ul.plain { padding-left: 20px; }
+ul.plain li { margin: 7px 0; }
+.steps { margin: 16px 0 8px; }
+.step {
+  display: grid; grid-template-columns: 36px 1fr;
+  gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.step:last-child { border-bottom: 0; }
+.step .n {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--teal); font-size: 14px; font-weight: 500;
+  padding-top: 2px;
+}
+.step p { margin: 0; }
+.step b { color: var(--text); }
+footer {
+  margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--faint);
+}
+footer code { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+code { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: #9AD4C8; }
+@media print {
+  :root { --bg: #fff; --bg-elev: #fff; --bg-card: #f7f7f7; --text: #111; --muted: #333; --faint: #444; --line: #ccc; --line-strong: #999; }
+  body { background: #fff; color: #111; font-size: 11pt; }
+  .topbar { position: static; background: #fff; }
+  nav.toc { display: none; }
+  a { color: #0a5; text-decoration: none; }
+  .callout, .gate, table, .step { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">EPM-BP-100-KPIs-PROD</div>
+    <nav class="toc">
+      <a href="#s01">01 Production</a>
+      <a href="#s02">02 Estate</a>
+      <a href="#s03">03 Four seats</a>
+      <a href="#s04">04 Promotion</a>
+      <a href="#s05">05 Access</a>
+      <a href="#s06">06 Operability</a>
+      <a href="#s07">07 Edges</a>
+      <a href="#s08">08 Demo vs prod</a>
+      <a href="#s09">09 Do / Don’t</a>
+      <a href="#s10">10 Not this</a>
+      <a href="#s11">11 Fences</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+<header class="doc">
+  <div class="kicker">Enterprise Performance Model · Best practice · Production</div>
+  <h1>Production deployment of ~100 enterprise KPIs</h1>
+  <div class="meta">
+    <div><b>ID</b> EPM-BP-100-KPIs-PROD <span class="badge open">unregistered working note</span><br>Not a formal EPM artifact · Not KPI-000 · Not a Store build · Not Azure design</div>
+    <div><b>Lane</b> KPI Store / consumption semantic layer<br><b>Date</b> 14 Aug 2026 (America/Chicago)<br><b>Audience</b> Hamid Adesokan</div>
+    <div><b>Compiler</b> Databricks Metric Views / Unity Catalog <span class="badge stated">programme compiler in demos</span><br><b>Locks honoured</b> C-10 · C-11 · RC-1 <span class="badge locked">cite, not invent</span></div>
+    <div><b>Status</b> Picture of current understanding, 14 Aug 2026 (America/Chicago). Practice note for a production-shaped Store + consumption semantic layer. <em>Not</em> a programme lock. <em>Not</em> KPI-000. <em>Not</em> a Store build. <em>Not</em> Azure design.</div>
+  </div>
+  <p class="lede">The teaching note (EPM-BP-100-KPIs) said one catalog, many Metric Views, Gold per diverging grain, several Genie agents. This note answers: what does that look like when you are getting ready to run it in production for an enterprise — <b>~100 certified KPIs from different domains</b> — not a three-KPI Free-edition demo inside one O2C family.</p>
+</header>
+
+<div class="callout locks">
+  <div class="label">Locks honoured — cite, do not invent</div>
+  <ul>
+    <li><b>C-10:</b> ontology = meaning. Store catalog + consumption semantic layer = certified formula + compute. Ontology does not author formulas. The Store does not author meaning.</li>
+    <li><b>C-11:</b> never say “semantic layer” unqualified. Say <em>consumption semantic layer</em> or <em>Metric View</em>. Programme compiler seat in demos = Databricks Metric Views / Unity Catalog.</li>
+    <li><b>RC-1:</b> one certified formula, one compile path per KPI. Programme path = <code>MEASURE()</code> on that KPI’s Metric View. No second formula.</li>
+  </ul>
+</div>
+
+<section id="s01">
+  <h2><span class="num">01</span> What “production” means here</h2>
+  <p class="intro">Production, in this note, is not a cloud landing zone and not a headcount of dashboards. It is the moment a finance or ops leader can act on a certified number and trust that every surface they can see agrees.</p>
+
+  <h3>Certified numbers a leader can act on</h3>
+  <p>A KPI is in production when a named person will take a named action on the published figure — close a period, chase a payer, hold a site, re-cut a plan — and when that figure is the same figure whether they open Gold, run <code>MEASURE()</code>, or ask the Genie agent that is allowed to see that view. If those three can disagree, you are not in production. You are in a demo that has not yet been fenced.</p>
+  <p>That is RC-1 spoken as an operating rule: <b>one compile path per KPI</b>. The Metric View is the formula object. Gold is a published instance of that compile. Genie is a question set over that compile. None of them is allowed a private SQL copy of the measure.</p>
+
+  <h3>Environments, not hand-edits</h3>
+  <p>At least two Unity Catalog catalogs: a working catalog and a production catalog. YAML lives in git. A pipeline publishes the Unity Catalog Metric View. Nobody hand-edits a production view, and nobody <code>CREATE OR REPLACE</code>s the whole Store catalog because one KPI moved. Draft work happens in the working catalog. Certification is a status change on a catalog row after the promotion path in §04 is green — not a paste into prod.</p>
+  <p>The Azure estate is later and out of scope. This note is the Store / consumption shape. It is independent of which cloud landing eventually hosts the catalogs. Do not read an Azure design into these pages.</p>
+
+  <div class="callout note">
+    <div class="label">Working picture — not a lock</div>
+    <p>Two catalogs (working + production), YAML in git, pipeline publishes the UC Metric View. That is the production-shaped compile path. Exact pipeline product, workspace topology, and catalog names stay <span class="badge open">open</span>. Do not invent them here.</p>
+  </div>
+</section>
+
+<section id="s02">
+  <h2><span class="num">02</span> The production estate (scale picture)</h2>
+  <p class="intro">Assumed estate: <b>~100 certified KPIs from different domains</b>. Not 100 measures inside one O2C family. The teaching note’s grouping test still holds; across domains it almost always fails. That is the scale picture this note is written against.</p>
+
+  <p>Domains the project has already named: <b>Customer order-to-cash</b> and <b>Ops / Tech plan-to-produce</b>. “Different domains” means those two, plus any other enterprise domain that fails the grouping test — different population, different Silver star, or different grain family. This note does not invent a domain list beyond those names. It does not need one. The test is the partition, not a slide of process names.</p>
+
+  <div class="gates">
+    <div class="gate">
+      <strong>~100 catalog rows</strong>
+      One row per certified KPI. One enterprise Store catalog lists all 100. Partition the register by domain (a domain column / owner). Do not stand a second competing catalog per domain as the working picture.
+    </div>
+    <div class="gate">
+      <strong>Views closer to 100</strong>
+      Different domains almost never share a Metric View. A view is shared only <em>inside</em> one domain, and only when population + Silver star + grain family still match. Expect the view count much closer to 100 than to “a few families.”
+    </div>
+    <div class="gate">
+      <strong>Gold per diverging grain</strong>
+      One Gold mart / table per KPI when grains diverge — even more true across domains. Do not fold the estate into one <code>gold_kpi_value</code>.
+    </div>
+    <div class="gate">
+      <strong>Several Genie agents</strong>
+      One agent per consumption context / domain job at minimum. Never one Genie on 100 cross-domain KPIs. Cross-domain numbers go to the catalog or a composed report.
+    </div>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Working picture of the estate — counts that are stated vs open</caption>
+    <thead>
+      <tr><th>Seat</th><th>Working picture</th><th>Count</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Store catalog</td>
+        <td>One enterprise register, partitioned by domain / owner. Lists every certified KPI.</td>
+        <td>~100 rows</td>
+        <td><span class="badge stated">stated</span> one catalog; a second catalog per domain is <span class="badge open">open</span> and not the working picture</td>
+      </tr>
+      <tr>
+        <td class="ref">Metric View</td>
+        <td>Formula object. Shared only inside one domain when the grouping test still passes. Cross-domain share is almost never.</td>
+        <td>Much closer to 100 than to a few families</td>
+        <td>Exact view-count <span class="badge open">open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Gold</td>
+        <td>Published instances FROM <code>MEASURE()</code>. Share a mart when grain, unit, retention, and access match. One mart per KPI when they diverge. Never one estate-wide <code>gold_kpi_value</code>.</td>
+        <td>Follows grain, not catalog count</td>
+        <td>Physical form <span class="badge open">open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Genie</td>
+        <td>One agent per consumption context / domain job at minimum. O2C is not plan-to-produce. A new job gets a new agent.</td>
+        <td>Several, by job</td>
+        <td>Exact agent-count <span class="badge open">open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">Ontology + domain model</td>
+        <td>Sits beside the Store. Meaning SoT. The Store does not author the term, the includes, or the excludes (C-10).</td>
+        <td>One meaning side</td>
+        <td><span class="badge locked">C-10</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout warn">
+    <div class="label">Do not scale the O2C shortcut</div>
+    <p>Demo 2 put three related O2C KPIs on three views and one Genie. That taught the compile path inside one family. A hundred KPIs from different domains is a different estate. One catalog still lists them. The views, Gold marts, and agents do not collapse just because the catalog already can.</p>
+  </div>
+
+  <p>The ontology and the domain model sit beside this picture. They are the meaning source of truth. The Store copies an ontologist-minted meaning IRI onto <code>ontology_iri</code>; it does not mint meaning IRIs and it does not invent the class. When a class is shared, the pointer is the 1:1 KPI-individual IRI, not the shared class. If a KPI has no term yet, it is not ready for a catalog row, let alone a production view.</p>
+</section>
+
+<section id="s03">
+  <h2><span class="num">03</span> Four seats in production (what each must have)</h2>
+  <p class="intro">C-10 splits meaning from formula + compute. These four seats sit on the formula + compute side. Across ~100 KPIs from different domains, each seat has a production minimum. Fail the minimum and that seat is still a demo leftover.</p>
+
+  <h3>Catalog — operated register, not a spreadsheet leftover</h3>
+  <p>The catalog is the enterprise register. One row per certified KPI. It can list all 100 because that is its job. It is not the compile and not the meaning SoT. In production it is an operated object: create a row, replace a row by <code>kpi_id</code>, retire a row. Never <code>CREATE OR REPLACE</code> the whole catalog because one KPI moved, one domain onboarded, or one steward changed.</p>
+  <p>Partition the register by domain (a domain column, and an owner). Customer O2C rows and Ops / Tech plan-to-produce rows live in the same catalog. They do not live in the same Metric View, the same Gold mart, or the same Genie agent. A second competing catalog per domain is not the working picture; mark it <span class="badge open">open</span> if someone later wants to argue it. Do not stand it from this note.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Catalog row — production minimum</caption>
+    <thead>
+      <tr><th>Field</th><th>Why it is on the row</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="ref">kpi_id</td><td>Stable identity. Replace-by-<code>kpi_id</code>. Never rewrite the register to rename one row.</td></tr>
+      <tr><td class="ref">name</td><td>Published name. The thing a leader asks for. Not a Genie synonym list.</td></tr>
+      <tr><td class="ref">published measure</td><td>The measure name the Metric View exposes. Pointer, not a second formula.</td></tr>
+      <tr><td class="ref">Metric View FQN</td><td>Where the compile lives. Working FQN and production FQN are environment facts, not two formulas.</td></tr>
+      <tr><td class="ref">calc_version</td><td>Frozen on certify. <code>calc_version</code> is the formula (the YAML / the view), not a hash of the loaded facts. A data load is not a formula change. A formula change is a new version, not a silent overwrite.</td></tr>
+      <tr><td class="ref">grain</td><td>The certified grain this row publishes. “Customer” is not a grain.</td></tr>
+      <tr><td class="ref">as-of rule</td><td>Lives on the row and in the view. Not only in a Genie paragraph.</td></tr>
+      <tr><td class="ref">owner / steward</td><td>Named humans. Domain partition lives here as well as on a domain column.</td></tr>
+      <tr><td class="ref">certification status</td><td>Draft · certified · deprecated. Production readers consume certified. Deprecated stays addressable; it is not deleted by a wholesale replace.</td></tr>
+      <tr><td class="ref">ontology_iri</td><td>Pointer at meaning SoT (C-10). Ontologist mints the IRI, including a KPI-individual IRI that is 1:1 with <code>kpi_id</code> when a class is shared. Store copies the pointer; Store does not mint meaning IRIs.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Status is a lifecycle, not a colour on a slide. <b>Draft</b> means the row exists and the intended measure + view are named; it is not yet a number a leader may act on. <b>Certified</b> means the promotion path in §04 is green and <code>calc_version</code> is frozen. <b>Deprecated</b> means the row remains so old pointers resolve, and so nobody silently republishes under the same <code>kpi_id</code> with a different meaning.</p>
+
+  <h3>Metric View — the formula object</h3>
+  <p>Git YAML is the authoring source of truth. The Unity Catalog object is the compile. Humans review YAML. A pipeline publishes the view into the working catalog, then into production. The UC object is not hand-edited in prod.</p>
+  <p>The grouping test is unchanged from the teaching note, and it is stricter once domains differ:</p>
+  <ol class="seq">
+    <li><b>Same population</b> — the same “who counts.” Payer is not sold-to. A site is not a customer account.</li>
+    <li><b>Same Silver star</b> — the same fact + dimension family. Different Silver tables get their own view.</li>
+    <li><b>Same grain family</b> — the same atomic grain, or a grain that rolls up without rewriting the measure.</li>
+  </ol>
+  <p>Fail any one and the KPI gets its own Metric View. A different domain — Customer O2C versus Ops / Tech plan-to-produce — fails all three in practice. Do not fold them because the catalog already lists both. Inside one domain, a view may still hold a few measures, and only then. Across ~100 KPIs from different domains, expect the view count much closer to 100 than to “a few families.” Exact view-count stays <span class="badge open">open</span>.</p>
+  <p>Version 0.1 YAML discipline from the demo still applies: join aliases that do not break the compiler; measures declared so <code>MEASURE()</code> is the only programme path. Only <code>MEASURE()</code> is the programme path (RC-1). A view that compiles but is queried through private SQL is not in production.</p>
+
+  <div class="callout warn">
+    <div class="label">No mega-YAML</div>
+    <p>One file that declares a hundred measures from different domains is not a consumption semantic layer. It is a second catalog pretending to be a compiler. Split YAML the way you split views: by domain, then by the grouping test. Do not invent a file-naming standard in this note.</p>
+  </div>
+
+  <h3>Gold — published instances</h3>
+  <p>Gold is FROM <code>MEASURE()</code> only. It is a published snapshot of the compile, not a second formula, not formula SoT. Delete-then-insert has a race: a reader can see an empty or partial KPI, or a stale grain beside a new one under the same <code>kpi_id</code>. Prefer one transaction, or a swap of an active-publication pointer. Do not <code>CREATE OR REPLACE</code> an estate-wide table to refresh one KPI.</p>
+  <p>Share a Gold mart when grain, unit, retention, and access match. One mart per KPI when they diverge. Across different domains that almost always fails. Do not stack O2C instances and plan-to-produce instances in one <code>gold_kpi_value</code> and hope a <code>kpi_id</code> column sorts it out. The demo folded three related O2C KPIs into one table. That taught the compile path. It is not the production shape of a cross-domain estate.</p>
+  <p>Carry <code>calc_version</code>, the as-of, a source / population pointer, and <code>published_at</code> on every published row. Production readers hit Gold or <code>MEASURE()</code>. They never hit a private SQL copy, a notebook leftover, or a Power BI measure that re-implements the formula. Drift check: Gold versus live <code>MEASURE()</code> on the same grain, same <code>calc_version</code>, and same as-of. If they do not match, Gold is not published. It is a rumour.</p>
+  <p>Gold physical form at programme scale stays <span class="badge open">open</span>. Share a mart when grain, unit, retention, and access match; one mart per KPI when they diverge. This paragraph is not a lock on storage layout, clustering, or table names.</p>
+
+  <h3>Genie — a question set, not the enterprise</h3>
+  <p>One agent = one charter: which job, which views, which grains. Customer O2C is one charter. Ops / Tech plan-to-produce is another. A hundred KPIs from different domains do not share an agent. Exact agent-count is <span class="badge open">open</span>; the floor is one agent per consumption context / domain job.</p>
+  <p>Instruction text and example SQL live in the same repo as the views. There is one write path into the Genie Text box — the script string is the instruction. Do not keep a parallel “real” instruction in a slide, a wiki, or a chat. The confuse-set is a release gate, not a chat hobby. It runs in a fresh conversation after every instruction or view change that agent can see.</p>
+  <p>No Export-to-metric-view. No second formula. The Genie fence is attached objects intersect the asker's Unity Catalog grants intersect the Genie service grants. Attachments are not a wall. Never attach <code>fct_*</code> or <code>raw_*</code>. Revoke leader <code>SELECT</code> on those objects. Cross-domain numbers do not go into a mega-Genie. They go to the catalog (which KPI, which view, which Gold) or to a composed report that already joined certified Gold / <code>MEASURE()</code> results.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>What each seat may hold when the 100 KPIs are from different domains</caption>
+    <thead>
+      <tr><th>Seat</th><th>Owns</th><th>May hold ~100?</th><th>Must not</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Catalog</td>
+        <td>Register + pointers, partitioned by domain</td>
+        <td>Yes — that is its job. One enterprise catalog.</td>
+        <td>Author or compile a formula. Wholesale <code>CREATE OR REPLACE</code>.</td>
+      </tr>
+      <tr>
+        <td class="ref">Metric View</td>
+        <td>Certified compile</td>
+        <td>No as a single file. Across domains, view count trends toward 100.</td>
+        <td>Mix domains, populations, Silver stars, or grain families. Mega-YAML.</td>
+      </tr>
+      <tr>
+        <td class="ref">Gold</td>
+        <td>Published instances FROM <code>MEASURE()</code></td>
+        <td>No — one table / mart per diverging grain, especially across domains</td>
+        <td>Become a second formula. One <code>gold_kpi_value</code> for the estate.</td>
+      </tr>
+      <tr>
+        <td class="ref">Genie</td>
+        <td>A question set over a small view set</td>
+        <td>No — several agents, one charter each</td>
+        <td>Author YAML, Export-to-metric-view, span the estate, or bolt an Ops KPI onto the O2C agent.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s04">
+  <h2><span class="num">04</span> Promotion path for one KPI (the unit of production)</h2>
+  <p class="intro">A KPI is not “in production” until all of the following are true. This is a short sequence, not a workshop, not a gate register, and not an artifact ID. The unit is one KPI. The estate is ~100 of these, from different domains, each walking the same path onto its own domain’s seats.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <p><b>Meaning exists.</b> An ontology class / term, with includes and excludes. The Store does not invent the term (C-10). If the class is missing, stop. There is nothing to certify.</p>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <p><b>Catalog row in draft.</b> Points at the intended published measure and the intended Metric View. Domain / owner set. Status = draft. The row is a reservation, not a certified number.</p>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <p><b>Metric View YAML in git, reviewed, published to the working catalog.</b> <code>MEASURE()</code> fixture passes — enterprise total and each certified grain. Join aliases that the compiler accepts. Only <code>MEASURE()</code> is the path.</p>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <p><b>Gold mart published FROM that <code>MEASURE()</code>.</b> Delete-then-insert has a race (empty or partial KPI, or a stale grain beside a new one). Prefer one transaction, or a swap of an active-publication pointer. Carry <code>calc_version</code>, as-of, a source / population pointer, and <code>published_at</code>. Drift check against live <code>MEASURE()</code> on the same grain, same <code>calc_version</code>, same as-of is green. Share the mart when grain, unit, retention, and access match. Not an estate-wide <code>gold_kpi_value</code>.</p>
+    </div>
+    <div class="step">
+      <div class="n">5</div>
+      <p><b>Attached to the right existing Genie agent — that domain’s agent, that job’s charter.</b> Or a new agent if the question set is a new job (the KPI is the first of a new consumption context). Instruction and example SQL updated in the same change, same repo, one write path into the Text box. Do not bolt an Ops / Tech KPI onto the O2C agent. Do not bolt a new domain onto an agent that already has a different population.</p>
+    </div>
+    <div class="step">
+      <div class="n">6</div>
+      <p><b>Confuse-set run in a fresh conversation.</b> Pass = the agent picks the right view, equality holds on the named grain, no <code>ILIKE OR</code>, no extra <code>GROUP BY</code>. Fail = the KPI is not certified, whatever the fixture said.</p>
+    </div>
+    <div class="step">
+      <div class="n">7</div>
+      <p><b>Catalog status → certified.</b> <code>calc_version</code> frozen until the next formula change. Production readers may now act on the number. The working-catalog objects are promoted by the pipeline; they are not hand-copied.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="label">A formula change is a new calc_version</div>
+    <p>Not a silent overwrite. YAML changes in git. The view republishes. Gold is republished FROM the new <code>MEASURE()</code>. Drift is re-checked. The confuse-set runs again in a <b>new chat</b> — old threads are discarded; they replay the old instruction. The catalog row keeps the same <code>kpi_id</code> and advances <code>calc_version</code>. Deprecated is for meaning or identity retirement, not for a formula bump.</p>
+  </div>
+</section>
+
+<section id="s05">
+  <h2><span class="num">05</span> Access, identity, and what Genie must not see</h2>
+  <p class="intro">The fence is what makes a hundred cross-domain KPIs survivable. Genie will guess. Design assumes it will. The identity that serves production questions is not allowed to see the tables a guess would be interesting on.</p>
+
+  <p>Never attach <code>fct_*</code> or <code>raw_*</code> to Genie. That is necessary and not enough. Databricks will query past the attach list if the asker has <code>SELECT</code>. The real fence is attached objects intersect the asker's Unity Catalog grants intersect the Genie service grants. Attachments are not a wall. Revoke leader <code>SELECT</code> on <code>raw_*</code> and <code>fct_*</code>. Leaders must not have <code>SELECT</code> on Lakebase ODS or bronze. Attaching the fact “just in case” is how an O2C agent starts answering plan-to-produce questions with an <code>ILIKE</code>.</p>
+  <p>Humans who author YAML are not the same role as humans who ask Genie. Authors need the working catalog, the repo, and the pipeline. Askers need the production agent for their job. Crossing those roles in one identity is how a “quick fix” becomes a second formula.</p>
+  <p><b>“Customer” is not a grain.</b> Party roles stay payer / sold-to / site / product. A Genie that is allowed to group by a polite word instead of a role will invent a population the Metric View never certified. That failure is worse across domains, because the polite word is shared and the populations are not.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Who may see what in the production-shaped Store</caption>
+    <thead>
+      <tr><th>Identity</th><th>May see</th><th>Must not see</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Genie service / asker</td>
+        <td>Attached certified Metric Views (and Gold if attached), and only if the asker also has <code>SELECT</code></td>
+        <td><code>fct_*</code>, <code>raw_*</code>, bronze, Lakebase ODS, unattached views, other domains’ views. Attachment list alone is not the fence</td>
+      </tr>
+      <tr>
+        <td class="ref">YAML author</td>
+        <td>Working catalog, git, pipeline, fixtures</td>
+        <td>A mandate to paste into the production Text box by hand, or to edit prod UC objects</td>
+      </tr>
+      <tr>
+        <td class="ref">Leader / asker</td>
+        <td>The agent for their job; Gold / catalog for certified numbers</td>
+        <td><code>fct_*</code>, <code>raw_*</code>, bronze, working-catalog drafts, another domain’s agent “because it is already open”</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s06">
+  <h2><span class="num">06</span> Operability</h2>
+  <p class="intro">Production is a loop, not a launch. The same four seats that hold the estate are the four seats you watch. Nothing below invents a workshop or a gate ID. It is the minimum you run so a certified number stays the certified number.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>What you watch, and what a fail means</caption>
+    <thead>
+      <tr><th>Watch</th><th>Green looks like</th><th>Fail means</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Compile health</td>
+        <td>The view still compiles. <code>MEASURE()</code> fixtures still match expected totals, or a documented as-of change explains the delta.</td>
+        <td>The KPI is not certified today, whatever the catalog status still says. Do not let Genie keep answering from a broken compile.</td>
+      </tr>
+      <tr>
+        <td class="ref">Drift</td>
+        <td>Gold snapshot equals live <code>MEASURE()</code> on the same grain, same <code>calc_version</code>, same as-of.</td>
+        <td>Readers must not use Gold until it is republished FROM the compile. A dashboard on drifted Gold is a second number.</td>
+      </tr>
+      <tr>
+        <td class="ref">Genie</td>
+        <td>Confuse-set run after every instruction or view change that agent can see. Fresh conversation. Right view, equality, no <code>ILIKE OR</code>, no extra <code>GROUP BY</code>.</td>
+        <td>The agent is not a production surface until it passes. The catalog and Gold can still be.</td>
+      </tr>
+      <tr>
+        <td class="ref">Lineage</td>
+        <td>Readable from catalog row → Metric View → Silver star → ontology IRI.</td>
+        <td>A number with no pointer is not a certified KPI. Fix the row; do not write a paragraph in Genie to paper over it.</td>
+      </tr>
+      <tr>
+        <td class="ref">As-of / late facts</td>
+        <td>The as-of rule lives on the catalog row and in the view. Fixtures know the rule.</td>
+        <td>An as-of that exists only in a Genie paragraph will drift the first time a late fact arrives. That is a second formula in prose.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>As-of and late-arriving facts are an operability concern, not a Genie concern. The rule is declared once, on the catalog row and in the view. Genie may be told the rule so it does not invent a different one. It may not be the only place the rule lives.</p>
+</section>
+
+<section id="s07">
+  <h2><span class="num">07</span> Edge cases stay the same, but they are a release gate</h2>
+  <p class="intro">The teaching note already named the edges. In production they do not become a research backlog. They become the reason a KPI stays in draft. Across different domains the same edges are more expensive, because a guess that escapes the fence can land in the wrong process.</p>
+
+  <ul class="plain">
+    <li><b>New confuse-case = new example SQL + one Don’t line.</b> Same change, same repo, same write path into the Text box. Do not write a second architecture to contain one bad answer.</li>
+    <li><b>One write path.</b> The Genie Text box is the script string. Instruction and example SQL are files next to the views. There is no parallel “real” copy.</li>
+    <li><b>New chat after any edit.</b> Old threads replay old instructions. A formula change, an instruction change, or a view republish all discard the old conversation.</li>
+    <li><b>Cannot fully stop <code>GROUP BY ALL</code> / <code>ILIKE</code> / thread replay.</b> Production design assumes they happen. The fence — small view set on that agent, no raw tables, no other domain’s views — is what contains them. A hundred cross-domain KPIs on one agent is how you take the fence down.</li>
+    <li><b>Optional later:</b> a knowledge store of exact party names. Not required to call the shape production. Do not claim Databricks will stop <code>ILIKE</code>. Do not wait for that claim before fencing identities.</li>
+  </ul>
+
+  <div class="callout note">
+    <div class="label">The fence is the containment</div>
+    <p>You will not talk the model out of guessing. You will not get a platform promise that <code>ILIKE</code> is gone. You attach one job’s views, you deny bronze, and you re-run the confuse-set. That is the production answer to the same edges the demo already showed.</p>
+  </div>
+</section>
+
+<section id="s08">
+  <h2><span class="num">08</span> Demo vs production</h2>
+  <p class="intro">Demo 2 was a teaching shortcut inside one O2C family. Production is ~100 catalog rows from different domains. Quote the proven numbers. Do not restage the demo. Do not promote Unbilled (a <b>STATE</b>) to a pilot.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Demo 2 (Free, teaching) versus the production-shaped estate</caption>
+    <thead>
+      <tr><th></th><th>Demo 2 — Free, teaching</th><th>Production — ~100 KPIs, different domains</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Scope</td>
+        <td>3 related O2C KPIs, one process</td>
+        <td>~100 catalog rows from different domains (Customer O2C, Ops / Tech plan-to-produce, and any other domain that fails the grouping test)</td>
+      </tr>
+      <tr>
+        <td class="ref">Catalog</td>
+        <td>Teaching register for three measures</td>
+        <td>One enterprise Store catalog, partitioned by domain / owner. Draft · certified · deprecated. Replace-by-<code>kpi_id</code>.</td>
+      </tr>
+      <tr>
+        <td class="ref">Metric Views</td>
+        <td>3 views, one family, grouping test passed on purpose</td>
+        <td>Many views. Different domains almost never share. View count trends toward 100. Exact count <span class="badge open">open</span>.</td>
+      </tr>
+      <tr>
+        <td class="ref">Gold</td>
+        <td>One <code>gold_kpi_value</code> — the shortcut</td>
+        <td>Share a mart when grain, unit, retention, and access match. One mart per KPI when they diverge. Not one <code>gold_kpi_value</code> for the estate. Physical form <span class="badge open">open</span>.</td>
+      </tr>
+      <tr>
+        <td class="ref">Genie</td>
+        <td>One agent, <code>O2C certified KPIs</code></td>
+        <td>Several agents, one charter per consumption context / domain job. Never one agent on 100 cross-domain KPIs. Count <span class="badge open">open</span>.</td>
+      </tr>
+      <tr>
+        <td class="ref">Authoring</td>
+        <td>Instruction pasted / script-written into the Text box</td>
+        <td>Git YAML + pipeline publishes the UC Metric View. Instruction and example SQL in the same repo. One write path.</td>
+      </tr>
+      <tr>
+        <td class="ref">Proof</td>
+        <td>Fixtures and a small confuse-set on three measures</td>
+        <td>Fixtures on enterprise + each certified grain. Drift check. Confuse-set as a release gate. <code>calc_version</code> frozen on certify.</td>
+      </tr>
+      <tr>
+        <td class="ref">Access</td>
+        <td>Free-edition teaching identity</td>
+        <td>Fence = attached objects intersect asker Unity Catalog grants intersect Genie service grants. Attachments are not a wall. Never attach <code>fct_*</code> or <code>raw_*</code>. Revoke leader <code>SELECT</code> on those objects. No Lakebase ODS, no bronze.</td>
+      </tr>
+      <tr>
+        <td class="ref">Proven numbers</td>
+        <td>Unbilled $179,934 / 12 · contract-vs-list $110,064 / 7 · temp-adjusted $256,066.39 / 17</td>
+        <td>Quote those numbers. Do not restage. Do not promote Unbilled (a STATE) to a pilot or a customer class.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout warn">
+    <div class="label">Do not restage · do not promote Unbilled</div>
+    <p>Unbilled remains a STATE, not a KPI and not a customer class. The proven figures stay quoted so the compile path has a receipt. They are not a backlog item and not the start of a hundred-KPI pilot. Scaling the shortcut — one view family, one Gold table, one agent — to a cross-domain estate is how you fail RC-1 at the front door.</p>
+  </div>
+</section>
+
+<section id="s09">
+  <h2><span class="num">09</span> Do / Don’t for a production deploy</h2>
+  <p class="intro">Practice, not a lock. Same three locks underneath every row. Written for ~100 KPIs from different domains.</p>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Production deploy - do / don’t</caption>
+    <thead>
+      <tr><th>Do</th><th>Don’t</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>List all ~100 in one enterprise Store catalog, partitioned by domain / owner</td>
+        <td>Stand a second competing catalog per domain as the working picture, or treat the catalog as a spreadsheet leftover</td>
+      </tr>
+      <tr>
+        <td>Share a Metric View only inside one domain, and only when population + Silver star + grain family match</td>
+        <td>Write a mega-YAML, or fold O2C and plan-to-produce because “they are both KPIs”</td>
+      </tr>
+      <tr>
+        <td>Expect the view count much closer to 100 than to a few families; mark the exact count open</td>
+        <td>Assume the three-view O2C demo is the production ratio</td>
+      </tr>
+      <tr>
+        <td>Publish one Gold mart / table per KPI when grains diverge - especially across domains</td>
+        <td>One <code>gold_kpi_value</code> for the estate, or a second formula in Gold</td>
+      </tr>
+      <tr>
+        <td>Stand one Genie agent per consumption context / domain job; attach a KPI to that domain’s agent</td>
+        <td>One mega-Genie on 100 cross-domain KPIs, or bolt an Ops KPI onto the O2C agent</td>
+      </tr>
+      <tr>
+        <td>Send cross-domain numbers to the catalog or a composed report that already joined certified Gold / <code>MEASURE()</code></td>
+        <td>Ask one agent to join unrelated processes</td>
+      </tr>
+      <tr>
+        <td>Compile with <code>MEASURE()</code> on that KPI’s Metric View (RC-1). Git YAML in; pipeline publishes the UC object</td>
+        <td>A second formula in SQL, Gold, Power BI, or Genie. Hand-edit prod views. Export-to-metric-view</td>
+      </tr>
+      <tr>
+        <td><code>CREATE</code> / replace-by-<code>kpi_id</code>. Draft → certified → deprecated</td>
+        <td><code>CREATE OR REPLACE</code> the whole catalog</td>
+      </tr>
+      <tr>
+        <td>Say “consumption semantic layer” or “Metric View”</td>
+        <td>Say “semantic layer” unqualified (C-11)</td>
+      </tr>
+      <tr>
+        <td>Keep this note on the Store / consumption shape</td>
+        <td>Put Azure design, landing zones, or workspace topology in this note</td>
+      </tr>
+      <tr>
+        <td>Treat Demo 2 as a teaching shortcut with proven numbers</td>
+        <td>Restage it, promote Unbilled to a pilot, or scale the shortcut to a cross-domain estate</td>
+      </tr>
+      <tr>
+        <td>New confuse-case = new example SQL + one Don’t line; new chat after any edit</td>
+        <td>A second instruction copy, or a thread that predates the edit</td>
+      </tr>
+      <tr>
+        <td>Put Unity Catalog certified / deprecated tags on the Metric View and the Genie agent for browse and authority only, separate from catalog <code>status</code></td>
+        <td>Treat a UC tag as formula SoT, as KPI-020, as <code>calc_version</code>, or as a second certify register. Catalog status stays the Store lifecycle</td>
+      </tr>
+      <tr>
+        <td>Declare measure <code>synonyms</code> / <code>display_name</code> in Metric View YAML so agents route to the same compile object. Demo 2 YAML stays 0.1; this is additive later</td>
+        <td>Treat synonyms as meaning SoT, or invent a fake <code>customer</code> measure. “Customer” means ask which grain (payer / sold-to / site)</td>
+      </tr>
+      <tr>
+        <td>For tools that cannot pass <code>MEASURE()</code>, put a wrapper in front: one grain combo, embeds <code>MEASURE()</code> only. Gold is the published snapshot of the published measure (one mart per KPI when grains diverge). Do not require both for every grain</td>
+        <td>Treat the wrapper as a second formula. Force one wrapper plus one Gold for every grain combo. One estate-wide <code>gold_kpi_value</code>. Demo 2’s single table stays a teaching shortcut</td>
+      </tr>
+      <tr>
+        <td>Agent contract: submit <code>MEASURE()</code> only; persist / log the compiled SQL for audit. Backward ends in <code>MEASURE()</code> on the catalog’s view. Wrapper only when the tool cannot pass <code>MEASURE()</code></td>
+        <td>Let the graph emit a number. Treat BI compatibility mode (rewrites homemade SUM/COUNT onto the certified measure) as the happy path. Write a second formula</td>
+      </tr>
+      <tr>
+        <td>The ontologist mints meaning IRIs (w3id-style is a hint), including a KPI-individual IRI that is 1:1 with <code>kpi_id</code> when a class is shared. The Store copies the pointer onto catalog <code>ontology_iri</code>. The Store does not mint meaning IRIs. Neo4j NODE KEY sits on the 1:1 individual (or on <code>kpi_id</code>), never on a shared class such as <code>#Obligation</code></td>
+        <td>Let the Store mint meaning IRIs. Put a Neo4j NODE KEY on a shared class such as <code>#Obligation</code>. Treat a class IRI as the backward join to the catalog. Ship <code>example.org</code> IRIs in production</td>
+      </tr>
+      <tr>
+        <td>Label graph assertions accepted / candidate / rejected. LLM edges stay labelled until accepted</td>
+        <td>Treat LLM-extracted edges as meaning SoT (C-10). Treat graph assertion status as certifying compute. Catalog status stays the Store lifecycle</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s10">
+  <h2><span class="num">10</span> What this is not</h2>
+  <ul class="plain">
+    <li><b>Not a lock.</b> Picture of current understanding, 14 Aug 2026 (America/Chicago). Unregistered working note. Practice for a production-shaped Store + consumption semantic layer.</li>
+    <li><b>Not KPI-000.</b> Not a formal EPM artifact. Not a Store build. Not a programme decision record.</li>
+    <li><b>Not Azure design.</b> Not a landing zone, not a workspace topology, not a cloud bill of materials. The Azure estate is a different conversation.</li>
+    <li><b>Not Track A.</b> Not MetricFlow. Demo 1 stays where it is. This note does not edit it and does not borrow its compiler seat.</li>
+    <li><b>Not a build.</b> No workshop, no gate register, no invented artifact IDs. Gold physical form and exact agent count remain <span class="badge open">open</span>. Exact view-count remains <span class="badge open">open</span>.</li>
+    <li><b>Not a second catalog of meaning.</b> Ontology + domain model remain meaning SoT (C-10). The Store points; it does not author.</li>
+    <li>The sibling teaching note <b>EPM-BP-100-KPIs</b> stays the short rule: one catalog, many Metric Views, Gold per diverging grain, several Genie agents. This note is the production shape of that rule, written against ~100 KPIs from different domains.</li>
+  </ul>
+</section>
+
+<section id="s11">
+  <h2><span class="num">11</span> Production fences (from 14 Aug research)</h2>
+  <p class="intro">Working practice from the 14 Aug 2026 Perplexity Search SDK batch (<code>KPI-RES-PPLX-SDK-TWO-PLANE-2026-08</code>). Not a programme lock. Not a restage of the Databricks Demo 2 pack. C-10, C-11, and RC-1 are cited, not extended. These six fences sit on the Store + consumption semantic layer / Metric View side, and on the IRI join to meaning. They do not invent a second formula and they do not move meaning into the Store.</p>
+
+  <div class="callout note">
+    <div class="label">Practice, not a lock</div>
+    <p>The batch confirmed the consumption plane (<code>MEASURE()</code>, agent metadata, wrapper-or-Gold) and the meaning plane (stable IRIs, graph assertion status). It did not ship a vendor <code>ontology_iri</code> column. The join between those planes remains our work. Do not read a new lock into this section.</p>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Six production fences - working practice from the 14 Aug research</caption>
+    <thead>
+      <tr><th>#</th><th>Fence</th><th>What it is</th><th>What it is not</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">1</td>
+        <td>UC certified / deprecated tags</td>
+        <td>System tags on the Metric View and the Genie agent. Browse and authority only. Separate from catalog <code>status</code> (draft · certified · deprecated).</td>
+        <td>Not formula SoT. Not KPI-020. Not <code>calc_version</code>. Not a second certify register. Catalog status stays the Store lifecycle.</td>
+      </tr>
+      <tr>
+        <td class="ref">2</td>
+        <td>Measure <code>synonyms</code> / <code>display_name</code></td>
+        <td>Declared in Metric View YAML so agents and BI tools route to the same certified measure. Routing on the compile object, not meaning. Demo 2 YAML stays 0.1; this is additive later.</td>
+        <td>Not meaning SoT (C-10). Do not create a fake <code>customer</code> measure. “Customer” means ask which grain - payer / sold-to / site.</td>
+      </tr>
+      <tr>
+        <td class="ref">3</td>
+        <td>Wrapper-or-Gold</td>
+        <td>For tools that cannot pass <code>MEASURE()</code>, put a wrapper in front: one grain combo, embeds <code>MEASURE()</code> only. Gold is the published snapshot of the published measure (one mart per KPI when grains diverge). Do not require both for every grain. “One published object per grain combo” is the wrapper rule. “One Gold mart per KPI” is the Gold rule. They are not the same object. A wrapper is not a second formula (RC-1).</td>
+        <td>Never one estate-wide <code>gold_kpi_value</code>. Demo 2’s single <code>gold_kpi_value</code> stays a teaching shortcut. A wrapper is not a silent second grain.</td>
+      </tr>
+      <tr>
+        <td class="ref">4</td>
+        <td>Agent contract</td>
+        <td>Submit <code>MEASURE()</code> only. Persist / log the compiled SQL for audit. Backward ends in <code>MEASURE()</code> on the catalog’s view. A wrapper (fence 3) only when the tool cannot pass <code>MEASURE()</code>.</td>
+        <td>The graph does not emit a number. BI compatibility mode (rewrites homemade SUM/COUNT onto the certified measure) is a safety net, not the happy path. The agent must not write a second formula.</td>
+      </tr>
+      <tr>
+        <td class="ref">5</td>
+        <td>IRI hygiene</td>
+        <td>The ontologist mints meaning IRIs (w3id-style is a hint, not a scheme lock). When a class is shared, that includes a KPI-individual IRI that is 1:1 with <code>kpi_id</code>. The Store copies the pointer onto catalog <code>ontology_iri</code>. The Store does not mint meaning IRIs. Neo4j NODE KEY sits on the 1:1 individual (or on <code>kpi_id</code>), never on a shared class such as <code>#Obligation</code>. Demo 2 already binds two KPIs to <code>#Obligation</code>. Forward (<code>kpi_id</code> → IRI) still works. Backward from the class IRI to the catalog is 1:N and cannot pick a compile.</td>
+        <td>Production IRIs are not <code>example.org</code>. The IRI is the join to meaning SoT, not a formula and not a warehouse key the Store mints. Backward must land on <code>kpi_id</code>, or on that 1:1 individual IRI, then <code>MEASURE()</code> on the catalog’s view. A shared class cannot pick a compile. “Same IRI in Turtle, NODE KEY, and catalog” is only true for the 1:1 IRI.</td>
+      </tr>
+      <tr>
+        <td class="ref">6</td>
+        <td>Graph assertion status</td>
+        <td>Accepted / candidate / rejected. Canonical graph stores accepted or status-labelled assertions. LLM-extracted edges stay labelled until a human (or a declared rule) accepts them.</td>
+        <td>LLM-extracted edges are not meaning SoT (C-10). Graph assertion status does not certify compute. Catalog status stays the Store lifecycle. Same spirit as “agents must not write a second formula.”</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout">
+    <div class="label">Two traversals - the IRI seam</div>
+    <p><b>Forward:</b> Gold / <code>MEASURE()</code> → <code>kpi_id</code> → catalog → <code>ontology_iri</code> → triple store / Neo4j (meaning, lineage, graph science). Forward (<code>kpi_id</code> → IRI) is fine even when a class is shared.</p>
+    <p><b>Backward:</b> question → graph → <code>kpi_id</code>, or a 1:1 individual IRI → catalog → that KPI’s Metric View → <code>MEASURE()</code> on the catalog’s view. A shared class such as <code>#Obligation</code> is 1:N and is not the backward landing. The graph does not emit a number. The agent must not write a second formula.</p>
+  </div>
+
+  <p>Do / Don’t rows for these fences sit in §09 with the rest of the production deploy table. They are the same six fences, written as operating lines. They are not a second table of meaning and not a new lock set.</p>
+</section>
+
+<footer>
+  <p><b>EPM-BP-100-KPIs-PROD</b> · unregistered working note · 14 Aug 2026 (America/Chicago) · for Hamid Adesokan · Status: picture of current understanding. Practice note for a production-shaped Store + consumption semantic layer. Not KPI-000. Not a programme lock. Not a Store build. Not Azure design.</p>
+  <p>Locks cited, not extended: <b>C-10</b> (ontology = meaning; Store + consumption semantic layer = formula + compute) · <b>C-11</b> (never “semantic layer” unqualified) · <b>RC-1</b> (one certified formula, one compile path per KPI).</p>
+  <p>Assumed estate: ~100 certified KPIs from different domains. Named domains: Customer order-to-cash · Ops / Tech plan-to-produce · plus any other enterprise domain that fails the grouping test. Exact view-count and agent-count remain open. Gold physical form remains open.</p>
+  <p>Sibling: <code>EPM-BP-100-KPIs</code> (teaching note) stays the short rule. Grounding quoted, not restaged: Demo 2 Unbilled $179,934 / 12 · contract-vs-list $110,064 / 7 · temp-adjusted $256,066.39 / 17 · Genie <code>O2C certified KPIs</code> · <code>MEASURE()</code> only. Unbilled is a STATE. Visual system matches the teaching note. That note, <code>EPM-KPI-001-store-lane-briefing.html</code>, and Track A were not edited.</p>
+  <p><b>14 Aug 2026 addendum</b> · Perplexity Search SDK research <code>KPI-RES-PPLX-SDK-TWO-PLANE-2026-08</code> · §11 production fences. Working practice, not a programme lock. Databricks Demo 2 pack is not restaged.</p>
+  <p><b>14 Aug 2026</b> · IRI 1:1 wording applied. Still not a programme lock.</p>
+</footer>
+</div>
+</body>
+</html>

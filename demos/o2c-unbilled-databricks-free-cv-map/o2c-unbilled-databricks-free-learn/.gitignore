@@ -1,0 +1,16 @@
+# No secrets, no workspace URLs, no CLI profiles.
+.databrickscfg
+*.pat
+*.token
+.env
+.env.*
+!.env.example
+databricks.yml
+.DS_Store
+.ipynb_checkpoints/
+.venv
+__pycache__/
+*.pyc
+*.pyo
+.databricks
+.python-version

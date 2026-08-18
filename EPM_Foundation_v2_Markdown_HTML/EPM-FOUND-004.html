@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-004 — Enterprise Performance Ontology Design</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-004</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#purpose">Purpose</a>
+<a href="#ontology-layers">Ontology layers</a>
+<a href="#illustrative-class-hierarchy">Illustrative class hierarchy</a>
+<a href="#illustrative-object-properties">Illustrative object properties</a>
+<a href="#illustrative-data-properties">Illustrative data properties</a>
+<a href="#cardinality-and-validation-examples">Cardinality and validation examples</a>
+<a href="#ontology-versus-knowledge-graph">Ontology versus knowledge graph</a>
+<a href="#recommended-implementation-path">Recommended implementation path</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-004 · Version 2.0 Draft</div>
+<h1>Enterprise Performance Ontology Design</h1>
+<div class="subtitle">Formalization plan for machine-readable business context</div>
+<section id="purpose"><h2>Purpose</h2><p>The Enterprise Performance Ontology is the formal machine-readable implementation of the Enterprise Performance Semantic Model.</p>
+<p>The semantic model defines meaning. The ontology expresses that meaning using classes, properties, inheritance, constraints, and identifiers so that machines can validate, connect, query, and reason over enterprise context.</p></section><section id="ontology-layers"><h2>Ontology layers</h2><table><thead><tr><th>Layer</th><th>Examples</th></tr></thead><tbody>
+<tr><td>Upper enterprise concepts</td><td>Enterprise, Domain, Objective, Outcome, Role</td></tr>
+<tr><td>Business architecture</td><td>ValueStream, ValueStreamStage, Capability, Process, Activity, Decision</td></tr>
+<tr><td>Performance architecture</td><td>Measurement, Metric, PerformanceIndicator, EnterpriseKPI, Target, Threshold</td></tr>
+<tr><td>Data architecture</td><td>DataAsset, FoundationalDataProduct, DerivedDataProduct, KPIStore, SemanticView</td></tr>
+<tr><td>Consumption architecture</td><td>PowerBISemanticModel, Report, API, AIApplication, Workflow</td></tr>
+<tr><td>Governance</td><td>Owner, Steward, Policy, Standard, Approval, Version</td></tr>
+</tbody></table></section><section id="illustrative-class-hierarchy"><h2>Illustrative class hierarchy</h2><pre><code>BusinessConcept
+├── BusinessDomain
+├── StrategicObjective
+├── ValueStream
+├── ValueStreamStage
+├── Capability
+│   └── SubCapability
+├── BusinessProcess
+├── BusinessActivity
+├── BusinessDecision
+└── BusinessOutcome
+
+PerformanceConcept
+├── Measurement
+│   ├── RawMeasurement
+│   └── DerivedMeasurement
+├── Metric
+│   ├── OperationalMetric
+│   ├── DiagnosticMetric
+│   └── PerformanceIndicator
+└── EnterpriseKPI
+
+DataConcept
+├── DataAsset
+├── DataProduct
+│   ├── FoundationalDataProduct
+│   └── DerivedDataProduct
+├── KPIStore
+├── SemanticView
+└── PowerBISemanticModel</code></pre></section><section id="illustrative-object-properties"><h2>Illustrative object properties</h2><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>
+<tr><td>hasStage</td><td>ValueStream</td><td>ValueStreamStage</td></tr>
+<tr><td>usesCapability</td><td>ValueStreamStage</td><td>Capability</td></tr>
+<tr><td>hasSubCapability</td><td>Capability</td><td>Capability</td></tr>
+<tr><td>realizedThrough</td><td>Capability</td><td>BusinessProcess</td></tr>
+<tr><td>containsActivity</td><td>BusinessProcess</td><td>BusinessActivity</td></tr>
+<tr><td>supportsDecision</td><td>BusinessActivity</td><td>BusinessDecision</td></tr>
+<tr><td>generatesMeasurement</td><td>BusinessProcess or Activity</td><td>Measurement</td></tr>
+<tr><td>evaluatesObjective</td><td>EnterpriseKPI</td><td>StrategicObjective</td></tr>
+<tr><td>measuresConcept</td><td>Metric or KPI</td><td>BusinessConcept</td></tr>
+<tr><td>explainedBy</td><td>EnterpriseKPI</td><td>Metric</td></tr>
+<tr><td>suppliedBy</td><td>Metric or KPI</td><td>DataProduct</td></tr>
+<tr><td>exposedThrough</td><td>DataProduct or KPI</td><td>SemanticView</td></tr>
+<tr><td>consumedBy</td><td>SemanticView or SemanticModel</td><td>Report, API, AIApplication</td></tr>
+<tr><td>ownedBy</td><td>GovernedConcept</td><td>Role or Organization</td></tr>
+</tbody></table></section><section id="illustrative-data-properties"><h2>Illustrative data properties</h2><ul>
+<li>preferredLabel</li>
+<li>definition</li>
+<li>identifier</li>
+<li>version</li>
+<li>status</li>
+<li>effectiveFrom</li>
+<li>effectiveTo</li>
+<li>unitOfMeasure</li>
+<li>timeGrain</li>
+<li>targetValue</li>
+<li>warningMinimum</li>
+<li>warningMaximum</li>
+<li>evaluationDirection</li>
+<li>calculationExpression</li>
+<li>sourceSystem</li>
+<li>refreshFrequency</li>
+<li>confidenceScore</li>
+<li>causalLag</li>
+</ul></section><section id="cardinality-and-validation-examples"><h2>Cardinality and validation examples</h2><ul>
+<li>EnterpriseKPI <strong>must have exactly one</strong> accountable owner at a given effective date.</li>
+<li>EnterpriseKPI <strong>must evaluate at least one</strong> StrategicObjective or BusinessOutcome.</li>
+<li>EnterpriseKPI <strong>must have at least one</strong> source DataProduct.</li>
+<li>BusinessProcess <strong>must realize at least one</strong> Capability.</li>
+<li>ValueStreamStage <strong>must use at least one</strong> Capability.</li>
+<li>SemanticView <strong>must expose at least one</strong> DataProduct or KPI.</li>
+<li>Candidate KPI may omit target and thresholds; Approved Enterprise KPI may not.</li>
+</ul></section><section id="ontology-versus-knowledge-graph"><h2>Ontology versus knowledge graph</h2><p>The ontology defines what kinds of things and relationships are allowed.</p>
+<p>The knowledge graph contains actual instances.</p>
+<p>Example:</p>
+<pre><code>Ontology statement:
+EnterpriseKPI explainedBy Metric
+
+Knowledge graph instances:
+Gasoline Netback CPG explainedBy Transportation Cost per Gallon
+Gasoline Netback CPG explainedBy RIN Cost Variance</code></pre></section><section id="recommended-implementation-path"><h2>Recommended implementation path</h2><ol>
+<li>1. Approve the human-readable semantic model.</li>
+<li>2. Define stable identifiers and namespaces.</li>
+<li>3. Formalize core classes and properties in RDF/OWL.</li>
+<li>4. Add SHACL validation shapes for governance constraints.</li>
+<li>5. Load a small Commercial pilot knowledge graph.</li>
+<li>6. Connect ontology identifiers to Purview terms, KPI metadata, data products, SQL views, and Power BI models.</li>
+<li>7. Validate competency questions such as:</li>
+</ol>
+<p>   - Which KPIs measure Logistics Execution?</p>
+<p>   - Which metrics explain Gasoline Netback CPG?</p>
+<p>   - Which data products supply those metrics?</p>
+<p>   - Which Power BI reports consume the KPI?</p>
+<p>   - Which processes and decisions can change the KPI?</p></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>

@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Downstream O&amp;G Order-to-Cash Operational Blueprint</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+max-width: 1100px;
+margin: 0 auto;
+padding: 40px 32px 80px;
+color: #1a1a1a;
+line-height: 1.6;
+background: #fdfdfc;
+}
+h1 { font-size: 1.9em; border-bottom: 3px solid #1f4e79; padding-bottom: 10px; margin-top: 0; }
+h2 { font-size: 1.5em; color: #1f4e79; border-bottom: 1px solid #ccd6e0; padding-bottom: 6px; margin-top: 2.2em; }
+h3 { font-size: 1.2em; color: #2c5f8a; margin-top: 1.8em; }
+h4 { font-size: 1.05em; color: #444; margin-top: 1.4em; }
+table {
+border-collapse: collapse;
+width: 100%;
+margin: 1.2em 0;
+font-size: 0.92em;
+}
+th, td {
+border: 1px solid #d0d7de;
+padding: 8px 10px;
+vertical-align: top;
+text-align: left;
+}
+th {
+background: #1f4e79;
+color: #fff;
+font-weight: 600;
+}
+tr:nth-child(even) { background: #f4f7fa; }
+pre {
+background: #0d1117;
+color: #e6edf3;
+padding: 16px;
+border-radius: 6px;
+overflow-x: auto;
+font-size: 0.78em;
+line-height: 1.35;
+}
+code {
+background: #eef1f4;
+padding: 2px 5px;
+border-radius: 3px;
+font-size: 0.9em;
+}
+pre code { background: none; padding: 0; color: inherit; }
+a { color: #1f6feb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+blockquote {
+border-left: 4px solid #1f4e79;
+margin: 1em 0;
+padding: 0.2em 1em;
+color: #444;
+background: #f4f7fa;
+}
+hr { border: none; border-top: 2px solid #e1e6eb; margin: 2.5em 0; }
+strong { color: #12233a; }
+.title-block-header { margin-bottom: 1em; }
+#TOC {
+background: #f4f7fa;
+border: 1px solid #d0d7de;
+border-radius: 6px;
+padding: 16px 24px;
+margin-bottom: 2em;
+}
+#TOC ul { list-style: none; padding-left: 1.2em; }
+#TOC > ul { padding-left: 0; }
+#TOC a { color: #1f4e79; font-weight: 500; }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Downstream O&amp;G Order-to-Cash Operational
+Blueprint</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#downstream-oil-gas-commercial-marketing" id="toc-downstream-oil-gas-commercial-marketing">Downstream Oil &amp;
+Gas Commercial &amp; Marketing</a></li>
+<li><a href="#order-to-cash-o2c-enterprise-architecture-blueprint" id="toc-order-to-cash-o2c-enterprise-architecture-blueprint">Order-to-Cash
+(O2C) Enterprise Architecture Blueprint</a>
+<ul>
+<li><a href="#document-purpose" id="toc-document-purpose">Document
+Purpose</a></li>
+<li><a href="#section-1-end-to-end-value-stream-l1-chevron-map" id="toc-section-1-end-to-end-value-stream-l1-chevron-map">SECTION 1:
+END-TO-END VALUE STREAM (L1 CHEVRON MAP)</a></li>
+<li><a href="#section-2-integrated-order-to-cash-capability-map" id="toc-section-2-integrated-order-to-cash-capability-map">SECTION 2:
+INTEGRATED ORDER-TO-CASH CAPABILITY MAP</a></li>
+<li><a href="#section-3-deep-dive-process-definition-master-data-baseline" id="toc-section-3-deep-dive-process-definition-master-data-baseline">SECTION
+3: DEEP-DIVE PROCESS DEFINITION &amp; MASTER DATA BASELINE</a></li>
+<li><a href="#section-4-system-landscape-integration-architecture" id="toc-section-4-system-landscape-integration-architecture">SECTION 4:
+SYSTEM LANDSCAPE &amp; INTEGRATION ARCHITECTURE</a></li>
+<li><a href="#section-5-downstream-operational-exceptions-risk-management" id="toc-section-5-downstream-operational-exceptions-risk-management">SECTION
+5: DOWNSTREAM OPERATIONAL EXCEPTIONS &amp; RISK MANAGEMENT</a></li>
+<li><a href="#appendix-a-channel-specific-o2c-swim-narratives" id="toc-appendix-a-channel-specific-o2c-swim-narratives">APPENDIX A:
+Channel-Specific O2C Swim Narratives</a></li>
+<li><a href="#appendix-b-suggested-o2c-data-products-for-epm-kpi-store-linkage" id="toc-appendix-b-suggested-o2c-data-products-for-epm-kpi-store-linkage">APPENDIX
+B: Suggested O2C Data Products (for EPM / KPI Store linkage)</a></li>
+<li><a href="#appendix-c-glossary-downstream-o2c" id="toc-appendix-c-glossary-downstream-o2c">APPENDIX C: Glossary
+(Downstream O2C)</a></li>
+<li><a href="#appendix-d-source-evidence-index-inline-cited-works" id="toc-appendix-d-source-evidence-index-inline-cited-works">APPENDIX D:
+Source Evidence Index (Inline-Cited Works)</a></li>
+<li><a href="#artifact-update-block-enterprise-performance-model" id="toc-artifact-update-block-enterprise-performance-model">Artifact
+Update Block (Enterprise Performance Model)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="downstream-oil-gas-commercial-marketing">Downstream Oil &amp;
+Gas Commercial &amp; Marketing</h1>
+<h1 id="order-to-cash-o2c-enterprise-architecture-blueprint">Order-to-Cash
+(O2C) Enterprise Architecture Blueprint</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Document ID</strong></td>
+<td style="text-align: left;">EPM-BA-O2C-DS-001</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Title</strong></td>
+<td style="text-align: left;">Downstream O&amp;G Order-to-Cash
+Operational Blueprint</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Domain</strong></td>
+<td style="text-align: left;">Downstream Commercial &amp; Marketing —
+Order to Cash</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Version</strong></td>
+<td style="text-align: left;">1.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Status</strong></td>
+<td style="text-align: left;">Draft / Candidate Baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Workstream</strong></td>
+<td style="text-align: left;">Domain Modeling (Downstream Business
+Architecture)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Audience</strong></td>
+<td style="text-align: left;">Enterprise Architects, Process Owners, MDM
+Stewards, Finance Controllers, Commercial Ops</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channels in Scope</strong></td>
+<td style="text-align: left;">B2B C&amp;I, Wholesale/Rack, Retail
+Station Networks, Lubricants, Aviation, Marine</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Out of Scope</strong></td>
+<td style="text-align: left;">Upstream production accounting, midstream
+pure tariff/transportation O2C (except terminal/pipeline custody
+interfaces), crude trading books, refining process control</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Related EPM
+Artifacts</strong></td>
+<td style="text-align: left;">Downstream Business Architecture;
+Enterprise Measurement Catalog; KPI Store; Data Product Portfolio</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="document-purpose">Document Purpose</h2>
+<p>This blueprint is an Enterprise Architecture reference for the
+end-to-end <strong>Order-to-Cash (O2C)</strong> value stream in
+Downstream Oil &amp; Gas Commercial &amp; Marketing. It is intentionally
+<em>not</em> a generic manufacturing or retail O2C description. It
+surfaces the physical, logistical, financial, tax, pricing, legal, and
+measurement realities that differentiate hydrocarbon commercial
+operations: temperature/pressure volume correction, multi-unit of
+measure (UoM) accounting, rack and formula pricing, motor fuel excise
+frameworks, terminal automation custody events, exchange/borrow/loan
+netting, multi-channel title transfer models, and channel-specific
+settlement instruments (BOL, BDN, uplift ticket, POS shift close,
+LIA).</p>
+<p>The blueprint is structured for use as:</p>
+<ol type="1">
+<li>A capability and process baseline for KPI/metric design in the
+Enterprise Performance Model.</li>
+<li>A master-data and integration contract reference for domain modeling
+and system integration workstreams.</li>
+<li>An exception/risk catalog for controls design (credit, tax,
+measurement, title, and settlement).</li>
+</ol>
+<hr />
+<h2 id="section-1-end-to-end-value-stream-l1-chevron-map">SECTION 1:
+END-TO-END VALUE STREAM (L1 CHEVRON MAP)</h2>
+<h3 id="scope-of-the-o2c-lifecycle">1.1 Scope of the O2C Lifecycle</h3>
+<p>Downstream Commercial O2C begins at <strong>commercial opportunity /
+contract capture</strong> (not merely sales order entry) and ends at
+<strong>cash application, dispute closure, and period financial
+close</strong>, with continuous feedback into credit exposure, contract
+performance, and customer retention. Operational custody events (rack
+load, bulk drop, into-plane uplift, bunker delivery, retail pump
+dispense) are first-class economic events—not warehouse “goods issue”
+analogues—because quantity, quality, tax status, and title often
+crystallize only at the meter/ticket.</p>
+<p>Industry terminal/pipeline commercial platforms describe O2C as the
+cycle managed <strong>from order to invoice</strong>, synchronizing
+logistics and commercial management to reduce invoicing error and
+accelerate month-end close (<a href="https://www.emerson.com/en/automation-systems/advanced-industry-software/oil-and-gas/software-for-energy-transportation-storage/order-to-cash-software">Emerson
+DeltaV O2CManager</a>). Large operators have treated O2C as a
+transformation lever for pipeline/terminal commercial excellence,
+integrating nomination, scheduling, measurement, and billing (<a href="https://www.infosys.com/industries/oil-and-gas/insights/order-to-cash-transformation.html">Infosys
+O2C transformation</a>). Process-mining deployments in integrated oil
+majors similarly target B2B sales O2C first-time quality and cycle time
+(<a href="https://www.celonis.com/solutions/stories/mol-order-to-cash">Celonis
+/ MOL Group</a>).</p>
+<h3 id="l1-chevron-value-stream-map-ascii">1.2 L1 Chevron Value Stream
+Map (ASCII)</h3>
+<pre><code>╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║  FOUNDATIONAL LAYER (runs continuously across every chevron)                                                          ║
+║  ┌──────────────────────────────┐   ┌──────────────────────────────┐   ┌──────────────────────────────────────────┐ ║
+║  │ MDM &amp; Product/Customer Hub   │   │ Credit, Tax &amp; Legal Master    │   │ Governance, Controls &amp; Audit Trail       │ ║
+║  │ • Customer/Ship-to/Payer     │   │ • Credit limits &amp; collateral  │   │ • SOX / internal control narratives      │ ║
+║  │ • Material / HPM / Specs     │   │ • FEIN, licenses, exemptions  │   │ • Measurement SOP / API MPMS adherence   │ ║
+║  │ • Terminal/Rack/Depot plant  │   │ • Bonded vs duty-paid status  │   │ • Data quality SLAs &amp; stewardship        │ ║
+║  │ • Carrier / Driver / Trailer │   │ • Sanction/KYC screening      │   │ • Contract &amp; price approval authorities  │ ║
+║  │ • Contract &amp; price condition │   │ • Incoterms / title rules     │   │ • Exception taxonomy &amp; RCA               │ ║
+║  └──────────────┬───────────────┘   └──────────────┬───────────────┘   └──────────────────┬───────────────────────┘ ║
+╚═════════════════╪══════════════════════════════════╪══════════════════════════════════════╪════════════════════════╝
+                  │ feeds / constrains               │                                      │
+                  ▼                                  ▼                                      ▼
+┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────┐
+│ 1.QUOTE &amp;  │─▶│ 2.CREDIT &amp; │─▶│ 3.ORDER &amp;  │─▶│ 4.FULFILL  │─▶│ 5.MEASURE  │─▶│ 6.INVOICE  │─▶│ 7.CASH &amp;   │─▶│ 8.DISPUTE  │
+│ CONTRACT   │  │ RISK       │  │ NOMINATE   │  │ &amp; LOGISTICS│  │ &amp; TITLE    │  │ &amp; TAX      │  │ COLLECT    │  │ CLOSE &amp;    │
+│ CAPTURE    │  │ RELEASE    │  │ SCHEDULE   │  │ EXECUTE    │  │ TRANSFER   │  │ BILL       │  │ SETTLE     │  │ RETAIN     │
+└────────────┘  └────────────┘  └────────────┘  └────────────┘  └────────────┘  └────────────┘  └────────────┘  └────────────┘
+     │                │               │               │               │               │               │               │
+     ▼                ▼               ▼               ▼               ▼               ▼               ▼               ▼
+ Formula / index   Exposure vs     Call-off /      TAS load /      GOV→GSV→NSV     Multi-channel   ACH/wire/card   Quantity,
+ term sheets;      limit; bond;    rack appoint-   bulk drop /     QCI; BOL/BDN/   billing; excise  lockbox;       quality, tax,
+ volume commit;    sanctions;      ment; VMI       into-plane /    uplift ticket;  dyed/clear;     netting;       price, freight
+ exchange/EXG;     payment terms   auto-order;     bunker; retail  certificate of  LIA / fee       deduction      disputes;
+ channel SPA       release         secondary TD    POS dispense    quality         settlement      handling       contract renew</code></pre>
+<h3 id="chevron-definitions-l1">1.3 Chevron Definitions (L1)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L1 Chevron</th>
+<th style="text-align: left;">Business Outcome</th>
+<th style="text-align: left;">Primary Downstream Triggers</th>
+<th style="text-align: left;">MDM / Governance Tie-In</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. Quote &amp; Contract
+Capture</strong></td>
+<td style="text-align: left;">Commercially approved instrument (SPA,
+rack access agreement, dealer/commission contract, into-plane MSA,
+bunker GT&amp;C, lube supply agreement, exchange agreement)</td>
+<td style="text-align: left;">RFQ; bid; index nomination; branded dealer
+onboarding; airport tender; port bunker inquiry</td>
+<td style="text-align: left;">Customer legal entity, ship-to, payer
+hierarchy; product grade family; price procedure; Incoterms;
+jurisdiction tax profile; contract version control</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Credit &amp; Risk
+Release</strong></td>
+<td style="text-align: left;">Orderable credit envelope and counterparty
+clearance</td>
+<td style="text-align: left;">New account; limit review; open AR +
+unbilled lifts + contingent tax; mark-to-market on formula books</td>
+<td style="text-align: left;">Credit master, collateral/LC, parent
+guarantee, insurance; sanctions list; license validity</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Order &amp; Nominate /
+Schedule</strong></td>
+<td style="text-align: left;">Executable commercial order + logistics
+nomination</td>
+<td style="text-align: left;">Rack order / card lock; C&amp;I call-off;
+VMI forecast; aviation flight schedule; vessel nomination; retail tank
+forecast</td>
+<td style="text-align: left;">Order type by channel; plant/rack
+determination; carrier/driver qualifications; appointment slots;
+inventory ownership model</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Fulfill &amp; Logistics
+Execute</strong></td>
+<td style="text-align: left;">Physical movement authorized and executed
+under control</td>
+<td style="text-align: left;">TAS load authorization; bulk truck
+routing; into-plane dispatch; bunker barge/stem; retail tank truck;
+pipeline batch</td>
+<td style="text-align: left;">Terminal/plant, tank, meter, compartment,
+driver PIN, carrier SCAC; product availability / allocation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Measure &amp; Title
+Transfer</strong></td>
+<td style="text-align: left;">Custody quantity/quality locked;
+title/risk per Incoterms</td>
+<td style="text-align: left;">Meter ticket; temperature/density sample;
+seal; BOL; BDN; uplift ticket; POS gallon totalizer</td>
+<td style="text-align: left;">UoM dual/triple posting (observed vs
+standard); QCI parameters; batch/spec; tax status
+(clear/dyed/bonded)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6. Invoice &amp; Tax
+Bill</strong></td>
+<td style="text-align: left;">Customer-ready fiscal document + statutory
+tax reporting events</td>
+<td style="text-align: left;">Auto-bill on ticket; cycle bill; fee bill
+(throughput, into-plane service); exchange differential invoice</td>
+<td style="text-align: left;">Price condition determination; tax engine
+jurisdiction stack; exemption certificates; invoice form variants</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7. Cash &amp; Collect /
+Settle</strong></td>
+<td style="text-align: left;">Applied cash; reduced exposure; partner
+netting closed</td>
+<td style="text-align: left;">ACH debit per rack agreement; wire; card;
+lockbox; netting statement; retail sweep</td>
+<td style="text-align: left;">Bank master; payment advice matching keys
+(BOL#, ticket#, invoice#); tolerance rules</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8. Dispute, Close &amp;
+Retain</strong></td>
+<td style="text-align: left;">Root-caused variance closed; books closed;
+contract performance scored</td>
+<td style="text-align: left;">Short-pay; temperature claim; quality
+off-spec; tax rebill; freight claim; period-end accruals</td>
+<td style="text-align: left;">Dispute codes; write-off authority; KPI
+feedback; renewal/churn workflow</td>
+</tr>
+</tbody>
+</table>
+<h3 id="channel-variants-overlay-on-the-chevron">1.4 Channel Variants
+Overlay on the Chevron</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Channel</th>
+<th style="text-align: left;">Distinct O2C Signature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Wholesale / Rack</strong></td>
+<td style="text-align: left;">High-velocity card-lock / rack orders;
+meter ticket + BOL as invoice support; short payment terms (often ~10
+days ACH); rack or OPIS/Platts-referenced pricing (<a href="https://www.opis.com/blog/wholesale-rack-fuel-pricing-essentials/">OPIS
+rack pricing</a>; <a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT
+Fuels Wholesale Rack Agreement</a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B2B C&amp;I</strong></td>
+<td style="text-align: left;">Contract call-offs; VMI/tank telemetry;
+multi-drop bulk; often delivered duty-paid with destination tax; freight
+&amp; demurrage components (<a href="https://www.shell.com/business-customers/commercial-fuels/evmi.html">Shell
+eVMI</a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Retail Station
+Networks</strong></td>
+<td style="text-align: left;">Dealer / lessee-dealer / commission-agent
+models; consignment inventory ownership variants; POS shift/day close;
+brand fee &amp; rebate nets; tank wagon replenishment (<a href="https://www.cstoretrader.com/guides/dealer-vs-lessee-dealer-vs-commission/">C-Store
+Trader dealer models</a>; <a href="https://help.petrosoftinc.com/Content/Station_Home/Station_Options/consigned_station.htm">Petrosoft
+consigned stations</a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lubricants</strong></td>
+<td style="text-align: left;">Packaged + bulk; SKU explosion (viscosity
+grade, OEM approvals); warehouse pick/pack; returns &amp; core charges;
+less volume-correction intensive than fuels but dense product
+master</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Aviation</strong></td>
+<td style="text-align: left;">Into-plane uplifts; flight/tail number;
+airport FBO fees; IATA/into-plane service charges; uplift ticket
+reconciliation (<a href="https://invoicedataextraction.com/blog/aviation-fuel-invoice-reconciliation">Aviation
+fuel invoice reconciliation</a>; <a href="https://www.doi.gov/sites/default/files/documents/2024-09/doi-aviation-fuel-management-handbook-sept-2024.pdf">DOI
+Aviation Fuel Management Handbook</a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Marine</strong></td>
+<td style="text-align: left;">Stem nomination; barge/ship-to-ship; BDN
+as statutory &amp; commercial document; mass/volume dual; sulfur/MARPOL
+attributes; demurrage (<a href="https://www.exxonmobil.com/en/marine/technicalresource/marine-resources/bunker-delivery-notes">ExxonMobil
+BDN</a>; <a href="https://vesselchain.org/bunker-delivery-note-guide-2025/">BDN 2025
+guide</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="master-data-management-insertion-points">1.5 Master Data
+Management Insertion Points</h3>
+<p>MDM is not a “side process.” It is a <strong>hard gate</strong> at
+chevrons 1–3 and a <strong>reconciliation dimension</strong> at 5–8:</p>
+<pre><code>Contract Capture ──requires──▶ Golden Customer + Product Spec + Price Procedure + Tax Profile
+Credit Release   ──reads─────▶ Exposure dimensions keyed by Payer + Product Family + Location
+Order Entry      ──validates─▶ Ship-to tank/rack eligibility, carrier card, product grade availability
+Fulfillment      ──consumes──▶ Terminal plant/tank/meter masters from TAS + ERP plant
+Measurement      ──applies───▶ QCI tables (density, CTL/CPL, VCF) per API MPMS / ASTM D1250
+Billing          ──derives───▶ Taxability from product tax class + destination + exemption cert
+Cash/Dispute     ──matches───▶ Alternate keys: Ticket ID, BOL, BDN, Uplift #, POS batch</code></pre>
+<p>Quantity conversion is foundational: SAP IS-Oil TSW/HPM designs
+require QCI conversion data defined for material, plant, storage
+location, and batch so goods movements and nominations post correctly
+(<a href="https://help.sap.com/docs/SUPPORT_CONTENT/isoil/3139386109.html">SAP
+TSW help</a>; <a href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f4ab800d01c4366b0c9aaff06a64320/40ea5e9072ae42119c3425a9f9294d5f.html">SAP
+QCI integration</a>; <a href="https://community.sap.com/t5/enterprise-resource-planning-q-a/sap-is-oil-and-gas-hpm-module-implementation-without-qci-interface/qaq-p/12108628">SAP
+Community HPM/QCI</a>). Physical volume correction algorithms are
+defined under <strong>API MPMS Chapter 11.1 / ASTM D1250</strong> for
+temperature and pressure effects on density and volume of crude, refined
+products, and lubricants (<a href="https://www.astm.org/d1250-19e01.html">ASTM D1250-19e1</a>; <a href="https://www.api.org/-/media/files/publications/2024-catalog/2024-petroleum-measurement.pdf">API
+Petroleum Measurement catalog</a>).</p>
+<hr />
+<h2 id="section-2-integrated-order-to-cash-capability-map">SECTION 2:
+INTEGRATED ORDER-TO-CASH CAPABILITY MAP</h2>
+<h3 id="capability-pillar-grid-l1-l2l3-downstream-specific">2.1
+Capability Pillar Grid (L1 → L2/L3 Downstream-Specific)</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Capability Pillar (L1)</th>
+<th style="text-align: left;">L2/L3 Specialized Capabilities (Downstream
+O&amp;G)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A. Quote &amp; Contract
+Management</strong></td>
+<td style="text-align: left;">A1 Formula &amp; Index-Linked Pricing
+Contract Design · A2 Rack Access / Throughput &amp; Terminaling
+Agreements · A3 Exchange, Buy-Sell &amp; Location Swap Structuring · A4
+Channel Contract Archetypes (Dealer / Commission / Into-Plane / Bunker
+GT&amp;C / Lube SPA) · A5 Volume Commitment, Allocation &amp;
+Take-or-Pay Administration</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B. Credit &amp; Risk
+Management</strong></td>
+<td style="text-align: left;">B1 Multi-Dimensional Credit Exposure
+(lifted unbilled + open AR + contingent tax + MTM) · B2 Collateral, LC,
+Parent Guarantee &amp; Prepay Controls · C3 Counterparty KYC / Sanctions
+/ Beneficial Ownership · B4 Payment Term &amp; Method Risk by Channel ·
+B5 Credit Release at Order, Load Authorization &amp; Invoice</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C. Order Management &amp;
+Fulfillment</strong></td>
+<td style="text-align: left;">C1 Multi-Channel Order Capture (rack card,
+EDI, portal, VMI auto-order, aviation schedule, vessel stem) · C2
+Nomination, Appointment &amp; Slotting (rack, pipeline, marine berth) ·
+C3 Secondary Distribution / Bulk Fleet Execution (TD) · C4 Terminal
+Automation Load Control &amp; BOL Issuance · C5 Allocation, Rationing
+&amp; Product Availability Management</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D. Invoicing &amp;
+Billing</strong></td>
+<td style="text-align: left;">D1 Ticket-to-Invoice Automation
+(BOL/BDN/Uplift/POS) · D2 Multi-Component Billing (product, freight,
+into-plane fee, throughput, demurrage, additive) · D3 Excise / Motor
+Fuel / Sales Tax Determination &amp; Exemption · D4 Exchange
+Differential &amp; LIA Settlement Billing · D5 Cycle, Self-Bill,
+Consignment &amp; Commission Settlement Runs</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E. Receipt &amp;
+Collection</strong></td>
+<td style="text-align: left;">E1 Cash Application on Ticket/BOL Keys ·
+E2 ACH Debit / Card / Wire / Lockbox Orchestration · E3 Partner Netting
+&amp; Intercompany Settlement · E4 Deduction Management (shortage,
+quality, tax, freight) · E5 Unapplied Cash &amp; Suspense Clearing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F. Dispute
+Management</strong></td>
+<td style="text-align: left;">F1 Quantity Dispute
+(temp/density/VCF/meter factor) · F2 Quality / Spec Off-Grade Claims ·
+F3 Price &amp; Index Publication Disputes · F4 Tax Rebill &amp;
+Exemption Certificate Failures · F5 Demurrage, Detention &amp;
+Service-Level Claims</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G. Customer Retention &amp;
+Contract Performance</strong></td>
+<td style="text-align: left;">G1 Contract Utilization &amp; Uplift
+Analytics · G2 Rebate, Brand Fee &amp; Incentive True-Up · G3 Churn /
+Dealer Network Health · G4 Service Level &amp; OTIF by Channel · G5
+Renewal, Reprice &amp; Index Roll Management</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>H. Master Data
+Management</strong></td>
+<td style="text-align: left;">H1 Customer / Hierarchy / Ship-to Tank
+Topology · H2 Hydrocarbon Product, Spec, Additive &amp; Tax Class · H3
+Location Topology (Terminal, Rack, Bay, Depot, Station, Airport, Port) ·
+H4 Partner Exchange &amp; Book-Out Structures · H5 Carrier, Driver,
+Trailer, Compartment &amp; Card Assets</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>I. Governance, Controls &amp;
+Compliance</strong></td>
+<td style="text-align: left;">I1 Measurement Governance (API MPMS /
+ASTM) · I2 Pricing Authority &amp; Index Feed Controls · I3 Tax &amp;
+Excise Regulatory Compliance · I4 SOX / Revenue Recognition Controls for
+Title Transfer · I5 Data Quality, Lineage &amp; Stewardship for O2C Data
+Products</td>
+</tr>
+</tbody>
+</table>
+<h3 id="capability-channel-heat-map">2.2 Capability × Channel Heat
+Map</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Capability</th>
+<th style="text-align: center;">Rack</th>
+<th style="text-align: center;">C&amp;I</th>
+<th style="text-align: center;">Retail</th>
+<th style="text-align: center;">Lubes</th>
+<th style="text-align: center;">Aviation</th>
+<th style="text-align: center;">Marine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Formula/Index Contract</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rack Access Agreement</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+</tr>
+<tr>
+<td style="text-align: left;">Exchange/Borrow/Loan</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">◐</td>
+</tr>
+<tr>
+<td style="text-align: left;">VMI / Telemetry Order</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+</tr>
+<tr>
+<td style="text-align: left;">TAS / BOL Integration</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">◐</td>
+</tr>
+<tr>
+<td style="text-align: left;">BDN / Marine Docs</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">●</td>
+</tr>
+<tr>
+<td style="text-align: left;">Into-Plane Uplift</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">○</td>
+</tr>
+<tr>
+<td style="text-align: left;">Consignment/Commission</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+</tr>
+<tr>
+<td style="text-align: left;">Excise Dyed/Clear</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">◐</td>
+</tr>
+<tr>
+<td style="text-align: left;">Partner Netting</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">●</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">◐</td>
+<td style="text-align: center;">●</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ● Core · ◐ Partial / situational · ○ Rare</p>
+<hr />
+<h2 id="section-3-deep-dive-process-definition-master-data-baseline">SECTION
+3: DEEP-DIVE PROCESS DEFINITION &amp; MASTER DATA BASELINE</h2>
+<p>For each pillar, L2 processes are defined with Downstream-specific
+mechanics and master data attributes.</p>
+<h3 id="a-quote-contract-management">3.A Quote &amp; Contract
+Management</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A1 Formula &amp; Index-Linked
+Pricing Design</strong></td>
+<td style="text-align: left;">Design, approve, and version price
+procedures that convert market publications and differentials into
+invoiceable unit prices; maintain effective dating and fallback
+logic.</td>
+<td style="text-align: left;">Fuel price formation typically cascades
+<strong>NYMEX → Spot → Rack</strong>, with basis differentials that can
+decouple from futures on local outages (<a href="https://www.opis.com/blog/wholesale-rack-fuel-pricing-essentials/">OPIS</a>).
+Contracts reference Platts/OPIS/Argus assessments with grade, location,
+and timing rules (<a href="https://www.spglobal.com/commodityinsights/plattscontent/_assets/_files/en/our-methodology/methodology-specifications/americas-refined-oil-products-methodology.pdf">Platts
+Americas Refined Oil Products methodology</a>; <a href="https://www.spglobal.com/energy/en/pricing-benchmarks/our-methodology/subscriber-notes/050126-platts-launches-new-gasoline-blend-value-calculations-in-us">Platts
+US gasoline blend value</a>). <strong>MD attributes:</strong> Index ID,
+publication lag (e.g., prior day mean), differential ($/gal or ¢/gal),
+escalation clauses, currency, UoM (gal <span class="citation" data-cites="60">@60</span>°F / m³ <span class="citation" data-cites="15">@15</span>°C / MT), holiday calendar, price cap/floor,
+additive package adder, RIN/LCFS cost pass-through flags.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A2 Rack Access &amp; Terminaling
+Agreements</strong></td>
+<td style="text-align: left;">Establish customer right to lift at named
+terminals/racks, credit terms, BOL rules, and payment mechanics.</td>
+<td style="text-align: left;">Wholesale rack agreements define barrel as
+<strong>42 net U.S. gallons at 60°F</strong>, payment often <strong>ACH
+debit ~10 days from delivery</strong>, supported by invoice + rack meter
+ticket/BOL, with late fees (<a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT
+Fuels Wholesale Rack Agreement</a>). Pipeline/terminal GT&amp;Cs define
+custody, quality, and liability frameworks (<a href="https://cms.energytransfer.com/wp-content/uploads/2019/04/GTsCsPetroleumProducts-02012019v9_1_Final.pdf">Energy
+Transfer Petroleum Products GT&amp;Cs</a>). <strong>MD:</strong>
+Terminal ID, rack/bay eligibility, carrier authorization list, card-lock
+ID, product slate, minimum lift, appointment window, insurance
+certificates, access hours.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A3 Exchange, Buy-Sell &amp;
+Location Swap Structuring</strong></td>
+<td style="text-align: left;">Structure partner product exchanges
+(like-kind or differential), borrows/loans, and book-outs to optimize
+logistics footprint without unnecessary physical haul.</td>
+<td style="text-align: left;">IS-Oil EXG patterns track exchange
+balances, borrow/loan, LIA (Logical Inventory Adjustment) documents, and
+netting of customer/vendor invoices including product and tax postings
+(<a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/exchange-borrow-loan-invoice-the-difference-quantity-after-lia/m-p/7554007">SAP
+EXG discussion</a>; <a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/netting-statements-in-financial-transactions/td-p/2656532">SAP
+netting statements</a>). <strong>MD:</strong> Exchange agreement ID,
+partner dual role (customer+vendor), product pair equivalence (e.g.,
+CBOB↔︎RBOB with octane adjust), location pair, imbalance tolerance,
+settlement frequency, fee schedule, tax handling method, imbalance price
+index.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A4 Channel Contract
+Archetypes</strong></td>
+<td style="text-align: left;">Instantiate legal/commercial templates per
+channel with correct title, inventory ownership, and fee models.</td>
+<td style="text-align: left;"><strong>Retail:</strong> dealer-owned vs
+lessee-dealer vs commission agent changes who owns inventory and who is
+merchant of record (<a href="https://www.cstoretrader.com/guides/dealer-vs-lessee-dealer-vs-commission/">C-Store
+Trader</a>); consignment stations track supplier-owned inventory at site
+(<a href="https://help.petrosoftinc.com/Content/Station_Home/Station_Options/consigned_station.htm">Petrosoft</a>;
+<a href="http://www.petrodatainc.com/S7CONS.PDF">Petro-Data
+consignment</a>). <strong>Aviation:</strong> into-plane MSA + airport
+authority permits. <strong>Marine:</strong> bunker GT&amp;C + stem
+confirmation. <strong>Lubes:</strong> SPA with OEM approval lists.
+<strong>MD:</strong> Contract type code, title transfer rule (FCA rack /
+DAP tank / into-wing / FOB barge), inventory ownership flag, brand
+license, rebate table, SLA KPIs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A5 Volume Commitment &amp;
+Allocation Admin</strong></td>
+<td style="text-align: left;">Administer MVCs, ratable lifts, allocation
+during supply disruption, and force majeure notices.</td>
+<td style="text-align: left;">Downstream allocation is often terminal-
+and grade-specific (e.g., ULSD vs B5, winter RVP gasoline). Pipeline
+batch calendars and terminal inventory constrain call-offs.
+<strong>MD:</strong> Commitment volume by period/grade/location,
+ratability band, allocation priority class, FM clause ID, substitution
+rules (grade give/take).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b-credit-risk-management">3.B Credit &amp; Risk Management</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>B1 Multi-Dimensional
+Exposure</strong></td>
+<td style="text-align: left;">Continuously compute counterparty exposure
+across booked, lifted-unbilled, open AR, disputed, and contingent
+tax.</td>
+<td style="text-align: left;">Rack customers can lift continuously on
+card authorization; exposure spikes on weekends/holidays before
+invoicing. Formula-priced volumes create MTM risk vs index. Unbilled BOL
+tickets are material. <strong>MD:</strong> Exposure segments (product
+family, terminal region), unbilled aging buckets, MTM curve source, tax
+contingency flag, parent/child exposure roll-up.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B2 Collateral &amp; Prepay
+Controls</strong></td>
+<td style="text-align: left;">Manage LC, cash deposit, surety, parent
+guarantee; auto-switch to prepay when limit breached.</td>
+<td style="text-align: left;">Motor fuel dealers and jobbers often
+require bonds for tax liabilities in addition to trade credit.
+<strong>MD:</strong> Instrument type, expiry, evergreen flag, covered
+entities, drawdown rules.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B3 KYC / Sanctions /
+Licensing</strong></td>
+<td style="text-align: left;">Screen counterparties; validate fuel
+reseller / aviation / marine licenses.</td>
+<td style="text-align: left;">Resellers may need IRS 637 registration /
+state supplier licenses to purchase tax-free or at rack. Dyed diesel
+purchasers need proper exemption documentation (<a href="https://www.law.cornell.edu/cfr/text/26/48.4082-1">26 CFR
+§48.4082-1</a>; <a href="https://dor.mo.gov/taxation/business/tax-types/motor-fuel/documents/Tax-Requirements-of-Clear-and-Dyed-Diesel-Motor-Fuel.pdf">MO
+clear/dyed requirements</a>). <strong>MD:</strong> License
+type/jurisdiction/expiry, 637 status, exemption cert ID, screening list
+version, beneficial owner.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B4 Payment Term Risk by
+Channel</strong></td>
+<td style="text-align: left;">Align terms with lift velocity and fraud
+patterns.</td>
+<td style="text-align: left;">Rack ACH short cycle vs aviation monthly
+airline settlements vs marine stem letters of indemnity.
+Card-not-present rack fraud controls. <strong>MD:</strong> Default terms
+by channel, hard-block vs soft-warn, dual control thresholds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>B5 Multi-Gate Credit
+Release</strong></td>
+<td style="text-align: left;">Enforce credit at quote, order save,
+load-authorize (TAS), and invoice release.</td>
+<td style="text-align: left;">TAS load authorization is a real-time
+credit gate—failure mode is truck turned away at rack.
+<strong>MD:</strong> Release hierarchy, override authority matrix,
+real-time interface SLA to TAS.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c-order-management-fulfillment">3.C Order Management &amp;
+Fulfillment</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>C1 Multi-Channel Order
+Capture</strong></td>
+<td style="text-align: left;">Capture executable demand with complete
+logistics &amp; tax attributes.</td>
+<td style="text-align: left;">Order types: rack spot, rack contract
+call-off, C&amp;I delivery order, VMI auto-replenishment, aviation
+flight plan uplift, marine stem, lube sales order, retail tank
+replenishment, exchange lift. SAP MCOE-style downstream order features
+include plant determination, item category redetermination, contract
+call-off restrictions, final delivery indicator (<a href="https://www.proexcellency.com/products/sap-is-oil-gas-online-training">SAP
+IS-Oil training outline</a>). <strong>MD:</strong> Order type, contract
+reference, ship-to tank ID, product grade + additive, tax status
+(taxable/exempt/dyed), requested UoM, carrier preference, driver
+card.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C2 Nomination, Appointment &amp;
+Slotting</strong></td>
+<td style="text-align: left;">Reserve terminal/pipeline/marine capacity
+and time windows.</td>
+<td style="text-align: left;">Rack appointments reduce congestion;
+pipeline nominations per cycle; marine berth/barge windows; airport
+hydrant/into-plane slots. TSW nominates and schedules hydrocarbon
+movements with QCI-aware quantities (<a href="https://help.sap.com/docs/SUPPORT_CONTENT/isoil/3139386109.html">SAP
+TSW</a>). <strong>MD:</strong> Nomination cycle ID, appointment slot,
+batch ID, vessel IMO, voyage number, flight number/tail.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C3 Secondary Distribution
+Execution (TD)</strong></td>
+<td style="text-align: left;">Plan and execute bulk truck delivery from
+terminal/depot to customer tank or station.</td>
+<td style="text-align: left;">Multi-compartment trucks; product
+sequencing to avoid contamination; seal numbers; delivery ticket with
+compartment-level temp/density; split drops; night deliveries. SAP
+IS-Oil TD is the classic secondary distribution construct (<a href="https://resolvetech.com/sap-s4hana-downstream-oil-and-gas/">ResolveTech
+SAP S/4 Downstream</a>). <strong>MD:</strong> Vehicle ID, compartment
+map, trailer capacity, driver HOS, delivery sequence, geofence, stick
+reading method.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C4 Terminal Automation &amp;
+BOL</strong></td>
+<td style="text-align: left;">Authorize load, control valves/meters,
+capture ticket, print/transmit BOL.</td>
+<td style="text-align: left;">TAS enforces PIN/card, preset quantity,
+product arm, additive injection, overfill protection; issues BOL/meter
+ticket consumed by ERP billing (<a href="https://www.emerson.com/documents/automation/terminalmanager-en-186128.pdf">Emerson
+TerminalManager</a>; <a href="https://mangancontinuity.com/bill-of-lading-automation/">BOL
+automation</a>). <strong>MD:</strong> Badge/PIN, preset mode
+(gross/net), additive recipe, meter ID, BOL number range, seal range,
+carrier SCAC.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>C5 Allocation &amp;
+Availability</strong></td>
+<td style="text-align: left;">Constrain orders to physical bookable
+inventory and allocation rules.</td>
+<td style="text-align: left;">Book-stock vs physical tank gauge;
+pipeline in-transit; exchange receipts due; biofuel blendstock
+availability; RVP seasonal cutover. <strong>MD:</strong> ATP rules,
+allocation quota, blend recipe constraints, seasonal grade
+calendar.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d-invoicing-billing">3.D Invoicing &amp; Billing</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>D1 Ticket-to-Invoice
+Automation</strong></td>
+<td style="text-align: left;">Transform custody documents into AR
+invoices with minimal manual touch.</td>
+<td style="text-align: left;">Invoice basis documents: rack meter
+ticket/BOL, bulk delivery ticket, aviation uplift ticket, marine BDN,
+retail POS gallon summary, exchange LIA. Payment often references
+ticket/BOL copy (<a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT
+agreement</a>). BDN is both MARPOL compliance artifact and commercial
+quantity document (<a href="https://www.exxonmobil.com/en/marine/technicalresource/marine-resources/bunker-delivery-notes">ExxonMobil
+BDN</a>; <a href="https://vesselchain.org/bunker-delivery-note-guide-2025/">Vesselchain
+BDN guide</a>). <strong>MD:</strong> Billing document type by channel,
+copy control from delivery/ticket, alternate quantity fields
+(GOV/GSV/NSV/mass), external ticket ID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D2 Multi-Component
+Billing</strong></td>
+<td style="text-align: left;">Bill product energy/volume plus ancillary
+commercial components.</td>
+<td style="text-align: left;">Components: product, freight, stop-off,
+demurrage/detention, into-plane service fee, throughput/terminaling fee,
+additive, dye, bio blend premium, environmental fees, airport concession
+fees. Aviation invoices commonly mix fuel + FBO/handler fees and require
+line-level reconciliation (<a href="https://invoicedataextraction.com/blog/aviation-fuel-invoice-reconciliation">Aviation
+invoice reconciliation</a>). <strong>MD:</strong> Condition types,
+account assignment, fee rate tables by airport/port/terminal, currency,
+taxability per component.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D3 Excise, Motor Fuel &amp;
+Indirect Tax</strong></td>
+<td style="text-align: left;">Determine, invoice, remit, and report
+complex fuel taxes; manage exemptions and dyed product.</td>
+<td style="text-align: left;">Federal/state motor fuel tax stacks; dyed
+diesel/kerosene exempt from certain highway taxes if properly dyed and
+documented (<a href="https://www.law.cornell.edu/cfr/text/26/48.4082-1">26 CFR
+§48.4082-1</a>); nontaxable use credits for undyed fuel in off-highway
+use (<a href="https://www.irs.gov/credits-deductions/businesses/fuel-tax-credit">IRS
+Fuel Tax Credit</a>); state-by-state regimes (<a href="https://taxadmin.org/wp-content/uploads/resources/motor-fuels/motor-fuel-state.book_.pdf">FTA
+motor fuel book</a>). Origin vs destination basis; rack vs retail
+collection points; aviation and marine special regimes.
+<strong>MD:</strong> Tax jurisdiction chain, product tax class (clear
+ULSD, dyed ULSD, gasoline RVP class, Jet-A, MGO, VLSFO), exemption cert,
+dye indicator, IRS 637, point-of-taxation rule, filing entity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D4 Exchange Differential &amp; LIA
+Billing</strong></td>
+<td style="text-align: left;">Settle imbalances, fees, and quality
+give-and-take on partner exchanges.</td>
+<td style="text-align: left;">After physical lifts both ways, net
+quantity differences are invoiced; tax postings must mirror product
+movements; LIA adjusts book positions (<a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/exchange-borrow-loan-invoice-the-difference-quantity-after-lia/m-p/7554007">SAP
+EXG</a>). <strong>MD:</strong> Imbalance UoM, settlement price rule, fee
+per barrel moved, tax reverse-charge flags.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D5 Cycle / Consignment /
+Commission Settlement</strong></td>
+<td style="text-align: left;">Run periodic settlements where classic
+“invoice per delivery” is insufficient.</td>
+<td style="text-align: left;">Commission agents: settle commission on
+gallons sold, not title transfer at rack. Consignment: bill on retail
+sell-through or tank withdrawal. Lube rebates and brand image funds.
+<strong>MD:</strong> Settlement calendar, POS source system ID,
+commission rate table, shrink allowance, sell-through cut-off.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="e-receipt-collection">3.E Receipt &amp; Collection</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>E1 Intelligent Cash
+Application</strong></td>
+<td style="text-align: left;">Match remittances to invoices using
+hydrocarbon document keys.</td>
+<td style="text-align: left;">Remittance advice often cites BOL numbers,
+ticket IDs, load dates, or BDN numbers rather than invoice
+numbers—matching engine must use these alternate keys.
+<strong>MD:</strong> Matching key priority, tolerance (value &amp;
+volume), auto-write-off limit.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E2 Payment Rail
+Orchestration</strong></td>
+<td style="text-align: left;">Execute ACH debit, wire, card, lockbox,
+retail sweep.</td>
+<td style="text-align: left;">Rack agreements may mandate ACH debit on
+due date (<a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT</a>).
+Retail dealer sweeps and card settlements (fleet cards, network cards).
+<strong>MD:</strong> Bank account, mandate ID, payment method per payer,
+retry rules, NSF handling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E3 Partner Netting</strong></td>
+<td style="text-align: left;">Offset AR/AP across exchange and dual-role
+counterparties.</td>
+<td style="text-align: left;">Netting statements consolidate buy/sell
+and exchange fees into single cash movement (<a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/netting-statements-in-financial-transactions/td-p/2656532">SAP
+netting</a>). <strong>MD:</strong> Netting agreement, eligible document
+types, close calendar, residual cash threshold.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E4 Deduction
+Management</strong></td>
+<td style="text-align: left;">Capture short-pays with structured reason
+codes and workflow.</td>
+<td style="text-align: left;">Typical deductions: temperature/quantity,
+quality, tax overcharge, freight, demurrage counterclaim, retail promo.
+<strong>MD:</strong> Reason taxonomy, evidence checklist (ticket, COA,
+gauge), owner role.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>E5 Suspense &amp; Unapplied
+Cash</strong></td>
+<td style="text-align: left;">Clear unidentified receipts quickly given
+high ticket volumes.</td>
+<td style="text-align: left;">High-volume rack produces many small
+invoices; unapplied cash ages into credit risk noise.
+<strong>MD:</strong> Suspense GL, aging SLA, research work queue.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="f-dispute-management">3.F Dispute Management</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>F1 Quantity / Measurement
+Dispute</strong></td>
+<td style="text-align: left;">Investigate variance between billed NSV
+and customer claim.</td>
+<td style="text-align: left;">Root causes: wrong observed temperature,
+density/API gravity, meter factor, VCF table version, air vs vacuum
+mass, shore vs ship figures, foaming/entrained air, stick vs meter.
+Resolution path: retrieve TAS ticket raw data → re-run QCI (API MPMS
+11.1 / ASTM D1250) → meter proving records → issue credit/rebill (<a href="https://www.astm.org/d1250-19e01.html">ASTM D1250</a>; <a href="https://www.api.org/-/media/files/publications/2024-catalog/2024-petroleum-measurement.pdf">API
+MPMS catalog</a>). <strong>MD:</strong> Ticket raw observations
+(TOV/GOV, temp, pressure, density), VCF version, meter factor, proving
+certificate ID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F2 Quality / Spec
+Dispute</strong></td>
+<td style="text-align: left;">Handle off-spec claims (octane, sulfur,
+water, flash, viscosity, FAME%, cold properties).</td>
+<td style="text-align: left;">COA vs actual; pipeline contamination;
+wrong additive; bio blend stratification. May trigger product return,
+regrade, or price adjustment (e.g., octane giveaway). Blending economics
+and octane/RVP constraints are first-class (<a href="https://people.mines.edu/jjechura/wp-content/uploads/sites/120/2019/02/CBEN409_11_Blending_Optimization-1.pdf">Mines
+blending notes</a>; <a href="https://www.spglobal.com/energy/en/pricing-benchmarks/our-methodology/subscriber-notes/050126-platts-launches-new-gasoline-blend-value-calculations-in-us">Platts
+blend value</a>). <strong>MD:</strong> Spec limits per
+grade/season/jurisdiction, COA ID, lab method (ASTM), retention sample
+ID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F3 Price / Index
+Dispute</strong></td>
+<td style="text-align: left;">Resolve incorrect index, differential,
+effective date, or UoM conversion.</td>
+<td style="text-align: left;">Common: used gross vs net gallons; wrong
+OPIS rack average; holiday publication; currency. <strong>MD:</strong>
+Index snapshot store (immutable), contract price procedure version,
+calculation audit log.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F4 Tax Dispute &amp;
+Rebill</strong></td>
+<td style="text-align: left;">Correct taxability, exemption, or
+jurisdiction errors.</td>
+<td style="text-align: left;">Dyed product sold as clear (or reverse);
+missing exemption cert; wrong destination state on drop; aviation vs
+highway use. May require amended returns. <strong>MD:</strong> Cert
+image, effective dates, use-type code, amended return flag.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F5 Logistics Service
+Claims</strong></td>
+<td style="text-align: left;">Demurrage, detention, no-show appointment,
+into-plane delay, stem short-delivery.</td>
+<td style="text-align: left;">Marine demurrage and airport delay
+penalties are high-value. <strong>MD:</strong> Laytime terms, NOR
+timestamps, appointment actuals, reason codes.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="g-customer-retention-contract-performance">3.G Customer
+Retention &amp; Contract Performance</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>G1 Utilization &amp; Uplift
+Analytics</strong></td>
+<td style="text-align: left;">Track actual vs committed volumes by
+grade/location.</td>
+<td style="text-align: left;">Terminal share of wallet; rack lift
+patterns; aviation airport coverage. Feeds KPI Store candidates
+(contract attainment, lost lift). <strong>MD:</strong> Commitment
+baseline, actual NSV, weather/force majeure flags.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G2 Rebate / Brand / Incentive
+True-Up</strong></td>
+<td style="text-align: left;">Calculate volume rebates, image funds,
+dealer incentives.</td>
+<td style="text-align: left;">Retail brand networks: cents-per-gallon
+rebates, co-op advertising. Fleet card incentives. <strong>MD:</strong>
+Program ID, accrual rate, clawback rules.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G3 Network Health
+(Retail)</strong></td>
+<td style="text-align: left;">Monitor dealer financial stress, station
+downtime, brand compliance.</td>
+<td style="text-align: left;">Early-warning for credit and churn.
+<strong>MD:</strong> Station status, mystery shop scores, out-of-fuel
+events.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G4 OTIF &amp; Service
+Level</strong></td>
+<td style="text-align: left;">Measure on-time-in-full by channel with
+hydrocarbon definitions of “full.”**</td>
+<td style="text-align: left;">“Full” means within measurement tolerance
+of ordered NSV, correct grade, correct tax status. <strong>MD:</strong>
+Tolerance band, grade substitution policy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>G5 Renewal &amp; Index
+Roll</strong></td>
+<td style="text-align: left;">Manage contract end-of-term and index
+basis changes.</td>
+<td style="text-align: left;">Seasonal grade changes force reprice;
+regulatory sulfur/RVP changes. <strong>MD:</strong> Renewal workflow,
+notice period, new index mapping.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="h-master-data-management-o2c-critical-domains">3.H Master Data
+Management (O2C-Critical Domains)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>H1 Party &amp; Account
+Topology</strong></td>
+<td style="text-align: left;">Govern sold-to, ship-to, bill-to, payer,
+end-use consumer, dealer of record.</td>
+<td style="text-align: left;">One legal entity may lift at 50 terminals;
+one payer may cover 200 stations; aviation needs airline + handler +
+airport. <strong>MD:</strong> Hierarchy, tax ID, licenses, credit link,
+EDI endpoint.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>H2 Product / Spec / Tax
+Class</strong></td>
+<td style="text-align: left;">Maintain hydrocarbon and packaged product
+masters with dual UoM and taxability.</td>
+<td style="text-align: left;">Fuels: base grade, oxygenate, RVP class,
+sulfur class, biodiesel %; lubes: viscosity, OEM spec; marine: ISO 8217
+grade, sulfur. HPM dynamic conversion parameters. <strong>MD:</strong>
+Material, base UoM, alternate UoM, density defaults, QCI group, tax
+class, dangerous goods.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>H3 Location Topology</strong></td>
+<td style="text-align: left;">Terminal, rack, bay, tank, depot, station,
+airport hydrant, port berth.</td>
+<td style="text-align: left;">Inventory ownership can differ by tank
+(throughput customer stock vs company stock). <strong>MD:</strong>
+Plant/SLoc/tank, latitude/longitude, jurisdiction, TAS system ID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>H4 Exchange &amp; Book
+Structures</strong></td>
+<td style="text-align: left;">Partner agreements and logical inventory
+books.</td>
+<td style="text-align: left;">Book-out chains; location swaps.
+<strong>MD:</strong> Agreement, book ID, imbalance GL.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>H5 Logistics Asset
+Masters</strong></td>
+<td style="text-align: left;">Carriers, drivers, trailers, compartments,
+cards, vessels, aircraft.</td>
+<td style="text-align: left;">Load control depends on valid card/PIN and
+compartment cleanliness certification. <strong>MD:</strong> Asset ID,
+certifications, blacklist status.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="i-governance-controls-compliance">3.I Governance, Controls &amp;
+Compliance</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">L2 Process Name</th>
+<th style="text-align: left;">Definition &amp; Core Business
+Activities</th>
+<th style="text-align: left;">Downstream O&amp;G Specifics &amp; Master
+Data Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>I1 Measurement
+Governance</strong></td>
+<td style="text-align: left;">Own standards, meter proving cadence, VCF
+software versions.</td>
+<td style="text-align: left;">API MPMS chapters cover vocabulary, tanks,
+metering, proving, marine measurement, and quantity calculation (Ch. 12
+NSV concepts) (<a href="https://www.api.org/-/media/files/publications/2024-catalog/2024-petroleum-measurement.pdf">API
+catalog</a>). <strong>MD:</strong> Standard version, proving schedule,
+software adjunct version for D1250.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>I2 Pricing Authority
+Controls</strong></td>
+<td style="text-align: left;">Segregate who can change rack postings vs
+contract differentials.</td>
+<td style="text-align: left;">Rack price sheets change multiple times
+per day; controls against unauthorized overrides. <strong>MD:</strong>
+Approval matrix, price freeze windows.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>I3 Tax &amp; Excise
+Compliance</strong></td>
+<td style="text-align: left;">Filing, remittance, dye compliance,
+exemption audit.</td>
+<td style="text-align: left;">Civil/criminal exposure for misuse of dyed
+fuel (<a href="https://dor.mo.gov/taxation/business/tax-types/motor-fuel/documents/Tax-Requirements-of-Clear-and-Dyed-Diesel-Motor-Fuel.pdf">MO
+guidance</a>). <strong>MD:</strong> Filing calendar, return mapping from
+invoice tax lines.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>I4 Revenue Recognition / Title
+Controls</strong></td>
+<td style="text-align: left;">Align billing and revenue with Incoterms
+and custody events.</td>
+<td style="text-align: left;">Title at flange vs destination tank
+changes cut-off. Exchange imbalances are not “sales” until settled.
+<strong>MD:</strong> Title rule code, cut-off calendar.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>I5 O2C Data Product
+Stewardship</strong></td>
+<td style="text-align: left;">Define quality rules for tickets,
+invoices, exposure feeds into KPI Store.</td>
+<td style="text-align: left;">Ticket completeness (temp, density, VCF)
+is a data product SLA, not optional. <strong>MD:</strong> DQ rules,
+lineage to TAS/ERP, steward RACI.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cross-cutting-physical-measurement-baseline-applies-to-cf">3.3
+Cross-Cutting Physical Measurement Baseline (applies to C–F)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Definition in Downstream O2C</th>
+<th style="text-align: left;">Typical Master / Transaction
+Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GOV (Gross Observed
+Volume)</strong></td>
+<td style="text-align: left;">Volume at observed temperature/pressure,
+including free water as applicable per method</td>
+<td style="text-align: left;">Observed temp, pressure, meter reading,
+tank gauge</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GSV (Gross Standard
+Volume)</strong></td>
+<td style="text-align: left;">GOV corrected by VCF (CTL/CPL) to standard
+conditions (e.g., 60°F / 15°C)</td>
+<td style="text-align: left;">VCF, CTL, CPL, reference density</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NSV (Net Standard
+Volume)</strong></td>
+<td style="text-align: left;">GSV minus sediment &amp; water (S&amp;W)
+or other deductions per contract/API Ch.12 practice</td>
+<td style="text-align: left;">S&amp;W %, NSV, method</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mass / Weight</strong></td>
+<td style="text-align: left;">Often used in marine and some pipeline;
+air vs vacuum basis must be explicit</td>
+<td style="text-align: left;">Density, weight factor, vacuum/air
+flag</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>QCI</strong></td>
+<td style="text-align: left;">System interface/engine performing dynamic
+hydrocarbon quantity conversion for ERP postings</td>
+<td style="text-align: left;">Material/plant/SLoc/batch conversion data
+(<a href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f4ab800d01c4366b0c9aaff06a64320/40ea5e9072ae42119c3425a9f9294d5f.html">SAP
+QCI</a>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Standard conditions</strong></td>
+<td style="text-align: left;">Contractual basis for “net gallon” / “net
+barrel” — commonly 60°F US (<a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT
+barrel definition</a>)</td>
+<td style="text-align: left;">Std temp/pressure profile ID</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="section-4-system-landscape-integration-architecture">SECTION 4:
+SYSTEM LANDSCAPE &amp; INTEGRATION ARCHITECTURE</h2>
+<h3 id="target-state-logical-architecture-ascii">4.1 Target-State
+Logical Architecture (ASCII)</h3>
+<pre><code>                    ┌──────────────────────────────────────────────────────────┐
+                    │  EXPERIENCE &amp; COMMERCIAL EDGE                             │
+                    │  CRM / CPQ / Dealer Portal / Customer Portal / Mobile      │
+                    │  Aviation Ops Portal · Marine Stem Desk · Lube B2B Shop    │
+                    └───────────────┬─────────────────────────────┬─────────────┘
+                                    │ quotes, contracts, orders   │ claims, self-service
+                                    ▼                             ▼
+┌──────────────┐    ┌──────────────────────────────────────────────────────────┐    ┌──────────────────┐
+│ Market Data  │    │              CORE COMMERCIAL ERP / INDUSTRY SOLUTION      │    │ Credit / Treasury │
+│ Platts/OPIS/ │───▶│  SD/O2C · IS-Oil (HPM, TSW, TD, EXG, TDP) or equivalent  │◀──▶│ Limit · Collateral│
+│ Argus · NYMEX│    │  Pricing engine · Billing · AR · Netting · Exchanges      │    │ Sanctions · KYC   │
+└──────────────┘    └───────────┬───────────────┬───────────────┬───────────────┘    └──────────────────┘
+                                │               │               │
+           nominations/orders   │               │ invoices      │ settlements
+                                ▼               │               ▼
+┌───────────────────────────────────────────────┼──────────────────────────────────────────────────────┐
+│  LOGISTICS &amp; CUSTODY FABRIC                   │                                                      │
+│  ┌─────────────────────┐  ┌──────────────────▼──────────┐  ┌─────────────────────────────────────┐ │
+│  │ Terminal Automation │  │ Secondary Distribution / TMS │  │ Fleet Telemetry / VMI / ATG        │ │
+│  │ System (TAS)        │  │ Bulk truck · routing · TD    │  │ Tank gauges · pump totalizers      │ │
+│  │ Load control · BOL  │  │ Delivery ticket · seals      │  │ eVMI auto-replenishment            │ │
+│  │ Additive · cardlock │  └──────────────────────────────┘  └─────────────────────────────────────┘ │
+│  └──────────┬──────────┘                                                                            │
+│             │ tickets / inventory                                                                   │
+│  ┌──────────▼──────────┐  ┌─────────────────────────────┐  ┌─────────────────────────────────────┐ │
+│  │ Pipeline SCADA /    │  │ Aviation Fueling / FBO      │  │ Marine Bunkerting · Barge · BDN    │ │
+│  │ Nomination systems  │  │ Into-plane · uplift tickets │  │ Mass flow · MARPOL docs            │ │
+│  └─────────────────────┘  └─────────────────────────────┘  └─────────────────────────────────────┘ │
+└────────────────────────────────────┬────────────────────────────────────────────────────────────────┘
+                                     │ custody events (ticket, BDN, uplift, gauge)
+                                     ▼
+                    ┌──────────────────────────────────────────────────────────┐
+                    │  MEASUREMENT &amp; QUALITY                                    │
+                    │  QCI / QuantityWare / OpenTAS QCM · LIMS · COA · Proving  │
+                    │  API MPMS 11.1 / ASTM D1250 VCF engines                    │
+                    └──────────────────────────┬───────────────────────────────┘
+                                               │ corrected NSV + quality
+                                               ▼
+┌──────────────────┐    ┌──────────────────────────────────────────────────────┐    ┌──────────────────┐
+│ Indirect Tax     │◀──▶│  FINANCE &amp; COMPLIANCE CORE                            │───▶│ Bank / Payment   │
+│ Engine           │    │  GL · AR · AP netting · Excise returns · SOX controls │    │ ACH · Wire · Card│
+│ Vertex/Sabrix/   │    └──────────────────────────┬───────────────────────────┘    └──────────────────┘
+│ custom fuel tax  │                               │
+└──────────────────┘                               ▼
+                    ┌──────────────────────────────────────────────────────────┐
+                    │  DATA / ANALYTICS / EPM                                   │
+                    │  Ticket &amp; Invoice Data Products · KPI Store · Power BI    │
+                    │  Credit exposure cubes · OTIF · Dispute aging             │
+                    └──────────────────────────────────────────────────────────┘</code></pre>
+<p>Industry platforms emphasize ERP integration of terminal/pipeline
+O2C, inventory visibility, and month-end acceleration (<a href="https://www.emerson.com/en/automation-systems/advanced-industry-software/oil-and-gas/software-for-energy-transportation-storage/order-to-cash-software">Emerson
+O2C</a>). SAP S/4 Downstream industry solutions package
+refining-to-distribution processes including TSW/TD/HPM constructs (<a href="https://resolvetech.com/sap-s4hana-downstream-oil-and-gas/">ResolveTech</a>).
+VMI solutions close the loop from tank telemetry to automated ordering
+(<a href="https://www.shell.com/business-customers/commercial-fuels/evmi.html">Shell
+eVMI</a>; <a href="https://www.foxinsights.ai/en/resources/what-is-vmi-fuel-distribution">Fox
+Insights VMI</a>).</p>
+<h3 id="critical-real-time-near-real-time-integration-points">4.2
+Critical Real-Time / Near-Real-Time Integration Points</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th style="text-align: left;">Integration</th>
+<th style="text-align: left;">Pattern</th>
+<th style="text-align: left;">Latency Target</th>
+<th style="text-align: left;">Payload Essentials</th>
+<th style="text-align: left;">Failure Mode if Broken</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>CRM/CPQ → ERP
+Contract</strong></td>
+<td style="text-align: left;">Event / batch</td>
+<td style="text-align: left;">Minutes–hours</td>
+<td style="text-align: left;">Contract ID, price procedure, ship-to
+slate, credit terms</td>
+<td style="text-align: left;">Orders blocked or wrong price</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>Market Data →
+Pricing</strong></td>
+<td style="text-align: left;">Scheduled feed + snapshot store</td>
+<td style="text-align: left;">Multiple/day</td>
+<td style="text-align: left;">Index ID, timestamp, value, UoM</td>
+<td style="text-align: left;">Systematic misbills; disputes</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>ERP Order → TAS
+Authorization</strong></td>
+<td style="text-align: left;">Real-time sync/async</td>
+<td style="text-align: left;">Seconds</td>
+<td style="text-align: left;">Order/preset, customer card, product, max
+qty, credit token</td>
+<td style="text-align: left;">Truck denied at rack; lost lift</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>TAS → ERP
+Delivery/Ticket</strong></td>
+<td style="text-align: left;">Real-time event</td>
+<td style="text-align: left;">Seconds–minutes</td>
+<td style="text-align: left;">BOL#, meter tickets, GOV, temp, density,
+additive, seals, driver</td>
+<td style="text-align: left;">Unbilled lifts; inventory mismatch</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;"><strong>Ticket → QCI Engine → ERP Goods
+Issue</strong></td>
+<td style="text-align: left;">Inline sync</td>
+<td style="text-align: left;">Seconds</td>
+<td style="text-align: left;">Observed values in; NSV/mass out</td>
+<td style="text-align: left;">Wrong inventory &amp; COGS</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><strong>ATG/VMI → Order
+Management</strong></td>
+<td style="text-align: left;">Event + forecast</td>
+<td style="text-align: left;">Minutes–hourly</td>
+<td style="text-align: left;">Tank ID, gross/net level, ullage, rate of
+consumption</td>
+<td style="text-align: left;">Run-outs or overfills</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;"><strong>TD Mobile → ERP Proof of
+Delivery</strong></td>
+<td style="text-align: left;">Event</td>
+<td style="text-align: left;">Minutes</td>
+<td style="text-align: left;">Compartment qty, temp, stick before/after,
+GPS, signature</td>
+<td style="text-align: left;">Billing delay; theft risk</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;"><strong>Into-Plane System →
+Billing</strong></td>
+<td style="text-align: left;">Event</td>
+<td style="text-align: left;">Minutes</td>
+<td style="text-align: left;">Uplift ticket, flight/tail,
+gallons/liters, density, fee codes</td>
+<td style="text-align: left;">Airline reconciliation breaks</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;"><strong>Marine BDN → ERP + Document
+Archive</strong></td>
+<td style="text-align: left;">Event + eBDN</td>
+<td style="text-align: left;">Minutes</td>
+<td style="text-align: left;">BDN#, mass/volume, sulfur, viscosity,
+barge ID, timestamps</td>
+<td style="text-align: left;">MARPOL + commercial exposure</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;"><strong>ERP Billing → Tax
+Engine</strong></td>
+<td style="text-align: left;">Inline</td>
+<td style="text-align: left;">Seconds</td>
+<td style="text-align: left;">Ship-from/to, product tax class,
+exemptions, dye flag</td>
+<td style="text-align: left;">Incorrect excise; filing error</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;"><strong>ERP AR → Credit
+Engine</strong></td>
+<td style="text-align: left;">Near real-time</td>
+<td style="text-align: left;">Minutes</td>
+<td style="text-align: left;">Open items, unbilled tickets,
+disputes</td>
+<td style="text-align: left;">Over-limit lifts</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;"><strong>AR → Bank ACH Debit</strong></td>
+<td style="text-align: left;">Scheduled</td>
+<td style="text-align: left;">Daily</td>
+<td style="text-align: left;">Invoice list, mandate, amount</td>
+<td style="text-align: left;">Cash delay; NSF cascade</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;"><strong>EXG Balances →
+Netting</strong></td>
+<td style="text-align: left;">Period batch</td>
+<td style="text-align: left;">Daily/weekly</td>
+<td style="text-align: left;">Dual postings, fees, tax</td>
+<td style="text-align: left;">Working capital leakage</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: left;"><strong>POS/Station → Consignment
+Settlement</strong></td>
+<td style="text-align: left;">Shift/daily</td>
+<td style="text-align: left;">Hours</td>
+<td style="text-align: left;">Pump totalizer, grade mix, price book</td>
+<td style="text-align: left;">Shrink and revenue leakage</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: left;"><strong>O2C Events → EPM Data
+Products</strong></td>
+<td style="text-align: left;">Stream/CDC</td>
+<td style="text-align: left;">Near real-time</td>
+<td style="text-align: left;">Normalized ticket/invoice/exposure
+facts</td>
+<td style="text-align: left;">Blind KPI Store / bad decisions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="integration-control-requirements">4.3 Integration Control
+Requirements</h3>
+<ol type="1">
+<li><strong>Immutable ticket store</strong> — raw TAS observations
+retained even after QCI recalculation.</li>
+<li><strong>Exactly-once billing keys</strong> — BOL/ticket unique
+constraints prevent double bill.</li>
+<li><strong>Clock sync</strong> — terminal, ERP, and bank cut-offs
+aligned to contract time zones (often Central for US rack).</li>
+<li><strong>Credit token expiry</strong> — TAS auth tokens short-lived
+to prevent stale approvals.</li>
+<li><strong>Tax determination audit</strong> — every invoice line stores
+full jurisdiction and cert reference.</li>
+<li><strong>Index snapshot immutability</strong> — price disputes
+require as-published frozen values, not live re-query.</li>
+</ol>
+<hr />
+<h2 id="section-5-downstream-operational-exceptions-risk-management">SECTION
+5: DOWNSTREAM OPERATIONAL EXCEPTIONS &amp; RISK MANAGEMENT</h2>
+<h3 id="exception-catalog-critical-edge-cases">5.1 Exception Catalog
+(Critical Edge Cases)</h3>
+<h4 id="exception-1-temperature-vcf-quantity-variance-rack-or-bulk">Exception
+1 — Temperature / VCF Quantity Variance (Rack or Bulk)</h4>
+<p><strong>Scenario.</strong> Customer ordered 8,000 gross gallons. Hot
+summer rack meter tickets 8,000 GOV at 92°F. Billed NSV after VCF is
+~7,900 gallons. Customer short-pays the “missing” 100 gallons, claiming
+meter error.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li><strong>Capture:</strong> Deduction reason code <em>QTY-TEMP</em>
+linked to invoice and BOL#.</li>
+<li><strong>Evidence pack:</strong> TAS ticket (observed temp, API
+gravity/density, meter ID), VCF engine version (API MPMS 11.1 / ASTM
+D1250), contract clause stating net gallons <span class="citation" data-cites="60">@60</span>°F (<a href="https://www.astm.org/d1250-19e01.html">ASTM D1250</a>; <a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT
+barrel <span class="citation" data-cites="60">@60</span>°F</a>).</li>
+<li><strong>Re-perform QCI</strong> with stored raw observations;
+compare to billed NSV.</li>
+<li><strong>If calculation correct:</strong> Issue formal dispute denial
+with calculation worksheet; collect residual; educate counterparty.</li>
+<li><strong>If meter/temp probe fault:</strong> Pull proving/calibration
+records; credit NSV difference; open maintenance notification; evaluate
+prior lifts on same meter (systematic bias).</li>
+<li><strong>Control uplift:</strong> Dashboard of GOV–NSV spreads by
+terminal/meter; DQ rule requiring temp/density on every ticket before
+billing release.</li>
+</ol>
+<h4 id="exception-2-dyed-vs-clear-diesel-tax-misclassification">Exception 2
+— Dyed vs Clear Diesel Tax Misclassification</h4>
+<p><strong>Scenario.</strong> C&amp;I construction customer entitled to
+dyed ULSD for off-road equipment is loaded with clear ULSD due to wrong
+product arm / order tax status. Invoice includes highway excise;
+customer refuses tax portion. Alternatively, dyed product is diverted to
+highway use—regulatory violation.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li><strong>Detect:</strong> Tax engine vs product dye indicator
+mismatch; or state inspection notice.</li>
+<li><strong>Quarantine AR tax lines</strong>; freeze further lifts on
+that ship-to until cert/product status validated (<a href="https://www.law.cornell.edu/cfr/text/26/48.4082-1">26 CFR
+§48.4082-1</a>; <a href="https://dor.mo.gov/taxation/business/tax-types/motor-fuel/documents/Tax-Requirements-of-Clear-and-Dyed-Diesel-Motor-Fuel.pdf">MO
+dyed fuel guidance</a>).</li>
+<li><strong>If supplier error (clear sold when dyed ordered):</strong>
+Arrange product swap or credit tax + price differential; file amended
+tax return if remitted; RCA on TAS product mapping and order default tax
+class.</li>
+<li><strong>If customer misuse of dyed:</strong> Escalate to compliance;
+potential report; terminate dyed eligibility; rebill tax where legally
+required.</li>
+<li><strong>Master data fix:</strong> Ship-to default product slate,
+exemption cert effective dating, driver training flags on BOLs
+(“NONTAXABLE USE ONLY” legends).</li>
+<li><strong>Preventive control:</strong> Two-person rule for tax class
+overrides; cert expiry blocking in order entry.</li>
+</ol>
+<h4 id="exception-3-exchange-imbalance-netting-break">Exception 3 —
+Exchange Imbalance &amp; Netting Break</h4>
+<p><strong>Scenario.</strong> Partner exchange at two terminals: Company
+A lifts 50 kbbl gasoline at Partner terminal; Partner lifts 47 kbbl at
+Company terminal in the month. Fees and tax treatments differ by state.
+Month-end imbalance invoice disagrees by volume and tax.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li><strong>Reconcile operational tickets both ways</strong> to exchange
+book (not just GL).</li>
+<li><strong>Apply LIA</strong> for identified gains/losses and
+measurement tolerances (<a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/exchange-borrow-loan-invoice-the-difference-quantity-after-lia/m-p/7554007">SAP
+EXG/LIA</a>).</li>
+<li><strong>Price residual imbalance</strong> per agreement index +
+location differential.</li>
+<li><strong>Tax alignment:</strong> Ensure each physical lift carried
+correct origin/destination tax; imbalance settlement may be
+financial-only without second tax event—per agreement and counsel.</li>
+<li><strong>Generate netting statement</strong> combining AR/AP and fees
+into one cash move (<a href="https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/netting-statements-in-financial-transactions/td-p/2656532">SAP
+netting</a>).</li>
+<li><strong>Dispute slice:</strong> Volume vs fee vs tax separated—never
+net into a single opaque “misc” deduction.</li>
+<li><strong>Control:</strong> Weekly exchange balance dashboard with
+tolerance breach alerts before month-end cliff.</li>
+</ol>
+<h4 id="exception-4-aviation-uplift-ticket-vs-airline-operational-log-mismatch">Exception
+4 — Aviation Uplift Ticket vs Airline Operational Log Mismatch</h4>
+<p><strong>Scenario.</strong> Into-plane agent bills 12,450 USG Jet-A
+for flight XX123 tail Nxxx. Airline operations log shows 12,100 USG.
+Service fees and airport concession fees also differ.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li><strong>Match keys:</strong> Flight number, tail, date/time window,
+airport ICAO, ticket number (<a href="https://invoicedataextraction.com/blog/aviation-fuel-invoice-reconciliation">Aviation
+invoice reconciliation</a>).</li>
+<li><strong>Retrieve</strong> hydrant/truck meter ticket, density/temp,
+and fueler signature; compare to aircraft fuel slip.</li>
+<li><strong>Split dispute:</strong> energy/volume vs into-plane service
+fee vs third-party airport fees.</li>
+<li><strong>If under-delivery proven:</strong> Credit volume; review
+whether defuel/refuel or meter jump occurred; check for shared hydrant
+allocation errors.</li>
+<li><strong>If airline log incomplete:</strong> Provide ticket image
+pack; enforce contractual meter primacy clause.</li>
+<li><strong>Process fix:</strong> Require electronic uplift capture with
+photo of aircraft gauge/fuel slip; SLA for ticket transmission &lt; X
+minutes after disconnect.</li>
+<li><strong>Credit impact:</strong> Unbilled/disputed aviation volumes
+remain in exposure until closed.</li>
+</ol>
+<h4 id="exception-5-marine-bdn-quantity-challenge-ship-vs-barge-figures">Exception
+5 — Marine BDN Quantity Challenge (Ship vs Barge Figures)</h4>
+<p><strong>Scenario.</strong> Barge delivers VLSFO; BDN shows 1,500.000
+MT. Vessel chief engineer claims 1,472 MT by ship tank measurement.
+Buyer short-pays and threatens off-spec claim on viscosity/sulfur.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li><strong>Secure documents:</strong> BDN (including mandatory MARPOL
+fields), meter or tank calc sheets, COA, seal numbers, timestamps,
+NOR/SOF (<a href="https://www.exxonmobil.com/en/marine/technicalresource/marine-resources/bunker-delivery-notes">ExxonMobil
+BDN</a>; <a href="https://vesselchain.org/bunker-delivery-note-guide-2025/">BDN
+guide</a>).</li>
+<li><strong>Determine contractual measurement hierarchy</strong> (mass
+flow meter vs barge tanks vs ship tanks) and whether surveyor was
+called.</li>
+<li><strong>Quantity path:</strong> Recompute with correct density in
+air/vacuum basis; check list/trim corrections; confirm no pipeline
+content double-count.</li>
+<li><strong>Quality path:</strong> Retain sample per MARPOL; if sulfur
+out of spec, initiate non-conformance—may trigger fuel replacement,
+speed claims, or rejection independent of quantity.</li>
+<li><strong>Commercial settlement:</strong> Issue credit note / debit
+note; update stem file; demurrage if delay from dispute at berth.</li>
+<li><strong>Preventive:</strong> Prefer calibrated mass flow meters;
+independent surveyor triggers at threshold; eBDN integration to ERP to
+avoid re-key errors.</li>
+<li><strong>Accounting:</strong> Accrue revenue at provisional BDN;
+true-up post-survey within close calendar.</li>
+</ol>
+<h4 id="exception-6-bonus-retail-consignment-shrink-commission-settlement-gap">Exception
+6 (Bonus) — Retail Consignment Shrink &amp; Commission Settlement
+Gap</h4>
+<p><strong>Scenario.</strong> Commission-agent station shows pump
+totalizer sales exceeding tank truck drops + opening stock by 1.8% for
+the month (beyond shrink allowance). Dealer claims supplier
+short-dropped; supplier claims theft or meter drift.</p>
+<p><strong>O2C resolution path.</strong></p>
+<ol type="1">
+<li>Confirm <strong>inventory ownership model</strong> (consignment vs
+dealer-owned) (<a href="https://www.cstoretrader.com/guides/dealer-vs-lessee-dealer-vs-commission/">C-Store
+Trader</a>; <a href="https://help.petrosoftinc.com/Content/Station_Home/Station_Options/consigned_station.htm">Petrosoft
+consignment</a>).</li>
+<li>Reconcile: opening stick/ATG + BOL drops − closing ATG − metered
+sales = shrink.</li>
+<li>Validate compartment delivery tickets (temp-corrected) and ATG
+calibration.</li>
+<li>If supplier short-drop: credit inventory and adjust commission
+base.</li>
+<li>If station loss: charge dealer per contract shrink clause; potential
+security review; credit limit rethink.</li>
+<li>Settlement run: commission on <em>authorized</em> gallons only; hold
+payment until variance cleared.</li>
+<li>Control: weekly ATG vs book variance alerts; sealed drop SOP; camera
+on tank fills.</li>
+</ol>
+<h3 id="risk-to-control-matrix-summary">5.2 Risk-to-Control Matrix
+(Summary)</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Risk</th>
+<th style="text-align: left;">Primary Chevron</th>
+<th style="text-align: left;">Preventive Control</th>
+<th style="text-align: left;">Detective Control</th>
+<th style="text-align: left;">Corrective Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Mismeasured volume</td>
+<td style="text-align: left;">5–6</td>
+<td style="text-align: left;">Proving + QCI governance</td>
+<td style="text-align: left;">GOV–NSV analytics</td>
+<td style="text-align: left;">Rebill/credit + meter work order</td>
+</tr>
+<tr>
+<td style="text-align: left;">Excise misclassification</td>
+<td style="text-align: left;">3–6</td>
+<td style="text-align: left;">Cert &amp; dye hard-stops</td>
+<td style="text-align: left;">Tax exception reports</td>
+<td style="text-align: left;">Amend + rebill</td>
+</tr>
+<tr>
+<td style="text-align: left;">Credit overrun at rack</td>
+<td style="text-align: left;">2–4</td>
+<td style="text-align: left;">Real-time TAS credit token</td>
+<td style="text-align: left;">Unbilled exposure aging</td>
+<td style="text-align: left;">Block card; collect; revise limit</td>
+</tr>
+<tr>
+<td style="text-align: left;">Exchange book break</td>
+<td style="text-align: left;">4–7</td>
+<td style="text-align: left;">Dual-entry ticket to EXG book</td>
+<td style="text-align: left;">Weekly imbalance dashboard</td>
+<td style="text-align: left;">LIA + netting true-up</td>
+</tr>
+<tr>
+<td style="text-align: left;">Aviation/marine doc mismatch</td>
+<td style="text-align: left;">5–6</td>
+<td style="text-align: left;">e-ticket/eBDN mandatory fields</td>
+<td style="text-align: left;">Auto match to ops logs</td>
+<td style="text-align: left;">Survey + credit note</td>
+</tr>
+<tr>
+<td style="text-align: left;">Retail shrink</td>
+<td style="text-align: left;">4–7</td>
+<td style="text-align: left;">Sealed drops + ATG</td>
+<td style="text-align: left;">Variance &gt; threshold alert</td>
+<td style="text-align: left;">Chargeback / police / process fix</td>
+</tr>
+<tr>
+<td style="text-align: left;">Index price error</td>
+<td style="text-align: left;">1,6</td>
+<td style="text-align: left;">Immutable snapshots</td>
+<td style="text-align: left;">Price variance vs prior day</td>
+<td style="text-align: left;">Auto reprice job + notify</td>
+</tr>
+<tr>
+<td style="text-align: left;">Double billing ticket</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Unique external ticket key</td>
+<td style="text-align: left;">Duplicate detection job</td>
+<td style="text-align: left;">Void/credit immediately</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-a-channel-specific-o2c-swim-narratives">APPENDIX A:
+Channel-Specific O2C Swim Narratives</h2>
+<h3 id="a.1-wholesale-rack-jobber-reseller">A.1 Wholesale Rack (Jobber /
+Reseller)</h3>
+<ol type="1">
+<li>Credit-approved customer receives rack access + cards.</li>
+<li>Driver arrives; TAS validates card, order/preset, product,
+credit.</li>
+<li>Load with additive/dye as ordered; meter ticket + BOL issued.</li>
+<li>ERP ingests ticket; QCI computes NSV; tax engine applies rack origin
+stack.</li>
+<li>Price from contract (posted rack or OPIS mean ± differential).</li>
+<li>Invoice + ticket/BOL to customer; ACH debit on due date (<a href="https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf">QT</a>;
+<a href="https://www.opis.com/blog/wholesale-rack-fuel-pricing-essentials/">OPIS</a>).</li>
+<li>Exceptions: wrong product, overfill, card fraud, tax license
+lapse.</li>
+</ol>
+<h3 id="a.2-b2b-ci-with-vmi">A.2 B2B C&amp;I with VMI</h3>
+<ol type="1">
+<li>ATG telemetry streams tank inventory (<a href="https://www.shell.com/business-customers/commercial-fuels/evmi.html">Shell
+eVMI</a>).</li>
+<li>Forecasting creates delivery proposals; planner confirms.</li>
+<li>TD bulk truck loads at terminal (company or exchange stock).</li>
+<li>On-site drop with before/after gauge; delivery ticket signed.</li>
+<li>Bill product + freight; destination tax; possible pump-out
+fees.</li>
+<li>Collect on negotiated terms; disputes on stick vs meter.</li>
+</ol>
+<h3 id="a.3-retail-network">A.3 Retail Network</h3>
+<ol type="1">
+<li>Station forecast / low-tank alert.</li>
+<li>Brand/supplier delivers under dealer or consignment terms.</li>
+<li>POS sells to motorists; shift close sends totals.</li>
+<li>Settlement: wholesale invoice and/or commission statement + rebate
+accruals.</li>
+<li>Cash collection via sweep or dealer payment; card network settlement
+separate.</li>
+<li>Shrink and pricebook compliance managed continuously.</li>
+</ol>
+<h3 id="a.4-lubricants">A.4 Lubricants</h3>
+<ol type="1">
+<li>Quote by SKU pack size and OEM approval.</li>
+<li>Warehouse pick/pack or bulk fill; COA if required.</li>
+<li>Ship via parcel/LTL; POD.</li>
+<li>Invoice with freight and any core/deposit.</li>
+<li>Returns and shelf-life exceptions common relative to fuels.</li>
+</ol>
+<h3 id="a.5-aviation-into-plane">A.5 Aviation Into-Plane</h3>
+<ol type="1">
+<li>Airline schedule / ad-hoc release to into-plane agent.</li>
+<li>Fueler uplifts; ticket captures aircraft ID, quantity, density,
+time.</li>
+<li>Bill fuel formula price + into-plane fee + airport fees.</li>
+<li>Airline reconciles tickets to flight ops (<a href="https://invoicedataextraction.com/blog/aviation-fuel-invoice-reconciliation">reconciliation
+practice</a>).</li>
+<li>Disputes split volume vs fees; credit exposure until match.</li>
+</ol>
+<h3 id="a.6-marine-bunker">A.6 Marine Bunker</h3>
+<ol type="1">
+<li>Stem confirmation (grade, sulfur, quantity, port, window,
+price).</li>
+<li>Barge alongside; deliver against nomination.</li>
+<li>BDN issued—commercial + statutory (<a href="https://www.exxonmobil.com/en/marine/technicalresource/marine-resources/bunker-delivery-notes">ExxonMobil</a>).</li>
+<li>Invoice on BDN quantity/quality; collect per GT&amp;C (often very
+short terms or security).</li>
+<li>Quantity/quality claims via surveyor; demurrage parallel track.</li>
+</ol>
+<hr />
+<h2 id="appendix-b-suggested-o2c-data-products-for-epm-kpi-store-linkage">APPENDIX
+B: Suggested O2C Data Products (for EPM / KPI Store linkage)</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Data Product</th>
+<th style="text-align: left;">Grain</th>
+<th style="text-align: left;">Key Measures</th>
+<th style="text-align: left;">Primary Sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Custody Ticket Fact</strong></td>
+<td style="text-align: left;">1 ticket line</td>
+<td style="text-align: left;">GOV, GSV, NSV, mass, temp, density</td>
+<td style="text-align: left;">TAS, TD mobile, into-plane, BDN</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Commercial Invoice
+Fact</strong></td>
+<td style="text-align: left;">1 invoice line</td>
+<td style="text-align: left;">Extended price, tax, freight, fees</td>
+<td style="text-align: left;">ERP billing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Unbilled Lift Fact</strong></td>
+<td style="text-align: left;">1 ticket not yet invoiced</td>
+<td style="text-align: left;">NSV, estimated value, age hours</td>
+<td style="text-align: left;">TAS vs ERP match</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Credit Exposure
+Snapshot</strong></td>
+<td style="text-align: left;">Payer × day</td>
+<td style="text-align: left;">AR, unbilled, disputed, MTM</td>
+<td style="text-align: left;">AR + tickets + credit</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Exchange Balance
+Fact</strong></td>
+<td style="text-align: left;">Agreement × product × loc × day</td>
+<td style="text-align: left;">In, out, imbalance</td>
+<td style="text-align: left;">EXG book</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tax Line Fact</strong></td>
+<td style="text-align: left;">Invoice tax line</td>
+<td style="text-align: left;">Jurisdiction, rate, dye flag, cert</td>
+<td style="text-align: left;">Tax engine</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dispute Case Fact</strong></td>
+<td style="text-align: left;">Case × reason</td>
+<td style="text-align: left;">Amount, volume, cycle time</td>
+<td style="text-align: left;">Dispute system</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Contract Attainment
+Fact</strong></td>
+<td style="text-align: left;">Contract × period</td>
+<td style="text-align: left;">Committed vs actual NSV</td>
+<td style="text-align: left;">Contract + tickets</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>data products / measures</strong>, not
+automatically KPIs. Promotion to the KPI Store requires objective,
+owner, target, threshold, and action per EPM measurement classification
+rules.</p>
+<hr />
+<h2 id="appendix-c-glossary-downstream-o2c">APPENDIX C: Glossary
+(Downstream O2C)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>BOL</strong></td>
+<td style="text-align: left;">Bill of Lading — custody/transport
+document issued at load</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>BDN</strong></td>
+<td style="text-align: left;">Bunker Delivery Note — marine delivery
+&amp; compliance document</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GOV/GSV/NSV</strong></td>
+<td style="text-align: left;">Gross Observed / Gross Standard / Net
+Standard Volume</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VCF / CTL / CPL</strong></td>
+<td style="text-align: left;">Volume Correction Factor / Correction for
+Temperature on Liquid / Pressure</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>QCI</strong></td>
+<td style="text-align: left;">Quantity Conversion Interface/engine</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HPM</strong></td>
+<td style="text-align: left;">Hydrocarbon Product Management (industry
+ERP concept)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TSW</strong></td>
+<td style="text-align: left;">Trader’s &amp; Scheduler’s Workbench
+(nomination/scheduling)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TD</strong></td>
+<td style="text-align: left;">Secondary Distribution (bulk truck)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EXG / LIA</strong></td>
+<td style="text-align: left;">Exchange agreement accounting / Logical
+Inventory Adjustment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TAS</strong></td>
+<td style="text-align: left;">Terminal Automation System</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Rack</strong></td>
+<td style="text-align: left;">Wholesale loading rack at terminal</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Posted Rack Price</strong></td>
+<td style="text-align: left;">Supplier’s wholesale price at a terminal
+rack</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Formula Price</strong></td>
+<td style="text-align: left;">Index ± differential (± fees)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dyed Fuel</strong></td>
+<td style="text-align: left;">Chemically marked non-highway
+diesel/kerosene with distinct tax treatment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Into-Plane</strong></td>
+<td style="text-align: left;">Fueling service delivering jet fuel into
+aircraft</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Stem</strong></td>
+<td style="text-align: left;">Marine bunker nomination/order</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VMI / ATG</strong></td>
+<td style="text-align: left;">Vendor Managed Inventory / Automatic Tank
+Gauge</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Commission Agent</strong></td>
+<td style="text-align: left;">Retail operator selling supplier-owned
+fuel for commission</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NSV@60°F</strong></td>
+<td style="text-align: left;">US customary net standard volume basis
+commonly contracted</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-d-source-evidence-index-inline-cited-works">APPENDIX D:
+Source Evidence Index (Inline-Cited Works)</h2>
+<p>Primary sources used throughout this blueprint include:</p>
+<ul>
+<li>Emerson Order-to-Cash for energy logistics —
+https://www.emerson.com/en/automation-systems/advanced-industry-software/oil-and-gas/software-for-energy-transportation-storage/order-to-cash-software</li>
+<li>Infosys O&amp;G O2C transformation —
+https://www.infosys.com/industries/oil-and-gas/insights/order-to-cash-transformation.html</li>
+<li>Celonis MOL O2C —
+https://www.celonis.com/solutions/stories/mol-order-to-cash</li>
+<li>OPIS wholesale rack pricing —
+https://www.opis.com/blog/wholesale-rack-fuel-pricing-essentials/</li>
+<li>QT Fuels Wholesale Rack Agreement —
+https://www.qtfuels.com/app/themes/quiktrip-fuels/public/WholesaleRackAgreement.pdf</li>
+<li>Energy Transfer Petroleum Products GT&amp;Cs —
+https://cms.energytransfer.com/wp-content/uploads/2019/04/GTsCsPetroleumProducts-02012019v9_1_Final.pdf</li>
+<li>Platts Americas refined products methodology —
+https://www.spglobal.com/commodityinsights/plattscontent/_assets/_files/en/our-methodology/methodology-specifications/americas-refined-oil-products-methodology.pdf</li>
+<li>Platts US gasoline blend value note —
+https://www.spglobal.com/energy/en/pricing-benchmarks/our-methodology/subscriber-notes/050126-platts-launches-new-gasoline-blend-value-calculations-in-us</li>
+<li>ASTM D1250 / API MPMS 11.1 —
+https://www.astm.org/d1250-19e01.html</li>
+<li>API Petroleum Measurement catalog —
+https://www.api.org/-/media/files/publications/2024-catalog/2024-petroleum-measurement.pdf</li>
+<li>SAP TSW help —
+https://help.sap.com/docs/SUPPORT_CONTENT/isoil/3139386109.html</li>
+<li>SAP QCI integration —
+https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f4ab800d01c4366b0c9aaff06a64320/40ea5e9072ae42119c3425a9f9294d5f.html</li>
+<li>SAP HPM/QCI community —
+https://community.sap.com/t5/enterprise-resource-planning-q-a/sap-is-oil-and-gas-hpm-module-implementation-without-qci-interface/qaq-p/12108628</li>
+<li>SAP EXG borrow/loan —
+https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/exchange-borrow-loan-invoice-the-difference-quantity-after-lia/m-p/7554007</li>
+<li>SAP netting —
+https://community.sap.com/t5/sap-for-oil-gas-and-energy-discussions/netting-statements-in-financial-transactions/td-p/2656532</li>
+<li>ResolveTech SAP S/4 Downstream —
+https://resolvetech.com/sap-s4hana-downstream-oil-and-gas/</li>
+<li>Shell eVMI —
+https://www.shell.com/business-customers/commercial-fuels/evmi.html</li>
+<li>ExxonMobil BDN —
+https://www.exxonmobil.com/en/marine/technicalresource/marine-resources/bunker-delivery-notes</li>
+<li>BDN 2025 guide —
+https://vesselchain.org/bunker-delivery-note-guide-2025/</li>
+<li>IRS Fuel Tax Credit —
+https://www.irs.gov/credits-deductions/businesses/fuel-tax-credit</li>
+<li>26 CFR §48.4082-1 dyed fuel —
+https://www.law.cornell.edu/cfr/text/26/48.4082-1</li>
+<li>Missouri clear/dyed motor fuel —
+https://dor.mo.gov/taxation/business/tax-types/motor-fuel/documents/Tax-Requirements-of-Clear-and-Dyed-Diesel-Motor-Fuel.pdf</li>
+<li>FTA motor fuel state book —
+https://taxadmin.org/wp-content/uploads/resources/motor-fuels/motor-fuel-state.book_.pdf</li>
+<li>C-Store Trader dealer models —
+https://www.cstoretrader.com/guides/dealer-vs-lessee-dealer-vs-commission/</li>
+<li>Petrosoft consigned stations —
+https://help.petrosoftinc.com/Content/Station_Home/Station_Options/consigned_station.htm</li>
+<li>Aviation invoice reconciliation —
+https://invoicedataextraction.com/blog/aviation-fuel-invoice-reconciliation</li>
+<li>DOI Aviation Fuel Management Handbook —
+https://www.doi.gov/sites/default/files/documents/2024-09/doi-aviation-fuel-management-handbook-sept-2024.pdf</li>
+<li>Emerson TerminalManager —
+https://www.emerson.com/documents/automation/terminalmanager-en-186128.pdf</li>
+<li>Colorado School of Mines blending —
+https://people.mines.edu/jjechura/wp-content/uploads/sites/120/2019/02/CBEN409_11_Blending_Optimization-1.pdf</li>
+</ul>
+<hr />
+<h2 id="artifact-update-block-enterprise-performance-model">Artifact
+Update Block (Enterprise Performance Model)</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Workstream</strong></td>
+<td style="text-align: left;">Domain Modeling — Downstream Business
+Architecture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Target artifact</strong></td>
+<td style="text-align: left;">O2C Downstream O&amp;G Operational
+Blueprint (EPM-BA-O2C-DS-001)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Objective</strong></td>
+<td style="text-align: left;">Establish exhaustive O2C value stream,
+capability, process/master data, systems, and exception baseline for
+Downstream Commercial &amp; Marketing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Conclusions</strong></td>
+<td style="text-align: left;">Downstream O2C is custody-event-centric;
+measurement (GOV/GSV/NSV + QCI), excise tax status, channel title
+models, and exchange netting are non-optional architectural objects—not
+optional extensions of generic O2C</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Decisions / Status</strong></td>
+<td style="text-align: left;">Draft/Candidate baseline produced; not yet
+Approved Baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Definitions added</strong></td>
+<td style="text-align: left;">GOV/GSV/NSV, QCI/HPM/TSW/TD/EXG/LIA, rack
+access, dyed fuel tax path, channel archetypes, unbilled lift
+exposure</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Assumptions</strong></td>
+<td style="text-align: left;">US-centric tax/measurement examples
+generalized with SI notes; SAP IS-Oil used as reference industry
+solution pattern, not a tool mandate; midstream pure tariff O2C out of
+scope except custody interfaces</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Open questions</strong></td>
+<td style="text-align: left;">(1) Client-specific channel mix and system
+inventory? (2) Which ticket fields are already in the enterprise data
+platform? (3) KPI Store pilot metrics to bind first (e.g., unbilled lift
+age, OTIF NSV, dispute cycle time)? (4) Exchange/netting legal entity
+model?</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Source evidence</strong></td>
+<td style="text-align: left;">See Appendix D (primary industry,
+standards, regulatory, and vendor documentation)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Artifacts to
+create/update</strong></td>
+<td style="text-align: left;">Promote into Downstream Business
+Architecture canonical pack; seed Measurement Catalog entries for
+NSV/unbilled/exposure; link future KPI candidates</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Suggested
+version/status</strong></td>
+<td style="text-align: left;">v1.0 Draft → review for Candidate; after
+process-owner validation → Approved Baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Next action</strong></td>
+<td style="text-align: left;">Map this blueprint’s data products to
+existing Power BI entities; select 5–7 pilot O2C KPIs; confirm system
+landscape against actual enterprise inventory</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>End of Document — EPM-BA-O2C-DS-001 v1.0</em></p>
+</body>
+</html>

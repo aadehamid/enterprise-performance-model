@@ -1,0 +1,170 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/apache/ossie/release/0.1.1/core-spec/osi-schema.json
+# Apache Ossie (incubating) — formerly Open Semantic Interchange (OSI).
+# PROJECTION of the certified Unbilled metric. Not the compile SoT.
+# Compile SoT for this pack: sql/03_metric_view.sql
+#   (Unity Catalog Metric View YAML / CREATE VIEW … WITH METRICS).
+# Databricks does not read this file. Nobody in this demo compiles it.
+# File is spec 0.1.1 (same stance as Track A). Live `main` schema is
+# 0.2.0.dev0 and will fail validation against this file.
+# Not compile SoT, not OWL, not a second formula.
+# Ossie is not the compiler.
+
+version: "0.1.1"
+
+semantic_model:
+  - name: o2c_unbilled
+    description: >
+      Downstream O&G order-to-cash unbilled tickets. Projection of the
+      Databricks Metric View unbilled_usd in demo 2. Population is sealed
+      in fct_unbilled (delivered, no posted invoice as of as_of_date,
+      quality-hold excluded, gallons_net * contract_price). The authored
+      compile input is sql/03_metric_view.sql. This file is interchange,
+      not a second formula and not an ontology.
+    ai_context:
+      instructions: >
+        Unbilled is a state of an obligation (a delivered BOL not yet invoiced),
+        not a customer class. Do not group by a generic "customer". Slice by
+        sold_to, payer, or site explicitly. Ship-to is a terminal (location),
+        not a party role. Do not treat this YAML as OWL. Do not treat the
+        Databricks Metric View as the ontology.
+      synonyms:
+        - "unbilled"
+        - "unbilled revenue"
+        - "delivered not invoiced"
+
+    datasets:
+      - name: fct_unbilled
+        source: workspace.o2c_unbilled.fct_unbilled
+        primary_key: [ticket_id]
+        description: Ticket-level certified unbilled fact. One row per delivered BOL with no posted invoice.
+        ai_context:
+          synonyms:
+            - "unbilled tickets"
+            - "open lifts"
+        fields:
+          - name: ticket_id
+            description: BOL ticket identifier
+            datatype: String
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: ticket_id
+          - name: delivery_date
+            description: Lift date (day)
+            datatype: Date
+            dimension:
+              is_time: true
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: delivery_date
+          - name: sold_to_name
+            description: Sold-to party (who is entitled to lift). Not "the customer".
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "sold-to"
+                - "sold to"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: sold_to_name
+          - name: payer_name
+            description: Payer party (who is invoiced). Credit lives here.
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "payer"
+                - "bill payer"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: payer_name
+          - name: site_code
+            description: Site / ship-to location (terminal). Not a customer role.
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "site"
+                - "terminal"
+                - "ship-to"
+                - "rack"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: site_code
+          - name: as_of_date
+            description: As-of date the unbilled population was sealed
+            datatype: Date
+            dimension:
+              is_time: true
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: as_of_date
+          - name: product_code
+            description: Product (RBOB, ULSD, Jet-A)
+            datatype: String
+            dimension:
+              is_time: false
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: product_code
+          - name: unbilled_usd
+            description: gallons_net * contract_price_usd on this ticket
+            datatype: Decimal
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: unbilled_usd
+          - name: gallons_net
+            description: Temperature-corrected net gallons (60F)
+            datatype: Decimal
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: gallons_net
+
+    relationships: []
+
+    metrics:
+      - name: unbilled_usd
+        description: >
+          Certified Unbilled USD. Same metric the Databricks Metric View
+          compiles. SUM of fct_unbilled.unbilled_usd. Slice by sold_to_name,
+          payer_name, site_code, or as_of_date — the ticket set does not change.
+        datatype: Decimal
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: SUM(fct_unbilled.unbilled_usd)
+        ai_context:
+          synonyms:
+            - "Unbilled USD"
+            - "unbilled revenue"
+      - name: unbilled_ticket_count
+        description: Count of unbilled delivered BOL tickets.
+        datatype: Integer
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: COUNT(fct_unbilled.ticket_id)
+
+    custom_extensions:
+      - vendor_name: DATABRICKS
+        data: |
+          {
+            "project_name": "o2c_unbilled_databricks_free",
+            "compile_sot": "sql/03_metric_view.sql",
+            "metric_view": "unbilled_usd",
+            "compiler": "Unity Catalog Metric Views",
+            "kpi_id": "KPI-O2C-UNBILLED-USD",
+            "note": "Projection only. Databricks does not parse osi/. The Metric View YAML is the compile input. Ossie is not the compiler. The Metric View is not the ontology."
+          }

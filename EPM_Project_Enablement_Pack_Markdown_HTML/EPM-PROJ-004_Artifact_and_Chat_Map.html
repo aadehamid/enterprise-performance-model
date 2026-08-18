@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EPM Artifact and Chat Map</title><style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#182230;--muted:#5e6c7b;--navy:#17365d;--blue:#2368a2;--line:#dfe6ee;--soft:#eef4fa;--green:#0f766e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.layout{display:grid;grid-template-columns:285px minmax(0,1fr);min-height:100vh}aside{background:#102a43;color:#eaf2f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{margin:0;font-size:18px}aside p{font-size:13px;color:#b7c7d6}aside a{display:block;color:#dbeafe;text-decoration:none;padding:7px 9px;border-radius:7px;margin:2px 0;font-size:14px}aside a:hover{background:#1f4568}
+main{padding:34px}.doc{max-width:1080px;margin:auto;background:var(--paper);padding:50px 58px;border-radius:16px;box-shadow:0 12px 34px rgba(16,42,67,.08)}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);font-weight:800}h1{font-size:40px;color:var(--navy);line-height:1.12;margin:7px 0}.sub{font-size:18px;color:var(--muted);margin-bottom:30px}
+h2{color:var(--navy);border-bottom:2px solid var(--soft);padding-bottom:8px;margin-top:38px}h3{color:#244f77;margin-top:26px}p,li{font-size:16px}
+blockquote{padding:17px 21px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}pre{background:#102a43;color:#eaf2f8;padding:20px;border-radius:10px;overflow:auto}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}th{background:var(--navy);color:#fff;padding:10px;text-align:left}td{border:1px solid var(--line);padding:10px;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}
+.cardgrid{max-width:1120px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.card{display:block;background:#fff;border:1px solid var(--line);padding:24px;border-radius:14px;text-decoration:none;color:var(--ink);box-shadow:0 8px 22px rgba(16,42,67,.07)}.card:hover{transform:translateY(-2px)}.card small{color:var(--blue);font-weight:800}.card h2{border:0;margin:8px 0;font-size:21px}.card p{font-size:14px;color:var(--muted)}
+@media(max-width:900px){.layout{display:block}aside{position:relative;height:auto}.doc{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="layout"><aside><h2>EPM Project Pack</h2><p>EPM-PROJ-004_Artifact_and_Chat_Map</p><a href="index.html">Home</a><hr style="border-color:#31516e"><a href="EPM-FOUND-000A_Architectural_Principles.html">EPM-FOUND-000A Architectural Principles</a> <a href="EPM-PROJ-001_Project_Instructions.html">EPM-PROJ-001 Project Instructions</a> <a href="EPM-PROJ-002_Project_Operating_Model.html">EPM-PROJ-002 Project Operating Model</a> <a href="EPM-PROJ-003_Project_Onboarding_Guide.html">EPM-PROJ-003 Project Onboarding Guide</a> <a href="EPM-PROJ-004_Artifact_and_Chat_Map.html">EPM-PROJ-004 Artifact and Chat Map</a> <a href="EPM-PROJ-005_Migration_Checklist.html">EPM-PROJ-005 Migration Checklist</a><hr style="border-color:#31516e"><a href="#question-to-artifact-map">Question-to-artifact map</a>
+<a href="#question-to-chat-map">Question-to-chat map</a>
+<a href="#artifact-dependency-map">Artifact dependency map</a></aside>
+<main><article class="doc"><div class="kicker">EPM-PROJ-004_Artifact_and_Chat_Map · Version 1.0 Draft</div><h1>EPM Artifact and Chat Map</h1><div class="sub">A practical map from questions to the right artifact and working chat</div><section id="question-to-artifact-map"><h2>Question-to-artifact map</h2><table><thead><tr><th>Question</th><th>Canonical artifact</th></tr></thead><tbody>
+<tr><td>What is the EPM and how is the repository organized?</td><td>EPM-FOUND-000</td></tr>
+<tr><td>What principles govern all design decisions?</td><td>EPM-FOUND-000A</td></tr>
+<tr><td>What are domains, value streams, capabilities, processes, activities, and decisions?</td><td>EPM-FOUND-001</td></tr>
+<tr><td>How do objectives, KPIs, data products, and consumption connect?</td><td>EPM-FOUND-002</td></tr>
+<tr><td>What do concepts and relationships mean?</td><td>EPM-FOUND-003</td></tr>
+<tr><td>How will the meaning be formalized for machines?</td><td>EPM-FOUND-004</td></tr>
+<tr><td>How do we classify measurements, metrics, and KPIs?</td><td>EPM-FOUND-005</td></tr>
+<tr><td>What are foundational and derived products and how do they align with medallion?</td><td>EPM-FOUND-006</td></tr>
+<tr><td>How should the project operate?</td><td>EPM-PROJ-002</td></tr>
+<tr><td>How do we establish the project?</td><td>EPM-PROJ-003</td></tr>
+</tbody></table></section><section id="question-to-chat-map"><h2>Question-to-chat map</h2><table><thead><tr><th>Work question</th><th>Recommended chat</th></tr></thead><tbody>
+<tr><td>Is this Tableau calculation a KPI?</td><td>Measurement Classification</td></tr>
+<tr><td>How should the tall KPI fact work?</td><td>KPI Store Design</td></tr>
+<tr><td>What value stream does this report support?</td><td>Commercial Business Architecture</td></tr>
+<tr><td>Why did Netback change?</td><td>Commercial Performance Model</td></tr>
+<tr><td>Where should this calculation live?</td><td>Semantic and Consumption Layer or Data Product Portfolio</td></tr>
+<tr><td>Should this be Silver or Gold?</td><td>Data Product Portfolio</td></tr>
+<tr><td>How should a concept be represented in OWL?</td><td>Ontology Design</td></tr>
+<tr><td>What should Power BI calculate?</td><td>Power BI Standards</td></tr>
+<tr><td>How should Purview, YAML, SQL, and graph metadata integrate?</td><td>System Integration</td></tr>
+<tr><td>What goes to the steering committee?</td><td>Executive Readouts</td></tr>
+</tbody></table></section><section id="artifact-dependency-map"><h2>Artifact dependency map</h2><pre><code>EPM-FOUND-000A Architectural Principles
+            ↓ governs
+EPM-FOUND-001 Business Architecture
+EPM-FOUND-002 Performance and Data Architecture
+EPM-FOUND-003 Semantic Model
+            ↓ formalized by
+EPM-FOUND-004 Ontology Design
+            ↓ specialized by
+EPM-FOUND-005 Measurement and KPI Model
+EPM-FOUND-006 Data Product and Consumption Model
+            ↓ operationalized through
+KPI Store Technical Design
+Tableau Classification Method
+Domain Models
+Data Product Specifications
+Semantic Views
+Power BI Semantic Models
+Ontology and Knowledge Graph</code></pre></section></article></main></div></body></html>

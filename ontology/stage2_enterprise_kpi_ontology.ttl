@@ -1,0 +1,1442 @@
+##############################################################################
+# Enterprise KPI Ontology (Stage 2) — v2.0.0
+# A governed semantic foundation for KPI definitions, lineage, governance,
+# business-architecture alignment, and analytics consumption.
+#
+# v2.0.0 changelog (see "Ontology Review & Improvement Plan" for full detail):
+#   1. Removed heterogeneous "bucket" superclasses (BusinessArchitectureElement,
+#      SemanticAsset, LineageNode, GovernanceElement). Module membership is now
+#      recorded honestly via dcterms:isPartOf pointing at a skos:Collection per
+#      module, instead of a false rdfs:subClassOf claim. ConsumptionAsset is kept
+#      as a real superclass because its members genuinely share one kind:
+#      "a surface a human consumes KPI values through."
+#   2. Added the missing Observation/Fact layer: ekpi:KPIObservation,
+#      ekpi:DimensionValue, ekpi:ObservationStatus — so the graph can answer
+#      "what was this KPI, for which asset/terminal, on which day, and was
+#      it on target" — not just "how is this KPI defined."
+#   3. Reconciled every Stage 1 vs Stage 2 gap found in the review: TimePeriod
+#      now has real individuals and real datatype properties; Target now has
+#      a working targetPeriod object property; Synonym was removed as a
+#      redundant class (skos:altLabel already covers it — see design doc);
+#      SemanticRelationship, ValueStream, BusinessFunction, ProcessStep,
+#      DataProduct, AnalyticalModel, AccessRule, OrganizationalUnit are all
+#      now backed by real individuals in the worked example below.
+#   4. Added owl:Restriction axioms that operationalize key subclass
+#      distinctions (KPI vs Metric, Gold vs Silver vs Raw).
+#   5. Introduced a small property hierarchy via rdfs:subPropertyOf.
+#   6. Closed three previously free-text fields into owl:oneOf controlled
+#      vocabularies: Criticality, ThresholdSeverity, AggregationType.
+#   7. Promoted CalculationLogic's SQL text into a real ekpi:logicExpression
+#      datatype property (kept the rdfs:comment as a human-friendly gloss too).
+#   8. Anchored ekpi:Role as rdfs:subClassOf foaf:Agent.
+#   9. Replaced the "Asset Uptime %" (Operations) worked example with a
+#      Downstream Oil & Gas Commercial worked example: Rack Price Capture
+#      Rate %, grounded in the Downstream Commercial value stream, capability
+#      map, business processes, and data products.
+##############################################################################
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix schema:  <http://schema.org/> .
+
+# Enterprise ontology namespace (schema: classes + properties)
+@prefix ekpi:    <https://ontology.enterprise.example.com/kpi-store/core#> .
+# Enterprise instance/individual namespace (data)
+@prefix data:    <https://data.enterprise.example.com/kpi-store/> .
+
+@base <https://ontology.enterprise.example.com/kpi-store/core#> .
+
+##############################################################################
+# 1. ONTOLOGY HEADER AND METADATA
+##############################################################################
+
+<https://ontology.enterprise.example.com/kpi-store/core>
+    a owl:Ontology ;
+    rdfs:label "Enterprise KPI Ontology"@en ;
+    dcterms:title "Enterprise KPI Ontology" ;
+    dcterms:description "A governed ontology linking business architecture, KPI definitions, a semantic model, medallion-architecture lineage, consumption assets, and governance for an enterprise KPI store. v2.0.0 corrects the class-tree, adds a KPI observation/fact layer, and re-grounds the worked example in Downstream Oil & Gas Commercial (Rack Price Capture Rate %)."@en ;
+    dcterms:creator "Enterprise Data & Analytics Governance Team" ;
+    dcterms:created "2026-08-01"^^xsd:date ;
+    dcterms:modified "2026-08-02"^^xsd:date ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionInfo "2.0.0" ;
+    owl:versionIRI <https://ontology.enterprise.example.com/kpi-store/core/2026-08-02#> ;
+    owl:priorVersion <https://ontology.enterprise.example.com/kpi-store/core/2026-08-01#> .
+
+##############################################################################
+# 1B. MODULE TAGS
+# Modules are recorded as skos:Collection individuals, not as OWL superclasses.
+# Every class below declares dcterms:isPartOf one of these — this replaces the
+# v1.0.0 "bucket superclass" pattern (BusinessArchitectureElement, SemanticAsset,
+# LineageNode, GovernanceElement) that falsely implied shared kind-hood between
+# heterogeneous concepts. See Ontology Review & Improvement Plan, Priority 1 #1.
+##############################################################################
+
+ekpi:BusinessArchitectureModule a skos:Collection ;
+    rdfs:label "Business Architecture Module"@en .
+
+ekpi:KPIModelModule a skos:Collection ;
+    rdfs:label "KPI Model Module"@en .
+
+ekpi:SemanticModelModule a skos:Collection ;
+    rdfs:label "Semantic Model Module"@en .
+
+ekpi:LineageModule a skos:Collection ;
+    rdfs:label "Lineage & Data Architecture Module"@en .
+
+ekpi:ConsumptionModule a skos:Collection ;
+    rdfs:label "Consumption Module"@en .
+
+ekpi:GovernanceModule a skos:Collection ;
+    rdfs:label "Governance Module"@en .
+
+##############################################################################
+# 2. CLASS DECLARATIONS
+##############################################################################
+
+### --- 2.A Business Architecture ---------------------------------------
+# No abstract "BusinessArchitectureElement" bucket superclass (removed in
+# v2.0.0). Module membership is recorded via dcterms:isPartOf only.
+
+ekpi:BusinessCapability a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Capability"@en ;
+    rdfs:comment "An enterprise ability to do something of value, e.g. Rack Price Management & Publication."@en .
+
+ekpi:ValueStream a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Value Stream"@en ;
+    rdfs:comment "An end-to-end sequence of activities delivering value to a stakeholder, e.g. the Downstream Commercial value stream."@en .
+
+ekpi:BusinessDomain a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Domain"@en ;
+    rdfs:comment "A logical grouping of related business activity, e.g. Downstream Commercial."@en .
+
+ekpi:BusinessFunction a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Function"@en ;
+    rdfs:comment "A recurring organizational activity grouping, e.g. Pricing & Margin Management."@en .
+
+ekpi:BusinessProcess a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Process"@en ;
+    rdfs:comment "A structured set of activities producing a specific outcome, e.g. Rack Price Setting."@en .
+
+ekpi:ProcessStep a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Process Step"@en ;
+    rdfs:comment "An atomic activity within a BusinessProcess."@en .
+
+ekpi:BusinessGoal a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Goal"@en ;
+    rdfs:comment "A directional business intent, e.g. Protect and Grow Commercial Margin."@en .
+
+ekpi:StrategicObjective a owl:Class ;
+    rdfs:subClassOf ekpi:BusinessGoal ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Strategic Objective"@en ;
+    rdfs:comment "A specific, time-bound target that operationalizes a BusinessGoal."@en .
+
+ekpi:OrganizationalUnit a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Organizational Unit"@en ;
+    rdfs:comment "A team, department, plant, or site, e.g. the Commercial Pricing & Distribution Team."@en .
+
+ekpi:Role a owl:Class ;
+    rdfs:subClassOf foaf:Agent ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Role"@en ;
+    rdfs:comment "A functional responsibility a person can hold. Anchored to foaf:Agent so ownership/approval/stewardship semantics connect to a recognized upper-level 'agent' concept (fix applied per ontology review, item 9)."@en .
+
+ekpi:BusinessOwner a owl:Class ;
+    rdfs:subClassOf ekpi:Role ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Owner"@en ;
+    rdfs:comment "Accountable for the business meaning and use of a governed asset."@en .
+
+ekpi:DataSteward a owl:Class ;
+    rdfs:subClassOf ekpi:Role ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Data Steward"@en ;
+    rdfs:comment "Accountable for data quality and definitional integrity of a governed asset."@en .
+
+### --- 2.B KPI Model -----------------------------------------------------
+
+ekpi:PerformanceIndicator a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Performance Indicator"@en ;
+    rdfs:comment "Genuine superclass (not a bucket): both Metric and Measure are, by definition, quantifications of performance."@en .
+
+ekpi:Metric a owl:Class ;
+    rdfs:subClassOf ekpi:PerformanceIndicator ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Metric"@en ;
+    rdfs:comment "A quantifiable value derived from one or more Measures. Broader than KPI."@en .
+
+ekpi:KPI a owl:Class ;
+    rdfs:subClassOf ekpi:Metric ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "KPI"@en ;
+    rdfs:comment "A governed, named indicator of performance against a goal."@en .
+
+ekpi:Measure a owl:Class ;
+    rdfs:subClassOf ekpi:PerformanceIndicator ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Measure"@en ;
+    rdfs:comment "A raw or lightly aggregated quantity computed from data; a building block of a KPI."@en .
+
+ekpi:KPIObservation a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "KPI Observation"@en ;
+    rdfs:comment "The measured Fact/event layer: one dated, dimensioned, valued reading of a KPI (e.g. Rack Price Capture Rate for Terminal X, Product Y, on Day Z). Added in v2.0.0 to close the biggest functional gap flagged in the ontology review: without this class the graph could describe a KPI's definition and lineage but never an actual observed value over time."@en .
+
+ekpi:DimensionValue a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Dimension Value"@en ;
+    rdfs:comment "A specific value along a Dimension axis (e.g. 'Houston Rack Terminal 3' as a value of the Terminal Dimension), as opposed to Dimension itself which names the axis."@en .
+
+ekpi:ObservationStatus a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Observation Status"@en ;
+    rdfs:comment "A controlled-vocabulary state describing a KPIObservation relative to its Target/Threshold: OnTarget, Watch, or Breach."@en ;
+    owl:oneOf ( data:ObsStatus_OnTarget data:ObsStatus_Watch data:ObsStatus_Breach ) .
+
+ekpi:KPIDefinition a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "KPI Definition"@en ;
+    rdfs:comment "The versioned, documented specification of a KPI."@en .
+
+ekpi:BusinessDefinition a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Business Definition"@en ;
+    rdfs:comment "The authoritative textual definition of a BusinessTerm."@en .
+
+ekpi:CertifiedDefinition a owl:Class ;
+    rdfs:subClassOf ekpi:KPIDefinition, ekpi:BusinessDefinition ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Certified Definition"@en ;
+    rdfs:comment "A KPIDefinition or BusinessDefinition that has passed governance certification."@en .
+
+ekpi:KPIFormula a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "KPI Formula"@en ;
+    rdfs:comment "The mathematical expression defining how a KPI is calculated."@en .
+
+ekpi:CalculationLogic a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Calculation Logic"@en ;
+    rdfs:comment "Implementation-level logic (SQL, DAX, pseudo-code) realizing a KPIFormula."@en .
+
+ekpi:AggregationRule a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Aggregation Rule"@en ;
+    rdfs:comment "Rule describing how a measure rolls up across time or dimensions."@en .
+
+ekpi:UnitOfMeasure a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Unit of Measure"@en ;
+    rdfs:comment "The unit a KPI, Measure, or KPIObservation is expressed in, e.g. percent, USD, hours."@en .
+
+ekpi:Target a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Target"@en ;
+    rdfs:comment "A desired value for a KPI within a given TimePeriod (see ekpi:targetPeriod)."@en .
+
+ekpi:Threshold a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Threshold"@en ;
+    rdfs:comment "A boundary value that triggers a status such as red, yellow, or green."@en .
+
+ekpi:Dimension a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Dimension"@en ;
+    rdfs:comment "An axis for slicing a KPI, e.g. Terminal or Product. Contrast with DimensionValue, which is a specific value on this axis."@en .
+
+ekpi:TimePeriod a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Time Period"@en ;
+    rdfs:comment "A defined interval a KPI value or Target applies to, e.g. a day or a fiscal quarter."@en .
+
+ekpi:Grain a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Grain"@en ;
+    rdfs:comment "The lowest level of detail at which a KPI or Measure is recorded."@en .
+
+ekpi:Criticality a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Criticality"@en ;
+    rdfs:comment "Closed controlled vocabulary for KPI criticality (v2.0.0 fix: was previously free xsd:string)."@en ;
+    owl:oneOf ( data:Criticality_High data:Criticality_Medium data:Criticality_Low ) .
+
+ekpi:ThresholdSeverity a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Threshold Severity"@en ;
+    rdfs:comment "Closed controlled vocabulary for threshold severity (v2.0.0 fix: was previously free xsd:string)."@en ;
+    owl:oneOf ( data:Severity_Red data:Severity_Yellow data:Severity_Green ) .
+
+ekpi:AggregationType a owl:Class ;
+    dcterms:isPartOf ekpi:KPIModelModule ;
+    rdfs:label "Aggregation Type"@en ;
+    rdfs:comment "Closed controlled vocabulary for aggregation type (v2.0.0 fix: was previously free xsd:string)."@en ;
+    owl:oneOf ( data:AggType_SUM data:AggType_AVG data:AggType_LAST data:AggType_RATIO ) .
+
+### --- 2.C Semantic Model -------------------------------------------------
+# No abstract "SemanticAsset" bucket superclass (removed in v2.0.0).
+# Synonym was removed as a class: it was never instantiated (an orphan class
+# per the ontology review) and skos:altLabel already covers the same need
+# directly on BusinessTerm individuals — modeling it twice would be redundant.
+
+ekpi:SemanticLayer a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Layer"@en ;
+    rdfs:comment "The platform or service hosting one or more SemanticModels."@en .
+
+ekpi:SemanticModel a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Model"@en ;
+    rdfs:comment "A governed logical model binding business meaning to physical gold-layer data."@en .
+
+ekpi:SemanticEntity a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Entity"@en ;
+    rdfs:comment "A business-meaningful object in the semantic model, e.g. Rack Loading Transaction, Terminal, Product."@en .
+
+ekpi:SemanticAttribute a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Attribute"@en ;
+    rdfs:comment "A descriptive field on a SemanticEntity."@en .
+
+ekpi:SemanticMeasure a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Measure"@en ;
+    rdfs:comment "The semantic-layer representation of a Measure or KPI, bound to gold data and an aggregation rule."@en .
+
+ekpi:SemanticRelationship a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Semantic Relationship"@en ;
+    rdfs:comment "A named relationship between two SemanticEntity instances, e.g. 'Rack Loading occurs at Terminal'. Instantiated in v2.0.0 (was an orphan/untested class in v1.0.0)."@en .
+
+ekpi:BusinessTerm a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Business Term"@en ;
+    rdfs:comment "A controlled-vocabulary business word or phrase (glossary entry). Modeled as a SKOS Concept."@en .
+
+ekpi:MappingRule a owl:Class ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Mapping Rule"@en ;
+    rdfs:comment "An explicit rule mapping a BusinessTerm or SemanticAttribute to a physical column or field."@en .
+
+### --- 2.D Lineage & Data Architecture -------------------------------------
+# No abstract "LineageNode" bucket superclass (removed in v2.0.0).
+
+ekpi:OperationalSystem a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Operational System"@en ;
+    rdfs:comment "A source-of-record system, e.g. OPIS Market Data Service, RightAngle CTRM/ETRM."@en .
+
+ekpi:SourceApplication a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Source Application"@en ;
+    rdfs:comment "A specific application instance within an OperationalSystem."@en .
+
+ekpi:SourceTable a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Source Table"@en ;
+    rdfs:comment "A physical or logical table in a source application."@en .
+
+ekpi:SourceField a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Source Field"@en ;
+    rdfs:comment "A column in a SourceTable; the ultimate physical origin of a data value."@en .
+
+ekpi:Dataset a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Dataset"@en ;
+    rdfs:comment "Genuine abstract superclass for datasets across the medallion layers — lets lineage properties (hasQualityRule, transformedBy) be declared once instead of three times."@en .
+
+ekpi:RawLayerDataset a owl:Class ;
+    rdfs:subClassOf ekpi:Dataset ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Raw Layer Dataset"@en ;
+    rdfs:comment "Bronze/raw ingested copy of source data, minimally transformed."@en .
+
+ekpi:SilverLayerDataset a owl:Class ;
+    rdfs:subClassOf ekpi:Dataset ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Silver Layer Dataset"@en ;
+    rdfs:comment "Cleansed, conformed, business-rule-applied dataset."@en .
+
+ekpi:GoldLayerDataset a owl:Class ;
+    rdfs:subClassOf ekpi:Dataset ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Gold Layer Dataset"@en ;
+    rdfs:comment "Curated, aggregate-ready dataset intended for consumption."@en .
+
+ekpi:RawLayerDataset owl:disjointWith ekpi:GoldLayerDataset .
+ekpi:RawLayerDataset owl:disjointWith ekpi:SilverLayerDataset .
+ekpi:SilverLayerDataset owl:disjointWith ekpi:GoldLayerDataset .
+
+ekpi:DataProduct a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Data Product"@en ;
+    rdfs:comment "A packaged, owned, discoverable data asset that wraps a Gold dataset, e.g. the Rack Price Sheet."@en .
+
+ekpi:DataPipeline a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Data Pipeline"@en ;
+    rdfs:comment "An orchestrated set of TransformationSteps moving or transforming data between layers."@en .
+
+ekpi:TransformationStep a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Transformation Step"@en ;
+    rdfs:comment "An atomic transformation, e.g. join, filter, aggregate, within a pipeline."@en .
+
+ekpi:DataQualityRule a owl:Class ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Data Quality Rule"@en ;
+    rdfs:comment "A rule such as not-null or range-check applied to a dataset or field."@en .
+
+ekpi:ProvenanceEvent a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    dcterms:isPartOf ekpi:LineageModule ;
+    rdfs:label "Provenance Event"@en ;
+    rdfs:comment "A specific run or execution that produced or transformed data. Equivalent to prov:Activity."@en .
+
+### --- 2.E Consumption ------------------------------------------------------
+# ConsumptionAsset is KEPT as a real superclass: unlike the removed buckets,
+# its members genuinely share one kind — "a surface a human consumes KPI
+# values through" — so rdfs:subClassOf is an honest claim here.
+
+ekpi:ConsumptionAsset a owl:Class ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Consumption Asset"@en ;
+    rdfs:comment "Genuine superclass for anything a human (or downstream model) consumes KPI values through."@en .
+
+ekpi:Report a owl:Class ;
+    rdfs:subClassOf ekpi:ConsumptionAsset ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Report"@en ;
+    rdfs:comment "A static or on-demand document presenting KPI or measure values."@en .
+
+ekpi:Dashboard a owl:Class ;
+    rdfs:subClassOf ekpi:ConsumptionAsset ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Dashboard"@en ;
+    rdfs:comment "An interactive, typically live, visualization surface."@en .
+
+ekpi:Scorecard a owl:Class ;
+    rdfs:subClassOf ekpi:ConsumptionAsset ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Scorecard"@en ;
+    rdfs:comment "A structured, goal-vs-actual performance view, usually tied to a StrategicObjective."@en .
+
+ekpi:AnalyticalModel a owl:Class ;
+    rdfs:subClassOf ekpi:ConsumptionAsset ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Analytical Model"@en ;
+    rdfs:comment "A downstream model, e.g. a forecast or ML model, consuming certified measures or KPIs."@en .
+
+ekpi:ConsumerUseCase a owl:Class ;
+    dcterms:isPartOf ekpi:ConsumptionModule ;
+    rdfs:label "Consumer Use Case"@en ;
+    rdfs:comment "A named business use case describing why or how a KPI is consumed."@en .
+
+### --- 2.F Governance --------------------------------------------------------
+# No abstract "GovernanceElement" bucket superclass (removed in v2.0.0).
+
+ekpi:Policy a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Policy"@en ;
+    rdfs:comment "A high-level governance rule, e.g. every KPI must have a certified owner."@en .
+
+ekpi:Standard a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Standard"@en ;
+    rdfs:comment "A concrete specification implementing a Policy, e.g. a naming standard."@en .
+
+ekpi:Control a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Control"@en ;
+    rdfs:comment "An enforceable check implementing a Standard, technical or procedural."@en .
+
+ekpi:AccessRule a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Access Rule"@en ;
+    rdfs:comment "A rule restricting who can view or edit a governed asset, e.g. commercial pricing confidentiality."@en .
+
+ekpi:CertificationStatus a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Certification Status"@en ;
+    rdfs:comment "A controlled-vocabulary state: Draft, InReview, Certified, or Deprecated."@en ;
+    owl:oneOf ( data:Status_Draft data:Status_InReview data:Status_Certified data:Status_Deprecated ) .
+
+ekpi:Version a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Version"@en ;
+    rdfs:comment "A versioned snapshot of a governed asset."@en .
+
+ekpi:ApprovalEvent a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Approval Event"@en ;
+    rdfs:comment "A recorded approval or sign-off action."@en .
+
+ekpi:AuditEvent a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Audit Event"@en ;
+    rdfs:comment "A recorded change or access event for traceability."@en .
+
+ekpi:StewardshipAssignment a owl:Class ;
+    dcterms:isPartOf ekpi:GovernanceModule ;
+    rdfs:label "Stewardship Assignment"@en ;
+    rdfs:comment "A time-bound assignment linking a DataSteward to a governed asset. Populated with real properties in v2.0.0 (was an inert individual with no properties in v1.0.0 — see ekpi:assignmentSteward / assignmentStartDate below)."@en .
+
+##############################################################################
+# 3. OBJECT PROPERTY DECLARATIONS (with domain/range)
+##############################################################################
+
+### --- Property hierarchy (super-properties; v2.0.0 fix) ---
+# Introduced so the graph can be queried "give me everything that specifies
+# this KPI" / "give me every governance record" / "give me every semantic
+# component" without listing every narrow predicate by name.
+
+ekpi:hasSpecificationElement a owl:ObjectProperty ;
+    rdfs:label "has specification element"@en ;
+    rdfs:comment "Super-property grouping every predicate that attaches a piece of a KPI's formal specification (formula, aggregation, unit, target, threshold, time period, grain)."@en .
+
+ekpi:hasGovernanceRecord a owl:ObjectProperty ;
+    rdfs:label "has governance record"@en ;
+    rdfs:comment "Super-property grouping every predicate that attaches a governance fact (certification status, version, audit event, access rule) to a governed asset."@en .
+
+ekpi:hasSemanticComponent a owl:ObjectProperty ;
+    rdfs:label "has semantic component"@en ;
+    rdfs:comment "Super-property grouping every predicate that attaches a component of a SemanticModel (entity, measure, attribute, relationship)."@en .
+
+### --- Business alignment ---
+
+ekpi:alignsToGoal a owl:ObjectProperty ;
+    rdfs:label "aligns to goal"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:BusinessGoal ;
+    rdfs:comment "Relates a KPI to the BusinessGoal it supports."@en .
+
+ekpi:alignsToObjective a owl:ObjectProperty ;
+    rdfs:label "aligns to objective"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:StrategicObjective ;
+    rdfs:comment "Relates a KPI to the StrategicObjective it supports."@en .
+
+ekpi:supportsCapability a owl:ObjectProperty ;
+    rdfs:label "supports capability"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:BusinessCapability .
+
+ekpi:supportsValueStream a owl:ObjectProperty ;
+    rdfs:label "supports value stream"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:ValueStream .
+
+ekpi:belongsToDomain a owl:ObjectProperty ;
+    rdfs:label "belongs to domain"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:BusinessDomain .
+
+ekpi:measuresProcess a owl:ObjectProperty ;
+    rdfs:label "measures process"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:BusinessProcess .
+
+ekpi:hasProcessStep a owl:ObjectProperty ;
+    rdfs:label "has process step"@en ;
+    rdfs:domain ekpi:BusinessProcess ; rdfs:range ekpi:ProcessStep .
+
+ekpi:narrowsGoal a owl:ObjectProperty ;
+    rdfs:label "narrows goal"@en ;
+    rdfs:domain ekpi:StrategicObjective ; rdfs:range ekpi:BusinessGoal ;
+    rdfs:comment "Relates a specific StrategicObjective individual to the broader BusinessGoal individual it operationalizes."@en .
+
+ekpi:belongsToUnit a owl:ObjectProperty ;
+    rdfs:label "belongs to unit"@en ;
+    rdfs:domain ekpi:Role ; rdfs:range ekpi:OrganizationalUnit ;
+    rdfs:comment "Relates a Role (and by extension the BusinessOwner/DataSteward holding it) to the OrganizationalUnit it sits in."@en .
+
+### --- KPI specification ---
+
+ekpi:hasDefinition a owl:ObjectProperty ;
+    rdfs:label "has definition"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:KPIDefinition ;
+    rdfs:comment "Relates a KPI to its documented, versioned KPIDefinition."@en .
+
+ekpi:isDefinitionOf a owl:ObjectProperty ;
+    owl:inverseOf ekpi:hasDefinition ;
+    rdfs:label "is definition of"@en .
+
+ekpi:hasFormula a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has formula"@en ;
+    rdfs:domain ekpi:KPIDefinition ; rdfs:range ekpi:KPIFormula .
+
+ekpi:implementedBy a owl:ObjectProperty ;
+    rdfs:label "implemented by"@en ;
+    rdfs:domain ekpi:KPIFormula ; rdfs:range ekpi:CalculationLogic .
+
+ekpi:hasAggregationRule a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has aggregation rule"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:KPI ekpi:Measure ) ] ;
+    rdfs:range ekpi:AggregationRule .
+
+ekpi:hasUnitOfMeasure a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has unit of measure"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:KPI ekpi:Measure ekpi:KPIObservation ) ] ;
+    rdfs:range ekpi:UnitOfMeasure .
+
+ekpi:hasTarget a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has target"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:Target .
+
+ekpi:hasThreshold a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has threshold"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:Threshold .
+
+ekpi:targetPeriod a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "target period"@en ;
+    rdfs:domain ekpi:Target ; rdfs:range ekpi:TimePeriod ;
+    rdfs:comment "The TimePeriod a Target value applies to, e.g. FY26 Q4. v2.0.0 fix: this property was declared in the Stage 1 design table but never implemented in Stage 2 v1.0.0 — it is now declared and asserted on the worked example's Target individual."@en .
+
+ekpi:slicedByDimension a owl:ObjectProperty ;
+    rdfs:label "sliced by dimension"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:Dimension .
+
+ekpi:hasTimePeriod a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has time period"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:TimePeriod .
+
+ekpi:hasGrain a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has grain"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:KPI ekpi:Measure ) ] ;
+    rdfs:range ekpi:Grain .
+
+ekpi:derivedFromMeasure a owl:ObjectProperty ;
+    rdfs:label "derived from measure"@en ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:Measure .
+
+ekpi:derivedFromDataset a owl:ObjectProperty ;
+    rdfs:label "derived from dataset"@en ;
+    rdfs:domain ekpi:Measure ; rdfs:range ekpi:GoldLayerDataset .
+
+### --- KPI Observation / fact layer (v2.0.0 addition) ---
+
+ekpi:measuresKPI a owl:ObjectProperty ;
+    rdfs:label "measures KPI"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:KPI ;
+    rdfs:comment "Relates a specific observed value/event to the KPI it is a reading of."@en .
+
+ekpi:observedForPeriod a owl:ObjectProperty ;
+    rdfs:label "observed for period"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:TimePeriod .
+
+ekpi:observedForDimensionValue a owl:ObjectProperty ;
+    rdfs:label "observed for dimension value"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:DimensionValue ;
+    rdfs:comment "Which specific dimension values (e.g. which terminal, which product) this observation applies to."@en .
+
+ekpi:valueOfDimension a owl:ObjectProperty ;
+    rdfs:label "value of dimension"@en ;
+    rdfs:domain ekpi:DimensionValue ; rdfs:range ekpi:Dimension .
+
+ekpi:hasObservationStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "has observation status"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:ObservationStatus ;
+    rdfs:comment "Functional: one observation has exactly one status relative to Target/Threshold."@en .
+
+ekpi:computedAgainstTarget a owl:ObjectProperty ;
+    rdfs:label "computed against target"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:Target .
+
+ekpi:computedAgainstThreshold a owl:ObjectProperty ;
+    rdfs:label "computed against threshold"@en ;
+    rdfs:domain ekpi:KPIObservation ; rdfs:range ekpi:Threshold .
+
+### --- Lineage / medallion ---
+
+ekpi:originatesIn a owl:ObjectProperty ;
+    rdfs:label "originates in"@en ;
+    rdfs:domain ekpi:SourceField ; rdfs:range ekpi:OperationalSystem .
+
+ekpi:transformedBy a owl:ObjectProperty ;
+    rdfs:label "transformed by"@en ;
+    rdfs:domain ekpi:Dataset ; rdfs:range ekpi:TransformationStep .
+
+ekpi:partOfPipeline a owl:ObjectProperty ;
+    rdfs:label "part of pipeline"@en ;
+    rdfs:domain ekpi:TransformationStep ; rdfs:range ekpi:DataPipeline .
+
+ekpi:hasQualityRule a owl:ObjectProperty ;
+    rdfs:label "has quality rule"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:Dataset ekpi:SourceField ) ] ;
+    rdfs:range ekpi:DataQualityRule .
+
+ekpi:wrapsDataset a owl:ObjectProperty ;
+    rdfs:label "wraps dataset"@en ;
+    rdfs:domain ekpi:DataProduct ; rdfs:range ekpi:Dataset ;
+    rdfs:comment "Relates a packaged, owned DataProduct to the Gold dataset it wraps for downstream consumption."@en .
+
+# Generic PROV-based lineage edges reused across the whole chain:
+#   RawLayerDataset -> SilverLayerDataset -> GoldLayerDataset, and SourceField -> RawLayerDataset,
+# are all expressed with prov:wasDerivedFrom so the graph stays interoperable with PROV tooling.
+
+### --- Semantic model bridges ---
+
+ekpi:feedsSemanticModel a owl:ObjectProperty ;
+    rdfs:label "feeds semantic model"@en ;
+    rdfs:domain ekpi:GoldLayerDataset ; rdfs:range ekpi:SemanticModel .
+
+ekpi:isFedBy a owl:ObjectProperty ;
+    owl:inverseOf ekpi:feedsSemanticModel ;
+    rdfs:label "is fed by"@en .
+
+ekpi:hasSemanticEntity a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSemanticComponent ;
+    rdfs:label "has semantic entity"@en ;
+    rdfs:domain ekpi:SemanticModel ; rdfs:range ekpi:SemanticEntity .
+
+ekpi:hasSemanticMeasure a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSemanticComponent ;
+    rdfs:label "has semantic measure"@en ;
+    rdfs:domain ekpi:SemanticModel ; rdfs:range ekpi:SemanticMeasure .
+
+ekpi:hasSemanticAttribute a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSemanticComponent ;
+    rdfs:label "has semantic attribute"@en ;
+    rdfs:domain ekpi:SemanticEntity ; rdfs:range ekpi:SemanticAttribute .
+
+ekpi:hasSemanticRelationship a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSemanticComponent ;
+    rdfs:label "has semantic relationship"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:SemanticModel ekpi:SemanticEntity ) ] ;
+    rdfs:range ekpi:SemanticRelationship ;
+    rdfs:comment "v2.0.0: instantiates the previously-orphan SemanticRelationship class."@en .
+
+ekpi:hasSourceEntity a owl:ObjectProperty ;
+    rdfs:label "has source entity"@en ;
+    rdfs:domain ekpi:SemanticRelationship ; rdfs:range ekpi:SemanticEntity .
+
+ekpi:hasTargetEntity a owl:ObjectProperty ;
+    rdfs:label "has target entity"@en ;
+    rdfs:domain ekpi:SemanticRelationship ; rdfs:range ekpi:SemanticEntity .
+
+ekpi:mapsToBusinessTerm a owl:ObjectProperty ;
+    rdfs:label "maps to business term"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:SemanticMeasure ekpi:SemanticAttribute ) ] ;
+    rdfs:range ekpi:BusinessTerm .
+
+ekpi:mappedByRule a owl:ObjectProperty ;
+    rdfs:label "mapped by rule"@en ;
+    rdfs:domain ekpi:SemanticAttribute ; rdfs:range ekpi:MappingRule .
+
+ekpi:realizesKPI a owl:ObjectProperty ;
+    rdfs:label "realizes KPI"@en ;
+    rdfs:domain ekpi:SemanticMeasure ; rdfs:range ekpi:KPI ;
+    rdfs:comment "States that a SemanticMeasure is the governed, physical-data-bound implementation of a KPI."@en .
+
+### --- Consumption ---
+
+ekpi:consumedBy a owl:ObjectProperty ;
+    rdfs:label "consumed by"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:SemanticMeasure ekpi:KPIDefinition ) ] ;
+    rdfs:range ekpi:ConsumptionAsset .
+
+ekpi:usedInUseCase a owl:ObjectProperty ;
+    rdfs:label "used in use case"@en ;
+    rdfs:domain ekpi:ConsumptionAsset ; rdfs:range ekpi:ConsumerUseCase .
+
+### --- Governance ---
+
+ekpi:ownedBy a owl:ObjectProperty ;
+    rdfs:label "owned by"@en ;
+    rdfs:range ekpi:BusinessOwner .
+
+ekpi:stewardedBy a owl:ObjectProperty ;
+    rdfs:label "stewarded by"@en ;
+    rdfs:range ekpi:DataSteward ;
+    rdfs:comment "Denormalized shortcut naming the CURRENT steward of an asset directly, for cheap querying. The authoritative, time-bound record of who was steward and for how long lives on the StewardshipAssignment reached via hasStewardshipAssignment — both are kept deliberately, not redundantly (see ontology review, Priority 2 item 5)."@en .
+
+ekpi:hasStewardshipAssignment a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:label "has stewardship assignment"@en ;
+    rdfs:range ekpi:StewardshipAssignment .
+
+ekpi:assignmentSteward a owl:ObjectProperty ;
+    rdfs:label "assignment steward"@en ;
+    rdfs:domain ekpi:StewardshipAssignment ; rdfs:range ekpi:DataSteward ;
+    rdfs:comment "v2.0.0 fix: StewardshipAssignment individuals previously had no properties beyond a label. This property (plus assignmentStartDate/assignmentEndDate) now makes the assignment a real, queryable fact."@en .
+
+ekpi:governedByPolicy a owl:ObjectProperty ;
+    rdfs:label "governed by policy"@en ;
+    rdfs:range ekpi:Policy .
+
+ekpi:implementsStandard a owl:ObjectProperty ;
+    rdfs:label "implements standard"@en ;
+    rdfs:domain ekpi:Policy ; rdfs:range ekpi:Standard .
+
+ekpi:enforcedByControl a owl:ObjectProperty ;
+    rdfs:label "enforced by control"@en ;
+    rdfs:domain ekpi:Standard ; rdfs:range ekpi:Control .
+
+ekpi:hasCertificationStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:label "has certification status"@en ;
+    rdfs:range ekpi:CertificationStatus ;
+    rdfs:comment "Functional: a governed asset has exactly one current certification status."@en .
+
+ekpi:hasVersion a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:label "has version"@en ;
+    rdfs:range ekpi:Version .
+
+ekpi:approvedBy a owl:ObjectProperty ;
+    rdfs:label "approved by"@en ;
+    rdfs:domain ekpi:Version ; rdfs:range ekpi:ApprovalEvent .
+
+ekpi:auditedBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:label "audited by"@en ;
+    rdfs:range ekpi:AuditEvent .
+
+ekpi:restrictedBy a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:label "restricted by"@en ;
+    rdfs:range ekpi:AccessRule .
+
+##############################################################################
+# 4. DATATYPE PROPERTY DECLARATIONS
+##############################################################################
+
+ekpi:kpiCode a owl:DatatypeProperty ;
+    rdfs:label "KPI code"@en ; rdfs:domain ekpi:KPI ; rdfs:range xsd:string .
+
+ekpi:definitionText a owl:DatatypeProperty ;
+    rdfs:label "definition text"@en ; rdfs:domain ekpi:KPIDefinition ; rdfs:range xsd:string .
+
+ekpi:effectiveDate a owl:DatatypeProperty ;
+    rdfs:label "effective date"@en ; rdfs:domain ekpi:KPIDefinition ; rdfs:range xsd:date .
+
+ekpi:formulaExpression a owl:DatatypeProperty ;
+    rdfs:label "formula expression"@en ; rdfs:domain ekpi:KPIFormula ; rdfs:range xsd:string .
+
+ekpi:logicExpression a owl:DatatypeProperty ;
+    rdfs:label "logic expression"@en ; rdfs:domain ekpi:CalculationLogic ; rdfs:range xsd:string ;
+    rdfs:comment "v2.0.0 fix: the concrete SQL/DAX implementation is now a real, queryable/comparable datatype property, not only prose hidden inside rdfs:comment (ontology review, Priority 3 item 8)."@en .
+
+ekpi:unitSymbol a owl:DatatypeProperty ;
+    rdfs:label "unit symbol"@en ; rdfs:domain ekpi:UnitOfMeasure ; rdfs:range xsd:string .
+
+ekpi:targetValue a owl:DatatypeProperty ;
+    rdfs:label "target value"@en ; rdfs:domain ekpi:Target ; rdfs:range xsd:decimal .
+
+ekpi:thresholdValue a owl:DatatypeProperty ;
+    rdfs:label "threshold value"@en ; rdfs:domain ekpi:Threshold ; rdfs:range xsd:decimal .
+
+ekpi:grainLabel a owl:DatatypeProperty ;
+    rdfs:label "grain label"@en ; rdfs:domain ekpi:Grain ; rdfs:range xsd:string .
+
+ekpi:fieldName a owl:DatatypeProperty ;
+    rdfs:label "field name"@en ; rdfs:domain ekpi:SourceField ; rdfs:range xsd:string .
+
+ekpi:datasetName a owl:DatatypeProperty ;
+    rdfs:label "dataset name"@en ; rdfs:domain ekpi:Dataset ; rdfs:range xsd:string .
+
+ekpi:refreshFrequency a owl:DatatypeProperty ;
+    rdfs:label "refresh frequency"@en ; rdfs:domain ekpi:Dataset ; rdfs:range xsd:string .
+
+ekpi:ruleExpression a owl:DatatypeProperty ;
+    rdfs:label "rule expression"@en ; rdfs:domain ekpi:DataQualityRule ; rdfs:range xsd:string .
+
+ekpi:versionNumber a owl:DatatypeProperty ;
+    rdfs:label "version number"@en ; rdfs:domain ekpi:Version ; rdfs:range xsd:string .
+
+ekpi:versionDate a owl:DatatypeProperty ;
+    rdfs:label "version date"@en ; rdfs:domain ekpi:Version ; rdfs:range xsd:date .
+
+ekpi:eventTimestamp a owl:DatatypeProperty ;
+    rdfs:label "event timestamp"@en ;
+    rdfs:domain [ owl:unionOf ( ekpi:ApprovalEvent ekpi:AuditEvent ) ] ;
+    rdfs:range xsd:dateTime .
+
+ekpi:unitName a owl:DatatypeProperty ;
+    rdfs:label "unit name"@en ; rdfs:domain ekpi:OrganizationalUnit ; rdfs:range xsd:string .
+
+ekpi:unitType a owl:DatatypeProperty ;
+    rdfs:label "unit type"@en ; rdfs:domain ekpi:OrganizationalUnit ; rdfs:range xsd:string .
+
+ekpi:periodStart a owl:DatatypeProperty ;
+    rdfs:label "period start"@en ; rdfs:domain ekpi:TimePeriod ; rdfs:range xsd:date ;
+    rdfs:comment "v2.0.0 fix: declared in the Stage 1 design table but never implemented in Stage 2 v1.0.0 (zero TimePeriod individuals existed)."@en .
+
+ekpi:periodEnd a owl:DatatypeProperty ;
+    rdfs:label "period end"@en ; rdfs:domain ekpi:TimePeriod ; rdfs:range xsd:date .
+
+ekpi:periodGranularity a owl:DatatypeProperty ;
+    rdfs:label "period granularity"@en ; rdfs:domain ekpi:TimePeriod ; rdfs:range xsd:string .
+
+ekpi:dimensionValueLabel a owl:DatatypeProperty ;
+    rdfs:label "dimension value label"@en ; rdfs:domain ekpi:DimensionValue ; rdfs:range xsd:string .
+
+ekpi:hasObservedValue a owl:DatatypeProperty ;
+    rdfs:label "has observed value"@en ; rdfs:domain ekpi:KPIObservation ; rdfs:range xsd:decimal ;
+    rdfs:comment "The actual measured numeric value of one KPIObservation."@en .
+
+ekpi:relationshipType a owl:DatatypeProperty ;
+    rdfs:label "relationship type"@en ; rdfs:domain ekpi:SemanticRelationship ; rdfs:range xsd:string .
+
+ekpi:assignmentStartDate a owl:DatatypeProperty ;
+    rdfs:label "assignment start date"@en ; rdfs:domain ekpi:StewardshipAssignment ; rdfs:range xsd:date .
+
+ekpi:assignmentEndDate a owl:DatatypeProperty ;
+    rdfs:label "assignment end date"@en ; rdfs:domain ekpi:StewardshipAssignment ; rdfs:range xsd:date ;
+    rdfs:comment "Left unasserted on open-ended (still-active) assignments."@en .
+
+##############################################################################
+# 5. OWL RESTRICTIONS
+# v2.0.0 adds restrictions that operationalize the KPI-vs-Metric and
+# Gold-vs-Silver-vs-Raw distinctions the review flagged as "asserted only
+# as prose" (Priority 2, item 4) — mirroring Casey Hart's bedroom/closet
+# example: a logical fact a reasoner can check, not only a human-readable
+# comment.
+##############################################################################
+
+# Every KPI must have at least one documented KPIDefinition.
+ekpi:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:hasDefinition ;
+    owl:someValuesFrom ekpi:KPIDefinition
+] .
+
+# What formally distinguishes a governed KPI from a plain Metric: a KPI must
+# have an accountable BusinessOwner. A Metric need not.
+ekpi:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:ownedBy ;
+    owl:someValuesFrom ekpi:BusinessOwner
+] .
+
+# CertifiedDefinition is inferable: a KPIDefinition whose certification status is Certified.
+ekpi:CertifiedDefinition owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        ekpi:KPIDefinition
+        [ a owl:Restriction ;
+          owl:onProperty ekpi:hasCertificationStatus ;
+          owl:hasValue data:Status_Certified ]
+    )
+] .
+
+# A RawLayerDataset must trace back to at least one SourceField — that is
+# what makes it "raw" rather than merely "unlabeled."
+ekpi:RawLayerDataset rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty prov:wasDerivedFrom ;
+    owl:someValuesFrom ekpi:SourceField
+] .
+
+# A SilverLayerDataset must trace back to at least one RawLayerDataset.
+ekpi:SilverLayerDataset rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty prov:wasDerivedFrom ;
+    owl:someValuesFrom ekpi:RawLayerDataset
+] .
+
+# A GoldLayerDataset must feed at least one SemanticModel — that is what
+# makes it "gold" (consumption-ready) rather than merely "cleansed."
+ekpi:GoldLayerDataset rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:feedsSemanticModel ;
+    owl:someValuesFrom ekpi:SemanticModel
+] .
+
+##############################################################################
+# 6. CONTROLLED VOCABULARY INDIVIDUALS
+##############################################################################
+
+data:Status_Draft      a ekpi:CertificationStatus ; rdfs:label "Draft"@en .
+data:Status_InReview    a ekpi:CertificationStatus ; rdfs:label "In Review"@en .
+data:Status_Certified   a ekpi:CertificationStatus ; rdfs:label "Certified"@en .
+data:Status_Deprecated  a ekpi:CertificationStatus ; rdfs:label "Deprecated"@en .
+
+data:Criticality_High   a ekpi:Criticality ; rdfs:label "High"@en .
+data:Criticality_Medium a ekpi:Criticality ; rdfs:label "Medium"@en .
+data:Criticality_Low    a ekpi:Criticality ; rdfs:label "Low"@en .
+
+data:Severity_Red    a ekpi:ThresholdSeverity ; rdfs:label "Red"@en .
+data:Severity_Yellow a ekpi:ThresholdSeverity ; rdfs:label "Yellow"@en .
+data:Severity_Green  a ekpi:ThresholdSeverity ; rdfs:label "Green"@en .
+
+data:AggType_SUM   a ekpi:AggregationType ; rdfs:label "SUM"@en .
+data:AggType_AVG   a ekpi:AggregationType ; rdfs:label "AVG"@en .
+data:AggType_LAST  a ekpi:AggregationType ; rdfs:label "LAST"@en .
+data:AggType_RATIO a ekpi:AggregationType ; rdfs:label "RATIO"@en .
+
+data:ObsStatus_OnTarget a ekpi:ObservationStatus ; rdfs:label "On Target"@en .
+data:ObsStatus_Watch    a ekpi:ObservationStatus ; rdfs:label "Watch"@en .
+data:ObsStatus_Breach   a ekpi:ObservationStatus ; rdfs:label "Breach"@en .
+
+##############################################################################
+# 7. WORKED EXAMPLE — Downstream Oil & Gas Commercial:
+#    "Rack Price Capture Rate %"
+#
+#    Business context: Downstream Commercial value stream, Pricing & Margin
+#    Management function, Rack Price Management & Publication capability,
+#    Rack Price Setting business process. Measures how much of the published
+#    OPIS rack benchmark price a terminal actually realizes in rack revenue —
+#    a direct proxy for margin leakage at the rack.
+#
+#    End-to-end path (two source systems feeding one KPI):
+#    RightAngle CTRM (realized revenue)  -\
+#                                           >-- KPI: Rack Price Capture Rate %
+#    OPIS Market Data Service (benchmark)-/        -> Semantic Model -> Dashboard
+##############################################################################
+
+### --- 7.A Business architecture individuals ---
+
+data:DownstreamCommercialDomain a ekpi:BusinessDomain ;
+    rdfs:label "Downstream Commercial"@en ;
+    rdfs:comment "Level 1 business domain covering market intelligence, physical trading, pricing & margin management, marketing & channels, terminals & logistics, quality & loss control, risk, performance management, and finance & settlements."@en .
+
+data:DownstreamCommercialValueStream a ekpi:ValueStream ;
+    rdfs:label "Downstream Commercial Value Stream"@en ;
+    rdfs:comment "End-to-end commercial value stream spanning three stages: (1) Market & Strategy Formation, (2) Execution & Operations, (3) Risk, Performance & Control — which feeds back into stage 1."@en .
+
+data:PricingMarginManagementFunction a ekpi:BusinessFunction ;
+    rdfs:label "Pricing & Margin Management"@en ;
+    rdfs:comment "Level 2 recurring commercial function covering master/rack pricing and operational margin management."@en .
+
+data:RackPriceManagementCapability a ekpi:BusinessCapability ;
+    rdfs:label "Rack Price Management & Publication"@en ;
+    rdfs:comment "Level 3 capability: set and govern rack prices against benchmark and zone/freight differentials."@en .
+
+data:MarginPerformanceManagementCapability a ekpi:BusinessCapability ;
+    rdfs:label "Commercial Performance & KPI Management"@en .
+
+data:RackPriceSettingProcess a ekpi:BusinessProcess ;
+    rdfs:label "Rack Price Setting"@en ;
+    rdfs:comment "Level 3 business process that ingests market benchmarks, applies zone/freight differentials, and publishes governed rack price sheets."@en ;
+    ekpi:hasProcessStep data:Step_IngestOPISBenchmark, data:Step_ApplyZoneDifferential,
+                         data:Step_PublishRackSheet, data:Step_ReconcileRealizedVsPublished .
+
+data:Step_IngestOPISBenchmark a ekpi:ProcessStep ;
+    rdfs:label "Ingest OPIS Benchmark"@en .
+
+data:Step_ApplyZoneDifferential a ekpi:ProcessStep ;
+    rdfs:label "Apply Zone & Freight Differential"@en .
+
+data:Step_PublishRackSheet a ekpi:ProcessStep ;
+    rdfs:label "Publish Rack Price Sheet"@en .
+
+data:Step_ReconcileRealizedVsPublished a ekpi:ProcessStep ;
+    rdfs:label "Reconcile Realized vs. Published Price"@en .
+
+data:ProtectGrowCommercialMarginGoal a ekpi:BusinessGoal ;
+    rdfs:label "Protect and Grow Commercial Margin"@en .
+
+data:ImproveRackCapture99pctQ4FY26 a ekpi:StrategicObjective ;
+    rdfs:label "Improve Rack Price Capture Rate to 99% by Q4 FY26"@en ;
+    ekpi:narrowsGoal data:ProtectGrowCommercialMarginGoal .
+
+data:CommercialPricingDistributionTeam a ekpi:OrganizationalUnit ;
+    rdfs:label "Commercial Pricing & Distribution Team"@en ;
+    ekpi:unitName "Commercial Pricing & Distribution Team" ;
+    ekpi:unitType "Commercial Function Team" .
+
+data:CommercialPricingManager a ekpi:BusinessOwner ;
+    rdfs:label "Commercial Pricing Manager"@en ;
+    foaf:name "Commercial Pricing Manager (Role)" ;
+    ekpi:belongsToUnit data:CommercialPricingDistributionTeam .
+
+data:CommercialDataSteward a ekpi:DataSteward ;
+    rdfs:label "Commercial Data Steward"@en ;
+    ekpi:belongsToUnit data:CommercialPricingDistributionTeam .
+
+### --- 7.B KPI model individuals ---
+
+data:RackPriceCaptureRateKPI a ekpi:KPI ;
+    rdfs:label "Rack Price Capture Rate %"@en ;
+    ekpi:kpiCode "KPI-COM-001" ;
+    ekpi:criticality data:Criticality_High ;
+    ekpi:alignsToObjective data:ImproveRackCapture99pctQ4FY26 ;
+    ekpi:supportsCapability data:RackPriceManagementCapability, data:MarginPerformanceManagementCapability ;
+    ekpi:supportsValueStream data:DownstreamCommercialValueStream ;
+    ekpi:belongsToDomain data:DownstreamCommercialDomain ;
+    ekpi:measuresProcess data:RackPriceSettingProcess ;
+    ekpi:hasDefinition data:RackPriceCaptureRateDefinition_v1 ;
+    ekpi:hasAggregationRule data:AvgOverTerminalDayRule ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:hasTarget data:Target_99pct_Q4FY26 ;
+    ekpi:hasThreshold data:RedThreshold_97pct ;
+    ekpi:slicedByDimension data:TerminalDimension, data:ProductDimension ;
+    ekpi:hasGrain data:PerTerminalPerProductPerDayGrain ;
+    ekpi:derivedFromMeasure data:RealizedRackRevenueMeasure, data:PublishedRackBenchmarkMeasure ;
+    ekpi:ownedBy data:CommercialPricingManager ;
+    ekpi:stewardedBy data:CommercialDataSteward ;
+    ekpi:hasStewardshipAssignment data:CommercialPricingStewardshipAssignment ;
+    ekpi:governedByPolicy data:KPICertificationPolicy .
+
+data:RackPriceCaptureRateDefinition_v1 a ekpi:CertifiedDefinition ;
+    rdfs:label "Rack Price Capture Rate % Definition v1"@en ;
+    ekpi:definitionText "Percentage of the published OPIS rack benchmark price per gallon that is actually realized in terminal rack revenue, computed per terminal per product per day."@en ;
+    ekpi:effectiveDate "2026-07-15"^^xsd:date ;
+    ekpi:hasFormula data:RackPriceCaptureRateFormula ;
+    ekpi:hasCertificationStatus data:Status_Certified ;
+    ekpi:hasVersion data:RackCaptureDef_Version1 ;
+    ekpi:auditedBy data:AuditEvent_20260715 ;
+    ekpi:consumedBy data:CommercialPricingDashboard, data:CommercialMarginScorecard, data:DailyRackReconciliationReport .
+
+data:RackPriceCaptureRateFormula a ekpi:KPIFormula ;
+    rdfs:label "Rack Price Capture Rate Formula"@en ;
+    ekpi:formulaExpression "Rack Price Capture Rate % = (Realized Rack Revenue per Gallon / Published OPIS Rack Benchmark per Gallon) * 100" ;
+    ekpi:implementedBy data:RackCaptureCalcLogic_SQL .
+
+data:RackCaptureCalcLogic_SQL a ekpi:CalculationLogic ;
+    rdfs:label "Rack Price Capture Rate SQL Logic"@en ;
+    ekpi:logicExpression "SELECT terminal_id, product_code, business_date, SUM(realized_revenue_per_gal) / SUM(published_benchmark_per_gal) * 100 AS rack_capture_pct FROM gold.rack_price_capture GROUP BY terminal_id, product_code, business_date" ;
+    rdfs:comment "Joins realized terminal rack revenue against the published OPIS benchmark for the same terminal, product, and business date."@en .
+
+data:AvgOverTerminalDayRule a ekpi:AggregationRule ;
+    rdfs:label "Average Over Terminal-Day"@en ;
+    ekpi:aggregationType data:AggType_AVG .
+
+data:PercentUnit a ekpi:UnitOfMeasure ;
+    rdfs:label "Percent"@en ;
+    ekpi:unitSymbol "%" .
+
+data:FY26_Q4 a ekpi:TimePeriod ;
+    rdfs:label "FY26 Q4"@en ;
+    ekpi:periodStart "2026-07-01"^^xsd:date ;
+    ekpi:periodEnd "2026-09-30"^^xsd:date ;
+    ekpi:periodGranularity "Quarter" .
+
+data:Day_20260630 a ekpi:TimePeriod ;
+    rdfs:label "2026-06-30"@en ;
+    ekpi:periodStart "2026-06-30"^^xsd:date ;
+    ekpi:periodEnd "2026-06-30"^^xsd:date ;
+    ekpi:periodGranularity "Day" .
+
+data:Day_20260731 a ekpi:TimePeriod ;
+    rdfs:label "2026-07-31"@en ;
+    ekpi:periodStart "2026-07-31"^^xsd:date ;
+    ekpi:periodEnd "2026-07-31"^^xsd:date ;
+    ekpi:periodGranularity "Day" .
+
+data:Target_99pct_Q4FY26 a ekpi:Target ;
+    rdfs:label "Target 99% FY26 Q4"@en ;
+    ekpi:targetValue "99.0"^^xsd:decimal ;
+    ekpi:targetPeriod data:FY26_Q4 .
+
+data:RedThreshold_97pct a ekpi:Threshold ;
+    rdfs:label "Red Threshold 97%"@en ;
+    ekpi:thresholdValue "97.0"^^xsd:decimal ;
+    ekpi:thresholdSeverity data:Severity_Red .
+
+data:TerminalDimension a ekpi:Dimension ; rdfs:label "Terminal"@en .
+data:ProductDimension  a ekpi:Dimension ; rdfs:label "Product"@en .
+
+data:HoustonRackTerminal3 a ekpi:DimensionValue ;
+    ekpi:valueOfDimension data:TerminalDimension ;
+    ekpi:dimensionValueLabel "Houston Rack Terminal 3" .
+
+data:BeaumontRackTerminal1 a ekpi:DimensionValue ;
+    ekpi:valueOfDimension data:TerminalDimension ;
+    ekpi:dimensionValueLabel "Beaumont Rack Terminal 1" .
+
+data:ULSDDieselProduct a ekpi:DimensionValue ;
+    ekpi:valueOfDimension data:ProductDimension ;
+    ekpi:dimensionValueLabel "ULSD Diesel" .
+
+data:RBOBGasolineProduct a ekpi:DimensionValue ;
+    ekpi:valueOfDimension data:ProductDimension ;
+    ekpi:dimensionValueLabel "RBOB Gasoline" .
+
+data:PerTerminalPerProductPerDayGrain a ekpi:Grain ;
+    rdfs:label "Per Terminal Per Product Per Day"@en ;
+    ekpi:grainLabel "terminal x product x day" .
+
+data:RealizedRackRevenueMeasure a ekpi:Measure ;
+    rdfs:label "Realized Rack Revenue per Gallon"@en ;
+    ekpi:derivedFromDataset data:RackLiftings_GoldDataset .
+
+data:PublishedRackBenchmarkMeasure a ekpi:Measure ;
+    rdfs:label "Published OPIS Rack Benchmark per Gallon"@en ;
+    ekpi:derivedFromDataset data:OPISBenchmark_GoldDataset .
+
+### --- 7.C KPI Observations (fact layer — multiple readings over time) ---
+
+data:RackCaptureObs_Houston3_ULSD_20260630 a ekpi:KPIObservation ;
+    rdfs:label "Rack Price Capture Rate — Houston Rack Terminal 3 / ULSD Diesel — 2026-06-30"@en ;
+    ekpi:measuresKPI data:RackPriceCaptureRateKPI ;
+    ekpi:hasObservedValue "99.6"^^xsd:decimal ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:observedForPeriod data:Day_20260630 ;
+    ekpi:observedForDimensionValue data:HoustonRackTerminal3, data:ULSDDieselProduct ;
+    ekpi:computedAgainstTarget data:Target_99pct_Q4FY26 ;
+    ekpi:computedAgainstThreshold data:RedThreshold_97pct ;
+    ekpi:hasObservationStatus data:ObsStatus_OnTarget .
+
+data:RackCaptureObs_Houston3_ULSD_20260731 a ekpi:KPIObservation ;
+    rdfs:label "Rack Price Capture Rate — Houston Rack Terminal 3 / ULSD Diesel — 2026-07-31"@en ;
+    ekpi:measuresKPI data:RackPriceCaptureRateKPI ;
+    ekpi:hasObservedValue "98.4"^^xsd:decimal ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:observedForPeriod data:Day_20260731 ;
+    ekpi:observedForDimensionValue data:HoustonRackTerminal3, data:ULSDDieselProduct ;
+    ekpi:computedAgainstTarget data:Target_99pct_Q4FY26 ;
+    ekpi:computedAgainstThreshold data:RedThreshold_97pct ;
+    ekpi:hasObservationStatus data:ObsStatus_Watch .
+
+data:RackCaptureObs_Beaumont1_RBOB_20260731 a ekpi:KPIObservation ;
+    rdfs:label "Rack Price Capture Rate — Beaumont Rack Terminal 1 / RBOB Gasoline — 2026-07-31"@en ;
+    ekpi:measuresKPI data:RackPriceCaptureRateKPI ;
+    ekpi:hasObservedValue "96.2"^^xsd:decimal ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:observedForPeriod data:Day_20260731 ;
+    ekpi:observedForDimensionValue data:BeaumontRackTerminal1, data:RBOBGasolineProduct ;
+    ekpi:computedAgainstTarget data:Target_99pct_Q4FY26 ;
+    ekpi:computedAgainstThreshold data:RedThreshold_97pct ;
+    ekpi:hasObservationStatus data:ObsStatus_Breach .
+
+### --- 7.D Lineage individuals — Chain A: realized revenue (RightAngle CTRM) ---
+
+data:RightAngleCTRM a ekpi:OperationalSystem ;
+    rdfs:label "RightAngle CTRM/ETRM"@en .
+
+data:RightAngleTerminalBillingApp a ekpi:SourceApplication ;
+    rdfs:label "RightAngle Terminal Billing"@en .
+
+data:TerminalLiftingTxnTable a ekpi:SourceTable ;
+    rdfs:label "TERMINAL_LIFTING_TXN"@en .
+
+data:NetPricePerGalField a ekpi:SourceField ;
+    rdfs:label "NET_PRICE_PER_GAL"@en ;
+    ekpi:fieldName "NET_PRICE_PER_GAL" ;
+    ekpi:originatesIn data:RightAngleCTRM .
+
+data:RackLiftings_RawDataset a ekpi:RawLayerDataset ;
+    rdfs:label "rack_liftings_raw"@en ;
+    ekpi:datasetName "raw.rack_liftings" ;
+    prov:wasDerivedFrom data:NetPricePerGalField .
+
+data:RackLiftings_SilverDataset a ekpi:SilverLayerDataset ;
+    rdfs:label "rack_liftings_silver"@en ;
+    ekpi:datasetName "silver.rack_liftings" ;
+    prov:wasDerivedFrom data:RackLiftings_RawDataset .
+
+data:RackLiftings_GoldDataset a ekpi:GoldLayerDataset ;
+    rdfs:label "rack_liftings_gold"@en ;
+    ekpi:datasetName "gold.rack_liftings" ;
+    prov:wasDerivedFrom data:RackLiftings_SilverDataset ;
+    ekpi:feedsSemanticModel data:CommercialPricingSemanticModel ;
+    ekpi:hasQualityRule data:NotNullNetPriceRule .
+
+data:NotNullNetPriceRule a ekpi:DataQualityRule ;
+    rdfs:label "Net Price Not Null"@en ;
+    ekpi:ruleExpression "net_price_per_gal IS NOT NULL" .
+
+data:RackLiftingsPipeline a ekpi:DataPipeline ;
+    rdfs:label "Rack Liftings Medallion Pipeline"@en .
+
+data:RackLiftings_RawToSilverStep a ekpi:TransformationStep ;
+    rdfs:label "Rack Liftings Raw to Silver Cleanse Step"@en ;
+    ekpi:partOfPipeline data:RackLiftingsPipeline ;
+    prov:wasAssociatedWith data:RackLiftings_SilverDataset .
+
+data:RackLiftings_SilverToGoldStep a ekpi:TransformationStep ;
+    rdfs:label "Rack Liftings Silver to Gold Aggregation Step"@en ;
+    ekpi:partOfPipeline data:RackLiftingsPipeline ;
+    prov:wasAssociatedWith data:RackLiftings_GoldDataset .
+
+data:RackLiftings_SilverDataset ekpi:transformedBy data:RackLiftings_RawToSilverStep .
+data:RackLiftings_GoldDataset ekpi:transformedBy data:RackLiftings_SilverToGoldStep .
+
+data:RackLiftingsGoldLoadRun_20260731 a ekpi:ProvenanceEvent ;
+    rdfs:label "Rack Liftings Gold Load Run 2026-07-31"@en ;
+    prov:generated data:RackLiftings_GoldDataset .
+
+data:RackLiftings_GoldDataset prov:wasGeneratedBy data:RackLiftingsGoldLoadRun_20260731 .
+
+### --- 7.E Lineage individuals — Chain B: published benchmark (OPIS) ---
+
+data:OPISMarketDataService a ekpi:OperationalSystem ;
+    rdfs:label "OPIS Market Data Service"@en .
+
+data:OPISRackPriceFeedApp a ekpi:SourceApplication ;
+    rdfs:label "OPIS Rack Price Feed"@en .
+
+data:OPISRackPriceDailyTable a ekpi:SourceTable ;
+    rdfs:label "OPIS_RACK_PRICE_DAILY"@en .
+
+data:RackPriceUSDGalField a ekpi:SourceField ;
+    rdfs:label "RACK_PRICE_USD_GAL"@en ;
+    ekpi:fieldName "RACK_PRICE_USD_GAL" ;
+    ekpi:originatesIn data:OPISMarketDataService .
+
+data:OPISBenchmark_RawDataset a ekpi:RawLayerDataset ;
+    rdfs:label "opis_rack_benchmark_raw"@en ;
+    ekpi:datasetName "raw.opis_rack_benchmark" ;
+    prov:wasDerivedFrom data:RackPriceUSDGalField .
+
+data:OPISBenchmark_SilverDataset a ekpi:SilverLayerDataset ;
+    rdfs:label "opis_rack_benchmark_silver"@en ;
+    ekpi:datasetName "silver.opis_rack_benchmark" ;
+    prov:wasDerivedFrom data:OPISBenchmark_RawDataset .
+
+data:OPISBenchmark_GoldDataset a ekpi:GoldLayerDataset ;
+    rdfs:label "opis_rack_benchmark_gold"@en ;
+    ekpi:datasetName "gold.opis_rack_benchmark" ;
+    prov:wasDerivedFrom data:OPISBenchmark_SilverDataset ;
+    ekpi:feedsSemanticModel data:CommercialPricingSemanticModel ;
+    ekpi:hasQualityRule data:RangeCheckBenchmarkRule .
+
+data:RangeCheckBenchmarkRule a ekpi:DataQualityRule ;
+    rdfs:label "Benchmark Price Range Check"@en ;
+    ekpi:ruleExpression "rack_price_usd_gal BETWEEN 0.50 AND 6.00" .
+
+data:RackPriceSheetDataProduct a ekpi:DataProduct ;
+    rdfs:label "Rack Price Sheet"@en ;
+    rdfs:comment "Packaged, owned data product wrapping the OPIS benchmark gold dataset for downstream consumption by pricing analysts and terminal systems."@en ;
+    ekpi:wrapsDataset data:OPISBenchmark_GoldDataset .
+
+### --- 7.F Semantic model individuals ---
+
+data:EnterpriseSemanticLayer a ekpi:SemanticLayer ;
+    rdfs:label "Enterprise BI Semantic Layer"@en .
+
+data:CommercialPricingSemanticModel a ekpi:SemanticModel ;
+    rdfs:label "Commercial Pricing Semantic Model"@en ;
+    ekpi:hasSemanticEntity data:RackLoadingTransactionEntity, data:TerminalEntity, data:ProductEntity ;
+    ekpi:hasSemanticMeasure data:RackPriceCaptureSemanticMeasure ;
+    ekpi:hasSemanticRelationship data:RackLoading_OccursAt_Terminal, data:RackLoading_For_Product ;
+    ekpi:restrictedBy data:CommercialPricingAccessRule .
+
+data:RackLoadingTransactionEntity a ekpi:SemanticEntity ;
+    rdfs:label "Rack Loading Transaction"@en ;
+    ekpi:hasSemanticAttribute data:TerminalCodeAttribute, data:NetPriceAttribute .
+
+data:TerminalEntity a ekpi:SemanticEntity ;
+    rdfs:label "Terminal"@en .
+
+data:ProductEntity a ekpi:SemanticEntity ;
+    rdfs:label "Product"@en .
+
+data:TerminalCodeAttribute a ekpi:SemanticAttribute ;
+    rdfs:label "Terminal Code"@en ;
+    ekpi:mappedByRule data:TerminalCodeMappingRule .
+
+data:TerminalCodeMappingRule a ekpi:MappingRule ;
+    rdfs:label "Terminal Code Mapping Rule"@en ;
+    rdfs:comment "Maps semantic attribute RackLoadingTransaction.TerminalCode to gold.rack_liftings.terminal_id."@en .
+
+data:NetPriceAttribute a ekpi:SemanticAttribute ;
+    rdfs:label "Net Price Per Gallon"@en ;
+    ekpi:mappedByRule data:NetPriceMappingRule .
+
+data:NetPriceMappingRule a ekpi:MappingRule ;
+    rdfs:label "Net Price Mapping Rule"@en ;
+    rdfs:comment "Maps semantic attribute RackLoadingTransaction.NetPricePerGallon to gold.rack_liftings.net_price_per_gal."@en .
+
+data:RackLoading_OccursAt_Terminal a ekpi:SemanticRelationship ;
+    rdfs:label "Rack Loading occurs at Terminal"@en ;
+    ekpi:hasSourceEntity data:RackLoadingTransactionEntity ;
+    ekpi:hasTargetEntity data:TerminalEntity ;
+    ekpi:relationshipType "occursAtTerminal" .
+
+data:RackLoading_For_Product a ekpi:SemanticRelationship ;
+    rdfs:label "Rack Loading is for Product"@en ;
+    ekpi:hasSourceEntity data:RackLoadingTransactionEntity ;
+    ekpi:hasTargetEntity data:ProductEntity ;
+    ekpi:relationshipType "forProduct" .
+
+data:RackPriceCaptureSemanticMeasure a ekpi:SemanticMeasure ;
+    rdfs:label "Rack Price Capture Rate (Semantic Measure)"@en ;
+    ekpi:mapsToBusinessTerm data:RackPriceCaptureBusinessTerm ;
+    ekpi:realizesKPI data:RackPriceCaptureRateKPI ;
+    ekpi:consumedBy data:CommercialPricingDashboard, data:CommercialMarginScorecard,
+                     data:DailyRackReconciliationReport, data:RackPriceLeakageForecastModel .
+
+data:RackPriceCaptureBusinessTerm a ekpi:BusinessTerm ;
+    skos:prefLabel "Rack Price Capture Rate"@en ;
+    skos:altLabel "Rack Margin Capture"@en, "Price Realization Rate"@en ;
+    skos:definition "The share of the published rack benchmark price that a terminal actually realizes in rack revenue."@en .
+
+### --- 7.G Consumption individuals ---
+
+data:CommercialPricingDashboard a ekpi:Dashboard ;
+    rdfs:label "Commercial Pricing Performance Dashboard"@en ;
+    ekpi:usedInUseCase data:DailyCommercialPricingReview .
+
+data:CommercialMarginScorecard a ekpi:Scorecard ;
+    rdfs:label "Commercial Margin Scorecard"@en ;
+    ekpi:usedInUseCase data:DailyCommercialPricingReview .
+
+data:DailyRackReconciliationReport a ekpi:Report ;
+    rdfs:label "Daily Rack Pricing Reconciliation Report"@en ;
+    ekpi:usedInUseCase data:DailyCommercialPricingReview .
+
+data:RackPriceLeakageForecastModel a ekpi:AnalyticalModel ;
+    rdfs:label "Rack Price Leakage Forecast Model"@en ;
+    rdfs:comment "Forecasts terminals/products at risk of rack price leakage using the certified semantic measure as input."@en ;
+    ekpi:usedInUseCase data:DailyCommercialPricingReview .
+
+data:DailyCommercialPricingReview a ekpi:ConsumerUseCase ;
+    rdfs:label "Daily Commercial Pricing Review"@en .
+
+### --- 7.H Governance individuals ---
+
+data:CommercialPricingAccessRule a ekpi:AccessRule ;
+    rdfs:label "Commercial Pricing Confidential Data Access Rule"@en ;
+    rdfs:comment "Restricts view/edit of commercial pricing KPI definitions and semantic measures to the Commercial Pricing & Distribution Team and above."@en .
+
+data:KPICertificationPolicy a ekpi:Policy ;
+    rdfs:label "KPI Certification Policy"@en ;
+    ekpi:implementsStandard data:KPINamingStandard .
+
+data:KPINamingStandard a ekpi:Standard ;
+    rdfs:label "KPI Naming Standard"@en ;
+    ekpi:enforcedByControl data:KPICodeUniquenessControl .
+
+data:KPICodeUniquenessControl a ekpi:Control ;
+    rdfs:label "KPI Code Uniqueness Control"@en .
+
+data:RackCaptureDef_Version1 a ekpi:Version ;
+    rdfs:label "v1"@en ;
+    ekpi:versionNumber "1" ;
+    ekpi:versionDate "2026-07-15"^^xsd:date ;
+    ekpi:approvedBy data:ApprovalEvent_20260715 .
+
+data:ApprovalEvent_20260715 a ekpi:ApprovalEvent ;
+    rdfs:label "Approval of v1"@en ;
+    ekpi:eventTimestamp "2026-07-15T10:00:00"^^xsd:dateTime ;
+    prov:wasAssociatedWith data:CommercialPricingManager .
+
+data:AuditEvent_20260715 a ekpi:AuditEvent ;
+    rdfs:label "Audit of v1 Approval"@en ;
+    ekpi:eventTimestamp "2026-07-15T10:05:00"^^xsd:dateTime .
+
+data:CommercialPricingStewardshipAssignment a ekpi:StewardshipAssignment ;
+    rdfs:label "Commercial Data Steward Assignment for Rack Price Capture Rate"@en ;
+    ekpi:assignmentSteward data:CommercialDataSteward ;
+    ekpi:assignmentStartDate "2026-07-15"^^xsd:date .
+
+##############################################################################
+# END OF FILE
+##############################################################################

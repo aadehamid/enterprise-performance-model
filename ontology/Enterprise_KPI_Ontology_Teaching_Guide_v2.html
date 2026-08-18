@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning the Enterprise KPI Ontology — RDF, OWL &amp; Turtle from Scratch</title>
+<style>
+:root{
+  --paper:#F6F7F4; --panel:#FFFFFF; --ink:#20292B; --ink-soft:#4A5558; --line:#DCE1DB;
+  --schema:#0E7C7B; --schema-bg:#E4F1F0; --data:#B65C12; --data-bg:#F7EBDD;
+  --std:#6B5B95; --std-bg:#EDEAF4; --lit:#3D6B35; --com:#8A948E;
+  --warn-bg:#FBF3E2; --warn-line:#E0C989; --deep:#12383C; --deep-ink:#DCE9E6;
+  --code-bg:#0F2325; --code-ink:#D7E4DF;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 "Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;}
+h1,h2,h3,h4,.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 .4rem}
+h2{font-size:1.5rem;margin:0 0 .8rem;color:var(--deep)}
+h3{font-size:1.17rem;margin:1.6rem 0 .5rem;color:var(--deep)}
+h4{font-size:1.02rem;margin:1.2rem 0 .35rem}
+p{margin:.55rem 0}
+a{color:var(--schema)}
+code,pre,kbd{font-family:ui-monospace,"Cascadia Code",Consolas,Menlo,monospace}
+code{background:#EDF0EB;border:1px solid var(--line);border-radius:4px;padding:.05rem .3rem;font-size:.86em}
+pre.ttl{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:1rem 1.15rem;
+  overflow-x:auto;font-size:.83rem;line-height:1.62;margin:.8rem 0;border:1px solid #1E3B3E}
+pre.ttl code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+/* token colors inside code */
+.tk-e{color:#5FD3CF;font-weight:600}      /* ekpi: schema namespace */
+.tk-d{color:#F0A868;font-weight:600}      /* data: individuals namespace */
+.tk-s{color:#B9A9E8}                      /* standard vocabularies */
+.tk-i{color:#8FB6C9}                      /* full IRIs */
+.tk-l{color:#A8D69A}                      /* literals */
+.tk-c{color:#5E7A74;font-style:italic}    /* comments */
+.tk-p{color:#E4EDE9;font-weight:700}      /* punctuation ; . , [ ] ( ) */
+.tk-a{color:#F2D06B;font-weight:700}      /* 'a' keyword and @prefix */
+/* inline namespace chips used in prose */
+.ns{border-radius:4px;padding:.03rem .32rem;font-family:ui-monospace,Consolas,monospace;font-size:.84em;font-weight:600;white-space:nowrap}
+.ns-e{background:var(--schema-bg);color:var(--schema);border:1px solid #BCDCDA}
+.ns-d{background:var(--data-bg);color:var(--data);border:1px solid #E8CBA6}
+.ns-s{background:var(--std-bg);color:var(--std);border:1px solid #D3CCE7}
+/* triple diagram */
+.triple{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;background:var(--panel);
+  border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;margin:.7rem 0;font-size:.9rem}
+.tnode{border-radius:7px;padding:.28rem .7rem;font-family:ui-monospace,Consolas,monospace;font-weight:600}
+.tnode.sub{background:var(--schema-bg);color:var(--schema);border:1.5px solid var(--schema)}
+.tnode.obj{background:var(--data-bg);color:var(--data);border:1.5px solid var(--data)}
+.tnode.neutral{background:#EEF1ED;color:var(--ink);border:1.5px solid #B9C2BB}
+.tarrow{display:flex;align-items:center;gap:.15rem;color:var(--ink-soft);font-size:.8rem;font-family:ui-monospace,Consolas,monospace}
+.tarrow::after{content:"⟶";font-size:1.1rem;color:var(--ink)}
+/* layout */
+header.hero{background:var(--deep);color:var(--deep-ink);padding:2.4rem 1.2rem 2rem}
+.hero-inner{max-width:980px;margin:0 auto}
+.hero .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:#8FC1BB;margin-bottom:.6rem}
+.hero p.lede{max-width:62ch;color:#B8CEC9;font-size:1.02rem}
+.hero .meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:1.1rem;font-size:.8rem;color:#87A8A2}
+main{max-width:980px;margin:0 auto;padding:1.4rem 1.2rem 4rem}
+section.part{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:1.4rem 1.6rem;margin:1.3rem 0}
+details.sub{border:1px solid var(--line);border-radius:10px;margin:.8rem 0;background:#FBFCFA}
+details.sub>summary{cursor:pointer;padding:.65rem .9rem;font-weight:600;font-family:"Iowan Old Style",Palatino,Georgia,serif;
+  font-size:1.05rem;color:var(--deep);list-style:none;display:flex;align-items:center;gap:.55rem}
+details.sub>summary::before{content:"▸";transition:transform .15s;color:var(--schema)}
+details.sub[open]>summary::before{transform:rotate(90deg)}
+details.sub>.body{padding:.15rem 1.1rem 1rem}
+.partnum{display:inline-block;background:var(--schema);color:#fff;border-radius:6px;
+  font-size:.72rem;letter-spacing:.12em;padding:.18rem .55rem;font-weight:700;margin-bottom:.5rem;text-transform:uppercase}
+table{border-collapse:collapse;width:100%;margin:.7rem 0;font-size:.88rem}
+th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top}
+th{background:#EDF1EC;font-weight:600}
+tbody tr:nth-child(even){background:#F8FAF7}
+.callout{border-left:4px solid var(--schema);background:var(--schema-bg);border-radius:0 8px 8px 0;
+  padding:.65rem .9rem;margin:.8rem 0;font-size:.93rem}
+.callout.amber{border-left-color:var(--data);background:var(--data-bg)}
+.callout.warn{border-left-color:var(--warn-line);background:var(--warn-bg)}
+.callout b:first-child{display:block;margin-bottom:.15rem}
+.legend{display:flex;flex-wrap:wrap;gap:.6rem;margin:.7rem 0}
+.legend .ns{font-size:.8rem}
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:30;background:rgba(246,247,244,.94);backdrop-filter:blur(4px);
+  border-bottom:1px solid var(--line);padding:.55rem 1.2rem}
+.toolbar-inner{max-width:980px;margin:0 auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.toolbar input{flex:1;min-width:200px;padding:.45rem .7rem;border:1px solid var(--line);border-radius:8px;
+  font:inherit;font-size:.9rem;background:#fff}
+.toolbar button{padding:.42rem .8rem;border:1px solid var(--line);border-radius:8px;background:#fff;
+  cursor:pointer;font:inherit;font-size:.83rem;color:var(--deep)}
+.toolbar button:hover{background:var(--schema-bg)}
+nav.toc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.4rem;margin:1.3rem 0}
+nav.toc ol{margin:.4rem 0 0;padding-left:1.3rem;columns:2;column-gap:2.4rem;font-size:.92rem}
+nav.toc li{margin:.22rem 0;break-inside:avoid}
+.hit{background:#FFF3B8;border-radius:3px}
+.dimmed{opacity:.28}
+.pill{display:inline-block;font-size:.72rem;border-radius:99px;padding:.1rem .55rem;font-weight:700;
+  letter-spacing:.05em;vertical-align:middle;margin-left:.4rem}
+.pill.schema{background:var(--schema-bg);color:var(--schema)}
+.pill.data{background:var(--data-bg);color:var(--data)}
+figure.walk{margin:.9rem 0;padding:.9rem 1rem;background:#FBFCFA;border:1px solid var(--line);border-radius:10px}
+figure.walk pre{margin:0;font-size:.8rem;line-height:1.7;overflow-x:auto;background:none;color:var(--ink)}
+figcaption{font-size:.8rem;color:var(--ink-soft);margin-top:.4rem}
+@media (max-width:720px){nav.toc ol{columns:1}section.part{padding:1.1rem 1rem}}
+@media print{
+  .toolbar{display:none}
+  details.sub{border:none}
+  details.sub>summary::before{display:none}
+  details.sub:not([open])>.body{display:block}
+  section.part{border:none;padding:0;margin:1rem 0;break-inside:avoid-page}
+  pre.ttl{background:#fff;color:#000;border:1px solid #999}
+  .tk-e{color:#0E7C7B}.tk-d{color:#B65C12}.tk-s{color:#6B5B95}.tk-l{color:#3D6B35}
+  .tk-c{color:#777}.tk-p,.tk-a{color:#000}.tk-i{color:#33566B}
+  body{font-size:11pt}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Enterprise Performance Model · Learning Artifact</div>
+    <h1>Building the Enterprise KPI Ontology from Scratch</h1>
+    <p class="lede">A complete, self-contained walkthrough of <code style="background:#1C4448;border-color:#2A585C;color:#CFE5E1">stage2_enterprise_kpi_ontology.ttl</code> v2.0.0 — what RDF, RDFS, OWL, and Turtle each are, why each was chosen, how every line of syntax works, how the ontology was designed from scratch, and how a working-ontologist review turned v1.0.0 into a corrected v2.0.0. Worked example: Downstream Oil &amp; Gas Commercial — <em>Rack Price Capture Rate %</em>.</p>
+    <div class="meta">
+      <span>Sources: Stage 1 Blueprint v2 · Stage 2 Turtle v2.0.0 + Explanation · Stage 3 Primer v2 · Ontology Best Practices · Class Hierarchy Reference</span>
+      <span>Prepared 2026-08-02 · Ontology version 2.0.0</span>
+      <span>Status: Learning material (not a canonical EPM artifact)</span>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <input id="q" type="search" placeholder="Search this document… (e.g. blank node, disjointWith, prov, medallion)" aria-label="Search document">
+    <button onclick="toggleAll(true)">Expand all</button>
+    <button onclick="toggleAll(false)">Collapse all</button>
+    <button onclick="window.print()">Print / PDF</button>
+  </div>
+</div>
+
+<main>
+
+<nav class="toc">
+  <h2 style="font-size:1.15rem;margin:0">Contents</h2>
+  <ol>
+    <li><a href="#p1">Why an ontology at all — the problem it solves</a></li>
+    <li><a href="#p2">The three-layer stack: RDF → RDFS/OWL → Turtle</a></li>
+    <li><a href="#p3">Names that never collide: IRIs, namespaces, prefixes</a></li>
+    <li><a href="#p4">The ten borrowed vocabularies and why we reuse them</a></li>
+    <li><a href="#p5">Turtle syntax crash course — every symbol explained</a></li>
+    <li><a href="#p6">How the ontology was designed (the Stage 1 method)</a></li>
+    <li><a href="#p7">The review that produced v2.0.0 — eleven lessons</a></li>
+    <li><a href="#p8">The .ttl file, section by section</a></li>
+    <li><a href="#p9">The nine OWL &amp; RDFS power tools</a></li>
+    <li><a href="#p10">Worked example: Rack Price Capture Rate % end to end</a></li>
+    <li><a href="#p11">Design decisions and their rationale</a></li>
+    <li><a href="#p12">Competency questions — how you know the model works</a></li>
+    <li><a href="#p13">Connecting this to the EPM initiative</a></li>
+    <li><a href="#p14">Glossary and one-page cheat sheet</a></li>
+  </ol>
+  <div class="legend">
+    <span style="font-size:.8rem;color:var(--ink-soft)">Color key used everywhere below:</span>
+    <span class="ns ns-e">ekpi: — schema (classes &amp; properties we invented)</span>
+    <span class="ns ns-d">data: — individuals (actual KPIs, datasets, observations)</span>
+    <span class="ns ns-s">rdf: rdfs: owl: skos: prov: dcterms: foaf: … — reused standards</span>
+  </div>
+</nav>
+
+<!-- ===================== PART 1 ===================== -->
+<section class="part" id="p1">
+  <div class="partnum">Part 1</div>
+  <h2>Why an ontology at all — the problem it solves</h2>
+
+  <p>Start with the pain you already know from the Tableau-to-Power BI migration: two reports both show a number called <em>throughput</em>, the formulas differ slightly, and nobody can say authoritatively which is right, who owns it, or where the numbers physically come from. The meaning of the KPI lives in people's heads, in scattered spreadsheets, and inside BI tool config files — none of which a machine (or a new colleague) can query.</p>
+
+  <p>An <strong>ontology</strong> is the fix for exactly that. In plain language: an ontology is a <em>formal, machine-readable map of the concepts in a domain and the relationships between them</em>. Not a database of KPI values, and not a document about KPIs — a graph of <em>meaning</em>, where "Rack Price Capture Rate % is a KPI, defined by certified definition v1, owned by the Commercial Pricing Manager, computed from Realized Rack Revenue, which comes from a gold dataset, which came from RightAngle CTRM's <code>NET_PRICE_PER_GAL</code> field" are all explicit, traversable, checkable facts.</p>
+
+  <div class="callout"><b>The one-sentence intuition</b>
+  A relational database stores <em>values</em> in tables you design up front. An ontology stores <em>meaning</em> as a graph of small facts, so questions you never anticipated — "if this source field changes, which dashboards break?" — can still be answered by walking the graph.</div>
+
+  <p>And — new in v2.0.0 — the ontology now also stores <em>facts over time</em>: not just "how is this KPI defined" but "what did it actually read at Beaumont Terminal 1 on July 31st, and was that a breach?" That addition (the observation layer, Parts 7–10) came from a hard lesson about what was missing from the first version.</p>
+
+  <h3>What the KPI ontology is a map of</h3>
+  <p>The design carves the domain into <strong>six modules</strong>, each answering one governance question. Keep this table in your pocket — the entire .ttl file is these six modules plus the "bridges" between them.</p>
+  <table>
+    <thead><tr><th>#</th><th>Module</th><th>The question it answers</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Business Architecture</td><td>Why does this KPI exist, and who in the business cares?</td></tr>
+      <tr><td>2</td><td>KPI Model — <em>specification</em> layer</td><td>What exactly is being measured, how, and against what target?</td></tr>
+      <tr><td>2a</td><td>KPI Model — <em>observation / fact</em> layer <span class="pill data">new in v2</span></td><td>What did it <em>actually</em> read — where, when, and was it on target?</td></tr>
+      <tr><td>3</td><td>Semantic Model</td><td>What is the one governed, reusable definition consumers should bind to?</td></tr>
+      <tr><td>4</td><td>Lineage &amp; Data Architecture</td><td>Where did the numbers physically come from, and how were they transformed?</td></tr>
+      <tr><td>5</td><td>Consumption</td><td>Where does the KPI actually show up for a human?</td></tr>
+      <tr><td>6</td><td>Governance</td><td>Who owns / approved / certified this, and can we audit it?</td></tr>
+    </tbody>
+  </table>
+  <p>One crucial change from v1.0.0: these modules are now recorded as <em>metadata tags</em>, not as superclasses. That distinction — the difference between "grouped together" and "the same kind of thing" — turned out to be the single biggest lesson of the whole project, and Part 7 tells that story in full.</p>
+  <p>Notice, too, that these are the same questions the EPM charter asks of every KPI ("why does a KPI exist, how it is calculated, which process it measures, which data products support it, who is accountable"). The ontology is one candidate <em>technical representation</em> of that ambition.</p>
+</section>
+
+<!-- ===================== PART 2 ===================== -->
+<section class="part" id="p2">
+  <div class="partnum">Part 2</div>
+  <h2>The three-layer stack: RDF → RDFS/OWL → Turtle</h2>
+
+  <p>This is the single distinction that trips up almost every beginner, so we settle it first. Three different things are stacked on top of each other, and each answers a different question:</p>
+
+  <table>
+    <thead><tr><th>Layer</th><th>What it is</th><th>Question it answers</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>RDF</strong><br><span style="font-size:.8em;color:var(--ink-soft)">the data model</span></td><td>A way of describing anything as a graph of three-part facts ("triples")</td><td>"What is a fact, structurally?"</td><td>subject – predicate – object</td></tr>
+      <tr><td><strong>RDFS / OWL</strong><br><span style="font-size:.8em;color:var(--ink-soft)">the ontology languages</span></td><td>Vocabularies <em>written in RDF</em> for declaring kinds of things, hierarchies, and logical rules</td><td>"What kinds of things exist, and what can be inferred?"</td><td>"KPI is a subclass of Metric"; "every KPI must have a definition and an owner"</td></tr>
+      <tr><td><strong>Turtle</strong><br><span style="font-size:.8em;color:var(--ink-soft)">the text syntax</span></td><td>One human-friendly notation for writing triples down as text</td><td>"How do I type it?"</td><td><code>ekpi:KPI rdfs:subClassOf ekpi:Metric .</code></td></tr>
+    </tbody>
+  </table>
+
+  <details class="sub" open><summary>2.1 — Why RDF: everything is a triple</summary><div class="body">
+    <p><strong>RDF</strong> (Resource Description Framework) says: any knowledge, no matter how complex, can be broken into atomic three-part statements — <em>subject, predicate, object</em>. Each triple is one labeled edge in a graph:</p>
+    <div class="triple">
+      <span class="tnode sub">data:RackPriceCaptureRateKPI</span>
+      <span class="tarrow">ekpi:alignsToObjective</span>
+      <span class="tnode obj">data:ImproveRackCapture99pctQ4FY26</span>
+    </div>
+    <div class="triple">
+      <span class="tnode sub">data:RackPriceCaptureRateKPI</span>
+      <span class="tarrow">ekpi:hasUnitOfMeasure</span>
+      <span class="tnode obj">data:PercentUnit</span>
+    </div>
+    <p>Stack thousands of these and you have an enterprise knowledge graph. <strong>Why choose this over tables?</strong> Three reasons:</p>
+    <p><strong>1. Merge without collisions.</strong> Every subject, predicate, and object is a globally unique identifier (an IRI — Part 3), so two graphs built by different teams can be poured into one pot and nothing clashes. Try that with two databases that both have a <code>KPI</code> table.</p>
+    <p><strong>2. Schema-later, not schema-never.</strong> New relationships are just new triples. You don't run <code>ALTER TABLE</code> to add "KPI supports value stream"; you assert one more fact. This is what makes the <em>progressive metadata enrichment</em> the EPM charter demands technically natural — empty slots are simply triples not yet asserted. The v2.0.0 observation layer proved this in practice: an entire new fact layer was added <em>without restructuring anything that existed</em>.</p>
+    <p><strong>3. The question set is open.</strong> Because the data <em>is</em> a graph, any path query works: KPI → dataset → source field, or backwards. In tables, every new traversal is a new set of joins someone has to design.</p>
+    <p><em>Analogy for graph-database users:</em> RDF triples are like Neo4j's <code>(node)-[:REL]-&gt;(node)</code>, with two additions — the object may be a plain value like <code>"98.4"</code>, and every name is globally addressable so graphs merge safely.</p>
+  </div></details>
+
+  <details class="sub" open><summary>2.2 — Why RDFS and OWL: raw triples have no rules</summary><div class="body">
+    <p>Plain RDF lets you assert anything: <em>"Tuesday owns the color blue"</em> is a perfectly legal triple. RDF gives you a fact <em>format</em>, not fact <em>discipline</em>. That's where the two ontology languages come in — both are themselves just vocabularies of special, standardized predicates you use inside ordinary triples:</p>
+    <p><strong>RDFS</strong> (RDF Schema) is the light layer: it lets you declare classes (<span class="ns ns-s">rdfs:Class</span>), build hierarchies of classes (<span class="ns ns-s">rdfs:subClassOf</span>) <em>and now of properties too</em> (<span class="ns ns-s">rdfs:subPropertyOf</span>, new in v2.0.0), attach human-readable names (<span class="ns ns-s">rdfs:label</span>, <span class="ns ns-s">rdfs:comment</span>), and give properties a "function signature" (<span class="ns ns-s">rdfs:domain</span>, <span class="ns ns-s">rdfs:range</span>). Think of RDFS as the ability to draw a class diagram.</p>
+    <p><strong>OWL</strong> (Web Ontology Language) is the power layer on top. It adds real logic — the things RDFS cannot say:</p>
+    <table>
+      <thead><tr><th>OWL feature</th><th>What it lets you say</th><th>Used in our ontology for</th></tr></thead>
+      <tbody>
+        <tr><td><code>owl:Restriction</code> + <code>someValuesFrom</code></td><td>"Every member of this class <em>must have at least one</em> of these"</td><td>Every KPI needs a definition <em>and an owner</em>; every Silver dataset must trace to a Raw dataset (six restrictions total in v2.0.0)</td></tr>
+        <tr><td><code>owl:FunctionalProperty</code></td><td>"A thing can have <em>at most one</em> value for this property"</td><td>One current certification status per definition; one status per observation</td></tr>
+        <tr><td><code>owl:disjointWith</code></td><td>"Nothing can belong to both of these classes"</td><td>A dataset can't be Raw and Gold at the same time</td></tr>
+        <tr><td><code>owl:equivalentClass</code></td><td>"This class means <em>exactly</em> this logical expression"</td><td>CertifiedDefinition = KPIDefinition whose status = Certified (inferred!)</td></tr>
+        <tr><td><code>owl:oneOf</code></td><td>"This class contains <em>only</em> this closed list of members"</td><td>Five closed vocabularies: CertificationStatus, Criticality, ThresholdSeverity, AggregationType, ObservationStatus</td></tr>
+        <tr><td><code>owl:inverseOf</code></td><td>"These two properties are the same edge read both ways"</td><td>hasDefinition / isDefinitionOf; feedsSemanticModel / isFedBy</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Why OWL matters</strong>, in one sentence: it turns your model from documentation into something a <em>reasoner</em> — a logic engine — can check ("this dataset is typed both Raw and Gold, that's an error"; "this Gold dataset feeds no semantic model, that's a violation") and extend ("this definition's status is Certified, therefore it <em>is</em> a CertifiedDefinition, no manual tagging needed"). Governance rules become executable, not aspirational. The v2.0.0 review (Part 7) leaned on exactly this: several distinctions that lived only in comments were promoted into restrictions a reasoner can actually verify.</p>
+  </div></details>
+
+  <details class="sub" open><summary>2.3 — Why Turtle: the readable way to write it down</summary><div class="body">
+    <p><strong>Turtle</strong> ("Terse RDF Triple Language") is purely a <em>file format</em> — one of several text notations for the identical graph. The alternatives are RDF/XML (verbose, older), JSON-LD (JSON-shaped, good for web APIs), and N-Triples (one full triple per line, good for machines, brutal for humans). Turtle is the standard choice for <em>authoring</em> ontologies because it reads closest to natural sentences.</p>
+    <div class="callout"><b>Key mental move</b>
+    The syntax is disposable; the graph is what persists. You could regenerate this exact ontology as JSON-LD tomorrow and its meaning would be bit-for-bit identical. When you read Turtle, always translate in your head back to triples: <em>subject — predicate — object</em>.</div>
+    <p>One more thing Turtle is <em>not</em>: proof of correctness. A file can parse perfectly and still model the domain wrongly — that gap between "compiles" and "is actually right" is the entire subject of Part 7.</p>
+  </div></details>
+</section>
+
+<!-- ===================== PART 3 ===================== -->
+<section class="part" id="p3">
+  <div class="partnum">Part 3</div>
+  <h2>Names that never collide: IRIs, namespaces, prefixes</h2>
+
+  <p>Every node and edge in RDF needs a name, and RDF insists the name be <em>globally unique</em>. The mechanism is the <strong>IRI</strong> (Internationalized Resource Identifier) — think "a URL that names a concept, not necessarily a webpage you visit":</p>
+  <pre class="ttl nohl" style="font-size:.95rem"><code><span class="tk-i">https://ontology.enterprise.example.com/kpi-store/core</span><span class="tk-a">#KPI</span></code></pre>
+  <p>Two companies can both have a concept called "KPI"; because the IRIs differ, their graphs can be merged and never collide. That is the whole trick — uniqueness by web address, and using a domain you control means no one else can accidentally mint the same name.</p>
+
+  <h3>Prefixes: nicknames for namespaces</h3>
+  <p>Typing full IRIs constantly would be unreadable, so Turtle lets you declare a <strong>prefix</strong> — a short alias for a <strong>namespace</strong> (the common "stem" shared by a family of IRIs):</p>
+  <pre class="ttl"><code>@prefix ekpi: &lt;https://ontology.enterprise.example.com/kpi-store/core#&gt; .</code></pre>
+  <p>After this line, <span class="ns ns-e">ekpi:KPI</span> expands to the full IRI above. It is exactly like <code>import numpy as np</code> in Python — <code>np</code> is not numpy, it's a nickname that expands back to the full thing.</p>
+
+  <h3>The most important design choice in the file: two custom namespaces, not one</h3>
+  <p>Our ontology declares <em>two</em> namespaces of its own, and keeping them separate is deliberate enterprise hygiene:</p>
+  <table>
+    <thead><tr><th>Namespace</th><th>Prefix</th><th>Holds</th><th>Changes when…</th></tr></thead>
+    <tbody>
+      <tr><td><code>…/kpi-store/core#</code></td><td><span class="ns ns-e">ekpi:</span></td><td>The <strong>schema</strong> — every class and property we invented (KPI, KPIObservation, GoldLayerDataset, hasDefinition…)</td><td>The <em>model of the world</em> changes — rare, versioned, governed</td></tr>
+      <tr><td><code>…data.enterprise…/kpi-store/</code></td><td><span class="ns ns-d">data:</span></td><td>The <strong>individuals</strong> — actual KPIs, datasets, teams, approval events, daily observations</td><td>The <em>facts about the world</em> change — daily, loaded and reloaded freely</td></tr>
+    </tbody>
+  </table>
+  <div class="callout amber"><b>Why this split matters</b>
+  Instance data (<span class="ns ns-d">data:</span>) can be loaded, reloaded, or swapped wholesale without ever touching a class or property definition (<span class="ns ns-e">ekpi:</span>). It's the same instinct as separating a database's DDL from its rows — the schema is a stable contract, the data is a flowing stream. The new observation layer makes this concrete: KPI readings will arrive <em>every day</em> as new <span class="ns ns-d">data:</span> individuals, while the <span class="ns ns-e">ekpi:</span> schema never moves. Throughout this document, teal = schema, amber = individuals, so you can see the split at a glance.</div>
+
+  <h3>Monolithic today, modular tomorrow</h3>
+  <p>The blueprint reserves six module sub-namespaces (<code>ba:</code>, <code>kpim:</code>, <code>sem:</code>, <code>lin:</code>, <code>cons:</code>, <code>gov:</code>) for a future physical split into one .ttl file per module, each importing a shared <code>core.ttl</code> via <code>owl:imports</code>. <strong>None of that is in use today</strong> — the current file is deliberately one file, one <span class="ns ns-e">ekpi:</span> namespace, which is easier to learn from and to review. Treat the split as a documented roadmap, not the current state; the module <em>tags</em> (Part 9.9) already mark where the seams would go.</p>
+
+  <h3>Versioning: how v2.0.0 announces itself</h3>
+  <p>The ontology's main IRI carries no version number (so references stay stable). Instead the header asserts <code>owl:versionInfo "2.0.0"</code>, a dated <code>owl:versionIRI</code> snapshot (<code>…/core/2026-08-02#</code>), and — new — <code>owl:priorVersion</code> pointing back at the v1.0.0 snapshot (<code>…/core/2026-08-01#</code>). The "current" address always works; every historical version remains addressable, and the chain of versions is itself machine-readable — the same instinct as the EPM rule that approved baselines can't change silently.</p>
+</section>
+<!-- ===================== PART 4 ===================== -->
+<section class="part" id="p4">
+  <div class="partnum">Part 4</div>
+  <h2>The ten borrowed vocabularies — and why reuse beats reinvention</h2>
+
+  <p>Open the .ttl file and the first thing you see is ten <code>@prefix</code> lines besides our own two. Each is a <strong>standard vocabulary</strong> — a published set of classes and properties the wider world already agrees on. The design rule at work: <em>never invent a term when a well-known standard already has one</em>. Every reused term is a free integration: any tool that already speaks PROV, SKOS, or FOAF partially understands our graph with zero custom code. In v2.0.0 three of these vocabularies took on <strong>new jobs</strong> — marked below.</p>
+
+  <table>
+    <thead><tr><th>Prefix</th><th>Full name</th><th>What it's for</th><th>Where it appears in our ontology</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ns ns-s">rdf:</span></td><td>RDF Core</td><td>The base vocabulary of RDF itself; most importantly <code>rdf:type</code> ("is an instance of")</td><td>Every <code>a</code> shorthand in the file is secretly <code>rdf:type</code></td></tr>
+      <tr><td><span class="ns ns-s">rdfs:</span></td><td>RDF Schema</td><td>Light schema vocabulary: classes, hierarchies, labels, comments, domain/range — and property hierarchies via <code>rdfs:subPropertyOf</code></td><td>Every class and property carries <code>rdfs:label</code>/<code>rdfs:comment</code>; <span class="pill data">new</span> the v2 property hierarchy uses <code>rdfs:subPropertyOf</code></td></tr>
+      <tr><td><span class="ns ns-s">owl:</span></td><td>Web Ontology Language</td><td>The logic layer: restrictions, equivalence, disjointness, functional properties, closed enumerations</td><td>Declares every class/property; the CertifiedDefinition inference; medallion disjointness + six restrictions; five <code>owl:oneOf</code> vocabularies</td></tr>
+      <tr><td><span class="ns ns-s">xsd:</span></td><td>XML Schema Datatypes</td><td>Primitive datatypes for literal values: string, date, decimal, dateTime, boolean</td><td><code>"98.4"^^xsd:decimal</code>, <code>"2026-07-31"^^xsd:date</code></td></tr>
+      <tr><td><span class="ns ns-s">dcterms:</span></td><td>Dublin Core Terms</td><td>General document/resource metadata: title, creator, created, license — and part-of relationships</td><td>The ontology header; <span class="pill data">new</span> <code>dcterms:isPartOf</code> on <em>every class</em>, tagging its module (Part 9.9)</td></tr>
+      <tr><td><span class="ns ns-s">dc:</span></td><td>Dublin Core Elements</td><td>Older, simpler predecessor of dcterms</td><td>Declared for compatibility; barely used (we prefer dcterms)</td></tr>
+      <tr><td><span class="ns ns-s">foaf:</span></td><td>Friend of a Friend</td><td>Describing people and agents: names, relationships, and the general concept of "something that can act"</td><td><span class="pill data">new</span> <span class="ns ns-e">ekpi:Role</span> is now <code>rdfs:subClassOf foaf:Agent</code> — ownership roles are anchored to a recognized upper concept; <code>foaf:name</code> on the Commercial Pricing Manager</td></tr>
+      <tr><td><span class="ns ns-s">skos:</span></td><td>Simple Knowledge Organization System</td><td>Purpose-built for controlled vocabularies and glossaries: preferred/alternate labels, definitions, broader/narrower — and <em>collections</em> (grouping without taxonomy)</td><td><span class="ns ns-e">ekpi:BusinessTerm</span> is a <code>skos:Concept</code> with <code>prefLabel/altLabel/definition</code>; <span class="pill data">new</span> six <code>skos:Collection</code> individuals are the module tags that replaced the bucket superclasses</td></tr>
+      <tr><td><span class="ns ns-s">prov:</span></td><td>PROV-O (W3C Provenance)</td><td>Describing where things came from: activities, derivation, generation</td><td><code>prov:wasDerivedFrom</code> chains the medallion layers; TransformationStep, ProvenanceEvent, ApprovalEvent, and AuditEvent are all <code>prov:Activity</code> subclasses</td></tr>
+      <tr><td><span class="ns ns-s">schema:</span></td><td>Schema.org</td><td>Broad web-scale vocabulary (people, orgs, products)</td><td>Declared for potential web-tool interoperability; not required by the core model</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><b>Why the SKOS, PROV, and FOAF choices are the clever ones</b>
+  <p style="margin-top:.3rem"><strong>SKOS for the glossary — and now for grouping:</strong> business terms could have been modeled as OWL classes, but SKOS is <em>purpose-built</em> for term lists — <code>skos:altLabel</code> carries the synonyms "Rack Margin Capture" and "Price Realization Rate" for "Rack Price Capture Rate" with no extra machinery (this is also why the old <code>Synonym</code> class was deleted: SKOS already did its job). And v2.0.0 discovered a second SKOS gift: <code>skos:Collection</code> means exactly "a group of things with no implied shared essence" — precisely the semantics a documentation module needs, which is why it replaced the bucket superclasses.</p>
+  <p><strong>PROV for lineage:</strong> instead of inventing a "cameFrom" predicate, every layer-to-layer hop reuses <code>prov:wasDerivedFrom</code>. Any lineage visualizer or catalog that understands the W3C provenance standard can render our raw→silver→gold chains automatically, with zero mapping work. Reuse <em>is</em> the integration strategy.</p>
+  <p><strong>FOAF for agency:</strong> before v2.0.0, <code>Role</code> floated with no upper anchor — nothing declared that owners and stewards are <em>things that can act</em>. One line (<code>ekpi:Role rdfs:subClassOf foaf:Agent</code>) fixes that, and means any FOAF-aware system (an HR or identity graph, say) understands our roles without a bespoke mapping.</p></div>
+</section>
+
+<!-- ===================== PART 5 ===================== -->
+<section class="part" id="p5">
+  <div class="partnum">Part 5</div>
+  <h2>Turtle syntax crash course — every symbol explained</h2>
+
+  <p>Turtle has a tiny grammar. Master seven punctuation marks and three literal decorations and you can read the entire 1,400-line file. A v2.0.0 Turtle file reads top to bottom in this order: <strong>prefixes → ontology metadata → module tags → classes → properties → individuals.</strong></p>
+
+  <details class="sub" open><summary>5.1 — The shape of every block: <code>;</code> <code>,</code> <code>.</code></summary><div class="body">
+    <pre class="ttl"><code>SUBJECT
+    predicate1  object1 ;
+    predicate2  object2 ;
+    predicate3  objectA, objectB .</code></pre>
+    <table>
+      <thead><tr><th>Symbol</th><th>Read it as</th></tr></thead>
+      <tbody>
+        <tr><td><code>;</code></td><td>"Same subject — here's the next fact about it." (Saves retyping the subject.)</td></tr>
+        <tr><td><code>,</code></td><td>"Same subject <em>and</em> same predicate — another object." One line, multiple triples.</td></tr>
+        <tr><td><code>.</code></td><td>"End of this subject's block. No more facts about it here."</td></tr>
+      </tbody>
+    </table>
+    <p>So the block above is five triples: (S,p1,o1), (S,p2,o2), (S,p3,oA), (S,p3,oB) — the punctuation is pure compression, nothing more. When in doubt while reading, mentally expand back to one triple per line. A real example of the comma at work, from the observation layer: <code>ekpi:observedForDimensionValue data:HoustonRackTerminal3, data:ULSDDieselProduct</code> — one line, two triples, "this reading applies to that terminal <em>and</em> that product."</p>
+  </div></details>
+
+  <details class="sub" open><summary>5.2 — <code>a</code> : the most important two letters in the file</summary><div class="body">
+    <pre class="ttl"><code>ekpi:KPI a owl:Class .
+data:RackPriceCaptureRateKPI a ekpi:KPI .</code></pre>
+    <p><code>a</code> is Turtle shorthand for the predicate <code>rdf:type</code> — read it as "is a". The two lines above are doing very different jobs with identical syntax, and seeing the difference is the moment ontology "clicks":</p>
+    <p>Line 1 says the <em>concept</em> KPI is a <strong>class</strong> — a category of things. Line 2 says one <em>specific thing</em>, Rack Price Capture Rate %, is an <strong>individual</strong> (an instance) belonging to that category. Schema vs data — teal vs amber — in two lines.</p>
+  </div></details>
+
+  <details class="sub"><summary>5.3 — Literals: quoted values, <code>@en</code> language tags, <code>^^xsd:</code> typing</summary><div class="body">
+    <pre class="ttl"><code>data:Target_99pct_Q4FY26 a ekpi:Target ;
+    rdfs:label "Target 99% FY26 Q4"@en ;
+    ekpi:targetValue "99.0"^^xsd:decimal ;
+    ekpi:targetPeriod data:FY26_Q4 .</code></pre>
+    <p>A <strong>literal</strong> is a plain value — text, number, date — sitting at the object position instead of another node. Three decorations:</p>
+    <p><code>"…"</code> — everything in RDF starts life as quoted text. An undecorated string like <code>"KPI-COM-001"</code> defaults to <code>xsd:string</code>.</p>
+    <p><code>@en</code> — a <strong>language tag</strong>: "this text is English." It's what makes multilingual ontologies possible — add <code>rdfs:label "KPI"@de</code> later without touching anything.</p>
+    <p><code>^^xsd:decimal</code> — a <strong>datatype suffix</strong>: "interpret this text as a decimal number." It's RDF's type-cast. Without it, <code>"99.0"</code> is just characters a machine can't compare or do math on. Same pattern: <code>"2026-07-31"^^xsd:date</code>, <code>"2026-07-15T09:00:00"^^xsd:dateTime</code>.</p>
+    <p>Note the fourth line: <code>targetPeriod</code> points at a <em>node</em> (<span class="ns ns-d">data:FY26_Q4</span>, a TimePeriod individual with real start/end dates), not a literal. In v1.0.0 this property was documented but never implemented — one of the drift bugs the review caught (Part 7, lesson 4).</p>
+  </div></details>
+
+  <details class="sub"><summary>5.4 — <code>[ … ]</code> blank nodes: anonymous helper nodes</summary><div class="body">
+    <pre class="ttl"><code>ekpi:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:ownedBy ;
+    owl:someValuesFrom ekpi:BusinessOwner
+] .</code></pre>
+    <p>Square brackets create a <strong>blank node</strong> — an unnamed resource that exists only to hold a bundle of facts. It gets no IRI because nothing else in the graph will ever need to point at it; it's a throwaway helper. Here it holds an OWL restriction (this particular one — every KPI must have an owner — is new in v2.0.0 and is decoded fully in Part 9). <em>Intuition:</em> it's the anonymous inner object in JSON — <code>{"onProperty": …, "someValuesFrom": …}</code> — versus a named, addressable record.</p>
+  </div></details>
+
+  <details class="sub"><summary>5.5 — <code>( … )</code> lists: ordered collections</summary><div class="body">
+    <pre class="ttl"><code>owl:oneOf ( data:ObsStatus_OnTarget data:ObsStatus_Watch data:ObsStatus_Breach )</code></pre>
+    <p>Parentheses build an <strong>RDF list</strong> — an ordered collection, used where OWL needs "exactly these, as a set": enumerations (<code>owl:oneOf</code>) and intersections (<code>owl:intersectionOf</code>). Note there are no commas inside the parentheses — items are space-separated. The example above closes the new <code>ObservationStatus</code> vocabulary: an observation is OnTarget, Watch, or Breach, and can never be anything else.</p>
+  </div></details>
+
+  <details class="sub"><summary>5.6 — <code>#</code> comments and <code>&lt; &gt;</code> full IRIs</summary><div class="body">
+    <p><code># like this</code> — everything after a hash (outside an IRI) to end of line is a comment for humans; parsers ignore it. The big banner blocks in the .ttl file are just comments used as section dividers — the v2.0.0 file even carries its own nine-point changelog as a comment banner at the top.</p>
+    <p><code>&lt;https://…&gt;</code> — angle brackets always mean "this is a full, literal IRI, not a prefixed shorthand." You see them in <code>@prefix</code> declarations and in the ontology header, where the ontology names itself by its own full IRI.</p>
+    <p>One caution the review reinforced (Part 7, lesson 9): a comment is documentation, <em>never</em> the sole carrier of a queryable fact. In v1.0.0 the KPI's SQL lived only inside an <code>rdfs:comment</code>; v2.0.0 promoted it into a real <code>logicExpression</code> datatype property and kept the comment as a human gloss.</p>
+  </div></details>
+
+  <details class="sub"><summary>5.7 — The beginner trap: <code>rdfs:subClassOf</code> is for classes only</summary><div class="body">
+    <pre class="ttl"><code>ekpi:StrategicObjective a owl:Class ;
+    rdfs:subClassOf ekpi:BusinessGoal .        # CLASS level: every objective IS a goal-type thing
+
+data:ImproveRackCapture99pctQ4FY26 a ekpi:StrategicObjective ;
+    ekpi:narrowsGoal data:ProtectGrowCommercialMarginGoal .   # INSTANCE level: this objective narrows that goal</code></pre>
+    <p>Both use the idea of "narrower," but at different layers. <code>rdfs:subClassOf</code> only ever connects two <strong>classes</strong> ("every member of A is also a member of B"). To connect two <strong>individuals</strong>, you need an ordinary object property — here, the purpose-built <span class="ns ns-e">ekpi:narrowsGoal</span> (which in v1.0.0 existed only in prose; now it's a real property with a real asserted edge). Using subClassOf between two specific named things is the most common beginner error in OWL — and, as Part 7 shows, misusing subClassOf between things that merely <em>share a topic</em> is its equally common grown-up sibling.</p>
+  </div></details>
+</section>
+
+<!-- ===================== PART 6 ===================== -->
+<section class="part" id="p6">
+  <div class="partnum">Part 6</div>
+  <h2>How the ontology was designed — the Stage 1 method, step by step</h2>
+
+  <p>The .ttl file wasn't typed top to bottom. It was <em>designed</em> first (Stage 1, on paper), <em>serialized</em> into Turtle (Stage 2), and then — critically — <em>reviewed and corrected</em> (the v1.0.0 → v2.0.0 cycle, Part 7). This part covers the design method; it is the part you can reuse for any future domain:</p>
+
+  <details class="sub" open><summary>Step 1 — Partition the domain into modules</summary><div class="body">
+    <p>Before any class exists, decide the big shapes. The six modules from Part 1 were chosen so each answers exactly one governance question and can stand alone — a team can adopt Lineage without adopting Consumption. Modules are stitched together by a small set of deliberate <strong>bridge properties</strong> (like <span class="ns ns-e">ekpi:realizesKPI</span>, which connects the Semantic Model module to the KPI module). <em>Why:</em> modularity is what lets the ontology grow incrementally instead of being a big-bang design — the same "progressive enrichment" logic as the EPM delivery sequence. <em>The v2 refinement:</em> module membership is metadata (<code>dcterms:isPartOf</code>), never a superclass — the full story is Part 7, lesson 1.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Step 2 — Name the classes (the nouns)</summary><div class="body">
+    <p>Within each module, list the categories of things — the nouns of the domain. Business Architecture gets BusinessCapability, ValueStream, BusinessDomain, BusinessProcess, BusinessGoal…; the KPI module gets KPI, KPIDefinition, Measure, Metric, Target, Threshold, Dimension, Grain — and, in v2.0.0, the fact-layer nouns KPIObservation, DimensionValue, ObservationStatus. Each class gets a one-line, plain-English definition <em>before</em> any syntax is written. <em>Why:</em> if you can't define the class in a sentence, you don't yet know whether it should exist. (And if you can't <em>instantiate</em> it in a worked example, it may not deserve to exist — the fate of <code>Synonym</code> and <code>LineageEdge</code>.)</p>
+  </div></details>
+
+  <details class="sub" open><summary>Step 3 — Build the hierarchy — but only where it's honestly a hierarchy</summary><div class="body">
+    <figure class="walk"><pre>owl:Thing
+├─ Role  (⊑ foaf:Agent) ─┬─ BusinessOwner
+│                        └─ DataSteward
+├─ PerformanceIndicator          ← genuine superclass, kept
+│   ├─ Metric ─└─ KPI            ← every KPI is a Metric; restrictions make the difference checkable
+│   └─ Measure
+├─ Dataset                       ← genuine superclass, kept (enables disjointness)
+│   ├─ RawLayerDataset  ⟂  SilverLayerDataset  ⟂  GoldLayerDataset
+├─ ConsumptionAsset              ← genuine superclass, kept
+│   ├─ Report · Dashboard · Scorecard · AnalyticalModel
+├─ [BusinessArchitectureModule]  ← module TAG, not a superclass
+│   BusinessCapability · ValueStream · BusinessDomain · BusinessProcess └ ProcessStep
+│   BusinessGoal └ StrategicObjective · OrganizationalUnit
+├─ [KPIModelModule]      KPIDefinition └ CertifiedDefinition · KPIFormula · Target · Threshold ·
+│                        Dimension · TimePeriod · Grain · KPIObservation · DimensionValue …
+├─ [SemanticModelModule] SemanticModel · SemanticEntity · SemanticMeasure · SemanticRelationship ·
+│                        BusinessTerm (⊑ skos:Concept) · MappingRule
+├─ [LineageModule]       OperationalSystem · SourceTable · SourceField · DataProduct ·
+│                        DataPipeline └ TransformationStep (⊑ prov:Activity) · ProvenanceEvent
+└─ [GovernanceModule]    Policy · Standard · Control · CertificationStatus · Version ·
+                         ApprovalEvent · AuditEvent (both ⊑ prov:Activity) · StewardshipAssignment</pre>
+    <figcaption>The corrected v2.0.0 tree. <code>⊑</code> = rdfs:subClassOf (a real logical claim); <code>⟂</code> = owl:disjointWith; <code>[ModuleName]</code> = grouping by dcterms:isPartOf only — no subclass edge exists to it.</figcaption></figure>
+    <p>Three hierarchy decisions carry real meaning:</p>
+    <p><strong>KPI ⊑ Metric ⊑ PerformanceIndicator.</strong> "Every KPI is a Metric, but not every Metric is governed and strategic enough to be a KPI" — the EPM taxonomy principle, encoded. And v2.0.0 made the difference <em>operational</em>: a KPI is now formally required (by restriction) to have a definition and a BusinessOwner; a Metric is not. A reasoner can tell them apart from asserted facts alone.</p>
+    <p><strong>Dataset as a genuine abstraction.</strong> <span class="ns ns-e">ekpi:Dataset</span> survives because every member truly is "a dataset at some medallion layer" — and because <code>hasQualityRule</code>/<code>transformedBy</code> get declared once instead of three times, and <code>owl:disjointWith</code> only makes sense between siblings under a real shared parent.</p>
+    <p><strong>Everything else is a tag, not a parent.</strong> The bracketed module names are <code>skos:Collection</code> individuals reached by <code>dcterms:isPartOf</code>. Why the old bucket superclasses were demoted is the opening lesson of Part 7.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Step 4 — Name the properties (the verbs), with domain → range — and now a hierarchy of their own</summary><div class="body">
+    <p>Now connect the nouns. Every relationship gets a name, a <strong>domain</strong> (what kind of thing sits on the left) and a <strong>range</strong> (what kind sits on the right) — literally a function signature: <code>hasDefinition: KPI → KPIDefinition</code>. Object properties link things to things; datatype properties link things to plain values (<code>targetValue: Target → xsd:decimal</code>). <em>Why domain/range matter:</em> they are lightweight guardrails — tools can flag a triple whose subject or object is the wrong kind of thing, and editors can auto-suggest valid connections.</p>
+    <p><em>New in v2.0.0:</em> once you have ~35 properties, organize <em>them</em> too. Three super-properties (<code>hasSpecificationElement</code>, <code>hasGovernanceRecord</code>, <code>hasSemanticComponent</code>) group the narrow predicates via <code>rdfs:subPropertyOf</code> — decoded in Part 9.2.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Step 5 — Add constraints only where they pay rent</summary><div class="body">
+    <p>OWL can express elaborate logic; the design uses it <em>sparingly</em> — every constraint in the file exists because it catches a specific real-world governance failure:</p>
+    <table>
+      <thead><tr><th>Constraint chosen</th><th>The failure it prevents</th></tr></thead>
+      <tbody>
+        <tr><td>KPI must have ≥1 definition (<code>someValuesFrom</code>)</td><td>"Orphan" KPIs on dashboards with no documented definition — the exact post-migration gap</td></tr>
+        <tr><td>KPI must have ≥1 BusinessOwner <span class="pill data">new</span></td><td>Ungoverned numbers masquerading as KPIs — this restriction <em>is</em> the checkable KPI-vs-Metric line</td></tr>
+        <tr><td>Raw must derive from a SourceField; Silver from Raw; Gold must feed a SemanticModel <span class="pill data">new</span></td><td>Medallion order enforced by logic, not naming convention — a Gold dataset that dead-ends is now a flagged violation</td></tr>
+        <tr><td><code>hasCertificationStatus</code> and <code>hasObservationStatus</code> are functional</td><td>A definition simultaneously Draft <em>and</em> Certified; an observation both OnTarget and Breach</td></tr>
+        <tr><td>Five closed <code>owl:oneOf</code> vocabularies <span class="pill data">3 new</span></td><td>Free-text drift: "High" vs "high" vs "Critical"; "SUM" vs "Sum" vs "total"</td></tr>
+        <tr><td>CertifiedDefinition defined by <code>equivalentClass</code></td><td>Trust labels drifting out of sync with actual status — membership is <em>inferred</em>, never hand-maintained</td></tr>
+      </tbody>
+    </table>
+    <p>Equally important is what was <em>not</em> constrained: a formula may have multiple calculation implementations (SQL <em>and</em> DAX legitimately coexist), so no hard cardinality was placed on <code>implementedBy</code>. Over-constraining a graph that must reflect messy reality is its own failure mode.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Step 6 — Decide namespaces, reuse, and file layout</summary><div class="body">
+    <p>Finally the packaging decisions from Parts 3 and 4: split <span class="ns ns-e">ekpi:</span> (schema) from <span class="ns ns-d">data:</span> (individuals); reuse SKOS for the glossary <em>and</em> for module collections, PROV for lineage, FOAF for agency; hash IRIs for terms, slash IRIs for instances; version via <code>owl:versionInfo</code>/<code>versionIRI</code>/<code>priorVersion</code>, not the path. The one-file-per-module split (each importing a shared <code>core.ttl</code>, bridge properties living in core to avoid circular imports) stays a documented future state.</p>
+  </div></details>
+
+  <div class="callout"><b>The method in one line</b>
+  Modules → nouns → honest tree → verbs (with signatures and their own hierarchy) → just-enough constraints → packaging — then <em>review against reality</em> (Part 7). Design on paper, serialize last, and never confuse "it parses" with "it's right."</div>
+</section>
+
+<!-- ===================== PART 7 ===================== -->
+<section class="part" id="p7">
+  <div class="partnum">Part 7</div>
+  <h2>The review that produced v2.0.0 — eleven lessons in honest modeling</h2>
+
+  <p>This is the newest and, for learning purposes, most valuable material in the whole package. v1.0.0 parsed perfectly and looked plausible — and a structured review (modeled on ontologist Casey Hart's critique of a ChatGPT-generated real-estate ontology, <em>"I Asked ChatGPT to Build an Ontology. Here's What Happened."</em>) found the identical failure modes in our own file, in our own domain's clothing. The gap between an ontology that <em>compiles</em> and one that <em>models the domain correctly</em> is exactly where human judgment does the work.</p>
+
+  <div class="callout"><b>The core discipline: two questions, never confused</b>
+  <p style="margin-top:.3rem"><strong>Question 1 — "Is this a genuine kind of that thing?"</strong> This is what <code>rdfs:subClassOf</code> answers. It is a logical claim: every member of the subclass really <em>is</em> a member of the superclass, always, in every context.</p>
+  <p><strong>Question 2 — "Do I just want to group these for browsing, documentation, or module ownership?"</strong> A metadata question — and it must <em>never</em> be answered with subClassOf.</p>
+  <p>Nearly every mistake below is, underneath, a case of reaching for the taxonomy tool to solve a grouping or labeling problem. Internalize this one distinction and the rest of the review is just its consequences worked out across the file.</p></div>
+
+  <details class="sub" open><summary>Lesson 1 — The "genuine kind" test: no bucket superclasses</summary><div class="body">
+    <p><strong>Hart's version:</strong> the generated ontology's top class <code>Property</code> had Address, Parcel, Building, Listing, and Transaction as subclasses — things <em>related to</em> a property, not themselves properties. His memorable test: <em>would you put a bedroom and a shoe in the same class because they're both "things in a house"?</em></p>
+    <p><strong>Our version:</strong> v1.0.0 had four bucket superclasses — <code>BusinessArchitectureElement</code>, <code>SemanticAsset</code>, <code>LineageNode</code>, <code>GovernanceElement</code> — invented purely to mirror the documentation modules. But a <code>BusinessCapability</code> and an <code>OrganizationalUnit</code> are simply not the same <em>kind</em> of thing; a semantic model, an attribute, a glossary term, and a mapping rule share a topic, not an essence. Asserting subClassOf made a false logical claim to buy a convenient grouping label.</p>
+    <p><strong>The fix:</strong> all four buckets removed. Three superclasses <em>survived</em> because they honestly pass the test: <code>ConsumptionAsset</code> (every member really is "a surface a human consumes KPI values through"), <code>PerformanceIndicator</code> (every member really is "a quantification of performance"), and <code>Dataset</code> (every member really is "a dataset at some medallion layer" — and disjointness between Raw/Silver/Gold only means something between siblings under a real parent).</p>
+    <p><strong>The standing rule:</strong> before writing any abstract superclass whose only job is grouping, ask out loud: "is every member <em>always and necessarily</em> that kind of thing, no exceptions?" If the honest answer is "well, they're related to the same topic" — that's a grouping, and the next lesson has the right tool.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 2 — Group honestly: <code>dcterms:isPartOf</code> + <code>skos:Collection</code></summary><div class="body">
+    <pre class="ttl"><code>ekpi:BusinessArchitectureModule a skos:Collection ;
+    rdfs:label "Business Architecture Module"@en .
+
+ekpi:BusinessCapability a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Capability"@en .</code></pre>
+    <p>Decode: the first block mints an <em>individual</em> (not a class!) whose whole job is to be a labeled bucket — <code>skos:Collection</code> exists precisely for "a group of things with no implied shared essence." The second block files BusinessCapability under that bucket with <code>dcterms:isPartOf</code> — a plain metadata fact. Every one of the ~50 classes in the file carries exactly one such tag.</p>
+    <p><strong>What you lose: nothing.</strong> "Show me everything in the Lineage module" is still one easy query — you match <code>dcterms:isPartOf ekpi:LineageModule</code> instead of <code>rdfs:subClassOf ekpi:LineageNode</code>. The query is equally simple; the difference is the ontology no longer asserts something untrue to make it possible. Note also that the two mechanisms coexist happily: <code>GoldLayerDataset</code> is both <code>rdfs:subClassOf Dataset</code> (a kind claim) <em>and</em> <code>dcterms:isPartOf LineageModule</code> (a filing claim) — different purposes, no conflict.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 3 — Model measurements as events, not attributes: the Observation layer</summary><div class="body">
+    <p><strong>Hart's version:</strong> the generated ontology modeled the property's <em>sale</em> as an oddly-nested attribute rather than its own event with a value, unit, and date — quietly blocking the query he most cared about: comparing sales over time.</p>
+    <p><strong>Our version — the single biggest gap in v1.0.0:</strong> the graph could fully describe how a KPI is <em>defined</em>, its lineage, and its governance… and had <strong>no class for what it actually measured</strong>. It could answer "what is Rack Price Capture Rate and where does its data come from" but not "what was it at Beaumont Terminal 1 last Tuesday, and was it above target?" — which is the entire point of a KPI store.</p>
+    <p><strong>The fix — the Observation/Fact pattern</strong>, three new classes: <code>KPIObservation</code> (one dated, dimensioned, valued reading), <code>DimensionValue</code> (a specific value on an axis — "Houston Rack Terminal 3" — as distinct from <code>Dimension</code>, the axis itself, "Terminal"), and the closed <code>ObservationStatus</code> vocabulary (OnTarget / Watch / Breach). Part 8 §7 and Part 10 show it live, including a deliberately unhealthy reading in Breach — the graph must represent bad news, not just the happy path.</p>
+    <p><strong>The standing rule:</strong> anything that happens repeatedly over time and needs comparing across occurrences (a sale, a reading, a shift's output, a KPI value) gets its own event/fact class from day one. Never nest it as an attribute on the static definition — that structurally blocks the time-series queries the domain will certainly need.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 4 — Audit design docs against implementation: no silent drift, no orphans</summary><div class="body">
+    <p>A literal side-by-side audit of Stage 1 (the narrative) against Stage 2 (the Turtle) found real drift: <code>targetPeriod</code> documented but never implemented; <code>TimePeriod</code> a full documented class with <em>zero</em> individuals; <code>Synonym</code> and <code>SemanticRelationship</code> declared but never instantiated or connected (pure orphans); <code>ValueStream</code>, <code>BusinessFunction</code>, <code>ProcessStep</code>, <code>DataProduct</code>, <code>AnalyticalModel</code>, <code>AccessRule</code>, <code>OrganizationalUnit</code> declared but untested; <code>StewardshipAssignment</code>'s one individual carrying nothing but a label — an inert placeholder.</p>
+    <p><strong>The fix, item by item:</strong> <code>targetPeriod</code> implemented as a real object property wired to real TimePeriod individuals; <code>Synonym</code> deleted (its whole job was already done by <code>skos:altLabel</code> — modeling one idea twice is redundancy, not richness); <code>LineageEdge</code> deleted (fully covered by reused PROV edges); every surviving class given at least one working individual in the worked example; <code>StewardshipAssignment</code> given real properties (next lesson but one shows it working).</p>
+    <p><strong>The standing rule:</strong> before calling an ontology "done," walk both directions: every design-doc term must exist and be used in the Turtle; every Turtle term must match its design-doc description. Anything declared-but-unused gets removed, implemented, or explicitly flagged "future extension" — never left to silently imply coverage that doesn't exist.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 5 — Back every meaningful subclass distinction with a restriction</summary><div class="body">
+    <p><strong>Hart's version:</strong> <code>Bedroom</code> had a label and a comment, but nothing said what actually <em>makes</em> a room a bedroom. A human reading the comment understands; a reasoner cannot.</p>
+    <p><strong>Our version:</strong> nothing beyond prose distinguished a <code>KPI</code> from a plain <code>Metric</code>, or said <em>why</em> Gold differs from Silver (disjointness says they're exclusive, not why). <strong>The fix:</strong> five new restrictions — KPI requires an owner; Raw requires derivation from a SourceField; Silver from Raw; Gold must feed a SemanticModel (all decoded in Part 9.5). Now "which KPIs have no owner?" and "which Gold datasets dead-end?" are reasoner-checkable violations, not hopes.</p>
+    <p><strong>The standing rule:</strong> a comment describing what makes a subclass different is a starting point, not an ending point. Ask: "could a reasoner tell these two classes apart from asserted facts alone?" If not, add the restriction.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 6 — Give properties a hierarchy too</summary><div class="body">
+    <p>~35 object properties sat completely flat in v1.0.0. But <code>hasFormula</code>, <code>hasTarget</code>, <code>hasThreshold</code>, <code>hasGrain</code>… are conceptually siblings — each is "a piece of a KPI's specification" — and the graph offered no way to ask "everything that specifies this KPI" without hand-listing seven predicates. The fix: three super-properties via <code>rdfs:subPropertyOf</code> (<code>hasSpecificationElement</code>, <code>hasGovernanceRecord</code>, <code>hasSemanticComponent</code>) — mechanics in Part 9.2.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 7 — Close free-text fields into controlled vocabularies</summary><div class="body">
+    <p><strong>Hart's version:</strong> underspecified terms ("city" — a string? a geographic entity?) get interpreted inconsistently by different users. <strong>Our version:</strong> we'd correctly closed CertificationStatus but left <code>criticality</code>, <code>thresholdSeverity</code>, and <code>aggregationType</code> as free <code>xsd:string</code> — inviting "High" vs "high" vs "Critical", "SUM" vs "Sum" vs "total". <strong>The fix:</strong> all three closed with <code>owl:oneOf</code> over named individuals (plus the new ObservationStatus), turning "find every record with an invalid value" from a monitoring problem into a structural impossibility. Note the ripple effect: <code>criticality</code> changed from a datatype property to an <em>object</em> property, because its value is now a governed individual, not a string.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 8 — Write competency questions, before and after</summary><div class="body">
+    <p>Good ontology engineering starts from "what will people actually need to query" and checks the vocabulary against that list — not eventually, but as a design input. v1.0.0 listed benefits qualitatively ("supports impact analysis") but never wrote a checkable question list; had it done so, "what was this KPI's value at this terminal on this date?" would have exposed the missing Observation layer <em>months</em> earlier. v2.0.0 ships fifteen concrete competency questions (Part 12), each traceable end-to-end through the current classes and properties.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 9 — Promote facts out of comments — but don't destroy useful "redundancy"</summary><div class="body">
+    <p><strong>First half:</strong> the KPI's SQL lived only inside an <code>rdfs:comment</code> — unqueryable, uncomparable. Promoted to a real <code>logicExpression</code> datatype property; the comment stays as a human gloss. Rule: anything a person might filter, compare, or query on is a structured property, never comment prose.</p>
+    <p><strong>Second half — the subtler lesson:</strong> the property-hierarchy pass surfaced what looked like duplication: <code>stewardedBy</code> (KPI → steward, directly) <em>and</em> <code>hasStewardshipAssignment</code> → a full <code>StewardshipAssignment</code> record. The instinct is to collapse them. Deliberately, both were kept, because they answer different questions: <code>stewardedBy</code> answers "who do I ask <em>right now</em>" in one cheap hop (a dashboard tooltip); the assignment record answers "who has been steward, over which date ranges" — auditable history the shortcut structurally cannot carry once a steward changes. Rule: keep a shortcut only if it serves a query the authoritative record makes expensive; keep the record only if it captures what the shortcut cannot (here: time-boundedness) — and document why, so a future reviewer doesn't "fix" it away.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 10 — Anchor local root classes to a recognized upper concept</summary><div class="body">
+    <p>Owners and stewards were subclasses of a local <code>Role</code> class that floated with no upper anchor — the "this is a thing capable of acting, owning, approving" semantics were implicit. One line fixes it: <code>ekpi:Role rdfs:subClassOf foaf:Agent</code>. Now any FOAF-aware tool understands our roles are agents, no bespoke explanation needed. Rule: before inventing a local root for people/orgs/systems that act, check whether <code>foaf:Agent</code>, <code>prov:Agent</code>, or similar already has the concept.</p>
+  </div></details>
+
+  <details class="sub" open><summary>Lesson 11 — Use SKOS labeling consistently, and only where it earns its keep</summary><div class="body">
+    <p>v1.0.0 used <code>skos:prefLabel/altLabel/definition</code> on exactly one showcase class (BusinessTerm) and nowhere else. The fix is pragmatic, not maximal: extend <code>skos:altLabel</code> to the handful of terms that genuinely have alternate names, without ceremonially SKOS-ifying classes nobody calls by a second name. Rule: apply SKOS wherever a real synonym or preferred/informal split exists — consistently, but never as decoration.</p>
+  </div></details>
+
+  <div class="callout amber"><b>The reviewer's checklist, in one breath</b>
+  Genuine-kind test on every subClassOf · groupings via isPartOf + Collection · repeated happenings get an event/fact class · no design-vs-implementation drift, no orphans · every distinction backed by a restriction · properties get a hierarchy · governed value sets closed with oneOf · competency questions written and traced · queryable facts out of comments (but honest shortcut/record pairs kept) · actors anchored to foaf:Agent · SKOS where real synonyms live. Run it before signing off on <em>any</em> ontology — this one or the next.</div>
+</section>
+<!-- ===================== PART 8 ===================== -->
+<section class="part" id="p8">
+  <div class="partnum">Part 8</div>
+  <h2>The .ttl file, section by section</h2>
+  <p>Now we walk the actual v2.0.0 file (1,442 lines) in the order it's written. Each subsection shows a representative excerpt (real lines from the file) and decodes it completely. The file even opens with a nine-point changelog banner — written as Turtle comments — summarizing everything Part 7 covered.</p>
+
+  <details class="sub" open><summary>§1 — The ontology header: the file describes itself, and its own history</summary><div class="body">
+    <pre class="ttl"><code>&lt;https://ontology.enterprise.example.com/kpi-store/core&gt;
+    a owl:Ontology ;
+    rdfs:label "Enterprise KPI Ontology"@en ;
+    dcterms:creator "Enterprise Data &amp; Analytics Governance Team" ;
+    dcterms:created "2026-08-01"^^xsd:date ;
+    dcterms:modified "2026-08-02"^^xsd:date ;
+    owl:versionInfo "2.0.0" ;
+    owl:versionIRI &lt;https://ontology.enterprise.example.com/kpi-store/core/2026-08-02#&gt; ;
+    owl:priorVersion &lt;https://ontology.enterprise.example.com/kpi-store/core/2026-08-01#&gt; .</code></pre>
+    <p>The first "real" triple declares that the file's own IRI is an <code>owl:Ontology</code> — the document introducing itself. Dublin Core supplies librarian-style metadata (title, creator, dates, license). This is the RDF equivalent of the metadata block the EPM charter requires on every canonical artifact — applied to the ontology itself. The versioning trio does real work: stable main IRI, dated <code>versionIRI</code> snapshot, and <code>owl:priorVersion</code> making the v1→v2 succession itself a machine-readable fact.</p>
+  </div></details>
+
+  <details class="sub" open><summary>§1B — Module tags: six collections, declared before any class <span class="pill data">new</span></summary><div class="body">
+    <pre class="ttl"><code>ekpi:BusinessArchitectureModule a skos:Collection ;
+    rdfs:label "Business Architecture Module"@en .
+ekpi:KPIModelModule       a skos:Collection ; rdfs:label "KPI Model Module"@en .
+ekpi:SemanticModelModule  a skos:Collection ; rdfs:label "Semantic Model Module"@en .
+ekpi:LineageModule        a skos:Collection ; rdfs:label "Lineage &amp; Data Architecture Module"@en .
+ekpi:ConsumptionModule    a skos:Collection ; rdfs:label "Consumption Module"@en .
+ekpi:GovernanceModule     a skos:Collection ; rdfs:label "Governance Module"@en .</code></pre>
+    <p>Six individuals whose only job is to be honest buckets. They come <em>before</em> the classes because every class declaration that follows points back at one of them. This tiny section is the structural heart of the v2 correction — Part 7, lessons 1–2.</p>
+  </div></details>
+
+  <details class="sub" open><summary>§2 — Class declarations: the nouns, now honestly organized</summary><div class="body">
+    <p>Section 2 declares ~50 classes, grouped 2.A through 2.F. The template gained one line since v1 — the module tag:</p>
+    <pre class="ttl"><code>ekpi:BusinessCapability a owl:Class ;
+    dcterms:isPartOf ekpi:BusinessArchitectureModule ;
+    rdfs:label "Business Capability"@en ;
+    rdfs:comment "An enterprise ability to do something of value, e.g. Rack Price Management &amp; Publication."@en .</code></pre>
+    <p>Four facts: it's a class; it's <em>filed under</em> (not a kind of!) the Business Architecture module; display name; human definition. The <code>rdfs:comment</code> lines are the ontology's built-in glossary — and note they now cite the Downstream Commercial worked example.</p>
+    <p>What each module contributes in v2.0.0:</p>
+    <table>
+      <thead><tr><th>Module</th><th>Classes declared</th><th>Notable v2 structural choices</th></tr></thead>
+      <tbody>
+        <tr><td><strong>2.A Business Architecture</strong></td><td>BusinessCapability, ValueStream, BusinessDomain, BusinessFunction, BusinessProcess, ProcessStep, BusinessGoal, StrategicObjective, OrganizationalUnit, Role, BusinessOwner, DataSteward</td><td>No bucket superclass — all module-tagged. Role ⊑ foaf:Agent. OrganizationalUnit now has real unitName/unitType properties and real individuals; the new belongsToUnit property finally connects roles to their team</td></tr>
+        <tr><td><strong>2.B KPI Model — specification</strong></td><td>PerformanceIndicator (genuine, kept), Metric, KPI, Measure, KPIDefinition, BusinessDefinition, CertifiedDefinition, KPIFormula, CalculationLogic, AggregationRule, UnitOfMeasure, Target, Threshold, Dimension, TimePeriod, Grain</td><td>KPI ⊑ Metric, now backed by two restrictions (definition + owner). TimePeriod finally real, with periodStart/End/Granularity and individuals. CalculationLogic carries a queryable logicExpression</td></tr>
+        <tr><td><strong>2.B KPI Model — observation</strong> <span class="pill data">new</span></td><td>KPIObservation, DimensionValue, ObservationStatus</td><td>The fact layer: dated, dimensioned readings with a functional status drawn from a closed OnTarget/Watch/Breach vocabulary</td></tr>
+        <tr><td><strong>2.C Semantic Model</strong></td><td>SemanticLayer, SemanticModel, SemanticEntity, SemanticAttribute, SemanticMeasure, SemanticRelationship, BusinessTerm, BusinessDefinition, MappingRule</td><td>No SemanticAsset bucket. BusinessTerm ⊑ skos:Concept. Synonym deleted (skos:altLabel covers it). SemanticRelationship now instantiated, with hasSourceEntity/hasTargetEntity</td></tr>
+        <tr><td><strong>2.D Lineage &amp; Data</strong></td><td>OperationalSystem, SourceApplication, SourceTable, SourceField, Dataset (genuine, kept), RawLayerDataset, SilverLayerDataset, GoldLayerDataset, DataProduct, DataPipeline, TransformationStep, DataQualityRule, ProvenanceEvent</td><td>LineageNode and LineageEdge deleted. Medallion layers pairwise disjoint <em>and</em> each backed by a restriction enforcing its place in the chain. DataProduct instantiated via new wrapsDataset</td></tr>
+        <tr><td><strong>2.E Consumption</strong></td><td>ConsumptionAsset (genuine, kept), Report, Dashboard, Scorecard, AnalyticalModel, ConsumerUseCase</td><td>All four consumption types now instantiated — including AnalyticalModel (a leakage forecast model)</td></tr>
+        <tr><td><strong>2.F Governance</strong></td><td>Policy, Standard, Control, AccessRule, CertificationStatus, Version, ApprovalEvent, AuditEvent, StewardshipAssignment</td><td>No GovernanceElement bucket. Policy → Standard → Control mirrors real operating models. ApprovalEvent/AuditEvent ⊑ prov:Activity. StewardshipAssignment now a real record, AccessRule now instantiated</td></tr>
+      </tbody>
+    </table>
+    <p>Two lines worth pausing on. First, a class with parents from two different worlds — multiple inheritance is normal and cheap in OWL (classes are just sets):</p>
+    <pre class="ttl"><code>ekpi:BusinessTerm a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    dcterms:isPartOf ekpi:SemanticModelModule ;
+    rdfs:label "Business Term"@en .</code></pre>
+    <p>Second, the disjointness axioms — three one-line triples that arm the reasoner:</p>
+    <pre class="ttl"><code>ekpi:RawLayerDataset    owl:disjointWith ekpi:GoldLayerDataset .
+ekpi:RawLayerDataset    owl:disjointWith ekpi:SilverLayerDataset .
+ekpi:SilverLayerDataset owl:disjointWith ekpi:GoldLayerDataset .</code></pre>
+  </div></details>
+
+  <details class="sub" open><summary>§3 — Object properties: the verbs, with signatures — and three parents</summary><div class="body">
+    <p>Section 3 opens, new in v2.0.0, by declaring three <strong>super-properties</strong>; the narrow properties then attach themselves with one extra line each:</p>
+    <pre class="ttl"><code>ekpi:hasSpecificationElement a owl:ObjectProperty ;
+    rdfs:label "has specification element"@en .
+
+ekpi:hasFormula a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:label "has formula"@en ;
+    rdfs:domain ekpi:KPIDefinition ;
+    rdfs:range  ekpi:KPIFormula .</code></pre>
+    <p>Read <code>domain</code>/<code>range</code> as the function signature <code>hasFormula: KPIDefinition → KPIFormula</code>, and <code>subPropertyOf</code> as "every hasFormula edge is also a hasSpecificationElement edge" — the property-level twin of "every KPI is a Metric" (mechanics in Part 9.2). Inverse pairs work as before: <code>isDefinitionOf owl:inverseOf hasDefinition</code>, <code>isFedBy owl:inverseOf feedsSemanticModel</code>.</p>
+    <p>The property families, including the new observation set:</p>
+    <table>
+      <thead><tr><th>Family</th><th>Key properties</th><th>What they connect</th></tr></thead>
+      <tbody>
+        <tr><td>Business alignment</td><td>alignsToGoal, alignsToObjective, supportsCapability, supportsValueStream, belongsToDomain, measuresProcess, hasProcessStep, narrowsGoal <span class="pill data">new</span>, belongsToUnit <span class="pill data">new</span></td><td>KPI → Business Architecture ("why this number matters"), and roles → their team</td></tr>
+        <tr><td>KPI specification<br><span style="font-size:.8em">⊂ hasSpecificationElement</span></td><td>hasDefinition, hasFormula, implementedBy, hasAggregationRule, hasUnitOfMeasure, hasTarget, hasThreshold, targetPeriod <span class="pill data">now real</span>, slicedByDimension, hasTimePeriod, hasGrain, derivedFromMeasure, derivedFromDataset</td><td>KPI → its spec, math, context, and building-block Measures → gold data</td></tr>
+        <tr><td>Observation <span class="pill data">new</span></td><td>measuresKPI, observedForPeriod, observedForDimensionValue, valueOfDimension, hasObservationStatus (functional), computedAgainstTarget, computedAgainstThreshold</td><td>A dated reading → its KPI, period, dimension values, and the target/threshold it was judged against</td></tr>
+        <tr><td>Lineage</td><td>originatesIn, transformedBy, partOfPipeline, hasQualityRule, wrapsDataset <span class="pill data">new</span> (+ reused prov:wasDerivedFrom, prov:wasGeneratedBy)</td><td>Source field → medallion layers → pipelines, runs, and packaged data products</td></tr>
+        <tr><td>Semantic bridges<br><span style="font-size:.8em">⊂ hasSemanticComponent</span></td><td>feedsSemanticModel/isFedBy, hasSemanticEntity, hasSemanticMeasure, hasSemanticAttribute, hasSemanticRelationship <span class="pill data">new</span>, hasSourceEntity/hasTargetEntity <span class="pill data">new</span>, mapsToBusinessTerm, mappedByRule, <strong>realizesKPI</strong></td><td>Gold data → semantic layer → glossary and → back to the governed KPI</td></tr>
+        <tr><td>Consumption</td><td>consumedBy, usedInUseCase</td><td>Semantic measures/definitions → dashboards, reports, scorecards, models → use cases</td></tr>
+        <tr><td>Governance<br><span style="font-size:.8em">⊂ hasGovernanceRecord</span></td><td>ownedBy, stewardedBy, hasStewardshipAssignment, assignmentSteward <span class="pill data">new</span>, governedByPolicy, implementsStandard, enforcedByControl, hasCertificationStatus, hasVersion, approvedBy, auditedBy, restrictedBy</td><td>Accountability, trust state, and history attached to assets in every module</td></tr>
+      </tbody>
+    </table>
+    <div class="callout amber"><b>A deliberate omission worth noticing</b>
+    Governance properties like <code>ownedBy</code> and <code>hasCertificationStatus</code> declare a <em>range</em> but no domain. That's intentional: they must attach to assets of <em>any</em> module (a KPI, a semantic model, a data product), so pinning a domain would wrongly narrow them. Leaving domain open is a modeling decision, not laziness.</div>
+  </div></details>
+
+  <details class="sub"><summary>§4 — Datatype properties: attaching plain values</summary><div class="body">
+    <pre class="ttl"><code>ekpi:hasObservedValue a owl:DatatypeProperty ;
+    rdfs:label "has observed value"@en ;
+    rdfs:domain ekpi:KPIObservation ;
+    rdfs:range  xsd:decimal .
+
+ekpi:logicExpression a owl:DatatypeProperty ;
+    rdfs:label "logic expression"@en ;
+    rdfs:domain ekpi:CalculationLogic ;
+    rdfs:range  xsd:string .</code></pre>
+    <p>Identical template to object properties, except <code>a owl:DatatypeProperty</code> and the range is a <em>datatype</em>, because the value is a plain number or string, not another linked node. The file declares ~26, including the newcomers: <code>hasObservedValue</code> (the actual KPI reading), <code>logicExpression</code> (the SQL, promoted out of a comment), <code>periodStart/periodEnd/periodGranularity</code> (TimePeriod, finally real), <code>dimensionValueLabel</code>, <code>unitName/unitType</code>, and <code>assignmentStartDate/assignmentEndDate</code>.</p>
+    <p>Rule of thumb when modeling: <em>if the value could ever need its own relationships (an owner, a status, a version), make it a class and an object property; if it's forever just a value, a datatype property is enough.</em> That's why Target is a class (targets get periods and approval) but targetValue is a literal — and why <code>criticality</code> <em>moved</em> in v2: once its values became governed individuals (Criticality_High…), it had to become an object property.</p>
+  </div></details>
+
+  <details class="sub"><summary>§5 — The OWL restrictions block: six checkable rules</summary><div class="body">
+    <p>Up from two in v1.0.0 to six, each operationalizing a distinction that previously lived only in prose: (1) every KPI must have a definition; (2) every KPI must have a BusinessOwner — the formal KPI-vs-Metric line; (3) CertifiedDefinition is defined by logic, membership inferred; (4) Raw must derive from a SourceField; (5) Silver must derive from Raw; (6) Gold must feed a SemanticModel. All decoded with full syntax in Part 9.4–9.6.</p>
+  </div></details>
+
+  <details class="sub"><summary>§6 — Controlled vocabulary individuals: five closed sets</summary><div class="body">
+    <pre class="ttl"><code>data:Status_Certified   a ekpi:CertificationStatus ; rdfs:label "Certified"@en .
+data:Criticality_High   a ekpi:Criticality        ; rdfs:label "High"@en .
+data:Severity_Red       a ekpi:ThresholdSeverity  ; rdfs:label "Red"@en .
+data:AggType_AVG        a ekpi:AggregationType    ; rdfs:label "AVG"@en .
+data:ObsStatus_Breach   a ekpi:ObservationStatus  ; rdfs:label "Breach"@en .</code></pre>
+    <p>One representative from each of the five vocabularies (CertificationStatus: Draft/InReview/Certified/Deprecated; Criticality: High/Medium/Low; ThresholdSeverity: Red/Yellow/Green; AggregationType: SUM/AVG/LAST/RATIO; ObservationStatus: OnTarget/Watch/Breach). Each set's class was closed with <code>owl:oneOf</code> back in §2, so these named individuals — note they live in <span class="ns ns-d">data:</span> — are the <em>only</em> legal values. Enums, enforced by the ontology itself; the model-level twin of the EPM artifact status ladder.</p>
+  </div></details>
+
+  <details class="sub"><summary>§7 — The worked example: Rack Price Capture Rate %, end to end</summary><div class="body">
+    <p>The final ~430 lines are where the schema comes alive: roughly seventy <span class="ns ns-d">data:</span> individuals telling one continuous Downstream Commercial story — from RightAngle CTRM's <code>NET_PRICE_PER_GAL</code> field and the OPIS feed's <code>RACK_PRICE_USD_GAL</code> field, through two medallion chains, into one semantic model, one governed KPI, four consumption surfaces, and three dated observations. The centerpiece:</p>
+    <pre class="ttl"><code>data:RackPriceCaptureRateKPI a ekpi:KPI ;
+    rdfs:label "Rack Price Capture Rate %"@en ;
+    ekpi:kpiCode "KPI-COM-001" ;
+    ekpi:criticality data:Criticality_High ;
+    ekpi:alignsToObjective data:ImproveRackCapture99pctQ4FY26 ;
+    ekpi:supportsCapability data:RackPriceManagementCapability, data:MarginPerformanceManagementCapability ;
+    ekpi:supportsValueStream data:DownstreamCommercialValueStream ;
+    ekpi:belongsToDomain data:DownstreamCommercialDomain ;
+    ekpi:measuresProcess data:RackPriceSettingProcess ;
+    ekpi:hasDefinition data:RackPriceCaptureRateDefinition_v1 ;
+    ekpi:hasAggregationRule data:AvgOverTerminalDayRule ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:hasTarget data:Target_99pct_Q4FY26 ;
+    ekpi:hasThreshold data:RedThreshold_97pct ;
+    ekpi:slicedByDimension data:TerminalDimension, data:ProductDimension ;
+    ekpi:hasGrain data:PerTerminalPerProductPerDayGrain ;
+    ekpi:derivedFromMeasure data:RealizedRackRevenueMeasure, data:PublishedRackBenchmarkMeasure ;
+    ekpi:ownedBy data:CommercialPricingManager ;
+    ekpi:stewardedBy data:CommercialDataSteward ;
+    ekpi:hasStewardshipAssignment data:CommercialPricingStewardshipAssignment ;
+    ekpi:governedByPolicy data:KPICertificationPolicy .</code></pre>
+    <p>Read it as a checklist and you'll recognize it: objective, capabilities, value stream, domain, process, certified definition, aggregation, unit, target, threshold, dimensions, grain, feeding measures, accountable owner, steward (shortcut <em>and</em> time-bound record), policy. This one block <em>is</em> the KPI qualification criteria from the EPM charter §7.2, rendered as ~22 triples — and note <code>criticality</code> pointing at a governed individual, not a string. Part 10 walks the full chain around this KPI, including the new observation layer.</p>
+  </div></details>
+</section>
+
+<!-- ===================== PART 9 ===================== -->
+<section class="part" id="p9">
+  <div class="partnum">Part 9</div>
+  <h2>The nine OWL &amp; RDFS power tools — each one fully decoded</h2>
+  <p>These are the places where the ontology goes beyond "labeled boxes and arrows" into actual logic and honest structure. Master these nine and you've mastered every advanced construct in the file. Two are new to v2.0.0.</p>
+
+  <details class="sub" open><summary>9.1 — <code>rdfs:subClassOf</code>: inheritance and inference in one — used honestly</summary><div class="body">
+    <p>"Every member of class A is also a member of class B." Its power is that a reasoner applies it automatically: assert <code>data:RackPriceCaptureRateKPI a ekpi:KPI</code> once, and because KPI ⊑ Metric ⊑ PerformanceIndicator, the individual <em>is also</em> a Metric and a PerformanceIndicator — zero extra triples; queries for "all metrics" find your KPIs for free. The v2 discipline: this is a <em>logical claim</em>, reserved for genuine kinds (Part 7, lesson 1). When you merely want to group, use tool 9.9 instead.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.2 — <code>rdfs:subPropertyOf</code>: a hierarchy for the verbs <span class="pill data">new</span></summary><div class="body">
+    <pre class="ttl"><code>ekpi:hasTarget a owl:ObjectProperty ;
+    rdfs:subPropertyOf ekpi:hasSpecificationElement ;
+    rdfs:domain ekpi:KPI ; rdfs:range ekpi:Target .</code></pre>
+    <p>The same idea as subClassOf, one level up: "whenever hasTarget holds between two things, the broader hasSpecificationElement also holds between them." A query or reasoner asking for a KPI's <code>hasSpecificationElement</code> values automatically picks up its formula, aggregation rule, unit, target, threshold, time period, and grain — without the query author knowing or listing seven narrow predicate names (and without that list going stale when an eighth is added). Three such parents exist: <code>hasSpecificationElement</code>, <code>hasGovernanceRecord</code>, <code>hasSemanticComponent</code>.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.3 — <code>owl:disjointWith</code>: the impossibility rule</summary><div class="body">
+    <p>"Nothing can be a member of both classes." The medallion layers are declared pairwise disjoint, so if a load script ever types a dataset as both Raw and Gold, a reasoner flags the graph as <em>logically inconsistent</em> — the data-entry error is caught by mathematics, not by a human reviewer noticing. Disjointness is reserved for genuinely mutually exclusive pairs — and note it needs a real shared parent (Dataset) for "siblings" to even be meaningful, one reason that superclass survived the bucket purge.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.4 — <code>owl:FunctionalProperty</code>: at most one value</summary><div class="body">
+    <pre class="ttl"><code>ekpi:hasCertificationStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:subPropertyOf ekpi:hasGovernanceRecord ;
+    rdfs:range ekpi:CertificationStatus .
+
+ekpi:hasObservationStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain ekpi:KPIObservation ;
+    rdfs:range  ekpi:ObservationStatus .</code></pre>
+    <p>Declaring a property functional means any subject can have <em>at most one</em> value for it. Two uses now: a definition has exactly one current trust state ("you cannot be simultaneously Draft and Certified"), and — new — an observation has exactly one performance status ("a reading cannot be both OnTarget and Breach"). Both enforced by the ontology, not by application code. (Notice a subject can carry two types after <code>a</code>, comma-separated — it's both an ObjectProperty and a FunctionalProperty.)</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.5 — <code>owl:Restriction</code> + <code>owl:someValuesFrom</code>: "must have at least one" — six times over</summary><div class="body">
+    <pre class="ttl"><code>ekpi:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:ownedBy ;
+    owl:someValuesFrom ekpi:BusinessOwner
+] .
+
+ekpi:GoldLayerDataset rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ekpi:feedsSemanticModel ;
+    owl:someValuesFrom ekpi:SemanticModel
+] .</code></pre>
+    <p>Decode from inside out: the blank node is an anonymous class — "all things that have at least one <code>ownedBy</code> value of type BusinessOwner." Saying KPI is a <em>subclass</em> of that anonymous class means every KPI must satisfy it. RDFS alone cannot express "must have at least one"; this is precisely what justifies OWL's existence.</p>
+    <p>The six restrictions in plain English: <strong>no KPI without a documented definition</strong> (the post-migration orphan-KPI gap); <strong>no KPI without an accountable owner</strong> (the formal KPI-vs-Metric line — a Metric has no such requirement); <strong>Raw must trace to a source field</strong> (what makes it "raw" rather than "unlabeled"); <strong>Silver must trace to Raw</strong> (medallion order enforced); <strong>Gold must feed a semantic model</strong> (what makes it "gold" — consumption-ready — rather than merely "cleansed"). Competency questions 6 and 7 (Part 12) exist to verify these return zero violations.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.6 — <code>owl:equivalentClass</code> + <code>owl:hasValue</code>: certification as inference</summary><div class="body">
+    <pre class="ttl"><code>ekpi:CertifiedDefinition owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+        ekpi:KPIDefinition
+        [ a owl:Restriction ;
+          owl:onProperty ekpi:hasCertificationStatus ;
+          owl:hasValue data:Status_Certified ]
+    )
+] .</code></pre>
+    <p>The most elegant trick in the file. <code>owl:equivalentClass</code> — the class on the left means <em>exactly</em> the same as the description on the right; membership flows both ways. <code>owl:intersectionOf ( … )</code> — an RDF list of two conditions that must <em>both</em> hold. <code>owl:hasValue data:Status_Certified</code> — the status property must equal exactly this individual.</p>
+    <p><strong>Net effect:</strong> nobody ever tags anything as a CertifiedDefinition by hand. A reasoner looks at <span class="ns ns-d">data:RackPriceCaptureRateDefinition_v1</span>, sees its status is Certified, and <em>infers</em> its membership. Change the status to Deprecated tomorrow and the membership silently, correctly disappears. Trust state and class membership can never drift apart — a governance sync problem dissolved by logic rather than process.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.7 — <code>owl:oneOf</code>: closed enumerations — now five of them</summary><div class="body">
+    <pre class="ttl"><code>ekpi:ObservationStatus a owl:Class ;
+    owl:oneOf ( data:ObsStatus_OnTarget data:ObsStatus_Watch data:ObsStatus_Breach ) .
+
+ekpi:Criticality a owl:Class ;
+    owl:oneOf ( data:Criticality_High data:Criticality_Medium data:Criticality_Low ) .</code></pre>
+    <p>Each class is closed over exactly its listed individuals — nothing else can ever be an ObservationStatus or a Criticality. This is how you model a governed value set (an enum) <em>inside</em> the ontology, so validation and governance dashboards get the allowed states from the model itself. v1 had one such vocabulary; v2 has five — because the review found <code>criticality</code>, <code>thresholdSeverity</code>, and <code>aggregationType</code> living as free strings, the exact "High vs high vs Critical" inconsistency Part 7 lesson 7 warns about.</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.8 — <code>owl:inverseOf</code>: one edge, both directions</summary><div class="body">
+    <pre class="ttl"><code>ekpi:isFedBy owl:inverseOf ekpi:feedsSemanticModel .</code></pre>
+    <p>Declares that the two properties are the same relationship read in opposite directions: assert <code>GoldDataset feedsSemanticModel Model</code>, and <code>Model isFedBy GoldDataset</code> is inferred. Queries and navigation work naturally from either end without duplicating assertions (and without the duplicates ever falling out of sync).</p>
+  </div></details>
+
+  <details class="sub" open><summary>9.9 — <code>dcterms:isPartOf</code> + <code>skos:Collection</code>: honest grouping <span class="pill data">new</span></summary><div class="body">
+    <pre class="ttl"><code>ekpi:LineageModule a skos:Collection ;
+    rdfs:label "Lineage &amp; Data Architecture Module"@en .
+
+ekpi:GoldLayerDataset a owl:Class ;
+    rdfs:subClassOf ekpi:Dataset ;                  # a KIND claim — genuine
+    dcterms:isPartOf ekpi:LineageModule ;           # a FILING claim — metadata
+    rdfs:label "Gold Layer Dataset"@en .</code></pre>
+    <p>Not an OWL construct at all — and that's the point. When classes share a <em>topic</em> rather than an <em>essence</em>, the right tool is a metadata edge to a collection individual, not a subclass edge to an invented superclass. This one pattern replaced four bucket superclasses, and the GoldLayerDataset excerpt shows both mechanisms coexisting on one class, each doing its own honest job. "Everything in the Lineage module" remains a one-line query — matched on isPartOf, asserting nothing false. This is the structural signature of v2.0.0.</p>
+  </div></details>
+</section>
+<!-- ===================== PART 10 ===================== -->
+<section class="part" id="p10">
+  <div class="partnum">Part 10</div>
+  <h2>Worked example: tracing Rack Price Capture Rate % end to end</h2>
+
+  <p>Here is the whole point of the exercise. The §7 individuals form one continuous story from physical columns in two different source systems to a dashboard on a commercial manager's screen — and, new in v2.0.0, all the way to dated observations of how the KPI actually performed. Every arrow below is a literal triple asserted in the file.</p>
+
+  <p><strong>The business setup in one paragraph:</strong> within the Downstream Commercial domain, the Pricing &amp; Margin Management function owns the Rack Price Management &amp; Publication capability. Its core process, Rack Price Setting, runs four steps: ingest the OPIS rack benchmark → apply zone/freight differentials → publish the rack price sheet → reconcile realized vs. published price. The KPI — <em>Rack Price Capture Rate % = (Realized Rack Revenue per Gallon ÷ Published OPIS Rack Benchmark per Gallon) × 100</em>, per terminal, per product, per day — is a direct proxy for margin leakage at the rack. It aligns to the objective "Improve Rack Price Capture Rate to 99% by Q4 FY26," which narrows the goal "Protect and Grow Commercial Margin."</p>
+
+  <h3>Forward: how the number is built — two chains feeding one KPI</h3>
+  <figure class="walk"><pre>RightAngle CTRM (OperationalSystem)                 OPIS Market Data Service (OperationalSystem)
+  └─ NET_PRICE_PER_GAL on TERMINAL_LIFTING_TXN        └─ RACK_PRICE_USD_GAL on OPIS_RACK_PRICE_DAILY
+       │ prov:wasDerivedFrom                               │ prov:wasDerivedFrom
+       ▼                                                   ▼
+  raw.rack_liftings          [RawLayerDataset]        raw.opis_benchmark      [RawLayerDataset]
+       │ prov:wasDerivedFrom  (RackLiftingsPipeline:       │ prov:wasDerivedFrom
+       ▼   Raw→Silver step)                                ▼   (simpler chain — no pipeline
+  silver.rack_liftings       [SilverLayerDataset]     silver.opis_benchmark    individuals; a documented
+       │ prov:wasDerivedFrom  (Silver→Gold step;           │ prov:wasDerivedFrom  scope choice, not a gap)
+       ▼   run: RackLiftingsGoldLoadRun_20260731)          ▼
+  gold.rack_liftings         [GoldLayerDataset]       gold.opis_benchmark     [GoldLayerDataset]
+       │ feedsSemanticModel                                │ feedsSemanticModel   (also wrapped by
+       └───────────────┬───────────────────────────────────┘    RackPriceSheetDataProduct
+                       ▼                                        via wrapsDataset)
+        Commercial Pricing Semantic Model
+          ├─ hasSemanticEntity ─► RackLoadingTransaction · Terminal · Product
+          ├─ hasSemanticRelationship ─► RackLoading_OccursAt_Terminal · RackLoading_For_Product
+          └─ hasSemanticMeasure ─► Rack Price Capture (SemanticMeasure)
+                  │ mapsToBusinessTerm ─► "Rack Price Capture Rate"
+                  │    (skos:altLabel "Rack Margin Capture", "Price Realization Rate")
+                  ▼ realizesKPI
+            Rack Price Capture Rate % (KPI)
+                  │ consumedBy
+                  ▼
+  Commercial Pricing Dashboard · Commercial Margin Scorecard ·
+  Daily Rack Reconciliation Report · Rack Price Leakage Forecast Model (AnalyticalModel)
+                  └── all usedInUseCase: Daily Commercial Pricing Review</pre>
+  <figcaption>Medallion terms in plain English: <strong>Raw/Bronze</strong> = landed as-is; <strong>Silver</strong> = cleaned and standardized; <strong>Gold</strong> = curated and consumption-ready — and in v2.0.0 each layer's place in the chain is enforced by a restriction, not just a naming convention. Note the deliberate asymmetry: one KPI, two independent lineage chains of different modeled depth, because not every source needs identical granularity to be governed correctly.</figcaption></figure>
+
+  <h3>Backward: the audit question</h3>
+  <p>Start at <span class="ns ns-d">data:CommercialPricingDashboard</span> and walk the same edges in reverse — dashboard ← semantic measure ← KPI; semantic model ← <em>both</em> gold datasets ← silver ← raw ← source fields ← RightAngle and OPIS. That traversal answers "where does this number on my screen physically come from?" — and its converse answers impact analysis: <em>if <code>NET_PRICE_PER_GAL</code> changes format, which dashboards break?</em> In today's world that answer lives in tribal knowledge; in the graph it's a SPARQL query.</p>
+
+  <h3>New in v2.0.0: what the KPI actually read — the observation layer</h3>
+  <pre class="ttl"><code>data:RackCaptureObs_Beaumont1_RBOB_20260731 a ekpi:KPIObservation ;
+    rdfs:label "Rack Price Capture Rate — Beaumont Rack Terminal 1 / RBOB Gasoline — 2026-07-31"@en ;
+    ekpi:measuresKPI data:RackPriceCaptureRateKPI ;
+    ekpi:hasObservedValue "96.2"^^xsd:decimal ;
+    ekpi:hasUnitOfMeasure data:PercentUnit ;
+    ekpi:observedForPeriod data:Day_20260731 ;
+    ekpi:observedForDimensionValue data:BeaumontRackTerminal1, data:RBOBGasolineProduct ;
+    ekpi:computedAgainstTarget data:Target_99pct_Q4FY26 ;
+    ekpi:computedAgainstThreshold data:RedThreshold_97pct ;
+    ekpi:hasObservationStatus data:ObsStatus_Breach .</code></pre>
+  <p>Read it with the Part 5 recipe: this individual <em>is a</em> KPIObservation (an event/fact, not a definition); it points at <em>which</em> KPI it reads; carries the actual number (96.2); says <em>when</em> (a real TimePeriod individual for 2026-07-31) and <em>for which specific dimension values</em> — note the comma: one line, two triples, terminal <em>and</em> product; records what it was judged against; and, because <code>hasObservationStatus</code> is functional, carries exactly one verdict — <strong>Breach</strong>, since 96.2% sits below the 97% red threshold.</p>
+  <p>Three observations ship in the file, deliberately spanning states and dimensions: Houston 3 / ULSD on 2026-06-30 at 99.6% (<em>OnTarget</em>), the same terminal/product on 2026-07-31 at 98.4% (<em>Watch</em> — between the 99% target and the 97% threshold), and the Beaumont breach above. The graph represents unhealthy performance as readily as healthy — and a single query can now run from "this specific number, at this terminal, on this day, was in breach" all the way back through <code>measuresKPI</code> and the lineage chains to the exact source field. v1.0.0 structurally could not answer that question at all.</p>
+
+  <h3>The governance orbit around the KPI</h3>
+  <figure class="walk"><pre>RackPriceCaptureRateKPI
+  ── ownedBy ─────► CommercialPricingManager   (BusinessOwner ⊑ Role ⊑ foaf:Agent)
+  │                     └─ belongsToUnit ─► Commercial Pricing &amp; Distribution Team
+  ── stewardedBy ─► CommercialDataSteward       ("who do I ask right now" — one hop)
+  ── hasStewardshipAssignment ─► CommercialPricingStewardshipAssignment
+  │                     ├─ assignmentSteward ─► CommercialDataSteward
+  │                     └─ assignmentStartDate 2026-07-15  (open-ended: still active)
+  ── governedByPolicy ─► KPICertificationPolicy ─ implementsStandard ─► KPINamingStandard
+  │                                                └─ enforcedByControl ─► KPICodeUniquenessControl
+  └── hasDefinition ─► RackPriceCaptureRateDefinition_v1
+          ├─ hasCertificationStatus ─► Status_Certified    (functional: exactly one)
+          ├─ hasFormula ─► "(Realized ÷ Benchmark) × 100"
+          │        └─ implementedBy ─► SQL logic  (queryable logicExpression, comment kept as gloss)
+          ├─ hasVersion ─► v1 ── approvedBy ─► ApprovalEvent 2026-07-15
+          └─ auditedBy ─► AuditEvent 2026-07-15</pre>
+  <figcaption>Because the definition's status is Certified, the reasoner infers it is a CertifiedDefinition (Part 9.6). Notice the shortcut/record pair from Part 7 lesson 9 working side by side, and that the policy chain is <em>reused</em> — the same enterprise KPICertificationPolicy other KPIs would reference, not re-derived per KPI.</figcaption></figure>
+
+  <div class="callout"><b>Why the semantic measure sits in the middle — not off to the side</b>
+  <span class="ns ns-d">data:RackPriceCaptureSemanticMeasure</span> literally sits on the lineage path between the gold datasets and the KPI. If the semantic layer were left as BI-tool config or a spreadsheet, it would be an opaque translation step — invisible to lineage, ungovernable, unqueryable. Modeled as a first-class node, it gets the same trust machinery as everything else, and it solves the reuse problem: define the measure once, consume it from four different surfaces — the ontology's answer to "fifty slightly different revenue definitions."</div>
+</section>
+
+<!-- ===================== PART 11 ===================== -->
+<section class="part" id="p11">
+  <div class="partnum">Part 11</div>
+  <h2>Design decisions and their rationale — the complete ledger</h2>
+  <p>Every non-obvious choice in the v2.0.0 file, with the reason it was made. This is the table to internalize if you want to <em>design</em> ontologies rather than just read them.</p>
+  <table>
+    <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Separate <span class="ns ns-e">ekpi:</span> (schema) and <span class="ns ns-d">data:</span> (individuals) namespaces</td><td>Instance data — now including daily observations — can be reloaded or swapped wholesale without touching class/property definitions; schema stays a stable, governed contract</td></tr>
+      <tr><td>Module membership via <code>dcterms:isPartOf</code> → <code>skos:Collection</code>, never via bucket superclasses <span class="pill data">new</span></td><td>subClassOf is a logical claim about kinds; grouping is metadata. Four false-taxonomy buckets removed; browsing queries unchanged; nothing untrue asserted</td></tr>
+      <tr><td>Keep exactly three superclasses: PerformanceIndicator, Dataset, ConsumptionAsset</td><td>Each passes the genuine-kind test; Dataset additionally makes medallion disjointness meaningful and lets shared lineage properties be declared once</td></tr>
+      <tr><td>Add the KPIObservation / DimensionValue / ObservationStatus fact layer <span class="pill data">new</span></td><td>A KPI store must answer "what did it read, where, when, and was it in breach" — definitions alone structurally cannot; repeated happenings get their own event class</td></tr>
+      <tr><td>Dimension (the axis) distinct from DimensionValue (a point on it) <span class="pill data">new</span></td><td>Lets one KPI definition stay generic ("sliced by Terminal") while each observation pins down exactly which terminal</td></tr>
+      <tr><td>Reuse rdf/rdfs/owl/xsd/dcterms/skos/prov/foaf instead of inventing equivalents</td><td>Any tool that speaks these standards partially understands the graph with zero custom code; reuse <em>is</em> the integration strategy</td></tr>
+      <tr><td>BusinessTerm ⊑ skos:Concept; synonyms via skos:altLabel; <code>Synonym</code> class deleted <span class="pill data">new</span></td><td>SKOS is purpose-built for glossaries; a parallel class doing the same job is redundant modeling of one idea — and it was a never-instantiated orphan anyway</td></tr>
+      <tr><td>Role ⊑ foaf:Agent <span class="pill data">new</span></td><td>Anchors "things that can own, approve, steward" to a recognized upper concept; FOAF-aware systems (identity/HR graphs) understand our roles for free</td></tr>
+      <tr><td>Lineage hops via instance-level prov:wasDerivedFrom chains, not one bespoke property per hop</td><td>The class model stays stable as the estate grows — new layers or pipelines add only <em>individuals</em>; PROV-aware tooling renders lineage automatically</td></tr>
+      <tr><td>Two lineage chains of different modeled depth feed one KPI <span class="pill data">new</span></td><td>A documented scope choice: not every source system needs identical lineage granularity to be governed correctly; the ontology doesn't force a single-source assumption</td></tr>
+      <tr><td>Pipeline (DataPipeline) separated from run (ProvenanceEvent via prov:generated/wasGeneratedBy)</td><td>"The recurring process" and "this specific execution" are different things — auditing needs the run, architecture needs the pipeline</td></tr>
+      <tr><td>KPI ⊑ Metric ⊑ PerformanceIndicator, backed by definition + owner restrictions <span class="pill data">strengthened</span></td><td>"Not every metric is a KPI" is now reasoner-checkable, not naming convention: a KPI must have a documented definition and an accountable BusinessOwner; a Metric need not</td></tr>
+      <tr><td>Medallion layers pairwise disjoint <em>and</em> each restricted into its place in the chain <span class="pill data">strengthened</span></td><td>Mistyped datasets are inconsistencies; a Gold dataset that skips Silver or feeds nothing is a flagged violation — convention promoted to logic</td></tr>
+      <tr><td>Five closed owl:oneOf vocabularies <span class="pill data">3 new + 1 new class</span></td><td>"High" vs "high" vs "Critical" becomes structurally impossible; governed value sets live in the model, not a lookup table someone forgets</td></tr>
+      <tr><td>CertifiedDefinition via owl:equivalentClass, not manual tagging</td><td>Certification membership is <em>inferred</em> from status, so trust labels can never drift out of sync</td></tr>
+      <tr><td>Property hierarchy: hasSpecificationElement, hasGovernanceRecord, hasSemanticComponent <span class="pill data">new</span></td><td>"Everything that specifies this KPI" becomes one predicate instead of a seven-name enumeration callers must keep in sync by hand</td></tr>
+      <tr><td>Keep both stewardedBy (shortcut) and StewardshipAssignment (time-bound record) <span class="pill data">clarified</span></td><td>Different questions: "who do I ask right now" (one cheap hop) vs "who has been steward, over which dates" (auditable history). Collapsing either loses real capability — documented so nobody "fixes" it away</td></tr>
+      <tr><td>logicExpression as a real datatype property; comment kept as gloss <span class="pill data">new</span></td><td>SQL is now queryable and comparable across KPIs; comments are documentation, never the sole carrier of a queryable fact</td></tr>
+      <tr><td>Governance edges (ownedBy, hasVersion…) declare range but no domain</td><td>They must attach to assets of any module; an open domain is the correct generality, not an omission</td></tr>
+      <tr><td>No hard cardinality on implementedBy (formula → logic)</td><td>SQL and DAX implementations legitimately coexist; over-constraint would misrepresent reality</td></tr>
+      <tr><td>Inverse pairs (hasDefinition/isDefinitionOf, feedsSemanticModel/isFedBy)</td><td>Bidirectional traversal without duplicated, drift-prone assertions</td></tr>
+      <tr><td>Hash IRIs for ontology terms, slash IRIs for individuals</td><td>Terms resolve fast as one document; large instance data can be served and paginated per-resource</td></tr>
+      <tr><td>Version via owl:versionInfo + dated versionIRI + owl:priorVersion <span class="pill data">extended</span></td><td>The "current" IRI stays stable; snapshots stay addressable; the v1→v2 succession is itself a machine-readable fact — approved baselines never change silently</td></tr>
+      <tr><td>Monolithic file today; six-module owl:imports split documented as roadmap <span class="pill data">clarified</span></td><td>One file is easier to learn and review now; the module tags already mark the seams, and bridge properties would live in core to avoid circular imports later</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== PART 12 ===================== -->
+<section class="part" id="p12">
+  <div class="partnum">Part 12</div>
+  <h2>Competency questions — how you know the model actually works</h2>
+
+  <p>A <strong>competency question</strong> is a natural-language question the ontology must be able to answer via a graph query once populated — phrased the way a real user would ask it. They are a <em>design input</em>, not a post-hoc QA step: write them before modeling where possible, trace each one end-to-end through the actual classes and properties, and re-run the trace after every revision. Any question you can't trace is a real modeling gap, not a hypothetical one — this exercise is precisely what would have caught the missing Observation layer months earlier, had it been done first (Part 7, lesson 8).</p>
+
+  <p>The fifteen questions used to validate v2.0.0, doubling as a starting SPARQL test suite:</p>
+  <table>
+    <thead><tr><th>#</th><th>Question</th><th>What it exercises</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Which KPIs support the "Rack Price Management &amp; Publication" capability?</td><td>supportsCapability</td></tr>
+      <tr><td>2</td><td>What is the certified definition and formula for Rack Price Capture Rate %, and who approved it?</td><td>hasDefinition → hasFormula; hasVersion → approvedBy → ApprovalEvent</td></tr>
+      <tr><td>3</td><td>Which source systems and fields ultimately feed a given KPI's Gold dataset?</td><td>derivedFromMeasure → derivedFromDataset → prov:wasDerivedFrom chain → originatesIn</td></tr>
+      <tr><td>4</td><td>If NET_PRICE_PER_GAL in RightAngle changes format, which dashboards or scorecards are at risk?</td><td>The Part 10 backward walk, run forward from a SourceField</td></tr>
+      <tr><td>5</td><td>Who is the current data steward for a given KPI, and since when?</td><td>stewardedBy (shortcut) + hasStewardshipAssignment → assignmentStartDate (record)</td></tr>
+      <tr><td>6</td><td>Which KPIs have no BusinessOwner asserted?</td><td>The ownership restriction — should return zero violations</td></tr>
+      <tr><td>7</td><td>Which Gold datasets do not yet feed any SemanticModel?</td><td>The medallion restriction — should return zero violations</td></tr>
+      <tr><td>8</td><td>What was the observed value for Houston Terminal 3 / ULSD on a given day, and was it on target?</td><td>The observation layer: measuresKPI, observedForPeriod, observedForDimensionValue, hasObservationStatus</td></tr>
+      <tr><td>9</td><td>Which terminal/product combinations breached their threshold in the last period?</td><td>hasObservationStatus = Breach, grouped by DimensionValue</td></tr>
+      <tr><td>10</td><td>Which business terms have alternate labels ("synonyms"), and what are they?</td><td>skos:altLabel on BusinessTerm — the deleted Synonym class's job, done properly</td></tr>
+      <tr><td>11</td><td>Which consumption assets would be affected if a specific SemanticMeasure were deprecated?</td><td>consumedBy fan-out across all four consumption types</td></tr>
+      <tr><td>12</td><td>What is the full chain of custody — source field to dashboard — for a KPI value shown to an executive?</td><td>The complete Part 10 trace, both lineage chains</td></tr>
+      <tr><td>13</td><td>Which KPIs are measured against the same underlying Measure (candidates for consolidation)?</td><td>derivedFromMeasure joined across KPIs — the anti-duplication query</td></tr>
+      <tr><td>14</td><td>Which policies, standards, and controls govern a given KPI?</td><td>governedByPolicy → implementsStandard → enforcedByControl</td></tr>
+      <tr><td>15</td><td>Which strategic objectives currently have no KPI tracking them?</td><td>A coverage-gap query — deliberately <em>not</em> yet enforced by a restriction; a candidate for future tightening</td></tr>
+    </tbody>
+  </table>
+  <p>Notice questions 6 and 7 are special: they exist to <em>verify the restrictions</em> — in a healthy graph they return nothing, and anything they do return is a governance violation the model itself detected. And notice question 15's footnote: knowing what you've chosen <em>not</em> to enforce yet is part of honest modeling too.</p>
+</section>
+
+<!-- ===================== PART 13 ===================== -->
+<section class="part" id="p13">
+  <div class="partnum">Part 13</div>
+  <h2>Connecting this to the EPM initiative</h2>
+  <p>This ontology remains a learning example, not (yet) an EPM canonical artifact — but v2.0.0 tightened the mapping to the initiative's vocabulary considerably, because the corrections pushed the model toward exactly the questions the EPM charter asks.</p>
+  <table>
+    <thead><tr><th>EPM concept / artifact</th><th>Ontology counterpart</th></tr></thead>
+    <tbody>
+      <tr><td>Architecture chain: objectives → value streams → capabilities → processes → measurements → KPIs → data products → models → technical assets → consumption</td><td>The six modules stitched by bridge properties; the worked example now traverses the full chain including ValueStream, BusinessFunction, ProcessStep, and DataProduct — all newly instantiated. The "read right to left" audit question is the Part 10 backward walk</td></tr>
+      <tr><td>Measurement taxonomy: measure vs metric vs KPI (EPM-MEAS-001)</td><td>Measure, Metric, KPI with KPI ⊑ Metric — and the distinction is now <em>enforced</em>: a KPI requires a definition and an owner by restriction, which is precisely the charter's "a widely used calculation is not automatically a KPI"</td></tr>
+      <tr><td>KPI qualification criteria (Charter §7.2): objective, owner, definition, formula, dimensions, grain, target, thresholds, review</td><td>The ~22-triple RackPriceCaptureRateKPI block — each criterion one required or expected edge, several now reasoner-checkable</td></tr>
+      <tr><td>KPI Values Store / KPI Calculation Layer (Workstream 1 logical layers 5–6)</td><td>The new KPIObservation fact layer — dated, dimensioned readings with target/threshold evaluation and OnTarget/Watch/Breach status. This is the ontology-shaped sketch of what EPM-KPI-014 (Calculation &amp; Load) and EPM-KPI-015 (Target, Threshold &amp; Status) govern</td></tr>
+      <tr><td>Targets, thresholds, status evaluation (EPM-KPI-015)</td><td>Target (with a real targetPeriod), Threshold with closed ThresholdSeverity, computedAgainstTarget/Threshold on each observation, functional hasObservationStatus</td></tr>
+      <tr><td>Business Glossary (EPM-GLOS-001)</td><td>BusinessTerm as skos:Concept with prefLabel / altLabel / definition — the exact shape of Purview's glossary model; "Rack Margin Capture" and "Price Realization Rate" ride along as altLabels</td></tr>
+      <tr><td>Lineage mandate; "throughput" duplicate-definition drift</td><td>prov:wasDerivedFrom chains + realizesKPI: one semantic measure realizes one KPI, consumed by four surfaces — reuse over duplication, structurally; competency question 13 is the consolidation-candidate query for the Tableau inventory phase</td></tr>
+      <tr><td>Governance roles: Business KPI Owner vs Data Steward (the Master Index's "distinction that matters most")</td><td>ownedBy → BusinessOwner (meaning and consequence) vs stewardedBy → DataSteward (quality and integrity), both ⊑ Role ⊑ foaf:Agent, and belongsToUnit finally connects them to an OrganizationalUnit</td></tr>
+      <tr><td>Artifact statuses; "approved baselines cannot change silently"; versioning and restatement (EPM-KPI-016)</td><td>CertificationStatus enum + functional status + Version/ApprovalEvent/AuditEvent with timestamps and approvers + owl:priorVersion chaining ontology releases themselves</td></tr>
+      <tr><td>Progressive metadata enrichment</td><td>Native to RDF — and now demonstrated: v2.0.0 added an entire observation layer and a property hierarchy without restructuring v1's surviving assertions</td></tr>
+      <tr><td>Artifact families and the register (EPM-FOUND-002)</td><td>The module-tag pattern is the same governance instinct: honest grouping metadata (family letters, dcterms:isPartOf) kept separate from what things <em>are</em></td></tr>
+      <tr><td>Four-tool stack (ER/Studio, Purview, Unity Catalog, BigEye)</td><td>Each tool's metadata is graph-shaped: Purview glossaries are SKOS-like, lineage tools consume PROV-like structures, DataQualityRule is the BigEye-shaped hook, and DataProduct/wrapsDataset is the Unity-Catalog-shaped one — the ontology is a candidate <em>lingua franca</em> across them</td></tr>
+      <tr><td>Chat-to-artifact promotion discipline; validation before approval</td><td>The Part 7 review cycle itself: design narrative audited against implementation, drift closed, decisions documented with rationale — the ontology equivalent of "no durable conclusion is real until promoted and reconciled"</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><b>Status note</b>
+  Treat everything in this document as learning material and design exploration (source precedence level 9 — general/industry pattern — until formally promoted). If the ontology approach is adopted for the KPI Store, the natural landing artifacts are EPM-KPI-013 (KPI Metadata Schema) and EPM-KPI-011 (Logical Data Model) — with the observation layer additionally informing EPM-KPI-014 and EPM-KPI-015 — and the adoption decision recorded in EPM-DEC-001. The "Ontology Best Practices" standard is itself a strong candidate for promotion as a reusable modeling-standards artifact (Family F).</div>
+</section>
+
+<!-- ===================== PART 14 ===================== -->
+<section class="part" id="p14">
+  <div class="partnum">Part 14</div>
+  <h2>Glossary and one-page cheat sheet</h2>
+
+  <details class="sub" open><summary>14.1 — Mini glossary (plain language)</summary><div class="body">
+    <table>
+      <thead><tr><th>Term</th><th>Plain-language meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Triple</td><td>One fact: subject – predicate – object. The atomic unit of RDF.</td></tr>
+        <tr><td>IRI</td><td>A globally unique name for a thing — a very precise, permanent address.</td></tr>
+        <tr><td>Namespace</td><td>The common IRI "stem" shared by a family of related terms.</td></tr>
+        <tr><td>Prefix</td><td>A short nickname for a namespace, so you don't type full IRIs.</td></tr>
+        <tr><td>Class</td><td>A category of things (KPI, Dataset, KPIObservation).</td></tr>
+        <tr><td>Individual</td><td>One specific instance of a class (<em>this</em> KPI; <em>this</em> reading of it on 2026-07-31).</td></tr>
+        <tr><td>Object property</td><td>A relationship between two things.</td></tr>
+        <tr><td>Datatype property</td><td>A relationship between a thing and a plain value (string, number, date).</td></tr>
+        <tr><td>Literal</td><td>A plain value like "96.2" or "2026-07-31", optionally typed with ^^xsd:…</td></tr>
+        <tr><td>Blank node</td><td>An unnamed helper node, written [ … ], for facts that need no address of their own.</td></tr>
+        <tr><td>Domain / Range</td><td>A property's function signature: what may sit on its left and right.</td></tr>
+        <tr><td>rdfs:subClassOf</td><td>"Every member of the first class is also a member of the second." A real logical claim about kinds — never a convenience label.</td></tr>
+        <tr><td>rdfs:subPropertyOf</td><td>The same idea one level up: every use of the narrow property implies the broader one also holds.</td></tr>
+        <tr><td>dcterms:isPartOf + skos:Collection</td><td>Honest grouping without a taxonomy claim — files a class under a module without asserting shared kind-hood.</td></tr>
+        <tr><td>Restriction</td><td>A formal constraint on how a property may be used for members of a class.</td></tr>
+        <tr><td>owl:oneOf</td><td>Closes a class to an exact, fixed list of individuals — a governed enumeration.</td></tr>
+        <tr><td>owl:FunctionalProperty</td><td>A property that can hold at most one value per subject.</td></tr>
+        <tr><td>Reasoner</td><td>Software that checks consistency and derives new facts (like inferred class membership) from asserted ones.</td></tr>
+        <tr><td>SPARQL</td><td>The query language for RDF graphs — SQL's cousin for triples and paths.</td></tr>
+        <tr><td>Ontology</td><td>A formal, machine-readable specification of a domain's concepts and relationships.</td></tr>
+        <tr><td>Competency question</td><td>A user-phrased question the ontology must answer via a traceable query — a design input and regression test.</td></tr>
+        <tr><td>Bucket superclass</td><td>The anti-pattern: a superclass invented purely to group topic-mates. Fails the genuine-kind test; use a module tag instead.</td></tr>
+        <tr><td>Orphan class</td><td>A class declared but never instantiated or connected — silent debt to remove, implement, or explicitly defer.</td></tr>
+        <tr><td>Fact / observation layer</td><td>The part of an ontology recording what actually happened (dated, dimensioned readings), as opposed to how things are defined.</td></tr>
+        <tr><td>Lineage</td><td>The traceable path showing where data came from and how it was transformed.</td></tr>
+        <tr><td>Medallion architecture</td><td>The Raw/Bronze → Silver → Gold refinement pattern of modern data platforms.</td></tr>
+        <tr><td>Semantic layer</td><td>A governed translation layer mapping physical data to business meaning.</td></tr>
+        <tr><td>Certification</td><td>A governance state confirming an asset is trusted and approved.</td></tr>
+        <tr><td>Rack price / rack capture</td><td>The posted terminal ("rack") price fuel is sold at; capture rate measures how much of the published benchmark a terminal actually realizes — a margin-leakage proxy.</td></tr>
+      </tbody>
+    </table>
+  </div></details>
+
+  <details class="sub" open><summary>14.2 — Turtle syntax cheat sheet</summary><div class="body">
+    <table>
+      <thead><tr><th>You see</th><th>It means</th></tr></thead>
+      <tbody>
+        <tr><td><code>@prefix p: &lt;IRI&gt; .</code></td><td>Register nickname <code>p:</code> for that namespace</td></tr>
+        <tr><td><code>a</code></td><td><code>rdf:type</code> — "is a / is an instance of"</td></tr>
+        <tr><td><code>;</code></td><td>Same subject, next predicate</td></tr>
+        <tr><td><code>,</code></td><td>Same subject and predicate, another object</td></tr>
+        <tr><td><code>.</code></td><td>End of this subject's block</td></tr>
+        <tr><td><code>"text"@en</code></td><td>String literal with a language tag</td></tr>
+        <tr><td><code>"96.2"^^xsd:decimal</code></td><td>Literal type-cast to a datatype</td></tr>
+        <tr><td><code>[ … ]</code></td><td>Blank (anonymous) node holding a bundle of facts</td></tr>
+        <tr><td><code>( a b c )</code></td><td>Ordered RDF list (used by oneOf, intersectionOf)</td></tr>
+        <tr><td><code># …</code></td><td>Comment to end of line — documentation, never the sole home of a queryable fact</td></tr>
+        <tr><td><code>&lt;https://…&gt;</code></td><td>A full IRI, written out</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reading recipe for any block:</strong> find the subject (first token) → read <code>a</code> as "is a" → treat each <code>;</code> as a new sentence about the same subject → expand each <code>,</code> into repeated sentences → stop at <code>.</code> — then check the colors: teal means you're reading schema, amber means you're reading a real-world fact.</p>
+    <p><strong>Reviewing recipe for any ontology</strong> (the Part 7 checklist, compressed): every subClassOf passes the genuine-kind test · groupings via isPartOf + Collection · repeated happenings get a fact class · no design-vs-code drift or orphans · distinctions backed by restrictions · properties get parents · governed value sets closed with oneOf · competency questions written and traced · queryable facts out of comments · actors anchored to foaf:Agent · SKOS where real synonyms live.</p>
+  </div></details>
+
+  <details class="sub"><summary>14.3 — Suggested next steps for hands-on practice</summary><div class="body">
+    <p>1. Open the .ttl in <strong>Protégé</strong> (the standard free ontology editor) — it will render the corrected class tree automatically, and running a reasoner lets you watch CertifiedDefinition membership get inferred and (if you deliberately break a rule — type a dataset as both Raw and Gold, or strip a KPI's owner) watch the violations light up. 2. Write your first SPARQL queries straight from Part 12's competency list — start with #8 ("what did Houston 3 / ULSD read on 2026-07-31?"), which is a four-triple pattern over the observation layer, then #4, the impact-analysis walk. 3. Best exercise of all: pick one real Downstream KPI from your own estate — a throughput or yield with known definitional drift — and model it as a second set of <span class="ns ns-d">data:</span> individuals against the unchanged <span class="ns ns-e">ekpi:</span> schema, including two or three observations with honest Watch/Breach statuses. If the schema holds without modification, you've proven the design; where it creaks, run the Part 7 checklist and you've found your first real schema-change decision — with a method for making it well.</p>
+  </div></details>
+</section>
+
+<footer style="max-width:980px;margin:0 auto;padding:0 1.2rem 3rem;color:var(--ink-soft);font-size:.82rem">
+  <p>Compiled from six v2.0.0 sources: Stage 1 — KPI Ontology Design Blueprint · Stage 2 — Enterprise KPI Ontology (Turtle, v2.0.0) and its prose explanation · Stage 3 — RDF/OWL Teaching Document · Ontology Best Practices Standard (drawing on Casey Hart's ontology critique) · KPI Ontology Class Hierarchy reference. Self-contained; no external dependencies. Learning material for the Enterprise Performance Model initiative — not a canonical artifact.</p>
+</footer>
+</main>
+
+
+<script>
+/* ---------- Turtle syntax highlighter ---------- */
+(function(){
+  var esc = function(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");};
+  var STD = {rdf:1,rdfs:1,owl:1,xsd:1,dcterms:1,dc:1,foaf:1,skos:1,prov:1,schema:1};
+  var RE = /(&lt;[^&]*?&gt;)|("(?:[^"\\]|\\.)*"(?:@[A-Za-z-]+|\^\^[A-Za-z]+:[A-Za-z]+)?)|(#[^\n]*)|(@prefix|@base)|(^|\s)(a)(?=\s)|([A-Za-z][\w-]*):([\w._-]*)|([;.,\[\]()])/g;
+  document.querySelectorAll("pre.ttl:not(.nohl)").forEach(function(pre){
+    var src = esc(pre.textContent);
+    var out = src.replace(RE, function(m, iri, lit, com, dir, aPre, aKw, pfx, local, punct){
+      if(iri)  return '<span class="tk-i">'+iri+'</span>';
+      if(lit)  return '<span class="tk-l">'+lit+'</span>';
+      if(com)  return '<span class="tk-c">'+com+'</span>';
+      if(dir)  return '<span class="tk-a">'+dir+'</span>';
+      if(aKw)  return aPre+'<span class="tk-a">a</span>';
+      if(pfx!==undefined){
+        var cls = pfx==="ekpi" ? "tk-e" : pfx==="data" ? "tk-d" : STD[pfx] ? "tk-s" : "tk-i";
+        return '<span class="'+cls+'">'+pfx+':'+local+'</span>';
+      }
+      if(punct) return '<span class="tk-p">'+punct+'</span>';
+      return m;
+    });
+    pre.innerHTML = "<code>"+out+"</code>";
+  });
+})();
+
+/* ---------- Expand / collapse all ---------- */
+function toggleAll(open){
+  document.querySelectorAll("details.sub").forEach(function(d){ d.open = open; });
+}
+
+/* ---------- Live search: dim non-matching sections, highlight hits ---------- */
+(function(){
+  var input = document.getElementById("q");
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.part"));
+  var marked = [];
+  function clearMarks(){
+    marked.forEach(function(el){
+      var p = el.parentNode;
+      p.replaceChild(document.createTextNode(el.textContent), el);
+      p.normalize();
+    });
+    marked = [];
+  }
+  function markIn(node, q){
+    if(node.nodeType===3){
+      var idx = node.textContent.toLowerCase().indexOf(q);
+      if(idx>-1){
+        var hit = node.splitText(idx);
+        hit.splitText(q.length);
+        var span = document.createElement("span");
+        span.className = "hit";
+        span.textContent = hit.textContent;
+        hit.parentNode.replaceChild(span, hit);
+        marked.push(span);
+        return true;
+      }
+      return false;
+    }
+    if(node.nodeType===1 && !/^(SCRIPT|STYLE)$/.test(node.tagName)){
+      var found=false;
+      Array.prototype.slice.call(node.childNodes).forEach(function(c){
+        if(markIn(c,q)) found=true;
+      });
+      return found;
+    }
+    return false;
+  }
+  var t=null;
+  input.addEventListener("input", function(){
+    clearTimeout(t);
+    t=setTimeout(function(){
+      clearMarks();
+      var q = input.value.trim().toLowerCase();
+      sections.forEach(function(s){ s.classList.remove("dimmed"); });
+      if(q.length<2) return;
+      sections.forEach(function(s){
+        var has = s.textContent.toLowerCase().indexOf(q)>-1;
+        if(!has){ s.classList.add("dimmed"); return; }
+        s.querySelectorAll("details.sub").forEach(function(d){
+          if(d.textContent.toLowerCase().indexOf(q)>-1) d.open=true;
+        });
+        markIn(s,q);
+      });
+    },200);
+  });
+})();
+</script>
+</body>
+</html>

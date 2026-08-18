@@ -1,0 +1,18 @@
+-- =============================================================================
+-- 02_facts.sql — star-ish dims + the certified unbilled fact
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   fct_unbilled is the certified *population* at ticket grain:
+--     delivered, no posted invoice as of 2026-08-01,
+--     quality-hold excluded,
+--     unbilled_usd = gallons_net * contract_price.
+--   It is NOT a second published formula and NOT a gold KPI snapshot.
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--   Demo 2 (Databricks Free). Not Track A.
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/02_facts.sql
+-- =============================================================================
+
+-- your SQL goes here

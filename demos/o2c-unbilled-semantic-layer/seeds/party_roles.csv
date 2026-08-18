@@ -1,0 +1,11 @@
+party_id,role_code
+APEX-PAYER,payer
+APEX-HOU,sold_to
+APEX-DAL,sold_to
+APEX-BILL,bill_to
+GCA,payer
+GCA,sold_to
+GCA,bill_to
+METRO-PAYER,payer
+METRO-BMT,sold_to
+METRO-BILL,bill_to

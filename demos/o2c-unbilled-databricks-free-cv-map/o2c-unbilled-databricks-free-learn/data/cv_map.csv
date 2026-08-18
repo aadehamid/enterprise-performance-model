@@ -1,0 +1,23 @@
+local_system,field,local_key,term_id,map_ok,note
+Demo2,payer_id,APEX-PAYER,id:payer,yes,Apex Fuels LLC payer
+Demo2,payer_id,METRO-PAYER,id:payer,yes,Metro Lubricants payer
+Demo2,payer_id,GCA,id:payer,yes,Gulf Coast Aviation payer
+Demo2,sold_to_id,APEX-HOU,id:sold-to,yes,Apex Houston Rack
+Demo2,sold_to_id,APEX-DAL,id:sold-to,yes,Apex Dallas Dealer
+Demo2,sold_to_id,METRO-BMT,id:sold-to,yes,Metro Beaumont
+Demo2,sold_to_id,GCA,id:sold-to,yes,GCA also sold-to
+Demo2,bill_to_id,APEX-BILL,id:bill-to,yes,Apex AP — mapped; not an Unbilled grain
+Demo2,bill_to_id,METRO-BILL,id:bill-to,yes,Metro shared services — mapped; not an Unbilled grain
+Demo2,bill_to_id,GCA,id:bill-to,yes,GCA also bill-to
+Demo2,terminal_code,HSC,id:ship-to,yes,Houston Ship Channel
+Demo2,terminal_code,DAL,id:ship-to,yes,Dallas terminal
+Demo2,terminal_code,BMT,id:ship-to,yes,Beaumont terminal
+SAP,sold_to,1000123,id:sold-to,yes,SAP AG/SP sold-to
+SAP,bill_to,1000123,id:bill-to,yes,SAP RE/BP bill-to — same digits as sold-to
+SAP,payer,1000450,id:payer,yes,SAP RG/PY payer
+SAP,ship_to,2000881,id:ship-to,yes,SAP WE/SH ship-to
+TAS,consignee,CONS-4412,id:loading-authorized-party,yes,Wrong sense for Unbilled
+Warehouse,customer_id,1000123,,no,Overloaded warehouse key — no map
+Salesforce,account_id,SF-APEX,,no,Salesforce account is a relationship, not a role
+RightAngle,business_associate,BA-APEX,,no,Overloaded RightAngle BA — no map
+RightAngle,remittance_party,APEX-PAYER,id:payer,yes,RA remittance is the payer

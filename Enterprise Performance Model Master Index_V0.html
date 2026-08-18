@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-FOUND-000 — Enterprise Performance Model Master Index</title>
+<style>
+:root{--ink:#172133;--muted:#5e6877;--paper:#f5f7fa;--surface:#fff;--line:#d9e0e8;--navy:#173b67;--blue:#1f5f99;--cyan:#dceef8;--green:#276749;--green-bg:#e6f4ea;--amber:#8a4b08;--amber-bg:#fff4d6;--red:#9b2c2c;--red-bg:#fde8e8;--violet:#65438a;--violet-bg:#f1eafa;--gray-bg:#edf1f5;--shadow:0 8px 26px rgba(24,39,58,.08);--radius:14px}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} a{color:#145da0;text-underline-offset:3px} a:hover{text-decoration-thickness:2px} a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #f0a63a;outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:#fff;padding:.7rem;z-index:100} .skip:focus{left:1rem;top:1rem}
+header.hero{background:linear-gradient(135deg,#112f52,#1f5f99);color:#fff;padding:42px clamp(20px,5vw,72px) 34px} .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:800;color:#bfe1f3} h1{font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;margin:.35rem 0 1rem;max-width:1050px} .subtitle{max-width:950px;font-size:1.08rem;color:#e9f4fa;margin:0 0 1.4rem} .meta-grid{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr));gap:10px;max-width:1200px} .meta{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);padding:10px 12px;border-radius:10px} .meta b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#cbe6f5} .meta span{display:block;margin-top:2px;font-weight:650}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1500px;margin:auto} nav.toc{position:sticky;top:0;height:100vh;overflow:auto;padding:24px 18px;border-right:1px solid var(--line);background:#eef3f7} .toc h2{font-size:.83rem;text-transform:uppercase;letter-spacing:.08em;margin:.1rem .5rem .7rem;color:#445166} .toc a{display:block;padding:.48rem .58rem;border-radius:8px;text-decoration:none;color:#27374b;font-size:.89rem} .toc a:hover,.toc a.active{background:#d9e8f3;color:#0f4674;font-weight:700} .toc .toc-small{font-size:.77rem;color:#647287;margin:.9rem .55rem 0}
+main{min-width:0;padding:28px clamp(18px,4vw,54px) 70px} section{scroll-margin-top:18px;margin-bottom:34px} .section-head{display:flex;align-items:center;gap:12px;margin-bottom:14px} .section-no{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#dbeaf5;color:#154b79;font-weight:800} h2{font-size:clamp(1.45rem,2.3vw,2rem);line-height:1.2;margin:0} h3{font-size:1.06rem;margin:1.25rem 0 .55rem} p{max-width:92ch} .lead{font-size:1.06rem;color:#374457} .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px} .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)} .card h3{margin:.1rem 0 .45rem} .card p:last-child{margin-bottom:0} .kicker{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#5c6f85}
+.callout{border-left:5px solid;padding:13px 15px;border-radius:8px;margin:14px 0;background:#fff} .fact{border-color:#2878b5;background:#eaf5fb} .working{border-color:#6b4ba1;background:var(--violet-bg)} .candidate-callout{border-color:#b26b18;background:var(--amber-bg)} .assumption{border-color:#7b8794;background:#f2f4f6} .recommendation{border-color:#32815e;background:var(--green-bg)} .issue{border-color:#c04444;background:var(--red-bg)} .conflict{border:2px solid #b83232;background:#fff4f4} .callout b:first-child{display:block;text-transform:uppercase;font-size:.72rem;letter-spacing:.06em;margin-bottom:2px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)} .chain span{padding:8px 10px;border-radius:9px;background:#e9f1f7;font-weight:650;text-align:center} .chain i{font-style:normal;color:#577187;font-weight:900}
+.arch-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);overflow:auto} .arch{min-width:820px;display:grid;grid-template-columns:1fr 46px 1fr 46px 1fr 46px 1fr;grid-template-rows:auto auto auto;gap:10px;align-items:center} .arch .node{border:1px solid #b8c9d9;border-radius:11px;padding:12px;text-align:center;background:#f8fbfd;font-weight:700} .arch .node small{display:block;font-weight:500;color:#5c6877;margin-top:3px} .arch .arrow{text-align:center;font-size:1.55rem;color:#3b6e96} .arch .governance{grid-column:1/8;background:#163e68;color:#fff;border-radius:11px;padding:12px;text-align:center;font-weight:750;letter-spacing:.01em} .arch .consumers{grid-column:1/8;display:grid;grid-template-columns:repeat(5,1fr);gap:8px} .arch .consumer{background:#e8f4ed;border:1px solid #acd0bb;border-radius:9px;padding:9px;text-align:center;font-weight:650}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)} table{border-collapse:collapse;width:100%;min-width:980px} th,td{padding:10px 11px;border-bottom:1px solid #e4e8ed;text-align:left;vertical-align:top} th{position:sticky;top:0;background:#eaf0f5;color:#24364b;font-size:.76rem;text-transform:uppercase;letter-spacing:.045em;z-index:1} tbody tr:hover{background:#f8fbfd} .mobile-label{display:none} .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.72rem;font-weight:800;white-space:nowrap;background:var(--gray-bg);color:#425064} .badge.draft{background:#e6eff8;color:#1d527f} .badge.candidate{background:var(--amber-bg);color:var(--amber)} .badge.approved-baseline,.badge.implemented{background:var(--green-bg);color:var(--green)} .badge.not-started,.badge.to-be-located,.badge.to-be-confirmed{background:#eef0f2;color:#5f6670} .badge.in-progress,.badge.exploratory{background:var(--violet-bg);color:var(--violet)} .badge.superseded,.badge.retired{background:#f4e8e8;color:#744} .placeholder{color:#687483;font-style:italic}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;margin:12px 0} input,select,button{font:inherit} input,select{width:100%;padding:10px;border:1px solid #aeb9c5;border-radius:9px;background:#fff} button{border:0;border-radius:9px;padding:10px 14px;background:#1a5b91;color:#fff;font-weight:750;cursor:pointer} button:hover{background:#124b79} .directory-note{font-size:.88rem;color:#5b6573} .countline{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.sequence{counter-reset:step;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px} .step{counter-increment:step;background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px;position:relative} .step:before{content:counter(step);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#174b77;color:#fff;font-weight:800;margin-bottom:8px} .step strong{display:block}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px} .decision{background:#fff;border:1px solid var(--line);border-top:5px solid #777;border-radius:11px;padding:14px} .decision.working-baseline{border-top-color:#6b4ba1} .decision.candidate{border-top-color:#c57b18} .decision.to-be-confirmed{border-top-color:#7b8794} .decision.approved{border-top-color:#27734d} .decision .dstatus{font-size:.72rem;text-transform:uppercase;font-weight:850;letter-spacing:.06em}
+.dashboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px} .dash{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;min-height:120px} .dash .label{font-weight:760} .dash .why{font-size:.82rem;color:#5d6876;margin-top:8px} .status-bar{height:7px;border-radius:8px;background:#dfe5ea;margin-top:11px;overflow:hidden} .status-bar span{display:block;height:100%;background:#617b93} .dash[data-status="Draft"] .status-bar span{width:35%;background:#3977aa} .dash[data-status="Exploratory"] .status-bar span{width:20%;background:#7755a1} .dash[data-status="Candidate"] .status-bar span{width:55%;background:#bd751c} .dash[data-status="Not started"] .status-bar span{width:5%;background:#8b949d} .dash[data-status="To be confirmed"] .status-bar span{width:12%;background:#8b949d}
+details{background:#fff;border:1px solid var(--line);border-radius:11px;padding:0 14px;margin:10px 0} summary{cursor:pointer;font-weight:750;padding:12px 2px} details[open] summary{border-bottom:1px solid var(--line)} .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px} .taglist{display:flex;flex-wrap:wrap;gap:7px} .tag{background:#edf2f6;border:1px solid #d6dee5;border-radius:999px;padding:4px 9px;font-size:.78rem}
+.back-top{position:fixed;right:18px;bottom:18px;text-decoration:none;background:#163e68;color:#fff;padding:9px 12px;border-radius:999px;box-shadow:var(--shadow);font-weight:760} footer{background:#142d48;color:#dbe7f1;padding:26px clamp(20px,5vw,72px);font-size:.88rem}
+.nojs{background:#fff4d6;border:1px solid #e0ba67;padding:10px 14px}
+@media(max-width:1100px){.layout{grid-template-columns:220px minmax(0,1fr)}.meta-grid{grid-template-columns:repeat(3,1fr)}.card-grid,.sequence{grid-template-columns:repeat(2,1fr)}.dashboard{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.layout{display:block}nav.toc{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.toc a{display:inline-block}main{padding:22px 15px 70px}.meta-grid,.card-grid,.sequence,.decision-grid,.dashboard,.two-col{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.back-top{right:10px;bottom:10px}}
+@media print{body{background:#fff;font-size:10pt}header.hero{background:#fff!important;color:#000;padding:0 0 16px;border-bottom:2px solid #000}.eyebrow,.subtitle,.meta b{color:#333}.meta-grid{grid-template-columns:repeat(3,1fr)}.meta{border:1px solid #aaa;background:#fff}nav.toc,.filters,.back-top,button{display:none!important}.layout{display:block;max-width:none}main{padding:0}section{break-inside:avoid;margin-bottom:18px}.card,.arch-wrap,.table-wrap,.dash,.decision,.step{box-shadow:none}table{min-width:0;font-size:7.3pt}th{position:static}a{color:#000;text-decoration:none}details{break-inside:avoid}details>summary{list-style:none}details:not([open])>*:not(summary){display:block}footer{background:#fff;color:#000;border-top:1px solid #000;padding:14px 0}}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to main content</a>
+<header class="hero">
+<div class="eyebrow">Enterprise Performance Model · Foundation and Project Governance</div>
+<h1>Enterprise Performance Model Master Index</h1>
+<p class="subtitle">The project home page, navigation guide, architecture overview, artifact directory, and current-state control dashboard for the Downstream Oil &amp; Gas Enterprise Performance Model.</p>
+<div class="meta-grid" aria-label="Artifact metadata">
+<div class="meta"><b>Artifact ID</b><span>EPM-FOUND-000</span></div><div class="meta"><b>Version</b><span>0.1</span></div><div class="meta"><b>Status</b><span>Draft</span></div><div class="meta"><b>Owner</b><span>Enterprise Performance Model Lead</span></div><div class="meta"><b>Maintainer</b><span>To be confirmed</span></div><div class="meta"><b>Last updated</b><span>July 28, 2026</span></div>
+</div>
+<p style="max-width:1100px;margin:13px 0 0;color:#dcecf5"><strong>Review trigger:</strong> Creation, approval, supersession, retirement, or material change of a major project artifact.</p>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="Table of contents"><h2>Contents</h2>
+<a href="#orientation">1. Executive orientation</a><a href="#scope">2. Scope and boundaries</a><a href="#architecture">3. Architecture</a><a href="#workstreams">4. Workstreams</a><a href="#sequence">5. Delivery sequence</a><a href="#directory">6. Artifact directory</a><a href="#baseline">7. Authoritative baseline</a><a href="#decisions">8. Major decisions</a><a href="#priorities">9. Priorities and active work</a><a href="#issues">10. Issues, assumptions, conflicts</a><a href="#traceability">11. Source and traceability</a><a href="#ownership">12. Governance and ownership</a><a href="#dashboard">13. Status dashboard</a><a href="#use">14. How to use this index</a><a href="#actions">15. Immediate next actions</a>
+<p class="toc-small">This index summarizes controlled artifacts; it does not replace them.</p></nav>
+<main id="main">
+<noscript><p class="nojs">Interactive filters and current-section highlighting are unavailable because JavaScript is disabled. All content remains visible and printable.</p></noscript>
+
+<section id="orientation"><div class="section-head"><span class="section-no">1</span><h2>Executive Orientation</h2></div>
+<p class="lead">The Enterprise Performance Model is a governed architecture for connecting business intent to measurable performance and to the data, models, systems, and consumers that make performance actionable.</p>
+<div class="chain" aria-label="Enterprise Performance Model architecture chain"><span>Business objectives</span><i>→</i><span>Value streams</span><i>→</i><span>Domains &amp; capabilities</span><i>→</i><span>Processes &amp; activities</span><i>→</i><span>Measurements</span><i>→</i><span>KPIs</span><i>→</i><span>Data products</span><i>→</i><span>Domain models</span><i>→</i><span>Technical assets</span><i>→</i><span>Reporting, analytics, automation &amp; AI</span></div>
+<div class="card-grid" style="margin-top:14px"><article class="card"><div class="kicker">Why it exists</div><h3>Consistent performance meaning</h3><p>Different reports can contain similar calculations with different logic. The EPM creates business ownership, common definitions, traceability, and reusable implementation patterns.</p></article><article class="card"><div class="kicker">Conceptual umbrella</div><h3>More than a KPI database</h3><p>The model links objectives, processes, measurements, KPIs, data products, domain models, technical fields, and consuming decisions.</p></article><article class="card"><div class="kicker">First delivery priority</div><h3>KPI Store</h3><p>The KPI Store is the first implementation priority, while Domain Modeling and System Integration progressively enrich and scale the broader architecture.</p></article></div>
+<div class="callout fact"><b>Current-state fact / working baseline</b>The Tableau reports in scope have already been migrated to Power BI. KPI definitions, ownership, targets, thresholds, lineage, and standardization were not systematically captured during that migration.</div>
+<div class="callout working"><b>Evidence treatment</b>Tableau XML is now parsed retrospectively to inventory historical calculations. Extracted calculations are evidence—not approved measures or KPIs. Power BI reports and semantic models are the current validation and consumption sources.</div>
+<div class="callout candidate-callout"><b>Cross-workstream baseline</b>KPI Store and Enterprise Performance Management is first. Domain Modeling and System Integration are connected follow-on workstreams. Data Governance applies across all workstreams.</div>
+</section>
+
+<section id="scope"><div class="section-head"><span class="section-no">2</span><h2>Project Scope and Boundaries</h2></div>
+<p>The detailed authority for scope, roles, lifecycle, and cadence is <strong>EPM-FOUND-001 — Project Charter and Operating Model</strong> (Version 2.0, Candidate). This index only summarizes it.</p>
+<div class="card-grid"><article class="card"><div class="kicker">Priority 1</div><h3>KPI Store and EPM</h3><p><strong>Purpose:</strong> define measurement classes, govern KPIs, inventory and rationalize report logic, establish metadata, values, thresholds, quality, lineage, and governed consumption.</p><p><strong>Major exclusions:</strong> storing every Tableau calculation as a KPI; rebuilding all Power BI reports; treating popularity as approval; waiting for full domain models; replacing foundational data products.</p></article><article class="card"><div class="kicker">Follow-on</div><h3>Domain Modeling</h3><p><strong>Purpose:</strong> create a reusable, tool-agnostic playbook and reference architecture connecting business concepts, metadata, data products, models, and technical fields.</p><p><strong>Major exclusions:</strong> broad ETL/ELT, enterprise-wide physicalization, heavy production execution, comprehensive modeling of every domain.</p></article><article class="card"><div class="kicker">Follow-on</div><h3>System Integration</h3><p><strong>Purpose:</strong> define responsibilities, flows, contracts, payloads, interoperability constraints, and targeted proofs of value across ER/Studio, Purview, Unity Catalog, and BigEye.</p><p><strong>Major exclusions:</strong> broad production integration, bulk migration, production connector development, and unrelated tool evaluation.</p></article><article class="card"><div class="kicker">Cross-cutting</div><h3>Data Governance</h3><p>Establishes policies, roles, decision rights, ownership, definitions, lineage, quality, security, compliance, data-product governance, reuse, adoption, value, and maturity.</p><p><strong>Boundary:</strong> governance is embedded across delivery rather than treated as a separate final phase.</p></article></div>
+</section>
+
+<section id="architecture"><div class="section-head"><span class="section-no">3</span><h2>Enterprise Performance Model Architecture</h2></div>
+<p>The architecture below is conceptual. It establishes traceability and responsibility across layers; it does not prescribe that every layer must be implemented in one platform.</p>
+<div class="arch-wrap" role="img" aria-label="High-level EPM architecture from objectives through consumers, with governance spanning all layers">
+<div class="arch"><div class="node">Business objectives<small>Outcomes, strategy, decisions</small></div><div class="arrow">→</div><div class="node">Value streams<small>Value creation and stages</small></div><div class="arrow">→</div><div class="node">Domains &amp; capabilities<small>Accountability and ownership</small></div><div class="arrow">→</div><div class="node">Processes &amp; activities<small>Work, controls, interventions</small></div>
+<div class="node">Measurements &amp; KPIs<small>Definitions, formulas, grain, targets</small></div><div class="arrow">→</div><div class="node">Data products<small>Reusable governed inputs</small></div><div class="arrow">→</div><div class="node">Domain models<small>Concepts, entities, attributes</small></div><div class="arrow">→</div><div class="node">Technical assets<small>Tables, fields, pipelines, quality</small></div>
+<div class="governance">Governance across every layer: ownership · metadata · lineage · quality · security · decision rights · lifecycle · change control</div>
+<div class="consumers"><div class="consumer">Power BI</div><div class="consumer">Analytics</div><div class="consumer">Applications</div><div class="consumer">Automation &amp; alerts</div><div class="consumer">AI &amp; agents</div></div></div></div>
+<div class="callout recommendation"><b>Architecture principle</b>Place logic at the lowest sensible reusable layer; use the KPI Store for governed KPI calculation, values, thresholds, status, history, and consumption—not as a replacement for foundational data products.</div>
+</section>
+
+<section id="workstreams"><div class="section-head"><span class="section-no">4</span><h2>Workstream Overview</h2></div>
+<div class="table-wrap"><table><thead><tr><th>Workstream</th><th>Purpose</th><th>Scope summary</th><th>Priority</th><th>Current status</th><th>Key dependencies</th><th>Primary artifacts</th><th>Next milestone</th></tr></thead><tbody>
+<tr><td><strong>KPI Store and Enterprise Performance Management</strong></td><td>Establish governed enterprise measurement and KPI architecture.</td><td>Inventory, taxonomy, catalogs, governance, metadata, calculation/value/consumption layers, pilots.</td><td>First</td><td><span class="badge in-progress">In progress</span></td><td>Control artifacts; source inventory; business ownership; resolution of historical design conflict.</td><td>EPM-MEAS-001; EPM-XML-001; EPM-KPI-001–019.</td><td>Confirm conceptual architecture and measurement taxonomy; select first pilot family.</td></tr>
+<tr><td><strong>Domain Modeling</strong></td><td>Create a tool-agnostic modeling method and traceability to business concepts and technical fields.</td><td>Playbook, reference architecture, standards, repository, one or two proofs of value.</td><td>Follow-on and iterative</td><td><span class="badge exploratory">Exploratory</span></td><td>KPI metadata needs; selected domain; data-product strategy; tool constraints.</td><td>EPM-MOD-001–005.</td><td>Locate prior scope materials and define the first proof-of-value domain.</td></tr>
+<tr><td><strong>System Integration</strong></td><td>Define the metadata ecosystem and targeted proof patterns.</td><td>Tool boundaries, flows, patterns, payloads, constraints, representative exchange.</td><td>Follow-on, coordinated with modeling</td><td><span class="badge exploratory">Exploratory</span></td><td>Tool responsibility decisions; representative payload; KPI and modeling use case.</td><td>EPM-INT-001–006.</td><td>Confirm proof-of-value scope and create Tool Responsibility Matrix.</td></tr>
+<tr><td><strong>Cross-cutting Data Governance</strong></td><td>Embed ownership, semantics, quality, security, lineage, and lifecycle controls.</td><td>Policies, roles, ownership, glossary, traceability, approval, quality, adoption.</td><td>Across every phase</td><td><span class="badge in-progress">In progress</span></td><td>Governance forum; owners; control artifacts; approval decisions.</td><td>EPM-FOUND-001; EPM-GLOS-001; EPM-SRC-001; EPM-DEC-001; EPM-ISS-001; EPM-KPI-004.</td><td>Create decision, source, and issue registers; confirm governance reviewers.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="sequence"><div class="section-head"><span class="section-no">5</span><h2>Current Delivery Sequence</h2></div>
+<div class="sequence"><div class="step"><strong>Define the KPI Store and measurement architecture</strong><span>Set boundaries, taxonomy, qualification, governance, metadata, and architecture.</span></div><div class="step"><strong>Inventory and classify Tableau calculations</strong><span>Normalize historical logic, find duplicates, compare with Power BI, classify evidence.</span></div><div class="step"><strong>Establish KPI governance and pilot KPIs</strong><span>Assign owners, approve definitions, set targets, implement and validate representative KPIs.</span></div><div class="step"><strong>Formalize Domain Modeling</strong><span>Reconnect KPIs to concepts, entities, attributes, data products, and technical fields.</span></div><div class="step"><strong>Define and prove System Integration patterns</strong><span>Validate tool responsibilities, metadata propagation, payloads, and constraints.</span></div><div class="step"><strong>Scale and operationalize</strong><span>Expand domains, automate controls, embed cadence, and track adoption and value.</span></div></div>
+<p class="lead">The KPI Store comes first because it addresses the immediate inconsistency in performance definitions and report logic. The Enterprise Performance Model remains the umbrella because a trusted KPI still requires business context, ownership, data products, models, technical lineage, and governed consumption.</p>
+</section>
+
+<section id="directory"><div class="section-head"><span class="section-no">6</span><h2>Canonical Artifact Directory</h2></div>
+<p class="directory-note"><strong>Control note:</strong> appearance in the register means an artifact is planned in the minimum controlled set; it does not prove that a file exists. “To be located” means prior evidence suggests relevant work exists, but the canonical artifact was not available for review. The directory currently contains 47 registered artifacts.</p>
+<div class="countline"><span class="badge draft">Draft 1</span><span class="badge candidate">Candidate 2</span><span class="badge in-progress">In progress 1</span><span class="badge to-be-located">To be located 17</span><span class="badge not-started">Not started 26</span></div>
+<div class="filters" role="search"><label><span class="kicker">Search</span><input id="artifactSearch" type="search" placeholder="Search ID, title, purpose, owner, dependency…" aria-label="Search artifact directory"></label><label><span class="kicker">Family</span><select id="familyFilter" aria-label="Filter by family"><option value="">All families</option><option value="Foundation and Navigation">Foundation and Navigation</option><option value="Business Architecture">Business Architecture</option><option value="Measurement and KPI">Measurement and KPI</option><option value="KPI Store Technical Architecture">KPI Store Technical Architecture</option><option value="Data Products and Semantic Models">Data Products and Semantic Models</option><option value="Domain Modeling">Domain Modeling</option><option value="System Integration">System Integration</option><option value="Delivery and Adoption">Delivery and Adoption</option></select></label><label><span class="kicker">Status</span><select id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="Draft">Draft</option><option value="Candidate">Candidate</option><option value="In progress">In progress</option><option value="Not started">Not started</option><option value="To be located">To be located</option><option value="To be confirmed">To be confirmed</option><option value="Approved Baseline">Approved Baseline</option><option value="Implemented">Implemented</option><option value="Superseded">Superseded</option><option value="Retired">Retired</option><option value="Exploratory">Exploratory</option></select></label><button id="clearFilters" type="button">Clear filters</button></div>
+<p id="resultCount" aria-live="polite"></p>
+<div class="table-wrap"><table id="artifactTable"><thead><tr><th>Artifact ID</th><th>Title</th><th>Family</th><th>Purpose</th><th>Owner</th><th>Version</th><th>Status</th><th>Role</th><th>Key dependencies</th><th>Location or link</th><th>Next required action</th></tr></thead><tbody><tr data-family="Foundation and Navigation" data-status="Draft">
+<td><strong>EPM-FOUND-000</strong><span class="mobile-label">Enterprise Performance Model Master Index</span></td>
+<td>Enterprise Performance Model Master Index</td><td>Foundation and Navigation</td><td>Navigation and current-state overview</td>
+<td>Enterprise Performance Model Lead</td><td>0.1</td><td><span class="badge draft">Draft</span></td>
+<td>Navigation and control</td><td>EPM-FOUND-001; EPM-FOUND-002; all major artifact status updates</td>
+<td><a href="#top">This document</a></td>
+<td>Validate Version 0.1; add project links; update after control artifacts are created</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Candidate">
+<td><strong>EPM-FOUND-001</strong><span class="mobile-label">Project Charter and Operating Model</span></td>
+<td>Project Charter and Operating Model</td><td>Foundation and Navigation</td><td>Defines scope, workstreams, roles, lifecycle, and cadence</td>
+<td>Enterprise Performance Model Lead</td><td>2.0</td><td><span class="badge candidate">Candidate</span></td>
+<td>Authoritative scope and operating model when approved</td><td>Executive and governance validation</td>
+<td><span class="placeholder">Reviewed source; project source link to be added</span></td>
+<td>Governance review and decision on approval baseline</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Candidate">
+<td><strong>EPM-FOUND-002</strong><span class="mobile-label">Artifact Register and Chat Migration Playbook</span></td>
+<td>Artifact Register and Chat Migration Playbook</td><td>Foundation and Navigation</td><td>Controls knowledge capture</td>
+<td>To be confirmed</td><td>1.0</td><td><span class="badge candidate">Candidate</span></td>
+<td>Authoritative artifact and knowledge-control model when approved</td><td>Agreement on artifact controls and migration method</td>
+<td><span class="placeholder">Reviewed source; project source link to be added</span></td>
+<td>Confirm owner; governance review; approve or revise</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Not started">
+<td><strong>EPM-GLOS-001</strong><span class="mobile-label">Business Glossary</span></td>
+<td>Business Glossary</td><td>Foundation and Navigation</td><td>Establishes shared business meaning</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Approved priorities; stakeholder capacity; validation evidence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-MEAS-001</strong><span class="mobile-label">Enterprise Measurement Taxonomy</span></td>
+<td>Enterprise Measurement Taxonomy</td><td>Measurement and KPI</td><td>Defines measurement classes and rules</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Not started">
+<td><strong>EPM-SRC-001</strong><span class="mobile-label">Source and Traceability Register</span></td>
+<td>Source and Traceability Register</td><td>Foundation and Navigation</td><td>Records where knowledge originated</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative provenance record when established</td><td>Project control setup; owners and review cadence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Create and populate immediately as a Phase 1 control</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Not started">
+<td><strong>EPM-DEC-001</strong><span class="mobile-label">Architecture Decision Log</span></td>
+<td>Architecture Decision Log</td><td>Foundation and Navigation</td><td>Records material decisions</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative decision record when established</td><td>Project control setup; owners and review cadence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Create and populate immediately as a Phase 1 control</td></tr>
+<tr data-family="Foundation and Navigation" data-status="Not started">
+<td><strong>EPM-ISS-001</strong><span class="mobile-label">Open Issues and Assumptions Log</span></td>
+<td>Open Issues and Assumptions Log</td><td>Foundation and Navigation</td><td>Prevents hidden uncertainty</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative uncertainty record when established</td><td>Project control setup; owners and review cadence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Create and populate immediately as a Phase 1 control</td></tr>
+<tr data-family="Business Architecture" data-status="To be located">
+<td><strong>EPM-BUS-001</strong><span class="mobile-label">Downstream Value Stream Model</span></td>
+<td>Downstream Value Stream Model</td><td>Business Architecture</td><td>Defines enterprise value creation</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Existing Downstream architecture sources; process-owner validation</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Business Architecture" data-status="To be located">
+<td><strong>EPM-BUS-002</strong><span class="mobile-label">Business Capability Map</span></td>
+<td>Business Capability Map</td><td>Business Architecture</td><td>Organizes business responsibilities</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Existing Downstream architecture sources; process-owner validation</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Business Architecture" data-status="To be located">
+<td><strong>EPM-BUS-003</strong><span class="mobile-label">Business Process and Activity Model</span></td>
+<td>Business Process and Activity Model</td><td>Business Architecture</td><td>Provides process context</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Existing Downstream architecture sources; process-owner validation</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Business Architecture" data-status="To be located">
+<td><strong>EPM-BUS-004</strong><span class="mobile-label">Business Objective and Decision Model</span></td>
+<td>Business Objective and Decision Model</td><td>Business Architecture</td><td>Links strategy to decisions</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Existing Downstream architecture sources; process-owner validation</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Measurement and KPI" data-status="In progress">
+<td><strong>EPM-XML-001</strong><span class="mobile-label">Tableau Calculation Inventory</span></td>
+<td>Tableau Calculation Inventory</td><td>Measurement and KPI</td><td>Preserves extracted legacy logic</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge in-progress">In progress</span></td>
+<td>Supporting evidence inventory</td><td>Tableau XML parser outputs; normalization rules; Power BI comparison</td>
+<td><span class="placeholder">Current extraction output location to be confirmed</span></td>
+<td>Locate current outputs; define inventory schema; classify first calculation cohort</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-MEAS-002</strong><span class="mobile-label">Enterprise Measurement Catalog</span></td>
+<td>Enterprise Measurement Catalog</td><td>Measurement and KPI</td><td>Governs reusable non-KPI measures</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-KPI-001</strong><span class="mobile-label">Candidate KPI Register</span></td>
+<td>Candidate KPI Register</td><td>Measurement and KPI</td><td>Manages KPI review pipeline</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Governance workflow record</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-KPI-002</strong><span class="mobile-label">Enterprise KPI Catalog</span></td>
+<td>Enterprise KPI Catalog</td><td>Measurement and KPI</td><td>System of record for approved KPI definitions</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative approved KPI system of record</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-KPI-003</strong><span class="mobile-label">KPI Dependency and Driver Model</span></td>
+<td>KPI Dependency and Driver Model</td><td>Measurement and KPI</td><td>Shows how KPIs are formed and explained</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Supporting explanatory model</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Measurement and KPI" data-status="Not started">
+<td><strong>EPM-KPI-004</strong><span class="mobile-label">KPI Governance and Approval Standard</span></td>
+<td>KPI Governance and Approval Standard</td><td>Measurement and KPI</td><td>Defines governance workflow</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Measurement taxonomy; source evidence; business ownership; validation</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-010</strong><span class="mobile-label">KPI Store Conceptual Architecture</span></td>
+<td>KPI Store Conceptual Architecture</td><td>KPI Store Technical Architecture</td><td>Explains what the store is and is not</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-011</strong><span class="mobile-label">KPI Store Logical Data Model</span></td>
+<td>KPI Store Logical Data Model</td><td>KPI Store Technical Architecture</td><td>Defines logical structures and relationships</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-012</strong><span class="mobile-label">KPI Store Physical Design</span></td>
+<td>KPI Store Physical Design</td><td>KPI Store Technical Architecture</td><td>Defines implementation schemas</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-013</strong><span class="mobile-label">KPI Metadata Schema</span></td>
+<td>KPI Metadata Schema</td><td>KPI Store Technical Architecture</td><td>Defines required KPI metadata</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-014</strong><span class="mobile-label">KPI Calculation and Load Framework</span></td>
+<td>KPI Calculation and Load Framework</td><td>KPI Store Technical Architecture</td><td>Defines computation and ingestion</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-015</strong><span class="mobile-label">Target, Threshold, and Status Standard</span></td>
+<td>Target, Threshold, and Status Standard</td><td>KPI Store Technical Architecture</td><td>Standardizes performance evaluation</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-016</strong><span class="mobile-label">Versioning and Restatement Standard</span></td>
+<td>Versioning and Restatement Standard</td><td>KPI Store Technical Architecture</td><td>Controls changes over time</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-017</strong><span class="mobile-label">KPI Data-Quality Framework</span></td>
+<td>KPI Data-Quality Framework</td><td>KPI Store Technical Architecture</td><td>Defines quality controls</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="To be located">
+<td><strong>EPM-KPI-018</strong><span class="mobile-label">KPI Security and Consumption Standard</span></td>
+<td>KPI Security and Consumption Standard</td><td>KPI Store Technical Architecture</td><td>Defines governed access and reuse</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="KPI Store Technical Architecture" data-status="Not started">
+<td><strong>EPM-KPI-019</strong><span class="mobile-label">KPI Pilot Specification Package</span></td>
+<td>KPI Pilot Specification Package</td><td>KPI Store Technical Architecture</td><td>Provides implementable KPI designs</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Implementation specification package</td><td>KPI scope decision; resolved storage-pattern conflict; pilot requirements</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Data Products and Semantic Models" data-status="To be located">
+<td><strong>EPM-DP-001</strong><span class="mobile-label">Data Product Portfolio</span></td>
+<td>Data Product Portfolio</td><td>Data Products and Semantic Models</td><td>Catalogs governed products</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Current data-product portfolio; Power BI implementation evidence; owners</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Data Products and Semantic Models" data-status="Not started">
+<td><strong>EPM-DP-002</strong><span class="mobile-label">Data Product Standard and Contract Template</span></td>
+<td>Data Product Standard and Contract Template</td><td>Data Products and Semantic Models</td><td>Defines what qualifies as a product</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Current data-product portfolio; Power BI implementation evidence; owners</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Data Products and Semantic Models" data-status="Not started">
+<td><strong>EPM-SEM-001</strong><span class="mobile-label">Semantic Model Standards</span></td>
+<td>Semantic Model Standards</td><td>Data Products and Semantic Models</td><td>Controls reusable semantic logic</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Current data-product portfolio; Power BI implementation evidence; owners</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Data Products and Semantic Models" data-status="Not started">
+<td><strong>EPM-SEM-002</strong><span class="mobile-label">Power BI Consumption and Certification Standard</span></td>
+<td>Power BI Consumption and Certification Standard</td><td>Data Products and Semantic Models</td><td>Governs report consumption</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Current data-product portfolio; Power BI implementation evidence; owners</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Domain Modeling" data-status="To be located">
+<td><strong>EPM-MOD-001</strong><span class="mobile-label">Domain Modeling Playbook</span></td>
+<td>Domain Modeling Playbook</td><td>Domain Modeling</td><td>Defines repeatable modeling method</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI metadata requirements; selected proof-of-value domain; core tool constraints</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Domain Modeling" data-status="To be located">
+<td><strong>EPM-MOD-002</strong><span class="mobile-label">Domain Modeling Reference Architecture</span></td>
+<td>Domain Modeling Reference Architecture</td><td>Domain Modeling</td><td>Shows modeling ecosystem</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI metadata requirements; selected proof-of-value domain; core tool constraints</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="Domain Modeling" data-status="Not started">
+<td><strong>EPM-MOD-003</strong><span class="mobile-label">Modeling Standards and Conventions</span></td>
+<td>Modeling Standards and Conventions</td><td>Domain Modeling</td><td>Standardizes models</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI metadata requirements; selected proof-of-value domain; core tool constraints</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Domain Modeling" data-status="Not started">
+<td><strong>EPM-MOD-004</strong><span class="mobile-label">Domain Model Repository</span></td>
+<td>Domain Model Repository</td><td>Domain Modeling</td><td>Stores approved conceptual/logical models</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI metadata requirements; selected proof-of-value domain; core tool constraints</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Domain Modeling" data-status="Not started">
+<td><strong>EPM-MOD-005</strong><span class="mobile-label">KPI-to-Domain Traceability Model</span></td>
+<td>KPI-to-Domain Traceability Model</td><td>Domain Modeling</td><td>Connects KPIs to formal domain models</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>KPI metadata requirements; selected proof-of-value domain; core tool constraints</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="System Integration" data-status="To be located">
+<td><strong>EPM-INT-001</strong><span class="mobile-label">System Integration Reference Architecture</span></td>
+<td>System Integration Reference Architecture</td><td>System Integration</td><td>Defines the connected ecosystem</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge to-be-located">To be located</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Prior source or artifact to be located</span></td>
+<td>Locate prior artifact/evidence; assess currency; assign canonical ID and status</td></tr>
+<tr data-family="System Integration" data-status="Not started">
+<td><strong>EPM-INT-002</strong><span class="mobile-label">Tool Responsibility Matrix</span></td>
+<td>Tool Responsibility Matrix</td><td>System Integration</td><td>Prevents overlapping ownership</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="System Integration" data-status="Not started">
+<td><strong>EPM-INT-003</strong><span class="mobile-label">Integration Pattern Catalog</span></td>
+<td>Integration Pattern Catalog</td><td>System Integration</td><td>Defines reusable technical patterns</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="System Integration" data-status="Not started">
+<td><strong>EPM-INT-004</strong><span class="mobile-label">Metadata Flow and Sequence Diagrams</span></td>
+<td>Metadata Flow and Sequence Diagrams</td><td>System Integration</td><td>Shows propagation across systems</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="System Integration" data-status="Not started">
+<td><strong>EPM-INT-005</strong><span class="mobile-label">Payload and Contract Specifications</span></td>
+<td>Payload and Contract Specifications</td><td>System Integration</td><td>Defines exchange structures</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="System Integration" data-status="Not started">
+<td><strong>EPM-INT-006</strong><span class="mobile-label">Tool Constraints and Risk Register</span></td>
+<td>Tool Constraints and Risk Register</td><td>System Integration</td><td>Records limitations</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Authoritative within its subject area when approved</td><td>Tool responsibility decisions; representative payloads; proof-of-value scope</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Delivery and Adoption" data-status="Not started">
+<td><strong>EPM-DEL-001</strong><span class="mobile-label">Delivery Backlog and Roadmap</span></td>
+<td>Delivery Backlog and Roadmap</td><td>Delivery and Adoption</td><td>Controls sequencing</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Delivery control</td><td>Approved priorities; stakeholder capacity; validation evidence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Delivery and Adoption" data-status="Not started">
+<td><strong>EPM-VAL-001</strong><span class="mobile-label">Validation and Reconciliation Register</span></td>
+<td>Validation and Reconciliation Register</td><td>Delivery and Adoption</td><td>Preserves validation evidence</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Supporting validation evidence</td><td>Approved priorities; stakeholder capacity; validation evidence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Delivery and Adoption" data-status="Not started">
+<td><strong>EPM-CHG-001</strong><span class="mobile-label">Training and Change Plan</span></td>
+<td>Training and Change Plan</td><td>Delivery and Adoption</td><td>Supports adoption</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Adoption support</td><td>Approved priorities; stakeholder capacity; validation evidence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr>
+<tr data-family="Delivery and Adoption" data-status="Not started">
+<td><strong>EPM-VALUE-001</strong><span class="mobile-label">Adoption and Value Scorecard</span></td>
+<td>Adoption and Value Scorecard</td><td>Delivery and Adoption</td><td>Measures outcomes</td>
+<td>To be confirmed</td><td>To be confirmed</td><td><span class="badge not-started">Not started</span></td>
+<td>Outcome measurement</td><td>Approved priorities; stakeholder capacity; validation evidence</td>
+<td><span class="placeholder">Project source link to be added</span></td>
+<td>Confirm owner and sequence; create initial Draft when dependency is available</td></tr></tbody></table></div>
+</section>
+
+<section id="baseline"><div class="section-head"><span class="section-no">7</span><h2>Authoritative Baseline</h2></div>
+<div class="two-col"><div><h3>Highest available evidence reviewed</h3><div class="callout candidate-callout"><b>Candidate canonical artifacts</b>EPM-FOUND-001 Version 2.0 and EPM-FOUND-002 Version 1.0. They are the strongest reviewed artifacts, but neither is an Approved Baseline.</div><div class="callout fact"><b>Current validated implementation / user-stated baseline</b>Power BI migration is complete for reports in scope; Power BI reports and semantic models are the current validation and consumption environment.</div><div class="callout working"><b>Working project baseline</b>Tableau XML parsing is retrospective discovery; extraction does not confer KPI status; KPI Store is the first priority under the broader EPM.</div></div><div><h3>Lower-confidence or incomplete baseline</h3><div class="callout candidate-callout"><b>Candidate architecture</b>Domain Modeling and System Integration scopes and target relationships are defined in the Candidate Charter, but detailed canonical artifacts were not located.</div><div class="callout assumption"><b>Working assumptions</b>Relevant business architecture, data-product, KPI Store design, and prior-chat material exist but require location, classification, and migration.</div><div class="callout recommendation"><b>Recommendation</b>Do not promote any technical KPI Store pattern to Approved Baseline until prior designs are reconciled against current implementation and stakeholder decisions.</div></div></div>
+</section>
+
+<section id="decisions"><div class="section-head"><span class="section-no">8</span><h2>Major Decisions and Working Baselines</h2></div>
+<p>No reviewed Architecture Decision Log exists. Therefore, no item below is labeled “Approved” solely because it appears in a Candidate artifact or prior chat.</p>
+<div class="decision-grid">
+<div class="decision working-baseline"><div class="dstatus">Working Baseline</div><h3>Enterprise Performance Model is the conceptual umbrella</h3><p>Supported by the Candidate Charter and active project instructions. Decision-log entry: <span class="placeholder">to be created</span>.</p></div>
+<div class="decision working-baseline"><div class="dstatus">Working Baseline</div><h3>KPI Store is the first delivery priority</h3><p>Supported consistently by the Candidate Charter, Register/Playbook, and active instructions.</p></div>
+<div class="decision working-baseline"><div class="dstatus">Working Baseline / Current State</div><h3>Power BI migration is complete</h3><p>User-stated current implementation baseline; requires source-system validation evidence in EPM-SRC-001.</p></div>
+<div class="decision working-baseline"><div class="dstatus">Working Baseline</div><h3>Tableau XML is retrospective evidence</h3><p>Extracted logic is inventoried and classified; extraction does not approve definitions or KPIs.</p></div>
+<div class="decision working-baseline"><div class="dstatus">Working Baseline</div><h3>Power BI is the current validation and consumption environment</h3><p>Current models and reports should be used to validate migrated logic and dependencies.</p></div>
+<div class="decision candidate"><div class="dstatus">Candidate</div><h3>Domain Modeling progressively enriches traceability</h3><p>Later refinement maps KPI-to-domain, capability, process, concept, entity, attribute, data product, and field.</p></div>
+<div class="decision candidate"><div class="dstatus">Candidate</div><h3>System Integration starts with targeted proofs of value</h3><p>The first KPI Store release must not depend on full production integration across the core tool stack.</p></div>
+<div class="decision candidate"><div class="dstatus">Candidate</div><h3>Data Governance is cross-cutting</h3><p>Ownership, definitions, quality, lineage, security, lifecycle, and adoption apply across every workstream.</p></div>
+</div>
+</section>
+
+<section id="priorities"><div class="section-head"><span class="section-no">9</span><h2>Current Priorities and Active Work</h2></div>
+<div class="card-grid"><article class="card"><div class="kicker">Current priority</div><h3>Establish control and architecture</h3><p>Complete the Master Index, create the decision/source/issue registers, confirm measurement taxonomy, and reconcile prior KPI Store designs.</p></article><article class="card"><div class="kicker">Active work</div><h3>Retrospective calculation discovery</h3><p>Tableau XML parsing is under way to inventory calculations. The inventory schema, normalization, and classification workflow still require controlled artifacts.</p></article><article class="card"><div class="kicker">Immediate next work</div><h3>Advance first KPI Store artifact</h3><p>Choose whether EPM-KPI-010 or EPM-MEAS-001 is the first formal Draft, then define the first pilot KPI family and its validation sources.</p></article><article class="card"><div class="kicker">Deferred work</div><h3>Broad modeling and integration implementation</h3><p>Enterprise-wide domain physicalization, broad metadata migration, production connectors, and report rebuilding remain outside the first phase.</p></article><article class="card"><div class="kicker">Required validation</div><h3>Business and governance ownership</h3><p>Confirm artifact owners, KPI owners, domain owners, stewards, governance reviewers, and approval authority.</p></article><article class="card"><div class="kicker">Delivery risks</div><h3>Uncontrolled legacy decisions</h3><p>Key designs remain distributed across prior chats and files; formulas and status may conflict; links and implementation evidence are incomplete.</p></article></div>
+</section>
+
+<section id="issues"><div class="section-head"><span class="section-no">10</span><h2>Open Issues, Assumptions, and Conflicts</h2></div>
+<div class="callout conflict"><b>Material unresolved conflict</b>Prior KPI Store work contains at least two competing technical patterns: (1) a persisted tall KPI value fact with thresholds, restatement, and governed consumption; and (2) no central KPI value store, with KPIs computed from Silver star schemas as semantic views and metadata cached from Purview. Neither pattern is promoted here. Resolve through current-implementation review and an Architecture Decision Log entry.</div>
+<div class="two-col"><div><h3>Open issues</h3><ul><li>Maintainer and most artifact owners are unconfirmed.</li><li>Separate canonical artifacts for taxonomy, glossary, decisions, sources, and issues have not been located.</li><li>Extracted formulas have not been business-approved or fully reconciled with Power BI.</li><li>Current Power BI models, Tableau inventory outputs, and source links were not available for direct review.</li><li>Domain Modeling and System Integration proof-of-value domains and success criteria are not confirmed.</li></ul></div><div><h3>Assumptions and dependencies</h3><ul><li>Prior Downstream business architecture and data-product materials exist and can be located.</li><li>Power BI semantic models can provide current consumption and calculation evidence.</li><li>Business KPI Owners and process owners will be available for qualification and approval.</li><li>The first KPI Store phase can proceed without full tool integration and comprehensive domain models.</li><li>The Artifact Register is the planned minimum controlled set, not proof of artifact completion.</li></ul></div></div>
+<p>Authoritative detailed record: <strong>EPM-ISS-001 — Open Issues and Assumptions Log</strong> (<span class="placeholder">not started; project source link to be added</span>).</p>
+</section>
+
+<section id="traceability"><div class="section-head"><span class="section-no">11</span><h2>Source and Traceability Overview</h2></div>
+<p>Every durable statement should carry provenance and be classified by authority, currency, and validation. The detailed register belongs in <strong>EPM-SRC-001 — Source and Traceability Register</strong>.</p>
+<div class="table-wrap"><table><thead><tr><th>Precedence</th><th>Source class</th><th>Treatment</th></tr></thead><tbody>
+<tr><td>1</td><td>Approved canonical artifact</td><td>Primary authority; do not silently override.</td></tr><tr><td>2</td><td>Approved decision-log entry</td><td>Controls material choices and supersession.</td></tr><tr><td>3</td><td>Approved business or technical specification</td><td>Authoritative within its approved scope.</td></tr><tr><td>4</td><td>Current validated implementation</td><td>Evidence of what currently operates; may reveal divergence from documentation.</td></tr><tr><td>5</td><td>Candidate artifact under formal review</td><td>Strong working baseline, not yet approved.</td></tr><tr><td>6</td><td>Working project chat</td><td>Exploration and draft evidence; promote durable conclusions.</td></tr><tr><td>7</td><td>Prior or outside-project chat</td><td>Baseline evidence requiring classification, reconciliation, and migration.</td></tr><tr><td>8</td><td>Unvalidated Tableau XML or report logic</td><td>Historical implementation evidence; never automatic KPI authority.</td></tr><tr><td>9</td><td>General industry assumption</td><td>Use only when clearly labeled and no stronger source exists.</td></tr>
+</tbody></table></div>
+<details><summary>How specific source types are treated</summary><p><strong>Uploaded files</strong> inherit the authority of their content and status, not the upload event. <strong>Power BI models</strong> are current implementation evidence when validated. <strong>Business workshops</strong> produce candidate or approved evidence depending on formal sign-off. <strong>External research</strong> supports comparison and design rationale but does not override internal approved sources. <strong>Architecture assumptions</strong> must be visible in EPM-ISS-001. <strong>Tableau XML</strong> and local report logic remain evidence until governed.</p></details>
+</section>
+
+<section id="ownership"><div class="section-head"><span class="section-no">12</span><h2>Governance and Ownership Overview</h2></div>
+<div class="table-wrap"><table><thead><tr><th>Role</th><th>Concise responsibility</th></tr></thead><tbody>
+<tr><td>Executive leadership</td><td>Set direction and priorities, allocate resources, resolve material escalations, monitor value and risk, sponsor adoption.</td></tr><tr><td>Global process owners</td><td>Own end-to-end processes, outcomes, standards, cross-domain decisions, and validation of process KPIs.</td></tr><tr><td>Enterprise Data Governance</td><td>Set policies and roles, operate forums, resolve cross-domain semantic issues, monitor maturity, promote reuse.</td></tr><tr><td>Enterprise Performance Model Lead</td><td>Maintain project direction, architectural coherence, priorities, artifact promotion, validation coordination, Master Index, and decision log.</td></tr><tr><td>Domain Data Owners</td><td>Approve domain semantics and KPIs, set quality expectations and priorities, establish ownership and decision rights.</td></tr><tr><td>Business KPI Owners</td><td>Own intended outcome, approve KPI meaning, formula, targets, thresholds, management action, and review cadence.</td></tr><tr><td>Data Product Owners</td><td>Own product purpose, consumers, contracts, lifecycle, service expectations, quality, adoption, and value.</td></tr><tr><td>Data Stewards</td><td>Maintain definitions and metadata, monitor quality, coordinate issues, support lineage and standards.</td></tr><tr><td>Semantic Model Owners</td><td>Own shared dimensions and measures, implement approved logic, security, certification, compatibility, and report support.</td></tr><tr><td>Digital and engineering teams</td><td>Provide platforms and architecture, implement approved models and pipelines, operate controls, monitoring, security, metadata, and lineage.</td></tr>
+</tbody></table></div><p>Detailed responsibilities and decision rights remain in EPM-FOUND-001.</p>
+</section>
+
+<section id="dashboard"><div class="section-head"><span class="section-no">13</span><h2>Artifact Status Dashboard</h2></div>
+<p>These are aggregate maturity assessments based only on reviewed evidence. They do not imply that every underlying canonical file exists.</p>
+<div class="dashboard">
+<div class="dash" data-status="Draft"><div class="label">Foundation and navigation</div><span class="badge draft">Draft</span><div class="status-bar"><span></span></div><div class="why">Master Index Draft; Charter and Register are Candidate; control logs not started.</div></div>
+<div class="dash" data-status="To be confirmed"><div class="label">Business architecture</div><span class="badge to-be-confirmed">To be confirmed</span><div class="status-bar"><span></span></div><div class="why">Prior materials are referenced but were not located or status-verified.</div></div>
+<div class="dash" data-status="Exploratory"><div class="label">Measurement taxonomy and catalog</div><span class="badge exploratory">Exploratory</span><div class="status-bar"><span></span></div><div class="why">Taxonomy seed exists in Candidate Charter; standalone catalog not started.</div></div>
+<div class="dash" data-status="Exploratory"><div class="label">Tableau calculation inventory</div><span class="badge exploratory">Exploratory</span><div class="status-bar"><span></span></div><div class="why">Parsing is active; controlled inventory artifact and outputs were not reviewed.</div></div>
+<div class="dash" data-status="Not started"><div class="label">Candidate KPI governance</div><span class="badge not-started">Not started</span><div class="status-bar"><span></span></div><div class="why">Candidate register and approval standard not located.</div></div>
+<div class="dash" data-status="Not started"><div class="label">Enterprise KPI catalog</div><span class="badge not-started">Not started</span><div class="status-bar"><span></span></div><div class="why">No approved KPI system of record was reviewed.</div></div>
+<div class="dash" data-status="Exploratory"><div class="label">KPI Store conceptual architecture</div><span class="badge exploratory">Exploratory</span><div class="status-bar"><span></span></div><div class="why">Historical concepts exist, including competing patterns; canonical artifact not located.</div></div>
+<div class="dash" data-status="To be confirmed"><div class="label">KPI Store technical design</div><span class="badge to-be-confirmed">To be confirmed</span><div class="status-bar"><span></span></div><div class="why">Prior designs conflict; current validated implementation not reviewed.</div></div>
+<div class="dash" data-status="To be confirmed"><div class="label">Data-product architecture</div><span class="badge to-be-confirmed">To be confirmed</span><div class="status-bar"><span></span></div><div class="why">Prior portfolios and architecture are referenced but not located.</div></div>
+<div class="dash" data-status="Not started"><div class="label">Semantic-model standards</div><span class="badge not-started">Not started</span><div class="status-bar"><span></span></div><div class="why">Power BI is current consumption evidence; governed standard not found.</div></div>
+<div class="dash" data-status="Exploratory"><div class="label">Domain Modeling</div><span class="badge exploratory">Exploratory</span><div class="status-bar"><span></span></div><div class="why">Candidate scope exists; detailed playbook/reference artifacts not located.</div></div>
+<div class="dash" data-status="Exploratory"><div class="label">System Integration</div><span class="badge exploratory">Exploratory</span><div class="status-bar"><span></span></div><div class="why">Candidate scope and core stack defined; proof artifacts not located.</div></div>
+<div class="dash" data-status="Not started"><div class="label">Delivery and adoption</div><span class="badge not-started">Not started</span><div class="status-bar"><span></span></div><div class="why">Roadmap, validation register, change plan, and value scorecard not located.</div></div>
+</div></section>
+
+<section id="use"><div class="section-head"><span class="section-no">14</span><h2>How to Use This Index</h2></div>
+<div class="card-grid"><article class="card"><h3>Find authority</h3><p>Use the artifact directory, then check status, version, role, and location. Candidate and chat content are not approved authority.</p></article><article class="card"><h3>Find decisions</h3><p>Use EPM-DEC-001 for material choices and supersession. Until created, decision cards in this index are working baselines only.</p></article><article class="card"><h3>Find uncertainty</h3><p>Use EPM-ISS-001 for assumptions, conflicts, dependencies, risks, evidence needed, and owners.</p></article><article class="card"><h3>Find evidence</h3><p>Use EPM-SRC-001 to trace chats, files, models, workshops, XML, implementations, and research to affected artifacts.</p></article><article class="card"><h3>Promote chat conclusions</h3><p>Route each durable conclusion to the artifact family listed in EPM-FOUND-002; record material decisions and provenance separately.</p></article><article class="card"><h3>Determine what happens next</h3><p>Use the priority section, status dashboard, and EPM-DEL-001 once established.</p></article></div>
+</section>
+
+<section id="actions"><div class="section-head"><span class="section-no">15</span><h2>Immediate Next Actions</h2></div>
+<ol><li><strong>Validate this Version 0.1 Draft</strong> against project governance expectations and confirm the maintainer.</li><li><strong>Create and populate EPM-DEC-001, EPM-SRC-001, and EPM-ISS-001</strong> as Phase 1 controls.</li><li><strong>Locate existing artifacts</strong> for KPI Store, Downstream business architecture, data products, semantic models, Domain Modeling, and System Integration.</li><li><strong>Consolidate Priority A KPI Store chats</strong>, including technical table designs, semantic-view alternatives, governance decisions, KPI formulas, and scope constraints.</li><li><strong>Resolve the KPI Store implementation conflict</strong> through current-state evidence and a formal architecture decision.</li><li><strong>Confirm artifact owners, versions, statuses, and project links</strong> without inferring them from job roles.</li><li><strong>Locate and profile the current Tableau calculation inventory</strong>; agree its schema and classification states.</li><li><strong>Identify the first KPI Store artifact to advance</strong>—recommended starting candidates are EPM-MEAS-001 and EPM-KPI-010, sequenced together.</li><li><strong>Select the first pilot KPI family</strong> and identify business owner, Power BI validation source, data products, and required quality evidence.</li><li><strong>Update this index</strong> whenever a major artifact is added, approved, superseded, retired, or materially changed.</li></ol>
+</section>
+
+<section id="artifact-update"><div class="section-head"><span class="section-no">✓</span><h2>Artifact Update Block</h2></div>
+<details open><summary>Conclusions</summary><p>EPM-FOUND-000 has been created as the project navigation and control artifact. The strongest reviewed baseline consists of two Candidate foundation artifacts plus user-stated current implementation context. The KPI Store remains the first priority under the broader Enterprise Performance Model.</p></details>
+<details><summary>Decisions and status</summary><p>No new architecture decision is declared Approved. The EPM umbrella, KPI Store priority, retrospective XML treatment, Power BI validation role, follow-on modeling/integration approach, and cross-cutting governance are recorded as Working Baseline or Candidate according to evidence.</p></details>
+<details><summary>Definitions added or changed</summary><p>No measurement definition was changed. The index formalizes “artifact directory status” as evidence maturity plus file availability; appearing in the planned register does not prove existence.</p></details>
+<details><summary>Assumptions</summary><p>Prior business architecture, data-product, KPI Store, modeling, and integration sources exist but require location and classification. Artifact ownership is not inferred unless explicitly stated.</p></details>
+<details><summary>Open questions and conflicts</summary><p>The principal conflict is the persisted KPI value-store pattern versus the semantic-view/no-central-value-store pattern. Other open matters include ownership, approval authority, source links, inventory schema, pilot selection, and current implementation evidence.</p></details>
+<details><summary>Source evidence</summary><p>Active Enterprise Performance Model project instructions; EPM-FOUND-001 Version 2.0 Candidate; EPM-FOUND-002 Version 1.0 Candidate; the EPM-FOUND-000 creation brief; accessible prior project chat context; prior KPI Store design summaries.</p></details>
+<details><summary>Artifacts created or requiring updates</summary><p><strong>Created:</strong> EPM-FOUND-000 Version 0.1 Draft. <strong>Create/populate:</strong> EPM-DEC-001, EPM-SRC-001, EPM-ISS-001. <strong>Locate/reconcile:</strong> business architecture, KPI Store technical design, data-product, semantic, Domain Modeling, and System Integration artifacts. <strong>Advance:</strong> EPM-MEAS-001, EPM-XML-001, EPM-KPI-010, and the first pilot package.</p></details>
+<details><summary>Suggested version and status</summary><p>EPM-FOUND-000 — Version 0.1, Draft. Promote to Candidate only after source links, control registers, owner/status confirmation, and stakeholder review are completed.</p></details>
+<details><summary>Next validation or implementation action</summary><p>Establish the three control registers, locate Priority A KPI Store evidence, and run a focused architecture decision session to reconcile the competing KPI Store technical patterns.</p></details>
+</section>
+</main></div>
+<a class="back-top" href="#top" aria-label="Back to top">↑ Back to top</a>
+<footer><strong>EPM-FOUND-000 · Version 0.1 · Draft</strong><br>This Master Index is a navigation and control artifact. Detailed definitions, formulas, decisions, controls, and implementation specifications remain in the linked canonical artifacts. Where links are unavailable, placeholders are intentionally shown rather than false authoritative links.</footer>
+<script>
+(function(){
+const search=document.getElementById('artifactSearch'), family=document.getElementById('familyFilter'), status=document.getElementById('statusFilter'), rows=[...document.querySelectorAll('#artifactTable tbody tr')], count=document.getElementById('resultCount');
+function filter(){const q=search.value.toLowerCase().trim(),f=family.value,s=status.value;let n=0;rows.forEach(r=>{const show=(!q||r.textContent.toLowerCase().includes(q))&&(!f||r.dataset.family===f)&&(!s||r.dataset.status===s);r.hidden=!show;if(show)n++;});count.textContent=`Showing ${n} of ${rows.length} artifacts`;}
+[search,family,status].forEach(el=>el.addEventListener('input',filter));document.getElementById('clearFilters').addEventListener('click',()=>{search.value='';family.value='';status.value='';filter();search.focus();});filter();
+const links=[...document.querySelectorAll('.toc a')], sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);const obs=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio).slice(0,1).forEach(e=>{links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));})},{rootMargin:'-15% 0px -70% 0px',threshold:[0,.15,.5]});sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body></html>

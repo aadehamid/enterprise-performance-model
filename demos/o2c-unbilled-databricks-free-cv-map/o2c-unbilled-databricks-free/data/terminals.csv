@@ -1,0 +1,4 @@
+terminal_code,terminal_name,city,state,mode
+HSC,Houston Ship Channel,Houston,TX,marine_rack
+DAL,Dallas,Dallas,TX,pipeline_rack
+BMT,Beaumont,Beaumont,TX,refinery_rack

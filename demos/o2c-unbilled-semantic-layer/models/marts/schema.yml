@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_unbilled
+    description: >
+      Ticket-level certified unbilled fact. Grain = one BOL ticket.
+      Filter is already applied (delivered + no invoice as of as_of_date).
+    columns:
+      - name: ticket_id
+        tests: [unique, not_null]
+      - name: unbilled_usd
+        tests: [not_null]
+      - name: sold_to_id
+        tests: [not_null]
+      - name: payer_id
+        tests: [not_null]
+      - name: delivery_date
+        tests: [not_null]
+
+  - name: dim_kpi_metadata
+    description: One-row metadata for the certified Unbilled USD KPI.
+    columns:
+      - name: kpi_id
+        tests: [unique, not_null]
+      - name: formula_pointer
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['unbilled_usd']
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['certified']
+
+  - name: gold_kpi_unbilled
+    description: Published sold_to + terminal + day snapshot of fct_unbilled.
+    columns:
+      - name: unbilled_usd
+        tests: [not_null]

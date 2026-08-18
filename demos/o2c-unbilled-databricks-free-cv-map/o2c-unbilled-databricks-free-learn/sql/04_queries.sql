@@ -1,0 +1,18 @@
+-- =============================================================================
+-- 04_queries.sql — Act 1 conflict, Act 2 MEASURE(), Act 3 SELECT * refused
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   NO SECOND FORMULA.
+--   Do NOT re-encode gallons_net * contract_price in this file.
+--   Act 1 groups the certified fact (payer vs sold-to, both labeled customer).
+--   Act 2 asks the compiler with MEASURE() at payer, sold_to, site.
+--   Act 3 SELECT * should fail.
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/04_queries.sql
+--   ../o2c-unbilled-databricks-free/WALKTHROUGH.md
+-- =============================================================================
+
+-- your SQL goes here

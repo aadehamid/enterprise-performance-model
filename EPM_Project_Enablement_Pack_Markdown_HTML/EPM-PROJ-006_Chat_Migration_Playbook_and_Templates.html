@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-PROJ-006 — Chat Migration Playbook and Templates</title><style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#182230;--muted:#5e6c7b;--navy:#17365d;--blue:#2368a2;--line:#dfe6ee;--soft:#eef4fa;--green:#0f766e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.layout{display:grid;grid-template-columns:285px minmax(0,1fr);min-height:100vh}aside{background:#102a43;color:#eaf2f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{margin:0;font-size:18px}aside p{font-size:13px;color:#b7c7d6}aside a{display:block;color:#dbeafe;text-decoration:none;padding:7px 9px;border-radius:7px;margin:2px 0;font-size:14px}aside a:hover{background:#1f4568}
+main{padding:34px}.doc{max-width:1080px;margin:auto;background:var(--paper);padding:50px 58px;border-radius:16px;box-shadow:0 12px 34px rgba(16,42,67,.08)}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);font-weight:800}h1{font-size:40px;color:var(--navy);line-height:1.12;margin:7px 0}.sub{font-size:18px;color:var(--muted);margin-bottom:30px}
+h2{color:var(--navy);border-bottom:2px solid var(--soft);padding-bottom:8px;margin-top:38px}h3{color:#244f77;margin-top:26px}p,li{font-size:16px}
+blockquote{padding:17px 21px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}pre{background:#102a43;color:#eaf2f8;padding:20px;border-radius:10px;overflow:auto}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}th{background:var(--navy);color:#fff;padding:10px;text-align:left}td{border:1px solid var(--line);padding:10px;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}
+@media(max-width:900px){.layout{display:block}aside{position:relative;height:auto}.doc{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="layout"><aside>
+<h2>EPM Project Pack</h2><p>EPM-PROJ-006</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000A_Architectural_Principles.html">EPM-FOUND-000A</a> <a href="EPM-PROJ-001_Project_Instructions.html">EPM-PROJ-001</a> <a href="EPM-PROJ-002_Project_Operating_Model.html">EPM-PROJ-002</a> <a href="EPM-PROJ-003_Project_Onboarding_Guide.html">EPM-PROJ-003</a> <a href="EPM-PROJ-004_Artifact_and_Chat_Map.html">EPM-PROJ-004</a> <a href="EPM-PROJ-005_Migration_Checklist.html">EPM-PROJ-005</a> <a href="EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.html">EPM-PROJ-006</a>
+<hr style="border-color:#31516e">
+<a href="#purpose">Purpose</a>
+<a href="#chat-to-artifact-routing-matrix">Chat-to-artifact routing matrix</a>
+<a href="#conversation-closeout-template">Conversation closeout template</a>
+<a href="#previous-chat-migration-procedure">Previous-chat migration procedure</a>
+<a href="#control-log-templates">Control-log templates</a>
+<a href="#practical-operating-rules">Practical operating rules</a>
+<a href="#initial-project-source-package">Initial project source package</a>
+</aside><main><article class="doc">
+<div class="kicker">EPM-PROJ-006 · Version 1.0 Draft</div>
+<h1>Chat Migration Playbook and Templates</h1>
+<div class="sub">Routing, closeout, migration procedure, and control-log templates</div>
+<p><strong>Artifact:</strong> EPM-PROJ-006_Chat_Migration_Playbook_and_Templates
+<strong>Version:</strong> 1.0 Draft
+<strong>Status:</strong> Draft (working baseline)
+<strong>Updated:</strong> 2026-08-05</p>
+<p><em>Routing, closeout, migration procedure, and control-log templates for turning chat work into governed artifacts</em></p>
+<p><strong>Project pack:</strong> <a href="EPM-FOUND-000A_Architectural_Principles.html">EPM-FOUND-000A</a> | <a href="EPM-PROJ-001_Project_Instructions.html">EPM-PROJ-001</a> | <a href="EPM-PROJ-002_Project_Operating_Model.html">EPM-PROJ-002</a> | <a href="EPM-PROJ-003_Project_Onboarding_Guide.html">EPM-PROJ-003</a> | <a href="EPM-PROJ-004_Artifact_and_Chat_Map.html">EPM-PROJ-004</a> | <a href="EPM-PROJ-005_Migration_Checklist.html">EPM-PROJ-005</a> | <a href="EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.html">EPM-PROJ-006</a></p>
+<blockquote>
+<p><strong>Provenance.</strong> This artifact preserves the <em>Chat-to-Artifact Migration Playbook</em> half of the superseded Register (formerly EPM-FOUND-002 / the "Canonical Artifact Register and Chat Migration Playbook"). The Register's <em>inventory</em> half now lives in the Master Index (EPM-FOUND-000). The lighter onboarding and checklist material lives in EPM-PROJ-003 and EPM-PROJ-005. This document carries the operational method those two do not: the routing matrix, the conversation closeout template, the step-by-step migration procedure, and the control-log templates. See EPM-FOUND-000 §"Major decisions" (D-15) and §"Conflicts" (C-10).</p>
+</blockquote>
+<h2 id="purpose">Purpose</h2>
+<p>Chats are working spaces. This playbook defines how durable knowledge produced in a chat becomes governed artifact content — and how prior or outside-project conversations are migrated in without losing traceability. The governing rule throughout: <strong>moving a chat into the project is not the same as migrating it.</strong> Migration is complete only when durable content is reflected in the appropriate canonical artifacts and recorded in the Source and Traceability Register.</p>
+<h2 id="chat-to-artifact-routing-matrix">Chat-to-artifact routing matrix</h2>
+<p>When a chat produces a durable conclusion, route it to the correct canonical artifact.</p>
+<table>
+<thead>
+<tr>
+<th>Chat outcome</th>
+<th>Target artifact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New project scope or priority</td>
+<td>Project Instructions / Operating Model (PROJ-001 / PROJ-002)</td>
+</tr>
+<tr>
+<td>New definition or terminology</td>
+<td>Business Glossary (GLOS-001)</td>
+</tr>
+<tr>
+<td>New measurement class or classification rule</td>
+<td>Enterprise Measurement and KPI Model (FOUND-005)</td>
+</tr>
+<tr>
+<td>Extracted Tableau calculation</td>
+<td>Tableau Calculation Inventory (XML-001)</td>
+</tr>
+<tr>
+<td>Reusable normalized metric</td>
+<td>Enterprise Measurement Catalog (MEAS-002)</td>
+</tr>
+<tr>
+<td>Candidate KPI</td>
+<td>Candidate KPI Register (KPI-001)</td>
+</tr>
+<tr>
+<td>Approved KPI</td>
+<td>Enterprise KPI Catalog (KPI-002)</td>
+</tr>
+<tr>
+<td>KPI driver or supporting-measure relationship</td>
+<td>KPI Dependency and Driver Model (KPI-003)</td>
+</tr>
+<tr>
+<td>New KPI approval requirement</td>
+<td>KPI Governance and Approval Standard (KPI-004)</td>
+</tr>
+<tr>
+<td>New database or metadata design</td>
+<td>KPI Store Logical/Physical Design or Metadata Schema (KPI-011/012/013)</td>
+</tr>
+<tr>
+<td>New threshold or status rule</td>
+<td>Target, Threshold, and Status Standard (KPI-015)</td>
+</tr>
+<tr>
+<td>New restatement policy</td>
+<td>Versioning and Restatement Standard (KPI-016)</td>
+</tr>
+<tr>
+<td>New data-quality rule</td>
+<td>KPI Data-Quality Framework (KPI-017)</td>
+</tr>
+<tr>
+<td>New domain, capability, process, or activity</td>
+<td>Business Architecture (FOUND-001 / BUS-001..004)</td>
+</tr>
+<tr>
+<td>New data product</td>
+<td>Data Product Portfolio (DP-001)</td>
+</tr>
+<tr>
+<td>New semantic modeling rule</td>
+<td>Semantic Model Standards (SEM-001)</td>
+</tr>
+<tr>
+<td>New conceptual/logical model</td>
+<td>Domain Model Repository (MOD-004)</td>
+</tr>
+<tr>
+<td>KPI mapped to entity or attribute</td>
+<td>KPI-to-Domain Traceability Model (MOD-005)</td>
+</tr>
+<tr>
+<td>New tool responsibility</td>
+<td>Tool Responsibility Matrix (INT-002)</td>
+</tr>
+<tr>
+<td>New metadata flow</td>
+<td>Metadata Flow and Sequence Diagrams (INT-004)</td>
+</tr>
+<tr>
+<td>New payload</td>
+<td>Payload and Contract Specifications (INT-005)</td>
+</tr>
+<tr>
+<td>Material choice between alternatives</td>
+<td>Architecture Decision Log (DEC-001)</td>
+</tr>
+<tr>
+<td>Unresolved conflict or assumption</td>
+<td>Open Issues and Assumptions Log (ISS-001)</td>
+</tr>
+<tr>
+<td>External chat, file, or research used</td>
+<td>Source and Traceability Register (SRC-001)</td>
+</tr>
+<tr>
+<td>New delivery action or dependency</td>
+<td>Delivery Backlog and Roadmap (DEL-001)</td>
+</tr>
+<tr>
+<td>Validation evidence</td>
+<td>Validation and Reconciliation Register (VAL-001)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-closeout-template">Conversation closeout template</h2>
+<p>Use this at the end of a substantial project chat. It is the operational form of the "Artifact Update Block."</p>
+<pre><code class="language-text">Conversation Closeout
+
+Chat title:
+Date:
+Workstream: KPI Store / Domain Modeling / System Integration / Governance / Other
+Primary artifact being advanced:
+
+1. Purpose        — What question or problem did the chat address?
+2. Baseline used  — Which approved artifacts, prior chats, files, or implementations were the starting point?
+3. Conclusions    — What durable understanding was reached?
+4. Decisions      — What was decided? Mark each as proposed, candidate, or approved.
+5. Definitions    — Which terms were added, clarified, or changed?
+6. Assumptions    — Which assumptions remain, and what evidence is needed?
+7. Open questions — What is unresolved?
+8. Conflicts      — Which sources, definitions, formulas, or designs disagree?
+9. Artifact updates — Per affected artifact: ID and title, section, proposed change, suggested version, suggested status.
+10. Source traceability — Chats, files, reports, workbooks, systems, or research used.
+11. Validation    — Who must validate, and what evidence is required?
+12. Next action   — What happens next, by whom, in which workstream?
+</code></pre>
+<h2 id="previous-chat-migration-procedure">Previous-chat migration procedure</h2>
+<p>A seven-step procedure for bringing prior or outside-project conversations into the governed baseline.</p>
+<p><strong>Step 1 — Inventory prior chats.</strong> List prior conversations by theme: KPI Store architecture; Tableau XML extraction; Power BI semantic models; downstream business architecture; Commercial, Refining, Midstream, Corporate; data portfolios and products; governance; Purview; Domain Modeling; System Integration; AI opportunities.</p>
+<p><strong>Step 2 — Prioritize.</strong></p>
+<ul>
+<li><em>Priority A — move or summarize immediately:</em> approved architecture, table designs, final business definitions, explicit stakeholder decisions, KPI formulas, governance decisions, scope commitments, important constraints.</li>
+<li><em>Priority B — migrate during the relevant workstream:</em> detailed domain research, process and capability models, supporting-metric inventories, alternative designs, implementation examples.</li>
+<li><em>Priority C — retain as reference only:</em> general learning, early brainstorming, superseded ideas, context that affects no canonical artifact.</li>
+</ul>
+<p><strong>Step 3 — Extract durable content.</strong> For each chat, identify final decisions, candidate decisions, definitions, formulas, data models, constraints, assumptions, open questions, stakeholders, sources, and superseded content.</p>
+<p><strong>Step 4 — Reconcile.</strong> Compare extracted content with approved artifacts, current implementation, newer decisions, and other prior chats. <strong>Do not merge contradictions silently.</strong></p>
+<p><strong>Step 5 — Promote.</strong> Update the appropriate canonical artifacts. A prior chat is not migrated merely because it was moved into the project; migration is complete only when its durable content is reflected in the artifacts and the source register.</p>
+<p><strong>Step 6 — Record provenance.</strong> Add an entry to the Source and Traceability Register: source title, type, date, original location, topics, reliability/status, artifacts updated, decisions extracted, conflicts, migration date.</p>
+<p><strong>Step 7 — Close.</strong> Mark the source as fully migrated, partially migrated, reference only, superseded, or requires validation.</p>
+<h2 id="control-log-templates">Control-log templates</h2>
+<p>Concrete schemas for the three control logs that are still to be created (SRC-001, DEC-001, ISS-001). Statuses below use the canonical vocabularies reconciled in EPM-FOUND-000.</p>
+<h3 id="source-and-traceability-register-src-001">Source and Traceability Register (SRC-001)</h3>
+<table>
+<thead>
+<tr>
+<th>Source ID</th>
+<th>Source title</th>
+<th>Type</th>
+<th>Date</th>
+<th>Topic</th>
+<th>Status/reliability</th>
+<th>Key conclusions</th>
+<th>Decisions found</th>
+<th>Conflicts</th>
+<th>Artifacts affected</th>
+<th>Migration status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Source types: project chat; outside-project chat; uploaded file; business workshop; Tableau workbook; Power BI model; source-system analysis; approved specification; technical implementation; external research; architecture inference.</p>
+<h3 id="architecture-decision-log-dec-001">Architecture Decision Log (DEC-001)</h3>
+<table>
+<thead>
+<tr>
+<th>Decision ID</th>
+<th>Date</th>
+<th>Title</th>
+<th>Status</th>
+<th>Context</th>
+<th>Options</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Consequences</th>
+<th>Owner</th>
+<th>Affected artifacts</th>
+<th>Review trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision statuses</strong> (distinct from the artifact lifecycle): Proposed → Candidate → Approved → Implemented → Superseded → Rejected.</p>
+<h3 id="open-issues-and-assumptions-log-iss-001">Open Issues and Assumptions Log (ISS-001)</h3>
+<table>
+<thead>
+<tr>
+<th>Item ID</th>
+<th>Type</th>
+<th>Description</th>
+<th>Impact</th>
+<th>Evidence needed</th>
+<th>Owner</th>
+<th>Due/review date</th>
+<th>Status</th>
+<th>Affected artifacts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Item types: open question; assumption; conflict; dependency; risk; constraint.</p>
+<h2 id="practical-operating-rules">Practical operating rules</h2>
+<ol>
+<li>Start each major chat by naming the workstream and target artifact.</li>
+<li>Retrieve baseline context before producing a new design.</li>
+<li>Keep exploration in the chat.</li>
+<li>Record durable conclusions in the closeout.</li>
+<li>Update canonical artifacts at defined milestones.</li>
+<li>Record material decisions separately (DEC-001).</li>
+<li>Record unresolved uncertainty separately (ISS-001).</li>
+<li>Preserve the origin of every important definition or design (SRC-001).</li>
+<li>Do not assume moving a chat equals migrating its content.</li>
+<li>Before sharing or isolating the project, consolidate all Priority A external chats.</li>
+<li>Review the artifact register monthly.</li>
+<li>Review the decision log and open issues at every governance checkpoint.</li>
+<li>Update the Master Index whenever an artifact is added, superseded, or approved.</li>
+<li>Use catalogs for structured records and narrative documents for standards, rationale, and architecture.</li>
+<li>Keep the KPI Store as the first delivery priority while designing it for later Domain Modeling and System Integration enrichment.</li>
+</ol>
+<h2 id="initial-project-source-package">Initial project source package</h2>
+<p>The minimum first package for a stable baseline:</p>
+<ol>
+<li>Project Instructions (PROJ-001)</li>
+<li>Project Operating Model (PROJ-002)</li>
+<li>This Migration Playbook and Templates (PROJ-006)</li>
+<li>Master Index (FOUND-000)</li>
+<li>Architectural Principles (FOUND-000A)</li>
+<li>Architecture foundation set (FOUND-001 to 006)</li>
+<li>Decision Log (DEC-001) — to be created</li>
+<li>Source and Traceability Register (SRC-001) — to be created</li>
+<li>Open Issues and Assumptions Log (ISS-001) — to be created</li>
+<li>Business Glossary and Measurement Taxonomy (GLOS-001)</li>
+<li>Existing KPI Store Technical Design — to be located</li>
+<li>Current Downstream business architecture — to be located</li>
+<li>Current Tableau extraction results or inventory — to be located</li>
+<li>Domain Modeling and System Integration scope materials — to be located</li>
+</ol>
+<hr />
+<p><em>Part of the Enterprise Performance Model project pack. Preserves migration method from the superseded Register.</em></p>
+
+</article></main></div></body></html>

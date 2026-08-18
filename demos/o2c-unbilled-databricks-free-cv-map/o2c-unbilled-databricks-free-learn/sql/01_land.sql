@@ -1,0 +1,17 @@
+-- =============================================================================
+-- 01_land.sql — schema, volume, then land the seven CSVs into raw_*
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   Land the seed CSVs (or the Lakebase replica) into raw_* tables.
+--   Do NOT wget (Free outbound internet is restricted).
+--   Upload via Catalog Explorer into the landing volume, or copy
+--   replica rows in Python — no federated join from the warehouse.
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--   Demo 2 (Databricks Free). Not Track A. No DuckDB, no dbt, no MetricFlow.
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/01_land.sql
+-- =============================================================================
+
+-- your SQL goes here
