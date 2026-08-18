@@ -1,0 +1,6 @@
+term_id,preferred_label,scope_note,ontology_iri
+id:payer,Payer,Party that settles the invoice. Unbilled payer grain hangs here. Not sold-to or bill-to.,https://example.org/domain-ontology-kpi/o2c#Payer
+id:sold-to,Sold-To,Party the product is sold to. Unbilled sold-to grain. Not the payer and not a lift authorization.,https://example.org/domain-ontology-kpi/o2c#SoldTo
+id:bill-to,Bill-To,Party that receives the invoice. Mapped but not an Unbilled certified grain.,https://example.org/domain-ontology-kpi/o2c#BillTo
+id:ship-to,Ship-To,Delivery site / terminal. Unbilled site grain.,https://example.org/domain-ontology-kpi/o2c#ShipTo
+id:loading-authorized-party,Loading-Authorized Party,Who may lift at the rack. Wrong sense for Unbilled. Not a certified Unbilled grain.,https://example.org/domain-ontology-kpi/o2c#LoadingAuthorizedParty

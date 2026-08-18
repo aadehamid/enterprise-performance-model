@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enterprise Performance Model RACI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #f5f7f7;
+  --ink: #282828;
+  --muted: #5f6973;
+  --line: #dce1e3;
+  --card: #FFFFFF;
+  --navy: #0033a1;
+  --blue: #245ea8;
+  --red: #db0032;
+  --red-deep: #870a22;
+  --hero: #1d2c78;
+  --footer: #131414;
+  --radius: 2px;
+  --nav-h: 72px;
+  --act-w: 17.25rem;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+body::before { display: none; }
+a { color: inherit; }
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 0;
+}
+.skip:focus {
+  left: 1rem;
+  top: 0.5rem;
+  z-index: 20;
+  background: #fff;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line);
+}
+nav.top {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  height: var(--nav-h);
+  background: var(--canvas);
+  border-bottom: 1px solid var(--line);
+}
+nav.top .inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem 1.1rem;
+  overflow-x: auto;
+}
+nav.top a {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid transparent;
+}
+nav.top a:hover,
+nav.top a:focus-visible {
+  border-bottom-color: var(--ink);
+}
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.75rem 1.25rem 5rem;
+}
+.doc-head {
+  max-width: 38rem;
+  margin-bottom: 2.75rem;
+}
+.doc-head p.kicker {
+  margin: 0 0 0.7rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1, h2, h3 {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+h1 {
+  font-size: clamp(2.1rem, 4vw, 3.15rem);
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.035em;
+}
+h2 {
+  font-size: 1.85rem;
+  margin: 0 0 0.65rem;
+}
+h3 {
+  font-size: 1.05rem;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+.deck {
+  margin: 0 0 0.55rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.lede {
+  margin: 0;
+  color: var(--ink);
+}
+.aside {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+section {
+  margin: 3.1rem 0 0;
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+.sec-label {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.45rem;
+}
+.prose {
+  max-width: 40rem;
+  margin: 0 0 1.15rem;
+  color: var(--ink);
+}
+.prose.muted {
+  color: var(--muted);
+}
+.letter-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.letter-card,
+.role-card,
+.list-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem 1rem;
+}
+.letter-card p,
+.role-card p {
+  margin: 0.55rem 0 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.4rem, 1fr));
+  gap: 0.7rem;
+}
+.role-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.block-badge,
+.meta-pill {
+  flex: 0 0 auto;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.38rem;
+  border-radius: 5px;
+  background: #FDEBEC;
+  color: #9F2F2D;
+}
+.meta-pill {
+  background: #F5F4F1;
+  color: var(--muted);
+}
+.consult-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.subhead {
+  margin: 1.6rem 0 0.65rem;
+  font-size: 1.25rem;
+}
+.glossary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2.4rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.35rem 1.15rem 0.5rem;
+}
+.g-item {
+  display: grid;
+  grid-template-columns: 7.1rem 1fr;
+  gap: 0.2rem 0.85rem;
+  padding: 0.48rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.glossary .g-item:nth-last-child(-n+2) {
+  border-bottom: 0;
+}
+.g-item dt {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink);
+  padding-top: 0.12rem;
+}
+.g-item dd {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+.table-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.table-wrap {
+  overflow: auto;
+  max-height: calc(100vh - 7.5rem);
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+  font-size: 0.82rem;
+}
+caption {
+  caption-side: top;
+  text-align: left;
+  padding: 0.75rem 0.9rem 0.65rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  background: var(--card);
+  position: sticky;
+  left: 0;
+}
+th, td {
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid #F1F0EC;
+  vertical-align: middle;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #FBFBFA;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 0.4rem 0.2rem 0.45rem;
+  text-align: center;
+}
+thead th.col-act {
+  z-index: 5;
+  left: 0;
+  text-align: left;
+  padding: 0.55rem 0.9rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+tbody th.col-act {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--card);
+  text-align: left;
+  font-weight: 500;
+  width: var(--act-w);
+  min-width: var(--act-w);
+  max-width: var(--act-w);
+  padding: 0.65rem 0.9rem;
+  vertical-align: top;
+  box-shadow: 8px 0 16px rgba(47, 52, 55, 0.035);
+}
+tbody tr:hover th.col-act,
+tbody tr:hover td {
+  background: #FBFBFA;
+}
+.col-role {
+  width: 3.05rem;
+  min-width: 3.05rem;
+  text-align: center;
+  padding: 0.35rem 0.15rem;
+}
+.col-btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0.1rem 0.15rem;
+  margin: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  width: 100%;
+  border-radius: 5px;
+}
+.col-btn:hover,
+.col-btn:focus-visible {
+  background: #F5F4F1;
+}
+.col-btn .h1,
+.col-btn .h2 {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.act {
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.note {
+  margin: 0.32rem 0 0;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.55rem;
+  height: 1.28rem;
+  padding: 0 0.32rem;
+  border-radius: 5px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.b-a { background: #FDEBEC; color: #9F2F2D; }
+.b-r { background: #EDF3EC; color: #346538; }
+.b-c { background: #E1F3FE; color: #1F6C9F; }
+.b-i { background: #F5F4F1; color: #787774; }
+.b-ar { background: #FBF3DB; color: #956400; }
+table.hl-on tbody td.col-role,
+table.hl-on thead th.col-role {
+  opacity: 0.28;
+}
+table.hl-on tbody td.col-role.is-hl,
+table.hl-on thead th.col-role.is-hl {
+  opacity: 1;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.list-card ol,
+.list-card ul {
+  margin: 0.55rem 0 0;
+  padding-left: 1.15rem;
+}
+.list-card li + li {
+  margin-top: 0.4rem;
+}
+.list-card p {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer.doc {
+  margin-top: 3.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.78rem;
+  max-width: 46rem;
+}
+footer.doc a {
+  color: var(--muted);
+}
+html.js .fade {
+  opacity: 0;
+  transform: translateY(6px);
+}
+html.js .fade.on {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+@media (max-width: 880px) {
+  .letter-row,
+  .glossary,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+  .glossary .g-item:nth-last-child(-n+2) {
+    border-bottom: 1px solid var(--line);
+  }
+  .glossary .g-item:last-child {
+    border-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade, .fade.on {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+@media print {
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+  body::before,
+  nav.top {
+    display: none;
+  }
+  main {
+    max-width: none;
+    padding: 0;
+  }
+  .table-wrap {
+    overflow: visible;
+    max-height: none;
+  }
+  .table-card,
+  .letter-card,
+  .role-card,
+  .list-card,
+  .glossary {
+    break-inside: avoid;
+  }
+  .badge {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  thead th,
+  tbody th.col-act {
+    position: static;
+  }
+}
+
+.site-head {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 14;
+}
+.site-head .bar {
+  max-width: 72rem;
+  margin: 0 auto;
+  height: 72px;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: var(--navy);
+}
+.brand img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+.brand .word {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  line-height: 1.25;
+}
+.site-head .meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+.site-head .meta span.sep { color: #b3bbbd; }
+nav.top {
+  position: sticky;
+  top: 72px;
+  z-index: 12;
+  height: 44px;
+  background: var(--navy);
+  border-bottom: 0;
+}
+nav.top .inner { max-width: 72rem; }
+nav.top a {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-bottom: 2px solid transparent;
+  padding: 0.35rem 0;
+}
+nav.top a:hover,
+nav.top a:focus-visible {
+  border-bottom-color: var(--red);
+  color: #fff;
+}
+.hero {
+  background: var(--hero);
+  color: #fff;
+  padding: 2.6rem 0 2.4rem;
+}
+.hero .inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.hero .kicker {
+  margin: 0 0 0.55rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cddaf4;
+}
+.hero h1 {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+  line-height: 1.15;
+  color: #fff;
+  margin: 0 0 0.7rem;
+  max-width: 22ch;
+}
+.hero .deck, .hero .lede, .hero .aside {
+  color: #dbe2f1;
+  max-width: 40rem;
+}
+.hero .deck { font-size: 1.02rem; color: #fff; }
+.rule {
+  height: 4px;
+  background: var(--red);
+  border: 0;
+  margin: 0;
+}
+h1, h2, h3 {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--navy);
+}
+.sec-label,
+.g-item dt,
+.col-btn .h1,
+.col-btn .h2,
+.badge,
+.block-badge,
+.meta-pill,
+.kicker {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+.letter-card, .role-card, .list-card, .table-card, .glossary {
+  border-radius: 2px;
+  border-color: var(--line);
+}
+.block-badge { background: #fde8ec; color: var(--red-deep); }
+.b-a { background: #fde8ec; color: var(--red); }
+.b-r { background: #e7f0f5; color: var(--navy); }
+.b-c { background: #f5f7f7; color: var(--blue); }
+.b-i { background: #eef0f1; color: #616a72; }
+.b-ar { background: #fde8ec; color: var(--navy); box-shadow: inset 0 0 0 1px var(--red); }
+thead th {
+  background: var(--navy);
+  color: #fff;
+}
+thead th .col-btn { color: #fff; }
+.col-btn:hover, .col-btn:focus-visible { background: rgba(255,255,255,0.08); }
+tbody th.col-act { background: #fff; }
+tbody tr:hover th.col-act, tbody tr:hover td { background: #e7f0f5; }
+.site-foot {
+  background: var(--footer);
+  color: #b3bbbd;
+  margin-top: 3.5rem;
+  padding: 2rem 0 2.4rem;
+  font-size: 0.78rem;
+}
+.site-foot .inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.site-foot a { color: #dce1e3; }
+.site-foot .rule { margin-bottom: 1.1rem; width: 3rem; }
+
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-head" role="banner">
+  <div class="bar">
+    <a class="brand" href="#content">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTIgODUuMSI+Cgk8dGl0bGU+TGFnb3MgU3BlY2lhbHR5IENoZW1pY2FscyBsb2dvPC90aXRsZT4KICA8cGF0aCBpZD0iaG9sZGluZ19saW5lXzFfIiBmaWxsPSIjZmZmIiBkPSJNNzkgMi42YzQgLjEgOCAyLjcgOS42IDYuNWw5LjggMjIgNy44IDE3LjVjLjUgMS43LjUgMy43LjIgNS41bC01LjggMjEuNGMtMS4zIDMuNy01LjIgNi44LTkuMSA3LjFIMThjLTMuOC0uMi03LjctMi45LTkuMS02LjVsLS44LTIuMy0zLTExLjFMMi44IDU0Yy0uNC0yLS4xLTQgLjUtNS44TDIwLjIgOS41YzEuNC0zLjkgNS41LTYuNyA5LjYtNi45SDc5eiIvPgogIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik05MS43IDg0LjZIMTcuOWMtNC43LS4zLTkuMi0zLjUtMTAuOS03LjlsLS45LTIuNkwuNyA1NC4zYy0uNC0yLjItLjItNC42LjYtNi44bC4xLS4xTDE4LjIgOC43QTEzIDEzIDAgMCAxIDI5LjcuNUg3OWM1IC4xIDkuNyAzLjMgMTEuNiA3LjhsMTcuNyAzOS42Yy44IDIuNC41IDUuMS4zIDYuNXYuMmwtNS44IDIxLjZjLTEuNyA0LjUtNi4zIDguMS0xMS4xIDguNHptLTczLjYtNC4yaDczLjRjMy0uMyA2LjEtMi42IDcuMS01LjZsNS43LTIxLjJjLjMtMS42LjItMy4yLS4xLTQuM0w4Ni43IDkuOWMtMS4zLTMtNC40LTUuMS03LjgtNS4ySDI5LjhjLTMuMi4xLTYuNSAyLjUtNy42IDUuNXYuMUw1LjMgNDljLS41IDEuNS0uNyAzLjEtLjQgNC41TDEwLjIgNzNsLjggMi4zYzEgMi43IDQgNC45IDcuMSA1LjF6Ii8+CiAgPHBhdGggaWQ9ImJsdWVfbGluZV9zaGllbGQiIGZpbGw9IiMwMDMzYTEiIGQ9Ik03OCA0LjFjMy45LjEgNy43IDIuNiA5LjIgNi4ybDkuNSAyMS4xIDcuNSAxNi44Yy41IDEuNi41IDMuNi4yIDUuM2wtNS42IDIwLjZjLTEuMyAzLjYtNSA2LjUtOC43IDYuOEgxOS40Yy0zLjctLjItNy40LTIuOC04LjctNi4zbC0uNy0yLjEtMy0xMC43LTIuMy04LjJjLS4zLTEuOS0uMS0zLjkuNS01LjVsMTYuMi0zNy4yYzEuNC0zLjggNS4zLTYuNSA5LjItNi42SDc4eiIvPgogIDxwYXRoIGlkPSJ3aGl0ZV9pbnNpZGVfc2hpZWxkIiBmaWxsPSIjZmZmIiBkPSJNNzguMyA3LjljMi41LjIgNSAyLjMgNS44IDQuOGwxNC45IDMzYy45IDEuOSAyLjUgNC4xIDEuOSA2LjdsLS44IDMuNC00LjUgMTYuNmMtLjYgMi41LTMuMSA0LjQtNS41IDQuOEgyMC4zYy0yLjIgMC00LjItLjktNS42LTIuOC0xLjMtMi4yLTYuNC0yMi02LjQtMjItLjItMS45LjUtMy42IDEuMy01LjJsMTIuNi0yOC44IDMuMS03YzEuMy0yLjMgMy43LTMuNSA2LjEtMy42bDQ2LjkuMXoiLz4KICA8cGF0aCBpZD0iQklHX00iIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZGIwMDMyIiBkPSJNNTQuNSAzNy43bDguNy0yMi41aDEzLjNsMTEuOCAzOC40SDcybC0xLjgtMjEuMS0xMC41IDIxLjFINDkuNEwzOC44IDMyLjcgMzcgNTMuNkgyMC44bDExLjQtMzguNGgxMy4zeiIvPgogIDxwYXRoIGlkPSJNIiBmaWxsPSIjMDAzM2ExIiBkPSJNMjMuNCA2My45bDEuMS01LjVoMy40bDEuMyAxMC43aC0yLjZsLS44LTYuOWMtLjQgMi4zLS44IDQuNi0xLjEgNi45SDIybC0xLjItNi45Yy0uMyAyLjMtLjUgNC42LS44IDYuOWgtMi42bDEuNS0xMC44aDMuNGwxLjEgNS42eiIvPgogIDxwYXRoIGlkPSJBIiBmaWxsPSIjMDAzM2ExIiBkPSJNMzguNSA2OS4xaC0yLjdsLS4zLTEuOUgzM2wtLjQgMS45aC0yLjdsMi4zLTEwLjhoNHoiLz4KICA8cGF0aCBpZD0iUiIgZmlsbD0iIzAwMzNhMSIgZD0iTTQ1LjUgNTguNmMxLjYuOCAxLjUgMi43IDEuNCA0LjItLjIuOC0uNSAxLjctMS40IDJ2LjNMNDcgNjloLTIuNmwtMS4zLTMuOGMtLjItLjEtLjUtLjEtLjcgMFY2OWgtMi42VjU4LjNjLjEgMCA0LjItLjMgNS43LjN6Ii8+CiAgPHBhdGggaWQ9IkFfX3gyM18yIiBmaWxsPSIjMDAzM2ExIiBkPSJNNTYuNCA2OS4xaC0yLjhsLS4zLTEuOWgtMi41bC0uNCAxLjloLTIuNkw1MCA1OC4zaDR6Ii8+CiAgPHBhdGggaWQ9IlQiIGZpbGw9IiMwMDMzYTEiIGQ9Ik02My4xIDYwLjZoLTIuM3Y4LjVoLTIuNnYtOC41aC0yLjN2LTIuM2g3LjJ6Ii8+CiAgPHBhdGggaWQ9IkgiIGZpbGw9IiMwMDMzYTEiIGQ9Ik02Ni43IDYyLjZINjl2LTQuM2gyLjd2MTAuOEg2OXYtNC4yaC0yLjN2NC4yaC0yLjZWNTguM2gyLjZ6Ii8+CiAgPHBhdGggaWQ9Ik9fMV8iIGZpbGw9IiMwMDMzYTEiIGQ9Ik03Ny40IDY5LjNjLTEuNSAwLTIuNy0uNC0zLjQtMS40LS42LTEtLjgtMi4yLS44LTQuMyAwLTIuMi40LTQuMSAxLjYtNC43IDEuMi0uNiAxLjgtLjcgMi41LS43czEuNCAwIDIuNS43YzEuMi42IDEuNiAyLjUgMS42IDQuN3MtLjEgMy40LS44IDQuM2MtLjUgMS0xLjcgMS40LTMuMiAxLjQiLz4KICA8cGF0aCBpZD0iTiIgZmlsbD0iIzAwMzNhMSIgZD0iTTg4LjUgNjUuMnYtNi45aDIuNHYxMC44aC0zLjVsLTEuOS02LjV2Ni41aC0yLjNWNTguM2gzLjV6Ii8+CiAgPGc+CiAgICA8cGF0aCBpZD0iaW5zaWRlX0EiIGZpbGw9IiNmZmYiIGQ9Ik0zNSA2NS4yaC0xLjdsLjktNC42Yy40IDEuNC42IDMgLjggNC42eiIvPgogICAgPHBhdGggaWQ9Imluc2lkZV9SIiBmaWxsPSIjZmZmIiBkPSJNNDQgNjAuN2MuNC41LjUgMS4zLjMgMS45LS4yLjItLjIuNS0uNi41aC0xLjF2LTIuNmMtLjEgMCAxLS4xIDEuNC4yeiIvPgogICAgPHBhdGggaWQ9Imluc2lkZV9BXzJuZCIgZmlsbD0iI2ZmZiIgZD0iTTUyLjkgNjUuMmgtMS43bC45LTQuNmMuMyAxLjQuNSAzIC44IDQuNnoiLz4KICAgIDxwYXRoIGlkPSJpbnNpZGVfT18xXyIgZmlsbD0iI2ZmZiIgZD0iTTc3LjQgNjcuMWMtLjUgMC0xLS4yLTEuMi0uOS0uMi0uNi0uMy0xLjMtLjMtMi42cy4xLTIuNS42LTIuOWMuNC0uNC43LS40LjktLjQuMyAwIC41IDAgLjkuNHMuNiAxLjUuNiAyLjljMCAxLjMtLjEgMi0uMyAyLjYtLjIuNy0uNy45LTEuMi45Ii8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTA0LjcgNzcuNmMwLTEuOSAxLjYtMy40IDMuNC0zLjQgMS44IDAgMy40IDEuNCAzLjQgMy40cy0xLjYgMy40LTMuNCAzLjRjLTEuOSAwLTMuNC0xLjQtMy40LTMuNHptMy40IDIuOGMxLjUgMCAyLjctMS4yIDIuNy0yLjggMC0xLjYtMS4yLTIuOC0yLjctMi44YTIuOCAyLjggMCAwIDAtMi44IDIuOGMuMSAxLjYgMS4zIDIuOCAyLjggMi44em0tLjctLjhoLS42di0zLjloMS41Yy45IDAgMS40LjMgMS40IDEuMSAwIC43LS40IDEtMSAxLjFsMS4xIDEuN2gtLjdsLTEtMS43aC0uN3YxLjd6bS43LTIuMmMuNSAwIC45IDAgLjktLjYgMC0uNS0uNC0uNi0uOS0uNmgtLjh2MS4yaC44eiIvPgogIDwvZz4KPC9zdmc+Cg==" width="112" height="85" alt="Lagos Specialty Chemicals">
+      <span class="word">Lagos Specialty<br>Chemicals</span>
+    </a>
+    <div class="meta"><span>Enterprise Performance Model</span><span class="sep">|</span><span>RACI v0.2</span></div>
+  </div>
+</header>
+<nav class="top" aria-label="On this page">
+  <div class="inner">
+    <a href="#letters">Letters</a>
+    <a href="#roles">Roles</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#domain">Domain Modeling</a>
+    <a href="#ontology">Ontology</a>
+    <a href="#store">Store</a>
+    <a href="#integration">Integration</a>
+    <a href="#gaps">Gaps</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="inner">
+    <p class="kicker">Programme document</p>
+    <h1>Enterprise Performance Model RACI</h1>
+    <p class="deck">Client-project matrix. 17 August 2026. v0.2.</p>
+    <p class="lede">Columns are roles, not named people. Names land at CW1 / CK1.</p>
+    <p class="aside">CI Knowledge Management is a separate project. Demos and learner packs are not rows.</p>
+  </div>
+</div>
+<hr class="rule">
+<main id="content">
+
+  <section id="letters" class="fade">
+    <p class="sec-label">Letters</p>
+    <h2>How the letters work</h2>
+    <p class="prose">A blank cell means that role is not in the activity. Where a source table named two people as the decider, this matrix keeps one A and records the other as R or C.</p>
+    <div class="letter-row">
+      <div class="letter-card"><span class="badge b-r">R</span><p>Responsible. Does the work. At least one per row. More than one R is allowed when the work is shared.</p></div><div class="letter-card"><span class="badge b-a">A</span><p>Accountable. Signs off. Exactly one A per row.</p></div><div class="letter-card"><span class="badge b-c">C</span><p>Consulted. Two-way input before the work.</p></div><div class="letter-card"><span class="badge b-i">I</span><p>Informed. One-way update.</p></div><div class="letter-card"><span class="badge b-ar">A/R</span><p>Same person is Accountable and Responsible. Allowed.</p></div>
+    </div>
+    <p class="prose muted" style="margin-top:1.1rem">Every row has at least one R and exactly one A. A+R on the same person is allowed. This matrix is a draft until CW1 / CK1 walks it with the named people.</p>
+  </section>
+
+  <section id="first-use" class="fade">
+    <p class="sec-label">First use</p>
+    <h2>Terms used in the matrix</h2>
+    <dl class="glossary">
+      <div class="g-item"><dt>O2C</dt><dd>Order-to-cash</dd></div><div class="g-item"><dt>P2P</dt><dd>Plan-to-produce</dd></div><div class="g-item"><dt>CV</dt><dd>Controlled vocabulary (the signed list of preferred terms)</dd></div><div class="g-item"><dt>CQ</dt><dd>Competency question (a question the model must be able to answer)</dd></div><div class="g-item"><dt>IRI</dt><dd>Internationalized Resource Identifier (the stable web address for a meaning)</dd></div><div class="g-item"><dt>Turtle</dt><dd>File format for a formal ontology</dd></div><div class="g-item"><dt>SHACL</dt><dd>Shapes Constraint Language (validation rules on the ontology)</dd></div><div class="g-item"><dt>SoT</dt><dd>Source of truth</dd></div><div class="g-item"><dt>MEASURE()</dt><dd>The certified query on a Databricks Metric View</dd></div><div class="g-item"><dt>Genie</dt><dd>Databricks assistant for ad hoc questions. It reads certified objects. It does not author them.</dd></div><div class="g-item"><dt>LP</dt><dd>Linear-programming refinery planning model</dd></div><div class="g-item"><dt>UC</dt><dd>Unity Catalog</dd></div><div class="g-item"><dt>C-10</dt><dd>Lock: the certified formula lives in the Store catalog and the consumption semantic layer. Silver tables and Excel do not hold a second formula.</dd></div><div class="g-item"><dt>MDM</dt><dd>Master data management</dd></div><div class="g-item"><dt>TAS</dt><dd>Terminal automation system</dd></div><div class="g-item"><dt>SOL</dt><dd>Safe operating limit</dd></div><div class="g-item"><dt>CW1</dt><dd>Domain Modeling kickoff</dd></div><div class="g-item"><dt>CW2</dt><dd>Workshop that names owners and books the series</dd></div><div class="g-item"><dt>CK1</dt><dd>KPI Store kickoff</dd></div><div class="g-item"><dt>DP-16</dt><dd>Formula-authoring home is named before the authoring-home workshop closes</dd></div><div class="g-item"><dt>DP-18</dt><dd>Publish gate. No Purview write and no ontology load until this gate opens.</dd></div><div class="g-item"><dt>Q-21</dt><dd>Confirm the Domain Modeling Lead and the two business analysts</dd></div><div class="g-item"><dt>QD-05 / DEP-03</dt><dd>A governance forum exists that can record a certification act</dd></div><div class="g-item"><dt>QD-11</dt><dd>An AI / agent initiative lead exists</dd></div><div class="g-item"><dt>D-M11</dt><dd>Graph persistence decision</dd></div><div class="g-item"><dt>D-M18 / DP-11</dt><dd>LimitValue pattern: a Constraint is not a Threshold, a Breach, or a Binding</dd></div><div class="g-item"><dt>CW10</dt><dd>Authoring-home workshop. Names where each fact type is written.</dd></div><div class="g-item"><dt>Ubiquitous language</dt><dd>The shared words a working group agrees to use</dd></div><div class="g-item"><dt>Silver</dt><dd>Generated projection table. Not a formula.</dd></div><div class="g-item"><dt>Gold</dt><dd>Published MEASURE() snapshots. Not a second formula.</dd></div><div class="g-item"><dt>G3</dt><dd>Customer model promotion gate</dd></div><div class="g-item"><dt>G4</dt><dd>Constraints model promotion gate</dd></div><div class="g-item"><dt>GK1</dt><dd>Store classified gate</dd></div><div class="g-item"><dt>GK2</dt><dd>Store contextualised gate</dd></div><div class="g-item"><dt>HSE</dt><dd>Health, safety, and environment</dd></div><div class="g-item"><dt>OT</dt><dd>Operational technology</dd></div>
+    </dl>
+  </section>
+
+  <section id="roles" class="fade">
+    <p class="sec-label">Roles</p>
+    <h2>Fifteen standing columns</h2>
+    <p class="prose">Columns are roles, not named people. Names land in the CW1 / CK1 nomination table. Day-to-day counterpart unblocks access and diaries. They help on the access row. They are not a standing decision column. Approval forum chair convenes the certification act. The forum is still open (QD-05 / DEP-03). They are C on the certification row until the forum is named.</p>
+    <div class="role-grid">
+      <article class="role-card"><header><h3>Sponsor</h3></header><p>Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates.</p></article><article class="role-card"><header><h3>EPM Lead</h3></header><p>Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed.</p></article><article class="role-card"><header><h3>DDO Cust</h3><span class="block-badge">Yes</span></header><p>Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3).</p></article><article class="role-card"><header><h3>Coord Constr</h3><span class="block-badge">Yes</span></header><p>Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4).</p></article><article class="role-card"><header><h3>EDG</h3></header><p>Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy.</p></article><article class="role-card"><header><h3>GPO</h3></header><p>Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows.</p></article><article class="role-card"><header><h3>Store lead</h3></header><p>KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1.</p></article><article class="role-card"><header><h3>KPI owner</h3><span class="block-badge">Yes (Store)</span></header><p>Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula.</p></article><article class="role-card"><header><h3>DM Lead</h3></header><p>Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21).</p></article><article class="role-card"><header><h3>Ontologist</h3></header><p>Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed.</p></article><article class="role-card"><header><h3>Formula</h3></header><p>Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16).</p></article><article class="role-card"><header><h3>Backend</h3></header><p>Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed.</p></article><article class="role-card"><header><h3>EA</h3></header><p>Enterprise architect. Wider platform direction. Joint recommend on graph persistence.</p></article><article class="role-card"><header><h3>Digital</h3></header><p>Client digital and engineering. Decides graph persistence and Metric Views / compiler operability.</p></article><article class="role-card"><header><h3>Platform</h3></header><p>Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator.</p></article>
+    </div>
+    <h3 class="subhead">Consulted groups</h3>
+    <p class="prose muted">Not columns.</p>
+    <div class="consult-grid">
+      <article class="role-card consult"><header><h3>Customer SMEs</h3><span class="meta-pill">Not a column</span></header><p>Channel reps (B2B C&amp;I, wholesale/rack, retail, lubricants, aviation, marine), credit / risk, tax / excise, Customer MDM steward, MDM programme, O2C lead, TAS / terminal-auth.</p></article><article class="role-card consult"><header><h3>Constraints SMEs</h3><span class="meta-pill">Not a column</span></header><p>LP economist / refinery planner (blocking), scheduler, process engineer, quality / lab, HSE / permitting, maintenance / turnaround, tank farm, commercial contracts, P2P lead, OT / ISA-95 if Technology is in.</p></article><article class="role-card consult"><header><h3>Store SMEs</h3><span class="meta-pill">Not a column</span></header><p>Business-area representatives, report owners / power users, finance / controlling, regulatory reporting.</p></article><article class="role-card consult"><header><h3>Inherited-model authors</h3><span class="meta-pill">Not a column</span></header><p>Party, Finance, and Supply Chain leads (workshops CW3 to CW5).</p></article><article class="role-card consult"><header><h3>Family steward</h3><span class="meta-pill">Not a column</span></header><p>Signs constraint content for their family. Not the coordinating owner. Named at CW2.</p></article>
+    </div>
+  </section>
+
+  <section id="decisions" class="fade">
+    <p class="sec-label">Decisions</p>
+    <h2>Decision RACI</h2>
+    <p class="prose">Click a column header to hold that role in view. Also C / I sits under the decision title, not as a sixteenth scroll column.</p>
+    
+<div class="table-card" id="decisions-table">
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <caption>Decision RACI. Columns are roles. Also-consulted notes sit under each decision title.</caption>
+      <thead>
+        <tr><th scope="col" class="col-act">Decision</th><th scope="col" class="col-role" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><button type="button" class="col-btn" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><span class="h1">Sponsor</span></button></th><th scope="col" class="col-role" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><button type="button" class="col-btn" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><span class="h1">EPM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><button type="button" class="col-btn" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><span class="h1">DDO</span><span class="h2">Cust</span></button></th><th scope="col" class="col-role" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><button type="button" class="col-btn" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><span class="h1">Coord</span><span class="h2">Constr</span></button></th><th scope="col" class="col-role" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><button type="button" class="col-btn" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><span class="h1">EDG</span></button></th><th scope="col" class="col-role" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><button type="button" class="col-btn" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><span class="h1">GPO</span></button></th><th scope="col" class="col-role" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><button type="button" class="col-btn" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><span class="h1">Store</span><span class="h2">lead</span></button></th><th scope="col" class="col-role" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><button type="button" class="col-btn" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><span class="h1">KPI</span><span class="h2">owner</span></button></th><th scope="col" class="col-role" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><button type="button" class="col-btn" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><span class="h1">DM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><button type="button" class="col-btn" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><span class="h1">Ontol.</span></button></th><th scope="col" class="col-role" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><button type="button" class="col-btn" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><span class="h1">Formula</span></button></th><th scope="col" class="col-role" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><button type="button" class="col-btn" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><span class="h1">Backend</span></button></th><th scope="col" class="col-role" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><button type="button" class="col-btn" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><span class="h1">EA</span></button></th><th scope="col" class="col-role" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><button type="button" class="col-btn" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><span class="h1">Digital</span></button></th><th scope="col" class="col-role" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><button type="button" class="col-btn" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><span class="h1">Platform</span></button></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="col-act"><div class="act">Scope, depth, timeline, and how many items are expected to reach certified</div><p class="note">C: O2C and P2P leads, business-area leads</p></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-r">R</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Inherited-model disposition</div><p class="note">C: originating teams (Party, Finance, Supply Chain)</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Conformance-criteria disputes</div><p class="note">C: originating teams</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-a">A</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Modeling and ontology standards (MOD-003 / MOD-006)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-a">A</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Graph persistence platform (D-M11)</div><p class="note">C: platform operations</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-r">R</span></td><td class="col-role" data-col="13"><span class="badge b-a">A</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Business meaning - Customer</div><p class="note">C: channel representative, credit, tax, MDM</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Constraint content (a family)</div><p class="note">C: family steward. Coordinating owner holds A until that steward is named at CW2, then this A moves. Do not promote a family without a named steward</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"></td></tr><tr><th scope="row" class="col-act"><div class="act">Constraint model structure</div><p class="note">C: all family stewards</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Customer model promotion (G3)</div><p class="note">C: independent reviewer (unfilled). EPM Lead is Consulted. One A stays on DDO Cust</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Constraints model promotion (G4)</div><p class="note">C: independent reviewer (unfilled). EPM Lead is Consulted. One A stays on Coord Constr</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Cross-domain boundary disputes</div><p class="note">If no GPO exists at kickoff, A moves to Sponsor</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"><span class="badge b-a">A</span></td><td class="col-role" data-col="6"></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"></td></tr><tr><th scope="row" class="col-act"><div class="act">Scale beyond the two domains</div></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-r">R</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Measurement taxonomy</div><p class="note">C: business-area representatives</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-r">R</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-a">A</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Classification of one inventory item</div><p class="note">C: classification analyst (unconfirmed), SMEs, business-area representative. Store lead holds R until the analyst seat is named</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"></td></tr><tr><th scope="row" class="col-act"><div class="act">Whether two variants merge</div><p class="note">C: classification analyst. Store lead holds R until named. Escalate to GPO if cross-domain</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"><span class="badge b-c">C</span></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"></td></tr><tr><th scope="row" class="col-act"><div class="act">Business meaning of a KPI that uses a Customer term</div><p class="note">KPI-owner wording is input, not the SoT. Signed CV/CQ at G3</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Business meaning of a KPI that uses a Constraints term</div><p class="note">KPI-owner wording is input, not the SoT. Signed CV/CQ at G4</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Certified formula (how the number is computed)</div><p class="note">KPI owner is Consulted. They do not author the formula</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-r">R</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Target and Thresholds</div><p class="note">C: business-area SME, finance where relevant. Constraint authority stays with physics / permit / spec / SOL</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-ar">A/R</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"></td></tr><tr><th scope="row" class="col-act"><div class="act">LimitValue pattern reuse (D-M18 / DP-11)</div><p class="note">C: family stewards. Store lead is Consulted. They do not decide Constraints</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">KPI certification (one name, one population, one formula, one grain)</div><p class="note">C: approval forum chair (forum still open). The owner must accept. The forum must still record the act</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-a">A</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Consumption semantic layer authoring (git / Metric Views compile)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-r">R</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">DP-10 enrichment slots on the Store catalog</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Classification override</div><p class="note">Recorded as an override</p></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-r">R</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Metric Views / compiler operability (programme)</div><p class="note">Does not change where the certified formula lives (C-10)</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"></td><td class="col-role" data-col="9"></td><td class="col-role" data-col="10"><span class="badge b-r">R</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-r">R</span></td><td class="col-role" data-col="13"><span class="badge b-a">A</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Silver metadata editable or generated</div><p class="note">Locked: one-way projection. Silver is not a second formula (C-10)</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-ar">A/R</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Acceptance of the ad hoc demonstration</div><p class="note">C: AI / agent lead if one exists (QD-11)</p></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-r">R</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Publish gate (DP-18)</div><p class="note">No Purview write and no ontology load until this gate opens</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-ar">A/R</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </section>
+
+  <section id="domain" class="fade">
+    <p class="sec-label">Delivery</p>
+    <h2>Domain Modeling</h2>
+    <p class="prose">Same columns. Rows are sponsor-handoff work, not workshops.</p>
+    
+<div class="table-card" id="domain-table">
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <caption>Domain Modeling delivery activities. Same role columns as the decision matrix.</caption>
+      <thead>
+        <tr><th scope="col" class="col-act">Activity</th><th scope="col" class="col-role" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><button type="button" class="col-btn" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><span class="h1">Sponsor</span></button></th><th scope="col" class="col-role" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><button type="button" class="col-btn" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><span class="h1">EPM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><button type="button" class="col-btn" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><span class="h1">DDO</span><span class="h2">Cust</span></button></th><th scope="col" class="col-role" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><button type="button" class="col-btn" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><span class="h1">Coord</span><span class="h2">Constr</span></button></th><th scope="col" class="col-role" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><button type="button" class="col-btn" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><span class="h1">EDG</span></button></th><th scope="col" class="col-role" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><button type="button" class="col-btn" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><span class="h1">GPO</span></button></th><th scope="col" class="col-role" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><button type="button" class="col-btn" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><span class="h1">Store</span><span class="h2">lead</span></button></th><th scope="col" class="col-role" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><button type="button" class="col-btn" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><span class="h1">KPI</span><span class="h2">owner</span></button></th><th scope="col" class="col-role" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><button type="button" class="col-btn" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><span class="h1">DM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><button type="button" class="col-btn" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><span class="h1">Ontol.</span></button></th><th scope="col" class="col-role" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><button type="button" class="col-btn" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><span class="h1">Formula</span></button></th><th scope="col" class="col-role" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><button type="button" class="col-btn" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><span class="h1">Backend</span></button></th><th scope="col" class="col-role" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><button type="button" class="col-btn" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><span class="h1">EA</span></button></th><th scope="col" class="col-role" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><button type="button" class="col-btn" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><span class="h1">Digital</span></button></th><th scope="col" class="col-role" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><button type="button" class="col-btn" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><span class="h1">Platform</span></button></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="col-act"><div class="act">Domain modeling playbook (MOD-001)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-a">A</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Inherited-model assessment (MOD-009)</div><p class="note">C: Party, Finance, Supply Chain leads</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Customer ubiquitous language / CV</div><p class="note">C: channel, credit, tax, MDM, O2C, TAS</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Constraints ubiquitous language / CV</div><p class="note">C: LP economist (blocking), family stewards, P2P</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Competency-question pack - Customer</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Competency-question pack - Constraints</div><p class="note">C: LP economist</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Bounded-context map (O2C Customer vs P2P Constraints)</div><p class="note">C: O2C and P2P leads</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"><span class="badge b-c">C</span></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-a">A</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Customer conceptual and logical models (ER/Studio)</div><p class="note">C: SAP functional on binding</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Constraints conceptual and logical models (ER/Studio)</div><p class="note">C: LP planning system owner on binding</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Definition-to-field / source binding (not a formula)</div><p class="note">C: SAP functional, LP owner, Databricks / UC. G3 needs SAP binding demonstrated</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Authoring-home matrix (CW10)</div><p class="note">Formula-authoring home named before close (DP-16)</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-ar">A/R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Proof of value: one lift / one constraint family answers the CQs</div></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Handoff pack to ontology and Store (signed language + models + CQs)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-r">R</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </section>
+
+  <section id="ontology" class="fade">
+    <p class="sec-label">Delivery</p>
+    <h2>Ontology</h2>
+    
+<div class="table-card" id="ontology-table">
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <caption>Ontology delivery activities. Same role columns as the decision matrix.</caption>
+      <thead>
+        <tr><th scope="col" class="col-act">Activity</th><th scope="col" class="col-role" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><button type="button" class="col-btn" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><span class="h1">Sponsor</span></button></th><th scope="col" class="col-role" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><button type="button" class="col-btn" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><span class="h1">EPM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><button type="button" class="col-btn" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><span class="h1">DDO</span><span class="h2">Cust</span></button></th><th scope="col" class="col-role" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><button type="button" class="col-btn" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><span class="h1">Coord</span><span class="h2">Constr</span></button></th><th scope="col" class="col-role" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><button type="button" class="col-btn" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><span class="h1">EDG</span></button></th><th scope="col" class="col-role" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><button type="button" class="col-btn" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><span class="h1">GPO</span></button></th><th scope="col" class="col-role" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><button type="button" class="col-btn" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><span class="h1">Store</span><span class="h2">lead</span></button></th><th scope="col" class="col-role" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><button type="button" class="col-btn" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><span class="h1">KPI</span><span class="h2">owner</span></button></th><th scope="col" class="col-role" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><button type="button" class="col-btn" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><span class="h1">DM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><button type="button" class="col-btn" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><span class="h1">Ontol.</span></button></th><th scope="col" class="col-role" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><button type="button" class="col-btn" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><span class="h1">Formula</span></button></th><th scope="col" class="col-role" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><button type="button" class="col-btn" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><span class="h1">Backend</span></button></th><th scope="col" class="col-role" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><button type="button" class="col-btn" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><span class="h1">EA</span></button></th><th scope="col" class="col-role" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><button type="button" class="col-btn" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><span class="h1">Digital</span></button></th><th scope="col" class="col-role" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><button type="button" class="col-btn" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><span class="h1">Platform</span></button></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="col-act"><div class="act">Accept the signed Customer CV as Stage 1 product</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Accept the signed Constraints CV as Stage 1 product</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Freeze IRI / naming / module policy (MOD-006)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-a">A</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Author Customer ontology module in Turtle (MOD-007)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Author Constraints ontology module in Turtle (MOD-007)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Bind each Customer term to a meaning-class IRI</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Bind each Constraints term to a meaning-class IRI</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Mint one KPI-individual IRI per kpi_id (meaning pointer, not a formula)</div><p class="note">KPI owner does not author meaning</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Author SHACL shapes for the signed modules</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-a">A</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Run reasoner + SHACL + live CQs on combined modules</div><p class="note">C: independent reviewer as needed</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-ar">A/R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Tag signed Customer module for handover (git tag = version IRI)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-a">A</span></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Tag signed Constraints module for handover (git tag = version IRI)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"><span class="badge b-a">A</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-r">R</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Serve the signed ontology for query (Neo4j; serving only)</div><p class="note">Graph platform owner sits in Platform / Digital</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-a">A</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </section>
+
+  <section id="store" class="fade">
+    <p class="sec-label">Delivery</p>
+    <h2>KPI Store and consumption semantic layer</h2>
+    
+<div class="table-card" id="store-table">
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <caption>KPI Store and consumption semantic layer activities. Same role columns as the decision matrix.</caption>
+      <thead>
+        <tr><th scope="col" class="col-act">Activity</th><th scope="col" class="col-role" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><button type="button" class="col-btn" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><span class="h1">Sponsor</span></button></th><th scope="col" class="col-role" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><button type="button" class="col-btn" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><span class="h1">EPM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><button type="button" class="col-btn" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><span class="h1">DDO</span><span class="h2">Cust</span></button></th><th scope="col" class="col-role" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><button type="button" class="col-btn" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><span class="h1">Coord</span><span class="h2">Constr</span></button></th><th scope="col" class="col-role" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><button type="button" class="col-btn" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><span class="h1">EDG</span></button></th><th scope="col" class="col-role" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><button type="button" class="col-btn" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><span class="h1">GPO</span></button></th><th scope="col" class="col-role" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><button type="button" class="col-btn" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><span class="h1">Store</span><span class="h2">lead</span></button></th><th scope="col" class="col-role" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><button type="button" class="col-btn" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><span class="h1">KPI</span><span class="h2">owner</span></button></th><th scope="col" class="col-role" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><button type="button" class="col-btn" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><span class="h1">DM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><button type="button" class="col-btn" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><span class="h1">Ontol.</span></button></th><th scope="col" class="col-role" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><button type="button" class="col-btn" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><span class="h1">Formula</span></button></th><th scope="col" class="col-role" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><button type="button" class="col-btn" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><span class="h1">Backend</span></button></th><th scope="col" class="col-role" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><button type="button" class="col-btn" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><span class="h1">EA</span></button></th><th scope="col" class="col-role" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><button type="button" class="col-btn" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><span class="h1">Digital</span></button></th><th scope="col" class="col-role" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><button type="button" class="col-btn" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><span class="h1">Platform</span></button></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="col-act"><div class="act">Source Calculation Inventory</div><p class="note">C: report owners / power users</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Enterprise Measurement Catalog</div><p class="note">C: business-area representatives</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Candidate KPI Register</div><p class="note">C: report owners, finance, regulatory</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Approved Enterprise KPI Catalog</div><p class="note">Shared R: Store lead + KPI owner. A is Sponsor</p></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-r">R</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-i">I</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-i">I</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Consumption semantic layer: Metric Views (certified formulas)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-r">R</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-c">C</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">KPI Metadata (pointer, not a second formula)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-r">R</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-c">C</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">KPI Values Store (published MEASURE() snapshots)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-c">C</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">KPI Consumption Layer (Genie / BI consume certified objects)</div><p class="note">C: BI / Power BI owner, AI lead if one exists</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-c">C</span></td><td class="col-role" data-col="8"></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-c">C</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Unity Catalog listing and lineage for certified objects</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-c">C</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Specify which certified objects must appear in Purview (map existing; do not wipe)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </section>
+
+  <section id="integration" class="fade">
+    <p class="sec-label">Delivery</p>
+    <h2>System Integration</h2>
+    
+<div class="table-card" id="integration-table">
+  <div class="table-wrap" tabindex="0">
+    <table>
+      <caption>System Integration delivery activities. Same role columns as the decision matrix.</caption>
+      <thead>
+        <tr><th scope="col" class="col-act">Activity</th><th scope="col" class="col-role" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><button type="button" class="col-btn" data-col="0" title="Sponsor - Executive sponsor. Scope, resourcing, escalations, scale, and the mobilisation gates."><span class="h1">Sponsor</span></button></th><th scope="col" class="col-role" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><button type="button" class="col-btn" data-col="1" title="EPM Lead - Architectural coherence, which facts are meaning (models and ontology) and which are volume (Store numbers), O2C and P2P interfaces, artifact acceptance. Confirmed."><span class="h1">EPM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><button type="button" class="col-btn" data-col="2" title="DDO Cust - Domain Data Owner - Customer. Every customer definition. Signs the Customer CV and CQs. Promotes the Customer model (G3)."><span class="h1">DDO</span><span class="h2">Cust</span></button></th><th scope="col" class="col-role" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><button type="button" class="col-btn" data-col="3" title="Coord Constr - Coordinating Domain Data Owner - Constraints. Structure, taxonomy, and lifecycle. Not individual constraint values. Signs the Constraints CV and CQs. Promotes the Constraints model (G4)."><span class="h1">Coord</span><span class="h2">Constr</span></button></th><th scope="col" class="col-role" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><button type="button" class="col-btn" data-col="4" title="EDG - Enterprise Data Governance lead. Standards ratification, classification criteria, term-publication policy."><span class="h1">EDG</span></button></th><th scope="col" class="col-role" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><button type="button" class="col-btn" data-col="5" title="GPO - Global Process Owner. Cross-domain boundary disputes only. If no GPO exists at kickoff, the sponsor takes those dispute rows."><span class="h1">GPO</span></button></th><th scope="col" class="col-role" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><button type="button" class="col-btn" data-col="6" title="Store lead - KPI Store lead. Store catalog, C-10 (certified formula lives in the catalog and the consumption semantic layer), certification bar, formula-authoring home. Named by CW2 / CK1."><span class="h1">Store</span><span class="h2">lead</span></button></th><th scope="col" class="col-role" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><button type="button" class="col-btn" data-col="7" title="KPI owner - Business KPI Owner. One per candidate KPI. Target, Threshold, cadence, and the action taken. Does not author meaning or the certified formula."><span class="h1">KPI</span><span class="h2">owner</span></button></th><th scope="col" class="col-role" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><button type="button" class="col-btn" data-col="8" title="DM Lead - Domain Modeling Lead. Method, standards, workshop facilitation. Not the same person as a modeler. Still to confirm (Q-21)."><span class="h1">DM</span><span class="h2">Lead</span></button></th><th scope="col" class="col-role" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><button type="button" class="col-btn" data-col="9" title="Ontologist - Ontology modules, validation shapes, signed CQs, meaning SoT. Confirmed."><span class="h1">Ontol.</span></button></th><th scope="col" class="col-role" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><button type="button" class="col-btn" data-col="10" title="Formula - Formula author (Store / analytics engineer). Authors the certified number in the consumption semantic layer. Distinct from Store lead and KPI owner. Named before CW10 (DP-16)."><span class="h1">Formula</span></button></th><th scope="col" class="col-role" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><button type="button" class="col-btn" data-col="11" title="Backend - Backend / data engineers. Graph operation, Silver projection, metadata sync, Gold snapshots. Confirmed."><span class="h1">Backend</span></button></th><th scope="col" class="col-role" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><button type="button" class="col-btn" data-col="12" title="EA - Enterprise architect. Wider platform direction. Joint recommend on graph persistence."><span class="h1">EA</span></button></th><th scope="col" class="col-role" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><button type="button" class="col-btn" data-col="13" title="Digital - Client digital and engineering. Decides graph persistence and Metric Views / compiler operability."><span class="h1">Digital</span></button></th><th scope="col" class="col-role" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><button type="button" class="col-btn" data-col="14" title="Platform - Platform owners as a group: ER/Studio admin, Purview owner, Databricks / UC engineer, graph platform owner (if one exists), security / access administrator."><span class="h1">Platform</span></button></th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="col-act"><div class="act">Access request log (week 1)</div><p class="note">Client raises. Backend names targets: ER/Studio, both Purview planes, Unity, SAP, LP, optional graph. Day-to-day counterpart unblocks</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-i">I</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-r">R</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Environment baseline of the estate</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Integration contracts (canonical objects, events, one-way publish)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-a">A</span></td><td class="col-role" data-col="13"><span class="badge b-c">C</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Pipeline skeleton (load, projection, sync stubs in git)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-a">A</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Metadata sync pipelines (one-way; Excel held in staging)</div><p class="note">After DP-18 and MOD-008</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-c">C</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-a">A</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Thin Purview publish (write only; never the formula)</div><p class="note">After DP-18. Ontologist owns wording</p></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"><span class="badge b-c">C</span></td><td class="col-role" data-col="3"><span class="badge b-c">C</span></td><td class="col-role" data-col="4"><span class="badge b-c">C</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-a">A</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Silver projection pipeline (generated table; not the formula)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-i">I</span></td><td class="col-role" data-col="2"></td><td class="col-role" data-col="3"></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-a">A</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-c">C</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Inventory existing Harvest Terms / Team Server / UC connector (do not turn on)</div></th><td class="col-role" data-col="0"><span class="badge b-i">I</span></td><td class="col-role" data-col="1"><span class="badge b-a">A</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"></td><td class="col-role" data-col="8"><span class="badge b-c">C</span></td><td class="col-role" data-col="9"><span class="badge b-c">C</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr><tr><th scope="row" class="col-act"><div class="act">Four-tool connection handoff pack</div></th><td class="col-role" data-col="0"><span class="badge b-a">A</span></td><td class="col-role" data-col="1"><span class="badge b-c">C</span></td><td class="col-role" data-col="2"><span class="badge b-i">I</span></td><td class="col-role" data-col="3"><span class="badge b-i">I</span></td><td class="col-role" data-col="4"><span class="badge b-i">I</span></td><td class="col-role" data-col="5"></td><td class="col-role" data-col="6"><span class="badge b-i">I</span></td><td class="col-role" data-col="7"><span class="badge b-i">I</span></td><td class="col-role" data-col="8"><span class="badge b-i">I</span></td><td class="col-role" data-col="9"><span class="badge b-i">I</span></td><td class="col-role" data-col="10"><span class="badge b-i">I</span></td><td class="col-role" data-col="11"><span class="badge b-r">R</span></td><td class="col-role" data-col="12"><span class="badge b-c">C</span></td><td class="col-role" data-col="13"><span class="badge b-i">I</span></td><td class="col-role" data-col="14"><span class="badge b-c">C</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </section>
+
+  <section id="gaps" class="fade">
+    <p class="sec-label">Open</p>
+    <h2>Gaps and blocking seats</h2>
+    <p class="prose">These are missing people, not missing letters.</p>
+    <div class="two-col">
+      <article class="list-card">
+        <h3>Gaps the files already name</h3>
+        <ul>
+          <li>Approval forum (QD-05 / DEP-03). Certification has a person and no venue.</li><li>Independent reviewer at G3 / G4 / GK1 / GK2. Named as a class, not a person.</li><li>Domain Modeling Lead and the two business analysts (Q-21). Facilitation seat still open.</li><li>Classification analysts, review facilitator, and session coordinator (DEL-003 section 08).</li><li>Formula author, Store lead, and KPI owner must be three people. Do not collapse at CK1.</li><li>GPO may not exist. If none at kickoff, the sponsor takes those dispute rows.</li><li>AI / agent initiative lead (QD-11). Include only if one exists.</li><li>Graph platform owner only if a platform exists. Local files are enough for the foundations gate (G2).</li><li>BigEye owner is advisory. Not a column.</li><li>Security / access is inside Platform. Raise the request in week 1.</li>
+        </ul>
+      </article>
+      <article class="list-card">
+        <h3>Three seats that block approval</h3>
+        <p>From DEL-002 section 08, repeated in the lane briefings.</p>
+        <ol>
+          <li>Domain Data Owner - Customer</li><li>Coordinating Domain Data Owner - Constraints</li><li>LP economist / refinery planner</li>
+        </ol>
+        <p>From DEL-003 section 07: without named Business KPI Owners the Store produces a Candidate register and an empty catalog.</p>
+        <p>Names land at kickoff. Walk the matrix there.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="site-foot"><div class="inner"><hr class="rule">
+    Sources: <a href="https://projectmanagers.net/free-raci-matrix-templates/">RACI matrix rules</a>.
+    Client roles and the started decision tables in DEL-002 section 08 / 10, DEL-003 section 07 / 09,
+    and the four lane briefings in PMO/Project Planning (EPM-MOD-010, EPM-ONT-001, EPM-KPI-001, EPM-BE-001).
+  </div></footer>
+</main>
+<script>
+(function () {
+  document.querySelectorAll(".table-wrap table").forEach(function (table) {
+    table.querySelectorAll(".col-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var col = btn.getAttribute("data-col");
+        var on = table.getAttribute("data-hl") === col;
+        table.querySelectorAll("[data-col]").forEach(function (el) {
+          el.classList.remove("is-hl");
+        });
+        if (on) {
+          table.removeAttribute("data-hl");
+          table.classList.remove("hl-on");
+          return;
+        }
+        table.setAttribute("data-hl", col);
+        table.classList.add("hl-on");
+        table.querySelectorAll('[data-col="' + col + '"]').forEach(function (el) {
+          el.classList.add("is-hl");
+        });
+      });
+    });
+  });
+  document.documentElement.classList.add("js");
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add("on");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll(".fade").forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll(".fade").forEach(function (el) { el.classList.add("on"); });
+  }
+}());
+</script>
+</body>
+</html>

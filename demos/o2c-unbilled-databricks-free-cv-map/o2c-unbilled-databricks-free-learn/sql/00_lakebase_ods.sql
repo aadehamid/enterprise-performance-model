@@ -1,0 +1,19 @@
+-- =============================================================================
+-- 00_lakebase_ods.sql — Act 0 ODS on Lakebase project dataexpert-day1
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   Schema o2c_unbilled ONLY on existing project dataexpert-day1
+--   (database databricks_postgres).
+--   Do NOT create a second Lakebase project.
+--   Do NOT touch other day1 schemas.
+--   Do NOT DROP SCHEMA.
+--   Not the compiler. Not the Metric View. No Azure. No workspace URL.
+--   Demo 2 / Track B. Not demo 1. Not MetricFlow.
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/00_lakebase_ods.sql
+--   ../o2c-unbilled-databricks-free/sql/00_README.md
+-- =============================================================================
+
+-- your SQL goes here

@@ -1,0 +1,94 @@
+time_spines:
+  - name: time_spine
+    model: ref('metricflow_time_spine')
+    time_column: date_day
+    grains:
+      - name: day
+        column: date_day
+
+semantic_models:
+  - name: unbilled_tickets
+    description: >
+      Ticket-level unbilled fact. One row per delivered BOL with no posted
+      invoice line as of as_of_date. Certified value is gallons_net * contract
+      price. Default published grain is sold_to + terminal + day; this model
+      stays at ticket grain so both reports and auditors share one formula.
+    model: ref('fct_unbilled')
+    defaults:
+      agg_time_dimension: delivery_date
+
+    entities:
+      - name: ticket
+        type: primary
+        expr: ticket_id
+      - name: sold_to_party
+        type: foreign
+        expr: sold_to_id
+      - name: payer_party
+        type: foreign
+        expr: payer_id
+      - name: terminal_loc
+        type: foreign
+        expr: terminal_code
+      - name: product_sku
+        type: foreign
+        expr: product_code
+
+    dimensions:
+      - name: delivery_date
+        type: time
+        type_params:
+          time_granularity: day
+      - name: sold_to
+        type: categorical
+        expr: sold_to_name
+      - name: payer
+        type: categorical
+        expr: payer_name
+      - name: terminal
+        type: categorical
+        expr: terminal_code
+      - name: product
+        type: categorical
+        expr: product_code
+      - name: status
+        type: categorical
+
+    measures:
+      - name: unbilled_usd_measure
+        description: Net gallons at 60F times contract price, unbilled tickets only.
+        agg: sum
+        expr: unbilled_usd
+      - name: unbilled_gallons_net_measure
+        description: Temperature-corrected net gallons on unbilled tickets.
+        agg: sum
+        expr: gallons_net
+      - name: ticket_count
+        description: Count of unbilled BOL tickets.
+        agg: count
+        expr: ticket_id
+
+metrics:
+  - name: unbilled_usd
+    description: >
+      Certified Unbilled USD. Delivered tickets with no invoice line as of
+      as_of_date, valued at gallons_net * contract_price_usd. Slice by sold_to,
+      payer, terminal, product, or metric_time — the ticket set does not change.
+    type: simple
+    label: Unbilled USD
+    type_params:
+      measure: unbilled_usd_measure
+
+  - name: unbilled_gallons_net
+    description: Certified unbilled net gallons (60F).
+    type: simple
+    label: Unbilled Gallons Net
+    type_params:
+      measure: unbilled_gallons_net_measure
+
+  - name: unbilled_ticket_count
+    description: Count of unbilled delivered BOL tickets.
+    type: simple
+    label: Unbilled Ticket Count
+    type_params:
+      measure: ticket_count

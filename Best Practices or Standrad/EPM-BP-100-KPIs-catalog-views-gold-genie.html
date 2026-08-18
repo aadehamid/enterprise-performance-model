@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-BP-100-KPIs — 100 enterprise KPIs: catalog, Metric Views, Gold, and Genie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B131C;
+  --bg-elev: #121C28;
+  --bg-card: #162230;
+  --line: #243344;
+  --line-strong: #2E4456;
+  --text: #E6EEF4;
+  --muted: #93A4B3;
+  --faint: #6B7C8C;
+  --teal: #3DB8A8;
+  --teal-dim: rgba(61,184,168,.14);
+  --teal-line: rgba(61,184,168,.42);
+  --amber: #D4A017;
+  --red: #E05A5A;
+  --red-dim: rgba(224,90,90,.12);
+  --green: #4CAF7A;
+  --green-dim: rgba(76,175,122,.12);
+  --open: #E8B84A;
+  --locked: #3DB8A8;
+  --max: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px 80px; }
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(11,19,28,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 10px 28px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; letter-spacing: .02em;
+  color: var(--teal); font-size: 13px; white-space: nowrap;
+}
+nav.toc { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+nav.toc a {
+  color: var(--muted); font-size: 12px; padding: 4px 8px;
+  border-radius: 4px; text-decoration: none;
+}
+nav.toc a:hover { color: var(--text); background: var(--teal-dim); }
+header.doc {
+  padding: 36px 0 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px; color: var(--teal); letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 32px; line-height: 1.2;
+  margin: 0 0 18px; letter-spacing: -0.02em;
+}
+.meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px; font-size: 13.5px; color: var(--muted);
+}
+.meta b { color: var(--text); font-weight: 600; }
+.lede {
+  font-size: 17.5px; color: var(--text); margin: 22px 0 0;
+  max-width: 72ch;
+}
+.badge {
+  display: inline-block; font-family: "IBM Plex Mono", monospace;
+  font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; border: 1px solid;
+  vertical-align: middle; white-space: nowrap;
+}
+.badge.open { color: var(--open); border-color: var(--open); background: rgba(232,184,74,.1); }
+.badge.locked { color: var(--locked); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.rec { color: #C9B27A; border-color: #5A4E2E; background: rgba(201,178,122,.1); }
+.badge.stated { color: #9AD4C8; border-color: var(--teal-line); background: var(--teal-dim); }
+.callout {
+  border: 1px solid var(--teal-line);
+  background: var(--teal-dim);
+  border-left: 4px solid var(--teal);
+  padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;
+}
+.callout.locks { margin: 24px 0 32px; }
+.callout.warn {
+  border-color: rgba(224,90,90,.4); background: var(--red-dim);
+  border-left-color: var(--red);
+}
+.callout.note {
+  border-color: var(--line-strong); background: var(--bg-elev);
+  border-left-color: var(--muted);
+}
+.callout .label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--teal); margin: 0 0 8px;
+}
+.callout.warn .label { color: var(--red); }
+.callout ul { margin: 6px 0 0; padding-left: 18px; }
+.callout li { margin: 5px 0; }
+.callout p { margin: 6px 0; }
+section { margin: 42px 0 28px; }
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px; font-weight: 600; margin: 0 0 12px;
+  padding-top: 18px; border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+}
+h2 .num { color: var(--teal); margin-right: 8px; }
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px; font-weight: 600; margin: 26px 0 10px;
+}
+p { margin: 10px 0; }
+.intro { color: var(--muted); max-width: 78ch; }
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px;
+  background: var(--bg-elev);
+}
+th, td {
+  border: 1px solid var(--line); padding: 8px 10px;
+  text-align: left; vertical-align: top;
+}
+th {
+  background: #1A2836; color: var(--teal);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 12px; letter-spacing: .03em;
+  text-transform: uppercase;
+}
+tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+td.ref {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px;
+  color: var(--teal); white-space: nowrap;
+}
+caption {
+  caption-side: top; text-align: left; font-weight: 600;
+  padding: 0 0 8px; color: var(--text); font-size: 14px;
+}
+.gates { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+.gate {
+  flex: 1 1 200px; background: var(--bg-card);
+  border: 1px solid var(--line); border-top: 3px solid var(--teal);
+  padding: 10px 12px; border-radius: 0 0 6px 6px; font-size: 13px;
+}
+.gate strong {
+  display: block; font-family: "IBM Plex Mono", monospace;
+  color: var(--teal); font-size: 13px; margin-bottom: 4px;
+}
+ol.seq { padding-left: 22px; }
+ol.seq li { margin: 8px 0; }
+footer {
+  margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--faint);
+}
+footer code { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+code { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: #9AD4C8; }
+@media print {
+  :root { --bg: #fff; --bg-elev: #fff; --bg-card: #f7f7f7; --text: #111; --muted: #333; --faint: #444; --line: #ccc; --line-strong: #999; }
+  body { background: #fff; color: #111; font-size: 11pt; }
+  .topbar { position: static; background: #fff; }
+  nav.toc { display: none; }
+  a { color: #0a5; text-decoration: none; }
+  .callout, .gate, table { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">EPM-BP-100-KPIs</div>
+    <nav class="toc">
+      <a href="#s01">01 Rule</a>
+      <a href="#s02">02 Four seats</a>
+      <a href="#s03">03 Share a view</a>
+      <a href="#s04">04 Gold</a>
+      <a href="#s05">05 Genie</a>
+      <a href="#s06">06 Demo</a>
+      <a href="#s07">07 Edges</a>
+      <a href="#s08">08 Do / Don’t</a>
+      <a href="#s09">09 Not this</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+<header class="doc">
+  <div class="kicker">Enterprise Performance Model · Best practice</div>
+  <h1>100 enterprise KPIs: catalog, Metric Views, Gold, and Genie</h1>
+  <div class="meta">
+    <div><b>ID</b> EPM-BP-100-KPIs <span class="badge open">unregistered working note</span><br>Not a formal EPM artifact · Not KPI-000 · Not a Store build</div>
+    <div><b>Audience</b> Hamid Adesokan<br><b>Lane</b> KPI Store / consumption semantic layer<br><b>Date</b> 14 Aug 2026 (America/Chicago)</div>
+    <div><b>Compiler in demos</b> Databricks Metric Views / Unity Catalog<br><b>Locks honoured</b> C-10 · C-11 · RC-1 <span class="badge locked">cite, not invent</span></div>
+    <div><b>Status</b> Picture of current understanding, 14 Aug 2026. Research / practice note. Not a programme lock.</div>
+  </div>
+  <p class="lede">One file and one Genie does not scale to ~100 enterprise KPIs. The O2C demo put three related KPIs on three Metric Views and one Genie agent as a teaching shortcut. Production shape is four seats, not one artefact.</p>
+</header>
+
+<div class="callout locks">
+  <div class="label">Locks honoured — cite, do not invent</div>
+  <ul>
+    <li><b>C-10:</b> ontology = meaning. Store catalog + consumption semantic layer = certified formula + compute. Ontology does not author formulas.</li>
+    <li><b>C-11:</b> never say “semantic layer” unqualified. Say <em>consumption semantic layer</em> or <em>Metric View</em>. Programme compiler seat in demos = Databricks Metric Views / Unity Catalog.</li>
+    <li><b>RC-1:</b> one certified formula, one compile path per KPI. Programme path = <code>MEASURE()</code> on that KPI’s Metric View. No second formula.</li>
+  </ul>
+</div>
+
+<section id="s01">
+  <h2><span class="num">01</span> The rule</h2>
+  <p class="intro">The catalog can list a hundred. A Metric View, a Gold table, and a Genie agent cannot each hold a hundred. That is the whole note.</p>
+  <ol class="seq">
+    <li><b>One Store catalog</b> (the register) can list all 100.</li>
+    <li><b>Many Metric Views</b> — a view holds a few measures only when they share population, Silver star, and grain family.</li>
+    <li><b>Gold follows grain</b> — when grains diverge, one published table (or mart) per KPI. Folding instances into one <code>gold_kpi_value</code> was the demo shortcut.</li>
+    <li><b>Genie is a question set</b>, not the enterprise. Several agents by domain / job, each with a small set of views.</li>
+  </ol>
+  <div class="callout note">
+    <div class="label">Industry shape (grounding, not a lock)</div>
+    <p>Downstream O&amp;G. Customer lane = order-to-cash. Ops / Tech lane = plan-to-produce. Those are different processes. They do not share a Metric View just because both sit in the same catalog.</p>
+  </div>
+</section>
+
+<section id="s02">
+  <h2><span class="num">02</span> Four seats — what each owns</h2>
+  <p class="intro">C-10 splits meaning from formula + compute. These four seats sit on the formula + compute side. None of them is the ontology.</p>
+  <div class="gates">
+    <div class="gate">
+      <strong>Store catalog</strong>
+      The register. One row per KPI. Pointers: measure name, Metric View, <code>calc_version</code>. Can list all 100. Not the compile. Not meaning SoT.
+    </div>
+    <div class="gate">
+      <strong>Metric View</strong>
+      The formula object. Compiles the certified expression. A few measures only when they pass the grouping test (§03). Path = <code>MEASURE()</code> (RC-1).
+    </div>
+    <div class="gate">
+      <strong>Gold</strong>
+      Published instances FROM <code>MEASURE()</code>. Frozen snapshot — not a second formula, not formula SoT. Grain decides the table, not the catalog count.
+    </div>
+    <div class="gate">
+      <strong>Genie</strong>
+      Ad hoc consumer, not an author. A question set over a small set of views. No Export-to-metric-view. Not the enterprise.
+    </div>
+  </div>
+  <div class="table-wrap">
+  <table>
+    <caption>What each seat is allowed to hold at ~100 KPIs</caption>
+    <thead>
+      <tr><th>Seat</th><th>Owns</th><th>May hold ~100?</th><th>Must not</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Catalog</td>
+        <td>Register + pointers</td>
+        <td>Yes — that is its job</td>
+        <td>Author or compile a formula</td>
+      </tr>
+      <tr>
+        <td class="ref">Metric View</td>
+        <td>Certified compile</td>
+        <td>No — a few, if they group</td>
+        <td>Mix populations, Silver stars, or grain families</td>
+      </tr>
+      <tr>
+        <td class="ref">Gold</td>
+        <td>Published instances</td>
+        <td>No — one table / mart per diverging grain</td>
+        <td>Become a second formula</td>
+      </tr>
+      <tr>
+        <td class="ref">Genie</td>
+        <td>A question set</td>
+        <td>No — several agents, small view sets</td>
+        <td>Author YAML, Export-to-metric-view, or span the estate</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s03">
+  <h2><span class="num">03</span> When KPIs may share a Metric View</h2>
+  <p>A view may hold a few measures only when all three hold:</p>
+  <ol class="seq">
+    <li><b>Same population</b> — the same “who counts.” Payer is not sold-to. A site is not a customer account.</li>
+    <li><b>Same Silver star</b> — the same fact + dimension family. Different Silver tables get their own view.</li>
+    <li><b>Same grain family</b> — the same atomic grain, or a grain that rolls up without rewriting the measure. Different grains get their own view.</li>
+  </ol>
+  <p>Fail any one and the KPI gets its own Metric View. A different process — order-to-cash versus plan-to-produce — fails all three in practice. Do not fold them because the catalog already lists both.</p>
+  <div class="callout warn">
+    <div class="label">Don’t collapse process into one view</div>
+    <p>Customer O2C and Ops / Tech plan-to-produce are not one consumption semantic layer file. They may share a catalog. They do not share a Metric View.</p>
+  </div>
+</section>
+
+<section id="s04">
+  <h2><span class="num">04</span> Gold when grains diverge</h2>
+  <p>Gold is the published snapshot of the compile — instances FROM <code>MEASURE()</code>, versioned and immutable. It is not formula SoT (C-10 / RC-1). When two KPIs do not share a grain, do not stack their instances in one table and hope a <code>kpi_id</code> column sorts it out.</p>
+  <p><b>Practice already agreed:</b> often one Gold table (or mart) per KPI when grains diverge. The demo folded three O2C KPIs into one <code>gold_kpi_value</code>. That was the shortcut. It taught the compile path. It is not the production shape.</p>
+  <div class="callout note">
+    <div class="label">Open — not locked</div>
+    <p>Gold physical shape at programme scale is <span class="badge open">open</span>. One mart per KPI is the working note when grains diverge. The pack does not lock the physical form. Do not promote this paragraph into a lock.</p>
+  </div>
+</section>
+
+<section id="s05">
+  <h2><span class="num">05</span> Genie by consumption context</h2>
+  <p>Genie is a question set over a small set of Metric Views. It is not the catalog, not the compiler, and not the enterprise. Several agents, split by domain or job — Customer O2C in one, Ops / Tech plan-to-produce in another — each seeing only the views that belong to that job.</p>
+  <p>One agent pointed at 100 KPIs repeats the failure we already saw: Apex guess, <code>ILIKE</code> on names, <code>GROUP BY ALL</code> that silently widens the grain. The model starts shopping across unrelated measures. Cross-domain numbers do not go into a mega-Genie. They go to the catalog (which KPI, which view, which Gold) or to a composed report that already joined the certified results.</p>
+  <div class="callout note">
+    <div class="label">Open — not locked</div>
+    <p>Exact Genie-agent count is <span class="badge open">open</span>. The rule is “several, by consumption context,” not a headcount. Do not invent an estate-wide agent map here.</p>
+  </div>
+</section>
+
+<section id="s06">
+  <h2><span class="num">06</span> What the 3-KPI demo was (and was not)</h2>
+  <p class="intro">Demo 2 on Databricks Free. Three related O2C KPIs. Three Metric Views. One Genie agent titled <code>O2C certified KPIs</code>. <code>MEASURE()</code> only. Teaching shortcut — not the production shape.</p>
+  <div class="table-wrap">
+  <table>
+    <caption>Demo 2 proven numbers — quote, do not restage</caption>
+    <thead>
+      <tr><th>KPI</th><th>Proven value</th><th>Rows / grain note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Unbilled</td><td>$179,934</td><td>12</td></tr>
+      <tr><td>Contract-vs-list</td><td>$110,064</td><td>7</td></tr>
+      <tr><td>Temp-adjusted</td><td>$256,066.39</td><td>17</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>It was:</b> one process (O2C), three related measures, three views, one agent, one compile path. Proof that <code>MEASURE()</code> holds and that a small Genie can answer inside that fence.</p>
+  <p><b>It was not:</b> a 100-KPI estate. Not one YAML. Not one Gold table as the programme pattern. Not Azure design. Not Track A MetricFlow. Not a lock. Unbilled remains a <b>STATE</b>, not a KPI and not a customer class — do not promote the demo metric to make a pilot.</p>
+</section>
+
+<section id="s07">
+  <h2><span class="num">07</span> Future edge cases</h2>
+  <p class="intro">Short, because we cannot fully stop the model from guessing. We can only keep the fence small and the write path single.</p>
+  <ul>
+    <li><b>New confuse-case</b> = new example SQL + one Don’t line. Do not write a second architecture.</li>
+    <li><b>One write path.</b> The Genie Text box is the script string. Do not keep a parallel “real” instruction somewhere else.</li>
+    <li><b>After any edit:</b> new chat + a short confuse-set. Old threads replay old instructions.</li>
+    <li>Cannot fully stop <code>GROUP BY ALL</code>, <code>ILIKE</code>, or thread replay. Design assumes they will happen. Keep the view set small so a guess stays inside the family.</li>
+    <li><b>No Export-to-metric-view.</b> Genie consumes. It does not author.</li>
+    <li><b>No second formula.</b> RC-1. If a batch job contains SQL that is not the Metric View compile (except demo 1 / Track A), the architecture has already failed.</li>
+  </ul>
+</section>
+
+<section id="s08">
+  <h2><span class="num">08</span> Do / Don’t</h2>
+  <div class="table-wrap">
+  <table>
+    <caption>Practice, not a lock. Same three locks underneath every row.</caption>
+    <thead>
+      <tr><th>Do</th><th>Don’t</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>List all 100 in one Store catalog</td>
+        <td>Put all 100 in one Metric View, one Gold table, or one Genie</td>
+      </tr>
+      <tr>
+        <td>Share a Metric View only when population + Silver star + grain family match</td>
+        <td>Fold O2C and plan-to-produce because they are “both KPIs”</td>
+      </tr>
+      <tr>
+        <td>Publish one Gold table / mart per KPI when grains diverge</td>
+        <td>Treat <code>gold_kpi_value</code> as the programme shape</td>
+      </tr>
+      <tr>
+        <td>Stand several Genie agents by domain or job, each on a small view set</td>
+        <td>Point one agent at the estate and hope instructions hold</td>
+      </tr>
+      <tr>
+        <td>Send cross-domain numbers to the catalog or a composed report</td>
+        <td>Ask a mega-Genie to join unrelated processes</td>
+      </tr>
+      <tr>
+        <td>Say “consumption semantic layer” or “Metric View”</td>
+        <td>Say “semantic layer” unqualified (C-11)</td>
+      </tr>
+      <tr>
+        <td>Compile with <code>MEASURE()</code> on that KPI’s Metric View (RC-1)</td>
+        <td>Write a second formula in SQL, Gold, Power BI, or Genie</td>
+      </tr>
+      <tr>
+        <td>Keep one write path; new chat after any edit</td>
+        <td>Export-to-metric-view, or reuse a thread that predates the edit</td>
+      </tr>
+      <tr>
+        <td>Treat Demo 2 as a teaching shortcut with proven numbers</td>
+        <td>Restage it, promote Unbilled to a pilot, or scale the shortcut</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s09">
+  <h2><span class="num">09</span> What this is not</h2>
+  <ul>
+    <li>Not a programme lock. Not KPI-000. Not a Store build. Unregistered working note, 14 Aug 2026.</li>
+    <li>Not Azure design. Demo 2 was Databricks Free. The programme Azure estate is a different conversation.</li>
+    <li>Not Track A MetricFlow. Demo 1 / <code>o2c-unbilled-semantic-layer</code> stays where it is. Do not edit it from this note.</li>
+    <li>Not one mega-YAML, one mega-view, or one mega-Genie.</li>
+    <li>Not ontology meaning (C-10). Not an invented workshop, gate, or artifact ID.</li>
+    <li>Gold physical shape at programme scale, and the exact Genie-agent count, stay <span class="badge open">open</span>.</li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>EPM-BP-100-KPIs</b> · unregistered working note · 14 Aug 2026 (America/Chicago) · for Hamid Adesokan · Status: picture of current understanding. Research / practice note. Not KPI-000. Not a programme lock. Not a Store build.</p>
+  <p>Locks cited, not extended: <b>C-10</b> (ontology = meaning; Store + consumption semantic layer = formula + compute) · <b>C-11</b> (never “semantic layer” unqualified) · <b>RC-1</b> (one certified formula, one compile path per KPI).</p>
+  <p>Grounding: Demo 2 proven Unbilled $179,934 / 12 · contract-vs-list $110,064 / 7 · temp-adjusted $256,066.39 / 17 · Genie <code>O2C certified KPIs</code> · <code>MEASURE()</code> only. Production Gold note already agreed: often one table per KPI when grains diverge. Visual system matches <code>EPM-KPI-001-store-lane-briefing.html</code>. That briefing was not edited.</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enterprise Performance Project Onboarding Guide</title><style>
+:root{--bg:#f4f7fb;--paper:#fff;--ink:#182230;--muted:#5e6c7b;--navy:#17365d;--blue:#2368a2;--line:#dfe6ee;--soft:#eef4fa;--green:#0f766e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.layout{display:grid;grid-template-columns:285px minmax(0,1fr);min-height:100vh}aside{background:#102a43;color:#eaf2f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{margin:0;font-size:18px}aside p{font-size:13px;color:#b7c7d6}aside a{display:block;color:#dbeafe;text-decoration:none;padding:7px 9px;border-radius:7px;margin:2px 0;font-size:14px}aside a:hover{background:#1f4568}
+main{padding:34px}.doc{max-width:1080px;margin:auto;background:var(--paper);padding:50px 58px;border-radius:16px;box-shadow:0 12px 34px rgba(16,42,67,.08)}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);font-weight:800}h1{font-size:40px;color:var(--navy);line-height:1.12;margin:7px 0}.sub{font-size:18px;color:var(--muted);margin-bottom:30px}
+h2{color:var(--navy);border-bottom:2px solid var(--soft);padding-bottom:8px;margin-top:38px}h3{color:#244f77;margin-top:26px}p,li{font-size:16px}
+blockquote{padding:17px 21px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}pre{background:#102a43;color:#eaf2f8;padding:20px;border-radius:10px;overflow:auto}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}th{background:var(--navy);color:#fff;padding:10px;text-align:left}td{border:1px solid var(--line);padding:10px;vertical-align:top}tr:nth-child(even) td{background:#f8fafc}
+.cardgrid{max-width:1120px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.card{display:block;background:#fff;border:1px solid var(--line);padding:24px;border-radius:14px;text-decoration:none;color:var(--ink);box-shadow:0 8px 22px rgba(16,42,67,.07)}.card:hover{transform:translateY(-2px)}.card small{color:var(--blue);font-weight:800}.card h2{border:0;margin:8px 0;font-size:21px}.card p{font-size:14px;color:var(--muted)}
+@media(max-width:900px){.layout{display:block}aside{position:relative;height:auto}.doc{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="layout"><aside><h2>EPM Project Pack</h2><p>EPM-PROJ-003_Project_Onboarding_Guide</p><a href="index.html">Home</a><hr style="border-color:#31516e"><a href="EPM-FOUND-000A_Architectural_Principles.html">EPM-FOUND-000A Architectural Principles</a> <a href="EPM-PROJ-001_Project_Instructions.html">EPM-PROJ-001 Project Instructions</a> <a href="EPM-PROJ-002_Project_Operating_Model.html">EPM-PROJ-002 Project Operating Model</a> <a href="EPM-PROJ-003_Project_Onboarding_Guide.html">EPM-PROJ-003 Project Onboarding Guide</a> <a href="EPM-PROJ-004_Artifact_and_Chat_Map.html">EPM-PROJ-004 Artifact and Chat Map</a> <a href="EPM-PROJ-005_Migration_Checklist.html">EPM-PROJ-005 Migration Checklist</a><hr style="border-color:#31516e"><a href="#recommended-approach">Recommended approach</a>
+<a href="#files-to-upload-first">Files to upload first</a>
+<a href="#project-setup-steps">Project setup steps</a>
+<a href="#copy-ready-onboarding-prompt">Copy-ready onboarding prompt</a>
+<a href="#how-to-bring-scheduled-briefs-into-the-project">How to bring scheduled briefs into the project</a>
+<a href="#how-to-migrate-prior-conversations">How to migrate prior conversations</a>
+<a href="#validation-checklist-after-setup">Validation checklist after setup</a></aside>
+<main><article class="doc"><div class="kicker">EPM-PROJ-003_Project_Onboarding_Guide · Version 1.0 Draft</div><h1>Enterprise Performance Project Onboarding Guide</h1><div class="sub">How to establish the project and preserve the work completed so far</div><section id="recommended-approach"><h2>Recommended approach</h2><p>Create or use a dedicated ChatGPT Project named:</p>
+<p><strong>Enterprise Performance Model</strong></p>
+<p>Upload the canonical Markdown and HTML artifacts. Use Markdown as the machine-readable and editable source. Use HTML as the human-friendly reading edition.</p></section><section id="files-to-upload-first"><h2>Files to upload first</h2><p>Upload in this order:</p>
+<ol>
+<li>1. EPM-FOUND-000 — Master Index</li>
+<li>2. EPM-FOUND-000A — Architectural Principles</li>
+<li>3. EPM-FOUND-001 — Business Architecture</li>
+<li>4. EPM-FOUND-002 — Performance and Data Architecture</li>
+<li>5. EPM-FOUND-003 — Semantic Model</li>
+<li>6. EPM-FOUND-005 — Measurement and KPI Model</li>
+<li>7. EPM-FOUND-006 — Data Product and Consumption Model</li>
+<li>8. EPM-FOUND-004 — Ontology Design</li>
+<li>9. EPM-PROJ-002 — Project Operating Model</li>
+<li>10. Relevant KPI Store technical designs, domain artifacts, Tableau extracts, and migration evidence</li>
+</ol></section><section id="project-setup-steps"><h2>Project setup steps</h2><ol>
+<li>1. Create the dedicated project.</li>
+<li>2. Paste the concise instructions from EPM-PROJ-001 into Project Instructions.</li>
+<li>3. Upload all canonical Markdown files.</li>
+<li>4. Upload the HTML bundle for easy reading.</li>
+<li>5. Create the focused chats listed in the operating model as needed.</li>
+<li>6. Start with the onboarding prompt below.</li>
+<li>7. Ask the project to confirm the artifact inventory, identify inconsistencies, and use the foundation as the working baseline.</li>
+</ol></section><section id="copy-ready-onboarding-prompt"><h2>Copy-ready onboarding prompt</h2><pre><code>This project contains the canonical Enterprise Performance Model foundation.
+
+Please review the uploaded EPM-FOUND and EPM-PROJ artifacts and treat them as the working baseline unless a later approved artifact supersedes them.
+
+First:
+1. Summarize the architecture in your own words.
+2. Identify any contradictions, gaps, or unresolved terms across the artifacts.
+3. Build an artifact inventory showing ID, title, version, status, purpose, and dependencies.
+4. Recommend the next three work packages, prioritizing KPI Store implementation, Tableau measurement classification, Commercial business architecture, and the Netback pilot.
+5. Do not silently change accepted definitions. Clearly label recommendations and open questions.</code></pre></section><section id="how-to-bring-scheduled-briefs-into-the-project"><h2>How to bring scheduled briefs into the project</h2><p>Scheduled briefings can remain in the automation chat.</p>
+<p>When a briefing contains a development relevant to the EPM:</p>
+<ol>
+<li>1. Copy the relevant briefing or insight into the appropriate project chat.</li>
+<li>2. State the purpose of bringing it into the project.</li>
+<li>3. Ask whether it changes:</li>
+</ol>
+<p>   - a business assumption;</p>
+<p>   - causal relationship;</p>
+<p>   - KPI requirement;</p>
+<p>   - data-product requirement;</p>
+<p>   - scenario model;</p>
+<p>   - automation opportunity;</p>
+<p>   - or L&amp;D requirement.</p>
+<ol>
+<li>4. Update canonical artifacts only when the insight results in an accepted design or governance change.</li>
+</ol>
+<p>The project should not accumulate all news. It should retain only durable architectural implications.</p></section><section id="how-to-migrate-prior-conversations"><h2>How to migrate prior conversations</h2><p>Do not copy every historical message.</p>
+<p>Instead:</p>
+<ul>
+<li>upload the canonical artifacts created from those discussions;</li>
+<li>create short decision summaries for major unresolved topics;</li>
+<li>attach relevant technical designs;</li>
+<li>migrate only important source evidence that is not already captured;</li>
+<li>keep the old chats as historical references.</li>
+</ul>
+<p>The objective is to migrate decisions and knowledge, not conversational volume.</p></section><section id="validation-checklist-after-setup"><h2>Validation checklist after setup</h2><p>Confirm that the project can answer:</p>
+<ul>
+<li>What is the difference between a value stream and a capability?</li>
+<li>What is the difference between a measurement, metric, and KPI?</li>
+<li>What is the KPI Store boundary?</li>
+<li>What is the semantic model?</li>
+<li>How does the ontology relate to the semantic model?</li>
+<li>How do foundational and derived data products align with medallion layers?</li>
+<li>Where should reusable logic be implemented?</li>
+<li>How should Tableau calculations be classified?</li>
+<li>What is the first pilot?</li>
+<li>Which artifacts are authoritative?</li>
+</ul></section></article></main></div></body></html>

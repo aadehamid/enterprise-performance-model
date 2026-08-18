@@ -1,0 +1,15 @@
+# o2c-meaning.ttl — thin meaning sidecar (learner stub).
+# write the classes; see complete pack if stuck
+#   ../o2c-unbilled-databricks-free/ontology/o2c-meaning.ttl
+# C-10: ontology = meaning. Store catalog + Metric View = certified formula.
+# Does NOT author formulas, compile, or act as SHACL / a triple store.
+# IRIs are demo-only, unsigned.
+# Base: https://example.org/domain-ontology-kpi/o2c#
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix o2c:  <https://example.org/domain-ontology-kpi/o2c#> .
+
+# write the classes; see complete pack if stuck

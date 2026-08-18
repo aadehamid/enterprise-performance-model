@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downstream Oil &amp; Gas Order-to-Cash — Operational Blueprint &amp; Process Taxonomy</title>
+<style>
+:root{
+  --petrol-900:#0e2f33; --petrol-800:#123a3f; --petrol-700:#1a4a50; --petrol-600:#23606a; --petrol-500:#2f7a85;
+  --sand-50:#faf8f3; --sand-100:#f4f0e6; --sand-200:#e8e2d2; --sand-300:#d8cfba;
+  --amber-600:#b06a24; --amber-500:#c47f33; --amber-100:#f3e4d0;
+  --ink-900:#22303a; --ink-700:#3c4a52; --ink-500:#5d6b72; --ink-300:#8b969b;
+  --rust:#9c4a2f; --olive:#6b7a3a; --gold:#a8842c; --slate:#4d6b74;
+  --line:#e0dacb; --card:#ffffff;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--sand-50);color:var(--ink-900);line-height:1.62;font-size:16px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--amber-500),var(--petrol-500));z-index:200;transition:width .1s linear}
+.layout{display:flex;min-height:100vh}
+/* ---------- Sidebar ---------- */
+.sidebar{width:292px;flex:0 0 292px;background:var(--petrol-900);color:#cfe0dd;position:sticky;top:0;height:100vh;overflow-y:auto;padding:26px 0 40px;z-index:100}
+.sidebar::-webkit-scrollbar{width:6px}.sidebar::-webkit-scrollbar-thumb{background:var(--petrol-600);border-radius:3px}
+.brand{padding:0 24px 18px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:16px}
+.brand .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-500);font-weight:700}
+.brand h1{font-size:17px;line-height:1.35;color:#f2efe7;font-weight:700;margin-top:6px}
+.brand .v{font-size:11.5px;color:#9db8b3;margin-top:8px}
+.search{padding:0 24px 14px}
+.search input{width:100%;background:var(--petrol-800);border:1px solid var(--petrol-600);color:#eef4f2;border-radius:6px;padding:8px 11px;font-size:13px;outline:none}
+.search input::placeholder{color:#8aa6a1}
+.search .meta{font-size:11px;color:#8aa6a1;margin-top:6px;min-height:14px}
+nav.toc a{display:flex;gap:10px;padding:7px 24px;color:#bdd2cd;text-decoration:none;font-size:13px;border-left:3px solid transparent;line-height:1.35}
+nav.toc a .n{color:var(--amber-500);font-weight:700;font-size:11.5px;min-width:22px;padding-top:1px}
+nav.toc a:hover{background:var(--petrol-800);color:#fff}
+nav.toc a.active{background:var(--petrol-800);border-left-color:var(--amber-500);color:#fff}
+mark{background:var(--amber-100);color:var(--rust);padding:0 1px;border-radius:2px}
+/* ---------- Main ---------- */
+.main{flex:1;min-width:0;padding:0 0 90px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 40px}
+.hero{background:linear-gradient(135deg,var(--petrol-900) 0%,var(--petrol-700) 78%,var(--petrol-600) 100%);color:#f4f1e8;padding:64px 0 54px;margin-bottom:38px}
+.hero .wrap{max-width:1060px}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-500);font-weight:700;margin-bottom:14px}
+.hero h1{font-family:Georgia,"Times New Roman",serif;font-size:38px;line-height:1.18;font-weight:700;max-width:850px;color:#faf7ef}
+.hero .sub{margin-top:16px;font-size:16.5px;color:#c9dcd6;max-width:820px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-size:12px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#e8efe9;padding:4px 11px;border-radius:20px}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:4px;vertical-align:middle}
+.badge.b-approved{background:#e2ecdc;color:#4a6320}
+.badge.b-version{background:var(--amber-100);color:var(--amber-600)}
+.badge.b-new{background:#dceae4;color:#1f5c46}
+.badge.b-ren{background:#efe6d2;color:#8a6420}
+.badge.b-ext{background:#e2e7ee;color:#3c567a}
+.badge.b-dep{background:#f0ded6;color:#8f4a30}
+.badge.b-gov{background:#e6e0ef;color:#5a4880}
+h2.sec{font-family:Georgia,"Times New Roman",serif;font-size:28px;color:var(--petrol-800);margin:64px 0 8px;padding-top:26px;border-top:2px solid var(--sand-200)}
+.secno{color:var(--amber-600);font-size:15px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:8px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+h3{font-size:20px;color:var(--petrol-700);margin:34px 0 10px}
+h4{font-size:16px;color:var(--ink-900);margin:24px 0 8px}
+p{margin:12px 0;max-width:78ch}
+ul,ol{margin:12px 0 12px 22px;max-width:76ch}
+li{margin:5px 0}
+.lede{font-size:17.5px;color:var(--ink-700);max-width:80ch}
+a{color:var(--petrol-600)}
+/* citation superscripts */
+a.cite{font-size:11px;text-decoration:none;color:var(--amber-600);font-weight:700;vertical-align:super;margin:0 1px;white-space:nowrap}
+a.cite:hover{text-decoration:underline}
+/* callouts */
+.tldr,.callout,.warn,.gov-note{border-radius:8px;padding:18px 22px;margin:22px 0;border:1px solid var(--line);background:var(--card)}
+.tldr{border-left:4px solid var(--petrol-600);background:#f2f6f4}
+.callout{border-left:4px solid var(--amber-500);background:#fbf6ee}
+.warn{border-left:4px solid var(--rust);background:#faf1ec}
+.gov-note{border-left:4px solid #7a68a6;background:#f4f2f9}
+.tldr .t,.callout .t,.warn .t,.gov-note .t{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.tldr .t{color:var(--petrol-600)}.callout .t{color:var(--amber-600)}.warn .t{color:var(--rust)}.gov-note .t{color:#6a5896}
+/* stat cards */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 18px;text-align:center}
+.stat .num{font-family:Georgia,serif;font-size:34px;font-weight:700;line-height:1.1}
+.stat .lbl{font-size:12px;color:var(--ink-500);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.stat.s-kept .num{color:var(--slate)}.stat.s-ren .num{color:var(--gold)}.stat.s-ext .num{color:#3c567a}.stat.s-dep .num{color:var(--rust)}.stat.s-new .num{color:#1f5c46}.stat.s-tot .num{color:var(--petrol-700)}
+/* tables */
+.tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+caption{text-align:left;font-size:12.5px;color:var(--ink-500);padding:10px 14px 0;font-style:italic}
+th{background:var(--petrol-800);color:#eef2ec;text-align:left;padding:10px 12px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--sand-200);vertical-align:top}
+tr:nth-child(even) td{background:#fbf9f4}
+td .badge{font-size:10px;padding:2px 7px}
+.dot{font-size:15px}.d-full{color:#1f5c46}.d-part{color:var(--amber-600)}.d-none{color:#b9b2a2}
+/* chevron strip */
+.chevrons{display:flex;flex-wrap:wrap;gap:4px;margin:22px 0}
+.chev{flex:1 1 150px;min-width:140px;background:var(--petrol-700);color:#eef2ec;padding:12px 14px 12px 20px;font-size:12.5px;line-height:1.35;position:relative;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%);margin-right:-6px}
+.chev:first-child{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%)}
+.chev .cn{display:block;font-size:10.5px;color:var(--amber-500);font-weight:800;letter-spacing:.1em}
+.chev.alt{background:var(--petrol-600)}
+.chev.hl{background:var(--amber-600);color:#fdf6ec}
+.chev.hl .cn{color:#fbe3c6}
+/* codebox readouts */
+.codebox{background:var(--petrol-900);color:#cfe0d8;border-radius:8px;padding:18px 20px;overflow-x:auto;margin:20px 0;font-family:var(--mono);font-size:12.5px;line-height:1.55;white-space:pre}
+.codebox .cm{color:#7d9a94}
+/* taxonomy tiles */
+.pgroup{margin:26px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+.pgroup > header{background:linear-gradient(90deg,var(--petrol-800),var(--petrol-700));color:#eef2ec;padding:13px 18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pgroup > header .gnum{font-family:Georgia,serif;font-size:20px;color:var(--amber-500);font-weight:700}
+.pgroup > header .gname{font-size:15.5px;font-weight:700}
+.pgroup > header .gcount{margin-left:auto;font-size:12px;color:#b9cfc9}
+.pgroup .gdesc{padding:10px 18px;font-size:13px;color:var(--ink-500);border-bottom:1px solid var(--sand-200);background:#fbf9f4}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:0}
+.tile{padding:11px 14px;border-right:1px solid var(--sand-200);border-bottom:1px solid var(--sand-200);font-size:13px;line-height:1.4}
+.tile .tn{font-weight:600;color:var(--ink-900)}
+.tile .badge{margin-left:6px}
+.tile .note{display:block;font-size:11.5px;color:var(--ink-500);margin-top:4px}
+/* capability cards */
+.capgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:20px 0}
+.cap{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--petrol-600);border-radius:8px;padding:16px 18px}
+.cap .cid{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--amber-600)}
+.cap h4{margin:4px 0 8px;font-size:15px}
+.cap p,.cap ul{font-size:13px;margin:6px 0}
+.cap ul{margin-left:18px}
+/* channel cards */
+.changrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin:20px 0}
+.chan{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+.chan h4{margin:0 0 4px;font-size:15.5px;color:var(--petrol-800)}
+.chan .tagline{font-size:12px;color:var(--amber-600);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.chan dl{font-size:13px;margin:0}
+.chan dt{font-weight:700;color:var(--ink-700);margin-top:8px;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.chan dd{margin:2px 0 0}
+/* exception cards */
+.scen{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--rust);border-radius:8px;padding:16px 20px;margin:16px 0}
+.scen.cand{border-left-color:var(--gold)}
+.scen h4{margin:0 0 6px;font-size:15px}
+.scen .sid{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--rust)}
+.scen.cand .sid{color:var(--gold)}
+.scen p,.scen ul{font-size:13.5px}
+/* refs */
+ol.refs{margin-left:0;list-style:none;max-width:none}
+ol.refs li{font-size:13px;margin:8px 0;padding-left:52px;position:relative;color:var(--ink-700)}
+ol.refs li .rid{position:absolute;left:0;top:0;font-weight:800;color:var(--amber-600);font-size:12px}
+ol.refs li:target{background:var(--amber-100);border-radius:4px}
+footer{margin-top:70px;padding:26px 40px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-500)}
+.legend{font-size:12px;color:var(--ink-500);margin:10px 0}
+.legend .badge{margin-right:4px}
+@media(max-width:980px){.sidebar{display:none}.wrap{padding:0 22px}.hero h1{font-size:29px}}
+@media print{
+  .sidebar,#progress{display:none}
+  body{background:#fff;font-size:11.5pt}
+  .hero{background:#fff;color:#000;padding:20px 0;border-bottom:3px solid var(--petrol-800)}
+  .hero h1,.hero .sub{color:#000}
+  .chip{border-color:#999;color:#333}
+  h2.sec{page-break-before:always;border-top:none}
+  .pgroup,.scen,.cap,.chan,.stat,.tldr,.callout,.warn,.gov-note{page-break-inside:avoid}
+  .chev{clip-path:none;border:1px solid #999;margin:2px 0}
+  th{position:static}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="layout">
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="k">Downstream Oil &amp; Gas</div>
+    <h1>Order-to-Cash Operational Blueprint &amp; Process Taxonomy</h1>
+    <div class="v">v1.1 · 2026-08-11 · Commercial &amp; Marketing — all channels</div>
+  </div>
+  <div class="search">
+    <input id="searchBox" type="text" placeholder="Search document…  (Enter = next)">
+    <div class="meta" id="searchMeta"></div>
+  </div>
+  <nav class="toc" id="toc">
+    <a href="#s00"><span class="n">00</span>Executive Orientation</a>
+    <a href="#s01"><span class="n">01</span>From Generic to Downstream: Taxonomy Redline</a>
+    <a href="#s02"><span class="n">02</span>Downstream O2C Process Taxonomy — 10 Groups / 64 Processes</a>
+    <a href="#s03"><span class="n">03</span>End-to-End Value Stream &amp; the Custody-Event Spine</a>
+    <a href="#s04"><span class="n">04</span>Integrated O2C Capability Map</a>
+    <a href="#s05"><span class="n">05</span>Measurement &amp; Master-Data Baseline</a>
+    <a href="#s06"><span class="n">06</span>Channel Operating Patterns</a>
+    <a href="#s07"><span class="n">07</span>System Landscape &amp; Integration Architecture</a>
+    <a href="#s08"><span class="n">08</span>Operational Exceptions &amp; Risk Management</a>
+    <a href="#s09"><span class="n">09</span>Design Principles, Thresholds &amp; Caveats</a>
+    <a href="#refs"><span class="n">R</span>References</a>
+    <a href="#trace"><span class="n">T</span>Source Traceability</a>
+  </nav>
+</aside>
+<!-- ================= MAIN ================= -->
+<main class="main" id="doc">
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Enterprise Architecture · Operational Finance</div>
+    <h1>Order-to-Cash in Downstream Oil &amp; Gas: Operational Blueprint and Downstream-Native Process Taxonomy</h1>
+    <p class="sub">A production-ready reference covering B2B Commercial &amp; Industrial, Wholesale/Rack, Retail Station Networks, Lubricants, Aviation, and Marine — updated with the governed downstream redline of the generic O2C process taxonomy: <strong>10 Level&nbsp;1 process groups and 64 Level&nbsp;2 processes</strong>, with Measurement &amp; Custody Transfer elevated to a first-class process group.</p>
+    <div class="chips">
+      <span class="chip">6 commercial channels</span>
+      <span class="chip">10 Level 1 groups</span>
+      <span class="chip">64 Level 2 processes</span>
+      <span class="chip">12-stage value stream</span>
+      <span class="chip">9 capability pillars</span>
+      <span class="chip">8 exception scenarios</span>
+      <span class="chip">57 cited sources</span>
+    </div>
+    <div style="margin-top:20px">
+      <span class="badge b-approved">Production-ready</span>
+      <span class="badge b-version">v1.1 — taxonomy redline integrated</span>
+      <span class="badge b-gov">Governance decision 2026-08-09</span>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+<!-- ============ SECTION 00 ============ -->
+<h2 class="sec" id="s00"><span class="secno">00</span>Executive Orientation</h2>
+<p class="lede">Order-to-Cash in downstream oil &amp; gas is not a generic AR workflow. Revenue is anchored to a <strong>custody-transfer event</strong> on a fungible bulk product; the billed quantity is the output of a governed measurement and volume-correction chain (TOV → GOV → GSV → NSV) rather than a counted unit; the price is usually derived from a published index (OPIS, Platts, Argus, DTN) with formula differentials; and the tax point is fixed by excise law — at the terminal rack in the U.S., or under duty-suspension movement control (EMCS) in the EU — not by the commercial invoice alone.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R28">[R28]</a><a class="cite" href="#ref-R30">[R30]</a><a class="cite" href="#ref-R56">[R56]</a></p>
+<div class="tldr">
+  <div class="t">What this v1.1 update changes</div>
+  <ul>
+    <li><strong>Replaces the generic 9-group / 46-process O2C taxonomy</strong> with the governed downstream redline: <strong>10 Level&nbsp;1 groups, 64 Level&nbsp;2 processes</strong> — 36 kept, 5 renamed, 4 extended, 1 deprioritized, 18 new (§01, §02).</li>
+    <li><strong>Elevates “Measure &amp; Custody Transfer” to its own Level&nbsp;1 group</strong> between Order &amp; Fulfillment and Billing, mirroring the blueprint's standalone Measure/Title chevron — a formal governance decision of 2026-08-09 (§01.3).</li>
+    <li><strong>Augments the approved baseline</strong> with a capability × channel heat map (§04.2), a canonical GOV/GSV/NSV measurement baseline (§05.1), a canonical Downstream Movement Identity (§05.3), failure-mode analysis for every integration point (§07.2), a retail-channel exception scenario (§08), and quantified governance thresholds (§09).</li>
+    <li><strong>Repositions MDM as the first O2C process group</strong> and governance as a cross-cutting control plane rather than a detached support pillar (§04.3).</li>
+  </ul>
+</div>
+<p>The document is organized as a reference blueprint: the taxonomy redline first (what changed against the generic model and why), then the full 64-process taxonomy, then the operational content — value stream, capabilities, measurement and master data, channel patterns, integration, exceptions — each section citing primary and industry sources. The final two sections provide the design principles and quantified thresholds for implementation governance, the full reference list, and traceability back to every input document.</p>
+<div class="callout">
+  <div class="t">Scope note — production use</div>
+  <p style="margin:0">This is a production-oriented architecture document. Companion materials prepared for personal homelab/data-engineering experimentation (synthetic data generation, local semantic-stack pilots) were reviewed for taxonomy and domain-model content but are deliberately <strong>out of scope</strong> here; every operational, regulatory, and market claim in this document is grounded in the cited external sources listed in the References.</p>
+</div>
+
+<!-- ============ SECTION 01 ============ -->
+<h2 class="sec" id="s01"><span class="secno">01</span>From Generic to Downstream: Taxonomy Redline</h2>
+<h3>1.1 Why the generic O2C taxonomy fails downstream</h3>
+<p>The generic Order-to-Cash process taxonomy — nine Level&nbsp;1 groups (Master Data Mgmt, Quote &amp; Sale, Credit &amp; Risk, Order &amp; Fulfillment, Billing, Receipt, Collection, Dispute, Close) covering 46 Level&nbsp;2 processes — is built on assumptions that hold for discrete manufacturing and retail but break in bulk hydrocarbon commerce:</p>
+<div class="tablewrap"><table>
+<caption>Table 1.1 — Generic O2C assumptions vs. downstream hydrocarbon reality</caption>
+<thead><tr><th style="width:26%">Generic assumption</th><th>Downstream reality</th><th style="width:30%">Where it lands in the taxonomy</th></tr></thead>
+<tbody>
+<tr><td>Quantity is counted in discrete units at shipment</td><td>Quantity is <strong>measured</strong> at custody transfer — meters, tank gauges, mass-flow meters — then corrected to standard conditions (GOV→GSV→NSV per API MPMS 11.1 / ASTM D1250).<a class="cite" href="#ref-R56">[R56]</a><a class="cite" href="#ref-R58">[R58]</a></td><td>New Level&nbsp;1 group <strong>Measure &amp; Custody Transfer</strong> (§02, group 5)</td></tr>
+<tr><td>Price is a static master-data lookup</td><td>Price is <strong>index-derived</strong> (OPIS rack averages, Platts/Argus assessments, DTN) plus formula differentials, with snapshot elections, provisional-to-final repricing, and intraday rack changes.<a class="cite" href="#ref-R30">[R30]</a></td><td>Extended <em>Maintain Price &amp; Discount Master</em>; formula/snapshot governance in Billing</td></tr>
+<tr><td>“Tax” is a generic indirect-tax determination</td><td>Motor-fuel <strong>excise</strong> with position-holder liability at the terminal rack, dyed-vs-clear fuel rules, Form 637 registration, ExSTARS/720-TO reporting, RIN generation, and EU EMCS duty-suspension movements.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R25">[R25]</a><a class="cite" href="#ref-R27">[R27]</a><a class="cite" href="#ref-R28">[R28]</a></td><td>Renamed tax processes (×2); new RIN and excise-filing processes</td></tr>
+<tr><td>Fulfillment = pick/pack/ship</td><td>Fulfillment is a <strong>nomination-schedule-lift</strong> cycle through terminal gates and loading racks under a Terminal Automation System, plus into-plane and bunker delivery variants.<a class="cite" href="#ref-R2">[R2]</a><a class="cite" href="#ref-R54">[R54]</a></td><td>Renamed <em>Capture &amp; Validate Nomination</em>, <em>Manage Terminal Lifting &amp; Gate Operations</em></td></tr>
+<tr><td>Counterparties are customers</td><td>Downstream adds <strong>exchange partners</strong> (buy/sell, borrow/loan, in-lieu netting) whose liftings and imbalances settle outside a normal sale.<a class="cite" href="#ref-R47">[R47]</a><a class="cite" href="#ref-R49">[R49]</a></td><td>New exchange-agreement, exchange-lifting, exchange-netting processes</td></tr>
+<tr><td>Returns are a standard reverse-logistics flow</td><td>Bulk fuel is effectively never “returned”; returns survive only in packaged <strong>lubricants</strong>.</td><td><em>Manage Returns</em> deprioritized — lubricants-only</td></tr>
+<tr><td>Disputes are invoice deductions</td><td>Downstream adds <strong>quantity/quality custody claims</strong> — bunker quantity disputes, rack meter variances — triggered at receipt (e.g., a marine note of protest), not only post-invoice.<a class="cite" href="#ref-R16">[R16]</a><a class="cite" href="#ref-R17">[R17]</a></td><td>New <em>Manage Quantity/Quality Claims (Custody Disputes)</em></td></tr>
+</tbody>
+</table></div>
+
+<h3>1.2 Redline dispositions at a glance</h3>
+<div class="stats">
+  <div class="stat s-kept"><div class="num">36</div><div class="lbl">Kept unchanged</div></div>
+  <div class="stat s-ren"><div class="num">5</div><div class="lbl">Renamed</div></div>
+  <div class="stat s-ext"><div class="num">4</div><div class="lbl">Extended</div></div>
+  <div class="stat s-dep"><div class="num">1</div><div class="lbl">Deprioritized</div></div>
+  <div class="stat s-new"><div class="num">18</div><div class="lbl">New downstream</div></div>
+  <div class="stat s-tot"><div class="num">64</div><div class="lbl">Total L2 processes</div></div>
+</div>
+<p class="legend"><strong>Legend used throughout §02:</strong> <span class="badge b-new">New</span> added by the 2026-08-09 redline · <span class="badge b-ren">Renamed</span> generic process renamed for downstream precision · <span class="badge b-ext">Extended</span> scope widened with downstream attributes · <span class="badge b-dep">Deprioritized</span> retained for one channel only · unbadged tiles are kept unchanged from the generic model.</p>
+
+<h3>1.3 Renamed, extended, and deprioritized processes</h3>
+<div class="tablewrap"><table>
+<caption>Table 1.2 — The five renames: downstream precision replaces generic vocabulary</caption>
+<thead><tr><th style="width:28%">Generic process</th><th style="width:32%">Downstream redline</th><th>Rationale</th></tr></thead>
+<tbody>
+<tr><td>Maintain Tax Master</td><td><span class="badge b-ren">Renamed</span> <strong>Maintain Excise &amp; Environmental Credit Master</strong></td><td>The dominant tax content is motor-fuel excise (federal/state), dyed-fuel status, and environmental credits (RIN D-codes, §45Z-type incentives) — not generic indirect tax.<a class="cite" href="#ref-R24">[R24]</a></td></tr>
+<tr><td>Capture &amp; Validate Order</td><td><span class="badge b-ren">Renamed</span> <strong>Capture &amp; Validate Nomination</strong></td><td>The operable commercial object is the nomination: line items assigned to shipping documents, sent to the partner, confirmed or rejected by the carrier (SAP TSW nomination semantics).<a class="cite" href="#ref-R2">[R2]</a></td></tr>
+<tr><td>Manage Fulfillment</td><td><span class="badge b-ren">Renamed</span> <strong>Manage Terminal Lifting &amp; Gate Operations</strong></td><td>Fulfillment happens at the terminal: gate entry, vehicle pre-authorization, loading-bay assignment and queuing — Terminal Automation System scope.<a class="cite" href="#ref-R54">[R54]</a></td></tr>
+<tr><td>Determine Taxability &amp; Record Tax Liabilities</td><td><span class="badge b-ren">Renamed</span> <strong>Determine Excise/Motor Fuel Tax Liability &amp; Dye Status</strong></td><td>Determination must resolve dyed vs. clear diesel, federal/state excise layers, and RIN D-code position — decisions that drive both liability and legal fuel use.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R26">[R26]</a></td></tr>
+<tr><td>Reconcile Indirect Tax</td><td><span class="badge b-ren">Renamed</span> <strong>Reconcile Excise, Environmental Credit &amp; Indirect Tax</strong></td><td>Close-time reconciliation spans excise returns, environmental credit positions (RIN), and residual indirect tax.<a class="cite" href="#ref-R27">[R27]</a></td></tr>
+</tbody>
+</table></div>
+<div class="tablewrap"><table>
+<caption>Table 1.3 — The four extensions and the single deprioritization</caption>
+<thead><tr><th style="width:30%">Process</th><th style="width:12%">Disposition</th><th>Downstream extension</th></tr></thead>
+<tbody>
+<tr><td>Maintain Product Master</td><td><span class="badge b-ext">Extended</span></td><td>Adds dye status, API gravity/density defaults, UoM conversion group, and RIN D-code eligibility to the product record.<a class="cite" href="#ref-R56">[R56]</a></td></tr>
+<tr><td>Allocate &amp; Release Order</td><td><span class="badge b-ext">Extended</span></td><td>Stock Projection Worksheet, Location Balancing, and Three-Way Pegging (SAP TSW supply/demand allocation).<a class="cite" href="#ref-R2">[R2]</a></td></tr>
+<tr><td>Track &amp; Forecast Order</td><td><span class="badge b-ext">Extended</span></td><td>Worklist and Berth Planning Board for marine scheduling visibility.</td></tr>
+<tr><td>Perform Revenue Accounting</td><td><span class="badge b-ext">Extended</span></td><td>Two-step plant-to-plant transfer profit/loss postings; exchange-agreement accounting treatment.<a class="cite" href="#ref-R48">[R48]</a></td></tr>
+<tr><td>Manage Returns</td><td><span class="badge b-dep">Deprioritized</span></td><td>Low relevance for bulk fuel; retained for the <strong>lubricants</strong> channel only.</td></tr>
+</tbody>
+</table></div>
+
+<div class="gov-note" id="s01-3">
+  <div class="t">Governance decision 2026-08-09 — a tenth Level 1 group</div>
+  <p style="margin:0"><strong>Measure &amp; Custody Transfer</strong> was elevated from a candidate addition inside Order &amp; Fulfillment to its own Level&nbsp;1 process group, by explicit governance decision, to mirror this blueprint's separate <em>Measure/Title</em> chevron in the end-to-end value stream (§03). The group holds the two processes that convert a physical event into a billable, taxable quantity: <em>Perform Custody Transfer &amp; Quantity/Quality Determination</em> and <em>Issue Custody Transfer Documentation (Bill of Lading / Bunker Delivery Note)</em>. In downstream operations this event — not the invoice — anchors title transfer, excise liability, revenue recognition, and the evidence chain for disputes.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R38">[R38]</a></p>
+</div>
+<!-- ============ SECTION 02 ============ -->
+<h2 class="sec" id="s02"><span class="secno">02</span>Downstream O2C Process Taxonomy — 10 Groups / 64 Processes</h2>
+<p class="lede">The complete downstream-native taxonomy. Group order follows the value stream: master data first, commercial formation, risk, physical fulfillment, the measurement/custody gate, then the financial chain from billing through close. Process names preserve the governed taxonomy wording verbatim.</p>
+
+<div class="pgroup">
+<header><span class="gnum">1</span><span class="gname">Master Data Management</span><span class="gcount">8 processes</span></header>
+<div class="gdesc">The first O2C process group, not a detached support pillar: every downstream control — pricing formulas, excise determination, quantity conversion, terminal eligibility — consumes this master data. Governance applies through ownership, change workflows, and provenance on each object.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Maintain Customer Master</span><span class="note">Party-centered model: organizations, relationships, hierarchies, identifiers, roles.</span></div>
+  <div class="tile"><span class="tn">Maintain Price &amp; Discount Master</span><span class="note">Index references, differentials, snapshot elections, effective-dated rack formulas.<a class="cite" href="#ref-R30">[R30]</a></span></div>
+  <div class="tile"><span class="tn">Maintain Product Master</span><span class="badge b-ext">Extended</span><span class="note">Dye status, API gravity/density defaults, UoM conversion group, RIN D-code eligibility.<a class="cite" href="#ref-R56">[R56]</a></span></div>
+  <div class="tile"><span class="tn">Maintain Excise &amp; Environmental Credit Master</span><span class="badge b-ren">Renamed</span><span class="note">Excise rates/registrations (Form 637), RIN and environmental credit parameters.<a class="cite" href="#ref-R25">[R25]</a></span></div>
+  <div class="tile"><span class="tn">Maintain Workflows</span><span class="note">Approval chains and delegation rules across all O2C groups.</span></div>
+  <div class="tile"><span class="tn">Maintain Terminal &amp; Location Master (incl. TCN)</span><span class="badge b-new">New</span><span class="note">TSW location/transport-system objects; IRS Terminal Control Number directory for excise-valid racks.<a class="cite" href="#ref-R27">[R27]</a></span></div>
+  <div class="tile"><span class="tn">Maintain Exchange Partner Master</span><span class="badge b-new">New</span><span class="note">Counterparties in exchange / borrow-loan agreements.<a class="cite" href="#ref-R47">[R47]</a></span></div>
+  <div class="tile"><span class="tn">Maintain Quantity Conversion/UoM Rules</span><span class="badge b-new">New</span><span class="note">QCI conversion groups; API/ASTM standard routines for volume correction.<a class="cite" href="#ref-R56">[R56]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">2</span><span class="gname">Quote &amp; Sale</span><span class="gcount">8 processes</span></header>
+<div class="gdesc">Commercial formation: contracts carry terminal eligibility, index + differential pricing, and channel-specific terms — including the exchange agreements that move product without a standalone sale.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Maintain Commercial Policies</span></div>
+  <div class="tile"><span class="tn">Establish Commercial Terms &amp; Contracts</span><span class="note">Product, terminal eligibility, index + differential, tax handling, Incoterms/laycan where relevant.<a class="cite" href="#ref-R6">[R6]</a><a class="cite" href="#ref-R43">[R43]</a></span></div>
+  <div class="tile"><span class="tn">Define Financing &amp; Payment Methods</span></div>
+  <div class="tile"><span class="tn">Issue Quotes &amp; Renewals</span></div>
+  <div class="tile"><span class="tn">Develop &amp; Monitor Revenue Plan</span></div>
+  <div class="tile"><span class="tn">Analyze Customer Profitability</span></div>
+  <div class="tile"><span class="tn">Establish &amp; Manage Exchange Agreements</span><span class="badge b-new">New</span><span class="note">Buy/sell, borrow/loan, in-lieu (LIA) netting agreements; imbalance cash-out terms.<a class="cite" href="#ref-R47">[R47]</a><a class="cite" href="#ref-R49">[R49]</a></span></div>
+  <div class="tile"><span class="tn">Negotiate Channel-Specific Agreements (DODO/CODO/Jobber)</span><span class="badge b-new">New</span><span class="note">Retail channel-type agreements; includes carrier access agreements for rack lifting.<a class="cite" href="#ref-R35">[R35]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">3</span><span class="gname">Credit &amp; Risk</span><span class="gcount">7 processes</span></header>
+<div class="gdesc">Credit exposure accrues intraday in volumetric terms: a single rack lift or bunker stem can move six figures of product before any invoice exists. Limits, assurance instruments, and blocks must operate at lifting speed.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Maintain Credit Policies</span></div>
+  <div class="tile"><span class="tn">Establish Credit Limit &amp; Risk Code</span></div>
+  <div class="tile"><span class="tn">Monitor Credit Against Limit</span><span class="note">Near-real-time exposure: open orders + unbilled liftings + open AR, re-rated at index moves.</span></div>
+  <div class="tile"><span class="tn">Review Credit Limit and Risk Code</span></div>
+  <div class="tile"><span class="tn">Analyze Portfolio Credit Risk</span></div>
+  <div class="tile"><span class="tn">Perform Customer Closure and Reinstatement</span></div>
+  <div class="tile"><span class="tn">Issue &amp; Manage Letters of Credit</span><span class="badge b-new">New</span><span class="note">Document-triggered payment assurance for large cargo transactions.<a class="cite" href="#ref-R45">[R45]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">4</span><span class="gname">Order &amp; Fulfillment</span><span class="gcount">8 processes</span></header>
+<div class="gdesc">A nomination-schedule-lift cycle: commercial intent is nominated, allocated against supply, and physically executed at terminal gates, loading racks, airport aprons, and bunker barges — under terminal automation control.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Capture &amp; Validate Nomination</span><span class="badge b-ren">Renamed</span><span class="note">TSW nomination object: line items assigned to shipping docs; carrier confirms/rejects.<a class="cite" href="#ref-R2">[R2]</a></span></div>
+  <div class="tile"><span class="tn">Allocate &amp; Release Order</span><span class="badge b-ext">Extended</span><span class="note">Stock Projection Worksheet, Location Balancing, Three-Way Pegging.<a class="cite" href="#ref-R2">[R2]</a></span></div>
+  <div class="tile"><span class="tn">Track &amp; Forecast Order</span><span class="badge b-ext">Extended</span><span class="note">Worklist and Berth Planning Board (marine scheduling).</span></div>
+  <div class="tile"><span class="tn">Change/Cancel Order</span></div>
+  <div class="tile"><span class="tn">Manage Terminal Lifting &amp; Gate Operations</span><span class="badge b-ren">Renamed</span><span class="note">Gate entry, vehicle pre-authorization, bay assignment/queuing — TAS scope.<a class="cite" href="#ref-R54">[R54]</a></span></div>
+  <div class="tile"><span class="tn">Manage Returns</span><span class="badge b-dep">Deprioritized</span><span class="note">Retained for the lubricants channel only.</span></div>
+  <div class="tile"><span class="tn">Execute Exchange Lifting (Borrow/Loan)</span><span class="badge b-new">New</span><span class="note">Physical lifting under an exchange/borrow-loan agreement, not a standalone sale.<a class="cite" href="#ref-R47">[R47]</a></span></div>
+  <div class="tile"><span class="tn">Authorize &amp; Fulfill Into-Plane/Bunker Delivery</span><span class="badge b-new">New</span><span class="note">Aviation into-plane pre-authorization; marine bunker delivery fulfillment.<a class="cite" href="#ref-R6">[R6]</a><a class="cite" href="#ref-R43">[R43]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">5</span><span class="gname">Measure &amp; Custody Transfer</span><span class="gcount">2 processes</span></header>
+<div class="gdesc"><strong>New Level 1 group (governance decision 2026-08-09).</strong> The physical-to-financial gate: measured volumes are corrected to standard conditions, quality is certified, and the custody document that anchors title, tax, and revenue is issued.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Perform Custody Transfer &amp; Quantity/Quality Determination</span><span class="badge b-new">New</span><span class="note">GOV/GSV/NSV conversion via QCI; API MPMS 11.1 / ASTM D1250 volume correction; meter proving; quality certification.<a class="cite" href="#ref-R56">[R56]</a><a class="cite" href="#ref-R58">[R58]</a></span></div>
+  <div class="tile"><span class="tn">Issue Custody Transfer Documentation (Bill of Lading / Bunker Delivery Note)</span><span class="badge b-new">New</span><span class="note">Rack BOL issuance; marine variant is the MARPOL Annex VI-mandated BDN; e-BDN regimes emerging.<a class="cite" href="#ref-R38">[R38]</a><a class="cite" href="#ref-R41">[R41]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">6</span><span class="gname">Billing</span><span class="gcount">7 processes</span></header>
+<div class="gdesc">Billing consumes the custody document, the quantity-correction result, and the index-price formula — and is where excise liability, dye status, RIN generation, and exchange netting are settled onto the invoice.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Create &amp; Distribute Bill</span></div>
+  <div class="tile"><span class="tn">Perform Accounting for Self-Billing</span><span class="note">Evaluated receipt settlement where the customer's receiving record drives invoicing.</span></div>
+  <div class="tile"><span class="tn">Determine Excise/Motor Fuel Tax Liability &amp; Dye Status</span><span class="badge b-ren">Renamed</span><span class="note">Dyed vs. clear diesel; federal/state excise; position-holder liability at the rack; RIN D-code.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R24">[R24]</a></span></div>
+  <div class="tile"><span class="tn">Create Exception Invoice</span><span class="note">Re-rating, provisional-to-final price settlement, retroactive index corrections.</span></div>
+  <div class="tile"><span class="tn">Generate &amp; Report RIN Credits</span><span class="badge b-new">New</span><span class="note">EPA Renewable Identification Number generation and reporting.</span></div>
+  <div class="tile"><span class="tn">File Federal &amp; State Motor Fuel Excise Tax Returns (Form 720/State Equivalents)</span><span class="badge b-new">New</span><span class="note">Form 720, 720-TO terminal operator reports, state motor-fuel returns.<a class="cite" href="#ref-R24">[R24]</a><a class="cite" href="#ref-R27">[R27]</a></span></div>
+  <div class="tile"><span class="tn">Bill Exchange Partner Netting (LIA/Borrow-Loan)</span><span class="badge b-new">New</span><span class="note">In-lieu/LIA and borrow-loan settlement billing; imbalance cash-out.<a class="cite" href="#ref-R47">[R47]</a><a class="cite" href="#ref-R49">[R49]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">7</span><span class="gname">Receipt</span><span class="gcount">7 processes</span></header>
+<div class="gdesc">Cash lands against high-value, index-priced invoices with channel-specific remittance formats — including fleet-card networks and document-triggered LC payments for cargo-scale trades.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Receive Payments</span></div>
+  <div class="tile"><span class="tn">Receive Remittance Advice</span></div>
+  <div class="tile"><span class="tn">Apply Receipts</span></div>
+  <div class="tile"><span class="tn">Manage Unapplied Receipts</span></div>
+  <div class="tile"><span class="tn">Perform Reconciliations &amp; Settlements</span></div>
+  <div class="tile"><span class="tn">Reconcile Fuel/Fleet Card Transactions</span><span class="badge b-new">New</span><span class="note">Fleet-card network settlement reconciliation (e.g., WEX-type programs) against site sales.<a class="cite" href="#ref-R33">[R33]</a></span></div>
+  <div class="tile"><span class="tn">Process LC Document Presentation &amp; Bank Payment</span><span class="badge b-new">New</span><span class="note">Document-triggered payment: SPA → LC issuance → shipment → document presentation → bank payment.<a class="cite" href="#ref-R45">[R45]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">8</span><span class="gname">Collection</span><span class="gcount">5 processes</span></header>
+<div class="gdesc">Kept unchanged from the generic model — the downstream specificity sits in what is being collected (large index-priced invoices, often secured by LCs or prepayment) rather than in the collection mechanics themselves.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Establish Collection Targets</span></div>
+  <div class="tile"><span class="tn">Analyze AR Aging</span></div>
+  <div class="tile"><span class="tn">Execute Collections</span></div>
+  <div class="tile"><span class="tn">Negotiate Settlements</span></div>
+  <div class="tile"><span class="tn">Initiate Legal Action</span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">9</span><span class="gname">Dispute</span><span class="gcount">6 processes</span></header>
+<div class="gdesc">Beyond invoice deductions: custody quantity/quality claims enter at physical receipt — a bunker barge figure dispute, a rack meter variance — with their own evidence chain and time bars.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Validate Deductions</span></div>
+  <div class="tile"><span class="tn">Receive &amp; Validate Queries</span></div>
+  <div class="tile"><span class="tn">Create Credit Memo/Charge Back</span></div>
+  <div class="tile"><span class="tn">Perform Appeasements</span></div>
+  <div class="tile"><span class="tn">Develop Root Cause Analysis &amp; Action Plan</span></div>
+  <div class="tile"><span class="tn">Manage Quantity/Quality Claims (Custody Disputes)</span><span class="badge b-new">New</span><span class="note">Bunker/rack/pipeline claims; receipt-time triggers (e.g., marine note of protest); survey evidence.<a class="cite" href="#ref-R16">[R16]</a><a class="cite" href="#ref-R19">[R19]</a><a class="cite" href="#ref-R60">[R60]</a></span></div>
+</div>
+</div>
+
+<div class="pgroup">
+<header><span class="gnum">10</span><span class="gname">Close</span><span class="gcount">6 processes</span></header>
+<div class="gdesc">The downstream close is three reconciliations deep: financial AR, physical stock (book vs. tank dip), and exchange-balance positions — plus the excise and environmental-credit ledger.</div>
+<div class="tiles">
+  <div class="tile"><span class="tn">Perform Revenue Accounting</span><span class="badge b-ext">Extended</span><span class="note">Two-step plant-to-plant transfer P/L postings; exchange accounting treatment.<a class="cite" href="#ref-R48">[R48]</a></span></div>
+  <div class="tile"><span class="tn">Process Bad Debt</span></div>
+  <div class="tile"><span class="tn">Close AR Sub Ledger</span></div>
+  <div class="tile"><span class="tn">Reconcile Excise, Environmental Credit &amp; Indirect Tax</span><span class="badge b-ren">Renamed</span><span class="note">Excise returns vs. liability ledger; RIN position; residual indirect tax.<a class="cite" href="#ref-R27">[R27]</a></span></div>
+  <div class="tile"><span class="tn">Reconcile Tank/Silo Book Stock to Physical Inventory</span><span class="badge b-new">New</span><span class="note">Tank-dip vs. book-stock control; gains/losses investigated against tolerance.<a class="cite" href="#ref-R55">[R55]</a></span></div>
+  <div class="tile"><span class="tn">Close Exchange Balance/Netting Position</span><span class="badge b-new">New</span><span class="note">Periodic exchange imbalance settlement and position close-out.<a class="cite" href="#ref-R47">[R47]</a><a class="cite" href="#ref-R49">[R49]</a></span></div>
+</div>
+</div>
+<!-- ============ SECTION 03 ============ -->
+<h2 class="sec" id="s03"><span class="secno">03</span>End-to-End Value Stream &amp; the Custody-Event Spine</h2>
+<p class="lede">The Level&nbsp;1 value stream remains the approved 12-stage chevron. The taxonomy redline now aligns one-to-one with it: the <em>Measure/Title</em> chevron (stage 7) is exactly the new Measure &amp; Custody Transfer process group, and master data stands as stage 1 rather than a back-office afterthought.</p>
+<div class="chevrons">
+  <div class="chev"><span class="cn">01</span>Master Data Foundations</div>
+  <div class="chev alt"><span class="cn">02</span>Commercial Terms &amp; Contracts</div>
+  <div class="chev"><span class="cn">03</span>Credit Assessment &amp; Limits</div>
+  <div class="chev alt"><span class="cn">04</span>Nomination Capture &amp; Validation</div>
+  <div class="chev"><span class="cn">05</span>Allocation, Scheduling &amp; Release</div>
+  <div class="chev alt"><span class="cn">06</span>Terminal Lifting &amp; Gate Operations</div>
+  <div class="chev hl"><span class="cn">07</span>Measurement &amp; Custody Transfer</div>
+  <div class="chev alt"><span class="cn">08</span>Billing, Pricing &amp; Tax Determination</div>
+  <div class="chev"><span class="cn">09</span>Receipt &amp; Cash Application</div>
+  <div class="chev alt"><span class="cn">10</span>Collections &amp; Risk Recovery</div>
+  <div class="chev"><span class="cn">11</span>Disputes &amp; Custody Claims</div>
+  <div class="chev alt"><span class="cn">12</span>Close, Reconciliation &amp; Reporting</div>
+</div>
+<p>Governance runs across all twelve stages as a control plane — ownership, SoD, provenance, tolerance thresholds, and audit evidence — rather than as a thirteenth stage.</p>
+<h3>3.1 The custody-event spine: one logical chain, six evidentiary variants</h3>
+<p>Every channel executes the same logical chain — a custody event produces a measurement, the measurement is corrected to a standard quantity, the quantity is priced and taxed, and cash follows. What changes by channel is the <strong>evidentiary document</strong> and the custody point:</p>
+<div class="codebox"><span class="cm"># Custody-event spine — channel evidentiary variants</span>
+
+CHANNEL                CUSTODY EVENT                    EVIDENCE DOCUMENT              QUANTITY BASIS
+---------------------  -------------------------------  -----------------------------  ------------------------------
+B2B C&amp;I               Truck/rail delivery at site      ePOD + meter/ticket            Delivered NSV (corrected)
+Wholesale / Rack       Truck loading at terminal rack   Rack BOL (TAS-issued)          Metered NSV @ 60°F          <a class="cite" href="#ref-R54">[R54]</a>
+Retail Station         Daily POS / wetstock close       POS close + ATG reconciliation Gallons sold vs. tank variance
+Lubricants             Packaged/bulk shipment + CoA     Delivery note + Certificate    Counted units / bulk NSV
+Aviation               Into-plane fueling at apron      Fuel ticket (e-ticket)         Metered litres/USG @ 15°C    <a class="cite" href="#ref-R6">[R6]</a><a class="cite" href="#ref-R9">[R9]</a>
+Marine                 Bunker barge-to-vessel transfer  Bunker Delivery Note (BDN)     MFM mass / sounding volume  <a class="cite" href="#ref-R38">[R38]</a><a class="cite" href="#ref-R40">[R40]</a>
+
+CHAIN:  Custody Event → Measured Quantity (observed) → Corrected Quantity (GSV/NSV)
+        → Index Price × Formula → Excise/Tax Determination → Invoice → Cash → Reconciliation</div>
+<div class="callout">
+  <div class="t">Architectural control principle — evidence preservation</div>
+  <p style="margin:0">No correction, re-rating, or restatement may destroy original evidence. Planned, observed, and corrected quantities — and every price/tax snapshot — are preserved with full lineage; corrections create new records chained to the original event ID, never overwrites. This principle is what makes custody disputes (§08) and excise audits answerable from data rather than from email.<a class="cite" href="#ref-R16">[R16]</a><a class="cite" href="#ref-R27">[R27]</a></p>
+</div>
+
+<!-- ============ SECTION 04 ============ -->
+<h2 class="sec" id="s04"><span class="secno">04</span>Integrated O2C Capability Map</h2>
+<h3>4.1 Two reconciled views of the same domain</h3>
+<p>The blueprint deliberately maintains two aligned structures. The <strong>process taxonomy</strong> (§02) is the governed operational backbone: 10 groups / 64 processes, owned and versioned as process architecture. The <strong>capability map</strong> below is the enterprise-architecture view: nine capability pillars (QC, CR, OM, IB, RC, DM, CM, MDM, GV) used for application rationalization, investment mapping, and system-landscape alignment (§07). They do not conflict: every capability pillar decomposes into Level&nbsp;2 processes, and the two “pillar-only” entries — MDM and Governance — map onto the taxonomy as its first process group and its cross-cutting control plane respectively.</p>
+<div class="tablewrap"><table>
+<caption>Table 4.1 — Capability pillar ↔ process taxonomy reconciliation</caption>
+<thead><tr><th style="width:8%">Pillar</th><th style="width:30%">Capability pillar (EA view)</th><th style="width:34%">Maps to process group(s)</th><th>Reconciliation note</th></tr></thead>
+<tbody>
+<tr><td>MDM</td><td>Master Data Management</td><td>Group 1 — Master Data Management (8)</td><td>1:1 — MDM is both an EA pillar and the taxonomy's first process group.</td></tr>
+<tr><td>QC</td><td>Quote &amp; Commercial Management</td><td>Group 2 — Quote &amp; Sale (8)</td><td>Includes exchange agreements and channel-specific (DODO/CODO/Jobber) agreements.</td></tr>
+<tr><td>CR</td><td>Credit &amp; Risk Management</td><td>Group 3 — Credit &amp; Risk (7)</td><td>Adds LC lifecycle as a downstream assurance instrument.<a class="cite" href="#ref-R45">[R45]</a></td></tr>
+<tr><td>OM</td><td>Order/Nomination &amp; Fulfillment Management</td><td>Group 4 — Order &amp; Fulfillment (8)</td><td>Nomination-centric; TAS gate operations in scope.<a class="cite" href="#ref-R54">[R54]</a></td></tr>
+<tr><td>—</td><td><em>(absorbed into OM/IB in the EA view)</em></td><td><strong>Group 5 — Measure &amp; Custody Transfer (2)</strong></td><td>Taxonomy-only group: measurement is a process responsibility shared by OM and IB capabilities but governed as its own group.</td></tr>
+<tr><td>IB</td><td>Invoicing, Billing &amp; Tax Determination</td><td>Group 6 — Billing (7)</td><td>Excise/RIN/exchange-netting billing variants.</td></tr>
+<tr><td>RC</td><td>Receipts &amp; Cash Application</td><td>Group 7 — Receipt (7)</td><td>Adds fleet-card and LC document-presentation receipt paths.<a class="cite" href="#ref-R33">[R33]</a></td></tr>
+<tr><td>DM</td><td>Dispute &amp; Claims Management</td><td>Group 9 — Dispute (6)</td><td>Adds custody quantity/quality claims.<a class="cite" href="#ref-R16">[R16]</a></td></tr>
+<tr><td>CM</td><td>Collections &amp; Close/Accounting</td><td>Groups 8 + 10 — Collection (5), Close (6)</td><td>Close adds stock and exchange-balance reconciliations.<a class="cite" href="#ref-R55">[R55]</a></td></tr>
+<tr><td>GV</td><td>Governance &amp; Compliance Control Plane</td><td><em>Cross-cutting — all 10 groups</em></td><td>Governance is not a peer process group: it operates through ownership, SoD, provenance, tolerances, and audit evidence on every object and event.</td></tr>
+</tbody>
+</table></div>
+
+<h3>4.2 Capability × channel heat map</h3>
+<p>Capability intensity differs sharply by channel — the reason a single generic O2C template cannot serve all six. <span class="dot d-full">●</span> core/defining &nbsp; <span class="dot d-part">◐</span> material &nbsp; <span class="dot d-none">○</span> light/none.</p>
+<div class="tablewrap"><table>
+<caption>Table 4.2 — Capability intensity by channel</caption>
+<thead><tr><th style="width:30%">Capability</th><th>B2B C&amp;I</th><th>Wholesale/Rack</th><th>Retail</th><th>Lubricants</th><th>Aviation</th><th>Marine</th></tr></thead>
+<tbody>
+<tr><td>Index/formula pricing &amp; re-rating</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-full">●</td></tr>
+<tr><td>Credit exposure at lifting speed</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-none">○</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-full">●</td></tr>
+<tr><td>Nomination &amp; scheduling (TSW/TAS)</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-full">●</td></tr>
+<tr><td>Custody measurement &amp; volume correction</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-full">●</td></tr>
+<tr><td>Excise / dyed-fuel / RIN determination</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-full">●</td><td class="dot d-none">○</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td></tr>
+<tr><td>Exchange / borrow-loan netting</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td></tr>
+<tr><td>Fleet-card / POS settlement</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-full">●</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-none">○</td></tr>
+<tr><td>Into-plane / bunker delivery documents</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-full">●</td><td class="dot d-full">●</td></tr>
+<tr><td>LC / trade-finance settlement</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-none">○</td><td class="dot d-none">○</td><td class="dot d-part">◐</td><td class="dot d-full">●</td></tr>
+<tr><td>Custody quantity/quality claims</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-part">◐</td><td class="dot d-part">◐</td><td class="dot d-full">●</td><td class="dot d-full">●</td></tr>
+</tbody>
+</table></div>
+<p class="legend">Reading: marine and wholesale/rack carry the densest capability load; retail concentrates on POS/fleet settlement and network agreements; lubricants is the only channel where returns and packaged-goods logistics remain material. Sources: channel operating patterns §06 and cited references therein.</p>
+
+<h3>4.3 Governance as the control plane</h3>
+<p>Governance in this blueprint is implemented, not aspirational. Every governed object — customer, contract, price formula, terminal, custody document, KPI — carries an explicit <strong>governance record</strong>: owner, status (proposed/approved/deprecated), provenance, and the validation gates it must pass before release. Customer data is modeled party-centrically (organizations and persons engaging in relationships, roles, hierarchies, and identifiers), which is what allows one legal entity to appear as customer, exchange partner, carrier, and consignee without master-data duplication. Segregation-of-duties rules attach to process assignments (e.g., who may release a credit block vs. who may lift), and KPI candidates are promoted to approved KPIs only through the same governance path. These mechanisms are what the taxonomy's badges trace back to: the 2026-08-09 redline is itself a governance record.</p>
+<!-- ============ SECTION 05 ============ -->
+<h2 class="sec" id="s05"><span class="secno">05</span>Measurement &amp; Master-Data Baseline</h2>
+<h3>5.1 The canonical quantity chain: TOV → GOV → GSV → NSV</h3>
+<p>The single most consequential master-data object in downstream O2C is the <strong>quantity conversion rule</strong> — it turns a physical reading into the billable, taxable quantity. The chain is standardized across the industry and implemented in quantity-conversion engines (SAP QCI and equivalent):<a class="cite" href="#ref-R56">[R56]</a></p>
+<div class="tablewrap"><table>
+<caption>Table 5.1 — Volume correction chain (liquid hydrocarbons)</caption>
+<thead><tr><th style="width:14%">Quantity</th><th style="width:34%">Definition</th><th>Correction applied</th></tr></thead>
+<tbody>
+<tr><td><strong>TOV</strong></td><td>Total Observed Volume</td><td>Raw tank/meter reading at observed conditions, before any correction.</td></tr>
+<tr><td><strong>GOV</strong></td><td>Gross Observed Volume</td><td>TOV minus free water and sediment; at observed temperature/pressure.</td></tr>
+<tr><td><strong>GSV</strong></td><td>Gross Standard Volume</td><td>GOV × VCF (volume correction factor, CTPL) to standard conditions — 60°F / 15°C — per API MPMS 11.1 / ASTM D1250 / ISO 91-1; GPA TP-27 for NGL/LPG.<a class="cite" href="#ref-R56">[R56]</a><a class="cite" href="#ref-R58">[R58]</a></td></tr>
+<tr><td><strong>NSV</strong></td><td>Net Standard Volume</td><td>GSV minus sediment &amp; water (S&amp;W) deduction — the commercial billing quantity for crude and many product trades.</td></tr>
+<tr><td><strong>Mass</strong></td><td>Weight in air vs. vacuum</td><td>Explicit air/vacuum flag on the ticket; marine MFM delivers mass directly (SS 648 / MPA regimes).<a class="cite" href="#ref-R40">[R40]</a></td></tr>
+</tbody>
+</table></div>
+<p>Billing, excise reporting (gallons at standard conditions for U.S. rack removals), and stock reconciliation must all consume the <em>same</em> corrected figure — which is why quantity conversion is governed master data (taxonomy process 1.8) and why the measurement event is its own process group.<a class="cite" href="#ref-R24">[R24]</a></p>
+
+<h3>5.2 Cross-cutting master-data baseline</h3>
+<div class="tablewrap"><table>
+<caption>Table 5.2 — Master-data entities that make or break downstream O2C</caption>
+<thead><tr><th style="width:22%">Entity</th><th>Downstream-critical content</th><th style="width:34%">Failure mode if wrong</th></tr></thead>
+<tbody>
+<tr><td>Customer / Party</td><td>Party-centric identity: legal entity, relationships, hierarchies, roles (customer, exchange partner, carrier, consignee), tax registrations and exemption certificates with expiry.</td><td>Duplicate accounts, misapplied exemptions, credit exposure fragmented across aliases.</td></tr>
+<tr><td>Product</td><td>Dye status, API gravity/density defaults, UoM conversion group, RIN D-code eligibility, spec version.<a class="cite" href="#ref-R56">[R56]</a></td><td>Wrong VCF → wrong billable quantity; wrong dye status → excise violation.<a class="cite" href="#ref-R23">[R23]</a></td></tr>
+<tr><td>Terminal / Location</td><td>Terminal Control Number (TCN), rack bays, tank inventory linkage, transport-system topology.<a class="cite" href="#ref-R27">[R27]</a></td><td>Excise-invalid liftings; nominations pointed at non-existent supply points.</td></tr>
+<tr><td>Price formula</td><td>Index reference (OPIS/Platts/Argus/DTN), snapshot election, differential schedule, effective dates, version.<a class="cite" href="#ref-R30">[R30]</a></td><td>Wrong-day pricing, un-auditable re-rating, margin leakage.</td></tr>
+<tr><td>Excise &amp; credit master</td><td>Form 637 registrations, position-holder status, state rate tables, RIN/credit parameters.<a class="cite" href="#ref-R25">[R25]</a></td><td>Assessment-scale excise errors; Form 720 mismatches.<a class="cite" href="#ref-R24">[R24]</a></td></tr>
+<tr><td>Exchange partner</td><td>Agreement terms, imbalance tolerances, cash-out mechanics.<a class="cite" href="#ref-R47">[R47]</a></td><td>Unbillable imbalances; partner disputes without contractual anchor.</td></tr>
+<tr><td>Quantity conversion rules</td><td>QCI conversion groups, API/ASTM routine versions, rounding rules.<a class="cite" href="#ref-R56">[R56]</a></td><td>Systematic quantity bias across every invoice — the costliest master-data error class.</td></tr>
+</tbody>
+</table></div>
+
+<h3>5.3 The canonical Downstream Movement Identity</h3>
+<div class="callout">
+  <div class="t">Design artifact — one identity for every movement</div>
+  <p>Every physical movement that can become financial carries a single canonical identity spanning its commercial, physical, fiscal, and evidentiary dimensions. Sixteen fields, one key:</p>
+  <ol style="font-size:13.5px">
+    <li>Movement ID (immutable)</li><li>Contract / agreement ID</li><li>Order / nomination ID</li><li>Origin location (terminal / rack / tank)</li><li>Destination (customer site / vessel / aircraft)</li><li>Product + specification version</li><li>Carrier / driver / compartment</li><li>Observed volume, density, temperature</li><li>Standard volume / mass (corrected)</li><li>Meter ID + proving reference</li><li>Tax point + tax role (e.g., position holder)</li><li>Price formula + version + index snapshot</li><li>Custody document reference (BOL / ticket / ePOD / BDN)</li><li>Quality certificate reference</li><li>Original-event ID (for corrections)</li><li>Correction sequence number</li>
+  </ol>
+  <p style="margin-bottom:0">Fields 15–16 implement the evidence-preservation principle of §03.1: corrections chain, they never overwrite.</p>
+</div>
+
+<!-- ============ SECTION 06 ============ -->
+<h2 class="sec" id="s06"><span class="secno">06</span>Channel Operating Patterns</h2>
+<p class="lede">One spine, six operating patterns. Each card states the custody evidence, pricing mechanics, fiscal treatment, and the taxonomy processes that carry the channel's weight.</p>
+<div class="changrid">
+<div class="chan">
+  <h4>B2B Commercial &amp; Industrial</h4>
+  <div class="tagline">Contract + delivered reliability</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>ePOD with metered/ticket quantity; VMI telemetry for vendor-managed tanks.</dd>
+    <dt>Pricing</dt><dd>Index + differential on contract (Platts/Argus/OPIS references), snapshot at delivery or lifting.<a class="cite" href="#ref-R30">[R30]</a></dd>
+    <dt>Fiscal</dt><dd>Excise determined at rack removal (position holder); delivered duty-paid variants.<a class="cite" href="#ref-R23">[R23]</a></dd>
+    <dt>Heavy processes</dt><dd>Credit at lifting speed; custody determination; excise determination; bulk-stock reconciliation.</dd>
+  </dl>
+</div>
+<div class="chan">
+  <h4>Wholesale / Rack</h4>
+  <div class="tagline">The excise point of the industry</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>TAS-issued rack Bill of Lading with metered NSV at 60°F.<a class="cite" href="#ref-R54">[R54]</a></dd>
+    <dt>Pricing</dt><dd>Posted rack (OPIS/DTN rack averages) with intraday changes, freezes, and formula discounts.<a class="cite" href="#ref-R30">[R30]</a></dd>
+    <dt>Fiscal</dt><dd>Federal/state motor-fuel excise at rack removal; TCN-valid terminals; ExSTARS / Form 720-TO reporting; dyed-diesel controls.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R26">[R26]</a><a class="cite" href="#ref-R27">[R27]</a></dd>
+    <dt>Heavy processes</dt><dd>Nomination validation; gate operations; exchange liftings; excise filing.</dd>
+  </dl>
+</div>
+<div class="chan">
+  <h4>Retail Station Networks</h4>
+  <div class="tagline">Network agreements + daily close</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>Daily POS close reconciled to ATG wetstock; consignment vs. dealer-owned inventory split.</dd>
+    <dt>Pricing</dt><dd>Dealer tank wagon / consignment commission models; franchise (PMPA) constraints on branded supply.<a class="cite" href="#ref-R35">[R35]</a></dd>
+    <dt>Fiscal</dt><dd>Excise already embedded in supply price; retail-side fuels excise claims rare; card-network fee structures.<a class="cite" href="#ref-R33">[R33]</a></dd>
+    <dt>Heavy processes</dt><dd>Channel agreements (DODO/CODO/Jobber); fleet-card reconciliation; consignment shrink settlement (EX-06).<a class="cite" href="#ref-R34">[R34]</a></dd>
+  </dl>
+</div>
+<div class="chan">
+  <h4>Lubricants</h4>
+  <div class="tagline">The packaged-goods outlier</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>Delivery note + Certificate of Analysis; counted units for packaged goods.</dd>
+    <dt>Pricing</dt><dd>Price lists with discounts — closest to generic O2C of the six channels.</dd>
+    <dt>Fiscal</dt><dd>Standard indirect tax; excise generally not applicable to finished lubes.</dd>
+    <dt>Heavy processes</dt><dd>The only channel retaining <em>Manage Returns</em>; quality claims via CoA.</dd>
+  </dl>
+</div>
+<div class="chan">
+  <h4>Aviation</h4>
+  <div class="tagline">Into-plane, ticket by ticket</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>Fuel ticket per fueling (increasingly electronic), flight/tail reference, metered volume at 15°C.<a class="cite" href="#ref-R6">[R6]</a><a class="cite" href="#ref-R9">[R9]</a></dd>
+    <dt>Pricing</dt><dd>Contract formula on jet index; AFSMA model terms; IATA settlement rails for airline accounting.<a class="cite" href="#ref-R6">[R6]</a><a class="cite" href="#ref-R7">[R7]</a></dd>
+    <dt>Fiscal</dt><dd>Exemption certificates (international flights), uplift duty regimes by jurisdiction.</dd>
+    <dt>Heavy processes</dt><dd>Into-plane authorization; ticket-to-invoice matching; exemption-certificate governance.</dd>
+  </dl>
+</div>
+<div class="chan">
+  <h4>Marine</h4>
+  <div class="tagline">The BDN is law</div>
+  <dl>
+    <dt>Custody evidence</dt><dd>Bunker Delivery Note — MARPOL Annex VI-mandated content; mass-flow meter (MFM) delivery figures in mandated ports; e-BDN regimes emerging (Singapore SS 709).<a class="cite" href="#ref-R38">[R38]</a><a class="cite" href="#ref-R40">[R40]</a><a class="cite" href="#ref-R41">[R41]</a></dd>
+    <dt>Pricing</dt><dd>Bunker index / spot + barge and delivery costs; credit terms short and fragile.<a class="cite" href="#ref-R45">[R45]</a></dd>
+    <dt>Fiscal</dt><dd>Bunker fuels generally excise-exempt at sea; quality/quantity claims time-barred under contract terms.<a class="cite" href="#ref-R43">[R43]</a><a class="cite" href="#ref-R60">[R60]</a></dd>
+    <dt>Heavy processes</dt><dd>Bunker delivery fulfillment; BDN issuance; custody claims with survey evidence.<a class="cite" href="#ref-R16">[R16]</a><a class="cite" href="#ref-R19">[R19]</a></dd>
+  </dl>
+</div>
+</div>
+<!-- ============ SECTION 07 ============ -->
+<h2 class="sec" id="s07"><span class="secno">07</span>System Landscape &amp; Integration Architecture</h2>
+<h3>7.1 The billing and compliance spine: TAS ↔ ERP</h3>
+<p>Downstream O2C runs on a split system landscape: the <strong>Terminal Automation System</strong> (TAS — e.g., Toptech TMS7, Implico OpenTAS, DTN TABS, Yokogawa) owns the physical event — gate, bay, meter, BOL — while the <strong>ERP hydrocarbon stack</strong> (SAP HPM/QCI/TD/TSW/EXG or equivalent bulk-stock platforms) owns quantity conversion, pricing, tax, billing, and accounting.<a class="cite" href="#ref-R54">[R54]</a><a class="cite" href="#ref-R14">[R14]</a><a class="cite" href="#ref-R2">[R2]</a><a class="cite" href="#ref-R55">[R55]</a> Real-time, bidirectional integration between the two is the single highest-value interface in the landscape: the BOL that the TAS prints is the invoice the ERP builds. Vendor names are illustrative, not prescriptive; the architecture is tool-neutral. Landscape guardrails for ECC→S/4 transitions follow the vendor's published maintenance and compatibility-pack timelines.<a class="cite" href="#ref-R59">[R59]</a></p>
+<h3>7.2 Integration catalog with failure modes</h3>
+<div class="tablewrap"><table>
+<caption>Table 7.1 — Fifteen integration points that carry O2C, with the operational failure mode if each breaks</caption>
+<thead><tr><th style="width:7%">ID</th><th style="width:24%">From → To</th><th style="width:30%">Content</th><th style="width:13%">Latency target</th><th>Failure mode if broken</th></tr></thead>
+<tbody>
+<tr><td>INT-01</td><td>MDM → ERP / TAS</td><td>Customer, product, terminal, tax master</td><td>Event-driven</td><td>Liftings blocked or billed against stale master data</td></tr>
+<tr><td>INT-02</td><td>Index feeds (OPIS/Platts/DTN) → Pricing</td><td>Daily/intraday index values</td><td>On publication</td><td>Wrong-day pricing; un-auditable manual overrides<a class="cite" href="#ref-R30">[R30]</a></td></tr>
+<tr><td>INT-03</td><td>ERP Order → TAS</td><td>Authorized nominations, credit status token</td><td>Near-real-time</td><td>Truck denied at rack; or worse, lifted on expired credit</td></tr>
+<tr><td>INT-04</td><td>TAS → ERP (BOL/ticket)</td><td>Custody ticket: observed + standard quantity</td><td>&lt; 1 min</td><td>Unbilled inventory leaves the terminal</td></tr>
+<tr><td>INT-05</td><td>Meter/QCI engine → ERP</td><td>VCF, conversion results, proving refs</td><td>Per ticket</td><td>Systematic quantity error on every invoice<a class="cite" href="#ref-R56">[R56]</a></td></tr>
+<tr><td>INT-06</td><td>ERP → Tax engine</td><td>Excise determination requests (dye status, TCN)</td><td>Per document</td><td>Excise mis-assessment at the tax point<a class="cite" href="#ref-R23">[R23]</a></td></tr>
+<tr><td>INT-07</td><td>ERP → Excise reporting (ExSTARS/state)</td><td>Form 720 / 720-TO / state filings</td><td>Periodic</td><td>Filing mismatches against terminal-operator reports<a class="cite" href="#ref-R27">[R27]</a></td></tr>
+<tr><td>INT-08</td><td>TAS/POS → Retail back office</td><td>POS close, ATG wetstock, fleet-card files</td><td>Daily</td><td>Shrink invisible; consignment commission unsettled<a class="cite" href="#ref-R33">[R33]</a></td></tr>
+<tr><td>INT-09</td><td>Into-plane system → ERP</td><td>Fuel tickets with flight/tail refs</td><td>Minutes</td><td>Unbilled uplifts; exemption-certificate gaps<a class="cite" href="#ref-R9">[R9]</a></td></tr>
+<tr><td>INT-10</td><td>Bunker platform/MFM → ERP</td><td>BDN data, MFM totals</td><td>Per delivery</td><td>Quantity claims without evidence; e-BDN non-compliance<a class="cite" href="#ref-R40">[R40]</a><a class="cite" href="#ref-R41">[R41]</a></td></tr>
+<tr><td>INT-11</td><td>Exchange module ↔ Partners</td><td>Lifting confirmations, imbalance statements</td><td>Daily/weekly</td><td>Uncollectible imbalances; netting disputes<a class="cite" href="#ref-R47">[R47]</a></td></tr>
+<tr><td>INT-12</td><td>Banks / lockbox → ERP</td><td>Receipts, remittance advice</td><td>Same day</td><td>Unapplied cash; phantom overdue AR blocks good customers</td></tr>
+<tr><td>INT-13</td><td>LC banks / trade finance ↔ ERP</td><td>LC issuance, document presentation, payment</td><td>Document events</td><td>Payment not triggered despite compliant shipment<a class="cite" href="#ref-R45">[R45]</a></td></tr>
+<tr><td>INT-14</td><td>ERP → Data platform</td><td>Ticket, invoice, exposure, stock facts</td><td>Hourly</td><td>KPIs (DSO, unbilled age) blind between snapshots</td></tr>
+<tr><td>INT-15</td><td>ERP ↔ Inventory/stock reconciliation</td><td>Book vs. physical stock movements</td><td>Daily</td><td>Book-stock drift; gains/losses found months late<a class="cite" href="#ref-R55">[R55]</a></td></tr>
+</tbody>
+</table></div>
+<h3>7.3 Integration control requirements</h3>
+<ul>
+  <li><strong>Immutable ticket store</strong> — custody documents are append-only; corrections chain to the original event (§03.1, §05.3).</li>
+  <li><strong>Exactly-once billing keys</strong> — one custody document bills once; re-delivery of a ticket never re-invoices.</li>
+  <li><strong>Clock synchronization</strong> — terminal, ERP, and banking clocks aligned; index snapshots are timestamped against the contract's election.</li>
+  <li><strong>Credit-token expiry</strong> — rack authorizations carry short-lived credit tokens; a stale token fails closed, not open.</li>
+  <li><strong>Index-snapshot immutability</strong> — the index value used for a price event is stored with the invoice, version-locked to the price formula.</li>
+  <li><strong>Idempotent excise determination</strong> — the tax engine's answer for a given ticket is deterministic and replayable for audit.<a class="cite" href="#ref-R23">[R23]</a></li>
+</ul>
+
+<!-- ============ SECTION 08 ============ -->
+<h2 class="sec" id="s08"><span class="secno">08</span>Operational Exceptions &amp; Risk Management</h2>
+<p class="lede">Exceptions are engineered as first-class flows with reason codes, tolerances, and owners — not as inbox firefighting. EX-01…EX-05 are the canonical set; EX-06 adds the retail channel gap; EX-07/EX-08 are promoted candidates.</p>
+<div class="scen"><span class="sid">EX-01 · Canonical</span><h4>Credit hold at the rack during an active lifting window</h4><p>A jobber's exposure crosses limit mid-day after an index move; TAS authorization tokens must be revoked in near-real-time or trucks keep lifting. Control: intraday volumetric exposure engine, short-lived credit tokens (INT-03), fail-closed authorization, exception queue for same-day release decisions.</p></div>
+<div class="scen"><span class="sid">EX-02 · Canonical</span><h4>Rack price change mid-cycle</h4><p>Posted rack prices change intraday while liftings are in progress; contract snapshot elections decide which postings apply. Control: immutable index snapshots (INT-02), formula-version governance, automated re-rating for affected tickets with full lineage.<a class="cite" href="#ref-R30">[R30]</a></p></div>
+<div class="scen"><span class="sid">EX-03 · Canonical</span><h4>Marine MFM vs. vessel figure dispute</h4><p>Barge MFM total vs. vessel soundings differ; the BDN is signed under protest. Control: MFM-mandate compliance (Singapore SS 648; Rotterdam and Antwerp-Bruges from 1 Jan 2026), independent bunker quantity surveys, note-of-protest workflow feeding Manage Quantity/Quality Claims.<a class="cite" href="#ref-R16">[R16]</a><a class="cite" href="#ref-R40">[R40]</a><a class="cite" href="#ref-R42">[R42]</a></p></div>
+<div class="scen"><span class="sid">EX-04 · Canonical</span><h4>Aviation ticket mismatch and exemption-certificate gaps</h4><p>Fuel tickets without matching flight references, or exempt uplifts billed with tax. Control: ticket-to-flight matching at capture (INT-09), certificate master with expiry, exception invoicing for retroactive corrections.<a class="cite" href="#ref-R6">[R6]</a></p></div>
+<div class="scen"><span class="sid">EX-05 · Canonical</span><h4>Dyed-fuel diversion and dye-status errors</h4><p>Dyed (untaxed) diesel entering taxed channels, or dye status misdetermined at the rack — an assessment-scale excise risk. Control: dye status as product-master attribute, deterministic excise engine (INT-06), terminal/position-holder reporting reconciled to Form 720-TO; refund mechanics per the new §6435 guidance where applicable.<a class="cite" href="#ref-R23">[R23]</a><a class="cite" href="#ref-R26">[R26]</a><a class="cite" href="#ref-R27">[R27]</a></p></div>
+<div class="scen cand"><span class="sid">EX-06 · Added — closes the retail channel gap</span><h4>Retail consignment shrink and commission settlement gap</h4><p>ATG wetstock vs. pump-totalizer variance on consigned sites; commission settlement is held until variance is cleared. Control: daily POS/ATG reconciliation (INT-08), shrink tolerance per site, settlement workflow keyed to variance clearance — the retail expression of book-to-physical reconciliation (process 10.5).<a class="cite" href="#ref-R34">[R34]</a></p></div>
+<div class="scen cand"><span class="sid">EX-07 · Candidate</span><h4>Loss/gain beyond measurement tolerance</h4><p>Terminal or in-transit gains/losses exceeding tolerance (working thresholds: ~±0.2% petrol, ~±0.15% diesel) trigger halt-and-remediate before further liftings. Control: book-to-physical reconciliation with tolerance gates (INT-15), meter proving re-verification, root-cause workflow (process 9.5).<a class="cite" href="#ref-R55">[R55]</a><a class="cite" href="#ref-R57">[R57]</a></p></div>
+<div class="scen cand"><span class="sid">EX-08 · Candidate</span><h4>Provisional-to-final price restatement</h4><p>Index-linked deals invoice provisionally, then restate at final assessment; mass restatements stress billing and credit. Control: exception-invoice flow (process 6.4), re-rating batch controls, exposure re-rated at final prices.</p></div>
+<div class="tablewrap"><table>
+<caption>Table 8.1 — Risk-to-control matrix (summary)</caption>
+<thead><tr><th style="width:26%">Risk</th><th style="width:30%">Primary control</th><th style="width:22%">Governance hook</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Unbilled liftings</td><td>TAS→ERP real-time ticket flow (INT-04)</td><td>Unbilled-lift age KPI, daily</td><td>Ticket ↔ invoice match report</td></tr>
+<tr><td>Excise mis-assessment</td><td>Deterministic tax engine + master data</td><td>Freeze billing automation above error threshold (§09)</td><td>720/720-TO reconciliation<a class="cite" href="#ref-R27">[R27]</a></td></tr>
+<tr><td>Quantity disputes</td><td>Evidence-preserving movement identity</td><td>Custody dispute rate per lifting</td><td>Ticket lineage + survey pack<a class="cite" href="#ref-R16">[R16]</a></td></tr>
+<tr><td>Exchange imbalance leakage</td><td>Imbalance statements + netting close</td><td>Exchange position KPI at close</td><td>Partner confirmations<a class="cite" href="#ref-R47">[R47]</a></td></tr>
+<tr><td>Retail shrink</td><td>POS/ATG daily reconciliation</td><td>Site variance tolerance</td><td>Wetstock exception log<a class="cite" href="#ref-R34">[R34]</a></td></tr>
+</tbody>
+</table></div>
+
+<!-- ============ SECTION 09 ============ -->
+<h2 class="sec" id="s09"><span class="secno">09</span>Design Principles, Thresholds &amp; Caveats</h2>
+<h3>9.1 Design principles for the target architecture</h3>
+<ol>
+  <li><strong>Anchor on the hydrocarbon-capable core</strong> — bulk-stock inventory, quantity conversion, and secondary distribution are not optional modules; a generic ERP retrofit fails at measurement and excise.<a class="cite" href="#ref-R2">[R2]</a><a class="cite" href="#ref-R55">[R55]</a></li>
+  <li><strong>Externalize the tax engine</strong> — excise rates, rules, and filings change faster than release cycles; determination belongs in a governed, replayable service.</li>
+  <li><strong>Treat TAS↔ERP integration as the highest-value interface</strong> — real-time and bidirectional, with the controls of §07.3.</li>
+  <li><strong>Engineer exceptions as first-class flows</strong> — reason codes, tolerances, owners, and SLAs for every EX scenario.</li>
+  <li><strong>Govern master data before go-live</strong> — product UoM conversion groups, terminal/TCN master, and tax registrations cannot be corrected cheaply after stock and history are posted.<a class="cite" href="#ref-R56">[R56]</a></li>
+  <li><strong>Stage the rollout</strong> — start with the wholesale/rack pilot (densest capability load, clearest custody evidence), then extend to C&I, retail, and the specialty channels.</li>
+</ol>
+<h3>9.2 Quantified governance thresholds</h3>
+<div class="warn">
+  <div class="t">Automation guardrails — measurable tripwires</div>
+  <ul style="margin-bottom:0">
+    <li><strong>Loss/gain tolerance:</strong> halt-and-remediate above ~±0.2% (petrol) / ~±0.15% (diesel) book-to-physical variance (EX-07).</li>
+    <li><strong>Tax determination:</strong> freeze billing automation if excise-determination errors exceed audit thresholds; replayable determination is a release gate.<a class="cite" href="#ref-R23">[R23]</a></li>
+    <li><strong>Credit at the rack:</strong> do not automate rack authorization unless credit-block latency is near-real-time (INT-03).</li>
+    <li><strong>Candidate KPIs under governance:</strong> DSO; billing cycle time / OTIF on NSV; dispute-to-cash leakage rate; unbilled lift age; custody-transfer quantity variance (GOV vs. GSV/NSV); custody dispute rate per lifting — promoted to approved KPIs only through the governance record path (§04.3).</li>
+  </ul>
+</div>
+<h3>9.3 Regulatory and market caveats to carry forward</h3>
+<ul>
+  <li><strong>Marine MFM mandates spread:</strong> Singapore has required mass-flow metering for bunker deliveries since 2017 (SS 648:2024 current; e-BDN default under SS 709); Rotterdam and Antwerp-Bruges mandates take effect 1 January 2026 — bunker O2C designs must be MFM-native in those ports.<a class="cite" href="#ref-R40">[R40]</a><a class="cite" href="#ref-R41">[R41]</a></li>
+  <li><strong>U.S. excise rates and rails:</strong> federal rates per IRS Publication 510 (e.g., 18.4¢/gal gasoline, 24.4¢/gal diesel, 0.1¢/gal LUST), position-holder liability at the rack, ExSTARS/720-TO reporting, and the new §6435 dyed-fuel refund method announced in 2026 guidance.<a class="cite" href="#ref-R24">[R24]</a><a class="cite" href="#ref-R26">[R26]</a><a class="cite" href="#ref-R27">[R27]</a></li>
+  <li><strong>EU excise movements:</strong> duty-suspension movements run under EMCS (e-AD/ARC) per Directive (EU) 2020/262; Energy Taxation Directive revision remains in legislative progress — monitor for rate and scope changes.<a class="cite" href="#ref-R28">[R28]</a><a class="cite" href="#ref-R29">[R29]</a></li>
+  <li><strong>Index selection is a commercial decision with compliance exposure:</strong> Argus/Platts assessments are spot-market references while OPIS/DTN rack reports are wholesale rack references — mixing them in a formula is a pricing error, and algorithmic pricing posture is now an antitrust enforcement focus for the sector.<a class="cite" href="#ref-R30">[R30]</a><a class="cite" href="#ref-R37">[R37]</a></li>
+  <li><strong>Retail franchise and pricing-law exposure:</strong> PMPA franchise protections for branded dealers and emerging state pricing statutes (e.g., California AB 325) constrain retail price-setting mechanics.<a class="cite" href="#ref-R35">[R35]</a><a class="cite" href="#ref-R36">[R36]</a></li>
+  <li><strong>Environmental credits enter O2C:</strong> RIN generation/reporting and §45Z-type clean-fuel credits are now billing-adjacent master data, not a separate sustainability silo.<a class="cite" href="#ref-R24">[R24]</a></li>
+</ul>
+<!-- ============ REFERENCES ============ -->
+<h2 class="sec" id="refs"><span class="secno">R</span>References</h2>
+<p class="legend">Numbering follows the approved baseline reference register ([R1]–[R60]; numbers R13, R22, R51 are intentionally unused in the source register and preserved for continuity). All URLs as cited in the baseline.</p>
+<ol class="refs">
+<li id="ref-R1"><span class="rid">[R1]</span>S&amp;P Global Market Intelligence. <em>Downstream Oil &amp; Gas (Refining &amp; Marketing) KPI Guide</em>. https://www.spglobal.com/market-intelligence/en/news-insights/resources/kpi-guides/downstream-oil-gas-refining-marketing</li>
+<li id="ref-R2"><span class="rid">[R2]</span>SAP Community. <em>Effective Handling of Secondary Distribution of Oil &amp; Gas Business Using S4SCSD</em>, 2023. https://community.sap.com/t5/sap-for-oil-gas-and-energy-blog-posts/effective-handling-of-secondary-distribution-of-oil-gas-business-using/ba-p/13579524</li>
+<li id="ref-R3"><span class="rid">[R3]</span>Inclusion Cloud. <em>SAP S/4HANA Oil &amp; Gas Modules (Commodity Pricing)</em>. https://inclusioncloud.com/insights/blog/sap-s-4hana-oil-and-gas-modules/</li>
+<li id="ref-R4"><span class="rid">[R4]</span>LeverX. <em>How SAP Transforms Oil and Gas Operations</em>. https://leverx.com/newsroom/sap-for-oil-gas-industry</li>
+<li id="ref-R5"><span class="rid">[R5]</span>International Air Transport Association (IATA). <em>Fuel: Fuel Data Standards and Commercial Fuel Working Group</em>. https://www.iata.org/en/programs/ops-infra/fuel/</li>
+<li id="ref-R6"><span class="rid">[R6]</span>IATA. <em>Aviation Fuel Supply Model Agreement (AFSMA), Edition 5.1</em>, July 2023. https://www.iata.org/contentassets/ebdba50e57194019930d72722413edd4/afsma-ed-5.1-july-2023f.pdf</li>
+<li id="ref-R7"><span class="rid">[R7]</span>IATA Airlines Magazine. <em>Fuel Management: A Burning Desire to Simplify</em>, 2017-10-27. https://airlines.iata.org/2017/10/27/fuel-management-burning-desire-simplify</li>
+<li id="ref-R8"><span class="rid">[R8]</span>Information Design One. <em>aFuel: Digital Aviation Fueling Platform</em>. https://www.informationdesign.io/afuel/</li>
+<li id="ref-R9"><span class="rid">[R9]</span>Weissgerber R. <em>White Paper: A New Digital Era for Aircraft Fueling</em>, Aircraft IT. https://www.aircraftit.com/articles/white-paper-a-new-digital-era-for-aircraft-fueling/</li>
+<li id="ref-R10"><span class="rid">[R10]</span>Aircraft IT. <em>Case Study: The Blueprint of a Digital Fueling Process (Lufthansa Group)</em>. https://www.aircraftit.com/articles/case-study-the-blueprint-of-a-digital-fueling-process/</li>
+<li id="ref-R11"><span class="rid">[R11]</span>i6.io. <em>Why Real-Time Fuel Data Is Now a Strategic Asset for Airlines</em>. https://i6.io/blog/why-real-time-fuel-data-is-now-a-strategic-asset-for-airlines</li>
+<li id="ref-R12"><span class="rid">[R12]</span>Atraxo. <em>Business Apps for Jet Fuel Suppliers</em>. https://www.atraxo.com/product-business-apps</li>
+<li id="ref-R14"><span class="rid">[R14]</span>DTN. <em>DTN TABS: Terminal Automation and Billing System</em>. https://www.dtn.com/refined-fuels/terminal-operator/tabs/</li>
+<li id="ref-R15"><span class="rid">[R15]</span>PortalERP. <em>iRely Adds Terminal Management Module to Its Petroleum ERP Platform</em>. https://portalerp.com/noticia/irely-adds-terminal-management-module-to-its-petroleum-erp-platform</li>
+<li id="ref-R16"><span class="rid">[R16]</span>Britannia P&amp;I Club. <em>Managing Bunker Quantity Disputes</em>, November 2024. https://britanniapandi.com/2024/11/managing-bunker-quantity-disputes-essential-practices-and-considerations-for-shipowners-and-operator/</li>
+<li id="ref-R17"><span class="rid">[R17]</span>Veritas Petroleum Services (VPS). <em>Thousands Saved at Sea: The Power of Precision Bunker Quantity Surveys</em>. https://www.v-p-s.com/knowledgecentre/articles/thousands-saved-sea-power-precision-bunker-quantity-surveys</li>
+<li id="ref-R18"><span class="rid">[R18]</span>Ship &amp; Bunker / VPS. <em>VPS: The Power of Precision Bunker Quantity Surveys</em>. https://shipandbunker.com/news/world/654639-vps-the-power-of-precision-bunker-quantity-surveys</li>
+<li id="ref-R19"><span class="rid">[R19]</span>Intertek Lintec. <em>Bunker Quantity Survey</em>. https://www.intertek.com/lintec/bunker-survey/</li>
+<li id="ref-R20"><span class="rid">[R20]</span>MCE Marine Surveyors; JM Marine Surveys. <em>Bunker Quantity Survey Procedure</em>. https://mceu.nl/survey/bunker-quantity-survey/ ; https://jmmarinesurveys.com/bunker-quantity-and-off-hire-condition-surveys/</li>
+<li id="ref-R21"><span class="rid">[R21]</span>Ruswal Global. <em>Bunker Survey Procedure</em>. https://ruswalglobal.com/bunker-survey-procedure/</li>
+<li id="ref-R23"><span class="rid">[R23]</span>U.S. Treasury Regulations. <em>26 CFR 48.4081-2 (Tax on Removal at a Terminal Rack); 26 CFR 48.4081-3</em>. https://www.law.cornell.edu/cfr/text/26/48.4081-2 ; https://www.ecfr.gov/current/title-26/chapter-I/subchapter-D/part-48/subpart-H/subject-group-ECFRfec64af5287e9f1/section-48.4081-3</li>
+<li id="ref-R24"><span class="rid">[R24]</span>Internal Revenue Service. <em>Publication 510 (Rev. December 2025): Excise Taxes</em>, 2025. https://www.irs.gov/publications/p510</li>
+<li id="ref-R25"><span class="rid">[R25]</span>Internal Revenue Service. <em>Form 637, Application for Registration; 637 Registration Program; IRM 4.24.2</em>. https://www.irs.gov/pub/irs-pdf/f637.pdf ; https://www.irs.gov/businesses/small-businesses-self-employed/637-registration-program ; https://www.irs.gov/irm/part4/irm_04-024-002</li>
+<li id="ref-R26"><span class="rid">[R26]</span>Internal Revenue Service. <em>IR-2026-59 and Announcement 2026-1 (T.D. 10047): Section 6435 Dyed-Fuel Refund Method</em>, 2026. https://www.irs.gov/newsroom/treasury-irs-provide-guidance-on-a-new-method-for-recovering-federal-excise-tax-paid-on-dyed-fuel-established-under-the-one-big-beautiful-bill ; https://www.irs.gov/pub/irs-drop/a-26-01.pdf</li>
+<li id="ref-R27"><span class="rid">[R27]</span>Internal Revenue Service. <em>Internal Revenue Manual 4.24.17: ExSTARS / Form 720-TO Terminal Operator Reporting</em>. https://www.irs.gov/irm/part4/irm_04-024-017</li>
+<li id="ref-R28"><span class="rid">[R28]</span>European Commission, DG TAXUD. <em>Excise Movement and Control System (EMCS); EUR-Lex Summary of Council Directive (EU) 2020/262</em>. https://taxation-customs.ec.europa.eu/taxation/excise-duties/emcs_en ; https://eur-lex.europa.eu/EN/legal-content/summary/general-arrangements-for-excise-duty-from-2023.html</li>
+<li id="ref-R29"><span class="rid">[R29]</span>Council of the EU. <em>ECOFIN 13 Nov 2025; EP Legislative Train: Energy Taxation Directive; COM(2021) 563</em>. https://www.consilium.europa.eu/en/meetings/ecofin/2025/11/13/ ; https://www.europarl.europa.eu/legislative-train/spotlight-JD%2023-24/file-revision-of-the-energy-taxation-directive ; https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021PC0563</li>
+<li id="ref-R30"><span class="rid">[R30]</span>OPIS. <em>Rack Pricing Methodology and Report Timings</em>. https://www.opisnet.com/about/methodology/ ; https://www.opis.com/blog/how-to-read-your-wholesale-rack-report/ ; https://www.opis.com/product/pricing/fuel-rack-prices/bottom-line-report/</li>
+<li id="ref-R31"><span class="rid">[R31]</span>City of Anacortes (via MRSC). <em>Invitation to Bid: Bulk Fuel</em>. https://mrsc.org/getmedia/06b37f8e-8b63-45ab-b62f-eabc5ac42c69/a5bulkfuel.pdf</li>
+<li id="ref-R32"><span class="rid">[R32]</span><em>Mathis v. Exxon Corp.</em>, 302 F.3d 448 (5th Cir. 2002). https://www.ca5.uscourts.gov/opinions/pub/01/01-40693.cv0.wpd.pdf</li>
+<li id="ref-R33"><span class="rid">[R33]</span>WEX Inc. <em>WEX Account and Services Agreement</em>, 2026-02-09. https://www.wexdrive.com/tncs/wex.pdf</li>
+<li id="ref-R34"><span class="rid">[R34]</span>ARKO Corp. <em>Form 10-K, Fiscal Year 2025 (SEC Filing)</em>, 2026. https://www.arkocorp.com/sec-filings/all-sec-filings/content/0001193125-26-071464/arko-20251231.htm</li>
+<li id="ref-R35"><span class="rid">[R35]</span>Buchalter. <em>Rehoboth Petroleum, Inc. v. Petroleum Marketing Group, Inc. (E.D. Pa., Oct. 6, 2025): PMPA Franchise Status</em>, 2025. https://www.buchalter.com/blogs/rehoboth-petroleum-inc-v-petroleum-marketing-group-inc-federal-court-analyzes-pmpa-franchise-status-rejects-termination-injunction-for-fuel-operations-and-issues-split-relief-protecting-conven/</li>
+<li id="ref-R36"><span class="rid">[R36]</span>California Assembly Bill 325 (Stats. 2025, ch. 338); <em>Casciani v. Kalibrate</em> Complaint (E.D. Cal. No. 2:26-cv-02211-CSK). https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB325 ; https://www.courthousenews.com/wp-content/uploads/2026/06/kalibrate-class-action-california.pdf</li>
+<li id="ref-R37"><span class="rid">[R37]</span>Hogan Lovells; Mayer Brown. <em>DOJ Criminal Enforcement Posture on Algorithmic Pricing</em>, 2026. https://www.hoganlovells.com/en/publications/doj-antitrust-official-lays-out-criminal-enforcement-playbook-for-algorithmic-pricing-cases ; https://www.mayerbrown.com/en/insights/publications/2026/07/collusion-by-code-what-dojs-algorithmic-pricing-enforcement-means-for-the-energy-sector</li>
+<li id="ref-R38"><span class="rid">[R38]</span>IMO. <em>MARPOL Annex VI, Appendix V: BDN Mandatory Content (Reg. 18.5) and 2024 Flashpoint Amendment</em>. https://imorules.com/GUID-44195EB8-3777-4B5D-BDA3-FCBE70A915F3.html ; https://britanniapandi.com/2024/04/latest-amendment-to-marpol-annex-vi-appendix-v/</li>
+<li id="ref-R39"><span class="rid">[R39]</span>Barbados Maritime Ship Registry. <em>Bulletin 027: MARPOL Annex VI Rev. 1.5</em>. https://barbadosmaritime.com/bulletin-027-marpol-annex-vi/</li>
+<li id="ref-R40"><span class="rid">[R40]</span>Maritime and Port Authority of Singapore. <em>Port Marine Circular No. 12 of 2024: SS 648:2024; Mass Flow Meter for Bunkering</em>, 2024. https://www.mpa.gov.sg/media-centre/details/port-marine-circular-no.-12-of-2024-implementation-of-singapore-standard-ss-648--2024---code-of-practice-for-bunker-mass-flow-metering ; https://www.mpa.gov.sg/port-marine-ops/marine-services/bunkering/mass-flow-meter-for-bunkering</li>
+<li id="ref-R41"><span class="rid">[R41]</span>Maritime and Port Authority of Singapore. <em>Digital Bunkering: e-BDN Default (SS 709); Sibcon 2024</em>. https://www.mpa.gov.sg/port-marine-ops/marine-services/bunkering/digital-bunkering ; https://www.mpa.gov.sg/media-centre/details/advancing-maritime-digitalisation--decarbonisation-and-manpower-development-efforts-at-sibcon-2024</li>
+<li id="ref-R42"><span class="rid">[R42]</span>NorthStandard P&amp;I. <em>No Switching Off When Bunker Mass Flow Meters Are Switched On</em>. http://north-standard.com/insights-and-resources/resources/articles/no-switching-off-when-bunker-mass-flow-meters-are-switched-on</li>
+<li id="ref-R43"><span class="rid">[R43]</span>BIMCO. <em>Bunker Terms 2018 (Full Standard Text)</em>. https://www.skuld.com/contentassets/860aa1a3766a4362904d7fca70fe2297/bimco-bunker-terms-2018.pdf</li>
+<li id="ref-R44"><span class="rid">[R44]</span>HFW. <em>OW Bunker Test Case: The Res Cogitans, [2016] UKSC 23</em>, May 2016. https://www.hfw.com/insights/ow-bunker-test-case-the-res-cogitans-supreme-court-judgment-handed-down-today-may-2016/</li>
+<li id="ref-R45"><span class="rid">[R45]</span>International Trade and Forfaiting Association (ITFA). <em>Bridging the Marine Fuel Liquidity Gap</em>, April 2026. https://itfa.org/bridging-the-marine-fuel-liquidity-gap-a-trade-finance-opportunity-in-the-marine-fuel-industry-april-2026/</li>
+<li id="ref-R46"><span class="rid">[R46]</span>U.S. Court of Appeals, Fifth Circuit. <em>Three Fifty Markets, Ltd. v. Argos M M/V</em>, No. 24-30413, 2026-02-02. https://www.ca5.uscourts.gov/opinions/pub/24/24-30413-CV0.pdf</li>
+<li id="ref-R47"><span class="rid">[R47]</span>NAESB. <em>LEAP Master Agreement (2011), Section 3.5 Imbalance Cash-Out</em>. https://naesb.org/pdf4/wgq_contracts120511a2.pdf</li>
+<li id="ref-R48"><span class="rid">[R48]</span>API Accounting Committee. <em>Comment Letter on EITF Issue No. 04-13</em>, 2004. https://storage.fasb.org/0413CL1.pdf</li>
+<li id="ref-R49"><span class="rid">[R49]</span>NAESB. <em>Master Monthly Netting and Close-Out Netting Agreement</em>, 2001. http://www.naesb.org/pdf/cs022301w1.pdf</li>
+<li id="ref-R50"><span class="rid">[R50]</span>Arc Terminals LP / Center Oil. <em>Storage and Throughput Agreement (SEC Contract Exhibit)</em>. https://contracts.justia.com/companies/arc-logistics-partners-lp-19025/contract/564241/</li>
+<li id="ref-R52"><span class="rid">[R52]</span>eCFR. <em>46 CFR Part 541: FMC Demurrage and Detention Billing Requirements; WSC v. FMC Vacatur (D.C. Cir., Sept. 2025)</em>. https://www.ecfr.gov/current/title-46/chapter-IV/subchapter-B/part-541 ; https://www.unicargo.com/how-to-avoid-demurrage-and-detention-fees/</li>
+<li id="ref-R53"><span class="rid">[R53]</span>Demurrage time-bar case chain: <em>The Sabrewing</em> [2007] EWHC 2482; <em>The Adventure</em> [2015] EWHC 318; <em>Tricon v MTM</em> [2020] EWHC 700. https://archive.onlinedmc.co.uk/waterfront_shipping_v__trafigura.htm ; https://www.balticexchange.com/en/news-and-events/news/baltic-magazine/2015/no-time-to-wasteondemurrageclaims.html ; https://www.mills-co.com/news-and-insights/time-bars-quick-reference-guide</li>
+<li id="ref-R54"><span class="rid">[R54]</span>Toptech Systems (TMS7/TDS/Load2day); ILTA; Yokogawa; Implico OpenTAS. <em>Terminal Automation System Sources</em>. https://www.toptech.com/tms7/ ; https://www.ilta.org/News-Resources/Newsletter/ArtMID/24096/ArticleID/1902/What-Is-a-Terminal-Automation-System ; https://www.yokogawa.com/us/solutions/products-and-services/information/supply-chain-management/terminal-automation/ ; https://www.opentas.com/terminal-management/</li>
+<li id="ref-R55"><span class="rid">[R55]</span>Oracle. <em>JD Edwards Bulk Stock Inventory Reconciliation and Conversion-Table Documentation</em>. https://docs.oracle.com/cd/E16582_01/doc.91/e15089/und_blk_stk_inv.htm ; https://docs.oracle.com/en/applications/jd-edwards/supply-chain-manufacturing/9.2/eoabs/operational-reconciliations.html</li>
+<li id="ref-R56"><span class="rid">[R56]</span>QuantityWare. <em>BCP 3.0 Documentation Reference Manual (SAP QCI Conversion Standards)</em>. https://www.quantityware.com/wp-content/uploads/BCP_3.0_Documentation_Reference_Manual.pdf</li>
+<li id="ref-R57"><span class="rid">[R57]</span>NCWM / NIST. <em>Handbook 44-2026, Section 3.31 Vehicle-Tank Meters (RSA Extract)</em>, 2026. https://cdn.ncwm.com/userfiles/files/Exams/Reference%20Material/RSA/2026_NIST_HB44_VTM_RSA.pdf</li>
+<li id="ref-R58"><span class="rid">[R58]</span>eCFR. <em>30 CFR 250.1202: BSEE Liquid Hydrocarbon Measurement</em>. https://www.ecfr.gov/current/title-30/chapter-II/subchapter-B/part-250/subpart-L</li>
+<li id="ref-R59"><span class="rid">[R59]</span>SAP SE. <em>Maintenance Strategy (Business Suite 7/ECC); Compatibility Pack Final Transition; Note 2269324</em>, 2025. https://support.sap.com/en/offerings-programs/strategy.html ; https://news.sap.com/2025/12/sap-announced-final-transition-period-for-compatibility-packs-for-sap-s-4hana-on-premise/ ; https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/compatibility-scope-what-happens-after-expiry-of-use-rights/ba-p/13536333</li>
+<li id="ref-R60"><span class="rid">[R60]</span>Skuld; Clyde &amp; Co. <em>BIMCO Bunker Terms Adoption and Bunker Quality-Claim Time Bars</em>. https://www.skuld.com/topics/ship/bunkers/bunker-suppliers-upset-balanced-bimco-bunker-terms/ ; https://www.clydeco.com/en/insights/2020/02/bunker-quality-claims-in-2020-issues-to-consider-p</li>
+</ol>
+
+<!-- ============ TRACEABILITY ============ -->
+<h2 class="sec" id="trace"><span class="secno">T</span>Source Traceability</h2>
+<p>How each input shaped this v1.1 document:</p>
+<div class="tablewrap"><table>
+<caption>Table T.1 — Input register and disposition</caption>
+<thead><tr><th style="width:34%">Input</th><th style="width:14%">Type</th><th>What was taken</th></tr></thead>
+<tbody>
+<tr><td>Approved baseline — <em>downstream_o2c_operational_blueprint</em> (.md/.docx, 57 refs)</td><td>Approved baseline</td><td>Document spine: 12-stage value stream, nine capability pillars, INT catalog, EX-01…05, reference register. Unchanged and not overwritten.</td></tr>
+<tr><td>Generic O2C process taxonomy (image, 9 groups / 46 processes)</td><td>Reference model</td><td>The redline baseline: every one of the 46 processes was dispositioned (kept / renamed / extended / deprioritized) — §01, §02.</td></tr>
+<tr><td>Domain model &amp; taxonomy redline (governed artifact, 2026-08-09)</td><td>Governed internal artifact</td><td>The downstream taxonomy verbatim: 10 groups / 64 processes, all rename/extension/new-process annotations, the Measure &amp; Custody Transfer elevation decision, and the governance-record model (§02, §04.3). Process names preserve its controlled wording.</td></tr>
+<tr><td>HTML blueprint variant (content-rich draft)</td><td>Draft — superseded</td><td>Capability × channel heat map (§04.2), GOV/GSV/NSV measurement table (§05.1), failure-mode column (§07.2), retail consignment exception (EX-06), integration control checklist (§07.3). Re-keyed to baseline IDs; its separate chevron/ID schemes not adopted.</td></tr>
+<tr><td>HTML EA reference variant (app-style draft)</td><td>Draft — divergent</td><td>Design principles and quantified thresholds (§09.1–9.2), MFM 2026 port mandates and index-selection caveats (§09.3). Its vendor-mandate stance treated as illustrative only, per the baseline's tool-neutral position.</td></tr>
+<tr><td>HTML EA reference variant (condensed v0.1 draft)</td><td>Draft — superseded</td><td>Canonical Downstream Movement Identity (§05.3) and the evidence-preservation principle (§03.1). Remainder is a strict subset of the baseline.</td></tr>
+<tr><td>Homelab data-strategy companion (synthetic/public data pilot)</td><td>Out of scope</td><td>Reviewed; deliberately excluded. This document is production-oriented and cites only external, verifiable sources — no synthetic data strategy, no experimental tooling.</td></tr>
+</tbody>
+</table></div>
+<div class="callout">
+  <div class="t">Document control</div>
+  <p style="margin:0"><strong>Version 1.1</strong> · 2026-08-11 · Supersedes the generic taxonomy for downstream O2C use · Baseline Markdown/DOCX (v1.0) remains the approved long-form record · Taxonomy redline approved 2026-08-09 · Next review: on EMCS/ETD legislative changes, 2026 MFM mandate go-lives, or any taxonomy change request.</p>
+</div>
+</div><!-- /wrap -->
+<footer>
+  <div class="wrap" style="padding:0">
+    Downstream Oil &amp; Gas Order-to-Cash — Operational Blueprint &amp; Process Taxonomy · v1.1 · 2026-08-11 ·
+    Channels: B2B C&amp;I · Wholesale/Rack · Retail · Lubricants · Aviation · Marine ·
+    Citations refer to the References section; internal governed artifacts are listed under Source Traceability.
+  </div>
+</footer>
+</main>
+</div><!-- /layout -->
+<script>
+(function(){
+  // Reading progress
+  var bar=document.getElementById('progress');
+  function upd(){var h=document.documentElement;var sc=h.scrollTop;var max=h.scrollHeight-h.clientHeight;bar.style.width=(max>0?(sc/max*100):0)+'%';}
+  document.addEventListener('scroll',upd,{passive:true});upd();
+  // Active TOC highlighting
+  var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function spy(){var y=window.scrollY+120;var cur=0;for(var i=0;i<secs.length;i++){if(secs[i].offsetTop<=y)cur=i;}
+    links.forEach(function(a,i){a.classList.toggle('active',i===cur);});}
+  document.addEventListener('scroll',spy,{passive:true});spy();
+  // Search with highlight + cycle
+  var box=document.getElementById('searchBox'),meta=document.getElementById('searchMeta'),hits=[],idx=-1,q='';
+  function clearMarks(){[].slice.call(document.querySelectorAll('mark')).forEach(function(m){var p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize();});}
+  function walk(node,re,out){var i;for(i=0;i<node.childNodes.length;i++){var c=node.childNodes[i];
+    if(c.nodeType===3){var t=c.nodeValue,m;re.lastIndex=0;var last=0,frag=null;
+      while((m=re.exec(t))){if(!frag)frag=document.createDocumentFragment();
+        if(m.index>last)frag.appendChild(document.createTextNode(t.slice(last,m.index)));
+        var mk=document.createElement('mark');mk.textContent=m[0];frag.appendChild(mk);out.push(mk);last=m.index+m[0].length;}
+      if(frag){if(last<t.length)frag.appendChild(document.createTextNode(t.slice(last)));c.parentNode.replaceChild(frag,c);}}
+    else if(c.nodeType===1&&!/^(SCRIPT|STYLE|MARK|INPUT)$/.test(c.tagName)&&!c.closest('.sidebar'))walk(c,re,out);}}
+  function run(){clearMarks();hits=[];idx=-1;q=box.value.trim();
+    if(q.length<2){meta.textContent='';return;}
+    var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+    walk(document.getElementById('doc'),re,hits);
+    meta.textContent=hits.length?hits.length+' match'+(hits.length>1?'es':'')+' — Enter to cycle':'No matches';
+    if(hits.length){idx=0;focusHit();}}
+  function focusHit(){hits.forEach(function(h,i){h.style.outline=i===idx?'2px solid #c47f33':'';h.style.background=i===idx?'#f3d9a8':'';});
+    if(hits[idx])hits[idx].scrollIntoView({block:'center',behavior:'smooth'});}
+  box.addEventListener('input',run);
+  box.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(hits.length){idx=(idx+1)%hits.length;focusHit();}}});
+})();
+</script>
+</body>
+</html>

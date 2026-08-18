@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controlled vocabulary — teammate practice guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B131C;
+  --bg-elev: #121C28;
+  --bg-card: #162230;
+  --line: #243344;
+  --text: #E6EEF4;
+  --muted: #93A4B3;
+  --faint: #6B7C8C;
+  --teal: #3DB8A8;
+  --max: 860px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.65;
+}
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(11,19,28,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 24px;
+  font-size: 12.5px;
+  color: var(--teal);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.wrap { max-width: var(--max); margin: 0 auto; padding: 40px 24px 96px; }
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.85rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+.lede { color: var(--muted); font-size: 1.05rem; margin: 0 0 28px; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 36px 0; }
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.28rem;
+  font-weight: 600;
+  color: var(--teal);
+  margin: 40px 0 12px;
+}
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 26px 0 8px;
+}
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 16px; padding-left: 1.25em; }
+li { margin: 0 0 6px; }
+strong { font-weight: 600; }
+a { color: var(--teal); }
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.86em;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+pre {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin: 0 0 18px;
+}
+pre code { background: none; border: 0; padding: 0; }
+.table-wrap { overflow-x: auto; margin: 12px 0 22px; }
+table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  color: var(--teal);
+  font-weight: 600;
+  background: var(--bg-elev);
+  font-size: 12px;
+}
+tr:last-child td { border-bottom: 0; }
+.callout {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+.note { color: var(--faint); font-size: 13px; margin-top: 40px; }
+nav a {
+  color: var(--teal);
+  text-decoration: none;
+  margin-right: 14px;
+  font-size: 13.5px;
+}
+nav { margin: 0 0 28px; line-height: 1.9; }
+</style>
+</head>
+<body>
+<div class="topbar">Controlled vocabulary · teammate practice guide · 16 Aug 2026</div>
+<div class="wrap">
+
+<h1>Controlled vocabulary — teammate practice guide</h1>
+<p class="lede">Stage 1 of 6. How to do the language work and what to land. Customer in order-to-cash, one rack lift, live Demo 2 facts only. Not a taxonomy, thesaurus, ontology, or knowledge graph.</p>
+
+<nav>
+  <a href="#who">1 Who / problem</a>
+  <a href="#what-cv">2 What a CV is</a>
+  <a href="#words">Words we use</a>
+  <a href="#purpose">3 Purpose</a>
+  <a href="#hunt">4 Word hunt</a>
+  <a href="#cluster">5 Cluster</a>
+  <a href="#label">6 Preferred label</a>
+  <a href="#scope">7 Scope notes</a>
+  <a href="#term-id">8 term_id</a>
+  <a href="#aliases">9 Aliases</a>
+  <a href="#map">10 Map</a>
+  <a href="#outward">11 Outward pass</a>
+  <a href="#gov">12 Governance</a>
+  <a href="#artifacts">13 Artifacts</a>
+  <a href="#stop">14 Stop</a>
+  <a href="#start">How a teammate starts</a>
+</nav>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td><strong>Stage</strong></td><td>1 of 6 - controlled vocabulary</td></tr>
+<tr><td><strong>What this is</strong></td><td>Teammate practice guide. How to do the language work and what to land. First stage of the <a href="production-ready-ontology-guide.md">production-ready ontology guide</a>.</td></tr>
+<tr><td><strong>What this is not</strong></td><td>Not a taxonomy, thesaurus, ontology, or knowledge graph. Not a planning deliverable. Not where you model the world.</td></tr>
+<tr><td><strong>Date</strong></td><td>2026-08-16 (America/Chicago)</td></tr>
+<tr><td><strong>Landed</strong></td><td>2026-08-16 10:13 CT. This is the teammate practice guide, not the 2026-08-15 short how-to.</td></tr>
+<tr><td><strong>Audience</strong></td><td>Teammates who have not read the research or the chat. You should be able to do the language work from this file.</td></tr>
+<tr><td><strong>Worked example</strong></td><td>Customer in order-to-cash. One rack lift. Live Demo 2 facts only.</td></tr>
+</tbody>
+</table></div>
+<p>A controlled vocabulary is not where you model the world. Do the language work. Then stop. Later stages inherit this.</p>
+<hr>
+<h2 id="who">1. Who this is for / the name-everywhere problem</h2>
+<p>You are on a team that has to agree what words mean before anyone formalises an ontology or publishes a number. You have not been in the earlier chats. This file is how to do the language work.</p>
+<p>The problem is simple: the same everyday word is used everywhere, and it does not mean one thing.</p>
+<p><strong>One lift.</strong> A rack lift for Apex can carry, on one bill of lading:</p>
+<ul>
+<li>who the product is sold to</li>
+<li>who settles the invoice</li>
+<li>who receives the invoice</li>
+<li>where it lifts (the terminal)</li>
+<li>who is allowed to lift at the rack</li>
+</ul>
+<p>Every one of those may be called &quot;customer&quot; on a screen, a ticket, or a warehouse column. Sometimes the <strong>same digits</strong> show up in two fields. SAP <code>sold_to</code> <code>1000123</code> and SAP <code>bill_to</code> <code>1000123</code> are two roles. Warehouse <code>customer_id</code> <code>1000123</code> does not pick a role.</p>
+<p>If you collapse those into one &quot;customer,&quot; later Unbilled dollars land on the wrong object. The vocabulary exists so that does not happen.</p>
+<h2 id="what-cv">2. What a CV is</h2>
+<p>A controlled vocabulary is a curated, finite list of approved terms. Each meaning records four things:</p>
+<ol>
+<li><strong>Preferred label</strong> - the one approved wording (Payer, Sold-To, Bill-To, Ship-To, Loading-Authorized Party).</li>
+<li><strong>Aliases</strong> - everyday variants, misspellings, and system codes that map to that wording. They do not compete with it. The word <code>customer</code> can be an alias on <strong>two</strong> IDs.</li>
+<li><strong>Scope note</strong> - one or two lines: what the term includes and what it excludes.</li>
+<li><strong><code>term_id</code></strong> - a stable ID (<code>id:payer</code>, <code>id:sold-to</code>, ...). Systems join on this. An IRI may bind later. The IRI does <strong>not</strong> replace <code>term_id</code>.</li>
+</ol>
+<p>Light usage rules (capitalisation, singular vs plural) live next to the list. They are not a fifth competing label.</p>
+<p><strong>A CV does not hold live keys.</strong> <code>APEX-PAYER</code> and <code>CONS-4412</code> live in the map, not on the term row.</p>
+<p><strong>A CV does not hold domain-model invariants.</strong> It does not decide aggregates, bounded contexts, or whether Ship-To is a place in the model. It names the meaning. Modeling still models. A controlled vocabulary is one instrument inside domain modeling, not the method.</p>
+<p>A list of words without preferred label, aliases, scope note, <code>term_id</code>, and a method is not a controlled vocabulary.</p>
+<h2 id="words">Words we use</h2>
+<p>Read this once so the later tables do not feel like jargon.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Word</th><th>What we mean</th></tr></thead>
+<tbody>
+<tr><td><strong>Meaning</strong></td><td>A distinct idea, not the word on the screen. &quot;Customer&quot; is one word. Sold-To and Loading-Authorized Party are two meanings of that word.</td></tr>
+<tr><td><strong>Word</strong></td><td>The string on a screen, ticket, or column (<code>customer</code>, <code>RG</code>, <code>APEX-PAYER</code>). One word can point at two meanings.</td></tr>
+<tr><td><strong>Working group</strong></td><td>The people who pick the preferred label for a slice (commercial, credit, rack, invoicing). Data brings evidence. Data does not name the meaning.</td></tr>
+<tr><td><strong>Preferred label</strong></td><td>The one approved wording. People read this.</td></tr>
+<tr><td><strong>Alias</strong></td><td>An everyday word or code that maps to a <code>term_id</code>. It does not compete with the preferred label. The same alias can sit on two IDs when the word is overloaded.</td></tr>
+<tr><td><strong><code>term_id</code></strong></td><td>The stable handle. Aliases and the map join on this. If the label later changes, the ID stays.</td></tr>
+<tr><td><strong>Map</strong></td><td><code>system + field + local_key</code> -&gt; <code>term_id</code> (or no map). The number is the party. The column is the role.</td></tr>
+<tr><td><strong>Scope note</strong></td><td>Includes and excludes for that meaning. Not a KPI grain, not a formula.</td></tr>
+<tr><td><strong><code>ontology_iri</code></strong></td><td>A second name for the same meaning in the turtle file. It does not replace <code>term_id</code>.</td></tr>
+</tbody>
+</table></div>
+<h2 id="purpose">3. Purpose and scope</h2>
+<p>Decide which decisions the vocabulary must support, and name what is out of scope so the list does not sprawl.</p>
+<p><strong>This slice supports:</strong> agreeing language for Customer in order-to-cash so a later Unbilled number can slice on the right grains, and so search can say what a word or code means.</p>
+<p><strong>Out of scope</strong></p>
+<ul>
+<li>Drawing an is-a tree</li>
+<li>Writing triples as the product</li>
+<li>Publishing a certified formula</li>
+<li>Renaming SAP, the lift system, or the warehouse in place</li>
+<li>Treating Unbilled as a customer class (Unbilled is a <strong>state</strong> of an obligation)</li>
+</ul>
+<p><strong>On the lift.</strong> Purpose is: keep sold-to, payer, bill-to, ship-to, and loading-authorized party distinct so &quot;unbilled for this customer&quot; is a real question. Out of scope is renaming the lift system&#x27;s <code>CONS-4412</code> screen.</p>
+<h2 id="hunt">4. Word hunt - tables, columns, values</h2>
+<p>Start where the language already lives. Hunt <strong>table names, column names, and the values in those columns</strong>. Also hunt tickets, screens, and reports. Treat every hit as <strong>evidence of a meaning, not an answer</strong>. Expect noise.</p>
+<p><strong>Unstructured / tagging first.</strong> Ticket subjects, search logs, screen labels, report titles. People type <code>customer</code>, <code>lift customer</code>, <code>paying party</code>.</p>
+<p><strong>Then structured seams.</strong> Lookup tables, enumerations, dim values. Extract distinct values. Count frequencies. Read a slice of real rows so later choices rest on usage.</p>
+<p><strong>On the lift (live Demo 2 hunt, not invented)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Where</th><th>Table / screen</th><th>Column</th><th>Value we actually have</th></tr></thead>
+<tbody>
+<tr><td>Demo tickets</td><td>ticket row</td><td><code>payer_id</code></td><td><code>APEX-PAYER</code></td></tr>
+<tr><td>Demo tickets</td><td>ticket row</td><td><code>sold_to_id</code></td><td><code>APEX-HOU</code>, <code>APEX-DAL</code></td></tr>
+<tr><td>Demo tickets</td><td>ticket row</td><td><code>bill_to_id</code></td><td><code>APEX-BILL</code></td></tr>
+<tr><td>Demo tickets</td><td>ticket row</td><td><code>terminal_code</code></td><td><code>HSC</code></td></tr>
+<tr><td>Lift system</td><td>lift authorization</td><td><code>lift_customer</code></td><td><code>CONS-4412</code></td></tr>
+<tr><td>SAP</td><td>partner functions</td><td><code>sold_to</code></td><td><code>1000123</code></td></tr>
+<tr><td>SAP</td><td>partner functions</td><td><code>bill_to</code></td><td><code>1000123</code> (same digits, different column)</td></tr>
+<tr><td>Warehouse</td><td><code>dim_customer</code></td><td><code>customer_id</code></td><td><code>1000123</code></td></tr>
+</tbody>
+</table></div>
+<p>The table name <code>dim_customer</code> is evidence. The column <code>customer_id</code> is evidence. The value <code>1000123</code> is evidence. None of them is the preferred label.</p>
+<h2 id="cluster">5. Cluster into meanings</h2>
+<p>Group the hits by <strong>meaning</strong>, not by the English word.</p>
+<p><strong>On the lift, five meanings (working names until the working group signs the labels):</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Meaning</th><th>What the lift is pointing at</th><th>What it is not</th></tr></thead>
+<tbody>
+<tr><td>Sold-To</td><td>Who the product is sold to (<code>APEX-HOU</code>, SAP <code>sold_to</code>)</td><td>Who pays; who may lift</td></tr>
+<tr><td>Payer</td><td>Who settles the invoice (<code>APEX-PAYER</code>)</td><td>Sold-to; bill-to</td></tr>
+<tr><td>Bill-To</td><td>Who receives the invoice (<code>APEX-BILL</code>)</td><td>Who pays (can differ)</td></tr>
+<tr><td>Ship-To</td><td>Where it lifts (<code>HSC</code>)</td><td>A party role</td></tr>
+<tr><td>Loading-Authorized Party</td><td>Who may lift at the rack (<code>CONS-4412</code>)</td><td>Sold-to; payer; site; the card/PIN token</td></tr>
+</tbody>
+</table></div>
+<p>Warehouse <code>customer_id</code> <code>1000123</code> does <strong>not</strong> get its own meaning. It is an overloaded key. Park it as unresolved.</p>
+<p>Do not fold these five into &quot;Customer.&quot; That is the name-everywhere problem.</p>
+<h2 id="label">6. Choose the preferred label</h2>
+<p>The <strong>working group</strong> picks one preferred term per meaning. Evidence, not a vote of systems:</p>
+<ul>
+<li><strong>Docs</strong> - contracts, invoices, deny codes, BOLs (how the writing already talks)</li>
+<li><strong>People</strong> - what they search and say</li>
+<li><strong>Company need</strong> - who is harmed if the wrong word wins (credit lives on the payer; lift deny lives on the loading-authorized party; Unbilled site grain lives on the terminal)</li>
+</ul>
+<p>SAP codes (<code>AG</code>/<code>SP</code>, <code>RG</code>/<code>PY</code>) do not win. <code>dim_customer.customer_id</code> does not win.</p>
+<p><strong>On the lift, the working group signed:</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Meaning</th><th>Preferred label</th></tr></thead>
+<tbody>
+<tr><td>Who the product is sold to</td><td>Sold-To</td></tr>
+<tr><td>Who settles the invoice</td><td>Payer</td></tr>
+<tr><td>Who receives the invoice</td><td>Bill-To</td></tr>
+<tr><td>Where it lifts</td><td>Ship-To</td></tr>
+<tr><td>Who may lift at the rack</td><td>Loading-Authorized Party</td></tr>
+</tbody>
+</table></div>
+<p>Apply the same spelling and hyphenation everywhere. Do not crown one system&#x27;s wording.</p>
+<h2 id="scope">7. Scope notes</h2>
+<p>Write one or two lines per preferred label: includes / excludes. Tomorrow&#x27;s editor and tomorrow&#x27;s model should make the same decision.</p>
+<p><strong>Landed on this lift</strong> (<code>cv_term.scope_note</code>):</p>
+<div class="table-wrap"><table>
+<thead><tr><th><code>term_id</code></th><th>Scope note</th></tr></thead>
+<tbody>
+<tr><td><code>id:payer</code></td><td>Party that settles the invoice. Not sold-to or bill-to.</td></tr>
+<tr><td><code>id:sold-to</code></td><td>Party the product is sold to. Not the payer and not a lift authorization.</td></tr>
+<tr><td><code>id:bill-to</code></td><td>Party that receives the invoice. Not who settles it, and not who is entitled to lift.</td></tr>
+<tr><td><code>id:ship-to</code></td><td>Delivery site / terminal. Not a party role.</td></tr>
+<tr><td><code>id:loading-authorized-party</code></td><td>Who may lift at the rack. Not a payer, not a sold-to, and not a site.</td></tr>
+</tbody>
+</table></div>
+<p>Loading-Authorized Party is <strong>not</strong> a certified Unbilled grain. Payer, Sold-To, and Ship-To are. Bill-To is mapped and still not an Unbilled grain.</p>
+<h2 id="term-id">8. Assign <code>term_id</code></h2>
+<p>Mint a stable ID per meaning. Join keys (aliases, map rows) point at it. <strong>Do not replace <code>term_id</code> with an IRI.</strong> The IRI is a later bind on the same row.</p>
+<p><strong>Landed IDs (do not invent others for this slice):</strong></p>
+<ul>
+<li><code>id:payer</code></li>
+<li><code>id:sold-to</code></li>
+<li><code>id:bill-to</code></li>
+<li><code>id:ship-to</code></li>
+<li><code>id:loading-authorized-party</code></li>
+</ul>
+<p>If the preferred label later changes from &quot;Payer&quot; to &quot;Invoice payer,&quot; the ID stays <code>id:payer</code>.</p>
+<h2 id="aliases">9. Aliases</h2>
+<p>Record every variant people and systems already use. Map each variant to exactly one <code>term_id</code> <strong>unless the same string is truly two meanings</strong>. Then it is two alias rows.</p>
+<p><strong>On the lift:</strong> the word <code>customer</code> is an alias on <strong>both</strong> <code>id:sold-to</code> and <code>id:loading-authorized-party</code>. Search must return both IDs. Never pick one and hide the other.</p>
+<p>Live alias count: <strong>22</strong> rows. Partner-function codes (<code>AG</code>, <code>SP</code>, <code>RG</code>, <code>PY</code>, <code>RE</code>, <code>BP</code>, <code>WE</code>, <code>SH</code>) are aliases / notations, not preferred labels. <code>CONS-4412</code> is an alias of Loading-Authorized Party (and a live map key). <code>site</code> is an alias of Ship-To in this demo, not a second Customer meaning.</p>
+<h2 id="map">10. Map live keys</h2>
+<p>The map is the contract. Systems keep their local string. We do not rename SAP overnight.</p>
+<p>Each row is:</p>
+<p><code>local_system</code> + <code>field</code> + <code>local_key</code> -&gt; <code>term_id</code> (or no map)</p>
+<p><strong>Same digits in two fields = two rows.</strong> SAP <code>sold_to</code> <code>1000123</code> -&gt; <code>id:sold-to</code>. SAP <code>bill_to</code> <code>1000123</code> -&gt; <code>id:bill-to</code>. The number is the party. The column is the role.</p>
+<p><strong>Warehouse <code>customer_id</code> <code>1000123</code> = no map.</strong> Empty <code>term_id</code>, <code>map_ok = no</code>. The dim does not pick a role.</p>
+<p><strong>On the lift (live rows you will see):</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th>System</th><th>Field</th><th>Local key</th><th><code>term_id</code></th><th>Map?</th></tr></thead>
+<tbody>
+<tr><td>Demo2</td><td><code>payer_id</code></td><td><code>APEX-PAYER</code></td><td><code>id:payer</code></td><td>yes</td></tr>
+<tr><td>Demo2</td><td><code>sold_to_id</code></td><td><code>APEX-HOU</code></td><td><code>id:sold-to</code></td><td>yes</td></tr>
+<tr><td>Lift</td><td><code>lift_customer</code></td><td><code>CONS-4412</code></td><td><code>id:loading-authorized-party</code></td><td>yes</td></tr>
+<tr><td>SAP</td><td><code>sold_to</code></td><td><code>1000123</code></td><td><code>id:sold-to</code></td><td>yes</td></tr>
+<tr><td>SAP</td><td><code>bill_to</code></td><td><code>1000123</code></td><td><code>id:bill-to</code></td><td>yes</td></tr>
+<tr><td>Warehouse</td><td><code>customer_id</code></td><td><code>1000123</code></td><td>(empty)</td><td>no</td></tr>
+</tbody>
+</table></div>
+<p>Live map count: <strong>19</strong> rows (Demo2 payers / sold-tos / bill-tos / terminals, plus SAP, Lift, and the warehouse no-map).</p>
+<p>GCA appears as payer, sold-to, <strong>and</strong> bill-to. Three rows. Same key, three fields, three meanings.</p>
+<h2 id="outward">11. Short outward pass</h2>
+<p>Compare internal candidates to language partners already use. Import what clarifies. Keep internal phrasing as an alias when that is how people here talk.</p>
+<p><strong>On this lift:</strong> partner-function codes (sold-to / bill-to / payer / ship-to) and BOL header fields (consignee, bill-to, ship-to) clarify splits we already see. They do not become the preferred labels. Do not download a public &quot;Customer&quot; tree and call the hunt done. Cookie-cutter lists miss rack authorization.</p>
+<h2 id="gov">12. Light governance</h2>
+<p>Before you treat the list as live:</p>
+<ul>
+<li><strong>Intake</strong> is evidence (frequency, regulatory need, company need, demonstrated confusion), not opinion.</li>
+<li><strong>Working group</strong> approves preferred labels and scope notes for the slice.</li>
+<li><strong>Version and deprecate</strong> terms. Evolve the label. Keep <code>term_id</code> stable.</li>
+<li><strong>Pilot</strong> in a real workflow. On this lift: search <code>customer</code> and confirm two IDs come back; run Unbilled <code>MEASURE()</code> for Apex payer and confirm it is not sliced on <code>CONS-4412</code> or warehouse <code>customer_id</code>.</li>
+</ul>
+<p>A vocabulary that is not governed is a list that will sprawl again.</p>
+<h2 id="artifacts">13. Artifacts to land</h2>
+<p>You write the <strong>meaning</strong> (preferred label, scope note, <code>term_id</code>, aliases, which live keys map). KPI Store Engineer checks the <strong>objects</strong> in the warehouse. Do not swap those seats.</p>
+<p>Live pack (do not invent other counts or keys):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Object</th><th>Columns / contract</th><th>Live Demo 2</th></tr></thead>
+<tbody>
+<tr><td><code>cv_term</code></td><td><code>term_id</code>, <code>preferred_label</code>, <code>scope_note</code>, <code>ontology_iri</code>. Join key = <code>term_id</code>. IRI does not replace <code>term_id</code>.</td><td><strong>5</strong> rows</td></tr>
+<tr><td><code>cv_alias</code></td><td>alias -&gt; <code>term_id</code></td><td><strong>22</strong> rows. <code>customer</code> on <code>id:sold-to</code> <strong>and</strong> <code>id:loading-authorized-party</code></td></tr>
+<tr><td><code>cv_map</code></td><td><code>local_system</code> + <code>field</code> + <code>local_key</code> -&gt; <code>term_id</code> (or no map)</td><td><strong>19</strong> rows. Warehouse <code>customer_id</code> <code>1000123</code> = no map</td></tr>
+<tr><td><code>cv_lookup(q)</code></td><td>Matches <code>q</code> against alias <strong>or</strong> preferred_label / <code>term_id</code> <strong>or</strong> a mapped local_key. Not <code>dim_customer</code>. No dollars. No SQL rewrite.</td><td>search entry (function, or the documented JOIN)</td></tr>
+<tr><td><code>dim_customer</code> (optional decoy)</td><td>overloaded warehouse key</td><td><strong>1</strong> row: <code>customer_id = 1000123</code>. <code>tickets.csv</code> is unchanged</td></tr>
+</tbody>
+</table></div>
+<p><strong>IRI bind on <code>cv_term</code> (join key stays <code>term_id</code>)</strong></p>
+<div class="table-wrap"><table>
+<thead><tr><th><code>term_id</code></th><th><code>ontology_iri</code></th></tr></thead>
+<tbody>
+<tr><td><code>id:payer</code></td><td><code>https://example.org/domain-ontology-kpi/o2c#Payer</code></td></tr>
+<tr><td><code>id:sold-to</code></td><td><code>https://example.org/domain-ontology-kpi/o2c#SoldTo</code></td></tr>
+<tr><td><code>id:bill-to</code></td><td><code>https://example.org/domain-ontology-kpi/o2c#BillTo</code></td></tr>
+<tr><td><code>id:ship-to</code></td><td><code>https://example.org/domain-ontology-kpi/o2c#ShipTo</code> (not <code>#Site</code>)</td></tr>
+<tr><td><code>id:loading-authorized-party</code></td><td><code>https://example.org/domain-ontology-kpi/o2c#LoadingAuthorizedParty</code></td></tr>
+</tbody>
+</table></div>
+<p>Unbilled catalog about-ID stays <code>https://example.org/domain-ontology-kpi/o2c#UnbilledState</code>. That is a state, not a party class. Ship-To is <code>#ShipTo</code>, not <code>#Site</code>. Demo IRIs are unsigned and replaceable. These IRIs are a bind, not an ontology build.</p>
+<p><strong>Why <code>cv_lookup</code> exists.</strong> So a person or a search agent can ask &quot;what is customer?&quot; / &quot;what is <code>APEX-PAYER</code>?&quot; / &quot;what is <code>CONS-4412</code>?&quot; and get preferred label + <code>term_id</code> without touching a dollar and without rewriting anyone&#x27;s SQL.</p>
+<p><strong>Three paths</strong></p>
+<ol>
+<li><strong>Raw SQL is honest.</strong> <code>SELECT customer_id FROM dim_customer</code> still returns <code>1000123</code>. <code>tickets.csv</code> was not renamed. There is no interceptor.</li>
+<li><strong>Published KPI only on mapped grains.</strong> Unbilled <code>MEASURE()</code> groups on keys that map to Payer, Sold-To, or Ship-To. Apex payer is <strong>$115,960.80 / 8</strong>. <code>CONS-4412</code> is not a payer. Warehouse <code>customer_id</code> is not a dimension on that view.</li>
+<li><strong>Search never a dollar.</strong> Vocabulary search returns the two IDs for <code>customer</code> and never an Unbilled number.</li>
+</ol>
+<p><strong>How <code>cv_lookup</code> works.</strong> A string you type can live in three places. <code>customer</code> is an alias (on two IDs). <code>Payer</code> is a preferred label. <code>APEX-PAYER</code> is a map key, not an alias. If you only query <code>cv_term</code>, you miss most of them. The function is the one door: it searches alias <strong>or</strong> preferred label / <code>term_id</code> <strong>or</strong> a mapped <code>cv_map.local_key</code>, then joins back to <code>cv_term</code> for the label and scope note. It does <strong>not</strong> read <code>dim_customer</code>. It does <strong>not</strong> return a dollar. It does <strong>not</strong> rewrite anyone&#x27;s SQL. If two meanings match, you get two rows. Hiding one is the bug.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>source</th><th>what it matches</th><th><code>hit_kind</code></th><th>example <code>q</code></th></tr></thead>
+<tbody>
+<tr><td><code>cv_alias</code></td><td><code>alias</code></td><td><code>alias</code></td><td><code>customer</code>, <code>RG</code></td></tr>
+<tr><td><code>cv_term</code></td><td>preferred label or <code>term_id</code></td><td><code>label</code></td><td><code>Payer</code>, <code>id:payer</code></td></tr>
+<tr><td><code>cv_map</code></td><td><code>local_key</code> where <code>term_id</code> is not null</td><td><code>map_key</code></td><td><code>APEX-PAYER</code>, <code>CONS-4412</code></td></tr>
+</tbody>
+</table></div>
+<pre><code>SELECT DISTINCT
+  t.term_id,
+  t.preferred_label,
+  h.hit_kind,
+  h.hit_value,
+  t.scope_note
+FROM (
+  SELECT a.term_id, &#x27;alias&#x27; AS hit_kind, a.alias AS hit_value
+  FROM cv_alias a
+  WHERE lower(a.alias) = lower(q)
+  UNION ALL
+  SELECT term.term_id, &#x27;label&#x27; AS hit_kind,
+    CASE
+      WHEN lower(term.preferred_label) = lower(q) THEN term.preferred_label
+      ELSE term.term_id
+    END AS hit_value
+  FROM cv_term term
+  WHERE lower(term.preferred_label) = lower(q)
+     OR lower(term.term_id) = lower(q)
+  UNION ALL
+  SELECT m.term_id, &#x27;map_key&#x27; AS hit_kind, m.local_key AS hit_value
+  FROM cv_map m
+  WHERE m.term_id IS NOT NULL
+    AND lower(m.local_key) = lower(q)
+) h
+INNER JOIN cv_term t ON t.term_id = h.term_id</code></pre>
+<p><code>hit_kind</code> is how the string matched (<code>alias</code>, <code>label</code>, <code>map_key</code>). <code>hit_value</code> is the string that matched. The answer is <code>term_id</code> + preferred label.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>column</th><th>what it is</th></tr></thead>
+<tbody>
+<tr><td><code>term_id</code></td><td>The meaning that matched</td></tr>
+<tr><td><code>preferred_label</code></td><td>Approved wording from <code>cv_term</code></td></tr>
+<tr><td><code>hit_kind</code></td><td>How the string matched: <code>alias</code>, <code>label</code>, or <code>map_key</code></td></tr>
+<tr><td><code>hit_value</code></td><td>The actual string that matched</td></tr>
+<tr><td><code>scope_note</code></td><td>Includes / excludes, from <code>cv_term</code></td></tr>
+</tbody>
+</table></div>
+<p><strong>Two Genie agents stay side by side</strong> (Sidebar -&gt; Genie Agents).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Title</th><th>Sources</th><th>Job</th><th>&quot;What is customer?&quot;</th></tr></thead>
+<tbody>
+<tr><td><code>O2C certified KPIs</code></td><td>Three Metric Views only. No <code>cv_*</code>.</td><td>Dollars via <code>MEASURE()</code></td><td>Guesses, or asks you to name payer / sold_to / site. No map. That contrast is the point.</td></tr>
+<tr><td><code>O2C vocabulary search</code></td><td><code>cv_term</code>, <code>cv_alias</code>, <code>cv_map</code> only</td><td>Preferred label + <code>term_id</code>. Never a dollar.</td><td>Runs <code>cv_lookup(&#x27;customer&#x27;)</code>, returns both IDs, says the word is overloaded.</td></tr>
+</tbody>
+</table></div>
+<p>Do not attach <code>cv_*</code> to the certified agent. Do not attach Metric Views to the search agent.</p>
+<p><strong>Paste-ready checks</strong> (<code>workspace.o2c_unbilled</code>):</p>
+<pre><code>SELECT term_id, preferred_label, ontology_iri
+FROM workspace.o2c_unbilled.cv_term
+ORDER BY term_id;
+
+SELECT * FROM workspace.o2c_unbilled.cv_lookup(&#x27;customer&#x27;);
+-- two IDs: id:sold-to and id:loading-authorized-party
+
+SELECT term_id, preferred_label FROM workspace.o2c_unbilled.cv_lookup(&#x27;RG&#x27;);
+SELECT term_id, preferred_label FROM workspace.o2c_unbilled.cv_lookup(&#x27;APEX-PAYER&#x27;);
+SELECT term_id, preferred_label FROM workspace.o2c_unbilled.cv_lookup(&#x27;CONS-4412&#x27;);
+
+SELECT local_system, field, local_key, term_id, map_ok, note
+FROM workspace.o2c_unbilled.cv_map
+ORDER BY local_system, field, local_key;
+-- 19 rows; warehouse 1000123 has no term_id
+
+SELECT payer, MEASURE(unbilled_usd), MEASURE(unbilled_ticket_count)
+FROM workspace.o2c_unbilled.unbilled_usd
+WHERE payer = &#x27;Apex Fuels LLC&#x27;
+GROUP BY payer;
+-- 115960.80 / 8
+
+-- must fail
+SELECT customer_id, MEASURE(unbilled_usd)
+FROM workspace.o2c_unbilled.unbilled_usd
+WHERE customer_id = &#x27;1000123&#x27;
+GROUP BY customer_id;
+
+SELECT loading_authorized_party, MEASURE(unbilled_usd)
+FROM workspace.o2c_unbilled.unbilled_usd
+GROUP BY loading_authorized_party;
+
+SELECT customer_id FROM workspace.o2c_unbilled.dim_customer;
+-- 1000123
+
+SELECT &#x27;cv_term&#x27; AS seat, term_id AS key, preferred_label AS label, ontology_iri
+FROM workspace.o2c_unbilled.cv_term
+WHERE ontology_iri IS NOT NULL
+UNION ALL
+SELECT &#x27;catalog&#x27;, kpi_id, name, ontology_iri
+FROM workspace.o2c_unbilled.dim_kpi_metadata
+WHERE ontology_iri LIKE &#x27;%#UnbilledState&#x27;;</code></pre>
+<h2 id="stop">14. Done enough / stop</h2>
+<p>A slice is ready to leave stage 1 when:</p>
+<ul>
+<li>Purpose and out-of-scope are written down</li>
+<li>Each in-scope meaning has preferred label + aliases + scope note + <code>term_id</code></li>
+<li>Live keys that matter are mapped (or explicitly no-map)</li>
+<li>Search returns both IDs for an overloaded word</li>
+<li>Published numbers only slice on mapped grains</li>
+<li>Intake, approval, version, and deprecate are named</li>
+</ul>
+<p>Then stop.</p>
+<p>Do not draw the is-a tree. Do not write a thesaurus of related terms as the product. Do not declare classes beyond the meaning bind already on <code>cv_term</code>. Do not stand up a knowledge graph.</p>
+<p>Later stages (metadata standards, taxonomy, thesaurus, ontology, knowledge graph) inherit this language. They inherit whatever mess you skip here.</p>
+<p>On this lift you stop when Sold-To, Payer, Bill-To, Ship-To, and Loading-Authorized Party are distinct, <code>customer</code> hits two IDs, warehouse <code>1000123</code> has no map, and Unbilled Apex payer is still $115,960.80 / 8 on the payer grain.</p>
+<h2 id="start">How a teammate starts</h2>
+<ol>
+<li>Write purpose and out-of-scope for the slice.</li>
+<li>Hunt table names, column names, and values (plus tickets, screens, reports). Treat hits as evidence.</li>
+<li>Cluster by meaning. Do not fold Sold-To, Payer, Bill-To, Ship-To, and Loading-Authorized Party into &quot;Customer.&quot;</li>
+<li>Working group picks preferred labels and scope notes. Data does not name the meaning.</li>
+<li>Assign <code>term_id</code>. Record aliases. Build the map as <code>system + field + key</code>. Same digits in two fields are two rows. A warehouse key with no role is no map.</li>
+<li>Land <code>cv_term</code>, <code>cv_alias</code>, <code>cv_map</code>, and <code>cv_lookup</code>. Optional: a <code>dim_customer</code> decoy so raw SQL stays honest.</li>
+<li>Use the three paths: raw SQL is honest; published KPIs slice only on mapped grains; search never a dollar.</li>
+<li>Bind <code>ontology_iri</code> when the meaning file exists. Do not replace <code>term_id</code>. Unbilled catalog stays <code>#UnbilledState</code>.</li>
+<li>Stop. Do not draw a class tree. Domain modeling still does the rest.</li>
+</ol>
+
+<p class="note">Landed 16 Aug 2026, 10:13 CT. Source: <code>production-ready-ontology-01-controlled-vocabulary.md</code>. Recreate objects with <code>scripts/10_cv_map.py</code> then <code>scripts/11_cv_search_genie.py</code> (after 07). Learner folder was not updated.</p>
+</div>
+</body>
+</html>

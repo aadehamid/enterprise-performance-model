@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo 1 — Rebuild Unbilled USD from scratch (MetricFlow + DuckDB)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B131C; --panel:#111C28; --panel-2:#16232F;
+  --line:#233444; --line-soft:#1B2A38;
+  --ink:#DCE6EF; --ink-dim:#93A6B8; --ink-faint:#63798C;
+  --amber:#E8A33D; --amber-dim:#8A6427;
+  --green:#5FB98A; --red:#D9645E; --blue:#5B93C4; --violet:#9B87C4;
+  --display:"Space Grotesk",'Segoe UI',system-ui,sans-serif;
+  --body:"IBM Plex Sans",'Segoe UI',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'Cascadia Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 500px at 12% -8%, rgba(232,163,61,.07), transparent 60%),
+             radial-gradient(900px 480px at 92% 4%, rgba(91,147,196,.06), transparent 62%)}
+.wrap{position:relative;z-index:1}
+.topbar{position:sticky;top:0;z-index:60;background:rgba(11,19,28,.93);
+  backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1340px;margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.tb-id{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;color:var(--amber);
+  border:1px solid var(--amber-dim);padding:3px 9px;border-radius:2px;white-space:nowrap}
+.tb-title{font-family:var(--display);font-weight:500;font-size:14px;color:var(--ink-dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-spacer{flex:1}
+#q{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:var(--body);
+  font-size:13px;padding:6px 11px;border-radius:2px;width:215px;outline:none}
+#q:focus{border-color:var(--amber-dim)}
+#q::placeholder{color:var(--ink-faint)}
+.hitcount{font-family:var(--mono);font-size:11px;color:var(--ink-faint);min-width:74px}
+.shell{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:34px;padding:0 22px 90px}
+nav.side{position:sticky;top:56px;align-self:start;max-height:calc(100vh - 72px);overflow-y:auto;
+  padding:26px 0 40px;border-right:1px solid var(--line-soft);scrollbar-width:thin}
+nav.side h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);margin:20px 0 8px;font-weight:500}
+nav.side a{display:block;padding:5px 12px 5px 10px;color:var(--ink-dim);text-decoration:none;
+  font-size:13.2px;border-left:2px solid transparent}
+nav.side a:hover{color:var(--ink);background:var(--panel)}
+nav.side a.on{color:var(--amber);border-left-color:var(--amber);background:rgba(232,163,61,.05)}
+nav.side a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-right:7px}
+main{padding-top:26px;min-width:0}
+.hero{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel) 0%, #0E1822 100%);
+  padding:30px 32px 26px;margin-bottom:34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.hero h1{font-family:var(--display);font-size:32px;line-height:1.16;margin:0 0 12px;font-weight:700;letter-spacing:-.015em}
+.hero p.lede{color:var(--ink-dim);max-width:74ch;margin:0 0 20px;font-size:16px}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.ctrl div{background:var(--panel-2);padding:9px 13px}
+.ctrl dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px}
+.ctrl dd{margin:0;font-size:13.5px;color:var(--ink)}
+section{margin-bottom:52px;scroll-margin-top:96px}
+section > h2{font-family:var(--display);font-size:23px;font-weight:700;letter-spacing:-.01em;
+  margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:13px;flex-wrap:wrap}
+section > h2 .num{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+.sub{color:var(--ink-dim);margin:10px 0 22px;max-width:82ch}
+h3{font-family:var(--display);font-size:16.5px;font-weight:500;margin:30px 0 10px;color:var(--ink)}
+h4{font-family:var(--display);font-size:14px;font-weight:500;margin:20px 0 7px;color:var(--ink-dim)}
+p{margin:0 0 13px}
+ul,ol{margin:0 0 14px;padding-left:21px}
+li{margin-bottom:5px}
+code{font-family:var(--mono);font-size:12.5px;color:var(--amber);background:rgba(232,163,61,.08);padding:1px 5px;border-radius:2px}
+pre{background:var(--panel-2);border:1px solid var(--line);padding:14px 16px;overflow-x:auto;
+  font-family:var(--mono);font-size:12.4px;line-height:1.55;color:var(--ink);margin:14px 0 18px}
+pre code{background:none;color:var(--ink);padding:0;font-size:inherit}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);margin:16px 0 22px}
+table{border-collapse:collapse;width:100%;font-size:13.4px;min-width:560px}
+thead th{background:var(--panel-2);text-align:left;padding:9px 12px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);font-weight:500;
+  border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-dim)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.018)}
+tbody td:first-child{color:var(--ink)}
+td .ref,.ref{font-family:var(--mono);font-size:11.5px;color:var(--amber);white-space:nowrap}
+td strong{color:var(--ink);font-weight:600}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.b{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid;border-radius:2px;white-space:nowrap;display:inline-block}
+.b-green{color:var(--green);border-color:#2E5C46}
+.b-red{color:var(--red);border-color:#5C3230}
+.b-amber{color:var(--amber);border-color:var(--amber-dim)}
+.b-blue{color:var(--blue);border-color:#2C4C68}
+.call{border-left:3px solid var(--amber);background:rgba(232,163,61,.055);padding:14px 18px;margin:18px 0;font-size:14.4px}
+.call.blue{border-left-color:var(--blue);background:rgba(91,147,196,.055)}
+.call.red{border-left-color:var(--red);background:rgba(217,100,94,.055)}
+.call.green{border-left-color:var(--green);background:rgba(95,185,138,.05)}
+.call.violet{border-left-color:var(--violet);background:rgba(155,135,196,.06)}
+.call b{color:var(--ink);display:block;margin-bottom:5px;font-family:var(--display);font-size:13.5px}
+.call p:last-child{margin-bottom:0}
+.plain{border:1px dashed var(--line);padding:12px 16px;margin:14px 0;font-size:14px;color:var(--ink-dim)}
+.plain b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:5px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0}
+.duo > div{background:var(--panel);padding:16px 19px}
+.duo h4{margin-top:0;font-size:14.5px;color:var(--ink)}
+.duo .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:6px}
+.stack{border:1px solid var(--line);margin:18px 0}
+.stack .lyr{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line-soft)}
+.stack .lyr:last-child{border-bottom:none}
+.stack .ln{background:var(--panel-2);padding:11px 14px;font-family:var(--mono);font-size:11px;
+  color:var(--amber);border-right:1px solid var(--line-soft);letter-spacing:.06em}
+.stack .lc{padding:11px 15px;font-size:13.8px;color:var(--ink-dim)}
+.stack .lc b{color:var(--ink);display:block;margin-bottom:3px;font-family:var(--display);font-size:14px}
+.xref{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--panel-2);
+  padding:10px 15px;margin:16px 0;font-size:13.6px;color:var(--ink-dim)}
+.xref span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);border:1px solid var(--amber-dim);padding:2px 8px;border-radius:2px;white-space:nowrap}
+mark{background:rgba(232,163,61,.32);color:#fff;padding:0 2px;border-radius:1px}
+.hidden{display:none !important}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0;color:var(--ink-faint);font-size:12.5px}
+.why{font-size:14.6px;color:var(--ink-dim);max-width:78ch;margin:0 0 16px}
+.steps{counter-reset:step;list-style:none;padding:0;margin:16px 0 18px}
+.steps li{counter-increment:step;position:relative;padding:10px 12px 10px 48px;border:1px solid var(--line-soft);
+  background:var(--panel);margin-bottom:8px}
+.steps li::before{content:counter(step, decimal-leading-zero);position:absolute;left:12px;top:12px;
+  font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.06em}
+kbd{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);background:var(--panel-2);
+  padding:1px 6px;border-radius:2px;color:var(--ink)}
+.path{font-family:var(--mono);font-size:12px;color:var(--blue)}
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.side{position:static;border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:18px;max-height:200px}
+  .hero h1{font-size:25px}
+  #q{width:150px}
+  .duo{grid-template-columns:1fr}
+  .stack .lyr{grid-template-columns:1fr}
+  .stack .ln{border-right:none;border-bottom:1px solid var(--line-soft)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  body{background:#fff;color:#000}
+  body::before{display:none}
+  .topbar,nav.side{display:none}
+  .shell{grid-template-columns:1fr;padding:0}
+  tr{page-break-inside:avoid}
+  a{color:#000;text-decoration:none}
+  .call{border-left-color:#666;background:#f7f7f7}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="tb-id">DEMO 1 · LEARN · TRACK A</span>
+    <span class="tb-title">Rebuild Unbilled USD from scratch</span>
+    <span class="tb-spacer"></span>
+    <input id="q" type="search" placeholder="Filter sections, numbers, pitfalls…" autocomplete="off">
+    <span class="hitcount" id="hits"></span>
+  </div>
+</div>
+
+<div class="shell">
+
+<nav class="side" id="nav">
+  <h4>Start here</h4>
+  <a href="#s0"><span class="n">00</span>How to use this page</a>
+  <a href="#s1"><span class="n">01</span>What you are building</a>
+  <a href="#s2"><span class="n">02</span>Python 3.12 + uv</a>
+  <a href="#s3"><span class="n">03</span>Project skeleton</a>
+  <h4>Land and compile</h4>
+  <a href="#s4"><span class="n">04</span>Generate seeds</a>
+  <a href="#s5"><span class="n">05</span>Staging models</a>
+  <a href="#s6"><span class="n">06</span>int + fct_unbilled</a>
+  <a href="#s7"><span class="n">07</span>Dims + gold + meta</a>
+  <a href="#s8"><span class="n">08</span>Time spine</a>
+  <a href="#s9"><span class="n">09</span>semantic_models.yml</a>
+  <a href="#s10"><span class="n">10</span>dbt seed / run / test</a>
+  <h4>Prove the grain</h4>
+  <a href="#s11"><span class="n">11</span>Act 1 reports</a>
+  <a href="#s12"><span class="n">12</span>Act 2 grain</a>
+  <a href="#s13"><span class="n">13</span>Act 3 mf query</a>
+  <h4>Wrap</h4>
+  <a href="#s14"><span class="n">14</span>Ossie sidecar</a>
+  <a href="#s15"><span class="n">15</span>Checklist of numbers</a>
+  <a href="#s16"><span class="n">16</span>Do not</a>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="eyebrow">learner guide · Track A · MetricFlow + DuckDB · not Databricks</div>
+  <h1>Demo 1 — Rebuild Unbilled USD from scratch (MetricFlow + DuckDB)</h1>
+  <p class="lede">Rebuild Unbilled USD from scratch on a Mac with uv + DuckDB + dbt + MetricFlow.
+  There is no empty learner folder for Track A (unlike Demo 2). This page is the teaching path.
+  The same folder is the complete pack — peek if stuck, do not copy-paste first. Work in order.</p>
+  <div class="ctrl">
+    <div><dt>Compiler</dt><dd>MetricFlow 0.209.0</dd></div>
+    <div><dt>Warehouse</dt><dd>DuckDB ./o2c.duckdb</dd></div>
+    <div><dt>As-of</dt><dd>2026-08-01</dd></div>
+    <div><dt>Proven proof</dt><dd>446 tickets · $6,049,649.77</dd></div>
+    <div><dt>Pins</dt><dd>dbt 1.10.23 · mf 0.11</dd></div>
+    <div><dt>Not this</dt><dd>Track B / Databricks / Azure</dd></div>
+  </div>
+</div>
+
+<section id="s0">
+  <h2><span class="num">00</span> How to use this page</h2>
+  <p class="sub">One folder. One teaching path. The complete pack is peek-if-stuck, not the first move.</p>
+
+  <p>Open this HTML in a browser. Unlike Demo 2, Track A has <strong>no empty learner folder</strong>.
+  The same directory — <code>demos/o2c-unbilled-semantic-layer/</code> — is the complete pack.
+  Rebuild in a <em>new sibling folder</em> (or a scratch copy) so you write every file yourself.
+  Peek the complete pack if stuck. Do not copy-paste first. Do not empty the complete pack.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Folder</th><th>What it is</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>o2c-unbilled-semantic-layer/</strong></td>
+        <td>This pack. Complete working demo + this LEARN page + EXPLAIN-COMPONENTS.html.</td>
+        <td>Read this page. Peek a <em>path</em> if stuck. Do not empty it. Do not copy blindly.</td>
+      </tr>
+      <tr>
+        <td><strong>Your scratch folder</strong></td>
+        <td>Empty project you create in §3. Same layout, your files.</td>
+        <td>Write YAML, SQL, and scripts here. This is the workbook.</td>
+      </tr>
+      <tr>
+        <td><strong>o2c-unbilled-databricks-free/</strong></td>
+        <td>Demo 2 / Track B. Databricks Free + Metric Views.</td>
+        <td>A different pack. Do not touch it.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>Work in order. Do not skip to <code>mf query</code>. The compiler only compiles if the fact is already sealed.
+  Gold only publishes if it selects from that fact. Act 3 is the same number as Act 1 A/B — you cannot prove that if you skip Act 1.</p>
+
+  <p>Each exercise below has the same shape:</p>
+  <ul>
+    <li><strong>Why</strong> this step exists (one idea, not a lecture).</li>
+    <li><strong>What you do</strong> (files, commands).</li>
+    <li><strong>Done when</strong> (exact counts and dollar totals).</li>
+    <li><strong>Pitfalls</strong> (the Mac / pin traps that actually bite).</li>
+  </ul>
+
+  <div class="duo">
+    <div>
+      <span class="tag">This page</span>
+      <h4>HOW you rebuild</h4>
+      <p>Teaching path. Write the project from scratch. Hit the VERIFY totals. Qualify every sentence: consumption semantic layer (MetricFlow on DuckDB).</p>
+    </div>
+    <div>
+      <span class="tag">Sibling</span>
+      <h4>EXPLAIN-COMPONENTS.html is WHAT was built</h4>
+      <p>Teacher handover. Seats, locks, quiz. Do not treat it as a rebuild script. If a step and a seat disagree, README / WALKTHROUGH / VERIFY win.</p>
+    </div>
+  </div>
+
+  <div class="call red">
+    <b>Do not</b>
+    <p>Do not start by opening the complete-pack SQL and rewriting it. That is copying, not learning.
+    If you get stuck, open the matching <em>path</em> named in the exercise, read the comment header,
+    then close it and write your own. Do not run Track B. Do not open Databricks.</p>
+  </div>
+</section>
+
+<section id="s1">
+  <h2><span class="num">01</span> What you are building (the picture)</h2>
+  <p class="sub">Story + certified rule + A/B/C. One population. One compiler. No ontology in this zip.</p>
+
+  <p class="why"><strong>Why.</strong> You need the story in your head before you write a line of SQL.
+  Two workbooks both titled Unbilled USD fight on grain. A third fights on basis. You will replace them
+  with one certified fact and one MetricFlow metric.</p>
+
+  <p>A Gulf Coast fuels marketer lifts product at three terminals (Houston Ship Channel, Dallas, Beaumont).
+  Invoices go to the <strong>payer</strong>, not the sold-to.</p>
+  <ul>
+    <li><strong>Apex Fuels LLC</strong> is the payer for two sold-tos: Houston Rack and Dallas Dealer.</li>
+    <li><strong>Gulf Coast Aviation Inc</strong> is payer <em>and</em> sold-to (same org).</li>
+    <li><strong>Metro Lubricants</strong> pays for Metro Lubes Beaumont.</li>
+    <li><strong>Ship-to is a terminal</strong>, not a customer role. HSC / DAL / BMT.</li>
+  </ul>
+
+  <p>Certified rule as of <strong>2026-08-01</strong>:</p>
+  <ul>
+    <li><code>status = delivered</code></li>
+    <li>no posted invoice line with <code>invoice_date &lt;= 2026-08-01</code></li>
+    <li><code>unbilled_usd = gallons_net * contract_price_usd</code></li>
+    <li>quality-hold never billed and never unbilled</li>
+  </ul>
+
+  <div class="stack">
+    <div class="lyr"><div class="ln">Seeds</div><div class="lc"><b>CSV extracts, seed=42</b>1,200 BOL tickets. 1,131 delivered. 69 quality_hold. 685 billed lines. 27 invoices. 8 parties. 3 products. 3 terminals.</div></div>
+    <div class="lyr"><div class="ln">Staging</div><div class="lc"><b>stg_*</b>Typed views. No business rule.</div></div>
+    <div class="lyr"><div class="ln">Gate</div><div class="lc"><b>int_ticket_billing</b>is_unbilled / is_billed. Quality-hold false on both.</div></div>
+    <div class="lyr"><div class="ln">Population</div><div class="lc"><b>fct_unbilled</b>Ticket grain. Compiler source. 446 rows. Formula lives here. <em>Not gold.</em></div></div>
+    <div class="lyr"><div class="ln">YAML</div><div class="lc"><b>semantic_models.yml</b>Legacy standalone spec. Names the metric and the SUM column. Compile SoT for MetricFlow.</div></div>
+    <div class="lyr"><div class="ln">Compiler</div><div class="lc"><b>MetricFlow 0.11 / 0.209</b>YAML → SQL. <code>mf query</code> is the one compile path. Consumption semantic layer (MetricFlow on DuckDB) for this pack only.</div></div>
+    <div class="lyr"><div class="ln">Gold</div><div class="lc"><b>gold_kpi_unbilled</b>195 rows at sold-to + terminal + day. SELECT from the fact. Not a second formula.</div></div>
+    <div class="lyr"><div class="ln">Metadata</div><div class="lc"><b>dim_kpi_metadata</b>One stub row. formula_pointer = unbilled_usd. Not a KPI Store catalog.</div></div>
+    <div class="lyr"><div class="ln">Sidecar</div><div class="lc"><b>Ossie projection</b>Write it. Do not compile it. Not ontology. Not OWL.</div></div>
+  </div>
+
+  <h3>The three reports you will reproduce</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Report</th><th>What it does</th><th class="num">Total</th><th class="num">Rows</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong></td><td>Certified tickets grouped by sold-to</td><td class="num">$6,049,649.77</td><td class="num">4</td></tr>
+      <tr><td><strong>B</strong></td><td>Same tickets grouped by payer</td><td class="num">$6,049,649.77</td><td class="num">3</td></tr>
+      <tr><td><strong>C</strong></td><td>Gross × list + quality-hold + mixed labels</td><td class="num">$7,393,499.19</td><td class="num">—</td></tr>
+    </tbody>
+  </table></div>
+  <p>Apex Fuels LLC $4,095,877.44 (296 tickets) = Houston Rack 2,726,475.31 (194) + Dallas Dealer 1,369,402.13 (102).
+  Metro Lubes Beaumont / Metro Lubricants 1,134,397.03 (92). GCA 819,375.30 (58) on both reports.</p>
+
+  <div class="call green">
+    <b>Proven proof (not a target you invent)</b>
+    <p>446 tickets. <strong>$6,049,649.77</strong> as of <strong>2026-08-01</strong>. Seed=42.
+    <code>mf query --metrics unbilled_usd --decimals 2</code> → 6049649.77.
+    You are rebuilding until you hit the same proof.</p>
+  </div>
+
+  <h3>Party roles vs terminals</h3>
+  <p>Downstream O2C overloads the word “customer”. The certified metric does not pick a customer for you. You choose the group-by. The formula stays still.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Role</th><th>Who in this demo</th><th>What it is for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Payer</strong></td><td>Apex Fuels LLC; Metro Lubricants; Gulf Coast Aviation Inc</td><td>Who is invoiced. Credit and cash live here.</td></tr>
+      <tr><td><strong>Sold-to</strong></td><td>Apex Houston Rack; Apex Dallas Dealer; Metro Lubes Beaumont; GCA</td><td>Who is entitled to lift under the contract.</td></tr>
+      <tr><td><strong>Bill-to</strong></td><td>Apex AP; Metro Shared Services; GCA</td><td>Who receives the invoice document.</td></tr>
+      <tr><td><strong>Ship-to</strong></td><td>HSC / DAL / BMT</td><td>A <strong>terminal</strong> (location). Not a party.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Gulf Coast Aviation is payer <em>and</em> sold-to (same org). Apex is not: one payer, two sold-tos. An Apex invoice can cover Houston <em>and</em> Dallas tickets in the same week — billed to Apex Fuels LLC, not to the rack desk.
+  If you default every KPI to “customer = sold-to”, credit and unbilled lie. If you default every KPI to “customer = payer”, dealer performance lies.</p>
+
+  <h3>Honest seats (write them on a card)</h3>
+  <ul>
+    <li><strong>Fact</strong> = population + formula. 446 tickets. <code>gallons_net * contract_price</code>.</li>
+    <li><strong>YAML</strong> = name + which column to SUM. Legacy standalone spec. Compile SoT for MetricFlow.</li>
+    <li><strong>Compiler</strong> = MetricFlow 0.11 / 0.209. YAML → SQL. <code>mf query</code>.</li>
+    <li><strong>Metadata</strong> = one stub row. <code>formula_pointer = unbilled_usd</code>. Not a KPI Store catalog.</li>
+    <li><strong>Gold</strong> = published snapshot of the same fact at sold-to + terminal + day. 195 rows. Not a second formula.</li>
+    <li><strong>Ossie</strong> = interchange nobody reads. Not compiled. Not OWL. Do not upgrade dbt to 1.12 to “use Ossie.”</li>
+  </ul>
+  <p>Delete the YAML and Act 1 still works. That is the production pattern. <code>--explain</code> printing a short <code>SUM(unbilled_usd) FROM fct_unbilled</code> is the compiler doing its job.</p>
+
+  <div class="call blue">
+    <b>C-10 / C-11 / RC-1 in one breath</b>
+    <p>Meaning vs formula. Always say <strong>consumption semantic layer (MetricFlow on DuckDB)</strong>, never bare “the semantic layer.”
+    One certified formula, one compile path (<code>mf query</code>). Programme consumption semantic layer is Databricks Metric Views (Demo 2). MetricFlow is the demo-1 compiler only.</p>
+  </div>
+</section>
+
+<section id="s2">
+  <h2><span class="num">02</span> Python 3.12 + uv venv</h2>
+  <p class="sub">3.13 will fail. Pins are locked. Homebrew is not required. Docker is not required.</p>
+
+  <p class="why"><strong>Why.</strong> <code>dbt-metricflow==0.11.0</code> requires Python <code>&lt;3.13</code> and
+  <code>dbt-core&gt;=1.10.4,&lt;1.11</code>. The verification box used 3.12.13 via uv because system Python was 3.13.5.
+  If you start on 3.13 you will spend an hour on a resolver error that is not the lesson.</p>
+
+  <ol class="steps">
+    <li>Check: <code>python3 --version</code>. You need 3.11 or 3.12. If you only have 3.13, install 3.12 from python.org and pass <code>--python 3.12</code> to <code>uv venv</code>.</li>
+    <li>Install uv if needed: <a href="https://docs.astral.sh/uv/getting-started/installation/">docs.astral.sh/uv</a>.</li>
+    <li>From your scratch folder (create it in §3 first, or create the venv after the skeleton):
+<pre><code># Python 3.11 or 3.12 only (3.13 will not resolve dbt-metricflow 0.11)
+uv venv --python 3.12
+source .venv/bin/activate
+uv pip install -r requirements.txt
+</code></pre>
+    </li>
+    <li>Confirm:
+<pre><code>dbt --version
+# Core: 1.10.23   Plugin duckdb: 1.10.1
+which mf
+# …/.venv/bin/mf
+python -c "import duckdb, metricflow; print(duckdb.__version__)"
+# 1.5.5
+</code></pre>
+    </li>
+  </ol>
+
+  <p>Without uv (fallback):</p>
+<pre><code>python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+</code></pre>
+
+  <p><code>requirements.txt</code> you write (these exact pins):</p>
+<pre><code>dbt-core==1.10.23
+dbt-duckdb==1.10.1
+dbt-metricflow==0.11.0
+</code></pre>
+  <p>Resolved on the verification box: <code>metricflow==0.209.0</code>, <code>duckdb==1.5.5</code>. Do not add Cube, Airflow, or a Databricks SDK.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>Venv is 3.11 or 3.12. <code>dbt --version</code> shows 1.10.23 / duckdb 1.10.1. <code>which mf</code> is <code>.venv/bin/mf</code>. No 0.13 install.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — Python 3.13 / No matching distribution for dbt-metricflow</b>
+    <p>Use 3.11 or 3.12. 0.10/0.11 require <code>&lt;3.13</code>. Do not “just pip install the latest MetricFlow.” 0.13 is a different line and will break the legacy YAML.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — mf not found, or mf opens Metafont</b>
+    <p><code>source .venv/bin/activate</code>. <code>which mf</code> must be <code>.venv/bin/mf</code>.
+    On a Mac, bare <code>mf</code> can resolve to a TeX Metafont binary. Call <code>.venv/bin/mf</code> explicitly.
+    <code>python -m dbt.cli.main</code> is <strong>not</strong> the MetricFlow CLI.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <h2><span class="num">03</span> Project skeleton</h2>
+  <p class="sub">dbt_project.yml, profiles.yml pointing at ./o2c.duckdb, DBT_PROFILES_DIR=.</p>
+
+  <p class="why"><strong>Why.</strong> dbt must find a DuckDB file in this folder, not a cloud profile in <code>~/.dbt</code>.
+  The project stays on the 1.10 line so the legacy standalone YAML spec is what you write in §9.</p>
+
+  <p>Create a scratch folder next to the complete pack. Suggested name: <code>o2c-unbilled-learn/</code>. Layout:</p>
+<pre><code>o2c-unbilled-learn/
+  dbt_project.yml
+  profiles.yml
+  requirements.txt
+  models/staging/
+  models/intermediate/
+  models/marts/
+  models/semantic_models.yml          # later
+  models/metricflow_time_spine.sql    # later
+  models/metricflow_time_spine.yml
+  seeds/
+  scripts/
+  osi/
+  tests/
+  analyses/
+</code></pre>
+
+  <p><code>dbt_project.yml</code> — the locks that matter:</p>
+<pre><code>name: o2c_unbilled
+version: "1.0.0"
+config-version: 2
+profile: o2c_unbilled
+require-dbt-version: [">=1.10.0", "&lt;1.11.0"]
+
+vars:
+  as_of_date: "2026-08-01"
+
+models:
+  o2c_unbilled:
+    +materialized: table
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+</code></pre>
+  <p>Also declare seed column types so DuckDB does not guess strings. Write this under <code>seeds:</code> in <code>dbt_project.yml</code> (peek complete-pack <span class="path">dbt_project.yml</span> if the keys slip):</p>
+<pre><code>seeds:
+  o2c_unbilled:
+    +quote_columns: false
+    deliveries:
+      +column_types:
+        bol_ts: timestamp
+        gallons_net: double
+        gallons_gross: double
+        temperature_f: double
+    invoices:
+      +column_types:
+        invoice_date: date
+        invoice_amount_usd: double
+    invoice_lines:
+      +column_types:
+        line_gallons_net: double
+        line_amount_usd: double
+    products:
+      +column_types:
+        contract_price_usd: double
+        list_price_usd: double
+        expansion_per_f: double
+</code></pre>
+  <p>The leftover <code>semantic-models.time-spine</code> cookbook key in the complete pack’s <code>dbt_project.yml</code> is unused on dbt 1.10 (you will see a warning). Keep or skip — the working spine config is the model-level YAML in §8 plus <code>time_spines:</code> in §9.</p>
+  <p>Add a <code>.gitignore</code> with <code>.venv/</code>, <code>target/</code>, <code>dbt_packages/</code>, <code>logs/</code>, <code>o2c.duckdb</code> if you like. Do not commit a second copy of the complete pack’s DuckDB file into the scratch folder as “the answer.”</p>
+
+  <p><code>profiles.yml</code> in the <em>project root</em> (not <code>~/.dbt</code>):</p>
+<pre><code>o2c_unbilled:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: o2c.duckdb
+      threads: 4
+</code></pre>
+
+  <p>Every later command:</p>
+<pre><code>export DBT_PROFILES_DIR=.
+export DBT_TARGET=dev
+</code></pre>
+  <p><code>demo.sh</code> in the complete pack sets these for you. In the scratch folder, export them yourself or write a tiny runner later.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>From the scratch root, <code>DBT_PROFILES_DIR=. dbt debug --target dev</code> finds the profile and can open (or create) <code>./o2c.duckdb</code>. You did not write a profile into <code>~/.dbt</code>.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — Could not find profile</b>
+    <p>You forgot <code>export DBT_PROFILES_DIR=.</code> or you ran dbt from a different directory. Always from the project root. Peek if stuck: complete pack <span class="path">profiles.yml</span> and <span class="path">scripts/demo.sh</span> (the two export lines only).</p>
+  </div>
+</section>
+
+<section id="s4">
+  <h2><span class="num">04</span> Generate seeds (or use shipped CSVs)</h2>
+  <p class="sub">seed=42. Same seven files. Same counts. Do not invent a new generator seed.</p>
+
+  <p class="why"><strong>Why.</strong> The proven totals only hold for seed=42. Change the seed and every dollar on this page is wrong.
+  The complete pack already ships the CSVs so you can skip the generator. Writing the generator is optional; hitting the counts is not.</p>
+
+  <p>Two paths. Both must land these files in <code>seeds/</code>:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>File</th><th class="num">Rows</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><code>deliveries.csv</code></td><td class="num">1,200</td><td>BOL tickets, 2026-06-01 … 2026-07-31. 1,131 delivered, 69 quality_hold.</td></tr>
+      <tr><td><code>invoice_lines.csv</code></td><td class="num">685</td><td>Ticket-to-invoice links.</td></tr>
+      <tr><td><code>invoices.csv</code></td><td class="num">27</td><td>Billed to the payer. Apex invoices can cover two sold-tos.</td></tr>
+      <tr><td><code>parties.csv</code></td><td class="num">8</td><td>Apex / GCA / Metro legal + desks.</td></tr>
+      <tr><td><code>party_roles.csv</code></td><td class="num">10</td><td>payer / sold_to / bill_to. GCA holds all three.</td></tr>
+      <tr><td><code>products.csv</code></td><td class="num">3</td><td>RBOB, ULSD, Jet-A. Contract ≠ list.</td></tr>
+      <tr><td><code>terminals.csv</code></td><td class="num">3</td><td>HSC, DAL, BMT. Sites. Not parties.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Path A — copy the shipped CSVs</h3>
+  <p>Copy <span class="path">../o2c-unbilled-semantic-layer/seeds/*.csv</span> into your <code>seeds/</code>. That is allowed. They are the input, not the answer. You still write every SQL model.</p>
+
+  <h3>Path B — write / run the generator</h3>
+  <p>If you write <code>scripts/generate_data.py</code>, lock <code>SEED = 42</code>, <code>AS_OF = date(2026, 8, 1)</code>, <code>N_TICKETS = 1200</code>, lifts 2026-06-01 … 2026-07-31.
+  Peek complete-pack <span class="path">scripts/generate_data.py</span> for party ids and product prices (RBOB contract 2.184 / list 2.269, etc.). Do not change prices or party names — Report A/B labels must match VERIFY.</p>
+<pre><code>python scripts/generate_data.py
+# tickets 1200 · delivered 1131 · quality_hold 69
+# billed lines 685 · unbilled delivered 446 · invoices 27
+</code></pre>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>Seven CSVs exist with counts <strong>1200 / 685 / 27 / 8 / 10 / 3 / 3</strong>. Generator (if you ran it) reports 446 unbilled delivered (39.4% of delivered).</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — totals do not match README</b>
+    <p>You changed the generator seed, or you edited a CSV by hand, or you did not <code>dbt run</code> after regenerating. Seed=42 only. Peek the shipped CSVs; do not invent new parties.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <h2><span class="num">05</span> Staging models</h2>
+  <p class="sub">stg_* views. Types and lowercase. No unbilled rule yet.</p>
+
+  <p class="why"><strong>Why.</strong> Every later model should read a typed view, not a raw seed.
+  The gate and the multiply do not belong here. If you put them here you will encode the formula twice.</p>
+
+  <p>Write seven models in <code>models/staging/</code>:</p>
+  <ul>
+    <li><code>stg_deliveries</code> — cast <code>bol_ts</code>, derive <code>delivery_date</code>, cast gallons and temperature, <code>lower(status)</code>.</li>
+    <li><code>stg_invoices</code> — cast date and amount, <code>lower(invoice_status)</code>.</li>
+    <li><code>stg_invoice_lines</code> — ticket_id, invoice_id, product, gallons, amount.</li>
+    <li><code>stg_parties</code>, <code>stg_party_roles</code>, <code>stg_products</code>, <code>stg_terminals</code> — pass-through with casts on prices.</li>
+  </ul>
+  <p>Each is <code>select … from {{ ref('seed_name') }}</code>. Seed names: <code>deliveries</code>, <code>invoices</code>, <code>invoice_lines</code>, <code>parties</code>, <code>party_roles</code>, <code>products</code>, <code>terminals</code>.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>After §10’s <code>dbt run</code>, seven staging views exist. <code>stg_deliveries</code> has 1,200 rows. Status values are lowercase <code>delivered</code> / <code>quality_hold</code>.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Do not filter to delivered here. Do not multiply gallons here. Peek if stuck: complete pack <span class="path">models/staging/stg_deliveries.sql</span> (header + casts only). Write yours; do not paste the rest of the project.</p>
+  </div>
+</section>
+
+<section id="s6">
+  <h2><span class="num">06</span> int_ticket_billing + fct_unbilled</h2>
+  <p class="sub">The certified rule. Population + formula. Not gold. Not YAML.</p>
+
+  <p class="why"><strong>Why.</strong> This is the formula source of truth. YAML will only name the metric and the SUM column.
+  If the gate or the multiply leaks into YAML, Act 3 <code>--explain</code> will not be a short <code>SUM(unbilled_usd) FROM fct_unbilled</code>.</p>
+
+  <h3>int_ticket_billing</h3>
+  <p>Write <code>models/intermediate/int_ticket_billing.sql</code>. Ticket-level billing status as of <code>var('as_of_date')</code>.</p>
+  <ol class="steps">
+    <li>CTE of invoice lines joined to invoices where <code>invoice_date &lt;= as_of</code> and <code>invoice_status = 'posted'</code>.</li>
+    <li>From <code>stg_deliveries</code>, left join that CTE on <code>ticket_id</code>.</li>
+    <li><code>is_billed</code> = false when status is <code>quality_hold</code>; else true when a line exists.</li>
+    <li><code>is_unbilled</code> = true only when status is <code>delivered</code> and no line exists.</li>
+  </ol>
+  <p>Quality-hold is never billed and never unbilled. That is the third state. Do not invent a fourth flag.</p>
+
+  <h3>fct_delivery (names + prices)</h3>
+  <p>Write <code>models/marts/fct_delivery.sql</code>. This is the wide delivery fact — billed, unbilled, and quality-hold all still present. Join <code>int_ticket_billing</code> to:</p>
+  <ul>
+    <li><code>stg_parties</code> three times (sold-to, payer, bill-to) so names sit on the row.</li>
+    <li><code>stg_terminals</code> for <code>terminal_name</code>.</li>
+    <li><code>stg_products</code> for <code>product_name</code>, <code>contract_price_usd</code>, <code>list_price_usd</code>.</li>
+  </ul>
+  <p>Compute <code>round(gallons_net * contract_price_usd, 2) as contract_value_usd</code> and, if you want Report C later,
+  <code>round(gallons_gross * list_price_usd, 2) as sloppy_value_usd</code>. Keep both flags. Contract ≠ list on every product (RBOB 2.184 / 2.269, ULSD 2.312 / 2.407, Jet-A 2.156 / 2.248). That gap is why C drifts even before quality-hold.</p>
+  <p>Do not filter to unbilled here. <code>fct_unbilled</code> is the filter. Report C needs the wider set.</p>
+
+  <h3>fct_unbilled</h3>
+  <p>Write <code>models/marts/fct_unbilled.sql</code>:</p>
+<pre><code>select
+    ticket_id, …,  -- keys, names, gallons, prices, status
+    contract_value_usd as unbilled_usd,
+    date '{{ var("as_of_date") }}' as as_of_date
+from {{ ref('fct_delivery') }}
+where is_unbilled
+  and status = 'delivered'
+</code></pre>
+  <p>Grain: one row per BOL. Default <em>published</em> grain (gold, next section) is sold-to + terminal + day. Product is a slice, not part of that grain.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>After §10: <code>fct_unbilled</code> has <strong>446</strong> rows. <code>select round(sum(unbilled_usd), 2) from fct_unbilled</code> is <strong>6049649.77</strong>.
+    Zero quality_hold rows. A custom test <code>assert_unbilled_excludes_holds</code> should pass.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Filtering on invoice presence without the as-of date and posted status will drop tickets whose invoice is after 2026-08-01 (they are still unbilled).
+    Peek if stuck: complete pack <span class="path">models/intermediate/int_ticket_billing.sql</span> and <span class="path">models/marts/fct_unbilled.sql</span>.
+    Write the filter yourself. Do not put the multiply in YAML.</p>
+  </div>
+</section>
+
+<section id="s7">
+  <h2><span class="num">07</span> Dims + gold_kpi_unbilled + dim_kpi_metadata</h2>
+  <p class="sub">Thin dims. One metadata row. Gold is a snapshot of the same fact.</p>
+
+  <p class="why"><strong>Why.</strong> Act 2 is “metadata is 1 row; grain lives on the fact.”
+  If you explode metadata per site, or write gold as a second <code>gallons_net * contract_price</code>, the lesson fails even when the dollars match.</p>
+
+  <h3>Thin dims</h3>
+  <p>Write pass-through marts if you want them for teaching: <code>dim_party</code>, <code>dim_party_role</code>, <code>dim_product</code>, <code>dim_terminal</code>.
+  They are not the compiler source. The fact already has names denormalized.</p>
+
+  <h3>gold_kpi_unbilled</h3>
+  <p>Write <code>models/marts/gold_kpi_unbilled.sql</code> as a <code>SELECT</code> from <code>fct_unbilled</code>, grouped to sold-to + terminal + day:</p>
+<pre><code>select
+    sold_to_id, sold_to_name,
+    terminal_code, terminal_name,
+    delivery_date, as_of_date,
+    sum(gallons_net) as unbilled_gallons_net,
+    sum(unbilled_usd) as unbilled_usd,
+    count(*) as ticket_count
+from {{ ref('fct_unbilled') }}
+group by 1, 2, 3, 4, 5, 6
+</code></pre>
+  <p>Not a second formula. The file header should say so.</p>
+
+  <h3>dim_kpi_metadata</h3>
+  <p>One row. Not a KPI Store catalog.</p>
+<pre><code>select
+    'KPI-O2C-UNBILLED-USD' as kpi_id,
+    'Unbilled USD' as name,
+    'Revenue Accounting / Order-to-Cash' as owner,
+    '…prose definition…' as definition,
+    'USD' as uom,
+    'sold_to + terminal + day' as default_grain_rule,
+    'certified' as status,
+    'unbilled_usd' as formula_pointer,
+    date '{{ var("as_of_date") }}' as as_of_date
+</code></pre>
+  <p>Tests: unique <code>kpi_id</code>, <code>formula_pointer</code> accepted value <code>unbilled_usd</code>, status accepted value <code>certified</code>, and a SQL test that the table has exactly one row.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>After §10: <code>dim_kpi_metadata</code> = <strong>1</strong> row, <code>formula_pointer=unbilled_usd</code>.
+    <code>gold_kpi_unbilled</code> = <strong>195</strong> rows. Sum of gold <code>unbilled_usd</code> = 6,049,649.77. Sum of gold <code>ticket_count</code> = 446.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Do not grow metadata into a catalog. Do not add one metadata row per sold-to. Do not write gold from staging.
+    Peek if stuck: <span class="path">models/marts/gold_kpi_unbilled.sql</span>, <span class="path">models/marts/dim_kpi_metadata.sql</span>, <span class="path">tests/assert_one_kpi_metadata_row.sql</span>.</p>
+  </div>
+</section>
+
+<section id="s8">
+  <h2><span class="num">08</span> Time spine</h2>
+  <p class="sub">2026-01-01 … 2026-08-31. MetricFlow needs a day spine. Lifts are Jun–Jul 2026.</p>
+
+  <p class="why"><strong>Why.</strong> MetricFlow joins measures to a time spine for <code>metric_time</code> slices.
+  Empty <code>metric_time</code> results usually mean the spine does not cover the lift dates, or dbt 1.10 did not see the model-level config.</p>
+
+  <p>Write <code>models/metricflow_time_spine.sql</code>:</p>
+<pre><code>{{ config(materialized='table') }}
+select cast(date_day as date) as date_day
+from (
+    select unnest(generate_series(
+        date '2026-01-01',
+        date '2026-08-31',
+        interval '1 day'
+    )) as date_day
+) dates
+</code></pre>
+
+  <p>Write <code>models/metricflow_time_spine.yml</code> — this is what dbt 1.10 actually reads:</p>
+<pre><code>version: 2
+models:
+  - name: metricflow_time_spine
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+</code></pre>
+  <p>Also declare <code>time_spines:</code> at the top of <code>semantic_models.yml</code> in §9. The project-level <code>semantic-models.time-spine</code> block in <code>dbt_project.yml</code> is the 1.8/1.9 cookbook pattern; dbt 1.10 warns it is unused. You may keep it. Do not rely on it alone.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>After §10: the spine table has one row per day 2026-01-01 through 2026-08-31. Later, <code>mf query … --group-by metric_time__day</code> returns Jun–Jul 2026 rows, not an empty frame.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — empty metric_time</b>
+    <p>Spine must cover the lifts. Re-run <code>dbt run</code> after adding the YAML. Peek: <span class="path">models/metricflow_time_spine.sql</span> and <span class="path">models/metricflow_time_spine.yml</span>.</p>
+  </div>
+</section>
+
+<section id="s9">
+  <h2><span class="num">09</span> semantic_models.yml</h2>
+  <p class="sub">Legacy standalone spec. Do not write dbt 1.12 embedded blocks.</p>
+
+  <p class="why"><strong>Why.</strong> This file is the compile SoT. It names the metric and which column to SUM.
+  It does not re-encode the unbilled rule. If you write dbt 1.12 <code>semantic_model:</code> under <code>models:</code>, you have left the pin set this demo compiles with.</p>
+
+  <p>Write <code>models/semantic_models.yml</code> with three top-level keys: <code>time_spines:</code>, <code>semantic_models:</code>, <code>metrics:</code>.</p>
+  <ul>
+    <li>Time spine: name <code>time_spine</code>, model <code>ref('metricflow_time_spine')</code>, column <code>date_day</code>, grain day.</li>
+    <li>Semantic model <code>unbilled_tickets</code> on <code>ref('fct_unbilled')</code>. Default <code>agg_time_dimension: delivery_date</code>.</li>
+    <li>Primary entity <code>ticket</code> / <code>ticket_id</code>. Foreign entities <code>sold_to_party</code>, <code>payer_party</code>, <code>terminal_loc</code>, <code>product_sku</code> (use ids / codes, and names that do <em>not</em> collide with dimension names).</li>
+    <li>Time dimension <code>delivery_date</code> (day). Categorical dimensions <code>sold_to</code> (expr <code>sold_to_name</code>), <code>payer</code>, <code>terminal</code>, <code>product</code>, <code>status</code>.</li>
+    <li>Measures: <code>unbilled_usd_measure</code> agg sum expr <code>unbilled_usd</code>; <code>unbilled_gallons_net_measure</code> sum of <code>gallons_net</code>; <code>ticket_count</code> count of <code>ticket_id</code>.</li>
+    <li>Metrics (type simple): <code>unbilled_usd</code>, <code>unbilled_gallons_net</code>, <code>unbilled_ticket_count</code>, each pointing at the matching measure.</li>
+  </ul>
+
+  <div class="call">
+    <b>What you are not writing</b>
+    <p>You are not writing <code>gallons_net * contract_price</code> again. You are not writing dbt 1.12 embedded blocks. You are not pointing MetricFlow at <code>osi/unbilled.ossie.yaml</code>. You are not authoring ontology IRIs.</p>
+  </div>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>After §10’s <code>dbt parse</code>: <code>target/semantic_manifest.json</code> exists. <code>mf list metrics</code> (in §13) finds the three metrics. Do not run <code>mf</code> yet if the fact is not built.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Dimension names must be distinct from entity names or MetricFlow will collide. That is why the entities are <code>sold_to_party</code> and the dimension is <code>sold_to</code>.
+    Peek if stuck: complete pack <span class="path">models/semantic_models.yml</span>. Copy structure, not a 1.12 rewrite.</p>
+  </div>
+</section>
+
+<section id="s10">
+  <h2><span class="num">10</span> dbt seed / run / parse / test</h2>
+  <p class="sub">Materialize the warehouse. Write the manifest. Then, and only then, Act 1.</p>
+
+  <p class="why"><strong>Why.</strong> <code>mf query</code> reads materialized tables plus the semantic manifest.
+  Empty / missing tables are the most common “MetricFlow is broken” report. It is not. You skipped this step.</p>
+
+  <ol class="steps">
+    <li><code>export DBT_PROFILES_DIR=.</code> and <code>export DBT_TARGET=dev</code>. Activate the venv.</li>
+    <li><code>dbt seed --target dev</code> — expect PASS=7 (1200 deliveries, 685 invoice_lines, 27 invoices, 8 parties, 10 roles, 3 products, 3 terminals).</li>
+    <li><code>dbt run --target dev</code> — expect PASS around 19 (11 tables + 8 views), including <code>fct_unbilled</code>, <code>gold_kpi_unbilled</code>, <code>dim_kpi_metadata</code>, <code>metricflow_time_spine</code>.</li>
+    <li><code>dbt parse --target dev</code> — Success. Writes <code>target/semantic_manifest.json</code>.</li>
+    <li><code>dbt test --select fct_unbilled dim_kpi_metadata gold_kpi_unbilled</code> — PASS=13 WARN=0 ERROR=0 on the complete pack. Your count may be lower if you wrote fewer tests; the three objects must still be correct.</li>
+  </ol>
+
+  <p>Ignore the dbt 1.10 deprecation banner. Ignore any unused-path warning on <code>semantic-models.time-spine</code>. Stay off 1.12.</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>DuckDB file <code>./o2c.duckdb</code> exists. 446 / 195 / 1 rows on fact / gold / metadata. Manifest exists. Tests on those three objects pass.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — dbt: command not found</b>
+    <p>Same venv. Or <code>python -m dbt.cli.main seed</code>. Peek: complete pack <span class="path">scripts/demo.sh</span> steps 2 only (seed / run / parse). Do not run the whole demo.sh until you have written Act 1 yourself.</p>
+  </div>
+</section>
+
+<section id="s11">
+  <h2><span class="num">11</span> Act 1 — write the three reports</h2>
+  <p class="sub">Or run act1_reports.py after you understand them. A and B share tickets. C does not.</p>
+
+  <p class="why"><strong>Why.</strong> Two honest “customer” reports fight on grain. The sloppy twin fights on basis.
+  You must see that before the compiler is interesting. Act 1 A/B already query the fact. Act 3 will be the same number through <code>mf query</code>.</p>
+
+  <p>Write three queries against <code>o2c.duckdb</code> (Python + duckdb, or the dbt analysis <code>analyses/act1_conflicting_reports.sql</code>, or a SQL client).</p>
+
+  <h3>Report A — sold-to, certified ticket set</h3>
+<pre><code>select sold_to_name as customer,
+       round(sum(unbilled_usd), 2) as unbilled_usd,
+       count(*) as tickets
+from fct_unbilled
+group by 1
+order by 2 desc;
+</code></pre>
+  <p>Expect 4 rows, grand total <strong>$6,049,649.77</strong>:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>customer</th><th class="num">USD</th><th class="num">tickets</th></tr></thead>
+    <tbody>
+      <tr><td>Apex Fuels Houston Rack</td><td class="num">2,726,475.31</td><td class="num">194</td></tr>
+      <tr><td>Apex Fuels Dallas Dealer</td><td class="num">1,369,402.13</td><td class="num">102</td></tr>
+      <tr><td>Metro Lubes Beaumont</td><td class="num">1,134,397.03</td><td class="num">92</td></tr>
+      <tr><td>Gulf Coast Aviation Inc</td><td class="num">819,375.30</td><td class="num">58</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Report B — payer, same tickets</h3>
+<pre><code>select payer_name as customer,
+       round(sum(unbilled_usd), 2) as unbilled_usd,
+       count(*) as tickets
+from fct_unbilled
+group by 1
+order by 2 desc;
+</code></pre>
+  <p>Expect 3 rows, same grand total <strong>$6,049,649.77</strong>:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>customer</th><th class="num">USD</th><th class="num">tickets</th></tr></thead>
+    <tbody>
+      <tr><td>Apex Fuels LLC</td><td class="num">4,095,877.44</td><td class="num">296</td></tr>
+      <tr><td>Metro Lubricants</td><td class="num">1,134,397.03</td><td class="num">92</td></tr>
+      <tr><td>Gulf Coast Aviation Inc</td><td class="num">819,375.30</td><td class="num">58</td></tr>
+    </tbody>
+  </table></div>
+  <p>Check: Apex payer == Houston + Dallas. B has fewer customer rows than A. That is the grain lesson.</p>
+
+  <h3>Report C — sloppy twin</h3>
+  <p>From <code>fct_delivery</code> (or staging + products), on purpose:</p>
+  <ol>
+    <li>Quantity = <code>gallons_gross</code> (ambient), not net.</li>
+    <li>Price = list, not contract.</li>
+    <li>Population includes <code>quality_hold</code>.</li>
+    <li>Customer label mixes sold-to names (Apex) with the payer name (Metro).</li>
+  </ol>
+  <p>Grand total must be <strong>$7,393,499.19</strong>, and must <em>not</em> equal A/B.</p>
+
+  <p>After you can explain those four CHECKs out loud, you may run the complete-pack script:</p>
+<pre><code>python scripts/act1_reports.py
+</code></pre>
+  <p>in the complete pack — or your own copy. Do not run it first and call that “writing the reports.”</p>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>A total == B total == 6,049,649.77. C == 7,393,499.19. B has 3 customer rows, A has 4. Apex payer == Houston + Dallas. You can say why they fight without looking at this page.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Writing C against <code>fct_unbilled</code> will never hit 7,393,499.19 — the fact already dropped holds and used net × contract.
+    C must use the wider delivery set. Peek: complete pack <span class="path">scripts/act1_reports.py</span> after you have a failing C, not before.</p>
+  </div>
+</section>
+
+<section id="s12">
+  <h2><span class="num">12</span> Act 2 — prove 1 metadata row, grain on the fact</h2>
+  <p class="sub">1 / 195 / 446. Houston vs Dallas are the same KPI, different fact rows.</p>
+
+  <p class="why"><strong>Why.</strong> If grain lives on the metadata table you will fight this every quarter.
+  A catalog row does not explode into one row per site. The fact does. This demo is not a KPI Store.</p>
+
+  <ol class="steps">
+    <li><code>select count(*) from dim_kpi_metadata;</code> → 1. Print <code>formula_pointer</code> and <code>status</code> → <code>unbilled_usd</code> / <code>certified</code>.</li>
+    <li><code>select count(*) from gold_kpi_unbilled;</code> → 195.</li>
+    <li><code>select count(*) from fct_unbilled;</code> → 446.</li>
+    <li>Cross-join metadata to gold for Apex Houston and Dallas. Same <code>kpi_id</code>, same pointer, many terminal rows. Houston Rack × HSC is 2,666,499.54 / 190. Dallas Dealer × DAL is 1,324,859.69 / 99. Cross-terminal exceptions exist (4 Houston Rack off-HSC, 3 Dallas Dealer off-DAL).</li>
+  </ol>
+
+  <p>After you can say “metadata is one row; grain lives on the fact,” you may run:</p>
+<pre><code>python scripts/act2_grain.py
+</code></pre>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>1 / 195 / 446. You did not add a metadata row per site. You can explain why Report B has fewer rows than Report A using this same idea (two sold-tos roll to one payer).</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall</b>
+    <p>Joining metadata to gold with an inner join on sold-to will fail — metadata has no sold-to column. Cross join (or join on the constant kpi_id). Peek: <span class="path">scripts/act2_grain.py</span>.</p>
+  </div>
+</section>
+
+<section id="s13">
+  <h2><span class="num">13</span> Act 3 — mf list / --explain / query by sold-to and payer</h2>
+  <p class="sub">ticket__ names. Same number as Act 1 A/B. --explain is a short SUM on purpose.</p>
+
+  <p class="why"><strong>Why.</strong> RC-1: one certified formula, one compile path. Act 1 A/B already query the fact.
+  Act 3 is the same number through the consumption semantic layer (MetricFlow on DuckDB). If you write a second SQL that happens to match, you skipped the compiler.</p>
+
+  <ol class="steps">
+    <li>Activate the venv. <code>which mf</code> is <code>.venv/bin/mf</code>. If <code>mf</code> opens Metafont, call <code>.venv/bin/mf</code>.</li>
+    <li><code>mf list metrics</code> — three metrics: <code>unbilled_gallons_net</code>, <code>unbilled_ticket_count</code>, <code>unbilled_usd</code>.</li>
+    <li><code>mf query --metrics unbilled_usd --explain</code> must print:
+<pre><code>SELECT
+  SUM(unbilled_usd) AS unbilled_usd
+FROM "o2c"."main"."fct_unbilled" unbilled_tickets_src_10000
+</code></pre>
+      That is the compiler: YAML → SQL. No second formula.</li>
+    <li><code>mf query --metrics unbilled_usd --decimals 2</code> → <strong>6049649.77</strong>.</li>
+    <li><code>mf query --metrics unbilled_usd --group-by ticket__sold_to --decimals 2</code> — 4 rows, same dollars as Report A (order may differ).</li>
+    <li><code>mf query --metrics unbilled_usd --group-by ticket__payer --decimals 2</code> — 3 rows, same dollars as Report B. Apex Fuels LLC 4095877.44.</li>
+    <li>Optional: <code>--group-by ticket__sold_to,ticket__terminal,metric_time__day</code> — many rows at sold-to + terminal + day (Jun–Jul 2026).</li>
+    <li><code>mf list dimensions --metrics unbilled_usd</code> if you forget the names.</li>
+  </ol>
+
+  <p>Expected sold-to table (row order from MetricFlow may differ from Report A):</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>ticket__sold_to</th><th class="num">unbilled_usd</th></tr></thead>
+    <tbody>
+      <tr><td>Apex Fuels Houston Rack</td><td class="num">2726475.31</td></tr>
+      <tr><td>Apex Fuels Dallas Dealer</td><td class="num">1369402.13</td></tr>
+      <tr><td>Metro Lubes Beaumont</td><td class="num">1134397.03</td></tr>
+      <tr><td>Gulf Coast Aviation Inc</td><td class="num">819375.30</td></tr>
+    </tbody>
+  </table></div>
+  <p>Expected payer table:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>ticket__payer</th><th class="num">unbilled_usd</th></tr></thead>
+    <tbody>
+      <tr><td>Apex Fuels LLC</td><td class="num">4095877.44</td></tr>
+      <tr><td>Metro Lubricants</td><td class="num">1134397.03</td></tr>
+      <tr><td>Gulf Coast Aviation Inc</td><td class="num">819375.30</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sold-to slices sum: 2,726,475.31 + 1,369,402.13 + 1,134,397.03 + 819,375.30 = 6,049,649.77. MATCH. Only the group-by changes.</p>
+  <p>After Act 3 works, you may write a <code>scripts/demo.sh</code> that chains generate → seed → run → parse → act1 → act2 → mf list / explain / query. The complete pack’s <span class="path">scripts/demo.sh</span> is that runner. It also prints the 0.13 warning and the <code>ticket__</code> namespacing note. Do not start the course by running it end-to-end and calling that “rebuilding.”</p>
+
+  <div class="call">
+    <b>ticket__ is compiler namespacing</b>
+    <p>MetricFlow 0.209 prefixes categorical dimensions with the primary entity. Group-by names are <code>ticket__sold_to</code>, <code>ticket__payer</code>, <code>ticket__terminal</code>, <code>metric_time__day</code>.
+    That is not a claim that sold-to is a child of ticket. Bare <code>sold_to</code> is not a group-by item.</p>
+  </div>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>Unsliced 6049649.77. Sold-to slices sum to the same. Payer slices sum to the same. <code>--explain</code> is SUM from <code>fct_unbilled</code>. Report C stays 7,393,499.19 because it never used the fact / the metric.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — sold_to is not a group-by item</b>
+    <p>Use <code>ticket__sold_to</code>. The CLI will suggest it. Do not “fix” the YAML by renaming the primary entity to make bare names work — that is not this pin set.</p>
+  </div>
+
+  <div class="call red">
+    <b>Pitfall — new version 0.13.0 available</b>
+    <p>The CLI may nag. Do not upgrade. 0.13 wants dbt-core 1.10.4–1.12 and is a different line. YAML/pins break. Stay on <code>dbt-metricflow==0.11.0</code> / <code>metricflow==0.209.0</code>.</p>
+  </div>
+</section>
+
+<section id="s14">
+  <h2><span class="num">14</span> Ossie sidecar (write it, do not compile it)</h2>
+  <p class="sub">Portable projection. Nobody in this demo reads it. Not ontology. Not a reason to upgrade dbt.</p>
+
+  <p class="why"><strong>Why.</strong> C-10: meaning vs formula. The compile SoT is <code>models/semantic_models.yml</code>.
+  Ossie is interchange. If you skip the sidecar, you will call the MetricFlow YAML “the standard” or import Ossie as OWL later. If you compile it, you leave the 1.10 / 0.11 pin set.</p>
+
+  <p>Write <code>osi/unbilled.ossie.yaml</code> as a projection of the same metric. Spec <strong>0.1.1</strong>. Header comment should say: not compile SoT; compile SoT is <code>semantic_models.yml</code> + MetricFlow; dbt 1.10 does not parse this folder; do not point <code>mf</code> at this file; not OWL.</p>
+  <p>Include, in English:</p>
+  <ul>
+    <li>Dataset <code>fct_unbilled</code>, primary key <code>ticket_id</code>.</li>
+    <li>The certified population and <code>gallons_net * contract_price</code> described as already sealed on the fact.</li>
+    <li>Do not group by a generic “customer.” Slice sold-to, payer, or terminal explicitly. Ship-to is a terminal.</li>
+    <li><code>relationships</code> if you add them are join paths, not OWL object properties.</li>
+  </ul>
+
+  <div class="call green">
+    <b>Done when</b>
+    <p>The file exists. You did <em>not</em> upgrade dbt to 1.12. You did <em>not</em> point <code>mf</code> at it. <code>dbt parse</code> still succeeds on 1.10. Act 3 still returns 6049649.77.</p>
+  </div>
+
+  <div class="call red">
+    <b>Do not upgrade dbt to “use Ossie”</b>
+    <p>dbt Core only parses <code>osi/</code> on 1.12+. That breaks MetricFlow 0.11. Cube cannot import Ossie yet (apache/ossie#248 open as of August 2026). A hand-written <code>cube.yml</code> is a second formula. Park it. Peek: complete pack <span class="path">osi/unbilled.ossie.yaml</span> (first 40 lines are enough).</p>
+  </div>
+
+  <div class="call violet">
+    <b>No ontology in this zip</b>
+    <p>Do not import the Ossie file as OWL. When ontology is added later, project IRIs <em>into</em> Ossie. Demo 2’s Turtle sidecar is a different pack. Do not copy it here.</p>
+  </div>
+</section>
+
+<section id="s15">
+  <h2><span class="num">15</span> Checklist of numbers</h2>
+  <p class="sub">One table. If a row is wrong, stop and fix that exercise. Do not paper over it in gold or in mf query.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Where</th><th>What you check</th><th class="num">Done number</th></tr></thead>
+    <tbody>
+      <tr><td>§2 Venv</td><td>Python · dbt · mf · duckdb</td><td class="num">3.11/3.12 · 1.10.23 · .venv/bin/mf · 1.5.5</td></tr>
+      <tr><td>§3 Profile</td><td><code>dbt debug</code></td><td class="num">./o2c.duckdb · DBT_PROFILES_DIR=.</td></tr>
+      <tr><td>§4 Seeds</td><td>deliveries / lines / invoices / parties / roles / products / terminals</td><td class="num">1200 / 685 / 27 / 8 / 10 / 3 / 3</td></tr>
+      <tr><td>§4 Generator</td><td>delivered / quality_hold / unbilled delivered</td><td class="num">1131 / 69 / 446</td></tr>
+      <tr><td>§6 Fact</td><td><code>fct_unbilled</code> rows and USD</td><td class="num">446 · $6,049,649.77</td></tr>
+      <tr><td>§7 Metadata</td><td><code>dim_kpi_metadata</code></td><td class="num">1 row · formula_pointer=unbilled_usd</td></tr>
+      <tr><td>§7 Gold</td><td><code>gold_kpi_unbilled</code></td><td class="num">195 rows · same $6,049,649.77</td></tr>
+      <tr><td>§10 dbt</td><td>seed / run / parse / test</td><td class="num">PASS=7 · ~19 models · manifest · tests green</td></tr>
+      <tr><td>§11 Act 1 A</td><td>sold-to on the fact</td><td class="num">4 rows · $6,049,649.77</td></tr>
+      <tr><td>§11 Act 1 B</td><td>payer on the fact</td><td class="num">3 rows · $6,049,649.77</td></tr>
+      <tr><td>§11 Apex check</td><td>Payer Apex = Houston + Dallas</td><td class="num">$4,095,877.44 = 2,726,475.31 + 1,369,402.13</td></tr>
+      <tr><td>§11 Act 1 C</td><td>Sloppy basis</td><td class="num">$7,393,499.19</td></tr>
+      <tr><td>§12 Act 2</td><td>meta / gold / fact</td><td class="num">1 / 195 / 446</td></tr>
+      <tr><td>§13 mf list</td><td>metrics</td><td class="num">3 (unbilled_usd + 2 supporting)</td></tr>
+      <tr><td>§13 --explain</td><td>compiled SQL</td><td class="num">SUM(unbilled_usd) FROM fct_unbilled</td></tr>
+      <tr><td>§13 mf unsliced</td><td><code>--decimals 2</code></td><td class="num">6049649.77</td></tr>
+      <tr><td>§13 mf sold-to</td><td><code>ticket__sold_to</code></td><td class="num">4 rows · same total as A</td></tr>
+      <tr><td>§13 mf payer</td><td><code>ticket__payer</code></td><td class="num">3 rows · Apex 4095877.44</td></tr>
+      <tr><td>§14 Ossie</td><td>file exists, not compiled</td><td class="num">dbt still 1.10 · mf still 0.11</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>As-of for every dollar figure on this page is <strong>2026-08-01</strong>. Generator seed is <strong>42</strong>.
+  Quality-hold tickets are in the 1,200 and out of the 446. Pins: dbt-core==1.10.23, dbt-duckdb==1.10.1, dbt-metricflow==0.11.0, metricflow==0.209.0, duckdb==1.5.5.</p>
+</section>
+
+<section id="s16">
+  <h2><span class="num">16</span> Do not</h2>
+  <p class="sub">A short list. If you catch yourself doing one of these, stop and come back to the exercise.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Do not</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Touch Track B (<span class="path">demos/o2c-unbilled-databricks-free/</span>)</td><td>Different pack. Databricks Metric Views + Lakebase + Genie. Not this compiler.</td></tr>
+      <tr><td>Open Databricks, Lakebase, Genie, or Azure</td><td>Not in this zip. Programme consumption semantic layer is Demo 2. MetricFlow is the demo-1 compiler only.</td></tr>
+      <tr><td>Add Cube</td><td>No shipped Ossie→Cube converter (issue #248). A hand-written cube.yml is a second formula.</td></tr>
+      <tr><td>Add Airflow</td><td>Orchestrator, not a compiler. <code>demo.sh</code> is that DAG, run once by hand. Park it.</td></tr>
+      <tr><td>Add Postgres</td><td>DuckDB is the warehouse stand-in. Postgres-as-ODS is a later lesson.</td></tr>
+      <tr><td>Add ontology / import Ossie as OWL</td><td>No ontology in this zip. Ossie relationships are join paths, not OWL object properties.</td></tr>
+      <tr><td>Upgrade dbt to 1.12 to “use Ossie”</td><td>Breaks MetricFlow 0.11. Nobody in this demo reads <code>osi/</code>.</td></tr>
+      <tr><td>Upgrade MetricFlow to 0.13</td><td>Different line. YAML/pins break. Ignore the CLI nag.</td></tr>
+      <tr><td>Use Python 3.13</td><td>dbt-metricflow 0.11 will not resolve. 3.11 or 3.12 only.</td></tr>
+      <tr><td>Write a second Unbilled formula</td><td>Not in gold, not in YAML, not in Ossie, not in a Cube model. Formula SoT is <code>fct_unbilled</code>.</td></tr>
+      <tr><td>Grow <code>dim_kpi_metadata</code> into a catalog</td><td>This is not a KPI Store. One stub row. <code>formula_pointer = unbilled_usd</code>.</td></tr>
+      <tr><td>Say “the semantic layer” with no qualifier</td><td>C-11. Say consumption semantic layer (MetricFlow on DuckDB).</td></tr>
+      <tr><td>Group by bare <code>sold_to</code></td><td>Use <code>ticket__sold_to</code>. Compiler namespacing, not a child relationship.</td></tr>
+      <tr><td>Empty the complete pack</td><td>That is the answer key. Peek. Do not delete.</td></tr>
+      <tr><td>Copy-paste first</td><td>This page is the teaching path. Peek a path if stuck, then write your own.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Mac troubleshooting (from README)</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><code>mf: command not found</code></td><td><code>source .venv/bin/activate</code>. <code>which mf</code> should be <code>.venv/bin/mf</code>.</td></tr>
+      <tr><td><code>dbt: command not found</code></td><td>Same venv. Or <code>python -m dbt.cli.main seed</code>.</td></tr>
+      <tr><td>Empty / missing tables</td><td>Run <code>dbt seed && dbt run</code> first. <code>mf query</code> reads materialized tables.</td></tr>
+      <tr><td>Could not find profile</td><td><code>export DBT_PROFILES_DIR=.</code> from the project root.</td></tr>
+      <tr><td><code>sold_to</code> is not a group-by item</td><td>Use <code>ticket__sold_to</code>. <code>mf list dimensions --metrics unbilled_usd</code>.</td></tr>
+      <tr><td>Python 3.13 / No matching distribution for dbt-metricflow</td><td>Use Python 3.11 or 3.12.</td></tr>
+      <tr><td><code>mf</code> opens Metafont (rare on Mac)</td><td>PATH resolved a TeX binary. Use <code>.venv/bin/mf</code> explicitly.</td></tr>
+      <tr><td>Time-spine / empty <code>metric_time</code></td><td>Spine is 2026-01-01 … 2026-08-31. Lifts are Jun–Jul 2026. Re-run <code>dbt run</code>.</td></tr>
+      <tr><td>Totals do not match README</td><td>You changed the generator seed, or did not <code>dbt run</code> after regenerating seeds.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  Demo 1 · Track A · MetricFlow + DuckDB · learner guide · 14 Aug 2026 ·
+  Picture of current understanding, not a locked programme architecture ·
+  Compiler is MetricFlow 0.11 / 0.209 over DuckDB · Not Databricks · Not Metric Views · Not Lakebase · Not Genie · Not Azure ·
+  C-10: meaning vs formula · C-11: consumption semantic layer (MetricFlow on DuckDB) · RC-1: one compile path (mf query) ·
+  Proven proof: 446 tickets, $6,049,649.77 as of 2026-08-01, seed=42.
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.side a'));
+  var secs  = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){
+    var y = window.scrollY + 120, best = 0;
+    for (var i=0;i<secs.length;i++){ if (secs[i] && secs[i].offsetTop <= y) best = i; }
+    links.forEach(function(a,i){ a.classList.toggle('on', i===best); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
+
+  var q = document.getElementById('q');
+  var hits = document.getElementById('hits');
+  var blocks = Array.prototype.slice.call(document.querySelectorAll('section, .hero, footer'));
+
+  function clearMarks(root){
+    root.querySelectorAll('mark').forEach(function(m){
+      m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
+    });
+    root.normalize();
+  }
+  function markIn(node, term){
+    var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        var p = n.parentNode;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        var tag = p.nodeName;
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var texts = [], n;
+    while ((n = walker.nextNode())) texts.push(n);
+    texts.forEach(function(t){
+      var i = t.nodeValue.toLowerCase().indexOf(term);
+      if (i < 0) return;
+      var after = t.splitText(i);
+      after.splitText(term.length);
+      var mk = document.createElement('mark');
+      mk.textContent = after.nodeValue;
+      after.parentNode.replaceChild(mk, after);
+    });
+  }
+
+  var timer;
+  q.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      var term = q.value.trim().toLowerCase();
+      blocks.forEach(clearMarks);
+      if (!term){
+        blocks.forEach(function(b){ b.classList.remove('hidden'); });
+        hits.textContent = ''; return;
+      }
+      var count = 0;
+      blocks.forEach(function(b){
+        var on = b.textContent.toLowerCase().indexOf(term) > -1;
+        b.classList.toggle('hidden', !on);
+        if (on){ count++; markIn(b, term); }
+      });
+      hits.textContent = count + ' section' + (count===1?'':'s');
+    }, 140);
+  });
+  q.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ q.value=''; q.dispatchEvent(new Event('input')); q.blur(); }
+  });
+})();
+</script>
+</body>
+</html>

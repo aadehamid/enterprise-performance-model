@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Downstream Order-to-Cash Enterprise Architecture Reference Blueprint</title>
+<style>
+:root{--navy:#0b1f33;--blue:#155e75;--teal:#0f766e;--light:#f4f7f9;--line:#cbd5e1;--text:#172033;--muted:#52606d;--gold:#b7791f}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);line-height:1.55;background:#fff}
+header{background:linear-gradient(135deg,var(--navy),#123b5d);color:white;padding:56px 7vw 42px}
+header h1{margin:0 0 12px;font-size:2.35rem;line-height:1.15}
+header p{max-width:1000px;margin:0;color:#dce9f4}
+.meta{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 10px;border-radius:999px;font-size:.88rem}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);padding:10px 7vw;display:flex;gap:16px;flex-wrap:wrap}
+nav a{color:var(--blue);text-decoration:none;font-weight:600;font-size:.9rem}
+main{max-width:1500px;margin:auto;padding:28px 5vw 60px}
+section{margin:36px 0 54px;scroll-margin-top:65px}
+h2{font-size:1.8rem;border-bottom:3px solid var(--blue);padding-bottom:8px;color:var(--navy)}
+h3{color:var(--blue);margin-top:28px}
+.lead{font-size:1.15rem}
+.scope,.callout,.note{padding:16px 18px;border-left:5px solid var(--teal);background:#edf8f6;margin:20px 0}
+.note{border-left-color:var(--gold);background:#fff8e8}
+.chevrons{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px;margin:22px 0}
+.chevrons div{position:relative;background:var(--blue);color:white;padding:16px 18px;min-height:72px;display:flex;align-items:center;font-weight:700;clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%,8% 50%)}
+.foundation{background:#eef4f8;border:1px solid var(--line);padding:18px;border-radius:10px;margin:16px 0}
+.foundation.governance{background:#f5f1e7}
+.capability-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cap{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--light)}
+.cap h3{margin-top:0}
+.cap ul{padding-left:20px;margin-bottom:0}
+table{width:100%;border-collapse:collapse;margin:14px 0 30px;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:11px 12px;vertical-align:top;text-align:left}
+thead th{background:var(--navy);color:white;position:sticky;top:42px}
+tbody tr:nth-child(even){background:#f8fafc}
+pre.diagram{white-space:pre;overflow:auto;background:#071623;color:#dff7ff;padding:20px;border-radius:10px;font-size:.8rem;line-height:1.25}
+.codebox{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f3f4f6;padding:16px;border-radius:8px;border:1px solid var(--line)}
+#artifact-update th{width:220px;background:#eef4f8;color:var(--navy)}
+footer{text-align:center;color:var(--muted);padding:30px;border-top:1px solid var(--line)}
+@media(max-width:1000px){.chevrons{grid-template-columns:repeat(2,1fr)}.capability-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){header{padding:38px 22px}main{padding:20px}.chevrons,.capability-grid{grid-template-columns:1fr}table{display:block;overflow-x:auto;white-space:normal}nav{padding:10px 18px}}
+@media print{nav{display:none}header{padding:28px;color:#000;background:#fff;border-bottom:2px solid #000}.badge{border:1px solid #555}.chevrons div{clip-path:none;background:#eee;color:#000;border:1px solid #999}section{break-inside:auto}table{font-size:8.5pt}thead th{position:static;background:#ddd;color:#000}a{color:#000}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Downstream Order-to-Cash Enterprise Architecture Reference Blueprint</h1>
+  <p>End-to-end operational blueprint for Downstream Oil &amp; Gas Commercial &amp; Marketing across C&amp;I, Wholesale/Rack, Retail, Lubricants, Aviation and Marine.</p>
+  <div class="meta"><span class="badge">Enterprise Performance Model</span><span class="badge">Candidate Reference Architecture</span><span class="badge">Version 0.1</span><span class="badge">August 2026</span></div>
+</header>
+<nav>
+<a href="#value-stream">Value Stream</a><a href="#capability-map">Capability Map</a><a href="#process-data">Processes &amp; Data</a><a href="#architecture">Systems</a><a href="#exceptions">Exceptions</a><a href="#artifact-update">Artifact Update</a><a href="#sources">Sources</a>
+</nav>
+<main>
+
+<p class="lead">This blueprint defines Order to Cash as a <strong>physical-commercial-financial value stream</strong>, not merely a sales-order and receivables process. In downstream hydrocarbons, the billable event is often established only after a custody-transfer measurement, terminal movement, retail sale, aviation uplift, or marine bunker delivery has occurred.</p>
+<p>Final revenue can depend on corrected quantity, density, temperature, pressure, product quality, terminal and destination, market-index timing, excise-tax status, freight responsibility, and supporting evidence such as meter tickets, electronic proof of delivery, fuel uplift records, or bunker delivery notes.</p>
+<div class="scope">
+  <strong>Channels covered:</strong> B2B Commercial &amp; Industrial, Wholesale/Rack, Retail Station Networks, Lubricants, Aviation, and Marine.
+</div>
+
+
+<section id="value-stream">
+<h2>1. End-to-End Value Stream</h2>
+<div class="chevrons">
+  <div>Market &amp; Account Development</div><div>Tender, Quote &amp; Offer Formation</div>
+  <div>Contract, Customer &amp; Site Onboarding</div><div>Credit, Tax, License &amp; Supply Eligibility</div>
+  <div>Demand Signal, VMI, Forecast or POS Replenishment</div><div>Nomination, Call-Off or Sales Order</div>
+  <div>Allocation, Sourcing &amp; Product Substitution</div><div>Transport, Trip, Carrier &amp; Rack Planning</div>
+  <div>Terminal / Depot Authorization &amp; Scheduling</div><div>Load, Deliver, Uplift, Dispense or Bunker</div>
+  <div>Custody Transfer, Ticket, ePOD, BDN or Uplift Confirmation</div><div>Measured Quantity &amp; Quality Validation</div>
+  <div>Final Price, Freight, Tax, Duty &amp; Fee Determination</div><div>Invoice, Dealer, Partner or Card Settlement</div>
+  <div>Accounts Receivable &amp; Exposure Update</div><div>Cash Receipt, Clearing, Netting &amp; Application</div>
+  <div>Deduction, Dispute &amp; Collections Resolution</div><div>Revenue, Tax, Stock, Exchange &amp; Margin Close</div>
+  <div>Contract Performance, Renewal, Repricing or Exit</div>
+</div>
+
+<div class="foundation">
+<h3>Master Data and Reference Data Foundation</h3>
+<p>Customer and partner hierarchies; sold-to, ship-to, bill-to and payer roles; products, grades and specifications; contracts and price formulas; market indices; tax codes and exemptions; terminals, tanks, racks, bays and meters; vehicles, trailers and compartments; density and temperature conversion; carriers and routes; bank and payment data; aviation airport and aircraft references; marine vessel, port and berth references; retail site, tank, POS and dealer references.</p>
+</div>
+
+<div class="foundation governance">
+<h3>Governance and Control Foundation</h3>
+<p>Data ownership; effective dating; approval authority; credit policy; product stewardship; meter proving; tax control; license validity; segregation of duties; cybersecurity; audit evidence; financial close; exception thresholds; reconciliation ownership; records retention; regulatory and contractual compliance.</p>
+</div>
+
+<h3>Channel-Specific Operating Patterns</h3>
+<table>
+<thead><tr><th>Channel</th><th>Characteristic Operating Pattern</th></tr></thead>
+<tbody>
+<tr><td><strong>Commercial &amp; Industrial</strong></td><td>Delivered fuel to customer sites using forecasts, scheduled delivery, telemetry, minimum-drop constraints, delivery windows, contract-specific index pricing, freight zones and electronic proof of delivery.</td></tr>
+<tr><td><strong>Wholesale / Rack</strong></td><td>Buyer or appointed carrier collects product at a terminal rack. Credit, allocation, tax identity, carrier, driver, vehicle, compartment, product and terminal authorization must be valid before loading.</td></tr>
+<tr><td><strong>Retail Station Networks</strong></td><td>Replenishment is driven by POS movement, forecast demand, tank capacity and ATG data. Settlement may include dealer commissions, payment-card clearing, wet-stock reconciliation, rents, royalties and site-level deductions.</td></tr>
+<tr><td><strong>Lubricants</strong></td><td>Packaged and bulk products require SKU, package, formulation, viscosity grade, performance category, batch/lot, licensing mark, warehouse fulfillment, promotions, rebates and returns.</td></tr>
+<tr><td><strong>Aviation</strong></td><td>Airport storage, hydrant, refueler or into-plane uplift tied to airline, airport, flight, aircraft/tail, meter ticket, fuel grade, density, timestamp and service fees.</td></tr>
+<tr><td><strong>Marine</strong></td><td>Bunker nomination fulfilled to a named vessel at a port or berth. Grade, sulfur limit, quantity, density, delivery time, mass/volume basis, samples and bunker delivery note become settlement evidence.</td></tr>
+</tbody>
+</table>
+</section>
+
+
+<section id="capability-map">
+<h2>2. Integrated Order-to-Cash Capability Map</h2>
+<div class="capability-grid">
+<div class="cap"><h3>Quote &amp; Contract Management</h3><ul><li>Channel and tender qualification</li><li>Configurable product and service quoting</li><li>Physical deal and contract capture</li><li>Formula price and index-term management</li><li>Exchange, throughput and supply agreements</li></ul></div>
+<div class="cap"><h3>Credit &amp; Risk</h3><ul><li>Customer due diligence and license validation</li><li>Credit scoring, limits and collateral</li><li>Real-time exposure and availability checks</li><li>Order, delivery and rack release</li><li>Stop-supply and concentration management</li></ul></div>
+<div class="cap"><h3>Order Management &amp; Fulfillment</h3><ul><li>Forecast, nomination, call-off and VMI</li><li>Supply allocation and terminal sourcing</li><li>Trip, carrier and compartment planning</li><li>Rack authorization and loading execution</li><li>Custody-transfer confirmation</li></ul></div>
+<div class="cap"><h3>Invoicing &amp; Billing</h3><ul><li>Quantity determination and correction</li><li>Formula-price finalization</li><li>Excise, indirect tax and fee determination</li><li>Channel-specific billing and settlement</li><li>Retroactive adjustment and rebilling</li></ul></div>
+<div class="cap"><h3>Receipt &amp; Collection</h3><ul><li>Bank, lockbox, card and electronic receipts</li><li>Automated cash application</li><li>Short-pay and deduction processing</li><li>Collections, dunning and escalation</li><li>Partner, exchange and intercompany netting</li></ul></div>
+<div class="cap"><h3>Dispute Management</h3><ul><li>Case intake and evidence management</li><li>Quantity and measurement disputes</li><li>Quality and contamination claims</li><li>Price, tax, freight and allowance disputes</li><li>Financial resolution and root-cause prevention</li></ul></div>
+<div class="cap"><h3>Customer Retention &amp; Contract Management</h3><ul><li>Volume and service-level performance</li><li>Margin, rebate and incentive management</li><li>Customer, dealer and fleet engagement</li><li>Renewal, repricing and renegotiation</li><li>Offboarding and asset recovery</li></ul></div>
+<div class="cap"><h3>Master Data Management</h3><ul><li>Customer, site and partner hierarchies</li><li>Product, grade, specification and UOM</li><li>Terminal, tank, meter and logistics assets</li><li>Pricing, tax, license and exemption data</li><li>Measurement, quality and calibration data</li></ul></div>
+<div class="cap"><h3>Governance</h3><ul><li>Process ownership and policy control</li><li>Data stewardship and effective-dated change</li><li>Regulatory assurance and retention</li><li>Segregation of duties and cyber controls</li><li>Financial close, reconciliation and KPI assurance</li></ul></div>
+</div>
+</section>
+
+<section id="process-data"><h2>3. Deep-Dive Process Definition &amp; Master Data Baseline</h2>
+<h3>Quote and Contract Management</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Channel, Tender and Opportunity Qualification</strong></td><td>Identify the buying entity, operating model, product need, expected annual volume, locations, service pattern, required assets, credit profile and competitive position.</td><td>Channel, customer legal entity, parent hierarchy, sites, tanks, consumption, delivery windows, carrier model, terminal, airport or port, grades, volume profile, title-transfer point, licenses, tax status and service levels.</td></tr>
+<tr><td><strong>Product and Service Configuration</strong></td><td>Build the commercial offer by combining hydrocarbon product, specification, packaging or delivery mode, logistics service, equipment, additives, fees and optional services.</td><td>Commercial grade, regulatory grade, sulfur, octane/cetane, bio-content, density, flash point, viscosity, additive package, package size, specification version and approved substitutions.</td></tr>
+<tr><td><strong>Physical Deal and Contract Capture</strong></td><td>Record parties, products, locations, quantities, tolerances, validity, payment, title and risk transfer, quality obligations, claims windows and termination provisions.</td><td>Sold-to/ship-to/bill-to/payer, terminal/destination, observed versus standard quantity basis, formula price, freight basis, minimum drop, quality specification, measurement standard and governing law.</td></tr>
+<tr><td><strong>Formula Pricing and Market Index Terms</strong></td><td>Define publisher, assessment, averaging period, quotation timing, differential, freight, additives, handling, currency, conversion, rounding, floor, cap and provisional pricing.</td><td>Publisher, assessment, market, product, location, publication calendar, timestamp, currency, UOM, conversion, averaging window, fallback source and differential.</td></tr>
+<tr><td><strong>Exchange, Borrow-Loan and Throughput Agreements</strong></td><td>Manage reciprocal lifting, shared infrastructure, product equivalence, fees, tolerances, balancing cycle and cash settlement.</td><td>Partner, source/destination, equivalence group, ratio, quality differential, throughput fee, imbalance limit, settlement period, valuation price and aging rule.</td></tr>
+</tbody></table>
+<h3>Credit and Risk</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Customer Due Diligence, License and Eligibility</strong></td><td>Verify legal identity, sanctions status, tax registration, fuel licenses, resale/exemption certificates, insurance and authority to purchase or transport regulated products.</td><td>Legal entity ID, tax IDs, excise licenses, terminal registrations, resale status, certificates, carrier insurance, hazardous-material permits, airport approvals and validity dates.</td></tr>
+<tr><td><strong>Credit Assessment, Limit and Collateral</strong></td><td>Set risk class, credit limit, payment terms, review date and collateral requirements.</td><td>Limit currency, horizon, unsecured limit, deposits, guarantees, letters of credit, credit insurance, collateral validity and concentration thresholds.</td></tr>
+<tr><td><strong>Real-Time Credit Exposure Management</strong></td><td>Aggregate receivables, disputes, overdue debt, open orders, planned deliveries, loaded-but-unbilled movements, provisional invoices and collateral.</td><td>Exposure checks at quote approval, sales order, scheduling, rack authorization, load start and override; include valid-through tokens and stale-release protection.</td></tr>
+<tr><td><strong>Order, Delivery and Rack Release</strong></td><td>Release, partially release, reduce, prepay, redirect or block an order, delivery, terminal authorization, fleet card or account.</td><td>Customer, payer, order, terminal, product, quantity, estimated value, override token, approver, justification and expiry.</td></tr>
+<tr><td><strong>Delinquency, Stop-Supply and Portfolio Review</strong></td><td>Monitor aging, broken promises, adverse trends, returned payments and concentration; initiate dunning, prepayment or stop-supply.</td><td>Collection segment, grace period, stop threshold, protected-account flag, escalation path, station dependency and exception authority.</td></tr>
+</tbody></table>
+<h3>Order Management and Fulfillment</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Forecast, Nomination, Call-Off and VMI</strong></td><td>Translate contract entitlement and consumption into executable requirements through orders, nominations, call-offs or telemetry-driven replenishment.</td><td>Contract line, nomination cycle, requested date, terminal, destination, product, minimum quantity, tank capacity, current inventory, forecast consumption and runout date.</td></tr>
+<tr><td><strong>Allocation, Sourcing and Product Substitution</strong></td><td>Select refinery, terminal, depot, exchange partner or warehouse based on inventory, allocation, cost, tax and transport feasibility.</td><td>Allocation period, customer entitlement, inventory, product equivalence, approved substitutes, blend compatibility, tax status and supply priority.</td></tr>
+<tr><td><strong>Trip, Carrier, Vehicle and Compartment Planning</strong></td><td>Consolidate deliveries, select carrier/equipment, sequence stops, allocate compartments and schedule terminal slots.</td><td>Carrier, driver, tractor, trailer, compartment capacity, prior load, route, rack, loading sequence, axle limits, ullage and split-load indicator.</td></tr>
+<tr><td><strong>Terminal Authorization and Loading Execution</strong></td><td>Authenticate driver and vehicle, validate credit/allocation/tax/product, preset quantity, execute loading, inject additives and capture batch results.</td><td>Terminal, rack, bay, source tank, product, additive recipe, vehicle, compartment, preset, meter, meter factor, temperature, density, pressure, grounding and overfill status.</td></tr>
+<tr><td><strong>Custody Transfer, Delivery Confirmation and Return</strong></td><td>Capture meter ticket, bill of lading, ePOD, tank receipt, uplift record or BDN; process refusals, partial drops and returns.</td><td>Movement ID, observed/standard volume, mass, density, temperature, pressure, meter/proving reference, timestamps, signatures, seals, reason codes and photos.</td></tr>
+</tbody></table>
+<h3>Invoicing and Billing</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Quantity Determination and Measurement Validation</strong></td><td>Determine the contractually billable quantity and reconcile terminal meter, tank gauge, transport and customer receipt.</td><td>Gross observed volume, standard volume, net standard volume, mass, base temperature, pressure, density, CTL/CPL/CTPL, meter factor, UOM and rounding.</td></tr>
+<tr><td><strong>Final Price Determination</strong></td><td>Resolve the contract formula using valid index observations, differential, freight, additives, fees, currency, UOM conversion and rebates.</td><td>Formula version, pricing date, observations used, fallback rule, differential, freight zone, conversion factors, exchange rate and manual override approval.</td></tr>
+<tr><td><strong>Excise, Indirect Tax and Environmental Fees</strong></td><td>Identify tax point, taxpayer, jurisdiction, product category, quantity basis, rate, exemption, suspension or refund status.</td><td>Position holder, terminal operator, warehousekeeper, product tax code, origin/destination, certificate, movement document, duty status and environmental fees.</td></tr>
+<tr><td><strong>Channel-Specific Invoice and Settlement</strong></td><td>Generate rack, delivered-fuel, lubricants, dealer, card, aviation, marine, exchange or intercompany documents.</td><td>Delivery ticket or BOL, dealer/site, POS/card batch, airport/flight/aircraft, vessel/port/BDN, exchange balance and tax breakdown.</td></tr>
+<tr><td><strong>Provisional Billing, Adjustment and Rebilling</strong></td><td>Bill estimated quantity or provisional price where allowed, then settle differences when final index, freight, lab or measurement data arrives.</td><td>Original invoice/load, adjustment reason, prior/revised quantity and price, tax recalculation, accounting period and linkage to debit/credit note.</td></tr>
+</tbody></table>
+<h3>Receipt and Collection</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Payment Instrument and Clearing Management</strong></td><td>Support EFT, ACH, wire, direct debit, lockbox, check, fleet card, bank card, deposit, LC draw and partner settlement.</td><td>Payment method, account, site, merchant, card status, product authorization, limits, clearing network, interchange and settlement cycle.</td></tr>
+<tr><td><strong>Cash Receipt and Automated Application</strong></td><td>Import bank, lockbox, card and clearing files and apply receipts to invoices or accounts.</td><td>Invoice, payer, delivery ticket, load ID, station, card batch, BDN, uplift record, remittance line and confidence score.</td></tr>
+<tr><td><strong>Short-Pay, Deduction and Chargeback Processing</strong></td><td>Classify invoice/payment differences and route to valid allowance, dispute, unauthorized deduction or write-off.</td><td>Reason codes for temperature, meter, short delivery, freight, demurrage, quality, index differential, tax, rebate, shrinkage, uplift and bunker claims.</td></tr>
+<tr><td><strong>Collections and Promise-to-Pay</strong></td><td>Prioritize overdue accounts, record contacts/promises and recommend payment plans, stop-supply or legal escalation.</td><td>Amount, days past due, exposure, dispute status, criticality, customer risk, promise date and exception authority.</td></tr>
+<tr><td><strong>Partner, Exchange and Intercompany Netting</strong></td><td>Offset reciprocal receivables, payables, physical exchange balances, throughput fees and intercompany movements.</td><td>Bilateral agreement, product/location balance, equivalence rule, valuation price, fee, tax treatment, aging, tolerance, currency and confirmation status.</td></tr>
+</tbody></table>
+<h3>Dispute Management</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Dispute Intake, Classification and Evidence Control</strong></td><td>Create a case from customer contact, deduction, card chargeback, terminal exception, quality claim or reconciliation break.</td><td>Contract, nomination, order, rack authorization, batch, meter ticket, BOL, ePOD, ATG, POS, lab certificate, uplift, BDN, invoice and index publication.</td></tr>
+<tr><td><strong>Quantity and Measurement Dispute Resolution</strong></td><td>Compare contractual quantity basis with terminal, transport and receiving evidence; validate proving, correction factors and tolerances.</td><td>Meter/prover ID, meter factor, calibration, base temperature, density, CTL/CPL/CTPL inputs, gauge readings, line fill, water adjustment and custody point.</td></tr>
+<tr><td><strong>Quality, Contamination and Product Specification Claims</strong></td><td>Quarantine product, preserve samples, compare lab results with specification and trace tanks, lines and compartments.</td><td>Source tank, blend recipe, additive record, certificate of analysis, sample seal, test method, prior load, retain quantity and downgrade/recall path.</td></tr>
+<tr><td><strong>Price, Freight, Tax and Allowance Dispute</strong></td><td>Reperform the invoice using approved contract, index, timing rule, differential, freight, tax, rebate and FX.</td><td>Exact formula lineage, price observations, freight lane, tax point, product code, exemption validity, fees and override history.</td></tr>
+<tr><td><strong>Resolution, Financial Adjustment and Root-Cause Elimination</strong></td><td>Approve rejection, settlement, allowance, debit/credit, rebill, replacement, refund or write-off and remediate the cause.</td><td>Resolution type, approval, revised AR/tax/inventory/margin, customer communication, cause taxonomy and preventive action.</td></tr>
+</tbody></table>
+<h3>Customer Retention and Contract Management</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Volume Commitment and Contract Performance</strong></td><td>Compare nominated, ordered, lifted, delivered and invoiced quantities with commitments and tolerances.</td><td>Contract volume, measurement basis, period, terminal/site, actual standard quantity, force majeure, makeup rights and penalties.</td></tr>
+<tr><td><strong>Margin, Rebate and Incentive Management</strong></td><td>Calculate realized margin and settle contractual rebates, dealer commissions, fleet incentives and promotions.</td><td>Product cost, index exposure, freight, terminal fee, card cost, tax leakage, additives, eligible volume, tier, accrual rate and settlement period.</td></tr>
+<tr><td><strong>Service Reliability and Customer Experience</strong></td><td>Monitor fill rate, on-time delivery, stockout, rack turn time, invoice accuracy, dispute rate and service recovery.</td><td>Channel-specific service measures for C&amp;I, wholesale, retail, aviation and marine.</td></tr>
+<tr><td><strong>Renewal, Repricing and Renegotiation</strong></td><td>Use performance, market, credit, margin, claims and capacity to renew, reprice, expand or terminate.</td><td>Effective dates, index lineage, terminal/freight economics, product-standard changes, environmental obligations and credit support.</td></tr>
+<tr><td><strong>Offboarding and Asset Recovery</strong></td><td>Stop orders and access, settle balances, terminate integrations and recover supplier-owned equipment.</td><td>Final meter/tank reading, consignment stock, cards, rack access, telemetry, signage, pending claims/rebates and retention obligations.</td></tr>
+</tbody></table>
+<h3>Master Data Management</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Customer, Partner and Site Master</strong></td><td>Govern legal entities and operational roles including customer, dealer, carrier, airline, vessel owner, broker and exchange partner.</td><td>Legal/tax IDs, sold-to/ship-to/bill-to/payer, hierarchy, credit account, licenses, exemptions, geolocation, tanks, contacts, terminal access and channel.</td></tr>
+<tr><td><strong>Product, Grade, Specification and Packaging Master</strong></td><td>Govern commercial and physical identities, equivalences, substitutions and packaging.</td><td>Material, product family, regulatory grade, ASTM/API/JIG/ISO spec, sulfur, renewable content, density, UOM, additive recipe, package, viscosity and shelf life.</td></tr>
+<tr><td><strong>Location, Asset and Logistics Master</strong></td><td>Govern refinery, terminal, depot, rack, bay, tank, meter, pipeline, airport, retail site, port and berth; plus vehicles and compartments.</td><td>Location hierarchy, operator/owner, timezone, tax jurisdiction, tank capacity, product compatibility, meter/prover, bay restrictions and route permits.</td></tr>
+<tr><td><strong>Pricing, Tax, License and Reference Data</strong></td><td>Maintain index definitions, formulas, currencies, UOM conversions, freight tables, taxes, exemptions and calendars.</td><td>Publisher, assessment, market, timing, fallback, product tax code, taxable event, taxpayer role, certificate and movement-document type.</td></tr>
+<tr><td><strong>Measurement, Quality and Calibration Master</strong></td><td>Maintain standard conditions, correction methods, density methods, meter factors, tank tables, lab methods and sensor calibration.</td><td>Base temperature, pressure, commodity group, CTL/CPL/CTPL method/version, meter factor dates, ATG calibration, sample retention and tolerance.</td></tr>
+</tbody></table>
+<h3>Governance</h3>
+<table><thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead><tbody>
+<tr><td><strong>Process Ownership and Policy Control</strong></td><td>Assign accountable owners for contracts, credit, movement, measurement, price, tax, billing, collections, disputes and close.</td><td>Decision rights for price overrides, product substitution, rack release, meter-factor changes, tax overrides, off-spec disposition and write-offs.</td></tr>
+<tr><td><strong>Data Stewardship and Effective-Dated Change</strong></td><td>Enforce maker-checker approval, referential integrity, lineage, distribution and rollback.</td><td>High-risk changes include tax role, exemption expiry, product equivalence, conversion method, terminal-rack mapping, index source and vehicle authorization.</td></tr>
+<tr><td><strong>Regulatory Assurance and Records Retention</strong></td><td>Preserve evidence for product, movement, tax, measurement, invoice, environmental and claims compliance.</td><td>Tickets, BOLs, EMCS references, certificates, renewable-fuel transfer data, meter proving, aviation quality records, BDNs and samples.</td></tr>
+<tr><td><strong>Segregation of Duties, Identity and Cyber Control</strong></td><td>Separate contract, price, credit, loading, meter, tax, invoice, cash and write-off authorities; secure human and machine access.</td><td>Strong identity, least privilege, signed messages, replay protection, expiring tokens, monitoring of manual mode and card block controls.</td></tr>
+<tr><td><strong>Reconciliation, Financial Close and KPI Assurance</strong></td><td>Reconcile physical stock, movements, deliveries, billed quantities, tax, exchanges, AR, cash and general ledger.</td><td>Loaded-not-billed, billed-not-loaded, terminal-vs-ERP, observed-vs-standard, POS-vs-ATG-vs-card, exchange, tax, uplift and BDN reconciliations.</td></tr>
+</tbody></table>
+</section>
+
+<section id="architecture">
+<h2>4. System Landscape &amp; Integration Architecture</h2>
+<pre class="diagram">
+EXTERNAL ECOSYSTEM
+Customers / Dealers / Distributors / Airlines / Vessels / Brokers / Exchange Partners
+Market Price Publishers | Banks / Lockboxes / Card Acquirers | Tax Authorities | Regulators
+Carriers / Drivers | Credit Agencies | Product and License Registries
+                                      |
+                                      v
++----------------------+  +----------------------+  +----------------------+
+| CRM / Account / CPQ  |  | Market Data &       |  | Customer / Dealer /  |
+| Tender / CLM         |  | Commodity Pricing   |  | Carrier Portals      |
++----------------------+  +----------------------+  +----------------------+
+                 \                 |                 /
+                  \                |                /
+                   v               v               v
++--------------------------------------------------------------------------+
+| ENTERPRISE INTEGRATION & DATA CONTROL                                    |
+| API Gateway | Event Broker | EDI/B2B | Canonical O2C Model | MDM         |
+| Data Quality | Identity | Workflow | Effective Dating | Evidence Store   |
+| Observability | Idempotency | Replay | Reconciliation                    |
++--------------------------------------------------------------------------+
+                                      |
+                                      v
++--------------------------------------------------------------------------+
+| CORE ERP / DOWNSTREAM INDUSTRY PLATFORM                                  |
+| Contract / Deal | Sales Order | Allocation | Delivery | Bulk Inventory   |
+| Commodity Pricing | Quantity Conversion | Excise / Tax | Exchange Balance |
+| Billing | AR | Credit | Collections | Revenue / COGS | GL | Close         |
++--------------------------------------------------------------------------+
+     |                    |                    |                    |
+     v                    v                    v                    v
++-------------+   +----------------+   +----------------+   +---------------+
+| TMS /       |   | Terminal       |   | Tax Engine /   |   | Treasury /    |
+| Dispatch /  |   | Automation /   |   | Excise Content |   | Bank / Cards  |
+| ePOD        |   | Gate / Rack    |   | EMCS / eDocs   |   | Cash Apply    |
++-------------+   +----------------+   +----------------+   +---------------+
+       \                  /
+        \                /
+         v              v
++--------------------------------------------------------------------------+
+| PHYSICAL CHANNEL EXECUTION                                               |
+| C&I: Telematics / VMI / Customer Tanks / ePOD                            |
+| Wholesale: Gate / Rack / Driver / Vehicle / Compartment / BOL            |
+| Retail: POS / Forecourt / ATG / Dealer Settlement / Fleet Cards          |
+| Lubricants: WMS / MES / Batch / Lot / Packaging / Rebates                |
+| Aviation: Airport Storage / Hydrant / Refueler / Into-Plane / Uplift     |
+| Marine: Bunker Nomination / Barge / Flow Measurement / BDN / Samples     |
++--------------------------------------------------------------------------+
+                                      |
+                                      v
++--------------------------------------------------------------------------+
+| DATA, CONTROL & ANALYTICS                                                |
+| O2C Control Tower | Lakehouse | Margin | Exposure | Forecast | Wet-Stock |
+| Loss Analysis | Tax Reconciliation | Revenue Assurance | Dispute RCA     |
++--------------------------------------------------------------------------+
+</pre>
+
+<h3>Critical Integration Points</h3>
+<table>
+<thead><tr><th>Integration</th><th>Critical Payload</th><th>Timing and Control Requirement</th></tr></thead>
+<tbody>
+<tr><td>CRM / CPQ / CLM → ERP &amp; MDM</td><td>Customer roles, sites, contract lines, product, volume, tolerance, price formula, delivery terms, tax and payment terms.</td><td>Publish only approved, versioned and effective-dated terms.</td></tr>
+<tr><td>Market Publisher → Pricing Engine</td><td>Assessment, publisher, location, product, pricing date, timestamp, currency, UOM and correction indicator.</td><td>Calendar-driven ingestion; preserve original and revised values and full formula lineage.</td></tr>
+<tr><td>Credit Platform ↔ ERP / Portal / TAS</td><td>Exposure, available limit, collateral, stop flag, approved amount, terminal and valid-through token.</td><td>Real time at order and pre-load; fail closed unless emergency mode is governed.</td></tr>
+<tr><td>POS / ATG / VMI → Forecast &amp; Order Management</td><td>Sales, tank inventory, temperature, water level, ullage, receipt, sensor health and consumption forecast.</td><td>Near real time for runout avoidance; controlled aggregation for finance.</td></tr>
+<tr><td>ERP / TMS → Terminal Automation</td><td>Load ID, customer, order, product, rack, driver, vehicle, compartment, preset quantity, additives, credit and tax status.</td><td>Real time before access; authorization must be expiring and replay-safe.</td></tr>
+<tr><td>TAS / Flow Computer → ERP</td><td>Batch, source tank, meter, observed/standard quantity, mass, temperature, density, pressure, meter factor and exceptions.</td><td>Event-driven at load completion with unique event ID and checksum.</td></tr>
+<tr><td>TMS / Mobile → ERP</td><td>Arrival, compartment delivery, partial drop, refusal, ePOD, signature, seals, geolocation and retained/returned quantity.</td><td>Near real time; partial delivery must create separate quantity states.</td></tr>
+<tr><td>ERP ↔ Tax Engine / Government Platform</td><td>Product tax code, taxpayer role, origin, destination, terminal, exemption, movement type and tax date.</td><td>Synchronous before invoice and, where required, before physical movement.</td></tr>
+<tr><td>Retail POS / Card / Dealer → Settlement</td><td>Site, dealer, POS sales, tender, card transaction, wet-stock, fees, commissions and chargebacks.</td><td>High-frequency ingestion with transaction-level drill-through.</td></tr>
+<tr><td>Aviation Into-Plane → ERP Billing</td><td>Airline, airport, flight/tail, grade, meter start/stop, volume, density, time, vehicle/hydrant and service fee.</td><td>Near real time after uplift, subject to quality validation.</td></tr>
+<tr><td>Marine Execution → ERP Billing</td><td>Vessel, IMO number, port, berth, grade, sulfur, density, quantity, BDN, sample and signatures.</td><td>Post-delivery with legal-document validation and immutable evidence.</td></tr>
+<tr><td>ERP AR ↔ Bank / Lockbox / Acquirer</td><td>Payer, amount, currency, value date, invoice, remittance, card batch, fees and chargebacks.</td><td>Intraday or daily; deterministic matching before probabilistic matching.</td></tr>
+</tbody>
+</table>
+
+<h3>Canonical Downstream Movement Identity</h3>
+<div class="codebox">Movement ID; Contract / Deal ID; Order / Nomination / Call-Off ID; Customer, Partner, Bill-To and Payer; Origin, Terminal, Rack, Bay and Source Tank; Destination, Station, Airport or Vessel; Product, Regulatory Grade and Specification Version; Carrier, Driver, Vehicle, Trailer and Compartment; Observed Volume, Standard Volume, Mass, Density, Temperature and Pressure; Meter, Meter Factor and Proving Reference; Batch Start, Batch End and Custody-Transfer Timestamp; Tax Point, Taxpayer Role, Exemption and Movement Document; Price Formula Version and Pricing Basis; Delivery Ticket, ePOD, Uplift Ticket or BDN; Original Event ID, Correction Sequence and Adjustment Reason.</div>
+</section>
+
+
+<section id="exceptions">
+<h2>5. Downstream Operational Exceptions &amp; Risk Management</h2>
+<table>
+<thead><tr><th>Critical Exception or Risk</th><th>Step-by-Step O2C Resolution</th><th>Required Controls and Evidence</th></tr></thead>
+<tbody>
+<tr><td><strong>Temperature, Density or Meter Variance</strong></td><td>1. Detect tolerance breach.<br>2. Hold the disputed invoice component.<br>3. Retrieve observed volume, temperature, pressure, density and meter factor.<br>4. Recalculate using the contractual standard condition.<br>5. Validate proving, calibration, alarms and tank movements.<br>6. Issue linked correction, debit or credit.<br>7. Remediate master data, meter, sensor or interface defects.</td><td>Observed and corrected quantities; correction inputs; API/local method and version; meter/prover IDs; meter factor; tank data; ticket; ePOD; tolerance and adjustment lineage.</td></tr>
+<tr><td><strong>Off-Specification, Contamination or Wrong Product</strong></td><td>1. Stop and isolate.<br>2. Seal and retain samples.<br>3. Trace all affected movements.<br>4. Test against the effective specification.<br>5. Release, reblend, downgrade, return, replace, recall or dispose.<br>6. Block/reverse billing and establish claims.<br>7. Close with customer acceptance and preventive action.</td><td>Specification version; source tank; blend/additive record; prior compartment load; flush record; sample ID/seal; test method/result; certificate; trace scope and disposition approval.</td></tr>
+<tr><td><strong>Terminal Outage, Allocation Shortfall or Emergency Reroute</strong></td><td>1. Detect physical constraint.<br>2. Rank commitments by entitlement, runout risk and criticality.<br>3. Select alternate terminal, exchange or substitute.<br>4. Replan trip, rack authorization and ETA.<br>5. Reprice and retax based on actual source.<br>6. Notify all parties and obtain acceptance where needed.<br>7. Bill actual execution and assess contractual relief.</td><td>Allocation entitlement; alternate inventory; approved substitution; tax jurisdiction; price differential; freight; exchange agreement; customer approval; revised order and route.</td></tr>
+<tr><td><strong>Invalid Tax Exemption, Excise License or Movement Authorization</strong></td><td>1. Block before movement.<br>2. Determine whether tax-paid movement is permissible.<br>3. Obtain controlled evidence.<br>4. Recalculate duty and commercial impact.<br>5. Reauthorize with corrected status.<br>6. Invoice, report and retain the movement reference.<br>7. Update expiry controls and review affected open orders.</td><td>Legal entity, tax ID, license, jurisdiction, validity dates, taxpayer role, product tax code, taxable event, exemption reason, movement-reference status and approver.</td></tr>
+<tr><td><strong>Multi-Party Settlement Mismatch</strong></td><td>1. Detect control-total imbalance.<br>2. Separate timing, missing, duplicate, quantity, price, fee, tax and ownership differences.<br>3. Reconcile to physical evidence.<br>4. Suspend only the affected component.<br>5. Correct at source and replay or reverse properly.<br>6. Clear AR, cash, tax and partner balance.<br>7. Obtain operational and financial closure.</td><td>Retail: site/tank/POS/ATG/card batch. Aviation: airport/aircraft/uplift. Marine: vessel/port/BDN. Exchange: partner/location/product/balance cycle. All require immutable source linkage.</td></tr>
+</tbody>
+</table>
+<div class="callout"><strong>Architectural control:</strong> No correction should destroy the original commercial or physical evidence. Preserve planned, observed and corrected quantities; original and revised price and tax results; and all approvals linking them.</div>
+</section>
+
+
+<section id="artifact-update">
+<h2>Artifact Update Block</h2>
+<table>
+<tbody>
+<tr><th>Workstream</th><td>Domain Modeling / Downstream Business Architecture, with dependencies on KPI Store, Data Governance and System Integration.</td></tr>
+<tr><th>Target Artifact</th><td>Downstream Business Architecture — Order-to-Cash Domain Reference Blueprint.</td></tr>
+<tr><th>Objective</th><td>Establish an end-to-end operational, capability, process, data and integration baseline for Downstream Commercial &amp; Marketing O2C.</td></tr>
+<tr><th>Conclusions</th><td>Downstream O2C must be modeled as a physical-commercial-financial value stream. Custody-transfer evidence, measurement correction, formula pricing, excise status and channel settlement are first-class architecture elements.</td></tr>
+<tr><th>Decision / Status</th><td>Candidate reference architecture; not yet an approved canonical baseline.</td></tr>
+<tr><th>Definitions Added</th><td>Commercial commitment, supply instruction, physical execution, financial settlement and canonical downstream movement identity.</td></tr>
+<tr><th>Assumptions</th><td>Global design with U.S. terminal-rack and EU excise examples; local regulations and company-specific systems require validation.</td></tr>
+<tr><th>Open Questions</th><td>Enterprise scope by geography; system-of-record assignments; target canonical model; KPI mapping; ownership by capability and data domain.</td></tr>
+<tr><th>Artifacts to Update</th><td>Downstream Business Architecture; Domain Model Repository; Data Product Portfolio; System Integration Reference Architecture; Business Glossary; Source and Traceability Register.</td></tr>
+<tr><th>Suggested Version</th><td>Version 0.1 — Candidate.</td></tr>
+<tr><th>Next Action</th><td>Validate the capability and process model with Commercial, Supply, Terminal Operations, Tax, Credit, Billing and Data Governance stakeholders.</td></tr>
+</tbody>
+</table>
+</section>
+
+
+<section id="sources">
+<h2>Selected Source Basis</h2>
+<p>This HTML version reflects the researched source basis used in the original report, including SAP downstream industry documentation, API petroleum measurement standards, IRS motor-fuel excise guidance, European Commission EMCS guidance, NIST legal metrology handbooks, S&amp;P Global and Argus refined-product pricing methodologies, IATA aviation fuel standards, JIG aviation quality guidance, IMO MARPOL bunker-fuel requirements, Oracle bulk-stock documentation, Emerson terminal preset documentation, and automatic tank-gauging references.</p>
+<p class="note">This document is an enterprise architecture reference. Regulatory, tax, measurement and product-quality requirements must be validated for each jurisdiction, contract and operating company before implementation.</p>
+</section>
+
+</main>
+<footer>Downstream Order-to-Cash Enterprise Architecture Reference Blueprint</footer>
+</body>
+</html>

@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo 2 - What each component is doing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B131C; --panel:#111C28; --panel-2:#16232F;
+  --line:#233444; --line-soft:#1B2A38;
+  --ink:#DCE6EF; --ink-dim:#93A6B8; --ink-faint:#63798C;
+  --amber:#E8A33D; --amber-dim:#8A6427;
+  --green:#5FB98A; --red:#D9645E; --blue:#5B93C4; --violet:#9B87C4;
+  --display:"Space Grotesk",'Segoe UI',system-ui,sans-serif;
+  --body:"IBM Plex Sans",'Segoe UI',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'Cascadia Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 500px at 12% -8%, rgba(232,163,61,.07), transparent 60%),
+             radial-gradient(900px 480px at 92% 4%, rgba(91,147,196,.06), transparent 62%)}
+.wrap{position:relative;z-index:1}
+
+.topbar{position:sticky;top:0;z-index:60;background:rgba(11,19,28,.93);
+  backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1340px;margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.tb-id{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;color:var(--amber);
+  border:1px solid var(--amber-dim);padding:3px 9px;border-radius:2px;white-space:nowrap}
+.tb-title{font-family:var(--display);font-weight:500;font-size:14px;color:var(--ink-dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-spacer{flex:1}
+#q{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:var(--body);
+  font-size:13px;padding:6px 11px;border-radius:2px;width:215px;outline:none}
+#q:focus{border-color:var(--amber-dim)}
+#q::placeholder{color:var(--ink-faint)}
+.hitcount{font-family:var(--mono);font-size:11px;color:var(--ink-faint);min-width:74px}
+
+.shell{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:34px;padding:0 22px 90px}
+nav.side{position:sticky;top:56px;align-self:start;max-height:calc(100vh - 72px);overflow-y:auto;
+  padding:26px 0 40px;border-right:1px solid var(--line-soft);scrollbar-width:thin}
+nav.side h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);margin:20px 0 8px;font-weight:500}
+nav.side a{display:block;padding:5px 12px 5px 10px;color:var(--ink-dim);text-decoration:none;
+  font-size:13.2px;border-left:2px solid transparent}
+nav.side a:hover{color:var(--ink);background:var(--panel)}
+nav.side a.on{color:var(--amber);border-left-color:var(--amber);background:rgba(232,163,61,.05)}
+nav.side a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-right:7px}
+main{padding-top:26px;min-width:0}
+
+.hero{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel) 0%, #0E1822 100%);
+  padding:30px 32px 26px;margin-bottom:34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.hero h1{font-family:var(--display);font-size:32px;line-height:1.16;margin:0 0 12px;font-weight:700;letter-spacing:-.015em}
+.hero p.lede{color:var(--ink-dim);max-width:74ch;margin:0 0 20px;font-size:16px}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.ctrl div{background:var(--panel-2);padding:9px 13px}
+.ctrl dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px}
+.ctrl dd{margin:0;font-size:13.5px;color:var(--ink)}
+
+section{margin-bottom:52px;scroll-margin-top:96px}
+section > h2{font-family:var(--display);font-size:23px;font-weight:700;letter-spacing:-.01em;
+  margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:13px;flex-wrap:wrap}
+section > h2 .num{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+.sub{color:var(--ink-dim);margin:10px 0 22px;max-width:82ch}
+h3{font-family:var(--display);font-size:16.5px;font-weight:500;margin:30px 0 10px;color:var(--ink)}
+h4{font-family:var(--display);font-size:14px;font-weight:500;margin:20px 0 7px;color:var(--ink-dim)}
+p{margin:0 0 13px}
+ul,ol{margin:0 0 14px;padding-left:21px}
+li{margin-bottom:5px}
+code{font-family:var(--mono);font-size:12.5px;color:var(--amber);background:rgba(232,163,61,.08);padding:1px 5px;border-radius:2px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);margin:16px 0 22px}
+table{border-collapse:collapse;width:100%;font-size:13.4px;min-width:660px}
+thead th{background:var(--panel-2);text-align:left;padding:9px 12px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);font-weight:500;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-dim)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.018)}
+tbody td:first-child{color:var(--ink)}
+td .ref,.ref{font-family:var(--mono);font-size:11.5px;color:var(--amber);white-space:nowrap}
+td strong{color:var(--ink);font-weight:600}
+
+.b{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid;border-radius:2px;white-space:nowrap;display:inline-block}
+.b-draft{color:var(--ink-dim);border-color:var(--line)}
+.b-blue{color:var(--blue);border-color:#2C4C68}
+.b-green{color:var(--green);border-color:#2E5C46}
+.b-red{color:var(--red);border-color:#5C3230}
+.b-amber{color:var(--amber);border-color:var(--amber-dim)}
+.b-violet{color:var(--violet);border-color:#4A3D66}
+
+.call{border-left:3px solid var(--amber);background:rgba(232,163,61,.055);padding:14px 18px;margin:18px 0;font-size:14.4px}
+.call.blue{border-left-color:var(--blue);background:rgba(91,147,196,.055)}
+.call.red{border-left-color:var(--red);background:rgba(217,100,94,.055)}
+.call.green{border-left-color:var(--green);background:rgba(95,185,138,.05)}
+.call.violet{border-left-color:var(--violet);background:rgba(155,135,196,.06)}
+.call b{color:var(--ink);display:block;margin-bottom:5px;font-family:var(--display);font-size:13.5px}
+.call p:last-child{margin-bottom:0}
+
+.plain{border:1px dashed var(--line);padding:12px 16px;margin:14px 0;font-size:14px;color:var(--ink-dim)}
+.plain b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:5px}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0}
+.duo > div{background:var(--panel);padding:16px 19px}
+.duo h4{margin-top:0;font-size:14.5px;color:var(--ink)}
+.duo .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:6px}
+
+.stack{border:1px solid var(--line);margin:18px 0}
+.stack .lyr{display:grid;grid-template-columns:168px 1fr;border-bottom:1px solid var(--line-soft)}
+.stack .lyr:last-child{border-bottom:none}
+.stack .ln{background:var(--panel-2);padding:11px 14px;font-family:var(--mono);font-size:11px;
+  color:var(--amber);border-right:1px solid var(--line-soft);letter-spacing:.06em}
+.stack .lc{padding:11px 15px;font-size:13.8px;color:var(--ink-dim)}
+.stack .lc b{color:var(--ink);display:block;margin-bottom:3px;font-family:var(--display);font-size:14px}
+
+.seats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0 22px}
+.seats > div{background:var(--panel);padding:14px 16px}
+.seats .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:6px}
+.seats p:last-child{margin-bottom:0}
+.seats.full{grid-template-columns:1fr}
+.seats .span2{grid-column:1 / -1}
+
+.flow{display:grid;grid-template-columns:1fr;gap:8px;margin:18px 0}
+.flow .box{border:1px solid var(--line);background:var(--panel);padding:12px 16px;position:relative}
+.flow .box .who{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.flow .box .nm{font-family:var(--display);font-size:15px;color:var(--ink);margin-bottom:3px}
+.flow .box p{margin:0;font-size:13.4px;color:var(--ink-dim)}
+.flow .arr{text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.08em}
+.flow .box.dash{border-style:dashed;border-color:var(--violet)}
+.flow .box.dash .who{color:var(--violet)}
+.flow .fans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.flow .box.gold{border-color:#2E5C46}
+.flow .box.sql{border-color:#2C4C68}
+.flow .box.gen{border-color:var(--amber-dim)}
+
+.xref{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--panel-2);
+  padding:10px 15px;margin:16px 0;font-size:13.6px;color:var(--ink-dim)}
+.xref span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);border:1px solid var(--amber-dim);padding:2px 8px;border-radius:2px;white-space:nowrap}
+
+.quiz{border:1px solid var(--line);margin:12px 0}
+.quiz .q{background:var(--panel);padding:14px 16px;border-bottom:1px solid var(--line-soft)}
+.quiz .q:last-child{border-bottom:none}
+.quiz .qn{font-family:var(--mono);font-size:11px;color:var(--amber);margin-bottom:6px}
+.quiz p{margin:0 0 8px}
+details.ans{margin-top:6px}
+details.ans summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--green);list-style:none}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans .abody{margin-top:8px;padding:10px 12px;background:rgba(95,185,138,.06);
+  border-left:3px solid var(--green);color:var(--ink-dim);font-size:14px}
+
+.ticket{border:1px solid var(--line);background:var(--panel);padding:16px 18px;margin:16px 0}
+.ticket h4{margin-top:0;color:var(--ink)}
+.ticket dl{display:grid;grid-template-columns:140px 1fr;gap:4px 12px;margin:0;font-size:13.6px}
+.ticket dt{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.ticket dd{margin:0;color:var(--ink)}
+
+pre.mm{background:var(--panel-2);border:1px solid var(--line);padding:14px 16px;overflow-x:auto;
+  font-family:var(--mono);font-size:12px;color:var(--ink-dim);line-height:1.5}
+mark{background:rgba(232,163,61,.32);color:#fff;padding:0 2px;border-radius:1px}
+.hidden{display:none !important}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0;color:var(--ink-faint);font-size:12.5px}
+
+.steps{counter-reset:step;list-style:none;padding:0;margin:16px 0 18px}
+.steps li{counter-increment:step;position:relative;padding:10px 12px 10px 48px;border:1px solid var(--line-soft);
+  background:var(--panel);margin-bottom:8px}
+.steps li::before{content:counter(step, decimal-leading-zero);position:absolute;left:12px;top:12px;
+  font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.06em}
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.side{position:static;border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:18px;max-height:220px}
+  .hero h1{font-size:25px}
+  #q{width:150px}
+  .duo,.seats,.flow .fans{grid-template-columns:1fr}
+  .stack .lyr{grid-template-columns:1fr}
+  .stack .ln{border-right:none;border-bottom:1px solid var(--line-soft)}
+  .ticket dl{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  body{background:#fff;color:#000}
+  body::before{display:none}
+  .topbar,nav.side{display:none}
+  .shell{grid-template-columns:1fr;padding:0}
+  a{color:#000;text-decoration:none}
+  .call{border-left-color:#666;background:#f7f7f7}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="tb-id">DEMO 2 · TRACK B · EXPLAIN</span>
+    <span class="tb-title">What each component is doing</span>
+    <span class="tb-spacer"></span>
+    <input id="q" type="search" placeholder="Filter seats, grains, locks…" autocomplete="off">
+    <span class="hitcount" id="hits"></span>
+  </div>
+</div>
+
+<div class="shell">
+
+<nav class="side" id="nav">
+  <h4>Handover</h4>
+  <a href="#s00"><span class="n">00</span>Teacher brief</a>
+  <a href="#s01"><span class="n">01</span>Layer picture</a>
+  <a href="#s02"><span class="n">02</span>Honest formula seats</a>
+  <h4>Components</h4>
+  <a href="#s03"><span class="n">03</span>Lakebase ODS</a>
+  <a href="#s04"><span class="n">04</span>uv Python pipe</a>
+  <a href="#s05"><span class="n">05</span>Bronze raw_*</a>
+  <a href="#s06"><span class="n">06</span>Silver dims</a>
+  <a href="#s07"><span class="n">07</span>fct_unbilled</a>
+  <a href="#s08"><span class="n">08</span>dim_kpi_metadata</a>
+  <a href="#s09"><span class="n">09</span>Metric View</a>
+  <a href="#s09b"><span class="n">09b</span>KPI 2 contract-vs-list</a>
+  <a href="#s09c"><span class="n">09c</span>KPI 3 temp-adjusted</a>
+  <a href="#s10"><span class="n">10</span>gold_kpi_value</a>
+  <a href="#s11"><span class="n">11</span>SQL Editor check</a>
+  <a href="#s12"><span class="n">12</span>Genie Agent</a>
+  <a href="#s12b"><span class="n">12b</span>Word hunt / CV map</a>
+  <a href="#s13"><span class="n">13</span>Turtle sidecar</a>
+  <a href="#s14"><span class="n">14</span>UC + Free warehouse</a>
+  <h4>Walk + quiz</h4>
+  <a href="#s15"><span class="n">15</span>How a number moves</a>
+  <a href="#s16"><span class="n">16</span>Quiz</a>
+  <a href="#s17"><span class="n">17</span>Sources</a>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="eyebrow">explainer · Teacher handover · Track B · Databricks Free · not MetricFlow</div>
+  <h1>Demo 2 - What each component is doing</h1>
+  <p class="lede">A picture of what was built, why each seat exists, and how one ticket becomes $179,934.00. This is current understanding of Track B on Databricks Free. It is not a locked programme architecture. It is not KPI-000.</p>
+  <dl class="ctrl">
+    <div><dt>Pack</dt><dd>Demo 2 / Track B</dd></div>
+    <div><dt>Compiler</dt><dd>Unity Catalog Metric Views</dd></div>
+    <div><dt>Not</dt><dd>MetricFlow · DuckDB · dbt</dd></div>
+    <div><dt>Platform</dt><dd>Databricks Free only</dd></div>
+    <div><dt>As-of</dt><dd>2026-08-01</dd></div>
+    <div><dt>Proven total</dt><dd>12 tickets · $179,934.00</dd></div>
+    <div><dt>This file</dt><dd>WHAT was built</dd></div>
+    <div><dt>Sibling</dt><dd>LEARN.html / LEARN.md = HOW</dd></div>
+  </dl>
+</div>
+
+<!-- 00 Teacher brief -->
+<section id="s00">
+  <h2><span class="num">00</span>Teacher brief</h2>
+  <p class="sub">Start here. You can teach the course from this section without guessing what the pack is for.</p>
+
+  <h3>Mission</h3>
+  <p>Hamid wants to understand, end to end, a real O2C Unbilled KPI on Databricks Free. The path is ODS → bronze → silver population → consumption semantic layer (Metric View) → gold published values → Genie ad hoc. Same compile path the whole way. Meaning (ontology) stays off the formula.</p>
+  <p>He should be able to say what each seat does, what it is not, and why two honest “customer” reports fight. He should not mix this pack with Track A.</p>
+
+  <div class="duo">
+    <div>
+      <span class="tag">This file</span>
+      <h4>Source of truth for WHAT was built</h4>
+      <p>Read it. Hand it to Teacher. Quiz from it. Do not treat it as a rebuild script. Do not invent workshops from it. Do not treat it as KPI-000 or a programme lock.</p>
+    </div>
+    <div>
+      <span class="tag">Sibling</span>
+      <h4>LEARN.html / LEARN.md is HOW he rebuilds</h4>
+      <p>The learn pack is the do-it-yourself path. This file explains the seats so those exercises stay clear. If a step and a seat disagree, the pack sources below win. Do not invent a third path.</p>
+    </div>
+  </div>
+
+  <h3>Locks to honor while teaching</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Lock</th><th>Say this</th><th>Do not say this</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="ref">C-10</span></td>
+        <td>Ontology = meaning. Store catalog + Metric View = certified formula path. Metadata does not author formulas. They agree. They are not one object.</td>
+        <td>The Metric View is the ontology. Turtle compiles the number. <code>dim_kpi_metadata</code> holds the SQL.</td>
+      </tr>
+      <tr>
+        <td><span class="ref">C-11</span></td>
+        <td>This pack’s compiler is the <strong>consumption semantic layer</strong> (Unity Catalog Metric Views). Always qualify the phrase.</td>
+        <td>“The semantic layer” with no qualifier. Mixing MetricFlow into this pack.</td>
+      </tr>
+      <tr>
+        <td><span class="ref">RC-1</span></td>
+        <td>RC-1 per KPI: Gold publishes each certified KPI FROM that view’s own <code>MEASURE()</code> (one compile path each). One Genie Agent on all three views; <code>MEASURE()</code> on the matching view. No Export-to-metric-view. No second <code>SUM</code>.</td>
+        <td>Gold = <code>SUM(fct_unbilled)</code>. Gold is Unbilled-only. Genie authors a new view. Two compile paths that “happen to match.”</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3>Honest formula seats. Do not overstate.</h3>
+  <p>The ticket gate and <code>gallons_net * contract_price</code> live on <code>fct_unbilled</code>. That table seals the Unbilled population at ticket grain. The Unbilled Metric View is <code>SUM</code> / <code>GROUP BY</code> via YAML. It does not re-encode the unbilled rule. KPI 2 and 3 have no population fact: they compile from the bronze star and put the multiply in YAML. Gold publishes each certified KPI FROM that view’s <code>MEASURE()</code>. One Genie Agent asks all three views with <code>MEASURE()</code> on the matching view. Nobody re-encodes.</p>
+  <div class="call">
+    <b>Do not call fct_unbilled the certified formula</b>
+    <p>It is the Unbilled <em>population</em> and that view’s compiler source. Per-ticket dollars sit there so you can audit a BOL. The Unbilled Metric View compiles <code>SUM</code> / <code>GROUP BY</code>. KPI 2/3 have no such fact. Gold is a snapshot of each view’s <code>MEASURE()</code>. Metadata points (one row per KPI, all certified). Turtle names meaning.</p>
+  </div>
+
+  <h3>Track A is a different pack</h3>
+  <p>Track A is MetricFlow + DuckDB + dbt. It lives in <code>demos/o2c-unbilled-semantic-layer/</code>. Do not edit it. Do not run its <code>demo.sh</code>. Do not open DuckDB. Do not mix compilers. Same teaching story (two “Unbilled USD” workbooks that fight). Different warehouse. Different compiler.</p>
+
+  <h3>Azure is parked</h3>
+  <p>This demo is Free Edition only. Sign-in is at login.databricks.com. The workspace pattern is <code>*.cloud.databricks.com</code>, not <code>*.azuredatabricks.net</code>. If you land on Azure, stop. Azure is the actual project, not this pack.</p>
+
+  <h3>Suggested lesson order (one idea each)</h3>
+  <p>Do not invent workshops. Teach one idea, then the next. Use the component sections and the number walk as the primary source.</p>
+  <ol>
+    <li><strong>Unbilled is a state of an Obligation.</strong> A delivered BOL not yet invoiced. Not a KPI class. Not a customer class. Quality-hold is never billed and never unbilled.</li>
+    <li><strong><code>customer_grain ∈ {payer, sold-to, site}</code>.</strong> You choose the group-by. The formula stays still. Site is a terminal, not a party.</li>
+    <li><strong>Why two “customer” reports fight.</strong> Same 12 tickets. Same $179,934.00. Four sold-to rows vs three payer rows. Apex Fuels LLC equals Houston Rack + Dallas Dealer.</li>
+    <li><strong>Population vs published gold.</strong> <code>fct_unbilled</code> is the Unbilled ticket-grain population. <code>gold_kpi_value</code> is published instances per certified KPI FROM that view’s <code>MEASURE()</code>. Replace-by-<code>kpi_id</code>. Never <code>CREATE OR REPLACE</code> the whole gold table.</li>
+    <li><strong>What a Metric View compiles.</strong> YAML fields + measures inside <code>CREATE VIEW … WITH METRICS</code>. Version 0.1 is the live dialect. It writes the <code>SELECT</code> / <code>GROUP BY</code>.</li>
+    <li><strong><code>MEASURE()</code> vs <code>SELECT *</code>.</strong> Every measure uses <code>MEASURE()</code>. <code>SELECT *</code> is refused on purpose.</li>
+    <li><strong>C-10 meaning vs formula.</strong> Turtle names sold-to ≠ payer ≠ site. It does not author <code>gallons_net * contract_price</code>.</li>
+    <li><strong>Genie as consumer, not author.</strong> One agent, three views. Ad hoc grain questions; <code>MEASURE()</code> on the matching view. Export-to-metric-view is forbidden.</li>
+    <li><strong>Three certified catalog rows.</strong> Unbilled, contract-vs-list, temp-adjusted. All <code>certified</code>. Pointer = measure name. Object = view. IRIs: <code>#UnbilledState</code> / <code>#Obligation</code> / <code>#Obligation</code>. No <code>#DeliveredTicket</code>.</li>
+    <li><strong>KPI 2 and 3 are not a second Unbilled.</strong> Bronze star, multiply in YAML, no population fact. Join aliases <code>product_dim</code> / <code>sold</code> / <code>payer_dim</code> / <code>site_dim</code>. Gold publishes each FROM its own published measure.</li>
+  </ol>
+
+  <div class="call blue">
+    <b>Quiz lives in section 16</b>
+    <p>Ten short questions with answers in a collapsed block. Use them after the matching lesson. Do not grade from memory of Track A.</p>
+  </div>
+
+  <div class="plain">
+    <b>What this handover is not</b>
+    This HTML is a reference plus Teacher handover, not a single short lesson. Teacher expects a mission, one-idea lessons, a quiz, and a primary source. This file is that source. Write short lessons from it. Do not dump the whole file as one lesson. Do not treat it as KPI-000.
+  </div>
+</section>
+
+<!-- 01 Layer picture -->
+<section id="s01">
+  <h2><span class="num">01</span>Layer picture</h2>
+  <p class="sub">How the seats sit today. Solid arrows move rows or compiled numbers. The dashed Turtle line is meaning only. It never authors a dollar.</p>
+
+  <div class="stack">
+    <div class="lyr"><div class="ln">ODS</div><div class="lc"><b>Lakebase dataexpert-day1 / databricks_postgres / o2c_unbilled</b>Ops tables only. Existing project. New schema. Not a second Lakebase. Not the compiler.</div></div>
+    <div class="lyr"><div class="ln">PIPE</div><div class="lc"><b>uv Python (sdk + SQL connector + psycopg)</b>Copies rows. No federated join from the warehouse into Lakebase.</div></div>
+    <div class="lyr"><div class="ln">BRONZE</div><div class="lc"><b>workspace.o2c_unbilled.raw_*</b>Replica of the seven seeds. Counts 8 / 10 / 3 / 3 / 19 / 6 / 6.</div></div>
+    <div class="lyr"><div class="ln">SILVER</div><div class="lc"><b>dim_party, dim_site, dim_product, br_party_role + dim_kpi_metadata</b>Thin dims and one row per KPI (all certified). Metadata is a pointer, not the formula.</div></div>
+    <div class="lyr"><div class="ln">POPULATION</div><div class="lc"><b>fct_unbilled</b>Ticket grain. Compiler source. Gate + per-ticket dollars. Not gold. Not the published formula.</div></div>
+    <div class="lyr"><div class="ln">COMPILER</div><div class="lc"><b>Metric View unbilled_usd</b>YAML inside <code>CREATE VIEW … WITH METRICS</code>, version 0.1. Compiles <code>SUM</code> / <code>GROUP BY</code>. Consumption semantic layer for this pack.</div></div>
+    <div class="lyr"><div class="ln">GOLD</div><div class="lc"><b>gold_kpi_value</b>Published instances per certified KPI FROM that view’s <code>MEASURE()</code>. Not a second <code>SUM()</code>.</div></div>
+    <div class="lyr"><div class="ln">CONSUMERS</div><div class="lc"><b>SQL Editor + Genie Agent</b>Gold asks each certified view. One Genie Agent on all three views; <code>MEASURE()</code> on the matching view. Genie does not export a second view.</div></div>
+    <div class="lyr"><div class="ln">HUNT</div><div class="lc"><b>Six source stubs + cv_term / cv_alias / cv_map</b>Work that produced the map. Not a KPI. Not a second catalog. Not on the certified Genie.</div></div>
+    <div class="lyr"><div class="ln">MEANING</div><div class="lc"><b>ontology/o2c-meaning.ttl</b>Dashed. Agrees with the English. Databricks does not read this folder.</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="box"><div class="who">ODS</div><div class="nm">Lakebase o2c_unbilled</div><p>Seven ops tables on dataexpert-day1 / databricks_postgres.</p></div>
+    <div class="arr">↓ uv pipe · no federated join</div>
+    <div class="box"><div class="who">Bronze</div><div class="nm">raw_*</div><p>Replica in Unity Catalog. Same row counts.</p></div>
+    <div class="arr">↓ sql/02_facts.sql</div>
+    <div class="box"><div class="who">Silver + population</div><div class="nm">dims · br_party_role · fct_unbilled</div><p>Names denormalized onto the fact so the Metric View stays one source table.</p></div>
+    <div class="arr">↓ CREATE VIEW … WITH METRICS version 0.1</div>
+    <div class="box"><div class="who">Consumption semantic layer</div><div class="nm">unbilled_usd</div><p>SUM / GROUP BY via YAML. MEASURE() only.</p></div>
+    <div class="arr">↓ one compile path (RC-1)</div>
+    <div class="fans">
+      <div class="box gold"><div class="who">Gold</div><div class="nm">gold_kpi_value</div><p>FROM MEASURE() per certified KPI.</p></div>
+      <div class="box sql"><div class="who">Certified check</div><div class="nm">SQL Editor</div><p>Act 1 fights. Act 2 agrees. Act 3 refused.</p></div>
+      <div class="box gen"><div class="who">Ad hoc</div><div class="nm">Genie Agent</div><p>One agent, three views. MEASURE() only. Export forbidden.</p></div>
+    </div>
+    <div class="arr">dashed · meaning only · not a compile edge</div>
+    <div class="box dash"><div class="who">Ontology sidecar</div><div class="nm">o2c-meaning.ttl</div><p>payer, sold-to, site, Unbilled-as-a-state. No SQL. No gallons_net.</p></div>
+  </div>
+
+  <p>Mermaid of the same picture, if you want to paste it into a lesson:</p>
+<pre class="mm">flowchart TD
+  ODS[Lakebase ODS] --> PIPE[uv Python pipe]
+  PIPE --> BRZ[Bronze raw_*]
+  BRZ --> SLV[Silver dims]
+  BRZ --> FCT[fct_unbilled]
+  SLV -.-> FCT
+  FCT --> MV[Metric View unbilled_usd]
+  MV --> GOLD[gold_kpi_value]
+  MV --> SQL[SQL Editor]
+  MV --> GEN[Genie Agent]
+  HUNT[Word hunt / CV map] -.->|not a KPI| GEN
+  TTL[Turtle sidecar] -.->|meaning only| MV
+  TTL -.->|meaning only| META[dim_kpi_metadata]
+  META -.->|pointer, not formula| MV
+  PLAT[Unity Catalog + Free warehouse] --- ODS
+  PLAT --- BRZ
+  PLAT --- MV
+</pre>
+
+  <div class="call violet">
+    <b>Platform sits under the picture. It is not a formula seat.</b>
+    <p>Unity Catalog and the Free 2XS warehouse host objects and run SQL. They do not decide who is unbilled. They do not pick a customer grain.</p>
+  </div>
+</section>
+
+<!-- 02 Honest seats -->
+<section id="s02">
+  <h2><span class="num">02</span>Honest formula seats</h2>
+  <p class="sub">Three places people over-claim. Keep them separate when you talk.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Seat</th><th>What actually lives here</th><th>What does not</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>fct_unbilled</strong></td>
+        <td>Ticket gate (<code>delivered</code>, no posted invoice as of 2026-08-01, quality-hold out) and <code>unbilled_usd = gallons_net * contract_price</code>. One row per BOL. 12 tickets. $179,934.00.</td>
+        <td>Published gold. A certified <em>formula object</em>. A customer grain choice.</td>
+      </tr>
+      <tr>
+        <td><strong>Metric View YAML</strong></td>
+        <td><code>SUM(source.unbilled_usd)</code> and <code>COUNT(1)</code>. Fields you may group by. The compiler writes the <code>SELECT</code> / <code>GROUP BY</code>.</td>
+        <td>The unbilled rule. Ontology IRIs (version 0.1 does not embed them). A second copy of <code>gallons_net * contract_price</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Gold / Genie / SQL Act 2</strong></td>
+        <td>Gold: <code>MEASURE()</code> on each certified view (published measure only). Genie: <code>MEASURE()</code> on the matching certified view. SQL Act 2: <code>MEASURE(unbilled_usd)</code> on Unbilled. RC-1 per KPI.</td>
+        <td>A second <code>SUM(fct_unbilled)</code>. Gold Unbilled-only after a full run. Export-to-metric-view. <code>SELECT *</code>.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <p>Delete the Metric View and Act 1 against the fact still works. That is the production pattern: population first, compiler second. The walkthrough says so on purpose.</p>
+</section>
+
+<!-- 03 Lakebase ODS -->
+<section id="s03">
+  <h2><span class="num">03</span>Lakebase ODS</h2>
+  <p class="sub">dataexpert-day1 / databricks_postgres / o2c_unbilled only. Ops tables. Not the compiler.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The operational landing for the seven seeds. It is a <strong>new schema</strong> on the <strong>existing</strong> Lakebase project <code>dataexpert-day1</code>, database <code>databricks_postgres</code>. Schema name is locked: <code>o2c_unbilled</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Seven Postgres tables loaded from <code>data/*.csv</code>. Expected counts: parties 8, party_roles 10, products 3, terminals 3, tickets 19, invoices 6, invoice_lines 6.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p><code>CREATE SCHEMA IF NOT EXISTS o2c_unbilled</code>. Then create-if-not-exists, truncate or delete those seven tables, insert the CSVs. Scripts refuse any other schema or database. They never <code>DROP SCHEMA</code>. They never write into other day1 schemas.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not a second Lakebase project. Not Azure. Not the consumption semantic layer. Not gold. Not a place that authors Unbilled USD. Invoices live here as ops facts. The unbilled gate is applied later, on Databricks.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>scripts/00_lakebase_ods.py</code>, <code>sql/00_lakebase_ods.sql</code>, <code>sql/00_README.md</code>, seeds in <code>data/</code>. Host, user, and password stay in local <code>.env</code>. Never in the repo. Never in this file.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> the seven CSVs. <strong>Out:</strong> the uv pipe reads these tables and writes Databricks <code>raw_*</code>. Nothing in the warehouse queries Lakebase directly.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You lose the “ops system of record” seat. That is allowed. <code>scripts/02_load.py</code> (or the SQL-editor VALUES path in <code>sql/99_full_load.generated.sql</code>) can land CSVs straight into <code>raw_*</code>. Then Act 0 never ran. Bronze still has to exist. Do not invent a federated join to “skip the skip.”</p>
+    </div>
+  </div>
+
+  <div class="call red">
+    <b>Locked project and schema</b>
+    <p>Tempted to create a new Lakebase project? Don’t. Act 0 is a schema on dataexpert-day1. Scripts exit if <code>LAKEBASE_SCHEMA</code> is anything other than <code>o2c_unbilled</code>.</p>
+  </div>
+</section>
+
+<!-- 04 uv pipe -->
+<section id="s04">
+  <h2><span class="num">04</span>uv Python pipe</h2>
+  <p class="sub">databricks-sdk + SQL connector + psycopg. Python copies rows. No federated join.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The Mac-side runner for Track B. A <code>uv</code> venv talks to Lakebase with psycopg and to the Free warehouse with the Databricks SQL connector. Python is the pipe. The warehouse never joins out to Postgres.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>No durable data of its own. It holds connection helpers, placeholder substitution, and the script order. Tokens and passwords are read from local <code>.env</code> and refused if empty. They are not printed.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p><code>00b_land_replica.py</code> <code>SELECT</code>s each Lakebase ops table, then <code>CREATE OR REPLACE TABLE … AS SELECT * FROM VALUES …</code> into <code>raw_*</code>. Later scripts run facts, the version 0.1 Metric View, queries, store, KPI 2 and 3, then Genie (one agent, three views - after those views exist). Each script prints the SQL it sends.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not MetricFlow. Not dbt. Not DuckDB. Not a federated Lakebase query from DBSQL. Not Azure CLI. Not a second formula. <code>02_load.py</code> is a shortcut that skips Lakebase. Use it only when Act 0 is off.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>pyproject.toml</code>, <code>scripts/config.py</code>, <code>scripts/00_lakebase_ods.py</code>, <code>scripts/00b_land_replica.py</code>, then <code>01</code> through <code>09</code>. Run from <code>demos/o2c-unbilled-databricks-free/</code> with <code>uv run python scripts/…</code>.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> Lakebase <code>o2c_unbilled</code> (or local CSVs on the shortcut). <strong>Out:</strong> Unity Catalog tables and the Metric View on the Free warehouse. Genie is created or found by title through the same SDK.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You can still run the SQL-editor path (<code>sql/99_full_load.generated.sql</code> then <code>sql/05_store.sql</code>). You then have no Lakebase replica story. Do not replace the pipe with a warehouse query against Lakebase. That join is out of scope.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Bronze -->
+<section id="s05">
+  <h2><span class="num">05</span>Bronze raw_* replica</h2>
+  <p class="sub">Same seven seeds, now in Unity Catalog. Replica, not a certified number.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>Warehouse copies of the ops tables: <code>raw_parties</code>, <code>raw_party_roles</code>, <code>raw_products</code>, <code>raw_terminals</code>, <code>raw_tickets</code>, <code>raw_invoices</code>, <code>raw_invoice_lines</code>. Default home is <code>workspace.o2c_unbilled</code> (or your catalog / <code>default</code> if schema create is denied).</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>The same 8 / 10 / 3 / 3 / 19 / 6 / 6 rows. All 19 BOL tickets, including quality-hold and already-billed lifts. All six invoices, including the post-as-of posted invoice and the draft.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Sits still. <code>sql/02_facts.sql</code> joins these tables to build dims and <code>fct_unbilled</code>. Act 1 can also be taught against the fact, not against bronze. Bronze is the raw evidence.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not the population. Not gold. Not the consumption semantic layer. Not a place Genie should query as the measure source. Do not point Genie at <code>raw_*</code>.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p>Created by <code>scripts/00b_land_replica.py</code>, or <code>scripts/02_load.py</code>, or <code>sql/01_land.sql</code> Part B, or the VALUES head of <code>sql/99_full_load.generated.sql</code>. Seeds stay in <code>data/</code>.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> Lakebase via the pipe, or CSVs. <strong>Out:</strong> silver dims and <code>fct_unbilled</code>. Invoice header + lines are why a ticket is or is not unbilled later.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>Facts have nothing to join. The 12-ticket population cannot be sealed. Do not wget the CSVs from a notebook. Free outbound internet is restricted. Upload via UI, or use the VALUES file, or use the pipe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Silver dims -->
+<section id="s06">
+  <h2><span class="num">06</span>Silver dims + br_party_role</h2>
+  <p class="sub">Thin star-ish objects. They teach party vs site. The Metric View does not join them.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>Four silver tables built in <code>sql/02_facts.sql</code>: <code>dim_party</code>, <code>dim_site</code>, <code>dim_product</code>, <code>br_party_role</code>. <code>dim_kpi_metadata</code> is also silver, but it is a different seat (section 08). Keep them mentally apart.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Parties (legal / operating names). A role bridge: payer / sold_to / bill_to. GCA holds all three. Sites are terminals (HSC, DAL, BMT), not customers. Products carry contract price and list price. Contract ≠ list. That matters for the sloppy twin, not for the certified path.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Gives names and roles you can read. <code>dim_site</code> is joined when building <code>fct_unbilled</code> so <code>site_name</code> is already on the fact. After that, the Metric View reads one table. No YAML joins.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not the population. Not gold. Not the formula. Not a customer dimension that picks payer vs sold-to for you. Site is a location. Do not file it under “customer.”</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/02_facts.sql</code> (and the facts block inside <code>99</code>). Driven by <code>scripts/03_facts.py</code> on the uv path.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> <code>raw_parties</code>, <code>raw_party_roles</code>, <code>raw_terminals</code>, <code>raw_products</code>. <strong>Out:</strong> names denormalized onto <code>fct_unbilled</code>. The role bridge is the teaching object for “GCA is payer and sold-to.”</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You can still denormalize names from <code>raw_*</code> onto the fact. You lose the explicit party / site / role objects. The grain lesson gets harder to point at. Do not skip the idea, even if you skip the extra tables.</p>
+    </div>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Role or place</th><th>Who in this demo</th><th>What it is for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Payer</strong></td><td>Apex Fuels LLC; Metro Lubricants; Gulf Coast Aviation Inc</td><td>Who is invoiced. Credit and cash live here.</td></tr>
+      <tr><td><strong>Sold-to</strong></td><td>Apex Houston Rack; Apex Dallas Dealer; Metro Lubes Beaumont; GCA</td><td>Who is entitled to lift under the contract.</td></tr>
+      <tr><td><strong>Bill-to</strong></td><td>Apex AP; Metro Shared Services; GCA</td><td>Who receives the invoice document.</td></tr>
+      <tr><td><strong>Site / ship-to</strong></td><td>HSC / DAL / BMT</td><td>A terminal. Not a party.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Gulf Coast Aviation is payer and sold-to (same org). Apex is not: one payer, two sold-tos. <code>INV-2026-0001</code> covers Houston and Dallas tickets in the same week, billed to Apex Fuels LLC.</p>
+</section>
+
+<!-- 07 fct_unbilled -->
+<section id="s07">
+  <h2><span class="num">07</span>fct_unbilled</h2>
+  <p class="sub">Population / compiler source. Not gold. Not a layer named Certified. Not the published formula.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The sealed <strong>population</strong> at ticket grain. One row per unbilled BOL as of 2026-08-01. This is the table the Metric View reads. Easy to audit. Delete the Metric View and you can still query this table. That is on purpose.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>12 tickets. Grand total <strong>$179,934.00</strong>. Each row already has <code>unbilled_usd = gallons_net * contract_price</code>, plus payer / sold-to / site names, product, delivery date, and <code>as_of_date</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Applies the ticket gate: <code>status = delivered</code>, no posted invoice line with <code>invoice_date &lt;= 2026-08-01</code>, quality-hold excluded. Then multiplies net gallons by contract price. Names are denormalized so the Metric View stays one source table.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not gold published KPI values. Not a layer called Certified. Not a customer grain choice. Not something Genie should query as the measure source. Not a second <code>SUM</code> waiting to be copied into gold.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/02_facts.sql</code>. <code>scripts/03_facts.py</code> runs it. The facts block in <code>99</code> is the same rule. Comment at the top of <code>02</code> says it plainly: compiler source, not gold.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> <code>raw_tickets</code> + products + parties + <code>dim_site</code> + posted invoices as of. <strong>Out:</strong> Metric View <code>source</code>. Act 1 groups this table twice (sold-to vs payer) to show the fight.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>There is no population. The Metric View has no source. Gold and Genie have nothing honest to compile. Do not “fix” that by summing bronze in gold. Rebuild the fact.</p>
+    </div>
+  </div>
+
+  <div class="call">
+    <b>Honest seat: the gate and the multiply live here</b>
+    <p>This is where a ticket becomes unbilled dollars. The Metric View does not repeat <code>gallons_net * contract_price</code>. It sums the column this table already made. Gold and Genie must not re-encode the gate either.</p>
+  </div>
+
+  <h3>Why a ticket is in or out</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ticket</th><th>Shape</th><th>In fct_unbilled?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">BOL-2026-0101</span></td><td>HSC · Apex Houston · RBOB · 8,000 gal · delivered</td><td>Yes · $17,472.00</td><td>Delivered. No invoice line at all.</td></tr>
+      <tr><td><span class="ref">BOL-2026-0001</span></td><td>Same shape, earlier lift</td><td>No</td><td>Posted on <code>INV-2026-0001</code> (2026-06-14), before as-of.</td></tr>
+      <tr><td><span class="ref">BOL-2026-0104</span></td><td>HSC · Apex Houston · ULSD</td><td>Yes · $15,721.60</td><td><code>INV-2026-0005</code> is posted 2026-08-03. After as-of. Stays unbilled.</td></tr>
+      <tr><td><span class="ref">INV-2026-0006</span></td><td>Draft, Apex</td><td>Does not bill anyone</td><td>Draft does not count. That is why the draft row exists.</td></tr>
+      <tr><td><span class="ref">BOL-2026-0501</span></td><td>HSC · Apex Houston · RBOB · quality_hold</td><td>No</td><td>Quality-hold is never billed and never unbilled.</td></tr>
+      <tr><td><span class="ref">BOL-2026-0105</span></td><td>DAL · Apex Houston · RBOB</td><td>Yes · $8,736.00</td><td>Cross-terminal. Houston sold-to, Dallas site. Sold-to ↔ site is not fake-clean.</td></tr>
+    </tbody>
+  </table></div>
+  <p>19 tickets in bronze. 2 quality-hold. 5 delivered and billed on or before as-of. 12 remain. Hand-authored, not the Track A 1,200-row generator.</p>
+</section>
+
+<!-- 08 dim_kpi_metadata -->
+<section id="s08">
+  <h2><span class="num">08</span>dim_kpi_metadata</h2>
+  <p class="sub">One row per KPI (all certified). A pointer. It does not author the formula and it does not restate the gate.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The Store catalog. Silver. One row per KPI, all <code>certified</code>. After a full run: three rows. Owner, status, unit, allowed grains, and two pointer columns. Meaning IRI on the side.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Three certified rows after 06→08→09 (or 08/09 then 06 - replace-by-<code>kpi_id</code> keeps the others). Pointer is the <em>measure name</em>, object is the view. Unbilled: <code>KPI-O2C-UNBILLED-USD</code> / <code>unbilled_usd</code> / <code>unbilled_usd</code> view / <code>#UnbilledState</code>. Contract-vs-list: <code>KPI-O2C-CONTRACT-VS-LIST-USD</code> / <code>delivered_contract_usd</code> / <code>contract_vs_list_usd</code> view / <code>#Obligation</code>. Temp-adjusted: <code>KPI-O2C-TEMP-ADJUSTED-USD</code> / <code>temp_adjusted_usd</code> / <code>temp_adjusted_delivered_usd</code> view / <code>#Obligation</code>. No <code>#DeliveredTicket</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Answers “what is this KPI, who owns it, where is the compile object?” Gold joins it on <code>kpi_id</code>. It does not compute a dollar. It does not run <code>MEASURE()</code>. After 05/06 the Unbilled row is present; after a full run expect 3 certified rows.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not a SQL formula. Not a second copy of <code>gallons_net * contract_price</code>. Not the ticket gate. Not Turtle. Not gold. C-10: metadata does not author formulas.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/05_store.sql</code> and <code>scripts/06_store.py</code> upsert Unbilled. <code>scripts/08_complex_metric.py</code> and <code>scripts/09_temp_adjusted.py</code> upsert the other two. Built after each view exists, so the pointer has somewhere to point.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> authored identity + pointers. <strong>Out:</strong> join to <code>gold_kpi_value</code> on <code>kpi_id</code>. Dashed agreement with the Turtle IRI. No compile edge.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>Gold numbers can still exist. You lose the catalog seat: no owner, no status, no pointer a later Store can hang on. Do not “fix” the gap by pasting the gate into a definition column.</p>
+    </div>
+  </div>
+
+  <div class="call red">
+    <b>Pointer columns only. Do not restate the formula in prose.</b>
+    <p><code>definition</code> and <code>gating_rule</code> must not repeat “net gallons × contract price” or the ticket gate. Those live on <code>fct_unbilled</code> for Unbilled. Published Unbilled gold grains are enterprise / payer / sold_to / site. KPI 2/3 follow their own <code>allowed_grain</code>. Do not add a <code>#DeliveredTicket</code> class - delivered KPIs bind <code>#Obligation</code>.</p>
+  </div>
+</section>
+
+<!-- 09 Metric View -->
+<section id="s09">
+  <h2><span class="num">09</span>Metric View unbilled_usd</h2>
+  <p class="sub">YAML version 0.1 inside CREATE VIEW WITH METRICS. Fields + measures. This pack’s consumption semantic layer.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>A Unity Catalog Metric View named <code>unbilled_usd</code>. YAML lives inside <code>CREATE OR REPLACE VIEW … WITH METRICS LANGUAGE YAML AS $$ … $$</code>. One statement. Do not split the block. Version <strong>0.1</strong> is the pack dialect: <code>source</code>, <code>fields</code>, <code>measures</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Source: <code>fct_unbilled</code> (no joins). Fields: <code>payer</code>, <code>sold_to</code>, <code>site</code>, <code>site_name</code>, <code>as_of</code>, <code>delivery_date</code>, <code>product</code>. Measures: <code>unbilled_usd = SUM(source.unbilled_usd)</code>, <code>unbilled_ticket_count = COUNT(1)</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>The compiler writes the <code>SELECT</code> / <code>GROUP BY</code>. You ask with <code>MEASURE()</code>. You choose the group-by. The ticket set does not change. Swap <code>sold_to</code> for <code>payer</code> or <code>site</code>. Same $179,934.00. Different rows.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not ontology. Not gold. Not the ticket gate. Not a second multiply. Not MetricFlow (<code>ticket__sold_to</code> prefixes do not exist here). Not a time spine. Version 0.1 is fields and measures only. Do not add extra YAML keys.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>scripts/04_metric_view.py</code> (the live-proven 0.1 statement). <code>sql/03_metric_view.sql</code> is being rewritten to that same 0.1. The 0.1 block in <code>sql/99_full_load.generated.sql</code> is the warehouse-UI twin. Official create / query docs: Databricks Metric Views, 2026.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> <code>fct_unbilled</code> only. <strong>Out:</strong> gold <code>FROM MEASURE()</code>, SQL Editor Act 2, Genie ad hoc. Metadata points at the measure name and the view. Turtle agrees in English. Turtle is not an input.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You still have a population. You do not have a consumption semantic layer. Gold must not fall back to <code>SUM(fct_unbilled)</code>. Genie must not invent a view. Act 1 can still teach the grain fight against the fact. Acts 2 and 3 cannot run.</p>
+    </div>
+  </div>
+
+  <div class="call green">
+    <b>One compile dialect: version 0.1</b>
+    <p>Fields + measures. That is what compiled on Free on 2026-08-14. <code>SELECT *</code> was refused with <code>METRIC_VIEW_MISSING_MEASURE_FUNCTION</code>. Do not send learners toward an unproven richer YAML. Monaco auto-indent can mangle the block. Paste as one statement.</p>
+  </div>
+
+<pre class="mm">version: 0.1
+source: {{catalog}}.{{schema}}.fct_unbilled
+fields:
+  - name: payer
+    expr: source.payer_name
+  - name: sold_to
+    expr: source.sold_to_name
+  - name: site
+    expr: source.site_code
+  # plus site_name, as_of, delivery_date, product
+measures:
+  - name: unbilled_usd
+    expr: SUM(source.unbilled_usd)
+  - name: unbilled_ticket_count
+    expr: COUNT(1)</pre>
+</section>
+
+<!-- 09b KPI 2 -->
+<section id="s09b">
+  <h2><span class="num">09b</span>KPI 2 · contract_vs_list_usd</h2>
+  <p class="sub">Second certified KPI. Not a second Unbilled. Joins + filter + multiply in YAML. Gold publishes it. Genie asks it with <code>MEASURE()</code> on the matching view.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>A second Metric View: delivered-ticket value at contract vs list. Same compiler, different formula. Source is <code>raw_tickets</code> (bronze star), not <code>fct_unbilled</code>. No population fact. The multiply lives in YAML.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Four star joins, aliases <code>product_dim</code> / <code>sold</code> / <code>payer_dim</code> / <code>site_dim</code> (not <code>product</code> / <code>sold</code> / <code>payer</code> / <code>site</code> - those collide with field names → <code>INVALID_EXTRACT_BASE_FIELD_TYPE</code>). Filter: delivered, temp ≥ 80, gallons ≥ 5000, July 2026, gasoline|distillate. Engine default is LEFT OUTER; the filter on <code>product_dim.product_family</code> is an implicit inner (every ticket has a product).</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Version 0.1 first (joins + filter + measures). If Free refuses <code>joins</code>/<code>filter</code> on 0.1, retry the same shape as 1.1 on <em>this</em> view only. Do not change <code>unbilled_usd</code>. Consumers only <code>MEASURE()</code>. Published measure for Gold: <code>delivered_contract_usd</code> only (other <code>MEASURE()</code>s are query-only).</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not Unbilled. Not a second Unbilled formula. Not a population fact. Not a second formula Genie authors - Genie attaches this view and asks <code>MEASURE(delivered_contract_usd)</code>. Not <code>#DeliveredTicket</code> - catalog IRI is <code>#Obligation</code>.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/06_complex_metric.sql</code> / <code>scripts/08_complex_metric.py</code>. Catalog row <code>KPI-O2C-CONTRACT-VS-LIST-USD</code>, pointer <code>delivered_contract_usd</code>, object <code>contract_vs_list_usd</code>, status <code>certified</code>.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> bronze star. <strong>Out:</strong> Gold grains enterprise / sold_to / product FROM <code>MEASURE(delivered_contract_usd)</code>. Replace-by-<code>kpi_id</code>. Unsliced: contract <strong>$110,064.00</strong> / list <strong>$114,450.00</strong> / 7 tickets.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>Unbilled still compiles. You lose the joins/filter/multiply teaching point and the second certified catalog row. Do not flatten the formula into a new fact to “make gold easier.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09c KPI 3 -->
+<section id="s09c">
+  <h2><span class="num">09c</span>KPI 3 · temp_adjusted_delivered_usd</h2>
+  <p class="sub">Third certified KPI. Rack math. Same star, different filter and multiply. Gold publishes it. Genie asks it with <code>MEASURE()</code> on the matching view.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>A third Metric View: volume-correction / temperature-adjusted delivered value. Not Unbilled. Not contract-vs-list. Same four star joins on <code>raw_tickets</code>. No population fact. Expansion multiply lives in YAML.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Same join aliases: <code>product_dim</code> / <code>sold</code> / <code>payer_dim</code> / <code>site_dim</code>. Filter: delivered, gallons ≥ 4000, Jun–Jul 2026, gasoline|distillate|aviation. Measure <code>temp_adjusted_usd</code> = <code>gallons_net * contract_price * (1 + expansion_per_f * (temp - 60))</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Version 0.1 first; 1.1 only if this view needs it for joins/filter. Do not change <code>unbilled_usd</code>. Do not flatten into a new fact. Published measure for Gold: <code>temp_adjusted_usd</code> only.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not Unbilled. Not a second contract-vs-list. Not a population fact. Not a second formula Genie authors - Genie attaches this view and asks <code>MEASURE(temp_adjusted_usd)</code>. Catalog IRI is <code>#Obligation</code> (the delivered-ticket class already on Obligation). No <code>#DeliveredTicket</code>.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/07_temp_adjusted.sql</code> / <code>scripts/09_temp_adjusted.py</code>. Catalog row <code>KPI-O2C-TEMP-ADJUSTED-USD</code>, pointer <code>temp_adjusted_usd</code>, object <code>temp_adjusted_delivered_usd</code>, status <code>certified</code>.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> bronze star. <strong>Out:</strong> Gold grains enterprise / product / site FROM <code>MEASURE(temp_adjusted_usd)</code>. Replace-by-<code>kpi_id</code>. Unsliced: net <strong>$252,617.20</strong> / adj <strong>$256,066.39</strong> / 17 tickets.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You still have Unbilled and (if 08 ran) contract-vs-list. The catalog is not the live three-row contract. Do not invent a <code>#DeliveredTicket</code> class to “bind the delivered KPIs.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 gold -->
+<section id="s10">
+  <h2><span class="num">10</span>gold_kpi_value</h2>
+  <p class="sub">Published instances per certified KPI FROM that view’s MEASURE(). Replace-by-kpi_id. Not a second SUM. Not a whole-table replace.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The published snapshot table. One Gold table. Instances per certified KPI FROM that view’s <code>MEASURE()</code>. Unbilled grains: <strong>enterprise / payer / sold_to / site</strong>. Contract-vs-list: <strong>enterprise / sold_to / product</strong>. Temp-adjusted: <strong>enterprise / product / site</strong>. Each row is a frozen ask of that KPI’s view, not a new formula.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Unbilled: <strong>11 rows</strong> (1 / 3 / 4 / 3). Each Unbilled slice totals <strong>$179,934.00 / 12</strong>. Contract-vs-list enterprise: <strong>$110,064.00 / 7</strong> from <code>MEASURE(delivered_contract_usd)</code> only. Temp-adjusted enterprise: <strong>$256,066.39 / 17</strong> from <code>MEASURE(temp_adjusted_usd)</code> only. Columns include <code>kpi_id</code>, grain, key, label, as-of, <code>value_usd</code>, <code>ticket_count</code>, <code>formula_pointer</code>, published timestamp.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>First run: <code>CREATE TABLE IF NOT EXISTS gold_kpi_value</code>. Then <strong>replace-by-<code>kpi_id</code></strong>: <code>DELETE</code> that <code>kpi_id</code>, <code>INSERT … MEASURE() … UNION ALL</code> that KPI’s grains. Never <code>CREATE OR REPLACE</code> the whole gold table (that wipes the other KPIs). If the warehouse refuses <code>INSERT</code> from a Metric View, the script loads <code>VALUES</code> built from those same <code>MEASURE()</code> results. Still not <code>SUM(fct_unbilled)</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not the population. Not a second encode of the gate or the multiply. Not the consumption semantic layer. Not Unbilled-only after a full run. Not a place that picks a “customer” for you. One table, three <code>kpi_id</code>s, each grain set from that view’s published measure.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/05_store.sql</code> / <code>scripts/06_store.py</code> (Unbilled grains). <code>scripts/08_complex_metric.py</code> and <code>scripts/09_temp_adjusted.py</code> upsert the other two the same way.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> <code>MEASURE()</code> on each certified view’s published measure. <strong>Out:</strong> join to <code>dim_kpi_metadata</code> on <code>kpi_id</code>. Consumers who want a frozen number read gold. Consumers who want a fresh grain ask that view. Genie does not read gold. It asks each certified view with <code>MEASURE()</code> on the matching published measure.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You still have a compile path. You lose the published-instance seat. Do not backfill gold from <code>SUM(fct_unbilled)</code> to “save time.” That breaks RC-1 even if the dollars match. Do not <code>CREATE OR REPLACE</code> the whole table after KPI 2/3 exist.</p>
+    </div>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Grain</th><th>Rows</th><th>What you should see</th></tr></thead>
+    <tbody>
+      <tr><td><strong>enterprise</strong></td><td>1</td><td>* / Enterprise · $179,934.00 · 12</td></tr>
+      <tr><td><strong>payer</strong></td><td>3</td><td>Apex Fuels LLC $115,960.80 / 8 · Metro Lubricants $37,454.40 / 2 · GCA $26,518.80 / 2</td></tr>
+      <tr><td><strong>sold_to</strong></td><td>4</td><td>Houston Rack $79,362.40 / 5 · Metro Beaumont $37,454.40 / 2 · Dallas Dealer $36,598.40 / 3 · GCA $26,518.80 / 2</td></tr>
+      <tr><td><strong>site</strong></td><td>3</td><td>HSC $97,145.20 / 6 · DAL $45,334.40 / 4 · BMT $37,454.40 / 2</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>kpi_id</th><th>Published measure</th><th>Gold grains</th><th>Enterprise</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">KPI-O2C-UNBILLED-USD</span></td><td><code>unbilled_usd</code></td><td>enterprise / payer / sold_to / site · 11 rows</td><td>$179,934.00 / 12</td></tr>
+      <tr><td><span class="ref">KPI-O2C-CONTRACT-VS-LIST-USD</span></td><td><code>delivered_contract_usd</code></td><td>enterprise / sold_to / product</td><td>$110,064.00 / 7</td></tr>
+      <tr><td><span class="ref">KPI-O2C-TEMP-ADJUSTED-USD</span></td><td><code>temp_adjusted_usd</code></td><td>enterprise / product / site</td><td>$256,066.39 / 17</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 11 SQL Editor -->
+<section id="s11">
+  <h2><span class="num">11</span>SQL Editor certified check</h2>
+  <p class="sub">Act 1 fights on the fact. Act 2 agrees through MEASURE(). Act 3 is refused. That is the proof, not a dashboard.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The human-readable proof that the population and the consumption semantic layer tell the same story, and that a Metric View is not a regular table. Three acts in one file.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Act 1: two group-bys on <code>fct_unbilled</code>, both aliased <code>customer</code>. Act 2: <code>MEASURE()</code> unsliced and by sold_to / payer / site. Act 3: a commented <code>SELECT *</code> you uncomment on purpose. An optional sloppy twin that mixes roles and uses list price. Do not put that twin in the Metric View.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Act 1 grand totals match ($179,934.00). Rows fight (4 vs 3). Act 2 matches Act 1 row-for-row at each grain. Act 3 errors. Write the message down. Expect <code>METRIC_VIEW_MISSING_MEASURE_FUNCTION</code>. Then go back to <code>MEASURE()</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not a second formula. Act 2 does not re-encode <code>gallons_net * contract_price</code>. Not Track A’s <code>mf query</code>. Not Genie. Not gold (gold is a stored snapshot of the same <code>MEASURE()</code> asks).</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>sql/04_queries.sql</code>. <code>scripts/05_query.py</code>. The Act 1 / Act 2 tail of <code>99</code>. Official query rule: every measure uses <code>MEASURE()</code>; <code>SELECT *</code> is refused.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> <code>fct_unbilled</code> (Act 1) and the Metric View (Act 2 / 3). <strong>Out:</strong> the numbers you trust before you publish gold or talk to Genie. If Act 2 disagrees with Act 1, stop. Do not publish.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>You can still have objects. You have not proven the fight or the compile. Learners will treat the view like a table, or they will believe two “customer” reports because the totals match. Run the three acts.</p>
+    </div>
+  </div>
+
+  <div class="duo">
+    <div>
+      <span class="tag">Report A · sold-to · 4 rows</span>
+      <p>Apex Fuels Houston Rack $79,362.40 · Metro Lubes Beaumont $37,454.40 · Apex Fuels Dallas Dealer $36,598.40 · Gulf Coast Aviation Inc $26,518.80. Total $179,934.00.</p>
+    </div>
+    <div>
+      <span class="tag">Report B · payer · 3 rows</span>
+      <p>Apex Fuels LLC $115,960.80 (Houston + Dallas, 8 tickets) · Metro Lubricants $37,454.40 · Gulf Coast Aviation Inc $26,518.80. Total $179,934.00.</p>
+    </div>
+  </div>
+  <p>If a slide adds the Apex payer line to the two Apex sold-to lines, Unbilled USD is double-counted. Aviation matches on both reports. Same org, both roles. Metro looks like a rename until you remember sold-to vs payer.</p>
+</section>
+
+<!-- 12 Genie -->
+<section id="s12">
+  <h2><span class="num">12</span>Genie Agent ad hoc</h2>
+  <p class="sub">One agent. Three Metric Views. MEASURE() only. Export forbidden. Find by title <code>O2C certified KPIs</code>, never by a hardcoded id.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The ad hoc KPI path for <strong>all three</strong> certified KPIs. Official name is <strong>Genie Agent</strong> (was Genie Space). Business users ask grain questions in natural language. The formula already lives in the seats above. Genie consumes. It does not author.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Title to find: <code>O2C certified KPIs</code>. Data sources - the three Metric Views only, not <code>fct_unbilled</code>, not <code>raw_*</code>: <code>workspace.o2c_unbilled.unbilled_usd</code> (published <code>unbilled_usd</code>; grains enterprise | payer | sold_to | site; unsliced = enterprise; $179,934.00 / 12), <code>workspace.o2c_unbilled.contract_vs_list_usd</code> (published <code>delivered_contract_usd</code>; grains enterprise | sold_to | product; unsliced = enterprise; $110,064.00 / 7), <code>workspace.o2c_unbilled.temp_adjusted_delivered_usd</code> (published <code>temp_adjusted_usd</code>; grains enterprise | product | site; unsliced = enterprise; $256,066.39 / 17). Warehouse: Serverless Starter Warehouse (id stays in <code>.env</code>). As-of is 2026-08-01. Example SQL is <code>MEASURE()</code> only.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Creates the agent if missing (find-by-title), or updates an old leftover titled <code>O2C Unbilled (certified)</code>. Attaches the three views. Asks the three unsliced totals. Pass = generated SQL uses <code>MEASURE()</code> on the matching view and the dollars match. Recreate with <code>scripts/07_genie.py</code>. A live Unbilled conversation on 2026-08-14 already returned <strong>$179,934.00 / 12</strong> with <code>MEASURE()</code> - that is the pattern for all three.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not an author. Not a second Metric View. Not ontology. Not two agents. Kebab → <strong>Export to metric view</strong> is forbidden. That would mint a second formula. If Genie answers from <code>fct_unbilled</code> or <code>raw_*</code>, or re-encodes <code>gallons_net * contract_price</code>, that is a fail, even if the dollars match.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>scripts/07_genie.md</code> (notes, no secrets). <code>scripts/07_genie.py</code> (create-or-find by title, then ask). Official: Create and manage a Genie Agent (2026-07-30); Tune Genie Agent quality (2026-07-29); Genie Agents API (2026-08-13). The script on disk may still say the old Unbilled-only title - it is being updated to this three-view contract. Document the new contract, not a space id.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> the three existing Metric Views. <strong>Out:</strong> a natural-language answer that must match that view’s <code>MEASURE()</code> (Unbilled matches Act 2). No write-back into YAML. No space id belongs in a pack file or a lesson.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>The compile path still stands. You lose the ad hoc consumer seat. Do not skip by exporting a new view from a blank Genie. Author each version 0.1 view yourself (scripts 04 / 08 / 09), then attach those three views.</p>
+    </div>
+  </div>
+
+  <div class="call red">
+    <b>Find by title. Do not document a space id.</b>
+    <p>Workspace-specific ids, warehouse ids, and tokens stay out of this file and out of the pack. If a later workspace needs a new agent, find or create <code>O2C certified KPIs</code> and point it at the three Metric Views. An old leftover titled <code>O2C Unbilled (certified)</code> is the same seat - rename it; do not stand up a second agent.</p>
+  </div>
+
+  <h3>A. What you are creating</h3>
+  <p>One Genie Agent. Three Metric Views attached. English in; <code>MEASURE()</code> SQL out. Not an author. Not a second formula. Not Export-to-metric-view. Not two agents (one per KPI). Hamid’s contract, 2026-08-14: the ad hoc path for all three certified KPIs, published measure only.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Job</th><th>Who does it</th></tr></thead>
+    <tbody>
+      <tr><td>Population / compiler source (Unbilled)</td><td><code>fct_unbilled</code> - not attached to Genie</td></tr>
+      <tr><td>Compiler (SUM / GROUP BY, or YAML multiply on KPI 2/3)</td><td>The three Metric Views</td></tr>
+      <tr><td>Ad hoc grain questions</td><td><strong>This one Genie Agent</strong> - consumes <code>MEASURE()</code> on the matching view</td></tr>
+      <tr><td>Meaning (sold-to ≠ payer ≠ site)</td><td>Ontology sidecar - not Genie</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>B. Before you start</h3>
+  <ul>
+    <li>The three Metric Views already exist. Pack run order is 04 (Unbilled), then 08 (contract-vs-list), then 09 (temp-adjusted), <em>then</em> 07 (Genie). If a view is missing, stop and build it. Do not attach <code>fct_unbilled</code> as a stand-in. Do not run 07 before 08/09 on a clean 01→09.</li>
+    <li>Warehouse is running: <strong>Serverless Starter Warehouse</strong>. Official requirement: a pro or serverless SQL warehouse; you need at least CAN USE on it. The warehouse <em>id</em> stays in local <code>.env</code>. Never paste it here.</li>
+    <li>Local <code>.env</code> has host, token, and warehouse id. Never paste those into this HTML, a lesson, or a commit.</li>
+    <li>Python 3.12 + <code>uv</code> on the Mac. Path 1 uses that. Path 2 is the official UI fallback.</li>
+    <li>Title you will search for: <code>O2C certified KPIs</code>. Find by title only. Never document a space id.</li>
+  </ul>
+
+  <h3>C. Path 1 (preferred): Python / uv</h3>
+  <p>API create + conversation already worked on this Free workspace (2026-08-14, <code>databricks-sdk</code> 0.128). This is not UI-only. The script on disk may still say the old Unbilled-only title <code>O2C Unbilled (certified)</code> and one view - it is being updated to the three-view contract below. Run the updated script. Do not invent a second agent while it catches up.</p>
+  <ol class="steps">
+    <li><code>cd</code> into the complete pack: <code>demos/o2c-unbilled-databricks-free/</code>.</li>
+    <li>Activate the venv (<code>source .venv/bin/activate</code>) or skip ahead and use <code>uv run</code>.</li>
+    <li>Run <code>uv run python scripts/07_genie.py</code>. Token stays in <code>.env</code>. The script never prints the token.</li>
+    <li>What the script does: create-if-missing the agent titled <code>O2C certified KPIs</code>, or update an old leftover titled <code>O2C Unbilled (certified)</code> to that title; attach the three Metric Views (not <code>fct_unbilled</code>, not <code>raw_*</code>); ask the three unsliced totals.</li>
+    <li>What Done looks like: it prints the generated SQL (must be <code>MEASURE()</code> on the matching view) and the three totals - Unbilled <strong>$179,934.00 / 12</strong>, delivered contract <strong>$110,064.00 / 7</strong>, temp-adjusted <strong>$256,066.39 / 17</strong>.</li>
+    <li>Pitfalls. <code>mf</code> is N/A - this is Track B, not MetricFlow. Token missing or empty in <code>.env</code> → the script refuses; do not paste a PAT into a file. Warehouse stopped → start Serverless Starter Warehouse, then re-run. Old Unbilled-only agent leftover → the script should update that title and attach the other two views; if you still see two agents, you created a second one by hand - keep one, titled <code>O2C certified KPIs</code>.</li>
+  </ol>
+
+  <h3>D. Path 2: Databricks UI</h3>
+  <p>Use this if a later Free workspace rejects <code>POST /api/2.0/genie/spaces</code>. Steps below use only official words from <a href="https://docs.databricks.com/aws/en/genie-agents/set-up">Create and manage a Genie Agent</a> (updated 2026-07-30) and <a href="https://docs.databricks.com/aws/en/genie-agents/tune-quality">Tune Genie Agent quality</a> (updated 2026-07-29). One action per step. Do not invent extra menus.</p>
+  <ol class="steps">
+    <li>Click <strong>Genie Agents</strong> in the sidebar.</li>
+    <li>Click <strong>New</strong> in the upper-right corner of the screen.</li>
+    <li>Choose the data sources. Attach these three Metric Views only: <code>workspace.o2c_unbilled.unbilled_usd</code>, <code>workspace.o2c_unbilled.contract_vs_list_usd</code>, <code>workspace.o2c_unbilled.temp_adjusted_delivered_usd</code>. Do <strong>not</strong> add <code>fct_unbilled</code> or <code>raw_*</code>.</li>
+    <li>Click <strong>Create</strong>.</li>
+    <li>Genie Code launches automatically. Review suggestions. Accept only context that keeps <code>MEASURE()</code> on those three views. Reject anything that points at a fact table or invents a second formula. I am unsure of every Genie Code prompt on Free - if the picker looks different, stay with the three views and skip suggestions you do not trust.</li>
+    <li>Click <strong>Configure &gt; Data</strong>. Confirm the three views. Click <strong>Add</strong> if one is missing. Do not add <code>fct_unbilled</code> or <code>raw_*</code>.</li>
+    <li>Click <strong>Configure &gt; Settings</strong>. Set <strong>Title</strong> to <code>O2C certified KPIs</code>. Set <strong>Default warehouse</strong> to Serverless Starter Warehouse. (Official Settings fields also include Description, Tags, Thumbnail, Common questions. Do not invent other tab names.)</li>
+    <li>Click the <strong>Text</strong> tab. Paste the instruction block from section E as one comprehensive note. Official wording: “Click the Text tab to write plain text instructions.”</li>
+    <li>Click <strong>Configure &gt; Settings</strong> again. Under <strong>Common questions</strong>, add the sample questions from section F (they appear on the chat landing page).</li>
+    <li>Optional, official: <strong>Configure &gt; Examples</strong> - add example SQL that is <code>MEASURE()</code> only on the matching view (the three unsliced totals). Do not paste <code>gallons_net * contract_price</code>.</li>
+    <li>Ask the questions in section F. Confirm the generated SQL is <code>MEASURE()</code> on the matching view and the numbers match.</li>
+    <li>Do <strong>not</strong> open the kebab menu in the upper-right corner and select <strong>Export to metric view</strong>. That official action would mint a second formula. You already authored version 0.1 in scripts 04 / 08 / 09.</li>
+  </ol>
+  <div class="call blue">
+    <b>Old leftover titled O2C Unbilled (certified)</b>
+    <p>Find it by that title. Open it. <strong>Configure &gt; Settings</strong> → change <strong>Title</strong> to <code>O2C certified KPIs</code>. <strong>Configure &gt; Data</strong> → <strong>Add</strong> the other two Metric Views. Do not click <strong>New</strong> a second time.</p>
+  </div>
+
+  <h3>E. Instructions to paste</h3>
+  <p>Copy this block into the <strong>Text</strong> tab (Path 2) or leave it to the script (Path 1). Do not add a second formula. Do not mention a space id.</p>
+<p>The Text box is written in SKILL.md shape (name + when-to-use + do/don't + one example). Genie does not load it as an Agent Skill.</p>
+<pre class="mm">---
+name: o2c-certified-kpis
+description: Answer certified O2C KPI questions (unbilled USD, contract-vs-list / delivered contract USD, temp-adjusted delivered USD). Use when the user asks about those KPIs or a vague delivered or unbilled dollar amount. As-of is 2026-08-01.
+---
+
+# Route
+
+If the question does not name a KPI, ask which one (Unbilled / contract-vs-list / temp-adjusted). Do not guess between contract-vs-list and temp-adjusted on a vague delivered USD.
+
+- Unbilled USD → workspace.o2c_unbilled.unbilled_usd, measure unbilled_usd. Grains: enterprise | payer | sold_to | site. Unsliced = enterprise.
+- Contract vs list / delivered contract USD → workspace.o2c_unbilled.contract_vs_list_usd, measure delivered_contract_usd. Grains: enterprise | sold_to | product. Unsliced = enterprise. Other measures on that view are query-only, still MEASURE().
+- Temp-adjusted delivered USD → workspace.o2c_unbilled.temp_adjusted_delivered_usd, measure temp_adjusted_usd. Grains: enterprise | product | site. Unsliced = enterprise.
+
+# Do
+
+- Answer only via MEASURE() on the matching Metric View.
+- Say payer, sold-to, or site. Never say "customer".
+- If they name a grain, GROUP BY only that grain.
+- Filter the named party with equality on that role only (WHERE payer = 'Apex Fuels LLC').
+- If they asked for a payer total, lead with the payer number. Extra product/site charts only if they asked.
+- A sold-to lifting at another site is a real cross-terminal ticket, not a data error.
+
+# Don't
+
+- Do not ILIKE '%name%' OR across payer / sold_to / site.
+- Do not GROUP BY ALL extra dimensions unless they asked for a breakdown.
+- Do not invent a second formula, query fct_unbilled or raw_*, or use Export-to-metric-view.
+- Do not call sold-to a "customer location."
+
+# Example
+
+Unbilled for payer Apex Fuels LLC:
+
+SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd, MEASURE(unbilled_ticket_count) AS tickets
+FROM workspace.o2c_unbilled.unbilled_usd
+WHERE payer = 'Apex Fuels LLC'
+GROUP BY payer
+</pre>
+
+  <h3>F. Questions to ask + expected numbers</h3>
+  <p>Ask these. Pass = <code>MEASURE()</code> on the matching view <em>and</em> the dollars. A matching dollar from the wrong object is still a fail.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ask</th><th>Expected</th><th>SQL must</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>What is total unbilled USD as of 2026-08-01?</td>
+        <td><strong>$179,934.00 / 12</strong></td>
+        <td><code>MEASURE(unbilled_usd)</code> on <code>unbilled_usd</code></td>
+      </tr>
+      <tr>
+        <td>What is unbilled USD by payer?</td>
+        <td>Apex Fuels LLC <strong>$115,960.80</strong> (3 rows, same total)</td>
+        <td><code>MEASURE(unbilled_usd)</code> on <code>unbilled_usd</code>, group by payer</td>
+      </tr>
+      <tr>
+        <td>What is delivered contract USD as of 2026-08-01?</td>
+        <td><strong>$110,064.00 / 7</strong></td>
+        <td><code>MEASURE(delivered_contract_usd)</code> on <code>contract_vs_list_usd</code></td>
+      </tr>
+      <tr>
+        <td>What is delivered contract USD by product?</td>
+        <td>Same $110,064.00 total, product grain</td>
+        <td><code>MEASURE(delivered_contract_usd)</code> on <code>contract_vs_list_usd</code>, group by product</td>
+      </tr>
+      <tr>
+        <td>What is temp-adjusted delivered USD as of 2026-08-01?</td>
+        <td><strong>$256,066.39 / 17</strong></td>
+        <td><code>MEASURE(temp_adjusted_usd)</code> on <code>temp_adjusted_delivered_usd</code></td>
+      </tr>
+      <tr>
+        <td>What is temp-adjusted USD by site?</td>
+        <td>Same $256,066.39 total, site grain</td>
+        <td><code>MEASURE(temp_adjusted_usd)</code> on <code>temp_adjusted_delivered_usd</code>, group by site</td>
+      </tr>
+      <tr>
+        <td>What is unbilled USD by site?</td>
+        <td>3 rows, same $179,934.00 (HSC / DAL / BMT)</td>
+        <td>Ad hoc. Pass if <code>MEASURE()</code> on <code>unbilled_usd</code></td>
+      </tr>
+      <tr>
+        <td>What is list-minus-contract USD as of 2026-08-01?</td>
+        <td>Query-only measure on contract-vs-list (not the published Gold measure)</td>
+        <td>Ad hoc. Pass if still <code>MEASURE()</code> on <code>contract_vs_list_usd</code>. Fail if it hits <code>fct_unbilled</code> / <code>raw_*</code> or re-encodes <code>gallons_net * price</code>, even if dollars match</td>
+      </tr>
+      <tr>
+        <td>What is temp-adjusted USD by product?</td>
+        <td>Same $256,066.39 total, product grain</td>
+        <td>Ad hoc. Pass if <code>MEASURE(temp_adjusted_usd)</code> on <code>temp_adjusted_delivered_usd</code>. Fail if it hits <code>fct</code> / <code>raw</code> or re-encodes the expansion multiply</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p>Also fine to ask Unbilled by sold_to (4 rows, same $179,934.00). Same rule: matching view, <code>MEASURE()</code> only.</p>
+
+  <h3>G. How to read the SQL</h3>
+  <p>Live Unbilled conversation, 2026-08-14 (CT). Question 1 returned <strong>$179,934.00 / 12 tickets</strong>. Generated SQL:</p>
+<pre class="mm">SELECT MEASURE(`unbilled_usd`) AS `unbilled_usd`,
+       MEASURE(`unbilled_ticket_count`) AS `tickets`
+FROM `workspace`.`o2c_unbilled`.`unbilled_usd`
+GROUP BY ALL</pre>
+  <p>That is the pattern. KPI 2 must say <code>MEASURE(delivered_contract_usd)</code> on <code>contract_vs_list_usd</code>. KPI 3 must say <code>MEASURE(temp_adjusted_usd)</code> on <code>temp_adjusted_delivered_usd</code>. Other measures on those views are query-only - still <code>MEASURE()</code>, still the matching view.</p>
+  <div class="call red">
+    <b>Pass / fail</b>
+    <p>Pass: generated SQL uses <code>MEASURE()</code> on the matching Metric View, and the dollars match. Fail: the SQL hits <code>fct_unbilled</code> or <code>raw_*</code>, or re-encodes <code>gallons_net * contract_price</code> (or the temp expansion), even if the dollar figure matches. A right number from the wrong object is still a fail.</p>
+  </div>
+
+  <h3>H. Do not</h3>
+  <ul>
+    <li>Kebab → <strong>Export to metric view</strong>. Official action. Forbidden here. It would mint a second formula.</li>
+    <li>Attach <code>fct_unbilled</code> or <code>raw_*</code>. Three Metric Views only.</li>
+    <li>Document a space id, warehouse id, PAT, or workspace URL. Find by title <code>O2C certified KPIs</code>.</li>
+    <li>Stand up two agents (one Unbilled-only leftover plus a new three-view agent). Update the leftover. Keep one.</li>
+    <li>Treat Genie as an author. It consumes <code>MEASURE()</code>. It does not write YAML. It does not replace scripts 04 / 08 / 09.</li>
+  </ul>
+</section>
+
+<!-- 12b Word hunt / CV map -->
+<section id="s12b">
+  <h2><span class="num">12b</span>Word hunt / CV map</h2>
+  <p class="sub">The work that produced the map. Not a second catalog. Not a new KPI. Tickets stay as they are.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The hunt that makes the overloaded word “customer” visible across six source systems. It is how the map rows were found. It is not a second catalog and not a new KPI. Tickets are unchanged (no <code>customer_id</code> column).</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Six source stubs plus <code>cv_term</code> / <code>cv_alias</code> / <code>cv_map</code>. <code>system_name</code> lives only on the source stubs, not on <code>cv_*</code>. The map contract is system + field + key → <code>term_id</code>, or empty <code>term_id</code> + <code>map_ok=no</code> = no map. <code>cv_map</code> uses <code>local_system</code> (do not add a second <code>system_name</code> on the map). Join: <code>system_name = local_system</code> AND column = field AND value = local_key. Five <code>term_id</code>s only. 22 aliases unchanged. <code>ontology_iri</code> on <code>cv_term</code> binds all five (<code>#Payer</code> <code>#SoldTo</code> <code>#BillTo</code> <code>#ShipTo</code> <code>#LoadingAuthorizedParty</code>). Catalog Unbilled about-ID stays <code>#UnbilledState</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it does</span>
+      <p>Open the six sources. Read the party columns. Write the map. Prove <code>cv_lookup('customer')</code> returns exactly <code>id:sold-to</code> + <code>id:loading-authorized-party</code>. Apex payer <code>MEASURE()</code> still <strong>$115,960.80 / 8</strong>. <code>customer_id</code> and <code>CONS-4412</code> are refused as Unbilled grains. Unbilled <code>MEASURE()</code> only slices keys that map to payer / sold-to / ship-to.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not a KPI. Not a second catalog. Not CRM. Not Lift. Not TABS. Not rack pricing. Not a sixth <code>term_id</code>. Not a ticket rename. Hunt stubs stay off both Genies as dollar sources; they must never attach to the certified Genie. Search Genie is <code>11_cv_search_genie.py</code> (cv tables only, never a dollar). Two Genies stay distinct: certified <code>MEASURE()</code> vs vocabulary search.</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p>Working pack: <code>THE-PROBLEM.md</code>, <code>WALKTHROUGH.md</code> §14, <code>data/cv_*.csv</code> plus the six-system stubs, <code>scripts/10_cv_map.py</code>, <code>scripts/12_cv_hunt.py</code>, <code>scripts/11_cv_search_genie.py</code>. Learner pack ships the sidecar CSVs and the problem statement so you can <code>DESCRIBE</code> / <code>SELECT</code>. It does not ship 10 / 12 as the answer.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> six sources (Demo2 <code>raw_tickets</code>, SAP <code>sap_partner</code>, Salesforce <code>sf_account</code>, Warehouse <code>dim_customer</code>, RightAngle <code>ra_business_associate</code>, TAS <code>tas_lift</code>). <strong>Out:</strong> map rows. Hunt join is <code>system_name = local_system</code> AND column = field AND value = local_key. Certified Genie stays Metric View / <code>MEASURE()</code> only. Catalog about-ID stays <code>#UnbilledState</code>.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>The certified number still compiles. The word “customer” stays overloaded. Certified Genie will still guess. That is the failure the hunt exists to stop. Do not skip by inventing a sixth term or attaching hunt stubs to the certified agent.</p>
+    </div>
+  </div>
+
+  <h3>Six systems (no CRM, no Lift)</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>system_name / local_system</th><th>table</th><th>teach columns</th><th>map</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Demo2</td>
+        <td><code>raw_tickets</code></td>
+        <td><code>payer_id</code>, <code>sold_to_id</code>, <code>bill_to_id</code>, <code>terminal_code</code></td>
+        <td>Existing Demo2 keys (<code>APEX-PAYER</code> → <code>id:payer</code>, and the rest of the live ticket keys)</td>
+      </tr>
+      <tr>
+        <td>SAP</td>
+        <td><code>sap_partner</code></td>
+        <td><code>sold_to</code>, <code>bill_to</code>, <code>payer</code>, <code>ship_to</code></td>
+        <td><code>1000123</code> sold_to → <code>id:sold-to</code> and bill_to → <code>id:bill-to</code> (same digits, two rows); payer <code>1000450</code>; ship_to <code>2000881</code></td>
+      </tr>
+      <tr>
+        <td>Salesforce</td>
+        <td><code>sf_account</code> only</td>
+        <td><code>system_name</code>, <code>account_id</code> only</td>
+        <td><code>account_id</code> / <code>SF-APEX</code> → no-map. Cut 1: table name locked to <code>sf_account</code>; no <code>customer_id</code> column; no <code>crm_account</code>.</td>
+      </tr>
+      <tr>
+        <td>Warehouse</td>
+        <td><code>dim_customer</code></td>
+        <td><code>customer_id</code></td>
+        <td><code>1000123</code> → no-map</td>
+      </tr>
+      <tr>
+        <td>RightAngle</td>
+        <td><code>ra_business_associate</code></td>
+        <td><code>ba_id</code>, <code>business_associate</code>, <code>remittance_party</code></td>
+        <td><code>BA-APEX</code> → no-map; remittance keep (<code>APEX-PAYER</code> → <code>id:payer</code>); no <code>credit_party</code></td>
+      </tr>
+      <tr>
+        <td>TAS</td>
+        <td><code>tas_lift</code></td>
+        <td><code>lift_id</code>, <code>consignee</code></td>
+        <td><code>tas_lift.consignee</code> / <code>CONS-4412</code> → <code>id:loading-authorized-party</code>. No Lift system.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="call red">
+    <b>Locked cuts</b>
+    <p>Cut 1: table name locked to <code>sf_account</code>; no <code>customer_id</code> column; no <code>crm_account</code>. No Lift. No CRM. No sixth <code>term_id</code>. No new KPI. Tickets unchanged. Hunt stubs off the certified Genie. <code>system_name</code> only on source stubs, not on <code>cv_*</code>.</p>
+  </div>
+</section>
+
+<!-- 13 Turtle -->
+<section id="s13">
+  <h2><span class="num">13</span>Thin Turtle sidecar</h2>
+  <p class="sub">Meaning only. Unbilled is a state of an Obligation, not a KPI class. Dashed to the picture, never a compile edge.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>A thin Turtle file that names the O2C terms this pack already uses in English: Customer Account, Sold-to, Bill-to, Payer, Ship-to, Site, Credit Account, Obligation, Unbilled (a <strong>state</strong>), Customer grain. Prefix <code>o2c:</code> → a demo-only example.org IRI. Unsigned. Replaceable by the Ontologist.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Classes and a few SKOS concepts. The important sentence: Unbilled is a <strong>state of an Obligation</strong> (delivered, not yet invoiced). It is not a KPI class. It is not a customer class. <code>customer_grain</code> is the enumeration payer | sold-to | site. HSC, DAL, BMT are sites.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Nothing in Databricks. The warehouse does not read this folder. Version 0.1 YAML does not embed these IRIs. Do not claim it does. The Metric View header may point at the file in a comment. They agree. They are not one object.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not a formula. No <code>gallons_net * contract_price</code>. No SQL. Not a compiler. Not SHACL. Not a triple store. Not SPARQL. Not Neo4j. Not G3/G4 signed. Full OWL / reasoner / shapes are parked (Ontologist).</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p><code>ontology/o2c-meaning.ttl</code> and <code>ontology/README.md</code> in the complete pack. C-10 one-liner is in that README.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> the English the walkthrough already uses. <strong>Out:</strong> dashed agreement with metadata’s <code>ontology_iri</code> and with field names on the view. No arrow that moves a dollar.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>The number still compiles. Learners will call the Metric View “the ontology.” That is the failure C-10 exists to stop. Keep the sidecar even when it does no compute.</p>
+    </div>
+  </div>
+
+  <div class="call violet">
+    <b>C-10 in one breath</b>
+    <p>Ontology = meaning. Store catalog + this pack’s Metric Views = certified formula <em>path</em> for this demo. They agree. They are not one object. Unbilled is a state of an Obligation, not a KPI class. Unbilled binds <code>#UnbilledState</code>. Delivered KPIs bind <code>#Obligation</code>. There is no <code>#DeliveredTicket</code>.</p>
+  </div>
+</section>
+
+<!-- 14 Platform -->
+<section id="s14">
+  <h2><span class="num">14</span>Unity Catalog + Free warehouse</h2>
+  <p class="sub">Platform. Not the formula. Not a customer grain. Not Azure.</p>
+
+  <div class="seats">
+    <div>
+      <span class="tag">What it is</span>
+      <p>The place objects live and SQL runs. Unity Catalog is on by default on Free. One serverless SQL warehouse (2X-Small, Serverless Starter Warehouse). Workspace catalog plus a schema you create or <code>default</code>.</p>
+    </div>
+    <div>
+      <span class="tag">What it holds</span>
+      <p>Catalog, schema, volume (if you land CSVs), tables, the Metric View, privileges. Free users have <code>USE CATALOG</code> / <code>USE SCHEMA</code> / <code>WRITE VOLUME</code> on the workspace catalog. One metastore. One warehouse.</p>
+    </div>
+    <div>
+      <span class="tag">What it does at runtime</span>
+      <p>Compiles <code>CREATE VIEW … WITH METRICS</code> version 0.1. Evaluates <code>MEASURE()</code>. Refuses <code>SELECT *</code>. Can stop compute for the day when quota hits. Data stays. Compute returns tomorrow. Warehouse auto-updates DBSQL.</p>
+    </div>
+    <div>
+      <span class="tag">What it is not</span>
+      <p>Not the ticket gate. Not the multiply. Not the consumption semantic layer by itself (the Metric View is). Not Azure classic compute. Not custom storage. Not a second warehouse you spin up “just for Genie.”</p>
+    </div>
+    <div>
+      <span class="tag">Where it lives</span>
+      <p>Your Free Edition workspace, signed in at login.databricks.com. Pattern <code>*.cloud.databricks.com</code>. If you see <code>*.azuredatabricks.net</code>, you are in the wrong product. Stop. Warehouse id and host stay in local <code>.env</code>, never here.</p>
+    </div>
+    <div>
+      <span class="tag">How it connects</span>
+      <p><strong>In:</strong> every script and every SQL file. <strong>Out:</strong> every table and the view. It hosts the picture. It does not decide meaning.</p>
+    </div>
+    <div class="span2">
+      <span class="tag">Failure if you skip it</span>
+      <p>There is no Track B. DuckDB is Track A. Do not stand up Azure to “get a real warehouse” for this lesson. Official Free limits (2026): one 2XS serverless warehouse, restricted outbound internet, non-commercial.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 Number walk -->
+<section id="s15">
+  <h2><span class="num">15</span>How a number moves</h2>
+  <p class="sub">One Houston Apex RBOB BOL, from Lakebase to a Genie answer. Proven totals as of 2026-08-01: 12 tickets, $179,934.00.</p>
+
+  <div class="ticket">
+    <h4>The ticket we follow · BOL-2026-0101</h4>
+    <dl>
+      <dt>When</dt><dd>2026-07-20 06:10</dd>
+      <dt>Site</dt><dd>HSC · Houston Ship Channel</dd>
+      <dt>Sold-to</dt><dd>Apex Fuels Houston Rack (<code>APEX-HOU</code>)</dd>
+      <dt>Payer</dt><dd>Apex Fuels LLC (<code>APEX-PAYER</code>)</dd>
+      <dt>Bill-to</dt><dd>Apex AP</dd>
+      <dt>Product</dt><dd>RBOB · contract $2.184 / gal (not list $2.269)</dd>
+      <dt>Net gallons</dt><dd>8,000</dd>
+      <dt>Status</dt><dd>delivered</dd>
+      <dt>Invoice</dt><dd>none</dd>
+      <dt>Per-ticket USD</dt><dd>8,000 × 2.184 = <strong>$17,472.00</strong></dd>
+    </dl>
+  </div>
+
+  <h3>1. Lakebase ODS</h3>
+  <p>The row sits in <code>o2c_unbilled.tickets</code> on dataexpert-day1 / databricks_postgres. It is an ops lift. Nobody has decided “unbilled” yet. A quality-hold cousin (<code>BOL-2026-0501</code>, also Houston Apex RBOB) sits in the same table. An earlier twin (<code>BOL-2026-0001</code>) sits there too, already tied to <code>INV-2026-0001</code>.</p>
+
+  <h3>2. uv pipe → bronze</h3>
+  <p>Python reads the tickets table. Writes <code>raw_tickets</code>. Same 19 rows. No federated join. <code>BOL-2026-0101</code> is still just a delivered lift.</p>
+
+  <h3>3. fct_unbilled (why it is unbilled)</h3>
+  <p>The gate runs. Status is delivered. There is no posted invoice line with date ≤ 2026-08-01. It is not quality-hold. So it is in. <code>unbilled_usd</code> becomes $17,472.00 on the row. Names are copied on: Houston Rack, Apex Fuels LLC, HSC.</p>
+  <p>Compare: <code>BOL-2026-0001</code> fails the invoice test (posted 2026-06-14). <code>BOL-2026-0501</code> fails the quality-hold test. <code>BOL-2026-0104</code> (ULSD, same sold-to) stays in because its invoice is 2026-08-03. <code>BOL-2026-0105</code> (Houston sold-to, Dallas site) stays in and will split sold-to vs site later.</p>
+
+  <h3>4. MEASURE() unsliced and by grain</h3>
+  <p>The Metric View sums <code>source.unbilled_usd</code>. It does not multiply again. Our $17,472.00 is one of twelve addends.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ask</th><th>Where 0101 lands</th><th>Slice total</th><th>Tickets in that slice</th></tr></thead>
+    <tbody>
+      <tr><td>Unsliced <code>MEASURE(unbilled_usd)</code></td><td>Inside the enterprise number</td><td><strong>$179,934.00</strong></td><td>12</td></tr>
+      <tr><td><code>GROUP BY sold_to</code></td><td>Apex Fuels Houston Rack</td><td>$79,362.40</td><td>5</td></tr>
+      <tr><td><code>GROUP BY payer</code></td><td>Apex Fuels LLC</td><td>$115,960.80</td><td>8</td></tr>
+      <tr><td><code>GROUP BY site</code></td><td>HSC</td><td>$97,145.20</td><td>6</td></tr>
+    </tbody>
+  </table></div>
+  <p>Houston Rack’s $79,362.40 is not all HSC. <code>BOL-2026-0105</code> is a Houston sold-to lift at Dallas, so it sits in Houston Rack and in DAL. HSC’s $97,145.20 includes GCA Jet-A tickets our RBOB row does not know about. Same compiler. Different group-by.</p>
+
+  <h3>5. Gold row</h3>
+  <p>Four published grains, so 0101 appears inside four gold rows (never as its own ticket row in gold):</p>
+  <ul>
+    <li>enterprise / * / $179,934.00 / 12</li>
+    <li>payer / Apex Fuels LLC / $115,960.80 / 8</li>
+    <li>sold_to / Apex Fuels Houston Rack / $79,362.40 / 5</li>
+    <li>site / HSC / $97,145.20 / 6</li>
+  </ul>
+  <p>Each of those values came <code>FROM MEASURE()</code>. Gold did not write <code>8000 * 2.184</code>. Join to metadata on <code>KPI-O2C-UNBILLED-USD</code> if you want the pointer and the owner.</p>
+
+  <h3>6. Genie answer</h3>
+  <p>Ask “What is total unbilled USD as of 2026-08-01?” The agent must hit the Metric View with <code>MEASURE()</code> and say $179,934.00 / 12. Ask by sold_to, payer, or site and you get the slices above. If the generated SQL reads <code>fct_unbilled</code> or multiplies gallons again, fail the answer even when the figure is right.</p>
+
+  <div class="call">
+    <b>The dollar never gets a second author</b>
+    <p>Gate + multiply on the fact. SUM / GROUP BY in version 0.1 YAML. MEASURE() in gold, SQL Act 2, and Genie. Turtle never touches $17,472.00. That is the whole walk.</p>
+  </div>
+</section>
+
+<!-- 16 Quiz -->
+<section id="s16">
+  <h2><span class="num">16</span>Quiz</h2>
+  <p class="sub">Ten short questions. One idea each, in lesson order. Answers are collapsed. Ask Hamid to answer out loud before opening them.</p>
+
+  <div class="quiz">
+    <div class="q">
+      <div class="qn">Q1 · Unbilled is a state</div>
+      <p>Is Unbilled a KPI class, a customer class, or something else?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Something else: a <strong>state of an Obligation</strong>. A delivered BOL not yet invoiced. Quality-hold is never billed and never unbilled. Turtle names that. The Metric View does not.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q2 · customer_grain</div>
+      <p>What is <code>customer_grain</code> in this pack, and who picks it?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody"><code>customer_grain ∈ {payer, sold-to, site}</code>. You choose the group-by. The formula stays still. Site is a terminal, not a party. There is no fourth generic “customer.”</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q3 · two customer reports</div>
+      <p>Report A and Report B both total $179,934.00. Why do they still fight?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Same 12 tickets, different group-by. A has 4 sold-to rows. B has 3 payer rows. Apex Fuels LLC ($115,960.80 / 8) equals Houston Rack + Dallas Dealer. Adding those three “customer” lines double-counts. Aviation matches because GCA is both roles.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q4 · population vs gold</div>
+      <p>What is <code>fct_unbilled</code>, and what is <code>gold_kpi_value</code>?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody"><code>fct_unbilled</code> is the Unbilled population / compiler source at ticket grain (12 rows, gate + multiply). KPI 2/3 have no population fact. <code>gold_kpi_value</code> is published instances per certified KPI FROM that view’s <code>MEASURE()</code>. Unbilled gold is 11 rows at enterprise / payer / sold_to / site. Population is not gold. Do not name a Certified layer on the fact.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q5 · what the Metric View compiles</div>
+      <p>What does version 0.1 YAML actually compile, and what does it leave on the fact?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">It compiles <code>SUM(source.unbilled_usd)</code> and <code>COUNT(1)</code> plus the fields you may group by. The ticket gate and <code>gallons_net * contract_price</code> stay on <code>fct_unbilled</code>. Do not call the view the only formula source of truth. Do not teach a richer YAML dialect.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q6 · MEASURE() vs SELECT *</div>
+      <p>Why must a consumer write <code>MEASURE(unbilled_usd)</code> instead of <code>SELECT *</code>?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Every measure on a Metric View uses <code>MEASURE()</code>. <code>SELECT *</code> is refused (expect <code>METRIC_VIEW_MISSING_MEASURE_FUNCTION</code>) so you cannot treat the view like a table and re-aggregate. That refusal is the lesson, not a bug.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q7 · C-10</div>
+      <p>What does C-10 split, and what must <code>dim_kpi_metadata</code> not do?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Ontology = meaning. Store catalog + Metric View = certified formula path. They agree. They are not one object. Metadata is one row per KPI (all certified) - after a full run, three rows. It points (<code>formula_pointer</code> = measure name / <code>formula_object</code> = view). It must not restate the gate or the multiply. Unbilled IRI <code>#UnbilledState</code>; delivered KPIs <code>#Obligation</code>. No <code>#DeliveredTicket</code>. Turtle does not compile.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q8 · Genie</div>
+      <p>What is Genie allowed to do, and what is forbidden?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Allowed: find-by-title <code>O2C certified KPIs</code>, attach the three Metric Views, ask grain questions, answer with <code>MEASURE()</code> on the matching view. One agent, three views. Forbidden: Export-to-metric-view, querying <code>fct_unbilled</code> or <code>raw_*</code> as the measure source, re-encoding the multiply, documenting a space id, a second agent. A matching dollar from the wrong object is still a fail.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q9 · three certified KPIs</div>
+      <p>How many catalog rows after a full run, how does gold refresh, and which measure does each KPI publish?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody">Three certified rows in <code>dim_kpi_metadata</code>. Gold is one table: <code>CREATE TABLE IF NOT EXISTS</code>, then replace-by-<code>kpi_id</code> (<code>DELETE</code> that id, <code>INSERT FROM MEASURE()</code>). Never <code>CREATE OR REPLACE</code> the whole gold table. Published measures: <code>unbilled_usd</code>, <code>delivered_contract_usd</code>, <code>temp_adjusted_usd</code>. Join aliases on KPI 2/3 are <code>product_dim</code> / <code>sold</code> / <code>payer_dim</code> / <code>site_dim</code>.</div>
+      </details>
+    </div>
+    <div class="q">
+      <div class="qn">Q10 · Word hunt keys</div>
+      <p>What does <code>SF-APEX</code> map to? What is <code>CONS-4412</code>? What does warehouse <code>1000123</code> map to?</p>
+      <details class="ans"><summary>Answer</summary>
+        <div class="abody"><code>SF-APEX</code> = <strong>no-map</strong> (Salesforce <code>account_id</code> is a relationship, not a role). <code>CONS-4412</code> = <strong>Loading-Authorized Party</strong> (TAS consignee). Warehouse <code>1000123</code> = <strong>no-map</strong> (overloaded warehouse key; the same digits are two SAP roles).</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 17 Sources -->
+<section id="s17">
+  <h2><span class="num">17</span>Sources</h2>
+  <p class="sub">Do not invent past these. If a sentence in this file fights a source, believe the source and fix the file.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Source</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr><td><code>demos/o2c-unbilled-databricks-free/WALKTHROUGH.md</code></td><td>Grain story, party roles, Act 1 fight, proven totals, C-10 table</td></tr>
+      <tr><td><code>demos/o2c-unbilled-databricks-free/README.md</code></td><td>What the pack is / is not, layer story, uv vs SQL-editor paths, parked list</td></tr>
+      <tr><td><code>sql/02_facts.sql</code></td><td>Gate, multiply, dims, “not gold”</td></tr>
+      <tr><td><code>scripts/04_metric_view.py</code></td><td>Version 0.1 YAML that compiled</td></tr>
+      <tr><td><code>sql/05_store.sql</code></td><td>Unbilled catalog row + Unbilled gold FROM MEASURE(); replace-by-kpi_id</td></tr>
+      <tr><td><code>sql/06_complex_metric.sql</code> / <code>scripts/08_complex_metric.py</code></td><td>KPI 2 contract_vs_list_usd + catalog/gold upsert</td></tr>
+      <tr><td><code>sql/07_temp_adjusted.sql</code> / <code>scripts/09_temp_adjusted.py</code></td><td>KPI 3 temp_adjusted_delivered_usd + catalog/gold upsert</td></tr>
+      <tr><td><code>scripts/07_genie.md</code></td><td>Ad hoc path, Export forbidden, expected questions (ignore any id if one leaked into an older copy)</td></tr>
+      <tr><td><code>ontology/README.md</code> + <code>o2c-meaning.ttl</code></td><td>Meaning sidecar. Unbilled = state of an Obligation</td></tr>
+      <tr><td><code>demos/o2c-unbilled-databricks-free-learn/LEARN.md</code></td><td>HOW he rebuilds. This file is not that.</td></tr>
+      <tr><td><code>/workspace/teach-SKILL.md</code></td><td>Teacher shape: mission, one-idea lessons, quiz, primary source. This HTML is the handover, not one short lesson.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="plain">
+    <b>Also parked, so you do not add them while teaching</b>
+    Azure / Synapse / Fabric. MetricFlow / dbt / DuckDB (Track A). Cube. Airflow. A second Lakebase project. A second SUM as gold. Genie Export-to-metric-view. Committed tokens or workspace URLs. YAML richer than version 0.1.
+  </div>
+
+  <div class="xref"><span>Sibling</span> LEARN.html / LEARN.md is the rebuild-from-scratch how-to. Do not merge the two jobs.</div>
+</section>
+
+<footer>
+  Demo 2 / Track B explainer. Picture of current understanding, 16 Aug 2026. Not KPI-000. Not a programme lock. Word hunt / six systems / no new KPI. No tokens, warehouse ids, workspace URLs, or Genie space ids in this file.
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  const q = document.getElementById('q');
+  const hits = document.getElementById('hits');
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const nav = document.getElementById('nav');
+  const links = nav ? Array.from(nav.querySelectorAll('a')) : [];
+
+  function clearMarks(root){
+    root.querySelectorAll('mark').forEach(m => {
+      const t = document.createTextNode(m.textContent);
+      m.parentNode.replaceChild(t, m);
+    });
+  }
+  function markText(root, term){
+    if(!term) return 0;
+    const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(n){
+        if(!n.parentElement) return NodeFilter.FILTER_REJECT;
+        const tag = n.parentElement.tagName;
+        if(tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
+        return n.nodeValue.toLowerCase().includes(term) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    });
+    const nodes = [];
+    while(walk.nextNode()) nodes.push(walk.currentNode);
+    let n = 0;
+    nodes.forEach(node => {
+      const val = node.nodeValue;
+      const low = val.toLowerCase();
+      const idx = low.indexOf(term);
+      if(idx < 0) return;
+      const before = val.slice(0, idx);
+      const mid = val.slice(idx, idx + term.length);
+      const after = val.slice(idx + term.length);
+      const frag = document.createDocumentFragment();
+      if(before) frag.appendChild(document.createTextNode(before));
+      const m = document.createElement('mark');
+      m.textContent = mid;
+      frag.appendChild(m);
+      if(after) frag.appendChild(document.createTextNode(after));
+      node.parentNode.replaceChild(frag, node);
+      n++;
+    });
+    return n;
+  }
+  function filter(){
+    const term = (q.value || '').trim().toLowerCase();
+    let shown = 0, marks = 0;
+    sections.forEach(s => {
+      clearMarks(s);
+      const text = s.textContent.toLowerCase();
+      const ok = !term || text.includes(term);
+      s.classList.toggle('hidden', !ok);
+      if(ok){
+        shown++;
+        if(term) marks += markText(s, term);
+      }
+    });
+    hits.textContent = term ? (shown + ' sections · ' + marks + ' hits') : '';
+  }
+  if(q){ q.addEventListener('input', filter); }
+
+  function onScroll(){
+    let current = sections[0];
+    const y = window.scrollY + 110;
+    sections.forEach(s => { if(s.offsetTop <= y) current = s; });
+    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + current.id));
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

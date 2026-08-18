@@ -1,0 +1,162 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/apache/ossie/release/0.1.1/core-spec/osi-schema.json
+# Apache Ossie (incubating) — formerly Open Semantic Interchange (OSI).
+# PROJECTION of the certified Unbilled metric. Not the compile SoT.
+# Compile SoT: models/semantic_models.yml + MetricFlow (dbt 1.10 / mf 0.11).
+# dbt does not parse this folder on 1.10. Do not point mf at this file.
+# File is spec 0.1.1 (latest released). Live `main` schema is 0.2.0.dev0 and
+# will fail validation against this file. Nobody in the demo reads this file.
+# Not compile SoT, not OWL.
+
+version: "0.1.1"
+
+semantic_model:
+  - name: o2c_unbilled
+    description: >
+      Downstream O&G order-to-cash unbilled tickets. Projection of the
+      MetricFlow metric unbilled_usd. Population and formula are sealed in
+      fct_unbilled (delivered, no posted invoice as of as_of_date, quality-hold
+      excluded, gallons_net * contract_price). This file is interchange, not
+      a second formula and not an ontology.
+    ai_context:
+      instructions: >
+        Unbilled is a state of an obligation (a delivered BOL not yet invoiced),
+        not a customer class. Do not group by a generic "customer". Slice by
+        sold_to, payer, or terminal explicitly. Ship-to is a terminal (location),
+        not a party role. Do not treat this YAML as OWL.
+      synonyms:
+        - "unbilled"
+        - "unbilled revenue"
+        - "delivered not invoiced"
+
+    datasets:
+      - name: fct_unbilled
+        source: o2c.main.fct_unbilled
+        primary_key: [ticket_id]
+        description: Ticket-level certified unbilled fact. One row per delivered BOL with no posted invoice.
+        ai_context:
+          synonyms:
+            - "unbilled tickets"
+            - "open lifts"
+        fields:
+          - name: ticket_id
+            description: BOL ticket identifier
+            datatype: String
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: ticket_id
+          - name: delivery_date
+            description: Lift date (day)
+            datatype: Date
+            dimension:
+              is_time: true
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: delivery_date
+          - name: sold_to_name
+            description: Sold-to party (who is entitled to lift). Not "the customer".
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "sold-to"
+                - "sold to"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: sold_to_name
+          - name: payer_name
+            description: Payer party (who is invoiced). Credit lives here.
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "payer"
+                - "bill payer"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: payer_name
+          - name: terminal_code
+            description: Terminal / ship-to location. Not a customer role.
+            datatype: String
+            dimension:
+              is_time: false
+            ai_context:
+              synonyms:
+                - "terminal"
+                - "ship-to"
+                - "rack"
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: terminal_code
+          - name: product_code
+            description: Product (RBOB, ULSD, Jet-A)
+            datatype: String
+            dimension:
+              is_time: false
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: product_code
+          - name: unbilled_usd
+            description: gallons_net * contract_price_usd on this ticket
+            datatype: Decimal
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: unbilled_usd
+          - name: gallons_net
+            description: Temperature-corrected net gallons (60F)
+            datatype: Decimal
+            expression:
+              dialects:
+                - dialect: ANSI_SQL
+                  expression: gallons_net
+
+    relationships: []
+
+    metrics:
+      - name: unbilled_usd
+        description: >
+          Certified Unbilled USD. Same metric MetricFlow compiles. SUM of
+          fct_unbilled.unbilled_usd. Slice by sold_to_name, payer_name,
+          terminal_code, or delivery_date — the ticket set does not change.
+        datatype: Decimal
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: SUM(fct_unbilled.unbilled_usd)
+        ai_context:
+          synonyms:
+            - "Unbilled USD"
+            - "unbilled revenue"
+      - name: unbilled_gallons_net
+        description: Certified unbilled net gallons (60F).
+        datatype: Decimal
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: SUM(fct_unbilled.gallons_net)
+      - name: unbilled_ticket_count
+        description: Count of unbilled delivered BOL tickets.
+        datatype: Integer
+        expression:
+          dialects:
+            - dialect: ANSI_SQL
+              expression: COUNT(fct_unbilled.ticket_id)
+
+    custom_extensions:
+      - vendor_name: DBT
+        data: |
+          {
+            "project_name": "o2c_unbilled",
+            "compile_sot": "models/semantic_models.yml",
+            "metricflow_metric": "unbilled_usd",
+            "kpi_id": "KPI-O2C-UNBILLED-USD",
+            "note": "Projection only. dbt 1.10 does not parse osi/. MetricFlow 0.11 compiles the YAML, not this file."
+          }

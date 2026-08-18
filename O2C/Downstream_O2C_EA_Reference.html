@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downstream O&amp;G Order-to-Cash — EA Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --petro:#0F1A24;       /* petroleum dark */
+    --panel:#152430;       /* instrument panel */
+    --panel-2:#1C3040;
+    --steel:#243642;
+    --ink:#182530;         /* body text on light */
+    --muted:#5E6E78;       /* secondary text */
+    --line:#D6DDE0;        /* hairlines */
+    --surface:#EEF2F3;     /* reading surface */
+    --card:#FBFCFC;        /* content card */
+    --amber:#E8A33D;       /* signal accent */
+    --amber-deep:#B5701E;
+    --teal:#2E7D8A;        /* pipeline/flow secondary */
+    --teal-soft:#DDEBED;
+    --amber-soft:#FBEBD1;
+    --readout:#0B1219;     /* ascii readout bg */
+    --readout-ink:#B8D8CE; /* ascii text (phosphor) */
+    --readout-dim:#5C7A72;
+    --shadow:0 1px 2px rgba(16,32,44,.06),0 8px 24px rgba(16,32,44,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--surface);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- reading progress ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--amber),var(--amber-deep));z-index:100;transition:width .08s linear}
+
+  /* ---------- layout ---------- */
+  .shell{display:grid;grid-template-columns:288px minmax(0,1fr);max-width:1500px;margin:0 auto}
+  .sidebar{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+    background:var(--petro);color:#C6D3DB;padding:0;border-right:1px solid #0a1219}
+  .content{padding:0 clamp(20px,4vw,64px) 120px;max-width:980px}
+
+  /* ---------- sidebar ---------- */
+  .brand{padding:26px 24px 22px;border-bottom:1px solid #223541}
+  .brand .kicker{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 8px}
+  .brand h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px;line-height:1.25;margin:0;color:#EAF1F4}
+  .brand .sub{font-size:12.5px;color:#7E939F;margin:8px 0 0}
+  .toc{padding:14px 14px 30px}
+  .toc a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:#AFC0CA;
+    padding:9px 12px;border-radius:8px;font-size:13.5px;line-height:1.35;transition:background .15s,color .15s}
+  .toc a .num{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--teal);min-width:20px;font-weight:500}
+  .toc a:hover{background:#182935;color:#EAF1F4}
+  .toc a.active{background:#182935;color:#fff}
+  .toc a.active .num{color:var(--amber)}
+  .toc .grp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:#5C7280;padding:16px 12px 6px}
+  .searchbox{padding:14px 16px;border-bottom:1px solid #223541;position:sticky;top:0;background:var(--petro);z-index:2}
+  .searchbox input{width:100%;background:#0A1219;border:1px solid #2A404E;color:#DCE7EC;
+    border-radius:8px;padding:9px 12px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;outline:none}
+  .searchbox input:focus{border-color:var(--amber)}
+  .searchbox input::placeholder{color:#546873}
+  .searchmeta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:#6E8390;margin-top:7px;height:12px}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--petro);color:#E7EEF1;padding:clamp(38px,6vw,72px) clamp(20px,4vw,64px) 44px;
+    margin:0 clamp(-20px,-4vw,-64px);position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(1200px 300px at 88% -10%,rgba(232,163,61,.16),transparent 60%)}
+  .hero .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 18px}
+  .hero h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(30px,5vw,50px);
+    line-height:1.05;letter-spacing:-.01em;margin:0;max-width:16ch}
+  .hero p.lede{font-size:clamp(15px,2vw,18px);color:#A9BCC6;max-width:60ch;margin:20px 0 0;line-height:1.55}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;position:relative;z-index:1}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.04em;
+    background:#18293502;background:rgba(255,255,255,.05);border:1px solid #2A404E;color:#BFD0D9;
+    padding:7px 13px;border-radius:999px}
+  .chip b{color:var(--amber);font-weight:500}
+
+  /* ---------- chevron flow (signature) ---------- */
+  .flowwrap{margin:34px 0 4px;position:relative;z-index:1}
+  .flowlabel{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:#7E939F;margin:0 0 12px}
+  .flow{display:flex;flex-wrap:wrap;gap:6px 4px}
+  .chev{position:relative;background:var(--panel-2);color:#CFDDE4;font-size:12px;font-weight:500;
+    padding:9px 16px 9px 22px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%,12px 50%);
+    border:1px solid #26404F;letter-spacing:.01em}
+  .chev:first-child{padding-left:14px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%)}
+  .chev.on{background:var(--amber);color:#2A1B06;border-color:var(--amber-deep);font-weight:600}
+  .chev .i{font-family:"IBM Plex Mono",monospace;font-size:10px;opacity:.6;margin-right:7px}
+
+  /* ---------- sections ---------- */
+  section{padding-top:64px;scroll-margin-top:16px}
+  .sec-head{display:flex;align-items:flex-start;gap:16px;border-bottom:2px solid var(--petro);padding-bottom:16px;margin-bottom:8px}
+  .sec-head .idx{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;color:#fff;
+    background:var(--petro);padding:6px 11px;border-radius:7px;letter-spacing:.06em;white-space:nowrap;margin-top:4px}
+  .sec-head h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(22px,3.4vw,30px);
+    line-height:1.15;margin:0;letter-spacing:-.01em}
+  .sec-head .desc{font-size:14px;color:var(--muted);margin:6px 0 0}
+  .content > p{max-width:74ch}
+  h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px;margin:36px 0 10px;color:var(--steel)}
+  .content a{color:var(--teal)}
+  strong{color:var(--petro);font-weight:600}
+
+  /* ---------- readout (ascii) ---------- */
+  .readout{background:var(--readout);border:1px solid #223038;border-radius:12px;overflow:hidden;
+    margin:22px 0;box-shadow:var(--shadow)}
+  .readout .bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#0E1820;
+    border-bottom:1px solid #1E2C34;font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+  .readout .bar .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+  .readout pre{margin:0;padding:20px 18px;overflow-x:auto;color:var(--readout-ink);
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.5;tab-size:2}
+  .readout pre::-webkit-scrollbar{height:9px}
+  .readout pre::-webkit-scrollbar-thumb{background:#2C4048;border-radius:9px}
+  .scrollhint{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--readout-dim);
+    padding:0 18px 12px;display:none}
+
+  /* ---------- capability grid ---------- */
+  .capgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+  .cap{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--teal);
+    border-radius:12px;padding:16px 16px 14px;box-shadow:var(--shadow)}
+  .cap:nth-child(3n-1){border-top-color:var(--amber)}
+  .cap:nth-child(3n){border-top-color:var(--petro)}
+  .cap h5{font-family:"Space Grotesk",sans-serif;font-size:14.5px;font-weight:600;margin:0 0 4px;line-height:1.25}
+  .cap .pn{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);letter-spacing:.08em;
+    text-transform:uppercase;display:block;margin-bottom:8px}
+  .cap ul{margin:0;padding:0;list-style:none}
+  .cap li{font-size:13px;line-height:1.45;padding:5px 0 5px 16px;position:relative;color:#39495380;color:#3B4A53;
+    border-top:1px solid #EFF2F3}
+  .cap li:first-child{border-top:none}
+  .cap li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;
+    border-right:2px solid var(--teal);border-top:2px solid var(--teal);transform:rotate(45deg)}
+  .cap:nth-child(3n-1) li::before{border-color:var(--amber)}
+  .cap:nth-child(3n) li::before{border-color:var(--petro)}
+
+  /* ---------- tables ---------- */
+  .tablewrap{overflow-x:auto;margin:18px 0 6px;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;background:var(--card);font-size:13.5px;min-width:640px}
+  thead th{background:var(--petro);color:#EAF1F4;text-align:left;font-weight:600;
+    font-family:"Space Grotesk",sans-serif;font-size:12.5px;letter-spacing:.02em;padding:12px 15px;vertical-align:top;
+    position:sticky;top:0}
+  tbody td{padding:13px 15px;border-top:1px solid var(--line);vertical-align:top;line-height:1.5}
+  tbody td:first-child{font-weight:600;color:var(--petro);white-space:nowrap}
+  tbody tr:nth-child(even) td{background:#F6F8F8}
+  tbody tr:hover td{background:var(--teal-soft)}
+  table.wide{min-width:820px}
+  td strong{color:var(--amber-deep)}
+
+  /* ---------- pillar (collapsible) ---------- */
+  .pillar{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:16px 0;
+    overflow:hidden;box-shadow:var(--shadow)}
+  .pillar > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;
+    padding:15px 18px;user-select:none;background:linear-gradient(180deg,#fff,#F7F9F9)}
+  .pillar > summary::-webkit-details-marker{display:none}
+  .pillar > summary .pnum{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+    background:var(--petro);color:#fff;padding:5px 9px;border-radius:6px}
+  .pillar > summary h4{margin:0;font-size:16px;flex:1}
+  .pillar > summary .caret{color:var(--muted);transition:transform .2s;font-size:13px}
+  .pillar[open] > summary .caret{transform:rotate(90deg)}
+  .pillar[open] > summary{border-bottom:1px solid var(--line)}
+  .pillar .pbody{padding:4px 18px 18px}
+  .toolbar{display:flex;gap:8px;margin:8px 0 4px}
+  .toolbar button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;
+    background:#fff;border:1px solid var(--line);color:var(--steel);padding:7px 13px;border-radius:7px;cursor:pointer}
+  .toolbar button:hover{border-color:var(--teal);color:var(--teal)}
+
+  /* ---------- exceptions ---------- */
+  .exc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);
+    border-radius:10px;padding:18px 20px;margin:16px 0;box-shadow:var(--shadow)}
+  .exc .en{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--amber-deep);margin:0 0 4px}
+  .exc h4{margin:0 0 10px;font-size:17px}
+  .exc .scen{background:var(--amber-soft);border-radius:8px;padding:10px 14px;font-size:13.5px;margin:0 0 12px}
+  .exc ol{margin:8px 0 12px;padding-left:20px}
+  .exc ol li{margin:5px 0}
+  .exc .ctrl{border-top:1px dashed var(--line);padding-top:10px;font-size:13.5px}
+  .exc .ctrl b{color:var(--teal)}
+
+  /* ---------- callouts ---------- */
+  .callout{background:var(--panel);color:#DCE7EC;border-radius:12px;padding:22px 24px;margin:20px 0;box-shadow:var(--shadow)}
+  .callout h4{color:#fff;margin:0 0 12px;font-size:17px}
+  .callout ol{margin:0;padding-left:22px}
+  .callout ol li{margin:9px 0;line-height:1.55}
+  .callout ol li::marker{color:var(--amber);font-family:"IBM Plex Mono",monospace;font-weight:600}
+  .callout strong{color:var(--amber)}
+  .callout.warn{background:#221B10;border:1px solid #3A2E17}
+  .callout.warn h4{color:var(--amber)}
+  .callout.warn strong{color:#F0C079}
+  .callout.warn ul{margin:0;padding-left:20px}
+  .callout.warn li{margin:8px 0;line-height:1.55;color:#CDBFA6}
+
+  /* ---------- tldr ---------- */
+  .tldr{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;
+    margin:38px 0 0;box-shadow:var(--shadow);position:relative}
+  .tldr::before{content:"KEY TAKEAWAYS";position:absolute;top:-11px;left:22px;background:var(--amber);
+    color:#2A1B06;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+    padding:4px 11px;border-radius:6px}
+  .tldr ul{margin:6px 0 0;padding-left:20px}
+  .tldr li{margin:11px 0;line-height:1.55}
+  .tldr li::marker{color:var(--teal)}
+
+  mark{background:var(--amber);color:#2A1B06;border-radius:3px;padding:0 2px}
+  mark.cur{outline:2px solid var(--amber-deep)}
+
+  /* ---------- footer ---------- */
+  .foot{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);line-height:1.7}
+  .foot b{color:var(--petro)}
+
+  /* ---------- mobile ---------- */
+  .navtoggle{display:none}
+  @media(max-width:900px){
+    .shell{grid-template-columns:1fr}
+    .sidebar{position:fixed;z-index:60;width:min(320px,86vw);height:100vh;left:0;top:0;
+      transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.4)}
+    body.nav-open .sidebar{transform:none}
+    .navtoggle{display:flex;position:fixed;top:14px;right:14px;z-index:70;align-items:center;gap:8px;
+      background:var(--petro);color:#fff;border:none;border-radius:10px;padding:11px 14px;
+      font-family:"IBM Plex Mono",monospace;font-size:12px;box-shadow:var(--shadow);cursor:pointer}
+    .capgrid{grid-template-columns:1fr}
+    .scrollhint{display:block}
+    .hero{margin:0 clamp(-20px,-4vw,-64px)}
+  }
+  @media(max-width:560px){.chev{font-size:11px;padding:8px 13px 8px 19px}}
+
+  /* ---------- print ---------- */
+  @media print{
+    :root{--surface:#fff}
+    body{font-size:11px}
+    #progress,.sidebar,.navtoggle,.searchbox,.toolbar,.scrollhint{display:none!important}
+    .shell{grid-template-columns:1fr;max-width:none}
+    .content{padding:0;max-width:none}
+    .hero{color:#000;background:#fff;margin:0}
+    .hero .eyebrow,.hero .chip b{color:var(--amber-deep)}
+    .hero h2,.hero p.lede,.chip{color:#000}
+    .chev{background:#eee;color:#000;border-color:#999}.chev.on{background:var(--amber)}
+    .readout{background:#fff;border:1px solid #333}
+    .readout .bar{background:#eee;color:#000;border-color:#ccc}
+    .readout pre{color:#111}
+    .callout,.pillar,.cap,.exc,.tldr,.tablewrap{box-shadow:none;break-inside:avoid}
+    .callout{background:#f2f2f2;color:#000}.callout h4,.callout strong{color:#000}
+    thead th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pillar[open] .pbody,details{display:block!important}
+    section{padding-top:26px}
+    a{color:#000;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button class="navtoggle" onclick="document.body.classList.toggle('nav-open')">☰ Contents</button>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="searchbox">
+      <input id="search" type="search" placeholder="Search document…" autocomplete="off" aria-label="Search document">
+      <div class="searchmeta" id="searchmeta"></div>
+    </div>
+    <div class="brand">
+      <p class="kicker">EA Reference · v1.0</p>
+      <h1>Downstream O&amp;G<br>Order-to-Cash</h1>
+      <p class="sub">Commercial &amp; Marketing — end-to-end operational blueprint</p>
+    </div>
+    <nav class="toc" id="toc">
+      <div class="grp">Blueprint</div>
+      <a href="#tldr"><span class="num">00</span><span>Key Takeaways</span></a>
+      <a href="#s1"><span class="num">01</span><span>Value Stream (L1 Chevron Map)</span></a>
+      <a href="#s2"><span class="num">02</span><span>Integrated Capability Map</span></a>
+      <a href="#s3"><span class="num">03</span><span>Process &amp; Master-Data Baseline</span></a>
+      <a href="#s4"><span class="num">04</span><span>System Landscape &amp; Integration</span></a>
+      <a href="#s5"><span class="num">05</span><span>Exceptions &amp; Risk Management</span></a>
+      <div class="grp">Guidance</div>
+      <a href="#rec"><span class="num">R</span><span>Recommendations</span></a>
+      <a href="#cav"><span class="num">C</span><span>Caveats</span></a>
+    </nav>
+  </aside>
+
+  <!-- ===================== CONTENT ===================== -->
+  <main class="content" id="content">
+
+    <!-- HERO -->
+    <header class="hero">
+      <p class="eyebrow">Enterprise Architecture Reference Document</p>
+      <h2>Order-to-Cash for Downstream Hydrocarbon Operations</h2>
+      <p class="lede">Not standard order-to-cash. A hydrocarbon-aware, tax-heavy, physically-reconciled value stream where every step handles temperature-corrected volume, formula-based pricing, excise-duty status, and channel-specific settlement.</p>
+      <div class="meta-row">
+        <span class="chip"><b>Domain:</b> Commercial &amp; Marketing</span>
+        <span class="chip"><b>Channels:</b> C&amp;I · Rack · Retail · Lubricants · Aviation · Marine</span>
+        <span class="chip"><b>Spine:</b> SAP S/4HANA for Oil &amp; Gas (IS-Oil)</span>
+      </div>
+
+      <div class="flowwrap">
+        <p class="flowlabel">L1 Value Stream · the flow is the document</p>
+        <div class="flow">
+          <span class="chev"><span class="i">01</span>Quote &amp; Contract</span>
+          <span class="chev"><span class="i">02</span>Credit &amp; Risk</span>
+          <span class="chev"><span class="i">03</span>Order &amp; Call-off</span>
+          <span class="chev"><span class="i">04</span>Scheduling</span>
+          <span class="chev on"><span class="i">05</span>Physical Fulfilment</span>
+          <span class="chev"><span class="i">06</span>Invoicing</span>
+          <span class="chev"><span class="i">07</span>Collection</span>
+          <span class="chev"><span class="i">08</span>Dispute</span>
+          <span class="chev"><span class="i">09</span>Financial Close</span>
+          <span class="chev"><span class="i">10</span>Retention</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TL;DR -->
+    <section id="tldr" style="padding-top:34px">
+      <div class="tldr">
+        <ul>
+          <li>Downstream O2C is not standard order-to-cash: every step must handle temperature/density volume conversion (<strong>ASTM D1250-19e1 / API MPMS Ch. 11.1</strong>, reference temperatures 15&deg;C and 60&deg;F), formula/index-based pricing (<strong>Platts / Argus / OPIS</strong>), the excise-duty status of stock (duty-paid vs duty-suspended), and channel-specific settlement (rack BOL, into-plane, bunker delivery note, fuel-card).</li>
+          <li>The reference technology spine is <strong>SAP S/4HANA for Oil &amp; Gas (IS-Oil Downstream)</strong> — HPM, TDP, EXG, TD, TSW, MAP, MCOE, SSR — integrated in real time with <strong>Terminal Automation Systems</strong> (Toptech TMS7, Implico OpenTAS), <strong>indirect-tax engines</strong> (Vertex O Series), <strong>ETRM/CTRM</strong>, and pricing-agency feeds.</li>
+          <li>The hardest problems are exceptions: gross-vs-net volume disputes, loss/gain (evaporation/shrinkage) reconciliation, provisional-to-final price restatement, exchange-imbalance settlement, demurrage, off-spec quality claims, and tax-jurisdiction/duty-status misassignment. These must be engineered into the process, not bolted on.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== SECTION 1 ===================== -->
+    <section id="s1">
+      <div class="sec-head">
+        <span class="idx">01</span>
+        <div>
+          <h3>End-to-End Value Stream (L1 Chevron Map)</h3>
+          <p class="desc">From quote/contract capture through metered, temperature-corrected, duty-assessed fulfilment to invoicing, collection, dispute resolution and financial close — with Master Data &amp; Governance as the foundational layer feeding every stage.</p>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="bar"><span class="dot"></span>L1 Value Stream Map · O2C</div>
+        <pre>
+ DOWNSTREAM COMMERCIAL &amp; MARKETING — ORDER-TO-CASH L1 VALUE STREAM
+==================================================================================================
+
+  &gt;&gt;&gt; QUOTE &amp;      &gt;&gt;&gt; CREDIT &amp;     &gt;&gt;&gt; ORDER         &gt;&gt;&gt; SCHEDULING &amp;   &gt;&gt;&gt; PHYSICAL       &gt;&gt;&gt;
+      CONTRACT          RISK             MGMT &amp;            LOGISTICS          FULFILMENT
+      CAPTURE           ONBOARDING       CALL-OFF          (TSW/TD)           (LOADING)
+  -------------    -------------    -------------     -------------      -------------
+  - Tender/bid     - Credit app     - Sales order/    - Nomination       - Gantry/rack
+  - Formula/index    &amp; scoring        call-off off      &amp; stock proj.      loading (TAS)
+    price offer    - Credit limit     contract        - Berth/barge/     - Metered qty
+  - Contract         &amp; LC/BG        - ATP / plant      pipeline sched.    - Temp/density
+    (term/spot/      setup            determination   - Carrier/hauler     capture
+    evergreen)     - Exposure       - Excise/tax        dispatch         - VCF -&gt; net vol
+  - Exchange         reservation      status default  - Into-plane /     - BOL / ticket /
+    agreement                       - Provisional      barge order         BDN generation
+                                      price stamp
+
+    ...&gt;&gt;&gt; INVOICING &amp;   &gt;&gt;&gt; RECEIPT &amp;    &gt;&gt;&gt; DISPUTE &amp;     &gt;&gt;&gt; FINANCIAL      &gt;&gt;&gt; RETENTION &amp;
+           BILLING            COLLECTION       DEDUCTION          CLOSE              CONTRACT MGMT
+       -------------      -------------    -------------     -------------      -------------
+       - BOL-&gt;invoice     - Cash app       - Short-del /     - Loss/gain        - Volume/rebate
+         actualization    - Fuel/fleet       demurrage         reconciliation     settlement
+       - Formula &amp; Avg      card settle    - Off-spec /      - Exchange         - Contract renewal
+         (F&amp;A) pricing    - IATA/ICH         contamination     netting &amp;          / evergreen
+       - Excise + VAT/       clearing       - Gross/net vol     balance settle   - Price review
+         GST + env fees   - Netting          variance        - Provisional-&gt;    - Win/loss &amp;
+       - Consignment/       (exchange)     - Price              final restate     churn analytics
+         consumption      - Collections      restatement     - Period close &amp;
+         billing                             claims            revenue recog.
+
+==================================================================================================
+  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+  |  FOUNDATIONAL MASTER DATA MANAGEMENT &amp; GOVERNANCE (ties into EVERY stage above)             |
+  |  - Customer/ship-to/BP master + credit segment    - Material master (HPM conv. group/UoM)  |
+  |  - Product spec &amp; blend master (RVP, sulphur...)   - Plant/terminal/tank/strapping master   |
+  |  - Pricing condition &amp; index master (Platts...)   - Tax/excise-duty determination master   |
+  |  - Exchange partner &amp; agreement master            - Carrier/hauler &amp; vehicle master        |
+  |  - Governance: data ownership, stewardship, SoD, audit trail, change control, DQ KPIs      |
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>
+        <div class="scrollhint">→ scroll horizontally to view the full map</div>
+      </div>
+
+      <p><strong>Reading the map:</strong> Unlike generic O2C, physical fulfilment sits <em>inside</em> the cash cycle because the billable quantity is not known until product is metered at the rack and temperature-corrected to a standard volume; the invoice is an <em>actualization</em> of the BOL, not a copy of the order. Financial close likewise cannot complete until physical loss/gain and exchange balances are reconciled.</p>
+    </section>
+
+    <!-- ===================== SECTION 2 ===================== -->
+    <section id="s2">
+      <div class="sec-head">
+        <span class="idx">02</span>
+        <div>
+          <h3>Integrated Order-to-Cash Capability Map</h3>
+          <p class="desc">Nine capability pillars, each with the 4–5 specialized L2/L3 capabilities that are critical and specific to downstream oil &amp; gas operations.</p>
+        </div>
+      </div>
+
+      <div class="capgrid">
+        <div class="cap"><span class="pn">Pillar 1</span><h5>Quote &amp; Contract Management</h5>
+          <ul><li>Tender/bid &amp; spot quote management</li><li>Formula/index-based contract pricing</li><li>Term/spot/evergreen contract management</li><li>Exchange / buy-sell / terminalling agreements</li><li>Price protection, DTW &amp; rack posting management</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 2</span><h5>Credit &amp; Risk</h5>
+          <ul><li>Customer credit scoring &amp; onboarding</li><li>Credit limit &amp; dynamic exposure management</li><li>LC / bank guarantee / parent guarantee</li><li>Real-time credit block at call-off &amp; loading</li><li>Counterparty &amp; country risk (ETRM linkage)</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 3</span><h5>Order Management &amp; Fulfilment</h5>
+          <ul><li>Sales order / contract call-off</li><li>ATP &amp; automatic plant/terminal determination</li><li>Nomination &amp; scheduling (TSW)</li><li>Bulk transport &amp; distribution (TD)</li><li>BOL/ticket/BDN capture &amp; confirmation (TAS)</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 4</span><h5>Invoicing &amp; Billing</h5>
+          <ul><li>BOL actualization &amp; delivery-based billing</li><li>Formula &amp; Average (F&amp;A) pricing at billing</li><li>Multi-layer excise + VAT/GST + env fee calc</li><li>Consignment/consumption billing (retail)</li><li>Aviation into-plane &amp; marine bunker billing</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 5</span><h5>Receipt &amp; Collection</h5>
+          <ul><li>Cash application &amp; lockbox</li><li>Fuel/fleet card settlement</li><li>Card-network &amp; IATA/ICH clearing</li><li>Exchange / net-out settlement</li><li>Collections &amp; dunning</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 6</span><h5>Dispute Management</h5>
+          <ul><li>Short-delivery &amp; quantity-variance claims</li><li>Gross-vs-net volume dispute resolution</li><li>Off-spec / contamination quality claims</li><li>Demurrage &amp; laytime claims</li><li>Price-restatement / index-correction disputes</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 7</span><h5>Retention &amp; Contract Mgmt</h5>
+          <ul><li>Rebate / volume-incentive settlement</li><li>Contract renewal &amp; evergreen management</li><li>Retrospective price review</li><li>Loyalty &amp; branded-dealer programs</li><li>Churn / win-loss analytics</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 8</span><h5>Master Data Management</h5>
+          <ul><li>Business-partner &amp; ship-to hierarchy</li><li>Material / product-spec / blend master</li><li>Pricing condition &amp; index master</li><li>Terminal/tank/strapping &amp; UoM master</li><li>Tax/excise &amp; exchange-partner master</li></ul></div>
+        <div class="cap"><span class="pn">Pillar 9</span><h5>Governance</h5>
+          <ul><li>Data ownership &amp; stewardship model</li><li>Segregation of duties &amp; approval workflow</li><li>Audit trail &amp; regulatory reporting</li><li>Data-quality KPIs &amp; remediation</li><li>Change control &amp; reference-data lifecycle</li></ul></div>
+      </div>
+    </section>
+
+    <!-- ===================== SECTION 3 ===================== -->
+    <section id="s3">
+      <div class="sec-head">
+        <span class="idx">03</span>
+        <div>
+          <h3>Deep-Dive Process Definition &amp; Master-Data Baseline</h3>
+          <p class="desc">For every pillar: L2 process, core business activities, and the downstream-specific operational mechanics and master-data attributes.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button onclick="setAll(true)">Expand all</button>
+        <button onclick="setAll(false)">Collapse all</button>
+      </div>
+
+      <!-- PILLAR 1 -->
+      <details class="pillar" open>
+        <summary><span class="pnum">P1</span><h4>Quote &amp; Contract Management</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Tender/Bid &amp; Spot Quote Mgmt</td><td>Respond to customer/airline/marine tenders; build spot offers.</td><td>Prices quoted as a <strong>differential to a benchmark</strong>, not a flat price (e.g. NYMEX RBOB basis + differential). Regional index selection (Platts/Argus in Europe &amp; the NY Harbor barge market; OPIS at US rack). Pipeline spot deals are large (5,000–50,000 bbl). <em>Master data:</em> index master, differential condition records, product-grade &amp; spec.</td></tr>
+            <tr><td>Formula/Index Contract Pricing</td><td>Define price = index average over a pricing period ± differential.</td><td>SAP IS-Oil <strong>MAP</strong> (Marketing Accounting &amp; Pricing) and <strong>F&amp;A</strong> (Formula &amp; Average Pricing); provisional vs final pricing (settle retroactively when the index period closes). <em>Master data:</em> pricing formula, quotation source, quotation period, rounding rules.</td></tr>
+            <tr><td>Term/Spot/Evergreen Contract Mgmt</td><td>Capture sales contracts and call-off restrictions.</td><td>IS-Oil <strong>MCOE</strong>: multiple ship-to per contract, call-off restrictions, final-delivery indicator, contract-quantity correction on final delivery using ASTM. <em>Master data:</em> contract type, call-off tolerances.</td></tr>
+            <tr><td>Exchange / Buy-Sell / Terminalling Agreements</td><td>Model reciprocal product supply at different locations between oil companies.</td><td>IS-Oil <strong>EXG</strong>: an exchange agreement links a sales and a purchase contract between two exchange partners. Exchange types (borrow/loan, buy/sell, terminalling); terminalling is derived from borrow/loan via the ownership "Own" indicator (logical inventory not revalued). <em>Master data:</em> exchange partner, exchange type, fee condition records.</td></tr>
+            <tr><td>Price Protection / DTW &amp; Rack Posting</td><td>Manage branded-dealer DTW prices, rack postings, temporary voluntary allowances (TVA).</td><td><strong>DTW = rack price + transport + brand/credit-card/advertising costs</strong>, set by the refiner; unbranded buys at rack. Postings reset intraday (agencies freeze supplier prices at benchmark times). <em>Master data:</em> posting location, price cluster, TVA/rebate condition.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 2 -->
+      <details class="pillar" open>
+        <summary><span class="pnum">P2</span><h4>Credit &amp; Risk</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Credit Scoring &amp; Onboarding</td><td>Assess new customer/counterparty creditworthiness.</td><td>Distinguish trade customers from trading counterparties; country risk relevant for import/export. <em>Master data:</em> credit segment, risk class, rating.</td></tr>
+            <tr><td>Credit Limit &amp; Dynamic Exposure</td><td>Track exposure across open orders, deliveries, unbilled and AR.</td><td>Exposure is volatile because value = volume × index that moves daily; exposure must be revalued at the current price. <em>Master data:</em> credit limit, exposure category, horizon.</td></tr>
+            <tr><td>LC / Guarantee Management</td><td>Manage documentary/standby LC, bank &amp; parent guarantees.</td><td>Physical oil deals usually carry a deal-specific letter of credit; margining is common in gas/power while LC dominates physical oil. <em>Master data:</em> LC reference, expiry, tolerance, confirming bank.</td></tr>
+            <tr><td>Real-time Credit Block</td><td>Block order or loading if the limit is breached.</td><td>Critical mid-fulfilment: credit can be breached between order and rack loading as price moves; the block must reach the TAS to stop the gantry. <em>Master data:</em> credit-check rule, release authorization.</td></tr>
+            <tr><td>Counterparty &amp; Portfolio Risk</td><td>Monitor VaR, position and hedging limits.</td><td>ETRM/CTRM linkage — trader books, hedging limits tied to business events. <em>Master data:</em> book, position limit, VaR parameters.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 3 -->
+      <details class="pillar" open>
+        <summary><span class="pnum">P3</span><h4>Order Management &amp; Fulfilment</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Sales Order / Call-off</td><td>Convert a contract into an executable order.</td><td>IS-Oil MCOE fast order entry, last-order defaulting, automatic item-category redetermination (e.g. consignment). <em>Master data:</em> order type, item category, call-off reference.</td></tr>
+            <tr><td>ATP &amp; Plant/Terminal Determination</td><td>Determine the supplying terminal/plant.</td><td>MCOE automatic plant determination with alternates if the primary is dry. <em>Master data:</em> supplying plant, terminal, product availability.</td></tr>
+            <tr><td>Nomination &amp; Scheduling (TSW)</td><td>Plan bulk movements across pipeline/vessel/rail/truck.</td><td>IS-Oil <strong>TSW</strong>: nominations, stock projection worksheet, berth scheduling to minimize demurrage; ticketing confirms actuals. Covers rail, pipeline, marine, barge and truck. <em>Master data:</em> nomination type, transport system, event profile.</td></tr>
+            <tr><td>Bulk Transport &amp; Distribution (TD)</td><td>Execute scheduled movements, create shipments.</td><td>IS-Oil <strong>TD</strong>: bulk shipment, vehicle/driver, rack meters, TAS interface, delivery-confirmation processing; quantity conversion at loading and delivery. <em>Master data:</em> transport unit, vehicle meter, tank.</td></tr>
+            <tr><td>BOL/Ticket/BDN Capture</td><td>Capture the legal proof of delivery &amp; quantity.</td><td>Bill of Lading (rack), delivery ticket, marine <strong>Bunker Delivery Note (BDN)</strong>, aviation fuelling ticket; quantity metered gross then corrected to net. <em>Master data:</em> BOL number range, ticket type.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 4 -->
+      <details class="pillar" open>
+        <summary><span class="pnum">P4</span><h4>Invoicing &amp; Billing — Volume, Spec, Tax</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Volume Measurement &amp; Conversion</td><td>Convert metered ambient volume to standard net volume before billing.</td><td><strong>ASTM D1250-19e1 / API MPMS Ch. 11.1</strong>: apply the VCF/CTL to correct observed volume at ambient temperature to net standard volume; aligns with ISO 91-1 reference temperatures <strong>15&deg;C and 60&deg;F</strong> (metric procedures also incorporate a 20&deg;C base) generating CTL, Fp, CPL, CTPL across crude, refined products and lubricating oils. Flow: gross observed volume (GOV) → gross standard volume (GSV) → net standard volume (NSV) after BS&amp;W. IS-Oil <strong>HPM</strong> conversion: material master carries a conversion group + UoM group; QCI calls ASTM tables at the actual goods movement. <em>Master data:</em> conversion group, UoM group (L15, GAL60), density/API gravity, tank strapping table.</td></tr>
+            <tr><td>Product Spec, Blend &amp; Additization</td><td>Ensure billed product matches contracted spec.</td><td>Physical attributes: <strong>RVP</strong> (Reid Vapour Pressure), octane/cetane, sulphur ppm — US <strong>ULSD capped at 15 ppm sulfur</strong> by EPA (~97% reduction from 500 ppm; on-road rack mandate from 1 Sep 2006); flash point, cloud/pour point; <strong>ethanol (E10) / biodiesel (Bx)</strong> blend ratios; branded additization. <em>Master data:</em> product spec, blend recipe, additive package.</td></tr>
+            <tr><td>Delivery-Based / BOL Actualization Billing</td><td>Bill on the actual loaded/delivered quantity, not the ordered quantity.</td><td>Invoice = actualized BOL quantity (net standard volume); F&amp;A applies the final formula price. <em>Master data:</em> billing type, actual-qty source.</td></tr>
+            <tr><td>Multi-Layer Indirect Tax &amp; Excise</td><td>Determine and post excise + VAT/GST + environmental fees.</td><td>IS-Oil <strong>TDP</strong> calculates and posts excise on goods movement by quantity and location. The <strong>handling type</strong> sets ED status at FROM/TO location and the rate level (free/full/reduced); TDP keeps split inventory of the ED portion and distinguishes <strong>duty-paid vs duty-suspended/bonded</strong> stock. US federal: rack removals taxable, position holder liable — <strong>18.4&cent;/gal gasoline, 24.4&cent;/gal diesel</strong> (incl. 0.1&cent; LUST); dyed diesel carries only the 0.1&cent; LUST; jet fuel 4.4&cent;/gal commercial, 21.9&cent;/gal non-commercial; IFTA for interstate carriers; Form 720/720-TO. Tax engine (Vertex) called real-time. <em>Master data:</em> excise duty group, handling type, tax status, exemption certificate, jurisdiction.</td></tr>
+            <tr><td>Channel-Specific Billing</td><td>Apply the channel billing model.</td><td><strong>Retail:</strong> consignment/consumption billing (bill on sale, not delivery). <strong>Aviation:</strong> into-plane ticket → IATA IS-XML e-invoice via SIS, settled through the IATA Clearing House (ICH). <strong>Marine:</strong> BDN-based invoice; where MFMs are mandated (Singapore since 2017; Rotterdam &amp; Antwerp-Bruges from 2026) quantity is taken from the MFM totaliser. <strong>Lubricants:</strong> SKU/packaged billing with vendor-rebate accrual. <em>Master data:</em> billing model per channel, card scheme, IATA location code.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 5 -->
+      <details class="pillar">
+        <summary><span class="pnum">P5</span><h4>Receipt &amp; Collection</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Cash Application</td><td>Match incoming payments to AR.</td><td>High invoice volume from rack loads; match on BOL. <em>Master data:</em> payment method, lockbox key.</td></tr>
+            <tr><td>Fuel/Fleet Card Settlement</td><td>Settle card transactions from the retail network.</td><td>WEX/Voyager/EFS fleet cards; per-transaction capture with vehicle/driver, purchase controls, IFTA reporting; reconcile card network vs wetstock. <em>Master data:</em> card BIN, merchant, product restriction.</td></tr>
+            <tr><td>Card-Network &amp; IATA/ICH Clearing</td><td>Clear multi-party settlements.</td><td>Aviation via IATA SIS/ICH; retail via card acquirers. <em>Master data:</em> clearing member, settlement calendar.</td></tr>
+            <tr><td>Exchange / Net-Out Settlement</td><td>Settle exchange balances by product or cash.</td><td>IS-Oil EXG netting: month-end lists exchanged materials and fees and balances the logical inventory. <strong>Movement (inventory) netting</strong> settles by product; <strong>financial netting</strong> settles by cash (AP/AR). Balances tracked via Logical Inventory Adjustment (LIA) documents. <em>Master data:</em> netting type, fee condition, LIA document type.</td></tr>
+            <tr><td>Collections &amp; Dunning</td><td>Pursue overdue AR.</td><td><em>Master data:</em> dunning procedure, collection segment.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 6 -->
+      <details class="pillar">
+        <summary><span class="pnum">P6</span><h4>Dispute Management</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Short-Delivery / Quantity-Variance</td><td>Resolve delivered-vs-invoiced quantity gaps.</td><td>Compare BOL vs ship/tank gauge; ROB (remaining on board), clingage, line-fill losses. <em>Master data:</em> tolerance, variance reason code.</td></tr>
+            <tr><td>Gross-vs-Net Volume Dispute</td><td>Resolve disputes over the temperature basis of billed volume.</td><td>Rack sales are often billed <strong>gross</strong> (metered gallons, not temp-corrected); bulk is billed <strong>net</strong>; disputes arise when parties disagree on the basis. <em>Master data:</em> gross/net indicator, VCF.</td></tr>
+            <tr><td>Off-Spec / Contamination Claims</td><td>Handle quality claims.</td><td>Jet fuel to ATA103/JIG; contamination/cross-grade claims. Per the IATA Aviation Fuel Supply Model Agreement: short-delivery claims within <strong>15 days</strong>, quality within <strong>30 days</strong>; a signature on the delivery note is not a waiver of the right to claim. <em>Master data:</em> spec test result, claim type.</td></tr>
+            <tr><td>Demurrage &amp; Laytime Claims</td><td>Compute vessel detention charges.</td><td>Laytime starts on valid Notice of Readiness; <strong>demurrage = daily rate × time exceeded</strong> (liquidated damages; "once on demurrage, always on demurrage"); reversible vs non-reversible across load/discharge ports. <em>Master data:</em> charter party, laytime allowed, demurrage rate.</td></tr>
+            <tr><td>Price-Restatement Disputes</td><td>Resolve provisional→final price differences.</td><td>Index restatement when Platts/Argus corrects an assessment; cash settlement of the retroactive change (contracts often specify ~20 calendar days plus interest). <em>Master data:</em> quotation source, pricing period.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 7 -->
+      <details class="pillar">
+        <summary><span class="pnum">P7</span><h4>Retention &amp; Contract Management</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Rebate / Volume-Incentive Settlement</td><td>Accrue and pay volume/loyalty rebates.</td><td>Lubricants vendor rebates flow into COGS/margin; TVAs for dealers; jobber incentives. <em>Master data:</em> rebate agreement, tier, accrual.</td></tr>
+            <tr><td>Contract Renewal / Evergreen</td><td>Manage rolling contracts.</td><td>Evergreen supply/terminalling agreements. <em>Master data:</em> renewal rule, notice period.</td></tr>
+            <tr><td>Retrospective Price Review</td><td>Periodic renegotiation.</td><td>Formula-methodology change with retroactive cash settlement. <em>Master data:</em> review clause.</td></tr>
+            <tr><td>Loyalty / Branded-Dealer Programs</td><td>Manage the brand relationship.</td><td>Lessee-dealer, branded-jobber, company-dealer arrangements (DTW pricing tied to lease); brand fee. <em>Master data:</em> dealer type, brand agreement.</td></tr>
+            <tr><td>Churn / Win-Loss Analytics</td><td>Analyse retention.</td><td><em>Master data:</em> churn reason, competitor.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 8 -->
+      <details class="pillar">
+        <summary><span class="pnum">P8</span><h4>Master Data Management</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Business Partner &amp; Ship-To</td><td>Maintain customer/partner hierarchy.</td><td>Sold-to/ship-to/payer; branded dealer, exchange partner, into-plane agent. <em>Master data:</em> BP role, partner function.</td></tr>
+            <tr><td>Material / Product-Spec / Blend</td><td>Maintain product masters.</td><td>HPM material = conversion group + UoM group (UoM group cannot change once stock is posted); spec attributes (RVP, sulphur). <em>Master data:</em> material type, spec.</td></tr>
+            <tr><td>Pricing Condition &amp; Index</td><td>Maintain pricing masters.</td><td>Index master (Platts/Argus/OPIS symbols), differential, DTW/rack postings. <em>Master data:</em> condition type, quotation.</td></tr>
+            <tr><td>Terminal/Tank/Strapping &amp; UoM</td><td>Maintain physical-asset masters.</td><td>Tank master, calibration/strapping table, correction factors, silo management. <em>Master data:</em> tank, strapping, UoM group.</td></tr>
+            <tr><td>Tax/Excise &amp; Exchange-Partner</td><td>Maintain compliance masters.</td><td>Excise duty group, handling type, tax status, ED rate table, exemption certificate; exchange partner &amp; agreement. <em>Master data:</em> ED group, jurisdiction.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+
+      <!-- PILLAR 9 -->
+      <details class="pillar">
+        <summary><span class="pnum">P9</span><h4>Governance</h4><span class="caret">▶</span></summary>
+        <div class="pbody"><div class="tablewrap"><table class="wide">
+          <thead><tr><th>L2 Process Name</th><th>Definition &amp; Core Business Activities</th><th>Downstream O&amp;G Specifics &amp; Master Data Attributes</th></tr></thead>
+          <tbody>
+            <tr><td>Data Ownership &amp; Stewardship</td><td>Assign accountable owners.</td><td>Cross-functional: pricing, tax, credit and logistics each own domains. <em>Master data:</em> steward, domain.</td></tr>
+            <tr><td>Segregation of Duties &amp; Approval</td><td>Enforce SoD across the trade lifecycle.</td><td>ETRM/ERP SoD (trader vs back office); credit-release authority. <em>Master data:</em> role, authorization.</td></tr>
+            <tr><td>Audit Trail &amp; Regulatory Reporting</td><td>Maintain auditable records.</td><td>Excise returns (Form 720/720-TO), REMIT/EMIR for trading, environmental. <em>Master data:</em> report type, retention.</td></tr>
+            <tr><td>Data-Quality KPIs &amp; Remediation</td><td>Measure and fix DQ.</td><td><em>Master data:</em> DQ rule, threshold.</td></tr>
+            <tr><td>Change Control &amp; Reference Lifecycle</td><td>Govern reference-data changes.</td><td><em>Master data:</em> change request, effective date.</td></tr>
+          </tbody>
+        </table></div></div>
+      </details>
+    </section>
+
+    <!-- ===================== SECTION 4 ===================== -->
+    <section id="s4">
+      <div class="sec-head">
+        <span class="idx">04</span>
+        <div>
+          <h3>System Landscape &amp; Integration Architecture</h3>
+          <p class="desc">The enterprise system ecosystem required to execute downstream O2C, and the real-time integration points across the lifecycle.</p>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="bar"><span class="dot"></span>System Ecosystem · Integration Flow</div>
+        <pre>
+ DOWNSTREAM O2C ENTERPRISE SYSTEM ECOSYSTEM
+=====================================================================================================
+
+   [ CRM / COMMERCIAL ]            [ ETRM / CTRM ]                 [ PRICING AGENCIES ]
+   - Quote, tender, contact        - Deal capture, position        - Platts / Argus / OPIS
+   - Opportunity / retention       - VaR, hedging, P&amp;L               index &amp; rack feeds
+          |                              |                                 |
+          | contract, customer          | trade, exposure,                | index curves,
+          v                             v  provisional price              v  differentials
+  +===============================================================================================+
+  |                     CORE ERP / INDUSTRY SOLUTION                                              |
+  |                     SAP S/4HANA for Oil &amp; Gas (IS-Oil Downstream)                             |
+  |   MCOE (contract/order)  MAP + F&amp;A (pricing)   HPM (qty conv.)   TDP (excise)   EXG (exchange)|
+  |   TSW (nomination/sched.)  TD (transport/dist.)  SD/MM/FI-CO (std)  SSR/MRN (retail)          |
+  +===============================================================================================+
+        ^   |               ^     |                ^      |                 ^     |
+        |   | order/         |     | tax            |      | BOL/            |     | card/
+   credit   v scheduled  tax call  v determination  actual v net volume  settle   v settlement
+   check    |   volume    (real-   |  result        volume |  BOL confirm   files  |
+        |   |             time)    |                       |                       |
+   [ CREDIT/  ]     [ INDIRECT TAX ENGINE ]      [ TERMINAL AUTOMATION ]     [ CARD / IATA / BANK ]
+   [ RISK &amp;   ]     [ Vertex O Series /     ]    [ SYSTEM (TAS)        ]     [ - Fleet/fuel card   ]
+   [ ETRM     ]     [ OneSource / Avalara   ]    [ Toptech TMS7 /      ]     [   networks (WEX...) ]
+   [ exposure ]     [ - excise, VAT/GST,    ]    [ Implico OpenTAS     ]     [ - IATA SIS / ICH    ]
+   [          ]     [   env fee, exemption  ]    [ - gantry/rack ctrl  ]     [ - banks / lockbox   ]
+                    [   certificate         ]    [ - meter, eBOL       ]
+                                                 [ - stock accounting  ]
+                                                        ^      |
+                                                  gauging|      | actual loaded qty,
+                                                 (ATG)   |      v temp/density, BOL
+                                             [ FIELD / TANK GAUGING, LOAD RACK, METERS ]
+
+   [ TRANSPORT / LOGISTICS (TMS) ]        [ FLEET TELEMATICS / VMI ]
+   - carrier dispatch, freight            - tank level (VMI), auto-replenish
+   - marine/barge/pipeline schedule       - delivery confirmation, wetstock
+          ^                                        ^
+          | freight order, ETA                     | tank readings, consumption
+          +----------------------------------------+---&gt; feed ERP order &amp; billing
+=====================================================================================================</pre>
+        <div class="scrollhint">→ scroll horizontally to view the full diagram</div>
+      </div>
+
+      <p>The TAS layer (Toptech TMS7, Implico OpenTAS) sits above the field gauging/meters and integrates to the ERP for real-time transaction data and order updates, sending electronic BOLs (eBOLs) and receiving allocations/master data.</p>
+
+      <h4>Critical real-time integration points across the O2C lifecycle</h4>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Integration Point</th><th>Systems</th><th>Data Exchanged</th><th>O2C Stage</th></tr></thead>
+        <tbody>
+          <tr><td>Index feed → pricing</td><td>Platts/Argus/OPIS → ERP MAP/F&amp;A / ETRM</td><td>Daily index, differential, rack posting</td><td>Quote, billing</td></tr>
+          <tr><td>Credit check → order/loading</td><td>ERP/ETRM credit → SD → TAS</td><td>Credit status, block/release</td><td>Order, fulfilment</td></tr>
+          <tr><td>Tax determination call</td><td>ERP → Vertex/OneSource → ERP</td><td>Jurisdiction, excise/VAT rate, exemption</td><td>Order, billing</td></tr>
+          <tr><td>Nomination → shipment</td><td>TSW → TD → TAS</td><td>Scheduled volume, transport system</td><td>Scheduling</td></tr>
+          <tr><td>TAS → ERP BOL confirmation</td><td>TAS (Toptech/Implico) → ERP TD/HPM</td><td>Actual loaded qty, temp/density, BOL#, eBOL</td><td>Fulfilment</td></tr>
+          <tr><td>Actual vs scheduled volume</td><td>TAS → ERP</td><td>GOV/GSV/NSV, VCF, meter reading</td><td>Fulfilment, billing</td></tr>
+          <tr><td>Delivery/consumption → billing</td><td>VMI/telematics/retail POS → ERP</td><td>Tank readings, consignment consumption</td><td>Billing</td></tr>
+          <tr><td>Card/IATA settlement</td><td>Card network / IATA SIS → ERP FI</td><td>Transaction file, IS-XML e-invoice, ICH clearing</td><td>Collection</td></tr>
+          <tr><td>Exchange netting</td><td>ERP EXG ↔ partner</td><td>LIA, balances, fees, net-out</td><td>Collection, close</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ===================== SECTION 5 ===================== -->
+    <section id="s5">
+      <div class="sec-head">
+        <span class="idx">05</span>
+        <div>
+          <h3>Downstream Operational Exceptions &amp; Risk Management</h3>
+          <p class="desc">Seven critical edge cases unique to hydrocarbon fulfilment — and step-by-step how O2C resolves them.</p>
+        </div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 01</p>
+        <h4>Temperature-driven volume variance &amp; gross-vs-net billing dispute</h4>
+        <div class="scen"><b>Scenario:</b> A customer loads product measured at ambient temperature. The BOL shows gross observed volume; the contract requires net standard volume at 15&deg;C/60&deg;F. The customer's receiving gauge disagrees.</div>
+        <ol>
+          <li>Capture gross observed volume (GOV) at the rack meter plus observed temperature and density/API gravity.</li>
+          <li>Apply the ASTM D1250 / API MPMS Ch. 11.1 volume correction factor (VCF/CTL) to derive gross standard volume (GSV), then deduct BS&amp;W to get net standard volume (NSV).</li>
+          <li>IS-Oil HPM re-derives the quantity from the material's conversion group and QCI table; the invoice is issued on NSV.</li>
+          <li>If disputed, reconcile both parties' temperature and density readings against the certified tank strapping table and meter calibration; adjust with a credit/debit memo and a variance reason code.</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> The contract must explicitly state gross vs net basis and the standard temperature; rack billing (often gross) and bulk billing (often net) must be flagged to avoid basis mismatch.</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 02</p>
+        <h4>Loss/gain reconciliation (evaporation / shrinkage / theft)</h4>
+        <div class="scen"><b>Scenario:</b> End-of-period terminal book stock does not equal physical stock.</div>
+        <ol>
+          <li>Compute Loss/Gain = Closing Inventory + Deliveries − Beginning Inventory − Receipts.</li>
+          <li>Classify causes: measurement/ticketing inaccuracy, temperature-driven apparent variance, evaporation (floating-roof loss leeway roughly ±0.2% of throughput for petrol, ±0.15% for diesel), clingage/ROB, admixture shrinkage, or theft/abuse.</li>
+          <li>Compare against tolerance; verify ATG values by monthly manual gauging with a calibrated tape.</li>
+          <li>IS-Oil posts gain/loss to dedicated accounts; two-step transfers with profit/loss determination handle in-transit differences.</li>
+          <li>Out-of-tolerance variance triggers investigation (leak test, meter recalibration, security review).</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> Daily/weekly/monthly/annual reconciliation cadence with defined loss tolerances per product.</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 03</p>
+        <h4>Provisional-to-final price finalization &amp; index restatement</h4>
+        <div class="scen"><b>Scenario:</b> Product invoiced provisionally; the formula references an index average over a pricing period that closes after delivery, or the agency restates an assessment.</div>
+        <ol>
+          <li>At delivery, invoice at a provisional price (e.g. forward curve or prior average).</li>
+          <li>When the quotation period closes, F&amp;A recomputes the final price and issues a settlement invoice/credit for the difference plus contractual interest.</li>
+          <li>If Platts/Argus restates a published assessment, re-run the formula and settle the delta.</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> Master data must lock quotation source, period and rounding; a retroactive settlement window (e.g. ~20 calendar days plus interest) defined in the contract.</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 04</p>
+        <h4>Exchange imbalance settlement</h4>
+        <div class="scen"><b>Scenario:</b> Two partners have exchanged product at different locations; monthly volumes lifted do not balance.</div>
+        <ol>
+          <li>IS-Oil EXG tracks each partner's logical inventory via Logical Inventory Adjustment (LIA) documents (movement- or balance-based).</li>
+          <li>At month-end settlement, the system lists exchanged materials and fees and balances the logical inventory.</li>
+          <li>Imbalance is settled either by movement (inventory) netting (deliver product to square) or financial netting (cash AP/AR).</li>
+          <li>Borrow/loan positions appear as negative stock on the exchange plant until squared (transfer posting movement types 301/302).</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> The netting agreement must define whether settlement is physical or financial and prohibit netting of unrelated claims (e.g. quality claims and interest excluded).</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 05</p>
+        <h4>Credit limit breach mid-fulfilment</h4>
+        <div class="scen"><b>Scenario:</b> Between order creation and rack loading, a daily index rise pushes the order value above the customer's available credit.</div>
+        <ol>
+          <li>Dynamic exposure revalues open orders at the current index price.</li>
+          <li>When exposure exceeds the limit, the credit engine sets a block that propagates to the TAS, preventing gantry authorization.</li>
+          <li>Back office reviews: request prepayment, draw on LC/guarantee, or grant a temporary limit increase with documented approval.</li>
+          <li>On release, the block clears and the TAS authorizes loading.</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> Real-time credit-to-TAS integration; SoD between credit release and sales.</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 06</p>
+        <h4>Off-spec / contamination quality claim</h4>
+        <div class="scen"><b>Scenario:</b> Delivered fuel fails spec (e.g. jet-fuel water/particulate, cross-grade contamination, high sulphur).</div>
+        <ol>
+          <li>Retain samples and test against the contracted spec (e.g. ATA103 / JIG for jet fuel; water tests per the aviation fuel supply model agreement).</li>
+          <li>Notify within the contractual claim window (short-delivery within 15 days, quality within 30 days; signature on the delivery note is not a waiver).</li>
+          <li>Quantify remediation (re-blend, downgrade, disposal) and issue credit or replacement.</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> Spec master and test-result capture; claim-window master data; segregation of quality sign-off.</div>
+      </div>
+
+      <div class="exc">
+        <p class="en">Exception 07</p>
+        <h4>Tax jurisdiction / duty-status misassignment</h4>
+        <div class="scen"><b>Scenario:</b> Product removed as duty-suspended (bonded) but billed/moved as duty-paid, or the wrong tax jurisdiction is applied at the rack.</div>
+        <ol>
+          <li>IS-Oil TDP handling type governs ED status at FROM/TO location; the tax engine (Vertex) determines jurisdiction from ship-to/terminal.</li>
+          <li>On misassignment, reverse the material/accounting document; re-post with the correct handling type and duty status.</li>
+          <li>For the US, correct Form 720/720-TO position-holder reporting; for exemptions, validate the exemption certificate / dyed-diesel status (dyed diesel = 0.1&cent;/gal LUST vs 24.4&cent; clear — a large exposure if misclassified).</li>
+          <li>Settle any excise liability/claim delta with the tax office.</li>
+        </ol>
+        <div class="ctrl"><b>Control:</b> Exemption-certificate master, handling-type determination rules, and real-time tax-engine calls with jurisdiction validation.</div>
+      </div>
+    </section>
+
+    <!-- ===================== RECOMMENDATIONS ===================== -->
+    <section id="rec">
+      <div class="sec-head">
+        <span class="idx">R</span>
+        <div><h3>Recommendations</h3></div>
+      </div>
+      <div class="callout">
+        <h4>Design principles for the target architecture</h4>
+        <ol>
+          <li><strong>Anchor on SAP S/4HANA for Oil &amp; Gas (IS-Oil Downstream)</strong> as the O2C system of record — activate HPM, TDP, EXG, TD, TSW, MAP/F&amp;A and MCOE/SSR. Do not attempt to replicate hydrocarbon quantity conversion or excise handling in a generic ERP; IS-Oil extends the standard sales document precisely because pricing, tax and quantity conversion behave differently from SAP standard.</li>
+          <li><strong>Externalize tax to a dedicated engine</strong> (Vertex O Series or equivalent) with real-time determination at order and billing, and maintain exemption certificates and jurisdiction master centrally — essential given the multi-layer stack (federal excise, LUST, state motor-fuel, VAT/GST, environmental) and duty-suspension rules.</li>
+          <li><strong>Integrate TAS bidirectionally in real time</strong> (BOL confirmation, actual vs scheduled volume, credit-block-to-gantry). This is the highest-value integration because it closes the physical-to-financial gap and is the source of net-volume billing accuracy.</li>
+          <li><strong>Engineer exceptions as first-class processes</strong> (loss/gain, gross/net, provisional pricing, exchange netting, demurrage, quality, duty-status) with reason codes, tolerances and audit trails — not as manual workarounds.</li>
+          <li><strong>Stand up MDM &amp; governance before go-live</strong>: business-partner, material/spec, pricing/index, terminal/tank/strapping, tax/excise and exchange-partner domains with named stewards and SoD. The UoM group cannot be changed once stock is posted, so material-master conversion setup must be right first time.</li>
+          <li><strong>Stage the rollout</strong>: pilot one channel (wholesale/rack) end-to-end, validate net-volume billing accuracy and tax posting, then extend to retail (consignment/wetstock), aviation (IATA SIS/ICH), marine (BDN/MFM — mandates now in force at Rotterdam &amp; Antwerp-Bruges from 1 Jan 2026) and lubricants (rebate). <em>Thresholds that would change the plan:</em> if loss/gain persistently exceeds product tolerance (~±0.2% petrol / ±0.15% diesel), halt and remediate measurement/master data first; if tax-determination error exceeds internal audit thresholds, freeze billing automation until reconciled; if credit-block latency to the TAS is not near-real-time, do not automate rack authorization.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== CAVEATS ===================== -->
+    <section id="cav">
+      <div class="sec-head">
+        <span class="idx">C</span>
+        <div><h3>Caveats &amp; Source Notes</h3></div>
+      </div>
+      <div class="callout warn">
+        <h4>Validate before promoting to an approved baseline</h4>
+        <ul>
+          <li>Some SAP table/transaction-code and movement-type details (e.g. OIH01/OIH2/OIH4 excise tables, 301/302 borrow-loan movements, LIA document types) are corroborated by SAP Community and third-party SAP data-dictionary mirrors rather than first-party SAP Help pages, and should be validated against the specific release in use.</li>
+          <li>US federal fuel-tax rates cited (18.4&cent; gasoline, 24.4&cent; diesel/kerosene, 0.1&cent; LUST, 4.4&cent;/21.9&cent; jet) are current per IRS Publication 510 and CRS R48948, but state/provincial excise, environmental fees, dyed-diesel rules, IFTA and EU/UK duty-suspension regimes vary by jurisdiction and change over time; confirm per operating country. Recent US legislation added dyed-diesel claim provisions and §45Z clean-fuel credits — verify applicability.</li>
+          <li>Evaporation-loss tolerance figures are indicative ranges from published academic/industry studies, not universal legal limits; set company-specific tolerances.</li>
+          <li>Pricing-agency methodologies (Platts/Argus/OPIS) evolve; verify current symbols and methodologies before hard-coding formula references. Argus/Platts operate at the spot level and OPIS/DTN at the rack level — index selection must match the contract's reference market.</li>
+          <li>Marine MFM regulatory timeline: Singapore mandatory since 1 Jan 2017; Rotterdam and Antwerp-Bruges from 1 Jan 2026 per industry reporting — confirm scope (fuel grades covered) per port.</li>
+        </ul>
+      </div>
+
+      <div class="foot">
+        <b>EPM · Downstream Business Architecture (Workstream 2)</b><br>
+        Source precedence: general industry knowledge (Level 9) and observed system logic — <b>research evidence, not an approved canonical artifact.</b> Promote into the Downstream Business Architecture register before treating as baseline.<br>
+        Document type: Enterprise Architecture Reference · Status: Candidate for promotion · Format: self-contained HTML.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ---------- reading progress ----------
+  const bar=document.getElementById('progress');
+  document.addEventListener('scroll',()=>{
+    const h=document.documentElement;
+    const p=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    bar.style.width=Math.min(100,p)+'%';
+  },{passive:true});
+
+  // ---------- active TOC via IntersectionObserver ----------
+  const links=[...document.querySelectorAll('#toc a')];
+  const map=Object.fromEntries(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        (map[e.target.id]||{}).classList?.add('active');
+      }
+    });
+  },{rootMargin:'-15% 0px -70% 0px',threshold:0});
+  document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
+
+  // close mobile nav on link click
+  links.forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('nav-open')));
+
+  // ---------- expand / collapse all ----------
+  function setAll(open){document.querySelectorAll('.pillar').forEach(d=>d.open=open);}
+
+  // ---------- search + highlight ----------
+  const input=document.getElementById('search');
+  const meta=document.getElementById('searchmeta');
+  const root=document.getElementById('content');
+  let marks=[],cur=-1;
+
+  function clearMarks(){
+    marks.forEach(m=>{const p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize();});
+    marks=[];cur=-1;
+  }
+  function walk(node,term){
+    if(node.nodeType===3){
+      const t=node.nodeValue,low=t.toLowerCase();let i=low.indexOf(term);
+      if(i===-1)return;
+      const frag=document.createDocumentFragment();let last=0;
+      while(i!==-1){
+        frag.appendChild(document.createTextNode(t.slice(last,i)));
+        const mk=document.createElement('mark');mk.textContent=t.slice(i,i+term.length);
+        frag.appendChild(mk);marks.push(mk);last=i+term.length;i=low.indexOf(term,last);
+      }
+      frag.appendChild(document.createTextNode(t.slice(last)));
+      node.parentNode.replaceChild(frag,node);
+    } else if(node.nodeType===1 && !/^(SCRIPT|STYLE|MARK)$/.test(node.tagName)){
+      [...node.childNodes].forEach(c=>walk(c,term));
+    }
+  }
+  function jump(n){
+    if(!marks.length)return;
+    if(cur>-1)marks[cur].classList.remove('cur');
+    cur=(n+marks.length)%marks.length;
+    const m=marks[cur];m.classList.add('cur');
+    // open any collapsed pillar containing the match
+    let p=m.closest('.pillar');if(p)p.open=true;
+    m.scrollIntoView({behavior:'smooth',block:'center'});
+    meta.textContent=(cur+1)+' / '+marks.length+' matches';
+  }
+  let deb;
+  input.addEventListener('input',()=>{
+    clearTimeout(deb);
+    deb=setTimeout(()=>{
+      clearMarks();
+      const term=input.value.trim().toLowerCase();
+      if(term.length<2){meta.textContent='';return;}
+      walk(root,term);
+      meta.textContent=marks.length?marks.length+' matches — Enter to cycle':'no matches';
+      if(marks.length)jump(0);
+    },180);
+  });
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){e.preventDefault();jump(cur+(e.shiftKey?-1:1));}
+  });
+</script>
+</body>
+</html>

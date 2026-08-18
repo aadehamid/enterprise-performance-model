@@ -1,0 +1,9 @@
+party_id,party_name,legal_name,party_class,tax_id,hq_city,hq_state
+APEX-PAYER,Apex Fuels LLC,Apex Fuels LLC,marketer,76-4412901,Houston,TX
+APEX-HOU,Apex Fuels Houston Rack,Apex Fuels LLC — Houston Rack Desk,wholesale_rack,76-4412901,Houston,TX
+APEX-DAL,Apex Fuels Dallas Dealer,Apex Fuels LLC — Dallas Dealer Network,dealer,76-4412901,Dallas,TX
+APEX-BILL,Apex Fuels LLC Accounts Payable,Apex Fuels LLC,shared_services,76-4412901,Houston,TX
+GCA,Gulf Coast Aviation Inc,Gulf Coast Aviation Inc,aviation,72-8831044,Houston,TX
+METRO-PAYER,Metro Lubricants,Metro Lubricants Company,distributor,74-2291880,Beaumont,TX
+METRO-BMT,Metro Lubes Beaumont,Metro Lubricants Company — Beaumont,distributor_site,74-2291880,Beaumont,TX
+METRO-BILL,Metro Lubricants Shared Services,Metro Lubricants Company,shared_services,74-2291880,Beaumont,TX

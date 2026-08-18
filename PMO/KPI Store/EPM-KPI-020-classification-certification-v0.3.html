@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-KPI-020 — KPI Classification &amp; Certification Framework v0.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B131C; --panel:#111C28; --panel-2:#16232F;
+  --line:#233444; --line-soft:#1B2A38;
+  --ink:#DCE6EF; --ink-dim:#93A6B8; --ink-faint:#63798C;
+  --amber:#E8A33D; --amber-dim:#8A6427;
+  --green:#5FB98A; --red:#D9645E; --blue:#5B93C4; --violet:#9B87C4;
+  --display:"Space Grotesk",'Segoe UI',system-ui,sans-serif;
+  --body:"IBM Plex Sans",'Segoe UI',system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'Cascadia Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 500px at 12% -8%, rgba(232,163,61,.07), transparent 60%),
+             radial-gradient(900px 480px at 92% 4%, rgba(91,147,196,.06), transparent 62%)}
+.wrap{position:relative;z-index:1}
+
+.topbar{position:sticky;top:0;z-index:60;background:rgba(11,19,28,.93);
+  backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1340px;margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.tb-id{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;color:var(--amber);
+  border:1px solid var(--amber-dim);padding:3px 9px;border-radius:2px;white-space:nowrap}
+.tb-title{font-family:var(--display);font-weight:500;font-size:14px;color:var(--ink-dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-spacer{flex:1}
+#q{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:var(--body);
+  font-size:13px;padding:6px 11px;border-radius:2px;width:215px;outline:none}
+#q:focus{border-color:var(--amber-dim)}
+#q::placeholder{color:var(--ink-faint)}
+.hitcount{font-family:var(--mono);font-size:11px;color:var(--ink-faint);min-width:74px}
+
+.shell{max-width:1340px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:34px;padding:0 22px 90px}
+nav.side{position:sticky;top:56px;align-self:start;max-height:calc(100vh - 72px);overflow-y:auto;
+  padding:26px 0 40px;border-right:1px solid var(--line-soft);scrollbar-width:thin}
+nav.side h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-faint);margin:20px 0 8px;font-weight:500}
+nav.side a{display:block;padding:5px 12px 5px 10px;color:var(--ink-dim);text-decoration:none;
+  font-size:13.2px;border-left:2px solid transparent}
+nav.side a:hover{color:var(--ink);background:var(--panel)}
+nav.side a.on{color:var(--amber);border-left-color:var(--amber);background:rgba(232,163,61,.05)}
+nav.side a .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-right:7px}
+main{padding-top:26px;min-width:0}
+
+.hero{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel) 0%, #0E1822 100%);
+  padding:30px 32px 26px;margin-bottom:34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.hero h1{font-family:var(--display);font-size:32px;line-height:1.16;margin:0 0 12px;font-weight:700;letter-spacing:-.015em}
+.hero p.lede{color:var(--ink-dim);max-width:74ch;margin:0 0 20px;font-size:16px}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.ctrl div{background:var(--panel-2);padding:9px 13px}
+.ctrl dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px}
+.ctrl dd{margin:0;font-size:13.5px;color:var(--ink)}
+
+section{margin-bottom:52px;scroll-margin-top:96px}
+section > h2{font-family:var(--display);font-size:23px;font-weight:700;letter-spacing:-.01em;
+  margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:13px;flex-wrap:wrap}
+section > h2 .num{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+.sub{color:var(--ink-dim);margin:10px 0 22px;max-width:82ch}
+h3{font-family:var(--display);font-size:16.5px;font-weight:500;margin:30px 0 10px;color:var(--ink)}
+h4{font-family:var(--display);font-size:14px;font-weight:500;margin:20px 0 7px;color:var(--ink-dim)}
+p{margin:0 0 13px}
+ul,ol{margin:0 0 14px;padding-left:21px}
+li{margin-bottom:5px}
+code{font-family:var(--mono);font-size:12.5px;color:var(--amber);background:rgba(232,163,61,.08);padding:1px 5px;border-radius:2px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);margin:16px 0 22px}
+table{border-collapse:collapse;width:100%;font-size:13.4px;min-width:660px}
+thead th{background:var(--panel-2);text-align:left;padding:9px 12px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);font-weight:500;
+  border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-dim)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.018)}
+tbody td:first-child{color:var(--ink)}
+td .ref,.ref{font-family:var(--mono);font-size:11.5px;color:var(--amber);white-space:nowrap}
+td strong{color:var(--ink);font-weight:600}
+
+.b{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid;border-radius:2px;white-space:nowrap;display:inline-block}
+.b-draft{color:var(--ink-dim);border-color:var(--line)}
+.b-cand,.b-blue{color:var(--blue);border-color:#2C4C68}
+.b-appr,.b-green{color:var(--green);border-color:#2E5C46}
+.b-none{color:var(--ink-faint);border-color:var(--line-soft)}
+.b-red,.b-hi{color:var(--red);border-color:#5C3230}
+.b-md,.b-amber{color:var(--amber);border-color:var(--amber-dim)}
+.b-lo{color:var(--ink-dim);border-color:var(--line)}
+.b-new{color:var(--violet);border-color:#4A3D66}
+
+.call{border-left:3px solid var(--amber);background:rgba(232,163,61,.055);padding:14px 18px;margin:18px 0;font-size:14.4px}
+.call.blue{border-left-color:var(--blue);background:rgba(91,147,196,.055)}
+.call.red{border-left-color:var(--red);background:rgba(217,100,94,.055)}
+.call.green{border-left-color:var(--green);background:rgba(95,185,138,.05)}
+.call.violet{border-left-color:var(--violet);background:rgba(155,135,196,.06)}
+.call b{color:var(--ink);display:block;margin-bottom:5px;font-family:var(--display);font-size:13.5px}
+.call p:last-child{margin-bottom:0}
+
+.plain{border:1px dashed var(--line);padding:12px 16px;margin:14px 0;font-size:14px;color:var(--ink-dim)}
+.plain b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:5px}
+
+details.card{border:1px solid var(--line);background:var(--panel);margin:11px 0}
+details.card > summary{cursor:pointer;padding:13px 17px;list-style:none;display:flex;align-items:center;
+  gap:13px;font-family:var(--display);font-size:14.8px;color:var(--ink);flex-wrap:wrap}
+details.card > summary::-webkit-details-marker{display:none}
+details.card > summary::before{content:"+";font-family:var(--mono);color:var(--amber);font-size:15px;width:12px}
+details.card[open] > summary::before{content:"−"}
+details.card[open] > summary{border-bottom:1px solid var(--line-soft);background:var(--panel-2)}
+details.card > summary:hover{background:var(--panel-2)}
+details.card .body{padding:16px 20px 6px}
+.wsmeta{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto}
+
+.tree{border:1px solid var(--line);margin:18px 0}
+.tree .step{display:grid;grid-template-columns:52px 1fr 132px;border-bottom:1px solid var(--line-soft)}
+.tree .step:last-child{border-bottom:none}
+.tree .n{background:var(--panel-2);padding:12px 10px;font-family:var(--mono);font-size:12px;color:var(--amber);
+  border-right:1px solid var(--line-soft);text-align:center}
+.tree .q{padding:12px 15px;font-size:14px;color:var(--ink-dim)}
+.tree .q b{color:var(--ink);display:block;margin-bottom:3px;font-family:var(--display);font-size:14.2px}
+.tree .o{padding:12px 13px;font-size:12.3px;color:var(--ink-dim);border-left:1px solid var(--line-soft);
+  background:rgba(255,255,255,.012)}
+
+.funnel{border:1px solid var(--line);margin:18px 0}
+.funnel .f{display:grid;grid-template-columns:1fr 96px;border-bottom:1px solid var(--line-soft);align-items:center}
+.funnel .f:last-child{border-bottom:none}
+.funnel .fl{padding:10px 15px;font-size:13.8px;color:var(--ink-dim)}
+.funnel .fl b{color:var(--ink)}
+.funnel .fb{padding:10px 13px;font-family:var(--mono);font-size:11.5px;color:var(--amber);
+  border-left:1px solid var(--line-soft);text-align:right}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0}
+.duo > div{background:var(--panel);padding:16px 19px}
+.duo h4{margin-top:0;font-size:14.5px;color:var(--ink)}
+.duo .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:6px}
+
+.xref{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:var(--panel-2);
+  padding:10px 15px;margin:16px 0;font-size:13.6px;color:var(--ink-dim)}
+.xref span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);border:1px solid var(--amber-dim);padding:2px 8px;border-radius:2px;white-space:nowrap}
+
+mark{background:rgba(232,163,61,.32);color:#fff;padding:0 2px;border-radius:1px}
+.hidden{display:none !important}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0;color:var(--ink-faint);font-size:12.5px}
+
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.side{position:static;border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:18px;max-height:200px}
+  .hero h1{font-size:25px}
+  #q{width:150px}
+  .duo{grid-template-columns:1fr}
+  .tree .step{grid-template-columns:44px 1fr}
+  .tree .o{grid-column:1 / -1;border-left:none;border-top:1px solid var(--line-soft)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  body{background:#fff;color:#000}
+  body::before{display:none}
+  .topbar,nav.side{display:none}
+  .shell{grid-template-columns:1fr;padding:0}
+  details.card{border-color:#bbb}
+  details.card > summary{background:#f4f4f4}
+  details:not([open]) > *:not(summary){display:block !important}
+  tr{page-break-inside:avoid}
+  a{color:#000;text-decoration:none}
+  .call{border-left-color:#666;background:#f7f7f7}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="tb-id">EPM-KPI-020 · v0.3 · DRAFT</span>
+    <span class="tb-title">KPI Classification &amp; Certification Framework</span>
+    <span class="tb-spacer"></span>
+    <input id="q" type="search" placeholder="Filter classes, tests, risks…" autocomplete="off">
+    <span class="hitcount" id="hits"></span>
+  </div>
+</div>
+
+<div class="shell">
+
+<nav class="side" id="nav">
+  <h4>Framing</h4>
+  <a href="#s1"><span class="n">01</span>Why this exists</a>
+  <a href="#s2"><span class="n">02</span>Fixing the taxonomy</a>
+  <h4>Classification</h4>
+  <a href="#s3"><span class="n">03</span>Normalise first</a>
+  <a href="#s4"><span class="n">04</span>The decision tree</a>
+  <a href="#s5"><span class="n">05</span>The nine kinds</a>
+  <a href="#s6"><span class="n">06</span>The KPI qualification test</a>
+  <h4>Certification</h4>
+  <a href="#s7"><span class="n">07</span>The ladder</a>
+  <a href="#s8"><span class="n">08</span>SME review protocol</a>
+  <a href="#s9"><span class="n">09</span>Store client validation</a>
+  <a href="#s10"><span class="n">10</span>Awkward cases</a>
+  <h4>Running it</h4>
+  <a href="#s11"><span class="n">11</span>The funnel</a>
+  <a href="#s12"><span class="n">12</span>Output templates</a>
+  <a href="#s13"><span class="n">13</span>Risks</a>
+  <a href="#s14"><span class="n">14</span>Decisions &amp; questions</a>
+  <a href="#s15"><span class="n">15</span>Glossary</a>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="eyebrow">Workstream 1 · KPI Store · Method</div>
+  <h1>Deciding what is actually<br>a KPI, and proving it</h1>
+  <p class="lede">A repeatable way to take an inventory of extracted calculations and sort it: what to promote,
+  what to keep as a measure, what to consolidate, what to retire — and then how to move the survivors from
+  unvalidated report logic to certified enterprise KPI without pretending a review is an approval.</p>
+  <dl class="ctrl">
+    <div><dt>Artifact ID</dt><dd>EPM-KPI-020 <span class="b b-new">proposed</span></dd></div>
+    <div><dt>Version</dt><dd>0.3 — supersedes v0.2 (v0.2 kept: MetricFlow-as-programme-compiler snapshot)</dd></div>
+    <div><dt>Status</dt><dd><span class="b b-draft">Draft v0.3</span></dd></div>
+    <div><dt>Revision</dt><dd>14 Aug 2026</dd></div>
+    <div><dt>Owner</dt><dd>EPM Lead</dd></div>
+    <div><dt>Applies to</dt><dd>The full extracted calculation inventory</dd></div>
+    <div><dt>Companion to</dt><dd>EPM-KPI-000 v0.3 · EPM-DEL-003 v0.3</dd></div>
+    <div><dt>Depends on</dt><dd>EPM-MEAS-001 taxonomy</dd></div>
+    <div><dt>Source tier</dt><dd>9 unless stated</dd></div>
+  </dl>
+</div>
+
+<!-- 01 -->
+<section id="s1">
+  <h2><span class="num">01</span>Why this exists</h2>
+  <p class="sub">The inventory is complete. Nothing in it has governance status. This framework is how the
+  inventory becomes a catalog.</p>
+
+  <p>Every extracted calculation currently sits at Tier 8 — unvalidated report logic — regardless of how widely
+  it was used or how confidently it was named. The job is to sort it, promote a subset, and give the rest a
+  home that is not the bin. Three things make that hard, and this document exists to handle each:</p>
+
+  <ul>
+    <li><strong>The word "KPI" was applied by whoever built the report.</strong> A calculation named
+    "Throughput KPI" is evidence that someone called it that, nothing more.</li>
+    <li><strong>Classification is a judgement, and judgements need stated criteria</strong> or they become
+    arguments about who is more senior.</li>
+    <li><strong>Reviewing is not approving.</strong> Two validation steps are planned; neither creates an
+    accountable owner. Only a governance act does.</li>
+  </ul>
+
+  <div class="call">
+    <b>The one-sentence purpose</b>
+    <p>Turn "here are all the calculations we found" into a defensible register where every item has a
+    classification, a disposition, a rationale, and a named next step.</p>
+  </div>
+
+  <div class="call green">
+    <b>Say this early and often: classification is not deletion</b>
+    <p>Most calculations will not become KPIs. Almost all of them still get a home — the Enterprise Measurement
+    Catalog, a local report scope, or a documented retirement. <strong>"Not a KPI" is a routing decision, not a
+    verdict on someone's work.</strong> Teams that hear the second thing rather than the first stop cooperating
+    around session three, and the review never recovers.</p>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="s2">
+  <h2><span class="num">02</span>Fixing the taxonomy before using it</h2>
+  <p class="sub">The Charter's twelve classes are the right content in the wrong shape. Used as written, they
+  produce classification arguments that are really axis confusion.</p>
+
+  <h3>The problem</h3>
+  <p>The twelve classes mix three independent questions into one list:</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Charter class</th><th>Is actually a…</th></tr></thead>
+    <tbody>
+      <tr><td>Raw measure · Business measure · Derived measure · Operational metric · Diagnostic metric · Performance indicator · Technical calculation · Presentation-only calculation</td><td><strong>Kind</strong> — what sort of thing it is</td></tr>
+      <tr><td>Candidate KPI · Approved enterprise KPI · Obsolete or retired</td><td><strong>Governance state</strong> — where it sits on the ladder</td></tr>
+      <tr><td>Duplicate or near-duplicate</td><td><strong>Disposition</strong> — what we are going to do with it</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>Used as a single list, this forces false choices. Is a duplicate of an approved KPI a "duplicate" or an
+  "approved KPI"? Both — on different axes. Is a candidate KPI still a performance indicator? Yes. The list
+  cannot express that, so people argue.</p>
+
+  <h3>The fix — three independent axes</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Axis</th><th>Question</th><th>Values</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kind</strong></td><td>What sort of thing is this?</td><td>Presentation-only · Technical calculation · Raw measure · Business measure · Derived measure · Operational metric · Diagnostic metric · Performance indicator · KPI</td></tr>
+      <tr><td><strong>Disposition</strong></td><td>What do we do with it?</td><td>Promote · Consolidate into another · Retain locally · Reference only · Retire</td></tr>
+      <tr><td><strong>Governance state</strong></td><td>Where is it on the ladder?</td><td>Extracted · Classified · Candidate · Approved · Implemented · Superseded · Retired</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call blue">
+    <b>Why this is worth the amendment</b>
+    <p>Every item gets three values instead of one, and each is a separate, answerable question. "This is a
+    <em>derived measure</em>, disposition <em>consolidate into MEAS-114</em>, state <em>classified</em>" is
+    unambiguous and reviewable. "This is a duplicate" is not. The Charter's content is preserved entirely —
+    only the structure changes. Decision DC-01.</p>
+    <p>These three axes are an <strong>inventory taxonomy</strong> for extracted calculations. They are not
+    the Constraints four property axes (authority, hardness, horizon, constrained object), and they are not
+    a meaning taxonomy. Meaning is authored in the ontology and signed at G3/G4 CV/CQ. Batching by business
+    area is for review stamina only — it is not a domain boundary.</p>
+  </div>
+
+  <div class="plain"><b>The one-line explanation</b>
+  Kind is what it <em>is</em>. Disposition is what happens to it. State is how far through governance it has
+  travelled. Nothing is lost by separating them, and the arguments mostly disappear.</div>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <h2><span class="num">03</span>Normalise before classifying</h2>
+  <p class="sub">Classifying an un-normalised inventory means classifying the same calculation eleven times and
+  getting inconsistent answers. Normalisation comes first, and its hardest problem is near-duplicates.</p>
+
+  <h3>Normalisation steps</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>#</th><th>Step</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">N-1</span></td><td><strong>Syntactic normalisation</strong></td><td>Strip whitespace, standardise casing, resolve aliases, normalise operator ordering and parenthesisation. Catches trivially identical formulas written by different hands</td></tr>
+      <tr><td><span class="ref">N-2</span></td><td><strong>Source-field resolution</strong></td><td>Resolve every referenced field to its physical source. Two formulas that look different may reference the same columns; two that look identical may not</td></tr>
+      <tr><td><span class="ref">N-3</span></td><td><strong>Semantic equivalence grouping</strong></td><td>Different expressions producing the same result — <code>a/b*100</code> and <code>100*(a/b)</code>, or a sum-of-differences versus a difference-of-sums</td></tr>
+      <tr><td><span class="ref">N-4</span></td><td><strong>Name clustering</strong></td><td>Group by name similarity as a <em>hint only</em> — never as evidence. See the rule below</td></tr>
+      <tr><td><span class="ref">N-5</span></td><td><strong>Result comparison</strong></td><td>Where data is available, execute candidates over the same period and compare. The only definitive test</td></tr>
+      <tr><td><span class="ref">N-6</span></td><td><strong>Variant recording</strong></td><td>Where candidates are <em>not</em> equivalent, record precisely how they differ. This difference is usually the most valuable finding in the whole exercise</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call red">
+    <b>The near-duplicate rule</b>
+    <p><strong>Never merge on name similarity alone.</strong> Two calculations both called "Refinery Throughput"
+    that differ by one excluded product code, one date-boundary convention, or one unit basis are
+    <em>not duplicates</em> — they are two different measures with the same name, and merging them destroys a
+    real business distinction that someone deliberately created.</p>
+    <p>Merge only on <strong>formula equivalence plus source equivalence plus filter equivalence</strong>. Where
+    two candidates differ, both survive as separate items and the difference is logged as a definitional
+    conflict for the SME review. Decision DC-03.</p>
+  </div>
+
+  <div class="call violet">
+    <b>The finding hiding in the variants</b>
+    <p>Near-duplicates that differ subtly are the strongest evidence you will find of the definitional drift the
+    whole initiative exists to fix. Six variants of "loss" across four reports is not a data quality problem —
+    it is six teams having six different conversations about the same word, and it is exactly what the
+    Store catalog is meant to resolve. Surface these deliberately in the SME review rather than
+    quietly picking one.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="s4">
+  <h2><span class="num">04</span>The classification decision tree</h2>
+  <p class="sub">Ask the cheapest and most eliminating questions first. Most of the inventory exits in the first
+  three steps, which is what makes the exercise tractable.</p>
+
+  <div class="tree">
+    <div class="step">
+      <div class="n">1</div>
+      <div class="q"><b>Is it a presentation artifact?</b>Colour rules, labels, sort keys, tooltip text, formatting strings, display flags. Produces appearance, not a business number.</div>
+      <div class="o"><strong>Yes →</strong> Presentation-only. Retire. <em>But see the extraction rule below.</em></div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div class="q"><b>Is it a technical helper?</b>Row indexes, join keys, parameter placeholders, filter flags, date scaffolding, sequence numbers. Exists to make the report work.</div>
+      <div class="o"><strong>Yes →</strong> Technical calculation. Retire.</div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div class="q"><b>Is it equivalent to something already classified?</b>Formula, source, and filters all equivalent — per §03.</div>
+      <div class="o"><strong>Yes →</strong> Disposition: consolidate. Record the target.</div>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <div class="q"><b>Does it produce a number a business person would recognise as meaning something?</b>If you cannot state what it means in one business sentence, it does not pass.</div>
+      <div class="o"><strong>No →</strong> Technical calculation. Retire.</div>
+    </div>
+    <div class="step">
+      <div class="n">5</div>
+      <div class="q"><b>Does it come directly from source with no transformation?</b>A count, a sum, a value read as-is.</div>
+      <div class="o"><strong>Yes →</strong> Raw measure. Catalog it.</div>
+    </div>
+    <div class="step">
+      <div class="n">6</div>
+      <div class="q"><b>Is it a straightforward business aggregate of raw measures?</b>Total volume sold. Number of deliveries.</div>
+      <div class="o"><strong>Yes →</strong> Business measure. Catalog it.</div>
+    </div>
+    <div class="step">
+      <div class="n">7</div>
+      <div class="q"><b>Is it computed from other measures?</b>Ratios, rates, variances, indices.</div>
+      <div class="o"><strong>Yes →</strong> Derived measure. Catalog it, then continue.</div>
+    </div>
+    <div class="step">
+      <div class="n">8</div>
+      <div class="q"><b>Is it watched over time, in context, by someone?</b>Not "could be" — is it actually monitored?</div>
+      <div class="o"><strong>Yes →</strong> Metric. Operational if it tracks running the business; diagnostic if it explains why something moved.</div>
+    </div>
+    <div class="step">
+      <div class="n">9</div>
+      <div class="q"><b>Does it indicate performance against an expectation?</b>There is a notion of better and worse, not just higher and lower.</div>
+      <div class="o"><strong>Yes →</strong> Performance indicator. Continue to the qualification test.</div>
+    </div>
+    <div class="step">
+      <div class="n">10</div>
+      <div class="q"><b>Does it pass the full KPI qualification test in §06?</b>All eleven criteria, evidenced.</div>
+      <div class="o"><strong>Yes →</strong> Candidate KPI.<br><strong>No →</strong> Performance indicator; record which criteria failed.</div>
+    </div>
+  </div>
+
+  <div class="call red">
+    <b>The extraction rule for step 1</b>
+    <p>Presentation-only calculations frequently <strong>encode real business logic that exists nowhere else</strong>
+    — most commonly a conditional colour rule that hard-codes a threshold. <code>IF value &lt; 0.97 THEN red</code>
+    is a governed threshold wearing a formatting costume.</p>
+    <p>Before retiring any presentation calculation, extract any embedded threshold, target, or business rule
+    and classify <em>that</em> separately. The formatting is presentation; the number inside it may be the only
+    surviving record of an agreed performance expectation. Risk RK-10.</p>
+  </div>
+
+  <div class="plain"><b>Steps 5–7 are not exits</b>
+  A calculation can be a derived measure <em>and</em> a performance indicator <em>and</em> a candidate KPI. The
+  measure classification says what it is built from; the later steps say what role it plays. Record the measure
+  class and keep going — the Enterprise Measurement Catalog needs the measure regardless of whether the KPI
+  survives.</div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <h2><span class="num">05</span>The nine kinds</h2>
+  <p class="sub">Each with a definition, a distinguishing test, and where it goes.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Kind</th><th>Definition</th><th>Test that distinguishes it</th><th>Destination</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Presentation-only</strong></td><td>Produces appearance, not a business number</td><td>Remove it — does any number change? If only the look changes, it is presentation</td><td>Retire, after extracting any embedded rule</td></tr>
+      <tr><td><strong>Technical calculation</strong></td><td>Exists to make the report function</td><td>Would a business person ever ask for this value? If not, technical</td><td>Retire</td></tr>
+      <tr><td><strong>Raw measure</strong></td><td>A value taken from source with no transformation</td><td>Does it require any business rule to compute? If not, raw</td><td>Measurement Catalog</td></tr>
+      <tr><td><strong>Business measure</strong></td><td>A straightforward aggregate with agreed meaning</td><td>Is it a sum, count, or simple aggregation of raw measures?</td><td>Measurement Catalog</td></tr>
+      <tr><td><strong>Derived measure</strong></td><td>Computed from other measures</td><td>Does it reference other measures rather than fields?</td><td>Measurement Catalog, with its component lineage</td></tr>
+      <tr><td><strong>Operational metric</strong></td><td>A measure tracked over time to run the business day to day</td><td>Does someone look at this on a recurring operational cadence?</td><td>Measurement Catalog, flagged as monitored</td></tr>
+      <tr><td><strong>Diagnostic metric</strong></td><td>A measure used to explain why something else moved</td><td>Is it consulted <em>after</em> another number moves, to understand it?</td><td>Measurement Catalog, linked to what it explains</td></tr>
+      <tr><td><strong>Performance indicator</strong></td><td>Indicates performance against an expectation, but lacks full KPI apparatus</td><td>Is there a notion of good and bad, but no owner, target, or defined action?</td><td>Measurement Catalog, flagged as a KPI candidate pending the missing criteria</td></tr>
+      <tr><td><strong>KPI</strong></td><td>A performance indicator that can meet certification: one name, one population, one formula, one grain, versioned, consumption-SL-only compile, Gold snapshot. Owner act necessary, not sufficient</td><td>The §06 test, all eleven criteria, plus terms already in a signed CV</td><td>Candidate KPI Register, then the Store catalog on certification. Figure and process KPIs stay in the Measurement Catalog</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call blue">
+    <b>The distinction most often collapsed</b>
+    <p><strong>Performance indicator versus KPI.</strong> Most of what an organisation calls its KPIs are
+    performance indicators — real, meaningful, watched, and missing an accountable owner or a defined action.
+    That is not a failing; it is the normal state of an ungoverned estate. The value of separating them is
+    that the gap becomes visible and fixable: "this is a performance indicator that needs an owner and a
+    threshold to become a KPI" is a specific, actionable finding.</p>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6">
+  <h2><span class="num">06</span>The KPI qualification test</h2>
+  <p class="sub">The Charter's eleven criteria, made checkable. Each needs a yes and evidence. Crucially, they
+  split into criteria <em>we</em> can assess and criteria only <em>the business</em> can supply — and that split
+  determines what each review step is for.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>#</th><th>Criterion</th><th>Evidence required</th><th>Assessed by</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">K-1</span></td><td>Defined business objective</td><td>A named objective the KPI serves, not a restatement of the KPI</td><td><span class="b b-amber">Business</span></td></tr>
+      <tr><td><span class="ref">K-2</span></td><td><strong>Accountable business owner</strong></td><td>A named individual who has accepted accountability. Not a department</td><td><span class="b b-amber">Business</span></td></tr>
+      <tr><td><span class="ref">K-3</span></td><td>Approved meaning, then certified formula</td><td>Business wording is <em>input</em> to CV/CQ — not the SoT. Ontology authors meaning; G3/G4 signed CV/CQ is the meaning SoT. Formula is authored by the formula author in the Store catalog + consumption semantic layer</td><td><span class="b b-amber">Ontology + formula author</span></td></tr>
+      <tr><td><span class="ref">K-4</span></td><td>Approved calculation, in executable form</td><td>The full field set from KPI-000 §05 — expression, bindings, aggregation, additivity, grain</td><td><span class="b b-blue">Us</span></td></tr>
+      <tr><td><span class="ref">K-5</span></td><td>Defined dimensions and time grain</td><td>Legal slicing dimensions and atomic grain, declared</td><td><span class="b b-blue">Us</span></td></tr>
+      <tr><td><span class="ref">K-6</span></td><td>Target or performance expectation</td><td>A value, with an owner and an effective period</td><td><span class="b b-amber">Business</span></td></tr>
+      <tr><td><span class="ref">K-7</span></td><td>Thresholds or evaluation logic</td><td>KPI-owner Thresholds (RAG) referencing a LimitValue. Constraint ≠ Threshold ≠ Breach ≠ Binding. Constraint authority = physics / permit / spec / SOL — not the KPI owner</td><td><span class="b b-amber">KPI owner</span></td></tr>
+      <tr><td><span class="ref">K-8</span></td><td>Management review cadence</td><td>A named forum and frequency that actually meets</td><td><span class="b b-amber">Business</span></td></tr>
+      <tr><td><span class="ref">K-9</span></td><td><strong>Defined action when it moves</strong></td><td>A stated decision or intervention. See the test below</td><td><span class="b b-amber">Business</span></td></tr>
+      <tr><td><span class="ref">K-10</span></td><td>Enterprise or cross-report significance</td><td>Used beyond one report or one team, or explicitly enterprise-designated</td><td><span class="b b-blue">Us</span></td></tr>
+      <tr><td><span class="ref">K-11</span></td><td>Feasible data quality and timeliness</td><td>Lineage complete to source; refresh meets the cadence in K-8</td><td><span class="b b-blue">Us</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call red">
+    <b>K-9 is the test that does the real work</b>
+    <p><strong>If nobody would do anything differently when this number changes, it is not a KPI.</strong></p>
+    <p>Ask it exactly that way, of a specific person, about a specific number: "It moves from 94 to 89. What
+    happens? Who does what?" A KPI produces a concrete answer — a review is triggered, a plan is changed,
+    someone is called. A performance indicator produces "well, we'd look into it." That difference is the whole
+    distinction, and it is the single most efficient question in this framework.</p>
+  </div>
+
+  <div class="duo">
+    <div>
+      <span class="tag">Four we assess</span>
+      <h4>K-4, K-5, K-10, K-11</h4>
+      <p>Executable definition, dimensions and grain, cross-report significance, data feasibility. All
+      determinable from the inventory, the lineage, and the platform. These should be complete
+      <strong>before</strong> the SME review, so the business is never asked to rule on something we could have
+      established ourselves.</p>
+    </div>
+    <div>
+      <span class="tag">Six only the business can supply</span>
+      <h4>K-1, K-2, K-6, K-7, K-8, K-9</h4>
+      <p>Objective, owner, target, Threshold, cadence, action. The owner owns those. Meaning (K-3) is authored
+      in the ontology and signed at G3/G4 CV/CQ — the owner's wording is input, not the SoT. Store client
+      validation (KPI-020) is not domain CV/CQ.</p>
+    </div>
+  </div>
+
+  <div class="call">
+    <b>Partial passes are the normal outcome</b>
+    <p>Most performance indicators will pass K-1, K-3, K-4, K-5, K-10, K-11 and fail on owner, target,
+    threshold, cadence, or action. That is not a rejection — it is a <strong>gap list</strong>, and it is the
+    most useful thing this framework produces. "This becomes a KPI when someone owns it and states what happens
+    when it breaches" is a specific ask that a sponsor can act on.</p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="s7">
+  <h2><span class="num">07</span>The certification ladder</h2>
+  <p class="sub">Nine rungs from extracted through implemented and superseded. Each has an entry criterion, an
+  actor, and a resulting tier. Skipping a rung is what produces a catalog nobody trusts. Implemented and
+  Superseded sit on the state axis and on this ladder.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Rung</th><th>Step</th><th>Entry criterion</th><th>Actor</th><th>Tier out</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">1</span></td><td><strong>Extracted</strong></td><td>Calculation captured with source report, formula, and field references</td><td>Us</td><td><span class="b b-red">8</span></td></tr>
+      <tr><td><span class="ref">2</span></td><td><strong>Normalised</strong></td><td>Syntactic and semantic normalisation complete; equivalence groups formed; variants recorded</td><td>Us</td><td><span class="b b-red">8</span></td></tr>
+      <tr><td><span class="ref">3</span></td><td><strong>Classified</strong></td><td>Kind, disposition, and governance state assigned with rationale</td><td>Us</td><td><span class="b b-amber">7</span></td></tr>
+      <tr><td><span class="ref">4</span></td><td><strong>Contextualised</strong></td><td>Definitional lineage on domain IRIs and Constraint references; data lineage to source field; K-4, K-5, K-10, K-11 assessed. Process linkage may explain existence; it is not a certification path</td><td>Us</td><td><span class="b b-amber">6–7</span></td></tr>
+      <tr><td><span class="ref">5</span></td><td><strong>SME reviewed</strong></td><td>Classification confirmed or corrected; formula checked for faithfulness to signed meaning</td><td>In-house SMEs</td><td><span class="b b-amber">6</span></td></tr>
+      <tr><td><span class="ref">6</span></td><td><strong>Candidate</strong></td><td>Entered in the Candidate KPI Register with proposed owner, certified-formula fields, target, Threshold, cadence, action — and a gap list where these are missing. Terms already in a signed CV, or blocked</td><td>Us</td><td><span class="b b-cand">5</span></td></tr>
+      <tr><td><span class="ref">7</span></td><td><strong>Certified</strong></td><td><strong>One name, one population, one formula, one grain, versioned, consumption-SL-only compile, Gold snapshot.</strong> Owner act remains necessary, not sufficient. Do not certify a KPI whose terms are not in a signed CV</td><td>Business KPI Owner + Store lead</td><td><span class="b b-green">1</span></td></tr>
+      <tr><td><span class="ref">8</span></td><td><strong>Implemented</strong></td><td>Certified formula compiled by <strong>Databricks Metric Views</strong> (programme); MetricFlow only for demo 1. Gold snapshot published; Silver projection refreshed. State axis value</td><td>Formula author + engineers</td><td><span class="b b-green">1</span></td></tr>
+      <tr><td><span class="ref">9</span></td><td><strong>Superseded</strong></td><td>A later certified version is current; prior Gold snapshots retained under DK-06. State axis value</td><td>Store lead</td><td><span class="b b-lo">—</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call red">
+    <b>Rung 7 is a different kind of event from rungs 1–6</b>
+    <p>Rungs one to six are analysis and agreement. Rung seven is <strong>certification</strong> — one name,
+    one population, one formula, one grain, versioned, consumption-SL-only compile, Gold snapshot — plus a
+    named owner accepting accountability for target, Threshold, cadence, and action. The owner act is
+    necessary, not sufficient. Meaning was already signed at G3/G4 CV/CQ; the owner does not author it.
+    Every KPI Store that ends up as an unused catalog got to rung six and stopped, because rung seven
+    requires both the compile path and a conversation about accountability.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="s8">
+  <h2><span class="num">08</span>SME review protocol</h2>
+  <p class="sub">The in-house review. Its job is to confirm the classification and check that definitions are
+  faithful to what the business means — in that order.</p>
+
+  <h3>What it is and is not</h3>
+  <div class="duo">
+    <div>
+      <span class="tag">It is</span>
+      <h4>A classification review, then a definition review</h4>
+      <p>"Do you agree this is a diagnostic metric and not a KPI?" is a fast question with a decisive answer.
+      Asking it first removes most of the inventory from the slower conversation about exact wording.</p>
+    </div>
+    <div>
+      <span class="tag">It is not</span>
+      <h4>An approval, or a renegotiation of the taxonomy</h4>
+      <p>SMEs challenge individual classifications with evidence. They do not redefine what a KPI is mid-review
+      — if the taxonomy is wrong, that escalates as a standards question and the review pauses.</p>
+    </div>
+  </div>
+
+  <h3>Running it</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Practice</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Batch by business area</strong></td><td>For review stamina only — not a meaning taxonomy and not a domain boundary. One area's SMEs can move fast through their own inventory and cannot usefully rule on another's</td></tr>
+      <tr><td><strong>Pre-send the batch</strong></td><td>Classification plus one-line rationale per item, at least three days ahead. Reviewing cold in the room is where stamina goes</td></tr>
+      <tr><td><strong>Timebox per item</strong></td><td>Two to three minutes for confirmations, five for disputes. Anything longer is logged and taken offline — one contested item can consume a session</td></tr>
+      <tr><td><strong>Lead with the variants</strong></td><td>Open with the near-duplicate groups from §03. These are the most interesting items and they warm the room up on real content rather than on admin</td></tr>
+      <tr><td><strong>Capture disagreement as evidence, not as instant reclassification</strong></td><td>An SME saying "that's definitely a KPI" is input. Reclassify after the session, against the criteria, and show what changed</td></tr>
+      <tr><td><strong>Record every changed classification</strong></td><td>The list of what the review changed is the evidence the review was genuine rather than a rubber stamp</td></tr>
+      <tr><td><strong>Cap the session</strong></td><td>Roughly ninety minutes, or attention collapses and later items get waved through. Volume is the enemy — plan more short sessions, not fewer long ones</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call blue">
+    <b>The framing that makes the session productive</b>
+    <p>"We are not asking whether these calculations are good. We are asking what kind of thing each one is, so
+    that the ones that need enterprise governance get it and the ones that do not are left alone." That framing
+    lowers the stakes on every individual item and makes disagreement cheap — which is what you want, because
+    the disagreements are the useful part.</p>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="s9">
+  <h2><span class="num">09</span>Store client validation (KPI-020)</h2>
+  <p class="sub">A different conversation from the SME review, and a different conversation from domain CV/CQ.
+  This one is about ownership and consequence — target, Threshold, cadence, action. Meaning is not decided
+  here.</p>
+
+  <div class="call red">
+    <b>Store client validation ≠ CV/CQ</b>
+    <p>Call this <strong>Store client validation (KPI-020)</strong>. Domain controlled vocabulary and
+    competency questions are signed at G3/G4. Do not certify a KPI whose terms are not in a signed CV.
+    An “agreed business definition in the business’s own words” is input to CV/CQ, not the meaning SoT.
+    The ontology authors meaning.</p>
+  </div>
+
+  <h3>What Store client validation must produce, per KPI</h3>
+  <ol>
+    <li>Agreement that this is a Store KPI rather than a Measurement Catalog metric or a process metric</li>
+    <li>Confirmation that the terms already sit in a signed CV — or a block until they do</li>
+    <li><strong>A named individual accepting accountability</strong> for target, Threshold, cadence, and action</li>
+    <li>A target, with an effective period</li>
+    <li>Thresholds with severity and direction (KPI-owner authority; Constraint ≠ Threshold)</li>
+    <li>A review forum and cadence that actually exists</li>
+    <li>A stated action when performance moves</li>
+    <li><code>customer_grain</code> ∈ {payer, sold-to, site} when the KPI is a Store pilot. Name Customer Account + Sold-To / Bill-To / Payer / Ship-To (location) / CreditAccount (on payer). Do not overload as “Customer”</li>
+  </ol>
+
+  <div class="call red">
+    <b>Validation is not approval</b>
+    <p>A room agreeing that a formula looks correct produces items 1 and 2. It does not produce items 3 to 7,
+    and without those the Charter's own criteria are unmet. <strong>Certification requires a named person to
+    accept accountability for target, Threshold, cadence, and action</strong> — and the compile path, grain,
+    and Gold snapshot. That is a harder and often separate conversation, and it should be scheduled as such
+    rather than assumed to happen inside a validation workshop.</p>
+  </div>
+
+  <h3>Running it</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Practice</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bring candidates with gap lists, not blank forms</strong></td><td>"Here is the proposed definition, and it needs an owner and a threshold" is answerable. "Tell us about your KPIs" is a two-hour discussion producing nothing recordable</td></tr>
+      <tr><td><strong>Ask K-9 of a named person, about a specific number</strong></td><td>"It drops to 89 — what happens?" Concrete answer or it is not a KPI. This question resolves more classifications than any other</td></tr>
+      <tr><td><strong>Separate the owner conversation</strong></td><td>Accepting accountability in front of peers is a real commitment. Some people need to consider it, and pressing in the room produces a nod rather than an owner</td></tr>
+      <tr><td><strong>Present the variants for resolution</strong></td><td>Where six definitions of "loss" exist, this is the forum that picks one — or decides that three are genuinely different and names them differently</td></tr>
+      <tr><td><strong>Record everything that stays a gap</strong></td><td>A candidate with three unmet criteria and named owners for closing each is a better outcome than a forced approval</td></tr>
+      <tr><td><strong>Do not approve on the day by default</strong></td><td>Validation produces the material for approval. Approval is a separate, recorded governance act — see rung 7</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <h2><span class="num">10</span>Awkward cases</h2>
+  <p class="sub">Six situations that will arise, with a position decided in advance — because deciding them in
+  the moment favours whoever is most insistent.</p>
+
+  <details class="card">
+    <summary>A widely used calculation fails the KPI test
+      <span class="wsmeta"><span class="b b-hi">Certain</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> Usage is consumption evidence, not governance evidence. It classifies as a
+      metric or performance indicator, goes into the Enterprise Measurement Catalog, and remains available to
+      every report that uses it. Nothing breaks.</p>
+      <p><strong>Position to state.</strong> "This stays exactly where it is and keeps working. It is not
+      going in the KPI Store because it has no owner and no defined action — and if you want it there, those are
+      the two things to add."</p>
+      <p><strong>What not to do.</strong> Promote it to keep the peace. One unqualified KPI in the catalog
+      licenses the next twenty.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>Two near-identical calculations, two owners, both insist theirs is correct
+      <span class="wsmeta"><span class="b b-hi">Likely</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> Do not merge and do not arbitrate on the spot. Both survive as separate
+      candidates; the difference is logged as a definitional conflict with the precise divergence stated
+      (which filter, which date rule, which unit basis).</p>
+      <p><strong>Escalation.</strong> Cross-domain definitional conflicts go to the Global Process Owner or the
+      governance forum, not to the modeling team. Our job is to make the difference precise, not to decide
+      whose business meaning wins.</p>
+      <p><strong>Frequent outcome.</strong> Both are right for their own context and the resolution is two
+      differently-named KPIs, not one merged one. That is a legitimate and often correct answer.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>Everyone wants it, but the data cannot support it
+      <span class="wsmeta"><span class="b b-md">Likely</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> It stays a Candidate with a K-11 feasibility blocker recorded. Do not
+      approve something that cannot be computed reliably — a certified KPI that silently produces wrong numbers
+      damages the store more than a missing one.</p>
+      <p><strong>Useful reframing.</strong> The blocker becomes a data-quality or sourcing requirement with a
+      named owner. "This is approved the day we can source X reliably" is a productive outcome and often
+      motivates the sourcing work.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>No one will own it
+      <span class="wsmeta"><span class="b b-hi">Certain, for some</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> K-2 is not waivable. Without a named accountable owner it cannot be a KPI —
+      by definition, not by policy. It classifies as a performance indicator with an ownership gap.</p>
+      <p><strong>What this reveals.</strong> An unownable KPI usually means one of three things: nobody actually
+      uses it for decisions, it spans an organisational boundary nobody wants to cross, or it measures
+      something people would rather not be accountable for. All three are findings worth reporting to the
+      sponsor.</p>
+      <p><strong>Do not.</strong> Assign a department as owner. "Commercial owns it" means nobody owns it.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>An executive's favourite number fails the test
+      <span class="wsmeta"><span class="b b-md">The hardest one</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> Classify it honestly against the criteria and show the specific gaps. Then
+      let the sponsor decide — an override is legitimate, and it must be <em>recorded as an override</em> with
+      its rationale rather than absorbed by quietly relaxing the criteria.</p>
+      <p><strong>Why recording matters more than the outcome.</strong> One recorded override is a decision.
+      Three unrecorded ones mean the criteria no longer apply to anyone, and every subsequent classification is
+      negotiable. Decision DC-07.</p>
+      <p><strong>Often the gaps are closable.</strong> An executive who cares about a number will usually
+      supply an owner and a threshold when asked directly. The test frequently converts these rather than
+      rejecting them.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>Unbilled — a STATE, not a KPI and not a customer class
+      <span class="wsmeta"><span class="b b-md">Awkward kind</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> Unbilled is a <strong>STATE</strong> of an account, invoice, or movement
+      (unbilled versus billed). It is not a KPI, not a customer class, and not a reason to force a demo metric
+      up the measure → KPI ladder.</p>
+      <p><strong>What to do with a demo that counts unbilled items.</strong> Keep it as a measure or operational
+      metric in the Measurement Catalog. If a Store-certified KPI later needs that state, it references the
+      state and a domain IRI — it does not promote “Unbilled” itself.</p>
+      <p><strong>What not to do.</strong> Treat Unbilled as a customer class, or certify it because the demo
+      is visible. Do not rebuild the Unbilled demo to make this point.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary>The calculation is Power BI-local, created after migration
+      <span class="wsmeta"><span class="b b-md">Depends on extraction scope</span></span></summary>
+    <div class="body">
+      <p><strong>Position.</strong> Same classification treatment, but record the origin separately. Post-migration
+      local measures are a distinct population — they are more recent, more likely to be actively used, and
+      more likely to duplicate something that already exists centrally.</p>
+      <p><strong>Why the distinction is worth keeping.</strong> The rate at which report authors create local
+      measures after a governed catalog exists is a direct measure of whether the catalog is working. Track it.</p>
+      <p><strong>Open question QK-12</strong> asks whether the extraction covered this population at all.</p>
+    </div>
+  </details>
+</section>
+
+<!-- 11 -->
+<section id="s11">
+  <h2><span class="num">11</span>The funnel</h2>
+  <p class="sub">Expectation management. Set this shape with the client <em>before</em> results land — after,
+  it reads as an excuse. <span class="b b-red">Tier 9 — indicative shape, not a prediction about this estate.</span></p>
+
+  <div class="funnel">
+    <div class="f"><div class="fl"><b>Extracted calculations</b> — everything found across all migrated reports</div><div class="fb">100%</div></div>
+    <div class="f"><div class="fl">After removing presentation-only and technical calculations</div><div class="fb">large drop</div></div>
+    <div class="f"><div class="fl">After consolidating true duplicates and equivalence groups</div><div class="fb">further drop</div></div>
+    <div class="f"><div class="fl">Business-meaningful measures — the Enterprise Measurement Catalog population</div><div class="fb">the bulk</div></div>
+    <div class="f"><div class="fl">Metrics — actually monitored over time</div><div class="fb">a subset</div></div>
+    <div class="f"><div class="fl">Performance indicators — with a notion of good and bad</div><div class="fb">smaller</div></div>
+    <div class="f"><div class="fl"><b>Candidate KPIs</b> — passing the assessable criteria</div><div class="fb">smaller still</div></div>
+    <div class="f"><div class="fl"><b>Approved enterprise KPIs</b> — with owner, target, threshold, cadence, action</div><div class="fb">tens, not hundreds</div></div>
+  </div>
+
+  <div class="call">
+    <b>Why deliberately no percentages</b>
+    <p>Published ratios would be invented, and this estate's shape depends entirely on how the Tableau content
+    was built — a workbook-heavy estate with many local variants funnels very differently from a small set of
+    governed dashboards. Report the <em>shape</em> now and the <em>numbers</em> after normalisation, when they
+    are measured rather than guessed.</p>
+    <p>The one thing worth saying confidently: <strong>an organisation's approved enterprise KPI count almost
+    always lands in the tens.</strong> A catalog of four hundred approved KPIs is not a governed catalog; it is
+    the original problem with a new name.</p>
+  </div>
+
+  <div class="plain"><b>The reassurance that makes the funnel acceptable</b>
+  Everything that leaves the KPI track goes somewhere. Measures and metrics populate the Enterprise Measurement
+  Catalog and stay available to every report. Only presentation and technical calculations are genuinely
+  retired, and those were never business content. <strong>Nobody loses a number they were using.</strong></div>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <h2><span class="num">12</span>Output templates</h2>
+
+  <h3>Classification record — one per normalised calculation</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Field</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td>Calculation ID · source report · workbook or model · original name · original formula</td><td>Provenance</td></tr>
+      <tr><td>Equivalence group</td><td>Which normalisation group; which member is the representative</td></tr>
+      <tr><td>Variant note</td><td>Where a near-duplicate was <em>not</em> merged — the precise difference</td></tr>
+      <tr><td><strong>Kind</strong></td><td>One of the nine, with rationale</td></tr>
+      <tr><td><strong>Disposition</strong></td><td>Promote · consolidate · retain locally · reference only · retire</td></tr>
+      <tr><td><strong>Governance state</strong></td><td>Extracted · classified · candidate · approved · implemented · superseded · retired</td></tr>
+      <tr><td>Domain IRIs and Constraint references</td><td>Definitional lineage. Process linkage may explain existence; it is not a certification path</td></tr>
+      <tr><td>Data lineage</td><td>Gold → Silver → Raw → source system and field</td></tr>
+      <tr><td>Assessable criteria result</td><td>K-4, K-5, K-10, K-11 with evidence</td></tr>
+      <tr><td>Business criteria gaps</td><td>K-1, K-2, K-6, K-7, K-8, K-9 — met or gap, with owner for closing. K-3 (meaning) is signed CV/CQ, not an owner gap</td></tr>
+      <tr><td>SME review outcome</td><td>Confirmed, reclassified (from → to), or disputed</td></tr>
+      <tr><td>Override</td><td>If classification was overridden, by whom, on what rationale</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Candidate KPI register entry</h3>
+  <p>Adds to the above: proposed owner · proposed definition in executable form per KPI-000 §05 · proposed
+  target · thresholds · dimensions and atomic grain · additivity declaration · review cadence · defined action ·
+  outstanding criteria with named closers · target approval date.</p>
+
+  <h3>Funnel report — the summary artifact</h3>
+  <p>Counts at each rung, by business area, with movement since the last cycle. This is what goes to steering.
+  It answers the only two questions leadership actually asks: how many, and how far along.</p>
+
+  <h3>Definitional conflict log</h3>
+  <p>Where near-duplicates were not merged: the variants, the precise difference, the affected reports, the
+  competing owners, the escalation route, and the resolution. <strong>This log is one of the most valuable
+  outputs of the whole workstream</strong> — it is the documented evidence of the definitional drift the
+  initiative exists to fix.</p>
+</section>
+
+<!-- 13 -->
+<section id="s13">
+  <h2><span class="num">13</span>Risks</h2>
+  <p class="sub">Twelve risks specific to classification and certification. Seed EPM-ISS-001; delivery-phase
+  risks live in EPM-DEL-003.</p>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ref</th><th>Risk</th><th>Exp.</th><th>Mitigation</th><th>Early warning signal</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">RK-01</span></td><td><strong>Classification becomes an argument about the taxonomy</strong> rather than about items</td><td><span class="b b-hi">High</span></td><td>Ratify the three-axis taxonomy before any review; taxonomy changes escalate as a standards question and pause the review</td><td>A session spends more than fifteen minutes on definitions of the classes</td></tr>
+      <tr><td><span class="ref">RK-02</span></td><td><strong>Popularity used as a promotion argument.</strong> "It's in forty reports"</td><td><span class="b b-hi">High</span></td><td>State the tier-elevation frame up front: usage is consumption evidence, never governance evidence</td><td>The first appeal against a classification cites usage counts</td></tr>
+      <tr><td><span class="ref">RK-03</span></td><td><strong>Over-promotion.</strong> Everything becomes a KPI to avoid conflict</td><td><span class="b b-hi">High</span></td><td>K-9 asked of a named person about a specific number; overrides recorded as overrides</td><td>Approved KPI count passing one hundred</td></tr>
+      <tr><td><span class="ref">RK-04</span></td><td><strong>Under-promotion.</strong> The client feels their work was dismissed</td><td><span class="b b-md">Med</span></td><td>Lead every communication with "classification is not deletion"; show where each item landed</td><td>An SME stops attending after the first session</td></tr>
+      <tr><td><span class="ref">RK-05</span></td><td><strong>Near-duplicates merged incorrectly</strong>, destroying a real distinction</td><td><span class="b b-hi">High</span></td><td>Merge only on formula + source + filter equivalence; never on name similarity</td><td>A merge decision justified by "they're obviously the same thing"</td></tr>
+      <tr><td><span class="ref">RK-06</span></td><td><strong>Validation treated as approval</strong></td><td><span class="b b-hi">High</span></td><td>Rung 7 defined as a distinct recorded governance act; validation outputs explicitly labelled Candidate</td><td>A status report describes validated KPIs as approved</td></tr>
+      <tr><td><span class="ref">RK-07</span></td><td><strong>No named owners</strong>, so nothing reaches Tier 1</td><td><span class="b b-hi">High</span></td><td>Ownership conversation scheduled separately from validation; unownable KPIs reported to the sponsor as a finding</td><td>Candidate register grows while the approved catalog stays empty</td></tr>
+      <tr><td><span class="ref">RK-08</span></td><td><strong>Review stamina collapses</strong> under volume</td><td><span class="b b-hi">High</span></td><td>Ninety-minute sessions, batched by business area, pre-sent; timeboxed per item</td><td>Later items in a session approved noticeably faster than earlier ones</td></tr>
+      <tr><td><span class="ref">RK-09</span></td><td><strong>Classification starts before the taxonomy is ratified</strong></td><td><span class="b b-md">Med</span></td><td>EPM-MEAS-001 ratified as a gate; this framework depends on it</td><td>Classification work beginning with the taxonomy still in draft</td></tr>
+      <tr><td><span class="ref">RK-10</span></td><td><strong>Threshold logic buried in presentation calculations is discarded</strong></td><td><span class="b b-md">Med</span></td><td>The §04 extraction rule — mine every conditional formatting rule before retiring it</td><td>Presentation-only items retired in bulk with no extraction pass</td></tr>
+      <tr><td><span class="ref">RK-11</span></td><td><strong>Definitions validated in prose only</strong>, so they cannot compile later</td><td><span class="b b-hi">High</span></td><td>K-4 requires executable form at candidate stage, not at build time</td><td>A candidate register entry with a definition but no additivity or grain</td></tr>
+      <tr><td><span class="ref">RK-12</span></td><td><strong>Overrides not recorded</strong>, so the criteria quietly stop applying</td><td><span class="b b-md">Med</span></td><td>Override is a field on the classification record; overrides reported in the funnel report</td><td>A KPI in the catalog that fails a criterion with no override entry</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="call red">
+    <b>The three that decide whether the catalog is trusted</b>
+    <p><strong>RK-03</strong> (over-promotion), <strong>RK-06</strong> (validation mistaken for approval), and
+    <strong>RK-07</strong> (no owners). The first produces a catalog too large to govern, the second produces
+    one whose status claims are false, and the third produces one that never reaches Tier 1 at all. Each is
+    prevented by holding a single line that will be uncomfortable at least once.</p>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="s14">
+  <h2><span class="num">14</span>Decisions and open questions</h2>
+
+  <h3>Decisions to record</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ref</th><th>Decision</th><th>Recommendation <span class="b b-red">Tier 9</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">DC-01</span></td><td>Taxonomy structure</td><td><strong>Restructure into three independent axes</strong> — kind, disposition, governance state. All Charter content preserved; only the shape changes. Amend EPM-MEAS-001</td></tr>
+      <tr><td><span class="ref">DC-02</span></td><td>Classification precedes SME review</td><td>Yes. The SME session is a classification review first, definition review second</td></tr>
+      <tr><td><span class="ref">DC-03</span></td><td>Near-duplicate merge rule</td><td>Merge only on formula + source + filter equivalence. Never on name similarity. Unmerged variants logged as definitional conflicts</td></tr>
+      <tr><td><span class="ref">DC-04</span></td><td>Definition form at candidate stage</td><td>Executable, per KPI-000 §05. Additivity declaration and atomic grain mandatory. Prose alone does not qualify</td></tr>
+      <tr><td><span class="ref">DC-05</span></td><td>Ownership requirement</td><td><strong>K-2 is not waivable.</strong> A named individual, not a department. No owner, no KPI</td></tr>
+      <tr><td><span class="ref">DC-06</span></td><td>Review session sizing</td><td>Ninety minutes, batched by business area, materials pre-sent three days ahead, two to five minutes per item</td></tr>
+      <tr><td><span class="ref">DC-07</span></td><td>Overrides</td><td>Permitted by the sponsor, recorded as overrides with rationale, and reported in the funnel report. Never absorbed by relaxing criteria</td></tr>
+      <tr><td><span class="ref">DC-08</span></td><td>Destination for non-promoted items</td><td>The Enterprise Measurement Catalog, not the bin. Only presentation and technical calculations are genuinely retired</td></tr>
+      <tr><td><span class="ref">DC-09</span></td><td>Presentation-calculation extraction</td><td>Mine every conditional formatting rule for embedded thresholds before retiring it</td></tr>
+      <tr><td><span class="ref">DC-10</span></td><td>Approval as a distinct act</td><td>Rung 7 is a recorded governance act by a named owner, scheduled separately from validation</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Open questions</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Ref</th><th>Question</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><span class="ref">QC-01</span></td><td>How many calculations are in the inventory?</td><td>Sizes the whole exercise and the number of review sessions</td></tr>
+      <tr><td><span class="ref">QC-02</span></td><td>Does EPM-MEAS-001 exist, and can it be amended to the three-axis structure?</td><td>Blocking. Classification cannot begin without a ratified taxonomy</td></tr>
+      <tr><td><span class="ref">QC-03</span></td><td>Has normalisation already been done as part of extraction, or is it still ahead?</td><td>Determines whether the inventory count is items or equivalence groups</td></tr>
+      <tr><td><span class="ref">QC-04</span></td><td>Can calculations be executed against real data for result comparison?</td><td>N-5 is the only definitive equivalence test; without it, equivalence is inferred</td></tr>
+      <tr><td><span class="ref">QC-05</span></td><td>Which in-house SMEs cover which business areas?</td><td>Drives session batching and scheduling</td></tr>
+      <tr><td><span class="ref">QC-06</span></td><td>Who on the client side can accept KPI accountability?</td><td>RK-07. Without an answer, the ladder stops at rung 6</td></tr>
+      <tr><td><span class="ref">QC-07</span></td><td>Is there a governance forum that can perform rung 7?</td><td>Approval needs a venue as well as a person</td></tr>
+      <tr><td><span class="ref">QC-08</span></td><td>Did extraction capture conditional formatting and colour rules?</td><td>DC-09 and RK-10 depend on it. If not, embedded thresholds are already lost</td></tr>
+      <tr><td><span class="ref">QC-09</span></td><td>Does the inventory include Power BI-local measures created after migration?</td><td>A distinct population with different governance status</td></tr>
+      <tr><td><span class="ref">QC-10</span></td><td>Is there an existing KPI list the client already considers authoritative?</td><td>If so, it is a Tier 7 input to be reconciled — not a shortcut past classification</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="xref"><span>See also</span> Architecture, the dual-path reconciliation contract, and the executable field set are in EPM-KPI-000 v0.2. Delivery sequencing, workshops, and roles are in EPM-DEL-003 v0.2. DEL-002 G2 is not DEL-003 GK2.</div>
+</section>
+
+<!-- 15 -->
+<section id="s15">
+  <h2><span class="num">15</span>Glossary</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Term</th><th>What it actually means</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Classification</strong></td><td>Deciding what kind of thing a calculation is. Three separate questions: what it is, what happens to it, how far through governance it has travelled</td></tr>
+      <tr><td><strong>Kind</strong></td><td>What sort of thing it is — presentation, technical, measure, metric, indicator, or KPI</td></tr>
+      <tr><td><strong>Disposition</strong></td><td>What we are going to do with it — promote, consolidate, retain locally, reference, or retire</td></tr>
+      <tr><td><strong>Governance state</strong></td><td>Where it sits on the ladder: extracted · classified · candidate · approved · implemented · superseded · retired</td></tr>
+      <tr><td><strong>Normalisation</strong></td><td>Recognising that eleven differently-written calculations are the same calculation — before deciding anything about them</td></tr>
+      <tr><td><strong>Near-duplicate</strong></td><td>Two calculations that look the same and are not. The subtle difference is usually deliberate and usually important</td></tr>
+      <tr><td><strong>Equivalence group</strong></td><td>A set of calculations proven to produce the same result, represented by one member</td></tr>
+      <tr><td><strong>Presentation-only</strong></td><td>Produces appearance, not a number. Retire it — but mine it first for hard-coded thresholds</td></tr>
+      <tr><td><strong>Technical calculation</strong></td><td>Exists to make the report work. A business person would never ask for its value</td></tr>
+      <tr><td><strong>Measure</strong></td><td>A number with agreed meaning</td></tr>
+      <tr><td><strong>Metric</strong></td><td>A measure watched over time in context</td></tr>
+      <tr><td><strong>Performance indicator</strong></td><td>A metric with a notion of good and bad, but missing an owner, a target, or a defined action. Most of what organisations call KPIs</td></tr>
+      <tr><td><strong>KPI</strong></td><td>A performance indicator that can meet certification. If nobody would do anything differently when it moves, it is not one. Meaning is not an owner decision</td></tr>
+      <tr><td><strong>Candidate KPI</strong></td><td>Passes what we can assess, awaiting the business criteria and a governance act</td></tr>
+      <tr><td><strong>Certification</strong></td><td>One name, one population, one formula, one grain, versioned, consumption-SL-only compile, Gold snapshot. Owner act is necessary, not sufficient. Terms must already sit in a signed CV</td></tr>
+      <tr><td><strong>Store client validation (KPI-020)</strong></td><td>Owner, target, Threshold, cadence, action. Not domain CV/CQ. Not approval</td></tr>
+      <tr><td><strong>Unbilled</strong></td><td>A STATE of an account, invoice, or movement. Not a KPI. Not a customer class. Demo metrics that count it stay measures</td></tr>
+      <tr><td><strong>Store catalog</strong></td><td>The certified catalog. Not the ontology. Not the Measurement Catalog. Figure and process KPIs stay out of it</td></tr>
+      <tr><td><strong>Tier elevation</strong></td><td>Moving a calculation from unvalidated report logic up to approved enterprise KPI through defined steps, each of which adds evidence</td></tr>
+      <tr><td><strong>Override</strong></td><td>A sponsor decision to promote something that fails a criterion. Legitimate, and only safe when recorded as an override rather than absorbed</td></tr>
+      <tr><td><strong>Definitional conflict</strong></td><td>Two variants of the same-named thing that genuinely differ. Documented rather than resolved by the modeling team — and one of the most valuable outputs of the exercise</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  EPM-KPI-020 · KPI Classification &amp; Certification Framework · v0.3 · Draft · 14 Aug 2026 · Workstream 1 ·
+  Companion to EPM-KPI-000 v0.3 · Delivery plan EPM-DEL-003 v0.3 · Depends on EPM-MEAS-001 ·
+  v0.2 retained (MetricFlow-as-programme-compiler snapshot) ·
+  Not approved.
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.side a'));
+  var secs  = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){
+    var y = window.scrollY + 120, best = 0;
+    for (var i=0;i<secs.length;i++){ if (secs[i] && secs[i].offsetTop <= y) best = i; }
+    links.forEach(function(a,i){ a.classList.toggle('on', i===best); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
+
+  var q = document.getElementById('q');
+  var hits = document.getElementById('hits');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+  var cards = Array.prototype.slice.call(document.querySelectorAll('details.card'));
+
+  function clearMarks(root){
+    root.querySelectorAll('mark').forEach(function(m){
+      m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
+    });
+    root.normalize();
+  }
+  function markIn(node, term){
+    var walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
+    var texts = [], n;
+    while ((n = walker.nextNode())) texts.push(n);
+    texts.forEach(function(t){
+      var i = t.nodeValue.toLowerCase().indexOf(term);
+      if (i < 0) return;
+      var after = t.splitText(i);
+      after.splitText(term.length);
+      var mk = document.createElement('mark');
+      mk.textContent = after.nodeValue;
+      after.parentNode.replaceChild(mk, after);
+    });
+  }
+
+  var timer;
+  q.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      var term = q.value.trim().toLowerCase();
+      rows.forEach(clearMarks); cards.forEach(clearMarks);
+      if (!term){
+        rows.forEach(function(r){ r.classList.remove('hidden'); });
+        cards.forEach(function(c){ c.classList.remove('hidden'); c.open = false; });
+        hits.textContent = ''; return;
+      }
+      var count = 0;
+      rows.forEach(function(r){
+        var on = r.textContent.toLowerCase().indexOf(term) > -1;
+        r.classList.toggle('hidden', !on);
+        if (on){ count++; markIn(r, term); }
+      });
+      cards.forEach(function(c){
+        var on = c.textContent.toLowerCase().indexOf(term) > -1;
+        c.classList.toggle('hidden', !on);
+        c.open = on;
+        if (on){ count++; markIn(c, term); }
+      });
+      hits.textContent = count + ' match' + (count===1?'':'es');
+    }, 140);
+  });
+  q.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ q.value=''; q.dispatchEvent(new Event('input')); q.blur(); }
+  });
+})();
+</script>
+</body>
+</html>

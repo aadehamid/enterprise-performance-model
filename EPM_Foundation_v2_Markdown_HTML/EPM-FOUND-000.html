@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-000 — Enterprise Performance Model Master Index</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-000</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#executive-orientation">Executive orientation</a>
+<a href="#primary-architecture-chain">Primary architecture chain</a>
+<a href="#architecture-families">Architecture families</a>
+<a href="#workstreams-and-current-sequence">Workstreams and current sequence</a>
+<a href="#canonical-foundation-artifacts">Canonical foundation artifacts</a>
+<a href="#authoritative-baseline">Authoritative baseline</a>
+<a href="#how-to-use-the-repository">How to use the repository</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-000 · Version 2.0 Draft</div>
+<h1>Enterprise Performance Model Master Index</h1>
+<div class="subtitle">Repository home, architecture map, artifact directory, and delivery guide</div>
+<section id="executive-orientation"><h2>Executive orientation</h2><p>The <strong>Enterprise Performance Model (EPM)</strong> is the shared architecture that connects:</p>
+<ul>
+<li>how the downstream enterprise creates and delivers value;</li>
+<li>how business performance is observed, explained, and governed;</li>
+<li>how trusted data is organized into reusable products;</li>
+<li>how KPIs are defined, calculated, stored, and consumed; and</li>
+<li>how Power BI, APIs, automation, analytics, AI, and future agents use consistent business context.</li>
+</ul>
+<p>The EPM is the conceptual umbrella. The KPI Store, ontology, knowledge graph, SQL consumption views, Power BI semantic models, reports, APIs, and AI agents are implementations or consumers of parts of that architecture.</p>
+<blockquote><strong>Current program context:</strong> Most in-scope Tableau reports have already been migrated to Power BI. During migration, KPI definitions, ownership, targets, thresholds, lineage, and standardization were not systematically captured. Tableau XML is now being parsed retrospectively to inventory calculations. Extracted calculations are historical evidence—not approved KPIs.</blockquote></section><section id="primary-architecture-chain"><h2>Primary architecture chain</h2><pre><code>Enterprise strategy and objectives
+        ↓
+Business domains
+        ↓
+Value streams and value-stream stages
+        ↕ use
+Capabilities and sub-capabilities
+        ↓ realized through
+Business processes
+        ↓ decomposed into
+Business activities
+        ↓ support or produce
+Business decisions
+        ↓ observed through
+Measurements and metrics
+        ↓ governed as
+KPIs and performance outcomes
+        ↓ supplied by
+Foundational and derived data products
+        ↓ exposed through
+KPI Store, semantic views, Power BI semantic models, APIs
+        ↓ consumed by
+Reports, analytics, automation, AI, and management processes</code></pre></section><section id="architecture-families"><h2>Architecture families</h2><table><thead><tr><th>Architecture</th><th>Primary question</th><th>Core concepts</th><th>Canonical artifact</th></tr></thead><tbody>
+<tr><td>Business architecture</td><td>How does the enterprise create and deliver value?</td><td>Domain, value stream, stage, capability, process, activity, decision</td><td>EPM-FOUND-001</td></tr>
+<tr><td>Performance architecture</td><td>How is performance observed, explained, and governed?</td><td>Measurement, metric, indicator, KPI, objective, target, threshold</td><td>EPM-FOUND-002 and EPM-FOUND-005</td></tr>
+<tr><td>Semantic architecture</td><td>What do the concepts mean and how are they related?</td><td>Definitions, relationships, rules, constraints, classifications</td><td>EPM-FOUND-003</td></tr>
+<tr><td>Ontology architecture</td><td>How is the semantic model formalized for machines?</td><td>Classes, properties, cardinality, inheritance, axioms</td><td>EPM-FOUND-004</td></tr>
+<tr><td>Data-product architecture</td><td>How is trusted data packaged and delivered?</td><td>Foundational product, derived product, KPI Store, semantic view</td><td>EPM-FOUND-006</td></tr>
+<tr><td>Consumption architecture</td><td>How do people and systems use governed meaning and data?</td><td>SQL views, Power BI models, APIs, reports, agents</td><td>EPM-FOUND-006</td></tr>
+</tbody></table></section><section id="workstreams-and-current-sequence"><h2>Workstreams and current sequence</h2><table><thead><tr><th>Workstream</th><th>Purpose</th><th>Priority</th><th>Current emphasis</th></tr></thead><tbody>
+<tr><td>KPI Store and Enterprise Performance Management</td><td>Govern metrics and KPIs; persist approved values, targets, status, versions, and lineage</td><td>Immediate</td><td>Measurement classification, pilot KPIs, tall fact, threshold model</td></tr>
+<tr><td>Domain Modeling</td><td>Formalize business concepts and conceptual/logical models</td><td>Follow-on and iterative</td><td>Reconnect KPIs and data products to domains, concepts, entities, and fields</td></tr>
+<tr><td>System Integration</td><td>Connect metadata, models, catalog, quality, and consumption tooling</td><td>Follow-on</td><td>Targeted proofs of value and tool-responsibility boundaries</td></tr>
+<tr><td>Cross-cutting Data Governance</td><td>Govern definitions, ownership, quality, lineage, security, certification, and lifecycle</td><td>Continuous</td><td>Promotion rules, stewardship, certification, issue resolution</td></tr>
+</tbody></table>
+<p>Approved working sequence:</p>
+<ol>
+<li>1. Define the KPI Store and measurement architecture.</li>
+<li>2. Inventory and classify Tableau calculations.</li>
+<li>3. Establish KPI governance and implement pilot KPIs.</li>
+<li>4. Formalize domain modeling and reconnect models to the KPI Store.</li>
+<li>5. Define and prove system-integration patterns.</li>
+<li>6. Scale, automate, and operationalize.</li>
+</ol></section><section id="canonical-foundation-artifacts"><h2>Canonical foundation artifacts</h2><table><thead><tr><th>ID</th><th>Title</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>EPM-FOUND-000</td><td>Enterprise Performance Model Master Index</td><td>Navigation, scope, architecture map, artifact register, and delivery sequence</td></tr>
+<tr><td>EPM-FOUND-001</td><td>Enterprise Business Architecture</td><td>Defines domains, value streams, stages, capabilities, processes, activities, and decisions</td></tr>
+<tr><td>EPM-FOUND-002</td><td>Enterprise Performance and Data Architecture</td><td>Connects objectives, measurements, metrics, KPIs, data products, KPI Store, and consumption</td></tr>
+<tr><td>EPM-FOUND-003</td><td>Enterprise Performance Semantic Model</td><td>Human-readable authoritative description of concepts, relationships, rules, and constraints</td></tr>
+<tr><td>EPM-FOUND-004</td><td>Enterprise Performance Ontology Design</td><td>Machine-formal design derived from the semantic model</td></tr>
+<tr><td>EPM-FOUND-005</td><td>Enterprise Measurement and KPI Model</td><td>Detailed classification and promotion model for measurements, metrics, indicators, and KPIs</td></tr>
+<tr><td>EPM-FOUND-006</td><td>Enterprise Data Product and Consumption Model</td><td>Defines foundational/derived products and alignment with Raw, Silver, Gold, and semantic consumption</td></tr>
+</tbody></table></section><section id="authoritative-baseline"><h2>Authoritative baseline</h2><h3>Working baseline</h3>
+<ul>
+<li>The EPM is the conceptual umbrella.</li>
+<li>The KPI Store is the first implementation priority.</li>
+<li>Extracted Tableau calculations are candidate measurements, not approved KPIs.</li>
+<li>Power BI is the current primary validation and consumption environment.</li>
+<li>Reusable business logic should be implemented at the lowest sensible governed layer.</li>
+<li>Consumers access only the semantic/consumption layer.</li>
+<li>The semantic model is the authoritative system of business meaning.</li>
+<li>The ontology is the formal machine-readable implementation of that semantic model.</li>
+<li>SQL semantic views, Power BI semantic models, Purview glossary terms, knowledge graphs, APIs, and AI context are implementations or consumers of shared semantics.</li>
+</ul>
+<h3>Items requiring confirmation</h3>
+<ul>
+<li>Final canonical downstream domain and value-stream map.</li>
+<li>Final capability decomposition and ownership.</li>
+<li>KPI promotion and approval decision rights.</li>
+<li>Where measurement metadata is mastered across Purview, YAML, database metadata, and project artifacts.</li>
+<li>The first end-to-end ontology and knowledge-graph pilot.</li>
+</ul></section><section id="how-to-use-the-repository"><h2>How to use the repository</h2><p>Use chats for exploration, clarification, challenge, and decision development. Use these artifacts as the maintained baseline.</p>
+<p>When a conversation changes an accepted definition, relationship, modeling rule, or implementation decision:</p>
+<ol>
+<li>1. Record the decision and rationale.</li>
+<li>2. Update the relevant canonical artifact.</li>
+<li>3. Update the Master Index status or dependency if required.</li>
+<li>4. Reflect the change in metadata, ontology, code, views, and Power BI models only after governance acceptance.</li>
+</ol></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>

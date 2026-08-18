@@ -1,0 +1,63 @@
+name: o2c_unbilled
+version: "1.0.0"
+config-version: 2
+profile: o2c_unbilled
+require-dbt-version: [">=1.10.0", "<1.11.0"]
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+vars:
+  as_of_date: "2026-08-01"
+
+seeds:
+  o2c_unbilled:
+    +quote_columns: false
+    deliveries:
+      +column_types:
+        bol_ts: timestamp
+        gallons_net: double
+        gallons_gross: double
+        temperature_f: double
+    invoices:
+      +column_types:
+        invoice_date: date
+        invoice_amount_usd: double
+    invoice_lines:
+      +column_types:
+        line_gallons_net: double
+        line_amount_usd: double
+    products:
+      +column_types:
+        contract_price_usd: double
+        list_price_usd: double
+        expansion_per_f: double
+
+models:
+  o2c_unbilled:
+    +materialized: table
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+
+# MetricFlow time spine (legacy 1.8–1.11 project-level config).
+# Also declared in models/semantic_models.yml under time_spines:.
+semantic-models:
+  time-spine:
+    model: metricflow_time_spine
+    time_column: date_day
+    granularities: [day]

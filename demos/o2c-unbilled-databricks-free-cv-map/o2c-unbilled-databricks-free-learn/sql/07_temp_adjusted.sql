@@ -1,0 +1,26 @@
+-- =============================================================================
+-- 07_temp_adjusted.sql — THIRD Metric View: temp_adjusted_delivered_usd
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   Volume-correction / temperature-adjusted delivered value (rack math).
+--   This is NOT Unbilled and NOT contract-vs-list.
+--   CREATE VIEW … WITH METRICS LANGUAGE YAML
+--   Version 0.1 FIRST (fields + measures + joins + filter if 0.1 accepts them).
+--   No comment / display_name / synonyms.
+--   Source is raw_tickets. Same four star joins as exercise 12.
+--   Filter: delivered AND gal>=4000 AND Jun–Jul 2026
+--           AND product_family IN (gasoline, distillate, aviation).
+--   Measures: net/gross contract, temp-adjusted (expansion_per_f * (temp-60)),
+--             expansion delta, gallons, weighted temp*gallons, marine CASE.
+--   Consumers only MEASURE(). SELECT * is refused.
+--   Do not change sql/03_metric_view.sql (unbilled_usd).
+--   Same join-alias rule as exercise 12 (product_dim, sold, payer_dim, site_dim).
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql
+--   ../o2c-unbilled-databricks-free/scripts/09_temp_adjusted.py
+-- =============================================================================
+
+-- your SQL goes here

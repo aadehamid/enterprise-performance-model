@@ -1,0 +1,14 @@
+version: 2
+
+# dbt 1.10+ recognizes the time spine on the model itself.
+# The project-level semantic-models.time-spine block and the top-level
+# time_spines: list in semantic_models.yml are kept for the MotherDuck /
+# 1.8–1.9 cookbook pattern the demo documents.
+models:
+  - name: metricflow_time_spine
+    description: Daily date spine 2026-01-01 through 2026-08-31 for MetricFlow.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day

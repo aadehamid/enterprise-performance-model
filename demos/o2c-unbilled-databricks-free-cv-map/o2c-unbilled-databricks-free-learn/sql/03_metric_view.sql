@@ -1,0 +1,20 @@
+-- =============================================================================
+-- 03_metric_view.sql — Unity Catalog Metric View (the compiler for this demo)
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   CREATE VIEW … WITH METRICS LANGUAGE YAML
+--   Author the YAML yourself. Version 0.1 FIRST (fields + measures).
+--   Do NOT export this view from Genie.
+--   Source is fct_unbilled. Every measure is queried with MEASURE().
+--   SELECT * is refused (that is Act 3, not this file).
+--   This YAML is a formula, not ontology Turtle.
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/scripts/04_metric_view.py
+--   ../o2c-unbilled-databricks-free/sql/03_metric_view.sql
+--     (both are YAML 0.1 — fields + measures only; pack dialect)
+-- =============================================================================
+
+-- your SQL goes here

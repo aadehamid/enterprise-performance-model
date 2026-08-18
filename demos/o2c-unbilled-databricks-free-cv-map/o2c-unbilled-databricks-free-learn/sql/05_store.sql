@@ -1,0 +1,26 @@
+-- =============================================================================
+-- 05_store.sql — Silver KPI metadata + Gold published KPI values
+-- your SQL goes here
+--
+-- Teaching constraint:
+--   Layer story (locked):
+--     ODS        Lakebase dataexpert-day1 / databricks_postgres / o2c_unbilled
+--     Bronze     workspace.o2c_unbilled.raw_*   (replica; no federated join)
+--     Silver     dim_* + dim_kpi_metadata   — one row per KPI (all certified)
+--     Population fct_unbilled  (ticket grain; compiler source; NOT gold)
+--     Compiler   Metric View unbilled_usd  (SUM/GROUP BY via MEASURE())
+--     Gold       gold_kpi_value  — published KPI values FROM MEASURE(), not a second SUM()
+--   Honest seats: fct_unbilled holds the ticket gate + valuation
+--     (population / compiler source). Metric View compiles SUM/GROUP BY.
+--     Gold/Genie consume MEASURE() and must not re-encode.
+--   C-10: ontology = meaning. Metadata does NOT author the formula.
+--   RC-1 per KPI (one compile path each, no second SUM).
+--   Placeholders: {{catalog}} = workspace, {{schema}} = o2c_unbilled
+--   Demo 2 (Databricks Free). Not Track A.
+--
+-- Hint (path, not the answer):
+--   ../o2c-unbilled-databricks-free/sql/05_store.sql
+--   ../o2c-unbilled-databricks-free/scripts/06_store.py
+-- =============================================================================
+
+-- your SQL goes here

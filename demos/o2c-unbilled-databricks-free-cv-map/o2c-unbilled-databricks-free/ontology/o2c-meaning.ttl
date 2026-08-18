@@ -1,0 +1,138 @@
+# o2c-meaning.ttl — thin meaning sidecar (Databricks Free Unbilled demo).
+# C-10: ontology = meaning. Store catalog + Metric View = certified formula.
+# Does NOT author formulas, compile, or act as SHACL / a triple store / Neo4j.
+# IRIs are demo-only, unsigned, replaceable by the Ontologist later.
+# Base: https://example.org/domain-ontology-kpi/o2c#
+
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix o2c:  <https://example.org/domain-ontology-kpi/o2c#> .
+
+<https://example.org/domain-ontology-kpi/o2c#> a owl:Ontology ;
+    rdfs:label "O2C meaning sidecar (demo, unsigned)"@en ;
+    rdfs:comment "Demo-only meaning terms. Not G3/G4 signed. Not a formula. Not a compiler."@en .
+
+# --- Party / account. Do not overload "Customer". ---
+# CV bind (cv_term.term_id → class IRI). Demo-only. Do not replace term_id.
+#   id:payer                      → o2c:Payer
+#   id:sold-to                    → o2c:SoldTo
+#   id:bill-to                    → o2c:BillTo
+#   id:ship-to                    → o2c:ShipTo   (not o2c:Site: Site is the grain / named terminals)
+#   id:loading-authorized-party   → o2c:LoadingAuthorizedParty
+# Unbilled KPI about-ID stays o2c:UnbilledState. Delivered KPIs stay o2c:Obligation.
+
+
+o2c:CustomerAccount a owl:Class ;
+    rdfs:label "Customer Account"@en ; skos:prefLabel "Customer Account"@en ;
+    skos:altLabel "Customer"@en, "Account"@en ;
+    rdfs:comment "Canonical commercial account. Includes the legal/commercial identity that holds sold-to, bill-to, and payer roles. Excludes a generic Customer blob, a site/terminal, and a KPI grain. Do not overload Customer."@en .
+
+o2c:SoldTo a owl:Class ;
+    rdfs:label "Sold-to"@en ; skos:prefLabel "Sold-to"@en ;
+    skos:notation "id:sold-to" ;
+    skos:altLabel "Sold to"@en, "Sold-to party"@en ;
+    rdfs:comment "Who is entitled to lift under the contract. Includes the contracting party that may lift. Excludes payer, bill-to, and the terminal (ship-to / site)."@en .
+
+o2c:BillTo a owl:Class ;
+    rdfs:label "Bill-to"@en ; skos:prefLabel "Bill-to"@en ;
+    skos:notation "id:bill-to" ;
+    skos:altLabel "Bill to"@en, "Bill-to party"@en ;
+    rdfs:comment "Who receives the invoice document. Includes AP / shared-services desks. Excludes who is invoiced for credit (payer) and who is entitled to lift (sold-to)."@en .
+
+o2c:Payer a owl:Class ;
+    rdfs:label "Payer"@en ; skos:prefLabel "Payer"@en ;
+    skos:notation "id:payer" ;
+    skos:altLabel "Invoice payer"@en, "Bill payer"@en ;
+    rdfs:comment "Who is invoiced. Credit and cash live here. Includes the credit-bearing party. Excludes sold-to, bill-to, and site. A DSO at sold-to hides payer delinquency."@en .
+
+o2c:ShipTo a owl:Class ;
+    rdfs:label "Ship-to"@en ; skos:prefLabel "Ship-to"@en ;
+    skos:notation "id:ship-to" ;
+    skos:altLabel "Ship to"@en, "Consignee location"@en ;
+    rdfs:comment "A location / terminal, not a party role confused with sold-to. Includes the lift point. Excludes sold-to, payer, and any customer role."@en .
+
+o2c:LoadingAuthorizedParty a owl:Class ;
+    rdfs:label "Loading-Authorized Party"@en ; skos:prefLabel "Loading-Authorized Party"@en ;
+    skos:notation "id:loading-authorized-party" ;
+    skos:altLabel "Lifter"@en, "TABS customer"@en, "Loading-authorized"@en ;
+    rdfs:comment "Who may lift at the rack (card / PIN / carrier binding). Includes the party the lift system authorizes. Excludes the authorization token itself, sold-to, payer, bill-to, and the site. Wrong sense for Unbilled. Not a certified Unbilled grain (payer | sold-to | site). Same English word customer as Sold-To; different concept, different IRI."@en .
+
+o2c:Site a owl:Class ;
+    rdfs:label "Site"@en ; skos:prefLabel "Site"@en ;
+    skos:altLabel "Terminal"@en, "Rack"@en ;
+    rdfs:comment "Terminal / rack (HSC, DAL, BMT). Same idea as ShipTo location. Includes the physical lift location. Excludes a party role and a customer class."@en .
+
+o2c:HSC a o2c:Site ; rdfs:label "Houston Ship Channel"@en ; skos:altLabel "HSC"@en .
+o2c:DAL a o2c:Site ; rdfs:label "Dallas"@en ; skos:altLabel "DAL"@en .
+o2c:BMT a o2c:Site ; rdfs:label "Beaumont"@en ; skos:altLabel "BMT"@en .
+
+# --- Credit sits on the payer. ---
+
+o2c:CreditAccount a owl:Class ;
+    rdfs:label "Credit Account"@en ; skos:prefLabel "Credit Account"@en ;
+    skos:altLabel "Credit"@en, "AR credit"@en ;
+    rdfs:comment "Sits on the payer. Includes credit limit and cash application. Excludes sold-to performance and site capacity."@en .
+
+# --- Obligation and its unbilled STATE (not a KPI class). ---
+
+# Store catalog meaning bindings (not formulas, not a compiler):
+#   Unbilled KPI            → o2c:UnbilledState
+#   contract-vs-list KPI    → o2c:Obligation  (the delivered ticket class)
+#   temp-adjusted KPI       → o2c:Obligation
+# Do not add a DeliveredTicket class. Obligation already is "A delivered BOL / ticket".
+
+o2c:Obligation a owl:Class ;
+    rdfs:label "Obligation"@en ; skos:prefLabel "Obligation"@en ;
+    skos:altLabel "BOL"@en, "Ticket"@en, "Bill of lading"@en ;
+    rdfs:comment "A delivered BOL / ticket. Includes the lift that creates a billing obligation. Excludes a draft invoice and a quality-hold ticket that is never billed. The two delivered KPIs (contract-vs-list, temp-adjusted) bind here. Unbilled binds to UnbilledState."@en .
+
+o2c:ObligationState a owl:Class ;
+    rdfs:label "Obligation state"@en ; skos:prefLabel "Obligation state"@en ;
+    rdfs:comment "A state an Obligation can be in. Not a KPI class and not a customer class."@en .
+
+o2c:UnbilledState a o2c:ObligationState ;
+    rdfs:label "Unbilled"@en ; skos:prefLabel "Unbilled"@en ;
+    skos:altLabel "Unbilled"@en, "Delivered not invoiced"@en, "Open lift"@en ;
+    rdfs:comment "A STATE of an Obligation (delivered, not yet invoiced). Not a KPI class. Includes delivered BOLs with no posted invoice as of the as-of date. Excludes quality-hold tickets."@en .
+
+o2c:Unbilled owl:sameAs o2c:UnbilledState .
+
+# --- Grain enumeration: payer | sold-to | site. ---
+
+o2c:CustomerGrain a owl:Class ;
+    rdfs:label "Customer grain"@en ; skos:prefLabel "Customer grain"@en ;
+    skos:altLabel "customer_grain"@en ;
+    rdfs:comment "Enumeration note: payer | sold-to | site. You choose the group-by; the formula stays still. A DSO at sold-to hides payer delinquency. Includes the three published slices. Excludes a fourth generic customer grain."@en .
+
+o2c:grainPayer  a o2c:CustomerGrain ; rdfs:label "payer"@en ;  skos:prefLabel "payer"@en .
+o2c:grainSoldTo a o2c:CustomerGrain ; rdfs:label "sold-to"@en ; skos:prefLabel "sold-to"@en .
+o2c:grainSite   a o2c:CustomerGrain ; rdfs:label "site"@en ;   skos:prefLabel "site"@en .
+
+# --- A few SKOS concepts (scheme, not a formula). ---
+
+o2c:O2CMeaning a skos:ConceptScheme ;
+    skos:prefLabel "O2C meaning (demo, unsigned)"@en ;
+    rdfs:comment "Demo concept scheme. Not G3/G4 signed. Not compiled."@en .
+
+o2c:conceptUnbilledState a skos:Concept ; skos:inScheme o2c:O2CMeaning ;
+    skos:prefLabel "Unbilled is a state"@en ; skos:altLabel "delivered not invoiced"@en ;
+    skos:definition "Unbilled is a state of an Obligation, not a KPI and not a customer class."@en .
+
+o2c:conceptPartyVsSite a skos:Concept ; skos:inScheme o2c:O2CMeaning ;
+    skos:prefLabel "Party roles are not sites"@en ; skos:altLabel "sold-to ≠ payer ≠ site"@en ;
+    skos:definition "Sold-to, bill-to, and payer are party roles. Ship-to / site is a location. Do not overload Customer."@en .
+
+o2c:conceptLoadingAuthorized a skos:Concept ; skos:inScheme o2c:O2CMeaning ;
+    skos:prefLabel "Loading-authorized is not sold-to"@en ;
+    skos:altLabel "TABS customer ≠ SAP sold-to"@en ;
+    skos:definition "Two aliases of one concept share an IRI. Two concepts that share the English word customer do not. Loading-Authorized Party is not an Unbilled grain and is not owl:sameAs an overloaded warehouse customer_id."@en .
+
+o2c:conceptCreditOnPayer a skos:Concept ; skos:inScheme o2c:O2CMeaning ;
+    skos:prefLabel "Credit lives on the payer"@en ;
+    skos:definition "CreditAccount sits on the payer. A DSO at sold-to hides payer delinquency."@en .
+
+o2c:conceptKpiMeaningBind a skos:Concept ; skos:inScheme o2c:O2CMeaning ;
+    skos:prefLabel "KPI meaning bindings"@en ;
+    skos:definition "Unbilled meaning is UnbilledState. The two delivered KPIs (contract-vs-list, temp-adjusted) bind to Obligation, the delivered ticket class. There is no DeliveredTicket class."@en .

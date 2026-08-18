@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPM-ONT-001 — Ontology lane briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B131C;
+  --bg-elev: #121C28;
+  --bg-card: #162230;
+  --line: #243344;
+  --line-strong: #2E4456;
+  --text: #E6EEF4;
+  --muted: #93A4B3;
+  --faint: #6B7C8C;
+  --teal: #3DB8A8;
+  --teal-dim: rgba(61,184,168,.14);
+  --teal-line: rgba(61,184,168,.42);
+  --amber: #D4A017;
+  --red: #E05A5A;
+  --red-dim: rgba(224,90,90,.12);
+  --green: #4CAF7A;
+  --green-dim: rgba(76,175,122,.12);
+  --open: #E8B84A;
+  --locked: #3DB8A8;
+  --max: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px 80px; }
+
+/* topbar */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(11,19,28,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 10px 28px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; letter-spacing: .02em;
+  color: var(--teal); font-size: 13px; white-space: nowrap;
+}
+nav.toc { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+nav.toc a {
+  color: var(--muted); font-size: 12px; padding: 4px 8px;
+  border-radius: 4px; text-decoration: none;
+}
+nav.toc a:hover { color: var(--text); background: var(--teal-dim); }
+.search {
+  display: flex; align-items: center; gap: 6px;
+}
+.search input {
+  background: var(--bg-elev); border: 1px solid var(--line);
+  color: var(--text); border-radius: 6px; padding: 5px 10px;
+  font: 13px "IBM Plex Sans", sans-serif; width: 180px;
+}
+.search input:focus { outline: 1px solid var(--teal); border-color: var(--teal); }
+.search-count { font-size: 11px; color: var(--faint); min-width: 2ch; }
+
+/* header */
+header.doc {
+  padding: 36px 0 8px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px; color: var(--teal); letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 32px; line-height: 1.2;
+  margin: 0 0 18px; letter-spacing: -0.02em;
+}
+.meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px; font-size: 13.5px; color: var(--muted);
+}
+.meta b { color: var(--text); font-weight: 600; }
+.lede {
+  font-size: 17.5px; color: var(--text); margin: 22px 0 0;
+  max-width: 72ch;
+}
+
+/* badges */
+.badge {
+  display: inline-block; font-family: "IBM Plex Mono", monospace;
+  font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; border: 1px solid;
+  vertical-align: middle; white-space: nowrap;
+}
+.badge.open { color: var(--open); border-color: var(--open); background: rgba(232,184,74,.1); }
+.badge.locked { color: var(--locked); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.fixed { color: var(--teal); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.variable { color: #8EC8FF; border-color: #3A5A78; background: rgba(142,200,255,.08); }
+.badge.block { color: var(--red); border-color: var(--red); background: var(--red-dim); }
+.badge.stated { color: #9AD4C8; border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.rec { color: #C9B27A; border-color: #5A4E2E; background: rgba(201,178,122,.1); }
+.badge.phase { color: var(--muted); border-color: var(--line-strong); }
+.badge.us { color: #8EC8FF; border-color: #3A5A78; background: rgba(142,200,255,.08); }
+.badge.joint { color: var(--teal); border-color: var(--teal-line); background: var(--teal-dim); }
+.badge.client { color: #E0A060; border-color: #6A4A28; background: rgba(224,160,96,.1); }
+.badge.hamid { color: #D4A0E0; border-color: #5A3A68; background: rgba(212,160,224,.1); }
+
+/* callouts */
+.callout {
+  border: 1px solid var(--teal-line);
+  background: var(--teal-dim);
+  border-left: 4px solid var(--teal);
+  padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0;
+}
+.callout.locks { margin: 24px 0 32px; }
+.callout.warn {
+  border-color: rgba(224,90,90,.4); background: var(--red-dim);
+  border-left-color: var(--red);
+}
+.callout.note {
+  border-color: var(--line-strong); background: var(--bg-elev);
+  border-left-color: var(--muted);
+}
+.callout.hamid {
+  border-color: var(--teal); background: var(--bg-card);
+  border-left-width: 6px; padding: 18px 22px;
+}
+.callout h3, .callout .label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--teal); margin: 0 0 8px;
+}
+.callout.warn .label { color: var(--red); }
+.callout.hamid .label { color: var(--teal); font-size: 14px; }
+.callout ul { margin: 6px 0 0; padding-left: 18px; }
+.callout li { margin: 5px 0; }
+.callout p { margin: 6px 0; }
+
+/* sections */
+section { margin: 42px 0 28px; }
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px; font-weight: 600; margin: 0 0 12px;
+  padding-top: 18px; border-top: 1px solid var(--line);
+  letter-spacing: -0.01em;
+}
+h2 .num { color: var(--teal); margin-right: 8px; }
+h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 17px; font-weight: 600; margin: 26px 0 10px;
+}
+h4 { font-size: 15px; margin: 16px 0 8px; color: var(--text); }
+p { margin: 10px 0; }
+.intro { color: var(--muted); max-width: 78ch; }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; }
+table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px;
+  background: var(--bg-elev);
+}
+th, td {
+  border: 1px solid var(--line); padding: 8px 10px;
+  text-align: left; vertical-align: top;
+}
+th {
+  background: #1A2836; color: var(--teal);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600; font-size: 12px; letter-spacing: .03em;
+  text-transform: uppercase;
+}
+tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+td.ref {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px;
+  color: var(--teal); white-space: nowrap;
+}
+caption {
+  caption-side: top; text-align: left; font-weight: 600;
+  padding: 0 0 8px; color: var(--text); font-size: 14px;
+}
+
+/* workshop cards */
+details.ws {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 8px; margin: 10px 0; overflow: hidden;
+}
+details.ws[open] { border-color: var(--teal-line); }
+details.ws summary {
+  cursor: pointer; padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  list-style: none;
+}
+details.ws summary::-webkit-details-marker { display: none; }
+details.ws summary:hover { background: var(--teal-dim); }
+.ws-id {
+  font-family: "IBM Plex Mono", monospace; color: var(--teal);
+  font-weight: 500; min-width: 7ch;
+}
+.ws-name { font-weight: 600; }
+.ws-body { padding: 4px 16px 16px; border-top: 1px solid var(--line); }
+.ws-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px 16px; font-size: 13px; color: var(--muted); margin: 10px 0 12px;
+}
+.ws-meta b { color: var(--text); }
+.agenda { margin: 8px 0; padding-left: 0; list-style: none; }
+.agenda li {
+  font-size: 13.5px; padding: 3px 0 3px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.agenda .t {
+  font-family: "IBM Plex Mono", monospace; color: var(--teal);
+  font-size: 12px; margin-right: 8px;
+}
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+.att { font-size: 13.5px; }
+.att b { display: block; color: var(--teal); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* gates strip */
+.gates {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px;
+}
+.gate {
+  flex: 1 1 140px; background: var(--bg-card);
+  border: 1px solid var(--line); border-top: 3px solid var(--teal);
+  padding: 10px 12px; border-radius: 0 0 6px 6px; font-size: 12.5px;
+}
+.gate strong {
+  display: block; font-family: "IBM Plex Mono", monospace;
+  color: var(--teal); font-size: 13px; margin-bottom: 4px;
+}
+
+/* sequence */
+ol.seq { padding-left: 22px; }
+ol.seq li { margin: 8px 0; }
+ol.seq .who { margin-left: 6px; }
+.phase-head {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--teal); font-size: 14px; letter-spacing: .04em;
+  text-transform: uppercase; margin: 22px 0 8px;
+}
+.slice-stop {
+  border: 2px solid var(--red); background: var(--red-dim);
+  padding: 12px 16px; margin: 16px 0; border-radius: 6px;
+  font-weight: 600;
+}
+
+/* footer */
+footer {
+  margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--faint);
+}
+footer code { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+mark.hit { background: rgba(61,184,168,.35); color: inherit; padding: 0 2px; }
+
+/* print */
+@media print {
+  :root { --bg: #fff; --bg-elev: #fff; --bg-card: #f7f7f7; --text: #111; --muted: #333; --faint: #444; --line: #ccc; --line-strong: #999; }
+  body { background: #fff; color: #111; font-size: 11pt; }
+  .topbar { position: static; background: #fff; }
+  nav.toc, .search { display: none; }
+  a { color: #0a5; text-decoration: none; }
+  details.ws { break-inside: avoid; border-color: #bbb; }
+  details.ws { open: true; }
+  details.ws[open] .ws-body, details.ws .ws-body { display: block !important; }
+  details.ws:not([open]) .ws-body { display: block; }
+  .callout, .gate, table { break-inside: avoid; }
+  h2 { break-after: avoid; }
+  header.doc { border-bottom-color: #999; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">EPM-ONT-001</div>
+    <nav class="toc">
+      <a href="#s00">00 Read</a>
+      <a href="#s01">01 Open</a>
+      <a href="#s02">02 Workshops</a>
+      <a href="#s03">03 Client</a>
+      <a href="#s04">04 Formats</a>
+      <a href="#s05">05 Sequence</a>
+      <a href="#s06">06 Not</a>
+    </nav>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search this briefing…" aria-label="Search this briefing">
+      <span class="search-count" id="qc"></span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<header class="doc">
+  <div class="kicker">Ontology lane · briefing · research and planning only · no build</div>
+  <h1>Ontology lane — open questions, workshops, deliverables, and the path from kickoff to a signed ontology</h1>
+  <div class="meta">
+    <div><b>Artifact</b> EPM-ONT-001 <span class="badge open">unregistered briefing</span><br>Not a formal EPM artifact</div>
+    <div><b>Audience</b> Hamid<br><b>Author</b> Ontologist · <b>Date</b> 2026-08-14</div>
+    <div><b>Sources</b> EPM-MOD-000 v0.5 · EPM-DEL-002 v0.3 · EPM-MOD-009 v0.3 · C-10 / C-11</div>
+    <div><b>Status</b> Briefing. Research and planning only. No build.</div>
+  </div>
+  <p class="lede">This is the ontology lane only. Domain models and the KPI Store hang off it; they are not this document. Nothing here invents a workshop, a gate, or a format. Where the planning docs name a form, that form is quoted. Where they say “document” or “register” without naming Word vs HTML, that gap is marked and a working recommendation is given.</p>
+</header>
+
+<div class="callout locks">
+  <div class="label">Locks — compact, once</div>
+  <ul>
+    <li><b>Customer</b> = order-to-cash. <b>Ops / Tech</b> = plan-to-produce.</li>
+    <li><b>Pipeline (load-bearing):</b> Controlled vocabulary → metadata standards → taxonomy → thesaurus (SKOS) → ontology → knowledge graph. Do not skip to graph-first.</li>
+    <li><b>Constraint ≠ Threshold ≠ Breach ≠ Binding.</b> Shared LimitValue pattern. Store KPIs reference constraints; they do not subclass them.</li>
+    <li><b>C-10:</b> ontology = meaning SoT. KPI Store + consumption SL = certified formula + compute. Warehouse / Gold = volume. Azure warehouse is physical, not meaning.</li>
+    <li><b>C-11:</b> ontology layer is not a BI/compiler “semantic layer.” Programme compiler = Databricks (Metric Views / UC semantics). MetricFlow = existing Unbilled demo only.</li>
+    <li>Do not overload “Customer.” Party + Customer Account + Sold-To / Bill-To / Payer / Ship-To (location) / Loading-Authorized Party.</li>
+    <li><b>DP-18 Hamid slice gate:</b> CW1–CW2 and P1 assessment are fine. CW11+ conceptual build, Turtle, and Purview publish wait on the slice.</li>
+    <li><b>Q-03 still open:</b> client-owned deliverable vs internal technique. Branches handover, training, and who attends CW7.</li>
+    <li>Graph product (GraphDB vs Jena) is <b>not</b> picked. Neo4j, if used, is serving only — not a second meaning SoT.</li>
+    <li>No Teaching Guide.</li>
+  </ul>
+</div>
+
+<section id="s00">
+  <h2><span class="num">00</span> How to read this</h2>
+  <p class="intro">Four things, in this order:</p>
+  <ol>
+    <li><b>What is still open</b> — decisions that must land before triples, and questions that gate or shape the ontology.</li>
+    <li><b>The workshops and who must be in the room</b> — the 12 fixed sessions plus the variables that take the calendar to 22–28.</li>
+    <li><b>The deliverables and the form each one takes</b> — stated form from DEL-002 §13 where it exists; a working recommendation where the docs say only “document” or “register.”</li>
+    <li><b>The activity sequence</b> from kickoff to a signed, loaded, pointer-published ontology.</li>
+  </ol>
+  <p>Client roles sit with the workshops and again as a standalone ask in §03.</p>
+</section>
+
+<section id="s01">
+  <h2><span class="num">01</span> Open questions</h2>
+
+  <h3>Table A — Must decide before any triples (D-M11–D-M15)</h3>
+  <div class="table-wrap">
+  <table>
+    <caption>Decisions that block first-triple authoring. Status of every row: Open.</caption>
+    <thead>
+      <tr><th>Ref</th><th>Question</th><th>What “decided” looks like</th><th>Who else</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">D-M11</td>
+        <td>Graph persistence</td>
+        <td>Operability, not features. Dedicated RDF store if the ontology is client-owned and reasoning matters; existing platform if one is already operated. Blocked on Q-05.</td>
+        <td>Client digital / engineering decides. Ontologist + EA recommend.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">D-M12</td>
+        <td>Vocabulary reuse</td>
+        <td>Reuse where a concept already exists (agents, provenance, labelling, concept schemes).</td>
+        <td>Ontologist recommends. Governance ratifies in MOD-006.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">D-M13</td>
+        <td>Validation</td>
+        <td>Both reasoning <em>and</em> SHACL.</td>
+        <td>Ontologist.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">D-M14</td>
+        <td>Naming / IRI / namespace</td>
+        <td>Settled before the first triple.</td>
+        <td>Ontologist drafts. Governance ratifies at CW7 / MOD-006.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+      <tr>
+        <td class="ref">D-M15</td>
+        <td>Modularisation</td>
+        <td>Shared upper + Customer + Constraints, with explicit imports.</td>
+        <td>Ontologist drafts. Governance ratifies in MOD-006.</td>
+        <td><span class="badge open">Open</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Table B — Questions that gate or shape the ontology</h3>
+  <div class="table-wrap">
+  <table>
+    <caption>Open items that change scope, attendees, or when triples may start. Q-08 is locked and listed last so it is not reopened.</caption>
+    <thead>
+      <tr><th>Ref</th><th>Question</th><th>Why it matters</th><th>Resolved at</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">Q-02</td>
+        <td>O2C / P2P interface dates <em>and</em> expected deliverable forms</td>
+        <td>Highest priority. Sets what the consuming programmes think they are receiving, and when.</td>
+        <td>CW1 must-leave-with</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-03</td>
+        <td>Client deliverable vs internal technique</td>
+        <td>Branches the attendee pack and the handover. B-10 is the same question.</td>
+        <td>CW1 must-leave-with</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-05</td>
+        <td>Does a graph platform exist, and who operates it?</td>
+        <td>Decides D-M11.</td>
+        <td>Open — digital / engineering</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-09</td>
+        <td>AI-agent objective?</td>
+        <td>Strengthens the machine-readability / ontology case.</td>
+        <td>Open</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-10</td>
+        <td>One refinery or several</td>
+        <td>Sizes the Constraints lane and the family-cluster count.</td>
+        <td>Open — CW1 sizing</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-11</td>
+        <td>Which geographies for Customer</td>
+        <td>Sizes the Customer channel set and tax/excise attendance.</td>
+        <td>Open — CW1 sizing</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-27</td>
+        <td>Client expectation on deliverable format — documents, models, running systems, or all three</td>
+        <td>Closes the Word / HTML / “running store” gap that DEL-002 §13 leaves open.</td>
+        <td>CW1</td>
+      </tr>
+      <tr>
+        <td class="ref">DP-17</td>
+        <td>TechnologyConstraint in-or-out</td>
+        <td>Adds or drops the OT / ISA-95 seat and the Technology class split at CW18.</td>
+        <td>CW1</td>
+      </tr>
+      <tr>
+        <td class="ref">DP-18</td>
+        <td>Hamid slice gate before CW11+ / Turtle / Purview</td>
+        <td>CW1–CW2 and P1 assessment may run. Conceptual build, Turtle, and Purview publish wait.</td>
+        <td>Hamid</td>
+      </tr>
+      <tr>
+        <td class="ref">DP-05</td>
+        <td>Graph platform provisioned (optional sandbox)</td>
+        <td>G2 does <em>not</em> require a running store. Sandbox is CW7 (b), not a G2 gate.</td>
+        <td>Open — optional</td>
+      </tr>
+      <tr>
+        <td class="ref">DP-14</td>
+        <td>Governance forum that can ratify standards</td>
+        <td>Without it, MOD-006 stays Draft. EDG lead is the named ratifier.</td>
+        <td>Open</td>
+      </tr>
+      <tr>
+        <td class="ref">D-M18</td>
+        <td>LimitValue pattern + ≠ rule with the Store</td>
+        <td>Store KPIs reference constraints; they do not subclass them. Shared LimitValue.</td>
+        <td>Open — prove at CW27</td>
+      </tr>
+      <tr>
+        <td class="ref">D-M04</td>
+        <td>Ontology vs ER/Studio as meaning authority</td>
+        <td>Recommendation: ontology. Still Open.</td>
+        <td>Open</td>
+      </tr>
+      <tr>
+        <td class="ref">D-M16</td>
+        <td>Party-plus-role</td>
+        <td>Must be proved live at CW15 (five real multi-role orgs, both ways).</td>
+        <td>CW15</td>
+      </tr>
+      <tr>
+        <td class="ref">Q-08</td>
+        <td>Silver vs Store catalog</td>
+        <td>Silver is a one-way projection of the Store catalog plus ontology IRIs, not editable.</td>
+        <td><span class="badge locked">Locked</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout note">
+    <div class="label">Do not reopen — glossary</div>
+    <p>The glossary no longer says “Customer is a role.” The live split is Customer Account + Sold-To / Bill-To / Payer. Ship-To is a location. Loading-Authorized Party is a distinct party. Do not reopen.</p>
+  </div>
+</section>
+
+<section id="s02">
+  <h2><span class="num">02</span> Workshops and agendas</h2>
+  <p class="intro">Twelve fixed workshops plus variables take the calendar to <b>22–28</b>. Formula:</p>
+  <p><code style="font-family:'IBM Plex Mono',monospace;color:var(--teal);font-size:13.5px;">12 + channels(3–5) + families(4–6) + inherited(2–3) + binding-and-trace(1–2)</code></p>
+  <p>Publish the numbered calendar after CW1, once the five sizing variables are known.</p>
+
+  <h3>Gates</h3>
+  <div class="gates">
+    <div class="gate"><strong>G0</strong> Mobilised. CW1 + CW2 done; calendar published.</div>
+    <div class="gate"><strong>G1</strong> Disposition register accepted (after CW3–CW5).</div>
+    <div class="gate"><strong>G2</strong> MOD-001 / 002 / 003 / 006 Candidate. No running triple store required.</div>
+    <div class="gate"><strong>G3</strong> Customer approved. Needs signed Customer CV/CQ.</div>
+    <div class="gate"><strong>G4</strong> Constraints approved. Needs signed Constraints CV/CQ.</div>
+    <div class="gate"><strong>G5</strong> 1–2 Store pilots (CW27).</div>
+    <div class="gate"><strong>G6</strong> Handover. Client steward adds an entity unaided (CW28).</div>
+  </div>
+
+  <!-- CW1 -->
+  <details class="ws" open>
+    <summary>
+      <span class="ws-id">CW1</span>
+      <span class="ws-name">Kickoff</span>
+      <span class="badge phase">P0</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day preferred · half day min</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Scope, boundaries, Q-02 / Q-03, role nominations, five sizing variables. No modeling.</div>
+        <div><b>Output / gate</b> Must leave with Q-02, Q-03, Technology in-or-out, role nominations, five sizing variables. Feeds G0.</div>
+      </div>
+      <h4>Agenda</h4>
+      <ul class="agenda">
+        <li><span class="t">0:00–0:20</span> Opening (no modeling)</li>
+        <li><span class="t">0:20–1:00</span> Scope playback</li>
+        <li><span class="t">1:00–1:45</span> Customer boundary (sizing variable 1)</li>
+        <li><span class="t">2:00–2:45</span> Constraints boundary (sizing variable 2)</li>
+        <li><span class="t">2:45–3:30</span> Consuming programmes — Q-02 dates and form</li>
+        <li><span class="t">3:30–4:15</span> Inherited models (sizing variable 3)</li>
+        <li><span class="t">4:30–5:30</span> Role request</li>
+        <li><span class="t">5:30–6:00</span> Access, tooling, close</li>
+      </ul>
+      <div class="two-col">
+        <div class="att"><b>Must</b> Executive sponsor · O2C lead · P2P lead · EDG lead · Commercial leadership · Refinery technical / planning leadership · EA</div>
+        <div class="att"><b>Should</b> Party model lead · data platform · SAP functional · MDM · IT security · KPI Store lead (Should CW1; Must CW10 / CW27)</div>
+      </div>
+      <p class="att" style="margin-top:8px;"><b>Optional</b> Finance / SC modeling leads · Purview owner · TAS SME · OT / ISA-95</p>
+      <p><b>Must not</b> model.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW2</span>
+      <span class="ws-name">Named commitments</span>
+      <span class="badge phase">P0</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Convert CW1 nominations to named commitments. Book the LP economist for CW18–CW24 as named sessions (not a retainer). Book the conceptual series.</div>
+        <div><b>Output / gate</b> Named owners. LP economist booked. Conceptual series booked. Feeds G0.</div>
+      </div>
+      <p class="att"><b>Must</b> Day-to-day counterpart plus the nominated owners from CW1, enough to convert names to diary commitments.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW3–CW5</span>
+      <span class="ws-name">Inherited-model walkthroughs — Party / Finance / Supply Chain</span>
+      <span class="badge phase">P1</span>
+      <span class="badge variable">Variable · 2–3</span>
+      <span class="badge">Half day each</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Walk the inherited Party, Finance, and Supply Chain models against the MOD-009 rubric. Disposition per subject area (D-M22).</div>
+        <div><b>Output / gate</b> Revised scores. Feeds G1.</div>
+      </div>
+      <p class="att"><b>Must</b> Original modeling team + lead · our modelers · DM Lead · EDG observer</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW6</span>
+      <span class="ws-name">Modeling standards ratification</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Ratify naming, keys, levels, relationships, definition quality, metadata, versioning.</div>
+        <div><b>Output / gate</b> Feeds MOD-003 / G2.</div>
+      </div>
+      <p class="att"><b>Must</b> Our modelers + ontologist · ER/Studio admin · Purview owner · EDG · one steward per domain · EA</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW7</span>
+      <span class="ws-name">Ontology design standard + optional sandbox</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Split day. (a) MOD-006 / IRI / modules / SHACL+OWL + CQ <em>method</em> — this is the G2 gate. (b) optional sandbox — not a G2 gate.</div>
+        <div><b>Output / gate</b> MOD-006 Candidate. G2 does not require a running triple store. CW7 is <b>not</b> CQ sign-off.</div>
+      </div>
+      <p>Business CQs are written at P2.6. Customer CQs are signed after CW11 s1–2. Constraints CQs are signed at CW18.</p>
+      <p class="att"><b>Must</b> Ontologist · backend engineers · EA · EDG · DM Lead</p>
+      <p class="att"><b>Platform ops</b> only if Q-03 = client-owned <em>and</em> (b) is in play.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW8</span>
+      <span class="ws-name">Customer boundary</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Freeze the Customer boundary that CW11 will conceptualise. No triples.</div>
+        <div><b>Output / gate</b> Boundary statement. Feeds P3A after DP-18.</div>
+      </div>
+      <p class="att"><b>Must</b> Domain Data Owner · channel reps · MDM · credit · finance</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW9</span>
+      <span class="ws-name">Constraints boundary + federated ownership</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Freeze the Constraints boundary and name the federated ownership (coordinating owner + family stewards).</div>
+        <div><b>Output / gate</b> Boundary statement + owner candidates. Feeds P3B after DP-18.</div>
+      </div>
+      <p class="att"><b>Must</b> Coordinating owner candidate · family steward candidates · LP planner · GPO</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW10</span>
+      <span class="ws-name">Authoring-home matrix</span>
+      <span class="badge phase">P2</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Six locations + three Store seats. Excel containment. C-10 split. Formula-authoring home named before close.</div>
+        <div><b>Output / gate</b> Authoring-home matrix. Formula-authoring home named. Feeds G2.</div>
+      </div>
+      <p class="att"><b>Must</b> KPI Store lead (Must at CW10 / CW27; only Should at CW1)</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW11–14</span>
+      <span class="ws-name">Customer conceptual series</span>
+      <span class="badge phase">P3A</span>
+      <span class="badge variable">Variable · 3–5</span>
+      <span class="badge">Half day each</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Controlled vocabulary, then roles, then agreements, then challenge CQs. Sign-off after s1–2 before s3–4 open.</div>
+        <div><b>Output / gate</b> Signed Customer CV/CQ after s1–2. Required for G3.</div>
+      </div>
+      <ul class="agenda">
+        <li><span class="t">s1</span> UL freeze of six terms: Customer Account, Sold-To, Bill-To, Payer, Ship-To (location), Loading-Authorized Party</li>
+        <li><span class="t">s2</span> Roles and hierarchies</li>
+        <li><span class="t">CV/CQ</span> Domain Data Owner Customer signs; ontologist scribes. Do not open s3–4 without it.</li>
+        <li><span class="t">s3</span> Agreements</li>
+        <li><span class="t">s4</span> Challenge CQs</li>
+      </ul>
+      <p class="att"><b>Must</b> Domain Data Owner · one rep per channel · credit · tax / excise · facilitator · scribe · BA · steward</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW15</span>
+      <span class="ws-name">Party-plus-role vs customer-as-entity</span>
+      <span class="badge phase">P3A</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Prove D-M16 live. Five real multi-role organisations modeled both ways.</div>
+        <div><b>Output / gate</b> Live proof that Party-plus-role holds. Feeds Customer module authoring.</div>
+      </div>
+      <p class="att"><b>Must</b> Domain Data Owner · channel reps · credit · MDM programme · facilitator · scribe</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW16</span>
+      <span class="ws-name">Customer source binding</span>
+      <span class="badge phase">P3A</span>
+      <span class="badge variable">Variable · 1–3</span>
+      <span class="badge">Half day × 1–3</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Bind the signed Customer vocabulary to SAP, CRM, credit, card, Databricks.</div>
+        <div><b>Output / gate</b> Source-binding notes for MOD-008 later.</div>
+      </div>
+      <p class="att"><b>Must</b> SAP functional · CRM · credit system · card platform · Databricks engineer</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW17</span>
+      <span class="ws-name">G3 — Customer approved</span>
+      <span class="badge phase">P3A</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">3 hours</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> G3 decision. Shared-meaning checklist <em>before</em> reasoner / SPARQL. Domain Data Owner decides.</div>
+        <div><b>Output / gate</b> G3 Customer approved. Needs signed Customer CV/CQ.</div>
+      </div>
+      <p class="att"><b>Must</b> Domain Data Owner (decides) · EDG · EPM Lead · DM Lead · ontologist · independent reviewer who was not in the modeling workshops</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW18</span>
+      <span class="ws-name">Constraints CV → CQs → is-a</span>
+      <span class="badge phase">P3B</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Full day</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Load-bearing agenda order. Vocabulary first, CQs second, is-a last. Sign-off at the end. Do not open CW19 without it.</div>
+        <div><b>Output / gate</b> Signed Constraints CV/CQ. Required for G4 and for CW19–23.</div>
+      </div>
+      <h4>Agenda order — load-bearing</h4>
+      <ul class="agenda">
+        <li><span class="t">1</span> CV — preferred term + aliases + includes / excludes for Constraint, Threshold, Breach, Binding, and family names</li>
+        <li><span class="t">2</span> CQs from P2.6</li>
+        <li><span class="t">3</span> Then is-a — Operational vs Technology only as the class split; families under those; four property axes (authority, hardness, horizon, constrained object). Classify ~20 real constraints.</li>
+        <li><span class="t">end</span> CV/CQ sign-off. Coordinating Domain Data Owner signs.</li>
+      </ul>
+      <p class="att"><b>Must</b> Coordinating owner · all family stewards · LP planner · process engineer · quality · HSE · maintenance · commercial. OT / ISA-95 if Technology is in.</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW19–23</span>
+      <span class="ws-name">Constraint family clusters</span>
+      <span class="badge phase">P3B</span>
+      <span class="badge variable">Variable · 4–6</span>
+      <span class="badge">Half day each</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Family clusters after the signed CV/CQ. Do not open without CW18 sign-off.</div>
+        <div><b>Output / gate</b> Family-level vocabulary and examples. Feeds Constraints module authoring.</div>
+      </div>
+      <ul class="agenda">
+        <li>Unit / utilities</li>
+        <li>Spec / blending</li>
+        <li>Tankage / movement</li>
+        <li>Regulatory / maintenance</li>
+        <li>Contractual</li>
+      </ul>
+      <p class="att"><b>Must</b> Coordinating owner · the family steward for that cluster · relevant SMEs from the CW18 set</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW24</span>
+      <span class="ws-name">Constraints source binding</span>
+      <span class="badge phase">P3B</span>
+      <span class="badge variable">Variable · 1–2</span>
+      <span class="badge">Half day × 1–2</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Bind signed Constraints vocabulary to LP, scheduler, quality / lab, tank farm, maintenance.</div>
+        <div><b>Output / gate</b> Source-binding notes for MOD-008 later.</div>
+      </div>
+      <p class="att"><b>Must</b> LP · scheduler · quality / lab · tank farm · maintenance</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW25</span>
+      <span class="ws-name">G4 — Constraints approved</span>
+      <span class="badge phase">P3B</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">3 hours</span>
+      <span class="badge block">Blocked on DP-18</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Same shape as CW17. Coordinating Domain Data Owner decides. Shared-meaning checklist before reasoner / SPARQL.</div>
+        <div><b>Output / gate</b> G4 Constraints approved. Needs signed Constraints CV/CQ.</div>
+      </div>
+      <p class="att"><b>Must</b> Coordinating Domain Data Owner (decides) · EDG · EPM Lead · DM Lead · ontologist · independent reviewer not in the modeling workshops</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW26</span>
+      <span class="ws-name">Combined reasoner + SPARQL</span>
+      <span class="badge phase">P4</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Shared-meaning checklist first, then reasoner and SPARQL. Execute every CQ live.</div>
+        <div><b>Output / gate</b> Combined modules pass reasoner + SHACL + live CQs. Feeds G5 path.</div>
+      </div>
+      <p class="att"><b>Must</b> Ontologist · backend · DM Lead · Domain Data Owner Customer · Coordinating owner Constraints · independent reviewer as needed</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW27</span>
+      <span class="ws-name">Store pilots</span>
+      <span class="badge phase">P4</span>
+      <span class="badge variable">Variable · 1–2</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> 1–2 Store pilots. customer_grain = payer / sold-to / site. LimitValue pattern reuse. Store KPIs reference constraints; they do not subclass them.</div>
+        <div><b>Output / gate</b> G5 — 1–2 Store pilots.</div>
+      </div>
+      <p class="att"><b>Must</b> KPI Store lead · KPI owner per pilot · Store / analytics engineer (formula author)</p>
+    </div>
+  </details>
+
+  <details class="ws">
+    <summary>
+      <span class="ws-id">CW28</span>
+      <span class="ws-name">Lessons, handover, scale</span>
+      <span class="badge phase">P5</span>
+      <span class="badge fixed">Fixed</span>
+      <span class="badge">Half day</span>
+    </summary>
+    <div class="ws-body">
+      <div class="ws-meta">
+        <div><b>Purpose</b> Lessons, handover, scale. Client steward adds an entity unaided.</div>
+        <div><b>Output / gate</b> G6 handover. Steward unaided is the proof.</div>
+      </div>
+      <p class="att"><b>Must</b> Client steward (the unaided add) · EDG · ontologist · DM Lead · day-to-day counterpart</p>
+    </div>
+  </details>
+</section>
+
+<section id="s03">
+  <h2><span class="num">03</span> What we need from the client</h2>
+  <p class="intro">Reproduced from DEL-002 §08, ontology-filtered. Named individuals, not role titles left blank.</p>
+
+  <h3>Decision roles — named individuals</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Role</th><th>What they decide / sign</th><th>Cadence</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Executive sponsor</td>
+        <td>Scope, scale, escalations</td>
+        <td>Monthly</td>
+        <td>Can take the GPO row at CW1 if GPO is dropped</td>
+      </tr>
+      <tr>
+        <td>Domain Data Owner — Customer</td>
+        <td>Every customer definition. Signs Customer CV/CQ. Promotes G3.</td>
+        <td>4 h/week in P3A</td>
+        <td><span class="badge block">Blocking</span></td>
+      </tr>
+      <tr>
+        <td>Coordinating Domain Data Owner — Constraints</td>
+        <td>Structure, taxonomy, lifecycle (not values). Signs Constraints CV/CQ. Promotes G4.</td>
+        <td>4 h/week in P3B</td>
+        <td><span class="badge block">Blocking</span></td>
+      </tr>
+      <tr>
+        <td>EDG lead</td>
+        <td>Ratifies MOD-006</td>
+        <td>2 h/week</td>
+        <td>Without them, artifacts stay Draft</td>
+      </tr>
+      <tr>
+        <td>Day-to-day counterpart</td>
+        <td>Unblocks access and diaries</td>
+        <td>Daily</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>GPO</td>
+        <td>Cross-domain boundary disputes</td>
+        <td>As needed</td>
+        <td>Or drop the row at CW1 and give it to the sponsor</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Customer SMEs</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Seat</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td>Channel reps × 3–6</td><td>CW11–14, CW17</td></tr>
+      <tr><td>Credit / risk</td><td>CW12, CW15</td></tr>
+      <tr><td>Tax / excise</td><td>CW13, CW16</td></tr>
+      <tr><td>Customer MDM steward</td><td>P3A</td></tr>
+      <tr><td>MDM programme</td><td>CW1, CW8, CW15</td></tr>
+      <tr><td>O2C lead</td><td>CW1, CW8, CW17</td></tr>
+      <tr><td>TAS / terminal-auth SME</td><td>CW11 s1–2, CW16</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Constraints SMEs</h3>
+  <p>The <b>LP economist / refinery planner</b> is the single highest-value participant. Book CW18–CW24 as named sessions at CW2 — not a 4–6 h/week retainer.</p>
+  <p>Also: scheduler · process engineer · quality / lab · HSE / permitting · maintenance / TAR · tank farm · commercial contracts · P2P lead · OT / ISA-95 if Technology is in.</p>
+
+  <h3>Technical</h3>
+  <p>ER/Studio admin · Purview owner · Databricks / UC engineer · SAP functional (SD / MM / IS-Oil) · LP planning system owner · graph platform owner (if one exists) · EA · security / access · BigEye (advisory) · KPI Store lead (Should CW1, Must CW10 / CW27) · KPI owner per pilot · Store / analytics engineer (formula author).</p>
+
+  <h3>Inherited-model authors</h3>
+  <p>Party / Finance / Supply Chain leads for CW3–CW5.</p>
+
+  <div class="callout warn">
+    <div class="label">Three genuinely blocking seats</div>
+    <ul>
+      <li>Domain Data Owner — Customer</li>
+      <li>Coordinating Domain Data Owner — Constraints</li>
+      <li>LP economist / refinery planner</li>
+    </ul>
+  </div>
+
+  <h3>What we provide</h3>
+  <p>Ontologist — confirmed. Backend — confirmed. DM Lead + 2 BAs — still to confirm (Q-21). BAs get business people to say what they mean.</p>
+
+  <h3>Access</h3>
+  <ul>
+    <li>DP-02 SAP</li>
+    <li>DP-03 LP model + spec library</li>
+    <li>DP-04 ER/Studio</li>
+    <li>DP-05 optional graph sandbox</li>
+    <li>DP-06 Purview</li>
+    <li>DP-07 Unity metadata</li>
+  </ul>
+</section>
+
+<section id="s04">
+  <h2><span class="num">04</span> Deliverables and their formats</h2>
+  <p class="intro">DEL-002 §13 names a Form. It does not say PowerPoint or Word for most rows. Q-27 (documents, models, running systems, or all three) is still open and is asked at CW1. Every row below marks <span class="badge stated">stated</span> vs <span class="badge rec">working recommendation</span>.</p>
+
+  <div class="callout hamid">
+    <div class="label">Hamid — “Is this PowerPoint, Excel, Word?”</div>
+    <ul>
+      <li><b>Workshop pre-reads and ratification packs:</b> short documents (HTML or Word / PDF). Slides only if the client’s forum requires them — not the SoT.</li>
+      <li><b>Design standard and playbook:</b> documents, not decks.</li>
+      <li><b>The ontology itself:</b> Turtle + SHACL + CQs in git. That is the product.</li>
+      <li><b>Mapping and disposition:</b> registers (tables), not slides.</li>
+      <li><b>Excel:</b> staging only. Never the meaning SoT.</li>
+      <li><b>Purview:</b> published terms (platform state), not an authored glossary.</li>
+      <li><b>Running store:</b> only if Q-03 = client-owned and D-M11 picks an operable platform.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <caption>Ontology-lane deliverables. Stated form is quoted from DEL-002 §13 where it exists. Working recommendation is ours where the form is generic.</caption>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Deliverable</th>
+        <th>Phase</th>
+        <th>Stated form</th>
+        <th>Working recommendation if generic</th>
+        <th>Who consumes</th>
+        <th>Predecessor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref">MOD-006</td>
+        <td>Ontology Design Standard</td>
+        <td>P2</td>
+        <td>Document <span class="badge stated">stated</span></td>
+        <td>Governed HTML or Word in git (same family as MOD-000), plus a one-pager PDF for the ratification pack. Not PowerPoint. Holds D-M11–D-M15. <span class="badge rec">working rec</span></td>
+        <td>Ontologist (to write 007) · Governance · backend</td>
+        <td>CW7 + EDG forum (DP-14)</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-007</td>
+        <td>Domain Ontologies</td>
+        <td>P3</td>
+        <td>Turtle files + validation suite <span class="badge stated">stated</span></td>
+        <td><code>.ttl</code> modules in git (shared upper, Customer, Constraints) + SHACL + CQ document (Markdown or HTML next to the Turtle, signed). Version IRI matches git tag. Not PowerPoint, not Excel, not a Neo4j dump. <span class="badge rec">working rec</span></td>
+        <td>Reasoner / SHACL at CW17 / CW25 / CW26 · mapping register · Purview as IRI pointer after DP-18</td>
+        <td>Signed CV/CQ + MOD-006 Candidate + DP-18</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-008</td>
+        <td>Mapping register</td>
+        <td>P4</td>
+        <td>Register <span class="badge stated">stated</span></td>
+        <td>Versioned CSV / Markdown table in git, or a governed catalog table. Excel allowed only as staging (C-08). Columns: ontology IRI · ER/Studio entity / attribute · Purview term. <span class="badge rec">working rec</span></td>
+        <td>Mappers · Purview publish · Store pilots</td>
+        <td>MOD-007 + MOD-004</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-009</td>
+        <td>Assessment + disposition register</td>
+        <td>P1</td>
+        <td>Framework + register <span class="badge stated">stated</span></td>
+        <td>Framework is already HTML. Disposition register is a table (Excel-staging → governed).</td>
+        <td>G1 · CW8 / CW9</td>
+        <td>CW3–CW5 walkthroughs</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-003</td>
+        <td>Modeling standards</td>
+        <td>P1–P2</td>
+        <td>Document <span class="badge stated">stated</span></td>
+        <td>Adjacent to this lane. Ontologist attends CW6. Same working rec as other design documents: HTML or Word in git, not a deck.</td>
+        <td>Modelers · Governance</td>
+        <td>CW6</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-001</td>
+        <td>Playbook</td>
+        <td>Revised P5</td>
+        <td>Document <span class="badge stated">stated</span></td>
+        <td>Document, not a deck. Revised at CW28 / P5.</td>
+        <td>Programme · client stewards</td>
+        <td>CW28 lessons</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-002</td>
+        <td>Reference architecture</td>
+        <td>P2</td>
+        <td>Document + diagrams <span class="badge stated">stated</span></td>
+        <td>Document + diagrams. Not a slide-only pack.</td>
+        <td>EA · backend · Governance</td>
+        <td>G2 pack</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-004</td>
+        <td>Domain models</td>
+        <td>P3–P4</td>
+        <td>ER/Studio models + documentation <span class="badge stated">stated</span></td>
+        <td>ER/Studio is the model file. Mapped to the ontology via MOD-008. Not the meaning SoT (D-M04 recommendation: ontology; still Open).</td>
+        <td>Modelers · mappers</td>
+        <td>Domain-model lane; mapped after MOD-007</td>
+      </tr>
+      <tr>
+        <td class="ref">MOD-005</td>
+        <td>KPI-to-domain traceability</td>
+        <td>P4</td>
+        <td>Matrix + projection design <span class="badge stated">stated</span></td>
+        <td>Store-owned. Ontology supplies IRIs and Constraint refs. Not a Store briefing.</td>
+        <td>KPI Store · ontology (IRI + Constraint refs only)</td>
+        <td>Store lane + MOD-007 IRIs</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Published glossary terms in Purview</td>
+        <td>P3–P4</td>
+        <td>Platform state <span class="badge stated">stated</span></td>
+        <td>Pointer: preferred term + signed definition or short form + IRI URL. Never the formula. After DP-18.</td>
+        <td>Business search in Purview</td>
+        <td>Signed CV/CQ + DP-18 + git tag</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Metadata sync</td>
+        <td>P4</td>
+        <td>Running pipelines <span class="badge stated">stated</span></td>
+        <td>Running pipelines. Not an authored glossary.</td>
+        <td>Platform ops</td>
+        <td>MOD-008 + Purview / Unity access (DP-06, DP-07)</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>O2C / P2P handover packages</td>
+        <td>per Q-02</td>
+        <td>Packages <span class="badge stated">stated</span></td>
+        <td>Form of the package is Q-02 (still open). Ask at CW1.</td>
+        <td>Consuming programmes</td>
+        <td>Q-02 at CW1</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Effort model, scale rec, enablement</td>
+        <td>P5</td>
+        <td>Documents + training <span class="badge stated">stated</span></td>
+        <td>Documents + training. No Teaching Guide in this lane.</td>
+        <td>Sponsor · stewards</td>
+        <td>CW28</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Authored ontology in git</td>
+        <td>P3–P4</td>
+        <td>Not its own §13 row <span class="badge rec">working rec</span></td>
+        <td>It is the SoT for 007: Turtle on a branch, PR, tag = versionIRI.</td>
+        <td>Ontologist · backend · reasoner</td>
+        <td>Signed CV/CQ + MOD-006 + DP-18</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Loaded RDF dataset (GraphDB or Jena)</td>
+        <td>P4</td>
+        <td>Not a §13 row <span class="badge rec">working rec</span></td>
+        <td>Named graph per module / release. Depends on D-M11 and Q-03. Product (GraphDB vs Jena) is not picked.</td>
+        <td>CW26 live CQs · optional serving</td>
+        <td>D-M11 decided · Q-03 branch</td>
+      </tr>
+      <tr>
+        <td class="ref">—</td>
+        <td>Optional Neo4j projection</td>
+        <td>P4</td>
+        <td>Not a §13 row <span class="badge rec">working rec</span></td>
+        <td>Derived serving graph. Do not version the dump as SoT. Neo4j is serving only — not a second meaning SoT.</td>
+        <td>Serving / demo only</td>
+        <td>Loaded RDF + explicit one-way projection</td>
+      </tr>
+      <tr>
+        <td class="ref">CW1</td>
+        <td>CW1 outputs</td>
+        <td>P0</td>
+        <td>Named outputs <span class="badge stated">stated</span></td>
+        <td>Scope statement = two pages · role nomination table · access request log · interface agreement · Q-03 branch · Technology in-or-out · engagement calendar.</td>
+        <td>Programme · Hamid · client counterpart</td>
+        <td>CW1 itself</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s05">
+  <h2><span class="num">05</span> Activity sequence — kickoff to a signed ontology</h2>
+  <p class="intro">Numbered. Each step is marked <span class="badge us">Us</span> / <span class="badge joint">Joint</span> / <span class="badge client">Client</span> / <span class="badge hamid">Hamid</span>. Steps after the slice gate that author or publish meaning are marked <span class="badge block">Blocked on slice</span>.</p>
+
+  <div class="phase-head">P0 — Mobilise</div>
+  <ol class="seq">
+    <li>Mobilise. Confirm DM Lead + 2 BAs (Q-21). <span class="badge us who">Us</span></li>
+    <li>Issue CW1 pre-read + role request. <span class="badge us who">Us</span></li>
+    <li>Run CW1. Leave with Q-02, Q-03, Technology in-or-out, nominations, sizing. <span class="badge joint who">Joint</span></li>
+    <li>Raise access week 1 (SAP, LP, ER/Studio, Purview, Unity, optional graph). <span class="badge client who">Client</span></li>
+    <li>Run CW2. Named owners. Book LP economist + conceptual series. <span class="badge joint who">Joint</span></li>
+    <li>Publish 22–28 workshop calendar. <span class="badge us who">Us</span></li>
+  </ol>
+  <p><b>G0</b> — mobilised.</p>
+
+  <div class="phase-head">P1 — Assessment (fine before the slice)</div>
+  <ol class="seq" start="7">
+    <li>Sense-inventory / harvest (D-M19): Purview classic + Unified, ER/Studio terms, Unity comments / tags, Excel. Harvest ≠ label-copy of “Customer.” <span class="badge us who">Us</span></li>
+    <li>Inherited-model desk review against MOD-009 rubric (21 criteria). <span class="badge us who">Us</span></li>
+    <li>CW3–CW5 walkthroughs. Disposition per subject area (D-M22). <span class="badge joint who">Joint</span></li>
+    <li>G1 disposition register accepted. <span class="badge client who">Client</span> <span class="badge us who">Us</span></li>
+  </ol>
+
+  <div class="phase-head">P2 — Standards (still no triples)</div>
+  <ol class="seq" start="11">
+    <li>CW6 → MOD-003 Candidate. <span class="badge joint who">Joint</span></li>
+    <li>CW7 (a) → MOD-006 Candidate. Optional (b) sandbox. <span class="badge joint who">Joint</span></li>
+    <li>P2.6 write business CQs (not signed yet). <span class="badge us who">Us</span></li>
+    <li>CW8 / CW9 boundaries. <span class="badge joint who">Joint</span></li>
+    <li>CW10 authoring-home matrix. Formula-authoring home named. KPI Store lead Must. <span class="badge joint who">Joint</span></li>
+  </ol>
+  <p><b>G2</b> — MOD-001 / 002 / 003 / 006 Candidate. No running triple store required.</p>
+
+  <div class="slice-stop">
+    DP-18 Hamid slice gate. Stop conceptual build / Turtle / Purview until Hamid opens a slice.
+    <span class="badge hamid">Hamid</span>
+    <span class="badge block">Blocked on slice</span>
+  </div>
+
+  <div class="phase-head">P3 — After the slice</div>
+  <ol class="seq" start="16">
+    <li>CW11 s1 UL freeze. CW11 s2 roles. Customer CV/CQ signed. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW11 s3–s4, CW15 party / role proof. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>Author Customer module Turtle + SHACL (MOD-007) only after signed CV/CQ + MOD-006. <span class="badge us who">Us</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW16 SAP binding. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW17 G3 — independent reviewer, shared-meaning checklist, CQs executed, shapes pass. Client decides. <span class="badge client who">Client</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW18 CV → CQs → is-a. Constraints CV/CQ signed. Do not open CW19 without it. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW19–23 family clusters. CW24 source binding. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>Author Constraints module Turtle + SHACL. <span class="badge us who">Us</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW25 G4. Client decides. <span class="badge client who">Client</span> <span class="badge block">Blocked on slice</span></li>
+  </ol>
+
+  <div class="phase-head">P4 — Combine, map, load, pointer-publish, pilot</div>
+  <ol class="seq" start="25">
+    <li>Combine modules, run reasoner + SHACL (CW26). <span class="badge joint who">Joint</span></li>
+    <li>MOD-008 mapping register. <span class="badge us who">Us</span></li>
+    <li>Git tag = versionIRI. Load named graphs into GraphDB or Jena (once D-M11 decided). <span class="badge us who">Us</span> / <span class="badge client who">Client ops</span></li>
+    <li>Optional one-way n10s projection to Neo4j (serving only). <span class="badge us who">Us</span></li>
+    <li>Purview publish: term + short definition + IRI pointer. Never the formula. After DP-18. <span class="badge joint who">Joint</span> <span class="badge block">Blocked on slice</span></li>
+    <li>CW27 — 1–2 Store pilots; customer_grain; LimitValue pattern reuse. <span class="badge joint who">Joint</span></li>
+  </ol>
+  <p><b>G5</b> — 1–2 Store pilots.</p>
+
+  <div class="phase-head">P5 — Handover</div>
+  <ol class="seq" start="31">
+    <li>CW28 lessons. Revise MOD-001 / 003 / 006. <span class="badge joint who">Joint</span></li>
+    <li>Enablement: client steward adds an entity unaided. <span class="badge joint who">Joint</span></li>
+    <li>Artifact closeout. <span class="badge us who">Us</span></li>
+  </ol>
+  <p><b>G6</b> — handover. Steward unaided.</p>
+</section>
+
+<section id="s06">
+  <h2><span class="num">06</span> What this briefing is not</h2>
+  <ul>
+    <li>Not a pick of GraphDB vs Jena.</li>
+    <li>Not a build of classes, SHACL, or IDs.</li>
+    <li>Not a Teaching Guide.</li>
+    <li>Not a Store or domain-model briefing.</li>
+    <li>Databricks is the programme compiler; this document does not restage the Unbilled MetricFlow demo.</li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>EPM-ONT-001</b> · unregistered briefing · 2026-08-14 · Ontologist for Hamid · Status: briefing, research and planning only, no build.</p>
+  <p>Sources (quoted, not extended):</p>
+  <ul>
+    <li><code>/workspace/domain-ontology-kpi/planning/</code> — EPM-MOD-000 v0.5, EPM-DEL-002 v0.3, EPM-MOD-009 v0.3</li>
+    <li><code>/workspace/domain-ontology-kpi/research/meta-integration-draft/02-ontology-graphs.md</code></li>
+    <li>C-10 / C-11 · Questions to Ontologist</li>
+  </ul>
+  <p>Nothing in this file invents a workshop ID, a gate, or a deliverable form. Where DEL-002 §13 says “document” or “register,” the gap is marked and a working recommendation is given. Q-27 remains the client close on documents vs models vs running systems.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  var input = document.getElementById("q");
+  var count = document.getElementById("qc");
+  var root = document.querySelector(".wrap");
+  if (!input || !root) return;
+  function clearMarks(node) {
+    var marks = node.querySelectorAll("mark.hit");
+    for (var i = 0; i < marks.length; i++) {
+      var m = marks[i];
+      var t = document.createTextNode(m.textContent);
+      m.parentNode.replaceChild(t, m);
+    }
+    node.normalize();
+  }
+  function walk(node, re, acc) {
+    if (node.nodeType === 3) {
+      var text = node.nodeValue;
+      if (!text || !re.test(text)) return;
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0;
+      var m;
+      while ((m = re.exec(text))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var mark = document.createElement("mark");
+        mark.className = "hit";
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        acc.n++;
+        last = m.index + m[0].length;
+        if (m[0].length === 0) break;
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+      return;
+    }
+    if (node.nodeType !== 1) return;
+    if (node.tagName === "SCRIPT" || node.tagName === "STYLE" || node.tagName === "MARK") return;
+    var kids = Array.prototype.slice.call(node.childNodes);
+    for (var i = 0; i < kids.length; i++) walk(kids[i], re, acc);
+  }
+  input.addEventListener("input", function () {
+    clearMarks(root);
+    var q = input.value.trim();
+    if (q.length < 2) { count.textContent = ""; return; }
+    var acc = { n: 0 };
+    var re;
+    try { re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"); }
+    catch (e) { count.textContent = ""; return; }
+    walk(root, re, acc);
+    count.textContent = acc.n ? String(acc.n) : "0";
+  });
+})();
+</script>
+</body>
+</html>

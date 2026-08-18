@@ -1,0 +1,23 @@
+term_id,alias
+id:payer,payer
+id:payer,RG
+id:payer,PY
+id:payer,paying party
+id:sold-to,sold-to
+id:sold-to,sold_to
+id:sold-to,AG
+id:sold-to,SP
+id:sold-to,customer
+id:bill-to,bill-to
+id:bill-to,bill_to
+id:bill-to,RE
+id:bill-to,BP
+id:ship-to,ship-to
+id:ship-to,ship_to
+id:ship-to,WE
+id:ship-to,SH
+id:ship-to,site
+id:loading-authorized-party,customer
+id:loading-authorized-party,lift customer
+id:loading-authorized-party,CONS-4412
+id:loading-authorized-party,loading-authorized party

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-003 — Enterprise Performance Semantic Model</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Foundation v2</h2><p>EPM-FOUND-003</p>
+<a href="index.html">Foundation home</a>
+<hr style="border-color:#31516e">
+<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#definition">Definition</a>
+<a href="#semantic-model-versus-implementation">Semantic model versus implementation</a>
+<a href="#core-concept-taxonomy">Core concept taxonomy</a>
+<a href="#core-relationship-taxonomy">Core relationship taxonomy</a>
+<a href="#rules-and-constraints">Rules and constraints</a>
+<a href="#example-semantic-chain">Example semantic chain</a>
+<a href="#governance-of-meaning">Governance of meaning</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-003 · Version 2.0 Draft</div>
+<h1>Enterprise Performance Semantic Model</h1>
+<div class="subtitle">Human-readable authoritative description of business meaning</div>
+<section id="definition"><h2>Definition</h2><p>The <strong>Enterprise Performance Semantic Model</strong> is the governed system of meaning for the Enterprise Performance Model.</p>
+<p>It defines:</p>
+<ul>
+<li>the concepts the enterprise uses;</li>
+<li>what each concept means;</li>
+<li>how concepts relate;</li>
+<li>which classifications are allowed;</li>
+<li>which rules and constraints apply;</li>
+<li>how concepts should be interpreted consistently by people and systems.</li>
+</ul>
+<p>The written specification is the human-readable expression of the semantic model. Ontologies, knowledge graphs, metadata structures, SQL views, Power BI models, and AI context layers are formal or technical representations, implementations, or consumers of that meaning.</p></section><section id="semantic-model-versus-implementation"><h2>Semantic model versus implementation</h2><table><thead><tr><th>Item</th><th>What it is</th></tr></thead><tbody>
+<tr><td>Semantic model</td><td>The organized system of concepts, definitions, relationships, rules, constraints, and classifications</td></tr>
+<tr><td>Human-readable specification</td><td>The authoritative written expression used for business review and governance</td></tr>
+<tr><td>Ontology</td><td>Formal machine-readable representation of the semantic model</td></tr>
+<tr><td>Knowledge graph</td><td>Instances of concepts and relationships, usually governed by an ontology</td></tr>
+<tr><td>SQL semantic view</td><td>A consumer-facing data interface implementing selected semantics</td></tr>
+<tr><td>Power BI semantic model</td><td>An analytical implementation containing tables, relationships, measures, hierarchies, and security</td></tr>
+<tr><td>Purview glossary</td><td>A governance implementation for terms, definitions, owners, and lineage</td></tr>
+<tr><td>YAML/JSON metadata</td><td>A portable implementation format for automation and configuration</td></tr>
+</tbody></table></section><section id="core-concept-taxonomy"><h2>Core concept taxonomy</h2><h3>Business context</h3>
+<ul>
+<li>Enterprise</li>
+<li>Business Domain</li>
+<li>Strategic Objective</li>
+<li>Value Stream</li>
+<li>Value-Stream Stage</li>
+<li>Business Outcome</li>
+</ul>
+<h3>Operating architecture</h3>
+<ul>
+<li>Capability</li>
+<li>Sub-capability</li>
+<li>Business Process</li>
+<li>Business Activity</li>
+<li>Business Event</li>
+<li>Business Decision</li>
+<li>Role</li>
+<li>Organization</li>
+</ul>
+<h3>Performance architecture</h3>
+<ul>
+<li>Measurement</li>
+<li>Raw Measurement</li>
+<li>Derived Measurement</li>
+<li>Metric</li>
+<li>Operational Metric</li>
+<li>Diagnostic Metric</li>
+<li>Performance Indicator</li>
+<li>Candidate KPI</li>
+<li>Enterprise KPI</li>
+<li>Target</li>
+<li>Threshold</li>
+<li>Status</li>
+<li>Performance Driver</li>
+<li>Performance Outcome</li>
+</ul>
+<h3>Data and consumption architecture</h3>
+<ul>
+<li>Source System</li>
+<li>Data Asset</li>
+<li>Foundational Data Product</li>
+<li>Derived Data Product</li>
+<li>KPI Store</li>
+<li>Semantic Layer</li>
+<li>Semantic View</li>
+<li>Power BI Semantic Model</li>
+<li>Report</li>
+<li>API</li>
+<li>Analytical Model</li>
+<li>AI Application</li>
+<li>Automation Workflow</li>
+</ul></section><section id="core-relationship-taxonomy"><h2>Core relationship taxonomy</h2><table><thead><tr><th>Relationship</th><th>Domain and range</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>contains</td><td>Domain → Capability; Process → Activity</td><td>Parent concept includes child concept</td></tr>
+<tr><td>decomposes into</td><td>Capability → Sub-capability</td><td>Broader ability is divided into component abilities</td></tr>
+<tr><td>uses</td><td>Value-Stream Stage → Capability</td><td>Stage requires the capability</td></tr>
+<tr><td>is realized through</td><td>Capability → Process</td><td>Ability is operationalized through repeatable work</td></tr>
+<tr><td>supports</td><td>Activity → Decision; KPI → Objective</td><td>Enables or contributes to another concept</td></tr>
+<tr><td>generates</td><td>Process/Activity/Event → Measurement</td><td>Produces an observed or calculated value</td></tr>
+<tr><td>calculates</td><td>Metric/KPI/Data Product → Measurement or Metric</td><td>Derives a value using governed logic</td></tr>
+<tr><td>measures</td><td>KPI/Metric → Objective, Outcome, Stage, Capability, Process</td><td>Quantifies performance of the target concept</td></tr>
+<tr><td>explains variance in</td><td>Metric/Driver → KPI</td><td>Helps explain why KPI performance changed</td></tr>
+<tr><td>influences</td><td>Event/Decision/Driver → Outcome or KPI</td><td>Changes likelihood, direction, or magnitude</td></tr>
+<tr><td>causes</td><td>Event/Condition → Effect</td><td>Stronger causal assertion supported by evidence</td></tr>
+<tr><td>constrains</td><td>Condition/Policy/Capacity → Decision or Process</td><td>Restricts available options</td></tr>
+<tr><td>supplies</td><td>Data Product → Metric/KPI/Semantic View</td><td>Provides required trusted data</td></tr>
+<tr><td>persists</td><td>KPI Store → KPI Value</td><td>Stores governed time-series results</td></tr>
+<tr><td>exposes</td><td>Semantic View/Model → Consumer</td><td>Makes governed data available</td></tr>
+<tr><td>consumes</td><td>Report/API/AI → Semantic View/Model</td><td>Uses an approved interface</td></tr>
+<tr><td>owned by</td><td>Governed Concept → Role/Organization</td><td>Assigns accountability</td></tr>
+<tr><td>governed by</td><td>Concept → Policy/Standard/Decision</td><td>Identifies governing authority</td></tr>
+</tbody></table></section><section id="rules-and-constraints"><h2>Rules and constraints</h2><ul>
+<li>Every enterprise KPI must evaluate at least one objective or critical outcome.</li>
+<li>Every approved KPI must have an accountable business owner.</li>
+<li>Every approved KPI must have a governed definition, calculation, grain, unit, dimensional scope, target or expected condition, and review cadence.</li>
+<li>A metric may explain multiple KPIs.</li>
+<li>A KPI may depend on multiple data products.</li>
+<li>A data product may support multiple metrics and KPIs.</li>
+<li>A value-stream stage may use many capabilities.</li>
+<li>A capability may support many value streams and stages.</li>
+<li>A process must realize at least one capability.</li>
+<li>An activity must belong to at least one process.</li>
+<li>A semantic view must have an identified source data product and consumer contract.</li>
+<li>The ontology must not introduce meanings that have not been defined or approved in the semantic specification.</li>
+</ul></section><section id="example-semantic-chain"><h2>Example semantic chain</h2><pre><code>Commercial Margin Optimization
+    is a Strategic Objective
+
+Gasoline Netback CPG
+    is an Enterprise KPI
+    evaluates Commercial Margin Optimization
+    is explained by Transportation Cost per Gallon
+    is explained by Product Cost Variance
+    is explained by RIN Cost Variance
+
+Commercial Margin Data Product
+    supplies Gasoline Netback CPG
+    supplies Transportation Cost per Gallon
+
+CONSUMPTION.v_kpi_values
+    exposes Gasoline Netback CPG
+
+Commercial Performance Power BI Semantic Model
+    consumes CONSUMPTION.v_kpi_values
+
+Executive Commercial Scorecard
+    consumes Commercial Performance Power BI Semantic Model</code></pre></section><section id="governance-of-meaning"><h2>Governance of meaning</h2><p>The semantic model is authoritative only when:</p>
+<ul>
+<li>definitions are structured and internally consistent;</li>
+<li>relationships are explicit;</li>
+<li>modeling rules are documented;</li>
+<li>ownership and approval are recorded;</li>
+<li>changes are versioned;</li>
+<li>conflicts are surfaced rather than silently resolved;</li>
+<li>implementations can be traced back to the governing concept and definition.</li>
+</ul></section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</article></main></div></body></html>
