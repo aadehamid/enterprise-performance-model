@@ -1,79 +1,120 @@
-# The problem - “customer” is not one thing
+# The Problem: Unbilled O2C Exposure Is Also a Customer-Domain Problem
 
-When someone asks “what is unbilled for this customer?” they are not
-asking one question. Across the systems that already feed this demo,
-the same everyday word - and sometimes the same digits - names
-different parties.
+## Purpose
 
-**Sold-to** is who the product is sold to. **Payer** is who settles
-the invoice. **Bill-to** is who receives the invoice. **Ship-to** is
-the terminal. Those four already disagree on a weekly close. Two more
-party meanings sit next to those four:
+This demonstration shows how a Downstream Oil & Gas enterprise can identify, explain, govern, and consume unbilled Order-to-Cash exposure using a Databricks lakehouse, governed metric definitions, semantic context, and traceable data assets.
 
-- A **loading-authorized party** (`CONS-4412`) may lift at the rack.
-  That is not a payer, not a sold-to, and not a site. Treating it as
-  “the customer” on Unbilled is the wrong meaning.
-- A warehouse **`customer_id`** (`1000123`) is overloaded. The same
-  digits are a sold-to in one system and a bill-to in another. The
-  warehouse key itself does not pick a role.
+The demonstration uses synthetic but realistic O2C records. It does not represent a production implementation, a financial close, or an approved enterprise KPI.
 
-That is why a **controlled vocabulary** exists here: a preferred
-label, a short list of aliases, a scope note, and a stable ID
-(`id:payer`, `id:sold-to`, `id:ship-to`, …). A **map** then says
-what a live key *is* (`APEX-PAYER` → Payer; `CONS-4412` →
-Loading-Authorized Party; warehouse `1000123` → no map). The map
-does not rewrite anyone’s SQL. It does not invent a new KPI.
+## Immediate business problem
 
-The hunt is how those map rows were found - the work, not a second
-catalog. Open the source tables (`raw_tickets`, `dim_customer`,
-`sap_partner`, `tas_lift`, `sf_account`,
-`ra_business_associate`); the table name is already a clue. Read the
-party columns. Read the live values (`APEX-PAYER`, SAP `1000123` in
-two columns, `CONS-4412`, ticket keys, warehouse `1000123`,
-Salesforce `SF-APEX`, RightAngle `BA-APEX`). Then write the map as system + field + key.
-Same digits `1000123` are two SAP map rows (sold-to and bill-to);
-warehouse `customer_id` has no map. Salesforce `account_id` `SF-APEX` has no map (a relationship, not a role). `CONS-4412` is a TAS consignee / loading-authorized party, not a payer. RightAngle speaks Business
-Associate / remittance - not SAP sold-to / bill-to / payer
-columns (those names were not taken from ION). Remittance maps to the existing Payer id; the BA field itself has no map. Credit is not mapped (credit lives on the payer; it is not the payer). Stubs
-exist so those sources can be opened. TABS is skipped (it would
-invent a meaning or duplicate sold-to). Rack pricing is skipped (no
-party field). No new KPI.
+A downstream commercial organization may release product, complete a custody transfer, or otherwise fulfill an order before an invoice is issued, linked, or recognized in the expected billing process. The resulting unbilled population can represent revenue-recognition risk, billing-process delay, disputed fulfillment, incomplete source integration, or a data-quality problem.
 
-Three paths stay distinct on purpose:
+The enterprise needs to answer questions such as:
 
-1. **Raw SQL is honest.** `SELECT customer_id FROM dim_customer`
-   still returns `1000123`. Tickets were not renamed. There is no
-   interceptor. Analysts can still write the query they already have.
-2. **The published Unbilled number may only slice on certified
-   grains.** Unbilled `MEASURE()` groups on keys that map to Payer,
-   Sold-To, or Ship-To. `customer_id` is not a dimension on that
-   view. `CONS-4412` is not a payer. Join on those keys is not a
-   certified grain.
-3. **Two Genie agents sit side by side.** The certified agent
-   answers dollars via `MEASURE()` on the Metric Views. Ask it
-   “What is customer?” and it will still **guess** - it has no map.
-   The vocabulary-search agent returns the two IDs for “customer”
-   (Sold-To and Loading-Authorized Party) and never a dollar.
+- Which fulfilled O2C events remain unbilled?
+- What is the unbilled quantity and monetary exposure?
+- How old is each unbilled event?
+- Which source event, commercial agreement, price basis, and billing condition explain the exposure?
+- Is the condition operationally valid, a billing exception, or a data defect?
+- Which customer, contract, terminal, product, and time-period views are valid for analysis?
 
-Unbilled remains a **state** of an obligation (delivered, not yet
-invoiced). The catalog about-ID stays `UnbilledState`. This act does
-not load an ontology and does not add a new KPI. It only makes the
-overloaded word visible, and keeps the certified number on the
-grains that actually mean Unbilled.
+## Upstream enterprise problem: fragmented customer identity and roles
 
-`term_id` is the join key (aliases and the map still point at it).
-`ontology_iri` on `cv_term` binds that key to the meaning sidecar
-(`#Payer`, `#SoldTo`, `#BillTo`, `#ShipTo`, `#LoadingAuthorizedParty`).
-It does not replace `term_id`. All five term_ids bind; Loading-Authorized
-Party is `#LoadingAuthorizedParty`. Catalog Unbilled bind stays
-`#UnbilledState` - a different seat, not collapsed into a party class.
-Ship-To is `#ShipTo`, not `#Site`. No new KPI.
+Unbilled O2C exposure is not only a billing-timeliness problem. A downstream enterprise represents commercial parties differently across CRM, ERP, CTRM, terminal automation, billing, receivables, tax/exemption, collections, and supporting systems.
 
-Each hunt stub carries system_name (Demo2 / SAP / Salesforce / TAS / Warehouse / RightAngle) so DESCRIBE/SELECT shows which system it simulates. Tickets stay unlabeled on the table; the hunt SELECT labels them Demo2. cv_map.local_system uses the same names. The hunt is table name → column → live value → map (`system + field +
-key` → `term_id`, or no map). Thin stubs (`sap_partner`,
-`tas_lift`, warehouse `dim_customer`, `sf_account`,
-`ra_business_associate`) exist so those sources can be opened;
-`raw_tickets` is already landed. The map is the result. TABS is
-skipped - a TABS stub would invent a system-specific meaning or just
-duplicate an existing sold-to key. Rack pricing is skipped. No new
-KPI.
+A Salesforce Account, SAP Business Partner, SAP customer role, RightAngle counterparty, terminal loading account, terminal consignee, ERP invoice account, tax-exemption party, and collections payer may refer to related parties. They can also represent different legal entities, commercial accounts, delivery locations, financial responsibilities, tax responsibilities, title-transfer parties, or credit relationships within one corporate family.
+
+These source-specific records can use incompatible identifiers, names, account hierarchies, locations, lifecycle states, ownership structures, and business-role semantics. The same source-customer value can appear in multiple O2C tables because one party plays several roles, such as sold-to, ship-to, bill-to, payer, consignee, contract party, credit counterparty, title-transfer party, tax-liable party, or guarantor.
+
+Repeated values are evidence for investigation, not proof of identity or role equivalence. Reliable interpretation requires transaction context, source-system semantics, effective dates, governed cross-reference evidence, and explicit role definitions.
+
+## Why this matters for unbilled exposure
+
+Without a governed Customer-domain model and controlled identity/role mappings, the enterprise cannot reliably associate a fulfillment event with the appropriate contractual, title, billing, payment, credit, tax, and performance context.
+
+```text
+Fragmented customer-like source objects
+  → uncertain party identity, hierarchy, and role
+  → incomplete O2C event association
+  → unreliable delivery-to-contract-to-invoice linkage
+  → uncertain billing, title, credit, and tax context
+  → uncertain unbilled exposure and customer performance measures
+```
+
+For example, the party receiving a terminal release may be the ship-to or consignee, while the contract is held by a parent commercial entity, invoices are sent to a shared-services bill-to account, payments come from a treasury payer, credit exposure is held against a CTRM counterparty, title transfers to a delivery party, and tax responsibility belongs to a different entity. Treating these roles as one interchangeable `customer_id` can misstate unbilled exposure and invalidate customer-level performance analysis.
+
+## Demonstration approach
+
+The demonstration creates a governed, traceable path:
+
+```text
+Synthetic source-system party records
+  → Bronze source representations
+  → Silver role-aware Customer and O2C harmonization
+  → Gold unbilled exposure fact
+  → reusable metric definitions and Metric Views
+  → governed metric / candidate-KPI context
+  → contextual views, lineage, quality evidence, and AI consumption
+```
+
+The scope deliberately preserves source-system differences. It does not force every record into a presumed golden customer. It uses governed cross-reference, candidate-match, confidence, role, and stewardship concepts to make ambiguity visible and reviewable.
+
+## Meaning, compute, and consume
+
+The demonstration follows the Enterprise Performance Model separation of concerns:
+
+```text
+MEANING — no KPI computation
+  Customer domain and O2C process architecture
+  → ontology modules and controlled vocabulary
+  → graph of meaning and named KPI context
+
+COMPUTE
+  Candidate KPI Register + Cataloging Store + Silver ingredients
+  → Semantic Layer certified measure object
+  → governed compiler/calculation process
+  → Gold published result snapshot
+
+CONSUME
+  BI, in-platform AI, external graph/agent tools, automation, and APIs
+```
+
+The Customer domain is a shared domain concept, not a KPI. Unbilled exposure is a first derived operational measurement use case; its classification as an operational metric, performance indicator, candidate KPI, or approved KPI remains subject to KPI governance. A Metric View or calculation does not itself establish an approved KPI.
+
+## Scope boundaries
+
+In scope:
+
+- Synthetic Customer/O2C data representing CRM, ERP, CTRM, terminal automation, billing/receivables, tax/exemption, collections, and customer identity-resolution staging perspectives.
+- Unbilled exposure as the first derived operational measurement use case.
+- Role-aware party relationships across order, contract, custody event, title transfer, invoice, payment, dispute, tax, and collection contexts.
+- Lineage from source representation through lakehouse facts, metric definitions, and consuming analytical or AI surfaces.
+- Data-quality controls for identity, relationship, completeness, timeliness, role consistency, and analytical eligibility conditions.
+
+Out of scope:
+
+- Full enterprise MDM, SAP MDG, CRM, ERP, CTRM, terminal-automation, tax, or collections-product implementation.
+- Autonomous survivorship, automated master-data approval, or production identity resolution.
+- Financial close, revenue-recognition policy, tax calculation, or formal regulatory reporting.
+- Automatic classification of an unbilled measure as an approved enterprise KPI.
+
+## Success criteria
+
+The demonstration succeeds when it can:
+
+1. Identify unbilled O2C events from controlled synthetic source data.
+2. Trace an unbilled fact to fulfillment, contract, party-role, title, tax, and billing evidence.
+3. Distinguish sold-to, ship-to/consignee, bill-to, payer, contract party, credit-counterparty, title-transfer, and tax-liability perspectives.
+4. Show source-to-Bronze-to-Silver-to-Gold lineage for the unbilled fact.
+5. Surface identity ambiguity, source cross-reference, match confidence, and quality-rule outcomes rather than hiding them.
+6. Publish reusable analytical measures without treating every measure as an approved KPI.
+7. Support a governed question such as: “Which unbilled terminal releases are attributable to this customer under the bill-to, consignee, title-transfer, tax-liable, and credit-counterparty perspectives?”
+
+## Relationship to the Customer-domain problem statement
+
+This document defines the first executable downstream O2C use case. The parent enterprise-domain problem, source-system variants, Customer role catalogue, target architecture responsibilities, and end-to-end demonstration objective are defined in:
+
+```text
+business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md
+```
