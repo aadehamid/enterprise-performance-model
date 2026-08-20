@@ -1,0 +1,826 @@
+
+{
+"meta": {
+   "generatedAt": "2026-08-05",
+   "sources": [
+     "Domains/O2C/02_O2C Process Taxonomy.pptx (9 process groups / capabilities, 46 L2 process definitions)",
+     "EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Commercial O2C value stream pattern)",
+     "downstream_process_map.json CM 1.3.7 / CM 1.3.8 (linkedProcessIds)"
+   ],
+   "catalogFile": "data_product_portfolio.json",
+   "processMapFile": "downstream_process_map.json",
+   "notes": [
+     "OTC value-stream OVERLAY: each L2 process from the O2C taxonomy is listed with its deck definition; linkedProcessIds reference existing CM nodes (no duplicated process tree).",
+     "Capability descriptions are the deck's process-group definitions (verbatim).",
+     "Process descriptions are the deck's L2 definitions (verbatim).",
+     "Naming guard: O2C Credit & Risk = customer AR credit, NOT Commercial Risk (ETRM) data portfolio.",
+     "Maintain Commercial Policies sits under Quote & Sale in the deck; MPC placed it under CM 1.3.7.1.6 (master data) — linked accordingly."
+   ]
+ },
+ "id": "vs-order-to-cash",
+ "name": "Order to Cash",
+ "domain": "Commercial",
+ "description": "Customer-triggered value stream from master data readiness and quote through order, fulfillment, billing, cash application, collections, disputes, and sub-ledger close.",
+ "trigger": "Customer quote request / order",
+ "outcome": "Cash collected, disputes resolved, revenue recognized, AR sub-ledger closed",
+ "capabilities": [
+   {
+     "id": "cap-otc-master-data-management",
+     "name": "Master Data Management",
+     "description": "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process.",
+     "alignsToProcessGroups": [
+       "CM 1.3.7.1"
+     ]
+   },
+   {
+     "id": "cap-otc-quote-sale",
+     "name": "Quote & Sale",
+     "description": "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability.",
+     "alignsToProcessGroups": [
+       "CM 1.3.7.2"
+     ]
+   },
+   {
+     "id": "cap-otc-customer-credit",
+     "name": "Credit & Risk",
+     "description": "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk.",
+     "alignsToProcessGroups": [
+       "CM 1.3.7.4"
+     ]
+   },
+   {
+     "id": "cap-otc-order-management",
+     "name": "Order & Fulfilment",
+     "description": "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book.",
+     "alignsToProcessGroups": [
+       "CM 1.3.7.3"
+     ]
+   },
+   {
+     "id": "cap-otc-billing",
+     "name": "Billing",
+     "description": "This process group houses the processes involved in the creation, distribution, and management of billings.",
+     "alignsToProcessGroups": [
+       "CM 1.3.8.1"
+     ]
+   },
+   {
+     "id": "cap-otc-cash-application",
+     "name": "Receipt",
+     "description": "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business.",
+     "alignsToProcessGroups": [
+       "CM 1.3.8.2"
+     ]
+   },
+   {
+     "id": "cap-otc-collections",
+     "name": "Collection",
+     "description": "This process group houses the processes involved in executing and managing collections - including short-term forecast.",
+     "alignsToProcessGroups": [
+       "CM 1.3.8.3"
+     ]
+   },
+   {
+     "id": "cap-otc-disputes",
+     "name": "Dispute",
+     "description": "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement.",
+     "alignsToProcessGroups": [
+       "CM 1.3.8.3"
+     ]
+   },
+   {
+     "id": "cap-otc-close",
+     "name": "Close",
+     "description": "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations.",
+     "alignsToProcessGroups": [
+       "CM 1.3.8.4",
+       "CM 1.3.8.2"
+     ]
+   }
+ ],
+ "stages": [
+   {
+     "id": "stg-otc-master-data",
+     "name": "Master Data Mgmt.",
+     "sequence": 1,
+     "description": "This process group houses processes involved with the management and maintenance of key master data environments (i.e., Customer, Price & Discount, Product, and Tax) that are fundamental to enable the transactions across the end-to-end O2C process.",
+     "processes": [
+       {
+         "id": "p-otc-maintain-customer-master",
+         "slideRef": null,
+         "name": "Maintain Customer Master",
+         "description": "This process contains the sub-processes associated with the creation of a new customer and/or maintenance of current customers master data attributes.  The customer master retains the fundamental attributes that enable key activities across Orders & Fulfilment (e.g., order validation), Billing (e.g., invoice generation) and other areas across O2C (e.g., taxation).",
+         "capabilityId": "cap-otc-master-data-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.1"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-maintain-price-discount-master",
+         "slideRef": null,
+         "name": "Maintain Price & Discount Master",
+         "description": "This process contains the sub-processes associated with managing and maintaining attributes associated with prices and discounts.  The maturity level of this environment influences directly the volume and impact of price related disputes.",
+         "capabilityId": "cap-otc-master-data-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.2"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-master-pricing"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-maintain-product-master",
+         "slideRef": null,
+         "name": "Maintain Product Master",
+         "description": "The process contains the sub-processes associated with creating and maintaining all the product related attributes and is a key component supporting the order in-take supporting validation and accuracy.",
+         "capabilityId": "cap-otc-master-data-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.3"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-maintain-tax-master",
+         "slideRef": null,
+         "name": "Maintain Tax Master",
+         "description": "This process contains the sub-processes to populate and maintain key master data attributes that supports the effective and accurate calculation of indirect tax - which is usually maintained within a bolt-on environment outside of the customer and product master data environment.",
+         "capabilityId": "cap-otc-master-data-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.4"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-maintain-workflows",
+         "slideRef": null,
+         "name": "Maintain Workflows",
+         "description": "This process contains the sub-processes to manage the rules and hierarchy associated with functioning of workflows across O2C - and it is fundamental to support enforcement of controls and approval hierarchy.",
+         "capabilityId": "cap-otc-master-data-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.5"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-quote-sale",
+     "name": "Quote & Sale",
+     "sequence": 2,
+     "description": "This process group houses the processes involved with supporting and executing commercial transactions (i.e., policies, terms & contracts, financing & payment methods, quotes & renewals) along with managing the revenue plan and analyzing customer profitability.",
+     "processes": [
+       {
+         "id": "p-otc-maintain-commercial-policies",
+         "slideRef": null,
+         "name": "Maintain Commercial Policies",
+         "description": "This process contains the sub-processes associated with maintaining the underlying policies associated with commercial terms (e.g., payment terms, discounts, rebates).  It aims at establishing a common standard understanding of the commercial terms to establish contracts between seller, partners, and buyer.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.1.6"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-establish-commercial-terms-contracts",
+         "slideRef": null,
+         "name": "Establish Commercial Terms & Contracts",
+         "description": "This process contains the sub-processes to establish and execute commercial contracts, licenses, agreements with customers and/or partners.  It incorporates the steps of drafting, approving, executing and sending the commercial contract with the commercial terms and conditions to be included in commercial contracts.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.2.1"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-define-financing-payment-methods",
+         "slideRef": null,
+         "name": "Define Financing & Payment Methods",
+         "description": "This process contains the sub-processes to define payment methods and financing options being made available to the customers in the stages leading to pricing and quoting activities with the potential customers.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.2.4"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-issue-quotes-renewals",
+         "slideRef": null,
+         "name": "Issue Quotes & Renewals",
+         "description": "This process contains the sub-processes to initiate, issue and close quotes and renewals when requested by, or targeted to the customer for a particular product and service. It also includes managing responses to RFPs and creating sale contracts.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.2.2"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-master-pricing",
+           "dp-product-availability-allocations"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-develop-monitor-revenue-plan",
+         "slideRef": null,
+         "name": "Develop & Monitor Revenue Plan",
+         "description": "This process contains the sub-processes to develop and monitor the revenue plan on the basis of past, actual and expected future sales, to guide quote development, support product allocation, and promotion development.  Additionally, this is a key part of monthly, quarterly, and annual planning and forecasting processes.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.2.3"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-analyze-customer-profitability",
+         "slideRef": null,
+         "name": "Analyze Customer Profitability",
+         "description": "This process contains the sub-processes to analyze the costs of customers against the revenue they provide, and generate insights that may inform changes or adjustments in commercial terms in specific accounts or more broadly inform the strategy associated with commercial terms.",
+         "capabilityId": "cap-otc-quote-sale",
+         "linkedProcessIds": [
+           "CM 1.3.7.2.5"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-credit-risk",
+     "name": "Credit & Risk",
+     "sequence": 3,
+     "description": "This process group houses the processes involved in assessing, measuring, and managing credit risk. It also includes maintaining policies and analyzing portfolio credit risk.",
+     "processes": [
+       {
+         "id": "p-otc-maintain-credit-policies",
+         "slideRef": null,
+         "name": "Maintain Credit Policies",
+         "description": "This process contains the sub-processes to maintain the customer credit policies and aims at driving the strategic and tactical use of credit as a tool to support the sales strategy while managing credit related losses (i.e., bad debt) to the desired target.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [
+           "CM 1.3.7.4.1"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       },
+       {
+         "id": "p-otc-establish-credit-limit-risk-code",
+         "slideRef": null,
+         "name": "Establish Credit Limit & Risk Code",
+         "description": "This process contains the sub-processes to assess the customer's creditworthiness in order to establish the customer's credit limit and assign a risk code (e.g., risk rating and risk category). The credit assessment is largely based on customer financials and third party credit agency scores.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [
+           "CM 1.3.7.4.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       },
+       {
+         "id": "p-otc-monitor-credit-against-limit",
+         "slideRef": null,
+         "name": "Monitor Credit Against Limit",
+         "description": "This process contains the sub-processes to monitor, evaluate, and release credit order blocks - i.e., orders “held” in queue due to systematic holds triggered by credit based violations usually set based on the credit risk category (a customer master attribute).  It also triggers potential reviews and revisions of the credit limit.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [
+           "CM 1.3.7.4.3"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       },
+       {
+         "id": "p-otc-review-credit-limit-risk-code",
+         "slideRef": null,
+         "name": "Review Credit Limit & Risk Code",
+         "description": "This process contains the sub-processes to review the existing customers' creditworthiness to revise the customer's credit limit and risk code.  The credit assessment is conducted based on information from customer financials, third party credit agencies and past order / credit history with the organization.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Present in O2C taxonomy with definition; no dedicated L5 in MPC. Closest: Monitor Credit Against Limit (CM 1.3.7.4.3). AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       },
+       {
+         "id": "p-otc-analyze-portfolio-credit-risk",
+         "slideRef": null,
+         "name": "Analyze Portfolio Credit Risk",
+         "description": "This process contains the sub-processes associated analyzing and developing insights associated with the health of the AR portfolio.  Additionally, contains the sub-processes for defining and refining the parameters for risk tolerances within the portfolio as well as approvals and escalations for exceptions.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [
+           "CM 1.3.7.4.4"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       },
+       {
+         "id": "p-otc-customer-closure-reinstatement",
+         "slideRef": null,
+         "name": "Perform Customer Closure and Reinstatement",
+         "description": "This process contains the sub-processes to perform customer credit line closure and reinstatements as it relates to the ability to accept and process orders to a specific customer on a credit basis.",
+         "capabilityId": "cap-otc-customer-credit",
+         "linkedProcessIds": [
+           "CM 1.3.7.4.5"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-order-fulfilment",
+     "name": "Order & Fulfilment",
+     "sequence": 4,
+     "description": "This process group houses the processes involved in key components of order management (i.e., capture & validation, allocation & release, monitoring and changing orders) and fulfillment.  In addition, it also addresses reverse orders (i.e., returns) and the analytics deployed across the order book.",
+     "processes": [
+       {
+         "id": "p-otc-capture-validate-order",
+         "slideRef": null,
+         "name": "Capture & Validate Order",
+         "description": "This process contains sub-processes associated with capturing customer orders, which can be automated (e.g., EDI, online) or manual (e.g., phone, fax, email), and performing key validations, mostly related to master data (e.g., customer, product, pricing, discounts), before accepting the order.",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.1"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-allocate-release-order",
+         "slideRef": null,
+         "name": "Allocate & Release Order",
+         "description": "This process contains the sub-processes to confirm product availability, perform product allocation, and release the order for fulfillment and shipment.",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.2"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-product-availability-allocations"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-track-forecast-order",
+         "slideRef": null,
+         "name": "Track & Forecast Order",
+         "description": "This process contains the sub-processes to monitor the customer order status and respond to their inquiries including backorder management.  Additionally, the process also includes the use of the order book as a predictor of product demand and revenues.",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.5"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-change-cancel-order",
+         "slideRef": null,
+         "name": "Change / Cancel Order",
+         "description": "This process contains the sub-processes to perform and manage order changes and cancelations.  This includes the sub-processes to interact with customers and other functions within the business and flows through to the fulfillment or returns process.",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.3"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-manage-fulfillment",
+         "slideRef": null,
+         "name": "Manage Fulfillment",
+         "description": "The process contains the sub-processes associated with fulfilling orders.  It is largely focused on the interactions between the order management team and the fulfillment team in support of accuracy, timeliness, and exceptions resolution.",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.4"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-logistic-execution"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-manage-returns",
+         "slideRef": null,
+         "name": "Manage Returns",
+         "description": "This process contains the sub-processes associated with managing product returns - including setting returns budget for return to stock (RTS) products as well as receiving, approving, and creating the return authorization (RA) across all return types (e.g., RTS, defective, shipment integrity).",
+         "capabilityId": "cap-otc-order-management",
+         "linkedProcessIds": [
+           "CM 1.3.7.3.6"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-billing",
+     "name": "Billing",
+     "sequence": 5,
+     "description": "This process group houses the processes involved in the creation, distribution, and management of billings.",
+     "processes": [
+       {
+         "id": "p-otc-create-distribute-bill",
+         "slideRef": null,
+         "name": "Create & Distribute Bill",
+         "description": "This process contains the sub-processes that trigger the creation of the invoice (e.g., billing due list), record revenue and AR, as well as distribute the customer invoice.  This is largely an automated environment with exception handling activities.",
+         "capabilityId": "cap-otc-billing",
+         "linkedProcessIds": [
+           "CM 1.3.8.1.1"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-master-pricing",
+           "dp-rack-pricing"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-accounting-self-billing",
+         "slideRef": null,
+         "name": "Perform Accounting for Self-Billing",
+         "description": "This process contains the sub-processes associated with recognizing customer relationships where billing (i.e., creation of AR) takes place but not invoicing (i.e., invoices are not sent to the customer) due to self-billing by the customer at the “receiving” point.",
+         "capabilityId": "cap-otc-billing",
+         "linkedProcessIds": [
+           "CM 1.3.8.1.2"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-determine-taxability",
+         "slideRef": null,
+         "name": "Determine Taxability & Record Tax Liabilities",
+         "description": "This process contains the sub-processes to determine the proper taxability of invoices to support the calculation and reporting of tax related transactions and record tax liabilities.",
+         "capabilityId": "cap-otc-billing",
+         "linkedProcessIds": [
+           "CM 1.3.8.1.3"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-create-exception-invoice",
+         "slideRef": null,
+         "name": "Create Exception Invoice",
+         "description": "This process contains the sub-processes to create exception invoices - either driven by billing errors or by the need to, on an exception basis, create a manual invoice.",
+         "capabilityId": "cap-otc-billing",
+         "linkedProcessIds": [
+           "CM 1.3.8.1.5"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-receipt",
+     "name": "Receipt",
+     "sequence": 6,
+     "description": "This process group houses the processes involved in the execution of receiving and applying payments, settling other tender type transactions (e.g., credit cards), and performing high frequency reconciliations (e.g., daily) in the course of the business.",
+     "processes": [
+       {
+         "id": "p-otc-receive-payments",
+         "slideRef": null,
+         "name": "Receive Payments",
+         "description": "This process contains the sub-processes associated with the receiving of customer payment information - usually through a bank lock-box interface.  This is a fundamental input to support the cash application process (i.e., apply receipts).",
+         "capabilityId": "cap-otc-cash-application",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.1"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-retail-payments"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-receive-remittance-advice",
+         "slideRef": null,
+         "name": "Receive Remittance Advice",
+         "description": "This process contains the sub-processes associated with receiving of customer remittance information to support effective and efficient execution of cash application activities (i.e., apply receipts).",
+         "capabilityId": "cap-otc-cash-application",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.2"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-apply-receipts",
+         "slideRef": null,
+         "name": "Apply Receipts",
+         "description": "This process contains the sub-processes associated with applying customer payments to the respective open invoices, clearing the AR sub-ledger.",
+         "capabilityId": "cap-otc-cash-application",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.3"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-retail-payments"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+       },
+       {
+         "id": "p-otc-manage-unapplied-receipts",
+         "slideRef": null,
+         "name": "Manage Unapplied Receipts",
+         "description": "This process contains the sub-processes associated with identifying and addressing unapplied receipts.  This includes activities associated with identifying, evaluating and addressing exceptions.",
+         "capabilityId": "cap-otc-cash-application",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.4"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-perform-reconciliations-settlements",
+         "slideRef": null,
+         "name": "Perform Reconciliations & Settlements",
+         "description": "This process contains the sub-processes associated with performing reconciliations and settlements largely associated with highly transactional environments where high frequency reconciliations (e.g., daily) are a key component of managing and conducting business (e.g., sales audit, credit card settlements, rebate settlements).",
+         "capabilityId": "cap-otc-cash-application",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.5"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-collection",
+     "name": "Collection",
+     "sequence": 7,
+     "description": "This process group houses the processes involved in executing and managing collections - including short-term forecast.",
+     "processes": [
+       {
+         "id": "p-otc-establish-collection-targets",
+         "slideRef": null,
+         "name": "Establish Collection Targets",
+         "description": "This process contains the sub-processes to determine collection targets used to optimize collections activities. This allows operations to focus resources on the accounts that are most likely to pay and help improve the effectiveness of the collections process by recovering a higher amount of outstanding balances.",
+         "capabilityId": "cap-otc-collections",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+       },
+       {
+         "id": "p-otc-analyze-ar-aging",
+         "slideRef": null,
+         "name": "Analyze AR Aging",
+         "description": "This process contains the sub-processes associated with deploying analytics to identify opportunities to optimize collections efforts and more proactively manage the effectiveness of the collections process.",
+         "capabilityId": "cap-otc-collections",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+       },
+       {
+         "id": "p-otc-execute-collections",
+         "slideRef": null,
+         "name": "Execute Collections",
+         "description": "This process contains the sub-processes associated with collecting overdue receivables thru engagement with customers.",
+         "capabilityId": "cap-otc-collections",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+       },
+       {
+         "id": "p-otc-negotiate-settlements",
+         "slideRef": null,
+         "name": "Negotiate Settlements",
+         "description": "This process includes the sub-processes associated with negotiated settlements with customers who are in an overdue position.  Reviews and approvals are sometimes part of the settlement process.",
+         "capabilityId": "cap-otc-collections",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+       },
+       {
+         "id": "p-otc-initiate-legal-action",
+         "slideRef": null,
+         "name": "Initiate Legal Action",
+         "description": "This process includes the sub-processes associated with initiating and managing customer accounts where legal action has or is to be taken to address unpaid balances.",
+         "capabilityId": "cap-otc-collections",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.2"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-dispute",
+     "name": "Dispute",
+     "sequence": 8,
+     "description": "This process group houses the processes involved in executing and managing disputes (i.e., claims and deductions) - including the analysis associated with identifying root cause and supporting upstream continuous improvement.",
+     "processes": [
+       {
+         "id": "p-otc-validate-deductions",
+         "slideRef": null,
+         "name": "Validate Deductions",
+         "description": "This process contains the sub-processes to initiate, analyze, and approve deductions. Deductions are initiated by the customer upon payment and are consequently managed and monitored. A valid and approved deduction requires no action while an invalid or rejected deduction triggers the action of a charge back to the customer.",
+         "capabilityId": "cap-otc-disputes",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.1"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+       },
+       {
+         "id": "p-otc-receive-validate-queries",
+         "slideRef": null,
+         "name": "Receive & Validate Queries",
+         "description": "This process contains the sub-processes to receive and validate a customer query / claim. A customer query / claim is usually associated with perceived errors associated with products (e.g., product type, quantity of products) which are largely classified as “shipment integrity” claims or pricing and discounts.",
+         "capabilityId": "cap-otc-disputes",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.1"
+         ],
+         "produces": [],
+         "consumes": [
+           "dp-loss-control"
+         ],
+         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog. Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+       },
+       {
+         "id": "p-otc-create-credit-memo-chargeback",
+         "slideRef": null,
+         "name": "Create Credit Memo / Charge Back",
+         "description": "This process contains the sub-processes associated with creating credit memos resulting from approved claims and with creating chargebacks associated with the invalid deductions.",
+         "capabilityId": "cap-otc-disputes",
+         "linkedProcessIds": [
+           "CM 1.3.8.1.4"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-perform-appeasements",
+         "slideRef": null,
+         "name": "Perform Appeasements",
+         "description": "This process contains the sub-processes to review, approve, issue, and manage customer / consumer related appeasement / concessions.",
+         "capabilityId": "cap-otc-disputes",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.1"
+         ],
+         "produces": [],
+         "consumes": [],
+         "rationale": "Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+       },
+       {
+         "id": "p-otc-root-cause-action-plan",
+         "slideRef": null,
+         "name": "Develop Root Cause Analysis & Action Plan",
+         "description": "This process contains the sub-processes associated with analyzing valid claims and deductions with the purpose of identifying the root cause and inform upstream processes to take corrective action.  This is a fundamental capability needed to support continuous improvement across the end-to-end O2C process.",
+         "capabilityId": "cap-otc-disputes",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.4"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   },
+   {
+     "id": "stg-otc-close",
+     "name": "Close",
+     "sequence": 9,
+     "description": "This process group houses the processes involved in the close of the sub ledger, including rev rec, AR and revenue related provisions, and reconciliations.",
+     "processes": [
+       {
+         "id": "p-otc-perform-revenue-accounting",
+         "slideRef": null,
+         "name": "Perform Revenue Accounting",
+         "description": "This process contains the sub-processes to review contracts to determine appropriate GAAP treatment and book the entries including revenue recognition, accruals (e.g., shipped but not billed) and to calculate, evaluate and record revenue impacting provisions or reserves (e.g., product returns, post-invoice discounts).",
+         "capabilityId": "cap-otc-close",
+         "linkedProcessIds": [
+           "CM 1.3.8.2.6"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-process-bad-debt",
+         "slideRef": null,
+         "name": "Process Bad Debt",
+         "description": "This process contains the sub-processes associated with calculating, evaluating, and determining proper bad debt reserve levels and recording respective accrual to bring bad debt reserves to required levels",
+         "capabilityId": "cap-otc-close",
+         "linkedProcessIds": [
+           "CM 1.3.8.3.3"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-close-ar-sub-ledger",
+         "slideRef": null,
+         "name": "Close AR Sub Ledger",
+         "description": "This process contains the sub-processes to close the AR sub ledger and reconcile to the GL.  In addition, it includes addressing unreconciled items and booking adjustments as needed (e.g., unapplied cash).",
+         "capabilityId": "cap-otc-close",
+         "linkedProcessIds": [
+           "CM 1.3.8.4.1",
+           "CM 1.3.8.4.2"
+         ],
+         "produces": [],
+         "consumes": []
+       },
+       {
+         "id": "p-otc-reconcile-indirect-tax",
+         "slideRef": null,
+         "name": "Reconcile Indirect Tax",
+         "description": "This process contains the sub-processes to reconcile indirect taxes and identify and resolve unreconciled items.",
+         "capabilityId": "cap-otc-close",
+         "linkedProcessIds": [
+           "CM 1.3.8.4.4"
+         ],
+         "produces": [],
+         "consumes": []
+       }
+     ]
+   }
+ ],
+ "flows": [
+   {
+     "from": "p-otc-root-cause-action-plan",
+     "to": "p-otc-maintain-commercial-policies",
+     "kind": "feeds",
+     "note": "Deck: dispute root-cause analysis informs upstream continuous improvement across end-to-end O2C"
+   }
+ ],
+ "gapAnalysis": [
+   {
+     "item": "Review Credit Limit & Risk Code",
+     "status": "missing",
+     "closestProcessIds": [
+       "CM 1.3.7.4.3"
+     ],
+     "note": "Deck L2 present in this value stream with definition; no dedicated L5 in MPC."
+   },
+   {
+     "item": "Collection L2 detail",
+     "status": "collapsed",
+     "closestProcessIds": [
+       "CM 1.3.8.3.2"
+     ],
+     "note": "Five deck L2s all link to Collection Management (CM 1.3.8.3.2) — process map collapsed them."
+   },
+   {
+     "item": "Dispute L2 detail (Validate Deductions; Receive & Validate Queries; Perform Appeasements)",
+     "status": "collapsed",
+     "closestProcessIds": [
+       "CM 1.3.8.3.1"
+     ],
+     "note": "Multiple deck L2s collapse to Dispute Management L5; Create Credit Memo is CM 1.3.8.1.4; Root Cause is CM 1.3.8.3.4."
+   },
+   {
+     "item": "Close AR Sub Ledger",
+     "status": "partial",
+     "closestProcessIds": [
+       "CM 1.3.8.4.1",
+       "CM 1.3.8.4.2"
+     ],
+     "note": "Covered via Period End Processing and AR Reconciliation/Compliance rather than a named close-sub-ledger process."
+   },
+   {
+     "item": "Process Bad Debt",
+     "status": "renamed",
+     "closestProcessIds": [
+       "CM 1.3.8.3.3"
+     ],
+     "note": "MPC name: Bad Debt Allowance."
+   },
+   {
+     "item": "Customer AR credit / receivables data products",
+     "status": "missing",
+     "closestProcessIds": [
+       "CM 1.3.7.4",
+       "CM 1.3.8.2",
+       "CM 1.3.8.3"
+     ],
+     "note": "Catalog gap: no data portfolio for AR credit, receivables, or collections. Do not reuse dp-commercial-risk."
+   }
+ ]
+}
