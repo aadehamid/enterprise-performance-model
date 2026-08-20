@@ -1,0 +1,79 @@
+
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enterprise-performance-model.local/schemas/data_product_portfolio.schema.json",
+  "title": "Downstream O&G Data Product Line / Data Portfolio Catalog",
+  "description": "Business data organization layer: Segments contain Data Product Lines (blue containers); Data Product Lines contain Data Portfolios (data products). Sibling layer to the LSC process hierarchy; joined to processes via value stream produce/consume links. Engagement/project-management tags (e.g. consulting coverage) are intentionally NOT part of this model.",
+  "type": "object",
+  "required": ["meta", "segments"],
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "generatedAt": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "aliases": {
+      "type": "object",
+      "description": "Slide/shorthand name -> canonical catalog id",
+      "additionalProperties": { "type": "string" }
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "productLines"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^seg-[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "description": { "type": ["string", "null"] },
+          "processDomainRef": {
+            "type": ["string", "null"],
+            "description": "Closest L0/L1 anchor in downstream_process_map.json (by name), e.g. 'Downstream Operations > Commercial & Marketing'"
+          },
+          "productLines": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/productLine" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "productLine": {
+      "type": "object",
+      "required": ["id", "name", "portfolios"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^dpl-[a-z0-9-]+$" },
+        "name": { "type": "string" },
+        "description": { "type": ["string", "null"] },
+        "status": { "type": "string", "enum": ["active", "defined_only", "open_decision"] },
+        "source": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "portfolios": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/portfolio" }
+        }
+      }
+    },
+    "portfolio": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^dp-[a-z0-9-]+$" },
+        "name": { "type": "string" },
+        "description": { "type": ["string", "null"] },
+        "status": { "type": "string", "enum": ["active", "defined_only", "open_decision"] },
+        "source": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

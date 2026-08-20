@@ -1,0 +1,281 @@
+
+{
+  "meta": {
+    "generatedAt": "2026-08-05",
+    "sources": [
+      "Commercial Business Process Lifecycle slide (stages 1-3, processes a-l)",
+      "EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (Domain > Value Stream > Stage > Capability > Process)",
+      "Industry grounding: ETRM front/middle/back office lifecycle; downstream commercial value chain (trading & supply, planning & optimization, marketing/pricing/retail)"
+    ],
+    "catalogFile": "data_product_portfolio.json",
+    "processMapFile": "downstream_process_map.json",
+    "notes": [
+      "Value stream OVERLAY: processes here reference LSC nodes via linkedProcessIds; they do not replace the CM hierarchy.",
+      "Data links follow sparse assignment rules: critical-path portfolios only, produce/consume relation required, product line (dpl-*) linked only for whole-line affinity.",
+      "Slide tags 'All data portfolios' (processes c, k) intentionally replaced with primary links per assignment rules."
+    ]
+  },
+  "id": "vs-commercial-hydrocarbon-lifecycle",
+  "name": "Commercial Hydrocarbon Lifecycle",
+  "domain": "Commercial",
+  "description": "End-to-end commercial lifecycle for hydrocarbon supply, trading, logistics, channel sales, and control: market intelligence through deal execution, physical operations, pricing/retail, risk, settlement, and backcasting.",
+  "trigger": "Market/supply opportunity informed by strategic supply & demand plan",
+  "outcome": "Profitable placement of crude/products with controlled risk, settled transactions, and learnings fed back to planning",
+  "capabilities": [
+    {
+      "id": "cap-market-intelligence",
+      "name": "Market Intelligence",
+      "description": "Monitor and interpret market data, competitor actions, and internal performance to inform commercial decisions.",
+      "alignsToProcessGroups": ["CM 1.3.1", "CM 1.1.1"]
+    },
+    {
+      "id": "cap-price-management",
+      "name": "Price Management",
+      "description": "Transform market data and internal assessment into validated price systems of record.",
+      "alignsToProcessGroups": ["CM 1.3.3", "CM 1.3.6"]
+    },
+    {
+      "id": "cap-supply-trading-strategy",
+      "name": "Supply & Trading Strategy",
+      "description": "Devise procurement and trading strategy: which crude grades/products to buy and sell, in what quantities.",
+      "alignsToProcessGroups": ["CM 1.2.1", "CM 1.2.5"]
+    },
+    {
+      "id": "cap-deal-capture-contracting",
+      "name": "Deal Capture & Contracting",
+      "description": "Negotiate and execute deals with counterparties; capture trades and contracts.",
+      "alignsToProcessGroups": ["CM 1.2.1"]
+    },
+    {
+      "id": "cap-logistics-planning-scheduling",
+      "name": "Logistics Planning & Scheduling",
+      "description": "Nominate and schedule physical movement of crude and products from seller to buyer.",
+      "alignsToProcessGroups": ["CM 1.1.3", "CM 1.2.7"]
+    },
+    {
+      "id": "cap-terminal-transport-execution",
+      "name": "Terminal & Transport Execution",
+      "description": "Execute planned physical movement and bulk loading safely and efficiently.",
+      "alignsToProcessGroups": ["CM 1.3.10", "CM 1.2.7", "CM 1.2.3"]
+    },
+    {
+      "id": "cap-product-quality-loss-management",
+      "name": "Product Quality & Loss Management",
+      "description": "Assess product quality via assay/lab data; manage custody transfer gains/losses.",
+      "alignsToProcessGroups": ["CM 1.2.5", "CM 1.2.6"]
+    },
+    {
+      "id": "cap-channel-pricing-sales",
+      "name": "Channel Pricing & Sales",
+      "description": "Set wholesale rack prices and execute final sale to end consumers at branded retail.",
+      "alignsToProcessGroups": ["CM 1.3.6"]
+    },
+    {
+      "id": "cap-commercial-risk-position-management",
+      "name": "Commercial Risk & Position Management",
+      "description": "EOD valuation of positions against closing prices; official daily P&L, VaR, and risk metrics.",
+      "alignsToProcessGroups": ["CM 1.2.2"]
+    },
+    {
+      "id": "cap-settlement-reconciliation",
+      "name": "Settlement & Reconciliation",
+      "description": "Finalize financial aspects of wholesale and retail transactions; allocate costs; manage claims from physical discrepancies.",
+      "alignsToProcessGroups": ["CM 1.2.4", "CM 1.2.3"]
+    },
+    {
+      "id": "cap-performance-management-backcasting",
+      "name": "Performance Management & Backcasting",
+      "description": "Compare actuals against perfect-foresight optimum; quantify value leakage; identify root causes for improvement.",
+      "alignsToProcessGroups": ["CM 1.1.5", "CM 1.1.6"]
+    },
+    {
+      "id": "cap-planning-optimization",
+      "name": "Planning & Optimization",
+      "description": "Cross-stage value chain planning and optimization capability; owns the Planning & Optimization data product line.",
+      "alignsToProcessGroups": ["CM 1.1"]
+    }
+  ],
+  "stages": [
+    {
+      "id": "stg-market-strategy-formation",
+      "name": "Market & Strategy Formation",
+      "sequence": 1,
+      "description": "From market monitoring to executed deals.",
+      "processes": [
+        {
+          "id": "p-market-intelligence-planning",
+          "slideRef": "a",
+          "name": "Market Intelligence & Planning",
+          "description": "Continuously monitor real-time market data, competitor actions, and internal sales performance; informed by the strategic supply & demand plan, forming the tactical foundation for daily commercial decisions.",
+          "capabilityId": "cap-market-intelligence",
+          "linkedProcessIds": ["CM 1.3.1", "CM 1.1.1"],
+          "produces": [],
+          "consumes": ["dp-external-market-data", "dpl-planning-optimization", "dp-operational-margin"],
+          "rationale": "Market intel consumes market feeds, plan context (whole P&O line), and margin signal; it does not own a trade or price system of record. Slide's broad tag list reduced to critical-path inputs."
+        },
+        {
+          "id": "p-market-price-calculation-validation",
+          "slideRef": "b",
+          "name": "Market Price Calculation & Validation",
+          "description": "Transform raw market data and internal price assessment into official, validated system of record for all product prices.",
+          "capabilityId": "cap-price-management",
+          "linkedProcessIds": ["CM 1.3.3.2", "CM 1.3.6.3", "CM 1.3.7.2"],
+          "produces": ["dp-master-pricing"],
+          "consumes": ["dp-external-market-data", "dp-physical-trading"],
+          "rationale": "Classic price SoR publish (market operations): owns Master Pricing; consumes market feeds and deal context."
+        },
+        {
+          "id": "p-supply-procurement-strategy",
+          "slideRef": "c",
+          "name": "Supply & Procurement Strategy",
+          "description": "Based on market analysis and refinery needs, traders devise a procurement strategy: which crude grades/finished product to buy, in what quantities.",
+          "capabilityId": "cap-supply-trading-strategy",
+          "linkedProcessIds": ["CM 1.2.1.4", "CM 1.2.5", "CM 1.1.2"],
+          "produces": [],
+          "consumes": ["dp-physical-trading", "dp-commercial-risk", "dpl-planning-optimization"],
+          "rationale": "Replaces slide tag 'All data portfolios': strategy formation critically needs current positions, risk appetite/limits, and the planning/optimization line. Other portfolios are secondary context, not critical path."
+        },
+        {
+          "id": "p-deal-negotiation-capture",
+          "slideRef": "d",
+          "name": "Deal Negotiation & Capture",
+          "description": "Traders engage counterparties to execute the deal: bilateral (phone/chat), through brokers, or on electronic platforms.",
+          "capabilityId": "cap-deal-capture-contracting",
+          "linkedProcessIds": ["CM 1.2.1.3", "CM 1.2.1.2"],
+          "produces": ["dp-physical-trading"],
+          "consumes": ["dp-commercial-risk", "dp-master-pricing"],
+          "rationale": "Front-office deal capture owns the trade facts (Physical Trading); constrained by risk limits and validated price curves."
+        }
+      ]
+    },
+    {
+      "id": "stg-execution-operations",
+      "name": "Execution & Operations",
+      "sequence": 2,
+      "description": "Physical movement, quality, wholesale and retail execution.",
+      "processes": [
+        {
+          "id": "p-logistics-planning-scheduling",
+          "slideRef": "e",
+          "name": "Logistics Planning & Scheduling",
+          "description": "Focus shifts to physically moving the crude; schedulers/logistics coordinators work with traders to nominate and schedule transport from seller to buyer.",
+          "capabilityId": "cap-logistics-planning-scheduling",
+          "linkedProcessIds": ["CM 1.1.3.6", "CM 1.2.7", "CM 1.3.10.2"],
+          "produces": ["dp-logistic-execution"],
+          "consumes": ["dp-physical-trading", "dpl-planning-optimization"],
+          "rationale": "Schedulers nominate against trades and plan; own the logistics execution data. Loss Control/QA move to execution/quality processes where they are critical path."
+        },
+        {
+          "id": "p-terminal-transport-operations",
+          "slideRef": "f",
+          "name": "Terminal & Transport Operations",
+          "description": "Execute the planned physical movement and loading of bulk product safely and efficiently.",
+          "capabilityId": "cap-terminal-transport-execution",
+          "linkedProcessIds": ["CM 1.3.10", "CM 1.2.7.2", "CM 1.2.3"],
+          "produces": ["dp-logistic-execution"],
+          "consumes": ["dp-loss-control", "dp-quality-assurance"],
+          "rationale": "Physical execution produces movement actuals (Logistic Execution); custody-transfer loss and quality data are critical operating inputs. Operational Margin dropped from primary (analytics, not execution-critical)."
+        },
+        {
+          "id": "p-quality-assessment-blending",
+          "slideRef": "g",
+          "name": "Quality Assessment & Blending Ops",
+          "description": "Traders use lab data to assess crude quality, from assay data at loading or internal lab samples on receipt.",
+          "capabilityId": "cap-product-quality-loss-management",
+          "linkedProcessIds": ["CM 1.2.5.1", "CM 1.2.6"],
+          "produces": ["dp-quality-assurance"],
+          "consumes": ["dp-loss-control", "dp-physical-trading"],
+          "rationale": "Lab/assay operations own the Quality Assurance product; parcel/cargo context and loss data consumed."
+        },
+        {
+          "id": "p-rack-price-setting",
+          "slideRef": "h",
+          "name": "Rack Price Setting",
+          "description": "Calculate, approve, and publish competitive and profitable wholesale rack prices for the next sales cycle.",
+          "capabilityId": "cap-channel-pricing-sales",
+          "linkedProcessIds": ["CM 1.3.6.3"],
+          "produces": ["dp-rack-pricing"],
+          "consumes": ["dp-master-pricing", "dp-operational-margin"],
+          "rationale": "Wholesale rack publish informed by the master price SoR and margin targets."
+        },
+        {
+          "id": "p-retail-sales-payment",
+          "slideRef": "i",
+          "name": "Retail Sales & Payment",
+          "description": "Execute the final sale to the end consumer at branded retail sites, securely process payments, and capture granular transaction data.",
+          "capabilityId": "cap-channel-pricing-sales",
+          "linkedProcessIds": ["CM 1.3.6.6", "CM 1.3.6"],
+          "produces": ["dp-retail-payments"],
+          "consumes": ["dp-rack-pricing"],
+          "rationale": "Channel sales/payment capture owns Retail Payments; rack price is the critical input. Known gap: LSC retail process depth is thin (loyalty/cards only)."
+        }
+      ]
+    },
+    {
+      "id": "stg-risk-performance-control",
+      "name": "Risk, Performance, and Control",
+      "sequence": 3,
+      "description": "Risk, settlement, and performance feedback into the next cycle.",
+      "processes": [
+        {
+          "id": "p-risk-management-position-monitoring",
+          "slideRef": "l",
+          "name": "Risk Management and Position Monitoring",
+          "description": "Runs in parallel to trading and scheduling: official EOD valuation of all positions against closing market prices; calculate and validate official daily P&L, VaR, and key risk metrics.",
+          "capabilityId": "cap-commercial-risk-position-management",
+          "linkedProcessIds": ["CM 1.2.2"],
+          "produces": ["dp-commercial-risk"],
+          "consumes": ["dp-physical-trading", "dp-master-pricing"],
+          "rationale": "Middle office owns the Commercial Risk product (positions, P&L, VaR) computed from trades and validated prices."
+        },
+        {
+          "id": "p-performance-tracking-analysis",
+          "slideRef": "k",
+          "name": "Performance Tracking & Analysis",
+          "description": "Track financial and operational performance of trades; through backcasting, compare actual results against the perfect-foresight optimum to quantify value leakage and identify root causes.",
+          "capabilityId": "cap-performance-management-backcasting",
+          "linkedProcessIds": ["CM 1.1.5", "CM 1.1.6"],
+          "produces": ["dp-backcasting-refining-ci"],
+          "consumes": ["dp-operational-margin", "dpl-planning-optimization"],
+          "rationale": "Replaces slide tag 'All data portfolios': backcasting owns the Backcasting & Refining CI product; critically consumes margin outcomes and the planning line as baseline. Broad analytical reads of other portfolios are not modeled as primary links."
+        },
+        {
+          "id": "p-settlement-post-trade-reconciliation",
+          "slideRef": "j",
+          "name": "Settlement and Post-Trade Reconciliation",
+          "description": "Finalize all financial aspects of wholesale and retail transactions, accurately allocate costs, and manage claims arising from physical discrepancies.",
+          "capabilityId": "cap-settlement-reconciliation",
+          "linkedProcessIds": ["CM 1.2.4", "CM 1.2.3"],
+          "produces": [],
+          "consumes": ["dp-physical-trading", "dp-master-pricing", "dp-rack-pricing", "dp-commercial-risk"],
+          "rationale": "Back office settles trades against price SoRs and risk data. Loss Control and Retail Payments enter via claims/retail settlement; kept secondary pending confirmation of settlement scope."
+        }
+      ]
+    }
+  ],
+  "flows": [
+    { "from": "p-settlement-post-trade-reconciliation", "to": "p-market-intelligence-planning", "kind": "loops_to", "note": "Slide: loops back to stage a" },
+    { "from": "p-rack-price-setting", "to": "p-risk-management-position-monitoring", "kind": "informs", "note": "Slide: rack pricing informs risk stage" },
+    { "from": "p-performance-tracking-analysis", "to": "p-market-intelligence-planning", "kind": "feeds", "note": "Backcast learnings feed next planning cycle" }
+  ],
+  "gapAnalysis": [
+    {
+      "item": "Retail Sales & Payment process depth",
+      "status": "partial",
+      "closestProcessIds": ["CM 1.3.6.6"],
+      "note": "LSC covers loyalty/cards administration; granular retail transaction capture and payment processing are not decomposed."
+    },
+    {
+      "item": "Loss Control process home",
+      "status": "missing",
+      "closestProcessIds": ["CM 1.2.3", "CM 1.3.10"],
+      "note": "No dedicated custody-transfer/loss-control process nodes; data portfolio exists without a clear LSC owner process."
+    },
+    {
+      "item": "Blending operations",
+      "status": "partial",
+      "closestProcessIds": ["CM 1.2.5.1", "CM 1.2.6"],
+      "note": "Quality management exists; blending operations may span Refining (L1 stub, not decomposed)."
+    }
+  ]
+}

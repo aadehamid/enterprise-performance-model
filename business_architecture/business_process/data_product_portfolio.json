@@ -1,0 +1,317 @@
+
+{
+  "meta": {
+    "generatedAt": "2026-08-05",
+    "sources": [
+      "Data Product Lines & Data Portfolio slide (Commercial / Midstream / Corporate)",
+      "Commercial Business Process Lifecycle slide (Rack Pricing, Loss Control additions)",
+      "EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (term: Data Product Portfolio)"
+    ],
+    "notes": [
+      "Blue rectangles on the source slide = Data Product Lines (containers); boxes inside = Data Portfolios (data products).",
+      "Engagement/project-management coverage tags are intentionally excluded from this model.",
+      "Handbook synonym: a Data Portfolio item here corresponds to an entry in the handbook's Data Product Portfolio workstream.",
+      "Foundational vs derived classification per handbook can be added per portfolio later."
+    ]
+  },
+  "aliases": {
+    "Risk": "dp-commercial-risk",
+    "P&O": "dpl-planning-optimization",
+    "Retail Payment": "dp-retail-payments",
+    "Master & Rack Pricing": "dp-master-pricing, dp-rack-pricing",
+    "QA (Commercial)": "dp-quality-assurance",
+    "ES&S": "dp-ess"
+  },
+  "segments": [
+    {
+      "id": "seg-commercial",
+      "name": "Commercial",
+      "description": "Commercial hydrocarbon data domains: trading, marketing & sales, market structure & logistics, planning & optimization.",
+      "processDomainRef": "Downstream Operations > Commercial & Marketing (CM 1)",
+      "productLines": [
+        {
+          "id": "dpl-energy-trading-risk-management",
+          "name": "Energy Trading & Risk Management",
+          "description": "Data products supporting physical/financial trading and commercial risk management (ETRM domain).",
+          "status": "active",
+          "portfolios": [
+            {
+              "id": "dp-commercial-risk",
+              "name": "Commercial Risk",
+              "description": "Commodity trading risk data: positions, exposures, P&L, VaR, limits, counterparty credit in the trading context. Distinct from Order-to-Cash customer AR credit.",
+              "status": "active"
+            },
+            {
+              "id": "dp-physical-trading",
+              "name": "Physical Trading",
+              "description": "Deal/trade facts for physical commodity transactions: trade capture, contracts, positions, movements context.",
+              "status": "active"
+            },
+            {
+              "id": "dp-quality-assurance",
+              "name": "Quality Assurance",
+              "description": "Product/crude quality data: assays, lab results, specifications, blending quality outcomes.",
+              "status": "active"
+            }
+          ]
+        },
+        {
+          "id": "dpl-marketing-sales",
+          "name": "Marketing & Sales",
+          "description": "Customer-facing marketing and sales data products.",
+          "status": "active",
+          "portfolios": [
+            {
+              "id": "dp-brand-data-integration",
+              "name": "Brand Data & Integration",
+              "description": "Brand, branded-site, and brand-partner data integration.",
+              "status": "active"
+            },
+            {
+              "id": "dp-retail-payments",
+              "name": "Retail Payments",
+              "description": "Retail transaction and payment data captured at branded retail sites (tender, cards, loyalty-linked payment).",
+              "status": "active"
+            },
+            {
+              "id": "dp-product-availability-allocations",
+              "name": "Product Availability & Allocations",
+              "description": "Product avails and allocation decisions data supporting order validation and channel supply.",
+              "status": "active"
+            }
+          ]
+        },
+        {
+          "id": "dpl-market-structure-logistics-management",
+          "name": "Market Structure & Logistics Management",
+          "description": "Pricing structures, logistics execution, margin and external market data products.",
+          "status": "active",
+          "portfolios": [
+            {
+              "id": "dp-master-pricing",
+              "name": "Master Pricing",
+              "description": "Validated price system of record: official product prices derived from market data and internal assessment.",
+              "status": "active"
+            },
+            {
+              "id": "dp-rack-pricing",
+              "name": "Rack Pricing",
+              "description": "Wholesale rack price data: calculated, approved, published rack prices per sales cycle. Distinct portfolio from Master Pricing.",
+              "status": "active",
+              "source": ["Commercial Business Process Lifecycle slide"],
+              "notes": ["Product line placement provisional; confirm with data owners."]
+            },
+            {
+              "id": "dp-logistic-execution",
+              "name": "Logistic Execution",
+              "description": "Nominations, scheduling, and physical movement execution data (pipeline, marine, rail, truck from the commercial view).",
+              "status": "active"
+            },
+            {
+              "id": "dp-loss-control",
+              "name": "Loss Control",
+              "description": "Custody transfer, gain/loss, and shrinkage data across movements and terminal operations.",
+              "status": "active",
+              "source": ["Commercial Business Process Lifecycle slide"],
+              "notes": ["Product line placement provisional; confirm with data owners."]
+            },
+            {
+              "id": "dp-operational-margin",
+              "name": "Operational Margin",
+              "description": "Margin measurement data across commercial operations (supply, logistics, channel).",
+              "status": "active"
+            },
+            {
+              "id": "dp-external-market-data",
+              "name": "External Market Data",
+              "description": "Third-party market feeds: price assessments, indices, market intelligence inputs.",
+              "status": "active"
+            }
+          ]
+        },
+        {
+          "id": "dpl-planning-optimization",
+          "name": "Planning & Optimization",
+          "description": "Value chain planning and optimization data products. Referenced on lifecycle slides by shorthand 'P&O' (a product line, not a portfolio item).",
+          "status": "active",
+          "portfolios": [
+            {
+              "id": "dp-regional-production-distribution-planning",
+              "name": "Regional Production & Distribution Planning",
+              "description": "Regional optimization and distribution planning data.",
+              "status": "active"
+            },
+            {
+              "id": "dp-local-production-planning-crude-scheduling",
+              "name": "Local Production Planning & Crude Scheduling",
+              "description": "Refinery/local production planning and crude scheduling data.",
+              "status": "active"
+            },
+            {
+              "id": "dp-backcasting-refining-ci",
+              "name": "Backcasting & Refining Continuous Improvement",
+              "description": "Backcast results vs plan/perfect-foresight, value leakage, and continuous improvement data.",
+              "status": "active"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seg-midstream",
+      "name": "Midstream",
+      "description": "Midstream operations data domains. Process decomposition for Midstream does not yet exist in the LSC map (L1 stub); portfolios are cataloged here and remain unlinked until a midstream process source is modeled.",
+      "processDomainRef": "Downstream Operations > Midstream (L1 stub)",
+      "productLines": [
+        {
+          "id": "dpl-terminals",
+          "name": "Terminals",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-terminal-ot", "name": "Terminal OT", "status": "defined_only" },
+            { "id": "dp-terminal-automation", "name": "Terminal Automation", "status": "defined_only" },
+            { "id": "dp-terminal-ops-it", "name": "Terminal Ops (IT)", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-midstream-logistics",
+          "name": "Logistics",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-marine-rail-ops", "name": "Marine & Rail Ops", "status": "defined_only" },
+            { "id": "dp-truck-ops", "name": "Truck Ops", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-infrastructure-platforms",
+          "name": "Infrastructure Platforms",
+          "status": "defined_only",
+          "notes": ["Platform product line; not expected to map to business process nodes."],
+          "portfolios": [
+            { "id": "dp-ot-compute-platforms", "name": "OT Compute Platforms", "status": "defined_only" },
+            { "id": "dp-ot-windows-platforms", "name": "OT Windows Platforms", "status": "defined_only" },
+            { "id": "dp-ot-communication-platform", "name": "OT Communication Platform", "status": "defined_only" },
+            { "id": "dp-ot-platform-development", "name": "OT Platform Development", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-midstream-back-office",
+          "name": "Back Office",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-ops-support", "name": "Ops Support", "status": "defined_only" },
+            { "id": "dp-hess", "name": "HES&S", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-data-platforms",
+          "name": "Data Platforms",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-ops-intel", "name": "Ops Intel", "status": "defined_only" },
+            { "id": "dp-gis", "name": "GIS", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-ng-ngl",
+          "name": "NG & NGL",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-processing-fractionation", "name": "Processing & Fractionation", "status": "defined_only" },
+            { "id": "dp-gathering-compression", "name": "Gathering & Compression", "status": "defined_only" },
+            { "id": "dp-measurement-lab", "name": "Measurement & Lab", "status": "defined_only" },
+            { "id": "dp-revenue-accounting-scheduling", "name": "Revenue Accounting & Scheduling", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-software-development-platforms",
+          "name": "Software Development Platforms",
+          "status": "defined_only",
+          "notes": ["Platform product line; not expected to map to business process nodes."],
+          "portfolios": [
+            { "id": "dp-devsecops", "name": "DevSecOps", "status": "defined_only" },
+            { "id": "dp-midstream-quality-assurance", "name": "Quality Assurance (Software)", "status": "defined_only", "notes": ["Software QA; distinct from Commercial product Quality Assurance (dp-quality-assurance)."] }
+          ]
+        },
+        {
+          "id": "dpl-pipelines",
+          "name": "Pipelines",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-pipeline-ot", "name": "Pipeline OT", "status": "defined_only" },
+            { "id": "dp-pipeline-ras", "name": "Pipeline RA&S", "status": "defined_only" },
+            { "id": "dp-pipeline-ops-integrity", "name": "Pipeline Ops & Integrity", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-reliability",
+          "name": "Reliability",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-field-operations", "name": "Field Operations", "status": "defined_only" },
+            { "id": "dp-reliability-center", "name": "Reliability Center", "status": "defined_only" },
+            { "id": "dp-operations-administration", "name": "Operations & Administration", "status": "defined_only" },
+            { "id": "dp-service-management", "name": "Service Management", "status": "defined_only" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seg-corporate",
+      "name": "Corporate",
+      "description": "Corporate/enabling function data domains. Maps loosely to the Enabling Functions L0 in the LSC map (all L1 stubs).",
+      "processDomainRef": "Enabling Functions (L0)",
+      "productLines": [
+        {
+          "id": "dpl-ess-law",
+          "name": "ES&S / Law",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-ess", "name": "ES&S", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > EHS & Gov Reporting (stub)."] },
+            { "id": "dp-legal", "name": "Legal", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Legal & Corp Comm (stub)."] }
+          ]
+        },
+        {
+          "id": "dpl-finance",
+          "name": "Finance",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-bpa", "name": "BP&A", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Finance (stub)."] }
+          ]
+        },
+        {
+          "id": "dpl-hr",
+          "name": "HR",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-hr", "name": "HR", "status": "defined_only" }
+          ]
+        },
+        {
+          "id": "dpl-supply-chain",
+          "name": "SC",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-supply-chain", "name": "SC", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Supply Chain Mgmt. (stub)."] }
+          ]
+        },
+        {
+          "id": "dpl-it",
+          "name": "IT",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-it", "name": "IT", "status": "defined_only", "notes": ["Closest LSC anchors: Enabling Functions > Process Excellence & IT; CM 1.4 IT Services (both stubs)."] }
+          ]
+        },
+        {
+          "id": "dpl-sbd",
+          "name": "S&BD",
+          "status": "defined_only",
+          "portfolios": [
+            { "id": "dp-sbd", "name": "S&BD", "status": "defined_only", "notes": ["No LSC anchor; Strategy & Business Development absent from Enabling Functions."] }
+          ]
+        }
+      ]
+    }
+  ]
+}

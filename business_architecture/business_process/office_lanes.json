@@ -1,0 +1,19 @@
+
+{
+  "front_office": {
+    "name": "Front Office",
+    "description": "Revenue-generating, market-facing functions of the trading organization: trading and deal execution, forecasting, pre-trade analysis, bidding strategy, and customer/counterparty engagement."
+  },
+  "middle_office": {
+    "name": "Middle Office",
+    "description": "Control and analytical layer between front and back office: monitors market and credit risk and exposure, validates captured trades, calculates P&L, manages confirmations and scenario modelling, and enforces risk limits, controls, and compliance."
+  },
+  "back_office": {
+    "name": "Back Office",
+    "description": "Administrative and operational completion of the trade lifecycle: settlements, invoicing and netting, accounting and sub-ledger management, regulatory reporting, dispute resolution, and record-keeping."
+  },
+  "operations": {
+    "name": "Operations",
+    "description": "Physical supply chain execution supporting the traded book: scheduling, movement actualization, feedstock and product inventory management, transportation, and terminal operations."
+  }
+}
