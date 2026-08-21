@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Domain in Downstream Oil &amp; Gas — Modeling Guide</title>
+<style>
+  :root{
+    --bg:#F7F6F2; --surface:#FFFFFF; --surface-alt:#F2F0EA; --border:#D9D6CE;
+    --ink:#28251D; --ink-muted:#6B6A64; --ink-faint:#9C9A93;
+    --primary:#01696F; --primary-dark:#0C4E54; --primary-tint:#E4EFEF;
+    --warn:#8A4A16; --warn-tint:#F6EBDD;
+    --good:#3B6B24; --good-tint:#E9F0E1;
+    --mono:'SF Mono',Consolas,'Courier New',monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+  }
+  .shell{max-width:1180px;margin:0 auto;padding:0 28px 100px}
+  a{color:var(--primary); text-decoration:none; border-bottom:1px solid rgba(1,105,111,0.28)}
+  a:hover{color:var(--primary-dark)}
+
+  /* Masthead */
+  header.masthead{background:linear-gradient(160deg,var(--primary-dark) 0%,var(--primary) 62%,#0A5158 100%); color:#F2F7F6; padding:56px 0 42px}
+  .masthead-in{max-width:1180px;margin:0 auto;padding:0 28px}
+  .eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.10em; text-transform:uppercase; color:#BFE3E1; margin:0 0 14px}
+  h1.title{font-size:34px; font-weight:700; line-height:1.22; margin:0 0 12px; letter-spacing:-.01em; color:#fff}
+  .subtitle{font-size:17.5px; color:#D9EEEC; max-width:760px; margin:0 0 26px; font-weight:400}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px}
+  .chip{font-family:var(--mono); font-size:12px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); color:#EAF6F5; padding:6px 12px; border-radius:3px; letter-spacing:.02em}
+
+  /* Orientation box */
+  .orient{background:var(--surface); border:1px solid var(--border); border-radius:6px; margin-top:-30px; padding:26px 30px; box-shadow:0 8px 24px rgba(20,40,40,0.07); position:relative; z-index:2}
+  .orient-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  .orient-grid .k{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin-bottom:6px}
+  .orient-grid .v{font-size:15px; color:var(--ink); font-weight:600; line-height:1.4}
+
+  /* Sections */
+  main{padding-top:46px}
+  section{margin-bottom:56px}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--primary); letter-spacing:.06em; font-weight:600; margin-bottom:6px}
+  h2{font-size:25px; font-weight:700; margin:0 0 18px; letter-spacing:-.01em; color:var(--ink)}
+  h3{font-size:18.5px; font-weight:700; margin:30px 0 12px; color:var(--ink)}
+  p{margin:0 0 15px; max-width:760px}
+  ul, ol{margin:0 0 16px; padding-left:22px; max-width:760px}
+  li{margin-bottom:8px}
+  strong{font-weight:650}
+  .lede{font-size:18px; color:var(--ink-muted); max-width:800px; margin-bottom:22px}
+
+  /* Callouts */
+  .callout{border-left:4px solid var(--primary); background:var(--primary-tint); padding:16px 20px; border-radius:0 4px 4px 0; margin:20px 0; max-width:760px}
+  .callout.warn{border-left-color:var(--warn); background:var(--warn-tint)}
+  .callout.good{border-left-color:var(--good); background:var(--good-tint)}
+  .callout .label{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin-bottom:6px; display:block}
+  .callout.warn .label{color:var(--warn)}
+  .callout.good .label{color:var(--good)}
+  .callout:not(.warn):not(.good) .label{color:var(--primary-dark)}
+  .callout p{margin-bottom:0; font-size:15px}
+
+  /* Tables */
+  .table-wrap{overflow-x:auto; margin:18px 0 26px; border:1px solid var(--border); border-radius:6px}
+  table{width:100%; border-collapse:collapse; font-size:14px; background:var(--surface); min-width:640px}
+  thead th{background:var(--primary-dark); color:#fff; text-align:left; padding:11px 14px; font-weight:600; font-size:13px; letter-spacing:.01em}
+  tbody td{padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:var(--surface-alt)}
+  td.narrow{width:150px; font-weight:600}
+  code{font-family:var(--mono); font-size:12.5px; background:var(--surface-alt); border:1px solid var(--border); padding:1px 6px; border-radius:3px}
+  .src{font-size:11.5px; color:var(--ink-faint)}
+
+  /* Term freeze cards */
+  .term-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:20px 0}
+  .term-card{background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:16px 18px}
+  .term-card .term{font-weight:700; color:var(--primary-dark); font-size:15.5px; margin-bottom:6px}
+  .term-card .def{font-size:13.5px; color:var(--ink-muted); line-height:1.5}
+
+  /* Concept map / flow */
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:22px 0; font-family:var(--mono); font-size:13px}
+  .flow .node{background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:8px 14px; font-weight:600}
+  .flow .node.core{border-color:var(--primary); color:var(--primary-dark); background:var(--primary-tint)}
+  .flow .arrow{color:var(--ink-faint)}
+
+  /* Boundary badges */
+  .badge{display:inline-block; font-family:var(--mono); font-size:11px; font-weight:700; padding:3px 8px; border-radius:3px; letter-spacing:.03em}
+  .badge.a{background:#DCEFE9; color:#1E5A44}
+  .badge.b{background:#E4EEF7; color:#1B4E75}
+  .badge.c{background:#F1E7F2; color:#5B3866}
+
+  /* Evidence register */
+  .ev-group{margin-bottom:26px}
+  .ev-group h4{font-family:var(--mono); font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--primary-dark); margin:0 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border)}
+  .ev-list{list-style:none; padding:0; margin:0}
+  .ev-list li{font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--surface-alt); margin-bottom:0}
+  .ev-list li:last-child{border-bottom:none}
+  .ev-list .ev-title{font-weight:600; color:var(--ink)}
+  .ev-list .ev-url{display:block; font-size:12px; word-break:break-all; margin-top:2px}
+
+  /* Artifact update block */
+  .aub{background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:28px 32px; margin-top:10px}
+  .aub h3{margin-top:0}
+  .aub .field{margin-bottom:16px}
+  .aub .field-label{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--primary); font-weight:700; margin-bottom:5px}
+
+  footer{border-top:1px solid var(--border); margin-top:50px; padding-top:24px; font-size:12.5px; color:var(--ink-faint)}
+
+  @media (max-width:760px){
+    .orient-grid{grid-template-columns:1fr}
+    h1.title{font-size:26px}
+  }
+  @media print{
+    header.masthead{background:var(--primary-dark) !important; -webkit-print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <p class="eyebrow">Enterprise Performance Model &middot; Domain Modeling Workstream</p>
+    <h1 class="title">Customer Domain in Downstream Oil &amp; Gas</h1>
+    <p class="subtitle">A modeling guide for a domain that looks simple until you check a second system. This report explains why "Customer" fractures across Downstream O&amp;G platforms, names the systems where it fractures, and lays out the Party‑plus‑Role pattern the team can model against.</p>
+    <div class="meta-row">
+      <span class="chip">Scope: Downstream O&amp;G only</span>
+      <span class="chip">Status: Exploratory / input to Draft artifacts</span>
+      <span class="chip">Prepared: 21 Aug 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="orient">
+    <div class="orient-grid">
+      <div>
+        <div class="k">Workstream</div>
+        <div class="v">2 — Domain Modeling (informing Workstream 1, KPI Store, where Customer‑linked KPIs are consumed)</div>
+      </div>
+      <div>
+        <div class="k">Target artifact</div>
+        <div class="v">Input to Domain Model Repository and <code>customer_domain_problem_statement_v0.1.md</code> — not itself a canonical artifact</div>
+      </div>
+      <div>
+        <div class="k">Objective</div>
+        <div class="v">Give the team one place that explains how Customer data varies by system and how to model it without collapsing distinct meanings</div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <section id="exec-summary">
+      <div class="sec-num">01</div>
+      <h2>Executive summary</h2>
+      <p class="lede">In Downstream Oil &amp; Gas, "Customer" is not one thing. It is a label that six or more systems apply to different combinations of legal entities, accounts, roles, and locations — and those systems disagree with each other on purpose, because they are answering different questions.</p>
+      <ul>
+        <li><strong>The domain is broader than Order-to-Cash.</strong> O2C is the best-evidenced, most mature slice, but segmentation, loyalty, credit, compliance, and service all touch Customer data before or after an order exists.</li>
+        <li><strong>The fix is not one master table.</strong> It is modeling <strong>Party</strong> once (a person or organization, regardless of role) and attaching <strong>Roles</strong> — Sold-To, Bill-To, Payer, Loading-Authorized Party, Dealer, Consortium Member — as time-bounded relationships, not permanent labels or duplicate records.</li>
+        <li><strong>Every system already does a version of this.</strong> SAP's downstream retail modules bill dealers and fleet-card companies as roles on one business-partner record; the project's own draft ontology approach reaches the identical conclusion independently.</li>
+        <li><strong>Six terms need to be frozen before any taxonomy work starts:</strong> Customer Account, Sold-To, Bill-To, Payer, Ship-To (a location, not a role), and Loading-Authorized Party. A controlled-vocabulary draft already exists for these in the project repository.</li>
+      </ul>
+      <div class="callout good">
+        <span class="label">What this report is, and is not</span>
+        <p>This is a synthesis for team alignment, not a canonical artifact. It draws on (a) the project's own draft domain-modeling document, (b) Downstream O&amp;G company disclosures and O&amp;G-specific SAP/PIDX documentation gathered and validated in this workstream, and (c) a parallel AI-assisted research pass the user supplied. Every claim below is tagged with where it came from — see Section 8 for the honesty check on that third source.</p>
+      </div>
+    </section>
+
+    <section id="why-hard">
+      <div class="sec-num">02</div>
+      <h2>Why "Customer" breaks in Downstream, specifically</h2>
+      <p>In most industries, "customer" is a stable idea — the party who buys, once modeled, stays modeled. In Downstream it is not, for three reasons that compound rather than add:</p>
+
+      <h3>1. The same legal entity plays many roles at once</h3>
+      <p>A logistics firm can simultaneously be a wholesale customer, a haulage contractor, a rack carrier, and a lubricants distributor. Model it as four separate customer records and you lose the shared credit exposure across all four. Model it as one record and you lose that the roles have different owners, terms, and processes. Neither a single flat record nor four duplicate records is correct — the roles have to be modeled as relationships that can be added, expired, and queried independently.</p>
+
+      <h3>2. Who "the customer" is changes by channel</h3>
+      <p>In aviation, the paying party can be a fuel consortium or an into‑plane agent rather than the airline actually consuming the fuel. In marine bunkering, the buyer, the vessel operator, and the charterer can be three different parties, and the vessel itself is often more stable and more identifying than whichever party is contracting for a given voyage. In retail, the dealer is the commercial customer and the motorist is not — until a loyalty or fuel-card program makes the motorist a tracked party too, at a completely different grain.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Channel</th><th>Contracting party</th><th>Consuming party</th><th>Modeling tension</th></tr></thead>
+          <tbody>
+            <tr><td class="narrow">B2B commercial &amp; industrial</td><td>Corporate account, often with a group hierarchy</td><td>Multiple delivery sites</td><td>Contracting entity, credit group, and corporate group are three groupings and rarely identical</td></tr>
+            <tr><td class="narrow">Wholesale / rack</td><td>Jobber, distributor, reseller</td><td>Their own downstream customers</td><td>Who may physically lift at a terminal is a separate relationship from who buys</td></tr>
+            <tr><td class="narrow">Retail</td><td>Dealer, franchisee, or the company at company-owned sites</td><td>The motorist</td><td>Two customer populations at different grains — one largely anonymous except through loyalty and card identity</td></tr>
+            <tr><td class="narrow">Lubricants</td><td>Distributor or OEM account</td><td>End user or workshop</td><td>Channel conflict — the same end user reachable directly and through a distributor</td></tr>
+            <tr><td class="narrow">Aviation</td><td>Airline, consortium, or into-plane agent</td><td>The aircraft or flight</td><td>The paying party can be a collective; settlement runs through industry mechanisms rather than a normal invoice cycle</td></tr>
+            <tr><td class="narrow">Marine</td><td>Bunker buyer, trader, or charterer</td><td>The vessel</td><td>The consuming asset is often more stable and more identifying than the contracting party, which changes per voyage</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src">Channel framing: project draft, <em>EPM-MOD-000 Domain Modeling — Approach &amp; Domain Analysis v0.5</em> (internal, Draft status). Real-world confirmation for wholesale/rack, retail, lubricants, aviation, and marine channel splits: <a href="https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm">Valero 2025 Form 10-K</a>; <a href="https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm">Phillips 66 2025 Form 10-K</a>; <a href="https://www.sec.gov/Archives/edgar/data/1306965/000130696525000007/shel-20241231.htm">Shell plc 2024 Form 20-F</a>; <a href="https://www.shelloman.com.om/en_om/investors/results-and-reporting/annual-reports/_jcr_content/root/main/section/simple/text_1641432041.multi.stream/1745237394246/9453445b8d7b0ac4db67a5cd5c5b669f29e1d8ed/shell-annual-report-2024-english.pdf">Shell Oman Marketing Annual Report 2024</a>.</p>
+
+      <h3>3. Regulatory status changes the economics, not just the paperwork</h3>
+      <p>Excise registration, duty-suspension eligibility, and tax classification determine the price of the same physical product to different buyers. That is core model content, not a compliance footnote — which is why SAP's downstream modules carry excise and tax-exemption attributes directly on the customer/business-partner record rather than in a side compliance table.</p>
+      <p class="src">SAP's Oil &amp; Gas–CRM master-data exchange transfers handling type, source-of-petroleum/excise-tax rate keys, and mode-of-transport-for-US-excise-exemption data as part of the customer record synchronization (<a href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/e482cf535b804808e10000000a174cb4.html">SAP Oil &amp; Gas ↔ CRM customer exchange</a>). Excise-exemption licence checks are enforced against the customer master in delivery processing (<a href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/4b92cf535b804808e10000000a174cb4.html">SAP IS-Oil excise duty licence defaulting</a>). Real-world KYC/AML onboarding of commercial and trading counterparties: <a href="https://jobs.shell.com/job/makati-city/counterparty-onboarding-focal/25244/79167583008">Shell Trading &amp; Supply counterparty due-diligence posting</a>.</p>
+    </section>
+
+    <section id="modeling-answer">
+      <div class="sec-num">03</div>
+      <h2>The modeling answer: Party once, Role many times</h2>
+      <p>The recurring pattern — across the project's own draft analysis, external O&amp;G practice, and how SAP's downstream modules are actually built — is the same: model the <strong>Party</strong> once, and attach <strong>Roles</strong> as relationships that have a start date, an end date, and their own owner, terms, and process. A role is not a subtype of the party and it is not a flag on the party record; it is a first-class thing that exists <em>between</em> a party and a context.</p>
+
+      <div class="flow">
+        <span class="node core">Party</span><span class="arrow">→</span>
+        <span class="node">Person / Organisation</span><span class="arrow">→</span>
+        <span class="node">Party Identifier</span><span class="arrow">→</span>
+        <span class="node core">Role (time-bounded)</span><span class="arrow">→</span>
+        <span class="node">Relationship</span><span class="arrow">→</span>
+        <span class="node">Account</span><span class="arrow">→</span>
+        <span class="node">Hierarchy</span>
+      </div>
+
+      <h3>Five decisions that shape the model</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Decision</th><th>Why it's pivotal</th><th>Recommended direction</th></tr></thead>
+          <tbody>
+            <tr><td class="narrow">Party + Customer Account + Roles?</td><td>Determines whether one organisation playing four roles is one record or four, and whether the commercial account is first-class</td><td>Model Party once; Customer Account is the commercial object; Sold-To / Bill-To / Payer are roles on the account. Ship-To is a location, not a role. This is the highest-value structural decision in the domain.</td></tr>
+            <tr><td class="narrow">How many hierarchies?</td><td>Corporate group, credit group, sales hierarchy, and reporting hierarchy are all real and all different</td><td>Model hierarchy as a typed, named structure — expect at least three coexisting, not one parent-child column</td></tr>
+            <tr><td class="narrow">Is identity resolution in scope?</td><td>Determines whether this is a domain model or an MDM programme</td><td>Model the concepts (Party Identifier, Match Candidate) so the model can host MDM later. Building match/merge rules is a separate authorization.</td></tr>
+            <tr><td class="narrow">Where does the motorist sit?</td><td>The retail end consumer is a customer in loyalty terms and not in commercial terms</td><td>A distinct role on Party, noting most instances are pseudonymous. Excluding it makes retail unmodellable; conflating it with the dealer role breaks everything else.</td></tr>
+            <tr><td class="narrow">Contract: attribute or first-class?</td><td>O2C needs contract terms at order capture, pricing, and invoicing</td><td>First-class. A contract outlives, precedes, and can span customer accounts. Modeling it as an attribute is the most common downstream customer-model defect.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src">Source: project draft <em>EPM-MOD-000 v0.5</em> §04 Domain Analysis — Customer (internal, Draft status, not yet an approved baseline).</p>
+
+      <div class="callout">
+        <span class="label">What each stage of Order-to-Cash actually needs</span>
+        <p>Order capture needs to know who may order what, on what terms, to what location. Credit check needs the exposure grouping, which is rarely the ordering entity. Pricing needs contract and rebate structure. Delivery needs authorization and ship-to. Invoicing needs the payer and tax treatment. Collections needs the dunning hierarchy. Each is a <em>different grouping</em> of the same underlying parties — a model that produces only one hierarchy is unusable by O2C.</p>
+      </div>
+    </section>
+
+    <section id="controlled-vocab">
+      <div class="sec-num">04</div>
+      <h2>Freeze these six terms before any taxonomy work</h2>
+      <p>The project's own controlled-vocabulary draft and the domain-analysis draft independently converge on the same list. These are distinct meanings that different systems currently collapse into a single word — "customer" — and that collapse is the single biggest source of the "unbilled for this customer" type of question becoming unanswerable.</p>
+      <div class="term-grid">
+        <div class="term-card"><div class="term">Customer Account</div><div class="def">The commercial object. Not a party itself — the container that roles attach to.</div></div>
+        <div class="term-card"><div class="term">Sold-To</div><div class="def">Who the product is sold to; who may place the order and who may lift, in most cases.</div></div>
+        <div class="term-card"><div class="term">Payer</div><div class="def">Who settles the invoice. Credit exposure lives here — not on a generic "Customer."</div></div>
+        <div class="term-card"><div class="term">Bill-To</div><div class="def">Who receives the invoice. Can differ from who pays.</div></div>
+        <div class="term-card"><div class="term">Ship-To</div><div class="def">Where it lifts or delivers. A <strong>location</strong>, not a party role — do not model it as a role.</div></div>
+        <div class="term-card"><div class="term">Loading-Authorized Party</div><div class="def">Who may physically lift at the rack or terminal. Distinct from Sold-To, Payer, and the site itself.</div></div>
+      </div>
+      <p>A controlled vocabulary does not decide aggregates, bounded contexts, or database structure — it names the meaning so modeling can proceed without every team re-deriving what "customer" means from its own system's column names. SAP codes like <code>AG</code>/<code>SP</code> or <code>RG</code>/<code>PY</code> do not get to win by default just because they were first; neither does any single system's <code>customer_id</code> column.</p>
+      <p class="src">Source: project repository, <em>Production-Ready Ontology 01 — Controlled Vocabulary</em> (internal, working evidence) and <em>EPM-MOD-000 v0.5</em> §04, "Customer UL — freeze before taxonomy."</p>
+    </section>
+
+    <section id="systems-landscape">
+      <div class="sec-num">05</div>
+      <h2>Where Customer data actually lives: the systems landscape</h2>
+      <p>Every one of the tensions above shows up as a real disagreement between systems. The table below names the systems the team should expect in a Downstream O&amp;G estate, what each one calls "Customer," and where the disagreement bites.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>System / platform</th><th>What it calls "Customer"</th><th>What it actually captures</th><th>Where it fits</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="narrow">SAP Business Partner / Customer Master (ERP core)</td>
+              <td>A role assignable to a Business Partner record, not a standalone entity</td>
+              <td>Contract partner, subsidizer, issuer, authorized drawer, alternative payer, counterparty — all on one synchronized record</td>
+              <td>System of record for the commercial account and its roles</td>
+            </tr>
+            <tr>
+              <td class="narrow">SAP IS-Oil Service Station Retailing (SSR)</td>
+              <td>Service-station operators and fleet-card companies, invoiced as customers</td>
+              <td>COCO / CODO / DODO operating models; automatic settlement with clearing houses; retail-network pricing; POS/forecourt interfaces</td>
+              <td>Retail network operations — bills the dealer, not the motorist</td>
+            </tr>
+            <tr>
+              <td class="narrow">SAP OGSD (Oil &amp; Gas Secondary Distribution) — Customer Hierarchy</td>
+              <td>Customers clustered into groups and nodes on a hierarchy</td>
+              <td>Drives collective orders, continuous product replenishment, promotion/"Sales Action" partners, and ordering authorization by node</td>
+              <td>Distribution-tier account structure — a different hierarchy than the corporate or credit one</td>
+            </tr>
+            <tr>
+              <td class="narrow">SAP RFNO (Retail Fuel Network Operations, S/4HANA)</td>
+              <td>Dealer, Location Manager, Service Station Owner, Payment Card Owner/Payer, Co-user, Driver, Clearing House, Issuer, Network Operator</td>
+              <td>Time-valid, settlement-relevant roles at the fuel-network level — separates who owns a site from who operates it from who pays for a lift</td>
+              <td>Retail/dealer network settlement — the most granular role model of any system in the estate</td>
+            </tr>
+            <tr>
+              <td class="narrow">SAP Oil &amp; Gas ↔ CRM master-data exchange</td>
+              <td>The same commercial party, bridged between ERP and CRM</td>
+              <td>Bidirectional sync of handling type, excise/tax rate keys, mode-of-transport-for-tax-exemption, and address</td>
+              <td>Keeps the compliance-relevant attributes of the customer record consistent across two systems of record</td>
+            </tr>
+            <tr>
+              <td class="narrow">Terminal automation / PIDX schemas</td>
+              <td>No "Customer" object — a trading partner identified for a specific lift</td>
+              <td>LoadingDeliveryReceipt, planned-movement, and Right-to-Lift messages; standardized Product, Company, Terminal, and Regional code lists</td>
+              <td>External identity reconciliation at the point of physical lift — supports Loading-Authorized Party as a distinct role, not a generic customer</td>
+            </tr>
+            <tr>
+              <td class="narrow">Credit management (SAP FSCM or equivalent)</td>
+              <td>Credit exposure grouping, not the ordering entity</td>
+              <td>Credit limit, credit exposure, blocked status, dunning level — attached to the Payer, not to "Customer" generically</td>
+              <td>Risk gating before order fulfilment — a different grouping than Sold-To</td>
+            </tr>
+            <tr>
+              <td class="narrow">Contract management / CTRM</td>
+              <td>A contracting or trading counterparty</td>
+              <td>Pricing agreements, rebate agreements, volume commitments, take-or-pay terms — first-class, outliving any single order</td>
+              <td>Governs pricing and commercial terms that O2C consumes but does not own</td>
+            </tr>
+            <tr>
+              <td class="narrow">CRM / loyalty &amp; card platforms (e.g. ExxonMobil Rewards+/Speedpass+, Shell Go+)</td>
+              <td>An individual motorist or fleet-card holder — pseudonymous in most cases</td>
+              <td>Enrollment, points/rewards, digital self-service; a completely different customer population than the commercial dealer or account</td>
+              <td>Consumer-grade identity that sits alongside, not inside, the commercial B2B account</td>
+            </tr>
+            <tr>
+              <td class="narrow">Billing / AR / Collections</td>
+              <td>The Payer, plus a dunning hierarchy</td>
+              <td>Invoicing, accounts receivable, collections workflows — needs its own grouping of the same parties</td>
+              <td>Downstream of pricing and delivery; frequently the system where "customer_id" gets overloaded and needs to be parked as unresolved rather than crowned authoritative</td>
+            </tr>
+            <tr>
+              <td class="narrow">Tax and excise registers; sanctions/KYC screening</td>
+              <td>A regulatory status attached to the party, not a separate customer</td>
+              <td>Excise registration, duty-suspension eligibility, tax classification, licence/certification, counterparty due-diligence tiers (Basic/Simplified/Standard/Enhanced)</td>
+              <td>Gates pricing and eligibility to trade — core model content, not a compliance side-table</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src">Sources: <a href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/da03f33a89304594a1f7fb98198577c1/38c9cc5340487214e10000000a174cb4.html">SAP SSR (Service Station Retailing)</a>; <a href="https://help.sap.com/docs/ogsd/application-help-for-sap-ogsd-7-0/98b732cffc844375adf6d78d816dde95.html?locale=en-US&state=PRODUCTION&version=7.0.12">SAP OGSD Customer Hierarchy</a>; SAP RFNO — S/4HANA Supply Chain for Secondary Distribution guide; <a href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/e482cf535b804808e10000000a174cb4.html">SAP Oil &amp; Gas ↔ CRM exchange</a>; <a href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/4b92cf535b804808e10000000a174cb4.html">SAP IS-Oil excise duty licence defaulting</a>; <a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/using-sap-s-4hana-settlement-management-for-oil-and-gas-downstream-retail/ba-p/13467806">SAP S/4HANA settlement for O&amp;G downstream retail</a>; PIDX terminal/lift schemas (pidx.org/standards); <a href="https://jobs.shell.com/job/makati-city/counterparty-onboarding-focal/25244/79167583008">Shell counterparty onboarding (KYC/AML)</a>; <a href="https://investor.exxonmobil.com/company-information/press-releases/detail/246/exxonmobil-launches-new-exxon-mobil-rewards-loyalty-program">ExxonMobil Rewards+/Speedpass+ launch</a>; <a href="https://www.ibm.com/case-studies/vivo-energy-power-service">Vivo Energy / SAP Master Data Governance case study</a>.</p>
+
+      <div class="callout warn">
+        <span class="label">The practical consequence</span>
+        <p>No single system's customer table is authoritative for the whole domain. SAP's own settlement guidance says the fix at the point of settlement is to "ensure each service station location is set up as a business partner" and invoice commissions on "the Order-to-Cash or the Customer side" of the condition-contract — i.e. even SAP's own downstream products reconcile dealer, operator, and fleet-card identities onto one business-partner backbone rather than keeping them as separate customer types (<a href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/using-sap-s-4hana-settlement-management-for-oil-and-gas-downstream-retail/ba-p/13467806">SAP S/4HANA settlement for O&amp;G downstream retail</a>). The enterprise model should do the same thing on purpose, instead of by accident.</p>
+      </div>
+    </section>
+
+    <section id="boundary">
+      <div class="sec-num">06</div>
+      <h2>What's core O2C, what's broader Customer lifecycle, what's shared master data</h2>
+      <p>Not every "customer" capability belongs in the O2C pilot, and not every one belongs to a future Customer bounded context either — some are genuinely shared Party/MDM concerns. A rough three-way split, grounded in the Downstream Petroleum process framework and company practice:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Class</th><th>Capability examples</th><th>Rationale</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="narrow"><span class="badge a">A · O2C CORE</span></td>
+              <td>Order capture and role validation (Sold-To/Ship-To), credit adjudication, lifting agreement and rack-clearance checks, pricing and rebate application, invoicing and payer resolution, collections/dunning</td>
+              <td>These are the processes O2C cannot function without, and they are where the project's first pilot sits</td>
+            </tr>
+            <tr>
+              <td class="narrow"><span class="badge b">B · BROADER CUSTOMER LIFECYCLE</span></td>
+              <td>Segmentation and target-segment selection, lead/prospect/opportunity management, campaign and loyalty program management, customer service and complaint handling, customer retention/attrition analytics</td>
+              <td>Real Downstream capabilities with dedicated process IDs in the Downstream Petroleum framework, but they precede or run alongside an order rather than inside it</td>
+            </tr>
+            <tr>
+              <td class="narrow"><span class="badge c">C · SHARED PARTY / MDM</span></td>
+              <td>Party identity and matching, customer/corporate hierarchy management, KYC/AML/sanctions screening, excise and tax-exemption registration, master-data governance and golden-record stewardship</td>
+              <td>These concerns are consumed by O2C and by other contexts (trading, retail-network operations) alike — they should not be owned exclusively by any one bounded context</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src">Process grounding: <a href="http://ldmc.com.br/wp-content/uploads/2017/03/PCF-Downstream-Ver_5.0.3.pdf">APQC Process Classification Framework — Downstream Petroleum, v5.0.3</a> (wholesale/rack accounts 12894, lifting agreements 12895, rack clearances 12897, credit adjudication 12893, Manage Customer Service 10006, customer-management measures 10153). Company practice: <a href="https://www.shelloman.com.om/en_om/investors/results-and-reporting/annual-reports/_jcr_content/root/main/section/simple/text_1641432041.multi.stream/1745237394246/9453445b8d7b0ac4db67a5cd5c5b669f29e1d8ed/shell-annual-report-2024-english.pdf">Shell Oman Marketing Annual Report 2024</a>; <a href="https://ir.marathonpetroleum.com/investor/news-releases/news-details/2019/Marathon-Petroleum-Corp-Reports-Third-Quarter-Results/default.aspx">Marathon Petroleum Q3 2019 results</a>; <a href="https://umbrex.com/resources/industry-primers/oil-gas-industry-primers/refining-marketing-industry-primer/">Umbrex Refining &amp; Marketing industry primer</a>; <a href="https://www.deloitte.com/us/en/about/people/profiles.susan-cattozzo+cdaac26d.html">Deloitte Energy &amp; Chemicals, Customer &amp; Marketing practice</a>.</p>
+    </section>
+
+    <section id="ontology">
+      <div class="sec-num">07</div>
+      <h2>Why this is an ontology problem, not just a schema problem</h2>
+      <p>The project's own draft approach reaches this independently: <em>"One organisation plays many roles, and roles start and stop over time. Relational subtyping handles this badly — you either duplicate the organisation per role or flatten roles into flags. An ontology models the role as a first-class, time-bounded relationship between a party and a context, which is what it actually is."</em></p>
+      <p>Practically, that means the production sequence for Customer-domain meaning should follow: <strong>controlled vocabulary → metadata standards → taxonomy → thesaurus (SKOS) → ontology → knowledge graph</strong>, in that order. Skipping a step makes a later step absorb work it cannot do well — a taxonomy asked to carry definitions, or an ontology asked to invent preferred terms it was never given. Roles such as Sold-To, Payer, and Loading-Authorized Party are natural candidates for modeling as RDF/OWL relationships with validity intervals rather than as static foreign keys, which is exactly the pattern that lets a graph answer "who could this party legitimately act as, on this date" without four duplicate customer rows.</p>
+      <p class="src">Source: project draft <em>EPM-MOD-000 v0.5</em> §06 Ontology Approach (internal, Draft status).</p>
+    </section>
+
+    <section id="governance">
+      <div class="sec-num">08</div>
+      <h2>Evidence and governance notes — read before treating anything here as settled</h2>
+      <p>Per the project's source-precedence rules, this section separates what is actually verified in accessible project artifacts from what a parallel AI-assisted research pass asserted but that could not be independently confirmed.</p>
+
+      <div class="callout good">
+        <span class="label">Verified against the project repository</span>
+        <p>The domain-analysis content in Sections 3, 4, and 7 is drawn from an actual Draft artifact in the project repository — <strong>EPM-MOD-000 v0.5, "Domain Modeling — Approach &amp; Domain Analysis"</strong> (Status: Draft, Owner: EPM Lead, revision 2026-08-14) — and from an actual working controlled-vocabulary document at <code>Best Practices or Standrad/production-ready-ontology-01-controlled-vocabulary.md</code>. Both were located and read directly in the cloned repository, not assumed.</p>
+      </div>
+
+      <div class="callout warn">
+        <span class="label">Not verified — flagged rather than repeated as fact</span>
+        <p>A parallel research document the user supplied for this report referenced two additional internal files as sources — <code>sources/EPM-LOCK-2026-08-16.md</code> (said to contain an approved-baseline lock stating "Customer is modeled through order-to-cash") and <code>sources/sponsor-handoff-deliverables.md</code>. Neither file was found in the accessible project repository as of this report, and the literal phrase "Customer is modeled through order-to-cash" does not appear anywhere in the repository. The closest verified statement is EPM-MOD-000's own framing, <em>"Customer feeds Order-to-Cash,"</em> which is offered there as the current Draft domain scope, not as an approved, locked baseline. Treat the stronger "lock" claim as unconfirmed until the source file is located or the claim is withdrawn — do not cite it as an approved decision in downstream artifacts.</p>
+      </div>
+
+      <div class="callout">
+        <span class="label">Source precedence applied in this report</span>
+        <p>Where the parallel research document's structural conclusions (Party-centered core model, role-based reconciliation, O2C-as-pilot-boundary) matched the project's own EPM-MOD-000 draft independently, both are cited and the project draft is treated as primary. Where the parallel document relied on non-Downstream-O&amp;G sources (TM Forum SID, generic MDM vendor documentation, cross-industry APQC PCF, Martin Fowler's generic DDD writing), that material was excluded from this report per the standing instruction to keep this domain Downstream-O&amp;G-specific.</p>
+      </div>
+    </section>
+
+    <section id="recommendations">
+      <div class="sec-num">09</div>
+      <h2>Recommendations for the team</h2>
+      <ol>
+        <li><strong>Do not touch the O2C pilot boundary.</strong> Keep Order-to-Cash as the first proof-of-value bounded context; treat the broader Customer lifecycle and shared Party/MDM concerns (Section 6) as sequenced follow-on work, not scope creep into the pilot.</li>
+        <li><strong>Freeze the six controlled-vocabulary terms formally.</strong> Customer Account, Sold-To, Bill-To, Payer, Ship-To, and Loading-Authorized Party already have working definitions in the repository — ratify them before any taxonomy or ontology-authoring work builds on top.</li>
+        <li><strong>Adopt Party + Role as the conceptual core</strong>, with hierarchy modeled as a typed, named structure rather than a single parent-child column — expect at least three coexisting hierarchies (corporate, credit, sales/distribution).</li>
+        <li><strong>Confirm the actual system estate against the list in Section 5</strong> before workshops. The list here is a prompt built from what the project has already touched (SAP SSR/OGSD/RFNO, PIDX, CRM/loyalty, CTRM) — validate it against what this organisation actually runs.</li>
+        <li><strong>Resolve the EPM-LOCK discrepancy (Section 8) explicitly</strong> before any artifact repeats "Customer is modeled through order-to-cash" as an approved decision. Either locate the source file or record that no such lock currently exists, via the Architecture Decision Log.</li>
+        <li><strong>Route durable conclusions into canonical artifacts</strong> — this report is a working synthesis, not a substitute for updating the Domain Model Repository, Business Glossary, or <code>customer_domain_problem_statement_v0.1.md</code>.</li>
+      </ol>
+    </section>
+
+    <section id="evidence-register">
+      <div class="sec-num">10</div>
+      <h2>Source and evidence register</h2>
+
+      <div class="ev-group">
+        <h4>Internal project artifacts (highest precedence used in this report)</h4>
+        <ul class="ev-list">
+          <li><span class="ev-title">EPM-MOD-000 v0.5 — Domain Modeling Approach &amp; Domain Analysis</span> (Draft, Owner: EPM Lead, rev. 2026-08-14). Project repository, <code>PMO/Domain Modleing/EPM-MOD-000-approach-domain-analysis-v0.3.html</code>.</li>
+          <li><span class="ev-title">Production-Ready Ontology 01 — Controlled Vocabulary</span> (working evidence). Project repository, <code>Best Practices or Standrad/production-ready-ontology-01-controlled-vocabulary.md</code>.</li>
+          <li><span class="ev-title">Customer domain problem statement v0.1</span> (Draft, ID EPM-BA-CUST-001). Project repository, <code>business_architecture/domain/customer_domain_problem_statement_v0.1.md</code>.</li>
+        </ul>
+      </div>
+
+      <div class="ev-group">
+        <h4>Downstream O&amp;G company disclosures</h4>
+        <ul class="ev-list">
+          <li><span class="ev-title">Shell plc, Form 20-F 2024</span><a class="ev-url" href="https://www.sec.gov/Archives/edgar/data/1306965/000130696525000007/shel-20241231.htm">sec.gov/Archives/edgar/data/1306965/000130696525000007/shel-20241231.htm</a></li>
+          <li><span class="ev-title">Shell Oman Marketing, Annual Report 2024</span><a class="ev-url" href="https://www.shelloman.com.om/en_om/investors/results-and-reporting/annual-reports/_jcr_content/root/main/section/simple/text_1641432041.multi.stream/1745237394246/9453445b8d7b0ac4db67a5cd5c5b669f29e1d8ed/shell-annual-report-2024-english.pdf">shelloman.com.om — Annual Report 2024 (PDF)</a></li>
+          <li><span class="ev-title">Shell — counterparty onboarding (KYC/AML) role posting</span><a class="ev-url" href="https://jobs.shell.com/job/makati-city/counterparty-onboarding-focal/25244/79167583008">jobs.shell.com — Counterparty Onboarding Focal</a></li>
+          <li><span class="ev-title">ExxonMobil — Rewards+ / Speedpass+ program launch</span><a class="ev-url" href="https://investor.exxonmobil.com/company-information/press-releases/detail/246/exxonmobil-launches-new-exxon-mobil-rewards-loyalty-program">investor.exxonmobil.com — Rewards+ launch release</a></li>
+          <li><span class="ev-title">Marathon Petroleum — Q3 2019 earnings release</span><a class="ev-url" href="https://ir.marathonpetroleum.com/investor/news-releases/news-details/2019/Marathon-Petroleum-Corp-Reports-Third-Quarter-Results/default.aspx">ir.marathonpetroleum.com — Q3 2019 results</a></li>
+          <li><span class="ev-title">Valero Energy — Form 10-K (fiscal 2025)</span><a class="ev-url" href="https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm">sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm</a></li>
+          <li><span class="ev-title">Phillips 66 — Form 10-K (fiscal 2025)</span><a class="ev-url" href="https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm">sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm</a></li>
+          <li><span class="ev-title">Vivo Energy — SAP Master Data Governance case study</span><a class="ev-url" href="https://www.ibm.com/case-studies/vivo-energy-power-service">ibm.com/case-studies/vivo-energy-power-service</a></li>
+        </ul>
+      </div>
+
+      <div class="ev-group">
+        <h4>O&amp;G-specific systems documentation</h4>
+        <ul class="ev-list">
+          <li><span class="ev-title">SAP SSR — Service Station Retailing</span><a class="ev-url" href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/da03f33a89304594a1f7fb98198577c1/38c9cc5340487214e10000000a174cb4.html">help.sap.com — SSR</a></li>
+          <li><span class="ev-title">SAP OGSD — Customer Hierarchy</span><a class="ev-url" href="https://help.sap.com/docs/ogsd/application-help-for-sap-ogsd-7-0/98b732cffc844375adf6d78d816dde95.html?locale=en-US&state=PRODUCTION&version=7.0.12">help.sap.com — OGSD Customer Hierarchy</a></li>
+          <li><span class="ev-title">SAP Oil &amp; Gas ↔ CRM customer/business-partner exchange</span><a class="ev-url" href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/e482cf535b804808e10000000a174cb4.html">help.sap.com — O&amp;G-CRM exchange</a></li>
+          <li><span class="ev-title">SAP IS-Oil excise duty licence defaulting</span><a class="ev-url" href="https://help.sap.com/docs/SAP_ERP/3f42f39c7e59483b9095d75f5145ec23/4b92cf535b804808e10000000a174cb4.html">help.sap.com — excise duty licence defaulting</a></li>
+          <li><span class="ev-title">SAP S/4HANA settlement management for O&amp;G downstream retail</span><a class="ev-url" href="https://community.sap.com/t5/enterprise-resource-planning-blog-posts-by-sap/using-sap-s-4hana-settlement-management-for-oil-and-gas-downstream-retail/ba-p/13467806">community.sap.com — downstream retail settlement</a></li>
+          <li><span class="ev-title">PIDX International — Standards</span><a class="ev-url" href="https://pidx.org/standards/">pidx.org/standards</a></li>
+          <li><span class="ev-title">APQC Process Classification Framework — Downstream Petroleum, v5.0.3</span><a class="ev-url" href="http://ldmc.com.br/wp-content/uploads/2017/03/PCF-Downstream-Ver_5.0.3.pdf">ldmc.com.br — PCF Downstream v5.0.3 (PDF)</a></li>
+          <li><span class="ev-title">APQC — PCF Downstream Petroleum resource page</span><a class="ev-url" href="https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-downstream-petroleum-2">apqc.org — PCF Downstream Petroleum</a></li>
+          <li><span class="ev-title">BP — Annual Report 2017, Downstream segment</span><a class="ev-url" href="https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/investors/ar2017-downstream.pdf">bp.com — AR2017 Downstream (PDF)</a></li>
+        </ul>
+      </div>
+
+      <div class="ev-group">
+        <h4>Industry / consulting context (Downstream-specific)</h4>
+        <ul class="ev-list">
+          <li><span class="ev-title">Umbrex — Refining &amp; Marketing industry primer</span><a class="ev-url" href="https://umbrex.com/resources/industry-primers/oil-gas-industry-primers/refining-marketing-industry-primer/">umbrex.com — R&amp;M industry primer</a></li>
+          <li><span class="ev-title">Deloitte — Energy &amp; Chemicals, Customer &amp; Marketing practice</span><a class="ev-url" href="https://www.deloitte.com/us/en/about/people/profiles.susan-cattozzo+cdaac26d.html">deloitte.com — Customer &amp; Marketing practice profile</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="artifact-update" class="aub">
+      <h2>Artifact update block</h2>
+      <div class="field">
+        <div class="field-label">Conclusions</div>
+        <p>Customer in Downstream O&amp;G is a Party-plus-time-bounded-Role domain, not a single master table; O2C should remain the bounded first pilot while Segmentation/Loyalty/Service, and Party/MDM/Compliance, are sequenced as follow-on scope. The project's own EPM-MOD-000 draft independently reaches the Party+Role conclusion that external O&amp;G evidence also supports.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Decisions and status</div>
+        <p>No new decisions were made in this report — it synthesizes and cites existing Draft material (EPM-MOD-000 v0.5, controlled vocabulary draft) plus external evidence. No status changes are proposed here; EPM-MOD-000 remains Draft.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Definitions added or changed</div>
+        <p>None added independently — this report repeats and cross-validates the six controlled-vocabulary terms (Customer Account, Sold-To, Bill-To, Payer, Ship-To, Loading-Authorized Party) already drafted in the repository, plus reproduces EPM-MOD-000's channel table and five-decision framework without modification.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Assumptions</div>
+        <p>Assumes the accessible repository clone (as of 20 Aug 2026) reflects the current state of EPM-MOD-000 and the controlled-vocabulary draft. Assumes the systems list in Section 5 needs field validation against the organisation's actual estate — it is explicitly a prompt, not a confirmed inventory, per EPM-MOD-000 itself.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Open questions and conflicts</div>
+        <p>The "EPM-LOCK-2026-08-16.md" and "sponsor-handoff-deliverables.md" files referenced by a parallel research pass could not be located in the repository — flagged in Section 8 and requires resolution before any artifact repeats the stronger "approved lock" claim. Open modeling questions carried over from EPM-MOD-000 remain unresolved here: where Party stewardship sits organisationally, and which bounded context follows O2C (Retail/Dealer Network, Loyalty/Consumer, Customer Service, or Trading/Exchange Partner).</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Source evidence</div>
+        <p>See Section 10, Source and Evidence Register, for the full internal-artifact and external-citation list used in this report.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Artifacts to create or update</div>
+        <p>Update <code>customer_domain_problem_statement_v0.1.md</code> toward v0.2 using the Party+Role framing and the six frozen terms; add an Architecture Decision Log entry resolving the EPM-LOCK discrepancy; feed the systems table (Section 5) into the Data Product Portfolio and Source and Traceability Register once field-validated.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Suggested version/status changes</div>
+        <p>None proposed for EPM-MOD-000 itself. This report should remain Exploratory until its conclusions are formally reviewed and, where accepted, promoted into the artifacts listed above.</p>
+      </div>
+      <div class="field">
+        <div class="field-label">Next action</div>
+        <p>Team review of this report against EPM-MOD-000 and the controlled-vocabulary draft; resolve the EPM-LOCK discrepancy; then proceed to drafting <code>customer_domain_problem_statement_v0.2.md</code>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Enterprise Performance Model &middot; Domain Modeling Workstream &middot; Customer Domain in Downstream Oil &amp; Gas &middot; Prepared 21 Aug 2026 &middot; Exploratory synthesis, not a canonical artifact.
+  </footer>
+
+</div>
+</body>
+</html>
