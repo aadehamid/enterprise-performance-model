@@ -1,6 +1,6 @@
 # Canonical Artifact Register and Chat-to-Artifact Migration Playbook
 
-> **Superseded — not current FOUND-002.** This file keeps the *former* ID EPM-FOUND-002 (Artifact Register, v1.0 Candidate). Current EPM-FOUND-002 is [Enterprise Performance and Data Architecture](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md). Inventory lives in [canonical FOUND-000](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md). Migration method lives in [PROJ-006](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md). Routing/checklist: [PROJ-004](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-004_Artifact_and_Chat_Map.md), [PROJ-005](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-005_Migration_Checklist.md).
+> **Superseded — not current FOUND-002.** This file keeps the *former* ID EPM-FOUND-002 (Artifact Register, v1.0 Candidate). Current EPM-FOUND-002 is [Enterprise Performance and Data Architecture](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md). Inventory lives in [canonical FOUND-000](../EPM-FOUND-000.md). Migration method lives in [PROJ-006](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md). Routing/checklist: [PROJ-004](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-004_Artifact_and_Chat_Map.md), [PROJ-005](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-005_Migration_Checklist.md).
 
 **Former artifact ID:** EPM-FOUND-002  
 **Status:** Superseded (was Candidate)  

@@ -13,7 +13,7 @@ A widely used calculation is not automatically a KPI. Appearance in a register m
 | If you want… | Open |
 |---|---|
 | GitHub orientation (this page) | [README.md](README.md) |
-| Live Master Index — architecture map, artifact register, decisions, remapping | [EPM-FOUND-000 (Enablement Pack v2.3)](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md) |
+| Live Master Index — architecture map, artifact register, decisions, remapping | [EPM-FOUND-000.md](EPM-FOUND-000.md) (v2.3) |
 | Foundation architecture set (FOUND-001–006) | [EPM Foundation v2](EPM_Foundation_v2_Markdown_HTML/README.md) |
 | Personal ontology / RDF / Neo4j / agents sandbox | [EPM_Homelab/00-Homelab-Charter-and-Roadmap.md](EPM_Homelab/00-Homelab-Charter-and-Roadmap.md) |
 | Runnable unbilled-exposure demos | [demos/README.md](demos/README.md) |
@@ -26,7 +26,7 @@ The Downstream O&G Enterprise Performance Model. Charter, operating model, found
 
 | Entry | Role |
 |---|---|
-| [EPM-FOUND-000](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md) | **Canonical** Master Index (control panel + architecture map) |
+| [EPM-FOUND-000](EPM-FOUND-000.md) | **Canonical** Master Index (control panel + architecture map) |
 | [EPM-FOUND-000A](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.md) | Architectural principles |
 | [EPM-FOUND-001–006](EPM_Foundation_v2_Markdown_HTML/README.md) | Business, performance, semantic, ontology, measurement, and data-product architecture |
 | [Project Enablement Pack](EPM_Project_Enablement_Pack_Markdown_HTML/README.md) | Instructions, operating model, onboarding, chat migration |
@@ -51,7 +51,7 @@ One live file per artifact. Other copies are stubs, pack-local maps, or supersed
 
 | Artifact | Canonical path | Other copies |
 |---|---|---|
-| Master Index (EPM-FOUND-000) | [`EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md`](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md) | Root v0.1 stub; Foundation v2 pack map; HTML reading copies |
+| Master Index (EPM-FOUND-000) | [`EPM-FOUND-000.md`](EPM-FOUND-000.md) | Pack folders keep pointers only; HTML reading copies are stale |
 | Integrated Architecture Handbook | [`EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html`](EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html) | V1 superseded |
 | Old Charter (former FOUND-001) | [`ARCHIVE/02_Project_Charter_and_Operating_Model.md`](ARCHIVE/02_Project_Charter_and_Operating_Model.md) | Superseded — do not treat as current FOUND-001 |
 | Old Register (former FOUND-002) | [`ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md`](ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md) | Superseded — current FOUND-001/002 are the Foundation v2 architecture docs |
