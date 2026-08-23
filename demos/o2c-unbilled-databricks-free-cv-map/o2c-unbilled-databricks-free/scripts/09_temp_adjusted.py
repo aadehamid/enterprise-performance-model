@@ -19,6 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from catalog_status import upsert_kpi_row  # noqa: E402
 from config import DATA_DIR, PACK_ROOT, connect, print_sql, run_statement, settings  # noqa: E402
 
 VIEW_NAME = "temp_adjusted_delivered_usd"
@@ -240,7 +241,7 @@ def assert_qty(label: str, live: object, expected: Decimal | int) -> None:
 
 KPI3_ID = "KPI-O2C-TEMP-ADJUSTED-USD"
 KPI3_POINTER = "temp_adjusted_usd"
-KPI3_STATUS = "certified"
+KPI3_STATUS = "approved"
 KPI3_IRI = "https://example.org/domain-ontology-kpi/o2c#Obligation"
 
 GOLD_DDL = """CREATE TABLE IF NOT EXISTS {fq}.gold_kpi_value (
@@ -257,29 +258,27 @@ GOLD_DDL = """CREATE TABLE IF NOT EXISTS {fq}.gold_kpi_value (
 
 
 def maybe_insert_metadata(cur, fq: str) -> bool:
-    """DELETE + INSERT so a re-run updates pointer/status/iri. Returns True if upserted."""
+    """Store write path: compare prev, maybe reset approval, hash on approve."""
     # formula_version is the authored dialect (0.1), not whatever the retry used.
-    delete_stmt = f"DELETE FROM {fq}.dim_kpi_metadata WHERE kpi_id = '{KPI3_ID}'"
-    insert_stmt = f"""INSERT INTO {fq}.dim_kpi_metadata
-SELECT
-  CAST('{KPI3_ID}' AS STRING),
-  CAST('Temp-adjusted delivered USD' AS STRING),
-  CAST('Revenue Accounting / Order-to-Cash' AS STRING),
-  CAST('Temperature-adjusted delivered value (see Metric View)' AS STRING),
-  CAST('USD' AS STRING),
-  CAST('enterprise,product,site' AS STRING),
-  CAST('enterprise | product | site' AS STRING),
-  CAST('See temp_adjusted_delivered_usd Metric View (not Unbilled).' AS STRING),
-  CAST('{KPI3_STATUS}' AS STRING),
-  CAST('{KPI3_POINTER}' AS STRING),
-  CAST('{fq}.temp_adjusted_delivered_usd' AS STRING),
-  CAST('0.1' AS STRING),
-  CAST('{KPI3_IRI}' AS STRING),
-  CAST(DATE '2026-08-01' AS DATE)"""
+    new = {
+        "kpi_id": KPI3_ID,
+        "name": "Temp-adjusted delivered USD",
+        "owner": "Revenue Accounting / Order-to-Cash",
+        "definition": "Temperature-adjusted delivered value (see Metric View)",
+        "uom": "USD",
+        "allowed_grain": "enterprise,product,site",
+        "default_grain_rule": "enterprise | product | site",
+        "gating_rule": "See temp_adjusted_delivered_usd Metric View (not Unbilled).",
+        "status": KPI3_STATUS,
+        "formula_pointer": KPI3_POINTER,
+        "formula_object": f"{fq}.temp_adjusted_delivered_usd",
+        "formula_version": "0.1",
+        "ontology_iri": KPI3_IRI,
+        "as_of_date": "2026-08-01",
+    }
     try:
-        run_statement(cur, delete_stmt, fetch=False)
-        run_statement(cur, insert_stmt, fetch=False)
-        print(f"Metadata pointer row {KPI3_ID} upserted.")
+        applied = upsert_kpi_row(cur, fq, new)
+        print(f"Metadata pointer row {KPI3_ID} upserted status={applied.get('status')}.")
         return True
     except Exception as exc:
         print(f"Metadata upsert skipped ({type(exc).__name__}).")

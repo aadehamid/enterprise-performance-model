@@ -1,9 +1,9 @@
-# Genie Agent — ad hoc KPI path for all three certified views
+# Genie Agent - ad hoc KPI path for all three approved views
 
 Demo **2** / Track B. Official name is **Genie Agent** (was Genie Space).
 Not MetricFlow. Not Track A. Not a second formula.
 
-One agent answers ad hoc questions against **all three** certified
+One agent answers ad hoc questions against **all three** approved
 Metric Views. Live create/update + conversation on Databricks Free
 Edition via `databricks-sdk` (`w.genie.create_space` /
 `update_space` + `start_conversation_and_wait`). This is **not**
@@ -16,7 +16,7 @@ Do **not** put a workspace URL, PAT, or warehouse id in this file.
 ## What Genie is in this demo
 
 Genie Agent is the **ad hoc KPI path**. Business users ask grain
-questions in natural language. Each certified Metric View compiles
+questions in natural language. Each approved Metric View compiles
 its own formula. Genie must **consume** the matching view with
 `MEASURE()`. It must **not** author a second formula, re-encode a
 valuation, or Export-to-metric-view.
@@ -27,7 +27,7 @@ valuation, or Export-to-metric-view.
 | Compiler (SUM/GROUP BY / joins / multiply) | The three Metric Views (`CREATE VIEW … WITH METRICS` / `MEASURE()`) |
 | Ad hoc grain questions (all three KPIs) | **This Genie Agent** (consumes MEASURE(); no second SUM) |
 | Published snapshot | Gold `gold_kpi_value` FROM each view's `MEASURE()` |
-| Meaning (sold-to ≠ payer ≠ site) | Ontology sidecar — not Genie |
+| Meaning (sold-to ≠ payer ≠ site) | Ontology sidecar - not Genie |
 
 ---
 
@@ -36,21 +36,21 @@ valuation, or Export-to-metric-view.
 | Field | Value |
 | --- | --- |
 | Title | `O2C certified KPIs` (find by this title only; no space id) |
-| Previous title | `O2C Unbilled (certified)` — script **updates** that agent in place (title + serialized_space) so Hamid still has one agent |
-| Data sources | the three Metric Views below. Do **not** attach `fct_unbilled` or `raw_*` |
+| Previous title | `O2C Unbilled (certified)` - script **updates** that agent in place (title + serialized_space) so this workspace still has one agent |
+| Data sources | the three Metric Views below **plus** `dim_kpi_metadata`. Do **not** attach `fct_unbilled`, `gold_kpi_value`, or `raw_*` |
 | Warehouse | Serverless Starter Warehouse (id stays in local `.env`) |
 | Parent folder | the workspace user folder (API `parent_path`) |
 
 The create/update payload sends `data_sources.metric_views` with all
-three identifiers. GET `serialized_space` may store those same
+three identifiers and `data_sources.tables` with `dim_kpi_metadata`. GET `serialized_space` may store those same
 identifiers under `data_sources.tables` (server-normalized). The
 identifiers are still the Metric Views, **not** `fct_unbilled`.
-Conversation SQL must use `MEASURE()` on the matching view — that
+Conversation SQL must use `MEASURE()` on the matching view - that
 is the pass condition.
 
 ---
 
-## The three certified sources
+## The three approved sources
 
 | View | Published measure | Grains (unsliced = enterprise) | Unsliced (as-of 2026-08-01) |
 | --- | --- | --- | --- |
@@ -82,7 +82,8 @@ Official API (updated 2026-08-13):
 
 ## Instructions the agent is given
 
-- Answer only via `MEASURE()` on the matching Metric View
+- Look up `dim_kpi_metadata.status` first. `MEASURE()` only when status = `approved`. If `drifted`, `proposed`, or `archived`: say not approved (status=<status>) and do not give a number.
+- Answer only via `MEASURE()` on the matching Metric View (when approved)
 - Unbilled USD → `unbilled_usd` (enterprise \| payer \| sold_to \| site; unsliced = enterprise). Never a generic "customer"
 - Contract vs list / delivered contract USD → `contract_vs_list_usd`, published measure `delivered_contract_usd` (enterprise \| sold_to \| product; unsliced = enterprise). Other measures on that view are query-only, still `MEASURE()`
 - Temp-adjusted / temperature-adjusted delivered USD → `temp_adjusted_delivered_usd`, published measure `temp_adjusted_usd` (enterprise \| product \| site; unsliced = enterprise)
@@ -99,8 +100,8 @@ Official API (updated 2026-08-13):
 
 The live Text box is the SKILL.md-shaped string from `general_instruction_text()` in `07_genie.py`. Do not duplicate a second conflicting instruction.
 
-Example SQL attached to the agent is `MEASURE()` only. No
-`gallons_net * contract_price` copy.
+Example SQL attached to the agent is catalog status SELECT first, then
+`MEASURE()` only when status = approved. No `gallons_net * contract_price` copy.
 
 ---
 
@@ -119,9 +120,9 @@ temp-adjusted by product.
 Filtered-grain examples (GROUP BY the named grain only; equality on that role):
 
 7. *What is unbilled USD for payer Apex Fuels LLC?*
-   `SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd, MEASURE(unbilled_ticket_count) AS tickets FROM {unbilled} WHERE payer = 'Apex Fuels LLC' GROUP BY payer`
+   `SELECT kpi_id, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'` then (only if approved) `SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd, MEASURE(unbilled_ticket_count) AS tickets FROM {unbilled} WHERE payer = 'Apex Fuels LLC' GROUP BY payer`
 8. *What is unbilled USD by sold_to for Apex Fuels Houston Rack?*
-   `SELECT sold_to, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} WHERE sold_to = 'Apex Fuels Houston Rack' GROUP BY sold_to`
+   `SELECT kpi_id, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'` then (only if approved) `SELECT sold_to, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} WHERE sold_to = 'Apex Fuels Houston Rack' GROUP BY sold_to`
 
 ## Expected numbers (must match `MEASURE()`)
 
@@ -130,6 +131,11 @@ unbilled unsliced              $179,934.00 / 12 tickets
 delivered contract unsliced    $110,064.00 / 7 tickets
 temp-adjusted unsliced         $256,066.39 / 17 tickets
 ```
+
+Locked Unbilled catalog-status facts (as-of 2026-08-01):
+- approved → **$179,934.00 / 12**
+- drifted → refused, no number (not approved, status=drifted)
+- re-approve → **$179,934.00 / 12**
 
 `scripts/07_genie.py` live-asks the three unsliced questions after
 create/update. Pass = `MEASURE()` on the right view, not fct/raw,
@@ -141,17 +147,29 @@ Live conversation test 2026-08-14 (CT): all three unsliced questions
 passed. Generated SQL used `MEASURE()` on the matching view.
 
 ```sql
+SELECT kpi_id, status
+FROM `workspace`.`o2c_unbilled`.`dim_kpi_metadata`
+WHERE kpi_id = 'KPI-O2C-UNBILLED-USD';
+-- only if status = approved:
 SELECT MEASURE(`unbilled_usd`) AS `unbilled_usd`,
        MEASURE(`unbilled_ticket_count`) AS `tickets`
 FROM `workspace`.`o2c_unbilled`.`unbilled_usd`
 -- $179,934.00 / 12
 
+SELECT kpi_id, status
+FROM `workspace`.`o2c_unbilled`.`dim_kpi_metadata`
+WHERE kpi_id = 'KPI-O2C-CONTRACT-VS-LIST-USD';
+-- only if status = approved:
 SELECT MEASURE(`delivered_contract_usd`) AS `delivered_contract_usd`,
        MEASURE(`delivered_ticket_count`) AS `tickets`
 FROM `workspace`.`o2c_unbilled`.`contract_vs_list_usd`
 GROUP BY ALL
 -- $110,064.00 / 7
 
+SELECT kpi_id, status
+FROM `workspace`.`o2c_unbilled`.`dim_kpi_metadata`
+WHERE kpi_id = 'KPI-O2C-TEMP-ADJUSTED-USD';
+-- only if status = approved:
 SELECT MEASURE(`temp_adjusted_usd`) AS `temp_adjusted_usd`,
        MEASURE(`delivered_ticket_count`) AS `tickets`
 FROM `workspace`.`o2c_unbilled`.`temp_adjusted_delivered_usd`
@@ -188,7 +206,7 @@ API create/update worked here. If a later Free workspace rejects
 
 1. Sidebar → **Genie Agents**
 2. Find `O2C certified KPIs` (or the leftover `O2C Unbilled (certified)` and rename it). Or **New**
-3. Choose data sources — all three Metric Views above. Do **not** add `fct_unbilled` or `raw_*`
+3. Choose data sources - all three Metric Views above. Do **not** add `fct_unbilled` or `raw_*`
 4. **Create** / save
 5. Configure → Settings: title `O2C certified KPIs`; default warehouse = Serverless Starter Warehouse
 6. Add the instructions and sample questions above
