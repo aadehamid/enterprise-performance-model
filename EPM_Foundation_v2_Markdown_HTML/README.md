@@ -1,6 +1,8 @@
 # Enterprise Performance Model Foundation — Version 2
 
-This package contains the canonical foundation set in both Markdown and HTML.
+This package contains the **architecture** foundation set (FOUND-001–006) in both Markdown and HTML.
+
+The **live Master Index** (register, decisions, remapping) is [`../EPM-FOUND-000.md`](../EPM-FOUND-000.md). The FOUND-000 file in this folder is a pointer.
 
 ## Documents
 
