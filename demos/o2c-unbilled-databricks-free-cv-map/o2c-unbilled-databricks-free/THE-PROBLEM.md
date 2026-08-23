@@ -116,5 +116,5 @@ The demonstration succeeds when it can:
 This document defines the first executable downstream O2C use case. The parent enterprise-domain problem, source-system variants, Customer role catalogue, target architecture responsibilities, and end-to-end demonstration objective are defined in:
 
 ```text
-business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md
+business_architecture/domain/customer_domain_problem_statement_v0.1.md
 ```
