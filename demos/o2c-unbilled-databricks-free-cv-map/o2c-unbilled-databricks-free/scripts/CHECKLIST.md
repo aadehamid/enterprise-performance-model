@@ -1,7 +1,7 @@
 # Click-through checklist (workspace UI)
 
 No `demo.sh`. No Docker. No Azure CLI. No token in git.
-SQL-editor click-through. Mac `uv` path is in README (01–06, then 08, 09, then 07 Genie).
+SQL-editor click-through. Mac `uv` path is in README (01–06, then 08, 09, then 07 Genie, then 13/14/15).
 
 Live compile of version 0.1 succeeded 2026-08-14. Preferred path is
 `sql/99_full_load.generated.sql` (no CSV upload). Do not write a
@@ -63,8 +63,8 @@ Live compile of version 0.1 succeeded 2026-08-14.
 ## Store (Silver metadata + Gold FROM MEASURE())
 
 - [ ] `05_store.sql` / `scripts/06_store.py` ran
-- [ ] After 05/06 only: Unbilled row present (`KPI-O2C-UNBILLED-USD`, status certified)
-- [ ] After full run (08/09): **3** certified metadata rows (Unbilled + contract-vs-list + temp-adjusted)
+- [ ] After 05/06 only: Unbilled row present (`KPI-O2C-UNBILLED-USD`, status approved)
+- [ ] After full run (08/09): **3** approved metadata rows (Unbilled + contract-vs-list + temp-adjusted)
 - [ ] `formula_pointer` = `unbilled_usd` (measure name, not a SQL formula)
 - [ ] `gold_kpi_value` grains: enterprise 1 / payer 3 / sold_to 4 / site 3
 - [ ] Each grain slice `SUM(value_usd)` = `$179,934.00` / 12 tickets
@@ -93,16 +93,16 @@ Do **not** change `unbilled_usd`. Gold publishes all three KPIs FROM their own `
 - [ ] `temp_adjusted_delivered_usd` unsliced adj ≈ `$256,066.39` / 17 tickets
 - [ ] Net `$252,617.20` / marine adj ≈ `$138,692.75`
 - [ ] `SELECT *` on `temp_adjusted_delivered_usd` refused
-- [ ] KPI 2 pointer = `delivered_contract_usd` (measure), object = view, status `certified`, iri `#Obligation`
+- [ ] KPI 2 pointer = `delivered_contract_usd` (measure), object = view, status `approved`, iri `#Obligation`
 - [ ] KPI 2 gold grains enterprise / sold_to / product; enterprise `$110,064.00` / 7
-- [ ] KPI 3 pointer = `temp_adjusted_usd`, status `certified`, iri `#Obligation`
+- [ ] KPI 3 pointer = `temp_adjusted_usd`, status `approved`, iri `#Obligation`
 - [ ] KPI 3 gold grains enterprise / product / site; enterprise ≈ `$256,066.39` / 17
-- [ ] Full-run catalog = 3 certified rows; gold has all three kpi_ids; Unbilled gold still 11 / `$179,934.00`
+- [ ] Full-run catalog = 3 approved rows; gold has all three kpi_ids; Unbilled gold still 11 / `$179,934.00`
 - [ ] `unbilled_usd` YAML still version 0.1 (fields + measures only)
 
 ## Genie Agent (ad hoc only)
 
-Genie Agent is the ad hoc KPI path for **all three** certified
+Genie Agent is the ad hoc KPI path for **all three** approved
 Metric Views. Run it **after** KPI 2 (08) and KPI 3 (09) so those
 views exist. It must query the matching view with `MEASURE()`.
 It must **not** author a second formula. Export-to-metric-view
@@ -117,10 +117,10 @@ this workspace. See `scripts/07_genie.md`.
 Mac path: `uv run python scripts/07_genie.py` (after 08 and 09).
 
 - [ ] Agent titled **O2C certified KPIs** exists (one agent)
-- [ ] Data sources are the three Metric Views (`unbilled_usd`, `contract_vs_list_usd`, `temp_adjusted_delivered_usd`)
+- [ ] Data sources are the three Metric Views (`unbilled_usd`, `contract_vs_list_usd`, `temp_adjusted_delivered_usd`) plus `dim_kpi_metadata`
 - [ ] Did **not** attach `fct_unbilled` or `raw_*` as the semantic source
 - [ ] Warehouse is Serverless Starter Warehouse
-- [ ] Instructions: MEASURE() only on the matching view; unsliced = enterprise; Unbilled grain enterprise | payer | sold_to | site; contract enterprise | sold_to | product; temp-adjusted enterprise | product | site
+- [ ] Instructions: lookup status first; MEASURE() only when status = approved; if drifted/proposed/archived say not approved (status=<status>) and give no number; unsliced = enterprise; Unbilled grain enterprise | payer | sold_to | site; contract enterprise | sold_to | product; temp-adjusted enterprise | product | site
 - [ ] Instructions: if the question does not name a KPI, ask which one (Unbilled / contract-vs-list / temp-adjusted). Do not guess between contract-vs-list and temp-adjusted on a vague "delivered USD."
 - [ ] Did **not** kebab → Export to metric view
 - [ ] Unbilled unsliced → **$179,934.00 / 12 tickets** (`MEASURE()` on `unbilled_usd`)
@@ -130,3 +130,12 @@ Mac path: `uv run python scripts/07_genie.py` (after 08 and 09).
 - [ ] Temp-adjusted unsliced → **$256,066.39 / 17** (`MEASURE()` on `temp_adjusted_delivered_usd`)
 - [ ] Temp-adjusted by site → same total
 - [ ] Generated SQL uses `MEASURE()` on the matching view (not `fct_unbilled` / `raw_*`)
+
+## Catalog status (three-act)
+
+- [ ] `13_status_drift.py`: Unbilled approved → view edit → drifted; contract/temp-adjusted stay approved
+- [ ] Genie on drifted Unbilled: not approved (status=drifted); no number
+- [ ] `14_reapprove.py` after revert: Unbilled approved; Genie **$179,934.00 / 12**
+- [ ] `15_edit_reset_prove.py`: definition change → proposed; restore + re-approve
+- [ ] drift_check does not flip proposed or archived to drifted
+- [ ] `06_store.py` while drifted does not approve and does not overwrite Gold

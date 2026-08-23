@@ -8,7 +8,7 @@
 --   ODS        Lakebase dataexpert-day1 / databricks_postgres / o2c_unbilled  (ops tables)
 --   Bronze     workspace.o2c_unbilled.raw_*   (replica; Python pipe; no federated join)
 --   Silver     dim_party, dim_site, dim_product, br_party_role  (already exist)
---              + dim_kpi_metadata   NEW — one row per KPI (all certified; pointer, not the formula)
+--              + dim_kpi_metadata   NEW — one row per KPI (status proposed|approved|drifted|archived; pointer, not the formula)
 --   Population fct_unbilled  (ticket grain; compiler source; ticket gate + gallons_net * contract_price; NOT gold)
 --   Compiler   Metric View workspace.o2c_unbilled.unbilled_usd  (SUM/GROUP BY via MEASURE())
 --   Gold       gold_kpi_value  NEW — published KPI values FROM MEASURE(), not a second SUM()
@@ -31,13 +31,13 @@
 -- =============================================================================
 
 -- ---------------------------------------------------------------------------
--- Silver: dim_kpi_metadata — one row per KPI (all certified).
+-- Silver: dim_kpi_metadata — one row per KPI (status proposed|approved|drifted|archived).
 -- Meaning + pointer. Not a second formula.
 -- Create the table if missing, then upsert ONLY the Unbilled row.
 -- Do NOT CREATE OR REPLACE the table (that wipes KPI 2/3).
 -- Gold below upserts ONLY Unbilled rows and must not touch metadata.
 -- After 05/06: Unbilled row present (catalog may already have 2/3 if 08/09 ran first).
--- After a full run: expect 3 certified rows.
+-- After a full run: expect 3 approved rows (plus definition_hash from live MV text).
 -- formula_version is the authored dialect (0.1), not "whatever the retry used."
 -- ---------------------------------------------------------------------------
 
@@ -55,12 +55,18 @@ CREATE TABLE IF NOT EXISTS {{catalog}}.{{schema}}.dim_kpi_metadata (
   formula_object STRING,
   formula_version STRING,
   ontology_iri STRING,
-  as_of_date DATE
+  as_of_date DATE,
+  definition_hash STRING
 );
 
-DELETE FROM {{catalog}}.{{schema}}.dim_kpi_metadata
-WHERE kpi_id = 'KPI-O2C-UNBILLED-USD';
+-- Free warehouse: ADD COLUMN IF NOT EXISTS is a parse error.
+-- 06_store.py DESCRIBE-checks, then ADD COLUMN once if missing.
 
+-- First-time INSERT only. Never DELETE an existing Unbilled row
+-- (that would drop definition_hash). Never INSERT status=approved
+-- over drifted|proposed|archived. Gold publish is not re-approve
+-- (approve_kpi / 14_reapprove.py is the only path that sets approved
+-- + refreshes definition_hash).
 INSERT INTO {{catalog}}.{{schema}}.dim_kpi_metadata (
   kpi_id,
   name,
@@ -86,12 +92,18 @@ SELECT
   CAST('enterprise,payer,sold_to,site' AS STRING)      AS allowed_grain,
   CAST('enterprise | payer | sold_to | site' AS STRING) AS default_grain_rule,
   CAST('See fct_unbilled (population / compiler source).' AS STRING) AS gating_rule,
-  CAST('certified' AS STRING)                          AS status,
+  CAST('approved' AS STRING)                           AS status,
   CAST('unbilled_usd' AS STRING)                       AS formula_pointer,
   CAST('{{catalog}}.{{schema}}.unbilled_usd' AS STRING) AS formula_object,
   CAST('0.1' AS STRING)                                AS formula_version,
   CAST('https://example.org/domain-ontology-kpi/o2c#UnbilledState' AS STRING) AS ontology_iri,
-  CAST(DATE '2026-08-01' AS DATE)                      AS as_of_date;
+  CAST(DATE '2026-08-01' AS DATE)                      AS as_of_date
+FROM (SELECT 1) AS _gate
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+  WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+);
 
 -- After 05/06: Unbilled row present. Catalog may already have 2/3 if 08/09 ran first.
 -- After a full run: expect 3 rows.
@@ -133,8 +145,16 @@ CREATE TABLE IF NOT EXISTS {{catalog}}.{{schema}}.gold_kpi_value (
   published_ts TIMESTAMP
 );
 
+-- Refresh Gold only while Unbilled is already approved.
+-- drifted|proposed|archived keep the last approved snapshot (published_ts unchanged).
 DELETE FROM {{catalog}}.{{schema}}.gold_kpi_value
-WHERE kpi_id = 'KPI-O2C-UNBILLED-USD';
+WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+  AND EXISTS (
+    SELECT 1
+    FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+    WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+      AND status = 'approved'
+  );
 
 INSERT INTO {{catalog}}.{{schema}}.gold_kpi_value (
   kpi_id,
@@ -158,6 +178,12 @@ SELECT
   'unbilled_usd'                     AS formula_pointer,
   current_timestamp()                AS published_ts
 FROM {{catalog}}.{{schema}}.unbilled_usd
+WHERE EXISTS (
+  SELECT 1
+  FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+  WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+    AND status = 'approved'
+)
 UNION ALL
 SELECT
   'KPI-O2C-UNBILLED-USD'             AS kpi_id,
@@ -170,6 +196,12 @@ SELECT
   'unbilled_usd'                     AS formula_pointer,
   current_timestamp()                AS published_ts
 FROM {{catalog}}.{{schema}}.unbilled_usd
+WHERE EXISTS (
+  SELECT 1
+  FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+  WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+    AND status = 'approved'
+)
 GROUP BY payer
 UNION ALL
 SELECT
@@ -183,6 +215,12 @@ SELECT
   'unbilled_usd'                     AS formula_pointer,
   current_timestamp()                AS published_ts
 FROM {{catalog}}.{{schema}}.unbilled_usd
+WHERE EXISTS (
+  SELECT 1
+  FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+  WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+    AND status = 'approved'
+)
 GROUP BY sold_to
 UNION ALL
 SELECT
@@ -196,6 +234,12 @@ SELECT
   'unbilled_usd'                     AS formula_pointer,
   current_timestamp()                AS published_ts
 FROM {{catalog}}.{{schema}}.unbilled_usd
+WHERE EXISTS (
+  SELECT 1
+  FROM {{catalog}}.{{schema}}.dim_kpi_metadata
+  WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+    AND status = 'approved'
+)
 GROUP BY site, site_name;
 
 -- Unbilled gold only: 11 rows (enterprise 1 / payer 3 / sold_to 4 / site 3).
