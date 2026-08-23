@@ -2,8 +2,11 @@
 
 This package establishes the dedicated Enterprise Performance Project.
 
+**Canonical Master Index:** [EPM-FOUND-000.md](EPM-FOUND-000.md) (v2.3). This is the live register and control panel for the whole repository.
+
 ## Contents
 
+- [EPM-FOUND-000](EPM-FOUND-000.md) — Enterprise Performance Model Master Index (canonical)
 - [EPM-FOUND-000A_Architectural_Principles](EPM-FOUND-000A_Architectural_Principles.md) — EPM Architectural Principles
 - [EPM-PROJ-001_Project_Instructions](EPM-PROJ-001_Project_Instructions.md) — Enterprise Performance Project Instructions
 - [EPM-PROJ-002_Project_Operating_Model](EPM-PROJ-002_Project_Operating_Model.md) — Enterprise Performance Project Operating Model

@@ -1,10 +1,14 @@
 # Enterprise Performance Model Master Index
 **Artifact ID:** EPM-FOUND-000  
 **Version:** 2.0 Draft  
-**Status:** Working baseline  
+**Status:** Working baseline (pack-local architecture map — not the live control panel)  
 **Last updated:** August 4, 2026  
 
-*Repository home, architecture map, artifact directory, and delivery guide*
+*Foundation v2 pack map: architecture chain, families, and FOUND-001–006 in this folder*
+
+> **Not the live Master Index.** The canonical control-panel index (register, decisions, remapping, ARCHIVE links) is  
+> [`../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md`](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md).  
+> FOUND-001–006 **in this folder** remain the architecture sources.
 
 **Foundation navigation:** [EPM-FOUND-000](EPM-FOUND-000.md) | [EPM-FOUND-001](EPM-FOUND-001.md) | [EPM-FOUND-002](EPM-FOUND-002.md) | [EPM-FOUND-003](EPM-FOUND-003.md) | [EPM-FOUND-004](EPM-FOUND-004.md) | [EPM-FOUND-005](EPM-FOUND-005.md) | [EPM-FOUND-006](EPM-FOUND-006.md)
 

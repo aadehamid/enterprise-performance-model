@@ -1,14 +1,17 @@
 # Enterprise Performance Model Master Index
 **Artifact ID:** EPM-FOUND-000
-**Version:** 2.2 Draft
+**Version:** 2.3 Draft
 **Status:** Draft (functioning as working baseline)
 **Owner:** Enterprise Performance Model Lead
 **Steward / maintainer:** To be confirmed
-**Last updated:** 2026-08-05
+**Last updated:** 2026-08-23
+**Canonical path:** `EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md`
 
 *Repository home, architecture map, artifact register, decisions, issues, and delivery control*
 
-**Foundation navigation:** [EPM-FOUND-000](EPM-FOUND-000.md) | [EPM-FOUND-000A](EPM-FOUND-000A_Architectural_Principles.md) | [EPM-FOUND-001](EPM-FOUND-001.md) | [EPM-FOUND-002](EPM-FOUND-002.md) | [EPM-FOUND-003](EPM-FOUND-003.md) | [EPM-FOUND-004](EPM-FOUND-004.md) | [EPM-FOUND-005](EPM-FOUND-005.md) | [EPM-FOUND-006](EPM-FOUND-006.md)
+> **This is the canonical Master Index.** Other files that reuse ID EPM-FOUND-000 are stubs, pack-local maps, or superseded reading copies. See [README.md](../README.md).
+
+**Foundation navigation:** [EPM-FOUND-000](EPM-FOUND-000.md) | [EPM-FOUND-000A](EPM-FOUND-000A_Architectural_Principles.md) | [EPM-FOUND-001](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md) | [EPM-FOUND-002](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md) | [EPM-FOUND-003](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md) | [EPM-FOUND-004](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md) | [EPM-FOUND-005](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md) | [EPM-FOUND-006](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md)
 
 ---
 
@@ -113,33 +116,33 @@ Read left to right it is a design sequence. Read right to left it is the audit q
 
 ## Canonical foundation and project set
 
-| ID | Title | Role | Status |
-|---|---|---|---|
-| EPM-FOUND-000 | Enterprise Performance Model Master Index | Architecture map + control panel (this document) | Draft (2.2) |
-| EPM-FOUND-000A | Architectural Principles | The 16 constitutional principles governing all design | Draft (working baseline) |
-| EPM-FOUND-001 | Enterprise Business Architecture | Domains, value streams, capabilities, processes, activities, decisions | Draft (working baseline) |
-| EPM-FOUND-002 | Enterprise Performance and Data Architecture | Objectives → measurements → metrics → KPIs → data products → KPI Store → consumption | Draft (working baseline) |
-| EPM-FOUND-003 | Enterprise Performance Semantic Model | Authoritative human-readable business meaning | Draft (working baseline) |
-| EPM-FOUND-004 | Enterprise Performance Ontology Design | Machine-formal design derived from the semantic model | Draft (working baseline) |
-| EPM-FOUND-005 | Enterprise Measurement and KPI Model | Classification and promotion model; Tableau extraction rules | Draft (working baseline) |
-| EPM-FOUND-006 | Enterprise Data Product and Consumption Model | Foundational/derived products, medallion alignment, consumption | Draft (working baseline) |
-| EPM-PROJ-001 | Project Instructions | Concise operating rules for the project | Draft (working baseline) |
-| EPM-PROJ-002 | Project Operating Model | How chats, artifacts, decisions, reviews, and implementation work together | Draft (working baseline) |
-| EPM-PROJ-003 | Project Onboarding Guide | How to establish the project and preserve prior work | Draft (working baseline) |
-| EPM-PROJ-004 | Artifact and Chat Map | Question → artifact and question → chat routing | Draft (working baseline) |
-| EPM-PROJ-005 | Migration Checklist | Controlled checklist for moving work into the project | Draft (working baseline) |
-| EPM-PROJ-006 | Chat Migration Playbook and Templates | Routing matrix, closeout, migration procedure, control-log templates *(salvaged from the superseded Register)* | Draft (working baseline) |
-| EPM-GLOS-001 | Business Glossary | Shared business meaning for terms | To be located |
-| EPM-SRC-001 | Source and Traceability Register | Where every conclusion originated | Not started |
-| EPM-DEC-001 | Architecture Decision Log | Material decisions and their rationale | Not started |
-| EPM-ISS-001 | Open Issues and Assumptions Log | Open uncertainty and conflicts | Not started |
+| ID | Title | Role | Status | Location |
+|---|---|---|---|---|
+| EPM-FOUND-000 | Enterprise Performance Model Master Index | Architecture map + control panel (this document) | Draft (2.3) | This file (canonical) |
+| EPM-FOUND-000A | Architectural Principles | The 16 constitutional principles governing all design | Draft (working baseline) | [EPM-FOUND-000A_Architectural_Principles.md](EPM-FOUND-000A_Architectural_Principles.md) |
+| EPM-FOUND-001 | Enterprise Business Architecture | Domains, value streams, capabilities, processes, activities, decisions | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md) |
+| EPM-FOUND-002 | Enterprise Performance and Data Architecture | Objectives → measurements → metrics → KPIs → data products → KPI Store → consumption | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md) |
+| EPM-FOUND-003 | Enterprise Performance Semantic Model | Authoritative human-readable business meaning | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md) |
+| EPM-FOUND-004 | Enterprise Performance Ontology Design | Machine-formal design derived from the semantic model | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md) |
+| EPM-FOUND-005 | Enterprise Measurement and KPI Model | Classification and promotion model; Tableau extraction rules | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md) |
+| EPM-FOUND-006 | Enterprise Data Product and Consumption Model | Foundational/derived products, medallion alignment, consumption | Draft (working baseline) | [../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md) |
+| EPM-PROJ-001 | Project Instructions | Concise operating rules for the project | Draft (working baseline) | [EPM-PROJ-001_Project_Instructions.md](EPM-PROJ-001_Project_Instructions.md) |
+| EPM-PROJ-002 | Project Operating Model | How chats, artifacts, decisions, reviews, and implementation work together | Draft (working baseline) | [EPM-PROJ-002_Project_Operating_Model.md](EPM-PROJ-002_Project_Operating_Model.md) |
+| EPM-PROJ-003 | Project Onboarding Guide | How to establish the project and preserve prior work | Draft (working baseline) | [EPM-PROJ-003_Project_Onboarding_Guide.md](EPM-PROJ-003_Project_Onboarding_Guide.md) |
+| EPM-PROJ-004 | Artifact and Chat Map | Question → artifact and question → chat routing | Draft (working baseline) | [EPM-PROJ-004_Artifact_and_Chat_Map.md](EPM-PROJ-004_Artifact_and_Chat_Map.md) |
+| EPM-PROJ-005 | Migration Checklist | Controlled checklist for moving work into the project | Draft (working baseline) | [EPM-PROJ-005_Migration_Checklist.md](EPM-PROJ-005_Migration_Checklist.md) |
+| EPM-PROJ-006 | Chat Migration Playbook and Templates | Routing matrix, closeout, migration procedure, control-log templates *(salvaged from the superseded Register)* | Draft (working baseline) | [EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md](EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md) |
+| EPM-GLOS-001 | Business Glossary | Shared business meaning for terms | To be located | No reviewed source in repo |
+| EPM-SRC-001 | Source and Traceability Register | Where every conclusion originated | Not started | Planned — no file yet |
+| EPM-DEC-001 | Architecture Decision Log | Material decisions and their rationale | Not started | Planned — no file yet |
+| EPM-ISS-001 | Open Issues and Assumptions Log | Open uncertainty and conflicts | Not started | Planned — no file yet |
 
 ### Superseded artifacts (retained for reference, not yet deleted)
 
-| Former ID / file | Title | Superseded by | Residual content to migrate before hard-retire |
-|---|---|---|---|
-| EPM-FOUND-001 (old) / `02_Project_Charter...` | Project Charter and Operating Model | PROJ-001, PROJ-002, FOUND-000A (principles), FOUND-000 (roles, sequence) | §3 Strategic Objectives; §4 detailed workstream scope/exclusions; §5.1–5.10 detailed role responsibilities; §8 eight-stage delivery lifecycle; §15 Definition of Success — logged as **C-11** |
-| EPM-FOUND-002 (old) / `03_Canonical_Artifact_Register...` | Canonical Artifact Register and Chat Migration Playbook | FOUND-000 (inventory), PROJ-004 (routing), PROJ-005 (checklist), **PROJ-006 (playbook + templates)** | None outstanding — unique method preserved in PROJ-006; safe to move to Retired once PROJ-006 is confirmed |
+| Former ID / file | Title | Location | Superseded by | Residual content to migrate before hard-retire |
+|---|---|---|---|---|
+| EPM-FOUND-001 (old) / `02_Project_Charter...` | Project Charter and Operating Model | [ARCHIVE/02_Project_Charter_and_Operating_Model.md](../ARCHIVE/02_Project_Charter_and_Operating_Model.md) | PROJ-001, PROJ-002, FOUND-000A (principles), FOUND-000 (roles, sequence) | §3 Strategic Objectives; §4 detailed workstream scope/exclusions; §5.1–5.10 detailed role responsibilities; §8 eight-stage delivery lifecycle; §15 Definition of Success — logged as **C-11** |
+| EPM-FOUND-002 (old) / `03_Canonical_Artifact_Register...` | Canonical Artifact Register and Chat Migration Playbook | [ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md](../ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md) | FOUND-000 (inventory), PROJ-004 (routing), PROJ-005 (checklist), **PROJ-006 (playbook + templates)** | None outstanding — unique method preserved in PROJ-006; safe to move to Retired once PROJ-006 is confirmed |
 
 > **Supersession is not deletion.** A *Superseded* artifact has been replaced as the authority but is kept for reference until its unique content is fully carried by its successors. Only then does it move to *Retired* (safe to delete). The Register is effectively there already (via PROJ-006); the Charter is not yet, pending the C-11 fold-in.
 
@@ -149,14 +152,35 @@ Read left to right it is a design sequence. Read right to left it is the audit q
 
 Navigable status view. The **detailed inventory** — every artifact with full purpose and update-trigger — was carried by the superseded Register; its routing content now lives in PROJ-004 and PROJ-006. Family A is covered above. Families B–H below are the planned build artifacts.
 
-**Status meanings:** *Draft / Candidate* — exists at that status. *To be located* — named as existing but not present; existence unconfirmed. *Not started* — planned, no document yet.
+**Status meanings.** These four are not interchangeable:
+
+| Status | Means | File present? |
+|---|---|---|
+| Draft / Candidate | Reviewed or working document at that status | Yes — see Location in Family A |
+| Existing-unlinked | File is in the repo; it is **not** yet accepted as the reviewed source for this ID | Yes — listed under "Present in repo, not yet the reviewed source" |
+| To be located | Named as if it already exists somewhere; no reviewed file found yet | No (or not identified) |
+| Not started | Planned in the minimum controlled set; no document yet | No |
+
+> Appearance in this register still means *planned in the minimum controlled set*. It does not, by itself, prove a file exists or that an existing file is the reviewed source.
+
+### Present in repo, not yet the reviewed source
+
+Working files that match a registered subject but have **not** been accepted as the canonical artifact for that ID. Do not treat them as Approved, and do not invent a silent promotion.
+
+| Related ID | What is on disk | Why it is not the reviewed source |
+|---|---|---|
+| EPM-BUS-001 / EPM-BUS-003 | [`business_architecture/business_process/value_stream_order_to_cash.json`](../business_architecture/business_process/value_stream_order_to_cash.json), [`value_stream_commercial_lifecycle.json`](../business_architecture/business_process/value_stream_commercial_lifecycle.json), [`downstream_process_map.json`](../business_architecture/business_process/downstream_process_map.json), [`office_lanes.json`](../business_architecture/business_process/office_lanes.json) | Instance JSON and schemas; FOUND-001 remains the definitional architecture. No ID-bearing reviewed BUS artifact. |
+| EPM-DP-001 | [`business_architecture/business_process/data_product_portfolio.json`](../business_architecture/business_process/data_product_portfolio.json) | Working portfolio JSON + schema; not reviewed as EPM-DP-001. |
+| EPM-MOD-001 / domain problem | [`business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../business_architecture/domain/customer_domain_problem_statement_v0.1.md) | Draft domain problem (EPM-BA-CUST-001). Not the Domain Modeling Playbook. |
+| EPM-FOUND-003 / 004 | [`ontology/stage2_enterprise_kpi_ontology.ttl`](../ontology/stage2_enterprise_kpi_ontology.ttl), [`ontology/kpi_ontology_class_hierarchy.md`](../ontology/kpi_ontology_class_hierarchy.md) | Formal ontology work; FOUND-003/004 remain the human/machine design docs. |
+| — (homelab / demos) | [`EPM_Homelab/`](../EPM_Homelab/), [`demos/`](../demos/README.md) | Explicitly not governed EPM artifacts. |
 
 ### Family B — Business architecture (populated downstream)
 | ID | Title | Status |
 |---|---|---|
-| EPM-BUS-001 | Downstream Value Stream Model | To be located |
+| EPM-BUS-001 | Downstream Value Stream Model | Existing-unlinked |
 | EPM-BUS-002 | Business Capability Map | To be located |
-| EPM-BUS-003 | Business Process and Activity Model | To be located |
+| EPM-BUS-003 | Business Process and Activity Model | Existing-unlinked |
 | EPM-BUS-004 | Business Objective and Decision Model | To be located |
 
 ### Family C — Measurement and KPI
@@ -186,7 +210,7 @@ Navigable status view. The **detailed inventory** — every artifact with full p
 ### Family E — Data products and semantics
 | ID | Title | Status |
 |---|---|---|
-| EPM-DP-001 | Data Product Portfolio | To be located |
+| EPM-DP-001 | Data Product Portfolio | Existing-unlinked |
 | EPM-DP-002 | Data Product Standard and Contract Template | Not started |
 | EPM-SEM-001 | Semantic Model Standards | Not started |
 | EPM-SEM-002 | Power BI Consumption and Certification Standard | Not started |
@@ -397,7 +421,7 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 
 | # | Action | Why it matters | Owner |
 |---|---|---|---|
-| 01 | Save FOUND-000 (v2.2), FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as one consistent baseline; keep the old Charter/Register as Superseded reference | Establishes a clean, collision-free baseline | EPM Lead |
+| 01 | Treat FOUND-000 v2.3 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded | Establishes a clean, collision-free baseline | EPM Lead |
 | 02 | Fold the Charter's residual depth (C-11: §3, §4-detail, §5-detail, §8, §15) into PROJ-001/PROJ-002 and FOUND-000, then retire the Charter | Prevents loss of scope, roles, and lifecycle detail | EPM Lead |
 | 03 | Confirm whether an existing KPI Store technical design exists | Determines Phase 2 vs Phase 3 for Workstream 1 | EPM Lead |
 | 04 | Create and seed EPM-DEC-001 from "Major decisions" (D-01 to D-16) | Without it, no status claim is defensible | To be confirmed |
@@ -419,6 +443,24 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 **Salvage findings.** Register migration playbook (routing matrix, closeout template, seven-step procedure, log templates) is unique method → preserved in PROJ-006. Charter depth (§3, §4-detail, §5.1–5.10, §8, §15) is not yet carried by the pack → logged as C-11 fold-in backlog; Charter kept Superseded (not Retired) until folded.
 
 **Still absent even after adoption.** The KPI Store technical design, the Tableau calculation inventory, and the measurement/KPI catalogs. The v2 set is the architecture spine, not the technical build.
+
+### v2.3 repository hygiene (2026-08-23)
+
+Declared this file the sole canonical Master Index. Pointed foundation navigation and Family A locations at the Foundation v2 Markdown files (those IDs are not in this folder). Linked ARCHIVE/ for the superseded Charter and Register. Split register presence into *Draft/Candidate*, *Existing-unlinked*, *To be located*, and *Not started*. Root v0.1 and the Foundation v2 FOUND-000 are now a pointer and a pack-local map respectively.
+
+---
+
+## Artifact Update Block
+
+- **Conclusions:** One live FOUND-000; old Charter/Register are in ARCHIVE/ and remain Superseded, not the current FOUND-001/002.
+- **Decisions and status:** No new approved decisions. Working baseline unchanged except repository location of the index.
+- **Definitions added or changed:** *Existing-unlinked* = file on disk that is not the reviewed source for that ID.
+- **Assumptions:** Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel.
+- **Open questions and conflicts:** C-11 (Charter fold-in) unchanged. Existing-unlinked JSON/ontology still needs a formal subsumption pass (C-08).
+- **Source evidence:** Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack.
+- **Artifacts created or requiring updates:** This index to 2.3; root v0.1 replaced by pointer; Foundation v2 FOUND-000 bannered; HTML reading copies marked.
+- **Suggested version and status:** 2.3 Draft.
+- **Next validation or implementation action:** Fold C-11 Charter depth; decide whether existing-unlinked JSON is promoted, assigned a different ID, or left as working evidence.
 
 ---
 
