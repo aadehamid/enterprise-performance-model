@@ -13,10 +13,12 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # --- uv (pinned Python + fast installs) -------------------------------------
+# Prepend before the check: non-interactive bash does not load profile PATH,
+# so a prior ~/.local/bin/uv would otherwise look missing and re-download.
+export PATH="$HOME/.local/bin:$PATH"
 if ! command -v uv >/dev/null 2>&1; then
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
-export PATH="$HOME/.local/bin:$PATH"
 uv --version
 
 # --- Track A: local semantic-layer demo (dbt + MetricFlow over DuckDB) ------
