@@ -1,0 +1,4 @@
+{
+  "name": "enterprise-performance-model",
+  "install": "bash .cursor/install.sh"
+}
