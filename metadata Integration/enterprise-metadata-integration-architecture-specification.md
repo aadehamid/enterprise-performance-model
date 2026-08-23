@@ -32,6 +32,8 @@ The resulting graph becomes the **integration and context plane**. It supports g
 
 > Keep each metadata fact in its operational system of authority. Publish a validated, selective, identity-resolved projection for enterprise integration and downstream consumption.
 
+Process and domain authority for this scope is the files under `business_architecture/`. Demo tools may stand in for a production system of authority. A demo tool is not a second system of authority.
+
 ---
 
 ## 2. Scope and Non-Goals
@@ -152,6 +154,32 @@ The resulting graph becomes the **integration and context plane**. It supports g
 5. A Gold object is not automatically certified merely because it is in a Gold schema.
 6. A widely used calculation is not automatically an approved KPI.
 7. DCAT describes access and services; it does not execute permission enforcement.
+
+### 5.3 Process authority and demo stand-ins
+
+The files under `business_architecture/` are the validated full Downstream oil and gas process set, including order-to-cash (O2C). Every file in that folder is process and domain authority.
+
+Current files on `main`:
+
+- `business_architecture/business_process/downstream_process_map.json`
+- `business_architecture/business_process/value_stream_order_to_cash.json`
+- `business_architecture/business_process/value_stream_commercial_lifecycle.json`
+- `business_architecture/business_process/data_product_portfolio.json`
+- `business_architecture/business_process/office_lanes.json`
+- `business_architecture/domain/customer_domain_problem_statement_v0.1.md`
+- `business_architecture/schema/data_product_portfolio.schema.json`
+- `business_architecture/schema/value_stream.schema.json`
+
+Demo and reference implementations may use the open-source tools in the table below. The production system of authority is unchanged. A demo tool is not a second system of authority.
+
+| Demo tool | Production seat | Concern |
+|---|---|---|
+| Sirius Web | ER/Studio | Models |
+| OpenMetadata | Purview | Enterprise catalog |
+| Neo4j Community | Neo4j | Serving graph |
+| Apache Jena Fuseki | none (demo runtime only) | SPARQL and SHACL loaded from git Turtle |
+
+Formal ontology source of truth stays Turtle in git (the ontology file format). The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views.
 
 ---
 
