@@ -16,7 +16,7 @@ Do not put a workspace URL in this file.
 ODS        Lakebase dataexpert-day1 / databricks_postgres / o2c_unbilled  (ops tables)
 Bronze     workspace.o2c_unbilled.raw_*   (replica; Python pipe; no federated join)
 Silver     dim_party, dim_site, dim_product, br_party_role
-           + dim_kpi_metadata   - one row per KPI (all certified; pointer, not the formula)
+           + dim_kpi_metadata   - one row per KPI (status approved/drifted/proposed/archived; pointer, not the formula)
 Population fct_unbilled  (ticket grain; compiler source; ticket gate + gallons_net * contract_price; NOT gold)
 Compiler   Metric View workspace.o2c_unbilled.unbilled_usd  (SUM/GROUP BY via MEASURE())
 Gold       gold_kpi_value  - published KPI values FROM MEASURE(), not a second SUM()
@@ -226,7 +226,7 @@ Then go back to `MEASURE(unbilled_usd)`.
 
 | | KPI Store (this demo) | Compiler (this demo) | Ontology (sidecar) |
 | --- | --- | --- | --- |
-| Job | Certify definition, owner, status, grain rule; publish instances | **Compute** the certified formula on demand | System of record for *meaning* |
+| Job | Approve definition, owner, status, grain rule; publish instances | **Compute** the certified formula on demand | System of record for *meaning* |
 | Artifact | `dim_kpi_metadata` + `gold_kpi_value` | Metric View YAML + `fct_unbilled` | RDF / OWL (`ontology/o2c-meaning.ttl`) |
 | Consumer | "What is Unbilled USD, who owns it, what is the published number?" | "Give me Unbilled USD by payer" | "sold-to ≠ payer ≠ site" |
 
@@ -239,9 +239,9 @@ not re-encode. RC-1 still holds for Gold/Genie.
 `dim_kpi_metadata` is the Store catalog (one row per KPI). Unbilled
 `formula_pointer` = `unbilled_usd` (measure name). `formula_object` =
 `{{catalog}}.{{schema}}.unbilled_usd`. After a full run the catalog has
-three certified rows. `gold_kpi_value` publishes each KPI FROM its
+three approved rows. `gold_kpi_value` publishes each KPI FROM its
 own `MEASURE()` - RC-1 per KPI, one compile path each. Genie is
-the ad hoc path for all three certified KPIs (MEASURE() only).
+the ad hoc path for all three approved KPIs (MEASURE() only).
 
 ---
 
@@ -334,13 +334,13 @@ this YAML - or the Metric View YAML - as OWL.
 
 `sql/05_store.sql` / `scripts/06_store.py` add two Unity Catalog tables:
 
-- **`dim_kpi_metadata`** - one row per KPI (all `certified`). Owner,
+- **`dim_kpi_metadata`** - one row per KPI (status `approved` / `drifted` / `proposed` / `archived`). Owner,
   definition, allowed grain, gating rule, status. `formula_pointer`
   is the Metric View **measure name**, not a SQL formula and not the
   view name. `formula_object` is the view. Unbilled `ontology_iri` is
   `#UnbilledState`; KPI 2 and 3 use `#Obligation` (the delivered-
   ticket class - do not add `#DeliveredTicket`). After 05/06 the
-  Unbilled row is present. After a full run expect **3** certified
+  Unbilled row is present. After a full run expect **3** approved
   rows. Gold publishes all three FROM their own `MEASURE()`. Genie
   is the ad hoc path for all three (MEASURE() only).
 - **`gold_kpi_value`** - published snapshots FROM each KPI's own
@@ -375,13 +375,13 @@ not G3/G4 signed. Full OWL / SHACL / triple store is parked
 ## 13. Genie Agent (ad hoc only)
 
 Genie Agent (was Genie Space) is the **ad hoc KPI path for all three
-certified Metric Views**. It does not author a second formula. It
+approved Metric Views**. It does not author a second formula. It
 asks grain questions against the view you already compiled.
 
 - Title: **O2C certified KPIs** (find by title only). Script updates
   the leftover `O2C Unbilled (certified)` agent in place.
 - Attach all three views: `unbilled_usd`, `contract_vs_list_usd`,
-  `temp_adjusted_delivered_usd`. Not `fct_unbilled` or `raw_*`.
+  `temp_adjusted_delivered_usd`, plus `dim_kpi_metadata`. Not `fct_unbilled` or `raw_*`.
 - Answer with `MEASURE()` on the matching view. Unsliced = enterprise.
   Unbilled grain is enterprise | payer | sold_to | site; contract is
   enterprise | sold_to | product; temp-adjusted is enterprise |
@@ -394,6 +394,20 @@ asks grain questions against the view you already compiled.
   **$110,064.00 / 7**; temp-adjusted **$256,066.39 / 17**.
 
 Details: `scripts/07_genie.md`. Recreate/re-ask: `scripts/07_genie.py`.
+
+
+## 13b. Catalog status (approved / drifted / proposed / archived)
+
+`status` is a column on `dim_kpi_metadata`. Values: proposed | approved | drifted | archived.
+Genie MEASURE() only if status = approved. If drifted, proposed, or archived, do not give a number.
+drifted means live Metric View text ≠ `definition_hash` (sha256 of live `SHOW CREATE` text) on that row.
+
+Objects first: catalog row, `definition_hash`, drift check (`scripts/13_status_drift.py`), re-approve (`scripts/14_reapprove.py`). Edit of formula_pointer / formula_object / definition on an approved row sets proposed (`scripts/15_edit_reset_prove.py`). Gold publish is not re-approve.
+
+Three-act e2e (Unbilled only, as-of 2026-08-01):
+1. approved → Genie enterprise Unbilled **$179,934.00 / 12**
+2. edit Unbilled Metric View (hash mismatch) → drifted → Genie refuses, no number
+3. revert view → re-approve → Genie **$179,934.00 / 12**
 
 ---
 

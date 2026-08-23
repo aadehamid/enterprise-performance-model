@@ -19,6 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from catalog_status import upsert_kpi_row  # noqa: E402
 from config import (  # noqa: E402
     DATA_DIR,
     PACK_ROOT,
@@ -231,7 +232,7 @@ def assert_close(label: str, live: object, expected: Decimal | int, *, cents: bo
 
 KPI2_ID = "KPI-O2C-CONTRACT-VS-LIST-USD"
 KPI2_POINTER = "delivered_contract_usd"
-KPI2_STATUS = "certified"
+KPI2_STATUS = "approved"
 KPI2_IRI = "https://example.org/domain-ontology-kpi/o2c#Obligation"
 
 GOLD_DDL = """CREATE TABLE IF NOT EXISTS {fq}.gold_kpi_value (
@@ -248,29 +249,27 @@ GOLD_DDL = """CREATE TABLE IF NOT EXISTS {fq}.gold_kpi_value (
 
 
 def maybe_insert_metadata(cur, fq: str) -> bool:
-    """DELETE + INSERT so a re-run updates pointer/status/iri. Returns True if upserted."""
+    """Store write path: compare prev, maybe reset approval, hash on approve."""
     # formula_version is the authored dialect (0.1), not whatever the retry used.
-    delete_stmt = f"DELETE FROM {fq}.dim_kpi_metadata WHERE kpi_id = '{KPI2_ID}'"
-    insert_stmt = f"""INSERT INTO {fq}.dim_kpi_metadata
-SELECT
-  CAST('{KPI2_ID}' AS STRING),
-  CAST('Contract vs list USD' AS STRING),
-  CAST('Revenue Accounting / Order-to-Cash' AS STRING),
-  CAST('Delivered-ticket value at contract vs list (see Metric View)' AS STRING),
-  CAST('USD' AS STRING),
-  CAST('enterprise,sold_to,product' AS STRING),
-  CAST('enterprise | sold_to | product' AS STRING),
-  CAST('See contract_vs_list_usd Metric View (not Unbilled).' AS STRING),
-  CAST('{KPI2_STATUS}' AS STRING),
-  CAST('{KPI2_POINTER}' AS STRING),
-  CAST('{fq}.contract_vs_list_usd' AS STRING),
-  CAST('0.1' AS STRING),
-  CAST('{KPI2_IRI}' AS STRING),
-  CAST(DATE '2026-08-01' AS DATE)"""
+    new = {
+        "kpi_id": KPI2_ID,
+        "name": "Contract vs list USD",
+        "owner": "Revenue Accounting / Order-to-Cash",
+        "definition": "Delivered-ticket value at contract vs list (see Metric View)",
+        "uom": "USD",
+        "allowed_grain": "enterprise,sold_to,product",
+        "default_grain_rule": "enterprise | sold_to | product",
+        "gating_rule": "See contract_vs_list_usd Metric View (not Unbilled).",
+        "status": KPI2_STATUS,
+        "formula_pointer": KPI2_POINTER,
+        "formula_object": f"{fq}.contract_vs_list_usd",
+        "formula_version": "0.1",
+        "ontology_iri": KPI2_IRI,
+        "as_of_date": "2026-08-01",
+    }
     try:
-        run_statement(cur, delete_stmt, fetch=False)
-        run_statement(cur, insert_stmt, fetch=False)
-        print(f"Metadata pointer row {KPI2_ID} upserted.")
+        applied = upsert_kpi_row(cur, fq, new)
+        print(f"Metadata pointer row {KPI2_ID} upserted status={applied.get('status')}.")
         return True
     except Exception as exc:
         print(f"Metadata upsert skipped ({type(exc).__name__}).")

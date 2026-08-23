@@ -40,6 +40,7 @@ def view_ids(catalog: str, schema: str) -> dict[str, str]:
         "unbilled": f"{fq}.unbilled_usd",
         "contract": f"{fq}.contract_vs_list_usd",
         "temp": f"{fq}.temp_adjusted_delivered_usd",
+        "catalog": f"{fq}.dim_kpi_metadata",
     }
 
 
@@ -51,10 +52,24 @@ def general_instruction_text(views: dict[str, str]) -> str:
     the Text box and the conversation prompt stay the same on the next script run.
     """
     unbilled, contract, temp = views["unbilled"], views["contract"], views["temp"]
+    catalog = views["catalog"]
     return f"""---
 name: o2c-certified-kpis
-description: Answer certified O2C KPI questions (unbilled USD, contract-vs-list / delivered contract USD, temp-adjusted delivered USD). Use when the user asks about those KPIs or a vague delivered or unbilled dollar amount. As-of is 2026-08-01.
+description: Look up dim_kpi_metadata.status first. MEASURE() only when status = approved. If drifted, proposed, or archived, do not give a number. As-of is 2026-08-01.
 ---
+
+# Catalog status (do this first, every turn)
+
+STOP. Query {catalog} before any MEASURE().
+
+SELECT kpi_id, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'
+-- or KPI-O2C-CONTRACT-VS-LIST-USD / KPI-O2C-TEMP-ADJUSTED-USD
+
+Read the status cell.
+- approved → immediately MEASURE() on the matching Metric View in this same turn and report the official dollars and tickets. Do not stop after the status query. Do not ask the user to proceed.
+- drifted / proposed / archived → reply only: "The number is not approved (status=<status>). I will not give a number." Stop. Do not MEASURE(). Do not include a dollar figure, ticket count, or remembered value.
+
+{catalog} is status only. It is not the number. Gold is not a source.
 
 # Route
 
@@ -66,7 +81,7 @@ If the question does not name a KPI, ask which one (Unbilled / contract-vs-list 
 
 # Do
 
-- Answer only via MEASURE() on the matching Metric View.
+- Lookup status first. MEASURE() only when status = approved.
 - Say payer, sold-to, or site. Never say "customer".
 - If they name a grain, GROUP BY only that grain.
 - Filter the named party with equality on that role only (WHERE payer = 'Apex Fuels LLC').
@@ -78,12 +93,16 @@ If the question does not name a KPI, ask which one (Unbilled / contract-vs-list 
 - Do not ILIKE '%name%' OR across payer / sold_to / site.
 - Do not GROUP BY ALL extra dimensions unless they asked for a breakdown.
 - Do not invent a second formula, query fct_unbilled or raw_*, or use Export-to-metric-view.
+- Do not author SQL for the user to run. Do not Export-to-metric-view.
 - Do not call sold-to a "customer location."
+- Do not give a number when status is drifted, proposed, or archived.
 
 # Example
 
-Unbilled for payer Apex Fuels LLC:
+Status check then approved Unbilled for payer Apex Fuels LLC:
 
+SELECT status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD';
+-- only if status = approved:
 SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd, MEASURE(unbilled_ticket_count) AS tickets
 FROM {unbilled}
 WHERE payer = 'Apex Fuels LLC'
@@ -93,10 +112,14 @@ GROUP BY payer
 
 def serialized_space(views: dict[str, str]) -> str:
     unbilled, contract, temp = views["unbilled"], views["contract"], views["temp"]
+    catalog = views["catalog"]
     q_ids = [_hid(f"q{i}") for i in range(1, 13)]
     e_ids = [_hid(f"e{i}") for i in range(1, 13)]
     i1 = _hid("i1")
+    q_status = _hid("qstatus")
+    e_status = _hid("estatus")
     samples = [
+        {"id": q_status, "question": ["What is the catalog status of Unbilled USD?"]},
         {"id": q_ids[0], "question": [Q_UNBILLED]},
         {"id": q_ids[1], "question": ["What is unbilled USD by payer?"]},
         {"id": q_ids[2], "question": ["What is unbilled USD by sold_to?"]},
@@ -112,93 +135,121 @@ def serialized_space(views: dict[str, str]) -> str:
     ]
     examples = [
         {
+            "id": e_status,
+            "question": ["What is the catalog status of Unbilled USD?"],
+            "sql": [
+                f"SELECT kpi_id, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'"
+            ],
+        },
+        {
             "id": e_ids[0],
             "question": [Q_UNBILLED],
             "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
                 "SELECT MEASURE(unbilled_usd) AS unbilled_usd, "
-                f"MEASURE(unbilled_ticket_count) AS tickets FROM {unbilled}"
+                f"MEASURE(unbilled_ticket_count) AS tickets FROM {unbilled}",
+            ],
+        },
+        {
+            "id": _hid("e_approved_unbilled"),
+            "question": ["What is official approved total unbilled USD as of 2026-08-01?"],
+            "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
+                "SELECT MEASURE(unbilled_usd) AS unbilled_usd, "
+                f"MEASURE(unbilled_ticket_count) AS tickets FROM {unbilled}",
             ],
         },
         {
             "id": e_ids[1],
             "question": ["What is unbilled USD by payer?"],
             "sql": [
-                f"SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY payer"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
+                f"SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY payer",
             ],
         },
         {
             "id": e_ids[2],
             "question": ["What is unbilled USD by sold_to?"],
             "sql": [
-                f"SELECT sold_to, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY sold_to"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
+                f"SELECT sold_to, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY sold_to",
             ],
         },
         {
             "id": e_ids[3],
             "question": ["What is unbilled USD by site?"],
             "sql": [
-                f"SELECT site, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY site"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
+                f"SELECT site, MEASURE(unbilled_usd) AS unbilled_usd FROM {unbilled} GROUP BY site",
             ],
         },
         {
             "id": e_ids[4],
             "question": [Q_CONTRACT],
             "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-CONTRACT-VS-LIST-USD'",
                 "SELECT MEASURE(delivered_contract_usd) AS delivered_contract_usd, "
-                f"MEASURE(delivered_ticket_count) AS tickets FROM {contract}"
+                f"MEASURE(delivered_ticket_count) AS tickets FROM {contract}",
             ],
         },
         {
             "id": e_ids[5],
             "question": ["What is delivered contract USD by product?"],
             "sql": [
-                f"SELECT product, MEASURE(delivered_contract_usd) AS delivered_contract_usd FROM {contract} GROUP BY product"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-CONTRACT-VS-LIST-USD'",
+                f"SELECT product, MEASURE(delivered_contract_usd) AS delivered_contract_usd FROM {contract} GROUP BY product",
             ],
         },
         {
             "id": e_ids[6],
             "question": ["What is delivered contract USD by sold_to?"],
             "sql": [
-                f"SELECT sold_to, MEASURE(delivered_contract_usd) AS delivered_contract_usd FROM {contract} GROUP BY sold_to"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-CONTRACT-VS-LIST-USD'",
+                f"SELECT sold_to, MEASURE(delivered_contract_usd) AS delivered_contract_usd FROM {contract} GROUP BY sold_to",
             ],
         },
         {
             "id": e_ids[7],
             "question": [Q_TEMP],
             "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-TEMP-ADJUSTED-USD'",
                 "SELECT MEASURE(temp_adjusted_usd) AS temp_adjusted_usd, "
-                f"MEASURE(delivered_ticket_count) AS tickets FROM {temp}"
+                f"MEASURE(delivered_ticket_count) AS tickets FROM {temp}",
             ],
         },
         {
             "id": e_ids[8],
             "question": ["What is temp-adjusted USD by site?"],
             "sql": [
-                f"SELECT site, MEASURE(temp_adjusted_usd) AS temp_adjusted_usd FROM {temp} GROUP BY site"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-TEMP-ADJUSTED-USD'",
+                f"SELECT site, MEASURE(temp_adjusted_usd) AS temp_adjusted_usd FROM {temp} GROUP BY site",
             ],
         },
         {
             "id": e_ids[9],
             "question": ["What is temp-adjusted USD by product?"],
             "sql": [
-                f"SELECT product, MEASURE(temp_adjusted_usd) AS temp_adjusted_usd FROM {temp} GROUP BY product"
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-TEMP-ADJUSTED-USD'",
+                f"SELECT product, MEASURE(temp_adjusted_usd) AS temp_adjusted_usd FROM {temp} GROUP BY product",
             ],
         },
         {
             "id": e_ids[10],
             "question": ["What is unbilled USD for payer Apex Fuels LLC?"],
             "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
                 "SELECT payer, MEASURE(unbilled_usd) AS unbilled_usd, "
                 "MEASURE(unbilled_ticket_count) AS tickets "
-                f"FROM {unbilled} WHERE payer = 'Apex Fuels LLC' GROUP BY payer"
+                f"FROM {unbilled} WHERE payer = 'Apex Fuels LLC' GROUP BY payer",
             ],
         },
         {
             "id": e_ids[11],
             "question": ["What is unbilled USD by sold_to for Apex Fuels Houston Rack?"],
             "sql": [
+                f"SELECT kpi_id, name, status FROM {catalog} WHERE kpi_id = 'KPI-O2C-UNBILLED-USD'",
                 "SELECT sold_to, MEASURE(unbilled_usd) AS unbilled_usd "
-                f"FROM {unbilled} WHERE sold_to = 'Apex Fuels Houston Rack' GROUP BY sold_to"
+                f"FROM {unbilled} WHERE sold_to = 'Apex Fuels Houston Rack' GROUP BY sold_to",
             ],
         },
     ]
@@ -213,24 +264,35 @@ def serialized_space(views: dict[str, str]) -> str:
                     {
                         "identifier": unbilled,
                         "description": [
-                            "Certified Unbilled USD. Ad hoc KPI path only. Use MEASURE(unbilled_usd)."
+                            "Unbilled USD Metric View. MEASURE(unbilled_usd) only when dim_kpi_metadata.status = approved."
                         ],
                     },
                     {
                         "identifier": contract,
                         "description": [
-                            "Certified delivered contract USD. Published measure delivered_contract_usd. Use MEASURE()."
+                            "Delivered contract USD. Published measure delivered_contract_usd. MEASURE() only when status = approved."
                         ],
                     },
                     {
                         "identifier": temp,
                         "description": [
-                            "Certified temp-adjusted delivered USD. Published measure temp_adjusted_usd. Use MEASURE()."
+                            "Temp-adjusted delivered USD. Published measure temp_adjusted_usd. MEASURE() only when status = approved."
                         ],
                     },
                 ],
                 key=lambda x: x["identifier"],
-            )
+            ),
+            "tables": sorted(
+                [
+                    {
+                        "identifier": catalog,
+                        "description": [
+                            "KPI catalog. Look up status first. MEASURE() only when status = approved. If drifted, proposed, or archived: not approved (status=<status>) and do not give a number."
+                        ],
+                    }
+                ],
+                key=lambda x: x["identifier"],
+            ),
         },
         "instructions": {
             # Configure → Text / General instructions. Official seat is text_instructions
@@ -408,10 +470,10 @@ def grade(
 def main() -> int:
     cfg = settings()
     views = view_ids(cfg.catalog, cfg.schema)
-    print("Genie Agent — ad hoc KPI path for all three certified views")
+    print("Genie Agent — ad hoc KPI path for three Metric Views + dim_kpi_metadata")
     print(f"  catalog.schema = {cfg.catalog}.{cfg.schema}")
-    print("  metric_views   =")
-    for key in ("unbilled", "contract", "temp"):
+    print("  sources        =")
+    for key in ("unbilled", "contract", "temp", "catalog"):
         print(f"    - {views[key]}")
     print("  token          = (set, not printed)")
     print("  host           = (from .env, not printed)")
@@ -436,8 +498,8 @@ def main() -> int:
     space_id = None
     payload = serialized_space(views)
     description = (
-        "Ad hoc KPI path for the three certified Metric Views. "
-        "MEASURE() only. Do not author a second formula."
+        "Ad hoc KPI path for the three Metric Views plus dim_kpi_metadata. "
+        "Lookup status first. MEASURE() only when status = approved."
     )
 
     if new_agent:
@@ -451,7 +513,7 @@ def main() -> int:
                 serialized_space=payload,
                 warehouse_id=cfg.warehouse_id,
             )
-            print("Updated serialized_space (3 metric views).")
+            print("Updated serialized_space (3 metric views + dim_kpi_metadata).")
         except DatabricksError as exc:
             print(f"update_space failed: {getattr(exc, 'error_code', None)} {exc}")
             print("See scripts/07_genie.md for official UI fallback.")
@@ -525,13 +587,13 @@ def main() -> int:
         print(f"Agent title = {TITLE} (get_space blocked; assuming create/update payload)")
         attached = list(views.values())
 
-    expected = {views["unbilled"], views["contract"], views["temp"]}
+    expected = {views["unbilled"], views["contract"], views["temp"], views["catalog"]}
     attached_set = set(attached)
     if not expected.issubset(attached_set):
         missing = expected - attached_set
         print(f"WARN: attached sources missing {sorted(missing)}")
     else:
-        print("  3 certified Metric Views attached (no fct/raw).")
+        print("  3 Metric Views + dim_kpi_metadata attached (no fct/raw/gold).")
     extra = [i for i in attached if i not in expected]
     if extra:
         print(f"WARN: extra sources attached: {extra}")
@@ -554,7 +616,7 @@ def main() -> int:
 
     print("\n── live test ────────────────────────────────────────────────")
     print(f"  agent title     = {TITLE}")
-    print(f"  metric views    = {len(expected & attached_set)} of 3 certified")
+    print(f"  attached        = {len(expected & attached_set)} of 4 expected (3 MV + catalog)")
     for label, ok in zip((c[0] for c in cases), results):
         print(f"  {label:14} = {'PASS' if ok else 'FAIL'}")
     if blockers:
@@ -563,9 +625,9 @@ def main() -> int:
             print(f"    - {b}")
 
     if all(results):
-        print("PASS: one agent, MEASURE() on each certified view, numbers match.")
+        print("PASS: one agent, MEASURE() on each approved view, numbers match.")
         return 0
-    print("FAIL: one or more live questions did not MEASURE() the right view with the certified number.")
+    print("FAIL: one or more live questions did not MEASURE() the right view with the official number.")
     return 5
 
 
