@@ -17,8 +17,8 @@ It must be used with:
 
 - [`README.md`](README.md) for navigation, scope, operating rules, and quick orientation.
 - [`THE-PROBLEM.md`](THE-PROBLEM.md) for the business problem the implementation proves.
-- [`../../../../business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md`](../../../../business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md) for Customer-domain variants, party roles, and business context.
-- [`../../../../EPM_Homelab/`](../../../../EPM_Homelab/) for the shared reference architecture, decisions, standards, and reusable patterns.
+- [`../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md) for Customer-domain variants, party roles, and business context.
+- [`../../../EPM_Homelab/`](../../../EPM_Homelab/) for the shared reference architecture, decisions, standards, and reusable patterns.
 
 ### Architectural relationship
 

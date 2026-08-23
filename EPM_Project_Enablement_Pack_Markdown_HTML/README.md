@@ -13,11 +13,12 @@ This package establishes the dedicated Enterprise Performance Project.
 - [EPM-PROJ-003_Project_Onboarding_Guide](EPM-PROJ-003_Project_Onboarding_Guide.md) — Enterprise Performance Project Onboarding Guide
 - [EPM-PROJ-004_Artifact_and_Chat_Map](EPM-PROJ-004_Artifact_and_Chat_Map.md) — EPM Artifact and Chat Map
 - [EPM-PROJ-005_Migration_Checklist](EPM-PROJ-005_Migration_Checklist.md) — EPM Project Migration Checklist
+- [EPM-PROJ-006_Chat_Migration_Playbook_and_Templates](EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md) — Chat migration playbook and templates
 
 ## Recommended sequence
 
 1. Read the Architectural Principles.
-2. Paste the Project Instructions into the ChatGPT Project.
+2. Paste the Project Instructions into the project workspace (Claude is the current working environment; older pack text still says ChatGPT — see C-05 in FOUND-000).
 3. Upload the EPM Foundation Version 2 package.
 4. Upload this Project Enablement Pack.
 5. Run the onboarding prompt.

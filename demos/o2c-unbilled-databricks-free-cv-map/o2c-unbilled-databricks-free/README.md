@@ -17,25 +17,25 @@ Read the documents in this order:
 
 1. [`THE-PROBLEM.md`](THE-PROBLEM.md) — the unbilled O2C business problem and its Customer-domain cause.
 2. [`IMPLEMENTATION-HANDOFF.md`](IMPLEMENTATION-HANDOFF.md) — the detailed build specification, delivery sequence, test strategy, and acceptance criteria.
-3. [`../../../../business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md`](../../../../business_architecture/domain/Customer_Domain_Problem_Statement_v0.1.md) — the parent Customer-domain problem, source-system variants, and role catalogue.
+3. [`../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md) — the parent Customer-domain problem, source-system variants, and role catalogue.
 4. The shared EPM Homelab reference architecture listed below.
 
 ## Reference implementation relationship
 
 > **Reference implementation:** This directory is the runnable, testable Customer/O2C implementation of the shared EPM Homelab reference architecture. It implements and validates shared patterns; it does not silently override shared source-of-truth boundaries or approved architecture decisions.
 
-> **Reference architecture:** The reusable architecture, standards, tool decisions, and cross-cutting controls live in [`../../../../EPM_Homelab/`](../../../../EPM_Homelab/). Changes to a shared principle, tool boundary, standard, or pattern must be assessed against the Homelab artifacts before being treated as reusable baseline.
+> **Reference architecture:** The reusable architecture, standards, tool decisions, and cross-cutting controls live in [`../../../EPM_Homelab/`](../../../EPM_Homelab/). Changes to a shared principle, tool boundary, standard, or pattern must be assessed against the Homelab artifacts before being treated as reusable baseline.
 
 ### Governing shared references
 
 | Shared artifact | Why it matters to this implementation |
 |---|---|
-| [`00-Homelab-Charter-and-Roadmap.md`](../../../../EPM_Homelab/00-Homelab-Charter-and-Roadmap.md) | Defines homelab mission, scope boundaries, delivery priority, and end-to-end demonstration intent |
-| [`01-Reference-Architecture.md`](../../../../EPM_Homelab/01-Reference-Architecture.md) | Defines cross-layer architecture, source-of-truth boundaries, and information flows |
-| [`02-Tool-Selection-and-ADRs.md`](../../../../EPM_Homelab/02-Tool-Selection-and-ADRs.md) | Records selected open-source tools, alternatives, licensing, and architecture decisions |
-| [`04-Data-Strategy-and-Datasets.md`](../../../../EPM_Homelab/04-Data-Strategy-and-Datasets.md) | Defines public-data anchors, synthetic-data boundaries, and source-to-data-product guidance |
-| [`05-Domain-Model-and-Ontology-Pilot.md`](../../../../EPM_Homelab/05-Domain-Model-and-Ontology-Pilot.md) | Defines ontology, RDF/OWL, SHACL, KPI, and graph-pilot patterns |
-| [`06-Repo-Structure-and-Build-Plan.md`](../../../../EPM_Homelab/06-Repo-Structure-and-Build-Plan.md) | Defines reproducibility, repository, testing, pipeline, and delivery conventions |
+| [`00-Homelab-Charter-and-Roadmap.md`](../../../EPM_Homelab/00-Homelab-Charter-and-Roadmap.md) | Defines homelab mission, scope boundaries, delivery priority, and end-to-end demonstration intent |
+| [`01-Reference-Architecture.md`](../../../EPM_Homelab/01-Reference-Architecture.md) | Defines cross-layer architecture, source-of-truth boundaries, and information flows |
+| [`02-Tool-Selection-and-ADRs.md`](../../../EPM_Homelab/02-Tool-Selection-and-ADRs.md) | Records selected open-source tools, alternatives, licensing, and architecture decisions |
+| [`04-Data-Strategy-and-Datasets.md`](../../../EPM_Homelab/04-Data-Strategy-and-Datasets.md) | Defines public-data anchors, synthetic-data boundaries, and source-to-data-product guidance |
+| [`05-Domain-Model-and-Ontology-Pilot.md`](../../../EPM_Homelab/05-Domain-Model-and-Ontology-Pilot.md) | Defines ontology, RDF/OWL, SHACL, KPI, and graph-pilot patterns |
+| [`06-Repo-Structure-and-Build-Plan.md`](../../../EPM_Homelab/06-Repo-Structure-and-Build-Plan.md) | Defines reproducibility, repository, testing, pipeline, and delivery conventions |
 
 ## Business problem
 

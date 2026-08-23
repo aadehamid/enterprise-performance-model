@@ -1,12 +1,15 @@
 # Enterprise Performance Model
 ## Project Charter, Operating Model, and Knowledge Management Framework
 
-**Artifact ID:** EPM-FOUND-001  
-**Status:** Candidate  
+> **Superseded — not current FOUND-001.** This file keeps the *former* ID EPM-FOUND-001 (Project Charter, v2.0 Candidate). Current EPM-FOUND-001 is [Enterprise Business Architecture](../EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md). Governance successors: [PROJ-001](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-001_Project_Instructions.md), [PROJ-002](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-002_Project_Operating_Model.md), [FOUND-000A](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.md), [canonical FOUND-000](../EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000.md). Residual Charter depth is logged as C-11. Do not treat this file as an Approved Baseline.
+
+**Former artifact ID:** EPM-FOUND-001  
+**Status:** Superseded (was Candidate)  
 **Version:** 2.0  
 **Primary owner:** Enterprise Performance Model Lead  
 **Applies to:** KPI Store, Domain Modeling, System Integration, and cross-cutting Data Governance  
-**Purpose:** Define how the project is organized, governed, executed, documented, and evolved.
+**Purpose:** Define how the project is organized, governed, executed, documented, and evolved.  
+**Location:** `ARCHIVE/02_Project_Charter_and_Operating_Model.md`
 
 ---
 
