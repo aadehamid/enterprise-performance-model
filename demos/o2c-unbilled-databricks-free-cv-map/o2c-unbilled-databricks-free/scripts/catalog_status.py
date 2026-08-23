@@ -96,14 +96,32 @@ def maybe_reset_approval(prev: dict[str, Any] | None, new: dict[str, Any]) -> di
     return out
 
 
-def _table_columns(cur, fq: str, table: str) -> set[str]:
-    rows = run_statement(cur, f"DESCRIBE TABLE {fq}.{table}")
+def _is_missing_relation(exc: Exception) -> bool:
+    text = str(exc).upper()
+    return (
+        "TABLE_OR_VIEW_NOT_FOUND" in text
+        or "TABLE OR VIEW NOT FOUND" in text
+        or "CANNOT BE FOUND" in text
+    )
+
+
+def _table_columns(cur, fq: str, table: str) -> set[str] | None:
+    """Column names, or None if the table does not exist yet."""
+    try:
+        rows = run_statement(cur, f"DESCRIBE TABLE {fq}.{table}")
+    except Exception as exc:
+        if _is_missing_relation(exc):
+            return None
+        raise
     return {str(r[0]).lower() for r in rows if r and r[0] and not str(r[0]).startswith("#")}
 
 
 def ensure_definition_hash_column(cur, fq: str) -> None:
     """Keep the table. Never CREATE OR REPLACE. Add definition_hash if missing."""
     cols = _table_columns(cur, fq, "dim_kpi_metadata")
+    if cols is None:
+        print("dim_kpi_metadata missing; CREATE TABLE comes later.")
+        return
     if "definition_hash" in cols:
         print("definition_hash column already present.")
         return
@@ -120,10 +138,15 @@ def _as_row(cols: list[str], values: tuple) -> dict[str, Any]:
 
 
 def fetch_kpi_row(cur, fq: str, kpi_id: str) -> dict[str, Any] | None:
-    rows = run_statement(
-        cur,
-        f"SELECT * FROM {fq}.dim_kpi_metadata WHERE kpi_id = {sql_str(kpi_id)}",
-    )
+    try:
+        rows = run_statement(
+            cur,
+            f"SELECT * FROM {fq}.dim_kpi_metadata WHERE kpi_id = {sql_str(kpi_id)}",
+        )
+    except Exception as exc:
+        if _is_missing_relation(exc):
+            return None
+        raise
     if not rows:
         return None
     cols = [d[0] for d in cur.description]
@@ -131,7 +154,12 @@ def fetch_kpi_row(cur, fq: str, kpi_id: str) -> dict[str, Any] | None:
 
 
 def fetch_all_kpi_rows(cur, fq: str) -> list[dict[str, Any]]:
-    rows = run_statement(cur, f"SELECT * FROM {fq}.dim_kpi_metadata ORDER BY kpi_id")
+    try:
+        rows = run_statement(cur, f"SELECT * FROM {fq}.dim_kpi_metadata ORDER BY kpi_id")
+    except Exception as exc:
+        if _is_missing_relation(exc):
+            return []
+        raise
     cols = [d[0] for d in cur.description]
     return [_as_row(cols, tuple(r)) for r in rows]
 
@@ -294,7 +322,9 @@ def drift_check(cur, fq: str) -> list[dict[str, Any]]:
     """Compare live MV hash to stored hash. Mismatch → drifted IFF currently approved.
 
     proposed and archived are left alone even when the live hash differs.
-    Prints skipped-not-approved when the row is not approved. Does not edit the view.
+    Prints skipped-not-approved when the row is not approved. An approved
+    row with an empty definition_hash is skipped (not drifted) — no baseline.
+    Does not edit the view.
     """
     ensure_definition_hash_column(cur, fq)
     results: list[dict[str, Any]] = []
@@ -309,8 +339,14 @@ def drift_check(cur, fq: str) -> list[dict[str, Any]]:
             continue
         obj = str(row.get("formula_object") or "")
         stored = str(row.get("definition_hash") or "")
+        if not stored:
+            print(f"{kpi_id}\told={old}\tnew={old}\tskipped-empty-hash")
+            results.append(
+                {"kpi_id": kpi_id, "old_status": old, "new_status": old, "match": None}
+            )
+            continue
         live_hash = live_definition_hash(cur, obj) if obj else ""
-        match = bool(stored) and stored == live_hash
+        match = stored == live_hash
         new = old
         if not match:
             new = STATUS_DRIFTED
