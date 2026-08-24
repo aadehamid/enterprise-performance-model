@@ -711,12 +711,12 @@ Exit gate: A business/technical reviewer can ask the defined questions, obtain g
 - The Customer/O2C role-aware unbilled demonstration is a reference implementation, not a competing reference architecture.
 - Customer identity, hierarchy, and transaction role must be represented separately to support trustworthy O2C measurement.
 - Unbilled exposure is initially an operational metric/candidate KPI consideration, not an automatically approved KPI.
-- Meaning, compute, and consume must remain separated: Turtle in git defines formal semantic and mapping assertions (ER/Studio production / Sirius Web demo stand-in model structure); FOUND-003 stays the human-readable semantic model; Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
+- Meaning, compute, and consume must remain separated: Turtle in git defines formal semantic and mapping assertions only, not all meaning (ER/Studio production / Sirius Web demo stand-in model structure); FOUND-003 stays the human-readable semantic model; FOUND-004 stays the ontology design and uses conceptual names; exact IRIs, axioms, constraints, and individuals belong to Turtle in git; Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
 
 ### Decisions and status
 
 - **Draft decision:** `EPM_Homelab/` governs reusable patterns; this directory contains implementation-specific executable evidence.
-- **Draft decision:** Turtle in git is the formal semantic and mapping source. Fuseki loads that release as the demo SPARQL/SHACL runtime. Neo4j is a controlled projection for investigation and impact analysis.
+- **Draft decision:** Turtle in git is the formal semantic and mapping source, not all meaning. FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design and uses conceptual names; exact IRIs, axioms, constraints, and individuals belong to that Turtle. Fuseki loads that release as the demo SPARQL/SHACL runtime. Neo4j is a controlled projection for investigation and impact analysis.
 - **Draft decision:** Dashboard and agent layers may not recreate governed metric/KPI formulas.
 - **Pending decision:** Initial unbilled calculation scope, financial treatment, business grain, and operational owner validation.
 
