@@ -4,12 +4,12 @@
 **Status:** Working baseline  
 **Last updated:** August 4, 2026  
 
-*Human-readable authoritative description of business meaning*
+*Human-readable semantic model of business meaning. Not the machine ontology SoT.*
 
 **Foundation navigation:** [EPM-FOUND-000](EPM-FOUND-000.md) | [EPM-FOUND-001](EPM-FOUND-001.md) | [EPM-FOUND-002](EPM-FOUND-002.md) | [EPM-FOUND-003](EPM-FOUND-003.md) | [EPM-FOUND-004](EPM-FOUND-004.md) | [EPM-FOUND-005](EPM-FOUND-005.md) | [EPM-FOUND-006](EPM-FOUND-006.md)
 
 ## Definition
-The **Enterprise Performance Semantic Model** is the governed system of meaning for the Enterprise Performance Model.
+The **Enterprise Performance Semantic Model** is the human-readable semantic model for the Enterprise Performance Model. It is not the machine ontology SoT.
 
 It defines:
 
@@ -22,12 +22,14 @@ It defines:
 
 The written specification is the human-readable expression of the semantic model. Ontologies, knowledge graphs, metadata structures, SQL views, Power BI models, and AI context layers are formal or technical representations, implementations, or consumers of that meaning.
 
+Machine ontology SoT is Turtle in git ([`ontology/stage2_enterprise_kpi_ontology.ttl`](../ontology/stage2_enterprise_kpi_ontology.ttl)). Demo `o2c-meaning.ttl` is demo Turtle, not that SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle, not SoT. Turtle defines formal semantic and mapping assertions only, not all meaning. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI classes. Process authority is not this file.
+
 ## Semantic model versus implementation
 | Item | What it is |
 |---|---|
 | Semantic model | The organized system of concepts, definitions, relationships, rules, constraints, and classifications |
-| Human-readable specification | The authoritative written expression used for business review and governance |
-| Ontology | Formal machine-readable representation of the semantic model |
+| Human-readable specification | The written expression used for business review and governance. Not the machine SoT. |
+| Ontology | Formal machine-readable representation. Machine SoT is Turtle in git, not this file. |
 | Knowledge graph | Instances of concepts and relationships, usually governed by an ontology |
 | SQL semantic view | A consumer-facing data interface implementing selected semantics |
 | Power BI semantic model | An analytical implementation containing tables, relationships, measures, hierarchies, and security |
@@ -151,7 +153,7 @@ Executive Commercial Scorecard
 ```
 
 ## Governance of meaning
-The semantic model is authoritative only when:
+This human-readable semantic model is ready for business review only when:
 
 - definitions are structured and internally consistent;
 - relationships are explicit;
