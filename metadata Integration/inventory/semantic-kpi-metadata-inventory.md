@@ -19,16 +19,19 @@ Read-only. Names, formulas, and classifications are copied from the files. Nothi
 
 `proposed | approved | drifted | archived` is **catalog_status** on `dim_kpi_metadata` only. It is never used as classification or mapping_status. mapping_status is never `approved`.
 
-## Authority (copied, not invented)
+## Authority (copied from these files, not invented)
 
 | Concern | SoT in these files |
 |---|---|
 | Compile | Databricks Unity Catalog Metric Views (`sql/03_metric_view.sql` and sibling MV SQL) |
 | Store catalog | `dim_kpi_metadata` (`sql/05_store.sql`, `sql/08_catalog_status.sql`) |
 | Ontology | Turtle in git (`ontology/o2c-meaning.ttl`). Fuseki is not. |
-| Process | Not this inventory. `business_architecture/business_process/` and `business_architecture/schema/` only. Domain folder is draft context. |
 | Gold | Published cut from `MEASURE()`. Not re-approve. |
 | Ossie | 0.1.1 projection. Not compile SoT. |
+
+### Current governance (not pinned)
+
+Process authority is `business_architecture/business_process/` and `business_architecture/schema/` only. Domain folder is draft context. That lock is PRs #6/#7/#9 on current main. It is not a SHA in this manifest. Do not cite those folders as pinned evidence.
 
 ## Source artifacts
 
@@ -55,7 +58,7 @@ Read-only. Names, formulas, and classifications are copied from the files. Nothi
 
 ### KPI-O2C-UNBILLED-USD — fact / named_kpi / recorded
 
-`sql/05_store.sql` `854ca5a2…`. **Existing approved Store row. Do not un-approve.** `catalog_status=approved` is the column value on first-time `INSERT` (`WHERE NOT EXISTS`). Pointer `unbilled_usd` → `workspace.o2c_unbilled.unbilled_usd`. IRI `#UnbilledState`. Owner Revenue Accounting / Order-to-Cash. Grain enterprise \| payer \| sold_to \| site. `definition_hash` column exists; first-time INSERT omits the hash (Python fills). Never `INSERT` approved over drifted\|proposed\|archived. Named KPI 1:1 with this row.
+`sql/05_store.sql` `854ca5a2…`. File first-insert literal is `approved` `WHERE NOT EXISTS`. Live warehouse state was not re-read this pass. Do not un-approve a live row from this inventory. `catalog_status` is not set (not a live observed enum). Pointer `unbilled_usd` → `workspace.o2c_unbilled.unbilled_usd`. IRI `#UnbilledState`. Owner Revenue Accounting / Order-to-Cash. Grain enterprise \| payer \| sold_to \| site. `definition_hash` column exists; first-time INSERT omits the hash (Python fills). Never `INSERT` approved over drifted\|proposed\|archived. Named KPI 1:1 with this row.
 
 ### GOLD-KPI-VALUE-UNBILLED — fact / published_cut / recorded
 
@@ -75,7 +78,11 @@ Same file. `gold_kpi_value` from `MEASURE(unbilled_usd)` / `MEASURE(unbilled_tic
 
 ### KPI-O2C-CONTRACT-VS-LIST-USD — fact / named_kpi / recorded
 
-Same file. `kpi_id` as written. IRI `#Obligation`. File INSERT status literal `certified`. 08 migrates certified→approved. Gold DELETE/INSERT **not** EXISTS-gated on approved (unlike Unbilled). Live warehouse status not re-read this pass.
+Same file. `kpi_id` as written. IRI `#Obligation`. Same-file DELETE then INSERT into `dim_kpi_metadata` (status literal `certified`). 08 migrates certified→approved. Live warehouse status not re-read. Gold DELETE/INSERT **not** EXISTS-gated on approved (unlike Unbilled). See UNRES-06-07-GOLD-GATE.
+
+### GOLD-KPI-VALUE-CONTRACT-VS-LIST — fact / published_cut / recorded
+
+Same file `766f8d79…`. `gold_kpi_value` from `MEASURE(delivered_contract_usd)` / `MEASURE(delivered_ticket_count)`. Grains enterprise / sold_to / product. DELETE/INSERT not EXISTS-gated. File evidence, not live warehouse. Gold publish is not re-approve.
 
 ### MV-TEMP-ADJUSTED — fact / measure / recorded
 
@@ -83,7 +90,11 @@ Same file. `kpi_id` as written. IRI `#Obligation`. File INSERT status literal `c
 
 ### KPI-O2C-TEMP-ADJUSTED-USD — fact / named_kpi / recorded
 
-Same file. IRI `#Obligation` (shared with contract-vs-list). File INSERT status literal `certified`. 08 migrates. Gold not EXISTS-gated. Live status not re-read this pass.
+Same file. IRI `#Obligation` (shared with contract-vs-list). Same-file DELETE then INSERT into `dim_kpi_metadata` (status literal `certified`). 08 migrates. Live warehouse status not re-read. Gold DELETE/INSERT **not** EXISTS-gated. See UNRES-06-07-GOLD-GATE.
+
+### GOLD-KPI-VALUE-TEMP-ADJUSTED — fact / published_cut / recorded
+
+Same file `f5d8db8b…`. `gold_kpi_value` from `MEASURE(temp_adjusted_usd)` / `MEASURE(delivered_ticket_count)`. Grains enterprise / product / site. DELETE/INSERT not EXISTS-gated. File evidence, not live warehouse. Gold publish is not re-approve.
 
 ### TTL-UNBILLEDSTATE — fact / meaning_term / cited
 
@@ -98,7 +109,7 @@ Same file. `#Obligation` = delivered BOL / ticket. Both delivered KPIs bind here
 | ID | Field | Note |
 |---|---|---|
 | UNRES-QUALITY-FRESHNESS | quality_freshness | Not declared in these files. |
-| UNRES-PROCESS-USED-IN | process_used_in | No process column on `dim_kpi_metadata`. This inventory is not process authority. |
+| UNRES-PROCESS-USED-IN | process_used_in | No process column on `dim_kpi_metadata` in these files. Do not cite the process/schema folders as pinned evidence. |
 | UNRES-06-07-FILE-STATUS-LITERAL | catalog_status | 06/07 INSERT `certified`; 08 migrates. Warehouse not re-read. |
 | UNRES-06-07-GOLD-GATE | gold_publish_gate | 05 Unbilled Gold is gated; 06/07 Gold is not. Python companions not inventoried. |
 | UNRES-DEFINITION-HASH-FILL | definition_hash | Column in 05/08; fill is Python. 06/07 INSERT omit it. |
@@ -111,4 +122,4 @@ ADR-META rows. Fuseki. Neo4j. Vocabulary baseline. Generator. SHACL. OpenMetadat
 
 Used where the Demo 2 files have the fact: path, SHA, technical id, name, description, classification, formula, aggregation, grain, time, dimensions, physical deps, lineage, owner, catalog metadata, mapping_status.
 
-Absent: quality/freshness. Forbidden: mapping_status `approved`; classification `approved KPI`.
+Absent: quality_freshness (see UNRES-QUALITY-FRESHNESS). Forbidden: mapping_status `approved`; classification `approved KPI`.

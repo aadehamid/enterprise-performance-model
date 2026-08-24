@@ -18,7 +18,6 @@
     "compile_sot": "Databricks Unity Catalog Metric Views (sql/03_metric_view.sql and sibling MV SQL)",
     "store_catalog": "dim_kpi_metadata (sql/05_store.sql + sql/08_catalog_status.sql)",
     "ontology_sot": "Turtle in git (ontology/o2c-meaning.ttl). Fuseki is not.",
-    "process_sot": "business_architecture/business_process/ and business_architecture/schema/ only. Domain folder is draft context. Not this inventory.",
     "gold": "published cut from MEASURE(); not re-approve",
     "ossie": "Ossie 0.1.1 projection; not compile SoT"
   },
@@ -50,7 +49,7 @@
       "drifted",
       "archived"
     ],
-    "note": "catalog_status is a separate field copied from dim_kpi_metadata.status. classification and mapping_status never use those four words."
+    "note": "catalog_status is a separate field for a live-observed enum only. This inventory does not re-read the warehouse. File INSERT literals go in catalog_metadata.file_insert_status_literal. classification and mapping_status never use proposed|approved|drifted|archived."
   },
   "section_8_2_fields_used": [
     "artifact_path",
@@ -67,7 +66,6 @@
     "physical_dependencies",
     "upstream_lineage",
     "owner_metadata",
-    "quality_freshness",
     "catalog_metadata",
     "mapping_status"
   ],
@@ -111,7 +109,6 @@
       ],
       "upstream_lineage": "raw_tickets delivered LEFT JOIN posted invoices as-of; exclude posted ticket_id; quality-hold excluded because status != delivered",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "Not a catalog row. File says NOT gold; Gold is gold_kpi_value from MEASURE().",
       "notes": [
@@ -151,7 +148,6 @@
       ],
       "upstream_lineage": "source: fct_unbilled",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "Not the Store row. Catalog formula_object points here.",
       "notes": [
@@ -186,8 +182,7 @@
       ],
       "upstream_lineage": "formula_pointer=unbilled_usd; formula_object=workspace.o2c_unbilled.unbilled_usd; formula_version=0.1",
       "owner_metadata": "Revenue Accounting / Order-to-Cash",
-      "quality_freshness": null,
-      "catalog_status": "approved",
+      "catalog_status": null,
       "catalog_metadata": {
         "table": "dim_kpi_metadata",
         "columns_present": [
@@ -209,13 +204,14 @@
         ],
         "uom": "USD",
         "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#UnbilledState",
-        "first_time_insert": "WHERE NOT EXISTS; status='approved'; does not INSERT definition_hash (Python fills hash)",
-        "no_silent_promotion": "Never INSERT status=approved over drifted|proposed|archived. approve_kpi / 14_reapprove.py is the only path that sets approved and refreshes definition_hash."
+        "no_silent_promotion": "Never INSERT status=approved over drifted|proposed|archived. approve_kpi / 14_reapprove.py is the only path that sets approved and refreshes definition_hash.",
+        "file_insert_status_literal": "approved",
+        "insert_gate": "WHERE NOT EXISTS"
       },
       "notes": [
-        "Existing approved Store row. Do not un-approve.",
+        "File first-insert literal is approved WHERE NOT EXISTS. Live warehouse state was not re-read this pass. Do not un-approve a live row from this inventory.",
         "Named KPI is 1:1 with this catalog row.",
-        "classification=named_kpi; catalog_status=approved is a copied column value, not a second approval."
+        "classification=named_kpi. file_insert_status_literal is not a live catalog_status."
       ]
     },
     {
@@ -246,7 +242,6 @@
       ],
       "upstream_lineage": "DELETE/INSERT Unbilled gold only when dim_kpi_metadata.status='approved'. Else last snapshot stays (published_ts unchanged).",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "Gold publish is not re-approve. File comment and EXISTS gates.",
       "notes": [
@@ -273,7 +268,6 @@
       ],
       "upstream_lineage": "Hash fill is Python (SHOW CREATE TABLE of formula_object). See scripts/13_status_drift.py and 14_reapprove.py (not inventoried this pass).",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": {
         "status_values": [
@@ -319,7 +313,6 @@
       ],
       "upstream_lineage": "custom_extensions.DATABRICKS.compile_sot=sql/03_metric_view.sql; metric_view=unbilled_usd; compiler=Unity Catalog Metric Views; kpi_id=KPI-O2C-UNBILLED-USD",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "References kpi_id; does not set catalog status.",
       "notes": [
@@ -358,7 +351,6 @@
       ],
       "upstream_lineage": "filter: delivered AND temperature_f>=80 AND gallons_net>=5000 AND July 2026 AND product_family IN gasoline|distillate",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": null,
       "notes": [
@@ -390,20 +382,59 @@
         "contract_vs_list_usd",
         "gold_kpi_value"
       ],
-      "upstream_lineage": "formula_pointer=delivered_contract_usd; formula_object=workspace.o2c_unbilled.contract_vs_list_usd; formula_version=0.1",
+      "upstream_lineage": "formula_pointer=delivered_contract_usd; formula_object=workspace.o2c_unbilled.contract_vs_list_usd; formula_version=0.1; same-file DELETE then INSERT into dim_kpi_metadata (status literal certified). 08 migrates. Live status not re-read. Gold DELETE/INSERT not EXISTS-gated.",
       "owner_metadata": "Revenue Accounting / Order-to-Cash",
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": {
         "file_insert_status_literal": "certified",
         "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#Obligation",
         "08_catalog_status_migrates": "UPDATE status='approved' WHERE status='certified'",
-        "gold_gate": "06 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)"
+        "gold_gate": "06 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)",
+        "store_lineage": "Same pinned file 06: DELETE kpi_id then INSERT dim_kpi_metadata. status literal certified. sql/08_catalog_status.sql migrates certified to approved. Live warehouse status not re-read. Gold not EXISTS-gated."
       },
       "notes": [
         "File as written INSERTs status='certified'. 08_catalog_status.sql migrates certified\u2192approved.",
         "Live warehouse status after migrate is not re-read this pass (see unresolved).",
         "Do not treat the file literal 'certified' as a current catalog enum value after 08."
+      ]
+    },
+    {
+      "row_id": "GOLD-KPI-VALUE-CONTRACT-VS-LIST",
+      "claim_label": "fact",
+      "classification": "published_cut",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/06_complex_metric.sql",
+      "git_sha": "766f8d79e6e4cf462d8311680b66dfc05d28dab5",
+      "technical_id": "workspace.o2c_unbilled.gold_kpi_value (kpi_id=KPI-O2C-CONTRACT-VS-LIST-USD)",
+      "business_name": "Published contract-vs-list cuts",
+      "description": "Gold published instances FROM MEASURE(delivered_contract_usd). File evidence, not live warehouse. Not re-approve.",
+      "formula_expression": "MEASURE(delivered_contract_usd), MEASURE(delivered_ticket_count)",
+      "aggregation": "compiler MEASURE(); Gold does not re-encode",
+      "entity_grain": "enterprise / sold_to / product",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "published_ts"
+      ],
+      "business_dimensions": [
+        "grain",
+        "grain_key",
+        "grain_label"
+      ],
+      "physical_dependencies": [
+        "contract_vs_list_usd Metric View",
+        "dim_kpi_metadata",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "Same-file DELETE then INSERT gold_kpi_value. NOT EXISTS-gated on dim_kpi_metadata.status='approved'.",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": {
+        "gold_gate": "not EXISTS-gated on approved",
+        "live_status": "not re-read"
+      },
+      "notes": [
+        "File expected unsliced delivered_contract_usd 110064.00 / 7 tickets.",
+        "Gold publish is not re-approve. See UNRES-06-07-GOLD-GATE."
       ]
     },
     {
@@ -439,7 +470,6 @@
       ],
       "upstream_lineage": "filter: delivered AND gallons_net>=4000 AND Jun\u2013Jul 2026 AND product_family IN gasoline|distillate|aviation",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": null,
       "notes": [
@@ -471,19 +501,58 @@
         "temp_adjusted_delivered_usd",
         "gold_kpi_value"
       ],
-      "upstream_lineage": "formula_pointer=temp_adjusted_usd; formula_object=workspace.o2c_unbilled.temp_adjusted_delivered_usd; formula_version=0.1",
+      "upstream_lineage": "formula_pointer=temp_adjusted_usd; formula_object=workspace.o2c_unbilled.temp_adjusted_delivered_usd; formula_version=0.1; same-file DELETE then INSERT into dim_kpi_metadata (status literal certified). 08 migrates. Live status not re-read. Gold DELETE/INSERT not EXISTS-gated.",
       "owner_metadata": "Revenue Accounting / Order-to-Cash",
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": {
         "file_insert_status_literal": "certified",
         "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#Obligation",
         "08_catalog_status_migrates": "UPDATE status='approved' WHERE status='certified'",
-        "gold_gate": "07 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)"
+        "gold_gate": "07 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)",
+        "store_lineage": "Same pinned file 07: DELETE kpi_id then INSERT dim_kpi_metadata. status literal certified. sql/08_catalog_status.sql migrates certified to approved. Live warehouse status not re-read. Gold not EXISTS-gated."
       },
       "notes": [
         "File as written INSERTs status='certified'. 08_catalog_status.sql migrates certified\u2192approved.",
         "Live warehouse status after migrate is not re-read this pass (see unresolved)."
+      ]
+    },
+    {
+      "row_id": "GOLD-KPI-VALUE-TEMP-ADJUSTED",
+      "claim_label": "fact",
+      "classification": "published_cut",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql",
+      "git_sha": "f5d8db8b74f69ec1dd06a88b0ba012aeee5878ef",
+      "technical_id": "workspace.o2c_unbilled.gold_kpi_value (kpi_id=KPI-O2C-TEMP-ADJUSTED-USD)",
+      "business_name": "Published temp-adjusted cuts",
+      "description": "Gold published instances FROM MEASURE(temp_adjusted_usd). File evidence, not live warehouse. Not re-approve.",
+      "formula_expression": "MEASURE(temp_adjusted_usd), MEASURE(delivered_ticket_count)",
+      "aggregation": "compiler MEASURE(); Gold does not re-encode",
+      "entity_grain": "enterprise / product / site",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "published_ts"
+      ],
+      "business_dimensions": [
+        "grain",
+        "grain_key",
+        "grain_label"
+      ],
+      "physical_dependencies": [
+        "temp_adjusted_delivered_usd Metric View",
+        "dim_kpi_metadata",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "Same-file DELETE then INSERT gold_kpi_value. NOT EXISTS-gated on dim_kpi_metadata.status='approved'.",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": {
+        "gold_gate": "not EXISTS-gated on approved",
+        "live_status": "not re-read"
+      },
+      "notes": [
+        "File expected unsliced temp_adjusted_usd 256066.39 / 17 tickets.",
+        "Gold publish is not re-approve. See UNRES-06-07-GOLD-GATE."
       ]
     },
     {
@@ -504,7 +573,6 @@
       "physical_dependencies": null,
       "upstream_lineage": "Store catalog meaning binding: Unbilled KPI \u2192 o2c:UnbilledState. Does NOT author formulas or compile.",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "Matches dim_kpi_metadata.ontology_iri for KPI-O2C-UNBILLED-USD.",
       "notes": [
@@ -530,7 +598,6 @@
       "physical_dependencies": null,
       "upstream_lineage": "contract-vs-list KPI \u2192 o2c:Obligation; temp-adjusted KPI \u2192 o2c:Obligation",
       "owner_metadata": null,
-      "quality_freshness": null,
       "catalog_status": null,
       "catalog_metadata": "Both delivered catalog rows share this IRI.",
       "notes": [
@@ -551,7 +618,7 @@
       "claim_label": "unresolved",
       "mapping_status": "unresolved",
       "field": "process_used_in",
-      "note": "dim_kpi_metadata has no process column. This inventory is not process authority. Process SoT is business_architecture/business_process/ and business_architecture/schema/ only. Domain folder is draft context. No process IDs minted from this inventory."
+      "note": "No process column on dim_kpi_metadata in these files. Do not cite business_architecture/business_process/ or schema/ as pinned evidence. Those folders are current governance (PRs #6/#7/#9), not a SHA in this manifest."
     },
     {
       "row_id": "UNRES-06-07-FILE-STATUS-LITERAL",
@@ -581,5 +648,9 @@
     "vocabulary baseline / generator / SHACL",
     "OpenMetadata / Purview fixtures",
     "Stage B files"
-  ]
+  ],
+  "current_governance_not_pinned": {
+    "process_authority": "business_architecture/business_process/ and business_architecture/schema/ only. Domain folder is draft context.",
+    "note": "This lock is PRs #6/#7/#9 on current main. It is not a SHA in the eight-blob manifest. Do not cite those folders as pinned evidence."
+  }
 }
