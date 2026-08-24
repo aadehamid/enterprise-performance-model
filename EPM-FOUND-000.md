@@ -182,6 +182,14 @@ Current process-authority files on `main`:
 - `business_architecture/schema/data_product_portfolio.schema.json`
 - `business_architecture/schema/value_stream.schema.json`
 
+| ID | Title | Files |
+|---|---|---|
+| EPM-BUS-001 | Downstream Value Stream Model | `business_architecture/business_process/value_stream_order_to_cash.json`, `business_architecture/business_process/value_stream_commercial_lifecycle.json`, `business_architecture/schema/value_stream.schema.json` |
+| EPM-BUS-003 | Business Process and Activity Model | `business_architecture/business_process/downstream_process_map.json`, `business_architecture/business_process/office_lanes.json` |
+| EPM-DP-001 | Data Product Portfolio | `business_architecture/business_process/data_product_portfolio.json`, `business_architecture/schema/data_product_portfolio.schema.json` |
+
+office_lanes.json is a front/middle/back/operations overlay on BUS-003. Those four keys are not process or activity IDs.
+
 ### Machine ontology SoT
 
 Turtle in git is the machine ontology SoT. Current enterprise Turtle: [`ontology/stage2_enterprise_kpi_ontology.ttl`](ontology/stage2_enterprise_kpi_ontology.ttl). Demo `o2c-meaning.ttl` is demo Turtle, not this enterprise SoT.
@@ -446,7 +454,7 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 
 | # | Action | Why it matters | Owner |
 |---|---|---|---|
-| 01 | Treat FOUND-000 v2.3 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded | Establishes a clean, collision-free baseline | EPM Lead |
+| 01 | Treat FOUND-000 v2.4 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded | Establishes a clean, collision-free baseline | EPM Lead |
 | 02 | Fold the Charter's residual depth (C-11: §3, §4-detail, §5-detail, §8, §15) into PROJ-001/PROJ-002 and FOUND-000, then retire the Charter | Prevents loss of scope, roles, and lifecycle detail | EPM Lead |
 | 03 | Confirm whether an existing KPI Store technical design exists | Determines Phase 2 vs Phase 3 for Workstream 1 | EPM Lead |
 | 04 | Create and seed EPM-DEC-001 from "Major decisions" (D-01 to D-16) | Without it, no status claim is defensible | To be confirmed |
@@ -477,6 +485,8 @@ Declared this file (`EPM-FOUND-000.md` at repo root) the sole live Master Index.
 
 PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on `dim_kpi_metadata`. Fuseki is not SoT. OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.
 
+Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this register before those two.
+
 ---
 
 ## Artifact Update Block
@@ -487,7 +497,7 @@ PRs #5, #6, and #7 supersede this register where they conflict. Process and sche
 - **Assumptions:** Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel.
 - **Open questions and conflicts:** C-11 unchanged. C-08 narrowed (process JSON closed; Family C/E remains).
 - **Source evidence:** Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack.
-- **Artifacts created or requiring updates:** This index to 2.3 at repo root; pack FOUND-000 files are pointers; HTML reading copies marked stale.
+- **Artifacts created or requiring updates:** This index to 2.4 at repo root; pack FOUND-000 files are pointers; HTML reading copies marked stale.
 - **Suggested version and status:** 2.4 Draft.
 - **Next validation or implementation action:** Fold C-11 Charter depth. Do not reopen process JSON as Existing-unlinked. Do not start Stage B from this index.
 
