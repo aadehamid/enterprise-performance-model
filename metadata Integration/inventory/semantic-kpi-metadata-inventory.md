@@ -86,7 +86,7 @@ Same file `766f8d79…`. `gold_kpi_value` from `MEASURE(delivered_contract_usd)`
 
 ### MV-TEMP-ADJUSTED — fact / measure / recorded
 
-`sql/07_temp_adjusted.sql` `f5d8db8b…`. View `temp_adjusted_delivered_usd`. NOT Unbilled. `temp_adjusted_usd = SUM(gallons_net * contract_price * (1 + expansion_per_f * (temperature_f - 60)))`. Filter: delivered, gal≥4000, Jun–Jul 2026, gasoline\|distillate\|aviation. File expected 256066.39 / 17.
+`sql/07_temp_adjusted.sql` `f5d8db8b…`. View `temp_adjusted_delivered_usd`. NOT Unbilled. `temp_adjusted_usd = SUM(gallons_net * contract_price_usd * (1 + expansion_per_f * (temperature_f - 60)))`. Filter: delivered, gal≥4000, Jun–Jul 2026, gasoline\|distillate\|aviation. File expected 256066.39 / 17.
 
 ### KPI-O2C-TEMP-ADJUSTED-USD — fact / named_kpi / recorded
 
