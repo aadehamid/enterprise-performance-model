@@ -17,7 +17,8 @@ It must be used with:
 
 - [`README.md`](README.md) for navigation, scope, operating rules, and quick orientation.
 - [`THE-PROBLEM.md`](THE-PROBLEM.md) for the business problem the implementation proves.
-- [`../../../business_architecture/`](../../../business_architecture/) for process and domain authority (every file in that folder, including order-to-cash).
+- [`../../../business_architecture/business_process/`](../../../business_architecture/business_process/) and [`../../../business_architecture/schema/`](../../../business_architecture/schema/) for process authority (order-to-cash included).
+- [`../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md) for Customer-domain context. Draft. Not process authority.
 - [`../../../EPM_Homelab/`](../../../EPM_Homelab/) for the shared reference architecture, decisions, standards, and reusable patterns.
 
 ### Architectural relationship
@@ -39,7 +40,8 @@ The reference implementation **implements** the shared architecture. It may reve
 |---|---|---|
 | Reusable architecture principle, tool boundary, standard, or enterprise pattern | `EPM_Homelab/` | Propose/update the Homelab artifact and record a decision where material; assess impact on this and other demos |
 | Customer/O2C source fixture, role mapping, data transformation, dashboard, test, or implementation-specific integration | This implementation directory | Change the implementation and its evidence; promote only proven reusable patterns to Homelab |
-| Customer business definition, role catalog, source-system variant, or process meaning | Files under `business_architecture/` | Update the governing process/domain file before changing semantic interpretation |
+| Process meaning | Files under `business_architecture/business_process/` and `business_architecture/schema/` | Update the governing process or schema file before changing semantic interpretation |
+| Customer business definition, role catalog, or source-system variant | Files under `business_architecture/domain/` | Draft Customer-domain context. Not process authority. Update that draft before changing Customer-domain interpretation |
 | Metric/KPI definition, threshold, ownership, or approval status | KPI Store artifacts | Classify and govern the change; do not treat report logic as authoritative without validation |
 
 ## 2. Scope, baseline, and boundaries
@@ -179,7 +181,7 @@ Every reusable measurement must have, at minimum:
 
 | Concern | System of record / authoritative boundary | Not authoritative for this concern |
 |---|---|---|
-| Downstream process and domain meaning | Every file under `business_architecture/` | Optional companions; demo-local process lists |
+| Downstream process meaning | Files under `business_architecture/business_process/` and `business_architecture/schema/` | Optional companions; demo-local process lists; files under `business_architecture/domain/` |
 | Conceptual/logical/physical data-model structure | ER/Studio (production). Sirius Web is the demo stand-in | Hand-authored graph nodes, dashboard fields, agent prose; Sirius as a second model SoT |
 | Formal semantic definitions and mapping assertions | Turtle in git (OWL/SKOS/SHACL). Fuseki loads those files as the demo SPARQL/SHACL runtime | Neo4j serving projection; Fuseki as a second ontology SoT |
 | Operational source context | Lakebase source schemas and captured source extracts | Silver/Gold reinterpretation without retained source lineage |
@@ -192,7 +194,7 @@ Every reusable measurement must have, at minimum:
 
 ### Process authority and demo stand-ins
 
-The files under `business_architecture/` are the validated full Downstream oil and gas process set, including order-to-cash (O2C). Every file in that folder is process and domain authority.
+The files under `business_architecture/business_process/` and `business_architecture/schema/` are the Downstream oil and gas process set, including order-to-cash (O2C). Those two folders are process authority. Files under `business_architecture/domain/` are draft context, not process authority.
 
 Current files on `main`:
 
@@ -201,7 +203,6 @@ Current files on `main`:
 - `business_architecture/business_process/value_stream_commercial_lifecycle.json`
 - `business_architecture/business_process/data_product_portfolio.json`
 - `business_architecture/business_process/office_lanes.json`
-- `business_architecture/domain/customer_domain_problem_statement_v0.1.md`
 - `business_architecture/schema/data_product_portfolio.schema.json`
 - `business_architecture/schema/value_stream.schema.json`
 
