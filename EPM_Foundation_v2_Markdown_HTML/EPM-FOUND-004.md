@@ -9,9 +9,11 @@
 **Foundation navigation:** [EPM-FOUND-000](EPM-FOUND-000.md) | [EPM-FOUND-001](EPM-FOUND-001.md) | [EPM-FOUND-002](EPM-FOUND-002.md) | [EPM-FOUND-003](EPM-FOUND-003.md) | [EPM-FOUND-004](EPM-FOUND-004.md) | [EPM-FOUND-005](EPM-FOUND-005.md) | [EPM-FOUND-006](EPM-FOUND-006.md)
 
 ## Purpose
-The Enterprise Performance Ontology is the formal machine-readable implementation of the Enterprise Performance Semantic Model.
+This file is the ontology design for the Enterprise Performance Semantic Model. It is not the machine ontology SoT.
 
-The semantic model defines meaning. The ontology expresses that meaning using classes, properties, inheritance, constraints, and identifiers so that machines can validate, connect, query, and reason over enterprise context.
+FOUND-003 is the human-readable semantic model. Turtle in git defines formal semantic and mapping assertions only, not all meaning. This design uses conceptual names. Exact current IRIs, axioms, constraints, and individuals belong to the Turtle SoT.
+
+Machine ontology SoT is Turtle in git ([`ontology/stage2_enterprise_kpi_ontology.ttl`](../ontology/stage2_enterprise_kpi_ontology.ttl)). Demo `o2c-meaning.ttl` is demo Turtle, not that SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle, not SoT. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI OWL classes. Process authority is not this file.
 
 ## Ontology layers
 | Layer | Examples |
@@ -123,7 +125,7 @@ Gasoline Netback CPG explainedBy RIN Cost Variance
 ## Recommended implementation path
 1. Approve the human-readable semantic model.
 2. Define stable identifiers and namespaces.
-3. Formalize core classes and properties in RDF/OWL.
+3. Formalize core classes and properties as Turtle in git (`ontology/stage2_enterprise_kpi_ontology.ttl`). This file is the design, not that SoT. Fuseki is a demo runtime, not SoT.
 4. Add SHACL validation shapes for governance constraints.
 5. Load a small Commercial pilot knowledge graph.
 6. Connect ontology identifiers to Purview terms, KPI metadata, data products, SQL views, and Power BI models.
