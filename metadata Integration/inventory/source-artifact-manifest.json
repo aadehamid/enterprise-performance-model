@@ -1,0 +1,68 @@
+{
+  "manifest_id": "EPM-STAGE-A-SOURCE-ARTIFACT-MANIFEST",
+  "repo": "aadehamid/enterprise-performance-model",
+  "commit": "814cb79d2b79b51210d4e21170f4579c1940b891",
+  "extracted_at": "2026-08-23T19:58:00-05:00",
+  "scope": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/",
+  "method": "gh contents API at ref=814cb79; blob sha from GitHub; no clone; no Dropbox; no repo write",
+  "artifacts": [
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/03_metric_view.sql",
+      "sha": "efe32788b6c758ef8ffe19cc38ad27e0d702cdd4",
+      "size": 2657,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/05_store.sql",
+      "sha": "854ca5a22fa908380884c467f32b4eaa55dda4db",
+      "size": 10690,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/08_catalog_status.sql",
+      "sha": "d9652d440f773f65e5953d8b9821232c2f9b8ba1",
+      "size": 1038,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/02_facts.sql",
+      "sha": "a6cc9e16f4a398413c264f5e6a8b29b2fc4a2d5f",
+      "size": 4268,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/06_complex_metric.sql",
+      "sha": "766f8d79e6e4cf462d8311680b66dfc05d28dab5",
+      "size": 9836,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql",
+      "sha": "f5d8db8b74f69ec1dd06a88b0ba012aeee5878ef",
+      "size": 10075,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/osi/unbilled.ossie.yaml",
+      "sha": "2e889441d9c8b5480b305d44ef51140077fa19d5",
+      "size": 6280,
+      "exists": true
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/ontology/o2c-meaning.ttl",
+      "sha": "6ce06388b5434b0ff2d68ff2381c85fb3a2c5713",
+      "size": 8591,
+      "exists": true
+    }
+  ],
+  "skipped_verified_absent_or_out_of_scope": [
+    {
+      "path": "demos/o2c-unbilled-semantic-layer/models/marts/schema.yml",
+      "reason": "phantom / dbt out of scope"
+    },
+    {
+      "path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free-learn/",
+      "reason": "learner folder out of scope"
+    }
+  ]
+}

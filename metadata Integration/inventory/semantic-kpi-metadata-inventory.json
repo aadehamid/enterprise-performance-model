@@ -1,0 +1,656 @@
+{
+  "inventory_id": "EPM-STAGE-A-SEMANTIC-KPI-INVENTORY",
+  "status": "Draft evidence. Not a catalog. Not process authority. Not Stage B.",
+  "pin": {
+    "repo": "aadehamid/enterprise-performance-model",
+    "commit": "814cb79d2b79b51210d4e21170f4579c1940b891",
+    "scope": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/",
+    "excluded": [
+      "learner folder",
+      "Track A",
+      "MetricFlow / dbt / o2c-unbilled-semantic-layer",
+      "models/marts/schema.yml (phantom)",
+      "joined demos"
+    ]
+  },
+  "extracted_at": "2026-08-23T19:58:00-05:00",
+  "authority": {
+    "compile_sot": "Databricks Unity Catalog Metric Views (sql/03_metric_view.sql and sibling MV SQL)",
+    "store_catalog": "dim_kpi_metadata (sql/05_store.sql + sql/08_catalog_status.sql)",
+    "ontology_sot": "Turtle in git (ontology/o2c-meaning.ttl). Fuseki is not.",
+    "gold": "published cut from MEASURE(); not re-approve",
+    "ossie": "Ossie 0.1.1 projection; not compile SoT"
+  },
+  "vocabulary": {
+    "claim_label": [
+      "fact",
+      "candidate",
+      "unresolved"
+    ],
+    "classification": [
+      "named_kpi",
+      "measure",
+      "population_fact",
+      "interchange_projection",
+      "meaning_term",
+      "catalog_table",
+      "published_cut",
+      "catalog_lifecycle_helper"
+    ],
+    "mapping_status": [
+      "recorded",
+      "cited",
+      "not_applicable",
+      "unresolved"
+    ],
+    "catalog_status_enum_do_not_reuse_here": [
+      "proposed",
+      "approved",
+      "drifted",
+      "archived"
+    ],
+    "note": "catalog_status is a separate field for a live-observed enum only. This inventory does not re-read the warehouse. File INSERT literals go in catalog_metadata.file_insert_status_literal. classification and mapping_status never use proposed|approved|drifted|archived."
+  },
+  "section_8_2_fields_used": [
+    "artifact_path",
+    "git_sha",
+    "technical_id",
+    "business_name",
+    "description",
+    "classification",
+    "formula_expression",
+    "aggregation",
+    "entity_grain",
+    "time_dimensions",
+    "business_dimensions",
+    "physical_dependencies",
+    "upstream_lineage",
+    "owner_metadata",
+    "catalog_metadata",
+    "mapping_status"
+  ],
+  "section_8_2_fields_omitted_as_absent": [
+    "quality_freshness (no fact in these files)",
+    "mapping_status value 'approved' (forbidden; second-approval smell)",
+    "classification value 'approved KPI' (forbidden; collides with catalog enum)"
+  ],
+  "rows": [
+    {
+      "row_id": "POP-FCT-UNBILLED",
+      "claim_label": "fact",
+      "classification": "population_fact",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/02_facts.sql",
+      "git_sha": "a6cc9e16f4a398413c264f5e6a8b29b2fc4a2d5f",
+      "technical_id": "workspace.o2c_unbilled.fct_unbilled",
+      "business_name": "Unbilled ticket population",
+      "description": "Population at ticket grain. Compiler source for the Unbilled Metric View. Not gold published KPI values.",
+      "formula_expression": "unbilled_usd = gallons_net * contract_price_usd",
+      "aggregation": null,
+      "entity_grain": "ticket (ticket_id)",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "delivery_date=CAST(bol_ts AS DATE)"
+      ],
+      "business_dimensions": [
+        "sold_to_id/sold_to_name",
+        "payer_id/payer_name",
+        "bill_to_id/bill_to_name",
+        "site_code/site_name",
+        "product_code"
+      ],
+      "physical_dependencies": [
+        "raw_tickets",
+        "raw_products",
+        "raw_parties",
+        "raw_invoice_lines",
+        "raw_invoices",
+        "dim_site"
+      ],
+      "upstream_lineage": "raw_tickets delivered LEFT JOIN posted invoices as-of; exclude posted ticket_id; quality-hold excluded because status != delivered",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "Not a catalog row. File says NOT gold; Gold is gold_kpi_value from MEASURE().",
+      "notes": [
+        "File comment: 12 tickets, $179,934.00.",
+        "Do not treat SUM(fct_unbilled) as a second compile path."
+      ]
+    },
+    {
+      "row_id": "MV-UNBILLED-USD",
+      "claim_label": "fact",
+      "classification": "measure",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/03_metric_view.sql",
+      "git_sha": "efe32788b6c758ef8ffe19cc38ad27e0d702cdd4",
+      "technical_id": "workspace.o2c_unbilled.unbilled_usd",
+      "business_name": "unbilled_usd Metric View",
+      "description": "Unity Catalog Metric View compiler for Unbilled. YAML 0.1 fields + measures. Queried with MEASURE(). SELECT * refused.",
+      "formula_expression": "unbilled_usd: SUM(source.unbilled_usd); unbilled_ticket_count: COUNT(1)",
+      "aggregation": {
+        "unbilled_usd": "SUM",
+        "unbilled_ticket_count": "COUNT"
+      },
+      "entity_grain": "compiler source is fct_unbilled (ticket); published slices via MEASURE() GROUP BY",
+      "time_dimensions": [
+        "as_of (source.as_of_date)",
+        "delivery_date"
+      ],
+      "business_dimensions": [
+        "payer",
+        "sold_to",
+        "site",
+        "site_name",
+        "product"
+      ],
+      "physical_dependencies": [
+        "fct_unbilled"
+      ],
+      "upstream_lineage": "source: fct_unbilled",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "Not the Store row. Catalog formula_object points here.",
+      "notes": [
+        "Compile SoT for Unbilled. Ossie and Gold consume this; they do not author it."
+      ]
+    },
+    {
+      "row_id": "KPI-O2C-UNBILLED-USD",
+      "claim_label": "fact",
+      "classification": "named_kpi",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/05_store.sql",
+      "git_sha": "854ca5a22fa908380884c467f32b4eaa55dda4db",
+      "technical_id": "KPI-O2C-UNBILLED-USD",
+      "business_name": "Unbilled USD",
+      "description": "Unbilled USD at the published grains",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": "allowed_grain=enterprise,payer,sold_to,site; default_grain_rule=enterprise | payer | sold_to | site",
+      "time_dimensions": [
+        "as_of_date=2026-08-01"
+      ],
+      "business_dimensions": [
+        "payer",
+        "sold_to",
+        "site"
+      ],
+      "physical_dependencies": [
+        "dim_kpi_metadata",
+        "unbilled_usd Metric View",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "formula_pointer=unbilled_usd; formula_object=workspace.o2c_unbilled.unbilled_usd; formula_version=0.1",
+      "owner_metadata": "Revenue Accounting / Order-to-Cash",
+      "catalog_status": null,
+      "catalog_metadata": {
+        "table": "dim_kpi_metadata",
+        "columns_present": [
+          "kpi_id",
+          "name",
+          "owner",
+          "definition",
+          "uom",
+          "allowed_grain",
+          "default_grain_rule",
+          "gating_rule",
+          "status",
+          "formula_pointer",
+          "formula_object",
+          "formula_version",
+          "ontology_iri",
+          "as_of_date",
+          "definition_hash"
+        ],
+        "uom": "USD",
+        "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#UnbilledState",
+        "no_silent_promotion": "Never INSERT status=approved over drifted|proposed|archived. approve_kpi / 14_reapprove.py is the only path that sets approved and refreshes definition_hash.",
+        "file_insert_status_literal": "approved",
+        "insert_gate": "WHERE NOT EXISTS"
+      },
+      "notes": [
+        "File first-insert literal is approved WHERE NOT EXISTS. Live warehouse state was not re-read this pass. Do not un-approve a live row from this inventory.",
+        "Named KPI is 1:1 with this catalog row.",
+        "classification=named_kpi. file_insert_status_literal is not a live catalog_status."
+      ]
+    },
+    {
+      "row_id": "GOLD-KPI-VALUE-UNBILLED",
+      "claim_label": "fact",
+      "classification": "published_cut",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/05_store.sql",
+      "git_sha": "854ca5a22fa908380884c467f32b4eaa55dda4db",
+      "technical_id": "workspace.o2c_unbilled.gold_kpi_value (kpi_id=KPI-O2C-UNBILLED-USD)",
+      "business_name": "Published Unbilled cuts",
+      "description": "Gold published instances FROM MEASURE(). Not a second SUM. Not re-approve.",
+      "formula_expression": "MEASURE(unbilled_usd), MEASURE(unbilled_ticket_count)",
+      "aggregation": "compiler MEASURE(); Gold does not re-encode",
+      "entity_grain": "enterprise / payer / sold_to / site (11 rows: 1+3+4+3)",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "published_ts"
+      ],
+      "business_dimensions": [
+        "grain",
+        "grain_key",
+        "grain_label"
+      ],
+      "physical_dependencies": [
+        "unbilled_usd Metric View",
+        "dim_kpi_metadata"
+      ],
+      "upstream_lineage": "DELETE/INSERT Unbilled gold only when dim_kpi_metadata.status='approved'. Else last snapshot stays (published_ts unchanged).",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "Gold publish is not re-approve. File comment and EXISTS gates.",
+      "notes": [
+        "Each Unbilled grain slice SUM(value_usd)=179934.00 per file comment."
+      ]
+    },
+    {
+      "row_id": "CATALOG-STATUS-HELPER",
+      "claim_label": "fact",
+      "classification": "catalog_lifecycle_helper",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/08_catalog_status.sql",
+      "git_sha": "d9652d440f773f65e5953d8b9821232c2f9b8ba1",
+      "technical_id": "dim_kpi_metadata.status + definition_hash",
+      "business_name": "Catalog status lifecycle",
+      "description": "Keep dim_kpi_metadata. Add definition_hash. Migrate status certified \u2192 approved. Never CREATE OR REPLACE.",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": null,
+      "time_dimensions": null,
+      "business_dimensions": null,
+      "physical_dependencies": [
+        "dim_kpi_metadata"
+      ],
+      "upstream_lineage": "Hash fill is Python (SHOW CREATE TABLE of formula_object). See scripts/13_status_drift.py and 14_reapprove.py (not inventoried this pass).",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": {
+        "status_values": [
+          "proposed",
+          "approved",
+          "drifted",
+          "archived"
+        ],
+        "sql": "ALTER TABLE ADD COLUMN definition_hash; UPDATE status='approved' WHERE status='certified'"
+      },
+      "notes": [
+        "This is the catalog enum. Do not copy these four words into classification or mapping_status."
+      ]
+    },
+    {
+      "row_id": "OSSIE-UNBILLED",
+      "claim_label": "fact",
+      "classification": "interchange_projection",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/osi/unbilled.ossie.yaml",
+      "git_sha": "2e889441d9c8b5480b305d44ef51140077fa19d5",
+      "technical_id": "semantic_model.o2c_unbilled / metrics.unbilled_usd",
+      "business_name": "Ossie 0.1.1 Unbilled projection",
+      "description": "Apache Ossie (incubating) 0.1.1 projection of the Unbilled metric. Self-declared not compile SoT. Databricks does not read this file. Nobody in this demo compiles it. Not OWL. Not a second formula.",
+      "formula_expression": "ANSI_SQL projection: SUM(fct_unbilled.unbilled_usd); COUNT(fct_unbilled.ticket_id)",
+      "aggregation": {
+        "unbilled_usd": "SUM",
+        "unbilled_ticket_count": "COUNT"
+      },
+      "entity_grain": "dataset fct_unbilled primary_key ticket_id",
+      "time_dimensions": [
+        "delivery_date",
+        "as_of_date"
+      ],
+      "business_dimensions": [
+        "sold_to_name",
+        "payer_name",
+        "site_code",
+        "product_code"
+      ],
+      "physical_dependencies": [
+        "workspace.o2c_unbilled.fct_unbilled"
+      ],
+      "upstream_lineage": "custom_extensions.DATABRICKS.compile_sot=sql/03_metric_view.sql; metric_view=unbilled_usd; compiler=Unity Catalog Metric Views; kpi_id=KPI-O2C-UNBILLED-USD",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "References kpi_id; does not set catalog status.",
+      "notes": [
+        "Compile stays Databricks Metric Views."
+      ]
+    },
+    {
+      "row_id": "MV-CONTRACT-VS-LIST",
+      "claim_label": "fact",
+      "classification": "measure",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/06_complex_metric.sql",
+      "git_sha": "766f8d79e6e4cf462d8311680b66dfc05d28dab5",
+      "technical_id": "workspace.o2c_unbilled.contract_vs_list_usd",
+      "business_name": "contract_vs_list_usd Metric View",
+      "description": "Second Metric View. NOT Unbilled. Delivered-ticket value at contract vs list. Compiler writes joins + filter + cross-table multiply.",
+      "formula_expression": "delivered_contract_usd: SUM(gallons_net * contract_price_usd); plus delivered_list_usd, list_minus_contract_usd, counts, and CASE slices",
+      "aggregation": "SUM / COUNT via MEASURE()",
+      "entity_grain": "source raw_tickets; published gold grains enterprise / sold_to / product",
+      "time_dimensions": [
+        "filter CAST(bol_ts AS DATE) BETWEEN 2026-07-01 AND 2026-07-31"
+      ],
+      "business_dimensions": [
+        "payer",
+        "sold_to",
+        "site",
+        "site_name",
+        "product",
+        "product_family"
+      ],
+      "physical_dependencies": [
+        "raw_tickets",
+        "raw_products",
+        "raw_parties",
+        "raw_terminals"
+      ],
+      "upstream_lineage": "filter: delivered AND temperature_f>=80 AND gallons_net>=5000 AND July 2026 AND product_family IN gasoline|distillate",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": null,
+      "notes": [
+        "File expected unsliced delivered_contract_usd 110064.00 / 7 tickets."
+      ]
+    },
+    {
+      "row_id": "KPI-O2C-CONTRACT-VS-LIST-USD",
+      "claim_label": "fact",
+      "classification": "named_kpi",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/06_complex_metric.sql",
+      "git_sha": "766f8d79e6e4cf462d8311680b66dfc05d28dab5",
+      "technical_id": "KPI-O2C-CONTRACT-VS-LIST-USD",
+      "business_name": "Contract vs list USD",
+      "description": "Delivered-ticket value at contract vs list (see Metric View)",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": "allowed_grain=enterprise,sold_to,product",
+      "time_dimensions": [
+        "as_of_date=2026-08-01"
+      ],
+      "business_dimensions": [
+        "sold_to",
+        "product"
+      ],
+      "physical_dependencies": [
+        "dim_kpi_metadata",
+        "contract_vs_list_usd",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "formula_pointer=delivered_contract_usd; formula_object=workspace.o2c_unbilled.contract_vs_list_usd; formula_version=0.1; same-file DELETE then INSERT into dim_kpi_metadata (status literal certified). 08 migrates. Live status not re-read. Gold DELETE/INSERT not EXISTS-gated.",
+      "owner_metadata": "Revenue Accounting / Order-to-Cash",
+      "catalog_status": null,
+      "catalog_metadata": {
+        "file_insert_status_literal": "certified",
+        "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#Obligation",
+        "08_catalog_status_migrates": "UPDATE status='approved' WHERE status='certified'",
+        "gold_gate": "06 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)",
+        "store_lineage": "Same pinned file 06: DELETE kpi_id then INSERT dim_kpi_metadata. status literal certified. sql/08_catalog_status.sql migrates certified to approved. Live warehouse status not re-read. Gold not EXISTS-gated."
+      },
+      "notes": [
+        "File as written INSERTs status='certified'. 08_catalog_status.sql migrates certified\u2192approved.",
+        "Live warehouse status after migrate is not re-read this pass (see unresolved).",
+        "Do not treat the file literal 'certified' as a current catalog enum value after 08."
+      ]
+    },
+    {
+      "row_id": "GOLD-KPI-VALUE-CONTRACT-VS-LIST",
+      "claim_label": "fact",
+      "classification": "published_cut",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/06_complex_metric.sql",
+      "git_sha": "766f8d79e6e4cf462d8311680b66dfc05d28dab5",
+      "technical_id": "workspace.o2c_unbilled.gold_kpi_value (kpi_id=KPI-O2C-CONTRACT-VS-LIST-USD)",
+      "business_name": "Published contract-vs-list cuts",
+      "description": "Gold published instances FROM MEASURE(delivered_contract_usd). File evidence, not live warehouse. Not re-approve.",
+      "formula_expression": "MEASURE(delivered_contract_usd), MEASURE(delivered_ticket_count)",
+      "aggregation": "compiler MEASURE(); Gold does not re-encode",
+      "entity_grain": "enterprise / sold_to / product",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "published_ts"
+      ],
+      "business_dimensions": [
+        "grain",
+        "grain_key",
+        "grain_label"
+      ],
+      "physical_dependencies": [
+        "contract_vs_list_usd Metric View",
+        "dim_kpi_metadata",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "Same-file DELETE then INSERT gold_kpi_value. NOT EXISTS-gated on dim_kpi_metadata.status='approved'.",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": {
+        "gold_gate": "not EXISTS-gated on approved",
+        "live_status": "not re-read"
+      },
+      "notes": [
+        "File expected unsliced delivered_contract_usd 110064.00 / 7 tickets.",
+        "Gold publish is not re-approve. See UNRES-06-07-GOLD-GATE."
+      ]
+    },
+    {
+      "row_id": "MV-TEMP-ADJUSTED",
+      "claim_label": "fact",
+      "classification": "measure",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql",
+      "git_sha": "f5d8db8b74f69ec1dd06a88b0ba012aeee5878ef",
+      "technical_id": "workspace.o2c_unbilled.temp_adjusted_delivered_usd",
+      "business_name": "temp_adjusted_delivered_usd Metric View",
+      "description": "Third Metric View. NOT Unbilled and NOT contract-vs-list. Volume-correction / temperature-adjusted delivered value.",
+      "formula_expression": "temp_adjusted_usd: SUM(gallons_net * contract_price_usd * (1 + expansion_per_f * (temperature_f - 60)))",
+      "aggregation": "SUM / COUNT via MEASURE()",
+      "entity_grain": "source raw_tickets; published gold grains enterprise / product / site",
+      "time_dimensions": [
+        "filter CAST(bol_ts AS DATE) BETWEEN 2026-06-01 AND 2026-07-31"
+      ],
+      "business_dimensions": [
+        "payer",
+        "sold_to",
+        "site",
+        "site_name",
+        "product",
+        "product_family",
+        "mode"
+      ],
+      "physical_dependencies": [
+        "raw_tickets",
+        "raw_products",
+        "raw_parties",
+        "raw_terminals"
+      ],
+      "upstream_lineage": "filter: delivered AND gallons_net>=4000 AND Jun\u2013Jul 2026 AND product_family IN gasoline|distillate|aviation",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": null,
+      "notes": [
+        "File expected unsliced temp_adjusted_usd 256066.39 / 17 tickets."
+      ]
+    },
+    {
+      "row_id": "KPI-O2C-TEMP-ADJUSTED-USD",
+      "claim_label": "fact",
+      "classification": "named_kpi",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql",
+      "git_sha": "f5d8db8b74f69ec1dd06a88b0ba012aeee5878ef",
+      "technical_id": "KPI-O2C-TEMP-ADJUSTED-USD",
+      "business_name": "Temp-adjusted delivered USD",
+      "description": "Temperature-adjusted delivered value (see Metric View)",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": "allowed_grain=enterprise,product,site",
+      "time_dimensions": [
+        "as_of_date=2026-08-01"
+      ],
+      "business_dimensions": [
+        "product",
+        "site"
+      ],
+      "physical_dependencies": [
+        "dim_kpi_metadata",
+        "temp_adjusted_delivered_usd",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "formula_pointer=temp_adjusted_usd; formula_object=workspace.o2c_unbilled.temp_adjusted_delivered_usd; formula_version=0.1; same-file DELETE then INSERT into dim_kpi_metadata (status literal certified). 08 migrates. Live status not re-read. Gold DELETE/INSERT not EXISTS-gated.",
+      "owner_metadata": "Revenue Accounting / Order-to-Cash",
+      "catalog_status": null,
+      "catalog_metadata": {
+        "file_insert_status_literal": "certified",
+        "ontology_iri": "https://example.org/domain-ontology-kpi/o2c#Obligation",
+        "08_catalog_status_migrates": "UPDATE status='approved' WHERE status='certified'",
+        "gold_gate": "07 DELETE/INSERT gold is NOT EXISTS-gated on status='approved' (unlike Unbilled in 05_store.sql)",
+        "store_lineage": "Same pinned file 07: DELETE kpi_id then INSERT dim_kpi_metadata. status literal certified. sql/08_catalog_status.sql migrates certified to approved. Live warehouse status not re-read. Gold not EXISTS-gated."
+      },
+      "notes": [
+        "File as written INSERTs status='certified'. 08_catalog_status.sql migrates certified\u2192approved.",
+        "Live warehouse status after migrate is not re-read this pass (see unresolved)."
+      ]
+    },
+    {
+      "row_id": "GOLD-KPI-VALUE-TEMP-ADJUSTED",
+      "claim_label": "fact",
+      "classification": "published_cut",
+      "mapping_status": "recorded",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/sql/07_temp_adjusted.sql",
+      "git_sha": "f5d8db8b74f69ec1dd06a88b0ba012aeee5878ef",
+      "technical_id": "workspace.o2c_unbilled.gold_kpi_value (kpi_id=KPI-O2C-TEMP-ADJUSTED-USD)",
+      "business_name": "Published temp-adjusted cuts",
+      "description": "Gold published instances FROM MEASURE(temp_adjusted_usd). File evidence, not live warehouse. Not re-approve.",
+      "formula_expression": "MEASURE(temp_adjusted_usd), MEASURE(delivered_ticket_count)",
+      "aggregation": "compiler MEASURE(); Gold does not re-encode",
+      "entity_grain": "enterprise / product / site",
+      "time_dimensions": [
+        "as_of_date=2026-08-01",
+        "published_ts"
+      ],
+      "business_dimensions": [
+        "grain",
+        "grain_key",
+        "grain_label"
+      ],
+      "physical_dependencies": [
+        "temp_adjusted_delivered_usd Metric View",
+        "dim_kpi_metadata",
+        "gold_kpi_value"
+      ],
+      "upstream_lineage": "Same-file DELETE then INSERT gold_kpi_value. NOT EXISTS-gated on dim_kpi_metadata.status='approved'.",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": {
+        "gold_gate": "not EXISTS-gated on approved",
+        "live_status": "not re-read"
+      },
+      "notes": [
+        "File expected unsliced temp_adjusted_usd 256066.39 / 17 tickets.",
+        "Gold publish is not re-approve. See UNRES-06-07-GOLD-GATE."
+      ]
+    },
+    {
+      "row_id": "TTL-UNBILLEDSTATE",
+      "claim_label": "fact",
+      "classification": "meaning_term",
+      "mapping_status": "cited",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/ontology/o2c-meaning.ttl",
+      "git_sha": "6ce06388b5434b0ff2d68ff2381c85fb3a2c5713",
+      "technical_id": "https://example.org/domain-ontology-kpi/o2c#UnbilledState",
+      "business_name": "Unbilled",
+      "description": "A STATE of an Obligation (delivered, not yet invoiced). Not a KPI class. Turtle in git is ontology SoT. Fuseki is not.",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": "comment: payer | sold-to | site",
+      "time_dimensions": null,
+      "business_dimensions": null,
+      "physical_dependencies": null,
+      "upstream_lineage": "Store catalog meaning binding: Unbilled KPI \u2192 o2c:UnbilledState. Does NOT author formulas or compile.",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "Matches dim_kpi_metadata.ontology_iri for KPI-O2C-UNBILLED-USD.",
+      "notes": [
+        "o2c:Unbilled owl:sameAs o2c:UnbilledState.",
+        "IRIs demo-only, unsigned."
+      ]
+    },
+    {
+      "row_id": "TTL-OBLIGATION",
+      "claim_label": "fact",
+      "classification": "meaning_term",
+      "mapping_status": "cited",
+      "artifact_path": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/ontology/o2c-meaning.ttl",
+      "git_sha": "6ce06388b5434b0ff2d68ff2381c85fb3a2c5713",
+      "technical_id": "https://example.org/domain-ontology-kpi/o2c#Obligation",
+      "business_name": "Obligation",
+      "description": "A delivered BOL / ticket. The two delivered KPIs bind here. Unbilled binds to UnbilledState.",
+      "formula_expression": null,
+      "aggregation": null,
+      "entity_grain": null,
+      "time_dimensions": null,
+      "business_dimensions": null,
+      "physical_dependencies": null,
+      "upstream_lineage": "contract-vs-list KPI \u2192 o2c:Obligation; temp-adjusted KPI \u2192 o2c:Obligation",
+      "owner_metadata": null,
+      "catalog_status": null,
+      "catalog_metadata": "Both delivered catalog rows share this IRI.",
+      "notes": [
+        "Shared IRI is a fact of the files. Whether that is ambiguous for agents is not decided here."
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "row_id": "UNRES-QUALITY-FRESHNESS",
+      "claim_label": "unresolved",
+      "mapping_status": "unresolved",
+      "field": "quality_freshness",
+      "note": "None of the inventoried Demo 2 files declare quality rules, freshness SLAs, or Bigeye/DQ checks."
+    },
+    {
+      "row_id": "UNRES-PROCESS-USED-IN",
+      "claim_label": "unresolved",
+      "mapping_status": "unresolved",
+      "field": "process_used_in",
+      "note": "No process column on dim_kpi_metadata in these files. Do not cite business_architecture/business_process/ or schema/ as pinned evidence. Those folders are current governance (PRs #6/#7/#9), not a SHA in this manifest."
+    },
+    {
+      "row_id": "UNRES-06-07-FILE-STATUS-LITERAL",
+      "claim_label": "unresolved",
+      "mapping_status": "unresolved",
+      "field": "catalog_status",
+      "note": "06 and 07 SQL INSERT status='certified'. 08 migrates certified\u2192approved. Warehouse live status after 08/Python was not re-read this pass. Do not treat the SQL literal as a rollback of the catalog enum."
+    },
+    {
+      "row_id": "UNRES-06-07-GOLD-GATE",
+      "claim_label": "unresolved",
+      "mapping_status": "unresolved",
+      "field": "gold_publish_gate",
+      "note": "Unbilled Gold in 05_store.sql is EXISTS-gated on status='approved'. 06 and 07 Gold DELETE/INSERT are not. Whether companion Python now gates is outside this SQL inventory."
+    },
+    {
+      "row_id": "UNRES-DEFINITION-HASH-FILL",
+      "claim_label": "unresolved",
+      "mapping_status": "unresolved",
+      "field": "definition_hash",
+      "note": "05 CREATE includes definition_hash; Unbilled first-time INSERT omits it. 06/07 INSERT omit it. 08 ADD COLUMN. Fill is Python (not inventoried)."
+    }
+  ],
+  "dropped": [
+    "ADR-META rows",
+    "Fuseki / Neo4j artifacts",
+    "vocabulary baseline / generator / SHACL",
+    "OpenMetadata / Purview fixtures",
+    "Stage B files"
+  ],
+  "current_governance_not_pinned": {
+    "process_authority": "business_architecture/business_process/ and business_architecture/schema/ only. Domain folder is draft context.",
+    "note": "This lock is PRs #6/#7/#9 on current main. It is not a SHA in the eight-blob manifest. Do not cite those folders as pinned evidence."
+  }
+}
