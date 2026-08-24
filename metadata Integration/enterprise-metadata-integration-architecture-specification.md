@@ -157,7 +157,7 @@ Process and domain authority for this scope is the files under `business_archite
 
 ### 5.3 Process authority and demo stand-ins
 
-The files under `business_architecture/` are the validated full Downstream oil and gas process set, including order-to-cash (O2C). Every file in that folder is process and domain authority.
+The files under `business_architecture/business_process/` and `business_architecture/schema/` are the Downstream oil and gas process set, including order-to-cash (O2C). Those two folders are process authority. Files under `business_architecture/domain/` are draft context, not process authority.
 
 Current files on `main`:
 
@@ -166,7 +166,6 @@ Current files on `main`:
 - `business_architecture/business_process/value_stream_commercial_lifecycle.json`
 - `business_architecture/business_process/data_product_portfolio.json`
 - `business_architecture/business_process/office_lanes.json`
-- `business_architecture/domain/customer_domain_problem_statement_v0.1.md`
 - `business_architecture/schema/data_product_portfolio.schema.json`
 - `business_architecture/schema/value_stream.schema.json`
 
