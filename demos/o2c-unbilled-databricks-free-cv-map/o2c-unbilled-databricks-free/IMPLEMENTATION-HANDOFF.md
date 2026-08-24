@@ -172,9 +172,12 @@ Every reusable measurement must have, at minimum:
  └───────────────────┘
                            │
                            ▼
-                    OpenMetadata
-             cross-platform catalog, lineage,
-                 ownership, glossary, quality
+              ┌────────────────────┐    ┌────────────────────┐
+              │ Purview catalog    │    │ Bigeye             │
+              │ OM demo stand-in   │    │ observed lineage   │
+              │ enterprise catalog │    │ and data quality   │
+              └────────────────────┘    └────────────────────┘
+                                          no OSS stand-in
 ```
 
 ### Mandatory boundaries
@@ -186,7 +189,8 @@ Every reusable measurement must have, at minimum:
 | Formal semantic definitions and mapping assertions | Turtle in git (OWL/SKOS/SHACL). Fuseki loads those files as the demo SPARQL/SHACL runtime | Neo4j serving projection; Fuseki as a second ontology SoT |
 | Operational source context | Lakebase source schemas and captured source extracts | Silver/Gold reinterpretation without retained source lineage |
 | Lakehouse technical assets and native Databricks lineage | Unity Catalog | OpenMetadata copy/projection |
-| Cross-platform observability/catalog context | Purview (production). OpenMetadata is the demo stand-in | OpenMetadata as a second enterprise catalog |
+| Enterprise catalog | Purview (production). OpenMetadata is the demo stand-in | OpenMetadata as a second enterprise catalog |
+| Cross-platform lineage and data quality | Bigeye (production) | no OSS stand-in; do not map OpenMetadata to Bigeye |
 | Governed reusable analytical measures | Databricks Metric Views and versioned calculation specifications | Dashboard SQL, ad hoc notebook formulas, agent calculation logic |
 | KPI approval, thresholding, ownership, and published value history | KPI Store governance artifacts and Gold-published KPI snapshots | Tableau logic, report calculations, or a Metric View alone |
 | Graph investigation and impact traversal | Neo4j projection derived from approved sources | Uncontrolled semantic redefinition |
@@ -707,7 +711,7 @@ Exit gate: A business/technical reviewer can ask the defined questions, obtain g
 - The Customer/O2C role-aware unbilled demonstration is a reference implementation, not a competing reference architecture.
 - Customer identity, hierarchy, and transaction role must be represented separately to support trustworthy O2C measurement.
 - Unbilled exposure is initially an operational metric/candidate KPI consideration, not an automatically approved KPI.
-- Meaning, compute, and consume must remain separated: Turtle in git defines meaning (ER/Studio production / Sirius Web demo stand-in model it); Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
+- Meaning, compute, and consume must remain separated: Turtle in git defines formal semantic and mapping assertions (ER/Studio production / Sirius Web demo stand-in model structure); FOUND-003 stays the human-readable semantic model; Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
 
 ### Decisions and status
 
