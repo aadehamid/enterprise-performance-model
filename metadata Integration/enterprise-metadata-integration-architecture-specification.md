@@ -32,7 +32,7 @@ The resulting graph becomes the **integration and context plane**. It supports g
 
 > Keep each metadata fact in its operational system of authority. Publish a validated, selective, identity-resolved projection for enterprise integration and downstream consumption.
 
-Process and domain authority for this scope is the files under `business_architecture/`. Demo tools may stand in for a production system of authority. A demo tool is not a second system of authority.
+Process authority for this scope is the files under `business_architecture/business_process/` and `business_architecture/schema/`. Files under `business_architecture/domain/` are draft context, not process authority. Demo tools may stand in for a production system of authority. A demo tool is not a second system of authority.
 
 ---
 
