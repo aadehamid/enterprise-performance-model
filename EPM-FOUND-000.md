@@ -1,6 +1,6 @@
 # Enterprise Performance Model Master Index
 **Artifact ID:** EPM-FOUND-000
-**Version:** 2.3 Draft
+**Version:** 2.4 Draft
 **Status:** Draft (functioning as working baseline)
 **Owner:** Enterprise Performance Model Lead
 **Steward / maintainer:** To be confirmed
@@ -118,12 +118,12 @@ Read left to right it is a design sequence. Read right to left it is the audit q
 
 | ID | Title | Role | Status | Location |
 |---|---|---|---|---|
-| EPM-FOUND-000 | Enterprise Performance Model Master Index | Architecture map + control panel (this document) | Draft (2.3) | This file (canonical) |
+| EPM-FOUND-000 | Enterprise Performance Model Master Index | Architecture map + control panel (this document) | Draft (2.4) | This file (canonical) |
 | EPM-FOUND-000A | Architectural Principles | The 16 constitutional principles governing all design | Draft (working baseline) | [EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.md](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.md) |
-| EPM-FOUND-001 | Enterprise Business Architecture | Domains, value streams, capabilities, processes, activities, decisions | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md) |
+| EPM-FOUND-001 | Enterprise Business Architecture | Pattern document for domains, value streams, capabilities, processes, activities, decisions. Not the process instance SoT. | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md) |
 | EPM-FOUND-002 | Enterprise Performance and Data Architecture | Objectives → measurements → metrics → KPIs → data products → KPI Store → consumption | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md) |
-| EPM-FOUND-003 | Enterprise Performance Semantic Model | Authoritative human-readable business meaning | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md) |
-| EPM-FOUND-004 | Enterprise Performance Ontology Design | Machine-formal design derived from the semantic model | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md) |
+| EPM-FOUND-003 | Enterprise Performance Semantic Model | Human-readable semantic model. Not the machine SoT. | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md) |
+| EPM-FOUND-004 | Enterprise Performance Ontology Design | Ontology design. Not the machine SoT. Machine expression is Turtle in git. | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md) |
 | EPM-FOUND-005 | Enterprise Measurement and KPI Model | Classification and promotion model; Tableau extraction rules | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md) |
 | EPM-FOUND-006 | Enterprise Data Product and Consumption Model | Foundational/derived products, medallion alignment, consumption | Draft (working baseline) | [EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md](EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md) |
 | EPM-PROJ-001 | Project Instructions | Concise operating rules for the project | Draft (working baseline) | [EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-001_Project_Instructions.md](EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-001_Project_Instructions.md) |
@@ -158,29 +158,60 @@ Navigable status view. The **detailed inventory** — every artifact with full p
 |---|---|---|
 | Draft / Candidate | Reviewed or working document at that status | Yes — see Location in Family A |
 | Existing-unlinked | File is in the repo; it is **not** yet accepted as the reviewed source for this ID | Yes — listed under "Present in repo, not yet the reviewed source" |
+| Process authority (instance files) | The files under `business_architecture/business_process/` and `business_architecture/schema/` are the process SoT for this ID. FOUND-001 remains the pattern document and is not the instance SoT. Not Existing-unlinked. Not Approved Baseline. Not catalog status. | Yes - listed under "Process authority (instance files)" |
 | To be located | Named as if it already exists somewhere; no reviewed file found yet | No (or not identified) |
 | Not started | Planned in the minimum controlled set; no document yet | No |
 
 > Appearance in this register still means *planned in the minimum controlled set*. It does not, by itself, prove a file exists or that an existing file is the reviewed source.
 
+Catalog status `proposed | approved | drifted | archived` lives on `dim_kpi_metadata` only. It is not an artifact-lifecycle value and it is not used on this register.
+
+### Process authority (instance files)
+
+PRs #6 and #7. The files under `business_architecture/business_process/` and `business_architecture/schema/` are the Downstream oil and gas process set, including order-to-cash (O2C). Those two folders are process authority. Files under `business_architecture/domain/` are draft context, not process authority.
+
+FOUND-001 stays the pattern document. It is not the instance SoT.
+
+Current process-authority files on `main`:
+
+- `business_architecture/business_process/downstream_process_map.json`
+- `business_architecture/business_process/value_stream_order_to_cash.json`
+- `business_architecture/business_process/value_stream_commercial_lifecycle.json`
+- `business_architecture/business_process/data_product_portfolio.json`
+- `business_architecture/business_process/office_lanes.json`
+- `business_architecture/schema/data_product_portfolio.schema.json`
+- `business_architecture/schema/value_stream.schema.json`
+
+| ID | Title | Files |
+|---|---|---|
+| EPM-BUS-001 | Downstream Value Stream Model | `business_architecture/business_process/value_stream_order_to_cash.json`, `business_architecture/business_process/value_stream_commercial_lifecycle.json`, `business_architecture/schema/value_stream.schema.json` |
+| EPM-BUS-003 | Business Process and Activity Model | `business_architecture/business_process/downstream_process_map.json`, `business_architecture/business_process/office_lanes.json` |
+| EPM-DP-001 | Data Product Portfolio | `business_architecture/business_process/data_product_portfolio.json`, `business_architecture/schema/data_product_portfolio.schema.json` |
+
+office_lanes.json is a front/middle/back/operations overlay on BUS-003. Those four keys are not process or activity IDs.
+
+### Machine ontology SoT
+
+Turtle in git is the machine ontology SoT. Current enterprise Turtle: [`ontology/stage2_enterprise_kpi_ontology.ttl`](ontology/stage2_enterprise_kpi_ontology.ttl). Demo `o2c-meaning.ttl` is demo Turtle, not this enterprise SoT.
+
+FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design. Neither is the machine SoT. Fuseki is not. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle.
+
 ### Present in repo, not yet the reviewed source
 
-Working files that match a registered subject but have **not** been accepted as the canonical artifact for that ID. Do not treat them as Approved, and do not invent a silent promotion.
+Working files that match a registered subject but have **not** been accepted as the canonical artifact for that ID. Do not invent a silent promotion to Approved Baseline.
 
 | Related ID | What is on disk | Why it is not the reviewed source |
 |---|---|---|
-| EPM-BUS-001 / EPM-BUS-003 | [`business_architecture/business_process/value_stream_order_to_cash.json`](business_architecture/business_process/value_stream_order_to_cash.json), [`value_stream_commercial_lifecycle.json`](business_architecture/business_process/value_stream_commercial_lifecycle.json), [`downstream_process_map.json`](business_architecture/business_process/downstream_process_map.json), [`office_lanes.json`](business_architecture/business_process/office_lanes.json) | Instance JSON and schemas; FOUND-001 remains the definitional architecture. No ID-bearing reviewed BUS artifact. |
-| EPM-DP-001 | [`business_architecture/business_process/data_product_portfolio.json`](business_architecture/business_process/data_product_portfolio.json) | Working portfolio JSON + schema; not reviewed as EPM-DP-001. |
-| EPM-MOD-001 / domain problem | [`business_architecture/domain/customer_domain_problem_statement_v0.1.md`](business_architecture/domain/customer_domain_problem_statement_v0.1.md) | Draft domain problem (EPM-BA-CUST-001). Not the Domain Modeling Playbook. |
-| EPM-FOUND-003 / 004 | [`ontology/stage2_enterprise_kpi_ontology.ttl`](ontology/stage2_enterprise_kpi_ontology.ttl), [`ontology/kpi_ontology_class_hierarchy.md`](ontology/kpi_ontology_class_hierarchy.md) | Formal ontology work; FOUND-003/004 remain the human/machine design docs. |
-| — (homelab / demos) | [`EPM_Homelab/`](EPM_Homelab/), [`demos/`](demos/README.md) | Explicitly not governed EPM artifacts. |
+| EPM-MOD-001 / domain problem | [`business_architecture/domain/customer_domain_problem_statement_v0.1.md`](business_architecture/domain/customer_domain_problem_statement_v0.1.md) | Draft Customer-domain context. Not process authority. Not the Domain Modeling Playbook. |
+| EPM-FOUND-003 / 004 (notes only) | [`ontology/kpi_ontology_class_hierarchy.md`](ontology/kpi_ontology_class_hierarchy.md) | Supporting notes. Not Turtle. Not machine SoT. |
+| n/a (homelab / demos) | [`EPM_Homelab/`](EPM_Homelab/), [`demos/`](demos/README.md) | Explicitly not governed EPM artifacts. |
 
 ### Family B — Business architecture (populated downstream)
 | ID | Title | Status |
 |---|---|---|
-| EPM-BUS-001 | Downstream Value Stream Model | Existing-unlinked |
+| EPM-BUS-001 | Downstream Value Stream Model | Process authority (instance files) |
 | EPM-BUS-002 | Business Capability Map | To be located |
-| EPM-BUS-003 | Business Process and Activity Model | Existing-unlinked |
+| EPM-BUS-003 | Business Process and Activity Model | Process authority (instance files) |
 | EPM-BUS-004 | Business Objective and Decision Model | To be located |
 
 ### Family C — Measurement and KPI
@@ -210,7 +241,7 @@ Working files that match a registered subject but have **not** been accepted as 
 ### Family E — Data products and semantics
 | ID | Title | Status |
 |---|---|---|
-| EPM-DP-001 | Data Product Portfolio | Existing-unlinked |
+| EPM-DP-001 | Data Product Portfolio | Process authority (instance files) |
 | EPM-DP-002 | Data Product Standard and Contract Template | Not started |
 | EPM-SEM-001 | Semantic Model Standards | Not started |
 | EPM-SEM-002 | Power BI Consumption and Certification Standard | Not started |
@@ -242,7 +273,7 @@ Working files that match a registered subject but have **not** been accepted as 
 | EPM-CHG-001 | Training and Change Plan | Not started |
 | EPM-VALUE-001 | Adoption and Value Scorecard | Not started |
 
-> **Relationship to reconcile (C-08).** The v2 foundation docs and the Family B/C/E artifacts overlap in subject but not in role. FOUND-001 is the *definitional* business architecture (what a domain or capability **is**); BUS-001 to 004 are the *populated downstream instances*. FOUND-005 defines the measurement taxonomy that MEAS/KPI artifacts apply; FOUND-006 defines the data-product model that DP/SEM artifacts instantiate. They complement; neither retires the other. A formal subsumption pass is logged as C-08.
+> **Relationship to reconcile (C-08).** FOUND-001 is the pattern document. The process and schema files listed under Process authority are the instance SoT for process meaning (PRs #6 and #7). BUS-001, BUS-003, and DP-001 name those instance files; they are not Existing-unlinked. FOUND-005 still defines the measurement taxonomy that MEAS/KPI artifacts apply; FOUND-006 still defines the data-product model that remaining DP/SEM artifacts instantiate. Remaining C-08 is Family C and the rest of Family E, not the process JSON.
 
 ---
 
@@ -286,7 +317,7 @@ Every artifact carries: ID, title, version, status, owner, date, scope, and depe
 - Power BI is the current validation and consumption environment; redevelopment out of scope unless authorised.
 - Reusable business logic is implemented at the lowest sensible governed layer.
 - Consumers access only the semantic / consumption layer.
-- The semantic model is the authoritative system of business meaning; the ontology is its formal machine-readable implementation.
+- FOUND-003 is the human-readable semantic model. Machine ontology SoT is Turtle in git. FOUND-004 is the ontology design, not the machine SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from that Turtle.
 - Data Governance is cross-cutting and embedded in delivery.
 - The 16 principles in FOUND-000A govern all design choices; exceptions follow its exception process.
 
@@ -341,7 +372,7 @@ Seeding list for **EPM-ISS-001**, which does not yet exist.
 - **C-05** Pack documents assume ChatGPT (PROJ-001 subtitle; PROJ-003 setup). The project runs on Claude. *Open — sweep platform assumptions in the pack.*
 - **C-06** FOUND-001/002 ID collision. **Resolved 2026-08-05**: FOUND-001/002 are the architecture docs; the interim re-homing to PROJ-001/002 is void (those are Project Instructions and Operating Model); the Charter and Register are superseded (D-15), not re-homed.
 - **C-07** Handoff proposed ten workstreams vs. four. **Resolved 2026-08-05**: extra concerns are architecture families/foundation artifacts; delivery stays at four.
-- **C-08** Subsumption of v2 foundation docs vs. planned Family B/C/E artifacts is not formally stated. *Open — they complement.*
+- **C-08** Subsumption of v2 foundation docs vs. planned Family B/C/E artifacts. **Partial 2026-08-23 (PRs #6 and #7):** process and schema instance files are process authority; FOUND-001 remains the pattern. Remaining open: Family C and the rest of Family E vs FOUND-005/006.
 - **C-09** Two lifecycle vocabularies. **Resolved 2026-08-05** by the reconciliation above (D-16).
 - **C-10** Retiring the Register risked losing its migration method. **Resolved 2026-08-05**: preserved in PROJ-006.
 - **C-11** Retiring the Charter would lose unique depth (§3, §4-detail, §5.1–5.10, §8, §15) not yet carried by the pack. *Open — fold into PROJ-001/002 and FOUND-000 before the Charter moves from Superseded to Retired.*
@@ -376,6 +407,8 @@ When sources conflict, the higher-precedence source wins. A lower source may nev
 9. General industry assumption
 
 **The highest-precedence sources available in this project are at level 5.** Levels 1 to 4 are empty — which is why nothing here is marked Approved. The adopted foundation set functions as a ratified working baseline but has not passed formal approval to become an Approved Baseline.
+
+Process authority (the two folders) and Turtle in git are concern SoTs from PRs #6 and #7. They do not fill precedence levels 1–4. They are not Approved Baseline. Catalog status stays on `dim_kpi_metadata` only.
 
 ---
 
@@ -421,12 +454,12 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 
 | # | Action | Why it matters | Owner |
 |---|---|---|---|
-| 01 | Treat FOUND-000 v2.3 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded | Establishes a clean, collision-free baseline | EPM Lead |
+| 01 | Treat FOUND-000 v2.4 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded | Establishes a clean, collision-free baseline | EPM Lead |
 | 02 | Fold the Charter's residual depth (C-11: §3, §4-detail, §5-detail, §8, §15) into PROJ-001/PROJ-002 and FOUND-000, then retire the Charter | Prevents loss of scope, roles, and lifecycle detail | EPM Lead |
 | 03 | Confirm whether an existing KPI Store technical design exists | Determines Phase 2 vs Phase 3 for Workstream 1 | EPM Lead |
 | 04 | Create and seed EPM-DEC-001 from "Major decisions" (D-01 to D-16) | Without it, no status claim is defensible | To be confirmed |
 | 05 | Create and seed EPM-SRC-001 and EPM-ISS-001 using the PROJ-006 templates | Provenance and open-issue tracking must exist | To be confirmed |
-| 06 | Run the C-08 subsumption pass (FOUND-001/005/006 vs Family B/C/E) | Prevents duplicate or contradictory downstream artifacts | EPM Lead |
+| 06 | Run the remaining C-08 pass (FOUND-005/006 vs Family C and the rest of Family E). Process JSON is not in that pass. | Prevents duplicate measurement or data-product artifacts. Process authority is already the two folders. | EPM Lead |
 | 07 | Sweep the pack for ChatGPT assumptions (C-05) and align to Claude | PROJ-001/003 currently misdirect setup steps | Steward |
 | 08 | Align the "Working Baseline" status wording across the pack with the canonical lifecycle | Small consistency fix | Steward |
 | 09 | Confirm artifact owners and stewards | Most artifacts read "To be confirmed" | Enterprise Data Governance |
@@ -448,19 +481,25 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 
 Declared this file (`EPM-FOUND-000.md` at repo root) the sole live Master Index. Pack copies are pointers. Linked ARCHIVE/ for the superseded Charter and Register. Split register presence into *Draft/Candidate*, *Existing-unlinked*, *To be located*, and *Not started*.
 
+### v2.4 PRs #5 / #6 / #7 supersede (2026-08-23)
+
+PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on `dim_kpi_metadata`. Fuseki is not SoT. OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.
+
+Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this register before those two.
+
 ---
 
 ## Artifact Update Block
 
 - **Conclusions:** One live FOUND-000; old Charter/Register are in ARCHIVE/ and remain Superseded, not the current FOUND-001/002.
-- **Decisions and status:** No new approved decisions. Working baseline unchanged except repository location of the index.
-- **Definitions added or changed:** *Existing-unlinked* = file on disk that is not the reviewed source for that ID.
+- **Decisions and status:** Process and schema files are process authority (PRs #6 and #7). Turtle in git is machine ontology SoT. No new Approved Baseline. Catalog enum unchanged.
+- **Definitions added or changed:** *Process authority (instance files)* = the two process/schema folders. *Machine ontology SoT* = Turtle in git. Existing-unlinked no longer applies to those files or to `ontology/stage2_enterprise_kpi_ontology.ttl`.
 - **Assumptions:** Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel.
-- **Open questions and conflicts:** C-11 (Charter fold-in) unchanged. Existing-unlinked JSON/ontology still needs a formal subsumption pass (C-08).
+- **Open questions and conflicts:** C-11 unchanged. C-08 narrowed (process JSON closed; Family C/E remains).
 - **Source evidence:** Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack.
-- **Artifacts created or requiring updates:** This index to 2.3 at repo root; pack FOUND-000 files are pointers; HTML reading copies marked stale.
-- **Suggested version and status:** 2.3 Draft.
-- **Next validation or implementation action:** Fold C-11 Charter depth; decide whether existing-unlinked JSON is promoted, assigned a different ID, or left as working evidence.
+- **Artifacts created or requiring updates:** This index to 2.4 at repo root; pack FOUND-000 files are pointers; HTML reading copies marked stale.
+- **Suggested version and status:** 2.4 Draft.
+- **Next validation or implementation action:** Fold C-11 Charter depth. Do not reopen process JSON as Existing-unlinked. Do not start Stage B from this index.
 
 ---
 
