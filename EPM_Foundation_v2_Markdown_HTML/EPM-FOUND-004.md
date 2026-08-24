@@ -11,7 +11,7 @@
 ## Purpose
 This file is the ontology design for the Enterprise Performance Semantic Model. It is not the machine ontology SoT.
 
-FOUND-003 is the human-readable semantic model. Turtle in git defines formal semantic and mapping assertions only, not all meaning. This design names the classes, properties, inheritance, constraints, and identifiers that the machine expression uses.
+FOUND-003 is the human-readable semantic model. Turtle in git defines formal semantic and mapping assertions only, not all meaning. This design uses conceptual names. Exact current IRIs, axioms, constraints, and individuals belong to the Turtle SoT.
 
 Machine ontology SoT is Turtle in git ([`ontology/stage2_enterprise_kpi_ontology.ttl`](../ontology/stage2_enterprise_kpi_ontology.ttl)). Demo `o2c-meaning.ttl` is demo Turtle, not that SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle, not SoT. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI OWL classes. Process authority is not this file.
 
