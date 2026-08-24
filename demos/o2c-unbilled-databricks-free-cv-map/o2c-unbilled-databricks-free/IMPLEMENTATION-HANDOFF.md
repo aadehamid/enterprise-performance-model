@@ -17,7 +17,8 @@ It must be used with:
 
 - [`README.md`](README.md) for navigation, scope, operating rules, and quick orientation.
 - [`THE-PROBLEM.md`](THE-PROBLEM.md) for the business problem the implementation proves.
-- [`../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md) for Customer-domain variants, party roles, and business context.
+- [`../../../business_architecture/business_process/`](../../../business_architecture/business_process/) and [`../../../business_architecture/schema/`](../../../business_architecture/schema/) for process authority (order-to-cash included).
+- [`../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md`](../../../business_architecture/domain/customer_domain_problem_statement_v0.1.md) for Customer-domain context. Draft. Not process authority.
 - [`../../../EPM_Homelab/`](../../../EPM_Homelab/) for the shared reference architecture, decisions, standards, and reusable patterns.
 
 ### Architectural relationship
@@ -39,7 +40,8 @@ The reference implementation **implements** the shared architecture. It may reve
 |---|---|---|
 | Reusable architecture principle, tool boundary, standard, or enterprise pattern | `EPM_Homelab/` | Propose/update the Homelab artifact and record a decision where material; assess impact on this and other demos |
 | Customer/O2C source fixture, role mapping, data transformation, dashboard, test, or implementation-specific integration | This implementation directory | Change the implementation and its evidence; promote only proven reusable patterns to Homelab |
-| Customer business definition, role catalogue, source-system variant, or process meaning | Business-architecture / domain artifact | Update or propose update to the governing domain artifact before changing semantic interpretation |
+| Process meaning | Files under `business_architecture/business_process/` and `business_architecture/schema/` | Update the governing process or schema file before changing semantic interpretation |
+| Customer business definition, role catalog, or source-system variant | Files under `business_architecture/domain/` | Draft Customer-domain context. Not process authority. Update that draft before changing Customer-domain interpretation |
 | Metric/KPI definition, threshold, ownership, or approval status | KPI Store artifacts | Classify and govern the change; do not treat report logic as authoritative without validation |
 
 ## 2. Scope, baseline, and boundaries
@@ -146,14 +148,15 @@ Every reusable measurement must have, at minimum:
                         └─────────────────┬─────────────────┘
                                           │
                         ┌─────────────────▼─────────────────┐
-                        │ Sirius model repository            │
+                        │ ER/Studio models (production)      │
+                        │ Sirius Web demo stand-in           │
                         │ conceptual / logical / physical    │
                         └───────┬──────────────┬─────────────┘
                                 │              │ approved export
                      model context│              ▼
                                 │   ┌─────────────────────────────┐
-                                │   │ Fuseki formal semantic layer │
-                                │   │ OWL / SKOS / SHACL / mapping │
+                                │   │ Fuseki demo runtime         │
+                                │   │ SPARQL/SHACL from git Turtle│
                                 │   └──────────────┬──────────────┘
                                 │                  │ controlled projection
                                 ▼                  ▼
@@ -169,24 +172,54 @@ Every reusable measurement must have, at minimum:
  └───────────────────┘
                            │
                            ▼
-                    OpenMetadata
-             cross-platform catalog, lineage,
-                 ownership, glossary, quality
+              ┌────────────────────┐    ┌────────────────────┐
+              │ Purview catalog    │    │ Bigeye             │
+              │ OM demo stand-in   │    │ observed lineage   │
+              │ enterprise catalog │    │ and data quality   │
+              └────────────────────┘    └────────────────────┘
+                                          no OSS stand-in
 ```
 
 ### Mandatory boundaries
 
 | Concern | System of record / authoritative boundary | Not authoritative for this concern |
 |---|---|---|
-| Conceptual/logical/physical data-model structure | Sirius approved model release | Hand-authored graph nodes, dashboard fields, agent prose |
-| Formal semantic definitions and mapping assertions | RDF/OWL/SKOS/SHACL in Fuseki | Neo4j serving projection |
+| Downstream process meaning | Files under `business_architecture/business_process/` and `business_architecture/schema/` | Optional companions; demo-local process lists; files under `business_architecture/domain/` |
+| Conceptual/logical/physical data-model structure | ER/Studio (production). Sirius Web is the demo stand-in | Hand-authored graph nodes, dashboard fields, agent prose; Sirius as a second model SoT |
+| Formal semantic definitions and mapping assertions | Turtle in git (OWL/SKOS/SHACL). Fuseki loads those files as the demo SPARQL/SHACL runtime | Neo4j serving projection; Fuseki as a second ontology SoT |
 | Operational source context | Lakebase source schemas and captured source extracts | Silver/Gold reinterpretation without retained source lineage |
 | Lakehouse technical assets and native Databricks lineage | Unity Catalog | OpenMetadata copy/projection |
-| Cross-platform observability/catalog context | OpenMetadata | Unity Catalog alone when assets lie outside Databricks |
+| Enterprise catalog | Purview (production). OpenMetadata is the demo stand-in | OpenMetadata as a second enterprise catalog |
+| Cross-platform lineage and data quality | Bigeye (production) | no OSS stand-in; do not map OpenMetadata to Bigeye |
 | Governed reusable analytical measures | Databricks Metric Views and versioned calculation specifications | Dashboard SQL, ad hoc notebook formulas, agent calculation logic |
 | KPI approval, thresholding, ownership, and published value history | KPI Store governance artifacts and Gold-published KPI snapshots | Tableau logic, report calculations, or a Metric View alone |
 | Graph investigation and impact traversal | Neo4j projection derived from approved sources | Uncontrolled semantic redefinition |
 | Presentation | Plotly Dash | Independent calculation layer |
+
+### Process authority and demo stand-ins
+
+The files under `business_architecture/business_process/` and `business_architecture/schema/` are the Downstream oil and gas process set, including order-to-cash (O2C). Those two folders are process authority. Files under `business_architecture/domain/` are draft context, not process authority.
+
+Current files on `main`:
+
+- `business_architecture/business_process/downstream_process_map.json`
+- `business_architecture/business_process/value_stream_order_to_cash.json`
+- `business_architecture/business_process/value_stream_commercial_lifecycle.json`
+- `business_architecture/business_process/data_product_portfolio.json`
+- `business_architecture/business_process/office_lanes.json`
+- `business_architecture/schema/data_product_portfolio.schema.json`
+- `business_architecture/schema/value_stream.schema.json`
+
+This implementation may use the open-source tools in the table below. The production system of authority is unchanged. A demo tool is not a second system of authority.
+
+| Demo tool | Production seat | Concern |
+|---|---|---|
+| Sirius Web | ER/Studio | Models |
+| OpenMetadata | Purview | Enterprise catalog |
+| Neo4j Community | Neo4j | Serving graph |
+| Apache Jena Fuseki | none (demo runtime only) | SPARQL and SHACL loaded from git Turtle |
+
+Formal ontology source of truth stays Turtle in git. The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views.
 
 ## 5. Core data-model requirements
 
@@ -656,7 +689,7 @@ Exit gate: A business/technical reviewer can ask the defined questions, obtain g
 | Ambiguous unbilled definition | Incorrect metric interpretation | Versioned calculation specification, owner validation, scenario tests, visible status disclaimer |
 | Role simplification into one customer key | False attribution and misleading aggregation | Mandatory role-assignment model and scenario tests |
 | Tool capability limits in free/local environment | Delayed or incomplete integrations | Phase 0 capability assessment; document substitutes and deviations |
-| Semantic/graph duplication | Conflicting definitions | Enforce Fuseki formal-source and Neo4j projection boundary |
+| Semantic/graph duplication | Conflicting definitions | Enforce Turtle in git as the source, and the Neo4j projection boundary |
 | Dashboard or agent formula reimplementation | Governed-result drift | Only consume Gold/Metric/KPI outputs; test response provenance |
 | Overly broad scope | Unfinished proof | Use phased exit gates and maintain strict non-goals |
 | Historical report logic treated as truth | Unvalidated KPI definitions | Classify as evidence; route to KPI governance validation |
@@ -678,12 +711,12 @@ Exit gate: A business/technical reviewer can ask the defined questions, obtain g
 - The Customer/O2C role-aware unbilled demonstration is a reference implementation, not a competing reference architecture.
 - Customer identity, hierarchy, and transaction role must be represented separately to support trustworthy O2C measurement.
 - Unbilled exposure is initially an operational metric/candidate KPI consideration, not an automatically approved KPI.
-- Meaning, compute, and consume must remain separated: Sirius/Fuseki define and validate meaning; Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
+- Meaning, compute, and consume must remain separated: Turtle in git defines formal semantic and mapping assertions (ER/Studio production / Sirius Web demo stand-in model structure); FOUND-003 stays the human-readable semantic model; Databricks computes; Dash/APIs/agents consume governed outputs; Neo4j serves context.
 
 ### Decisions and status
 
 - **Draft decision:** `EPM_Homelab/` governs reusable patterns; this directory contains implementation-specific executable evidence.
-- **Draft decision:** Fuseki is the formal semantic/mapping source; Neo4j is a controlled projection for investigation and impact analysis.
+- **Draft decision:** Turtle in git is the formal semantic and mapping source. Fuseki loads that release as the demo SPARQL/SHACL runtime. Neo4j is a controlled projection for investigation and impact analysis.
 - **Draft decision:** Dashboard and agent layers may not recreate governed metric/KPI formulas.
 - **Pending decision:** Initial unbilled calculation scope, financial treatment, business grain, and operational owner validation.
 
