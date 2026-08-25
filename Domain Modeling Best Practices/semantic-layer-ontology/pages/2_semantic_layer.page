@@ -245,7 +245,7 @@ elements:
       lineHeight: 1.3
       align: [left, top]
       text: |
-        Warehouse tables · operational systems — the data stays where it lives
+        Bronze replica, Silver facts, Gold published cuts. Both demos still copy and transform before MEASURE().
   - elementId: analogy
     elementType: text
     bounds: [580, 434, 316, 52]

@@ -179,7 +179,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Every consumer's question compiles to the same SQL — no hand-written forks</p>
+        <p>Every consumer question uses the same compile path. The SQL is not required to be identical.</p>
   - elementId: arr-3
     elementType: line
     bounds: [686, 250, 12, 2]
@@ -292,7 +292,7 @@ elements:
       lineHeight: 1.45
       align: [left, top]
       text: |
-        <p>A governed home for the result: certification status, owner, version, freshness. Consumers read the certified value instead of running their own query — so a Report C can no longer drift from Reports A and B.</p>
+        <p>Store governs identity, approval, and the formula pointer. Gold holds published values. Consumers read Gold, not a second query.</p>
 
   # ---------- footer ----------
   - elementId: footer-left
@@ -303,7 +303,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Flow mirrors the EPM demo's KPI pattern: candidate register → catalog → semantic layer → compiler → certified snapshots
+        Flow mirrors the EPM demo's KPI pattern: candidate register, Store catalog, semantic layer, compiler, Gold published cuts
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]
