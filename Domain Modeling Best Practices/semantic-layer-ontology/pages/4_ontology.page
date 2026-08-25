@@ -48,7 +48,7 @@ elements:
       lineHeight: 1.5
       align: [left, top]
       text: |
-        <p><span style="color:$ont">■</span> <strong>The nouns and verbs of the domain.</strong> Parties, contracts, terminals, custody tickets — and the relationships between them, like sold-to, payer, ship-to.</p>
+        <p><span style="color:$ont">■</span> <strong>The nouns and verbs of the domain.</strong> Parties, contracts, terminals, custody tickets — and the relationships between them, like sold-to, payer, and ship-to as a location.</p>
         <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>Machine-readable meaning.</strong> Written so people and AI can validate, connect, and reason over it — not just read it in a wiki.</p>
         <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>Meaning outlives implementation.</strong> The concept of a customer survives every system migration; today's formulas and tools may not.</p>
         <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>A spectrum, not a two-year project.</strong> Start with a glossary, add hierarchy and relationships, formalize only where the need is real.</p>
@@ -95,14 +95,6 @@ elements:
     bounds: [672, 229, 68, 2]
     viewBox: [68, 2]
     points: "0,1 68,1"
-    curve: sharp
-    arrow: [null, arrow]
-    border: {style: solid, width: 1.2, color: "$ont"}
-  - elementId: edge-shipto
-    elementType: line
-    bounds: [672, 229, 68, 61]
-    viewBox: [68, 61]
-    points: "0,0 68,61"
     curve: sharp
     arrow: [null, arrow]
     border: {style: solid, width: 1.2, color: "$ont"}
@@ -153,21 +145,21 @@ elements:
         <p>on the invoice</p>
   - elementId: role-3
     elementType: shape
-    bounds: [740, 268, 132, 44]
+    bounds: [580, 268, 156, 44]
     shapeName: rect
     fill: {type: solid, color: "$ontSoft"}
     border: {style: solid, width: 1.2, color: "$ont"}
   - elementId: role-3-text
     elementType: text
-    bounds: [740, 268, 132, 44]
+    bounds: [580, 268, 156, 44]
     content:
       fontSize: 9
       color: "$muted"
       align: [center, middle]
       lineHeight: 1.3
       text: |
-        <p><strong><span style="font-size:11.5px; color:$ont">Ship-to</span></strong></p>
-        <p>at the delivery point</p>
+        <p><strong><span style="font-size:11.5px; color:$ont">Ship-to / Site</span></strong></p>
+        <p>location / terminal, not a party role</p>
   - elementId: graph-caption
     elementType: text
     bounds: [580, 326, 316, 46]
@@ -296,7 +288,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Anchor example: party roles in O2C — from the EPM demo ontology (o2c-meaning.ttl)
+        Anchor example: party roles and site in O2C, from the EPM demo ontology (o2c-meaning.ttl). Ship-to is a location.
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]

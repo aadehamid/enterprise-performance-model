@@ -49,7 +49,7 @@ elements:
       align: [left, top]
       text: |
         <p><span style="color:$sl">■</span> <strong>Define once, use everywhere.</strong> One certified definition of a metric like Unbilled USD — not a slightly different formula in every report.</p>
-        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It translates; it doesn't copy.</strong> Definitions point at the data where it lives — nothing is moved or duplicated.</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It compiles; it does not replace the warehouse path.</strong> Definitions point at governed Silver or Gold objects. Both demos still replicate and transform (Bronze replica, Silver facts, Gold published cuts) before the compiler serves <code>MEASURE()</code>.</p>
         <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Versioned and reviewed like code.</strong> When a definition changes, every consumer changes with it.</p>
         <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Humans and AI agents get the same answer.</strong> An agent reads the approved metric instead of inventing its own SQL.</p>
   - elementId: bridge
@@ -192,7 +192,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Example — Unbilled USD:</span></strong> sum of net gallons × contract price, delivered tickets with no posted invoice</p>
+        <p><strong><span style="color:$ink">Example. Unbilled USD:</span></strong> sum of net gallons × contract price on delivered tickets with no posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold tickets are neither billed nor unbilled.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line

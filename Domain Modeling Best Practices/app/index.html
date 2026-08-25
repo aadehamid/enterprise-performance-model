@@ -309,7 +309,7 @@ ul.tight li,ol.tight li{margin-bottom:.25em;}
  └── OTHER PARTIES   → Replicated_Rep_Manager · TerritoryManager · TMR_RW_TerritoryManager ·
                         TAS &amp; CBS TerminalOwner · TAS &amp; CBS Driver · ApplUser ·
                         CompanyCodeApprover · ProjectPersonnel · Forecast_Reps</code></pre>
-<p>“Customer” already spans at least six systems’ worth of tables before the additional and related-party systems are even added — and several tables (<code>DlrHierarchy</code>, <code>TMR Customer</code>, <code>CBS Terminal_Customer</code>) encode <em>roles or relationships</em>, not just identity. Note also that the same system can hold parties in several buckets (TAS/CBS holds Customer <em>and</em> Supplier tables; OPIS holds Supplier data while its price assessments feed customer-facing pricing). Bucket boundaries will not be respected by the data.</p>
+<p>The tree already mixes confirmed sources (TAS, TMR) with related-party systems still pending an in/out decision (Kittyhawk, EIS, Brand Credit Card Master, OPIS, LBRS). Salesforce, SAP S/4HANA, and RightAngle are confirmed in §3.1 and do not appear in this tree. Several tables (<code>DlrHierarchy</code>, <code>TMR Customer</code>, <code>CBS Terminal_Customer</code>) encode <em>roles or relationships</em>, not just identity. Note also that the same system can hold parties in several buckets (TAS/CBS holds Customer <em>and</em> Supplier tables; OPIS holds Supplier data while its price assessments feed customer-facing pricing). Bucket boundaries will not be respected by the data.</p>
 <h3 id="s3-3">3.3 Why “Customer” is not one object</h3>
 <p>“Customer” is a <strong>contextual business role</strong>, not automatically one universal enterprise object. A legal organization, commercial account, invoice recipient, payment-responsible entity, delivery location, contract party, credit counterparty, tax-liable party, and title-transfer party can be related but distinct — and the same party may hold several of these roles simultaneously, while different roles in one transaction may be held by different legal entities in a corporate hierarchy.</p>
 <pre class="text"><code>Party / legal entity
@@ -336,7 +336,7 @@ ul.tight li,ol.tight li{margin-bottom:.25em;}
 </ul>
 <h3 id="s4-2">4.2 Explicitly out of scope <span class="tag out">OUT OF SCOPE</span></h3>
 <ul class="tight">
-<li><strong>Full MDM execution:</strong> matching, merging, and survivorship logic (the kind SAP MDG or Profisee would run), and golden-record creation, publication, and monitoring. These appear in this document only for context (§12) so that our outputs are designed to feed them later.</li>
+<li><strong>Full MDM execution:</strong> running matching, merging, survivorship, golden-record creation, publication, and monitoring (the kind SAP MDG or Profisee would run). Those appear in this document only as the shape our outputs must feed later (§12, §14). This phase does not auto-link, does not operate a match queue, and does not persist production match decisions.</li>
 </ul>
 <p>The primary goal of this phase is <strong>a single, standardized conceptual and logical view of the Customer object</strong> across Salesforce, SAP S/4HANA, TAS, TMR, RightAngle, and the other systems in §3.1 — resolving today’s conflicting representations into one agreed model and mapping. Full MDM execution is a later, separate decision.</p>
 <h3 id="s4-3">4.3 Why this boundary is the right call right now</h3>
@@ -380,7 +380,7 @@ ul.tight li,ol.tight li{margin-bottom:.25em;}
 <p class="small">Dataset scope per the charter: mastering systems (SAP MDG, Profisee) as future consumers; data source systems (Salesforce, SAP S/4HANA, TAS, TMR, RightAngle) as confirmed modeling inputs; related-party systems (Kittyhawk, Contract_Reporting, Nvision, EIS, Brand Credit Card Master, Corp_Vetting, OPIS, LBRS) to confirm with the domain owner — they may carry Party data overlapping the Customer domain.</p>
 <p>Sequencing note: steps 1→6 are the critical path, but they are <strong>iterative, not waterfall</strong>. Discovery surfaces conflicts that reshape the conceptual model; mapping exposes gaps that send you back to inventory. Plan for at least two full passes: a breadth-first pass (every confirmed system at shallow depth) and a depth pass (field-level, per system). Industry guidance on enterprise data modeling explicitly favors breadth over depth early — mutually exclusive objects, no more than three levels deep — before going deep (<a href="https://www.leanix.net/en/wiki/it-architecture/enterprise-data-model">LeanIX enterprise data modeling practices</a>).</p>
 <h3 id="s5-2">5.2 Guiding principles — how to standardize without touching source values</h3>
-<p>These ten principles are the contract every modeler on this workstream works under. They are the practical meaning of “standardize the Customer domain model <em>without changing the values in individual system representations</em>.”</p>
+<p>These 11 principles are the contract every modeler on this workstream works under. They are the practical meaning of “standardize the Customer domain model <em>without changing the values in individual system representations</em>.”</p>
 <table>
 <tr><th>#</th><th>Principle</th><th>What it means in practice</th></tr>
 <tr><td>P1</td><td><strong>Sources are read-only to us</strong></td><td>No writes, no cleansing in place, no re-keying, no “quick fixes” in any source system. Data-quality findings are <em>documented and routed</em> to the system owner, never fixed by us at the source.</td></tr>
@@ -864,7 +864,7 @@ No cleansing in place.</code></pre>
 <tr><td>3</td><td><strong>Customer Hierarchy and Relationship Model</strong><br/><span class="small">Steps 3–4</span></td><td>Parent/subsidiary/treasury and other controlled relationships among parties — modeled as dated, typed PARTY RELATIONSHIPs.</td><td>Credit exposure and guarantees roll up to parents while delivery happens at operating subsidiaries (§18). <em>Acceptance:</em> a dealer group (DlrHierarchy) and a treasury-pays-subsidiary-bills case both expressible.</td></tr>
 <tr><td>4</td><td><strong>Standardized Address and Contact Point Model</strong><br/><span class="small">Steps 3–4</span></td><td>Common structure for business, delivery, billing, and operational locations associated with a party or account, with usage types.</td><td>Reconcile location semantics across TDL, FlowCal, MSMIS, Terminaling Throughputs, Asphalt Marketing, and ERP/CRM — each models “location” differently. <em>Acceptance:</em> ship-to vs. consignee vs. rack identity distinctions expressible (§15 warning).</td></tr>
 <tr><td>5</td><td><strong>Customer Role and Extension Model</strong><br/><span class="small">Steps 3–4, governed by Step 6</span></td><td>The role taxonomy a party or account can hold, plus a mechanism to extend it for new systems without redefining the core model.</td><td>Start taxonomy: §15. Map each system to the roles it captures (§16). <em>Acceptance:</em> adding a hypothetical new system requires only new mapping rows, no core-model change.</td></tr>
-<tr><td>6</td><td><strong>Governance and Data Quality Rule Definitions</strong><br/><span class="small">Step 6</span></td><td>Rules for match-confidence thresholds, source authority per attribute, and the review process for ambiguous matches.</td><td>Home: playbook chapters 5–8. Survivorship stays a documented view-time preference (P4). <em>Acceptance:</em> thresholds, bands, and queue SLA written and approved; CDE DQ rules attached to the attribute dictionary.</td></tr>
+<tr><td>6</td><td><strong>Governance and Data Quality Rule Definitions</strong><br/><span class="small">Step 6</span></td><td>Rules for match-confidence thresholds, source authority per attribute, and the review process for ambiguous matches.</td><td>Home: playbook chapters 5–8. Survivorship stays a documented view-time preference (P4). <em>Acceptance:</em> threshold bands, review-queue shape, and CDE DQ rules written as design. No live queue and no auto-link job in this phase.</td></tr>
 </table>
 
 <hr />
@@ -872,7 +872,7 @@ No cleansing in place.</code></pre>
 <p>This is the one net-new data structure this workstream creates — thin, read-only toward sources, and owned by us. It is the physical home of Registry-style standardization (§4.3) and the future seed for Profisee/MDG (P10).</p>
 <h3 id="s14-1">14.1 Design rules</h3>
 <ul class="tight">
-<li><strong>Store keys, evidence, and decisions — not copied master data.</strong> Match-attribute snapshots exist to justify links and re-run matching later; they are clearly labeled read-only snapshots, never a synchronized copy.</li>
+<li><strong>Store keys, evidence, and the slot for a later decision. Not copied master data.</strong> Match-attribute snapshots exist to justify links and to re-run matching later; they are clearly labeled read-only snapshots, never a synchronized copy.</li>
 <li><strong>The canonical party row is an identity anchor, not a golden record.</strong> It carries no “best” attributes — attribute authority lives in the Source-Authority matrix (§10.5).</li>
 <li><strong>Every link is reversible and every decision is logged.</strong></li>
 <li><strong>Everything effective-dated and versioned</strong> (P6).</li>
@@ -893,11 +893,17 @@ SourceObjectRegistration           -- one row per source-system party-like objec
   party_kind_observed              -- organization | person | unknown
   match_attribute_snapshot         -- read-only snapshot of name/address/IDs used for matching
   party_id            FK → CanonicalParty (null = unmatched)
-  role_code           FK → Role catalogue (§15)
   match_confidence                 -- 0–100
   match_method                     -- deterministic | external-id | probabilistic | steward-decided
   match_status                     -- unmatched | candidate | confirmed | rejected | deferred
   evidence_ref / steward_decision_ref / version / valid_from / valid_to
+
+SourceRoleAssignment               -- one row per contextual role this source object plays
+  assignment_id       PK
+  xref_id             FK → SourceObjectRegistration
+  role_code           FK → Role catalog (§15)
+  role_context                     -- sales area, contract, ticket, site; optional
+  evidence_ref / version / valid_from / valid_to
 
 MatchDecision                      -- the steward decision log
   decision_id         PK
@@ -910,14 +916,15 @@ SourceAuthorityPreference          -- survivorship-as-preference (view-time only
   canonical_attribute / role_context
   preferred_source_system / preference_basis   -- authority | recency | completeness
   approved_by / approved_at / version / valid_from / valid_to</code></pre>
-<h3 id="s14-3">14.3 Match confidence bands (defaults — tune with domain owner)</h3>
+<h3 id="s14-3">14.3 Match confidence bands (design defaults for a later MDM run. Tune with the domain owner. This phase does not execute them.)</h3>
 <table>
-<tr><th>Band</th><th>Confidence</th><th>Action</th></tr>
+<tr><th>Band</th><th>Confidence</th><th>Later action (not this phase)</th></tr>
 <tr><td>Auto-link</td><td>≥ 90 (or deterministic external-ID/tax-ID/key match)</td><td>Link written with method + evidence; spot-audited</td></tr>
 <tr><td>Steward review</td><td>50–89</td><td>Queued to named steward; disposition logged in MatchDecision</td></tr>
 <tr><td>No link</td><td>&lt; 50</td><td>Recorded as non-match candidate; revisit if data improves</td></tr>
 </table>
 <p class="small">Target a review queue of ~1–3% of candidate pairs; above ~5%, tune rules/blocking (<a href="https://matchlogic.io/resources/data-matching-guide">MatchLogic</a>). Hybrid deterministic-first design per <a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">entity-resolution best practice</a>.</p>
+<p>Those bands and <code>MatchDecision</code> are the contract the xref must support. They are not work this phase runs.</p>
 <h3 id="s14-4">14.4 Harvest existing cross-references first</h3>
 <ul class="tight">
 <li>SAP CVI link tables (<code>CVI_CUST_LINK</code>, <code>CVI_VEND_LINK</code>) already bind Business Partners to customer/vendor numbers — authoritative intra-SAP xrefs (§17).</li>
@@ -927,7 +934,7 @@ SourceAuthorityPreference          -- survivorship-as-preference (view-time only
 <h3 id="s14-5">14.5 Worked example — one party, five systems, zero source changes</h3>
 <div class="callout example"><span class="ttl">Worked example (illustrative)</span>
 “ABC Paving &amp; Materials,” a mid-size contractor, appears as: a Salesforce account (commercial relationship); an SAP Business Partner with customer role + credit segment (sold-to/bill-to; its parent “ABC Group Holdings” is payer and guarantor); a TAS loading account (consignee at two racks); a TDL exchange partner (BOL-captured lifts under a buy/sell agreement); and an Asphalt Marketing project account (municipal-indexed contract). <br/><br/>
-<strong>In the xref schema:</strong> five <code>SourceObjectRegistration</code> rows — different systems, different native IDs, five different role codes — all linked to <em>one</em> <code>CanonicalParty</code> (ABC Paving &amp; Materials, LEGAL_ENTITY) plus one more for the parent, with a dated <code>guarantor-of / pays-for</code> PARTY RELATIONSHIP between them. The deterministic link came from a shared tax ID on four rows; the TDL row scored 84 on name+address and was confirmed by the steward (logged in <code>MatchDecision</code>). Legal name renders from SAP per the Source-Authority matrix; rack scheduling contact renders from TAS. <strong>No value in any of the five systems was changed.</strong> A reviewer can now answer “who is ABC?” — in any role, in any system — from one place.</div>
+<strong>In the xref schema:</strong> five <code>SourceObjectRegistration</code> rows (different systems, different native IDs) all linked to one <code>CanonicalParty</code> (ABC Paving &amp; Materials, LEGAL_ENTITY), plus one more registration for the parent. The SAP registration carries two <code>SourceRoleAssignment</code> rows (Sold-to and Bill-to, each dated). Payer and guarantor sit on the parent, with a dated <code>guarantor-of / pays-for</code> PARTY RELATIONSHIP. The other four registrations each have the role that system actually plays. The deterministic link came from a shared tax ID on four rows; the TDL row scored 84 on name+address and is the shape of a later steward decision (logged in <code>MatchDecision</code> when matching runs). Legal name renders from SAP per the Source-Authority matrix; rack scheduling contact renders from TAS. <strong>No value in any of the five systems was changed.</strong> A reviewer can now answer “who is ABC?” — in any role, in any system — from one place.</div>
 
 <hr />
 <h2 id="s15"><span class="pn">PART C — REFERENCE STANDARDS AND MODELS</span>15. Role catalogue</h2>
@@ -952,8 +959,8 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <table>
 <tr><th>System</th><th>What it captures</th><th>Likely Customer-domain role(s)</th></tr>
 <tr><td>Salesforce</td><td>CRM accounts, contacts, opportunities</td><td>Sold-to / ordering party (commercial relationship owner)</td></tr>
-<tr><td>SAP S/4HANA</td><td>Business Partners in core sales-area structures (§17)</td><td>Sold-to, Ship-to, Bill-to, Payer, tax-liable party; credit counterparty (FSCM)</td></tr>
-<tr><td>TAS</td><td>Terminal automation loading accounts</td><td>Consignee, Ship-to, Carrier (at the rack)</td></tr>
+<tr><td>SAP S/4HANA</td><td>Business Partners in core sales-area structures (§17)</td><td>Sold-to, Bill-to, Payer, tax-liable party; credit counterparty (FSCM). SAP also has a Ship-to partner function; canonical meaning is a location (<code>o2c:ShipTo</code> / Site), not a party role.</td></tr>
+<tr><td>TAS</td><td>Terminal automation loading accounts</td><td>Consignee, Carrier (at the rack). Ship-to at the rack is the site / location, not a party role.</td></tr>
 <tr><td>TMR</td><td>Customer brand/wholesale volume tracking (MTD/YTD)</td><td>Customer account / commercial performance context</td></tr>
 <tr><td>RightAngle</td><td>Commodity trading and risk (CTRM)</td><td>Contract party, Pricing party, Credit counterparty</td></tr>
 <tr><td>TDL</td><td>Swap-based exchange partners, BOL-captured loadings</td><td>Exchange (buy/sell) counterparty</td></tr>
@@ -974,7 +981,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <tr><td><code>BUT000</code> — BP general data</td><td>The Business Partner shell: category (person / organization / group), names, key <code>PARTNER_GUID</code></td><td>The legal-party layer of our canonical model. Already landed in our lakehouse as <code>replica_saps4.BUT000</code> → <code>mdm_core.Sap_Business_Partner_General_Data_Dim</code> (§6.5).</td></tr>
 <tr><td><code>BUT100</code> — BP roles</td><td>Roles assigned to the BP (e.g., <code>FLCU00</code> customer, <code>FLVN00</code> supplier)</td><td>SAP’s own implementation of P5 (roles, not types). One BP can be both customer and vendor (<a href="https://sap2databricks.com/sap-business-partners">roles in BUT100</a>).</td></tr>
 <tr><td>Customer tables <code>KNA1</code> (general), <code>KNB1</code> (company code), <code>KNVV</code> (sales area)</td><td>The classic customer master, still present and synchronized</td><td>Sales-area data (Sold-to context) lives here; do not model BUT000 alone.</td></tr>
-<tr><td><code>KNVP</code> — partner functions</td><td>Per sales area: Sold-to, Ship-to, Bill-to, Payer assignments</td><td>The physical home of the four O2C roles (<a href="https://help.sap.com/docs/SAP_ERP/a428aae377ba4a1199c3ecc8b7f5f33d/806fbd534f22b44ce10000000a174cb4.html">SAP Partner Functions</a>).</td></tr>
+<tr><td><code>KNVP</code> — partner functions</td><td>Per sales area: Sold-to, Ship-to, Bill-to, Payer assignments</td><td>The physical home of SAP partner functions. Sold-to, Bill-to, and Payer are party roles. Ship-to in this table is a location, not a fourth party role. (<a href="https://help.sap.com/docs/SAP_ERP/a428aae377ba4a1199c3ecc8b7f5f33d/806fbd534f22b44ce10000000a174cb4.html">SAP Partner Functions</a>).</td></tr>
 <tr><td>CVI link tables <code>CVI_CUST_LINK</code>, <code>CVI_VEND_LINK</code></td><td><code>PARTNER_GUID</code> ↔ customer number (<code>KUNNR</code>) / vendor number (<code>LIFNR</code>)</td><td>Ready-made, authoritative cross-references — harvest into our xref schema (§14.4) (<a href="https://community.sap.com/t5/technology-blog-posts-by-members/customer-vendor-integration-cvi-in-sap-s4hana-how-to-find-out-the-bp-linked/ba-p/13482118">finding BP↔customer/vendor links</a>).</td></tr>
 <tr><td>FSCM credit/collections (e.g., <code>UDMBPSEGMENTS</code>)</td><td>Business-partner assignment to credit/collection segments</td><td>Credit-counterparty role data — already in our Bronze (<code>replica_saps4.UDMBPSEGMENTS</code> → <code>mdm_core.Sap_Business_Partner_Collection_Segments_Dim</code>). Credit exposure does not live in the SD customer master.</td></tr>
 <tr><td>BP relationships &amp; addresses (<code>BUT050</code>/<code>BUT051</code>, <code>BUT020</code>/<code>BUT021</code>)</td><td>Typed, time-dependent BP-to-BP relationships; multiple addresses per BP</td><td>Precedent for our PARTY RELATIONSHIP and CONTACT POINT models; note the time-dependency convention (P6).</td></tr>
@@ -1026,7 +1033,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <tr><td>Ontology / concept model</td><td>What is a Customer, Party, Role, Terminal, Contract — and how are they related?</td><td>Our conceptual model (§8), glossary terms with typed relationships</td><td>Domain steward / data architect</td></tr>
 <tr><td>Semantic layer</td><td>How is Wholesale MTD or Rack Price Capture Rate calculated, filtered, and served?</td><td>Metric definitions, semantic models</td><td>Analytics engineering / BI</td></tr>
 <tr><td>Physical data layer</td><td>Which tables/columns produce it?</td><td>Bronze/Silver/gold assets (§6.5)</td><td>Data engineering</td></tr>
-<tr><td>Context / governance layer</td><td>Who owns it, what feeds it, what breaks if it changes?</td><td>Purview: glossary, lineage, domains, data products (<a href="https://learn.microsoft.com/en-us/purview/unified-catalog-plan">Purview Unified Catalog</a>)</td><td>Governance lead</td></tr>
+<tr><td>Context / governance layer</td><td>Who owns it, what feeds it, what breaks if it changes?</td><td>Purview: enterprise catalog (glossary, domains, data products). Bigeye: quality and cross-platform lineage. Unity Catalog: native Databricks lineage. Purview is not lineage or quality SoT. (<a href="https://learn.microsoft.com/en-us/purview/unified-catalog-plan">Purview Unified Catalog</a>)</td><td>Governance lead</td></tr>
 </table>
 <h3>20.2 The target-state KPI architecture (KPI Store) — where this workstream plugs in</h3>
 <p>The domain model and ontology this workstream produces are the <strong>meaning half</strong> of the target-state KPI architecture (the “KPI Store”). The architecture splits into two bands. The <strong>MEANING band</strong> — where no computation happens — runs from Domain Understanding through ontology modules into a graph of meaning that agents can query. The <strong>COMPUTE band</strong> runs PREPARE (Candidate KPI Register → steward certification → cataloging tool → Silver ingredients) → COMPILE (semantic layer → compiler) → CONSUME (Gold published KPI values, in-platform AI agent, BI). The two bands are bound by exactly one thing: the <strong>ontology IRI — one catalog row ↔ one semantic-layer object</strong> (the red dashed bindings below; agents only ever submit certified measures, never formulas — the compiled SQL is the audit trail).</p>
@@ -1037,7 +1044,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <text x="26" y="34" font-size="14" class="bt" fill="#16283f">MEANING — no computation here</text>
 <rect x="26" y="52" width="208" height="97.0" rx="7" fill="#cfe0f4" stroke="#1f3a5c" stroke-width="1.5"/>
 <text x="34" y="71" font-size="13" class="bt" fill="#16283f">Domain Understanding</text>
-<text x="34" y="81" font-size="11" fill="#33404e">Conceptual & logical model;</text>
+<text x="34" y="81" font-size="11" fill="#33404e">Conceptual &amp; logical model;</text>
 <text x="34" y="94.5" font-size="11" fill="#33404e">shared working words</text>
 <text x="34" y="108.0" font-size="11" fill="#33404e">(ubiquitous language). Tool:</text>
 <text x="34" y="121.5" font-size="11" fill="#33404e">ERStudio.</text>
@@ -1089,17 +1096,17 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <line x1="176" y1="398" x2="176" y2="432" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
 <text x="176" y="424" class="al" text-anchor="middle">promote after steward certification</text>
 <rect x="32" y="436" width="288" height="96.0" rx="7" fill="#ffffff" stroke="#2e6f6a" stroke-width="1.5"/>
-<text x="40" y="454" font-size="12" class="bt" fill="#16283f">Cataloging tool</text>
-<text x="40" y="464" font-size="10.5" fill="#33404e">One certified row: name, owner, formula</text>
-<text x="40" y="477.5" font-size="10.5" fill="#33404e">pointer, used-in, ontology IRI. Options:</text>
-<text x="40" y="491.0" font-size="10.5" fill="#33404e">Microsoft Purview · Databricks Unity</text>
-<text x="40" y="504.5" font-size="10.5" fill="#33404e">Catalog.</text>
-<text x="40" y="520.0" font-size="10.5" class="rl">◀ our Purview glossary (P9, §19)</text>
+<text x="40" y="454" font-size="12" class="bt" fill="#16283f">KPI Store catalog</text>
+<text x="40" y="464" font-size="10.5" fill="#33404e">One named KPI, one Store row: name,</text>
+<text x="40" y="477.5" font-size="10.5" fill="#33404e">owner, formula pointer, used-in, IRI,</text>
+<text x="40" y="491.0" font-size="10.5" fill="#33404e">status. Purview and Unity Catalog are</text>
+<text x="40" y="504.5" font-size="10.5" fill="#33404e">not this door.</text>
+<text x="40" y="520.0" font-size="10.5" class="rl">◀ Store row, not Purview glossary</text>
 <line x1="176" y1="540" x2="176" y2="566" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
 <text x="176" y="558" class="al" text-anchor="middle">one-way copy</text>
 <rect x="32" y="570" width="288" height="70.5" rx="7" fill="#f0f4f8" stroke="#2e6f6a" stroke-width="1.5"/>
 <text x="40" y="588" font-size="12" class="bt" fill="#16283f">Silver</text>
-<text x="40" y="598" font-size="10.5" fill="#33404e">Star dimensions & facts — ingredients</text>
+<text x="40" y="598" font-size="10.5" fill="#33404e">Star dimensions &amp; facts - ingredients</text>
 <text x="40" y="611.5" font-size="10.5" fill="#33404e">only, no formula. KPI metadata: one-way</text>
 <text x="40" y="625.0" font-size="10.5" fill="#33404e">read-only copy of the catalog row.</text>
 <rect x="352" y="296" width="300" height="322" rx="8" fill="#e8f1e5" stroke="#2f5d3a" stroke-width="1.5"/>
@@ -1154,7 +1161,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <tr><td>Graph of meaning</td><td>Shared meaning — and where it came from — queryable by agents</td><td>Phase D consumer of our ontology module (§20.5).</td></tr>
 <tr><td>Named KPI + 1:1 gate</td><td>KPI names governed as ontology artifacts, bound to concepts by IRI. A KPI can become a number; Customer cannot — it is a shared concept, not a KPI</td><td>The gate validates the Party/Role decision (§3.3): KPIs bind to <em>role-qualified</em> concepts (e.g., Consignee, Sold-to), never to the bare “Customer” concept (P11).</td></tr>
 <tr><td>Candidate KPI Register</td><td>Proposed KPI list — not approved; a proposed name must exist before certification can happen</td><td>Not our deliverable, but certification (§22 RACI) depends on our concepts being defined first.</td></tr>
-<tr><td>Cataloging tool</td><td>One certified row per KPI: name, owner, formula pointer, used-in, ontology IRI (Microsoft Purview · Databricks Unity Catalog)</td><td>Our Purview glossary and technical metadata documents (P9, §19) are the Customer-domain content of that catalog.</td></tr>
+<tr><td>KPI Store / KPI catalog</td><td>One named KPI, one Store row: name, owner, formula pointer, used-in, ontology IRI, status (<code>proposed | approved | drifted | archived</code>). Formula pointer goes to the semantic-layer object. Microsoft Purview is the enterprise catalog. Databricks Unity Catalog is the technical catalog (tables, Metric Views, native Databricks lineage). Bigeye is quality. None of those three is the Store door.</td><td>Our Purview glossary and Unity Catalog technical metadata (P9, §19) are Customer-domain content in those seats. They do not mint <code>kpi_id</code> or set Store status. Store approval is a Store-row status, not a Purview or Unity Catalog label.</td></tr>
 <tr><td>Silver</td><td>Star dimensions &amp; facts — ingredients only, no formulas; KPI metadata is a one-way read-only copy of the catalog row</td><td>Consistent with §6.5: Silver carries business meaning, never metric logic.</td></tr>
 <tr><td>Semantic layer · compiler · Gold</td><td>Certified measure object compiled against Silver; Gold holds published KPI values at agreed grains</td><td>Out of scope for this workstream — but none of it works until the meaning band above is governed.</td></tr>
 </table>
@@ -1170,7 +1177,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <li><strong>Phase A — Governed glossary (now, part of Steps 2–4):</strong> flat → hierarchical glossary in Purview; every canonical concept is a term with definition, synonyms (system names), owner, and linked data assets. A well-structured glossary delivers most ontological value at a fraction of the cost (<a href="https://www.youtube.com/watch?v=_hCYSPcMgOk">Atlan</a>).</li>
 <li><strong>Phase B — Concept model with typed relationships (= our conceptual model, §8):</strong> the Party/Role/Relationship structure doubles as the lightweight ontology. No separate ontology build at this stage — that is the point of reusing the conceptual model. When a module is serialized, it is stored as Turtle files in git with one stable, namespaced IRI per concept — those IRIs are the binding keys the KPI architecture relies on (§20.2).</li>
 <li><strong>Phase C — KPI/concept linkage:</strong> connect Customer concepts to the KPIs that reference them (e.g., Wholesale MTD/YTD from TMR; rack pricing KPIs feeding off RightAngle + OPIS) so every metric’s entity references resolve to governed definitions. Each certified KPI gets exactly one catalog row — name, owner, formula pointer, used-in, ontology IRI — bound to exactly one semantic-layer object; variants (e.g., Wholesale MTD by consignee vs. by sold-to) bind to role-qualified concepts, never to the bare “Customer” concept (1:1 gate, §20.2).</li>
-<li><strong>Phase D — Formal ontology only where justified:</strong> RDF/OWL serialization for specific consumers (regulatory traceability, AI agents needing machine-readable context) — scoped, incremental, and justified per use case.</li>
+<li><strong>Phase D - Formal ontology only where justified:</strong> serialize as Turtle in git. That Turtle is the machine SoT. FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design and uses conceptual names. Fuseki is a demo SPARQL/SHACL runtime, not a second SoT. Scoped, incremental, and justified per use case.</li>
 </ol>
 <h3>20.4 Failure modes this strategy avoids</h3>
 <div class="callout pitfall"><span class="ttl">Known failure modes (from industry experience)</span><ul class="tight">
@@ -1191,7 +1198,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <tr><td>% of source-to-target mapping completed</td><td>Cross-system mapping progress, system by system</td><td>Mapping documents: mapped attributes ÷ in-scope attributes (§10.4)</td><td>100% of CDEs; ≥ 95% overall per confirmed system</td></tr>
 <tr><td># of source systems fully inventoried</td><td>Discovery &amp; Inventory completion vs. the §3.1 list</td><td>System Inventory Register (§6.4) + §7.8 checklist</td><td>All confirmed systems; related-party decisions 100% closed</td></tr>
 <tr><td># of open definition issues pending SME input</td><td>Early warning on the domain-owner/SME dependencies (§2.4)</td><td>Issue log aging report</td><td>None aged &gt; 2 weeks without escalation</td></tr>
-<tr><td># of certified KPI catalog rows bound to Customer-domain concept IRIs</td><td>Whether the KPI Store connection is real or aspirational for this domain</td><td>Purview KPI catalog: rows whose ontology IRI points at Customer concepts (§20.2)</td><td>Every certified Customer-referencing KPI bound; none bound to the unqualified “Customer” concept</td></tr>
+<tr><td># of approved KPI Store catalog rows bound to Customer-domain concept IRIs</td><td>Whether the KPI Store connection is real or aspirational for this domain</td><td>KPI Store catalog (<code>dim_kpi_metadata</code>): rows whose ontology IRI points at Customer concepts (§20.2). Do not count Purview glossary terms or Unity Catalog tags as Store rows.</td><td>Every approved Customer-referencing KPI bound; none bound to the unqualified "Customer" concept</td></tr>
 </table>
 
 <hr />
@@ -1259,7 +1266,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <li>What are the approved match-confidence bands and review-queue SLA for this phase (§14.3 defaults are proposals)?</li>
 <li>What is the intended timeline and trigger for moving from this phase into full MDM scope with Profisee/SAP MDG (§12)?</li>
 <li>Which KPIs that reference Customer concepts are in scope for the first Named-KPI bindings (candidates: Wholesale MTD/YTD from TMR; rack price capture off RightAngle + OPIS) — and who owns each KPI proposal (§20.2)?</li>
-<li>Is the cataloging tool of record Microsoft Purview or Databricks Unity Catalog, and who owns the ontology-IRI naming convention that catalog rows and semantic-layer objects must share (§20.2)?</li>
+<li>The Store catalog (<code>dim_kpi_metadata</code>) is the tool of record for KPI identity and approval. Purview is the enterprise catalog. Unity Catalog is the Databricks technical catalog. Who owns the ontology-IRI naming convention that Store rows and semantic-layer objects must share (§20.2)?</li>
 </ul>
 
 <hr />
@@ -1277,12 +1284,12 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <tr><td>Entity resolution / matching</td><td>Determining whether records in different systems refer to the same real-world party, via deterministic rules, probabilistic scoring, or both, with steward review of uncertain cases.</td></tr>
 <tr><td>Critical Data Element (CDE)</td><td>An attribute whose quality is most consequential for the domain; carries explicit DQ rules and controls.</td></tr>
 <tr><td>Business Partner (SAP)</td><td>S/4HANA’s leading master-data object for parties; customers and vendors exist as BP roles synchronized via CVI (§17).</td></tr>
-<tr><td>Partner function (SAP SD)</td><td>A role a party performs in a sales transaction: Sold-to, Ship-to, Bill-to, Payer.</td></tr>
+<tr><td>Partner function (SAP SD)</td><td>A SAP SD partner function on a sales transaction. Sold-to, Bill-to, and Payer are party roles. Ship-to is a location, not a party role.</td></tr>
 <tr><td>CVI (Customer-Vendor Integration)</td><td>SAP’s synchronization mechanism keeping Business Partner and classic customer/vendor tables aligned; its link tables are ready-made cross-references.</td></tr>
 <tr><td>UDM</td><td>Universal Data Model — reusable, industry-agnostic conceptual/logical data model patterns (e.g., the Party Model) that this workstream translates for the Customer and second domains.</td></tr>
 <tr><td>Ontology (domain)</td><td>The governed conceptual model of business meaning: what domain concepts are and how they relate (§20).</td></tr>
 <tr><td>Semantic layer</td><td>The executable contract for metrics: how governed analytical values are computed and served (§20). Complements, never replaces, the ontology.</td></tr>
-<tr><td>Context layer / catalog</td><td>The platform (Purview) where glossary, lineage, ownership, and policy connect definitions to data assets (§20).</td></tr>
+<tr><td>Context layer / catalog</td><td>Purview is the enterprise catalog (glossary, stewardship, data-product context). Unity Catalog is the Databricks technical catalog. Bigeye is quality and cross-platform lineage. None of those three is the KPI Store catalog (§20).</td></tr>
 <tr><td>IDP</td><td>The enterprise data platform/discovery capability that surfaced candidate customer-data systems (§3.1).</td></tr>
 <tr><td>Bronze / Silver / Gold</td><td>Medallion lakehouse layers: Bronze = raw source replicas; Silver = cleaned, named, business-meaningful dimensions (§6.5); Gold = published KPI values at agreed grains (§20.2).</td></tr>
 <tr><td>Exchange (buy/sell) partner</td><td>A counterparty in product-exchange agreements, balanced volumetrically via BOLs rather than invoiced sales (TDL).</td></tr>

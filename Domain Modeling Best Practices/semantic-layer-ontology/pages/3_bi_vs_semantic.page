@@ -77,7 +77,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Definitions live inside the tool — Tableau calculated fields, Power BI measures, LookML</p>
+        <p>Definitions live inside the tool - Tableau calculated fields, Power BI measures, LookML</p>
   - elementId: r1-new
     elementType: text
     bounds: [550, 170, 346, 46]
@@ -151,7 +151,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Wiki pages at best — the real definition lives in institutional memory</p>
+        <p>Local to the tool. LookML may be versioned; a Tableau field often is not.</p>
   - elementId: r3-new
     elementType: text
     bounds: [550, 318, 346, 46]
@@ -226,7 +226,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Note: embedded models like LookML are real semantic layers — the difference is coupling, not quality
+        Note: embedded models like LookML are real semantic layers - the difference is coupling, not quality
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]
