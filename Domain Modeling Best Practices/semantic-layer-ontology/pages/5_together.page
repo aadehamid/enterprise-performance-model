@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Unbilled USD = Σ net gallons × contract price, over delivered tickets with no posted invoice</p>
+        <p>Unbilled USD = Σ net gallons × contract price on delivered tickets with no posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold tickets are neither billed nor unbilled.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 250, 12, 2]
@@ -215,7 +215,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        the certified number
+        identity, approval, pointer
   - elementId: st4-text
     elementType: text
     bounds: [714, 242, 168, 54]
@@ -225,7 +225,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>The certified, versioned value every dashboard, sheet, and agent reads</p>
+        <p>Store governs identity, approval, and the formula pointer. Gold holds published values. Not the number everyone consumes.</p>
 
   # ---------- captions under the flow ----------
   - elementId: data-caption
@@ -237,7 +237,7 @@ elements:
       wrap: false
       align: [center, middle]
       text: |
-        Underneath it all: the warehouse tables — the data stays where it lives and is queried in place
+        Underneath: Bronze replica, Silver facts, Gold published cuts. Both demos still copy and transform before MEASURE().
   - elementId: gov-caption
     elementType: text
     bounds: [64, 340, 832, 14]

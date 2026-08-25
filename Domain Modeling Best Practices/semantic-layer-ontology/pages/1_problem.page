@@ -127,7 +127,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Reports A & B - approved metric
+        Reports A and B - candidate operational calculation
   - elementId: f2-row1-value
     elementType: text
     bounds: [762, 186, 134, 16]

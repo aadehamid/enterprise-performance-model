@@ -91,7 +91,7 @@ elements:
       align: [center, middle]
       lineHeight: 1.25
       text: |
-        Dashboards & BI
+        Dashboards &amp; BI
   - elementId: chip-2
     elementType: shape
     bounds: [688, 154, 100, 40]

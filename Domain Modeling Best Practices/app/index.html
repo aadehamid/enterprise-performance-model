@@ -165,7 +165,7 @@ ul.tight li,ol.tight li{margin-bottom:.25em;}
 <tr><td>Program / workstream lead</td><td>§2, §21</td><td>§22–§26</td></tr>
 <tr><td>Analytics / BI / KPI lead</td><td>§20</td><td>§20.2 (KPI architecture connection), §21</td></tr>
 </table>
-<div class="callout note"><span class="ttl">Reading tip</span>If you only have ten minutes, read §2 (the mandate), §4 (the scope boundary), and §5.2 (the ten guiding principles). Everything else operates inside those.</div>
+<div class="callout note"><span class="ttl">Reading tip</span>If you only have ten minutes, read §2 (the mandate), §4 (the scope boundary), and §5.2 (the 11 guiding principles). Everything else operates inside those.</div>
 
 <hr />
 <h2 id="s2"><span class="pn">PART A — CONTEXT AND MANDATE</span>2. The mandate</h2>
@@ -710,10 +710,10 @@ No cleansing in place.</code></pre>
 <li><strong>Write one source-to-target mapping document per source system</strong> using the §10.4 template. Map every party-like object/attribute to its canonical entity/attribute, in both directions of meaning: what the source value <em>means</em> canonically, and which canonical attributes the source can <em>supply</em>. Mark each attribute <em>authoritative-source candidate</em> or <em>reference-only</em>, and the role context it applies in (a TAS contact is authoritative for rack-scheduling contact, not for legal name).</li>
 <li><strong>Agree the Source-Authority matrix</strong> (§10.5) attribute by attribute, role context by role context, with the domain owner. This is the survivorship deliverable for this phase: a documented <em>preference</em>, applied only when constructing a governed view — never a stored overwrite (P4).</li>
 <li><strong>Standardize at view-time only.</strong> Canonical formats (casing, address normalization, code-set translation) are defined as <em>transformation rules in the mapping document</em>, applied when a standardized view is materialized (e.g., a Silver/gold view) or when match keys are computed inside our own cross-reference store. The source column itself is never reformatted (P1/P2).</li>
-<li><strong>Populate the Enterprise ID &amp; Cross-Reference schema</strong> (design in §14): one <code>SourceObjectRegistration</code> row per source-system object, with a read-only snapshot of match attributes, the candidate canonical party, role code, confidence, and method.</li>
-<li><strong>Generate match candidates using a hybrid approach</strong> — deterministic rules first (exact tax-ID, D-U-N-S, or known cross-system key matches, e.g. <code>DlrExternalNoXref</code>, SAP CVI link tables §17), then probabilistic/fuzzy scoring on name+address for the remainder (<a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">entity-resolution best practice</a>; <a href="https://xylitytech.com/data-engineering/master-data-management-entity-resolution/">MDM entity resolution guide</a>). Output is <em>candidate links with confidence scores and evidence</em> — not merges.</li>
-<li><strong>Set three confidence bands with the domain owner:</strong> auto-link (high confidence, logged), steward review (uncertain), no-link (low). Best practice targets a review queue of ~1–3% of candidate pairs; a queue above ~5% signals the rules or blocking need tuning (<a href="https://matchlogic.io/resources/data-matching-guide">data-matching guide</a>).</li>
-<li><strong>Route ambiguous matches to the named domain owner/steward</strong> and log every disposition in <code>MatchDecision</code> (who, when, evidence, rationale). A governed spreadsheet or ticket queue is sufficient — no stewardship workflow product is required at this stage.</li>
+<li><strong>Populate the Enterprise ID and Cross-Reference schema</strong> (design in §14): one <code>SourceObjectRegistration</code> row per source-system object, with a read-only snapshot of match attributes, the candidate canonical party, confidence, and method. Do not put <code>role_code</code> on <code>SourceObjectRegistration</code>. Roles go on <code>SourceRoleAssignment</code> (one dated row per contextual role).</li>
+<li><strong>Record the hybrid match approach as design</strong> (deterministic rules first: exact tax-ID, D-U-N-S, or known cross-system key matches, e.g. <code>DlrExternalNoXref</code>, SAP CVI link tables §17; then probabilistic/fuzzy scoring on name+address). Cite <a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">entity-resolution best practice</a> and <a href="https://xylitytech.com/data-engineering/master-data-management-entity-resolution/">MDM entity resolution guide</a>. This phase does not generate or score candidates. Output of a later MDM run is candidate links with confidence and evidence, not merges.</li>
+<li><strong>Agree three confidence bands with the domain owner</strong> as the later MDM contract: auto-link (high confidence, logged), steward review (uncertain), no-link (low). Target a review queue of about 1 to 3 percent of candidate pairs; above about 5 percent, tune rules or blocking (<a href="https://matchlogic.io/resources/data-matching-guide">data-matching guide</a>). This phase does not auto-link and does not operate a queue.</li>
+<li><strong>Specify the <code>MatchDecision</code> slot</strong> (who, when, evidence, rationale) so a later steward disposition can be logged. Do not route matches or persist production dispositions in this phase. A spreadsheet or ticket queue is a later option, not a Step 5 deliverable.</li>
 <li><strong>Validate by walkthrough and reconciliation:</strong> pick 10–20 real parties spanning the §8.3 scenarios; trace each from every system through the xref to its role-qualified canonical representation (§14.5 worked example). Reconcile counts per system (mapped vs. unmapped vs. legitimately out-of-scope) with the SME.</li>
 <li><strong>Register mappings in Purview</strong> alongside glossary terms and assets (P9) — mappings are governed metadata, versioned like the model (P6).</li>
 </ol>
@@ -745,7 +745,7 @@ No cleansing in place.</code></pre>
 <h3 id="s10-6">10.6 Best practices</h3>
 <ul class="tight">
 <li><strong>Map through the canonical hub only</strong> — no point-to-point system mappings (P3): each new system adds 2 mappings (to/from canonical), not n (<a href="https://www.alation.com/blog/canonical-data-models-explained-benefits-tools-getting-started/">Alation</a>).</li>
-<li><strong>Hybrid matching, humans on the uncertain middle</strong> — deterministic first, probabilistic second, steward review for the gray zone; keep decisions transparent and reversible (<a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">RudderStack</a>; <a href="https://www.puppygraph.com/blog/entity-resolution">PuppyGraph ER workflow</a>).</li>
+<li><strong>Hybrid matching is the later MDM design</strong> (deterministic first, probabilistic second, steward review for the gray zone; decisions transparent and reversible). Cite <a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">RudderStack</a> and <a href="https://www.puppygraph.com/blog/entity-resolution">PuppyGraph ER workflow</a>. This phase does not generate candidates, auto-link, run a queue, or persist dispositions.</li>
 <li><strong>Reuse what exists:</strong> D-U-N-S / LEI / tax IDs as anchors (P7); SAP’s CVI link tables and <code>DlrMasterXref</code> as ready-made intra-system cross-references to harvest, not rebuild (§17, §14).</li>
 <li><strong>Every mapping row carries evidence</strong> — SME name, date, rationale — so future MDG/Profisee matching inherits a tested, explainable mapping set (P10).</li>
 </ul>
@@ -754,13 +754,13 @@ No cleansing in place.</code></pre>
 <li>Mapping at the wrong grain — an account-level key mapped to a party-level concept silently merges distinct legal entities (§3.3).</li>
 <li>“Same name ⇒ same party.” A repeated name suggests, never proves, identity; matches need multi-attribute evidence (§3.3, §14).</li>
 <li>Baking a “winning value” into a persisted table — that is golden-record creation, and it is out of scope (§4.2). Preferences stay as metadata.</li>
-<li>Letting the review queue balloon — &gt;5% of pairs in review means tuning thresholds, not hiring more stewards (<a href="https://matchlogic.io/resources/data-matching-guide">MatchLogic</a>).</li>
+<li>If a later MDM run has more than 5 percent of pairs in review, tune thresholds. Do not hire more stewards to absorb a bad rule set (<a href="https://matchlogic.io/resources/data-matching-guide">MatchLogic</a>). This phase has no review queue.</li>
 </ul></div>
 <h3 id="s10-8">10.8 Definition of done — Step 5</h3>
 <ul class="chk tight">
 <li>Mapping document approved per in-scope system (SME-validated, versioned, in Purview).</li>
 <li>Source-Authority matrix approved by the domain owner for all CDE attributes.</li>
-<li>Cross-reference schema populated for confirmed systems; candidates scored; steward queue sized and dispositioned; all decisions logged.</li>
+<li>Cross-reference schema designed for confirmed systems: one <code>SourceObjectRegistration</code> per source object plus <code>SourceRoleAssignment</code> rows. Match bands and <code>MatchDecision</code> documented as the later MDM shape. No candidates scored, no steward queue, no dispositions in this phase.</li>
 <li>Walkthrough validation passed for the scenario sample; per-system reconciliation counts agreed with SMEs.</li>
 <li>“% of source-to-target mapping completed” reportable per system.</li>
 </ul>
@@ -940,7 +940,7 @@ SourceAuthorityPreference          -- survivorship-as-preference (view-time only
 <h2 id="s15"><span class="pn">PART C — REFERENCE STANDARDS AND MODELS</span>15. Role catalogue</h2>
 <p>Group roles into tiers so modeling stays incremental. Start with Tier 1 only, scoped to confirmed systems. Role additions follow the §11.5 change process (P5, P6).</p>
 <p><strong>Tier 1 — mandatory O2C and commercial roles</strong></p>
-<pre class="text"><code>Legal entity · Corporate parent · Customer account · Sold-to · Ship-to · Bill-to · Payer ·
+<pre class="text"><code>Legal entity · Corporate parent · Customer account · Sold-to · Bill-to · Payer ·
 Consignee · Carrier · Contract party · Pricing party · Credit counterparty · Invoice recipient ·
 Source cross-reference / match candidate</code></pre>
 <p><strong>Tier 2 — financial, title, tax, and exception roles</strong></p>
