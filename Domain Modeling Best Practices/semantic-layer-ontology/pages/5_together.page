@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Σ gal × price on delivered tickets. No invoice as of as-of. Quality-hold out.</p>
+        <p>Σ net gallons × contract price. Delivered. No posted invoice (invoice_date &lt;= as_of). Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 262, 12, 2]

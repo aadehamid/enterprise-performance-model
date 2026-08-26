@@ -187,12 +187,12 @@ elements:
     elementType: text
     bounds: [596, 288, 284, 42]
     content:
-      fontSize: 11
+      fontSize: 10
       color: "$muted"
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Example. Unbilled USD:</span></strong> delivered, no invoice as of as-of. Quality-hold is out.</p>
+        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice (invoice_date &lt;= as_of). Quality-hold out.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line
