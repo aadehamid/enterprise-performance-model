@@ -127,7 +127,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Reports A and B - candidate operational calculation
+        A and B - candidate calc
   - elementId: f2-row1-value
     elementType: text
     bounds: [762, 186, 134, 16]
@@ -190,7 +190,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>All three reports read the same tables. Report C re-wrote the formula by hand and included quality-hold tickets, which are neither billed nor unbilled.</p>
+        <p>Reports A and B read fct_unbilled. Report C read fct_delivery and re-wrote the formula by hand. It included quality-hold tickets, which are neither billed nor unbilled.</p>
   - elementId: f2-verdict
     elementType: text
     bounds: [512, 366, 384, 16]

@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Unbilled USD = Σ net gallons × contract price on delivered tickets with no posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold tickets are neither billed nor unbilled.</p>
+        <p>Σ gal × price on delivered tickets. No invoice as of as-of. Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 262, 12, 2]
@@ -225,7 +225,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Store governs identity, approval, and the formula pointer. Gold holds published values. Not the number everyone consumes.</p>
+        <p>Gold holds published values. Store is not the consume number.</p>
 
   # ---------- captions under the flow ----------
   - elementId: data-caption

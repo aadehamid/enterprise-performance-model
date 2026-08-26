@@ -127,7 +127,7 @@ ul.tight li,ol.tight li{margin-bottom:.25em;}
 <ul>
 <li><a href="#s13">13. The six standardized domain objects</a></li>
 <li><a href="#s14">14. Enterprise ID &amp; Cross-Reference schema: detailed design and worked example</a></li>
-<li><a href="#s15">15. Role catalogue</a></li>
+<li><a href="#s15">15. Role catalog</a></li>
 <li><a href="#s16">16. Mapping real systems to Customer-domain roles</a></li>
 <li><a href="#s17">17. SAP S/4HANA Business Partner technical map</a></li>
 <li><a href="#s18">18. Downstream O&amp;G-specific modeling considerations</a></li>
@@ -714,7 +714,7 @@ No cleansing in place.</code></pre>
 <li><strong>Record the hybrid match approach as design</strong> (deterministic rules first: exact tax-ID, D-U-N-S, or known cross-system key matches, e.g. <code>DlrExternalNoXref</code>, SAP CVI link tables §17; then probabilistic/fuzzy scoring on name+address). Cite <a href="https://www.rudderstack.com/blog/what-is-entity-resolution/">entity-resolution best practice</a> and <a href="https://xylitytech.com/data-engineering/master-data-management-entity-resolution/">MDM entity resolution guide</a>. This phase does not generate or score candidates. Output of a later MDM run is candidate links with confidence and evidence, not merges.</li>
 <li><strong>Document three confidence bands with the domain owner</strong> as the later MDM contract: auto-link (high confidence, logged), steward review (uncertain), no-link (low). A later MDM run targets a review queue of about 1 to 3 percent of candidate pairs; above about 5 percent, tune rules or blocking (<a href="https://matchlogic.io/resources/data-matching-guide">data-matching guide</a>). This phase does not auto-link and does not operate a queue.</li>
 <li><strong>Specify the <code>MatchDecision</code> slot</strong> (who, when, evidence, rationale) so a later steward disposition can be logged. Do not route matches or persist production dispositions in this phase. A spreadsheet or ticket queue is a later option, not a Step 5 deliverable.</li>
-<li><strong>Validate by walkthrough and reconciliation:</strong> pick 10–20 real parties spanning the §8.3 scenarios; trace each from every system through the xref to its role-qualified canonical representation (§14.5 worked example). Reconcile counts per system (mapped vs. unmapped vs. legitimately out-of-scope) with the SME.</li>
+<li><strong>Validate by walkthrough and reconciliation:</strong> pick 10-20 real parties spanning the §8.3 scenarios; walk each party's source records against the mapping document and the designed xref shape (§14). Reconcile counts per system (mapped vs. unmapped vs. legitimately out-of-scope) with the SME. Do not require a populated xref or scored candidate links in this phase.</li>
 <li><strong>Register mappings in Purview</strong> alongside glossary terms and assets (P9) — mappings are governed metadata, versioned like the model (P6).</li>
 </ol>
 <h3 id="s10-4">10.4 Output artifact: Source-to-Target Mapping Document (per system, template)</h3>
@@ -860,7 +860,7 @@ No cleansing in place.</code></pre>
 <table>
 <tr><th>#</th><th>Object</th><th>Definition</th><th>Build guidance &amp; acceptance test</th></tr>
 <tr><td>1</td><td><strong>Canonical Customer / Party Object</strong><br/><span class="small">Steps 3–4</span></td><td>The single, agreed conceptual definition of “Party,” modeled as a supertype of Legal Entity, Organization, and Person, with Customer Account as a separate, related concept.</td><td>Role-based, not subtype hierarchy (P5). <em>Acceptance:</em> the five §8.3 scenarios expressible without workarounds; domain-owner sign-off.</td></tr>
-<tr><td>2</td><td><strong>Enterprise ID and Cross-Reference Schema</strong><br/><span class="small">Step 5</span></td><td>The governed, read-only mapping between each source-system object and its canonical Party/Role representation.</td><td>Design in §14. External identifiers (D-U-N-S, LEI, tax IDs) are useful source-independent bootstrap anchors (P7). <em>Acceptance:</em> any source object traceable to a role-qualified canonical representation with confidence + evidence.</td></tr>
+<tr><td>2</td><td><strong>Enterprise ID and Cross-Reference Schema</strong><br/><span class="small">Step 5</span></td><td>The governed, read-only mapping between each source-system object and its canonical Party/Role representation.</td><td>Design in §14. External identifiers (D-U-N-S, LEI, tax IDs) are useful source-independent bootstrap anchors (P7). <em>Acceptance:</em> xref schema designed (<code>SourceObjectRegistration</code> plus <code>SourceRoleAssignment</code>). Mapping documents can walk a source object to its intended Party/Role. Confidence, evidence, and scored links are a later MDM run.</td></tr>
 <tr><td>3</td><td><strong>Customer Hierarchy and Relationship Model</strong><br/><span class="small">Steps 3–4</span></td><td>Parent/subsidiary/treasury and other controlled relationships among parties — modeled as dated, typed PARTY RELATIONSHIPs.</td><td>Credit exposure and guarantees roll up to parents while delivery happens at operating subsidiaries (§18). <em>Acceptance:</em> a dealer group (DlrHierarchy) and a treasury-pays-subsidiary-bills case both expressible.</td></tr>
 <tr><td>4</td><td><strong>Standardized Address and Contact Point Model</strong><br/><span class="small">Steps 3–4</span></td><td>Common structure for business, delivery, billing, and operational locations associated with a party or account, with usage types.</td><td>Reconcile location semantics across TDL, FlowCal, MSMIS, Terminaling Throughputs, Asphalt Marketing, and ERP/CRM — each models “location” differently. <em>Acceptance:</em> ship-to vs. consignee vs. rack identity distinctions expressible (§15 warning).</td></tr>
 <tr><td>5</td><td><strong>Customer Role and Extension Model</strong><br/><span class="small">Steps 3–4, governed by Step 6</span></td><td>The role taxonomy a party or account can hold, plus a mechanism to extend it for new systems without redefining the core model.</td><td>Start taxonomy: §15. Map each system to the roles it captures (§16). <em>Acceptance:</em> adding a hypothetical new system requires only new mapping rows, no core-model change.</td></tr>
@@ -937,12 +937,11 @@ SourceAuthorityPreference          -- survivorship-as-preference (view-time only
 <strong>In the xref schema:</strong> five <code>SourceObjectRegistration</code> rows (different systems, different native IDs) all linked to one <code>CanonicalParty</code> (ABC Paving &amp; Materials, LEGAL_ENTITY), plus one more registration for the parent. The SAP registration carries two <code>SourceRoleAssignment</code> rows (Sold-to and Bill-to, each dated). Payer and guarantor sit on the parent, with a dated <code>guarantor-of / pays-for</code> PARTY RELATIONSHIP. The other four registrations each have the role that system actually plays. The deterministic link came from a shared tax ID on four rows; the TDL row scored 84 on name+address and is the shape of a later steward decision (logged in <code>MatchDecision</code> when matching runs). Legal name renders from SAP per the Source-Authority matrix; rack scheduling contact renders from TAS. <strong>No value in any of the five systems was changed.</strong> A reviewer can now answer “who is ABC?” — in any role, in any system — from one place.</div>
 
 <hr />
-<h2 id="s15"><span class="pn">PART C — REFERENCE STANDARDS AND MODELS</span>15. Role catalogue</h2>
+<h2 id="s15"><span class="pn">PART C — REFERENCE STANDARDS AND MODELS</span>15. Role catalog</h2>
 <p>Group roles into tiers so modeling stays incremental. Start with Tier 1 only, scoped to confirmed systems. Role additions follow the §11.5 change process (P5, P6).</p>
 <p><strong>Tier 1 — mandatory O2C and commercial roles</strong></p>
 <pre class="text"><code>Legal entity · Corporate parent · Customer account · Sold-to · Bill-to · Payer ·
-Consignee · Carrier · Contract party · Pricing party · Credit counterparty · Invoice recipient ·
-Source cross-reference / match candidate</code></pre>
+Consignee · Carrier · Contract party · Pricing party · Credit counterparty · Invoice recipient</code></pre>
 <p><strong>Tier 2 — financial, title, tax, and exception roles</strong></p>
 <pre class="text"><code>Ordering party · Delivery party · Title-transfer party · Tax-liable party ·
 Exemption-certificate party · Guarantor / credit-support party · Remit-to party ·
@@ -1239,7 +1238,7 @@ Pipeline shipper / off-taker · Marine consignee · Nominee / beneficial owner</
 <li>A reviewer can inspect conceptual and logical Customer ERDs covering every confirmed system in §3.1 and understand the Party/Role pattern without additional explanation (§8, §9).</li>
 <li>Every “related-party system to confirm” has an explicit in/out decision from its domain owner (§6).</li>
 <li>The same underlying party can be represented in multiple source-system and role contexts without forced equivalence (§14.5 demonstrates it end-to-end).</li>
-<li>A source object in any in-scope system can be traced through cross-reference/match evidence to a role-qualified Customer-domain representation (§14).</li>
+<li>Mapping documents and the designed xref shape show how a source object in any in-scope system will later bind to a role-qualified Customer-domain representation (§14). Scored match evidence is a later MDM run.</li>
 <li>The Standardization Health Metrics (§21) show measurable movement against targets, not just activity.</li>
 <li>The Domain Modeling Playbook (§11) and Domain Ontology strategy (§20) are drafted, reviewable, and have passed the second-domain readability test (§25).</li>
 <li>Every per-step definition of done (§6.8, §7.8, §8.7, §9.7, §10.8, §11.7) is met.</li>

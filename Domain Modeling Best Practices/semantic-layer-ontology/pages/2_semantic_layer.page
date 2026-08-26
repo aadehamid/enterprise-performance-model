@@ -192,7 +192,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Example. Unbilled USD:</span></strong> sum of net gallons × contract price on delivered tickets with no posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold tickets are neither billed nor unbilled.</p>
+        <p><strong><span style="color:$ink">Example. Unbilled USD:</span></strong> delivered, no invoice as of as-of. Quality-hold is out.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line
@@ -245,7 +245,7 @@ elements:
       lineHeight: 1.3
       align: [left, top]
       text: |
-        Bronze replica, Silver facts, Gold published cuts. Both demos still copy and transform before MEASURE().
+        Bronze / Silver / Gold, then MEASURE().
   - elementId: analogy
     elementType: text
     bounds: [580, 434, 316, 52]
