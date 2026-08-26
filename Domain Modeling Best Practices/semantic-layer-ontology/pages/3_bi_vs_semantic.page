@@ -1,0 +1,238 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  # ---------- header ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [64, 38, 700, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      align: [left, middle]
+      text: |
+        SOLUTION 1 OF 2 — SEMANTIC LAYER · A COMMON OBJECTION
+  - elementId: title
+    elementType: text
+    bounds: [64, 58, 760, 44]
+    content:
+      style: "$title"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Didn't the BI tool already do this?
+  - elementId: title-rule
+    elementType: shape
+    bounds: [64, 118, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- column headers ----------
+  - elementId: old-head
+    elementType: text
+    bounds: [190, 136, 340, 16]
+    content:
+      fontSize: 11.5
+      color: "$muted"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        BI-tool semantic model — embedded
+  - elementId: new-head
+    elementType: text
+    bounds: [550, 136, 346, 16]
+    content:
+      fontSize: 11.5
+      color: "$sl"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        Standalone semantic layer
+  - elementId: head-rule
+    elementType: shape
+    bounds: [64, 160, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- row 1: storage ----------
+  - elementId: r1-label
+    elementType: text
+    bounds: [64, 172, 110, 40]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.2
+      align: [left, top]
+      text: |
+        STORAGE
+  - elementId: r1-old
+    elementType: text
+    bounds: [190, 170, 340, 46]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Definitions live inside the tool - Tableau calculated fields, Power BI measures, LookML</p>
+  - elementId: r1-new
+    elementType: text
+    bounds: [550, 170, 346, 46]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>A standalone definition layer — tool-agnostic, versioned, queryable by any consumer</p>
+  - elementId: r1-rule
+    elementType: shape
+    bounds: [64, 232, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- row 2: access ----------
+  - elementId: r2-label
+    elementType: text
+    bounds: [64, 246, 110, 40]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.2
+      align: [left, top]
+      text: |
+        ACCESS
+  - elementId: r2-old
+    elementType: text
+    bounds: [190, 244, 340, 46]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Only that tool's users get the metric — everyone else rewrites it. Report C was exactly this</p>
+  - elementId: r2-new
+    elementType: text
+    bounds: [550, 244, 346, 46]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Dashboards, spreadsheets, notebooks, and AI agents all read the same definition</p>
+  - elementId: r2-rule
+    elementType: shape
+    bounds: [64, 306, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- row 3: governance ----------
+  - elementId: r3-label
+    elementType: text
+    bounds: [64, 320, 110, 40]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.2
+      align: [left, top]
+      text: |
+        GOVERNANCE
+  - elementId: r3-old
+    elementType: text
+    bounds: [190, 318, 340, 46]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Local to the tool. LookML may be versioned; a Tableau field often is not.</p>
+  - elementId: r3-new
+    elementType: text
+    bounds: [550, 318, 346, 46]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Definitions as code — every change tracked, reviewed, and auditable</p>
+  - elementId: r3-rule
+    elementType: shape
+    bounds: [64, 380, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- row 4: flexibility ----------
+  - elementId: r4-label
+    elementType: text
+    bounds: [64, 394, 110, 40]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.2
+      align: [left, top]
+      text: |
+        FLEXIBILITY
+  - elementId: r4-old
+    elementType: text
+    bounds: [190, 392, 340, 46]
+    content:
+      fontSize: 11
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Changing a metric means editing the tool and re-testing its dashboards</p>
+  - elementId: r4-new
+    elementType: text
+    bounds: [550, 392, 346, 46]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Swap the BI tool or add a consumer — the certified definition stays constant</p>
+
+  # ---------- takeaway ----------
+  - elementId: takeaway-rule
+    elementType: shape
+    bounds: [64, 456, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: takeaway
+    elementType: text
+    bounds: [64, 470, 832, 30]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Yes — the idea is old. What's new is <strong>where the definition lives</strong>: outside any single tool, so every consumer, human or AI, shares it.</p>
+
+  # ---------- footer ----------
+  - elementId: footer-left
+    elementType: text
+    bounds: [64, 514, 620, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Note: embedded models like LookML are real semantic layers - the difference is coupling, not quality
+  - elementId: footer-right
+    elementType: text
+    bounds: [830, 514, 66, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [right, middle]
+      text: |
+        03 / 05

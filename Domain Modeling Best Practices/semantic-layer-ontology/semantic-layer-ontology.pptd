@@ -1,0 +1,38 @@
+version: v2
+title: Semantic Layer and Ontology - Five Concept Slides
+size: [960, 540]
+theme:
+  colors:
+    bg: "#FAF8F5"
+    ink: "#211D19"
+    muted: "#6E675E"
+    faint: "#9A938A"
+    line: "#DDD6CC"
+    sl: "#B3501E"
+    slSoft: "#B3501E12"
+    slLine: "#B3501E66"
+    ont: "#2E5D46"
+    ontSoft: "#2E5D4612"
+    white: "#FFFFFF"
+  textStyles:
+    kicker:
+      fontSize: 11
+      color: "$muted"
+      letterSpacing: 2
+    title:
+      fontSize: 32
+      color: "$ink"
+      bold: true
+    body:
+      fontSize: 13
+      color: "$ink"
+      lineHeight: 1.5
+    caption:
+      fontSize: 10
+      color: "$faint"
+pages:
+  - pages/1_problem.page
+  - pages/2_semantic_layer.page
+  - pages/3_bi_vs_semantic.page
+  - pages/4_ontology.page
+  - pages/5_together.page
