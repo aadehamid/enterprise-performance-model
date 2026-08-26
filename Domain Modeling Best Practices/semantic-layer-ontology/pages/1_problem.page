@@ -1,0 +1,240 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  # ---------- header ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [64, 38, 700, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      align: [left, middle]
+      text: |
+        THE PROBLEM — BEFORE THE TWO SOLUTIONS
+  - elementId: title
+    elementType: text
+    bounds: [64, 58, 760, 44]
+    content:
+      style: "$title"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Same business, two kinds of wrong answers
+  - elementId: title-rule
+    elementType: shape
+    bounds: [64, 118, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- left: failure 1 — meaning ----------
+  - elementId: f1-label
+    elementType: text
+    bounds: [64, 140, 384, 12]
+    content:
+      fontSize: 10
+      color: "$ont"
+      bold: true
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        FAILURE 1 — THE WORD MEANS DIFFERENT THINGS
+  - elementId: f1-head
+    elementType: text
+    bounds: [64, 158, 384, 18]
+    content:
+      fontSize: 14.5
+      color: "$ink"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        "Customer" across the order-to-cash stack
+  - elementId: f1-rows
+    elementType: text
+    bounds: [64, 184, 384, 112]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p><strong>Contract &amp; order system</strong> — the sold-to party who signed the deal</p>
+        <p style="margin-top:8px"><strong>Billing / AR</strong> — the payer the invoice is sent to</p>
+        <p style="margin-top:8px"><strong>Terminal automation</strong> — the consignee picking up at the rack</p>
+        <p style="margin-top:8px"><strong>CRM</strong> — the account the sales team manages</p>
+  - elementId: f1-note
+    elementType: text
+    bounds: [64, 308, 384, 44]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      italic: true
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>Same company, four systems, four lists — ask for "unbilled by customer" and each system answers about a different "customer."</p>
+  - elementId: f1-verdict
+    elementType: text
+    bounds: [64, 366, 384, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        <p>Root cause: <strong><span style="color:$ont">meaning</span></strong> — what a word refers to</p>
+
+  # ---------- divider ----------
+  - elementId: divider
+    elementType: shape
+    bounds: [480, 140, 1, 254]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- right: failure 2 — logic ----------
+  - elementId: f2-label
+    elementType: text
+    bounds: [512, 140, 384, 12]
+    content:
+      fontSize: 10
+      color: "$sl"
+      bold: true
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        FAILURE 2 — THE MATH IS DIFFERENT EVERYWHERE
+  - elementId: f2-head
+    elementType: text
+    bounds: [512, 158, 384, 18]
+    content:
+      fontSize: 14.5
+      color: "$ink"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        "Unbilled USD" across three reports
+  - elementId: f2-row1-label
+    elementType: text
+    bounds: [512, 186, 250, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        A and B - candidate calc
+  - elementId: f2-row1-value
+    elementType: text
+    bounds: [762, 186, 134, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      bold: true
+      wrap: false
+      align: [right, middle]
+      text: |
+        $6,049,649.77
+  - elementId: f2-rule1
+    elementType: shape
+    bounds: [512, 208, 384, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: f2-row2-label
+    elementType: text
+    bounds: [512, 214, 250, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Report C — hand-written SQL
+  - elementId: f2-row2-value
+    elementType: text
+    bounds: [762, 214, 134, 16]
+    content:
+      fontSize: 11.5
+      color: "$sl"
+      bold: true
+      wrap: false
+      align: [right, middle]
+      text: |
+        $7,393,499.19
+  - elementId: f2-rule2
+    elementType: shape
+    bounds: [512, 236, 384, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: f2-gap
+    elementType: text
+    bounds: [512, 244, 384, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        <p>The gap: <strong><span style="color:$sl">$1,343,849.42 — a 22% larger number</span></strong></p>
+  - elementId: f2-note
+    elementType: text
+    bounds: [512, 272, 384, 60]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      italic: true
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>Reports A and B read fct_unbilled. Report C read fct_delivery and re-wrote the formula by hand. It included quality-hold tickets, which are neither billed nor unbilled.</p>
+  - elementId: f2-verdict
+    elementType: text
+    bounds: [512, 366, 384, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        <p>Root cause: <strong><span style="color:$sl">logic</span></strong> — the formula lives in many places</p>
+
+  # ---------- takeaway ----------
+  - elementId: takeaway-rule
+    elementType: shape
+    bounds: [64, 424, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+  - elementId: takeaway
+    elementType: text
+    bounds: [64, 442, 832, 44]
+    content:
+      fontSize: 13.5
+      color: "$ink"
+      lineHeight: 1.45
+      align: [left, top]
+      text: |
+        <p>Two different root causes need two different tools: an <strong><span style="color:$ont">ontology</span></strong> governs <strong>meaning</strong>, a <strong><span style="color:$sl">semantic layer</span></strong> governs <strong>logic</strong>. The next two slides take them one at a time.</p>
+
+  # ---------- footer ----------
+  - elementId: footer-left
+    elementType: text
+    bounds: [64, 514, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Both failure modes documented in the EPM demo — party roles (o2c-meaning.ttl) and the Report A/B/C comparison
+  - elementId: footer-right
+    elementType: text
+    bounds: [830, 514, 66, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [right, middle]
+      text: |
+        01 / 05

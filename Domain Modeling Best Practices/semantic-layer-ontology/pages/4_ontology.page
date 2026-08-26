@@ -1,0 +1,300 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  # ---------- header ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [64, 38, 700, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      align: [left, middle]
+      text: |
+        SOLUTION 2 OF 2 — ONTOLOGY · FIXES THE MEANING
+  - elementId: title
+    elementType: text
+    bounds: [64, 58, 720, 44]
+    content:
+      style: "$title"
+      wrap: false
+      align: [left, middle]
+      text: |
+        What is an ontology?
+  - elementId: title-rule
+    elementType: shape
+    bounds: [64, 118, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- left column: definition + bullets ----------
+  - elementId: definition
+    elementType: text
+    bounds: [64, 140, 470, 108]
+    content:
+      fontSize: 17.5
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |
+        <p>A <strong>formal model of what exists in the business</strong> and how those things relate — it defines <strong>meaning</strong>, not math.</p>
+  - elementId: bullets
+    elementType: text
+    bounds: [64, 262, 470, 210]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |
+        <p><span style="color:$ont">■</span> <strong>The nouns and verbs of the domain.</strong> Parties, contracts, terminals, custody tickets — and the relationships between them, like sold-to, payer, and ship-to as a location.</p>
+        <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>Machine-readable meaning.</strong> Written so people and AI can validate, connect, and reason over it — not just read it in a wiki.</p>
+        <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>Meaning outlives implementation.</strong> The concept of a customer survives every system migration; today's formulas and tools may not.</p>
+        <p style="margin-top:11px"><span style="color:$ont">■</span> <strong>A spectrum, not a two-year project.</strong> Start with a glossary, add hierarchy and relationships, formalize only where the need is real.</p>
+
+  # ---------- right column: concept graph ----------
+  - elementId: graph-label
+    elementType: text
+    bounds: [580, 130, 316, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        WHAT THINGS ARE, AND HOW THEY RELATE
+  # party node
+  - elementId: party-node
+    elementType: shape
+    bounds: [580, 205, 92, 48]
+    shapeName: rect
+    fill: {type: solid, color: "$ont"}
+  - elementId: party-node-text
+    elementType: text
+    bounds: [580, 205, 92, 48]
+    content:
+      fontSize: 12.5
+      color: "$white"
+      bold: true
+      align: [center, middle]
+      text: |
+        Party
+  # edges party -> roles
+  - elementId: edge-soldto
+    elementType: line
+    bounds: [672, 170, 68, 59]
+    viewBox: [68, 59]
+    points: "0,59 68,0"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.2, color: "$ont"}
+  - elementId: edge-payer
+    elementType: line
+    bounds: [672, 229, 68, 2]
+    viewBox: [68, 2]
+    points: "0,1 68,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.2, color: "$ont"}
+  - elementId: edge-label
+    elementType: text
+    bounds: [656, 196, 90, 12]
+    content:
+      fontSize: 9
+      color: "$muted"
+      wrap: false
+      align: [center, middle]
+      text: |
+        plays role of
+  # role chips
+  - elementId: role-1
+    elementType: shape
+    bounds: [740, 148, 132, 44]
+    shapeName: rect
+    fill: {type: solid, color: "$ontSoft"}
+    border: {style: solid, width: 1.2, color: "$ont"}
+  - elementId: role-1-text
+    elementType: text
+    bounds: [740, 148, 132, 44]
+    content:
+      fontSize: 9
+      color: "$muted"
+      align: [center, middle]
+      lineHeight: 1.3
+      text: |
+        <p><strong><span style="font-size:11.5px; color:$ont">Sold-to</span></strong></p>
+        <p>on the contract</p>
+  - elementId: role-2
+    elementType: shape
+    bounds: [740, 208, 132, 44]
+    shapeName: rect
+    fill: {type: solid, color: "$ontSoft"}
+    border: {style: solid, width: 1.2, color: "$ont"}
+  - elementId: role-2-text
+    elementType: text
+    bounds: [740, 208, 132, 44]
+    content:
+      fontSize: 9
+      color: "$muted"
+      align: [center, middle]
+      lineHeight: 1.3
+      text: |
+        <p><strong><span style="font-size:11.5px; color:$ont">Payer</span></strong></p>
+        <p>on the invoice</p>
+  - elementId: role-3
+    elementType: shape
+    bounds: [580, 268, 156, 44]
+    shapeName: rect
+    fill: {type: solid, color: "$ontSoft"}
+    border: {style: solid, width: 1.2, color: "$ont"}
+  - elementId: role-3-text
+    elementType: text
+    bounds: [580, 268, 156, 44]
+    content:
+      fontSize: 9
+      color: "$muted"
+      align: [center, middle]
+      lineHeight: 1.3
+      text: |
+        <p><strong><span style="font-size:11.5px; color:$ont">Ship-to / Site</span></strong></p>
+        <p>location / terminal, not a party role</p>
+  - elementId: graph-caption
+    elementType: text
+    bounds: [580, 326, 316, 46]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>One party, many roles. In the O2C demo the invoice goes to the <strong>payer</strong>, not the sold-to — and the ship-to is a terminal. Mixing roles is what makes “unbilled by customer” unreliable.</p>
+
+  # ---------- right column: spectrum ----------
+  - elementId: spectrum-label
+    elementType: text
+    bounds: [580, 384, 316, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        HOW FORMAL DOES IT NEED TO BE?
+  - elementId: spectrum-marker-label
+    elementType: text
+    bounds: [640, 404, 190, 12]
+    content:
+      fontSize: 9.5
+      color: "$ont"
+      bold: true
+      wrap: false
+      align: [center, middle]
+      text: |
+        Most teams need the middle
+  - elementId: spectrum-marker
+    elementType: shape
+    bounds: [730, 420, 12, 10]
+    shapeName: triangle
+    fill: {type: solid, color: "$ont"}
+  - elementId: spectrum-bar
+    elementType: line
+    bounds: [588, 436, 292, 2]
+    viewBox: [292, 2]
+    points: "0,1 292,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$faint"}
+  - elementId: tick-1
+    elementType: shape
+    bounds: [588, 431, 1, 10]
+    shapeName: rect
+    fill: {type: solid, color: "$faint"}
+  - elementId: tick-2
+    elementType: shape
+    bounds: [685, 431, 1, 10]
+    shapeName: rect
+    fill: {type: solid, color: "$faint"}
+  - elementId: tick-3
+    elementType: shape
+    bounds: [782, 431, 1, 10]
+    shapeName: rect
+    fill: {type: solid, color: "$faint"}
+  - elementId: tick-4
+    elementType: shape
+    bounds: [879, 431, 1, 10]
+    shapeName: rect
+    fill: {type: solid, color: "$faint"}
+  - elementId: tick-1-label
+    elementType: text
+    bounds: [552, 448, 76, 26]
+    content:
+      fontSize: 9.5
+      color: "$muted"
+      lineHeight: 1.3
+      align: [center, top]
+      text: |
+        Flat glossary
+  - elementId: tick-2-label
+    elementType: text
+    bounds: [647, 448, 76, 26]
+    content:
+      fontSize: 9.5
+      color: "$muted"
+      lineHeight: 1.3
+      align: [center, top]
+      text: |
+        Hierarchical glossary
+  - elementId: tick-3-label
+    elementType: text
+    bounds: [744, 448, 76, 26]
+    content:
+      fontSize: 9.5
+      color: "$muted"
+      lineHeight: 1.3
+      align: [center, top]
+      text: |
+        Concept model
+  - elementId: tick-4-label
+    elementType: text
+    bounds: [834, 448, 88, 26]
+    content:
+      fontSize: 9.5
+      color: "$muted"
+      lineHeight: 1.3
+      align: [center, top]
+      text: |
+        Formal ontology (RDF/OWL)
+
+  - elementId: spectrum-caption
+    elementType: text
+    bounds: [540, 480, 356, 26]
+    content:
+      fontSize: 9.5
+      color: "$muted"
+      lineHeight: 1.35
+      align: [center, top]
+      text: |
+        <p>The concept-model rung is the output of <strong><span style="color:$ink">domain modeling</span></strong> — e.g., a diagram of Party, Delivery Ticket, and Invoice, with Party playing its roles</p>
+
+  # ---------- footer ----------
+  - elementId: footer-left
+    elementType: text
+    bounds: [64, 514, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Anchor example: party roles and site in O2C, from the EPM demo ontology (o2c-meaning.ttl). Ship-to is a location.
+  - elementId: footer-right
+    elementType: text
+    bounds: [830, 514, 66, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [right, middle]
+      text: |
+        04 / 05
