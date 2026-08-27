@@ -12,7 +12,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        THE PROBLEM — BEFORE THE TWO SOLUTIONS
+        THE PROBLEM - BEFORE THE TWO SOLUTIONS
   - elementId: title
     elementType: text
     bounds: [64, 58, 760, 44]
@@ -28,7 +28,7 @@ elements:
     shapeName: rect
     fill: {type: solid, color: "$line"}
 
-  # ---------- left: failure 1 — meaning ----------
+  # ---------- left: failure 1 - meaning ----------
   - elementId: f1-label
     elementType: text
     bounds: [64, 140, 384, 12]
@@ -40,7 +40,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        FAILURE 1 — THE WORD MEANS DIFFERENT THINGS
+        FAILURE 1 - THE WORD MEANS DIFFERENT THINGS
   - elementId: f1-head
     elementType: text
     bounds: [64, 158, 384, 18]
@@ -61,10 +61,10 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p><strong>Contract &amp; order system</strong> — the sold-to party who signed the deal</p>
-        <p style="margin-top:8px"><strong>Billing / AR</strong> — the payer the invoice is sent to</p>
-        <p style="margin-top:8px"><strong>Terminal automation</strong> — the consignee picking up at the rack</p>
-        <p style="margin-top:8px"><strong>CRM</strong> — the account the sales team manages</p>
+        <p><strong>Contract &amp; order system</strong> - the sold-to party who signed the deal</p>
+        <p style="margin-top:8px"><strong>Billing / AR</strong> the bill-to who receives the invoice; the payer who settles it</p>
+        <p style="margin-top:8px"><strong>Terminal automation</strong> - the consignee picking up at the rack</p>
+        <p style="margin-top:8px"><strong>CRM</strong> - the account the sales team manages</p>
   - elementId: f1-note
     elementType: text
     bounds: [64, 308, 384, 44]
@@ -75,7 +75,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Same company, four systems, four lists — ask for "unbilled by customer" and each system answers about a different "customer."</p>
+        <p>Same company, four systems, four lists - ask for "unbilled by customer" and each system answers about a different "customer."</p>
   - elementId: f1-verdict
     elementType: text
     bounds: [64, 366, 384, 16]
@@ -85,7 +85,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        <p>Root cause: <strong><span style="color:$ont">meaning</span></strong> — what a word refers to</p>
+        <p>Root cause: <strong><span style="color:$ont">meaning</span></strong> - what a word refers to</p>
 
   # ---------- divider ----------
   - elementId: divider
@@ -94,7 +94,7 @@ elements:
     shapeName: rect
     fill: {type: solid, color: "$line"}
 
-  # ---------- right: failure 2 — logic ----------
+  # ---------- right: failure 2 - logic ----------
   - elementId: f2-label
     elementType: text
     bounds: [512, 140, 384, 12]
@@ -106,7 +106,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        FAILURE 2 — THE MATH IS DIFFERENT EVERYWHERE
+        FAILURE 2 - THE MATH IS DIFFERENT EVERYWHERE
   - elementId: f2-head
     elementType: text
     bounds: [512, 158, 384, 18]
@@ -127,7 +127,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Reports A & B — certified metric
+        A and B - candidate calc
   - elementId: f2-row1-value
     elementType: text
     bounds: [762, 186, 134, 16]
@@ -153,7 +153,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Report C — hand-written SQL
+        Report C - hand-written SQL
   - elementId: f2-row2-value
     elementType: text
     bounds: [762, 214, 134, 16]
@@ -179,7 +179,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        <p>The gap: <strong><span style="color:$sl">$1,343,849.42 — a 22% larger number</span></strong></p>
+        <p>The gap: <strong><span style="color:$sl">$1,343,849.42 - a 22% larger number</span></strong></p>
   - elementId: f2-note
     elementType: text
     bounds: [512, 272, 384, 60]
@@ -190,7 +190,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>All three reports read the same tables. Report C re-wrote the formula by hand and counted a different set of delivered-but-uninvoiced tickets.</p>
+        <p>Reports A and B read fct_unbilled. Report C read fct_delivery and re-wrote the formula by hand. It included quality-hold tickets, which are neither billed nor unbilled.</p>
   - elementId: f2-verdict
     elementType: text
     bounds: [512, 366, 384, 16]
@@ -200,7 +200,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        <p>Root cause: <strong><span style="color:$sl">logic</span></strong> — the formula lives in many places</p>
+        <p>Root cause: <strong><span style="color:$sl">logic</span></strong> - the formula lives in many places</p>
 
   # ---------- takeaway ----------
   - elementId: takeaway-rule
@@ -228,7 +228,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Both failure modes documented in the EPM demo — party roles (o2c-meaning.ttl) and the Report A/B/C comparison
+        Both failure modes documented in the EPM demo - party roles (o2c-meaning.ttl) and the Report A/B/C comparison
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]

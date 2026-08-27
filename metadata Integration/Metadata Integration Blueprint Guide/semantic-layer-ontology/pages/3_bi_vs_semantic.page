@@ -12,7 +12,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        SOLUTION 1 OF 2 — SEMANTIC LAYER · A COMMON OBJECTION
+        SOLUTION 1 OF 2 - SEMANTIC LAYER · A COMMON OBJECTION
   - elementId: title
     elementType: text
     bounds: [64, 58, 760, 44]
@@ -39,7 +39,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        BI-tool semantic model — embedded
+        BI-tool semantic model - embedded
   - elementId: new-head
     elementType: text
     bounds: [550, 136, 346, 16]
@@ -77,7 +77,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Definitions live inside the tool — Tableau calculated fields, Power BI measures, LookML</p>
+        <p>Definitions live inside the tool - Tableau calculated fields, Power BI measures, LookML</p>
   - elementId: r1-new
     elementType: text
     bounds: [550, 170, 346, 46]
@@ -87,7 +87,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>A standalone definition layer — tool-agnostic, versioned, queryable by any consumer</p>
+        <p>A standalone definition layer - tool-agnostic, versioned, queryable by any consumer</p>
   - elementId: r1-rule
     elementType: shape
     bounds: [64, 232, 832, 1]
@@ -114,7 +114,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Only that tool's users get the metric — everyone else rewrites it. Report C was exactly this</p>
+        <p>Only that tool's users get the metric - everyone else rewrites it. Report C was exactly this</p>
   - elementId: r2-new
     elementType: text
     bounds: [550, 244, 346, 46]
@@ -151,7 +151,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Wiki pages at best — the real definition lives in institutional memory</p>
+        <p>Local to the tool. LookML may be versioned; a Tableau field often is not.</p>
   - elementId: r3-new
     elementType: text
     bounds: [550, 318, 346, 46]
@@ -161,7 +161,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Definitions as code — every change tracked, reviewed, and auditable</p>
+        <p>Definitions as code - every change tracked, reviewed, and auditable</p>
   - elementId: r3-rule
     elementType: shape
     bounds: [64, 380, 832, 1]
@@ -198,7 +198,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Swap the BI tool or add a consumer — the certified definition stays constant</p>
+        <p>Swap the BI tool or add a consumer. The governed definition stays constant.</p>
 
   # ---------- takeaway ----------
   - elementId: takeaway-rule
@@ -215,7 +215,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Yes — the idea is old. What's new is <strong>where the definition lives</strong>: outside any single tool, so every consumer, human or AI, shares it.</p>
+        <p>Yes - the idea is old. What's new is <strong>where the definition lives</strong>: outside any single tool, so every consumer, human or AI, shares it.</p>
 
   # ---------- footer ----------
   - elementId: footer-left
@@ -226,7 +226,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Note: embedded models like LookML are real semantic layers — the difference is coupling, not quality
+        Note: embedded models like LookML are real semantic layers - the difference is coupling, not quality
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]

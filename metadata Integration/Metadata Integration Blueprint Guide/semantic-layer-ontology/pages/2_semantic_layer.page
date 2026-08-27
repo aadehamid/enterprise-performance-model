@@ -12,7 +12,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        SOLUTION 1 OF 2 — SEMANTIC LAYER · FIXES THE LOGIC
+        SOLUTION 1 OF 2 - SEMANTIC LAYER · FIXES THE LOGIC
   - elementId: title
     elementType: text
     bounds: [64, 58, 720, 44]
@@ -38,7 +38,7 @@ elements:
       lineHeight: 1.5
       align: [left, top]
       text: |
-        <p>A <strong>governed layer of metric definitions</strong> between your data and everyone who consumes it — <strong>define each metric once</strong>, and every dashboard, spreadsheet, and AI agent works from the same number.</p>
+        <p>A <strong>governed layer of metric definitions</strong> between your data and everyone who consumes it - <strong>define each metric once</strong>, and every dashboard, spreadsheet, and AI agent works from the same number.</p>
   - elementId: bullets
     elementType: text
     bounds: [64, 262, 470, 206]
@@ -48,10 +48,10 @@ elements:
       lineHeight: 1.5
       align: [left, top]
       text: |
-        <p><span style="color:$sl">■</span> <strong>Define once, use everywhere.</strong> One certified definition of a metric like Unbilled USD — not a slightly different formula in every report.</p>
-        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It translates; it doesn't copy.</strong> Definitions point at the data where it lives — nothing is moved or duplicated.</p>
+        <p><span style="color:$sl">■</span> <strong>Define once, use everywhere.</strong> One governed formula for a candidate calculation like Unbilled USD - not a slightly different formula in every report.</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It compiles; it still copies.</strong> Definitions point at warehouse tables. Bronze, Silver, and Gold still land before MEASURE().</p>
         <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Versioned and reviewed like code.</strong> When a definition changes, every consumer changes with it.</p>
-        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Humans and AI agents get the same answer.</strong> An agent reads the approved metric instead of inventing its own SQL.</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Humans and AI agents get the same answer.</strong> An agent submits MEASURE() instead of inventing SQL.</p>
   - elementId: bridge
     elementType: text
     bounds: [64, 484, 470, 16]
@@ -61,7 +61,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        <p><span style="color:$ont">→</span> That fixes the logic — <strong><span style="color:$ont">not the meaning</span></strong>. Meaning is the ontology's job, next.</p>
+        <p><span style="color:$ont">→</span> That fixes the logic - <strong><span style="color:$ont">not the meaning</span></strong>. Meaning is the ontology's job, next.</p>
 
   # ---------- right column: three-layer stack ----------
   - elementId: stack-label
@@ -187,12 +187,12 @@ elements:
     elementType: text
     bounds: [596, 288, 284, 42]
     content:
-      fontSize: 11
+      fontSize: 10
       color: "$muted"
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Example — Unbilled USD:</span></strong> sum of net gallons × contract price, delivered tickets with no posted invoice</p>
+        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice as of as-of (invoice_date &lt;= as_of). Quality-hold out.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line
@@ -245,7 +245,7 @@ elements:
       lineHeight: 1.3
       align: [left, top]
       text: |
-        Warehouse tables · operational systems — the data stays where it lives
+        Bronze / Silver / Gold, then MEASURE().
   - elementId: analogy
     elementType: text
     bounds: [580, 434, 316, 52]
@@ -256,7 +256,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p>Like a restaurant menu: you order the dish — you don't need to know how the kitchen made it.</p>
+        <p>Like a restaurant menu: you order the dish - you don't need to know how the kitchen made it.</p>
 
   # ---------- footer ----------
   - elementId: footer-left
@@ -267,7 +267,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Anchor example: O2C unbilled exposure — from the EPM demo (fct_unbilled, one certified metric)
+        Anchor example: O2C unbilled exposure - from the EPM demo (fct_unbilled, one candidate operational calculation)
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]

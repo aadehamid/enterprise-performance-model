@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metadata Exchange Blueprint — ER/Studio · Purview · Unity Catalog · Bigeye</title>
+<title>Metadata Exchange Blueprint - ER/Studio · Purview · Unity Catalog · Bigeye</title>
 <style>
   :root{
     --navy:#0f2b46; --navy2:#16395c; --teal:#0e7c86; --teal-lt:#e3f2f3;
@@ -114,8 +114,8 @@
 <main>
 <div class="hero">
   <div class="kicker">Enterprise Metadata Integration · Engineering Blueprint · EPM Program</div>
-  <h1>How ER/Studio, Purview, Unity Catalog and Bigeye exchange information — and what we build to make it world-class</h1>
-  <p>A prescriptive blueprint for the metadata exchange: the mental models to design by, the components to build, the information model and contracts every exchange obeys, the certification gates that make "certified" mean something, and the flows that must work end-to-end — landing in a pilot the business can touch.</p>
+  <h1>How ER/Studio, Purview, Unity Catalog and Bigeye exchange information - and what we build to make it world-class</h1>
+  <p>A prescriptive blueprint for the metadata exchange: the mental models to design by, the components to build, the information model and contracts every exchange obeys, the certification gates that make "certified" mean something, and the flows that must work end-to-end - landing in a pilot the business can touch.</p>
   <div class="meta">
     <span>v2.1 · Engineering blueprint (incorporates EPM-ARCH-META-001)</span>
     <span>Scope: EPM · Downstream Oil &amp; Gas pilot first</span>
@@ -125,20 +125,20 @@
 
 <section id="s1">
   <h2 class="sec"><span class="num">1</span>What we are building &amp; why</h2>
-  <p>Four systems each hold part of the truth about our data. ER/Studio knows what the business <i>means</i> (conceptual/logical models, the ubiquitous language). Unity Catalog knows what physically <i>exists</i> in the lakehouse and who may touch it. Purview knows what is <i>discoverable and governed</i> across the enterprise. Bigeye knows what is <i>actually happening</i> — lineage as observed, quality as measured. Today these facts are trapped in their homes. We are building the exchange that lets them flow — deliberately, verifiably, and in both directions where it makes sense.</p>
-  <p>The result is a <b>federated, ontology-linked metadata knowledge graph</b>: each metadata fact stays in its operational system of authority, and we publish a validated, selective, identity-resolved projection for enterprise integration and downstream consumption. The exchange supports governed discovery, cross-platform impact analysis, data-product publication, KPI traceability, policy-filtered AI grounding, and interoperability. It does <b>not</b> replace the user interfaces, runtime controls, or operational functions of the source platforms.</p>
+  <p>Four systems each hold part of the truth about our data. ER/Studio knows what the business <i>means</i> (conceptual/logical models, the ubiquitous language). Unity Catalog knows what physically <i>exists</i> in the lakehouse and who may touch it. Purview knows what is <i>discoverable and governed</i> across the enterprise. Bigeye knows what is <i>actually happening</i> - lineage as observed, quality as measured. Today these facts are trapped in their homes. We are building the exchange that lets them flow - deliberately, verifiably, and in both directions where it makes sense.</p>
+  <p>The result is a <b>federated, ontology-linked metadata knowledge graph</b>: each metadata fact stays in its operational system of authority, and we publish a gated, selective, identity-resolved projection for enterprise integration and downstream consumption. The exchange supports governed discovery, cross-platform impact analysis, data-product publication, KPI traceability, policy-filtered AI grounding, and interoperability. It does <b>not</b> replace the user interfaces, runtime controls, or operational functions of the source platforms.</p>
 
   <h3>1.1 The six qualities that make this "world-class"</h3>
   <div class="grid4">
     <div class="stat"><b>1 · One fact, one home</b><span>Every metadata attribute has exactly one system of authority. Everything else is a labelled projection. No competing truths, ever.</span></div>
-    <div class="stat"><b>2 · Contracted exchange</b><span>Every flow between systems has a versioned payload schema, compatibility rules and automated contract tests — like APIs, because they are APIs.</span></div>
+    <div class="stat"><b>2 · Contracted exchange</b><span>Every flow between systems has a versioned payload schema, compatibility rules and automated contract tests - like APIs, because they are APIs.</span></div>
     <div class="stat"><b>3 · Identity first</b><span>Nothing moves until we know <i>what it is</i>. A central registry resolves ER/Studio model objects, UC tables, Purview GUIDs and Bigeye nodes to one canonical identity.</span></div>
-    <div class="stat"><b>4 · Evidence, not vibes</b><span>Lineage and quality arrive as source-attributed evidence with timestamps and confidence — and only become "validated" through an explicit gate.</span></div>
+    <div class="stat"><b>4 · Evidence, not vibes</b><span>Lineage and quality arrive as source-attributed evidence with timestamps and confidence - and only become gated through an explicit gate.</span></div>
     <div class="stat"><b>5 · Built for change</b><span>Renames, deletes, re-scans and vendor upgrades are first-class scenarios (tombstones, mapping versions), not edge cases discovered in production.</span></div>
-    <div class="stat"><b>6 · Observable itself</b><span>The metadata pipelines have SLAs, freshness-lag dashboards, dead-letter queues and alerts — we can prove the exchange is healthy.</span></div>
+    <div class="stat"><b>6 · Observable itself</b><span>The metadata pipelines have SLAs, freshness-lag dashboards, dead-letter queues and alerts - we can prove the exchange is healthy.</span></div>
   </div>
 
-  <h3>1.2 Scope — and honest non-goals</h3>
+  <h3>1.2 Scope - and honest non-goals</h3>
   <div class="grid2">
     <div class="card">
       <h4>In scope</h4>
@@ -168,7 +168,7 @@
     </div>
   </div>
 
-  <h3>1.3 Architecture drivers — why the design looks like this</h3>
+  <h3>1.3 Architecture drivers - why the design looks like this</h3>
   <table>
     <tr><th>Driver</th><th>Architectural response</th></tr>
     <tr><td>Business terms and KPIs need enterprise meaning</td><td>Domain ontology, SKOS glossary and KPI Store provide stable semantics and governance; ER/Studio models formalize into them</td></tr>
@@ -183,8 +183,8 @@
 
   <h3>1.4 What the business gets</h3>
   <ul>
-    <li>One portal page per data product or KPI: certified badge, owner, meaning, freshness, quality state, and "where does this number come from" — one click, no meetings.</li>
-    <li>Definitions written once (in ER/Studio or the KPI register) appear everywhere — Purview, UC, BI, agent answers — without copy-paste.</li>
+    <li>One portal page per data product or KPI: certified badge, owner, meaning, freshness, quality state, and "where does this number come from" - one click, no meetings.</li>
+    <li>Definitions written once (in ER/Studio or the KPI register) appear everywhere - Purview, UC, BI, agent answers - without copy-paste.</li>
     <li>AI agents that answer with the certified measure and cite their evidence, instead of inventing SQL.</li>
     <li>When something breaks upstream, the affected KPIs show a degraded badge <i>before</i> the business meeting, not after.</li>
   </ul>
@@ -197,28 +197,28 @@
   <p>Eight mental models plus seven non-negotiable rules. Every design decision in this blueprint is one of these applied.</p>
 
   <div class="callout c-purple"><b class="label">Core principle</b>
-  Keep each metadata fact in its operational system of authority. Publish a validated, selective, identity-resolved projection for enterprise integration and downstream consumption.</div>
+  Keep each metadata fact in its operational system of authority. Publish a gated, selective, identity-resolved projection for enterprise integration and downstream consumption.</div>
 
-  <h3>2.1 Metadata is data — engineer it like data</h3>
+  <h3>2.1 Metadata is data - engineer it like data</h3>
   <p>Metadata moving between systems is a data product in its own right: it has pipelines, schemas, SLAs, tests, versioning, and consumers. If you would not run a revenue pipeline without tests and monitoring, do not run a metadata pipeline without them either.</p>
 
   <h3>2.2 Write models and read models (CQRS thinking)</h3>
-  <p>The four systems are <b>write models</b> — each authoritative for its own facts. The knowledge graph, portal and context API are <b>read models</b> — projections optimized for questions ("what supports this KPI?"). Read models are disposable and rebuildable; write models are precious. This single idea prevents the classic failure mode of trying to make the graph a new system of record.</p>
+  <p>The four systems are <b>write models</b> - each authoritative for its own facts. The knowledge graph, portal and context API are <b>read models</b> - projections optimized for questions ("what supports this KPI?"). Read models are disposable and rebuildable; write models are precious. This single idea prevents the classic failure mode of trying to make the graph a new system of record.</p>
 
   <h3>2.3 Integrate by contract, not by convenience</h3>
-  <p>"We call the Purview API and see what comes back" is how fragile integrations are born. Instead: every exchange is defined by a <b>versioned contract</b> — an explicit payload schema, field-level authority, compatibility guarantees, and contract tests that run in CI against recorded real payloads. Vendor APIs change; contracts let us notice before production does.</p>
+  <p>"We call the Purview API and see what comes back" is how fragile integrations are born. Instead: every exchange is defined by a <b>versioned contract</b> - an explicit payload schema, field-level authority, compatibility guarantees, and contract tests that run in CI against recorded real payloads. Vendor APIs change; contracts let us notice before production does.</p>
 
   <h3>2.4 Identity before content</h3>
-  <p>The same table exists as a UC object, a Purview GUID, a Bigeye node, and maybe a model entity in ER/Studio. Before any content flows, the exchange must answer: <i>are these the same thing?</i> That answer lives in the Identity &amp; Mapping Registry — keyed on stable IDs, versioned with effective dates, never on names alone.</p>
+  <p>The same table exists as a UC object, a Purview GUID, a Bigeye node, and maybe a model entity in ER/Studio. Before any content flows, the exchange must answer: <i>are these the same thing?</i> That answer lives in the Identity &amp; Mapping Registry - keyed on stable IDs, versioned with effective dates, never on names alone.</p>
 
   <h3>2.5 Authority is per attribute, not per system</h3>
-  <p>"Purview owns business metadata" is too coarse. The correct granularity: <i>this field, mastered there, projected elsewhere</i>. Example: a table's technical description is mastered in UC/dbt (because the one-way scan overwrites Purview); its business glossary association is mastered in Purview; its certification state is mastered in the governance workflow. The registry stores this per field.</p>
+  <p>"Purview owns business metadata" is too coarse. The correct granularity: <i>this field, mastered there, projected elsewhere</i>. Example: a table's technical description is mastered in UC/dbt (because the one-way scan overwrites Purview); its business glossary association is mastered in Purview; KPI identity and approval are mastered on the Store catalog (<code>dim_kpi_metadata</code>, status proposed | approved | drifted | archived). The registry stores this per field.</p>
 
   <h3>2.6 Evidence ≠ truth; location ≠ certification</h3>
-  <p>Bigeye observes a lineage edge — that is evidence, timestamped and attributed, not approved truth. A table sits in a Gold schema — that is a location, not a quality certification. The exchange keeps these distinctions in the data model itself (<code>assertionStatus</code>, <code>certificationStatus</code>), so no consumer can accidentally confuse them.</p>
+  <p>Bigeye observes a lineage edge - that is evidence, timestamped and attributed, not approved truth. A table sits in a Gold schema - that is a location, not a quality certification. The exchange keeps these distinctions in the data model itself (<code>assertionStatus</code>, <code>certificationStatus</code>), so no consumer can accidentally confuse them.</p>
 
   <h3>2.7 Push events where you can; pull deltas where you must</h3>
-  <p>Ideal: systems emit change events the moment facts change (Git webhooks, UC/dbt CI, workflow approvals). Reality: some systems only allow scheduled pulls (Purview scans, Bigeye extraction). So the backbone treats <b>everything as an event stream internally</b> — connectors turn polls into delta events — giving the rest of the system one uniform, idempotent, replayable mechanism.</p>
+  <p>Ideal: systems emit change events the moment facts change (Git webhooks, UC/dbt CI, workflow approvals). Reality: some systems only allow scheduled pulls (Purview scans, Bigeye extraction). So the backbone treats <b>everything as an event stream internally</b> - connectors turn polls into delta events - giving the rest of the system one uniform, idempotent, replayable mechanism.</p>
 
   <h3>2.8 Design for deletes and renames from day one</h3>
   <p>Creates and updates are easy. The integrations that rot are the ones that never handled: a UC table dropped but still present in Purview (the native scan does not propagate deletes), a model entity renamed in ER/Studio, a Bigeye node re-created with a new ID. Every flow in this blueprint has a tombstone and rename rule (§6, F8).</p>
@@ -229,7 +229,7 @@
       <li><b>One authoritative system is declared for every material metadata field.</b> No field floats unowned.</li>
       <li><b>A projection may enrich or link source facts but must never silently overwrite them.</b> Overwrites are explicit, rule-driven and logged.</li>
       <li><b>A catalog label is never the sole integration key.</b> Use stable GUIDs, platform object IDs and canonical URIs.</li>
-      <li><b>An observed lineage edge is not automatically validated KPI lineage.</b> Validation is a separate, human-approved step.</li>
+      <li><b>An observed lineage edge is not automatically signed-off KPI lineage.</b> Validation is a separate, human-approved step.</li>
       <li><b>A Gold object is not certified merely because it sits in a Gold schema.</b> Location and certification are separate fields.</li>
       <li><b>A widely used calculation is not automatically an approved KPI.</b> Usage informs prioritization; only governance approves.</li>
       <li><b>DCAT describes access and services; it does not execute permission enforcement.</b> Enforcement stays in the runtime platforms.</li>
@@ -247,7 +247,7 @@
       <div class="bx sys"><b>Unity Catalog</b>physical objects, tags, grants, native lineage</div>
       <div class="bx sys"><b>Microsoft Purview</b>enterprise catalog, glossary, stewardship, certification</div>
       <div class="bx sys"><b>Bigeye</b>observed lineage, monitors, incidents</div>
-      <div class="bx sys"><b>KPI Store + Semantic layer</b>named KPIs, certified measures, services</div>
+      <div class="bx sys"><b>KPI Store + Semantic layer</b>identity, approval, formula pointer; MEASURE() compiler; Gold holds published values</div>
     </div>
     <div class="down">▲ write-back orchestrator (governed loops) &nbsp;·&nbsp; ▼ connectors (poll→delta / webhook→event)</div>
     <div class="row">
@@ -260,7 +260,7 @@
       <div class="bx core"><b>Reconciliation Engine</b>conflicts, duplicates, tombstones, evidence comparison</div>
       <div class="bx core"><b>Validation Gates</b>SHACL shapes + publication policy</div>
     </div>
-    <div class="down">▼ validated, versioned projections</div>
+    <div class="down">▼ gated, versioned projections</div>
     <div class="row">
       <div class="bx serve"><b>Knowledge Graph</b>DCAT · PROV-O · SKOS · OWL · EPM vocabulary</div>
       <div class="bx serve"><b>Context API</b>policy-filtered, per consumer persona</div>
@@ -268,16 +268,16 @@
     </div>
   </div>
 
-  <h3>3.1 Build / configure / consume — honestly</h3>
+  <h3>3.1 Build / configure / consume - honestly</h3>
   <table>
     <tr><th>Layer</th><th>Posture</th><th>Why</th></tr>
-    <tr><td>Connectors to the systems <span class="pill p-build">BUILD</span></td><td>Custom, thin, well-tested</td><td>No off-the-shelf connector expresses our contracts, identity resolution or evidence semantics. Keep each connector small — they translate, they don't think.</td></tr>
+    <tr><td>Connectors to the systems <span class="pill p-build">BUILD</span></td><td>Custom, thin, well-tested</td><td>No off-the-shelf connector expresses our contracts, identity resolution or evidence semantics. Keep each connector small - they translate, they don't think.</td></tr>
     <tr><td>Event backbone <span class="pill p-buy">BUY/REUSE</span></td><td>Managed queue/stream (whatever the platform team already runs)</td><td>Durable, replayable transport is a solved problem; our differentiator is the event <i>schema</i>, not the broker.</td></tr>
     <tr><td>Identity &amp; Mapping Registry <span class="pill p-build">BUILD</span></td><td>Custom service + small datastore</td><td>The heart of the exchange. No vendor product encodes <i>our</i> authority matrix and effective-dated mapping rules.</td></tr>
     <tr><td>Reconciliation engine <span class="pill p-build">BUILD</span></td><td>Custom, rules-driven</td><td>Rules are business-specific (authority, evidence thresholds, tombstones). Start rule-based; resist ML.</td></tr>
     <tr><td>Validation gates <span class="pill p-cfg">CONFIGURE</span></td><td>SHACL engine + our shapes in Git</td><td>SHACL is a W3C standard with mature engines; we author shapes, not validators.</td></tr>
-    <tr><td>Graph store &amp; serving <span class="pill p-cfg">CONFIGURE</span></td><td>Proven store behind our Context API</td><td>The durable record is Turtle/YAML in Git; the store is a replaceable serving layer. Consumers call the Context API, never the store directly.</td></tr>
-    <tr><td>Portal <span class="pill p-build">BUILD (thin)</span></td><td>Lean front-end over Context API</td><td>Business delight lives here — but all logic stays behind the API so the UI stays thin.</td></tr>
+    <tr><td>Graph store &amp; serving <span class="pill p-cfg">CONFIGURE</span></td><td>Proven store behind our Context API</td><td>Machine ontology SoT is Turtle in git. YAML is a projection, not that SoT. The store is a replaceable serving layer loaded from git Turtle. Consumers call the Context API, never the store directly.</td></tr>
+    <tr><td>Portal <span class="pill p-build">BUILD (thin)</span></td><td>Lean front-end over Context API</td><td>Business delight lives here - but all logic stays behind the API so the UI stays thin.</td></tr>
   </table>
 </section>
 
@@ -294,7 +294,7 @@
       <tr><td><code>uc-adapter</code></td><td>Databricks REST (tables, tags) + system tables (lineage)</td><td>PhysicalAssetChanged, TagChanged, NativeLineageObserved</td></tr>
       <tr><td><code>purview-adapter</code></td><td>Atlas 2.2 REST (entities, business metadata, glossary), scan status</td><td>AssetEnriched, ClassificationSet, GlossaryLinked, PublishStateChanged</td></tr>
       <tr><td><code>bigeye-adapter</code></td><td>Bigeye API (lineage nodes/edges, monitors, incidents)</td><td>LineageEvidenceObserved, QualityIncidentRaised, MonitorStateChanged</td></tr>
-      <tr><td><code>kpi-adapter</code></td><td>KPI register store + metric-definitions repo (Git)</td><td>KpiProposed, KpiCertified, MetricVersionReleased</td></tr>
+      <tr><td><code>kpi-adapter</code></td><td>Store catalog (<code>dim_kpi_metadata</code>) + Metric View repo (Git)</td><td>KpiProposed, KpiApproved, KpiDrifted, KpiArchived, MetricVersionReleased</td></tr>
       <tr><td><code>ontology-adapter</code></td><td>Ontology repo (Turtle in Git)</td><td>ConceptDefined, ConceptDeprecated, OntologyReleased</td></tr>
     </table>
     <p class="small"><b>Proud-engineer details:</b> every adapter persists the raw vendor payload alongside the normalized event (evidence + replay); checkpoints make re-runs idempotent; a <code>--since</code> replay mode rebuilds any downstream state; per-asset API limits (Purview has no bulk business-metadata endpoint) are handled with batched windows and token buckets, not hope.</p>
@@ -322,22 +322,22 @@
 
   <h3>C6 · Validation &amp; Policy Gates</h3>
   <div class="card">
-    <p><b>Job:</b> SHACL shapes encoding "what a publishable thing must have" (§10). A projection that fails a gate is blocked, the failure is routed to the steward queue with a human-readable reason, and the block itself is audit-logged. Gates are the exchange's immune system — they make "certified" mean something.</p>
+    <p><b>Job:</b> SHACL shapes encoding "what a publishable thing must have" (§10). A projection that fails a gate is blocked, the failure is routed to the steward queue with a human-readable reason, and the block itself is audit-logged. Gates are the exchange's immune system - they make "certified" mean something.</p>
   </div>
 
   <h3>C7 · Knowledge Graph (serving)</h3>
   <div class="card">
-    <p><b>Job:</b> hold the validated, versioned projection and answer graph questions fast. Loaded from Git Turtle + event deltas. Treated as cattle, not pets: rebuildable from events + snapshots at any time.</p>
+    <p><b>Job:</b> hold the gated, versioned projection and answer graph questions fast. Loaded from Git Turtle + event deltas. Treated as cattle, not pets: rebuildable from events + snapshots at any time.</p>
   </div>
 
   <h3>C8 · Context API</h3>
   <div class="card">
-    <p><b>Job:</b> the single front door for all consumers — portal, BI developers, auditors, AI agents. Policy-filtered per persona: a business user gets meaning/owner/certification/freshness; an engineer also gets schema, quality rules and column lineage; an agent gets approved concepts, metric contracts and evidence — and nothing sensitive. This is what makes "the same door for every agent" real.</p>
+    <p><b>Job:</b> the single front door for all consumers - portal, BI developers, auditors, AI agents. Policy-filtered per persona: a business user gets meaning/owner/certification/freshness; an engineer also gets schema, quality rules and column lineage; an agent gets approved concepts, metric contracts and evidence - and nothing sensitive. This is what makes "the same door for every agent" real.</p>
   </div>
 
   <h3>C9 · Write-back Orchestrator</h3>
   <div class="card">
-    <p><b>Job:</b> the governed reverse direction. When governance facts change (certification approved, glossary term published, remediation resolved), the orchestrator writes them back to the right system through its API: UC governance tags, Purview glossary/business metadata, ER/Studio term status. Every write-back is an explicit, logged, conflict-checked transaction with a per-attribute rule — never two connectors pointed at each other (that is how you build an infinite overwrite loop with a one-way scan in the middle).</p>
+    <p><b>Job:</b> the governed reverse direction. When governance facts change (certification approved, glossary term published, remediation resolved), the orchestrator writes them back to the right system through its API: UC governance tags, Purview glossary/business metadata, ER/Studio term status. Every write-back is an explicit, logged, conflict-checked transaction with a per-attribute rule - never two connectors pointed at each other (that is how you build an infinite overwrite loop with a one-way scan in the middle).</p>
   </div>
 
   <h3>C10 · Exchange Observability (cross-cutting)</h3>
@@ -361,49 +361,49 @@
   <h2 class="sec"><span class="num">5</span>System integration cards</h2>
   <p>One card per system: what it is authority for, what it sends, what it receives, how to engineer it, and the verified platform behaviour that shapes the design.</p>
 
-  <h3>5.1 ER/Studio — the meaning source</h3>
+  <h3>5.1 ER/Studio - conceptual and logical models</h3>
   <table>
     <tr><th>Aspect</th><th>Design</th></tr>
     <tr><td>Authority for</td><td>Conceptual &amp; logical data models, entity/attribute definitions, the domain's ubiquitous language</td></tr>
     <tr><td>Sends</td><td>Model releases and entity/term deltas → formalized into ontology modules (Turtle in Git) → glossary terms pushed to Purview → concept IRIs linked to catalog assets</td></tr>
     <tr><td>Receives</td><td>Term status (draft/approved/deprecated) via write-back orchestrator, so modellers see governance state inside their tool</td></tr>
     <tr><td>Mechanism</td><td>Team Server REST API for programmatic extraction; MetaWizard bridges for bulk export; scheduled delta + on-release trigger. Fallback if the API edition is absent: versioned file export → Git → same adapter</td></tr>
-    <tr><td>Engineering notes</td><td>Key on stable model object IDs, not names (renames are routine). Record <code>source_model_version</code> on every extracted fact so ontology provenance — "shared meaning and where it came from" — is automatic. Verify Team Server licensing before committing to the API path</td></tr>
-    <tr><td>Never do</td><td>Re-author model definitions downstream. If a definition must change, it changes in ER/Studio and flows. Downstream systems hold projections with provenance</td></tr>
+    <tr><td>Engineering notes</td><td>Key on stable model object IDs, not names (renames are routine). Record <code>source_model_version</code> on every extracted fact so ontology provenance - "shared meaning and where it came from" - is automatic. Verify Team Server licensing before committing to the API path</td></tr>
+    <tr><td>Never do</td><td>Do not treat ER/Studio, this file, or the graph store as machine ontology SoT. Conceptual names live in the model. FOUND-003 is the human-readable semantic model. FOUND-004 is ontology design names, not executable IRIs. Exact IRIs, axioms, and mapping assertions live in Turtle in git.</td></tr>
   </table>
 
-  <h3>5.2 Microsoft Purview — the enterprise catalog &amp; governance seat</h3>
+  <h3>5.2 Microsoft Purview - the enterprise catalog &amp; governance seat</h3>
   <table>
     <tr><th>Aspect</th><th>Design</th></tr>
     <tr><td>Authority for</td><td>Enterprise discovery, business enrichment, glossary associations, classifications, stewardship, publication state</td></tr>
     <tr><td>Sends</td><td>Enriched assets, glossary links, classifications, publish-state changes → extracted via Atlas 2.2 REST into canonical events</td></tr>
     <tr><td>Receives</td><td>UC technical metadata via the native one-way scan; glossary terms from the ontology (write-back); certification workflow outcomes</td></tr>
-    <tr><td>Mechanism</td><td>Native "Azure Databricks Unity Catalog" source scan (managed identity/service principal, incremental) inbound; Atlas API outbound. Business-metadata writes are per-asset GUID — no bulk endpoint — so certification writes are batched into windows with rate limiting, and heavy API volume budgets for Elastic Data Map capacity</td></tr>
+    <tr><td>Mechanism</td><td>Native "Azure Databricks Unity Catalog" source scan (managed identity/service principal, incremental) inbound; Atlas API outbound. Business-metadata writes are per-asset GUID - no bulk endpoint - so certification writes are batched into windows with rate limiting, and heavy API volume budgets for Elastic Data Map capacity</td></tr>
     <tr><td>Engineering notes</td><td>Scan scope is catalog-level only → make "one UC catalog per domain" the scan and cost unit. Deletes in UC do not propagate → our tombstone rule owns retirement. Purview-side edits to attributes UC also holds can be overwritten by the next scan → authority matrix forbids authoring those attributes in Purview</td></tr>
     <tr><td>Publication policy</td><td>The backbone reads from Purview only assets and data products with an explicit publication state (see §10.1): Draft / Publish / Certified / Withhold / Retired</td></tr>
     <tr><td>Never do</td><td>Treat Purview as the store of record for the graph. Purview is a governance workbench and an authority for its fields; the canonical projection is assembled by the backbone</td></tr>
   </table>
 
-  <h3>5.3 Unity Catalog — the physical &amp; enforcement seat</h3>
+  <h3>5.3 Unity Catalog - the physical &amp; enforcement seat</h3>
   <table>
     <tr><th>Aspect</th><th>Design</th></tr>
     <tr><td>Authority for</td><td>Physical object identity (catalog.schema.object), schemas, tags, comments, grants, row filters/masks, native Databricks lineage</td></tr>
-    <tr><td>Sends</td><td>Object lifecycle events (create/alter/drop), tag changes, native lineage — via REST + system tables, since the Purview scan alone misses deletes, external-location lineage and readable notebook names</td></tr>
+    <tr><td>Sends</td><td>Object lifecycle events (create/alter/drop), tag changes, native lineage - via REST + system tables, since the Purview scan alone misses deletes, external-location lineage and readable notebook names</td></tr>
     <tr><td>Receives</td><td>Governance tags from the write-back orchestrator (e.g. <code>certified=true</code> only after the governance gate passes); optionally steward-authored descriptions, disabled by default</td></tr>
-    <tr><td>Mechanism</td><td><code>uc-adapter</code> polls object metadata + system tables on a schedule; CI/CD hooks on dbt/Terraform pipelines emit change events on deploy. Tags are read directly by the adapter (they do not auto-map into Purview)</td></tr>
-    <tr><td>Engineering notes</td><td>Runtime enforcement (grants, masks, filters) never leaves UC — the graph references policy posture only. Governance tags are written by the orchestrator's service principal alone; engineers cannot hand-tag certification</td></tr>
+    <tr><td>Mechanism</td><td><code>uc-adapter</code> polls object metadata + system tables on a schedule; CI/CD hooks on dbt/Terraform pipelines emit change events on deploy. Purview UC scans ingest UC tags as properties. The adapter still covers deletes, external-location lineage, and readable notebook names.</td></tr>
+    <tr><td>Engineering notes</td><td>Runtime enforcement (grants, masks, filters) never leaves UC - the graph references policy posture only. Governance tags are written by the orchestrator's service principal alone; engineers cannot hand-tag certification</td></tr>
     <tr><td>Never do</td><td>Let "Gold schema" imply "certified". Medallion location and certification status are separate fields by design</td></tr>
   </table>
 
-  <h3>5.4 Bigeye — the evidence source</h3>
+  <h3>5.4 Bigeye - the evidence source</h3>
   <table>
     <tr><th>Aspect</th><th>Design</th></tr>
-    <tr><td>Authority for</td><td>Observed cross-platform lineage (column-level), data-quality monitors, incidents — as <b>evidence</b></td></tr>
+    <tr><td>Authority for</td><td>Observed cross-platform lineage (column-level), data-quality monitors, incidents - as <b>evidence</b></td></tr>
     <tr><td>Sends</td><td>Lineage edges with node IDs, connector source, observation timestamps, confidence; monitor states; incident lifecycle events</td></tr>
-    <tr><td>Receives</td><td>Nothing. Bigeye is read-only for us — it observes; it is not a governance target</td></tr>
+    <tr><td>Receives</td><td>Nothing. Bigeye is read-only for us - it observes; it is not a governance target</td></tr>
     <tr><td>Mechanism</td><td>Bigeye API extraction on schedule (lineage) + near-real-time incident polling/webhooks for certified products. Every edge lands as a PROV-O qualified derivation with <code>assertionStatus</code> and <code>reconciliationStatus</code></td></tr>
     <tr><td>Engineering notes</td><td>Reconcile identity by qualified name + platform object ID, never by Bigeye node ID alone (IDs churn on re-scan). Verify connector coverage for RightAngle/OPIS/ETL/BI in week 1; gaps are filled by declared pipeline edges (OpenLineage facets from dbt/Databricks jobs), which enter reconciliation as a third evidence class</td></tr>
-    <tr><td>Never do</td><td>Promote observed lineage to KPI-validated lineage automatically. Validation requires the reconciliation verdict plus KPI-owner + steward sign-off</td></tr>
+    <tr><td>Never do</td><td>Promote observed lineage to signed-off KPI lineage automatically. Validation requires the reconciliation verdict plus KPI-owner + steward sign-off</td></tr>
   </table>
 
   <h4>Bigeye evidence → canonical representation</h4>
@@ -419,7 +419,7 @@
     <tr><td>Incident/anomaly</td><td><code>epm:DataQualityIncident</code> linked to entity/derivation</td></tr>
   </table>
 
-  <h4>Qualified derivation — the shape every lineage edge takes</h4>
+  <h4>Qualified derivation - the shape every lineage edge takes</h4>
   <pre>@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
 @prefix epm:  &lt;https://epm.example.org/id/&gt; .
 @prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
@@ -441,7 +441,7 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <p class="small">Every edge carries: who observed it, when, with what confidence, and where it stands in reconciliation. An edge without these fields is rejected at the gate.</p>
 
   <div class="callout c-green"><b class="label">The exchange in one sentence</b>
-  ER/Studio says what things mean, Unity Catalog says what exists and who may touch it, Purview says what is governed and certified, Bigeye says what is actually flowing and healthy — the backbone makes those four statements about <i>the same thing</i>, resolvable, evidenced, and delightful to consume.</div>
+  ER/Studio says what things mean, Unity Catalog says what exists and who may touch it, Purview says what is discoverable and governed, Bigeye says what is actually flowing and healthy. The Store catalog holds KPI identity, approval, and the formula pointer. Gold holds published values. The backbone makes those statements about the same thing, resolvable and evidenced.</div>
 </section>
 
 <section id="s6">
@@ -449,15 +449,15 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <p>Nine flows define the exchange completely. If these work, everything works. Each is testable end-to-end and carries a named SLO.</p>
 
   <h3>F1 · New Gold product publication: UC → Purview → graph → portal <span class="small">(technical spine · SLO ≤ 24 h)</span></h3>
-  <div class="flowstep"><div class="n">1</div><div class="t"><b>Engineering creates the Gold asset in Unity Catalog</b> (via dbt/Terraform CI — which also emits a declared-lineage event).</div></div>
-  <div class="flowstep"><div class="n">2</div><div class="t"><b>Purview incremental scan</b> makes the technical metadata discoverable; uc-adapter independently emits <code>PhysicalAssetChanged</code> with tags/comments the scan doesn't carry.</div></div>
+  <div class="flowstep"><div class="n">1</div><div class="t"><b>Engineering creates the Gold asset in Unity Catalog</b> (via dbt/Terraform CI - which also emits a declared-lineage event).</div></div>
+  <div class="flowstep"><div class="n">2</div><div class="t"><b>Purview incremental scan</b> makes the technical metadata discoverable and ingests UC tags as properties. uc-adapter independently emits <code>PhysicalAssetChanged</code> for deletes, external-location lineage, and notebook names the scan misses.</div></div>
   <div class="flowstep"><div class="n">3</div><div class="t"><b>Steward assigns/validates</b> glossary concepts, classification, ownership, contract, quality profile and publish state in Purview.</div></div>
   <div class="flowstep"><div class="n">4</div><div class="t"><b>Data-product owner approves certification</b> after the required quality and governance checks.</div></div>
   <div class="flowstep"><div class="n">5</div><div class="t"><b>purview-adapter extracts the eligible record</b> (publication state permitting) as a canonical event.</div></div>
   <div class="flowstep"><div class="n">6</div><div class="t"><b>Registry resolves identity:</b> UC object ↔ Purview GUID ↔ domain IRIs ↔ product ID; unknown → <code>Candidate</code> mapping + steward item.</div></div>
   <div class="flowstep"><div class="n">7</div><div class="t"><b>bigeye-adapter enriches</b> source-to-product lineage and quality evidence (§5.4 shape).</div></div>
   <div class="flowstep"><div class="n">8</div><div class="t"><b>Semantic adapter links</b> the relevant semantic service/metrics, if any.</div></div>
-  <div class="flowstep"><div class="n">9</div><div class="t"><b>SHACL gate validates completeness</b> (§10.3) — block + steward notification on failure.</div></div>
+  <div class="flowstep"><div class="n">9</div><div class="t"><b>SHACL gate validates completeness</b> (§10.3) - block + steward notification on failure.</div></div>
   <div class="flowstep"><div class="n">10</div><div class="t"><b>Backbone publishes the DCAT/PROV-O/ontology-linked projection;</b> portal, graph API and policy-filtered agent index update.</div></div>
   <div class="flowstep"><div class="n">11</div><div class="t"><b>Audit event records</b> source versions, mapping version, approver and publication timestamp.</div></div>
 
@@ -467,14 +467,14 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <div class="flowstep"><div class="n">3</div><div class="t"><b>Write-back orchestrator pushes glossary terms to Purview</b> via Atlas API (idempotent upsert by IRI).</div></div>
   <div class="flowstep"><div class="n">4</div><div class="t"><b>Stewards link terms to assets</b> in Purview; links flow to graph; portal shows plain-language meaning on every linked asset.</div></div>
 
-  <h3>F3 · Certification: KPI approved → certified row → UC tag → portal badge <span class="small">(governance loop · SLO ≤ 1 business day)</span></h3>
-  <div class="flowstep"><div class="n">1</div><div class="t"><b>Steward certifies a candidate KPI</b> in the register (definition, owner, thresholds, formula pointer to metric YAML in Git).</div></div>
-  <div class="flowstep"><div class="n">2</div><div class="t"><b>Orchestrator writes the certified row to Purview</b> (batched business-metadata write), bound to the Named KPI by ontology IRI — one row, one KPI, one measure version.</div></div>
-  <div class="flowstep"><div class="n">3</div><div class="t"><b>Orchestrator sets UC governance tag</b> <code>certified=true</code> on the implementing Gold asset.</div></div>
-  <div class="flowstep"><div class="n">4</div><div class="t"><b>Gate re-validates the full chain</b> (KPI → measure → service → Gold → lineage evidence); pass → projection flips to Certified.</div></div>
-  <div class="flowstep"><div class="n">5</div><div class="t"><b>Portal badge, agent context, BI discovery</b> all light up from the same event. One approval, everywhere consistent.</div></div>
+  <h3>F3 · Approval: Store catalog approved → Purview projection → Gold publish → portal <span class="small">(governance loop · SLO ≤ 1 business day)</span></h3>
+  <div class="flowstep"><div class="n">1</div><div class="t"><b>Steward sets Store catalog status to approved</b> on <code>dim_kpi_metadata</code> (identity, owner, thresholds, formula pointer to the Metric View). Status is proposed | approved | drifted | archived. Do not write approval to Purview as the Store door.</div></div>
+  <div class="flowstep"><div class="n">2</div><div class="t"><b>Orchestrator projects the approved Store row into Purview</b> as enterprise-catalog metadata, bound to the Named KPI by ontology IRI. One Store row, one KPI individual, one MEASURE() version. Purview is not the Store.</div></div>
+  <div class="flowstep"><div class="n">3</div><div class="t"><b>Gold publish writes the published values</b> at the agreed grains. Gold publish is not re-approve. Do not set <code>certified=true</code> as Store status.</div></div>
+  <div class="flowstep"><div class="n">4</div><div class="t"><b>Gate re-validates the chain</b> (approved Store row → MEASURE() → semantic service → Gold published values → lineage evidence). Pass does not mint a Certified Store class.</div></div>
+  <div class="flowstep"><div class="n">5</div><div class="t"><b>Portal badge, agent context, BI discovery</b> all light up from the same Store approval and Gold publish. One approval, everywhere consistent.</div></div>
 
-  <h3>F4 · Lineage validation: Bigeye + UC + declared edges → validated KPI lineage <span class="small">(evidence spine · SLO ≤ 24 h)</span></h3>
+  <h3>F4 · Lineage validation: Bigeye + UC + declared edges → signed-off KPI lineage <span class="small">(evidence spine · SLO ≤ 24 h)</span></h3>
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Three evidence classes arrive:</b> Bigeye observed edges, UC native lineage, declared pipeline edges from CI.</div></div>
   <div class="flowstep"><div class="n">2</div><div class="t"><b>Reconciliation engine compares:</b> all agree → <code>Corroborated</code>; Bigeye-only → <code>ObservedCrossPlatform</code>; declared vs Bigeye disagreement → <code>Conflict</code> + steward/technical-owner review (never auto-resolved).</div></div>
   <div class="flowstep"><div class="n">3</div><div class="t"><b>KPI owner + data steward approve</b> the traceability chain → status <code>ValidatedForKPI</code>; only now may the KPI publish as approved with lineage evidence.</div></div>
@@ -482,13 +482,13 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <h3>F5 · Quality incident: Bigeye → degraded badge → owner decision <span class="small">(trust loop · SLO ≤ 15 min for certified Gold)</span></h3>
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Bigeye detects a freshness / volume / schema / quality incident</b> and links it to the observed asset and lineage path.</div></div>
   <div class="flowstep"><div class="n">2</div><div class="t"><b>Canonical graph receives the incident reference</b> and traverses impact: asset → Gold product → semantic measure → KPI → reports and agents.</div></div>
-  <div class="flowstep"><div class="n">3</div><div class="t"><b>Consumer views flip the quality state</b> — Healthy | Warning | Degraded | Unavailable — with the incident reference; affected owners are notified.</div></div>
-  <div class="flowstep"><div class="n">4</div><div class="t"><b>KPI owner decides</b> whether to suppress, annotate, restate or continue KPI publication — the decision lands on the KPI's audit trail.</div></div>
+  <div class="flowstep"><div class="n">3</div><div class="t"><b>Consumer views flip the quality state</b> - Healthy | Warning | Degraded | Unavailable - with the incident reference; affected owners are notified.</div></div>
+  <div class="flowstep"><div class="n">4</div><div class="t"><b>KPI owner decides</b> whether to suppress, annotate, restate or continue KPI publication - the decision lands on the KPI's audit trail.</div></div>
 
   <h3>F6 · Source change impact: schema change → affected KPIs <span class="small">(change management · SLO ≤ 1 day)</span></h3>
   <p>A source change in RightAngle or OPIS alters Bronze/Silver schemas → UC and/or Bigeye observe it → Purview refreshes → the backbone identifies the affected canonical asset → graph traversal finds Silver product → Gold product → semantic metric → KPI → reports/agents → impact events are created for technical owner, steward, metric owner and KPI owner → the changed metric is re-validated and released, or dependent products/KPIs are marked degraded. The business hears about impact from us, not from a broken dashboard.</p>
 
-  <h3>F7 · Offline definitions: Excel → validated ingestion → candidate register <span class="small">(migration loop · SLO ≤ 2 business days)</span></h3>
+  <h3>F7 · Offline definitions: Excel to gated ingestion to candidate register <span class="small">(migration loop · SLO ≤ 2 business days)</span></h3>
   <p>Locked Excel templates (KPI sheet, glossary sheet) → JSON-Schema validation → rejects to the steward queue, clean rows upserted via API → the file is frozen as a provenance snapshot and watermarked SUPERSEDED. Tribal knowledge becomes governed candidates without copy-paste; after load, the store is the authority, not the file.</p>
 
   <h3>F8 · Delete / rename <span class="small">(the flow everyone forgets · SLO ≤ 24 h)</span></h3>
@@ -500,16 +500,16 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Approved business change proposal</b> → ontology/KPI Store version created with an effective date.</div></div>
   <div class="flowstep"><div class="n">2</div><div class="t"><b>Impact analysis</b> over mapped data products, semantic metrics, reports and agents.</div></div>
   <div class="flowstep"><div class="n">3</div><div class="t"><b>Required semantic-model and catalog-mapping updates</b> implemented; validation and owner approval.</div></div>
-  <div class="flowstep"><div class="n">4</div><div class="t"><b>New version published;</b> the older version is retained and referenced as superseded — never silently overwritten.</div></div>
+  <div class="flowstep"><div class="n">4</div><div class="t"><b>New version published;</b> the older version is retained and referenced as superseded - never silently overwritten.</div></div>
 </section>
 
 <section id="s7">
   <h2 class="sec"><span class="num">7</span>Contracts &amp; payload schemas</h2>
 
-  <h3>7.1 Canonical event envelope — every exchange, one shape</h3>
+  <h3>7.1 Canonical event envelope - every exchange, one shape</h3>
   <pre>{
   "event_id":        "uuid",                    <span class="cm">// idempotency key</span>
-  "event_type":      "PhysicalAssetChanged | TermDefined | PublishStateChanged | LineageEvidenceObserved | QualityIncidentRaised | KpiCertified | …",
+  "event_type":      "PhysicalAssetChanged | TermDefined | PublishStateChanged | LineageEvidenceObserved | QualityIncidentRaised | CatalogStatusChanged | …",
   "occurred_at":     "2026-08-27T10:15:00Z",    <span class="cm">// source-system time</span>
   "emitted_at":      "2026-08-27T10:16:02Z",    <span class="cm">// adapter time (lag metric)</span>
   "source": {
@@ -555,7 +555,7 @@ epm:Derivation_GoldPricing_From_SilverTransaction
 }</pre>
     </div>
   </div>
-  <h4>CertifiedRowWritten (orchestrator → Purview, per the KPI 1:1 rule)</h4>
+  <h4>StoreRowProjected (orchestrator → Purview, per the KPI 1:1 rule)</h4>
   <pre>{
   "kpi_iri": "https://epm.example.org/ontology/commercial#RackPriceCaptureRate",
   "kpi_name": "Rack Price Capture Rate %",
@@ -563,11 +563,11 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   "formula_pointer": {"repo":"metrics","path":"commercial/rack_price_capture.yml","version":"v1.2.0"},
   "used_in": ["Commercial Performance Review"],
   "thresholds": {"green": 98.0, "amber": 96.5},
-  "certification_state": "certified", "effective_date": "2026-09-01"
+  "store_status": "approved", "effective_date": "2026-09-01"
 }</pre>
-  <p class="small">The catalog stores the <b>pointer</b> to the formula (repo + path + version), never the formula text. Compiled SQL from the semantic layer is the audit trail — there is exactly one formula and it lives in Git.</p>
+  <p class="small">The catalog stores the <b>pointer</b> to the formula (repo + path + version), never the formula text. Compiled SQL from the semantic layer is the audit trail - there is exactly one formula and it lives in Git. Store catalog owns the pointer. Purview holds a projection.</p>
 
-  <h3>7.3 Identity registry record — one row per thing</h3>
+  <h3>7.3 Identity registry record - one row per thing</h3>
   <p>The same thing appears under different identifiers everywhere; the registry is where they meet:</p>
   <pre><span class="cm">// Unity Catalog table      → commercial.gold.commercial_pricing_performance
 // Purview asset            → GUID 9e24… / qualifiedName databricks://…
@@ -601,9 +601,9 @@ epm:Derivation_GoldPricing_From_SilverTransaction
 
   <h3>7.4 Field-authority snippet (the rule the reconciler executes)</h3>
   <pre>field_authority:
-  technical_description:  unity_catalog      <span class="cm"># scan overwrites Purview — author in UC/dbt only</span>
+  technical_description:  unity_catalog      <span class="cm"># scan overwrites Purview - author in UC/dbt only</span>
   business_glossary_link: purview
-  certification_status:   governance_workflow
+  kpi_approval_status:    kpi_store           <span class="cm"># proposed | approved | drifted | archived</span>
   physical_schema:        unity_catalog
   lineage_evidence:       bigeye             <span class="cm"># as evidence; validation is separate</span>
   concept_definition:     erstudio_ontology  <span class="cm"># Git Turtle after formalization</span>
@@ -659,7 +659,7 @@ DataProduct        --hasDataSteward--&gt;     StewardGroup
 DataProduct        --hasClassification--&gt;  Classification
 LineageAssertion   --assertedBy--&gt;        EvidenceSource
 LineageAssertion   --hasValidationStatus--&gt; LineageStatus</pre>
-  <p class="small">These fifteen patterns are the graph's grammar. The SHACL shapes in §10 check them mechanically; the Context API queries are written against them.</p>
+  <p class="small">These fifteen patterns are design names (FOUND-004 style). Exact current IRIs, axioms, and shapes belong to Turtle in git. SHACL in §10 is a publication-gate pattern, not a second SoT. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI OWL classes. KPI status is Store (<code>proposed | approved | drifted | archived</code>), not OWL classes.</p>
 
   <h3>8.4 DCAT publication model</h3>
   <pre>Enterprise catalog
@@ -681,7 +681,7 @@ LineageAssertion   --hasValidationStatus--&gt; LineageStatus</pre>
     <tr><td>Domain/business subject</td><td><code>dcterms:subject</code> referencing ontology URI</td></tr>
     <tr><td>Contract/profile</td><td><code>dcterms:conformsTo</code></td></tr>
     <tr><td>Access posture</td><td><code>dcterms:accessRights</code> + enterprise policy references</td></tr>
-    <tr><td>Source/provenance</td><td>PROV-O links — do not overload DCAT alone</td></tr>
+    <tr><td>Source/provenance</td><td>PROV-O links - do not overload DCAT alone</td></tr>
   </table>
 
   <h4>Example product projection</h4>
@@ -755,7 +755,7 @@ Rack Price Capture Rate % / approved BI and agent consumers</div>
 <section id="s10">
   <h2 class="sec"><span class="num">10</span>Certification &amp; validation gates</h2>
 
-  <h3>10.1 Publication states — what may leave Purview</h3>
+  <h3>10.1 Publication states - what may leave Purview</h3>
   <p>The backbone reads from Purview only assets and data products carrying an explicit publication state:</p>
   <table>
     <tr><th>State</th><th>Meaning</th></tr>
@@ -766,7 +766,7 @@ Rack Price Capture Rate % / approved BI and agent consumers</div>
     <tr><td><code>Retired</code></td><td>Emitted only with lifecycle status and replacement relation</td></tr>
   </table>
 
-  <h3>10.2 The publication gate — every projection passes through it</h3>
+  <h3>10.2 The publication gate - every projection passes through it</h3>
   <div class="chain">Source metadata change
       |
       v
@@ -784,7 +784,7 @@ SHACL validation passed?            no --&gt; block publication and notify stewa
       v
 Publish versioned graph projection and audit event</div>
 
-  <h3>10.3 Minimum requirements — Certified Gold data product</h3>
+  <h3>10.3 Minimum requirements - Certified Gold data product</h3>
   <div class="grid2">
     <div class="card">
       <ul>
@@ -792,7 +792,7 @@ Publish versioned graph projection and audit event</div>
         <li>Name, description, domain, lifecycle and certification status</li>
         <li>Business owner, data-product owner and data-steward group</li>
         <li>At least one business-concept URI mapping</li>
-        <li>At least one approved access form: distribution and/or semantic service</li>
+        <li>At least one <code>dcat:distribution</code>. A semantic service does not replace the distribution.</li>
         <li>Purview asset ID and platform physical-object reference</li>
       </ul>
     </div>
@@ -809,6 +809,7 @@ Publish versioned graph projection and audit event</div>
   </div>
 
   <h4>The gate as SHACL (pattern)</h4>
+  <p class="small">Pattern only. Not the machine ontology SoT. The <code>epm:</code> names here are placeholders, not current IRIs. Do not add CandidateKPI or ApprovedKPI OWL classes. A named KPI is one individual, 1:1 with its catalog row.</p>
   <pre>@prefix sh:      &lt;http://www.w3.org/ns/shacl#&gt; .
 @prefix dcat:    &lt;http://www.w3.org/ns/dcat#&gt; .
 @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
@@ -825,11 +826,11 @@ epm:CertifiedGoldDataProductShape
     sh:property [ sh:path epm:hasDataContract ;  sh:minCount 1 ] ;
     sh:property [ sh:path epm:hasClassification ; sh:minCount 1 ] .</pre>
 
-  <h3>10.4 The KPI traceability chain — what "approved KPI" requires</h3>
+  <h3>10.4 The KPI traceability chain - what a named KPI on an approved Store row requires</h3>
   <div class="chain">Business objective
       |
       v
-Approved KPI
+Named KPI (one individual, 1:1 with the catalog row)
       +-- approved definition / formula meaning / owner / thresholds
       |
       v
@@ -851,8 +852,8 @@ Bronze source-aligned assets and source systems
       v
 Data quality controls, freshness, and lineage evidence</div>
   <p>A KPI may publish as <b>Approved</b> only when its chain has all of: approved KPI definition and ownership · approved semantic metric version · defined dimensions and time grain · known Gold data product · lineage to required sources · quality and freshness expectations · approved access posture · source evidence and validation status · a version/effective-date policy. The chain is checked by gate, not by goodwill.</p>
-  <div class="callout c-gold"><b class="label">Role boundaries — keep them sharp</b>
-  <b>Domain ontology:</b> what is a Terminal, Contract, Product, Market Price Assessment, KPI? &nbsp;·&nbsp; <b>KPI Store:</b> what is the approved KPI, why does it matter, who owns it, which thresholds and review cadence apply? &nbsp;·&nbsp; <b>Semantic layer:</b> how is the metric actually calculated, filtered, joined, aggregated, secured, optimized and served? &nbsp;·&nbsp; <b>Metadata graph:</b> how do those definitions connect to data products, physical assets, lineage, quality evidence, reports and consumers?</div>
+  <div class="callout c-gold"><b class="label">Role boundaries - keep them sharp</b>
+  <b>Domain ontology:</b> what is a Terminal, Contract, Product, Market Price Assessment, KPI? Turtle in Git is machine SoT. FOUND-003 is human-readable. FOUND-004 is design names. &nbsp;·&nbsp; <b>KPI Store:</b> identity, approval, formula pointer on <code>dim_kpi_metadata</code>. Status proposed | approved | drifted | archived. Gold holds published values. &nbsp;·&nbsp; <b>Semantic layer:</b> MEASURE() on the Databricks Metric View is the compiler. &nbsp;·&nbsp; <b>Metadata graph:</b> how those definitions connect to data products, physical assets, lineage, quality evidence, reports and consumers. Purview is the enterprise catalog, not the Store door.</div>
 </section>
 
 <section id="s11">
@@ -866,12 +867,12 @@ Data quality controls, freshness, and lineage evidence</div>
     <tr><td>BI developer</td><td>Semantic catalog/API</td><td>Approved metrics, dimensions, grain, service contract, usage guidance</td></tr>
     <tr><td>Data engineer</td><td>Purview + UC + technical lineage API</td><td>Schemas, quality rules, transformations, physical mappings, detailed lineage</td></tr>
     <tr><td>Architect / modeller</td><td>Graph explorer / SPARQL / modelling repository</td><td>Ontology, mapping registry, provenance, dependency analysis</td></tr>
-    <tr><td>Auditor / controller</td><td>Evidence portal</td><td>KPI version, approvals, validated lineage, quality status, sources, review trail</td></tr>
+    <tr><td>Auditor / controller</td><td>Evidence portal</td><td>KPI version, approvals, signed-off lineage, quality status, sources, review trail</td></tr>
     <tr><td>AI agent</td><td>Policy-filtered Context API + semantic tools</td><td>Approved concepts, metric/service contracts, quality/freshness, user-permitted paths</td></tr>
     <tr><td>External partner</td><td>DCAT export/profile endpoint</td><td>Only externally shareable datasets/services and approved metadata</td></tr>
   </table>
 
-  <h3>11.2 The AI query pattern — the agent contract</h3>
+  <h3>11.2 The AI query pattern - the agent contract</h3>
   <div class="card">
     <p><b>User:</b> "Why did Rack Price Capture Rate decline in Houston last month?"</p>
     <ol>
@@ -881,7 +882,7 @@ Data quality controls, freshness, and lineage evidence</div>
       <li>Agent retrieves policy-permitted driver/lineage/quality context.</li>
       <li>Agent returns the answer with KPI version, freshness and evidence references.</li>
     </ol>
-    <p><b>The agent must never invent a metric formula, source table, join path or report logic.</b> Both the external/graph agent and the in-platform agent use this same door: ask meaning first → then the catalog → then submit the certified measure on the pointed semantic-layer object. Compiled SQL from the compiler is the audit trail, not a second KPI formula; agents do not read Silver or Gold for KPI values.</p>
+    <p><b>The agent must never invent a metric formula, source table, join path or report logic.</b> Both the external/graph agent and the in-platform agent use this same door: ask meaning first, then the Store catalog for an approved row, then submit MEASURE() on the pointed Metric View. Compiled SQL from MEASURE() is the audit trail, not a second KPI formula. Agents read Gold published values, not Silver, and not the Store as a number.</p>
   </div>
 
   <h3>11.3 Separation of discovery and access</h3>
@@ -892,7 +893,7 @@ Data quality controls, freshness, and lineage evidence</div>
   <ul>
     <li>Unity Catalog and other runtime systems enforce grants, masks, row filters and storage permissions.</li>
     <li>Purview manages discoverability, classification, governance context and stewardship workflow.</li>
-    <li>The graph publishes policy references and access posture — never executable secrets or ACL payloads.</li>
+    <li>The graph publishes policy references and access posture - never executable secrets or ACL payloads.</li>
     <li>DCAT output is filtered by audience; no sensitive technical metadata is automatically public.</li>
     <li>AI context APIs apply the same identity, purpose and sensitivity controls as data/service access.</li>
     <li>Bigeye incidents and detailed column lineage may be restricted to engineering and control personas.</li>
@@ -907,7 +908,7 @@ Data quality controls, freshness, and lineage evidence</div>
     <tr><td><code>certified=true</code> (only after governance approval)</td><td>CertifiedDataProduct</td><td><code>epm:Certified</code></td><td>Broad enterprise discovery</td></tr>
     <tr><td><code>retention=7y</code></td><td>RecordsRetention</td><td><code>epm:RetentionPolicyRef</code></td><td>Role-specific</td></tr>
   </table>
-  <p class="small">Implemented via the uc-adapter reading UC tags directly (they do not auto-map into Purview) and the reconciler enforcing the authority rules in §7.4.</p>
+  <p class="small">Implemented via the Purview UC scan ingesting UC tags as properties, the uc-adapter for deletes and lineage the scan misses, and the reconciler enforcing the authority rules in §7.4.</p>
 </section>
 
 <section id="s12">
@@ -937,7 +938,7 @@ Data quality controls, freshness, and lineage evidence</div>
       <h4>CI/CD &amp; environments</h4>
       <ul>
         <li>dev / test / prod for the backbone; lower environments point at non-prod Purview collections and UC dev catalogs</li>
-        <li>Ontology, SHACL shapes, mapping rules, contracts and adapter code all in Git with PR review — metadata-as-code end to end</li>
+        <li>Ontology, SHACL shapes, mapping rules, contracts and adapter code all in Git with PR review - metadata-as-code end to end</li>
         <li>Release trains for the backbone; connectors independently versioned</li>
       </ul>
       <h4>Security</h4>
@@ -962,16 +963,16 @@ Data quality controls, freshness, and lineage evidence</div>
   <div class="card">
     <ul>
       <li><b>Header:</b> name, plain-language definition (from ER/Studio/ontology), certified badge, owner &amp; steward with contact actions</li>
-      <li><b>Health strip:</b> freshness, quality state (Healthy / Warning / Degraded / Unavailable), last successful refresh — the F5 flow made visible</li>
+      <li><b>Health strip:</b> freshness, quality state (Healthy / Warning / Degraded / Unavailable), last successful refresh - the F5 flow made visible</li>
       <li><b>Lineage tab:</b> a readable, left-to-right trace from source systems to Gold to the KPI, with evidence-status chips (Corroborated / Under review), not a hairball graph</li>
-      <li><b>For KPIs:</b> the approved meaning, thresholds, review cadence, and a "how is this calculated" link to the certified measure contract — never raw SQL to a business user</li>
+      <li><b>For KPIs:</b> the approved meaning, thresholds, review cadence, and a "how is this calculated" link to the certified measure contract - never raw SQL to a business user</li>
       <li><b>Access:</b> "request access" routes to the right workflow; discovery never implies authorization</li>
     </ul>
   </div>
   <h3>13.2 The steward workbench</h3>
-  <p>One queue for everything that needs a human: candidate KPI certifications, mapping conflicts, lineage conflicts, gate blocks with plain-language reasons ("missing steward group on certified product X"), migration dispositions. Every item is one decision + one click; the backbone does the mechanics. SLA badges show queue health.</p>
+  <p>One queue for everything that needs a human: Store-row approval (proposed to approved), mapping conflicts, lineage conflicts, gate blocks with plain-language reasons, migration dispositions. Every item is one decision + one click; the backbone does the mechanics. SLA badges show queue health.</p>
   <h3>13.3 The agent experience</h3>
-  <p>Agents follow the contract in §11.2: resolve the concept or KPI → check the requester's policy → fetch the certified measure contract and freshness → submit the measure on the semantic service → answer with the number, KPI version, freshness and evidence references. When context is insufficient, the agent says so and links the steward contact — a governed "I don't know" instead of a hallucination.</p>
+  <p>Agents follow the contract in §11.2: resolve the concept or KPI → check the requester's policy → fetch the certified measure contract and freshness → submit the measure on the semantic service → answer with the number, KPI version, freshness and evidence references. When context is insufficient, the agent says so and links the steward contact - a governed "I don't know" instead of a hallucination.</p>
 </section>
 
 <section id="s14">
@@ -994,7 +995,7 @@ Data quality controls, freshness, and lineage evidence</div>
     <tr><td>Silver</td><td><code>commercial_transaction_conformed</code> · <code>market_price_assessment_conformed</code></td></tr>
     <tr><td>Gold</td><td><code>commercial_pricing_performance</code></td></tr>
     <tr><td>Semantic service</td><td>Commercial Performance Semantic Service</td></tr>
-    <tr><td>Consumer products</td><td>KPI Store view · Power BI validation report · controlled AI analytical tool</td></tr>
+    <tr><td>Consumer products</td><td>Gold published cuts · Power BI report · controlled AI analytical tool. Store is identity/approval/pointer, not a consume view.</td></tr>
   </table>
 
   <h3>14.3 Pilot success criteria (the acceptance test)</h3>
@@ -1008,19 +1009,19 @@ Data quality controls, freshness, and lineage evidence</div>
     <li>The graph answers: "which semantic metric, data product, source systems, owners and quality controls support this KPI?"</li>
     <li>A SHACL gate demonstrably blocks publication when owner, steward, classification, contract or lineage reference is missing</li>
   </ul>
-  <p class="small">If a future gate review re-points the pilot at the Customer domain (per the workstream charter), the same criteria apply to the equivalent Customer asset chain — the blueprint is domain-agnostic; only the content changes.</p>
+  <p class="small">If a future gate review re-points the pilot at the Customer domain (per the workstream charter), the same criteria apply to the equivalent Customer asset chain - the blueprint is domain-agnostic; only the content changes.</p>
 </section>
 
 <section id="s15">
   <h2 class="sec"><span class="num">15</span>Build plan &amp; definition of done</h2>
-  <h3>15.1 Sequence (one pilot domain, one KPI — then repeat)</h3>
+  <h3>15.1 Sequence (one pilot domain, one KPI - then repeat)</h3>
   <table>
     <tr><th>Milestone</th><th>Weeks</th><th>Components landed</th><th>Proof</th></tr>
     <tr><td><b>M1 · Foundations</b></td><td>1–4</td><td>Event envelope + registry schema; environments; CI/CD; authority matrix signed; connector/licence verification; namespace &amp; stable-IRI policy; graph-store spike</td><td>Envelope contract tests green; all systems reachable from dev</td></tr>
     <tr><td><b>M2 · Technical spine</b></td><td>5–8</td><td>uc-adapter + purview-adapter + native scan; identity resolution MVP; F1 live incl. tombstones (F8); Purview business-metadata schema + publication states</td><td>UC create/drop reflected in Purview + graph + portal within SLO</td></tr>
     <tr><td><b>M3 · Meaning spine</b></td><td>7–10</td><td>erstudio-adapter; ontology pipeline; glossary write-back; F2 live; Excel ingestion (F7); ontology-to-glossary mapping registry for core Commercial concepts</td><td>Model release → terms in Purview → meaning on portal pages, zero manual copy</td></tr>
-    <tr><td><b>M4 · Governance loop</b></td><td>9–12</td><td>Write-back orchestrator; certification flow; SHACL gates; F3 live; first DCAT/PROV-O projection published</td><td>One approval → certified row + UC tag + portal badge + agent context, consistent everywhere; gate blocks an incomplete certification on camera</td></tr>
-    <tr><td><b>M5 · Evidence spine</b></td><td>11–14</td><td>bigeye-adapter; reconciliation engine; F4 + F5 live</td><td>Validated lineage on the pilot KPI; incident drill flips badges ≤ 15 min</td></tr>
+    <tr><td><b>M4 · Governance loop</b></td><td>9–12</td><td>Write-back orchestrator; Store approval flow; SHACL gates; F3 live; first DCAT/PROV-O projection published</td><td>One Store approval → Purview projection + Gold publish + portal badge + agent context; gate blocks an incomplete approved row on camera</td></tr>
+    <tr><td><b>M5 · Evidence spine</b></td><td>11–14</td><td>bigeye-adapter; reconciliation engine; F4 + F5 live</td><td>Signed-off lineage on the pilot KPI; incident drill flips badges ≤ 15 min</td></tr>
     <tr><td><b>M6 · Operate &amp; scale</b></td><td>15+</td><td>Incremental extraction + reconciliation hardening; semantic-contract integration; portal views; steward workflow SLAs; then onboard Customer, Supply, Terminal Ops, Finance, O2C domains; Power BI report-lineage validation; policy-filtered agent API; approved DCAT profiles for partner exchange</td><td>New domain onboarding = configuration + authority entries, not new code</td></tr>
   </table>
 
@@ -1048,7 +1049,7 @@ Data quality controls, freshness, and lineage evidence</div>
     <tr><td>Recoverability</td><td>Any serving layer rebuildable from events + snapshots ≤ 4 h; registry backed up continuously (it is the one stateful crown jewel)</td></tr>
     <tr><td>Cost discipline</td><td>Catalog-per-domain scan scoping; batched Atlas writes; Elastic Data Map capacity monitored as a first-class metric</td></tr>
     <tr><td>Security &amp; privacy</td><td>Least-privilege identities; no ACL payloads in the graph; sensitive lineage/incidents restricted to engineering personas; agent context policy-filtered and audited</td></tr>
-    <tr><td>Portability</td><td>Canonical model in Git (Turtle/YAML); graph store replaceable; each connector the only casualty of a vendor swap</td></tr>
+    <tr><td>Portability</td><td>Machine SoT is Turtle in Git. YAML is not ontology SoT. Graph store replaceable; each connector the only casualty of a vendor swap</td></tr>
     <tr><td>Identifier lifecycle</td><td>Renames, mergers and source migrations create new mapping versions with effective dates; history is never overwritten</td></tr>
   </table>
 </section>
@@ -1056,31 +1057,31 @@ Data quality controls, freshness, and lineage evidence</div>
 <section id="s17">
   <h2 class="sec"><span class="num">17</span>Decision register</h2>
 
-  <h3>17.1 Architecture decisions (ratified positions)</h3>
+  <h3>17.1 Architecture decisions (positions to ratify)</h3>
   <table>
     <tr><th>ID</th><th>Decision</th><th>Rationale</th><th>Status</th></tr>
-    <tr><td>ADR-001</td><td><b>Selective metadata projection</b> — project selected catalog/platform metadata into the graph; never bulk-ingest everything into the domain ontology</td><td>Preserves operational authority, controls graph volume, delivers useful cross-domain context</td><td>Candidate → ratify at gate</td></tr>
+    <tr><td>ADR-001</td><td><b>Selective metadata projection</b> - project selected catalog/platform metadata into the graph; never bulk-ingest everything into the domain ontology</td><td>Preserves operational authority, controls graph volume, delivers useful cross-domain context</td><td>Candidate → ratify at gate</td></tr>
     <tr><td>ADR-002</td><td><b>DCAT 3 as the interoperability envelope</b> for data products, datasets, distributions and data services</td><td>Portable catalog metadata without substituting for ontology, semantic modelling or platform catalog operations</td><td>Candidate → ratify at gate</td></tr>
     <tr><td>ADR-003</td><td><b>PROV-O for normalized lineage</b>, including Bigeye evidence</td><td>Source attribution, qualified derivation, activity/agent representation, interoperability</td><td>Candidate → ratify at gate</td></tr>
-    <tr><td>ADR-004</td><td><b>UC → Purview → canonical projection</b> as the primary path for Databricks technical metadata, complemented by the uc-adapter for what the scan misses (deletes, tags, external lineage)</td><td>Avoids duplicate technical pipelines; keeps Purview as the enrichment point; adapter closes the verified gaps</td><td>Candidate → ratify at gate</td></tr>
+    <tr><td>ADR-004</td><td><b>UC → Purview → canonical projection</b> as the primary path for Databricks technical metadata, complemented by the uc-adapter for what the scan misses (deletes, external lineage, notebook names). UC tags ingest as Purview properties</td><td>Avoids duplicate technical pipelines; keeps Purview as the enrichment point; adapter closes the verified gaps</td><td>Candidate → ratify at gate</td></tr>
     <tr><td>ADR-005</td><td><b>Bigeye as evidence source</b>, not automatic approved lineage</td><td>Cross-platform lineage with review and reconciliation controls retained</td><td>Candidate → ratify at gate</td></tr>
-    <tr><td>ADR-006</td><td><b>Everything internal to the backbone is an event</b> — polls become delta events; the stream is the integration mechanism</td><td>Uniform idempotency, replay, lag metrics, and rebuildable read models</td><td>Proposed (this blueprint)</td></tr>
+    <tr><td>ADR-006</td><td><b>Everything internal to the backbone is an event</b> - polls become delta events; the stream is the integration mechanism</td><td>Uniform idempotency, replay, lag metrics, and rebuildable read models</td><td>Proposed (this blueprint)</td></tr>
     <tr><td>ADR-007</td><td><b>Write-back only through the orchestrator</b>, per-attribute rules, logged transactions</td><td>Native one-way pipelines make naive bidirectionality dangerous</td><td>Proposed (this blueprint)</td></tr>
   </table>
 
-  <h3>17.2 Open questions — with recommended answers to decide at the next council</h3>
+  <h3>17.2 Open questions - with recommended answers to decide at the next council</h3>
   <table>
     <tr><th>#</th><th>Question</th><th>Recommended answer</th></tr>
-    <tr><td>Q1</td><td>Which product hosts the canonical graph: triplestore, graph DB, catalog-adjacent service, managed cloud KG?</td><td>Spike in M1 with pilot-shaped data. Ontology stays Turtle in Git either way — the store is a replaceable serving layer</td></tr>
+    <tr><td>Q1</td><td>Which product hosts the canonical graph: triplestore, graph DB, catalog-adjacent service, managed cloud KG?</td><td>Spike in M1 with pilot-shaped data. Ontology stays Turtle in Git either way - the store is a replaceable serving layer</td></tr>
     <tr><td>Q2</td><td>Authoritative data-product lifecycle registry?</td><td>Purview publication states as workflow authority; the graph holds the projected, versioned record</td></tr>
-    <tr><td>Q3</td><td>Which Purview capability model: Data Map/Atlas, Unified Catalog, or both?</td><td>Confirm tenant state week 1; patterns here use Atlas APIs. If Unified Catalog data products exist, map certified rows to them rather than duplicating constructs</td></tr>
+    <tr><td>Q3</td><td>Which Purview capability model: Data Map/Atlas, Unified Catalog, or both?</td><td>Confirm tenant state week 1; patterns here use Atlas APIs. If Unified Catalog data products exist, project Store-approved rows into them. Do not make Purview the Store door.</td></tr>
     <tr><td>Q4</td><td>Is UC on Azure Databricks, and which lineage/tags/metadata features are enabled?</td><td>Verify week 1 (M1 checklist); required for system-table lineage and tag flows</td></tr>
     <tr><td>Q5</td><td>Which Bigeye Lineage Plus connectors/APIs are licensed?</td><td>Connector verification vs RightAngle / OPIS / ETL / BI in week 1; gaps → declared-edge registry</td></tr>
     <tr><td>Q6</td><td>Which semantic layer, and can it export machine-readable metric definitions and service contracts?</td><td>Databricks Metric Views as primary (YAML in Git, UC-native governance); dbt MetricFlow as documented fallback. Validate against the pilot KPI in M1</td></tr>
     <tr><td>Q7</td><td>Which classifications/lineage details may agents and broad discovery see?</td><td>Default: approved concepts, metric contracts, quality/freshness, high-level lineage. Column lineage + incidents restricted to engineering personas</td></tr>
     <tr><td>Q8</td><td>Freshness/sync SLAs per metadata category?</td><td>Adopt §16 starting values; tighten only where consumers prove need</td></tr>
     <tr><td>Q9</td><td>How are identifier changes, renames, mergers and migrations managed?</td><td>Stable IDs + versioned mappings with effective dates; renames create new mapping versions, never overwrite history (F8)</td></tr>
-    <tr><td>Q10</td><td>Which forum approves mappings, validated KPI lineage and certification?</td><td>Data Governance Council, with delegation rules for routine re-certifications</td></tr>
+    <tr><td>Q10</td><td>Which forum approves mappings, signed-off KPI lineage and publication state?</td><td>Data Governance Council, with delegation rules for routine re-certifications</td></tr>
   </table>
 
   <h3>17.3 Artifacts this blueprint generates</h3>
@@ -1094,7 +1095,7 @@ Data quality controls, freshness, and lineage evidence</div>
     <tr><td>Canonical metadata graph</td><td>An integrated, versioned graph of selected metadata instances linked to ontology concepts</td></tr>
     <tr><td>DCAT projection</td><td>The portable catalog/data-product/service representation emitted from canonical metadata</td></tr>
     <tr><td>Observed lineage assertion</td><td>A source-attributed lineage statement not yet approved for KPI traceability</td></tr>
-    <tr><td>Validated KPI lineage</td><td>An approved, evidence-backed KPI traceability chain (per §10.4)</td></tr>
+    <tr><td>Signed-off KPI lineage</td><td>An evidence-backed KPI traceability chain after the human gate (per §10.4). Not Store status.</td></tr>
     <tr><td>System of authority</td><td>The one system declared authoritative for a material metadata field (§2.9, rule 1)</td></tr>
     <tr><td>Tombstone</td><td>A retirement event for an asset deleted upstream, preserving history (F8)</td></tr>
     <tr><td>Candidate mapping</td><td>An inferred identity link that cannot support certified KPI lineage until steward review</td></tr>
@@ -1106,13 +1107,13 @@ Data quality controls, freshness, and lineage evidence</div>
   <h2 class="sec"><span class="num">19</span>Sources</h2>
   <p class="small">Platform behaviours referenced above were verified against vendor documentation (accessed Aug 2026):</p>
   <ul class="small">
-    <li>Microsoft Learn — <a href="https://learn.microsoft.com/en-us/purview/register-scan-azure-databricks-unity-catalog">Connect to and manage Azure Databricks Unity Catalog in Microsoft Purview</a> (one-way scan, catalog-level scoping, delete/lineage/notebook limitations, IR options)</li>
-    <li>Microsoft Q&amp;A — <a href="https://learn.microsoft.com/en-us/answers/questions/5780179/">Metadata sync between Databricks Unity Catalog and Purview</a> (one-way sync; UC tags not mapped; overwrite behaviour)</li>
-    <li>Microsoft Learn — <a href="https://learn.microsoft.com/en-us/purview/data-gov-api-atlas-2-2">Atlas 2.2 APIs with Data Map</a> (per-GUID business metadata writes; typedefs)</li>
-    <li>ER/Studio — <a href="https://erstudio.com/glossary/application-program-interface-api/">Team Server REST API</a> · <a href="https://erstudio.com/blog/are-data-modeling-tools-ready-for-the-metadata-as-code-era/">metadata-as-code &amp; MetaWizard bridges</a> · <a href="https://www.idera.com/~/media/corporate/files/comparisons/idera-comparison-er-studio-editions.pdf">edition comparison</a></li>
-    <li>Bigeye Docs — <a href="https://docs.bigeye.com/docs/lineage">Lineage Plus</a> (column-level lineage, connector library, API)</li>
-    <li>Databricks — <a href="https://community.databricks.com/t5/community-articles/introduction-to-metric-views-part-1-of-3/td-p/157647">Metric Views introduction</a> (YAML-defined, UC-registered, inherited governance)</li>
-    <li>W3C — <a href="https://www.w3.org/TR/vocab-dcat-3/">DCAT 3 Recommendation</a> · PROV-O Recommendation · SHACL; SEMIC <a href="https://semiceu.github.io/DCAT-AP/releases/3.0.0/">DCAT-AP 3.0</a> (SHACL templates); OpenLineage standard for declared pipeline lineage</li>
+    <li>Microsoft Learn - <a href="https://learn.microsoft.com/en-us/purview/register-scan-azure-databricks-unity-catalog">Connect to and manage Azure Databricks Unity Catalog in Microsoft Purview</a> (one-way scan, catalog-level scoping, delete/lineage/notebook limitations, IR options)</li>
+    <li>Microsoft Q&amp;A - <a href="https://learn.microsoft.com/en-us/answers/questions/5780179/">Metadata sync between Databricks Unity Catalog and Purview</a> (one-way sync; UC tags not mapped; overwrite behaviour)</li>
+    <li>Microsoft Learn - <a href="https://learn.microsoft.com/en-us/purview/data-gov-api-atlas-2-2">Atlas 2.2 APIs with Data Map</a> (per-GUID business metadata writes; typedefs)</li>
+    <li>ER/Studio - <a href="https://erstudio.com/glossary/application-program-interface-api/">Team Server REST API</a> · <a href="https://erstudio.com/blog/are-data-modeling-tools-ready-for-the-metadata-as-code-era/">metadata-as-code &amp; MetaWizard bridges</a> · <a href="https://www.idera.com/~/media/corporate/files/comparisons/idera-comparison-er-studio-editions.pdf">edition comparison</a></li>
+    <li>Bigeye Docs - <a href="https://docs.bigeye.com/docs/lineage">Lineage Plus</a> (column-level lineage, connector library, API)</li>
+    <li>Databricks - <a href="https://community.databricks.com/t5/community-articles/introduction-to-metric-views-part-1-of-3/td-p/157647">Metric Views introduction</a> (YAML-defined, UC-registered, inherited governance)</li>
+    <li>W3C - <a href="https://www.w3.org/TR/vocab-dcat-3/">DCAT 3 Recommendation</a> · PROV-O Recommendation · SHACL; SEMIC <a href="https://semiceu.github.io/DCAT-AP/releases/3.0.0/">DCAT-AP 3.0</a> (SHACL templates); OpenLineage standard for declared pipeline lineage</li>
   </ul>
   <div class="callout c-teal"><b class="label">Where to start Monday morning</b>
   Stand up the event envelope and registry schema in Git (M1), verify licences/connectivity to all systems, and get the first UC→Purview→graph flow running with tombstones. Everything else is one flow at a time on the same rails.</div>

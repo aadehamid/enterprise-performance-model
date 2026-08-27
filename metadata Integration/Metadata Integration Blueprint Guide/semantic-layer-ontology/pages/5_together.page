@@ -12,7 +12,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        PUTTING IT TOGETHER — ONTOLOGY · SEMANTIC LAYER · KPI STORE
+        PUTTING IT TOGETHER - ONTOLOGY · SEMANTIC LAYER · KPI STORE
   - elementId: title
     elementType: text
     bounds: [64, 58, 760, 44]
@@ -47,7 +47,7 @@ elements:
         <p>The question: <strong>"What is unbilled exposure by payer this week?"</strong></p>
 
   # ---------- flow: four stages ----------
-  # stage 1 — ontology
+  # stage 1 - ontology
   - elementId: st1-box
     elementType: shape
     bounds: [64, 196, 196, 110]
@@ -94,7 +94,7 @@ elements:
     curve: sharp
     arrow: [null, arrow]
     border: {style: solid, width: 1.5, color: "$faint"}
-  # stage 2 — semantic layer
+  # stage 2 - semantic layer
   - elementId: st2-box
     elementType: shape
     bounds: [276, 196, 196, 110]
@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Unbilled USD = Σ net gallons × contract price, over delivered tickets with no posted invoice</p>
+        <p>Σ net gallons × contract price. Delivered. No posted invoice as of as-of (invoice_date &lt;= as_of). Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 250, 12, 2]
@@ -141,7 +141,7 @@ elements:
     curve: sharp
     arrow: [null, arrow]
     border: {style: solid, width: 1.5, color: "$faint"}
-  # stage 3 — compiler
+  # stage 3 - compiler
   - elementId: st3-box
     elementType: shape
     bounds: [488, 196, 196, 110]
@@ -179,7 +179,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Every consumer's question compiles to the same SQL — no hand-written forks</p>
+        <p>Every consumer question uses the same compile path. The SQL is not required to be identical.</p>
   - elementId: arr-3
     elementType: line
     bounds: [686, 250, 12, 2]
@@ -188,7 +188,7 @@ elements:
     curve: sharp
     arrow: [null, arrow]
     border: {style: solid, width: 1.5, color: "$faint"}
-  # stage 4 — KPI store
+  # stage 4 - KPI store
   - elementId: st4-box
     elementType: shape
     bounds: [700, 196, 196, 110]
@@ -215,7 +215,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        the certified number
+        identity, approval, pointer
   - elementId: st4-text
     elementType: text
     bounds: [714, 242, 168, 54]
@@ -225,7 +225,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>The certified, versioned value every dashboard, sheet, and agent reads</p>
+        <p>Gold holds published values. Store is not the consume number.</p>
 
   # ---------- captions under the flow ----------
   - elementId: data-caption
@@ -237,7 +237,7 @@ elements:
       wrap: false
       align: [center, middle]
       text: |
-        Underneath it all: the warehouse tables — the data stays where it lives and is queried in place
+        Bronze / Silver / Gold, then MEASURE().
   - elementId: gov-caption
     elementType: text
     bounds: [64, 340, 832, 14]
@@ -248,7 +248,7 @@ elements:
       wrap: false
       align: [center, middle]
       text: |
-        Governance runs across all four stages — everything defined in code, reviewed, and versioned
+        Governance runs across all four stages - everything defined in code, reviewed, and versioned
 
   # ---------- two closing columns ----------
   - elementId: why-head
@@ -271,7 +271,7 @@ elements:
       lineHeight: 1.45
       align: [left, top]
       text: |
-        <p>"Payer" is meaning — the ontology's word. "Unbilled USD" is logic — the semantic layer's formula. Structure without logic is a taxonomy exercise; logic without structure is metric sprawl.</p>
+        <p>"Payer" is meaning - the ontology's word. "Unbilled USD" is logic - the semantic layer's formula. Structure without logic is a taxonomy exercise; logic without structure is metric sprawl.</p>
   - elementId: kpi-head
     elementType: text
     bounds: [496, 382, 400, 14]
@@ -292,7 +292,7 @@ elements:
       lineHeight: 1.45
       align: [left, top]
       text: |
-        <p>A governed home for the result: certification status, owner, version, freshness. Consumers read the certified value instead of running their own query — so a Report C can no longer drift from Reports A and B.</p>
+        <p>Store governs identity, approval, and the formula pointer. Gold holds published values. Consumers read Gold, not a second query.</p>
 
   # ---------- footer ----------
   - elementId: footer-left
@@ -303,7 +303,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Flow mirrors the EPM demo's KPI pattern: candidate register → catalog → semantic layer → compiler → certified snapshots
+        Flow mirrors the EPM demo's KPI pattern: candidate register, Store catalog, semantic layer, compiler, Gold published cuts
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]
