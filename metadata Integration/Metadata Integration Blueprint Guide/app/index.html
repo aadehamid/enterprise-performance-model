@@ -477,7 +477,7 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <h3>F4 · Lineage validation: Bigeye + UC + declared edges → signed-off KPI lineage <span class="small">(evidence spine · SLO ≤ 24 h)</span></h3>
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Three evidence classes arrive:</b> Bigeye observed edges, UC native lineage, declared pipeline edges from CI.</div></div>
   <div class="flowstep"><div class="n">2</div><div class="t"><b>Reconciliation engine compares:</b> all agree → <code>Corroborated</code>; Bigeye-only → <code>ObservedCrossPlatform</code>; declared vs Bigeye disagreement → <code>Conflict</code> + steward/technical-owner review (never auto-resolved).</div></div>
-  <div class="flowstep"><div class="n">3</div><div class="t"><b>KPI owner + data steward approve</b> the traceability chain → status <code>ValidatedForKPI</code>; only now may the KPI publish as approved with lineage evidence.</div></div>
+  <div class="flowstep"><div class="n">3</div><div class="t"><b>KPI owner + data steward approve</b> the traceability chain → status <code>SignedOffForKPI</code>; only now may the KPI publish as approved with lineage evidence.</div></div>
 
   <h3>F5 · Quality incident: Bigeye → degraded badge → owner decision <span class="small">(trust loop · SLO ≤ 15 min for certified Gold)</span></h3>
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Bigeye detects a freshness / volume / schema / quality incident</b> and links it to the observed asset and lineage path.</div></div>
