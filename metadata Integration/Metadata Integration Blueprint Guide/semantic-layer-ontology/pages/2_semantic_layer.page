@@ -192,7 +192,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold out.</p>
+        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. No posted invoice (invoice_date &lt;= as_of). Quality-hold out.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line
@@ -240,12 +240,13 @@ elements:
     elementType: text
     bounds: [596, 384, 284, 24]
     content:
-      fontSize: 11.5
+      fontSize: 10
+      wrap: false
       color: "$ink"
       lineHeight: 1.3
       align: [left, top]
       text: |
-        Store, semantic layer, MEASURE(), then Gold published values.
+        Store, semantic layer, MEASURE(), then Gold.
   - elementId: analogy
     elementType: text
     bounds: [580, 434, 316, 52]
