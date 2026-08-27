@@ -1,0 +1,280 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  # ---------- header ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [64, 38, 700, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      align: [left, middle]
+      text: |
+        SOLUTION 1 OF 2 - SEMANTIC LAYER · FIXES THE LOGIC
+  - elementId: title
+    elementType: text
+    bounds: [64, 58, 720, 44]
+    content:
+      style: "$title"
+      wrap: false
+      align: [left, middle]
+      text: |
+        What is a semantic layer?
+  - elementId: title-rule
+    elementType: shape
+    bounds: [64, 118, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- left column: definition + bullets ----------
+  - elementId: definition
+    elementType: text
+    bounds: [64, 140, 470, 108]
+    content:
+      fontSize: 17.5
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |
+        <p>A <strong>governed layer of metric definitions</strong> between your data and everyone who consumes it - <strong>define each metric once</strong>, and every dashboard, spreadsheet, and AI agent works from the same number.</p>
+  - elementId: bullets
+    elementType: text
+    bounds: [64, 262, 470, 206]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      lineHeight: 1.5
+      align: [left, top]
+      text: |
+        <p><span style="color:$sl">■</span> <strong>Define once, use everywhere.</strong> One governed formula for a candidate calculation like Unbilled USD - not a slightly different formula in every report.</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It compiles; it still copies.</strong> Path is Store, semantic layer, MEASURE(), then Gold published values. Bronze and Silver still copy first. Gold published values are not before MEASURE().</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Versioned and reviewed like code.</strong> When a definition changes, every consumer changes with it.</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Humans and AI agents get the same answer.</strong> An agent submits MEASURE() instead of inventing SQL.</p>
+  - elementId: bridge
+    elementType: text
+    bounds: [64, 484, 470, 16]
+    content:
+      fontSize: 11.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        <p><span style="color:$ont">→</span> That fixes the logic - <strong><span style="color:$ont">not the meaning</span></strong>. Meaning is the ontology's job, next.</p>
+
+  # ---------- right column: three-layer stack ----------
+  - elementId: stack-label
+    elementType: text
+    bounds: [580, 136, 316, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        WHO ASKS
+  # consumer chips
+  - elementId: chip-1
+    elementType: shape
+    bounds: [580, 154, 100, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: chip-1-text
+    elementType: text
+    bounds: [580, 154, 100, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |
+        Dashboards & BI
+  - elementId: chip-2
+    elementType: shape
+    bounds: [688, 154, 100, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: chip-2-text
+    elementType: text
+    bounds: [688, 154, 100, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |
+        Spreadsheets
+  - elementId: chip-3
+    elementType: shape
+    bounds: [796, 154, 100, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: chip-3-text
+    elementType: text
+    bounds: [796, 154, 100, 40]
+    content:
+      fontSize: 11
+      color: "$ink"
+      align: [center, middle]
+      lineHeight: 1.25
+      text: |
+        AI agents
+  # arrows chips -> semantic band (question down, answer up)
+  - elementId: arr-1
+    elementType: line
+    bounds: [629, 196, 2, 28]
+    viewBox: [2, 28]
+    points: "1,0 1,28"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  - elementId: arr-2
+    elementType: line
+    bounds: [737, 196, 2, 28]
+    viewBox: [2, 28]
+    points: "1,0 1,28"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  - elementId: arr-3
+    elementType: line
+    bounds: [845, 196, 2, 28]
+    viewBox: [2, 28]
+    points: "1,0 1,28"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  # semantic layer band
+  - elementId: sl-band
+    elementType: shape
+    bounds: [580, 226, 316, 112]
+    shapeName: rect
+    fill: {type: solid, color: "$slSoft"}
+    border: {style: solid, width: 1.5, color: "$sl"}
+  - elementId: sl-band-title
+    elementType: text
+    bounds: [596, 236, 284, 16]
+    content:
+      fontSize: 11
+      color: "$sl"
+      bold: true
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        SEMANTIC LAYER
+  - elementId: sl-band-sub
+    elementType: text
+    bounds: [596, 254, 284, 16]
+    content:
+      fontSize: 12.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Definitions + rules, governed in one place
+  - elementId: sl-band-rule
+    elementType: shape
+    bounds: [596, 278, 284, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$slLine"}
+  - elementId: sl-band-example
+    elementType: text
+    bounds: [596, 288, 284, 42]
+    content:
+      fontSize: 9
+      color: "$muted"
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice as of the cutoff (invoice_date &lt;= as_of). Quality-hold out.</p>
+  # arrows semantic band -> data band
+  - elementId: arr-4
+    elementType: line
+    bounds: [629, 338, 2, 22]
+    viewBox: [2, 22]
+    points: "1,0 1,22"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  - elementId: arr-5
+    elementType: line
+    bounds: [737, 338, 2, 22]
+    viewBox: [2, 22]
+    points: "1,0 1,22"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  - elementId: arr-6
+    elementType: line
+    bounds: [845, 338, 2, 22]
+    viewBox: [2, 22]
+    points: "1,0 1,22"
+    curve: sharp
+    arrow: [arrow, arrow]
+    border: {style: solid, width: 1.2, color: "$faint"}
+  # data band
+  - elementId: data-band
+    elementType: shape
+    bounds: [580, 360, 316, 56]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: data-band-title
+    elementType: text
+    bounds: [596, 368, 284, 14]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      letterSpacing: 1.5
+      wrap: false
+      align: [left, middle]
+      text: |
+        DATA
+  - elementId: data-band-sub
+    elementType: text
+    bounds: [596, 384, 284, 24]
+    content:
+      fontSize: 10
+      wrap: false
+      color: "$ink"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        Store, semantic layer, MEASURE(), then Gold.
+  - elementId: analogy
+    elementType: text
+    bounds: [580, 434, 316, 52]
+    content:
+      fontSize: 11
+      color: "$muted"
+      italic: true
+      lineHeight: 1.4
+      align: [left, top]
+      text: |
+        <p>Like a restaurant menu: you order the dish - you don't need to know how the kitchen made it.</p>
+
+  # ---------- footer ----------
+  - elementId: footer-left
+    elementType: text
+    bounds: [64, 514, 560, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Anchor example: O2C unbilled exposure - from the EPM demo (fct_unbilled, one candidate operational calculation)
+  - elementId: footer-right
+    elementType: text
+    bounds: [830, 514, 66, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [right, middle]
+      text: |
+        02 / 05
