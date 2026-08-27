@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Σ net gallons × contract price. Delivered. invoice_date &lt;= as_of. Quality-hold out.</p>
+        <p>Σ net gallons × contract price. Delivered. No posted invoice as of the cutoff (invoice_date &lt;= as_of). Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 250, 12, 2]
