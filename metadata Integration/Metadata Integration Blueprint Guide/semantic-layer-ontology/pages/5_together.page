@@ -1,0 +1,315 @@
+pageType: content
+background:
+  type: solid
+  color: "$bg"
+elements:
+  # ---------- header ----------
+  - elementId: kicker
+    elementType: text
+    bounds: [64, 38, 700, 16]
+    content:
+      style: "$kicker"
+      wrap: false
+      align: [left, middle]
+      text: |
+        PUTTING IT TOGETHER — ONTOLOGY · SEMANTIC LAYER · KPI STORE
+  - elementId: title
+    elementType: text
+    bounds: [64, 58, 760, 44]
+    content:
+      style: "$title"
+      wrap: false
+      align: [left, middle]
+      text: |
+        One question, one governed path to the answer
+  - elementId: title-rule
+    elementType: shape
+    bounds: [64, 118, 832, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$line"}
+
+  # ---------- the question ----------
+  - elementId: question-band
+    elementType: shape
+    bounds: [64, 134, 832, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: question-text
+    elementType: text
+    bounds: [84, 134, 792, 40]
+    content:
+      fontSize: 13.5
+      color: "$ink"
+      wrap: false
+      align: [left, middle]
+      text: |
+        <p>The question: <strong>"What is unbilled exposure by payer this week?"</strong></p>
+
+  # ---------- flow: four stages ----------
+  # stage 1 — ontology
+  - elementId: st1-box
+    elementType: shape
+    bounds: [64, 196, 196, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$ontSoft"}
+    border: {style: solid, width: 1.5, color: "$ont"}
+  - elementId: st1-title
+    elementType: text
+    bounds: [78, 208, 168, 12]
+    content:
+      fontSize: 10
+      color: "$ont"
+      bold: true
+      letterSpacing: 1.2
+      wrap: false
+      align: [left, middle]
+      text: |
+        1 · ONTOLOGY
+  - elementId: st1-sub
+    elementType: text
+    bounds: [78, 224, 168, 12]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      align: [left, middle]
+      text: |
+        what the words mean
+  - elementId: st1-text
+    elementType: text
+    bounds: [78, 242, 168, 54]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>"Payer" and "unbilled" each mean one thing, governed in o2c-meaning.ttl</p>
+  - elementId: arr-1
+    elementType: line
+    bounds: [262, 250, 12, 2]
+    viewBox: [12, 2]
+    points: "0,1 12,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$faint"}
+  # stage 2 — semantic layer
+  - elementId: st2-box
+    elementType: shape
+    bounds: [276, 196, 196, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$slSoft"}
+    border: {style: solid, width: 1.5, color: "$sl"}
+  - elementId: st2-title
+    elementType: text
+    bounds: [290, 208, 168, 12]
+    content:
+      fontSize: 10
+      color: "$sl"
+      bold: true
+      letterSpacing: 1.2
+      wrap: false
+      align: [left, middle]
+      text: |
+        2 · SEMANTIC LAYER
+  - elementId: st2-sub
+    elementType: text
+    bounds: [290, 224, 168, 12]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      align: [left, middle]
+      text: |
+        how to compute it
+  - elementId: st2-text
+    elementType: text
+    bounds: [290, 242, 168, 54]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>Unbilled USD = Σ net gallons × contract price, over delivered tickets with no posted invoice</p>
+  - elementId: arr-2
+    elementType: line
+    bounds: [474, 250, 12, 2]
+    viewBox: [12, 2]
+    points: "0,1 12,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$faint"}
+  # stage 3 — compiler
+  - elementId: st3-box
+    elementType: shape
+    bounds: [488, 196, 196, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$white"}
+    border: {style: solid, width: 1.5, color: "$muted"}
+  - elementId: st3-title
+    elementType: text
+    bounds: [502, 208, 168, 12]
+    content:
+      fontSize: 10
+      color: "$muted"
+      bold: true
+      letterSpacing: 1.2
+      wrap: false
+      align: [left, middle]
+      text: |
+        3 · COMPILER
+  - elementId: st3-sub
+    elementType: text
+    bounds: [502, 224, 168, 12]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      align: [left, middle]
+      text: |
+        one path to SQL
+  - elementId: st3-text
+    elementType: text
+    bounds: [502, 242, 168, 54]
+    content:
+      fontSize: 10.5
+      color: "$ink"
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>Every consumer's question compiles to the same SQL — no hand-written forks</p>
+  - elementId: arr-3
+    elementType: line
+    bounds: [686, 250, 12, 2]
+    viewBox: [12, 2]
+    points: "0,1 12,1"
+    curve: sharp
+    arrow: [null, arrow]
+    border: {style: solid, width: 1.5, color: "$faint"}
+  # stage 4 — KPI store
+  - elementId: st4-box
+    elementType: shape
+    bounds: [700, 196, 196, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$ink"}
+  - elementId: st4-title
+    elementType: text
+    bounds: [714, 208, 168, 12]
+    content:
+      fontSize: 10
+      color: "$white"
+      bold: true
+      letterSpacing: 1.2
+      wrap: false
+      align: [left, middle]
+      text: |
+        4 · KPI STORE
+  - elementId: st4-sub
+    elementType: text
+    bounds: [714, 224, 168, 12]
+    content:
+      fontSize: 10
+      color: "#C9C2B8"
+      wrap: false
+      align: [left, middle]
+      text: |
+        the certified number
+  - elementId: st4-text
+    elementType: text
+    bounds: [714, 242, 168, 54]
+    content:
+      fontSize: 10.5
+      color: "$white"
+      lineHeight: 1.35
+      align: [left, top]
+      text: |
+        <p>The certified, versioned value every dashboard, sheet, and agent reads</p>
+
+  # ---------- captions under the flow ----------
+  - elementId: data-caption
+    elementType: text
+    bounds: [64, 320, 832, 14]
+    content:
+      fontSize: 10
+      color: "$muted"
+      wrap: false
+      align: [center, middle]
+      text: |
+        Underneath it all: the warehouse tables — the data stays where it lives and is queried in place
+  - elementId: gov-caption
+    elementType: text
+    bounds: [64, 340, 832, 14]
+    content:
+      fontSize: 10.5
+      color: "$muted"
+      italic: true
+      wrap: false
+      align: [center, middle]
+      text: |
+        Governance runs across all four stages — everything defined in code, reviewed, and versioned
+
+  # ---------- two closing columns ----------
+  - elementId: why-head
+    elementType: text
+    bounds: [64, 382, 400, 14]
+    content:
+      fontSize: 11
+      color: "$ink"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        Why the question needs both
+  - elementId: why-body
+    elementType: text
+    bounds: [64, 402, 400, 88]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      align: [left, top]
+      text: |
+        <p>"Payer" is meaning — the ontology's word. "Unbilled USD" is logic — the semantic layer's formula. Structure without logic is a taxonomy exercise; logic without structure is metric sprawl.</p>
+  - elementId: kpi-head
+    elementType: text
+    bounds: [496, 382, 400, 14]
+    content:
+      fontSize: 11
+      color: "$ink"
+      bold: true
+      wrap: false
+      align: [left, middle]
+      text: |
+        What the KPI store adds
+  - elementId: kpi-body
+    elementType: text
+    bounds: [496, 402, 400, 88]
+    content:
+      fontSize: 11
+      color: "$ink"
+      lineHeight: 1.45
+      align: [left, top]
+      text: |
+        <p>A governed home for the result: certification status, owner, version, freshness. Consumers read the certified value instead of running their own query — so a Report C can no longer drift from Reports A and B.</p>
+
+  # ---------- footer ----------
+  - elementId: footer-left
+    elementType: text
+    bounds: [64, 514, 620, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [left, middle]
+      text: |
+        Flow mirrors the EPM demo's KPI pattern: candidate register → catalog → semantic layer → compiler → certified snapshots
+  - elementId: footer-right
+    elementType: text
+    bounds: [830, 514, 66, 14]
+    content:
+      style: "$caption"
+      wrap: false
+      align: [right, middle]
+      text: |
+        05 / 05
