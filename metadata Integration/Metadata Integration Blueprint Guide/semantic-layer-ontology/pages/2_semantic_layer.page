@@ -49,7 +49,7 @@ elements:
       align: [left, top]
       text: |
         <p><span style="color:$sl">■</span> <strong>Define once, use everywhere.</strong> One governed formula for a candidate calculation like Unbilled USD - not a slightly different formula in every report.</p>
-        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It compiles; it still copies.</strong> Definitions point at warehouse tables. Bronze, Silver, and Gold still land before MEASURE().</p>
+        <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>It compiles; it still copies.</strong> Path is Store, semantic layer, MEASURE(), then Gold published values. Bronze and Silver still copy first. Gold published values are not before MEASURE().</p>
         <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Versioned and reviewed like code.</strong> When a definition changes, every consumer changes with it.</p>
         <p style="margin-top:11px"><span style="color:$sl">■</span> <strong>Humans and AI agents get the same answer.</strong> An agent submits MEASURE() instead of inventing SQL.</p>
   - elementId: bridge
@@ -192,7 +192,7 @@ elements:
       lineHeight: 1.4
       align: [left, top]
       text: |
-        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice as of as-of (invoice_date &lt;= as_of). Quality-hold out.</p>
+        <p><strong><span style="color:$ink">Unbilled USD:</span></strong> Σ net gallons × contract price. Delivered. No posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold out.</p>
   # arrows semantic band -> data band
   - elementId: arr-4
     elementType: line
@@ -245,7 +245,7 @@ elements:
       lineHeight: 1.3
       align: [left, top]
       text: |
-        Bronze / Silver / Gold, then MEASURE().
+        Store, semantic layer, MEASURE(), then Gold published values.
   - elementId: analogy
     elementType: text
     bounds: [580, 434, 316, 52]

@@ -185,7 +185,7 @@
   <ul>
     <li>One portal page per data product or KPI: certified badge, owner, meaning, freshness, quality state, and "where does this number come from" - one click, no meetings.</li>
     <li>Definitions written once (in ER/Studio or the KPI register) appear everywhere - Purview, UC, BI, agent answers - without copy-paste.</li>
-    <li>AI agents that answer with the certified measure and cite their evidence, instead of inventing SQL.</li>
+    <li>AI agents that answer with MEASURE() and cite their evidence, instead of inventing SQL.</li>
     <li>When something breaks upstream, the affected KPIs show a degraded badge <i>before</i> the business meeting, not after.</li>
   </ul>
   <div class="callout c-teal"><b class="label">Design posture</b>
@@ -467,11 +467,11 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <div class="flowstep"><div class="n">3</div><div class="t"><b>Write-back orchestrator pushes glossary terms to Purview</b> via Atlas API (idempotent upsert by IRI).</div></div>
   <div class="flowstep"><div class="n">4</div><div class="t"><b>Stewards link terms to assets</b> in Purview; links flow to graph; portal shows plain-language meaning on every linked asset.</div></div>
 
-  <h3>F3 · Approval: Store catalog approved → Purview projection → Gold publish → portal <span class="small">(governance loop · SLO ≤ 1 business day)</span></h3>
+  <h3>F3 · Approval: Store catalog approved → semantic layer → MEASURE() → Gold publish → portal <span class="small">(governance loop · SLO ≤ 1 business day)</span></h3>
   <div class="flowstep"><div class="n">1</div><div class="t"><b>Steward sets Store catalog status to approved</b> on <code>dim_kpi_metadata</code> (identity, owner, thresholds, formula pointer to the Metric View). Status is proposed | approved | drifted | archived. Do not write approval to Purview as the Store door.</div></div>
-  <div class="flowstep"><div class="n">2</div><div class="t"><b>Orchestrator projects the approved Store row into Purview</b> as enterprise-catalog metadata, bound to the Named KPI by ontology IRI. One Store row, one KPI individual, one MEASURE() version. Purview is not the Store.</div></div>
+  <div class="flowstep"><div class="n">2</div><div class="t"><b>Orchestrator projects the approved Store row into Purview</b> as enterprise-catalog metadata, bound to the Named KPI by ontology IRI. 1:1 is one individual to one Store catalog row. Not one MEASURE() version. Purview is not the Store.</div></div>
   <div class="flowstep"><div class="n">3</div><div class="t"><b>Gold publish writes the published values</b> at the agreed grains. Gold publish is not re-approve. Do not set <code>certified=true</code> as Store status.</div></div>
-  <div class="flowstep"><div class="n">4</div><div class="t"><b>Gate re-validates the chain</b> (approved Store row → MEASURE() → semantic service → Gold published values → lineage evidence). Pass does not mint a Certified Store class.</div></div>
+  <div class="flowstep"><div class="n">4</div><div class="t"><b>Gate re-checks the chain</b> (approved Store row → semantic layer → MEASURE() → Gold published values → lineage evidence). Pass does not mint a Certified Store class.</div></div>
   <div class="flowstep"><div class="n">5</div><div class="t"><b>Portal badge, agent context, BI discovery</b> all light up from the same Store approval and Gold publish. One approval, everywhere consistent.</div></div>
 
   <h3>F4 · Lineage validation: Bigeye + UC + declared edges → signed-off KPI lineage <span class="small">(evidence spine · SLO ≤ 24 h)</span></h3>
@@ -486,7 +486,7 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   <div class="flowstep"><div class="n">4</div><div class="t"><b>KPI owner decides</b> whether to suppress, annotate, restate or continue KPI publication - the decision lands on the KPI's audit trail.</div></div>
 
   <h3>F6 · Source change impact: schema change → affected KPIs <span class="small">(change management · SLO ≤ 1 day)</span></h3>
-  <p>A source change in RightAngle or OPIS alters Bronze/Silver schemas → UC and/or Bigeye observe it → Purview refreshes → the backbone identifies the affected canonical asset → graph traversal finds Silver product → Gold product → semantic metric → KPI → reports/agents → impact events are created for technical owner, steward, metric owner and KPI owner → the changed metric is re-validated and released, or dependent products/KPIs are marked degraded. The business hears about impact from us, not from a broken dashboard.</p>
+  <p>A source change in RightAngle or OPIS alters Bronze/Silver schemas → UC and/or Bigeye observe it → Purview refreshes → the backbone identifies the affected canonical asset → graph traversal finds Silver product → Gold product → semantic metric → KPI → reports/agents → impact events are created for technical owner, steward, metric owner and KPI owner → the changed metric is re-checked at the gate and released, or dependent products/KPIs are marked degraded. The business hears about impact from us, not from a broken dashboard.</p>
 
   <h3>F7 · Offline definitions: Excel to gated ingestion to candidate register <span class="small">(migration loop · SLO ≤ 2 business days)</span></h3>
   <p>Locked Excel templates (KPI sheet, glossary sheet) → JSON-Schema validation → rejects to the steward queue, clean rows upserted via API → the file is frozen as a provenance snapshot and watermarked SUPERSEDED. Tribal knowledge becomes governed candidates without copy-paste; after load, the store is the authority, not the file.</p>
@@ -557,7 +557,7 @@ epm:Derivation_GoldPricing_From_SilverTransaction
   </div>
   <h4>StoreRowProjected (orchestrator → Purview, per the KPI 1:1 rule)</h4>
   <pre>{
-  "kpi_iri": "https://epm.example.org/ontology/commercial#RackPriceCaptureRate",
+  "kpi_iri": "https://data.enterprise.example.com/kpi-store/RackPriceCaptureRateKPI",
   "kpi_name": "Rack Price Capture Rate %",
   "owner": "…", "steward_group": "…",
   "formula_pointer": {"repo":"metrics","path":"commercial/rack_price_capture.yml","version":"v1.2.0"},
@@ -573,18 +573,18 @@ epm:Derivation_GoldPricing_From_SilverTransaction
 // Purview asset            → GUID 9e24… / qualifiedName databricks://…
 // Bigeye node              → node 123456
 // Data product             → DP-COMM-PRICING-001
-// Domain concept           → …/ontology/commercial#CommercialTransaction
-// DCAT dataset             → …/id/data-product/DP-COMM-PRICING-001</span>
+// Domain concept           → &lt;placeholder: IRI from Turtle in git&gt;
+// DCAT dataset             → &lt;placeholder: data-product id&gt;</span>
 
 {
-  "canonical_uri":      "https://epm.example.org/id/asset/commercial-pricing-gold-v1",
+  "canonical_uri":      "&lt;placeholder: asset id, not example.org&gt;",
   "resource_type":      "PhysicalDataAsset",
   "unity_object":       "commercial.gold.commercial_pricing_performance",
   "unity_object_id":    "&lt;platform id&gt;",
   "purview_guid":       "9e24…",
   "bigeye_node_id":     "123456",
   "data_product_id":    "DP-COMM-PRICING-001",
-  "ontology_iris":      ["CommercialTransaction","Terminal","Product","MarketPriceAssessment"],
+  "ontology_names":     ["CommercialTransaction","Terminal","Product","MarketPriceAssessment"],
   "mapping_method":     "declared | reviewed | inferred",
   "mapping_confidence": "1.0 | 0.95 | unknown",
   "mapping_status":     "approved | pending_review | retired",
@@ -685,6 +685,7 @@ LineageAssertion   --hasValidationStatus--&gt; LineageStatus</pre>
   </table>
 
   <h4>Example product projection</h4>
+  <p class="small">Pattern only. Not Turtle SoT. A live KPI bind uses the Turtle individual (for this worked example, <code>https://data.enterprise.example.com/kpi-store/RackPriceCaptureRateKPI</code>), not <code>epm:RackPriceCaptureRate</code>. Bare names are not IRIs.</p>
   <pre>@prefix dcat:    &lt;http://www.w3.org/ns/dcat#&gt; .
 @prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
 @prefix prov:    &lt;http://www.w3.org/ns/prov#&gt; .
@@ -803,7 +804,7 @@ Publish versioned graph projection and audit event</div>
         <li>Freshness expectation and current quality-status reference</li>
         <li>Lineage reference to required upstream products/sources</li>
         <li>Approved metric/KPI association where the product supports enterprise performance measurement</li>
-        <li><b>1:1 check:</b> exactly one certified measure version per KPI; formula pointer resolves to a Git tag</li>
+        <li><b>1:1 check:</b> one KPI individual to one Store catalog row. Formula pointer may version and resolves to a Git tag. That is not a second ontology individual. Status is proposed | approved | drifted | archived.</li>
       </ul>
     </div>
   </div>
@@ -944,7 +945,7 @@ Data quality controls, freshness, and lineage evidence</div>
       <h4>Security</h4>
       <ul>
         <li>Managed identities / service principals with least privilege per system; secrets in the platform vault; no credentials in Git</li>
-        <li>The write-back orchestrator is the only identity allowed to set governance tags / certified rows</li>
+        <li>The write-back orchestrator is the only identity allowed to set governance tags or Purview publication state. That is not Store status. Store status stays proposed | approved | drifted | archived on dim_kpi_metadata.</li>
         <li>Policy filtering enforced at the Context API, audited per consumer identity and purpose</li>
       </ul>
       <h4>Auditability</h4>
@@ -965,14 +966,14 @@ Data quality controls, freshness, and lineage evidence</div>
       <li><b>Header:</b> name, plain-language definition (from ER/Studio/ontology), certified badge, owner &amp; steward with contact actions</li>
       <li><b>Health strip:</b> freshness, quality state (Healthy / Warning / Degraded / Unavailable), last successful refresh - the F5 flow made visible</li>
       <li><b>Lineage tab:</b> a readable, left-to-right trace from source systems to Gold to the KPI, with evidence-status chips (Corroborated / Under review), not a hairball graph</li>
-      <li><b>For KPIs:</b> the approved meaning, thresholds, review cadence, and a "how is this calculated" link to the certified measure contract - never raw SQL to a business user</li>
+      <li><b>For KPIs:</b> the approved meaning, thresholds, review cadence, and a how-is-this-calculated link to the MEASURE() contract. Never raw SQL to a business user.</li>
       <li><b>Access:</b> "request access" routes to the right workflow; discovery never implies authorization</li>
     </ul>
   </div>
   <h3>13.2 The steward workbench</h3>
   <p>One queue for everything that needs a human: Store-row approval (proposed to approved), mapping conflicts, lineage conflicts, gate blocks with plain-language reasons, migration dispositions. Every item is one decision + one click; the backbone does the mechanics. SLA badges show queue health.</p>
   <h3>13.3 The agent experience</h3>
-  <p>Agents follow the contract in §11.2: resolve the concept or KPI → check the requester's policy → fetch the certified measure contract and freshness → submit the measure on the semantic service → answer with the number, KPI version, freshness and evidence references. When context is insufficient, the agent says so and links the steward contact - a governed "I don't know" instead of a hallucination.</p>
+  <p>Agents follow the contract in §11.2: resolve the concept or KPI → check the requester's policy → fetch the MEASURE() contract and freshness, then submit MEASURE() on the semantic service → answer with the number, KPI version, freshness and evidence references. When context is insufficient, the agent says so and links the steward contact - a governed "I don't know" instead of a hallucination.</p>
 </section>
 
 <section id="s14">
@@ -1108,7 +1109,7 @@ Data quality controls, freshness, and lineage evidence</div>
   <p class="small">Platform behaviours referenced above were verified against vendor documentation (accessed Aug 2026):</p>
   <ul class="small">
     <li>Microsoft Learn - <a href="https://learn.microsoft.com/en-us/purview/register-scan-azure-databricks-unity-catalog">Connect to and manage Azure Databricks Unity Catalog in Microsoft Purview</a> (one-way scan, catalog-level scoping, delete/lineage/notebook limitations, IR options)</li>
-    <li>Microsoft Q&amp;A - <a href="https://learn.microsoft.com/en-us/answers/questions/5780179/">Metadata sync between Databricks Unity Catalog and Purview</a> (one-way sync; UC tags not mapped; overwrite behaviour)</li>
+    <li>Microsoft Q&amp;A - <a href="https://learn.microsoft.com/en-us/answers/questions/5780179/">Metadata sync between Databricks Unity Catalog and Purview</a> (one-way sync; overwrite behaviour). Do not follow the tags-not-mapped claim. UC tags ingest as Purview properties.</li>
     <li>Microsoft Learn - <a href="https://learn.microsoft.com/en-us/purview/data-gov-api-atlas-2-2">Atlas 2.2 APIs with Data Map</a> (per-GUID business metadata writes; typedefs)</li>
     <li>ER/Studio - <a href="https://erstudio.com/glossary/application-program-interface-api/">Team Server REST API</a> · <a href="https://erstudio.com/blog/are-data-modeling-tools-ready-for-the-metadata-as-code-era/">metadata-as-code &amp; MetaWizard bridges</a> · <a href="https://www.idera.com/~/media/corporate/files/comparisons/idera-comparison-er-studio-editions.pdf">edition comparison</a></li>
     <li>Bigeye Docs - <a href="https://docs.bigeye.com/docs/lineage">Lineage Plus</a> (column-level lineage, connector library, API)</li>

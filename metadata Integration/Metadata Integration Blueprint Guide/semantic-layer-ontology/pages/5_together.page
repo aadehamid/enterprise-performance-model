@@ -132,7 +132,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Σ net gallons × contract price. Delivered. No posted invoice as of as-of (invoice_date &lt;= as_of). Quality-hold out.</p>
+        <p>Σ net gallons × contract price. Delivered. No posted invoice as of the as-of date (invoice_date &lt;= as_of). Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 250, 12, 2]
@@ -188,7 +188,7 @@ elements:
     curve: sharp
     arrow: [null, arrow]
     border: {style: solid, width: 1.5, color: "$faint"}
-  # stage 4 - KPI store
+  # stage 4 - Gold
   - elementId: st4-box
     elementType: shape
     bounds: [700, 196, 196, 110]
@@ -205,7 +205,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        4 · KPI STORE
+        4 · GOLD
   - elementId: st4-sub
     elementType: text
     bounds: [714, 224, 168, 12]
@@ -215,7 +215,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        identity, approval, pointer
+        published values
   - elementId: st4-text
     elementType: text
     bounds: [714, 242, 168, 54]
@@ -225,7 +225,7 @@ elements:
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Gold holds published values. Store is not the consume number.</p>
+        <p>MEASURE() writes Gold published cuts. Store sits upstream: identity, approval, pointer. Compiler does not route to Store.</p>
 
   # ---------- captions under the flow ----------
   - elementId: data-caption
@@ -237,7 +237,7 @@ elements:
       wrap: false
       align: [center, middle]
       text: |
-        Bronze / Silver / Gold, then MEASURE().
+        Store, semantic layer, MEASURE(), then Gold. Gold is not before MEASURE().
   - elementId: gov-caption
     elementType: text
     bounds: [64, 340, 832, 14]
@@ -303,7 +303,7 @@ elements:
       wrap: false
       align: [left, middle]
       text: |
-        Flow mirrors the EPM demo's KPI pattern: candidate register, Store catalog, semantic layer, compiler, Gold published cuts
+        Flow: Store catalog, semantic layer, MEASURE(), Gold published cuts
   - elementId: footer-right
     elementType: text
     bounds: [830, 514, 66, 14]
