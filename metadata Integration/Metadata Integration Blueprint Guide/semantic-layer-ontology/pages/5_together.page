@@ -127,12 +127,12 @@ elements:
     elementType: text
     bounds: [290, 242, 168, 54]
     content:
-      fontSize: 10.5
+      fontSize: 9
       color: "$ink"
       lineHeight: 1.35
       align: [left, top]
       text: |
-        <p>Σ net gallons × contract price. No posted invoice (invoice_date &lt;= as_of). Quality-hold out.</p>
+        <p>Σ net gallons × contract price. Delivered. invoice_date &lt;= as_of. Quality-hold out.</p>
   - elementId: arr-2
     elementType: line
     bounds: [474, 250, 12, 2]
