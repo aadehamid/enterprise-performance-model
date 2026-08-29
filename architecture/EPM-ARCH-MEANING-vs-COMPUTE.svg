@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-label="MEANING vs COMPUTE: Store row, MEASURE(), process JSON authority">
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5a6675"/></marker>
+    <marker id="ahr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c8102e"/></marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .bt { font-weight: 700; }
+      .al { fill: #5a6675; font-size: 11px; font-style: italic; }
+      .rl { fill: #c8102e; font-weight: 600; }
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="#f7f4ee"/>
+
+  <!-- MEANING -->
+  <rect x="16" y="14" width="1248" height="268" rx="12" fill="#eaf1fa" stroke="#1f3a5c" stroke-width="2.2"/>
+  <text x="32" y="40" font-size="18" class="bt" fill="#16283f">MEANING - no computation here</text>
+
+  <rect x="32" y="56" width="220" height="118" rx="8" fill="#cfe0f4" stroke="#1f3a5c" stroke-width="1.5"/>
+  <text x="44" y="78" font-size="15" class="bt" fill="#16283f">Domain Understanding</text>
+  <text x="44" y="98" font-size="12" fill="#33404e">Conceptual and logical model.</text>
+  <text x="44" y="114" font-size="12" fill="#33404e">Shared working words</text>
+  <text x="44" y="130" font-size="12" fill="#33404e">(ubiquitous language).</text>
+  <text x="44" y="152" font-size="12" fill="#33404e">Tool: ER/Studio.</text>
+
+  <line x1="256" y1="115" x2="288" y2="115" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="272" y="106" class="al" text-anchor="middle">formalize</text>
+
+  <rect x="292" y="56" width="220" height="118" rx="8" fill="#cfe0f4" stroke="#1f3a5c" stroke-width="1.5"/>
+  <text x="304" y="78" font-size="15" class="bt" fill="#16283f">Ontology modules</text>
+  <text x="304" y="98" font-size="12" fill="#33404e">Shared meaning. Machine SoT</text>
+  <text x="304" y="114" font-size="12" fill="#33404e">is Turtle in git. One stable</text>
+  <text x="304" y="130" font-size="12" fill="#33404e">IRI per concept / named KPI.</text>
+  <text x="304" y="152" font-size="12" fill="#33404e">Not process authority.</text>
+
+  <line x1="516" y1="115" x2="548" y2="115" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+
+  <rect x="552" y="56" width="230" height="118" rx="8" fill="#cfe0f4" stroke="#1f3a5c" stroke-width="1.5"/>
+  <text x="564" y="78" font-size="15" class="bt" fill="#16283f">Graph of meaning</text>
+  <text x="564" y="98" font-size="12" fill="#33404e">Queryable copy of published</text>
+  <text x="564" y="114" font-size="12" fill="#33404e">Turtle. Expose: Neo4j / Cypher.</text>
+  <text x="564" y="130" font-size="12" fill="#33404e">No client triple store.</text>
+  <text x="564" y="152" font-size="12" fill="#33404e">Fuseki = lab SPARQL only.</text>
+
+  <rect x="292" y="188" width="220" height="80" rx="8" fill="#dbe8f7" stroke="#1f3a5c" stroke-width="1.5"/>
+  <text x="304" y="210" font-size="15" class="bt" fill="#16283f">Named KPI</text>
+  <text x="304" y="228" font-size="12" fill="#33404e">KPI name as an ontology</text>
+  <text x="304" y="244" font-size="12" fill="#33404e">artifact, bound by IRI.</text>
+  <line x1="402" y1="174" x2="402" y2="184" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="430" y="182" class="al">creates</text>
+
+  <rect x="32" y="188" width="246" height="80" rx="8" fill="#dbe8f7" stroke="#1f3a5c" stroke-width="1.5"/>
+  <text x="44" y="210" font-size="15" class="bt" fill="#16283f">Process Architecture</text>
+  <text x="44" y="228" font-size="12" fill="#33404e">SoT: business_architecture/</text>
+  <text x="44" y="244" font-size="12" fill="#33404e">business_process/ + schema/.</text>
+  <text x="44" y="258" font-size="11" fill="#5a6675">Turtle may link process IDs. Not process SoT.</text>
+  <line x1="282" y1="228" x2="288" y2="228" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="268" y="218" class="al" text-anchor="end">used in</text>
+
+  <rect x="528" y="188" width="254" height="80" rx="8" fill="#fdf3d7" stroke="#9a6a00" stroke-width="1.5"/>
+  <text x="540" y="210" font-size="14" class="bt" fill="#9a6a00">1:1 gate</text>
+  <text x="540" y="228" font-size="12" fill="#5a4a12">A KPI (e.g. Crack Spread) can</text>
+  <text x="540" y="244" font-size="12" fill="#5a4a12">become a number. Customer</text>
+  <text x="540" y="260" font-size="12" fill="#5a4a12">cannot  -  concept, not a KPI.</text>
+
+  <rect x="800" y="56" width="220" height="118" rx="8" fill="#e8e8e8" stroke="#666" stroke-width="1.5"/>
+  <text x="812" y="78" font-size="14" class="bt" fill="#16283f">External / graph agent</text>
+  <text x="812" y="98" font-size="12" fill="#33404e">1. Ask graph: which KPI?</text>
+  <text x="812" y="114" font-size="12" fill="#33404e">2. Look up KPI Store row.</text>
+  <text x="812" y="130" font-size="12" fill="#33404e">3. Submit MEASURE().</text>
+  <text x="812" y="152" font-size="12" fill="#33404e">Never writes the formula.</text>
+  <line x1="786" y1="115" x2="796" y2="115" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="791" y="106" class="al" text-anchor="middle">which KPI?</text>
+
+  <rect x="1034" y="56" width="214" height="212" rx="8" fill="#f3f3f3" stroke="#666" stroke-width="1.5"/>
+  <text x="1046" y="78" font-size="13" class="bt" fill="#16283f">Not these doors</text>
+  <text x="1046" y="100" font-size="12" fill="#33404e">Purview = discovery /</text>
+  <text x="1046" y="116" font-size="12" fill="#33404e">stewardship catalog.</text>
+  <text x="1046" y="138" font-size="12" fill="#33404e">Unity Catalog = tables,</text>
+  <text x="1046" y="154" font-size="12" fill="#33404e">Metric Views, access.</text>
+  <text x="1046" y="176" font-size="12" fill="#33404e">Bigeye = quality.</text>
+  <text x="1046" y="198" font-size="12" class="rl">None is the Store row.</text>
+  <text x="1046" y="220" font-size="12" fill="#33404e">No enterprise SPARQL.</text>
+  <text x="1046" y="244" font-size="12" fill="#33404e">Lakebase = ODS only.</text>
+
+  <!-- COMPUTE -->
+  <rect x="16" y="296" width="1248" height="408" rx="12" fill="#f5f7f5" stroke="#2f5d3a" stroke-width="2.2"/>
+  <text x="32" y="322" font-size="18" class="bt" fill="#2f5d3a">COMPUTE</text>
+
+  <!-- PREPARE -->
+  <rect x="28" y="336" width="400" height="352" rx="10" fill="#e9f1ef" stroke="#2e6f6a" stroke-width="1.6"/>
+  <text x="42" y="358" font-size="13" class="bt" fill="#2e6f6a">PREPARE  -  ingredients + Store</text>
+
+  <rect x="42" y="372" width="372" height="78" rx="7" fill="#fff" stroke="#2e6f6a" stroke-width="1.5"/>
+  <text x="54" y="394" font-size="14" class="bt" fill="#16283f">Candidate KPI Register</text>
+  <text x="54" y="414" font-size="12" fill="#33404e">Proposed list. Not approved.</text>
+  <text x="54" y="430" font-size="12" fill="#33404e">A proposed name is required first.</text>
+
+  <line x1="228" y1="454" x2="228" y2="478" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="236" y="472" class="al">steward sets Store status</text>
+
+  <rect x="42" y="482" width="372" height="112" rx="7" fill="#fff" stroke="#2e6f6a" stroke-width="1.5"/>
+  <text x="54" y="504" font-size="14" class="bt" fill="#16283f">KPI Store</text>
+  <text x="54" y="522" font-size="12" fill="#33404e">dim_kpi_metadata owns identity,</text>
+  <text x="54" y="538" font-size="12" fill="#33404e">approval, formula pointer, IRI.</text>
+  <text x="54" y="554" font-size="12" fill="#33404e">Status: proposed | approved |</text>
+  <text x="54" y="570" font-size="12" fill="#33404e">drifted | archived.</text>
+  <text x="54" y="586" font-size="11" class="rl">Not Purview. Not Unity Catalog.</text>
+
+  <line x1="228" y1="598" x2="228" y2="618" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="236" y="614" class="al">one-way metadata copy</text>
+
+  <rect x="42" y="622" width="372" height="54" rx="7" fill="#f0f4f8" stroke="#2e6f6a" stroke-width="1.5"/>
+  <text x="54" y="644" font-size="14" class="bt" fill="#16283f">Silver</text>
+  <text x="54" y="662" font-size="12" fill="#33404e">Star: dimensions and facts. Ingredients only. No formula.</text>
+
+  <!-- COMPILE -->
+  <rect x="444" y="336" width="400" height="352" rx="10" fill="#e8f1e5" stroke="#2f5d3a" stroke-width="1.6"/>
+  <text x="458" y="358" font-size="13" class="bt" fill="#2f5d3a">COMPILE  -  the KPI is made here</text>
+
+  <rect x="458" y="372" width="372" height="130" rx="7" fill="#fff" stroke="#2f5d3a" stroke-width="1.5"/>
+  <text x="470" y="394" font-size="14" class="bt" fill="#16283f">Semantic Layer</text>
+  <text x="470" y="414" font-size="12" fill="#33404e">One Store formula pointer -&gt; one</text>
+  <text x="470" y="430" font-size="12" fill="#33404e">Metric View. Not SQL. Not Gold.</text>
+  <text x="470" y="450" font-size="12" fill="#33404e">Enterprise: Databricks Metric Views.</text>
+  <text x="470" y="466" font-size="12" fill="#33404e">Lab Track A: dbt MetricFlow.</text>
+  <text x="470" y="486" font-size="12" fill="#33404e">Also: Cube / AtScale / Power BI.</text>
+
+  <line x1="644" y1="506" x2="644" y2="528" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="652" y="522" class="al">compiler runs this</text>
+
+  <rect x="458" y="532" width="372" height="140" rx="7" fill="#fff" stroke="#2f5d3a" stroke-width="1.5"/>
+  <text x="470" y="554" font-size="14" class="bt" fill="#16283f">Compiler</text>
+  <text x="470" y="574" font-size="12" fill="#33404e">MEASURE() on the Metric View</text>
+  <text x="470" y="590" font-size="12" fill="#33404e">named by the Store pointer.</text>
+  <text x="470" y="610" font-size="12" fill="#33404e">Runs against Silver. Fills Gold.</text>
+  <text x="470" y="626" font-size="12" fill="#33404e">Answers new-grain questions.</text>
+  <text x="470" y="650" font-size="12" fill="#33404e">Compiled SQL is the audit trail.</text>
+
+  <!-- CONSUME -->
+  <rect x="860" y="336" width="388" height="352" rx="10" fill="#f0f7e2" stroke="#6a8f3f" stroke-width="1.6"/>
+  <text x="874" y="358" font-size="13" class="bt" fill="#5d7f37">CONSUME  -  the KPI is used here</text>
+
+  <rect x="874" y="372" width="360" height="78" rx="7" fill="#fff" stroke="#6a8f3f" stroke-width="1.5"/>
+  <text x="886" y="394" font-size="14" class="bt" fill="#16283f">Gold</text>
+  <text x="886" y="414" font-size="12" fill="#33404e">Published cuts at agreed grains.</text>
+  <text x="886" y="430" font-size="12" fill="#33404e">Not a second SUM.</text>
+
+  <rect x="874" y="466" width="360" height="96" rx="7" fill="#fff" stroke="#6a8f3f" stroke-width="1.5"/>
+  <text x="886" y="488" font-size="14" class="bt" fill="#16283f">In-platform AI agent</text>
+  <text x="886" y="508" font-size="12" fill="#33404e">Same door as the external agent:</text>
+  <text x="886" y="524" font-size="12" fill="#33404e">Store lookup, then MEASURE().</text>
+  <text x="886" y="544" font-size="12" fill="#33404e">Does not read Silver or Gold.</text>
+
+  <rect x="874" y="578" width="360" height="94" rx="7" fill="#fff" stroke="#6a8f3f" stroke-width="1.5"/>
+  <text x="886" y="600" font-size="14" class="bt" fill="#16283f">BI</text>
+  <text x="886" y="620" font-size="12" fill="#33404e">Official number: Gold published</text>
+  <text x="886" y="636" font-size="12" fill="#33404e">KPI value. Does not compile.</text>
+
+  <!-- Bindings -->
+  <polyline points="402,268 402,288 420,310 420,500 428,520" fill="none" stroke="#c8102e" stroke-width="1.7" stroke-dasharray="5 4" marker-end="url(#ahr)"/>
+  <text transform="rotate(-90 412 400)" x="412" y="400" fill="#c8102e" font-size="12" font-weight="600" text-anchor="middle">ontology IRI  -  Store row  -  Metric View</text>
+
+  <line x1="910" y1="174" x2="910" y2="332" stroke="#c8102e" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahr)"/>
+  <text x="918" y="260" fill="#c8102e" font-size="12" font-weight="600">MEASURE()</text>
+
+  <line x1="428" y1="538" x2="454" y2="538" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="432" y="530" class="al">formula pointer</text>
+  <line x1="428" y1="648" x2="454" y2="620" stroke="#5a6675" stroke-width="1.6" marker-end="url(#ah)"/>
+  <text x="430" y="668" class="al">ingredients</text>
+  <line x1="844" y1="600" x2="856" y2="420" stroke="#5a6675" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+  <text x="850" y="500" class="al">fills Gold</text>
+</svg>
