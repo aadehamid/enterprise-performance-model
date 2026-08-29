@@ -5,7 +5,7 @@
 **Version:** 0.1  
 **Status:** Draft — Candidate Architecture  
 **Owner:** Enterprise Data Architecture / Data Governance  
-**Last Updated:** 2026-08-23  
+**Last Updated:** 2026-08-29  
 **Scope:** Enterprise Performance Model (EPM), initial Downstream Oil & Gas Commercial / Order-to-Cash pilot  
 **Primary Objective:** Define a governed, interoperable metadata integration architecture that makes approved business, KPI, data-product, semantic, catalog, lineage, quality, and stewardship context available to downstream consumers without replacing Purview, Unity Catalog, Bigeye, or the semantic layer.
 
@@ -178,7 +178,18 @@ Demo and reference implementations may use the open-source tools in the table be
 | Neo4j Community | Neo4j | Serving graph |
 | Apache Jena Fuseki | none (demo runtime only) | SPARQL and SHACL loaded from git Turtle |
 
-Formal ontology source of truth stays Turtle in git (the ontology file format). The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views.
+Formal ontology source of truth stays Turtle in git (the ontology file format). The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views. There is no client triple store. Apache Jena Fuseki is a homelab SPARQL classroom only.
+
+Target band split: [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
+
+Optional Databricks assistants (not systems of authority):
+
+| Tool | Seat | Must not |
+|---|---|---|
+| [OntoBricks](https://github.com/databrickslabs/ontobricks) | Draft OWL from a bounded set of Unity Catalog tables. Export, review, rewrite, commit Turtle to git, then load Neo4j. | Become SoT. Materialize Silver as the graph of meaning. Compile KPIs. |
+| [dbxmetagen](https://github.com/databricks-industry-solutions/dbxmetagen) | Draft UC comments, tags, and domain labels for steward review. | Auto-apply Metric Views or Genie SQL. Replace Purview. Replace Turtle. |
+
+See ADR-HL-021 and ADR-HL-022 in `EPM_Homelab/02-Tool-Selection-and-ADRs.md`.
 
 ---
 

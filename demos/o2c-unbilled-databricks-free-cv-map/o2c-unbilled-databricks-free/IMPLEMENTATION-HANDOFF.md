@@ -4,7 +4,7 @@
 **Version:** 0.1  
 **Status:** Draft  
 **Owner:** Enterprise Performance Model initiative  
-**Last updated:** 2026-08-20  
+**Last updated:** 2026-08-29  
 **Workstream:** KPI Store and Enterprise Performance Management, with Domain Modeling, System Integration, and Data Governance dependencies  
 **Target artifact:** Customer/O2C runnable reference implementation  
 **Objective:** Build and validate an end-to-end, synthetic-data implementation that demonstrates role-aware Customer/O2C traceability, governed unbilled-exposure measurement, and evidence-backed investigation.
@@ -78,7 +78,9 @@ The reference implementation **implements** the shared architecture. It may reve
 Known baseline:
 
 - A Databricks unbilled demonstration already exists in this repository.
-- The implementation is expected to use Databricks Free, Unity Catalog, Contextual Views, Lakebase Postgres, Sirius Web, Apache Jena Fuseki, Neo4j Community, OpenMetadata, Plotly Dash, Python, FastAPI, MCP, and Dagster where feasible.
+- The implementation is expected to use Databricks Free, Unity Catalog, Contextual Views, Lakebase Postgres (ODS), Sirius Web, Neo4j Community (meaning expose), OpenMetadata, Plotly Dash, Python, FastAPI, MCP, and Dagster where feasible.
+- **Meaning path:** Turtle in git is SoT. Load published Turtle into Neo4j. Apache Jena Fuseki is optional **lab SPARQL classroom** only — keep it if you are learning SPARQL; it is not a client or demo-SoT runtime. Target picture: [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](../../../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg). ADR-HL-021 / ADR-HL-022.
+- Lakebase is the operational store, not a triple store. OntoBricks may draft OWL from UC tables; review, rewrite, and commit Turtle before any Neo4j load. dbxmetagen may draft comments/tags; do not auto-apply Metric Views.
 - This is synthetic-data, homelab evidence—not a production design commitment.
 
 Baseline uncertainty to resolve in Phase 0:
@@ -86,7 +88,7 @@ Baseline uncertainty to resolve in Phase 0:
 - Exact currently runnable scripts, schemas, catalog names, and execution commands.
 - Which Databricks Free features are presently available in the target workspace.
 - Exact version, API, export, authentication, and automation approach for Sirius Web.
-- Whether OpenMetadata, Fuseki, Neo4j, Dash, Dagster, FastAPI, and MCP are locally containerized, remotely hosted, or not yet present.
+- Whether OpenMetadata, Neo4j, Dash, Dagster, FastAPI, and MCP are locally containerized, remotely hosted, or not yet present. Fuseki is optional lab SPARQL only.
 - Existing naming conventions, source-file formats, and test coverage.
 
 No baseline behavior may be removed or refactored until it has a reproducible execution record and regression test evidence.

@@ -23,9 +23,10 @@ Use this EXACT terminology, tool set, and naming across every homelab document. 
 | SHACL validation | pySHACL | Apache-2.0 | Python-native, integrates with RDFLib pipelines; run in CI |
 | Relational→RDF mapping (virtual, default) | Ontop | Apache-2.0 | Exposes Postgres as a live virtual RDF/SPARQL graph with NO ETL/copy step — matches the "operational store stays source of truth" principle already discussed |
 | Relational→RDF mapping (materialize, when needed) | Morph-KGC | Apache-2.0 | Python engine to materialize an actual RDF graph from R2RML/RML mappings when you want to load curated facts into a triple store or Neo4j |
-| Triple store / SPARQL endpoint | Apache Jena Fuseki | Apache-2.0 | Mainstream, actively maintained (Jena 6.2.0+), best documentation for learning SPARQL; **explicitly avoid GraphDB Free, Stardog Free, AllegroGraph Free, Amazon Neptune** — all proprietary/not self-hostable-open-source despite free tiers; **avoid Blazegraph and D2RQ** — both abandoned/archived |
-| Lightweight/embedded triple store (optional exploration) | Oxigraph | Apache-2.0 / MIT dual | Rust-backed, embeddable, good for a "no server" mode or for comparing performance against Fuseki |
-| Knowledge graph (LPG) database | Neo4j Community Edition | GPLv3 (Community Edition) | The user's existing platform of choice; used as the serving/query layer for the graph, separate from the RDF/OWL source-of-truth |
+| Triple store / SPARQL classroom (lab only) | Apache Jena Fuseki | Apache-2.0 | Homelab SPARQL/SHACL classroom (ADR-HL-001). Learns SPARQL. Does **not** transfer to the client. Enterprise has no triple store. |
+| Meaning SoT | Turtle files in git | W3C RDF 1.1 Turtle | The triples live in git. Not a triple-store product. |
+| Meaning expose / serving graph | Neo4j Community Edition + n10s | GPLv3 / Neo4j Labs | Load **published** git Turtle. Client already has unused Neo4j. This is the transfer seat (ADR-HL-021). |
+| Lightweight/embedded triple store (optional exploration) | Oxigraph | Apache-2.0 / MIT dual | Optional no-server SPARQL comparison in the lab only |
 | RDF ↔ Neo4j bridge | neosemantics (n10s) (self-hosted only, not Aura) | Neo4j Labs plugin | Imports/exports RDF (incl. OWL/RDFS/SKOS) into/out of Neo4j's LPG model, validates against SHACL; `rdflib-neo4j` is the noted alternative if ever moving to Neo4j Aura |
 | AI agent orchestration | LangGraph | MIT | Stateful, controllable agent graphs; used to wire an LLM agent to the Neo4j knowledge graph and the KPI Store as tools |
 | KG-grounded retrieval | neo4j-graphrag-python and/or LlamaIndex Property Graph Index | Open source (Neo4j Labs) / MIT | Purpose-built for grounding LLM answers in a Neo4j graph (GraphRAG pattern) |
@@ -47,9 +48,28 @@ Use this EXACT terminology, tool set, and naming across every homelab document. 
 - **Llama 3.3 models** — source-available community license with usage restrictions; prefer Qwen3.6 or Mistral Small 3.2 (Apache-2.0) for a fully open homelab.
 - **Google's Open Knowledge Format (OKF)** — an emerging Google-authored specification, publicly viewable on GitHub, but with no stated open-source license and no formal standards-body ratification as of research date. Treat as "watch, don't build on yet." Rely on SKOS/PROV-O/RDF/OWL/SHACL instead.
 - **OPIS, S&P Global Platts** — paid commercial data services; use EIA Petroleum Marketing Monthly (rack prices) and EIA Spot Prices as the free substitutes.
+- **OntoBricks and dbxmetagen** — Databricks License; not homelab core. Optional on a Databricks workspace as draft assistants only (ADR-HL-022).
+
+## Lab vs enterprise transfer (ADR-HL-021 / ADR-HL-022)
+
+Target picture: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
+
+| Concern | Homelab (learn it) | Transfers to client |
+|---|---|---|
+| Meaning SoT | Turtle in git | Same |
+| SPARQL classroom | Fuseki (ADR-HL-001) | No. Client has no triple store. |
+| Expose / graph of meaning | Neo4j + n10s load of published Turtle | Same. Client already has unused Neo4j. |
+| Ops facts | PostgreSQL 18 | Lakebase (Databricks Postgres) |
+| Compile | DuckDB + MetricFlow in Track A; Metric Views in Track B | Databricks Metric Views only |
+| Catalog row (name, owner, formula pointer, IRI) | `dim_kpi_metadata` / OpenMetadata | Purview + Unity Catalog |
+| Data quality on Silver/Gold | dbt tests / SHACL on meaning | BigEye (SHACL is not BigEye) |
+| Bootstrap Turtle from existing tables | Optional later; Protégé is the lab author | OntoBricks **draft** → review/rewrite → git Turtle → Neo4j |
+| Bootstrap UC comments/tags | Not required in the lab | dbxmetagen **draft**; never auto-apply Metric Views |
+
+Do not ontologize the whole lakehouse. Formal Turtle covers named KPIs and the concepts they bind.
 
 ## Architecture principle carried over from the enterprise EPM project
-Operational and analytical data (Postgres, DuckDB) remain the systems of record for volume/transactional facts. The RDF/OWL ontology is the **meaning layer** — definitions, classes, relationships, KPI specs, lineage — accessed virtually via Ontop wherever possible rather than duplicated. Neo4j is a **serving/query layer** for the graph (populated from the RDF layer via n10s/Morph-KGC), not a second independent source of truth. This mirrors the "virtual RDF/OBDA first, materialize only stable facts" decision already explored for the enterprise EPM ontology work.
+Operational and analytical data (Postgres, DuckDB) remain the systems of record for volume/transactional facts. The RDF/OWL ontology is the **meaning layer** — definitions, classes, relationships, KPI specs, lineage — accessed virtually via Ontop wherever possible rather than duplicated. Neo4j is a **serving/query layer** for the graph (populated from published git Turtle via n10s, and from Morph-KGC only for stable curated facts), not a second independent source of truth. This mirrors the "virtual RDF/OBDA first, materialize only stable facts" decision already explored for the enterprise EPM ontology work. The client landing is the same meaning file with no Fuseki: git Turtle → Neo4j.
 
 ## Source documents already produced (read these, cite from them, do not re-derive facts)
 - [research_oss_tool_stack.md](../research_oss_tool_stack.md) — placeholder; the full tool license/maintenance research was not committed. Use this file and [02-Tool-Selection-and-ADRs.md](02-Tool-Selection-and-ADRs.md) as the in-repo authority.

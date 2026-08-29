@@ -8,12 +8,15 @@ The conceptual chain is the same in every track:
 
 A widely used calculation is not automatically a KPI. Appearance in a register means planned in the controlled set; it does not prove a file exists.
 
+**Meaning vs compute.** Meaning does not compute. Turtle in git is the machine ontology SoT. The enterprise expose path is Neo4j loaded from that published Turtle — the client has no triple store. The homelab still runs **Apache Jena Fuseki** so SPARQL can be learned; Fuseki does not transfer. Picture: [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg). Decisions: [ADR-HL-021](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (serve path), [ADR-HL-022](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata).
+
 ## Start here
 
 | If you want… | Open |
 |---|---|
 | GitHub orientation (this page) | [README.md](README.md) |
-| Live Master Index — architecture map, artifact register, decisions, remapping | [EPM-FOUND-000.md](EPM-FOUND-000.md) (v2.3) |
+| Live Master Index — architecture map, artifact register, decisions, remapping | [EPM-FOUND-000.md](EPM-FOUND-000.md) (v2.4) |
+| MEANING vs COMPUTE target picture | [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg) |
 | Foundation architecture set (FOUND-001–006) | [EPM Foundation v2](EPM_Foundation_v2_Markdown_HTML/README.md) |
 | Personal ontology / RDF / Neo4j / agents sandbox | [EPM_Homelab/00-Homelab-Charter-and-Roadmap.md](EPM_Homelab/00-Homelab-Charter-and-Roadmap.md) |
 | Runnable unbilled-exposure demos | [demos/README.md](demos/README.md) |
@@ -52,6 +55,7 @@ One live file per artifact. Other copies are stubs, pack-local maps, or supersed
 | Artifact | Canonical path | Other copies |
 |---|---|---|
 | Master Index (EPM-FOUND-000) | [`EPM-FOUND-000.md`](EPM-FOUND-000.md) | Pack folders keep pointers only; HTML reading copies are stale |
+| MEANING vs COMPUTE picture | [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg) | Note in [`architecture/README.md`](architecture/README.md) |
 | Integrated Architecture Handbook | [`EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html`](EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html) | V1 superseded |
 | Old Charter (former FOUND-001) | [`ARCHIVE/02_Project_Charter_and_Operating_Model.md`](ARCHIVE/02_Project_Charter_and_Operating_Model.md) | Superseded — do not treat as current FOUND-001 |
 | Old Register (former FOUND-002) | [`ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md`](ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md) | Superseded — current FOUND-001/002 are the Foundation v2 architecture docs |

@@ -4,17 +4,19 @@
 **Purpose:** Record the rationale, boundaries, and trade-offs behind the tool choices in `01-Reference-Architecture.md`. These ADRs provide a compact decision trail for a personal, open-source, single-machine learning stack.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
 **Owner:** Hamid Adesokan  
-**Last updated:** 2026-08-10
+**Last updated:** 2026-08-29
 
 This document records the “why” behind each reference-architecture tool choice using a lightweight Architecture Decision Record (ADR) format. It is adapted from the enterprise EPM Architecture Decision Log pattern, but is intentionally scoped to the **Downstream O&G Knowledge Homelab**: an educational sandbox that may take practical shortcuts and is not part of the governed Enterprise Performance Model (EPM) artifact set.
 
-## ADR-HL-001 — Use Apache Jena Fuseki as the primary triple store
+## ADR-HL-001 — Use Apache Jena Fuseki as the homelab SPARQL classroom
 
-**Status:** Accepted (for a personal homelab)
+**Status:** Accepted (for a personal homelab). Enterprise serve path is ADR-HL-021.
 
-**Context.** The homelab needs a self-hosted RDF store and SPARQL endpoint for the ontology meaning layer. Apache Jena provides a full RDF framework and Fuseki server under Apache-2.0, with current releases and maintained documentation. ([Apache Jena downloads](https://jena.apache.org/download/index.cgi)) ([Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/))
+**Context.** The homelab needs a self-hosted RDF store and SPARQL endpoint so the owner can learn SPARQL, named graphs, and SHACL-on-a-server. Apache Jena provides a full RDF framework and Fuseki server under Apache-2.0, with current releases and maintained documentation. ([Apache Jena downloads](https://jena.apache.org/download/index.cgi)) ([Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/))
 
-**Decision.** Use **Apache Jena Fuseki** as the default triple store/SPARQL endpoint. Use **Oxigraph** only as an optional lightweight or embedded comparison companion, not as the primary replacement. ([Oxigraph](https://github.com/oxigraph/oxigraph))
+The enterprise client has no triple store and will not be sold one. Their unused Neo4j is the expose path (ADR-HL-021). Fuseki stays in the lab so SPARQL can be learned. It is not the transfer artifact.
+
+**Decision.** Use **Apache Jena Fuseki** as the default **lab** SPARQL endpoint for Modules 05–07. Use **Oxigraph** only as an optional lightweight or embedded comparison companion, not as the primary replacement. ([Oxigraph](https://github.com/oxigraph/oxigraph)) Do not treat Fuseki as a client or production seat. The published Turtle still loads into Neo4j via n10s as the serve path that transfers.
 
 **Alternatives considered.**
 
@@ -26,9 +28,10 @@ This document records the “why” behind each reference-architecture tool choi
 | Oxigraph | Apache-2.0/MIT dual-licensed and actively developed, but selected as an optional embeddable/no-server exploration path rather than the teaching-oriented default endpoint. ([Oxigraph](https://github.com/oxigraph/oxigraph)) |
 
 **Consequences.**
-- SPARQL and RDF/OWL learning use a mainstream server endpoint with a clear operational boundary.
-- Curated materialized facts can be loaded into Fuseki; operational facts remain in Postgres and are exposed virtually where feasible.
+- SPARQL and RDF/OWL learning use a mainstream server endpoint with a clear operational boundary. Curriculum Modules 05–07 still run against Fuseki.
+- Curated materialized facts can be loaded into Fuseki for those exercises; operational facts remain in Postgres and are exposed virtually where feasible.
 - The stack avoids a dependency on free-tier terms or abandoned upstream projects.
+- The client demo and transfer story load the same git Turtle into Neo4j. Fuseki is omitted from that story.
 
 ## ADR-HL-002 — Prefer Ontop virtual RDF; materialize with Morph-KGC only when needed
 
@@ -403,6 +406,63 @@ Every answer returned by FastAPI or the MCP server includes a resolution trace: 
 - FastAPI and MCP server responses gain a small, consistent resolution-trace payload shape.
 - This pattern is a direct, demonstrable parallel to the enterprise EPM project's KPI Store consumption/governance goals, useful for portfolio and learning-transfer purposes.
 
+## ADR-HL-021 — No enterprise triple store; Turtle in git, expose through Neo4j
+
+**Status:** Accepted (lab transfer rule and intended enterprise landing)
+
+**Context.** The target band split is [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg): meaning does not compute; the only join is one ontology IRI to one certified catalog row to one semantic-layer object. The intended enterprise landscape is ER/Studio, Databricks (Unity Catalog, Lakebase, Metric Views), BigEye, and Purview. That estate has **no triple store**. It already has **Neo4j**, unused. Introducing Fuseki, Neptune, GraphDB, or a Lakebase SPO table as a second meaning store would be a second program.
+
+Machine ontology SoT is already Turtle in git ([EPM-FOUND-000](../EPM-FOUND-000.md); [metadata integration spec](../metadata%20Integration/enterprise-metadata-integration-architecture-specification.md)). Fuseki is listed there as demo runtime only.
+
+**Decision.**
+- Do not add a client triple store.
+- Store published meaning as Turtle in git. That file is the store of triples, not a triple-store product.
+- Load the published Turtle into **Neo4j** (n10s or an equivalent RDF import) and expose it there (Browser, Bloom, Cypher, MCP). Reload from git. Do not edit meaning in Neo4j.
+- That graph is the **graph of meaning**: concepts, named KPIs, IRIs, process, catalog bindings. It is not a node per Databricks table and not an A-Box of Silver facts.
+- **Apache Jena Fuseki remains in the homelab** so SPARQL and server-side SHACL can be learned (ADR-HL-001). It does not transfer.
+- Lakebase stays the **ODS** (ops ingredients). A Lakebase SPO table is a fallback meaning runtime only if Neo4j stays dark. It is not SoT.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Fuseki or another SPARQL server in the client estate | No triple-store seat; procurement and ops for a product they do not have |
+| Lakebase SPO (OntoBricks default) as the primary meaning store | Databricks-native, but fights the unused-Neo4j serve seat and invites an A-Box of Silver |
+| Purview / UC as the only meaning graph | Catalog is the certified-row seat, not a traversable graph of meaning |
+| Neo4j as SoT | Edits would fork from git Turtle |
+
+**Consequences.**
+- Transfer rehearsal is: write Turtle → validate (pySHACL / HermiT) → commit → n10s load → Cypher competency questions → catalog row with IRI → Metric View compile.
+- Agent contract on both lab and client: Cypher “which KPI” → catalog lookup → submit the certified measure. No formula authorship in the graph.
+
+## ADR-HL-022 — OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata
+
+**Status:** Accepted (optional Databricks-workspace tools; not homelab core)
+
+**Context.** The client will have many Unity Catalog tables with no Turtle. [OntoBricks](https://github.com/databrickslabs/ontobricks) can LLM-generate OWL from UC metadata, export Turtle/R2RML, and optionally materialize triples. [dbxmetagen](https://github.com/databricks-industry-solutions/dbxmetagen) can generate UC comments, tags, domain class, a catalog-metadata graph, and (if allowed) Metric Views and Genie spaces. Both are Databricks License: use only with Databricks Services. Neither is an OSI-open homelab core dependency. The 1:1 gate still holds: a table-induced `Customer` class is not a KPI.
+
+**Decision.**
+
+| Tool | Allowed seat | Forbidden seat |
+|---|---|---|
+| OntoBricks | **Draft factory** for one bounded domain/Gold mart. Export OWL. Steward reviews, rewrites, and **commits Turtle to git**. Neo4j serves that file. | SoT. Wizard-on-the-whole-catalog. Materialized Lakebase/Delta triples as the graph of meaning. KPI compile. |
+| dbxmetagen | **Catalog assistant** on the PREPARE band: comments, tags, domain labels, steward review (`apply_ddl=false`). `customer_context` may carry ubiquitous language and IRIs. | Ontology SoT. Auto-applied Metric Views or Genie-written SQL. A second compiler. |
+
+Industry bundles shipped with these tools (FIBO, FHIR, OMOP, Schema.org, Dublin Core) are hints, not EPM modules.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Make OntoBricks the enterprise ontology workbench and skip git | Violates Turtle-in-git SoT and the unused-Neo4j serve path |
+| Use dbxmetagen Metric View generation as the compiler | Second formula path; conflicts with the MEANING vs COMPUTE compile band |
+| Reject both tools entirely | Leaves no bootstrap for hundreds of undocumented UC tables |
+
+**Consequences.**
+- Homelab core stack is unchanged (Protégé, RDFLib, Fuseki classroom, Neo4j serve, Ontop/Morph-KGC).
+- A later Databricks workspace may run OntoBricks or dbxmetagen as optional assistants. Published meaning still leaves those apps as Turtle in git.
+- Databricks License tools stay off the “prefer genuinely open” core list (see license risk summary).
+
 ## License risk summary
 
 The baseline favors genuinely open-source software and open W3C standards. The following tools or specifications require an explicit exception, a future recheck, or avoidance because their free availability does not make them open source, or because they are abandoned.
@@ -419,6 +479,8 @@ The baseline favors genuinely open-source software and open W3C standards. The f
 | Google Open Knowledge Format | Public specification with no stated open-source license and no standards-body ratification. ([Google Cloud OKF overview](https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing)) | Watch; do not build on it |
 | Blazegraph | GPLv2 open source, but formally archived and abandoned. ([Blazegraph releases](https://github.com/blazegraph/database/releases)) | Avoid for new builds |
 | D2RQ | Apache-2.0 open source, but archived and effectively abandoned. ([D2RQ repository](https://github.com/d2rq/d2rq)) | Avoid for new builds |
+| Databricks Labs OntoBricks | Databricks License; use only with Databricks Services. Labs AS-IS, no SLA. ([OntoBricks](https://github.com/databrickslabs/ontobricks)) | Optional enterprise draft factory (ADR-HL-022). Not a homelab core dependency |
+| dbxmetagen | Databricks License; use only with Databricks Services. ([dbxmetagen](https://github.com/databricks-industry-solutions/dbxmetagen)) | Optional enterprise catalog assistant (ADR-HL-022). Not a homelab core dependency |
 
 ## Related homelab documents
 
