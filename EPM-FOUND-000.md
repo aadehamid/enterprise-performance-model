@@ -4,7 +4,7 @@
 **Status:** Draft (functioning as working baseline)
 **Owner:** Enterprise Performance Model Lead
 **Steward / maintainer:** To be confirmed
-**Last updated:** 2026-08-23
+**Last updated:** 2026-08-29
 **Canonical path:** `EPM-FOUND-000.md`
 
 *Repository home, architecture map, artifact register, decisions, issues, and delivery control*
@@ -89,6 +89,14 @@ Read left to right it is a design sequence. Read right to left it is the audit q
 | Data-product architecture | How is trusted data packaged and delivered? | Foundational product, derived product, KPI Store, semantic view | EPM-FOUND-006 |
 | Consumption architecture | How do people and systems use governed meaning and data? | SQL views, Power BI models, APIs, reports, agents | EPM-FOUND-006 |
 | Governance and project operation | Who owns meaning, and how is change controlled? | Ownership, precedence, lifecycle, migration, cadence | EPM-PROJ-001 to 006 and this index |
+
+### Meaning vs compute (target band split)
+
+![MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg)
+
+Meaning (Turtle in git) does not compute. Compute prepares Silver ingredients, compiles once via `MEASURE()` on a Metric View, and publishes Gold. The only legal join is **one ontology IRI → one KPI Store row → one Metric View**. The Store owns identity, approval, status (`proposed | approved | drifted | archived` on `dim_kpi_metadata`), and the formula pointer. Purview and Unity Catalog discover and govern pointed-at assets; they are not the Store door. Process authority stays `business_architecture/business_process/` and `business_architecture/schema/` — the picture’s Process Architecture box is not Turtle SoT. Agents ask the graph of meaning which KPI, look up the Store row, and submit `MEASURE()` on the Metric View the formula pointer names.
+
+Artifact note: [architecture/README.md](architecture/README.md). Enterprise serve path (no client triple store; Neo4j expose; Fuseki is lab-only): ADR-HL-021 in [EPM_Homelab/02-Tool-Selection-and-ADRs.md](EPM_Homelab/02-Tool-Selection-and-ADRs.md).
 
 ---
 
@@ -194,7 +202,7 @@ office_lanes.json is a front/middle/back/operations overlay on BUS-003. Those fo
 
 Turtle in git is the machine ontology SoT. Current enterprise Turtle: [`ontology/stage2_enterprise_kpi_ontology.ttl`](ontology/stage2_enterprise_kpi_ontology.ttl). Demo `o2c-meaning.ttl` is demo Turtle, not this enterprise SoT.
 
-FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design. Neither is the machine SoT. Fuseki is not. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle.
+FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design. Neither is the machine SoT. Fuseki is not. Fuseki is a **homelab SPARQL classroom** loaded from git Turtle so SPARQL can be learned. It is not a client seat. The enterprise client has no triple store. Published Turtle is loaded into **Neo4j** and exposed there (ADR-HL-021). OntoBricks may draft OWL from existing Unity Catalog tables; a steward reviews, rewrites, and commits Turtle to git before Neo4j serves it. dbxmetagen may draft UC comments and tags; it must not compile Metric Views (ADR-HL-022).
 
 ### Present in repo, not yet the reviewed source
 
@@ -205,6 +213,7 @@ Working files that match a registered subject but have **not** been accepted as 
 | EPM-MOD-001 / domain problem | [`business_architecture/domain/customer_domain_problem_statement_v0.1.md`](business_architecture/domain/customer_domain_problem_statement_v0.1.md) | Draft Customer-domain context. Not process authority. Not the Domain Modeling Playbook. |
 | EPM-FOUND-003 / 004 (notes only) | [`ontology/kpi_ontology_class_hierarchy.md`](ontology/kpi_ontology_class_hierarchy.md) | Supporting notes. Not Turtle. Not machine SoT. |
 | n/a (homelab / demos) | [`EPM_Homelab/`](EPM_Homelab/), [`demos/`](demos/README.md) | Explicitly not governed EPM artifacts. |
+| n/a (working visual) | [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg) | Target MEANING vs COMPUTE band split. Working visual, not a numbered FOUND artifact. |
 
 ### Family B — Business architecture (populated downstream)
 | ID | Title | Status |
@@ -317,7 +326,7 @@ Every artifact carries: ID, title, version, status, owner, date, scope, and depe
 - Power BI is the current validation and consumption environment; redevelopment out of scope unless authorised.
 - Reusable business logic is implemented at the lowest sensible governed layer.
 - Consumers access only the semantic / consumption layer.
-- FOUND-003 is the human-readable semantic model. Machine ontology SoT is Turtle in git. FOUND-004 is the ontology design, not the machine SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from that Turtle.
+- FOUND-003 is the human-readable semantic model. Machine ontology SoT is Turtle in git. FOUND-004 is the ontology design, not the machine SoT. Fuseki is a homelab SPARQL classroom loaded from that Turtle. Enterprise expose is Neo4j (D-17).
 - Data Governance is cross-cutting and embedded in delivery.
 - The 16 principles in FOUND-000A govern all design choices; exceptions follow its exception process.
 
@@ -354,6 +363,7 @@ Seeding list for **EPM-DEC-001**, which does not yet exist. No item is Approved 
 | **D-14** | **A prior interim re-homing of the Charter/Register to PROJ-001/PROJ-002 is void; those IDs belong to the pack's Project Instructions and Operating Model** | **Working baseline (2026-08-05)** | **This session; corrects C-06** |
 | **D-15** | **The old Charter and old Register are Superseded (retained for reference); the Register's migration method is preserved in the new PROJ-006** | **Working baseline (2026-08-05)** | **This session; see C-10, C-11** |
 | **D-16** | **One canonical artifact lifecycle and one decision-status set are adopted; earlier "Working Baseline / Proposed / Approved" wording maps onto them** | **Working baseline (2026-08-05)** | **This session; resolves C-09** |
+| D-17 | No client triple store. Machine ontology SoT is Turtle in git. Enterprise expose path is Neo4j (Cypher, not SPARQL). Fuseki remains a homelab SPARQL classroom only. KPI Store owns identity, approval, status, and formula pointer. Purview/UC are not the Store door. OntoBricks drafts Turtle; dbxmetagen drafts UC comments/tags; neither is SoT or compiler | Working baseline (2026-08-29) | [MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg); ADR-HL-021 / ADR-HL-022 |
 
 > **On D-13.** The v2 material was a level-7 source (outside-project chat) and could not, by itself, override the project baseline. It became baseline because the EPM Lead ratified it. That ratification is the governance act that makes the adoption legitimate rather than a silent override.
 
@@ -483,7 +493,7 @@ Declared this file (`EPM-FOUND-000.md` at repo root) the sole live Master Index.
 
 ### v2.4 PRs #5 / #6 / #7 supersede (2026-08-23)
 
-PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on `dim_kpi_metadata`. Fuseki is not SoT. OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.
+PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on `dim_kpi_metadata`. Fuseki is not SoT and is lab-only. Neo4j is the enterprise expose path (D-17). OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.
 
 Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this register before those two.
 
@@ -492,12 +502,12 @@ Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this 
 ## Artifact Update Block
 
 - **Conclusions:** One live FOUND-000; old Charter/Register are in ARCHIVE/ and remain Superseded, not the current FOUND-001/002.
-- **Decisions and status:** Process and schema files are process authority (PRs #6 and #7). Turtle in git is machine ontology SoT. No new Approved Baseline. Catalog enum unchanged.
-- **Definitions added or changed:** *Process authority (instance files)* = the two process/schema folders. *Machine ontology SoT* = Turtle in git. Existing-unlinked no longer applies to those files or to `ontology/stage2_enterprise_kpi_ontology.ttl`.
-- **Assumptions:** Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel.
+- **Decisions and status:** Process and schema files are process authority (PRs #6 and #7). Turtle in git is machine ontology SoT. D-17: no client triple store; Neo4j expose; Fuseki lab-only. No new Approved Baseline. Catalog enum unchanged.
+- **Definitions added or changed:** *Process authority (instance files)* = the two process/schema folders. *Machine ontology SoT* = Turtle in git. *Enterprise expose path* = Neo4j loaded from published Turtle. Existing-unlinked no longer applies to those files or to `ontology/stage2_enterprise_kpi_ontology.ttl`.
+- **Assumptions:** Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel. Homelab Fuseki remains the SPARQL classroom (ADR-HL-001).
 - **Open questions and conflicts:** C-11 unchanged. C-08 narrowed (process JSON closed; Family C/E remains).
-- **Source evidence:** Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack.
-- **Artifacts created or requiring updates:** This index to 2.4 at repo root; pack FOUND-000 files are pointers; HTML reading copies marked stale.
+- **Source evidence:** Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack; 2026-08-29 meaning-path working session.
+- **Artifacts created or requiring updates:** This index to 2.4 at repo root; [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg); ADR-HL-021 / ADR-HL-022.
 - **Suggested version and status:** 2.4 Draft.
 - **Next validation or implementation action:** Fold C-11 Charter depth. Do not reopen process JSON as Existing-unlinked. Do not start Stage B from this index.
 

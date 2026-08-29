@@ -9,3 +9,5 @@ Two runnable Order-to-Cash **unbilled exposure** packs plus one learner workbook
 | dbt / DuckDB / MetricFlow pack | [o2c-unbilled-semantic-layer](o2c-unbilled-semantic-layer/) | Local semantic-layer path with real dbt tests. See [VERIFY.txt](o2c-unbilled-semantic-layer/VERIFY.txt) for a recorded successful run (including the dbt-metricflow / dbt-core pin). |
 
 These are homelab reference implementations, not governed EPM artifacts. Parent problem statement: [customer_domain_problem_statement_v0.1.md](../business_architecture/domain/customer_domain_problem_statement_v0.1.md).
+
+Meaning path for both Databricks packs: Turtle sidecar in git; expose through Neo4j when you stand the graph up. Fuseki is optional lab SPARQL only. Band split: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
