@@ -3,7 +3,7 @@
 **Purpose:** Define the end-to-end reference architecture for a personal, open-source, single-machine learning environment that connects Downstream Oil & Gas facts, a governed meaning layer, graph serving, and a locally hosted AI agent.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
 **Owner:** Hamid Adesokan  
-**Last updated:** 2026-08-10  
+**Last updated:** 2026-08-29  
 
 ## Architecture overview
 
@@ -111,7 +111,7 @@ The following illustrates a single answerable fact, such as a synthetic gasoline
 
 5. **Materialize the stable semantic subset.** A separate Dagster asset invokes Morph-KGC for selected stable facts: terminal and product topology, KPI definitions, controlled glossary terms, mapping version, and provenance/lineage assertions. It writes Turtle files that are version-controlled in Git. Morph-KGC is the Apache-2.0 Python materialization engine for R2RML/RML-family mappings; materialization is intentional here because the output is a reviewable, portable graph artifact, not because the operational store ceased to be authoritative ([research compendium §3](../research_oss_tool_stack.md#3-relational-to-rdf-r2rmlrml-mapping-engines), [Morph-KGC documentation](https://morph-kgc.readthedocs.io/en/latest/why-morph-kgc/)).
 
-6. **Serve RDF and graph queries.** The selected Turtle release is loaded into Apache Jena Fuseki for SPARQL exploration and imported into self-hosted Neo4j Community Edition through n10s. Fuseki is the baseline open-source SPARQL server; Jena 6.2.0 is the researched current release and requires Java 21 or newer ([research compendium §1](../research_oss_tool_stack.md#1-triple-stores--rdf-databases), [Apache Jena downloads](https://jena.apache.org/download/index.cgi)). n10s imports RDF vocabularies and validates SHACL on self-hosted Neo4j, not Neo4j Aura; the cited research identifies release 2025.06.1 as a June 2025 bugfix release ([research compendium §2](../research_oss_tool_stack.md#2-neo4j--rdf-integration), [Neo4j Labs n10s](https://neo4j.com/labs/neosemantics/)).
+6. **Serve RDF and graph queries.** The selected Turtle release is loaded into Apache Jena Fuseki for **lab SPARQL** exploration and imported into self-hosted Neo4j Community Edition through n10s. Fuseki is the classroom SPARQL server (ADR-HL-001); it does not transfer to the client. Neo4j is the expose path that does (ADR-HL-021). Jena 6.2.0 is the researched current release and requires Java 21 or newer ([research compendium §1](../research_oss_tool_stack.md#1-triple-stores--rdf-databases), [Apache Jena downloads](https://jena.apache.org/download/index.cgi)). n10s imports RDF vocabularies and validates SHACL on self-hosted Neo4j, not Neo4j Aura; the cited research identifies release 2025.06.1 as a June 2025 bugfix release ([research compendium §2](../research_oss_tool_stack.md#2-neo4j--rdf-integration), [Neo4j Labs n10s](https://neo4j.com/labs/neosemantics/)).
 
 7. **Answer with an accountable path, through an explicit resolution tier.** Every question is answered by one of three named tiers (ADR-HL-020), and the response carries a resolution trace saying which tier answered it:
    - **Tier 0 — Governed metric.** The FastAPI backend or MCP server reads a pre-computed KPI Store fact-table value directly from DuckDB. Deterministic, 0 LLM calls.

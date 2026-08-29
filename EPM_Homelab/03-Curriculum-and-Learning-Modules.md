@@ -4,7 +4,7 @@
 **Purpose:** Define an evidence-producing learning sequence that builds the Gasoline Netback / Refining Margin CPG capstone from conceptual model through a grounded AI-agent interface. Each module uses the personal, open-source homelab stack and a consistent Downstream O&G scenario.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
 **Owner:** Hamid Adesokan  
-**Last updated:** 2026-08-10  
+**Last updated:** 2026-08-29  
 
 ## Curriculum intent and roadmap mapping
 
@@ -13,6 +13,8 @@ This curriculum converts the six-phase roadmap into a learning path. Phase 0 is 
 The sequence expands Hamid Adesokan’s original six-module sketch into eleven modules spanning conceptual modeling, controlled vocabularies, SKOS, RDF/RDFS/OWL, materialized and virtual RDF, SHACL, Neo4j, KPI engineering, lineage, and a graph-grounded agent. The capstone is the simplified **Gasoline Netback / Refining Margin CPG** KPI, combining public EIA inputs with synthetic terminal, custody-transfer, contract, order, and invoice facts. EIA publishes the spot-price and petroleum-marketing sources used for the exercises ([EIA Spot Prices](https://www.eia.gov/dnav/pet/pet_pri_spt_s1_d.htm); [EIA Petroleum Marketing Monthly](https://www.eia.gov/petroleum/marketing/monthly/)).
 
 PostgreSQL retains operational facts, DuckDB retains analytical/KPI facts, and RDF/OWL supplies meaning. Ontop exposes relational sources virtually where possible; Fuseki and Neo4j receive only deliberate materializations, avoiding a graph copy as an independent business record.
+
+**Fuseki stays in this curriculum.** Modules 05–07 use it so SPARQL and server-side SHACL can be learned. That is classroom only (ADR-HL-001). The path that transfers to the enterprise client is published Turtle in git loaded into Neo4j (ADR-HL-021; Module 08). Do not treat Fuseki as a client deliverable. Target band split: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
 
 ### Module map
 
@@ -220,7 +222,7 @@ A reasoning-gate Dagster asset, a short before/after inconsistency demonstration
 
 - Instance URI construction, typed literals, named graphs, provenance notes, and repeatable mapping.
 - Materialized RDF for an instructional snapshot; PostgreSQL and DuckDB remain systems of record for operational and analytical values.
-- Apache Jena Fuseki as the homelab’s primary triple store and SPARQL endpoint, selected instead of GraphDB ([Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/)).
+- Apache Jena Fuseki as the homelab SPARQL classroom, selected instead of GraphDB ([Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/)). Lab only. Enterprise expose is Neo4j (ADR-HL-021).
 - Curated mapping with Morph-KGC when a real RDF graph is required for Fuseki or Neo4j ([Morph-KGC documentation](https://morph-kgc.readthedocs.io/)).
 
 **Hands-on lab**

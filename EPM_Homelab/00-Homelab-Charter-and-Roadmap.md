@@ -4,7 +4,7 @@
 **Purpose:** Establish the personal learning mission, architectural boundaries, capstone pilot, and delivery sequence for the homelab. This document is the master index for the six supporting homelab documents.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
 **Owner:** Hamid Adesokan  
-**Last updated:** 2026-08-10  
+**Last updated:** 2026-08-29  
 
 ## Vision
 
@@ -17,7 +17,7 @@ The homelab is designed to build practical capability in:
 - Conceptual modeling, including separation of **T-Box** terminology/model structure from **A-Box** instance facts.
 - Controlled vocabularies and business glossary design with **SKOS**, including preferred labels, alternative labels, broader/narrower relationships, and concept schemes ([W3C SKOS Reference](https://www.w3.org/TR/skos-reference/)).
 - RDFS and OWL modeling, competency questions, URI design, and targeted reasoning.
-- RDF serialization, graph handling, and SPARQL with **RDFLib** and **Apache Jena Fuseki** ([RDFLib](https://github.com/rdflib/rdflib), [Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/)).
+- RDF serialization, graph handling, and SPARQL with **RDFLib** and **Apache Jena Fuseki** ([RDFLib](https://github.com/rdflib/rdflib), [Apache Jena Fuseki documentation](https://jena.apache.org/documentation/fuseki2/)). Fuseki is the lab SPARQL classroom. The enterprise client has no triple store; published Turtle is exposed through Neo4j (ADR-HL-021).
 - R2RML mapping and virtual RDF/OBDA through **Ontop**, with deliberate materialization only where it is useful ([Ontop VKG guide](https://ontop-vkg.org/guide/)).
 - SHACL shape design, validation diagnostics, and validation in continuous integration using **pySHACL** ([RDFLib pySHACL](https://github.com/rdflib/pyshacl)).
 - Neo4j property-graph design, Cypher, and RDF interchange using self-hosted **neosemantics (n10s)** ([Neo4j Labs neosemantics](https://neo4j.com/labs/neosemantics/)).
