@@ -8,7 +8,7 @@ The conceptual chain is the same in every track:
 
 A widely used calculation is not automatically a KPI. Appearance in a register means planned in the controlled set; it does not prove a file exists.
 
-**Meaning vs compute.** Meaning does not compute. Turtle in git is the machine ontology SoT. The enterprise expose path is Neo4j loaded from that published Turtle — the client has no triple store. The homelab still runs **Apache Jena Fuseki** so SPARQL can be learned; Fuseki does not transfer. Picture: [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg). Decisions: [ADR-HL-021](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (serve path), [ADR-HL-022](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata).
+**Meaning vs compute.** Meaning does not compute. Turtle in git is the machine ontology SoT. The enterprise expose path is Neo4j loaded from that published Turtle — the client has no triple store and no SPARQL seat. The **KPI Store** owns identity, approval, status, and the formula pointer; Purview/UC are not that row. Compile is `MEASURE()`. The homelab still runs **Apache Jena Fuseki** so SPARQL can be learned; Fuseki does not transfer. Picture: [architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg). Decisions: [ADR-HL-021](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (serve path), [ADR-HL-022](EPM_Homelab/02-Tool-Selection-and-ADRs.md) (OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata).
 
 ## Start here
 

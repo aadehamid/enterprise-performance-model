@@ -94,7 +94,7 @@ Read left to right it is a design sequence. Read right to left it is the audit q
 
 ![MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg)
 
-Meaning (Turtle in git) does not compute. Compute prepares Silver ingredients, compiles once in the semantic layer, and publishes Gold. The only legal join is **one ontology IRI → one certified catalog row → one semantic-layer object**. Agents ask the graph of meaning which KPI, look up the catalog, and submit the certified measure.
+Meaning (Turtle in git) does not compute. Compute prepares Silver ingredients, compiles once via `MEASURE()` on a Metric View, and publishes Gold. The only legal join is **one ontology IRI → one KPI Store row → one Metric View**. The Store owns identity, approval, status (`proposed | approved | drifted | archived` on `dim_kpi_metadata`), and the formula pointer. Purview and Unity Catalog discover and govern pointed-at assets; they are not the Store door. Process authority stays `business_architecture/business_process/` and `business_architecture/schema/` — the picture’s Process Architecture box is not Turtle SoT. Agents ask the graph of meaning which KPI, look up the Store row, and submit `MEASURE()` on the Metric View the formula pointer names.
 
 Artifact note: [architecture/README.md](architecture/README.md). Enterprise serve path (no client triple store; Neo4j expose; Fuseki is lab-only): ADR-HL-021 in [EPM_Homelab/02-Tool-Selection-and-ADRs.md](EPM_Homelab/02-Tool-Selection-and-ADRs.md).
 
@@ -363,7 +363,7 @@ Seeding list for **EPM-DEC-001**, which does not yet exist. No item is Approved 
 | **D-14** | **A prior interim re-homing of the Charter/Register to PROJ-001/PROJ-002 is void; those IDs belong to the pack's Project Instructions and Operating Model** | **Working baseline (2026-08-05)** | **This session; corrects C-06** |
 | **D-15** | **The old Charter and old Register are Superseded (retained for reference); the Register's migration method is preserved in the new PROJ-006** | **Working baseline (2026-08-05)** | **This session; see C-10, C-11** |
 | **D-16** | **One canonical artifact lifecycle and one decision-status set are adopted; earlier "Working Baseline / Proposed / Approved" wording maps onto them** | **Working baseline (2026-08-05)** | **This session; resolves C-09** |
-| D-17 | No client triple store. Machine ontology SoT is Turtle in git. Enterprise expose path is Neo4j. Fuseki remains a homelab SPARQL classroom only. OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata; neither is SoT or compiler | Working baseline (2026-08-29) | [MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg); ADR-HL-021 / ADR-HL-022 |
+| D-17 | No client triple store. Machine ontology SoT is Turtle in git. Enterprise expose path is Neo4j (Cypher, not SPARQL). Fuseki remains a homelab SPARQL classroom only. KPI Store owns identity, approval, status, and formula pointer. Purview/UC are not the Store door. OntoBricks drafts Turtle; dbxmetagen drafts UC comments/tags; neither is SoT or compiler | Working baseline (2026-08-29) | [MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg); ADR-HL-021 / ADR-HL-022 |
 
 > **On D-13.** The v2 material was a level-7 source (outside-project chat) and could not, by itself, override the project baseline. It became baseline because the EPM Lead ratified it. That ratification is the governance act that makes the adoption legitimate rather than a silent override.
 

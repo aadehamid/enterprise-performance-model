@@ -61,7 +61,8 @@ Target picture: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE
 | Expose / graph of meaning | Neo4j + n10s load of published Turtle | Same. Client already has unused Neo4j. |
 | Ops facts | PostgreSQL 18 | Lakebase (Databricks Postgres) |
 | Compile | DuckDB + MetricFlow in Track A; Metric Views in Track B | Databricks Metric Views only |
-| Catalog row (name, owner, formula pointer, IRI) | `dim_kpi_metadata` / OpenMetadata | Purview + Unity Catalog |
+| KPI Store row (identity, approval, status, formula pointer, ontology IRI) | `dim_kpi_metadata` (`proposed \| approved \| drifted \| archived`) | Same Store seat. The Store owns this row. |
+| Asset discovery / technical catalog | OpenMetadata (lab stand-in) | Purview (discovery/stewardship). Unity Catalog (tables, Metric Views, access). Not the Store door. |
 | Data quality on Silver/Gold | dbt tests / SHACL on meaning | BigEye (SHACL is not BigEye) |
 | Bootstrap Turtle from existing tables | Optional later; Protégé is the lab author | OntoBricks **draft** → review/rewrite → git Turtle → Neo4j |
 | Bootstrap UC comments/tags | Not required in the lab | dbxmetagen **draft**; never auto-apply Metric Views |

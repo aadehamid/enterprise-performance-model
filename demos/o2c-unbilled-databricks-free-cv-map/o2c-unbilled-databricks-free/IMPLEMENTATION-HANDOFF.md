@@ -56,7 +56,7 @@ The reference implementation **implements** the shared architecture. It may reve
 - Create role-aware Silver structures and a Gold unbilled exposure fact.
 - Implement reusable measures through Databricks Metric Views.
 - Implement a minimum viable KPI Store pattern for candidate/approved KPI governance and published KPI snapshots.
-- Publish semantic mappings and SHACL validation in Fuseki.
+- Validate published Turtle with pySHACL (CI or local). Apache Jena Fuseki is optional lab SPARQL classroom only — not a demo runtime requirement.
 - Publish a serving/query context graph in Neo4j Community.
 - Record technical catalog, ownership, lineage, quality, and glossary context through Unity Catalog and OpenMetadata, within available platform capabilities.
 - Deliver a Plotly Dash operational control-tower dashboard.
@@ -157,10 +157,10 @@ Every reusable measurement must have, at minimum:
                                 │              │ approved export
                      model context│              ▼
                                 │   ┌─────────────────────────────┐
-                                │   │ Fuseki demo runtime         │
-                                │   │ SPARQL/SHACL from git Turtle│
+                                │   │ Turtle in git + pySHACL     │
+                                │   │ Fuseki = optional lab only  │
                                 │   └──────────────┬──────────────┘
-                                │                  │ controlled projection
+                                │                  │ Neo4j expose (n10s)
                                 ▼                  ▼
                   ┌──────────────────┐    ┌───────────────────────┐
                   │ Unity Catalog    │    │ Neo4j context graph   │
@@ -188,7 +188,7 @@ Every reusable measurement must have, at minimum:
 |---|---|---|
 | Downstream process meaning | Files under `business_architecture/business_process/` and `business_architecture/schema/` | Optional companions; demo-local process lists; files under `business_architecture/domain/` |
 | Conceptual/logical/physical data-model structure | ER/Studio (production). Sirius Web is the demo stand-in | Hand-authored graph nodes, dashboard fields, agent prose; Sirius as a second model SoT |
-| Formal semantic definitions and mapping assertions | Turtle in git (OWL/SKOS/SHACL). Fuseki loads those files as the demo SPARQL/SHACL runtime | Neo4j serving projection; Fuseki as a second ontology SoT |
+| Formal semantic definitions and mapping assertions | Turtle in git (OWL/SKOS/SHACL). pySHACL validates. Fuseki is optional lab SPARQL only | Neo4j as a second ontology SoT; Fuseki as SoT or a required runtime |
 | Operational source context | Lakebase source schemas and captured source extracts | Silver/Gold reinterpretation without retained source lineage |
 | Lakehouse technical assets and native Databricks lineage | Unity Catalog | OpenMetadata copy/projection |
 | Enterprise catalog | Purview (production). OpenMetadata is the demo stand-in | OpenMetadata as a second enterprise catalog |
@@ -219,9 +219,9 @@ This implementation may use the open-source tools in the table below. The produc
 | Sirius Web | ER/Studio | Models |
 | OpenMetadata | Purview | Enterprise catalog |
 | Neo4j Community | Neo4j | Serving graph |
-| Apache Jena Fuseki | none (demo runtime only) | SPARQL and SHACL loaded from git Turtle |
+| Apache Jena Fuseki | none | Optional lab SPARQL classroom. Not a required runtime. |
 
-Formal ontology source of truth stays Turtle in git. The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views.
+Formal ontology source of truth stays Turtle in git. The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, Databricks Metric Views, and Neo4j. The KPI Store owns identity, approval, status, and formula pointer.
 
 ## 5. Core data-model requirements
 
@@ -403,7 +403,9 @@ Create or extend a Sirius Web model that contains:
 
 Python automation may submit only allow-listed model changes, such as create/update controlled elements, add approved attributes, create relationships, export a model release, or execute validation. Every automated change must retain a request/correlation ID, actor, timestamp, model version, and result.
 
-### 7.2 Fuseki ontology and SHACL
+### 7.2 Turtle ontology and SHACL
+
+Fuseki is not required. Validate shapes with pySHACL. Optional Fuseki load is lab SPARQL only.
 
 Create modular RDF artifacts, for example:
 
@@ -632,7 +634,7 @@ Exit gate: Unbilled exposure is reproducible at declared grain/as-of time and cl
 Deliverables:
 
 - Sirius approved export and release record.
-- Fuseki ontology/mapping load and SHACL test results.
+- Published Turtle in git and pySHACL test results. Optional Fuseki load only if running the lab SPARQL classroom.
 - Neo4j controlled projection, constraints, indexes, and competency queries.
 - Unity Catalog and OpenMetadata registration/lineage evidence.
 - Cross-layer traceability queries.
@@ -718,7 +720,7 @@ Exit gate: A business/technical reviewer can ask the defined questions, obtain g
 ### Decisions and status
 
 - **Draft decision:** `EPM_Homelab/` governs reusable patterns; this directory contains implementation-specific executable evidence.
-- **Draft decision:** Turtle in git is the formal semantic and mapping source, not all meaning. FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design and uses conceptual names; exact IRIs, axioms, constraints, and individuals belong to that Turtle. Fuseki loads that release as the demo SPARQL/SHACL runtime. Neo4j is a controlled projection for investigation and impact analysis.
+- **Draft decision:** Turtle in git is the formal semantic and mapping source, not all meaning. FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design and uses conceptual names; exact IRIs, axioms, constraints, and individuals belong to that Turtle. Neo4j is the expose path (load published Turtle). Fuseki is optional lab SPARQL classroom only, not a required runtime. KPI Store owns identity, approval, status, and formula pointer; Purview/UC are not that row.
 - **Draft decision:** Dashboard and agent layers may not recreate governed metric/KPI formulas.
 - **Pending decision:** Initial unbilled calculation scope, financial treatment, business grain, and operational owner validation.
 

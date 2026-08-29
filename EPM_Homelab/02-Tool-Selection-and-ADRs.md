@@ -410,7 +410,7 @@ Every answer returned by FastAPI or the MCP server includes a resolution trace: 
 
 **Status:** Accepted (lab transfer rule and intended enterprise landing)
 
-**Context.** The target band split is [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg): meaning does not compute; the only join is one ontology IRI to one certified catalog row to one semantic-layer object. The intended enterprise landscape is ER/Studio, Databricks (Unity Catalog, Lakebase, Metric Views), BigEye, and Purview. That estate has **no triple store**. It already has **Neo4j**, unused. Introducing Fuseki, Neptune, GraphDB, or a Lakebase SPO table as a second meaning store would be a second program.
+**Context.** The target band split is [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg): meaning does not compute; the only join is one ontology IRI to one KPI Store row to one Metric View compiled with `MEASURE()`. The Store owns identity, approval, status (`proposed | approved | drifted | archived`), and the formula pointer. Purview and Unity Catalog are not that row. The intended enterprise landscape is ER/Studio, Databricks (Unity Catalog, Lakebase ODS, Metric Views), BigEye, Purview, and unused Neo4j. That estate has **no triple store**. Introducing Fuseki, Neptune, GraphDB, or a Lakebase SPO table as a meaning store would be a second program.
 
 Machine ontology SoT is already Turtle in git ([EPM-FOUND-000](../EPM-FOUND-000.md); [metadata integration spec](../metadata%20Integration/enterprise-metadata-integration-architecture-specification.md)). Fuseki is listed there as demo runtime only.
 
@@ -418,22 +418,23 @@ Machine ontology SoT is already Turtle in git ([EPM-FOUND-000](../EPM-FOUND-000.
 - Do not add a client triple store.
 - Store published meaning as Turtle in git. That file is the store of triples, not a triple-store product.
 - Load the published Turtle into **Neo4j** (n10s or an equivalent RDF import) and expose it there (Browser, Bloom, Cypher, MCP). Reload from git. Do not edit meaning in Neo4j.
-- That graph is the **graph of meaning**: concepts, named KPIs, IRIs, process, catalog bindings. It is not a node per Databricks table and not an A-Box of Silver facts.
-- **Apache Jena Fuseki remains in the homelab** so SPARQL and server-side SHACL can be learned (ADR-HL-001). It does not transfer.
-- Lakebase stays the **ODS** (ops ingredients). A Lakebase SPO table is a fallback meaning runtime only if Neo4j stays dark. It is not SoT.
+- That graph is the **graph of meaning**: concepts, named KPIs, IRIs, and Store bindings. Process *links* may appear; process **authority** stays `business_architecture/business_process/` and `business_architecture/schema/`. The graph is not a node per Databricks table and not an A-Box of Silver facts.
+- **Apache Jena Fuseki remains in the homelab** so SPARQL and server-side SHACL can be learned (ADR-HL-001). It does not transfer. There is no enterprise SPARQL seat.
+- Lakebase stays the **ODS** (ops ingredients) only. Not a triple store. Not a meaning runtime. Not an SPO fallback.
 
 **Alternatives considered.**
 
 | Alternative | Why not selected |
 |---|---|
 | Fuseki or another SPARQL server in the client estate | No triple-store seat; procurement and ops for a product they do not have |
-| Lakebase SPO (OntoBricks default) as the primary meaning store | Databricks-native, but fights the unused-Neo4j serve seat and invites an A-Box of Silver |
-| Purview / UC as the only meaning graph | Catalog is the certified-row seat, not a traversable graph of meaning |
+| Lakebase SPO (OntoBricks default) as primary or fallback meaning store | Lakebase is ODS only. An SPO copy is a second meaning runtime and an A-Box of Silver |
+| Purview / UC as the KPI Store row | Those seats discover and enforce assets. The Store owns identity, approval, status, and the formula pointer |
 | Neo4j as SoT | Edits would fork from git Turtle |
+| Enterprise SPARQL endpoint | Client has no triple store. Expose is Cypher on Neo4j |
 
 **Consequences.**
-- Transfer rehearsal is: write Turtle → validate (pySHACL / HermiT) → commit → n10s load → Cypher competency questions → catalog row with IRI → Metric View compile.
-- Agent contract on both lab and client: Cypher “which KPI” → catalog lookup → submit the certified measure. No formula authorship in the graph.
+- Transfer rehearsal is: write Turtle → validate (pySHACL / HermiT) → commit → n10s load → Cypher competency questions → KPI Store row (`dim_kpi_metadata`) with IRI and formula pointer → `MEASURE()` on that Metric View.
+- Agent contract on both lab and client: Cypher “which KPI” → Store lookup → `MEASURE()` on the pointed Metric View. No formula authorship in the graph.
 
 ## ADR-HL-022 — OntoBricks drafts Turtle; dbxmetagen drafts catalog metadata
 

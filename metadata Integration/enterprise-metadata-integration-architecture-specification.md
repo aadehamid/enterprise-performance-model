@@ -91,7 +91,7 @@ Process authority for this scope is the files under `business_architecture/busin
 +----------------------------------------------------------------------------------+
 |                    CONSUMPTION / EXPERIENCE LAYER                                |
 |----------------------------------------------------------------------------------|
-| Purview discovery UI | Data-product portal | Semantic APIs | Context API | SPARQL|
+| Purview discovery UI | Data-product portal | Semantic APIs | Context API | Cypher (Neo4j)|
 | Policy-filtered search, lineage views, access-request routes, AI retrieval       |
 +-----------------------------------+----------------------------------------------+
                                     |
@@ -178,7 +178,7 @@ Demo and reference implementations may use the open-source tools in the table be
 | Neo4j Community | Neo4j | Serving graph |
 | Apache Jena Fuseki | none (demo runtime only) | SPARQL and SHACL loaded from git Turtle |
 
-Formal ontology source of truth stays Turtle in git (the ontology file format). The serving graph stays Neo4j. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, and Databricks Metric Views. There is no client triple store. Apache Jena Fuseki is a homelab SPARQL classroom only.
+Formal ontology source of truth stays Turtle in git (the ontology file format). The serving graph is **Neo4j** (Cypher). Graph-host selection is closed: no client triple store, no enterprise SPARQL endpoint. Production seats stay ER/Studio, Purview, Unity Catalog, Bigeye, Databricks Metric Views, and Neo4j. Apache Jena Fuseki is a homelab SPARQL classroom only. The KPI Store (`dim_kpi_metadata`) owns identity, approval, status (`proposed | approved | drifted | archived`), and the formula pointer. Purview and Unity Catalog are not that row.
 
 Target band split: [`architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg`](../architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg).
 
@@ -766,7 +766,7 @@ Canonical graph
 | Business user | Purview/data-product portal | Product meaning, steward, certification, glossary, access route, high-level lineage |
 | BI developer | Semantic catalog/API | Approved metrics, dimensions, grain, service contract, usage guidance |
 | Data engineer | Purview + Unity + technical lineage API | Schemas, quality rules, transformations, physical mappings, detailed lineage |
-| Architect/modeler | Graph explorer / SPARQL / modeling repository | Ontology, mapping registry, provenance, dependency analysis |
+| Architect/modeler | Neo4j / Cypher / modeling repository | Ontology, mapping registry, provenance, dependency analysis. SPARQL is lab-only (Fuseki). |
 | Auditor/controller | Evidence portal | KPI version, approvals, validated lineage, quality status, sources, review trail |
 | AI agent | Policy-filtered context API + semantic tools | Approved concepts, metric/service contracts, quality/freshness, user-permitted paths |
 | External partner | DCAT export/profile endpoint | Only externally shareable datasets/services and approved metadata |
@@ -1032,7 +1032,7 @@ Consumer products
 - Define EPM namespace, stable URI policy, and identifier strategy.
 - Define KPI/metric/data-product vocabulary and classification taxonomy.
 - Establish the mapping-registry schema.
-- Choose RDF/graph store and API serving approach.
+- Graph host is decided: Turtle in git; Neo4j serving (Cypher); no client triple store; no enterprise SPARQL. API serving is Context API plus Cypher, not SPARQL.
 
 ### Phase 1 — Pilot
 
@@ -1113,7 +1113,7 @@ Consumer products
 
 ## 23. Open Questions
 
-1. Which product will host the canonical RDF graph: dedicated triplestore, graph database projection, catalog-adjacent graph service, or managed cloud knowledge graph?
+1. ~~Which product will host the canonical RDF graph?~~ **Closed (2026-08-29):** Turtle in git is machine SoT. Neo4j is the serving graph (Cypher). No client triple store. No enterprise SPARQL. See ADR-HL-021.
 2. What is the authoritative enterprise data-product lifecycle registry: Purview, KPI Store, dedicated product registry, or a governed graph workflow?
 3. Which Purview capability model is available: Data Map/Atlas, Unified Catalog, or both?
 4. Is Unity Catalog running in Azure Databricks, and which lineage/tags/metadata capabilities are enabled?
@@ -1153,7 +1153,7 @@ Consumer products
 
 - Purview can harvest selected Unity Catalog metadata.
 - Bigeye APIs/exports provide usable lineage identifiers and observation context.
-- A controlled graph store and identity/mapping registry can be operated.
+- Neo4j can be operated as the serving graph over published git Turtle, with an identity/mapping registry. No client triple store.
 - Data product, KPI, and semantic metric governance roles will be assigned.
 
 ### Source evidence

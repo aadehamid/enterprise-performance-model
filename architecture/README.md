@@ -6,9 +6,18 @@
 **Status:** Working visual — target band split  
 **Owner:** Enterprise Performance Model Lead
 
-The MEANING vs COMPUTE picture. Meaning (Turtle in git) does not compute. Compute prepares ingredients, compiles once in the semantic layer, and publishes Gold. The only legal join is **one ontology IRI → one certified catalog row → one semantic-layer object**. Agents ask the graph of meaning which KPI, look up the catalog, and submit the certified measure. They do not write formulas and they do not read Silver or Gold directly.
+The MEANING vs COMPUTE picture. Meaning does not compute. Compute prepares Silver ingredients, compiles once via `MEASURE()` on a Metric View, and publishes Gold.
 
-**Machine ontology SoT** is Turtle in git. **Enterprise expose path** is Neo4j loaded from that published Turtle. Apache Jena Fuseki is a homelab SPARQL classroom, not a client triple store.
+The JPG footer is binding and overrides two box labels on the drawing:
+
+| Box on the drawing | Read as |
+|---|---|
+| Process Architecture / “ontology files in git (Turtle)” | Process **authority** stays [`business_architecture/business_process/`](../business_architecture/business_process/) and [`business_architecture/schema/`](../business_architecture/schema/). Turtle may *link* process IRIs. Turtle is not process SoT. |
+| Cataloging Tool (Purview / Unity Catalog) as the KPI row | **KPI Store** owns identity, approval, status (`proposed \| approved \| drifted \| archived` on `dim_kpi_metadata`), and the formula pointer. Purview is enterprise discovery. Unity Catalog is the technical catalog (tables, Metric Views, access). Neither is the Store door. |
+
+The only legal join is **one ontology IRI → one KPI Store row → one Metric View**. Agents ask the graph of meaning which KPI, look up the Store row, and submit `MEASURE()` on the Metric View named by the formula pointer. They do not write formulas and they do not read Silver or Gold directly.
+
+**Machine ontology SoT** is Turtle in git. **Enterprise expose path** is Neo4j loaded from that published Turtle. Apache Jena Fuseki is a homelab SPARQL classroom, not a client triple store. There is no enterprise SPARQL seat.
 
 Related:
 
