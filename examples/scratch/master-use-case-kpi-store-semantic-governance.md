@@ -19,7 +19,7 @@
 
 ## 1. Executive Summary & Core Objectives
 
-The enterprise is establishing a centralized **KPI Store** hosted on the **Databricks Lakehouse Platform** to serve as the single, authoritative source of truth for all enterprise key performance indicators (KPIs).
+The enterprise is establishing a centralized **KPI Store** hosted on the **Databricks Lakehouse Platform**. The Store seat is `dim_kpi_metadata`: identity, approval, and the formula pointer for each Named KPI. It is not the broad source of truth for meaning. Until I-11 closes, foundation files and Turtle in git win for meaning.
 
 This architecture resolves a fundamental enterprise problem: client-side reporting solutions (e.g., Power BI), operational microservices, and AI query engines defining competing, divergent calculation logic for the exact same business metrics.
 
@@ -41,14 +41,16 @@ This architecture resolves a fundamental enterprise problem: client-side reporti
 PLANE 1: MEANING (Semantic & Conceptual Governance - Zero Computation Here)
 ========================================================================================================================
 [ Domain Understanding ] ────── formalize ─────▶ [ Ontology Modules ] ───────▶ [ Graph of Meaning ]
-  (ER/Studio CDM & LDM;                            (Turtle in Git;               (Turtle in Git;
-   Ubiquitous Language)                             Shared meaning & lineage)     Global Enterprise Graph)
+  (ER/Studio CDM & LDM;                            (Turtle in git = SoT;         (Neo4j/Cypher expose;
+   Ubiquitous Language)                             Shared meaning & lineage)     SPARQL lab-only)
           │                                                │                                ▲
           │ About this object                              ▼ Creates this named KPI         │ which KPI
           ▼                                         [ Named KPI ] ──────────────────────────┤
 [ Process Architecture ] ──────── Used in ────────▶   (e.g., Crack Spread;                  │
   (Value Streams, Workflows,                           Has unique Ontology IRI;             │
-   Business Processes; Turtle in Git)                  1:1 Governance Gate)                 │
+   Business Processes;                                 1:1 Governance Gate)                 │
+   business_architecture/business_process/ +
+   business_architecture/schema/)
           │                                                │                                │
 ===========================================================│================================│===========================
 PLANE 2: COMPUTE (Execution, Preparation, Storage, Contracts & Observability)               │
@@ -164,15 +166,13 @@ This matrix establishes the definitive boundaries between where metadata origina
 
 | Metadata Category | Specific Metadata Attributes | Authoritative Source (System of Record) | Consumed By / Shared With | Sharing Mechanism (Protocol / Pattern) |
 | --- | --- | --- | --- | --- |
-| Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining`). |
+| Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining` example/prefix-only placeholder; not a live SoT IRI). |
 
 > ⚠️ **I-11 conflict:** Row uses a generic `ex:domain/Refining` example prefix. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
 | Business Process | Value stream name, Process Step ID, Explanatory context | Meaning Plane (Git / RDF) | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: linked via `dcterms:subject` or `ex:process/FluidCatalyticCracking`. Not used as a SQL join key. |
 
 > ⚠️ **I-11 conflict:** Row names the Meaning Plane (Git / RDF) as the Authoritative Source for business process identity. Current seat: process authority is `business_architecture/business_process/` + `business_architecture/schema/` per `EPM-FOUND-000` §Process authority. Turtle may link process IDs but is not process SoT. Tracked in GH #18.
-| Named KPI Identity | KPI Business Name, Certified Definition, 1:1 Gate status | Graph of Meaning (Git / RDF) | Purview Catalog, Silver KPI Metadata Table, ODPS Contract | By Reference: permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`). |
-
-> ⚠️ **I-11 conflict:** Row presents the Graph of Meaning as the Authoritative Source for "1:1 Gate status." Current seat: the only legal join is ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`; the Store row owns the gate. The Silver KPI Metadata Table is a read-only local copy used for joins, not the seat. Tracked in GH #18.
+| Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | KPI Store catalog (`dim_kpi_metadata`) | Graph of Meaning (Neo4j expose), Purview Catalog (discovery), Silver KPI Metadata Table, ODPS Contract | 1:1 Store row ↔ Named KPI. Turtle owns the IRI (`ex:kpi/CrackSpread321` prefix-only). Graph of Meaning is Neo4j expose of git Turtle, not identity SoR. |
 | Governance & Roles | Domain Data Owner, Product Owner, Data Steward, Technical Owner | Microsoft Purview / Unity Catalog | Candidate Register, Silver Metadata, ODPS Contract | By Identity URI / Email: synchronized into contract headers and graph agents (`foaf:Person`, `prov:wasAttributedTo`). |
 | Physical Schema & Grain | Column names, Data types, Primary/Foreign keys, Grain/Dimensionality | ER/Studio (PDM) & Databricks Silver | Semantic Layer, BigEye, ODPS Contract | By Value & Schema Reference: PDM generates DDL; contract embeds schema specification directly; grain links to dimension keys. |
 | Metric Logic & Math | Measure calculation object, Aggregation rules, Filter constraints | Semantic Layer (Metric Views / dbt / Cube) | Purview Catalog, Silver Metadata, ODPS Contract | By Formula Pointer: stored strictly as an abstract identifier (e.g., `metric_view_refining.crack_spread_321`). Never raw SQL/DAX. |
@@ -222,7 +222,7 @@ To ensure clear operational accountability and eliminate bottlenecks during KPI 
 1. **Candidate Ingestion:** The Data Product Owner enters a new metric into the Candidate KPI Register, associating it with a proposed name and business process context.
 2. **Semantic Verification:** The Data Steward vets the candidate against the Graph of Meaning. If unique, the Steward assigns a permanent Ontology IRI and secures approval from the Domain Data Owner.
 3. **Physical Delivery:** The Technical Owner maps the Silver star schema ingredients (from ER/Studio PDM), builds the measure in the Semantic Layer, and defines the Formula Pointer.
-4. **Contract Sign-Off:** The Data Product Owner and Technical Owner execute the Data Contract (ODPS), which registers the certified row in Microsoft Purview and schedules automated BigEye monitors.
+4. **Contract Sign-Off:** The Data Product Owner and Technical Owner execute the Data Contract (ODPS), which writes the approved Store row on `dim_kpi_metadata` (status proposed | approved | drifted | archived), projects discovery metadata to Purview, and schedules automated BigEye monitors. Purview is not the Store door.
 
 ---
 
@@ -268,7 +268,8 @@ To eliminate manual configuration and prevent metadata drift, the architecture u
                                   METADATA SHARING TOPOLOGY
 
      [ Meaning Plane: Git ]           [ ER/Studio ]          [ Microsoft Purview ]
-      (Ontology IRIs/Turtle)            (PDM Models)          (Certified Catalog)
+      (Turtle SoT; Neo4j expose)        (PDM Models)          (Enterprise catalog /
+                                                              discovery only)
                 │                            │                          │
                 │ Webhook                    │ Model Export             │ REST API
                 ▼                            ▼                          ▼
@@ -292,8 +293,8 @@ To eliminate manual configuration and prevent metadata drift, the architecture u
    - Emits health scores back to catalog     - Exposes Gold Output Ports to consumers
 ```
 
-- **Meaning Plane to Catalog:** Git webhooks detect changes in RDF Turtle files, compiling new Named KPI IRIs and pushing them to Microsoft Purview as certified conceptual assets.
-- **Catalog to Silver Metadata Table:** A scheduled, automated Databricks pipeline issues a read-only one-way sync from Purview into the Silver KPI Metadata Table. This ensures queries running inside Databricks can perform fast local joins against catalog metadata without external API round-trips.
+- **Meaning Plane to Store / Purview:** Git webhooks detect Turtle changes. Named KPI IRIs stay owned by Turtle. The approved Store row lives on `dim_kpi_metadata`. Purview receives a discovery projection, not the master Store row.
+- **Store to Silver Metadata Table:** A scheduled, automated Databricks pipeline issues a read-only one-way sync from `dim_kpi_metadata` into the Silver KPI Metadata Table for local joins. Purview is not SoT for formula pointer or catalog status. Purview receives a discovery projection only.
 - **Data Contract to BigEye (Observability as Code):** The Data Contract (ODPS YAML) is parsed by CI/CD deployment jobs. The quality section is compiled into API payloads sent to BigEye, automatically creating or updating monitoring metrics, freshness expectations, and anomaly detection rules.
 - **Contract to Consuming AI Agents:** External agents send read requests to the contract API or Graph of Meaning. The agent parses the machine-readable contract to determine whether its intended analytical goal falls under Certified Uses before generating query executions.
 
@@ -530,15 +531,14 @@ To ensure strict governance and prevent metric corruption, autonomous AI agents 
                    │
                    ▼
    Step 1: QUERY MEANING FIRST
-   - Agent queries Graph of Meaning (SPARQL/Turtle).
+   - Agent queries Graph of Meaning via Neo4j / Cypher (loaded from git Turtle). SPARQL / Fuseki lab-only.
    - Discovers the certified Named KPI ("Crack Spread 3:2:1").
    - Verifies that the user prompt falls under Certified Uses.
-
-> ⚠️ **I-11 conflict:** Step 1 says agents query the Graph of Meaning via SPARQL/Turtle. Current serve path: Neo4j/Cypher is the enterprise expose path; Fuseki/SPARQL is lab-only per ADR-HL-021. Tracked in GH #18.
                    │
                    ▼
-   Step 2: RESOLVE CATALOG & CONTRACT
-   - Agent reads Purview Catalog / ODPS Contract.
+   Step 2: RESOLVE STORE & CONTRACT
+   - Agent reads `dim_kpi_metadata` (Store) for identity, status, and formula pointer.
+   - Purview / ODPS are discovery and contract only. Not the Store door.
    - Resolves the Formula Pointer:
      refining_semantic_catalog.refining_metrics.crack_spread_321
    - Locates the approved Output Port.

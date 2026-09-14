@@ -1,37 +1,35 @@
 # Drafting scratch: enterprise ontology namespace design
 
-> **Status: working draft. Reconciliation with the foundation files is an open future step.**
+> **Status: working draft. The foundation files and Turtle SoT are authoritative until I-11 closes.**
 >
-> This file represents an earlier, less-detailed view of how one might
-> design a multi-layer enterprise namespace registry (TBox + ABox across
-> modeling, catalog, and Store layers). It is being kept here as a
-> working draft so its claims can be reviewed against the foundation
-> files and the current Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`)
-> before either becomes authoritative.
+> This file is an earlier, less-detailed scratch under reconciliation
+> (multi-layer enterprise namespace sketch across modeling, catalog, and
+> Store layers). The foundation files (`EPM-FOUND-003`, `EPM-FOUND-004`,
+> `EPM-FOUND-000`, `EPM-FOUND-002`, `EPM-FOUND-005`, `EPM-FOUND-006`,
+> ADR-HL-021) and the Turtle SoT
+> (`ontology/stage2_enterprise_kpi_ontology.ttl`) are authoritative.
+> This file does not override them; conflicts are open items, not
+> resolved positions. This scratch is not SoT.
 >
-> Treat this file as the source of truth only after reconciliation.
-> Until that happens, neither this file nor the foundation files override
-> each other; conflicts are open items, not resolved positions.
 > Tracked as Open Issue I-11 in `EPM-FOUND-000` and GitHub issue #18.
 
 ## Why this scratch exists
 
 The project foundation (see `EPM-FOUND-003` and `EPM-FOUND-004`) draws a
-sharp line between *human-readable meaning* (the semantic model), *ontology
-design* (this file's neighbourhood, conceptual names), and *machine SoT*
+sharp line between *human-readable meaning* (FOUND-003), *ontology design*
+(FOUND-004 conceptual names, not this scratch), and *machine SoT*
 (Turtle in git, exact IRIs). When sketching how a multi-layer enterprise
 namespace design might be approached across modeling, catalog, and Store
 layers, it is easy to ship a sketch that quietly competes with the
-foundation. This file exists so the sketch has a home and can be
-reasoned about openly, with reconciliation as the next step rather than
-either side being declared authoritative by default.
+foundation. This file exists only as non-authoritative scratch so that
+competition is visible. Until I-11 closes, foundation and Turtle win.
+This file is not a live ontology design seat.
 
 ## Boundaries the sketch must respect during reconciliation
 
 Three locks, all currently enforced elsewhere in the repo. They are
-listed here so the reconciliation between this file and the foundation
-can be done against a fixed reference set, not as a verdict that the
-sketch has already lost.
+listed here so reconciliation checks the sketch against a fixed
+reference set. The locks already bind. The sketch does not.
 
 1. **Turtle is the machine SoT.** Exact IRIs, classes, and properties only
    live in `ontology/stage2_enterprise_kpi_ontology.ttl`. The Turtle
@@ -67,8 +65,8 @@ namespace. During reconciliation, each row will be checked against the
 | TBox vocabulary (classes, properties) | Conceptual names that any modeling layer would reuse | Turtle SoT, prefixes `ekpi:` and `data:` |
 | Conceptual / business model names | Names that humans use to talk about entities | Human-readable semantic model (`EPM-FOUND-003`) |
 | Logical / physical data model names | Names bound to specific DBMS designs | ER/Studio artifacts, not Turtle |
-| Catalog asset identity | Names of tables, schemas, columns in a specific catalog | Unity Catalog, Purview — discover/govern tools |
-| KPI Store identity | One row per named KPI; status, approval, formula pointer | `dim_kpi_metadata` SQL seat — not Turtle |
+| Catalog asset identity | Names of tables, schemas, columns in a specific catalog | Unity Catalog, Purview - discover/govern tools |
+| KPI Store identity | One row per named KPI; status, approval, formula pointer | `dim_kpi_metadata` SQL seat - not Turtle |
 | Process identity | Process and activity IDs | `business_architecture/business_process/` JSON + schema |
 
 ## Things this scratch is asking the reconciliation to think through
