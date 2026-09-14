@@ -9,7 +9,8 @@
 > ADR-HL-021) and the Turtle SoT
 > (`ontology/stage2_enterprise_kpi_ontology.ttl`) are authoritative.
 > This file does not override them; conflicts are open items, not
-> resolved positions. This scratch is not SoT.
+> resolved positions. This scratch is not SoT. Reconciliation
+> alone does not make this file a source of truth.
 >
 > Tracked as Open Issue I-11 in `EPM-FOUND-000` and GitHub issue #18.
 
