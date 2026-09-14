@@ -71,6 +71,8 @@ PLANE 2: COMPUTE (Execution, Preparation, Storage, Contracts & Observability)   
   │   - Star schema: facts & dimensions (Ingredients) │                                     │
   │   - Read-only local copy of KPI metadata table    │                                     │
   │   - Governed by: Upstream Ingestion Contract      │                                     │
+
+> ⚠️ **I-11 conflict:** Diagram presents the Purview/Unity Catalog "Certified row" as the 1:1 binding to a Named KPI. Current seat: `dim_kpi_metadata` owns identity, approval, status, and the formula pointer; Purview/UC are discover/govern tools over pointed-at assets, not the Store row. Tracked in GH #18.
   └─────────────────────────┬─────────────────────────┘                                     │
                             │ Ingredients                                                   │
                             ▼                                                               │
@@ -130,6 +132,8 @@ Metadata moves through a structured, multi-stage lifecycle. Each stage has a sin
 [ STAGE 2: CANDIDATE REGISTRATION & CERTIFICATION ]
   Authoritative Source: Microsoft Purview / Databricks Unity Catalog
   Metadata Collected: Stewardship assignments, Lifecycle status (Proposed -> Certified), Formula Pointers.
+
+> ⚠️ **I-11 conflict:** Stage 2 names Purview/Unity Catalog as the Authoritative Source for certification and lifecycle status. Current seat: `dim_kpi_metadata` is the KPI Store seat (identity, approval, status, formula pointer); Purview/UC discover/govern pointed-at assets. Current status set is `proposed | approved | drifted | archived` per `EPM-FOUND-000` §Meaning vs compute and ADR-HL-021, not `Proposed -> Certified`. Tracked in GH #18.
            │
            ▼ (Reference via Catalog ID & Sync Engine)
 [ STAGE 3: DATA ASSET & INGREDIENT MODELING ]
@@ -161,8 +165,14 @@ This matrix establishes the definitive boundaries between where metadata origina
 | Metadata Category | Specific Metadata Attributes | Authoritative Source (System of Record) | Consumed By / Shared With | Sharing Mechanism (Protocol / Pattern) |
 | --- | --- | --- | --- | --- |
 | Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining`). |
+
+> ⚠️ **I-11 conflict:** Row uses a generic `ex:domain/Refining` example prefix. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
 | Business Process | Value stream name, Process Step ID, Explanatory context | Meaning Plane (Git / RDF) | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: linked via `dcterms:subject` or `ex:process/FluidCatalyticCracking`. Not used as a SQL join key. |
+
+> ⚠️ **I-11 conflict:** Row names the Meaning Plane (Git / RDF) as the Authoritative Source for business process identity. Current seat: process authority is `business_architecture/business_process/` + `business_architecture/schema/` per `EPM-FOUND-000` §Process authority. Turtle may link process IDs but is not process SoT. Tracked in GH #18.
 | Named KPI Identity | KPI Business Name, Certified Definition, 1:1 Gate status | Graph of Meaning (Git / RDF) | Purview Catalog, Silver KPI Metadata Table, ODPS Contract | By Reference: permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`). |
+
+> ⚠️ **I-11 conflict:** Row presents the Graph of Meaning as the Authoritative Source for "1:1 Gate status." Current seat: the only legal join is ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`; the Store row owns the gate. The Silver KPI Metadata Table is a read-only local copy used for joins, not the seat. Tracked in GH #18.
 | Governance & Roles | Domain Data Owner, Product Owner, Data Steward, Technical Owner | Microsoft Purview / Unity Catalog | Candidate Register, Silver Metadata, ODPS Contract | By Identity URI / Email: synchronized into contract headers and graph agents (`foaf:Person`, `prov:wasAttributedTo`). |
 | Physical Schema & Grain | Column names, Data types, Primary/Foreign keys, Grain/Dimensionality | ER/Studio (PDM) & Databricks Silver | Semantic Layer, BigEye, ODPS Contract | By Value & Schema Reference: PDM generates DDL; contract embeds schema specification directly; grain links to dimension keys. |
 | Metric Logic & Math | Measure calculation object, Aggregation rules, Filter constraints | Semantic Layer (Metric Views / dbt / Cube) | Purview Catalog, Silver Metadata, ODPS Contract | By Formula Pointer: stored strictly as an abstract identifier (e.g., `metric_view_refining.crack_spread_321`). Never raw SQL/DAX. |
@@ -306,6 +316,8 @@ info:
   status: "active"
   domain: "Downstream Refining & Trading"
   domainIRI: "https://metadata.enterprise.org/domains/Refining"
+
+> ⚠️ **I-11 conflict:** `domainIRI` uses a host (`metadata.enterprise.org`) and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` (`https://ontology.enterprise.example.com/kpi-store/core#`) and `data:` (`https://data.enterprise.example.com/kpi-store/`) only. This IRI is illustrative. Tracked in GH #18.
   purpose: >
     Provide an uncompromised, certified economic margin calculation representing
     the gross theoretical refining margin achieved by converting three barrels of
@@ -337,6 +349,8 @@ productDefinition:
   # Strict 1:1 Gate Linking to Meaning Plane
   ontologyIRI: "https://metadata.enterprise.org/kpis/CrackSpread321"
 
+> ⚠️ **I-11 conflict:** `ontologyIRI` uses a host and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` and `data:` only, on `ontology.enterprise.example.com` / `data.enterprise.example.com`. This IRI is illustrative. Tracked in GH #18.
+
   # Centralized Semantic Layer Formula Pointer (Never raw SQL)
   calculationModel:
     semanticLayerType: "Databricks Metric View"
@@ -361,6 +375,8 @@ productDefinition:
       type: "decimal(10,4)"
       description: "Calculated certified 3:2:1 crack spread margin in USD per barrel"
       mapsToConcept: "https://metadata.enterprise.org/concepts/DollarPerBarrel"
+
+> ⚠️ **I-11 conflict:** `mapsToConcept` uses a host and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` and `data:` only. This IRI is illustrative. Tracked in GH #18.
     - name: "calculation_timestamp"
       type: "timestamp"
       description: "System execution timestamp emitted by the compiler"
@@ -517,6 +533,8 @@ To ensure strict governance and prevent metric corruption, autonomous AI agents 
    - Agent queries Graph of Meaning (SPARQL/Turtle).
    - Discovers the certified Named KPI ("Crack Spread 3:2:1").
    - Verifies that the user prompt falls under Certified Uses.
+
+> ⚠️ **I-11 conflict:** Step 1 says agents query the Graph of Meaning via SPARQL/Turtle. Current serve path: Neo4j/Cypher is the enterprise expose path; Fuseki/SPARQL is lab-only per ADR-HL-021. Tracked in GH #18.
                    │
                    ▼
    Step 2: RESOLVE CATALOG & CONTRACT
