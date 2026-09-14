@@ -4,7 +4,7 @@
 **Status:** Draft (functioning as working baseline)
 **Owner:** Enterprise Performance Model Lead
 **Steward / maintainer:** To be confirmed
-**Last updated:** 2026-08-29
+**Last updated:** 2026-09-13
 **Canonical path:** `EPM-FOUND-000.md`
 
 *Repository home, architecture map, artifact register, decisions, issues, and delivery control*
@@ -399,6 +399,7 @@ Seeding list for **EPM-ISS-001**, which does not yet exist.
 - **I-08** Tool access, licensing, and existing Purview / Unity Catalog content are unknown.
 - **I-09** Approval authority, quorum, escalation path, and KPI review cadence are operationally undefined.
 - **I-10** The size of the Power BI estate in scope is unrecorded, so the classification workload is unknown.
+- **I-11** Reconcile `examples/scratch/` files against the foundation. Two files are tracked: `examples/scratch/initial-draft-ontology-structure.md` (PR #17) and `examples/scratch/master-use-case-kpi-store-semantic-governance.md`. Both represent working drafts that may grow into authoritative sources, but neither overrides the foundation files (`EPM-FOUND-003`, `EPM-FOUND-004`, `EPM-FOUND-000`, `EPM-FOUND-002`, `EPM-FOUND-005`, `EPM-FOUND-006`, ADR-HL-021) or the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`) until reconciliation completes. Tracking issue: GitHub #18 (labeled `reconciliation`). Related thread: C-08 (subsumption of v2 foundation docs vs. planned Family B/C/E artifacts).
 
 ---
 
