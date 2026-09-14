@@ -167,12 +167,8 @@ This matrix establishes the definitive boundaries between where metadata origina
 | Metadata Category | Specific Metadata Attributes | Authoritative Source (System of Record) | Consumed By / Shared With | Sharing Mechanism (Protocol / Pattern) |
 | --- | --- | --- | --- | --- |
 | Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining` example/prefix-only placeholder; not a live SoT IRI). |
-
-> ⚠️ **I-11 conflict:** Row uses a generic `ex:domain/Refining` example prefix. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
 | Business Process | Value stream name, Process Step ID, Explanatory context | Meaning Plane (Git / RDF) | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: linked via `dcterms:subject` or `ex:process/FluidCatalyticCracking`. Not used as a SQL join key. |
-
-> ⚠️ **I-11 conflict:** Row names the Meaning Plane (Git / RDF) as the Authoritative Source for business process identity. Current seat: process authority is `business_architecture/business_process/` + `business_architecture/schema/` per `EPM-FOUND-000` §Process authority. Turtle may link process IDs but is not process SoT. Tracked in GH #18.
-| Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | KPI Store catalog (`dim_kpi_metadata`) | Graph of Meaning (Neo4j expose), Purview Catalog (discovery), Silver KPI Metadata Table, ODPS Contract | 1:1 Store row ↔ Named KPI. Turtle owns the IRI (`ex:kpi/CrackSpread321` prefix-only). Graph of Meaning is Neo4j expose of git Turtle, not identity SoR. |
+| Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | **`dim_kpi_metadata`** (SQL Store seat; owns identity, approval, status, formula pointer); IRI declared in Turtle via `ekpi:` / `data:`; expose path Neo4j/Cypher per ADR-HL-021 (Fuseki/SPARQL lab-only) | Purview Catalog (discover/govern), Silver KPI Metadata Table (read-only join copy), ODPS Contract (downstream artifact) | **Current:** ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. **Draft said:** permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`). |
 | Governance & Roles | Domain Data Owner, Product Owner, Data Steward, Technical Owner | Microsoft Purview / Unity Catalog | Candidate Register, Silver Metadata, ODPS Contract | By Identity URI / Email: synchronized into contract headers and graph agents (`foaf:Person`, `prov:wasAttributedTo`). |
 | Physical Schema & Grain | Column names, Data types, Primary/Foreign keys, Grain/Dimensionality | ER/Studio (PDM) & Databricks Silver | Semantic Layer, BigEye, ODPS Contract | By Value & Schema Reference: PDM generates DDL; contract embeds schema specification directly; grain links to dimension keys. |
 | Metric Logic & Math | Measure calculation object, Aggregation rules, Filter constraints | Semantic Layer (Metric Views / dbt / Cube) | Purview Catalog, Silver Metadata, ODPS Contract | By Formula Pointer: stored strictly as an abstract identifier (e.g., `metric_view_refining.crack_spread_321`). Never raw SQL/DAX. |
@@ -181,6 +177,14 @@ This matrix establishes the definitive boundaries between where metadata origina
 | Data Quality Assertions | Range bounds, Nullability thresholds, Anomaly bounds, Completeness % | BigEye Observability Engine | Databricks Pipelines, ODPS Contract, AI Agents | Bi-Directional API: declarative rules authored in ODPS contract; BigEye pulls rules via API, runs tests, and emits execution metrics. |
 | Usage Boundaries | Certified Business Use Cases, Prohibited / Non-Certified Use Cases | Enterprise Data Governance Board | ODPS Contract, AI Agents, BI Dashboards | By Value (Contract Policy): textual rules enforced by AI agent system prompts and catalog validation flags. |
 | Audit & Traceability | Upstream tables used, Pipeline Run IDs, Execution Timestamps, SQL executed | Databricks Execution Engine & Compiler | Enterprise Knowledge Graph, BigEye, Compliance Logs | Automated Generation: captured during runtime via PROV-O (`prov:wasGeneratedBy`, `prov:used`). |
+
+### §4 row-level I-11 conflicts
+
+The three rows above diverge from the foundation. Conflicts are listed here so the table itself stays structurally intact.
+
+- **Domain & Concept row (Sharing Mechanism cell uses `ex:domain/Refining`)**. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
+- **Business Process row (Authoritative Source cell says `Meaning Plane (Git / RDF)`)**. Current seat: process authority is `business_architecture/business_process/` + `business_architecture/schema/` per `EPM-FOUND-000` §Process authority. Turtle may link process IDs but is not process SoT. Tracked in GH #18.
+- **Named KPI Identity row (rewritten in place; cell text above already cites `dim_kpi_metadata`)**. Original draft text in cell read `Graph of Meaning (Git / RDF)` for the SoR and `permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`)` for the sharing mechanism. Current legal join: ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. Tracked in GH #18.
 
 ---
 
@@ -317,8 +321,6 @@ info:
   status: "active"
   domain: "Downstream Refining & Trading"
   domainIRI: "https://metadata.enterprise.org/domains/Refining"
-
-> ⚠️ **I-11 conflict:** `domainIRI` uses a host (`metadata.enterprise.org`) and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` (`https://ontology.enterprise.example.com/kpi-store/core#`) and `data:` (`https://data.enterprise.example.com/kpi-store/`) only. This IRI is illustrative. Tracked in GH #18.
   purpose: >
     Provide an uncompromised, certified economic margin calculation representing
     the gross theoretical refining margin achieved by converting three barrels of
@@ -350,8 +352,6 @@ productDefinition:
   # Strict 1:1 Gate Linking to Meaning Plane
   ontologyIRI: "https://metadata.enterprise.org/kpis/CrackSpread321"
 
-> ⚠️ **I-11 conflict:** `ontologyIRI` uses a host and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` and `data:` only, on `ontology.enterprise.example.com` / `data.enterprise.example.com`. This IRI is illustrative. Tracked in GH #18.
-
   # Centralized Semantic Layer Formula Pointer (Never raw SQL)
   calculationModel:
     semanticLayerType: "Databricks Metric View"
@@ -376,8 +376,6 @@ productDefinition:
       type: "decimal(10,4)"
       description: "Calculated certified 3:2:1 crack spread margin in USD per barrel"
       mapsToConcept: "https://metadata.enterprise.org/concepts/DollarPerBarrel"
-
-> ⚠️ **I-11 conflict:** `mapsToConcept` uses a host and path not declared in the Turtle SoT. Current Turtle SoT prefixes: `ekpi:` and `data:` only. This IRI is illustrative. Tracked in GH #18.
     - name: "calculation_timestamp"
       type: "timestamp"
       description: "System execution timestamp emitted by the compiler"
@@ -517,6 +515,14 @@ successMetrics:
   - metric: "Query Response Performance"
     target: "95th percentile query latency < 1.5 seconds across all output ports"
 ```
+
+### §8 IRI conflicts
+
+The example YAML above uses three IRIs that diverge from the Turtle SoT. Each IRI is preserved verbatim in the YAML; the conflicts are listed here so the YAML itself stays structurally and syntactically valid.
+
+- **`domainIRI: "https://metadata.enterprise.org/domains/Refining"`**. Current Turtle SoT prefixes: `ekpi:` (`https://ontology.enterprise.example.com/kpi-store/core#`) and `data:` (`https://data.enterprise.example.com/kpi-store/`) only. This IRI is illustrative. Tracked in GH #18.
+- **`ontologyIRI: "https://metadata.enterprise.org/kpis/CrackSpread321"`**. Same divergence: this IRI uses a host and path not declared in the Turtle SoT. The current Turtle SoT prefixes are `ekpi:` and `data:` only, on `ontology.enterprise.example.com` / `data.enterprise.example.com`. Tracked in GH #18.
+- **`mapsToConcept: "https://metadata.enterprise.org/concepts/DollarPerBarrel"`**. Same divergence: not declared in the Turtle SoT. Tracked in GH #18.
 
 ---
 
