@@ -2,20 +2,17 @@
 
 ## Master System Specification, Metadata Lifecycle & Data Contract Design
 
-> **Status: working draft. Reconciliation with the foundation files is an open future step.**
+> **Status: working draft. The foundation files and Turtle SoT are authoritative until I-11 closes.**
 >
-> This file represents a later, more detailed view of the KPI Store +
-> semantic governance use case, generated after the current foundation
-> files (`EPM-FOUND-003`, `EPM-FOUND-004`, `EPM-FOUND-000`, and the
-> ADR-HL-021 section in `EPM_Homelab/02-Tool-Selection-and-ADRs.md`)
-> were written. It is being kept here as a working draft so its
-> detailed claims can be reviewed against the foundation and the
-> current Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`)
-> before either becomes authoritative.
+> This file is a working draft under reconciliation. The foundation
+> files (`EPM-FOUND-003`, `EPM-FOUND-004`, `EPM-FOUND-000`,
+> `EPM-FOUND-002`, `EPM-FOUND-005`, `EPM-FOUND-006`, ADR-HL-021) and
+> the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`) are
+> authoritative. This file does not override them; conflicts are open
+> items, not resolved positions. Inline `> ⚠️ I-11 conflict:`
+> callouts mark specific lines where this draft diverges from the
+> foundation; each callout cites the current seat.
 >
-> Treat this file as the source of truth only after reconciliation.
-> Until that happens, neither this file nor the foundation files
-> override each other; conflicts are open items, not resolved positions.
 > Tracked as Open Issue I-11 in `EPM-FOUND-000` and GitHub issue #18.
 
 ---
