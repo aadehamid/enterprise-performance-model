@@ -131,7 +131,8 @@ Metadata moves through a structured, multi-stage lifecycle. Each stage has a sin
 ```text
 [ STAGE 1: DOMAIN ANALYSIS & MEANING ]
   Authoritative Source: ER/Studio (CDM/LDM) & Git Ontologies (Turtle)
-  Metadata Collected: Business Terms, Taxonomies, Domain Context, Process Hierarchies, Named KPI IRIs.
+  Metadata Collected: Business Terms, Taxonomies, Domain Context, Named KPI IRIs.
+  Process Hierarchies: SoR is business_architecture/business_process/ + business_architecture/schema/ only (not domain/, not Turtle). Process link is "used in."
            │
            ▼ (Reference via Ontology IRI)
 [ STAGE 2: STORE REGISTRATION & APPROVAL ]
