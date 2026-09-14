@@ -63,18 +63,21 @@ PLANE 2: COMPUTE (Execution, Preparation, Storage, Contracts & Observability)   
   │   - Process provides explanatory context          │    │                                │
   │                         │                         │    │                                │
   │                         ▼ promote via steward     │    │                                │
-  │ [ Cataloging Tool (Purview / Unity Catalog) ] ────┼────┘ (Ontology IRI)                 │
-  │   - Certified row: Name, Owner, Formula           │                                     │
-  │     Pointer, Used In, Ontology IRI                │                                     │
+  │ [ KPI Store catalog (dim_kpi_metadata) ] ─────────┼────┘ (Ontology IRI)                 │
+  │   - Store row: Name, Owner, Formula Pointer,      │                                     │
+  │     Used In, Ontology IRI                         │                                     │
+  │   - Status: proposed | approved | drifted |       │                                     │
+  │     archived                                      │                                     │
   │   - 1:1 binding to Named KPI                      │                                     │
+  │   - Purview = enterprise catalog (discovery).     │                                     │
+  │     UC = technical catalog. Neither is the        │                                     │
+  │     Store door.                                   │                                     │
   │                         │                         │                                     │
   │                         ▼ one-way copy            │ Formula Pointer                     │
   │ [ Silver Layer (Databricks) ]                     │ (Lookup)                            │
   │   - Star schema: facts & dimensions (Ingredients) │                                     │
   │   - Read-only local copy of KPI metadata table    │                                     │
   │   - Governed by: Upstream Ingestion Contract      │                                     │
-
-> ⚠️ **I-11 conflict:** Diagram presents the Purview/Unity Catalog "Certified row" as the 1:1 binding to a Named KPI. Current seat: `dim_kpi_metadata` owns identity, approval, status, and the formula pointer; Purview/UC are discover/govern tools over pointed-at assets, not the Store row. Tracked in GH #18.
   └─────────────────────────┬─────────────────────────┘                                     │
                             │ Ingredients                                                   │
                             ▼                                                               │
@@ -131,11 +134,10 @@ Metadata moves through a structured, multi-stage lifecycle. Each stage has a sin
   Metadata Collected: Business Terms, Taxonomies, Domain Context, Process Hierarchies, Named KPI IRIs.
            │
            ▼ (Reference via Ontology IRI)
-[ STAGE 2: CANDIDATE REGISTRATION & CERTIFICATION ]
-  Authoritative Source: Microsoft Purview / Databricks Unity Catalog
-  Metadata Collected: Stewardship assignments, Lifecycle status (Proposed -> Certified), Formula Pointers.
-
-> ⚠️ **I-11 conflict:** Stage 2 names Purview/Unity Catalog as the Authoritative Source for certification and lifecycle status. Current seat: `dim_kpi_metadata` is the KPI Store seat (identity, approval, status, formula pointer); Purview/UC discover/govern pointed-at assets. Current status set is `proposed | approved | drifted | archived` per `EPM-FOUND-000` §Meaning vs compute and ADR-HL-021, not `Proposed -> Certified`. Tracked in GH #18.
+[ STAGE 2: STORE REGISTRATION & APPROVAL ]
+  Authoritative Source: KPI Store catalog (dim_kpi_metadata)
+  Metadata Collected: Stewardship assignments, catalog status (proposed | approved | drifted | archived), Formula Pointers.
+  Purview / Unity Catalog: discovery and governance of pointed-at assets only. Not the Store door.
            │
            ▼ (Reference via Catalog ID & Sync Engine)
 [ STAGE 3: DATA ASSET & INGREDIENT MODELING ]
@@ -167,7 +169,7 @@ This matrix establishes the definitive boundaries between where metadata origina
 | Metadata Category | Specific Metadata Attributes | Authoritative Source (System of Record) | Consumed By / Shared With | Sharing Mechanism (Protocol / Pattern) |
 | --- | --- | --- | --- | --- |
 | Domain & Concept | Domain Name, Domain Description, Ubiquitous Language definitions | ER/Studio (CDM) & Meaning Plane (Git) | Purview Catalog, ODPS Contract, External AI Agents | By Reference: linked via canonical `skos:Concept` or Domain URI (`ex:domain/Refining` example/prefix-only placeholder; not a live SoT IRI). |
-| Business Process | Value stream name, Process Step ID, Explanatory context | Meaning Plane (Git / RDF) | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: linked via `dcterms:subject` or `ex:process/FluidCatalyticCracking`. Not used as a SQL join key. |
+| Business Process | Value stream name, Process Step ID, Explanatory context | `business_architecture/business_process/` + `business_architecture/schema/` only | Candidate KPI Register, Purview Catalog, ODPS Contract | By Reference: stable process/value-stream IDs from those folders (cite path + file SHA). Not `domain/`. Not Meaning Plane. Not Turtle. Do not use `ex:process/…` as process SoR. Not used as a SQL join key. |
 | Named KPI Identity | KPI Business Name, definition, catalog status (proposed \| approved \| drifted \| archived), 1:1 Gate status | **`dim_kpi_metadata`** (SQL Store seat; owns identity, approval, status, formula pointer); IRI declared in Turtle via `ekpi:` / `data:`; expose path Neo4j/Cypher per ADR-HL-021 (Fuseki/SPARQL lab-only) | Purview Catalog (discover/govern), Silver KPI Metadata Table (read-only join copy), ODPS Contract (downstream artifact) | **Current:** ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. **Draft said:** permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`). |
 | Governance & Roles | Domain Data Owner, Product Owner, Data Steward, Technical Owner | Microsoft Purview / Unity Catalog | Candidate Register, Silver Metadata, ODPS Contract | By Identity URI / Email: synchronized into contract headers and graph agents (`foaf:Person`, `prov:wasAttributedTo`). |
 | Physical Schema & Grain | Column names, Data types, Primary/Foreign keys, Grain/Dimensionality | ER/Studio (PDM) & Databricks Silver | Semantic Layer, BigEye, ODPS Contract | By Value & Schema Reference: PDM generates DDL; contract embeds schema specification directly; grain links to dimension keys. |
@@ -180,10 +182,9 @@ This matrix establishes the definitive boundaries between where metadata origina
 
 ### §4 row-level I-11 conflicts
 
-The three rows above diverge from the foundation. Conflicts are listed here so the table itself stays structurally intact.
+Remaining row-level I-11 notes (Business Process SoR is now in the table row itself):
 
 - **Domain & Concept row (Sharing Mechanism cell uses `ex:domain/Refining`)**. Current convention: domain identity routes through the human-readable semantic model (`EPM-FOUND-003`) and any formal URI is declared in the Turtle SoT (`ontology/stage2_enterprise_kpi_ontology.ttl`, prefixes `ekpi:` and `data:` only). `ex:` is illustrative here, not authoritative. Tracked in GH #18.
-- **Business Process row (Authoritative Source cell says `Meaning Plane (Git / RDF)`)**. Current seat: process authority is `business_architecture/business_process/` + `business_architecture/schema/` per `EPM-FOUND-000` §Process authority. Turtle may link process IDs but is not process SoT. Tracked in GH #18.
 - **Named KPI Identity row (rewritten in place; cell text above already cites `dim_kpi_metadata`)**. Original draft text in cell read `Graph of Meaning (Git / RDF)` for the SoR and `permanent URI / Ontology IRI (`ex:kpi/CrackSpread321`)` for the sharing mechanism. Current legal join: ontology IRI → `dim_kpi_metadata` row → Metric View compiled with `MEASURE()`. Tracked in GH #18.
 
 ---
