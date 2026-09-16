@@ -160,7 +160,7 @@
     {
       "id": "seg-midstream",
       "name": "Midstream",
-      "description": "Midstream operations data domains. Process decomposition for Midstream does not yet exist in the MPC map (L1 stub); portfolios are cataloged here and remain unlinked until a midstream process source is modeled.",
+      "description": "Midstream operations data domains. Process decomposition for Midstream does not yet exist in the LSC map (L1 stub); portfolios are cataloged here and remain unlinked until a midstream process source is modeled.",
       "processDomainRef": "Downstream Operations > Midstream (L1 stub)",
       "productLines": [
         {
@@ -259,7 +259,7 @@
     {
       "id": "seg-corporate",
       "name": "Corporate",
-      "description": "Corporate/enabling function data domains. Maps loosely to the Enabling Functions L0 in the MPC map (all L1 stubs).",
+      "description": "Corporate/enabling function data domains. Maps loosely to the Enabling Functions L0 in the LSC map (all L1 stubs).",
       "processDomainRef": "Enabling Functions (L0)",
       "productLines": [
         {
@@ -267,8 +267,8 @@
           "name": "ES&S / Law",
           "status": "defined_only",
           "portfolios": [
-            { "id": "dp-ess", "name": "ES&S", "status": "defined_only", "notes": ["Closest MPC anchor: Enabling Functions > EHS & Gov Reporting (stub)."] },
-            { "id": "dp-legal", "name": "Legal", "status": "defined_only", "notes": ["Closest MPC anchor: Enabling Functions > Legal & Corp Comm (stub)."] }
+            { "id": "dp-ess", "name": "ES&S", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > EHS & Gov Reporting (stub)."] },
+            { "id": "dp-legal", "name": "Legal", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Legal & Corp Comm (stub)."] }
           ]
         },
         {
@@ -276,7 +276,7 @@
           "name": "Finance",
           "status": "defined_only",
           "portfolios": [
-            { "id": "dp-bpa", "name": "BP&A", "status": "defined_only", "notes": ["Closest MPC anchor: Enabling Functions > Finance (stub)."] }
+            { "id": "dp-bpa", "name": "BP&A", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Finance (stub)."] }
           ]
         },
         {
@@ -292,7 +292,7 @@
           "name": "SC",
           "status": "defined_only",
           "portfolios": [
-            { "id": "dp-supply-chain", "name": "SC", "status": "defined_only", "notes": ["Closest MPC anchor: Enabling Functions > Supply Chain Mgmt. (stub)."] }
+            { "id": "dp-supply-chain", "name": "SC", "status": "defined_only", "notes": ["Closest LSC anchor: Enabling Functions > Supply Chain Mgmt. (stub)."] }
           ]
         },
         {
@@ -300,7 +300,7 @@
           "name": "IT",
           "status": "defined_only",
           "portfolios": [
-            { "id": "dp-it", "name": "IT", "status": "defined_only", "notes": ["Closest MPC anchors: Enabling Functions > Process Excellence & IT; CM 1.4 IT Services (both stubs)."] }
+            { "id": "dp-it", "name": "IT", "status": "defined_only", "notes": ["Closest LSC anchors: Enabling Functions > Process Excellence & IT; CM 1.4 IT Services (both stubs)."] }
           ]
         },
         {
@@ -308,7 +308,7 @@
           "name": "S&BD",
           "status": "defined_only",
           "portfolios": [
-            { "id": "dp-sbd", "name": "S&BD", "status": "defined_only", "notes": ["No MPC anchor; Strategy & Business Development absent from Enabling Functions."] }
+            { "id": "dp-sbd", "name": "S&BD", "status": "defined_only", "notes": ["No LSC anchor; Strategy & Business Development absent from Enabling Functions."] }
           ]
         }
       ]
