@@ -10,7 +10,7 @@
     "catalogFile": "data_product_portfolio.json",
     "processMapFile": "downstream_process_map.json",
     "notes": [
-      "Value stream OVERLAY: processes here reference MPC nodes via linkedProcessIds; they do not replace the CM hierarchy.",
+      "Value stream OVERLAY: processes here reference LSC nodes via linkedProcessIds; they do not replace the CM hierarchy.",
       "Data links follow sparse assignment rules: critical-path portfolios only, produce/consume relation required, product line (dpl-*) linked only for whole-line affinity.",
       "Slide tags 'All data portfolios' (processes c, k) intentionally replaced with primary links per assignment rules."
     ]
@@ -207,7 +207,7 @@
           "linkedProcessIds": ["CM 1.3.6.6", "CM 1.3.6"],
           "produces": ["dp-retail-payments"],
           "consumes": ["dp-rack-pricing"],
-          "rationale": "Channel sales/payment capture owns Retail Payments; rack price is the critical input. Known gap: MPC retail process depth is thin (loyalty/cards only)."
+          "rationale": "Channel sales/payment capture owns Retail Payments; rack price is the critical input. Known gap: LSC retail process depth is thin (loyalty/cards only)."
         }
       ]
     },
@@ -263,13 +263,13 @@
       "item": "Retail Sales & Payment process depth",
       "status": "partial",
       "closestProcessIds": ["CM 1.3.6.6"],
-      "note": "MPC covers loyalty/cards administration; granular retail transaction capture and payment processing are not decomposed."
+      "note": "LSC covers loyalty/cards administration; granular retail transaction capture and payment processing are not decomposed."
     },
     {
       "item": "Loss Control process home",
       "status": "missing",
       "closestProcessIds": ["CM 1.2.3", "CM 1.3.10"],
-      "note": "No dedicated custody-transfer/loss-control process nodes; data portfolio exists without a clear MPC owner process."
+      "note": "No dedicated custody-transfer/loss-control process nodes; data portfolio exists without a clear LSC owner process."
     },
     {
       "item": "Blending operations",

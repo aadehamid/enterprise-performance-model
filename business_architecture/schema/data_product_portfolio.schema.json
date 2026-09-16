@@ -3,7 +3,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://enterprise-performance-model.local/schemas/data_product_portfolio.schema.json",
   "title": "Downstream O&G Data Product Line / Data Portfolio Catalog",
-  "description": "Business data organization layer: Segments contain Data Product Lines (blue containers); Data Product Lines contain Data Portfolios (data products). Sibling layer to the MPC process hierarchy; joined to processes via value stream produce/consume links. Engagement/project-management tags (e.g. consulting coverage) are intentionally NOT part of this model.",
+  "description": "Business data organization layer: Segments contain Data Product Lines (blue containers); Data Product Lines contain Data Portfolios (data products). Sibling layer to the LSC process hierarchy; joined to processes via value stream produce/consume links. Engagement/project-management tags (e.g. consulting coverage) are intentionally NOT part of this model.",
   "type": "object",
   "required": ["meta", "segments"],
   "additionalProperties": false,
