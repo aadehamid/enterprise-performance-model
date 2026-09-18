@@ -25,8 +25,7 @@ see what changed and why.
   `apqc_crosscheck.py`) and their generated outputs under `build/output/`
 
 The copies under `business_architecture/ontology/` in the repo are the
-published versions. Scripts under `build/` read the repo tree and write
-`build/output/`.
+published versions; `~/workspace/ontology-build/` holds working copies.
 
 ---
 
@@ -63,7 +62,8 @@ ontology; everything else points at it.
 | 0 | APQC reference alignment (v7.2.2, vendored workbook, ID corrections) | ✅ Done 2026-09-17 |
 | 1 | Foundations: competency questions; URI, language, version, license, module policies | ✅ Done 2026-09-18 |
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
-| 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | Planned |
+| 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
+| 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 5 rejected, 502 gaps for human authoring) | ✅ Done 2026-09-18 |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -103,7 +103,7 @@ order is otherwise unchanged.
   — corrected.
 - Delivered via PR #25
   (`update/apqc-pcf-7.2.2`), commits authored as
-  `aadehamid <aadehamid@gmail.com>`.
+  `aadehamid <aadehamid@gmail.com>` — **merged 2026-09-18**.
 
 **Decisions.** APQC is a consistency reference, not the source model
 (§4). Cited APQC IDs are verified against the workbook, not trusted
@@ -247,7 +247,87 @@ orphans (verified by script, not by eye).
   `output/step2-identity-report.md`.
 - **Delivered** via PR #26 (`ontology/foundations`), with the playbook,
   competency questions, APQC scope decisions, cross-check report, and
-  all build scripts/outputs under `business_architecture/ontology/`.
+  all build scripts/outputs under `business_architecture/ontology/` —
+  **merged 2026-09-18** (main, as of today, also carries PR #25's APQC
+  v7.2.2 work).
+
+### Step 3 — SKOS taxonomy ✅ (2026-09-18)
+
+The core module's taxonomy as Turtle: 680 `skos:Concept`s, 3,571
+triples, in stable document order.
+
+- **ConceptScheme:** the core module namespace URI itself —
+  `https://w3id.org/lsc/ontology/modules/core` — doubles as the
+  scheme (one URI, one thing: the module's entire current content *is*
+  the taxonomy). Carries `dcterms:title`/`description` and
+  `skos:hasTopConcept` for the two L0 roots.
+- **Per concept:** `skos:inScheme`, exactly one `skos:prefLabel` (`@en`),
+  `skos:notation` on all 669 ID'd nodes (codes correctly untagged —
+  notations are identifiers, not prose), `skos:definition` where the
+  repo provides one, `skos:broader` on all 678 non-root concepts.
+  `skos:narrower` not materialized (entailed via `owl:inverseOf`).
+- **Validation (rdflib, mechanical):** parses clean; 680 concepts; one
+  `@en` prefLabel each; every concept in scheme; 678 broader links, no
+  dangling targets, no self-references; 2 top concepts; zero untagged
+  prose literals; Turtle round-trip lossless.
+- **Known gap, not invented:** 503 concepts had no `skos:definition`
+  (the repo describes only 177 nodes). The language policy requires one
+  per concept — the missing definitions were taken up in **Step 3b**
+  (2026-09-18): 1 adopted with provenance, 502 remain for human
+  authoring (291 review-link, 125 no-source, 81 no-candidate, 5
+  rejected). A Step 9 SHACL shape can flag the unfilled ones.
+- **Deliberately excluded:** RACI, systems, lanes, and all other node
+  fields — Steps 4/5. This file is the taxonomy, nothing more.
+- **Artifacts:** `~/workspace/ontology-build/step3-skos-taxonomy.py`,
+  `step3-taxonomy.ttl`, `step3-taxonomy-report.md`.
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
+  2026-09-18, together with Step 3b) — `downstream_process_map.json`
+  untouched.
+
+### Step 3b — definition triangulation ✅ (2026-09-18, complete)
+
+Filling the 503 definition gaps without inventing text: APQC element
+descriptions triangulated against public industry definitions.
+
+- **Part 1 — APQC candidates (done):** every definition-less node
+  matched to the best APQC PCF v7.2.2 element by name-token F1 (name-only
+  and name+context scored, best kept), with APQC hierarchy depth recorded
+  so level-equivalence is judged. Triage: 131 strong (≥0.6), 291 weak,
+  81 no candidate. Review sheet: `step3b-definition-review.csv`
+  (all 503 rows; also copied to the goal's files dir).
+- **Part 2 — public-source agreement (done 2026-09-18):** EIA glossary
+  leg finished first: 2,641 terms fetched across all 26 letter pages,
+  exact + verb-stripped matching → 5 broad noun hits, **0 adoptions**
+  (final verdict, none precise enough). Web leg then ran over the 131
+  strong rows: 111 automated validations (5 workers; 20 rows deliberately
+  omitted as too generic for any authoritative definition) + 11 human-vetted
+  manual records. Result: **1 ADOPTED** — "Define Internal Marketing
+  Communications Strategy" ← APQC 16852, validator TechTarget "Internal
+  marketing" (agreement 0.625), human-inspected as a genuine match.
+  **5 REJECTED** at the human gate: "Perform Inventory Reconciliation"→
+  benefit reconciliation (0.667 name similarity, HR vs inventory),
+  CVP strategy→KM strategy (different "strategy" senses), "Manage M&A
+  Activity"→IT activity risk ("manage"+"activity" token overlap), plus 2
+  circular APQC-validating-APQC records. Merge: `step3b-merge-validations.py`
+  (replaces the truncated, retired `step3b-adopt-definitions.py`).
+- **Adoption rule (locked):** ADOPTED = strong APQC link + independent
+  source agrees + human semantic inspection → APQC text adopted with
+  `dcterms:source` provenance. REVIEW LINK = weak link, human confirms.
+  NO AGREEMENT / NO SOURCE / NO CANDIDATE → author an LSC definition.
+  Nothing is adopted on a heuristic match alone; APQC may never validate
+  itself.
+- **Final tally:** 178/680 definitions (177 repository-authored + 1
+  triangulated); 502 definition gaps remain for human authoring
+  (291 review-link, 125 no-source, 81 no-candidate, 5 rejected).
+- **Provenance:** every adopted definition carries `dcterms:source` →
+  per-source `dcterms:BibliographicResource` blank nodes (element ID +
+  title), themselves `dcterms:isPartOf` registry resources
+  `…/source/apqc-pcf-7.2.2` and `…/source/eia-glossary` (title, publisher,
+  issued, rights). Wired via `step3-skos-taxonomy.py --adoptions`;
+  base build without adoptions reproduces byte-identical output.
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
+  2026-09-18, together with Step 3) — review CSV, adoptions, validation
+  records, and both build scripts included.
 
 ---
 

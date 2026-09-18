@@ -21,6 +21,16 @@ before making any modeling choice.
 | `build/output/step2-identity-map.json` | 680 rows: uri, slug, level, name, skos_notation, parent_slug, minted flag |
 | `build/output/step2-identity-report.md` | Identity normalization summary |
 | `build/output/apqc_crosscheck_results.json` | Raw cross-check scores |
+| `build/step3-skos-taxonomy.py` | Reproducible script: 680 `skos:Concept` taxonomy with URIs, labels, definitions, APQC + validator provenance |
+| `build/output/step3-taxonomy.ttl` | The initial SKOS taxonomy: 680 concepts, 678 broader links, 178 definitions, 3,590 triples |
+| `build/output/step3-taxonomy-report.md` | Step 3 build summary |
+| `build/step3b-definition-triangulation.py` | Reproducible script: APQC candidate matching + EIA/web triangulation over the 503 definition gaps |
+| `build/step3b-merge-validations.py` | Merge automated + human validation records into final adoption decisions |
+| `build/output/step3b-definition-review.csv` | All 503 definition-gap review rows: 1 adopted, 5 rejected, 291 review-link, 125 no-source, 81 no-candidate |
+| `build/output/step3b-adoptions.json` | The single adopted definition (internal marketing communications strategy) with provenance |
+| `build/output/step3b-web-input.json` | 131 strong-match rows sent for web validation |
+| `build/output/step3b-web-validations.json` | 111 automated web-validation records |
+| `build/output/step3b-web-validations-manual.json` | 11 human-vetted manual validation records |
 
 ## Standing conventions
 
@@ -33,5 +43,6 @@ before making any modeling choice.
 
 ## Status
 
-Steps 0 (APQC alignment), 1 (foundations), 2 (identity normalization), and
+Steps 0 (APQC alignment), 1 (foundations), 2 (identity normalization),
+3 (SKOS taxonomy), 3b (definition triangulation), and
 8 (APQC scope review) are complete. See the playbook's plan table.
