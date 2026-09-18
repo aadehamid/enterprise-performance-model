@@ -1,0 +1,17 @@
+{
+  "CM-1-3-3-5-6": {
+    "definition": "Developing a program to promote the objectives, values, products and services of the company to its employees by treating them as potential customers, in order to extend company client base, increase employee engagement or to foster brand advocacy.",
+    "apqc": {
+      "id": "16852",
+      "name": "Define internal marketing communication strategy"
+    },
+    "validators": [
+      {
+        "kind": "web",
+        "label": "TechTarget: 'Internal marketing'",
+        "url": "https://www.techtarget.com/whatis/definition/internal-marketing",
+        "agreement": 0.625
+      }
+    ]
+  }
+}

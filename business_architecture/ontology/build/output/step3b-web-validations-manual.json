@@ -1,0 +1,69 @@
+{
+  "CM-1-1-2-12": {
+    "validator_name": "Wikipedia: 'Master data'",
+    "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+    "definition": "Master data represents data about the business entities that provide context for business transactions. The most commonly found categories of master data are parties (individuals and organisations, and their roles, such as customers, suppliers, employees), products, financial structures (such as ledgers and cost centres) and locational concepts."
+  },
+  "CM-1-1-3-7-5": {
+    "validator_name": "PeopleKeep: 'benefit reconciliation'",
+    "validator_url": "https://www.peoplekeep.com/blog/guide-to-benefits-reconciliation",
+    "definition": "Benefit reconciliation, also known as health insurance reconciliation or premium reconciliation, is when premium bills are reviewed against a company's payroll deductions to check for potential discrepancies.",
+    "verdict": "reject",
+    "verdict_reason": "FALSE MATCH: LSC 'Perform Inventory Reconciliation' is inventory reconciliation; APQC 'Perform benefit reconciliation' (10507) is employee-benefits reconciliation (name similarity 0.667 is misleading). Web validator confirms the HR sense."
+  },
+  "CM-1-2-2-1-7": {
+    "validator_name": "Wikipedia: 'Credit report monitoring'",
+    "validator_url": "http://en.wikipedia.org/wiki/Credit_report_monitoring",
+    "definition": "Credit report monitoring or company tracking is the monitoring of one's credit history in order to detect any suspicious activity or changes."
+  },
+  "CM-1-2-4-3": {
+    "validator_name": "TechTarget: 'Regulatory compliance'",
+    "validator_url": "https://www.techtarget.com/it-strategy/definition/What-is-regulatory-compliance",
+    "definition": "Regulatory compliance is an organization's adherence to laws, regulations, guidelines and specifications relevant to its business processes."
+  },
+  "CM-1-3-1-1-3": {
+    "validator_name": "TechTarget: 'Data analytics'",
+    "validator_url": "https://www.techtarget.com/data-technologies/definition/What-is-data-analytics-DA",
+    "definition": "Data analytics (DA) is the process of examining data sets to find trends and draw conclusions about the information they contain."
+  },
+  "CM-1-3-2-2": {
+    "validator_name": "Investopedia: 'Value proposition'",
+    "validator_url": "https://www.investopedia.com/terms/v/valueproposition.asp",
+    "definition": "A value proposition explains why a customer should choose a product or service by highlighting its key benefits and differentiators."
+  },
+  "CM-1-3-2-2-4": {
+    "validator_name": "APQC: 'What is Knowledge Management?'",
+    "validator_url": "https://www.apqc.org/resources/blog/what-knowledge-manager",
+    "definition": "Knowledge management (KM) is the application of a structured process to help information and knowledge flow to the right people at the right time.",
+    "verdict": "reject",
+    "verdict_reason": "FALSE MATCH: LSC 'Develop/Update Strategy (CVP)' is customer-value-proposition strategy; APQC 'Develop KM strategy' (11095) is knowledge-management strategy. Different 'strategy' senses."
+  },
+  "CM-1-3-3-2": {
+    "validator_name": "Indeed: 'Pricing strategy'",
+    "validator_url": "https://www.indeed.com/career-advice/career-development/pricing-strategy",
+    "definition": "A pricing strategy refers to the method companies use to decide which price to set for its products."
+  },
+  "CM-1-2-1-2-4": {
+    "validator_name": "Wikipedia \u2014 IT risk",
+    "validator_url": "https://en.wikipedia.org/wiki/IT_risk",
+    "definition": "Information technology risk, IT risk, IT-related risk, or cyber risk is any risk related to information technology.",
+    "verdict": "reject",
+    "verdict_reason": "FALSE MATCH (human gate): LSC 'Manage M&A Activity' is mergers-and-acquisitions activity; APQC 'Monitor and manage IT activity risk' (20729) is IT risk management. Name similarity came from the shared tokens 'manage'/'activity'. Validator agrees with APQC, but the LSC\u2192APQC link is invalid."
+  },
+  "CM-1-1-1-1-2": {
+    "validator_name": "APQC: 'Develop baseline demand forecasts'",
+    "validator_url": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/average-monthly-demand-forecast",
+    "definition": "Identify the bedrock levels of market demand anticipated for the organization's products/services. Estimate future demand for products and services using historical data, analysis of the market environment and any externalities, to create ex ante approximations.",
+    "verdict": "reject",
+    "verdict_reason": "CIRCULAR VALIDATOR (human gate): validator is APQC itself ('Develop baseline demand forecasts', apqc.org benchmarking measures page) validating APQC's own description. Triangulation requires an INDEPENDENT source. No adoption without external agreement.",
+    "lsc_name": "Develop Statistical Baseline"
+  },
+  "CM-1-1-1-1-4": {
+    "validator_name": "APQC: 'Generate line level plan'",
+    "validator_url": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/turnover-rate-manufacturing-personnel",
+    "definition": "Initiating the line-level plan for production. Break down the production schedule into specific lines, specifying the various objectives of the production schedule.",
+    "verdict": "reject",
+    "verdict_reason": "CIRCULAR VALIDATOR (human gate): validator is APQC itself and the cited URL (turnover-rate-manufacturing-personnel) is unrelated to line-level planning; the 'definition' merely restates APQC's own description (agreement 1.0 is self-match). No independent source, no adoption.",
+    "lsc_name": "Publish Forecast and Generate Component Level Forecast Plan"
+  }
+}

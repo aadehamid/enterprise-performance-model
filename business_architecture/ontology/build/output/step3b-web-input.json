@@ -1,0 +1,1050 @@
+[
+ {
+  "slug": "CM-1-1-1-1-2",
+  "lsc_name": "Develop Statistical Baseline",
+  "level": "5",
+  "apqc_id": "20043",
+  "apqc_name": "Develop baseline forecasts",
+  "apqc_description": "Identifying the demand anticipated for the organization's services. Estimate future demand for services using historical data, analysis of the market environment, and external data."
+ },
+ {
+  "slug": "CM-1-1-1-1-4",
+  "lsc_name": "Publish Forecast and Generate Component Level Forecast Plan",
+  "level": "5",
+  "apqc_id": "10306",
+  "apqc_name": "Generate line level plan",
+  "apqc_description": "Initiating the line-level plan for production. Break down the production schedule into specific lines, specifying the various objectives the production schedule."
+ },
+ {
+  "slug": "CM-1-1-2-12",
+  "lsc_name": "Maintain Supply Planning Master Data",
+  "level": "4",
+  "apqc_id": "10252",
+  "apqc_name": "Maintain master data",
+  "apqc_description": "Maintaining and preserving the master data plan for distribution requirements. Create a systematic collection of facts and figures regarding the distribution of the inventories. Maintain policies, processes, and tools covering the distribution function."
+ },
+ {
+  "slug": "CM-1-1-2-13",
+  "lsc_name": "Plan Finished Goods Inventory",
+  "level": "4",
+  "apqc_id": "10359",
+  "apqc_name": "Manage physical finished goods inventory",
+  "apqc_description": "Administering the movement of the finished products that are processed by the organization through its warehouses. Track goods through the use of systems such as barcodes in order to monitor the volumes available, quantity of out-flowing goods, remaining shelf life of the product, etc.--ultimately, to best manage the warehouse capacity."
+ },
+ {
+  "slug": "CM-1-1-3-7-5",
+  "lsc_name": "Perform Inventory Reconciliation",
+  "level": "5",
+  "apqc_id": "10507",
+  "apqc_name": "Perform benefit reconciliation",
+  "apqc_description": "Carrying out reconciliation of benefits delivered to employees. Compare the estimated benefit requirement made by the employee and the actual amount of benefits the employee is entitled to receive."
+ },
+ {
+  "slug": "CM-1-1-3-7-6",
+  "lsc_name": "Manage Consignment Inventory",
+  "level": "5",
+  "apqc_id": "12942",
+  "apqc_name": "Manage bulk inventory",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-3-7-7",
+  "lsc_name": "Manage Commingled Inventory",
+  "level": "5",
+  "apqc_id": "12942",
+  "apqc_name": "Manage bulk inventory",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-3-7-8",
+  "lsc_name": "Manage Inventory Re-brands",
+  "level": "5",
+  "apqc_id": "12410",
+  "apqc_name": "Develop and manage brands",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-3-7-9",
+  "lsc_name": "Manage Inventory Replenishment",
+  "level": "5",
+  "apqc_id": "12942",
+  "apqc_name": "Manage bulk inventory",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-3-7-11",
+  "lsc_name": "Manage Third Party Storage",
+  "level": "5",
+  "apqc_id": "12944",
+  "apqc_name": "Manage third party bulk storage",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-3-7-12",
+  "lsc_name": "Manage Inventory",
+  "level": "5",
+  "apqc_id": "12942",
+  "apqc_name": "Manage bulk inventory",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-1-4-6-3",
+  "lsc_name": "Manage Site Specific Business Risk",
+  "level": "5",
+  "apqc_id": "17462",
+  "apqc_name": "Manage business unit and function risk",
+  "apqc_description": "Analyzing the threats a business unit/function faces to prioritize the controls it implements.."
+ },
+ {
+  "slug": "CM-1-1-4-7-8",
+  "lsc_name": "Perform Scenario Analysis",
+  "level": "5",
+  "apqc_id": "11783",
+  "apqc_name": "Perform competitive analysis",
+  "apqc_description": "Comparing the proposals submitted by different bidders in terms of cost, efficiency and value."
+ },
+ {
+  "slug": "CM-1-1-7-1-2",
+  "lsc_name": "Schedule Resources",
+  "level": "5",
+  "apqc_id": "20882",
+  "apqc_name": "Schedule service delivery resources",
+  "apqc_description": "Scheduling resources to provide service delivery to IT users. Ensure design, development, deployment, and operations are aligned with the business objectives."
+ },
+ {
+  "slug": "CM-1-1-7-1-3",
+  "lsc_name": "Perform Production Accounting",
+  "level": "5",
+  "apqc_id": "10774",
+  "apqc_name": "Perform inventory accounting",
+  "apqc_description": "Conducting accounting for assets, and finding reasons for changes (depreciation, obsolescence, deterioration, change in customer taste, increased demand, decreased market supply, etc.)."
+ },
+ {
+  "slug": "CM-1-1-7-2-1",
+  "lsc_name": "Maintain Production Scheduling Master Data",
+  "level": "5",
+  "apqc_id": "10252",
+  "apqc_name": "Maintain master data",
+  "apqc_description": "Maintaining and preserving the master data plan for distribution requirements. Create a systematic collection of facts and figures regarding the distribution of the inventories. Maintain policies, processes, and tools covering the distribution function."
+ },
+ {
+  "slug": "CM-1-1-7-2-4",
+  "lsc_name": "Manage Production Schedule Exceptions",
+  "level": "5",
+  "apqc_id": "10224",
+  "apqc_name": "Create and manage master production schedule",
+  "apqc_description": "Taking care of the master production plan. The master production includes creation and implementation of the site-level production plan, as well as management of the inventory that is currently in the production process."
+ },
+ {
+  "slug": "CM-1-2-1-1-2",
+  "lsc_name": "Receive Demand Forecast",
+  "level": "5",
+  "apqc_id": "20634",
+  "apqc_name": "Forecast IT service demand",
+  "apqc_description": "Forecasting demand for IT services using current business growth, research, and customer feedback. Refine these forecasts, inspect the approach used in creating forecasts, and determine its accuracy."
+ },
+ {
+  "slug": "CM-1-2-1-1-4",
+  "lsc_name": "Perform Asset Optimization",
+  "level": "5",
+  "apqc_id": "19253",
+  "apqc_name": "Perform asset maintenance",
+  "apqc_description": "Engaging in all aspects of asset maintenance. Ensure that all assets are functioning properly and to all specified codes and regulations where applicable. Maintenance includes all preventative, routine, and corrective activates."
+ },
+ {
+  "slug": "CM-1-2-1-2-4",
+  "lsc_name": "Manage M&A Activity",
+  "level": "5",
+  "apqc_id": "20729",
+  "apqc_name": "Monitor and manage IT activity risk",
+  "apqc_description": "Monitoring and managing risks related to IT adoption within the organization."
+ },
+ {
+  "slug": "CM-1-2-1-2-9",
+  "lsc_name": "Manage Carrier Contracts",
+  "level": "5",
+  "apqc_id": "10291",
+  "apqc_name": "Manage contracts",
+  "apqc_description": "Keeping contracts up-to-date with routine evaluation. Maintain order and discipline with the contracts in order to avoid any loss of information and mishaps."
+ },
+ {
+  "slug": "CM-1-2-1-3-2",
+  "lsc_name": "Obtain Trade Approval",
+  "level": "5",
+  "apqc_id": "20074",
+  "apqc_name": "Obtain approval to proceed",
+  "apqc_description": "Gaining approval from all avenues to proceed with providing solutions for service delivery."
+ },
+ {
+  "slug": "CM-1-2-2-1-1",
+  "lsc_name": "Perform Counterparty Credit Reviews",
+  "level": "5",
+  "apqc_id": "19587",
+  "apqc_name": "Perform annual customer credit reviews",
+  "apqc_description": "Conducting reviews to assess customer credit on a yearly basis. Introduce changes or make recommendations, if needed."
+ },
+ {
+  "slug": "CM-1-2-2-1-3",
+  "lsc_name": "Manage Collateral",
+  "level": "5",
+  "apqc_id": "19586",
+  "apqc_name": "Manage customer collateral",
+  "apqc_description": "Handling customer securities to recover loans that are not paid back."
+ },
+ {
+  "slug": "CM-1-2-2-1-7",
+  "lsc_name": "Monitor & Analyze Credit",
+  "level": "5",
+  "apqc_id": "11215",
+  "apqc_name": "Monitor credit",
+  "apqc_description": "Revising credit reports periodically for accurateness and changes that could be suggestive of duplicitous activity."
+ },
+ {
+  "slug": "CM-1-2-2-3-6",
+  "lsc_name": "Manage Risk Limits",
+  "level": "5",
+  "apqc_id": "11211",
+  "apqc_name": "Manage exposure risk",
+  "apqc_description": "Taking care of exposure risks. Maintain financial investments in particular investments or a portfolios that could be risky for the organization."
+ },
+ {
+  "slug": "CM-1-2-2-3-8",
+  "lsc_name": "Monitor Risk",
+  "level": "5",
+  "apqc_id": "20729",
+  "apqc_name": "Monitor and manage IT activity risk",
+  "apqc_description": "Monitoring and managing risks related to IT adoption within the organization."
+ },
+ {
+  "slug": "CM-1-2-2-3-13",
+  "lsc_name": "Manage Risk Reporting",
+  "level": "5",
+  "apqc_id": "10522",
+  "apqc_name": "Manage reporting processes",
+  "apqc_description": "Providing information and reports regarding employees to management."
+ },
+ {
+  "slug": "CM-1-2-2-3-15",
+  "lsc_name": "Manage Commodity Valuations",
+  "level": "5",
+  "apqc_id": "12953",
+  "apqc_name": "Manage commodity positions",
+  "apqc_description": "Aggregating trading positions to determine market position and overall risk exposures. Monitor supply/purchase plans, trade carbon emission certificates, and manage market positions. Risk management activities are addressed in Monitor and execute risk and hedging transactions [11208].   Risk position and risk management is always separate from the group executing the trades to comply with separation of duties rules.  Compliance measures are set and executed to maintain overall positions within the risk limits determined in the trading strategy and is addressed Manage regulatory compliance [16463]."
+ },
+ {
+  "slug": "CM-1-2-4-2-8",
+  "lsc_name": "Manage Financial System/GL",
+  "level": "5",
+  "apqc_id": "17058",
+  "apqc_name": "Manage Financial Resources",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-2-4-2-9",
+  "lsc_name": "Manage Cash Application",
+  "level": "5",
+  "apqc_id": "10759",
+  "apqc_name": "Manage cash",
+  "apqc_description": "Taking care of all cash-related activities in the business. Manage and reconcile cash positions. Manage cash equivalents. Process and oversee electronic fund transfers. Develop cash flow forecasts. Manage cash flows. Produce cash management accounting transactions and reports. Manage and oversee banking relationships. Analyze, negotiate, resolve, and confirm bank fees."
+ },
+ {
+  "slug": "CM-1-2-4-2-11",
+  "lsc_name": "Manage Taxes",
+  "level": "5",
+  "apqc_id": "10736",
+  "apqc_name": "Manage taxes",
+  "apqc_description": "Estimating the organization's periodic tax liabilities. Ensure that appropriate taxing authorities receive tax return filings and payments when due."
+ },
+ {
+  "slug": "CM-1-2-4-2-12",
+  "lsc_name": "Develop Accounting Policies & Procedures",
+  "level": "5",
+  "apqc_id": "16592",
+  "apqc_name": "Develop omni-channel policies and procedures",
+  "apqc_description": "Determining the detailed policies and procedures that each of the channels needs to follow in order to conform to the organizational marketing strategy and to provide seamless customer service experience."
+ },
+ {
+  "slug": "CM-1-2-4-3",
+  "lsc_name": "Regulatory & Compliance",
+  "level": "4",
+  "apqc_id": "16463",
+  "apqc_name": "Manage regulatory compliance",
+  "apqc_description": "Obeying laws, guidelines, strategies, and stipulations related to the business."
+ },
+ {
+  "slug": "CM-1-2-4-3-1",
+  "lsc_name": "Develop Compliance Policies & Procedures",
+  "level": "5",
+  "apqc_id": "17469",
+  "apqc_name": "Develop enterprise compliance policies and procedures",
+  "apqc_description": "Creating a standardized approach to ethics and compliance. Have a programmatic approach for compliance that focuses on the definite risks the organization faces."
+ },
+ {
+  "slug": "CM-1-2-4-3-5",
+  "lsc_name": "Manage Tax Compliance",
+  "level": "5",
+  "apqc_id": "17467",
+  "apqc_name": "Manage compliance",
+  "apqc_description": "Managing steps to confirm enduring compliance to industry regulations and government legislation."
+ },
+ {
+  "slug": "CM-1-2-4-3-6",
+  "lsc_name": "Manage RINs Reporting",
+  "level": "5",
+  "apqc_id": "10522",
+  "apqc_name": "Manage reporting processes",
+  "apqc_description": "Providing information and reports regarding employees to management."
+ },
+ {
+  "slug": "CM-1-2-4-3-7",
+  "lsc_name": "Manage Exceptions",
+  "level": "5",
+  "apqc_id": "20807",
+  "apqc_name": "Manage architectural exceptions",
+  "apqc_description": "Identifying and resolving any architectural exceptions. Address the internal inquiries related to architecture that cannot be addressed immediately. Research inquiries that require the need of exceptional methods."
+ },
+ {
+  "slug": "CM-1-2-4-4-1",
+  "lsc_name": "Identify Potential Demurrage",
+  "level": "5",
+  "apqc_id": "10188",
+  "apqc_name": "Identify potential customers",
+  "apqc_description": "Identifying people who can be converted into customers. Leverage personal and professional networks, business research over databases and directories, and secondary research."
+ },
+ {
+  "slug": "CM-1-2-4-4-3",
+  "lsc_name": "Receive Demurrage Claim",
+  "level": "5",
+  "apqc_id": "20096",
+  "apqc_name": "Receive warranty claim",
+  "apqc_description": "Receiving incoming warranty claims. Route claim to correct department. Document claim."
+ },
+ {
+  "slug": "CM-1-2-4-4-6",
+  "lsc_name": "Validate and Negotiate Claim",
+  "level": "5",
+  "apqc_id": "12671",
+  "apqc_name": "Validate warranty claim",
+  "apqc_description": "Ensuring that the claim falls within the parameters of the warranty in question. After validation is made, the claim must be investigated."
+ },
+ {
+  "slug": "CM-1-2-4-4-8",
+  "lsc_name": "Receive Claim Invoice",
+  "level": "5",
+  "apqc_id": "20096",
+  "apqc_name": "Receive warranty claim",
+  "apqc_description": "Receiving incoming warranty claims. Route claim to correct department. Document claim."
+ },
+ {
+  "slug": "CM-1-2-5-3-1",
+  "lsc_name": "Manage Feedstock Transportation",
+  "level": "5",
+  "apqc_id": "12923",
+  "apqc_name": "Manage bulk transportation",
+  "apqc_description": "Managing the bulk transportation of refined products.  Spot and logistics contracts are arranged and pipeline, truck, rail, barge, and/or tanker shipments are scheduled and nominated, and pipeline shipments are managed.  Vessels, wharves/berths, rail and bulk truck shipments are scheduled and all the shipments are managed.  Book transfers, net outs and claims are managed, and the carrier invoices and documents are processed and audited."
+ },
+ {
+  "slug": "CM-1-2-5-4-2",
+  "lsc_name": "Manage Feedstock Inventory",
+  "level": "5",
+  "apqc_id": "12942",
+  "apqc_name": "Manage bulk inventory",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-2-6-3-2",
+  "lsc_name": "Manage Replenishment",
+  "level": "5",
+  "apqc_id": "10256",
+  "apqc_name": "Manage collaborative replenishment planning",
+  "apqc_description": "Administering the plan for collaborative replenishment of goods. Replenish inventory by creating a plan in case of faulty production."
+ },
+ {
+  "slug": "CM-1-2-7-2-2",
+  "lsc_name": "Manage Fleet (Own/Third Party)",
+  "level": "5",
+  "apqc_id": "12944",
+  "apqc_name": "Manage third party bulk storage",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-1-2",
+  "lsc_name": "Define Analysis Objectives & Scope",
+  "level": "5",
+  "apqc_id": "19521",
+  "apqc_name": "Define objectives",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-1-3",
+  "lsc_name": "Analyze Data",
+  "level": "5",
+  "apqc_id": "20962",
+  "apqc_name": "Analyze data",
+  "apqc_description": "Conducting data analysis. Choose statistical algorithms that best reveal patterns and trends in the data. Compare with hypotheses and time series forecasts. Determine error rates and significant outliers."
+ },
+ {
+  "slug": "CM-1-3-1-2-2",
+  "lsc_name": "Define Analysis Objectives & Scope",
+  "level": "5",
+  "apqc_id": "19521",
+  "apqc_name": "Define objectives",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-2-3",
+  "lsc_name": "Analyze Data",
+  "level": "5",
+  "apqc_id": "20962",
+  "apqc_name": "Analyze data",
+  "apqc_description": "Conducting data analysis. Choose statistical algorithms that best reveal patterns and trends in the data. Compare with hypotheses and time series forecasts. Determine error rates and significant outliers."
+ },
+ {
+  "slug": "CM-1-3-1-3-2",
+  "lsc_name": "Define Analysis Objectives & Scope",
+  "level": "5",
+  "apqc_id": "19521",
+  "apqc_name": "Define objectives",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-3-3",
+  "lsc_name": "Analyze Data",
+  "level": "5",
+  "apqc_id": "20962",
+  "apqc_name": "Analyze data",
+  "apqc_description": "Conducting data analysis. Choose statistical algorithms that best reveal patterns and trends in the data. Compare with hypotheses and time series forecasts. Determine error rates and significant outliers."
+ },
+ {
+  "slug": "CM-1-3-1-4-2",
+  "lsc_name": "Define Analysis Objectives & Scope",
+  "level": "5",
+  "apqc_id": "19521",
+  "apqc_name": "Define objectives",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-4-3",
+  "lsc_name": "Analyze Data",
+  "level": "5",
+  "apqc_id": "20962",
+  "apqc_name": "Analyze data",
+  "apqc_description": "Conducting data analysis. Choose statistical algorithms that best reveal patterns and trends in the data. Compare with hypotheses and time series forecasts. Determine error rates and significant outliers."
+ },
+ {
+  "slug": "CM-1-3-1-5-2",
+  "lsc_name": "Define Analysis Objectives & Scope",
+  "level": "5",
+  "apqc_id": "19521",
+  "apqc_name": "Define objectives",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-1-5-3",
+  "lsc_name": "Analyze Data",
+  "level": "5",
+  "apqc_id": "20962",
+  "apqc_name": "Analyze data",
+  "apqc_description": "Conducting data analysis. Choose statistical algorithms that best reveal patterns and trends in the data. Compare with hypotheses and time series forecasts. Determine error rates and significant outliers."
+ },
+ {
+  "slug": "CM-1-3-2-2",
+  "lsc_name": "Customer And Marketer Value Proposition",
+  "level": "4",
+  "apqc_id": "11168",
+  "apqc_name": "Define offering and customer value proposition",
+  "apqc_description": "Refining the attributes of organizational offerings to define their value proposition for the customer. Clearly define the suite of offerings in terms of the value delivered, from the perspective of what the customer desires. Validate the benefits delivered to the customers against target market segments, using techniques such as minimum viable product. Position brands for the respective products/services, in line with their unique value proposition and aligned with customers needs."
+ },
+ {
+  "slug": "CM-1-3-2-2-1",
+  "lsc_name": "Test Customer value proposition",
+  "level": "5",
+  "apqc_id": "11168",
+  "apqc_name": "Define offering and customer value proposition",
+  "apqc_description": "Refining the attributes of organizational offerings to define their value proposition for the customer. Clearly define the suite of offerings in terms of the value delivered, from the perspective of what the customer desires. Validate the benefits delivered to the customers against target market segments, using techniques such as minimum viable product. Position brands for the respective products/services, in line with their unique value proposition and aligned with customers needs."
+ },
+ {
+  "slug": "CM-1-3-2-2-4",
+  "lsc_name": "Develop/Update Strategy (CVP)",
+  "level": "5",
+  "apqc_id": "11095",
+  "apqc_name": "Develop KM strategy",
+  "apqc_description": "Creating a plan for managing the organization's knowledge base. Determine what kind of specialized knowledge the organization possesses, which elements of this collective knowledge can prove beneficial, how to capture and maintain this knowledge, how to grant access to this library of information, and how the organization should proceed."
+ },
+ {
+  "slug": "CM-1-3-2-3-1",
+  "lsc_name": "Test Customer value proposition",
+  "level": "5",
+  "apqc_id": "11168",
+  "apqc_name": "Define offering and customer value proposition",
+  "apqc_description": "Refining the attributes of organizational offerings to define their value proposition for the customer. Clearly define the suite of offerings in terms of the value delivered, from the perspective of what the customer desires. Validate the benefits delivered to the customers against target market segments, using techniques such as minimum viable product. Position brands for the respective products/services, in line with their unique value proposition and aligned with customers needs."
+ },
+ {
+  "slug": "CM-1-3-2-3-4",
+  "lsc_name": "Develop/Update Strategy (CVP)",
+  "level": "5",
+  "apqc_id": "11095",
+  "apqc_name": "Develop KM strategy",
+  "apqc_description": "Creating a plan for managing the organization's knowledge base. Determine what kind of specialized knowledge the organization possesses, which elements of this collective knowledge can prove beneficial, how to capture and maintain this knowledge, how to grant access to this library of information, and how the organization should proceed."
+ },
+ {
+  "slug": "CM-1-3-2-4-2",
+  "lsc_name": "Establish operating Objectives and develop Channel Strategy Hypothesis",
+  "level": "5",
+  "apqc_id": "20002",
+  "apqc_name": "Establish channel objectives",
+  "apqc_description": "Identifying the role that each chosen marketing channels plays in the larger distribution network with respect to the organizational marketing strategy. Determine intermediary costs for shipping, handling, transporting, warehousing, insurance and marketing that incur and accumulate in the distribution channel."
+ },
+ {
+  "slug": "CM-1-3-2-5",
+  "lsc_name": "Customer Experience Strategy",
+  "level": "4",
+  "apqc_id": "19959",
+  "apqc_name": "Develop customer experience strategy",
+  "apqc_description": "Defining a roadmap to meet customer expectations while considering how it will affect the business."
+ },
+ {
+  "slug": "CM-1-3-2-5-2",
+  "lsc_name": "Define Customer Experience Guiding Principles",
+  "level": "5",
+  "apqc_id": "19967",
+  "apqc_name": "Define a vision for the customer experience",
+  "apqc_description": "Establishing a direction and vision on how the organization behaves towards customers in a consistent, effective way. The key attributes for customer experience vision consists of emotional connection, commitments and expectations, compelling value proposition, and ease of understanding the organization's behavior."
+ },
+ {
+  "slug": "CM-1-3-3-2",
+  "lsc_name": "Pricing Strategy Management",
+  "level": "4",
+  "apqc_id": "10123",
+  "apqc_name": "Define pricing strategy",
+  "apqc_description": "Creating a pricing strategy and mechanism that aligns with the benefits of the products/services, as perceived by customers. Chart a strategic course and a methodology that can guide the pricing of products/services. Draw heavily from the customer value proposition, and balance the expectations of different divisions inside the organization, while delivering the maximum ROI."
+ },
+ {
+  "slug": "CM-1-3-3-2-2",
+  "lsc_name": "Develop Integrated Pricing Strategy",
+  "level": "5",
+  "apqc_id": "11095",
+  "apqc_name": "Develop KM strategy",
+  "apqc_description": "Creating a plan for managing the organization's knowledge base. Determine what kind of specialized knowledge the organization possesses, which elements of this collective knowledge can prove beneficial, how to capture and maintain this knowledge, how to grant access to this library of information, and how the organization should proceed."
+ },
+ {
+  "slug": "CM-1-3-3-2-3",
+  "lsc_name": "Analyze Pricing Performance",
+  "level": "5",
+  "apqc_id": "16500",
+  "apqc_name": "Analyze performance",
+  "apqc_description": "Conducting an analysis to review channel performance with respect to chosen metrics, benchmarks and performance targets [16573]. Compare to past performance and forecasts for the channel."
+ },
+ {
+  "slug": "CM-1-3-3-2-4",
+  "lsc_name": "Conduct Pricing Pilots",
+  "level": "5",
+  "apqc_id": "13169",
+  "apqc_name": "Conduct pricing analysis",
+  "apqc_description": "Analyzing marketing objectives, consumer demand, product attributes, competitors' pricing, and economic trends to determine optimum prices for the set of products and services that the company offers or intends to offer by delivering maximum ROI."
+ },
+ {
+  "slug": "CM-1-3-3-3-1",
+  "lsc_name": "Create Channel Offering & Value Proposition",
+  "level": "5",
+  "apqc_id": "11168",
+  "apqc_name": "Define offering and customer value proposition",
+  "apqc_description": "Refining the attributes of organizational offerings to define their value proposition for the customer. Clearly define the suite of offerings in terms of the value delivered, from the perspective of what the customer desires. Validate the benefits delivered to the customers against target market segments, using techniques such as minimum viable product. Position brands for the respective products/services, in line with their unique value proposition and aligned with customers needs."
+ },
+ {
+  "slug": "CM-1-3-3-3-2",
+  "lsc_name": "Define Channel Portfolio",
+  "level": "5",
+  "apqc_id": "16403",
+  "apqc_name": "Define portfolio governance",
+  "apqc_description": "Outlining the administration of business portfolio of the organization. Create and manage the rules and regulations regarding the business processes in order to identify, select, prioritize, and monitor portfolio components. Include a set of metrics to indicate the health and progress of the portfolio in the most vital area."
+ },
+ {
+  "slug": "CM-1-3-3-4",
+  "lsc_name": "Network Design (Retail)",
+  "level": "4",
+  "apqc_id": "10344",
+  "apqc_name": "Design logistics network",
+  "apqc_description": "Developing a network for logistical activities. Create a network of entities through which materials and information flow, encompassing all related activities associated with the flow of transformation of products."
+ },
+ {
+  "slug": "CM-1-3-3-4-1",
+  "lsc_name": "Define Target Location",
+  "level": "5",
+  "apqc_id": "10160",
+  "apqc_name": "Define target audience",
+  "apqc_description": "Determining the appropriate audience to direct marketing efforts at. Identify the particular group of customers to target. Discover the appropriate customer groups at a micro-level. Use techniques such as segmentation analysis, whereby the entire population is sliced according to certain demographic or behavioral attributes."
+ },
+ {
+  "slug": "CM-1-3-3-5",
+  "lsc_name": "Marketing Communications Strategy",
+  "level": "4",
+  "apqc_id": "10102",
+  "apqc_name": "Develop marketing strategy",
+  "apqc_description": "Charting a strategic course for marketing products/services. This will include defining the value proposition, creating a mechanism for pricing, and determining the right mix of marketing channels. Create a specific positioning and branding for the organization's offerings. Enlist marketing head to lead, with inputs from the business development and sales functions."
+ },
+ {
+  "slug": "CM-1-3-3-5-1",
+  "lsc_name": "Define Media Strategy",
+  "level": "5",
+  "apqc_id": "16854",
+  "apqc_name": "Define new media communication strategy",
+  "apqc_description": "Developing a marketing strategy that is maximally effective in a new or emerging media channel by capitalizing on its novel attributes and capabilities."
+ },
+ {
+  "slug": "CM-1-3-3-5-2",
+  "lsc_name": "Define Direct Marketing Strategy",
+  "level": "5",
+  "apqc_id": "16851",
+  "apqc_name": "Define direct marketing strategy",
+  "apqc_description": "Devising a master plan how to select potential customers or qualified clients for customized offers, and contact them on one-to-one basis through chat, phone, email or regular mail. The strategy would need to take into account that personalizing offers and contacting customers individually is an effective but resource-intensive marketing technique, and that ill-targeted offers risk at angering and alienating the contactees."
+ },
+ {
+  "slug": "CM-1-3-3-5-3",
+  "lsc_name": "Define Advertising Strategy",
+  "level": "5",
+  "apqc_id": "10123",
+  "apqc_name": "Define pricing strategy",
+  "apqc_description": "Creating a pricing strategy and mechanism that aligns with the benefits of the products/services, as perceived by customers. Chart a strategic course and a methodology that can guide the pricing of products/services. Draw heavily from the customer value proposition, and balance the expectations of different divisions inside the organization, while delivering the maximum ROI."
+ },
+ {
+  "slug": "CM-1-3-3-5-4",
+  "lsc_name": "Define POS Communication Strategy",
+  "level": "5",
+  "apqc_id": "16855",
+  "apqc_name": "Define point of sale (POS) communication strategy",
+  "apqc_description": "Establishing a framework for coordinated marketing to increase the profitability and increase brand awareness at the point of sale. This may include promotional posters on product shelves or island displays, advertisements in shopping carts, stickers on the floor that lead consumers to the promoted product, multi-buy promotions, coupons on sales receipts, etc."
+ },
+ {
+  "slug": "CM-1-3-3-5-5",
+  "lsc_name": "Define Digital Marketing Strategy",
+  "level": "5",
+  "apqc_id": "16851",
+  "apqc_name": "Define direct marketing strategy",
+  "apqc_description": "Devising a master plan how to select potential customers or qualified clients for customized offers, and contact them on one-to-one basis through chat, phone, email or regular mail. The strategy would need to take into account that personalizing offers and contacting customers individually is an effective but resource-intensive marketing technique, and that ill-targeted offers risk at angering and alienating the contactees."
+ },
+ {
+  "slug": "CM-1-3-3-5-6",
+  "lsc_name": "Define Internal Marketing Communications Strategy",
+  "level": "5",
+  "apqc_id": "16852",
+  "apqc_name": "Define internal marketing communication strategy",
+  "apqc_description": "Developing a program to promote the objectives, values, products and services of the company to its employees by treating them as potential customers, in order to extend company client base, increase employee engagement or to foster brand advocacy."
+ },
+ {
+  "slug": "CM-1-3-4-1-1",
+  "lsc_name": "Identify Market Needs",
+  "level": "5",
+  "apqc_id": "10109",
+  "apqc_name": "Identify market segments",
+  "apqc_description": "Identifying a section of the customer population to target for marketing products/services. Create segments within the customer population for targeted marketing campaigns, which increase the efficacy of marketing outlay. Determine the right customer segments, craft effective marketing messages, and efficiently communicate them. Determine the optimal pricing mix. Consider assistance from professional services for market segmentation studies, with coordination and oversight from the marketing/sales functions."
+ },
+ {
+  "slug": "CM-1-3-4-1-3",
+  "lsc_name": "Develop R&D Implementation Plans",
+  "level": "5",
+  "apqc_id": "20624",
+  "apqc_name": "Develop IT transformation plans",
+  "apqc_description": "Developing a robust plan to replace or upgrade an organization's information technology systems. Understanding the business need of IT transformation from current to an expected state for the business. Developing a strategic plan for IT operating model, governance, service delivery, and workforce transformation."
+ },
+ {
+  "slug": "CM-1-3-4-2-2",
+  "lsc_name": "Conduct Research",
+  "level": "5",
+  "apqc_id": "10108",
+  "apqc_name": "Conduct customer and market research",
+  "apqc_description": "Carrying out research studies to understand the behavior of customers and the realities of the market. Undertake research to understand the market conditions as well as the characteristics, drives, and desires of prospective customers. Gather highly contextualized intelligence through primary and secondary research methods, with the objective of gaining insights over how to best seize a market opportunity. Consider assistance from professional research services."
+ },
+ {
+  "slug": "CM-1-3-4-3",
+  "lsc_name": "Product & Service Development",
+  "level": "4",
+  "apqc_id": "19990",
+  "apqc_name": "Define product/service development requirements",
+  "apqc_description": "Encompassing the identification and capture of new product/service requirements or potential improvements to current products/services. Collaborating with members of the supply chain to ensure the feasibility of what is being defined in the requirements. For example, a product with manufacturing requirements that supply chain cannot currently fulfill requires a corporate decision to either upgrade manufacturing capabilities or abandon the new product. Enterprise-level effects and needs must be considered. Depending on the nature of the final product or service, these requirements are often defined as a set of abilities, such as availability or reliability, that influence product development decisions."
+ },
+ {
+  "slug": "CM-1-3-4-3-1",
+  "lsc_name": "Manage Product/Service Development",
+  "level": "5",
+  "apqc_id": "19696",
+  "apqc_name": "Govern and manage product/service development program",
+  "apqc_description": "Supervising the complete product/service program from innovation until its commercial success. Meeting the customer demand and expectations. Conduct further development and innovation pertaining to business goals."
+ },
+ {
+  "slug": "CM-1-3-4-3-2",
+  "lsc_name": "Conduct Product Development",
+  "level": "5",
+  "apqc_id": "11428",
+  "apqc_name": "Conduct new product development process assessment",
+  "apqc_description": "Analyzing the steps involved in the development of new product, its effect on existing product, resources, and functions related to the development of the new product until its sale in the competitive market place."
+ },
+ {
+  "slug": "CM-1-3-4-3-3",
+  "lsc_name": "Manage Product/Service Change",
+  "level": "5",
+  "apqc_id": "10061",
+  "apqc_name": "Manage product and service portfolio",
+  "apqc_description": "Managing a portfolio of product/service offerings to take advantage of shifts in the market expectations, all the while coordinating with the overall business strategy. Revisit the product/service portfolio in light of market opportunities, and overhaul it to capture value created by these opportunities. Identify gaps between current offerings and the market expectations to direct the organization's R&D activity. Create new solutions, and revise or retire existing ones so that the revamped portfolio aligns with Develop a business strategy [10015]."
+ },
+ {
+  "slug": "CM-1-3-4-4-2",
+  "lsc_name": "Register Intellectual Property",
+  "level": "5",
+  "apqc_id": "11049",
+  "apqc_name": "Protect intellectual property",
+  "apqc_description": "Safeguarding the intellectual property of the organization. This process requires the organization to protect a wide variety of intellectual property created by it. It involves creating and managing non-disclosure agreements (NDAs), following up on current developments in the areas where the organization holds patents, tracking the use of the organization's copyrighted material, creating and upholding licensing terms, and administering policies for safeguarding intellectual property."
+ },
+ {
+  "slug": "CM-1-3-4-4-4",
+  "lsc_name": "Protect Intellectual Assets",
+  "level": "5",
+  "apqc_id": "11049",
+  "apqc_name": "Protect intellectual property",
+  "apqc_description": "Safeguarding the intellectual property of the organization. This process requires the organization to protect a wide variety of intellectual property created by it. It involves creating and managing non-disclosure agreements (NDAs), following up on current developments in the areas where the organization holds patents, tracking the use of the organization's copyrighted material, creating and upholding licensing terms, and administering policies for safeguarding intellectual property."
+ },
+ {
+  "slug": "CM-1-3-4-6-2",
+  "lsc_name": "Collaborate with Customers/Technical Service",
+  "level": "5",
+  "apqc_id": "20044",
+  "apqc_name": "Collaborate with customers",
+  "apqc_description": "Providing a collaborative meeting in which to engage the customer to understand the scope of their needs and constructing solutions based on need and constraints."
+ },
+ {
+  "slug": "CM-1-3-5-1",
+  "lsc_name": "Sales Strategy & Planning",
+  "level": "4",
+  "apqc_id": "10103",
+  "apqc_name": "Develop sales strategy",
+  "apqc_description": "Developing concrete plans for guiding and providing support to the sales function. Chart a road map for the sales function, including an analysis of historical sales data to create forecasts for anticipated sales, forming sales targets, forging partnerships with other economic agents to boost sales, devising a budget for this function, and determining metrics to measure customer management activities as well as progress in achieving sales targets."
+ },
+ {
+  "slug": "CM-1-3-5-3-1",
+  "lsc_name": "Identify Marketing Needs",
+  "level": "5",
+  "apqc_id": "10418",
+  "apqc_name": "Identify strategic HR needs",
+  "apqc_description": "Strategically defining the current and future needs for developing an efficient HR strategy."
+ },
+ {
+  "slug": "CM-1-3-5-3-2",
+  "lsc_name": "Identify Target Groups",
+  "level": "5",
+  "apqc_id": "20143",
+  "apqc_name": "Identify impacted groups",
+  "apqc_description": "Recognizing the impact of threats to critical assets. Determine what groups are impacted by this impact."
+ },
+ {
+  "slug": "CM-1-3-5-3-6",
+  "lsc_name": "Define Communications Plan",
+  "level": "5",
+  "apqc_id": "17477",
+  "apqc_name": "Define sampling plan",
+  "apqc_description": "Establishing a detailed summary including measures, on which material, in what manner, and by whom. Identify the parameters to be measured, the range of possible values, and the required resolution. Provide a sampling scheme that details how and when samples will be taken. Select sample sizes. Assign roles and responsibilities."
+ },
+ {
+  "slug": "CM-1-3-5-4-1",
+  "lsc_name": "Define Promotional Plan",
+  "level": "5",
+  "apqc_id": "17477",
+  "apqc_name": "Define sampling plan",
+  "apqc_description": "Establishing a detailed summary including measures, on which material, in what manner, and by whom. Identify the parameters to be measured, the range of possible values, and the required resolution. Provide a sampling scheme that details how and when samples will be taken. Select sample sizes. Assign roles and responsibilities."
+ },
+ {
+  "slug": "CM-1-3-6-1-3",
+  "lsc_name": "Report Franchise Performance",
+  "level": "5",
+  "apqc_id": "16574",
+  "apqc_name": "Monitor and report performance",
+  "apqc_description": "Tracking trends and changes in performance inside individual marketing channels and in channels collectively. Summarize and document results. Alert relevant parties about significant or unexpected deviations from expected behaviors."
+ },
+ {
+  "slug": "CM-1-3-6-2-1",
+  "lsc_name": "Manage Sales Pipeline",
+  "level": "5",
+  "apqc_id": "20011",
+  "apqc_name": "Manage opportunity pipeline",
+  "apqc_description": "Overseeing and planning the acquisition of new customers."
+ },
+ {
+  "slug": "CM-1-3-6-2-2",
+  "lsc_name": "Manage Key Accounts",
+  "level": "5",
+  "apqc_id": "10183",
+  "apqc_name": "Manage customers and accounts",
+  "apqc_description": "Managing the customer's expectations, with the intent of responsibly increasing the sale of the organization's products/services. Create a systematic method for governing sales, using sales forecasts and customer management measures. Develop a blueprint to manage relationships with customers and the data it holds on them, as well as the sale of its products/services to these customers. Devise a recipe for handling the organization's key customers in order to manage their expectations with tact and responsibility while maximizing revenue."
+ },
+ {
+  "slug": "CM-1-3-6-2-3",
+  "lsc_name": "Manage Opportunity",
+  "level": "5",
+  "apqc_id": "20011",
+  "apqc_name": "Manage opportunity pipeline",
+  "apqc_description": "Overseeing and planning the acquisition of new customers."
+ },
+ {
+  "slug": "CM-1-3-6-2-7",
+  "lsc_name": "Measure & report",
+  "level": "5",
+  "apqc_id": "16395",
+  "apqc_name": "Measure and report process performance",
+  "apqc_description": "Defining and using performance indicators to consider the financial perspective, customer perspective, internal process perspective, and learning perspective of the organization."
+ },
+ {
+  "slug": "CM-1-3-6-6-6",
+  "lsc_name": "Manage Bad Debt",
+  "level": "5",
+  "apqc_id": "10761",
+  "apqc_name": "Manage debt and investment",
+  "apqc_description": "Taking care of the organization's financial position. Manage its loans or debts from different sources and investments. Leverage the most profitable options to balance the financial position in the market."
+ },
+ {
+  "slug": "CM-1-3-6-6-8",
+  "lsc_name": "Ensure Card Design Compliance",
+  "level": "5",
+  "apqc_id": "11047",
+  "apqc_name": "Ensure compliance",
+  "apqc_description": "Ensuring the organization's compliance position. Validate compliance with different statutes, regulatory directions, and legal principles (using Establish compliance framework and policies [17468]). Coordinate with compliance and risk management personnel."
+ },
+ {
+  "slug": "CM-1-3-6-6-11",
+  "lsc_name": "Manage Fraudulent Transactions",
+  "level": "5",
+  "apqc_id": "10768",
+  "apqc_name": "Manage transactions",
+  "apqc_description": "Managing any transfer of funds in the course of conducting cross-border trades or investments, including conversion across currencies. Find the most suitable alternative for making payments, while saving taxes and avoiding any unwarranted regulation, with the objective of protecting capital."
+ },
+ {
+  "slug": "CM-1-3-6-6-14",
+  "lsc_name": "Manage Credit Card Transactions",
+  "level": "5",
+  "apqc_id": "20933",
+  "apqc_name": "Manage corporate credit card accounts",
+  "apqc_description": "Handling credit card accounts of business customers."
+ },
+ {
+  "slug": "CM-1-3-6-6-15",
+  "lsc_name": "Manage Brand Loyalty Programs",
+  "level": "5",
+  "apqc_id": "16405",
+  "apqc_name": "Manage programs",
+  "apqc_description": "Establishing, implementing, and managing business programs. Successfully handle related projects that together constitute a program. Establish the program structure and approach. Coordinate with stakeholders and partners. Execute the program. Assess and report the performance of the program. Coordinate and prioritize resources across projects. Manage links between the projects and the overall costs and risks of the program."
+ },
+ {
+  "slug": "CM-1-3-7-1",
+  "lsc_name": "Manage Master Data (Customer, Price, Product, Tax, Location)",
+  "level": "4",
+  "apqc_id": "14208",
+  "apqc_name": "Manage customer master data",
+  "apqc_description": "Managing the corpus of data relating all customers acquired over time. Manage the storage, maintenance, access, revision, and usage of all data on customers. Ensure its security, and determine legitimate use cases that are beneficial to the organization."
+ },
+ {
+  "slug": "CM-1-3-7-1-1",
+  "lsc_name": "Maintain Customer Master Data",
+  "level": "5",
+  "apqc_id": "10252",
+  "apqc_name": "Maintain master data",
+  "apqc_description": "Maintaining and preserving the master data plan for distribution requirements. Create a systematic collection of facts and figures regarding the distribution of the inventories. Maintain policies, processes, and tools covering the distribution function."
+ },
+ {
+  "slug": "CM-1-3-7-1-2",
+  "lsc_name": "Maintain Price & Discount Master Data",
+  "level": "5",
+  "apqc_id": "10252",
+  "apqc_name": "Maintain master data",
+  "apqc_description": "Maintaining and preserving the master data plan for distribution requirements. Create a systematic collection of facts and figures regarding the distribution of the inventories. Maintain policies, processes, and tools covering the distribution function."
+ },
+ {
+  "slug": "CM-1-3-7-1-3",
+  "lsc_name": "Maintain Product Master Data",
+  "level": "5",
+  "apqc_id": "10252",
+  "apqc_name": "Maintain master data",
+  "apqc_description": "Maintaining and preserving the master data plan for distribution requirements. Create a systematic collection of facts and figures regarding the distribution of the inventories. Maintain policies, processes, and tools covering the distribution function."
+ },
+ {
+  "slug": "CM-1-3-7-1-4",
+  "lsc_name": "Maintain Tax Master Data",
+  "level": "5",
+  "apqc_id": "10929",
+  "apqc_name": "Maintain tax master data",
+  "apqc_description": "Maintaining a master file about the rational analysis of a financial condition or plan from a tax perspective in order to align financial goals through efficient tax planning."
+ },
+ {
+  "slug": "CM-1-3-7-2-5",
+  "lsc_name": "Analyze Customer Profitability",
+  "level": "5",
+  "apqc_id": "10176",
+  "apqc_name": "Analyze customer metrics",
+  "apqc_description": "Studying all measures of the customer's behavior and conduct toward the organization's offerings in order to glean insight and identify patterns into their decision making. Closely examine all categories of data sets over a customer base. Analyze data points related to customer loyalty, retention, value, conversion, level of satisfaction, attrition, etc. Flesh out measures for an all-encompassing analysis that provides a macro-level picture of the customer's behavior and mindset related to the organization's products/services."
+ },
+ {
+  "slug": "CM-1-3-7-2-6",
+  "lsc_name": "Manage Customer Portal",
+  "level": "5",
+  "apqc_id": "20085",
+  "apqc_name": "Manage Customer Service",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-7-3",
+  "lsc_name": "Capture And Manage Order Fulfillment",
+  "level": "4",
+  "apqc_id": "10332",
+  "apqc_name": "Manage service order fulfillment",
+  "apqc_description": "Handling and managing orders fulfilled, along with the orders are not or partially fulfilled to track the order fulfillment progress. Use electronic devices such as trackers and GPS in order track and ensure delivery of the orders."
+ },
+ {
+  "slug": "CM-1-3-7-3-4",
+  "lsc_name": "Manage Fulfillment",
+  "level": "5",
+  "apqc_id": "10332",
+  "apqc_name": "Manage service order fulfillment",
+  "apqc_description": "Handling and managing orders fulfilled, along with the orders are not or partially fulfilled to track the order fulfillment progress. Use electronic devices such as trackers and GPS in order track and ensure delivery of the orders."
+ },
+ {
+  "slug": "CM-1-3-7-4",
+  "lsc_name": "Manage Credit & Risk",
+  "level": "4",
+  "apqc_id": "11211",
+  "apqc_name": "Manage exposure risk",
+  "apqc_description": "Taking care of exposure risks. Maintain financial investments in particular investments or a portfolios that could be risky for the organization."
+ },
+ {
+  "slug": "CM-1-3-7-4-1",
+  "lsc_name": "Maintain Credit Policies",
+  "level": "5",
+  "apqc_id": "10789",
+  "apqc_name": "Establish credit policies",
+  "apqc_description": "Creating guidelines for providing advances. Set up credit standards, credit terms, and collection policies."
+ },
+ {
+  "slug": "CM-1-3-7-4-3",
+  "lsc_name": "Monitor Credit Against Limit",
+  "level": "5",
+  "apqc_id": "11215",
+  "apqc_name": "Monitor credit",
+  "apqc_description": "Revising credit reports periodically for accurateness and changes that could be suggestive of duplicitous activity."
+ },
+ {
+  "slug": "CM-1-3-7-5",
+  "lsc_name": "Manage Customer Requests and Inquiries",
+  "level": "4",
+  "apqc_id": "10388",
+  "apqc_name": "Manage customer service problems, requests, and inquiries",
+  "apqc_description": "Handling the requests and inquiries from customers that seek information regarding the organization's products/services. Obtain the customer requests online and by phone. Direct these requests to higher-level representatives. Approve requests, and respond to customers."
+ },
+ {
+  "slug": "CM-1-3-7-5-6",
+  "lsc_name": "Provide Customer Training",
+  "level": "5",
+  "apqc_id": "20754",
+  "apqc_name": "Provide  IT resilience training",
+  "apqc_description": "Conduct and manage employee training programs on IT resilience so that prospective risks can be avoided."
+ },
+ {
+  "slug": "CM-1-3-8-2-6",
+  "lsc_name": "Perform Revenue Accounting",
+  "level": "5",
+  "apqc_id": "10729",
+  "apqc_name": "Perform revenue accounting",
+  "apqc_description": "Comparing revenue targets to reality. Review all transactions and entries passed in final accounts in a year in order to examine profits."
+ },
+ {
+  "slug": "CM-1-3-8-3-4",
+  "lsc_name": "Develop Root Cause Analysis/Action Plan",
+  "level": "5",
+  "apqc_id": "12046",
+  "apqc_name": "Perform root cause analysis",
+  "apqc_description": "Using a technique that helps people answer the question of why a problem occurred in the first place. It seeks to identify the origin of a problem using a specific set of steps, with associated tools, to find the primary cause of the problem to determine what happened, why, and how to reduce the likelihood that it will happen again."
+ },
+ {
+  "slug": "CM-1-3-8-4",
+  "lsc_name": "Manage Accounting, Regulatory Reporting and Compliance",
+  "level": "4",
+  "apqc_id": "16463",
+  "apqc_name": "Manage regulatory compliance",
+  "apqc_description": "Obeying laws, guidelines, strategies, and stipulations related to the business."
+ },
+ {
+  "slug": "CM-1-3-9-1-2",
+  "lsc_name": "Manage Operations",
+  "level": "5",
+  "apqc_id": "10734",
+  "apqc_name": "Manage treasury operations",
+  "apqc_description": "Managing business's investments in trading in bonds, currencies, financial derivatives, etc. Manage the financial assets and holdings of the organization. Optimize the organization's liquidity. Invest excess cash. Reduce financial risks."
+ },
+ {
+  "slug": "CM-1-3-9-1-3",
+  "lsc_name": "Manage Service Employees",
+  "level": "5",
+  "apqc_id": "20085",
+  "apqc_name": "Manage Customer Service",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-9-1-4",
+  "lsc_name": "Manage Facilities",
+  "level": "5",
+  "apqc_id": "10949",
+  "apqc_name": "Manage facilities operations",
+  "apqc_description": "Managing all operational activities of the facility. Manage how each function/business unit works. Support the manufacturing facility to attain organizational goals."
+ },
+ {
+  "slug": "CM-1-3-9-1-5",
+  "lsc_name": "Manage Technology",
+  "level": "5",
+  "apqc_id": "20607",
+  "apqc_name": "Manage Information Technology (IT)",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-9-2",
+  "lsc_name": "Service & Support Delivery",
+  "level": "4",
+  "apqc_id": "20059",
+  "apqc_name": "Initiate service delivery",
+  "apqc_description": "Collaborating with the customer to understand service needs. Review, understand, and modify the delivery scope with the organization needs of the customer in mind. Confirm readiness and identify, select, and assign resources. Plan for service delivery."
+ },
+ {
+  "slug": "CM-1-3-9-2-1",
+  "lsc_name": "Manage Data",
+  "level": "5",
+  "apqc_id": "11749",
+  "apqc_name": "Manage traceability data",
+  "apqc_description": "Identifying and handling data accessed by the permitted touch points. Ensure that no data is accessible to any unnecessary recipient. Data flow should be controlled through secured access and free from unauthorized access."
+ },
+ {
+  "slug": "CM-1-3-9-2-2",
+  "lsc_name": "Manage Customer",
+  "level": "5",
+  "apqc_id": "20085",
+  "apqc_name": "Manage Customer Service",
+  "apqc_description": ""
+ },
+ {
+  "slug": "CM-1-3-9-3-3",
+  "lsc_name": "Measure Service Effectiveness",
+  "level": "5",
+  "apqc_id": "11077",
+  "apqc_name": "Measure cost effectiveness",
+  "apqc_description": "Measuring the cost effectiveness of the organization's processes. Track the return on investing in marketing campaigns, new equipment, and process redefinition. Measure the cost per employee or cost per cycle for a given process, function, or business unit."
+ },
+ {
+  "slug": "L1-shared-services",
+  "lsc_name": "Shared Services",
+  "level": "1",
+  "apqc_id": "19951",
+  "apqc_name": "Develop shared services strategy",
+  "apqc_description": "Charting a plan to leverage internal services and support functions throughout the organization. Delineate a framework of parameters and criteria to selectively filter service areas for inclusion among the organizations common resources. Arrange the organizations functional areas to create efficiencies of scale in the delivery of internal services."
+ },
+ {
+  "slug": "L1-human-resources",
+  "lsc_name": "Human Resources",
+  "level": "1",
+  "apqc_id": "20958",
+  "apqc_name": "Develop human resources strategy",
+  "apqc_description": "Creating a long-term plan to associate human resource requirements with the strategic goals of the company to ensure that there is enough qualified staffing to achieve those goals, to maintain competitive advantage and to reduce employee turnover."
+ }
+]

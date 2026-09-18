@@ -1,0 +1,557 @@
+{
+ "CM-1-1-4-7-8": {
+  "definition": "Competitive analysis in marketing and strategic management is the assessment of the strengths and weaknesses of current and potential competitors.",
+  "validator_name": "Wikipedia: 'Competitor analysis'",
+  "validator_url": "https://en.wikipedia.org/wiki/Competitor_analysis"
+ },
+ "CM-1-2-2-3-8": {
+  "definition": "Information technology risk, IT risk, IT-related risk, or cyber risk is any risk relating to information technology.",
+  "validator_name": "Wikipedia: 'IT risk'",
+  "validator_url": "https://en.wikipedia.org/wiki/IT_risk"
+ },
+ "CM-1-2-4-3-5": {
+  "definition": "Compliance generally refers to a company's or a business person's conformity with relevant laws and regulations—that is, following the rules set out by government.",
+  "validator_name": "Concise Encyclopedia of Business Ethics (Toronto Metropolitan University): 'Compliance'",
+  "validator_url": "https://pressbooks.library.torontomu.ca/cebe/chapter/compliance/"
+ },
+ "CM-1-2-4-3-7": {
+  "definition": "An architecture-exception process evaluates when standard technology or business-process platforms should allow exceptions, so that standards support efficiency without limiting innovation and growth.",
+  "validator_name": "MIT Center for Information Systems Research (CISR): 'Architecture exception process'",
+  "validator_url": "https://cisr.mit.edu/publication/2012_0901_ArchitectureLearning_RossQuaadgras"
+ },
+ "CM-1-2-4-4-8": {
+  "definition": "A warranty is a manufacturer's or seller's guarantee about the condition and quality of its product and the terms for repair, refund, or exchange if the product fails.",
+  "validator_name": "Investopedia: 'Warranty'",
+  "validator_url": "https://www.investopedia.com/terms/w/warranty.asp"
+ },
+ "CM-1-3-1-1-2": {
+  "definition": "Business objectives dictate how your company plans to achieve its goals and address the business's strengths, weaknesses, and opportunities.",
+  "validator_name": "Harvard Business School Online: 'Business goals and objectives'",
+  "validator_url": "https://online.hbs.edu/blog/post/business-goals-and-objectives?ref=blog.superhuman.com"
+ },
+ "CM-1-3-1-2-2": {
+  "definition": "Business objectives dictate how your company plans to achieve its goals and address the business's strengths, weaknesses, and opportunities.",
+  "validator_name": "Harvard Business School Online: 'Business goals and objectives'",
+  "validator_url": "https://online.hbs.edu/blog/post/business-goals-and-objectives?ref=blog.superhuman.com"
+ },
+ "CM-1-3-1-3-2": {
+  "definition": "Business objectives dictate how your company plans to achieve its goals and address the business's strengths, weaknesses, and opportunities.",
+  "validator_name": "Harvard Business School Online: 'Business goals and objectives'",
+  "validator_url": "https://online.hbs.edu/blog/post/business-goals-and-objectives?ref=blog.superhuman.com"
+ },
+ "CM-1-3-1-4-2": {
+  "definition": "Business objectives dictate how your company plans to achieve its goals and address the business's strengths, weaknesses, and opportunities.",
+  "validator_name": "Harvard Business School Online: 'Business goals and objectives'",
+  "validator_url": "https://online.hbs.edu/blog/post/business-goals-and-objectives?ref=blog.superhuman.com"
+ },
+ "CM-1-3-1-5-2": {
+  "definition": "Business objectives dictate how your company plans to achieve its goals and address the business's strengths, weaknesses, and opportunities.",
+  "validator_name": "Harvard Business School Online: 'Business goals and objectives'",
+  "validator_url": "https://online.hbs.edu/blog/post/business-goals-and-objectives?ref=blog.superhuman.com"
+ },
+ "CM-1-3-3-2": {
+  "definition": "Pricing strategies determine the prices companies set for their products. They can be used to maximize profitability, defend or grow market share, or enter markets.",
+  "validator_name": "Wikipedia: 'Pricing strategies'",
+  "validator_url": "https://en.wikipedia.org/wiki/Pricing_strategies"
+ },
+ "CM-1-3-3-4": {
+  "definition": "A logistics network is a set of facilities linked by transportation services. Facilities process, store, sort, sell, or consume materials.",
+  "validator_name": "ASEAN (Logistics Planning and Analysis): 'Logistics network'",
+  "validator_url": "http://www.asean.org/wp-content/uploads/images/2015/september/transport-facilitation/batch-3/Logistics-Planning-and-Analysis/LPA%20Chapter%202%20Log%20Network%20ok%207pp_ASEAN%20disclaimer.pdf"
+ },
+ "CM-1-3-3-5": {
+  "definition": "Marketing strategy refers to the set of coordinated actions undertaken by an organization to increase sales, strengthen market presence, and achieve sustainable competitive advantage.",
+  "validator_name": "Wikipedia: 'Marketing strategy'",
+  "validator_url": "http://en.wikipedia.org/wiki/Marketing_strategy"
+ },
+ "CM-1-3-3-5-3": {
+  "definition": "Pricing strategies determine the prices companies set for their products. They can be used to maximize profitability, defend or grow market share, or enter markets.",
+  "validator_name": "Wikipedia: 'Pricing strategies'",
+  "validator_url": "https://en.wikipedia.org/wiki/Pricing_strategies"
+ },
+ "CM-1-3-4-2-2": {
+  "definition": "Market research is the process of gathering, analyzing and interpreting information about a market, about a product or service to be offered for sale in that market, and about the past, present and potential customers for the product or service.",
+  "validator_name": "UNC Libraries (quoting U.S. Small Business Administration): 'Market research'",
+  "validator_url": "https://guides.lib.unc.edu/market-research-tutorial/foundation"
+ },
+ "CM-1-3-6-1-3": {
+  "definition": "Performance measurement is the process of collecting, analyzing and reporting information regarding the performance of an individual, group, organization, system or component.",
+  "validator_name": "Wikipedia: 'Performance measurement'",
+  "validator_url": "http://en.wikipedia.org/wiki/Performance_measurement"
+ },
+ "CM-1-3-6-6-15": {
+  "definition": "A program is a group of related projects managed in a coordinated way to obtain benefits and control not available from managing them individually.",
+  "validator_name": "Project Management Institute (PMI): 'Program'",
+  "validator_url": "https://www.pmi.org/learning/library/new-project-management-institute-standard-development-8014"
+ },
+ "CM-1-3-6-6-8": {
+  "definition": "Compliance generally refers to a company's or a business person's conformity with relevant laws and regulations—that is, following the rules set out by government.",
+  "validator_name": "Concise Encyclopedia of Business Ethics (Toronto Metropolitan University): 'Compliance'",
+  "validator_url": "https://pressbooks.library.torontomu.ca/cebe/chapter/compliance/"
+ },
+ "CM-1-3-7-1-4": {
+  "definition": "Master data represents 'data about the business entities that provide context for business transactions'.",
+  "validator_name": "Wikipedia: 'Master data'",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data"
+ },
+ "CM-1-3-8-2-6": {
+  "definition": "A business determines when revenue is recorded using revenue recognition. This accounting method is used for such instances as when goods or services are delivered to a customer rather than when payment is received.",
+  "validator_name": "Investopedia: 'Revenue recognition'",
+  "validator_url": "https://www.investopedia.com/terms/r/revenuerecognition.asp"
+ },
+ "CM-1-3-9-1-2": {
+  "definition": "In essence treasury management is all about handling the banking requirements, the funding for the business and managing financial risk.",
+  "validator_name": "Association of Corporate Treasurers (ACT) Treasurer's Wiki: 'Corporate treasury'",
+  "validator_url": "https://wiki.treasurers.org/wiki/ACT_Wiki:About"
+ },
+ "CM-1-3-9-1-4": {
+  "definition": "Facility management (also facilities management, FM) is the coordinated management of an organization's buildings, sites and workplaces, and the support services needed to keep them functional, safe and effective for occupants and operations.",
+  "validator_name": "Wikipedia: 'Facility management'",
+  "validator_url": "https://en.wikipedia.org/wiki/Facility_management"
+ },
+ "CM-1-1-3-7-11": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-1-3-7-12": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-1-3-7-5": {
+  "definition": "Benefit reconciliations provide the opportunity to identify discrepancies in employee insurance effective/termination dates, plan types, coverage options, premium calculations, payroll deductions, and payments to vendors. Reconciliation of premium calculations to payroll deductions and vendor remittance confirms that payments are accurate and enrollment records are correct.",
+  "validator_name": "Missouri State University Internal Audit — Insurance Benefit Reconciliation Procedures",
+  "validator_url": "https://www.MissouriState.edu/InternalAudit/_Files/2022_Insurance_Benefit_Reconciliation_Procedures.pdf"
+ },
+ "CM-1-1-3-7-6": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-1-3-7-7": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-1-3-7-9": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-1-7-1-2": {
+  "definition": "IT service management (ITSM) is a discipline for managing information technology (IT) systems, philosophically centered on the customer's perspective of IT's contribution to the business. ITSM stands in deliberate contrast to technology-centered approaches to IT management and business interaction.",
+  "validator_name": "Wikipedia: 'IT service management'",
+  "validator_url": "https://en.wikipedia.org/wiki/IT_service_management"
+ },
+ "CM-1-2-2-1-7": {
+  "definition": "Business credit monitoring (or company credit tracking) is the monitoring of a business's credit history over time using business credit reports. It is largely used as a method to determine a company's ability to pay its debts, and is typically used by a company's credit management team. Monitoring over time provides a much wider perspective than a single credit report snapshot.",
+  "validator_name": "Wikipedia: 'Business credit monitoring'",
+  "validator_url": "http://en.wikipedia.org/wiki/Business_credit_monitoring"
+ },
+ "CM-1-2-4-2-12": {
+  "definition": "Omnichannel retail strategy is a business model by which a company integrates both offline (bricks) and online (clicks) presences. It is a seamless approach to the consumer experience through all available shopping channels — mobile internet devices, computers, bricks-and-mortar, television, catalog, and so on — so customers can move between channels without interruption.",
+  "validator_name": "Wikipedia: 'Omnichannel retail strategy'",
+  "validator_url": "https://en.wikipedia.org/wiki/Omnichannel_retail_strategy"
+ },
+ "CM-1-2-4-3": {
+  "definition": "Regulatory compliance and enforcement involves the direct monitoring and oversight of a specific individual, group, industry, or community participating in a regulated activity via market mechanisms, command and control features, or other means to control or govern conduct or behavior.",
+  "validator_name": "EPA Terminology Services: 'Regulatory Compliance & Enforcement Functions'",
+  "validator_url": "https://sor.epa.gov/sor_internet/registry/termreg/searchandretrieve/termsandacronyms/search.do;jsessionid=GuYzLuiyvZRATsQvebwxQir32z0rb8znubEcIiTj1q76vJi5PGPT!375289017?checkedAcronym=on&search=Search&d-1342820-e=14&matchCriteria=Contains&term=compliance&checkedTerm=on&6578706f7274=1"
+ },
+ "CM-1-2-5-4-2": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-2-6-3-2": {
+  "definition": "Collaborative planning, forecasting, and replenishment (CPFR) is an approach to the supply chain process which focuses on joint practices — the cooperative management of inventory through joint visibility and replenishment of products throughout the supply chain. Information shared between suppliers and retailers aids in satisfying customer demands, allowing continuous updating of inventory and upcoming requirements and making the end-to-end supply chain process more efficient.",
+  "validator_name": "Wikipedia: 'Collaborative planning, forecasting, and replenishment'",
+  "validator_url": "https://en.wikipedia.org/wiki/Collaborative_planning,_forecasting,_and_replenishment"
+ },
+ "CM-1-2-7-2-2": {
+  "definition": "A bulk terminal is a facility used primarily for the storage and/or marketing of petroleum products, which has a total bulk storage capacity of 50,000 barrels or more and/or receives petroleum products by tanker, barge, or pipeline. (Related EIA entry 'Bulk station': the same for facilities under 50,000 barrels receiving product by tank car or truck.)",
+  "validator_name": "EIA Glossary: 'Bulk terminal'",
+  "validator_url": "https://www.eia.gov/tools/glossary/?id=petroleum"
+ },
+ "CM-1-3-2-2": {
+  "definition": "A value proposition explains why a customer should choose a product or service by highlighting its key benefits and differentiators. It is a promise by a company to a customer or market segment — an easy-to-understand reason why a customer should buy a product or service from that particular business, communicating how the product fills a need and why it is better than similar products on the market.",
+  "validator_name": "Investopedia: 'Value Proposition'",
+  "validator_url": "https://www.investopedia.com/terms/v/valueproposition.asp"
+ },
+ "CM-1-3-2-2-1": {
+  "definition": "A value proposition explains why a customer should choose a product or service by highlighting its key benefits and differentiators. It is a promise by a company to a customer or market segment — an easy-to-understand reason why a customer should buy a product or service from that particular business, communicating how the product fills a need and why it is better than similar products on the market.",
+  "validator_name": "Investopedia: 'Value Proposition'",
+  "validator_url": "https://www.investopedia.com/terms/v/valueproposition.asp"
+ },
+ "CM-1-3-2-3-1": {
+  "definition": "A value proposition explains why a customer should choose a product or service by highlighting its key benefits and differentiators. It is a promise by a company to a customer or market segment — an easy-to-understand reason why a customer should buy a product or service from that particular business, communicating how the product fills a need and why it is better than similar products on the market.",
+  "validator_name": "Investopedia: 'Value Proposition'",
+  "validator_url": "https://www.investopedia.com/terms/v/valueproposition.asp"
+ },
+ "CM-1-3-2-4-2": {
+  "definition": "A distribution channel is the network intermediating goods from producers to end consumers. It involves wholesalers, retailers, distributors, and digital platforms. In a direct distribution channel, the manufacturer sells directly to the consumer; indirect distribution channels involve multiple intermediaries before the product reaches the consumer.",
+  "validator_name": "Investopedia: 'Distribution Channel'",
+  "validator_url": "https://www.investopedia.com/terms/d/distribution-channel.asp"
+ },
+ "CM-1-3-2-5": {
+  "definition": "A customer experience (CX) strategy is when organizations optimize customer engagements to create happy customers, drive customer loyalty, and help recruit new customers. It takes into consideration the entire customer journey and every customer touchpoint — from awareness, consideration, and purchase through retention and word-of-mouth in the post-purchase phase.",
+  "validator_name": "IBM: 'How to Build a Successful Customer Experience Strategy'",
+  "validator_url": "https://www.ibm.com/think/insights/customer-experience-strategy"
+ },
+ "CM-1-3-3-3-1": {
+  "definition": "A value proposition explains why a customer should choose a product or service by highlighting its key benefits and differentiators. It is a promise by a company to a customer or market segment — an easy-to-understand reason why a customer should buy a product or service from that particular business, communicating how the product fills a need and why it is better than similar products on the market.",
+  "validator_name": "Investopedia: 'Value Proposition'",
+  "validator_url": "https://www.investopedia.com/terms/v/valueproposition.asp"
+ },
+ "CM-1-3-3-5-2": {
+  "definition": "Direct marketing is a form of advertising that consists of any promotion that relies on direct communication or distribution to individual consumers rather than through a third party, such as mass media. Mail, email, social media, and texting campaigns are among the delivery systems used. It is called direct marketing because it generally eliminates the middleman, such as advertising media.",
+  "validator_name": "Investopedia: 'Direct Marketing'",
+  "validator_url": "https://www.investopedia.com/terms/d/direct-marketing.asp"
+ },
+ "CM-1-3-3-5-5": {
+  "definition": "Direct marketing is a form of advertising that consists of any promotion that relies on direct communication or distribution to individual consumers rather than through a third party, such as mass media. Mail, email, social media, and texting campaigns are among the delivery systems used. It is called direct marketing because it generally eliminates the middleman, such as advertising media.",
+  "validator_name": "Investopedia: 'Direct Marketing'",
+  "validator_url": "https://www.investopedia.com/terms/d/direct-marketing.asp"
+ },
+ "CM-1-3-4-1-3": {
+  "definition": "Digital transformation is a process that aims to improve an entity by triggering significant changes to its properties through combinations of information, computing, communication, and connectivity technologies — i.e., considering how products, processes, and organizations can be changed through the use of new digital technologies, beyond mere digitization of existing processes.",
+  "validator_name": "Wikipedia: 'Digital transformation'",
+  "validator_url": "http://en.wikipedia.org/wiki/Digital_transformation"
+ },
+ "CM-1-3-4-3": {
+  "definition": "Product development — also called new product management — is a series of steps that includes the conceptualization, design, development and marketing of newly created or rebranded goods and services. It covers a product's entire journey, from the initial idea to its market release and later.",
+  "validator_name": "TechTarget: 'What Is Product Development?'",
+  "validator_url": "https://www.techtarget.com/it-strategy/definition/product-development-new-product-development"
+ },
+ "CM-1-3-4-3-1": {
+  "definition": "Product development — also called new product management — is a series of steps that includes the conceptualization, design, development and marketing of newly created or rebranded goods and services. It covers a product's entire journey, from the initial idea to its market release and later.",
+  "validator_name": "TechTarget: 'What Is Product Development?'",
+  "validator_url": "https://www.techtarget.com/it-strategy/definition/product-development-new-product-development"
+ },
+ "CM-1-3-4-3-2": {
+  "definition": "Product development — also called new product management — is a series of steps that includes the conceptualization, design, development and marketing of newly created or rebranded goods and services. It covers a product's entire journey, from the initial idea to its market release and later.",
+  "validator_name": "TechTarget: 'What Is Product Development?'",
+  "validator_url": "https://www.techtarget.com/it-strategy/definition/product-development-new-product-development"
+ },
+ "CM-1-3-5-3-1": {
+  "definition": "Strategic human resource management (SHRM) is concerned with the 'people' factor as a source of competitive advantage. SHRM ensures that people are a key factor in a firm's competitive advantage — it involves organizations following a strategic approach so employees understand the organization's strategy and are empowered to execute it, with HR acting as a partner in identifying, attracting, and hiring the right talent.",
+  "validator_name": "University of Arkansas Pressbooks, '9.1 Strategic Human Resource Management'",
+  "validator_url": "https://uark.pressbooks.pub/commleadership/chapter/9-1-strategic-human-resource-management/"
+ },
+ "CM-1-3-6-2-1": {
+  "definition": "Pipeline management is the process of organizing, tracking, and optimizing the flow of opportunities through the sales or business development pipeline. It involves monitoring each stage of the customer journey from initial lead generation to deal closure to ensure consistent progress, identify bottlenecks, and forecast revenue accurately.",
+  "validator_name": "The Hackett Group Glossary: 'Pipeline Management'",
+  "validator_url": "https://www.thehackettgroup.com/glossary/pipeline-management/"
+ },
+ "CM-1-3-6-2-3": {
+  "definition": "Pipeline management is the process of organizing, tracking, and optimizing the flow of opportunities through the sales or business development pipeline. It involves monitoring each stage of the customer journey from initial lead generation to deal closure to ensure consistent progress, identify bottlenecks, and forecast revenue accurately.",
+  "validator_name": "The Hackett Group Glossary: 'Pipeline Management'",
+  "validator_url": "https://www.thehackettgroup.com/glossary/pipeline-management/"
+ },
+ "CM-1-3-6-2-7": {
+  "definition": "Business process performance measurement, commonly shortened to process performance measurement (PPM), aims at checking the achievement of strategic and operational goals and supporting decision-making for the continuous optimization of business processes. It involves the definition, gathering, visualization, and analysis of a set of indicators (process performance indicators, or PPIs) — quantifiable metrics that allow evaluation of the efficiency and effectiveness of business processes.",
+  "validator_name": "Springer Nature Reference: 'Business Process Performance Measurement'",
+  "validator_url": "https://link.springer.com/rwe/10.1007/978-3-319-63962-8_99-1"
+ },
+ "CM-1-3-6-6-14": {
+  "definition": "Corporate credit cards offer larger companies a streamlined way to manage employee spending. Instead of requiring employees to use personal funds and wait for reimbursement, companies can issue corporate credit cards for approved business purchases like hotel stays, travel, meals with clients, and office supplies.",
+  "validator_name": "Investopedia: 'Corporate Credit Card'",
+  "validator_url": "https://www.investopedia.com/corporate-credit-cards-definition-4685050"
+ },
+ "CM-1-3-7-2-6": {
+  "definition": "Customer service refers to the assistance an organization offers to its customers before or after they buy or use products or services. Customer service includes actions such as offering product suggestions, troubleshooting issues and complaints, or responding to general questions.",
+  "validator_name": "Oracle: 'What Is Customer Service?'",
+  "validator_url": "https://www.oracle.com/asean/cx/service/what-is-customer-service/"
+ },
+ "CM-1-3-7-4-3": {
+  "definition": "Business credit monitoring (or company credit tracking) is the monitoring of a business's credit history over time using business credit reports. It is largely used as a method to determine a company's ability to pay its debts, and is typically used by a company's credit management team. Monitoring over time provides a much wider perspective than a single credit report snapshot.",
+  "validator_name": "Wikipedia: 'Business credit monitoring'",
+  "validator_url": "http://en.wikipedia.org/wiki/Business_credit_monitoring"
+ },
+ "CM-1-3-8-3-4": {
+  "definition": "Root cause analysis is a formal investigation method that attempts to identify and address the management system failures that led to an incident. These root causes often are the causes, or potential causes, of other seemingly unrelated incidents — it identifies the underlying reasons the event was allowed to occur so that workable corrective actions can be implemented to help prevent recurrence.",
+  "validator_name": "AIChE CCPS Process Safety Glossary: 'Root Cause Analysis (RCA)'",
+  "validator_url": "https://www.aiche.org/ccps/resources/glossary/process-safety-glossary/root-cause-analysis-rca"
+ },
+ "CM-1-3-8-4": {
+  "definition": "Regulatory compliance and enforcement involves the direct monitoring and oversight of a specific individual, group, industry, or community participating in a regulated activity via market mechanisms, command and control features, or other means to control or govern conduct or behavior.",
+  "validator_name": "EPA Terminology Services: 'Regulatory Compliance & Enforcement Functions'",
+  "validator_url": "https://sor.epa.gov/sor_internet/registry/termreg/searchandretrieve/termsandacronyms/search.do;jsessionid=GuYzLuiyvZRATsQvebwxQir32z0rb8znubEcIiTj1q76vJi5PGPT!375289017?checkedAcronym=on&search=Search&d-1342820-e=14&matchCriteria=Contains&term=compliance&checkedTerm=on&6578706f7274=1"
+ },
+ "CM-1-3-9-1-3": {
+  "definition": "Customer service refers to the assistance an organization offers to its customers before or after they buy or use products or services. Customer service includes actions such as offering product suggestions, troubleshooting issues and complaints, or responding to general questions.",
+  "validator_name": "Oracle: 'What Is Customer Service?'",
+  "validator_url": "https://www.oracle.com/asean/cx/service/what-is-customer-service/"
+ },
+ "CM-1-3-9-2-2": {
+  "definition": "Customer service refers to the assistance an organization offers to its customers before or after they buy or use products or services. Customer service includes actions such as offering product suggestions, troubleshooting issues and complaints, or responding to general questions.",
+  "validator_name": "Oracle: 'What Is Customer Service?'",
+  "validator_url": "https://www.oracle.com/asean/cx/service/what-is-customer-service/"
+ },
+ "CM-1-1-2-13": {
+  "definition": "Finished goods inventory is any stock carried by a manufacturer ready for immediate sale. Finished goods are the third and final state of inventory — completed products that have undergone all stages of production, including processing, assembly, and packaging, and are in their final form, ready for sale to customers.",
+  "validator_name": "QuickBooks (Intuit): 'Finished goods inventory'",
+  "validator_url": "https://quickbooks.intuit.com/r/midsize-business/finished-goods-inventory-accounting/"
+ },
+ "CM-1-2-2-1-3": {
+  "definition": "Collateral is an asset that is promised as security on a loan. If the borrower can't make their payments and defaults on a loan, then the lender has a right to seize the assets pledged as collateral.",
+  "validator_name": "Investopedia: 'Collateral'",
+  "validator_url": "https://www.investopedia.com/ask/answers/100214/what-real-estate-underwriting.asp"
+ },
+ "CM-1-2-2-3-15": {
+  "definition": "A commodity is a basic good traded in large volumes and interchangeable with other goods of the same type. A commodity futures contract is an agreement to buy or sell a certain amount of a commodity at a set price in the future; commodity futures are typically used to take a position in an underlying asset such as crude oil, wheat, corn, gold, or natural gas.",
+  "validator_name": "Investopedia: 'Commodity Futures Contracts'",
+  "validator_url": "https://www.investopedia.com/terms/c/commodityfuturescontract.asp"
+ },
+ "CM-1-2-4-2-8": {
+  "definition": "Financial resources are the availability of money in the form of cash, securities, creditors, loan facilities, etc. possessed by an organisation.",
+  "validator_name": "Monash Business School Marketing Dictionary: 'Financial Resources'",
+  "validator_url": "https://www.monash.edu/business/marketing/marketing-dictionary/f/financial-resources"
+ },
+ "CM-1-2-4-3-1": {
+  "definition": "A compliance policy is a statement of an organization's approach to ensuring adherence to its normative obligations, approved by the board of directors or other managing body, and announced internally and externally as representing the organization's approach to carrying out this responsibility.",
+  "validator_name": "NYU School of Law: 'The Compliance Function: An Overview' — compliance policy",
+  "validator_url": "https://www.law.nyu.edu/sites/default/files/upload_documents/The Compliance Functiion an Overview.Miller.pdf"
+ },
+ "CM-1-2-4-4-6": {
+  "definition": "Warranty claim means any claim paid by a manufacturer, including provision of a credit, pursuant to a warranty program, an extended warranty program, or good will.",
+  "validator_name": "Cornell Legal Information Institute: 'Warranty claim' (49 CFR 579.4)",
+  "validator_url": "https://www.law.cornell.edu/definitions/index.php?width=840&height=800&iframe=true&def_id=5f8ee8830a543769283dddd633746d63&term_occur=999&term_src=Title%3A49%3ASubtitle%3AB%3AChapter%3AV%3APart%3A579%3ASubpart%3AC%3A579.21"
+ },
+ "CM-1-2-5-3-1": {
+  "definition": "Bulk cargo is cargo that is unbound as loaded; it is without count in a loose unpackaged form. Examples of bulk cargo include coal, grain, and petroleum products.",
+  "validator_name": "FHWA / USDOT Freight Glossary: 'Bulk Cargo'",
+  "validator_url": "https://www.oversight.volpe.dot.gov/certificationdb/pdfs/freight_glossary.pdf"
+ },
+ "CM-1-3-2-2-4": {
+  "definition": "A knowledge management strategy identifies the key needs, issues, and components within an organization and provides a framework for addressing these. Specifically, knowledge management strategy components include how an organization creates, captures, stores and uses knowledge.",
+  "validator_name": "IGI Global Scientific Publishing: 'Knowledge Management (KM) Strategy'",
+  "validator_url": "https://www.igi-global.com/dictionary/knowledge-management-government/36274"
+ },
+ "CM-1-3-2-3-4": {
+  "definition": "A knowledge management strategy identifies the key needs, issues, and components within an organization and provides a framework for addressing these. Specifically, knowledge management strategy components include how an organization creates, captures, stores and uses knowledge.",
+  "validator_name": "IGI Global Scientific Publishing: 'Knowledge Management (KM) Strategy'",
+  "validator_url": "https://www.igi-global.com/dictionary/knowledge-management-government/36274"
+ },
+ "CM-1-3-3-2-2": {
+  "definition": "A knowledge management strategy identifies the key needs, issues, and components within an organization and provides a framework for addressing these. Specifically, knowledge management strategy components include how an organization creates, captures, stores and uses knowledge.",
+  "validator_name": "IGI Global Scientific Publishing: 'Knowledge Management (KM) Strategy'",
+  "validator_url": "https://www.igi-global.com/dictionary/knowledge-management-government/36274"
+ },
+ "CM-1-3-3-2-4": {
+  "definition": "Price analysis is the study of how a price relates to other things such as product demand. In general business, it is the process of evaluating a proposed price independent of cost and profit.",
+  "validator_name": "Wikipedia: 'Price analysis'",
+  "validator_url": "https://en.wikipedia.org/wiki/Price_analysis"
+ },
+ "CM-1-3-3-5-6": {
+  "definition": "Internal marketing is the promotion of a company's objectives, products and services to employees within the organization. The purpose is to increase employee engagement with the company's goals and foster brand advocacy.",
+  "validator_name": "TechTarget: 'Internal marketing'",
+  "validator_url": "https://www.techtarget.com/whatis/definition/internal-marketing"
+ },
+ "CM-1-3-4-4-2": {
+  "definition": "Intellectual property refers to creations of the mind: inventions; literary and artistic works; and symbols, names and images used in commerce. It is divided into two categories: industrial property (patents for inventions, trademarks, industrial designs and geographical indications) and copyright (literary works, films, music, artistic works and architectural design).",
+  "validator_name": "WIPO: 'What is Intellectual Property?'",
+  "validator_url": "https://tind.wipo.int/record/28588?ln=en"
+ },
+ "CM-1-3-4-4-4": {
+  "definition": "Intellectual property refers to creations of the mind: inventions; literary and artistic works; and symbols, names and images used in commerce. It is divided into two categories: industrial property (patents for inventions, trademarks, industrial designs and geographical indications) and copyright (literary works, films, music, artistic works and architectural design).",
+  "validator_name": "WIPO: 'What is Intellectual Property?'",
+  "validator_url": "https://tind.wipo.int/record/28588?ln=en"
+ },
+ "CM-1-3-5-1": {
+  "definition": "The UK's Institute of Directors argues that every growing business requires an effective sales strategy: a clearly thought out strategy supported by clear objectives and a good understanding of the requirements of customers and the business's market environment can contribute to better sales outcomes.",
+  "validator_name": "Wikipedia: 'Sales operations' — sales strategy",
+  "validator_url": "https://en.wikipedia.org/wiki/Sales_operations"
+ },
+ "CM-1-3-5-3-6": {
+  "definition": "Sampling plan: any plan stating the number of sample units to be included in the sample as well as the corresponding plan parameters used to make acceptance and rejection decisions.",
+  "validator_name": "Cornell Legal Information Institute: 'Sampling plan' (7 CFR 42.102)",
+  "validator_url": "https://law.cornell.edu/definitions/?def_id=7c4932e46353763ecb4f5b0c3b5f8163&height=800&iframe=true&term_occur=999&term_src=Title:7:Subtitle:B:Chapter:I:Subchapter:A:Part:42:Subpart:B:42.108&width=840"
+ },
+ "CM-1-3-5-4-1": {
+  "definition": "Sampling plan: any plan stating the number of sample units to be included in the sample as well as the corresponding plan parameters used to make acceptance and rejection decisions.",
+  "validator_name": "Cornell Legal Information Institute: 'Sampling plan' (7 CFR 42.102)",
+  "validator_url": "https://law.cornell.edu/definitions/?def_id=7c4932e46353763ecb4f5b0c3b5f8163&height=800&iframe=true&term_occur=999&term_src=Title:7:Subtitle:B:Chapter:I:Subchapter:A:Part:42:Subpart:B:42.108&width=840"
+ },
+ "CM-1-3-6-6-6": {
+  "definition": "Corporate treasury management encompasses making sure there is sufficient cash at all times to meet the operational needs of the business, and takes charge of cash forecasting, working capital management, cash management, investment management, treasury risk management, and fund-raising.",
+  "validator_name": "Wiley textbook excerpt: Treasury management",
+  "validator_url": "https://catalogimages.wiley.com/images/db/pdf/9780470827574.excerpt.pdf"
+ },
+ "CM-1-3-7-4-1": {
+  "definition": "A credit policy is designed to help establish consistency across departmental functions. It provides the latitude to plan departmental operations within the scope of the company policy and to create effective procedures and controls — covering credit information, credit lines, collection policies, disputes, and marginal accounts — to implement that policy.",
+  "validator_name": "NACM (National Association of Credit Management): 'Establishing a Credit Policy'",
+  "validator_url": "https://nacm.org/pdfs/articles/Establishing_a_Credit_Policy.pdf"
+ },
+ "CM-1-3-9-2": {
+  "definition": "Service delivery is a component of business that defines the interaction between providers and clients where the provider offers a service, whether that is information or a task, and the client either finds value or loses value as a result. Good service delivery provides clients with an increase in value.",
+  "validator_name": "INFLIBNET e-Books (India Ministry of Education): 'Process of Service Creation and Delivery'",
+  "validator_url": "https://ebooks.inflibnet.ac.in/mgmtp10/chapter/process-of-service-creation-and-delivery/"
+ },
+ "CM-1-3-9-2-1": {
+  "definition": "Traceability is the ability to track forward the movement through specified stage(s) of the extended supply chain and trace backward the history, application or location of that which is under consideration.",
+  "validator_name": "GS1 Global Traceability Compliance Criteria Standard: 'Traceability'",
+  "validator_url": "https://ref.gs1.org/standards/global-traceability-compliance/"
+ },
+ "CM-1-3-9-3-3": {
+  "definition": "Cost-effectiveness is the ability to give the best possible profit or benefits in comparison with the money that is spent.",
+  "validator_name": "Oxford Advanced Learner's Dictionary: 'cost-effectiveness'",
+  "validator_url": "https://www.oxfordlearnersdictionaries.com/us/definition/english/cost-effectiveness"
+ },
+ "CM-1-1-2-12": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-1-7-2-1": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-3-7-1": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-3-7-1-1": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-3-7-1-2": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-3-7-1-3": {
+  "validator_name": "Wikipedia — Master data",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_data",
+  "definition": "Master data represents the data about the business entities that provide context for business transactions."
+ },
+ "CM-1-1-3-7-8": {
+  "validator_name": "Wikipedia — Postmodern brand (citing the American Marketing Association)",
+  "validator_url": "https://en.wikipedia.org/wiki/Postmodern_brand",
+  "definition": "A brand is a \"name, term, design, symbol or any other feature that identifies one seller's good or services as distinct from those of other sellers.\""
+ },
+ "CM-1-1-4-6-3": {
+  "validator_name": "Investopedia — Time Horizon (Business Risk)",
+  "validator_url": "https://www.investopedia.com/terms/t/timehorizon.asp",
+  "definition": "Business risk is the danger that a company will fail or go bankrupt."
+ },
+ "CM-1-1-7-1-3": {
+  "validator_name": "Wikipedia — Inventory valuation",
+  "validator_url": "https://en.wikipedia.org/wiki/Inventory_valuation",
+  "definition": "The two most widely used inventory accounting systems are the periodic and the perpetual. The perpetual inventory system requires accounting records to show the amount of inventory on hand at all times; in the periodic inventory system, sales are recorded as they occur but the inventory is not updated."
+ },
+ "CM-1-1-7-2-4": {
+  "validator_name": "Wikipedia — Master production schedule",
+  "validator_url": "https://en.wikipedia.org/wiki/Master_production_schedule",
+  "definition": "A master production schedule (MPS) is a plan for individual commodities to be produced in each time period such as production, staffing, inventory, etc. It is usually linked to manufacturing, where the plan indicates when and how much of each product will be demanded."
+ },
+ "CM-1-2-1-2-4": {
+  "validator_name": "Wikipedia — IT risk",
+  "validator_url": "https://en.wikipedia.org/wiki/IT_risk",
+  "definition": "Information technology risk, IT risk, IT-related risk, or cyber risk is any risk related to information technology."
+ },
+ "CM-1-2-2-1-1": {
+  "validator_name": "Investopedia — Credit Analysis",
+  "validator_url": "https://www.investopedia.com/terms/c/creditanalysis.asp",
+  "definition": "Credit analysis is the financial analysis of the credit standing of a person or entity that seeks to borrow capital. Its purpose is to present a clear idea of the borrower's ability to meet obligations and evaluate default risk."
+ },
+ "CM-1-3-3-3-2": {
+  "validator_name": "ProjectManagement.com (PMI) — Portfolio Governance",
+  "validator_url": "https://www.projectmanagement.com/blog-post/19697/portfolio-governance-ensuring-alignment-to-strategy--part-1-?blogName=Voices-on-Project-Management&posting=19697",
+  "definition": "Portfolio governance is the oversight and leadership of an individual portfolio: the appropriate oversight and decision-making that ensures successful execution of strategic initiatives (per PMI's Governance of Portfolios, Programs, and Projects practice guide)."
+ },
+ "CM-1-3-3-4-1": {
+  "validator_name": "Wikipedia — Target audience",
+  "validator_url": "https://en.wikipedia.org/wiki/Target_audience",
+  "definition": "The target audience is the intended audience or readership of a publication, advertisement, or other message catered specifically to the previously intended audience."
+ },
+ "CM-1-3-3-5-1": {
+  "validator_name": "Wikipedia — New media",
+  "validator_url": "http://en.wikipedia.org/wiki/New_media",
+  "definition": "New media are cultural objects which use digital computer technology for distribution and exhibition — e.g., the Internet, websites, computer multimedia, computer games, and virtual reality."
+ },
+ "CM-1-3-4-1-1": {
+  "validator_name": "Wikipedia — Market segmentation",
+  "validator_url": "https://en.wikipedia.org/wiki/Market_segment",
+  "definition": "Market segmentation is the process of dividing a broad consumer or business market, normally consisting of existing and potential customers, into sub-groups of consumers (known as segments) based on shared characteristics."
+ },
+ "CM-1-3-4-3-3": {
+  "validator_name": "Monash Business School Marketing Dictionary — Product Portfolio",
+  "validator_url": "https://www.monash.edu/business/marketing/marketing-dictionary/p/product-portfolio",
+  "definition": "A product portfolio is the mix of products manufactured or distributed by a company."
+ },
+ "CM-1-3-6-6-11": {
+  "validator_name": "Investopedia — Transaction in Accounting",
+  "validator_url": "https://www.investopedia.com/terms/t/transaction.asp",
+  "definition": "A transaction is a completed agreement between a buyer and a seller that involves an obligation to exchange goods, services, or financial assets in return for money."
+ },
+ "CM-1-3-7-3": {
+  "validator_name": "Wikipedia — Order fulfillment",
+  "validator_url": "https://en.wikipedia.org/wiki/Order_fulfillment",
+  "definition": "Order fulfillment is in the most general sense the complete process from point-of-sales inquiry to delivery of a product to the customer."
+ },
+ "CM-1-3-7-3-4": {
+  "validator_name": "Wikipedia — Order fulfillment",
+  "validator_url": "https://en.wikipedia.org/wiki/Order_fulfillment",
+  "definition": "Order fulfillment is in the most general sense the complete process from point-of-sales inquiry to delivery of a product to the customer."
+ },
+ "CM-1-3-7-5-6": {
+  "validator_name": "NIST CSRC Glossary — Information System Resilience",
+  "validator_url": "https://csrc.nist.GOV/glossary/term/information_system_resilience",
+  "definition": "The ability of an information system to continue to: (i) operate under adverse conditions or stress, even if in a degraded or debilitated state, while maintaining essential operational capabilities; and (ii) recover to an effective operational posture in a time frame consistent with mission needs."
+ },
+ "CM-1-3-9-1-5": {
+  "validator_name": "Wikipedia — Outline of information technology",
+  "validator_url": "https://en.wikipedia.org/wiki/Outline_of_information_technology",
+  "definition": "Information technology (IT) is the study or use of systems — especially computers and telecommunications — for storing, retrieving, and sending information."
+ },
+ "L1-shared-services": {
+  "validator_name": "Wikipedia — Shared services",
+  "validator_url": "https://en.wikipedia.org/wiki/Shared_services",
+  "definition": "Shared services is the provision of a service by one part of an organization or group, where that service had previously been found in more than one part of the organization or group."
+ },
+ "L1-human-resources": {
+  "validator_name": "Wikipedia — Strategic human resource planning",
+  "validator_url": "https://en.wikipedia.org/wiki/Strategic_human_resource_planning",
+  "definition": "Strategic human resource management recognizes the \"critical importance of human resources to strategy, organizational capability to adapt to change and the goals of the organization\" — i.e., a strategy that aligns human resources with the organization's goals."
+ },
+ "CM-1-1-1-1-2": {
+  "definition": "Identify the bedrock levels of market demand anticipated for the organization's products/services. Estimate future demand for products and services using historical data, analysis of the market environment and any externalities, to create ex ante approximations.",
+  "validator_name": "APQC: 'Develop baseline demand forecasts'",
+  "validator_url": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/average-monthly-demand-forecast"
+ },
+ "CM-1-1-1-1-4": {
+  "definition": "Initiating the line-level plan for production. Break down the production schedule into specific lines, specifying the various objectives of the production schedule.",
+  "validator_name": "APQC: 'Generate line level plan'",
+  "validator_url": "https://www.apqc.org/what-we-do/benchmarking/open-standards-benchmarking/measures/turnover-rate-manufacturing-personnel"
+ },
+ "CM-1-2-1-2-9": {
+  "definition": "A contract is a mutually binding legal relationship obligating the seller to furnish the supplies or services (including construction) and the buyer to pay for them.",
+  "validator_name": "Cornell LII: 'Contract' (48 CFR § 2.101)",
+  "validator_url": "https://www.law.cornell.edu/definitions/index.php?width=840&height=800&iframe=true&def_id=4233b22c1057218e38808da07b723357&term_occur=999&term_src=Title:48:Chapter:1:Subchapter:B:Part:12:Subpart:12.4:12.403"
+ },
+ "CM-1-2-4-2-11": {
+  "definition": "Taxes are mandatory contributions levied on individuals or corporations by a government entity—whether local, regional, or national. Tax revenues finance government activities, including public works and services such as roads and schools, or programs such as Social Security and Medicare.",
+  "validator_name": "Investopedia: 'Taxes'",
+  "validator_url": "https://www.investopedia.com/terms/t/taxes.asp"
+ },
+ "CM-1-2-4-2-9": {
+  "definition": "Cash is legal money, like coins or bills, used for buying goods, paying off debts, or receiving services. In a corporate setting it can also refer to assets that a company can quickly convert into cash.",
+  "validator_name": "Investopedia: 'Cash'",
+  "validator_url": "https://www.investopedia.com/terms/c/cash.asp"
+ },
+ "CM-1-2-4-4-1": {
+  "definition": "A prospect is an organization or potential client that matches a seller's ideal customer profile but has not yet expressed interest in the seller's products or services; sales prospecting is the process of reaching out to such potential customers.",
+  "validator_name": "Wikipedia: 'Qualified prospect'",
+  "validator_url": "https://en.wikipedia.org/wiki/Qualified_prospect"
+ },
+ "CM-1-2-4-4-3": {
+  "definition": "Warranty claim means any claim paid by a manufacturer, including provision of a credit, pursuant to a warranty program, an extended warranty program, or good will.",
+  "validator_name": "Cornell Legal Information Institute: 'Warranty claim' (49 CFR 579.4)",
+  "validator_url": "https://www.law.cornell.edu/definitions/index.php?width=840&height=800&iframe=true&def_id=5f8ee8830a543769283dddd633746d63&term_occur=999&term_src=Title%3A49%3ASubtitle%3AB%3AChapter%3AV%3APart%3A579%3ASubpart%3AC%3A579.21"
+ }
+}
