@@ -63,6 +63,7 @@ ontology; everything else points at it.
 | 1 | Foundations: competency questions; URI, language, version, license, module policies | ✅ Done 2026-09-18 |
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
+| 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 5 rejected, 502 gaps for human authoring) | ✅ Done 2026-09-18 |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -102,7 +103,7 @@ order is otherwise unchanged.
   — corrected.
 - Delivered via PR #25
   (`update/apqc-pcf-7.2.2`), commits authored as
-  `aadehamid <aadehamid@gmail.com>`.
+  `aadehamid <aadehamid@gmail.com>` — **merged 2026-09-18**.
 
 **Decisions.** APQC is a consistency reference, not the source model
 (§4). Cited APQC IDs are verified against the workbook, not trusted
@@ -246,7 +247,9 @@ orphans (verified by script, not by eye).
   `output/step2-identity-report.md`.
 - **Delivered** via PR #26 (`ontology/foundations`), with the playbook,
   competency questions, APQC scope decisions, cross-check report, and
-  all build scripts/outputs under `business_architecture/ontology/`.
+  all build scripts/outputs under `business_architecture/ontology/` —
+  **merged 2026-09-18** (main, as of today, also carries PR #25's APQC
+  v7.2.2 work).
 
 ### Step 3 — SKOS taxonomy ✅ (2026-09-18)
 
@@ -267,10 +270,12 @@ triples, in stable document order.
   `@en` prefLabel each; every concept in scheme; 678 broader links, no
   dangling targets, no self-references; 2 top concepts; zero untagged
   prose literals; Turtle round-trip lossless.
-- **Known gap, not invented:** 503 concepts have no `skos:definition`
+- **Known gap, not invented:** 503 concepts had no `skos:definition`
   (the repo describes only 177 nodes). The language policy requires one
-  per concept — authoring the missing 503, or a SHACL shape flagging
-  them in Step 9, is follow-up work.
+  per concept — the missing definitions were taken up in **Step 3b**
+  (2026-09-18): 1 adopted with provenance, 502 remain for human
+  authoring (291 review-link, 125 no-source, 81 no-candidate, 5
+  rejected). A Step 9 SHACL shape can flag the unfilled ones.
 - **Deliberately excluded:** RACI, systems, lanes, and all other node
   fields — Steps 4/5. This file is the taxonomy, nothing more.
 - **Artifacts:** `~/workspace/ontology-build/step3-skos-taxonomy.py`,
