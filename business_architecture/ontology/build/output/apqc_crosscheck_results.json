@@ -1626,7 +1626,7 @@
   ]
  },
  {
-  "status": "COVERED",
+  "status": "THIN",
   "avg": 0.6,
   "label": "13.8 Develop, Manage, and Deliver Analytics",
   "n": 5,
