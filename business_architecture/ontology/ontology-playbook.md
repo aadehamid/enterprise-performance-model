@@ -63,7 +63,8 @@ ontology; everything else points at it.
 | 1 | Foundations: competency questions; URI, language, version, license, module policies | ✅ Done 2026-09-18 |
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
-| 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 5 rejected, 502 gaps for human authoring) | ✅ Done 2026-09-18 |
+| 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
+| 3c | Human definition authoring (14 L1–L3 gaps authored one at a time with Hamid; merged into taxonomy: 192/680 definitions, 3,660 triples) | ✅ Done 2026-09-18 |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -253,7 +254,7 @@ orphans (verified by script, not by eye).
 
 ### Step 3 — SKOS taxonomy ✅ (2026-09-18)
 
-The core module's taxonomy as Turtle: 680 `skos:Concept`s, 3,571
+The core module's taxonomy as Turtle: 680 `skos:Concept`s, 3,660
 triples, in stable document order.
 
 - **ConceptScheme:** the core module namespace URI itself —
@@ -272,17 +273,54 @@ triples, in stable document order.
   prose literals; Turtle round-trip lossless.
 - **Known gap, not invented:** 503 concepts had no `skos:definition`
   (the repo describes only 177 nodes). The language policy requires one
-  per concept — the missing definitions were taken up in **Step 3b**
-  (2026-09-18): 1 adopted with provenance, 502 remain for human
-  authoring (291 review-link, 125 no-source, 81 no-candidate, 5
-  rejected). A Step 9 SHACL shape can flag the unfilled ones.
+  per concept — Step 3b (2026-09-18) triangulated 1 adoption;
+  **Step 3c** (2026-09-18) human-authored the 14 L1–L3 gaps with Hamid.
+  192/680 concepts now carry definitions; 488 gaps remain (all L4–L6),
+  for future authoring passes. A Step 9 SHACL shape can flag the
+  unfilled ones.
 - **Deliberately excluded:** RACI, systems, lanes, and all other node
   fields — Steps 4/5. This file is the taxonomy, nothing more.
 - **Artifacts:** `~/workspace/ontology-build/step3-skos-taxonomy.py`,
   `step3-taxonomy.ttl`, `step3-taxonomy-report.md`.
-- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
-  2026-09-18, together with Step 3b) — `downstream_process_map.json`
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened and
+  merged 2026-09-18, together with Step 3b) — `downstream_process_map.json`
   untouched.
+
+### Step 3c — human definition authoring ✅ (2026-09-18, complete)
+
+The 14 L1–L3 definition gaps from the Step 3b workqueue, authored one
+at a time with Hamid: 10 L1 enabling/value-chain functions (Commercial
+& Marketing, Refining, Midstream, Supply Chain Management, Finance,
+Shared Services, Process Excellence & IT, Human Resources, Legal &
+Corporate Communications, EHS & Government Reporting) and 4 commercial
+planning stubs under C&M › Planning & Scheduling (Regional
+Optimization, Regional Backcasting, Refinery Planning, Distribution
+Backcasting).
+
+- **Working method:** draft → Hamid's wording (most L1s are his, verbatim
+  or near-verbatim) → approved definition + scope note recorded in
+  `step3c-authored-definitions.json` with parked child concepts,
+  planned Step 8 children, and terminology notes.
+- **Boundary rules locked in the decision log:** primary-purpose (not
+  asset-location) classification; domain placement questions for SCM,
+  C&M, Refining, Midstream, Distribution, Finance, PE&IT, HR, Legal,
+  EHS; Finance owns financial governance/transactions while domains own
+  the operational event; Shared Services executes but never replaces
+  the accountable functional owner; "Shared Services delivers IT
+  support on behalf of Process Excellence & IT"; the commercial
+  planning loop (Optimization → Refinery Planning → Refining execution
+  → Backcasting) and its distribution mirror.
+- **APQC candidates:** 5 more false matches rejected at the human gate
+  during authoring (total 10 rejected): "Process returns"→PE&IT,
+  "Develop human resources strategy"→HR function, "Determine corporate
+  incentives"→Legal & Corp Comm, "Manage reporting processes"→EHS,
+  "Supply chain resilience"→Regional Optimization.
+- **Merge:** `step3-skos-taxonomy.py --authored` adds `skos:definition`
+  + `skos:scopeNote` + `dcterms:source` (human-authored, approved by
+  Hamid, dated) per concept; validation asserts hold. Taxonomy now:
+  **680 concepts, 678 broader links, 192 definitions, 3,660 triples.**
+- **Delivered** via the Step 3c PR (new branch off main, after PR #28
+  merged 2026-09-18) — `downstream_process_map.json` untouched.
 
 ### Step 3b — definition triangulation ✅ (2026-09-18, complete)
 
@@ -316,18 +354,19 @@ descriptions triangulated against public industry definitions.
   NO AGREEMENT / NO SOURCE / NO CANDIDATE → author an LSC definition.
   Nothing is adopted on a heuristic match alone; APQC may never validate
   itself.
-- **Final tally:** 178/680 definitions (177 repository-authored + 1
-  triangulated); 502 definition gaps remain for human authoring
-  (291 review-link, 125 no-source, 81 no-candidate, 5 rejected).
+- **Final tally (after Step 3c):** 192/680 definitions (177
+  repository-authored + 1 triangulated + 14 human-authored);
+  10 APQC candidates rejected at the human gate; 488 definition
+  gaps remain (all L4–L6) for future authoring passes.
 - **Provenance:** every adopted definition carries `dcterms:source` →
   per-source `dcterms:BibliographicResource` blank nodes (element ID +
   title), themselves `dcterms:isPartOf` registry resources
   `…/source/apqc-pcf-7.2.2` and `…/source/eia-glossary` (title, publisher,
   issued, rights). Wired via `step3-skos-taxonomy.py --adoptions`;
   base build without adoptions reproduces byte-identical output.
-- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
-  2026-09-18, together with Step 3) — review CSV, adoptions, validation
-  records, and both build scripts included.
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened and
+  merged 2026-09-18, together with Step 3) — review CSV, adoptions,
+  validation records, and both build scripts included.
 
 ---
 
@@ -399,6 +438,123 @@ without a dated amendment and Hamid's explicit agreement.
 - **Constraints are not modeled.** The constraints module and its
   competency questions are parked; the "reference, don't subclass"
   principle is parked with them (2026-09-18).
+- **Classify activities by primary purpose, not asset location**
+  (2026-09-18, from definition authoring): a tank, berth, pipeline,
+  rack, or laboratory can participate in multiple contexts without
+  being forced into one category. E.g. crude unloaded into refinery
+  tanks is Midstream receipt even when co-located with a refinery;
+  an intermediate transferred between refinery process units is
+  Refining even though it physically moves.
+- **Midstream/Refining conceptual split** (2026-09-18): Midstream
+  moves, stores, receives, transfers, and dispatches material;
+  Refining transforms material into different products or
+  specifications. Maintenance and turnarounds enable refining but do
+  not themselves refine — they live in scope notes, not definitions.
+- **Commercial & Marketing is the market-facing value-optimization
+  function** (2026-09-18): it creates, manages, and optimizes the
+  commercial value of products and services. It coordinates with
+  refining, midstream, distribution, finance, and IT — and spans the
+  commercial hydrocarbon lifecycle as an overlay — but does not
+  subsume their underlying physical operations or enterprise-wide
+  technology services.
+- **Domain placement rule — each L1 domain's primary question**
+  (2026-09-18): Supply Chain Management — "what should move, be
+  made, held, or replenished, where and when?" (orchestrates, does
+  not own execution); Commercial & Marketing — "for which
+  customer/market, under what offer, price, contract, or margin?";
+  Refining — "how is feedstock transformed into compliant
+  products?"; Midstream — "how are bulk feedstocks and products
+  physically received, stored, transferred, and transported?";
+  Distribution — "how are products fulfilled and delivered into
+  channels or to end customers?" Use this table as the placement
+  test when new processes are modeled.
+- **Finance owns financial governance and financial transactions;
+  business domains own the operational or commercial event that
+  creates them** (2026-09-18): Finance's primary question is "what is
+  the organization's financial position, performance, obligation,
+  exposure, and control requirement?" Commercial defines/negotiates
+  economic activity; Finance records, controls, settles, reports, and
+  analyzes it. SCM governs physical/inventory decisions; Finance
+  measures working capital, costs, valuation, cash consequences, and
+  financial performance. Procurement owns sourcing; Finance owns
+  invoice processing, payment, accounting, tax treatment, and
+  financial control. HR owns workforce policy and inputs; Finance
+  owns pay calculation, payment, withholding, and payroll accounting.
+- **Process Excellence & IT's primary question** (2026-09-18): "how
+  should the enterprise operate, and what technology enables it?" —
+  improve, standardize, govern, measure, automate, and digitally
+  enable how the enterprise operates. It does not own business
+  outcomes or physical execution in the other domains. IT Service
+  Management design belongs here; a centralized service desk or
+  transactional IT-admin team under Shared Services is a delivery
+  model — "Shared Services delivers IT support on behalf of Process
+  Excellence & IT", not a second IT domain (parked for Step 4/5).
+- **Human Resources' primary question** (2026-09-18): "what
+  workforce is needed, and how is it planned, attracted, developed,
+  rewarded, engaged, retained, and transitioned?" HR owns workforce
+  policies, people processes, employee experience, and workforce
+  information — including authorized payroll inputs; Finance owns
+  pay calculation, payment, withholding, and payroll accounting.
+- **Legal & Corporate Communications' primary question**
+  (2026-09-18): "what legal obligation, advice, contract support,
+  governance matter, or official internal message applies?" Legal
+  provides counsel, legal-risk management, and regulatory/compliance
+  advice; owns internal corporate communications and approved
+  enterprise messaging. Government/industry relations, investor
+  relations, and public/media/community relations are out of scope
+  (Step 8) — as are commercial incentives, which belong with
+  Commercial & Marketing.
+- **EHS & Government Reporting's primary question** (2026-09-18):
+  "is this safe, environmentally compliant, correctly managed when
+  events occur, and properly reported to regulators?" EHS defines
+  standards, assurance, reporting obligations, incident-management
+  methods, governance, and oversight — the functional or asset owner
+  operates, executes containment, and closes assigned actions.
+  Legal advises on privilege, exposure, and disclosure.
+- **Commercial planning vs. SCM planning** (2026-09-18, Regional
+  Optimization): commercial planning (e.g. Regional Optimization)
+  selects the *economically preferred* plan — which demand to serve,
+  how to allocate constrained molecules, buy/sell/exchange,
+  inventory positioning, margin subject to service commitments.
+  Supply Chain Management coordinates the cross-functional
+  *executable* plan. Operators execute production, storage,
+  transfers, blending, transport, and delivery. Generalizes to the
+  other commercial planning stubs.
+- **Optimization vs. Backcasting** (2026-09-18, regional planning
+  loop): Optimization asks "what is the best commercially feasible
+  regional plan?" Backcasting asks "what actually happened versus
+  that plan, why did it happen, what decision or constraint drove
+  it, and what should change next cycle?" Backcasting compares
+  against the approved plan *and its contemporaneous assumptions*,
+  not a later reforecast or rewritten baseline.
+- **Commercial planning loop — four-node boundary** (2026-09-18):
+  Regional Optimization → the integrated regional commercial plan
+  (best commercially feasible regional plan). Refinery Planning →
+  crude/feedstock slate, operating-mode, throughput, yield,
+  quality, and availability targets (what should this refinery
+  buy, run, make, and target). Refining → detailed
+  operating/scheduling decisions, unit operations, control,
+  maintenance, turnaround work (how is the refinery safely and
+  reliably operated — including authority to depart from plan).
+  Regional Backcasting → reconciled plan-vs-actual variance
+  explanations and learning.
+- **Distribution planning loop — four-node boundary**
+  (2026-09-18): Distribution planning/optimization → the approved
+  distribution plan, allocations, shipment/replenishment targets,
+  and constraints (what inventory moves through which route, mode,
+  source, and destination). Distribution Backcasting → reconciled
+  plan-vs-actual performance, variance drivers, preserved decision
+  context, planning improvements. Distribution execution →
+  executed movements, delivery confirmations, exceptions, operating
+  records (how today's shipments and deliveries are safely carried
+  out). Finance → invoices, accruals, settlements, official
+  financial results (freight, inventory, revenue, cost).
+- **Shared Services executes designated services; it does not replace
+  the accountable functional owner** (2026-09-18): Shared Services is
+  the delivery model and shared organization (standardized processes,
+  common platforms, defined service levels), not a second Finance, HR,
+  IT, or Procurement. Functional policy, strategy, design,
+  governance, and domain outcomes stay with the accountable owner.
 
 ### Validation and process
 - **Core SHACL where sufficient; SHACL-SPARQL only when Core cannot
@@ -560,6 +716,32 @@ Facts about the source material that are easy to get wrong:
    modeling gap, not a bad question.
 5. **Boundary notes are decisions too.** "Out of scope" with a recorded
    reason beats silent omission; future-you will thank present-you.
+6. **Definition authoring workflow (Step 3c, locked 2026-09-18).**
+   Hamid fills `step3c-definition-authoring-workbook.xlsx` (the single
+   "Review & authoring" sheet) and gets it onto GitHub; the assistant
+   pulls it, runs `step3c-workbook-validate.py` (mechanical gate), then
+   performs a full semantic review against the enterprise-grade bar
+   below. Every doubt comes back to Hamid as a question. Only
+   `approved` rows whose questions are resolved merge into the taxonomy
+   via `step3-skos-taxonomy.py --authored`. Nothing merges on
+   assumption — the human gate from Step 3b applies to human-authored
+   text too.
+
+### Enterprise-grade definition review bar
+1. **Defined, not labeled.** No circular openings ("the finance
+   function…"); classify by primary purpose, not asset location.
+2. **Bounded.** Every definition ships with a scope note; every
+   out-of-scope item names the sibling that owns it.
+3. **Coherent upward.** The child must not contradict its parent's
+   definition or scope note.
+4. **Disjoint sideways.** No two siblings may claim the same activity —
+   overlaps are flagged as questions with both rows cited.
+5. **Terminology-stable.** The same term means the same thing in every
+   row; new terms go in `terminology_notes`.
+6. **Parked, not smuggled.** Future concepts noticed while defining go
+   in `parked_children`; constraints stay parked per Appendix A.
+7. **Provenance-clean.** Human-authored rows carry author, approver,
+   and date; APQC-sourced rows keep dual provenance.
 
 ---
 

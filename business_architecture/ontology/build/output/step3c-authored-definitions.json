@@ -1,0 +1,207 @@
+[
+ {
+  "slug": "CM-1",
+  "level": 1,
+  "lsc_name": "Commercial & Marketing",
+  "definition": "The downstream business function that creates, manages, and optimizes the commercial value of petroleum products and services through market strategy, customer and channel management, supply and trading, commercial planning and scheduling, pricing, sales, and order-to-cash activities.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "definition_note": "2026-09-18: replaced earlier end-to-end draft with the narrower value-optimization definition per Hamid's go-ahead.",
+  "scope_note": "Spans the commercial hydrocarbon lifecycle from supply acquisition and commercial optimization through product positioning, customer order capture, allocation, fulfilment coordination, invoicing, payment, and commercial performance management. It coordinates with refining, midstream, distribution, finance, and enterprise IT, but does not itself encompass their underlying physical operations or enterprise-wide technology services.",
+  "proposed_tree_change": "Reconsider 'IT Services' as a strict child of Commercial & Marketing: either rename to 'Commercial IT and Digital Enablement' (technology services, platforms, applications, data products, and integration capabilities dedicated to commercial/marketing/supply/trading/planning/sales/O2C processes), or reparent under Process Excellence & IT with an 'enables' link to Commercial & Marketing. Parked for the consolidated repo-JSON proposal after the modeling pass (2026-09-18) — tree not churned now.",
+  "child_role_notes": {
+   "Marketing": "market intelligence, brand, channel, product, customer-segment, and offer strategy",
+   "Planning & Scheduling": "commercial/supply planning, allocation, optimization, nominations, and scheduling — not physical unit-operation scheduling",
+   "Supply And Trading": "feedstock/product sourcing, trading, optimization, exposure management, commercial contracting"
+  },
+  "child_role_notes_note": "Parked 2026-09-18 for Step 4 process-definition modeling."
+ },
+ {
+  "slug": "L1-refining",
+  "level": 1,
+  "lsc_name": "Refining",
+  "definition": "The operation of petroleum refineries to convert crude oil and other hydrocarbon feedstocks into specification-compliant fuels, blendstocks, lubricants, asphalt, petrochemical feedstocks, and other refined products through separation, conversion, treatment, blending, and associated refinery operations.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Encompasses refinery production operations and the planning, execution, and recovery activities required to maintain refinery assets, reliability, integrity, safety, and operating availability, including major maintenance and turnarounds.",
+  "excludes": "Bulk transportation, terminaling, and distribution of products outside refinery operations; retail sale; enterprise-wide generic asset management where it is not refinery-specific.",
+  "planned_children": [
+   "Refinery Operations",
+   "Process Unit Operations",
+   "Refinery Production Planning and Scheduling",
+   "Reliability and Asset Integrity",
+   "Refinery Maintenance",
+   "Turnaround Management",
+   "Shutdown, Startup, and Commissioning"
+  ],
+  "planned_children_note": "Parked 2026-09-18 for Step 8 (asset-maintenance / turnaround modeling)."
+ },
+ {
+  "slug": "L1-midstream",
+  "level": 1,
+  "lsc_name": "Midstream",
+  "definition": "The transportation, terminaling, storage, and bulk handling of crude oil, intermediates, and refined products between supply points, refineries, terminals, and downstream distribution locations.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "definition_note": "2026-09-18: second sentence (asset list) folded into scope_note per Hamid's go-ahead.",
+  "scope_note": "Includes receipt, dispatch, transfer, pipeline, marine, rail, and bulk-truck logistics; terminal and tank-farm operations; inventory management; blending and additive operations where performed outside refinery process units; product segregation; custody transfer; nominations; scheduling; and bulk delivery to downstream depots, customers, or other facilities.",
+  "excludes": "Refinery process-unit operations and conversion; retail forecourt operations; last-mile consumer delivery; customer sales and account management; exploration and production; enterprise-wide trading/risk-management activities unless explicitly assigned to this domain.",
+  "planned_children": {
+   "Transportation and Logistics": [
+    "Pipeline Transportation",
+    "Marine Transportation",
+    "Rail Transportation",
+    "Bulk Road Transportation"
+   ],
+   "Terminal and Storage Operations": [
+    "Terminal Operations",
+    "Tank Farm Operations",
+    "Receipt and Unloading",
+    "Transfer and Dispatch",
+    "Bulk Inventory Management"
+   ],
+   "Product Management": [
+    "Product Segregation",
+    "Product Quality Assurance",
+    "Terminal Blending",
+    "Additive Injection"
+   ],
+   "Commercial and Control Activities": [
+    "Custody Transfer",
+    "Nominations and Scheduling",
+    "Measurement and Reconciliation",
+    "Logistics Coordination"
+   ]
+  },
+  "planned_children_note": "Parked 2026-09-18 for Step 8. Whether Commercial and Control Activities sits under Midstream depends on the framing: operating-model taxonomy (yes — they govern physical movement) vs capability map (nominations/settlement may belong to Supply and Trading, linked by relations)."
+ },
+ {
+  "slug": "L1-supply-chain-mgmt",
+  "level": 1,
+  "lsc_name": "Supply Chain Mgmt.",
+  "definition": "The integrated planning, coordination, and optimization of feedstock, intermediate, product, inventory, capacity, logistics, and information flows across the downstream petroleum value chain — from supply and sourcing through refining, terminaling, distribution, and customer fulfilment.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Includes demand and supply balancing; sourcing and replenishment planning; production and refinery supply planning; inventory and working-capital optimization; network, terminal, and distribution planning; transportation and delivery planning; materials management; supplier and carrier coordination; performance management; and supply-chain risk and disruption management. It orchestrates, but does not replace, the physical execution performed by refining, midstream, distribution, procurement, and commercial operations.",
+  "proposed_label_change": "If 'Planning & Scheduling' remains a child of Commercial & Marketing, qualify it as 'Commercial Planning & Scheduling' so Supply Chain Management can own broader 'Integrated Supply Chain Planning' (demand, supply, inventory, production, terminal, distribution planning) without duplicate meanings. Parked 2026-09-18 for the consolidated repo-JSON proposal — labels not churned now."
+ },
+ {
+  "slug": "L1-finance",
+  "level": 1,
+  "lsc_name": "Finance",
+  "definition": "Planning, recording, controlling, reporting, and managing the financial resources, performance, obligations, and risks of the downstream business, including financial planning and analysis, accounting, reporting, payroll, treasury, tax, and internal financial controls.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Includes budgeting, forecasting, financial and management accounting, period close, statutory and management reporting, accounts payable, expense reimbursement, payroll, treasury, liquidity and cash management, tax, financial compliance, internal controls, audit support, and financial risk management. Supports commercial, supply-chain, refining, midstream, distribution, and enabling-function processes through financial governance, measurement, and transaction processing. Excludes operational execution in those business domains and fixed-asset project accounting where it is intentionally governed and executed as an ERP-native capability outside this taxonomy's modeled scope."
+ },
+ {
+  "slug": "L1-shared-services",
+  "level": 1,
+  "lsc_name": "Shared Services",
+  "definition": "An enterprise service-delivery model that consolidates common, repeatable business-support services for multiple business units, legal entities, or regions through a shared organization, standardized processes, common platforms, and defined service levels.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Delivers selected operational and transactional services on behalf of enterprise functions and business domains, including finance operations, HR operations, payroll administration, procurement operations, IT service delivery, master-data administration, customer and supplier support, and other standardized administrative services. Services may be delivered centrally, regionally, or virtually and are governed through service catalogs, service levels, performance measures, and, where applicable, chargeback or cost-allocation arrangements."
+ },
+ {
+  "slug": "L1-process-excellence-it",
+  "level": 1,
+  "lsc_name": "Process Excellence & IT",
+  "definition": "The enabling function that drives operational excellence through process governance, standardization, performance management, continuous improvement, and transformation; and enables the enterprise through technology strategy, architecture, platforms, infrastructure, cybersecurity, data and integration, and digital capabilities.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Includes enterprise process architecture and governance; process ownership, documentation, standardization, measurement, benchmarking, and maturity assessment; continuous improvement, lean/six-sigma methods, automation, and business transformation; enterprise and solution architecture; portfolio, product, project, and demand management; application, data, integration, cloud, infrastructure, network, end-user, and IT service management; cybersecurity, technology risk, resilience, and disaster recovery; and delivery of digital, analytics, AI, and automation capabilities. Enables and governs cross-functional ways of working and enterprise technology. It does not own the business outcomes or physical execution of refining, midstream, distribution, commercial, finance, HR, legal, or EHS processes, except where a specifically delegated enterprise service is modeled as such.",
+  "parked_relation_note": "IT Service Management vs Shared Services: Process Excellence & IT owns IT operating-model policy, technology architecture, platforms, cybersecurity, application/infrastructure management, and IT service-management design; Shared Services may operate a centralized service desk, identity administration, end-user support, or transactional technology-admin team as a delivery model. Model as 'Shared Services delivers IT support on behalf of Process Excellence & IT' — not a second IT domain. Parked 2026-09-18 for Step 4/5 relationship modeling."
+ },
+ {
+  "slug": "L1-human-resources",
+  "level": 1,
+  "lsc_name": "Human Resources",
+  "definition": "The function that plans, attracts, develops, rewards, engages, retains, and transitions the workforce to enable the downstream business, including workforce planning, talent acquisition, onboarding, learning and development, performance management, compensation and benefits, employee and labor relations, HR policy and compliance, workforce information, and HR service delivery.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Includes workforce strategy and planning; organizational and position management; recruiting, sourcing, selection, hiring, and onboarding; learning, development, performance, talent, succession, and career management; compensation, benefits, recognition, and payroll-input administration; employee and labor relations; workforce policy, employment compliance, ethics-related workforce processes, and employee communications; workforce data, HR information systems, people analytics, and HR service delivery; and employee transition, redeployment, separation, and retirement. Human Resources owns workforce policies, people processes, employee experience, and workforce information. It provides authorized employee, time, attendance, compensation, and deduction inputs to payroll; Finance or a designated payroll service owns pay calculation, payment execution, withholding/remittance, payroll accounting, and financial control.",
+  "planned_children": [
+   "Workforce Planning and HR Strategy",
+   "Recruit, Source, and Select Employees",
+   "Manage Employee Onboarding, Development, and Training",
+   "Manage Performance, Reward, and Retain Employees",
+   "Manage Employee and Labor Relations",
+   "Redeploy, Separate, and Retire Employees",
+   "Manage Employee Information and People Analytics",
+   "Manage HR Service Delivery",
+   "Manage Employee Communications"
+  ],
+  "planned_children_note": "Parked 2026-09-18 for Step 8 (HR depth: 7.2/7.3/7.5)."
+ },
+ {
+  "slug": "L1-legal-corp-comm",
+  "level": 1,
+  "lsc_name": "Legal & Corp Comm",
+  "definition": "Provide legal counsel and legal-risk management, including contract and transaction support, litigation and dispute resolution, regulatory and compliance advice, corporate governance and entity support, and management of external legal providers; develop and deliver internal corporate communications and approved enterprise messaging.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "In scope: general counsel and legal advice to management and functions; legal review and support for contracts, transactions, claims, disputes, investigations, and litigation; regulatory interpretation and legal/compliance advice; corporate governance, entity management, board/committee administration where retained in the function, and corporate records; intellectual-property and outside-counsel management where not separate domains; employee, leadership, change, policy, crisis, and enterprise-wide internal communications; approval, stewardship, and consistency of official corporate messages. Out of scope (Step 8 decision): government relations, lobbying, and industry-association engagement; investor relations, shareholder engagement, and external board relations; public relations, media relations, community relations, philanthropy, and external reputation campaigns; distributor incentives, trade discounts, channel allowances, and other commercial-program design."
+ },
+ {
+  "slug": "L1-ehs-gov-reporting",
+  "level": 1,
+  "lsc_name": "EHS & Gov Reporting",
+  "definition": "Protect people, assets, and the environment through process safety; occupational health and safety; environmental management and compliance; emergency preparedness and response; incident, release, and near-miss management; corrective-action learning; and required regulatory reporting to government authorities.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "This domain governs EHS management, environmental and safety compliance, required regulator-facing reporting, and the enterprise coordination of incidents, releases, investigations, corrective actions, and emergency response. It does not replace operational ownership: operating sites, asset owners, maintenance, logistics, product stewardship, and business functions remain accountable for safely executing their work, preventing and containing events, and completing assigned corrective actions. Legal & Corporate Communications advises on legal privilege, enforcement exposure, disclosure, litigation hold, regulator strategy, and approved internal/external communications when those dimensions arise."
+ },
+ {
+  "slug": "CM-1-1-2",
+  "level": 3,
+  "lsc_name": "Regional Optimization",
+  "definition": "Optimize the integrated regional supply, demand, production, inventory, and product-movement plan to maximize commercial margin and reliably fulfill customer commitments within refinery, terminal, transportation, product-quality, and contractual constraints.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Regional Optimization determines the commercially preferred regional supply-and-disposition plan, including demand allocation, supply sourcing, product placement, inventory positioning, exchanges, and inter-regional movements. It does not directly operate refinery units, terminals, pipelines, vessels, trucks, or retail/wholesale delivery activities; those functions provide capabilities, constraints, and execution feedback to the optimization cycle."
+ },
+ {
+  "slug": "CM-1-1-5",
+  "level": 3,
+  "lsc_name": "Regional Backcasting",
+  "definition": "Reconcile actual regional supply, demand, production, inventory, product movements, and commercial outcomes against the approved plan and its contemporaneous assumptions and constraints; quantify and explain variances; and use the findings to improve subsequent regional planning and optimization cycles.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Regional Backcasting preserves and compares the approved planning baseline, actual outcomes, material assumptions, constraints, decisions, and variance explanations for a completed planning period. It produces commercially meaningful plan-versus-actual analysis — such as margin, price, volume, mix, yield, availability, inventory, logistics, quality, and customer-fulfillment variances — and feeds validated lessons into subsequent regional optimization. It does not replace Finance's statutory or management-close processes, SCM's execution control, or operating functions' technical root-cause investigations."
+ },
+ {
+  "slug": "CM-1-1-4",
+  "level": 3,
+  "lsc_name": "Refinery Planning",
+  "definition": "Develop the commercially optimal refinery production plan — selecting crude and feedstock intake, refinery operating modes, unit-throughput targets, product yield and quality targets, and production horizons — to fulfill commercial commitments and maximize margin within feasible refinery, supply, inventory, product-specification, and contractual constraints.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Refinery Planning owns the commercial and economic production-plan targets supplied to the refinery, including feedstock and crude-slate choices, target throughput and operating modes, target product yields and specifications, planned production availability, and economically preferred production alternatives. It does not own detailed unit-operation scheduling, tank and transfer line-ups, blend execution, process control, operating procedures, maintenance, turnaround execution, or the operational decision to depart from plan for safety, reliability, or immediate process conditions; those belong to Refining and its operating functions.",
+  "terminology_note": "'Production horizons' used instead of 'run schedules' to retain the planning-and-scheduling context without implying ownership of detailed daily/shift-level scheduling. If 'run schedule' is an established internal artifact, qualify as 'commercial run-plan targets'."
+ },
+ {
+  "slug": "CM-1-1-6",
+  "level": 3,
+  "lsc_name": "Distribution Backcasting",
+  "definition": "Reconcile actual distribution inventory availability, movements, deliveries, transportation costs, and customer fulfillment outcomes against the approved distribution plan and its contemporaneous assumptions and constraints; quantify and explain variances; and use validated lessons to improve subsequent distribution planning and optimization cycles.",
+  "author": "Hamid",
+  "date": "2026-09-18",
+  "status": "approved",
+  "scope_note": "Distribution Backcasting preserves and compares the approved distribution baseline, actual inventory availability and deployment, shipments, deliveries, transportation performance and cost, service outcomes, material constraints, decisions, and variance explanations for a completed period. It identifies commercially meaningful drivers — such as demand, supply availability, allocation, inventory, route or mode, freight, carrier capacity, terminal/rack availability, delivery reliability, and customer-service effects — and feeds validated findings into subsequent distribution planning. It does not dispatch equipment, operate terminals or transportation assets, conduct product movements, perform delivery, or replace Finance's freight-payment and financial-close processes.",
+  "terminology_note": "'Customer fulfillment outcomes' used as the taxonomy-consistent term (US English) for on-time/in-full performance, delivery-window compliance, stockout avoidance, order fill, exception recovery, and contractual service attainment."
+ }
+]

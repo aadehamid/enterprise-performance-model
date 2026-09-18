@@ -1,11 +1,11 @@
 # Step 3 — SKOS taxonomy report
 
 - Concepts: 680 (one per process-map node, stable document order)
-- Triples: 3590
+- Triples: 3660
 - `skos:broader` links: 678 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
-- `skos:definition` present: 178 of 680 (1 triangulated APQC/EIA)
+- `skos:definition` present: 192 of 680 (1 triangulated APQC/EIA, 14 human-authored)
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme
