@@ -1,0 +1,6802 @@
+[
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L0-downstream-operations",
+  "slug": "L0-downstream-operations",
+  "level": 0,
+  "name": "Downstream Operations",
+  "skos_notation": null,
+  "parent_slug": null,
+  "minted": true,
+  "proposed_repo_id": "L0-downstream-operations"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1",
+  "slug": "CM-1",
+  "level": 1,
+  "name": "Commercial & Marketing",
+  "skos_notation": "CM 1",
+  "parent_slug": "L0-downstream-operations",
+  "minted": false,
+  "proposed_repo_id": "CM 1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1",
+  "slug": "CM-1-1",
+  "level": 2,
+  "name": "Planning & Scheduling",
+  "skos_notation": "CM 1.1",
+  "parent_slug": "CM-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1",
+  "slug": "CM-1-1-1",
+  "level": 3,
+  "name": "Demand Forecasting",
+  "skos_notation": "CM 1.1.1",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1",
+  "slug": "CM-1-1-1-1",
+  "level": 4,
+  "name": "Demand Forecasting",
+  "skos_notation": "CM 1.1.1.1",
+  "parent_slug": "CM-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-1",
+  "slug": "CM-1-1-1-1-1",
+  "level": 5,
+  "name": "Prepare Master Data To Create Demand Forecast",
+  "skos_notation": "CM 1.1.1.1.1",
+  "parent_slug": "CM-1-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-2",
+  "slug": "CM-1-1-1-1-2",
+  "level": 5,
+  "name": "Develop Statistical Baseline",
+  "skos_notation": "CM 1.1.1.1.2",
+  "parent_slug": "CM-1-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-3",
+  "slug": "CM-1-1-1-1-3",
+  "level": 5,
+  "name": "Adjust Forecast Incorporating Customer Input and Market Intelligence",
+  "skos_notation": "CM 1.1.1.1.3",
+  "parent_slug": "CM-1-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-4",
+  "slug": "CM-1-1-1-1-4",
+  "level": 5,
+  "name": "Publish Forecast and Generate Component Level Forecast Plan",
+  "skos_notation": "CM 1.1.1.1.4",
+  "parent_slug": "CM-1-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-5",
+  "slug": "CM-1-1-1-1-5",
+  "level": 5,
+  "name": "Monitor Demand Forecasting Performance and Reporting",
+  "skos_notation": "CM 1.1.1.1.5",
+  "parent_slug": "CM-1-1-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.1.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2",
+  "slug": "CM-1-1-2",
+  "level": 3,
+  "name": "Regional Optimization",
+  "skos_notation": "CM 1.1.2",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1",
+  "slug": "CM-1-1-2-1",
+  "level": 4,
+  "name": "Model and System Maintenance",
+  "skos_notation": "CM 1.1.2.1",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-1",
+  "slug": "CM-1-1-2-1-1",
+  "level": 5,
+  "name": "Check if new location or material has been identified",
+  "skos_notation": "CM 1.1.2.1.1",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-2",
+  "slug": "CM-1-1-2-1-2",
+  "level": 5,
+  "name": "Perform validation check for new location and material in XPIMS model",
+  "skos_notation": "CM 1.1.2.1.2",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-3",
+  "slug": "CM-1-1-2-1-3",
+  "level": 5,
+  "name": "Update XPIMS model with new products and new location node",
+  "skos_notation": "CM 1.1.2.1.3",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-4",
+  "slug": "CM-1-1-2-1-4",
+  "level": 5,
+  "name": "Perform validation check for new location and material in DPO model",
+  "skos_notation": "CM 1.1.2.1.4",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-5",
+  "slug": "CM-1-1-2-1-5",
+  "level": 5,
+  "name": "Update DPO model with new products and/or nodes",
+  "skos_notation": "CM 1.1.2.1.5",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-6",
+  "slug": "CM-1-1-2-1-6",
+  "level": 5,
+  "name": "Update PPIMS model with New Products",
+  "skos_notation": "CM 1.1.2.1.6",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-7",
+  "slug": "CM-1-1-2-1-7",
+  "level": 5,
+  "name": "Create price tags for new location / material",
+  "skos_notation": "CM 1.1.2.1.7",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-8",
+  "slug": "CM-1-1-2-1-8",
+  "level": 5,
+  "name": "Update location and product tag mapping",
+  "skos_notation": "CM 1.1.2.1.8",
+  "parent_slug": "CM-1-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.1.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2",
+  "slug": "CM-1-1-2-2",
+  "level": 4,
+  "name": "Generate Inputs for Regional Optimization Plan",
+  "skos_notation": "CM 1.1.2.2",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1",
+  "slug": "CM-1-1-2-2-1",
+  "level": 5,
+  "name": "Conduct Regional Premise Review",
+  "skos_notation": "CM 1.1.2.2.1",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1",
+  "slug": "CM-1-1-2-2-1-1",
+  "level": 6,
+  "name": "Decide Upon Breakdown of Time Periods for XPIMS for Entire Planning Horizon",
+  "skos_notation": "CM 1.1.2.2.1.1",
+  "parent_slug": "CM-1-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2",
+  "slug": "CM-1-1-2-2-1-2",
+  "level": 6,
+  "name": "Decide Upon Breakdown of Time Periods for DPO for Entire Planning Horizon",
+  "skos_notation": "CM 1.1.2.2.1.2",
+  "parent_slug": "CM-1-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2",
+  "slug": "CM-1-1-2-2-2",
+  "level": 5,
+  "name": "Gather Automated Data Inputs",
+  "skos_notation": "CM 1.1.2.2.2",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2-1",
+  "slug": "CM-1-1-2-2-2-1",
+  "level": 6,
+  "name": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products",
+  "skos_notation": "CM 1.1.2.2.2.1",
+  "parent_slug": "CM-1-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3",
+  "slug": "CM-1-1-2-2-3",
+  "level": 5,
+  "name": "Gather Manual Data Inputs",
+  "skos_notation": "CM 1.1.2.2.3",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-1",
+  "slug": "CM-1-1-2-2-3-1",
+  "level": 6,
+  "name": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Petrochemicals",
+  "skos_notation": "CM 1.1.2.2.3.1",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-2",
+  "slug": "CM-1-1-2-2-3-2",
+  "level": 6,
+  "name": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)",
+  "skos_notation": "CM 1.1.2.2.3.2",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-3",
+  "slug": "CM-1-1-2-2-3-3",
+  "level": 6,
+  "name": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Feedstocks (non-Crude)",
+  "skos_notation": "CM 1.1.2.2.3.3",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-4",
+  "slug": "CM-1-1-2-2-3-4",
+  "level": 6,
+  "name": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Asphalt",
+  "skos_notation": "CM 1.1.2.2.3.4",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-5",
+  "slug": "CM-1-1-2-2-3-5",
+  "level": 6,
+  "name": "Update Regional Premise",
+  "skos_notation": "CM 1.1.2.2.3.5",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-6",
+  "slug": "CM-1-1-2-2-3-6",
+  "level": 6,
+  "name": "Update Opening Inventory",
+  "skos_notation": "CM 1.1.2.2.3.6",
+  "parent_slug": "CM-1-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-4",
+  "slug": "CM-1-1-2-2-4",
+  "level": 5,
+  "name": "Update Crude Avails and Crude Cost",
+  "skos_notation": "CM 1.1.2.2.4",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5",
+  "slug": "CM-1-1-2-2-5",
+  "level": 5,
+  "name": "Perform data validation checks",
+  "skos_notation": "CM 1.1.2.2.5",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-1",
+  "slug": "CM-1-1-2-2-5-1",
+  "level": 6,
+  "name": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)",
+  "skos_notation": "CM 1.1.2.2.5.1",
+  "parent_slug": "CM-1-1-2-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-2",
+  "slug": "CM-1-1-2-2-5-2",
+  "level": 6,
+  "name": "Identify data gaps between Regional and Distribution Plan inputs",
+  "skos_notation": "CM 1.1.2.2.5.2",
+  "parent_slug": "CM-1-1-2-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6",
+  "slug": "CM-1-1-2-2-6",
+  "level": 5,
+  "name": "Update data inputs to address data inconsistencies and gaps",
+  "skos_notation": "CM 1.1.2.2.6",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-1",
+  "slug": "CM-1-1-2-2-6-1",
+  "level": 6,
+  "name": "Address Data Inconsistencies if they Exist (Demand, Price, Opening Inventory, and Supply)",
+  "skos_notation": "CM 1.1.2.2.6.1",
+  "parent_slug": "CM-1-1-2-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-2",
+  "slug": "CM-1-1-2-2-6-2",
+  "level": 6,
+  "name": "Perform overrides against data gaps for Regional and Distribution Plan inputs",
+  "skos_notation": "CM 1.1.2.2.6.2",
+  "parent_slug": "CM-1-1-2-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-7",
+  "slug": "CM-1-1-2-2-7",
+  "level": 5,
+  "name": "Review model inputs for Market Outlook and Avails meeting",
+  "skos_notation": "CM 1.1.2.2.7",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-8",
+  "slug": "CM-1-1-2-2-8",
+  "level": 5,
+  "name": "Publish data for model input",
+  "skos_notation": "CM 1.1.2.2.8",
+  "parent_slug": "CM-1-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.2.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3",
+  "slug": "CM-1-1-2-3",
+  "level": 4,
+  "name": "Conduct Market Outlook and Avails Meeting",
+  "skos_notation": "CM 1.1.2.3",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-1",
+  "slug": "CM-1-1-2-3-1",
+  "level": 5,
+  "name": "Analyze Forecast and Historical Market Data",
+  "skos_notation": "CM 1.1.2.3.1",
+  "parent_slug": "CM-1-1-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-2",
+  "slug": "CM-1-1-2-3-2",
+  "level": 5,
+  "name": "Prepare Meeting Documentation",
+  "skos_notation": "CM 1.1.2.3.2",
+  "parent_slug": "CM-1-1-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-3",
+  "slug": "CM-1-1-2-3-3",
+  "level": 5,
+  "name": "Publish Meeting Outcomes",
+  "skos_notation": "CM 1.1.2.3.3",
+  "parent_slug": "CM-1-1-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-4",
+  "slug": "CM-1-1-2-3-4",
+  "level": 5,
+  "name": "Update Data Inputs Based on Outcomes of Market Outlook and Avails Meeting",
+  "skos_notation": "CM 1.1.2.3.4",
+  "parent_slug": "CM-1-1-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4",
+  "slug": "CM-1-1-2-4",
+  "level": 4,
+  "name": "Develop Base Regional Plan",
+  "skos_notation": "CM 1.1.2.4",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-1",
+  "slug": "CM-1-1-2-4-1",
+  "level": 5,
+  "name": "Generate PPIMS Base Models",
+  "skos_notation": "CM 1.1.2.4.1",
+  "parent_slug": "CM-1-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-2",
+  "slug": "CM-1-1-2-4-2",
+  "level": 5,
+  "name": "Generate XPIMS Base Plan",
+  "skos_notation": "CM 1.1.2.4.2",
+  "parent_slug": "CM-1-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5",
+  "slug": "CM-1-1-2-5",
+  "level": 4,
+  "name": "Develop Final Regional Plan",
+  "skos_notation": "CM 1.1.2.5",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-1",
+  "slug": "CM-1-1-2-5-1",
+  "level": 5,
+  "name": "Run list of standard scenarios for evaluation",
+  "skos_notation": "CM 1.1.2.5.1",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-2",
+  "slug": "CM-1-1-2-5-2",
+  "level": 5,
+  "name": "Identify Additional scenarios based on outcome analysis",
+  "skos_notation": "CM 1.1.2.5.2",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3",
+  "slug": "CM-1-1-2-5-3",
+  "level": 5,
+  "name": "Conduct Business Tactics Discussion",
+  "skos_notation": "CM 1.1.2.5.3",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-4",
+  "slug": "CM-1-1-2-5-4",
+  "level": 5,
+  "name": "Run additional scenarios identified from Business Tactics Discussion",
+  "skos_notation": "CM 1.1.2.5.4",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-5",
+  "slug": "CM-1-1-2-5-5",
+  "level": 5,
+  "name": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output",
+  "skos_notation": "CM 1.1.2.5.5",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6",
+  "slug": "CM-1-1-2-5-6",
+  "level": 5,
+  "name": "Update Model Constraints based on Outcomes of XPIMS <> DPO Reconciliation",
+  "skos_notation": "CM 1.1.2.5.6",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-1",
+  "slug": "CM-1-1-2-5-6-1",
+  "level": 6,
+  "name": "Update Network Constraints for DPO Plan",
+  "skos_notation": "CM 1.1.2.5.6.1",
+  "parent_slug": "CM-1-1-2-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-2",
+  "slug": "CM-1-1-2-5-6-2",
+  "level": 6,
+  "name": "Update Model Constraints for XPIMS Plan",
+  "skos_notation": "CM 1.1.2.5.6.2",
+  "parent_slug": "CM-1-1-2-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-7",
+  "slug": "CM-1-1-2-5-7",
+  "level": 5,
+  "name": "Conduct plan feasibility check for PPIMS",
+  "skos_notation": "CM 1.1.2.5.7",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-8",
+  "slug": "CM-1-1-2-5-8",
+  "level": 5,
+  "name": "Update XPIMS Plan based on PPIMS plan feasibility check",
+  "skos_notation": "CM 1.1.2.5.8",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-9",
+  "slug": "CM-1-1-2-5-9",
+  "level": 5,
+  "name": "Consolidate MOP XPIMS plan for MOP Review",
+  "skos_notation": "CM 1.1.2.5.9",
+  "parent_slug": "CM-1-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.5.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6",
+  "slug": "CM-1-1-2-6",
+  "level": 4,
+  "name": "Perform Crude Oil Evaluations",
+  "skos_notation": "CM 1.1.2.6",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-1",
+  "slug": "CM-1-1-2-6-1",
+  "level": 5,
+  "name": "Obtain latest XPIMS MOP model",
+  "skos_notation": "CM 1.1.2.6.1",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-2",
+  "slug": "CM-1-1-2-6-2",
+  "level": 5,
+  "name": "Refresh Crude Avails and Crude Cost",
+  "skos_notation": "CM 1.1.2.6.2",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-3",
+  "slug": "CM-1-1-2-6-3",
+  "level": 5,
+  "name": "Develop Crude Evaluation Step Cases",
+  "skos_notation": "CM 1.1.2.6.3",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-4",
+  "slug": "CM-1-1-2-6-4",
+  "level": 5,
+  "name": "Run Base Case and Crude Step Cases",
+  "skos_notation": "CM 1.1.2.6.4",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-5",
+  "slug": "CM-1-1-2-6-5",
+  "level": 5,
+  "name": "Publish COE results",
+  "skos_notation": "CM 1.1.2.6.5",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-6",
+  "slug": "CM-1-1-2-6-6",
+  "level": 5,
+  "name": "Conduct Weekly Crude Optimization Meeting",
+  "skos_notation": "CM 1.1.2.6.6",
+  "parent_slug": "CM-1-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.6.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7",
+  "slug": "CM-1-1-2-7",
+  "level": 4,
+  "name": "Perform Product Evaluations - COP / ACOP",
+  "skos_notation": "CM 1.1.2.7",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-1",
+  "slug": "CM-1-1-2-7-1",
+  "level": 5,
+  "name": "Obtain latest XPIMS MOP model",
+  "skos_notation": "CM 1.1.2.7.1",
+  "parent_slug": "CM-1-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-2",
+  "slug": "CM-1-1-2-7-2",
+  "level": 5,
+  "name": "Refresh Product Pricing and Demands",
+  "skos_notation": "CM 1.1.2.7.2",
+  "parent_slug": "CM-1-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-3",
+  "slug": "CM-1-1-2-7-3",
+  "level": 5,
+  "name": "Develop Step Cases for Out Month Horizon",
+  "skos_notation": "CM 1.1.2.7.3",
+  "parent_slug": "CM-1-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-4",
+  "slug": "CM-1-1-2-7-4",
+  "level": 5,
+  "name": "Run Step Cases for Out Month Horizon",
+  "skos_notation": "CM 1.1.2.7.4",
+  "parent_slug": "CM-1-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-5",
+  "slug": "CM-1-1-2-7-5",
+  "level": 5,
+  "name": "Publish COP / ACOP results",
+  "skos_notation": "CM 1.1.2.7.5",
+  "parent_slug": "CM-1-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.7.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8",
+  "slug": "CM-1-1-2-8",
+  "level": 4,
+  "name": "Management Review",
+  "skos_notation": "CM 1.1.2.8",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-1",
+  "slug": "CM-1-1-2-8-1",
+  "level": 5,
+  "name": "Conduct MOP Strategy Review",
+  "skos_notation": "CM 1.1.2.8.1",
+  "parent_slug": "CM-1-1-2-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.8.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-2",
+  "slug": "CM-1-1-2-8-2",
+  "level": 5,
+  "name": "Conduct Management Review with Leadership",
+  "skos_notation": "CM 1.1.2.8.2",
+  "parent_slug": "CM-1-1-2-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.8.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-3",
+  "slug": "CM-1-1-2-8-3",
+  "level": 5,
+  "name": "Update Regional Plan",
+  "skos_notation": "CM 1.1.2.8.3",
+  "parent_slug": "CM-1-1-2-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.8.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-4",
+  "slug": "CM-1-1-2-8-4",
+  "level": 5,
+  "name": "Communicate Decisions and Actions from Management Review Meeting",
+  "skos_notation": "CM 1.1.2.8.4",
+  "parent_slug": "CM-1-1-2-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.8.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9",
+  "slug": "CM-1-1-2-9",
+  "level": 4,
+  "name": "Handover Regional Plan",
+  "skos_notation": "CM 1.1.2.9",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-1",
+  "slug": "CM-1-1-2-9-1",
+  "level": 5,
+  "name": "Publish Local Refinery Targets for Regional to Local Transition",
+  "skos_notation": "CM 1.1.2.9.1",
+  "parent_slug": "CM-1-1-2-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.9.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-2",
+  "slug": "CM-1-1-2-9-2",
+  "level": 5,
+  "name": "Publish Distribution Targets",
+  "skos_notation": "CM 1.1.2.9.2",
+  "parent_slug": "CM-1-1-2-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.9.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-10",
+  "slug": "CM-1-1-2-10",
+  "level": 4,
+  "name": "Crude Allocation Decision",
+  "skos_notation": "CM 1.1.2.10",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-11",
+  "slug": "CM-1-1-2-11",
+  "level": 4,
+  "name": "Product Allocation Decision",
+  "skos_notation": "CM 1.1.2.11",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-12",
+  "slug": "CM-1-1-2-12",
+  "level": 4,
+  "name": "Maintain Supply Planning Master Data",
+  "skos_notation": "CM 1.1.2.12",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-13",
+  "slug": "CM-1-1-2-13",
+  "level": 4,
+  "name": "Plan Finished Goods Inventory",
+  "skos_notation": "CM 1.1.2.13",
+  "parent_slug": "CM-1-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.2.13"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3",
+  "slug": "CM-1-1-3",
+  "level": 3,
+  "name": "Distribution Planning & Scheduling and Inventory Management",
+  "skos_notation": "CM 1.1.3",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1",
+  "slug": "CM-1-1-3-1",
+  "level": 4,
+  "name": "Develop Network Premise for Prompt and Out Month",
+  "skos_notation": "CM 1.1.3.1",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-1",
+  "slug": "CM-1-1-3-1-1",
+  "level": 5,
+  "name": "Review business context and identify data objects requiring changes in Network Premise",
+  "skos_notation": "CM 1.1.3.1.1",
+  "parent_slug": "CM-1-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-2",
+  "slug": "CM-1-1-3-1-2",
+  "level": 5,
+  "name": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise",
+  "skos_notation": "CM 1.1.3.1.2",
+  "parent_slug": "CM-1-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-3",
+  "slug": "CM-1-1-3-1-3",
+  "level": 5,
+  "name": "Perform overrides (with rationale) in Network Premise",
+  "skos_notation": "CM 1.1.3.1.3",
+  "parent_slug": "CM-1-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-4",
+  "slug": "CM-1-1-3-1-4",
+  "level": 5,
+  "name": "Identify changes needed out of cycle for network premise",
+  "skos_notation": "CM 1.1.3.1.4",
+  "parent_slug": "CM-1-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2",
+  "slug": "CM-1-1-3-2",
+  "level": 4,
+  "name": "Develop Base Distribution Plan",
+  "skos_notation": "CM 1.1.3.2",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-1",
+  "slug": "CM-1-1-3-2-1",
+  "level": 5,
+  "name": "Generate DPO Base Plan",
+  "skos_notation": "CM 1.1.3.2.1",
+  "parent_slug": "CM-1-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-2",
+  "slug": "CM-1-1-3-2-2",
+  "level": 5,
+  "name": "Share DPO Base Plan in XPIMS DPO Reconciliation",
+  "skos_notation": "CM 1.1.3.2.2",
+  "parent_slug": "CM-1-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3",
+  "slug": "CM-1-1-3-3",
+  "level": 4,
+  "name": "Develop Final Distribution Plan",
+  "skos_notation": "CM 1.1.3.3",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-1",
+  "slug": "CM-1-1-3-3-1",
+  "level": 5,
+  "name": "Receive updated constraints from Schedulers for impacts to Distribution Plan",
+  "skos_notation": "CM 1.1.3.3.1",
+  "parent_slug": "CM-1-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-2",
+  "slug": "CM-1-1-3-3-2",
+  "level": 5,
+  "name": "Perform updates to Distribution Plan",
+  "skos_notation": "CM 1.1.3.3.2",
+  "parent_slug": "CM-1-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-4",
+  "slug": "CM-1-1-3-4",
+  "level": 4,
+  "name": "Handover Final Distribution Plan",
+  "skos_notation": "CM 1.1.3.4",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5",
+  "slug": "CM-1-1-3-5",
+  "level": 4,
+  "name": "Product Scheduling",
+  "skos_notation": "CM 1.1.3.5",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-1",
+  "slug": "CM-1-1-3-5-1",
+  "level": 5,
+  "name": "Develop Short-Term Network Plan",
+  "skos_notation": "CM 1.1.3.5.1",
+  "parent_slug": "CM-1-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-2",
+  "slug": "CM-1-1-3-5-2",
+  "level": 5,
+  "name": "Coordinate Product Trading",
+  "skos_notation": "CM 1.1.3.5.2",
+  "parent_slug": "CM-1-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-3",
+  "slug": "CM-1-1-3-5-3",
+  "level": 5,
+  "name": "Process Business Renewal Request",
+  "skos_notation": "CM 1.1.3.5.3",
+  "parent_slug": "CM-1-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6",
+  "slug": "CM-1-1-3-6",
+  "level": 4,
+  "name": "Physical Distribution Scheduling",
+  "skos_notation": "CM 1.1.3.6",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-1",
+  "slug": "CM-1-1-3-6-1",
+  "level": 5,
+  "name": "Plan & Execute Nominations",
+  "skos_notation": "CM 1.1.3.6.1",
+  "parent_slug": "CM-1-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-2",
+  "slug": "CM-1-1-3-6-2",
+  "level": 5,
+  "name": "Loading Shipment",
+  "skos_notation": "CM 1.1.3.6.2",
+  "parent_slug": "CM-1-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-3",
+  "slug": "CM-1-1-3-6-3",
+  "level": 5,
+  "name": "Track Movements and Inventory Management",
+  "skos_notation": "CM 1.1.3.6.3",
+  "parent_slug": "CM-1-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-4",
+  "slug": "CM-1-1-3-6-4",
+  "level": 5,
+  "name": "Discharge & Reconcile Load",
+  "skos_notation": "CM 1.1.3.6.4",
+  "parent_slug": "CM-1-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7",
+  "slug": "CM-1-1-3-7",
+  "level": 4,
+  "name": "Inventory",
+  "skos_notation": "CM 1.1.3.7",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-1",
+  "slug": "CM-1-1-3-7-1",
+  "level": 5,
+  "name": "Develop Crude/Feedstock Inventory Policy",
+  "skos_notation": "CM 1.1.3.7.1",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-2",
+  "slug": "CM-1-1-3-7-2",
+  "level": 5,
+  "name": "Develop Intermediates Inventory Policy",
+  "skos_notation": "CM 1.1.3.7.2",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-3",
+  "slug": "CM-1-1-3-7-3",
+  "level": 5,
+  "name": "Develop Finished Product Inventory Policy",
+  "skos_notation": "CM 1.1.3.7.3",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-4",
+  "slug": "CM-1-1-3-7-4",
+  "level": 5,
+  "name": "Measure Inventory",
+  "skos_notation": "CM 1.1.3.7.4",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-5",
+  "slug": "CM-1-1-3-7-5",
+  "level": 5,
+  "name": "Perform Inventory Reconciliation",
+  "skos_notation": "CM 1.1.3.7.5",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-6",
+  "slug": "CM-1-1-3-7-6",
+  "level": 5,
+  "name": "Manage Consignment Inventory",
+  "skos_notation": "CM 1.1.3.7.6",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-7",
+  "slug": "CM-1-1-3-7-7",
+  "level": 5,
+  "name": "Manage Commingled Inventory",
+  "skos_notation": "CM 1.1.3.7.7",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-8",
+  "slug": "CM-1-1-3-7-8",
+  "level": 5,
+  "name": "Manage Inventory Re-brands",
+  "skos_notation": "CM 1.1.3.7.8",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-9",
+  "slug": "CM-1-1-3-7-9",
+  "level": 5,
+  "name": "Manage Inventory Replenishment",
+  "skos_notation": "CM 1.1.3.7.9",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-10",
+  "slug": "CM-1-1-3-7-10",
+  "level": 5,
+  "name": "Manage Lot/Batch Inventory",
+  "skos_notation": "CM 1.1.3.7.10",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-11",
+  "slug": "CM-1-1-3-7-11",
+  "level": 5,
+  "name": "Manage Third Party Storage",
+  "skos_notation": "CM 1.1.3.7.11",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-12",
+  "slug": "CM-1-1-3-7-12",
+  "level": 5,
+  "name": "Manage Inventory",
+  "skos_notation": "CM 1.1.3.7.12",
+  "parent_slug": "CM-1-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.7.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8",
+  "slug": "CM-1-1-3-8",
+  "level": 4,
+  "name": "Secondary Distribution Management",
+  "skos_notation": "CM 1.1.3.8",
+  "parent_slug": "CM-1-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-1",
+  "slug": "CM-1-1-3-8-1",
+  "level": 5,
+  "name": "Generate Orders",
+  "skos_notation": "CM 1.1.3.8.1",
+  "parent_slug": "CM-1-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.8.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-2",
+  "slug": "CM-1-1-3-8-2",
+  "level": 5,
+  "name": "Schedule Secondary Distribution",
+  "skos_notation": "CM 1.1.3.8.2",
+  "parent_slug": "CM-1-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.8.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-3",
+  "slug": "CM-1-1-3-8-3",
+  "level": 5,
+  "name": "Setup Scheduling System",
+  "skos_notation": "CM 1.1.3.8.3",
+  "parent_slug": "CM-1-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.8.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-4",
+  "slug": "CM-1-1-3-8-4",
+  "level": 5,
+  "name": "Monitor Secondary Distribution Performance",
+  "skos_notation": "CM 1.1.3.8.4",
+  "parent_slug": "CM-1-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.3.8.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4",
+  "slug": "CM-1-1-4",
+  "level": 3,
+  "name": "Refinery Planning",
+  "skos_notation": "CM 1.1.4",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1",
+  "slug": "CM-1-1-4-1",
+  "level": 4,
+  "name": "Develop Refinery Premise for Prompt and Out Month",
+  "skos_notation": "CM 1.1.4.1",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-1",
+  "slug": "CM-1-1-4-1-1",
+  "level": 5,
+  "name": "Review business context and identify data objects requiring changes in Refinery Premise",
+  "skos_notation": "CM 1.1.4.1.1",
+  "parent_slug": "CM-1-1-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-2",
+  "slug": "CM-1-1-4-1-2",
+  "level": 5,
+  "name": "Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise",
+  "skos_notation": "CM 1.1.4.1.2",
+  "parent_slug": "CM-1-1-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-3",
+  "slug": "CM-1-1-4-1-3",
+  "level": 5,
+  "name": "Perform overrides (with rationale) in Refinery Premise",
+  "skos_notation": "CM 1.1.4.1.3",
+  "parent_slug": "CM-1-1-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-4",
+  "slug": "CM-1-1-4-1-4",
+  "level": 5,
+  "name": "Identify changes needed out of cycle for refinery premise",
+  "skos_notation": "CM 1.1.4.1.4",
+  "parent_slug": "CM-1-1-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2",
+  "slug": "CM-1-1-4-2",
+  "level": 4,
+  "name": "Receive RO Targets",
+  "skos_notation": "CM 1.1.4.2",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-1",
+  "slug": "CM-1-1-4-2-1",
+  "level": 5,
+  "name": "Perform Initial Review of M+1",
+  "skos_notation": "CM 1.1.4.2.1",
+  "parent_slug": "CM-1-1-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-2",
+  "slug": "CM-1-1-4-2-2",
+  "level": 5,
+  "name": "Receive Handover of M+1 Plan",
+  "skos_notation": "CM 1.1.4.2.2",
+  "parent_slug": "CM-1-1-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-3",
+  "slug": "CM-1-1-4-3",
+  "level": 4,
+  "name": "Refresh Refinery Plan for month M",
+  "skos_notation": "CM 1.1.4.3",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4",
+  "slug": "CM-1-1-4-4",
+  "level": 4,
+  "name": "Perform Prompt Month Evaluations",
+  "skos_notation": "CM 1.1.4.4",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-1",
+  "slug": "CM-1-1-4-4-1",
+  "level": 5,
+  "name": "Evaluate Market Scenarios Identified for Prompt Month Horizon",
+  "skos_notation": "CM 1.1.4.4.1",
+  "parent_slug": "CM-1-1-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-2",
+  "slug": "CM-1-1-4-4-2",
+  "level": 5,
+  "name": "Develop Step Cases for Prompt Month Horizon",
+  "skos_notation": "CM 1.1.4.4.2",
+  "parent_slug": "CM-1-1-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-3",
+  "slug": "CM-1-1-4-4-3",
+  "level": 5,
+  "name": "Run Step Cases for Prompt Month Horizon",
+  "skos_notation": "CM 1.1.4.4.3",
+  "parent_slug": "CM-1-1-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-5",
+  "slug": "CM-1-1-4-5",
+  "level": 4,
+  "name": "Communicate Changes to Scheduling",
+  "skos_notation": "CM 1.1.4.5",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6",
+  "slug": "CM-1-1-4-6",
+  "level": 4,
+  "name": "Commercial Development",
+  "skos_notation": "CM 1.1.4.6",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1",
+  "slug": "CM-1-1-4-6-1",
+  "level": 5,
+  "name": "Develop Strategic Business Plan",
+  "skos_notation": "CM 1.1.4.6.1",
+  "parent_slug": "CM-1-1-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-2",
+  "slug": "CM-1-1-4-6-2",
+  "level": 5,
+  "name": "Plan Budgets",
+  "skos_notation": "CM 1.1.4.6.2",
+  "parent_slug": "CM-1-1-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-3",
+  "slug": "CM-1-1-4-6-3",
+  "level": 5,
+  "name": "Manage Site Specific Business Risk",
+  "skos_notation": "CM 1.1.4.6.3",
+  "parent_slug": "CM-1-1-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7",
+  "slug": "CM-1-1-4-7",
+  "level": 4,
+  "name": "Refinery Optimization",
+  "skos_notation": "CM 1.1.4.7",
+  "parent_slug": "CM-1-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-1",
+  "slug": "CM-1-1-4-7-1",
+  "level": 5,
+  "name": "Capture Product Demand Requirements",
+  "skos_notation": "CM 1.1.4.7.1",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-2",
+  "slug": "CM-1-1-4-7-2",
+  "level": 5,
+  "name": "Evaluate Crude & Feedstock",
+  "skos_notation": "CM 1.1.4.7.2",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-3",
+  "slug": "CM-1-1-4-7-3",
+  "level": 5,
+  "name": "Capture Crude Availability",
+  "skos_notation": "CM 1.1.4.7.3",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4",
+  "slug": "CM-1-1-4-7-4",
+  "level": 5,
+  "name": "Capture Product/Crude/Feedstock Price",
+  "skos_notation": "CM 1.1.4.7.4",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-5",
+  "slug": "CM-1-1-4-7-5",
+  "level": 5,
+  "name": "Capture Refinery Level Constraints",
+  "skos_notation": "CM 1.1.4.7.5",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-6",
+  "slug": "CM-1-1-4-7-6",
+  "level": 5,
+  "name": "Capture Inventory",
+  "skos_notation": "CM 1.1.4.7.6",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-7",
+  "slug": "CM-1-1-4-7-7",
+  "level": 5,
+  "name": "Capture Monthly Operating Plan",
+  "skos_notation": "CM 1.1.4.7.7",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-8",
+  "slug": "CM-1-1-4-7-8",
+  "level": 5,
+  "name": "Perform Scenario Analysis",
+  "skos_notation": "CM 1.1.4.7.8",
+  "parent_slug": "CM-1-1-4-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.7.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5",
+  "slug": "CM-1-1-5",
+  "level": 3,
+  "name": "Regional Backcasting",
+  "skos_notation": "CM 1.1.5",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1",
+  "slug": "CM-1-1-5-1",
+  "level": 4,
+  "name": "Generate Inputs for Regional Backcast",
+  "skos_notation": "CM 1.1.5.1",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-1",
+  "slug": "CM-1-1-5-1-1",
+  "level": 5,
+  "name": "Receive aggregated month average forecast data",
+  "skos_notation": "CM 1.1.5.1.1",
+  "parent_slug": "CM-1-1-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2",
+  "slug": "CM-1-1-5-1-2",
+  "level": 5,
+  "name": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices",
+  "skos_notation": "CM 1.1.5.1.2",
+  "parent_slug": "CM-1-1-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-1",
+  "slug": "CM-1-1-5-1-2-1",
+  "level": 6,
+  "name": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs",
+  "skos_notation": "CM 1.1.5.1.2.1",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-2",
+  "slug": "CM-1-1-5-1-2-2",
+  "level": 6,
+  "name": "Receive actual data for product sales/ purchases volumes",
+  "skos_notation": "CM 1.1.5.1.2.2",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-3",
+  "slug": "CM-1-1-5-1-2-3",
+  "level": 6,
+  "name": "Receive actual data for refinery operations",
+  "skos_notation": "CM 1.1.5.1.2.3",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-4",
+  "slug": "CM-1-1-5-1-2-4",
+  "level": 6,
+  "name": "Receive actual data for network components",
+  "skos_notation": "CM 1.1.5.1.2.4",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5",
+  "slug": "CM-1-1-5-1-2-5",
+  "level": 6,
+  "name": "Receive actual data for inventory & transfers",
+  "skos_notation": "CM 1.1.5.1.2.5",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6",
+  "slug": "CM-1-1-5-1-2-6",
+  "level": 6,
+  "name": "Receive actual data product prices",
+  "skos_notation": "CM 1.1.5.1.2.6",
+  "parent_slug": "CM-1-1-5-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.1.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-2",
+  "slug": "CM-1-1-5-2",
+  "level": 4,
+  "name": "Set up and Stabilize Aggregated Forecast Model",
+  "skos_notation": "CM 1.1.5.2",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-3",
+  "slug": "CM-1-1-5-3",
+  "level": 4,
+  "name": "Evaluate the price adjusted forecast against the original forecast",
+  "skos_notation": "CM 1.1.5.3",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4",
+  "slug": "CM-1-1-5-4",
+  "level": 4,
+  "name": "Evaluate the LP price adjusted forecast against the original forecast",
+  "skos_notation": "CM 1.1.5.4",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-1",
+  "slug": "CM-1-1-5-4-1",
+  "level": 5,
+  "name": "Build and run the LP price adjusted forecast",
+  "skos_notation": "CM 1.1.5.4.1",
+  "parent_slug": "CM-1-1-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-2",
+  "slug": "CM-1-1-5-4-2",
+  "level": 5,
+  "name": "Publish LP Price Adjusted Forecast Results",
+  "skos_notation": "CM 1.1.5.4.2",
+  "parent_slug": "CM-1-1-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5",
+  "slug": "CM-1-1-5-5",
+  "level": 4,
+  "name": "Evaluate optimization cases",
+  "skos_notation": "CM 1.1.5.5",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-1",
+  "slug": "CM-1-1-5-5-1",
+  "level": 5,
+  "name": "Build and run feed optimization cases",
+  "skos_notation": "CM 1.1.5.5.1",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-2",
+  "slug": "CM-1-1-5-5-2",
+  "level": 5,
+  "name": "Build and run product optimization cases",
+  "skos_notation": "CM 1.1.5.5.2",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-3",
+  "slug": "CM-1-1-5-5-3",
+  "level": 5,
+  "name": "Build and run unit optimization case",
+  "skos_notation": "CM 1.1.5.5.3",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-4",
+  "slug": "CM-1-1-5-5-4",
+  "level": 5,
+  "name": "Build and run IRT optimization case",
+  "skos_notation": "CM 1.1.5.5.4",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-5",
+  "slug": "CM-1-1-5-5-5",
+  "level": 5,
+  "name": "Build and run distribution optimization case",
+  "skos_notation": "CM 1.1.5.5.5",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-6",
+  "slug": "CM-1-1-5-5-6",
+  "level": 5,
+  "name": "Build and run blue sky case 1",
+  "skos_notation": "CM 1.1.5.5.6",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-7",
+  "slug": "CM-1-1-5-5-7",
+  "level": 5,
+  "name": "Build and run blue sky case 2",
+  "skos_notation": "CM 1.1.5.5.7",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-8",
+  "slug": "CM-1-1-5-5-8",
+  "level": 5,
+  "name": "Publish optimization case results",
+  "skos_notation": "CM 1.1.5.5.8",
+  "parent_slug": "CM-1-1-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.5.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6",
+  "slug": "CM-1-1-5-6",
+  "level": 4,
+  "name": "Evaluate actuals cases",
+  "skos_notation": "CM 1.1.5.6",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-1",
+  "slug": "CM-1-1-5-6-1",
+  "level": 5,
+  "name": "Build and run unplanned downtime cases",
+  "skos_notation": "CM 1.1.5.6.1",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-2",
+  "slug": "CM-1-1-5-6-2",
+  "level": 5,
+  "name": "Build and run actual global crude purchase case",
+  "skos_notation": "CM 1.1.5.6.2",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-3",
+  "slug": "CM-1-1-5-6-3",
+  "level": 5,
+  "name": "Build and run actual crude allocation case",
+  "skos_notation": "CM 1.1.5.6.3",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-4",
+  "slug": "CM-1-1-5-6-4",
+  "level": 5,
+  "name": "Build and run actual non crude feed case",
+  "skos_notation": "CM 1.1.5.6.4",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-5",
+  "slug": "CM-1-1-5-6-5",
+  "level": 5,
+  "name": "Build and run actual IRTs case",
+  "skos_notation": "CM 1.1.5.6.5",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-6",
+  "slug": "CM-1-1-5-6-6",
+  "level": 5,
+  "name": "Build and run actual product case",
+  "skos_notation": "CM 1.1.5.6.6",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-7",
+  "slug": "CM-1-1-5-6-7",
+  "level": 5,
+  "name": "Build and run actual supply case",
+  "skos_notation": "CM 1.1.5.6.7",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-8",
+  "slug": "CM-1-1-5-6-8",
+  "level": 5,
+  "name": "Build and run actual throughput case",
+  "skos_notation": "CM 1.1.5.6.8",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-9",
+  "slug": "CM-1-1-5-6-9",
+  "level": 5,
+  "name": "Build and run final actual case",
+  "skos_notation": "CM 1.1.5.6.9",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-10",
+  "slug": "CM-1-1-5-6-10",
+  "level": 5,
+  "name": "Publish actuals case results",
+  "skos_notation": "CM 1.1.5.6.10",
+  "parent_slug": "CM-1-1-5-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.6.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7",
+  "slug": "CM-1-1-5-7",
+  "level": 4,
+  "name": "Compile and communicate learnings by business decisions and functions",
+  "skos_notation": "CM 1.1.5.7",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-1",
+  "slug": "CM-1-1-5-7-1",
+  "level": 5,
+  "name": "Evaluate output w.r.t shift in margin and changes in parameters",
+  "skos_notation": "CM 1.1.5.7.1",
+  "parent_slug": "CM-1-1-5-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-2",
+  "slug": "CM-1-1-5-7-2",
+  "level": 5,
+  "name": "Establish difference between regional volume in final case and actual volume",
+  "skos_notation": "CM 1.1.5.7.2",
+  "parent_slug": "CM-1-1-5-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-3",
+  "slug": "CM-1-1-5-7-3",
+  "level": 5,
+  "name": "Establish difference between refinery production in final case and actual volumes",
+  "skos_notation": "CM 1.1.5.7.3",
+  "parent_slug": "CM-1-1-5-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-4",
+  "slug": "CM-1-1-5-7-4",
+  "level": 5,
+  "name": "Capture the impact of each event on GRM waterfall",
+  "skos_notation": "CM 1.1.5.7.4",
+  "parent_slug": "CM-1-1-5-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-5",
+  "slug": "CM-1-1-5-7-5",
+  "level": 5,
+  "name": "Collate RCA and potential action items for all high-level impact areas",
+  "skos_notation": "CM 1.1.5.7.5",
+  "parent_slug": "CM-1-1-5-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.7.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8",
+  "slug": "CM-1-1-5-8",
+  "level": 4,
+  "name": "Conduct backcasting meeting(s) with key stakeholders",
+  "skos_notation": "CM 1.1.5.8",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-1",
+  "slug": "CM-1-1-5-8-1",
+  "level": 5,
+  "name": "Prepare monthly GRM waterfall for the region",
+  "skos_notation": "CM 1.1.5.8.1",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-2",
+  "slug": "CM-1-1-5-8-2",
+  "level": 5,
+  "name": "Prepare reports highlighting root causes for each events",
+  "skos_notation": "CM 1.1.5.8.2",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-3",
+  "slug": "CM-1-1-5-8-3",
+  "level": 5,
+  "name": "Prepare full potential (optimized) reports and trends",
+  "skos_notation": "CM 1.1.5.8.3",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-4",
+  "slug": "CM-1-1-5-8-4",
+  "level": 5,
+  "name": "Conduct backcasting meeting(s)",
+  "skos_notation": "CM 1.1.5.8.4",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-5",
+  "slug": "CM-1-1-5-8-5",
+  "level": 5,
+  "name": "Present outcomes in CCI Management Review meeting <TBD>",
+  "skos_notation": "CM 1.1.5.8.5",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-6",
+  "slug": "CM-1-1-5-8-6",
+  "level": 5,
+  "name": "Review all root causes along with next steps with all business units",
+  "skos_notation": "CM 1.1.5.8.6",
+  "parent_slug": "CM-1-1-5-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.8.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9",
+  "slug": "CM-1-1-5-9",
+  "level": 4,
+  "name": "Distribute final report with agreed upon action plans",
+  "skos_notation": "CM 1.1.5.9",
+  "parent_slug": "CM-1-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-1",
+  "slug": "CM-1-1-5-9-1",
+  "level": 5,
+  "name": "Incorporate comments & notes from key meetings",
+  "skos_notation": "CM 1.1.5.9.1",
+  "parent_slug": "CM-1-1-5-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.9.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-2",
+  "slug": "CM-1-1-5-9-2",
+  "level": 5,
+  "name": "Prepare & review list of consolidated action items/ RCA opportunities",
+  "skos_notation": "CM 1.1.5.9.2",
+  "parent_slug": "CM-1-1-5-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.9.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-3",
+  "slug": "CM-1-1-5-9-3",
+  "level": 5,
+  "name": "Finalize Backcasting Report",
+  "skos_notation": "CM 1.1.5.9.3",
+  "parent_slug": "CM-1-1-5-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.5.9.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6",
+  "slug": "CM-1-1-6",
+  "level": 3,
+  "name": "Distribution Backcasting",
+  "skos_notation": "CM 1.1.6",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1",
+  "slug": "CM-1-1-6-1",
+  "level": 4,
+  "name": "Set up and stabilize base case for Distribution Backcast",
+  "skos_notation": "CM 1.1.6.1",
+  "parent_slug": "CM-1-1-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1-1",
+  "slug": "CM-1-1-6-1-1",
+  "level": 5,
+  "name": "Aggregate periods for month average forecast",
+  "skos_notation": "CM 1.1.6.1.1",
+  "parent_slug": "CM-1-1-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.6.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-2",
+  "slug": "CM-1-1-6-2",
+  "level": 4,
+  "name": "Evaluate actuals cases in DPO",
+  "skos_notation": "CM 1.1.6.2",
+  "parent_slug": "CM-1-1-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-3",
+  "slug": "CM-1-1-6-3",
+  "level": 4,
+  "name": "Evaluate optimization cases in DPO",
+  "skos_notation": "CM 1.1.6.3",
+  "parent_slug": "CM-1-1-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7",
+  "slug": "CM-1-1-7",
+  "level": 3,
+  "name": "Refinery Scheduling",
+  "skos_notation": "CM 1.1.7",
+  "parent_slug": "CM-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1",
+  "slug": "CM-1-1-7-1",
+  "level": 4,
+  "name": "Daily Execution Planning",
+  "skos_notation": "CM 1.1.7.1",
+  "parent_slug": "CM-1-1-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-1",
+  "slug": "CM-1-1-7-1-1",
+  "level": 5,
+  "name": "Update Refinery Execution Instructions",
+  "skos_notation": "CM 1.1.7.1.1",
+  "parent_slug": "CM-1-1-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-2",
+  "slug": "CM-1-1-7-1-2",
+  "level": 5,
+  "name": "Schedule Resources",
+  "skos_notation": "CM 1.1.7.1.2",
+  "parent_slug": "CM-1-1-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-3",
+  "slug": "CM-1-1-7-1-3",
+  "level": 5,
+  "name": "Perform Production Accounting",
+  "skos_notation": "CM 1.1.7.1.3",
+  "parent_slug": "CM-1-1-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2",
+  "slug": "CM-1-1-7-2",
+  "level": 4,
+  "name": "Production Scheduling",
+  "skos_notation": "CM 1.1.7.2",
+  "parent_slug": "CM-1-1-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-1",
+  "slug": "CM-1-1-7-2-1",
+  "level": 5,
+  "name": "Maintain Production Scheduling Master Data",
+  "skos_notation": "CM 1.1.7.2.1",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-2",
+  "slug": "CM-1-1-7-2-2",
+  "level": 5,
+  "name": "Review Production Wheel and Run Length",
+  "skos_notation": "CM 1.1.7.2.2",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-3",
+  "slug": "CM-1-1-7-2-3",
+  "level": 5,
+  "name": "Create Production Scheduling and Sequencing Plan",
+  "skos_notation": "CM 1.1.7.2.3",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-4",
+  "slug": "CM-1-1-7-2-4",
+  "level": 5,
+  "name": "Manage Production Schedule Exceptions",
+  "skos_notation": "CM 1.1.7.2.4",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-5",
+  "slug": "CM-1-1-7-2-5",
+  "level": 5,
+  "name": "Measure Production Scheduling Performance",
+  "skos_notation": "CM 1.1.7.2.5",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-6",
+  "slug": "CM-1-1-7-2-6",
+  "level": 5,
+  "name": "Manage The Interface to Planning, Operations, Engineering & Maintenance",
+  "skos_notation": "CM 1.1.7.2.6",
+  "parent_slug": "CM-1-1-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3",
+  "slug": "CM-1-1-7-3",
+  "level": 4,
+  "name": "Energy & Utility Management",
+  "skos_notation": "CM 1.1.7.3",
+  "parent_slug": "CM-1-1-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-1",
+  "slug": "CM-1-1-7-3-1",
+  "level": 5,
+  "name": "Optimize Internal vs. External Energy Sources",
+  "skos_notation": "CM 1.1.7.3.1",
+  "parent_slug": "CM-1-1-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-2",
+  "slug": "CM-1-1-7-3-2",
+  "level": 5,
+  "name": "Optimize Plant Energy Balance",
+  "skos_notation": "CM 1.1.7.3.2",
+  "parent_slug": "CM-1-1-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-3",
+  "slug": "CM-1-1-7-3-3",
+  "level": 5,
+  "name": "Manage and Support Emission Trading",
+  "skos_notation": "CM 1.1.7.3.3",
+  "parent_slug": "CM-1-1-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.7.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2",
+  "slug": "CM-1-2",
+  "level": 2,
+  "name": "Supply And Trading",
+  "skos_notation": "CM 1.2",
+  "parent_slug": "CM-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1",
+  "slug": "CM-1-2-1",
+  "level": 3,
+  "name": "Trading Management",
+  "skos_notation": "CM 1.2.1",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1",
+  "slug": "CM-1-2-1-1",
+  "level": 4,
+  "name": "Forecasting & Optimization",
+  "skos_notation": "CM 1.2.1.1",
+  "parent_slug": "CM-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-1",
+  "slug": "CM-1-2-1-1-1",
+  "level": 5,
+  "name": "Receive Production Forecast",
+  "skos_notation": "CM 1.2.1.1.1",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-2",
+  "slug": "CM-1-2-1-1-2",
+  "level": 5,
+  "name": "Receive Demand Forecast",
+  "skos_notation": "CM 1.2.1.1.2",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-3",
+  "slug": "CM-1-2-1-1-3",
+  "level": 5,
+  "name": "Forecast Renewables",
+  "skos_notation": "CM 1.2.1.1.3",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-4",
+  "slug": "CM-1-2-1-1-4",
+  "level": 5,
+  "name": "Perform Asset Optimization",
+  "skos_notation": "CM 1.2.1.1.4",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-5",
+  "slug": "CM-1-2-1-1-5",
+  "level": 5,
+  "name": "Forecast Revenue",
+  "skos_notation": "CM 1.2.1.1.5",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-6",
+  "slug": "CM-1-2-1-1-6",
+  "level": 5,
+  "name": "Receive Power Generation Forecast",
+  "skos_notation": "CM 1.2.1.1.6",
+  "parent_slug": "CM-1-2-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2",
+  "slug": "CM-1-2-1-2",
+  "level": 4,
+  "name": "Contract Management",
+  "skos_notation": "CM 1.2.1.2",
+  "parent_slug": "CM-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-1",
+  "slug": "CM-1-2-1-2-1",
+  "level": 5,
+  "name": "Create New Counterparty",
+  "skos_notation": "CM 1.2.1.2.1",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-2",
+  "slug": "CM-1-2-1-2-2",
+  "level": 5,
+  "name": "Manage Existing Counterparty",
+  "skos_notation": "CM 1.2.1.2.2",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-3",
+  "slug": "CM-1-2-1-2-3",
+  "level": 5,
+  "name": "Terminate/Novate Counterparty",
+  "skos_notation": "CM 1.2.1.2.3",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-4",
+  "slug": "CM-1-2-1-2-4",
+  "level": 5,
+  "name": "Manage M&A Activity",
+  "skos_notation": "CM 1.2.1.2.4",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-5",
+  "slug": "CM-1-2-1-2-5",
+  "level": 5,
+  "name": "Create New Contract",
+  "skos_notation": "CM 1.2.1.2.5",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-6",
+  "slug": "CM-1-2-1-2-6",
+  "level": 5,
+  "name": "Manage Existing Contract",
+  "skos_notation": "CM 1.2.1.2.6",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-7",
+  "slug": "CM-1-2-1-2-7",
+  "level": 5,
+  "name": "Terminate/Novate Contract",
+  "skos_notation": "CM 1.2.1.2.7",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-8",
+  "slug": "CM-1-2-1-2-8",
+  "level": 5,
+  "name": "Manage Lease Contract",
+  "skos_notation": "CM 1.2.1.2.8",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-9",
+  "slug": "CM-1-2-1-2-9",
+  "level": 5,
+  "name": "Manage Carrier Contracts",
+  "skos_notation": "CM 1.2.1.2.9",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-10",
+  "slug": "CM-1-2-1-2-10",
+  "level": 5,
+  "name": "Manage Storage Contract",
+  "skos_notation": "CM 1.2.1.2.10",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-11",
+  "slug": "CM-1-2-1-2-11",
+  "level": 5,
+  "name": "Monitor Contracts",
+  "skos_notation": "CM 1.2.1.2.11",
+  "parent_slug": "CM-1-2-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.2.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3",
+  "slug": "CM-1-2-1-3",
+  "level": 4,
+  "name": "Trade Capture",
+  "skos_notation": "CM 1.2.1.3",
+  "parent_slug": "CM-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-1",
+  "slug": "CM-1-2-1-3-1",
+  "level": 5,
+  "name": "Manage Pre-Trade Analysis",
+  "skos_notation": "CM 1.2.1.3.1",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-2",
+  "slug": "CM-1-2-1-3-2",
+  "level": 5,
+  "name": "Obtain Trade Approval",
+  "skos_notation": "CM 1.2.1.3.2",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-3",
+  "slug": "CM-1-2-1-3-3",
+  "level": 5,
+  "name": "Capture Physical Trades",
+  "skos_notation": "CM 1.2.1.3.3",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-4",
+  "slug": "CM-1-2-1-3-4",
+  "level": 5,
+  "name": "Capture Exchange Trades",
+  "skos_notation": "CM 1.2.1.3.4",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-5",
+  "slug": "CM-1-2-1-3-5",
+  "level": 5,
+  "name": "Capture Storage Deals",
+  "skos_notation": "CM 1.2.1.3.5",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-6",
+  "slug": "CM-1-2-1-3-6",
+  "level": 5,
+  "name": "Capture Environmental/Renewable Deals",
+  "skos_notation": "CM 1.2.1.3.6",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-7",
+  "slug": "CM-1-2-1-3-7",
+  "level": 5,
+  "name": "Capture Financial (OTC) Trades",
+  "skos_notation": "CM 1.2.1.3.7",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-8",
+  "slug": "CM-1-2-1-3-8",
+  "level": 5,
+  "name": "Capture Structured Deals",
+  "skos_notation": "CM 1.2.1.3.8",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-9",
+  "slug": "CM-1-2-1-3-9",
+  "level": 5,
+  "name": "Capture Transportation Deals",
+  "skos_notation": "CM 1.2.1.3.9",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-10",
+  "slug": "CM-1-2-1-3-10",
+  "level": 5,
+  "name": "Report Trades to SDR",
+  "skos_notation": "CM 1.2.1.3.10",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-11",
+  "slug": "CM-1-2-1-3-11",
+  "level": 5,
+  "name": "Capture Transmission Deals",
+  "skos_notation": "CM 1.2.1.3.11",
+  "parent_slug": "CM-1-2-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.3.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-4",
+  "slug": "CM-1-2-1-4",
+  "level": 4,
+  "name": "Trading Strategy Management",
+  "skos_notation": "CM 1.2.1.4",
+  "parent_slug": "CM-1-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2",
+  "slug": "CM-1-2-2",
+  "level": 3,
+  "name": "Confirmations & Risk Management",
+  "skos_notation": "CM 1.2.2",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1",
+  "slug": "CM-1-2-2-1",
+  "level": 4,
+  "name": "Credit Risk Management",
+  "skos_notation": "CM 1.2.2.1",
+  "parent_slug": "CM-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-1",
+  "slug": "CM-1-2-2-1-1",
+  "level": 5,
+  "name": "Perform Counterparty Credit Reviews",
+  "skos_notation": "CM 1.2.2.1.1",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-2",
+  "slug": "CM-1-2-2-1-2",
+  "level": 5,
+  "name": "Manage Credit Limits",
+  "skos_notation": "CM 1.2.2.1.2",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-3",
+  "slug": "CM-1-2-2-1-3",
+  "level": 5,
+  "name": "Manage Collateral",
+  "skos_notation": "CM 1.2.2.1.3",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-4",
+  "slug": "CM-1-2-2-1-4",
+  "level": 5,
+  "name": "Calculate Credit Exposure",
+  "skos_notation": "CM 1.2.2.1.4",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-5",
+  "slug": "CM-1-2-2-1-5",
+  "level": 5,
+  "name": "Perform Margining",
+  "skos_notation": "CM 1.2.2.1.5",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-6",
+  "slug": "CM-1-2-2-1-6",
+  "level": 5,
+  "name": "Perform Advanced Credit Risk Analytics",
+  "skos_notation": "CM 1.2.2.1.6",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-7",
+  "slug": "CM-1-2-2-1-7",
+  "level": 5,
+  "name": "Monitor & Analyze Credit",
+  "skos_notation": "CM 1.2.2.1.7",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-8",
+  "slug": "CM-1-2-2-1-8",
+  "level": 5,
+  "name": "Manage Credit Risk Reporting",
+  "skos_notation": "CM 1.2.2.1.8",
+  "parent_slug": "CM-1-2-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.1.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2",
+  "slug": "CM-1-2-2-2",
+  "level": 4,
+  "name": "Confirmations Management",
+  "skos_notation": "CM 1.2.2.2",
+  "parent_slug": "CM-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-1",
+  "slug": "CM-1-2-2-2-1",
+  "level": 5,
+  "name": "Generate Confirms",
+  "skos_notation": "CM 1.2.2.2.1",
+  "parent_slug": "CM-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-2",
+  "slug": "CM-1-2-2-2-2",
+  "level": 5,
+  "name": "Manage Confirmation Documentation",
+  "skos_notation": "CM 1.2.2.2.2",
+  "parent_slug": "CM-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-3",
+  "slug": "CM-1-2-2-2-3",
+  "level": 5,
+  "name": "Manage Trade Modifications",
+  "skos_notation": "CM 1.2.2.2.3",
+  "parent_slug": "CM-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-4",
+  "slug": "CM-1-2-2-2-4",
+  "level": 5,
+  "name": "Report Confirmation To SDR",
+  "skos_notation": "CM 1.2.2.2.4",
+  "parent_slug": "CM-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-5",
+  "slug": "CM-1-2-2-2-5",
+  "level": 5,
+  "name": "Manage Confirm Disputes",
+  "skos_notation": "CM 1.2.2.2.5",
+  "parent_slug": "CM-1-2-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3",
+  "slug": "CM-1-2-2-3",
+  "level": 4,
+  "name": "Market Risk Management",
+  "skos_notation": "CM 1.2.2.3",
+  "parent_slug": "CM-1-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-1",
+  "slug": "CM-1-2-2-3-1",
+  "level": 5,
+  "name": "Establish And Maintain Book Structure",
+  "skos_notation": "CM 1.2.2.3.1",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-2",
+  "slug": "CM-1-2-2-3-2",
+  "level": 5,
+  "name": "Establish & Maintain Delegation Of Authority (DOA)",
+  "skos_notation": "CM 1.2.2.3.2",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-3",
+  "slug": "CM-1-2-2-3-3",
+  "level": 5,
+  "name": "Setup And Manage Curves",
+  "skos_notation": "CM 1.2.2.3.3",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-4",
+  "slug": "CM-1-2-2-3-4",
+  "level": 5,
+  "name": "Perform End-of-day (EOD) Process",
+  "skos_notation": "CM 1.2.2.3.4",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-5",
+  "slug": "CM-1-2-2-3-5",
+  "level": 5,
+  "name": "Perform End-of-Month (EOM) Process",
+  "skos_notation": "CM 1.2.2.3.5",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-6",
+  "slug": "CM-1-2-2-3-6",
+  "level": 5,
+  "name": "Manage Risk Limits",
+  "skos_notation": "CM 1.2.2.3.6",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-7",
+  "slug": "CM-1-2-2-3-7",
+  "level": 5,
+  "name": "Measure Risk",
+  "skos_notation": "CM 1.2.2.3.7",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-8",
+  "slug": "CM-1-2-2-3-8",
+  "level": 5,
+  "name": "Monitor Risk",
+  "skos_notation": "CM 1.2.2.3.8",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-9",
+  "slug": "CM-1-2-2-3-9",
+  "level": 5,
+  "name": "Perform Position & PNL Analysis",
+  "skos_notation": "CM 1.2.2.3.9",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-10",
+  "slug": "CM-1-2-2-3-10",
+  "level": 5,
+  "name": "Monitor Risk Policy Compliance",
+  "skos_notation": "CM 1.2.2.3.10",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-11",
+  "slug": "CM-1-2-2-3-11",
+  "level": 5,
+  "name": "Manage And Run Risk Scenarios",
+  "skos_notation": "CM 1.2.2.3.11",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-12",
+  "slug": "CM-1-2-2-3-12",
+  "level": 5,
+  "name": "Conduct Advanced Risk Analytics",
+  "skos_notation": "CM 1.2.2.3.12",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-13",
+  "slug": "CM-1-2-2-3-13",
+  "level": 5,
+  "name": "Manage Risk Reporting",
+  "skos_notation": "CM 1.2.2.3.13",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.13"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-14",
+  "slug": "CM-1-2-2-3-14",
+  "level": 5,
+  "name": "Manage Volatilities And Correlations",
+  "skos_notation": "CM 1.2.2.3.14",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.14"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-15",
+  "slug": "CM-1-2-2-3-15",
+  "level": 5,
+  "name": "Manage Commodity Valuations",
+  "skos_notation": "CM 1.2.2.3.15",
+  "parent_slug": "CM-1-2-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.2.3.15"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3",
+  "slug": "CM-1-2-3",
+  "level": 3,
+  "name": "Actualizations",
+  "skos_notation": "CM 1.2.3",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1",
+  "slug": "CM-1-2-3-1",
+  "level": 4,
+  "name": "Actualizations",
+  "skos_notation": "CM 1.2.3.1",
+  "parent_slug": "CM-1-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-1",
+  "slug": "CM-1-2-3-1-1",
+  "level": 5,
+  "name": "Perform Pipeline Actualization",
+  "skos_notation": "CM 1.2.3.1.1",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-2",
+  "slug": "CM-1-2-3-1-2",
+  "level": 5,
+  "name": "Perform Truck Actualization",
+  "skos_notation": "CM 1.2.3.1.2",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-3",
+  "slug": "CM-1-2-3-1-3",
+  "level": 5,
+  "name": "Perform Railcar Actualization",
+  "skos_notation": "CM 1.2.3.1.3",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-4",
+  "slug": "CM-1-2-3-1-4",
+  "level": 5,
+  "name": "Perform Vessel & Barge Actualization",
+  "skos_notation": "CM 1.2.3.1.4",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-5",
+  "slug": "CM-1-2-3-1-5",
+  "level": 5,
+  "name": "Perform Terminal/Storage Actualization",
+  "skos_notation": "CM 1.2.3.1.5",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-6",
+  "slug": "CM-1-2-3-1-6",
+  "level": 5,
+  "name": "Perform Lease Actualization",
+  "skos_notation": "CM 1.2.3.1.6",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-7",
+  "slug": "CM-1-2-3-1-7",
+  "level": 5,
+  "name": "Perform RINs/REC Actualization",
+  "skos_notation": "CM 1.2.3.1.7",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-8",
+  "slug": "CM-1-2-3-1-8",
+  "level": 5,
+  "name": "Manage Actualization Disputes",
+  "skos_notation": "CM 1.2.3.1.8",
+  "parent_slug": "CM-1-2-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.3.1.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4",
+  "slug": "CM-1-2-4",
+  "level": 3,
+  "name": "Settlements & Accounting",
+  "skos_notation": "CM 1.2.4",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1",
+  "slug": "CM-1-2-4-1",
+  "level": 4,
+  "name": "Settlements",
+  "skos_notation": "CM 1.2.4.1",
+  "parent_slug": "CM-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-1",
+  "slug": "CM-1-2-4-1-1",
+  "level": 5,
+  "name": "Settle Crude Oil",
+  "skos_notation": "CM 1.2.4.1.1",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-2",
+  "slug": "CM-1-2-4-1-2",
+  "level": 5,
+  "name": "Settle Products",
+  "skos_notation": "CM 1.2.4.1.2",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-3",
+  "slug": "CM-1-2-4-1-3",
+  "level": 5,
+  "name": "Settle Exchange Trades",
+  "skos_notation": "CM 1.2.4.1.3",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-4",
+  "slug": "CM-1-2-4-1-4",
+  "level": 5,
+  "name": "Settle Trucks",
+  "skos_notation": "CM 1.2.4.1.4",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-5",
+  "slug": "CM-1-2-4-1-5",
+  "level": 5,
+  "name": "Settle Vessels & Barge",
+  "skos_notation": "CM 1.2.4.1.5",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-6",
+  "slug": "CM-1-2-4-1-6",
+  "level": 5,
+  "name": "Settle First Purchaser/Leases",
+  "skos_notation": "CM 1.2.4.1.6",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-7",
+  "slug": "CM-1-2-4-1-7",
+  "level": 5,
+  "name": "Settle ISO/Power Pools",
+  "skos_notation": "CM 1.2.4.1.7",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-8",
+  "slug": "CM-1-2-4-1-8",
+  "level": 5,
+  "name": "Settle Emissions",
+  "skos_notation": "CM 1.2.4.1.8",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-9",
+  "slug": "CM-1-2-4-1-9",
+  "level": 5,
+  "name": "Manage Settlement Documents",
+  "skos_notation": "CM 1.2.4.1.9",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-10",
+  "slug": "CM-1-2-4-1-10",
+  "level": 5,
+  "name": "Settle Natural Gas",
+  "skos_notation": "CM 1.2.4.1.10",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-11",
+  "slug": "CM-1-2-4-1-11",
+  "level": 5,
+  "name": "Settle Financial OTC Trades",
+  "skos_notation": "CM 1.2.4.1.11",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-12",
+  "slug": "CM-1-2-4-1-12",
+  "level": 5,
+  "name": "Settle Pipelines",
+  "skos_notation": "CM 1.2.4.1.12",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-13",
+  "slug": "CM-1-2-4-1-13",
+  "level": 5,
+  "name": "Settle Rail",
+  "skos_notation": "CM 1.2.4.1.13",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.13"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-14",
+  "slug": "CM-1-2-4-1-14",
+  "level": 5,
+  "name": "Settle Terminal/Storage",
+  "skos_notation": "CM 1.2.4.1.14",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.14"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-15",
+  "slug": "CM-1-2-4-1-15",
+  "level": 5,
+  "name": "Settle Power",
+  "skos_notation": "CM 1.2.4.1.15",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.15"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-16",
+  "slug": "CM-1-2-4-1-16",
+  "level": 5,
+  "name": "Settle Broker",
+  "skos_notation": "CM 1.2.4.1.16",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.16"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-17",
+  "slug": "CM-1-2-4-1-17",
+  "level": 5,
+  "name": "Manage Settlement Disputes",
+  "skos_notation": "CM 1.2.4.1.17",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.17"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-18",
+  "slug": "CM-1-2-4-1-18",
+  "level": 5,
+  "name": "Settle Intermediates",
+  "skos_notation": "CM 1.2.4.1.18",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.18"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-19",
+  "slug": "CM-1-2-4-1-19",
+  "level": 5,
+  "name": "Settle Other Commodities",
+  "skos_notation": "CM 1.2.4.1.19",
+  "parent_slug": "CM-1-2-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.1.19"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2",
+  "slug": "CM-1-2-4-2",
+  "level": 4,
+  "name": "Accounting",
+  "skos_notation": "CM 1.2.4.2",
+  "parent_slug": "CM-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-1",
+  "slug": "CM-1-2-4-2-1",
+  "level": 5,
+  "name": "Manage Accounting Treatments",
+  "skos_notation": "CM 1.2.4.2.1",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-2",
+  "slug": "CM-1-2-4-2-2",
+  "level": 5,
+  "name": "Manage Production Accounting",
+  "skos_notation": "CM 1.2.4.2.2",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-3",
+  "slug": "CM-1-2-4-2-3",
+  "level": 5,
+  "name": "Manage Marketing Interests & Royalty Payments",
+  "skos_notation": "CM 1.2.4.2.3",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-4",
+  "slug": "CM-1-2-4-2-4",
+  "level": 5,
+  "name": "Manage AR/AP & Actuals",
+  "skos_notation": "CM 1.2.4.2.4",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-5",
+  "slug": "CM-1-2-4-2-5",
+  "level": 5,
+  "name": "Manage Trading Sub-Ledger",
+  "skos_notation": "CM 1.2.4.2.5",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-6",
+  "slug": "CM-1-2-4-2-6",
+  "level": 5,
+  "name": "Reconcile Economic PNL To Accounting PNL",
+  "skos_notation": "CM 1.2.4.2.6",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-7",
+  "slug": "CM-1-2-4-2-7",
+  "level": 5,
+  "name": "Manage Financial Info. Documentation & Reporting",
+  "skos_notation": "CM 1.2.4.2.7",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-8",
+  "slug": "CM-1-2-4-2-8",
+  "level": 5,
+  "name": "Manage Financial System/GL",
+  "skos_notation": "CM 1.2.4.2.8",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-9",
+  "slug": "CM-1-2-4-2-9",
+  "level": 5,
+  "name": "Manage Cash Application",
+  "skos_notation": "CM 1.2.4.2.9",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-10",
+  "slug": "CM-1-2-4-2-10",
+  "level": 5,
+  "name": "Manage Accruals",
+  "skos_notation": "CM 1.2.4.2.10",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-11",
+  "slug": "CM-1-2-4-2-11",
+  "level": 5,
+  "name": "Manage Taxes",
+  "skos_notation": "CM 1.2.4.2.11",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-12",
+  "slug": "CM-1-2-4-2-12",
+  "level": 5,
+  "name": "Develop Accounting Policies & Procedures",
+  "skos_notation": "CM 1.2.4.2.12",
+  "parent_slug": "CM-1-2-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.2.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3",
+  "slug": "CM-1-2-4-3",
+  "level": 4,
+  "name": "Regulatory & Compliance",
+  "skos_notation": "CM 1.2.4.3",
+  "parent_slug": "CM-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-1",
+  "slug": "CM-1-2-4-3-1",
+  "level": 5,
+  "name": "Develop Compliance Policies & Procedures",
+  "skos_notation": "CM 1.2.4.3.1",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-2",
+  "slug": "CM-1-2-4-3-2",
+  "level": 5,
+  "name": "Monitor External Trading Compliance",
+  "skos_notation": "CM 1.2.4.3.2",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-3",
+  "slug": "CM-1-2-4-3-3",
+  "level": 5,
+  "name": "Monitor Internal Trading Compliance",
+  "skos_notation": "CM 1.2.4.3.3",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-4",
+  "slug": "CM-1-2-4-3-4",
+  "level": 5,
+  "name": "Monitor Internal Trade Controls",
+  "skos_notation": "CM 1.2.4.3.4",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-5",
+  "slug": "CM-1-2-4-3-5",
+  "level": 5,
+  "name": "Manage Tax Compliance",
+  "skos_notation": "CM 1.2.4.3.5",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-6",
+  "slug": "CM-1-2-4-3-6",
+  "level": 5,
+  "name": "Manage RINs Reporting",
+  "skos_notation": "CM 1.2.4.3.6",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-7",
+  "slug": "CM-1-2-4-3-7",
+  "level": 5,
+  "name": "Manage Exceptions",
+  "skos_notation": "CM 1.2.4.3.7",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4",
+  "slug": "CM-1-2-4-4",
+  "level": 4,
+  "name": "Demurrage Management",
+  "skos_notation": "CM 1.2.4.4",
+  "parent_slug": "CM-1-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-1",
+  "slug": "CM-1-2-4-4-1",
+  "level": 5,
+  "name": "Identify Potential Demurrage",
+  "skos_notation": "CM 1.2.4.4.1",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-2",
+  "slug": "CM-1-2-4-4-2",
+  "level": 5,
+  "name": "Create Claim",
+  "skos_notation": "CM 1.2.4.4.2",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-3",
+  "slug": "CM-1-2-4-4-3",
+  "level": 5,
+  "name": "Receive Demurrage Claim",
+  "skos_notation": "CM 1.2.4.4.3",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-4",
+  "slug": "CM-1-2-4-4-4",
+  "level": 5,
+  "name": "Assess Claim",
+  "skos_notation": "CM 1.2.4.4.4",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-5",
+  "slug": "CM-1-2-4-4-5",
+  "level": 5,
+  "name": "Communicate and Negotiate Claim",
+  "skos_notation": "CM 1.2.4.4.5",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-6",
+  "slug": "CM-1-2-4-4-6",
+  "level": 5,
+  "name": "Validate and Negotiate Claim",
+  "skos_notation": "CM 1.2.4.4.6",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-7",
+  "slug": "CM-1-2-4-4-7",
+  "level": 5,
+  "name": "Send Claim Invoice",
+  "skos_notation": "CM 1.2.4.4.7",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-8",
+  "slug": "CM-1-2-4-4-8",
+  "level": 5,
+  "name": "Receive Claim Invoice",
+  "skos_notation": "CM 1.2.4.4.8",
+  "parent_slug": "CM-1-2-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.4.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5",
+  "slug": "CM-1-2-5",
+  "level": 3,
+  "name": "Crude/Feed Supply Chain Management",
+  "skos_notation": "CM 1.2.5",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1",
+  "slug": "CM-1-2-5-1",
+  "level": 4,
+  "name": "Crude/Feed Quality Management",
+  "skos_notation": "CM 1.2.5.1",
+  "parent_slug": "CM-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-1",
+  "slug": "CM-1-2-5-1-1",
+  "level": 5,
+  "name": "Manage feedstock Data Quality",
+  "skos_notation": "CM 1.2.5.1.1",
+  "parent_slug": "CM-1-2-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-2",
+  "slug": "CM-1-2-5-1-2",
+  "level": 5,
+  "name": "Review LP Model Integrity",
+  "skos_notation": "CM 1.2.5.1.2",
+  "parent_slug": "CM-1-2-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-3",
+  "slug": "CM-1-2-5-1-3",
+  "level": 5,
+  "name": "Develop Term Slate",
+  "skos_notation": "CM 1.2.5.1.3",
+  "parent_slug": "CM-1-2-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-4",
+  "slug": "CM-1-2-5-1-4",
+  "level": 5,
+  "name": "Develop Spot Slate",
+  "skos_notation": "CM 1.2.5.1.4",
+  "parent_slug": "CM-1-2-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2",
+  "slug": "CM-1-2-5-2",
+  "level": 4,
+  "name": "Crude/Feed Demand Management",
+  "skos_notation": "CM 1.2.5.2",
+  "parent_slug": "CM-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-1",
+  "slug": "CM-1-2-5-2-1",
+  "level": 5,
+  "name": "Coordinate Feedstock Trading",
+  "skos_notation": "CM 1.2.5.2.1",
+  "parent_slug": "CM-1-2-5-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-2",
+  "slug": "CM-1-2-5-2-2",
+  "level": 5,
+  "name": "Develop Feedstock Demand",
+  "skos_notation": "CM 1.2.5.2.2",
+  "parent_slug": "CM-1-2-5-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-3",
+  "slug": "CM-1-2-5-2-3",
+  "level": 5,
+  "name": "Plan Optimal Feedstock Slate And Run Rate",
+  "skos_notation": "CM 1.2.5.2.3",
+  "parent_slug": "CM-1-2-5-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3",
+  "slug": "CM-1-2-5-3",
+  "level": 4,
+  "name": "Crude/Feed Transportation Management",
+  "skos_notation": "CM 1.2.5.3",
+  "parent_slug": "CM-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-1",
+  "slug": "CM-1-2-5-3-1",
+  "level": 5,
+  "name": "Manage Feedstock Transportation",
+  "skos_notation": "CM 1.2.5.3.1",
+  "parent_slug": "CM-1-2-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-2",
+  "slug": "CM-1-2-5-3-2",
+  "level": 5,
+  "name": "Schedule Feedstock Delivery",
+  "skos_notation": "CM 1.2.5.3.2",
+  "parent_slug": "CM-1-2-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-3",
+  "slug": "CM-1-2-5-3-3",
+  "level": 5,
+  "name": "Plan Feedstock Arrival",
+  "skos_notation": "CM 1.2.5.3.3",
+  "parent_slug": "CM-1-2-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4",
+  "slug": "CM-1-2-5-4",
+  "level": 4,
+  "name": "Crude/Feed Supply Management",
+  "skos_notation": "CM 1.2.5.4",
+  "parent_slug": "CM-1-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4-1",
+  "slug": "CM-1-2-5-4-1",
+  "level": 5,
+  "name": "Assess & Manage Inventory Risk",
+  "skos_notation": "CM 1.2.5.4.1",
+  "parent_slug": "CM-1-2-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4-2",
+  "slug": "CM-1-2-5-4-2",
+  "level": 5,
+  "name": "Manage Feedstock Inventory",
+  "skos_notation": "CM 1.2.5.4.2",
+  "parent_slug": "CM-1-2-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6",
+  "slug": "CM-1-2-6",
+  "level": 3,
+  "name": "Refined Product Supply Chain Management",
+  "skos_notation": "CM 1.2.6",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1",
+  "slug": "CM-1-2-6-1",
+  "level": 4,
+  "name": "Network Management",
+  "skos_notation": "CM 1.2.6.1",
+  "parent_slug": "CM-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-1",
+  "slug": "CM-1-2-6-1-1",
+  "level": 5,
+  "name": "Segment Customers",
+  "skos_notation": "CM 1.2.6.1.1",
+  "parent_slug": "CM-1-2-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-2",
+  "slug": "CM-1-2-6-1-2",
+  "level": 5,
+  "name": "Evaluate Market Attractiveness",
+  "skos_notation": "CM 1.2.6.1.2",
+  "parent_slug": "CM-1-2-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-3",
+  "slug": "CM-1-2-6-1-3",
+  "level": 5,
+  "name": "Assess Cost-to-Serve Performance",
+  "skos_notation": "CM 1.2.6.1.3",
+  "parent_slug": "CM-1-2-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2",
+  "slug": "CM-1-2-6-2",
+  "level": 4,
+  "name": "Refined Product Demand Management",
+  "skos_notation": "CM 1.2.6.2",
+  "parent_slug": "CM-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-1",
+  "slug": "CM-1-2-6-2-1",
+  "level": 5,
+  "name": "Manage Refined Product Demand",
+  "skos_notation": "CM 1.2.6.2.1",
+  "parent_slug": "CM-1-2-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-2",
+  "slug": "CM-1-2-6-2-2",
+  "level": 5,
+  "name": "Manage Refined Product Exchanges",
+  "skos_notation": "CM 1.2.6.2.2",
+  "parent_slug": "CM-1-2-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-3",
+  "slug": "CM-1-2-6-2-3",
+  "level": 5,
+  "name": "Forecast Refined Product Demand",
+  "skos_notation": "CM 1.2.6.2.3",
+  "parent_slug": "CM-1-2-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3",
+  "slug": "CM-1-2-6-3",
+  "level": 4,
+  "name": "Supply Operations",
+  "skos_notation": "CM 1.2.6.3",
+  "parent_slug": "CM-1-2-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-1",
+  "slug": "CM-1-2-6-3-1",
+  "level": 5,
+  "name": "Manage Primary Distribution Operations",
+  "skos_notation": "CM 1.2.6.3.1",
+  "parent_slug": "CM-1-2-6-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-2",
+  "slug": "CM-1-2-6-3-2",
+  "level": 5,
+  "name": "Manage Replenishment",
+  "skos_notation": "CM 1.2.6.3.2",
+  "parent_slug": "CM-1-2-6-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-3",
+  "slug": "CM-1-2-6-3-3",
+  "level": 5,
+  "name": "Manage Primary Distribution Transportation",
+  "skos_notation": "CM 1.2.6.3.3",
+  "parent_slug": "CM-1-2-6-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.6.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7",
+  "slug": "CM-1-2-7",
+  "level": 3,
+  "name": "Products Distribution Management",
+  "skos_notation": "CM 1.2.7",
+  "parent_slug": "CM-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1",
+  "slug": "CM-1-2-7-1",
+  "level": 4,
+  "name": "Contractual Agreements Management",
+  "skos_notation": "CM 1.2.7.1",
+  "parent_slug": "CM-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-1",
+  "slug": "CM-1-2-7-1-1",
+  "level": 5,
+  "name": "Manage Product Exchange Agreements",
+  "skos_notation": "CM 1.2.7.1.1",
+  "parent_slug": "CM-1-2-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-2",
+  "slug": "CM-1-2-7-1-2",
+  "level": 5,
+  "name": "Manage Product Transport Agreements",
+  "skos_notation": "CM 1.2.7.1.2",
+  "parent_slug": "CM-1-2-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-3",
+  "slug": "CM-1-2-7-1-3",
+  "level": 5,
+  "name": "Negotiate Storage / Throughput Agreements",
+  "skos_notation": "CM 1.2.7.1.3",
+  "parent_slug": "CM-1-2-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2",
+  "slug": "CM-1-2-7-2",
+  "level": 4,
+  "name": "Terminal Operations Management",
+  "skos_notation": "CM 1.2.7.2",
+  "parent_slug": "CM-1-2-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-1",
+  "slug": "CM-1-2-7-2-1",
+  "level": 5,
+  "name": "Manage Safety (Materials, Staff, Contractor)",
+  "skos_notation": "CM 1.2.7.2.1",
+  "parent_slug": "CM-1-2-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-2",
+  "slug": "CM-1-2-7-2-2",
+  "level": 5,
+  "name": "Manage Fleet (Own/Third Party)",
+  "skos_notation": "CM 1.2.7.2.2",
+  "parent_slug": "CM-1-2-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-3",
+  "slug": "CM-1-2-7-2-3",
+  "level": 5,
+  "name": "Manage Site Assets (Tank, Rack, Etc.)",
+  "skos_notation": "CM 1.2.7.2.3",
+  "parent_slug": "CM-1-2-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.7.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3",
+  "slug": "CM-1-3",
+  "level": 2,
+  "name": "Marketing",
+  "skos_notation": "CM 1.3",
+  "parent_slug": "CM-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1",
+  "slug": "CM-1-3-1",
+  "level": 3,
+  "name": "Market Analysis & Insight",
+  "skos_notation": "CM 1.3.1",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1",
+  "slug": "CM-1-3-1-1",
+  "level": 4,
+  "name": "Market Analysis",
+  "skos_notation": "CM 1.3.1.1",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-1",
+  "slug": "CM-1-3-1-1-1",
+  "level": 5,
+  "name": "Source & Collect Information",
+  "skos_notation": "CM 1.3.1.1.1",
+  "parent_slug": "CM-1-3-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-2",
+  "slug": "CM-1-3-1-1-2",
+  "level": 5,
+  "name": "Define Analysis Objectives & Scope",
+  "skos_notation": "CM 1.3.1.1.2",
+  "parent_slug": "CM-1-3-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-3",
+  "slug": "CM-1-3-1-1-3",
+  "level": 5,
+  "name": "Analyze Data",
+  "skos_notation": "CM 1.3.1.1.3",
+  "parent_slug": "CM-1-3-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-4",
+  "slug": "CM-1-3-1-1-4",
+  "level": 5,
+  "name": "Document Findings",
+  "skos_notation": "CM 1.3.1.1.4",
+  "parent_slug": "CM-1-3-1-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2",
+  "slug": "CM-1-3-1-2",
+  "level": 4,
+  "name": "Company Analysis",
+  "skos_notation": "CM 1.3.1.2",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-1",
+  "slug": "CM-1-3-1-2-1",
+  "level": 5,
+  "name": "Source & Collect Information",
+  "skos_notation": "CM 1.3.1.2.1",
+  "parent_slug": "CM-1-3-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-2",
+  "slug": "CM-1-3-1-2-2",
+  "level": 5,
+  "name": "Define Analysis Objectives & Scope",
+  "skos_notation": "CM 1.3.1.2.2",
+  "parent_slug": "CM-1-3-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-3",
+  "slug": "CM-1-3-1-2-3",
+  "level": 5,
+  "name": "Analyze Data",
+  "skos_notation": "CM 1.3.1.2.3",
+  "parent_slug": "CM-1-3-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-4",
+  "slug": "CM-1-3-1-2-4",
+  "level": 5,
+  "name": "Document Findings",
+  "skos_notation": "CM 1.3.1.2.4",
+  "parent_slug": "CM-1-3-1-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3",
+  "slug": "CM-1-3-1-3",
+  "level": 4,
+  "name": "Consumer Analysis",
+  "skos_notation": "CM 1.3.1.3",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-1",
+  "slug": "CM-1-3-1-3-1",
+  "level": 5,
+  "name": "Source & Collect Information",
+  "skos_notation": "CM 1.3.1.3.1",
+  "parent_slug": "CM-1-3-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-2",
+  "slug": "CM-1-3-1-3-2",
+  "level": 5,
+  "name": "Define Analysis Objectives & Scope",
+  "skos_notation": "CM 1.3.1.3.2",
+  "parent_slug": "CM-1-3-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-3",
+  "slug": "CM-1-3-1-3-3",
+  "level": 5,
+  "name": "Analyze Data",
+  "skos_notation": "CM 1.3.1.3.3",
+  "parent_slug": "CM-1-3-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-4",
+  "slug": "CM-1-3-1-3-4",
+  "level": 5,
+  "name": "Document Findings",
+  "skos_notation": "CM 1.3.1.3.4",
+  "parent_slug": "CM-1-3-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4",
+  "slug": "CM-1-3-1-4",
+  "level": 4,
+  "name": "Customer And Marketer Analysis",
+  "skos_notation": "CM 1.3.1.4",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-1",
+  "slug": "CM-1-3-1-4-1",
+  "level": 5,
+  "name": "Source & Collect Information",
+  "skos_notation": "CM 1.3.1.4.1",
+  "parent_slug": "CM-1-3-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-2",
+  "slug": "CM-1-3-1-4-2",
+  "level": 5,
+  "name": "Define Analysis Objectives & Scope",
+  "skos_notation": "CM 1.3.1.4.2",
+  "parent_slug": "CM-1-3-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-3",
+  "slug": "CM-1-3-1-4-3",
+  "level": 5,
+  "name": "Analyze Data",
+  "skos_notation": "CM 1.3.1.4.3",
+  "parent_slug": "CM-1-3-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-4",
+  "slug": "CM-1-3-1-4-4",
+  "level": 5,
+  "name": "Document Findings",
+  "skos_notation": "CM 1.3.1.4.4",
+  "parent_slug": "CM-1-3-1-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5",
+  "slug": "CM-1-3-1-5",
+  "level": 4,
+  "name": "Competitor Analysis",
+  "skos_notation": "CM 1.3.1.5",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-1",
+  "slug": "CM-1-3-1-5-1",
+  "level": 5,
+  "name": "Source & Collect Information",
+  "skos_notation": "CM 1.3.1.5.1",
+  "parent_slug": "CM-1-3-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-2",
+  "slug": "CM-1-3-1-5-2",
+  "level": 5,
+  "name": "Define Analysis Objectives & Scope",
+  "skos_notation": "CM 1.3.1.5.2",
+  "parent_slug": "CM-1-3-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-3",
+  "slug": "CM-1-3-1-5-3",
+  "level": 5,
+  "name": "Analyze Data",
+  "skos_notation": "CM 1.3.1.5.3",
+  "parent_slug": "CM-1-3-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-4",
+  "slug": "CM-1-3-1-5-4",
+  "level": 5,
+  "name": "Document Findings",
+  "skos_notation": "CM 1.3.1.5.4",
+  "parent_slug": "CM-1-3-1-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-6",
+  "slug": "CM-1-3-1-6",
+  "level": 4,
+  "name": "Insight and Metrics",
+  "skos_notation": "CM 1.3.1.6",
+  "parent_slug": "CM-1-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2",
+  "slug": "CM-1-3-2",
+  "level": 3,
+  "name": "Strategy",
+  "skos_notation": "CM 1.3.2",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1",
+  "slug": "CM-1-3-2-1",
+  "level": 4,
+  "name": "Brand Strategy",
+  "skos_notation": "CM 1.3.2.1",
+  "parent_slug": "CM-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-1",
+  "slug": "CM-1-3-2-1-1",
+  "level": 5,
+  "name": "Formulate and Evaluate Strategic Operating Alternative",
+  "skos_notation": "CM 1.3.2.1.1",
+  "parent_slug": "CM-1-3-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-2",
+  "slug": "CM-1-3-2-1-2",
+  "level": 5,
+  "name": "Establish Brand Objectives and hypothesis",
+  "skos_notation": "CM 1.3.2.1.2",
+  "parent_slug": "CM-1-3-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-3",
+  "slug": "CM-1-3-2-1-3",
+  "level": 5,
+  "name": "Develop & Test Brand Hypothesis",
+  "skos_notation": "CM 1.3.2.1.3",
+  "parent_slug": "CM-1-3-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-4",
+  "slug": "CM-1-3-2-1-4",
+  "level": 5,
+  "name": "Develop / update Brand",
+  "skos_notation": "CM 1.3.2.1.4",
+  "parent_slug": "CM-1-3-2-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2",
+  "slug": "CM-1-3-2-2",
+  "level": 4,
+  "name": "Customer And Marketer Value Proposition",
+  "skos_notation": "CM 1.3.2.2",
+  "parent_slug": "CM-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-1",
+  "slug": "CM-1-3-2-2-1",
+  "level": 5,
+  "name": "Test Customer value proposition",
+  "skos_notation": "CM 1.3.2.2.1",
+  "parent_slug": "CM-1-3-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-2",
+  "slug": "CM-1-3-2-2-2",
+  "level": 5,
+  "name": "Formulate and Evaluate Strategic Operating Alternatives (CVP)",
+  "skos_notation": "CM 1.3.2.2.2",
+  "parent_slug": "CM-1-3-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-3",
+  "slug": "CM-1-3-2-2-3",
+  "level": 5,
+  "name": "Establish CVP principles and objectives",
+  "skos_notation": "CM 1.3.2.2.3",
+  "parent_slug": "CM-1-3-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-4",
+  "slug": "CM-1-3-2-2-4",
+  "level": 5,
+  "name": "Develop/Update Strategy (CVP)",
+  "skos_notation": "CM 1.3.2.2.4",
+  "parent_slug": "CM-1-3-2-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3",
+  "slug": "CM-1-3-2-3",
+  "level": 4,
+  "name": "Consumer Value Proposition",
+  "skos_notation": "CM 1.3.2.3",
+  "parent_slug": "CM-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-1",
+  "slug": "CM-1-3-2-3-1",
+  "level": 5,
+  "name": "Test Customer value proposition",
+  "skos_notation": "CM 1.3.2.3.1",
+  "parent_slug": "CM-1-3-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-2",
+  "slug": "CM-1-3-2-3-2",
+  "level": 5,
+  "name": "Formulate and Evaluate Strategic Operating Alternatives (CVP)",
+  "skos_notation": "CM 1.3.2.3.2",
+  "parent_slug": "CM-1-3-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-3",
+  "slug": "CM-1-3-2-3-3",
+  "level": 5,
+  "name": "Establish CVP principles and objectives",
+  "skos_notation": "CM 1.3.2.3.3",
+  "parent_slug": "CM-1-3-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-4",
+  "slug": "CM-1-3-2-3-4",
+  "level": 5,
+  "name": "Develop/Update Strategy (CVP)",
+  "skos_notation": "CM 1.3.2.3.4",
+  "parent_slug": "CM-1-3-2-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4",
+  "slug": "CM-1-3-2-4",
+  "level": 4,
+  "name": "Sales & Distribution Channel Strategy",
+  "skos_notation": "CM 1.3.2.4",
+  "parent_slug": "CM-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4-1",
+  "slug": "CM-1-3-2-4-1",
+  "level": 5,
+  "name": "Conduct Channel of trade diagnostics",
+  "skos_notation": "CM 1.3.2.4.1",
+  "parent_slug": "CM-1-3-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4-2",
+  "slug": "CM-1-3-2-4-2",
+  "level": 5,
+  "name": "Establish operating Objectives and develop Channel Strategy Hypothesis",
+  "skos_notation": "CM 1.3.2.4.2",
+  "parent_slug": "CM-1-3-2-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5",
+  "slug": "CM-1-3-2-5",
+  "level": 4,
+  "name": "Customer Experience Strategy",
+  "skos_notation": "CM 1.3.2.5",
+  "parent_slug": "CM-1-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-1",
+  "slug": "CM-1-3-2-5-1",
+  "level": 5,
+  "name": "Identify Customer Experience Aspiration",
+  "skos_notation": "CM 1.3.2.5.1",
+  "parent_slug": "CM-1-3-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-2",
+  "slug": "CM-1-3-2-5-2",
+  "level": 5,
+  "name": "Define Customer Experience Guiding Principles",
+  "skos_notation": "CM 1.3.2.5.2",
+  "parent_slug": "CM-1-3-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-3",
+  "slug": "CM-1-3-2-5-3",
+  "level": 5,
+  "name": "Establish Customer Experience Strategic Pillars",
+  "skos_notation": "CM 1.3.2.5.3",
+  "parent_slug": "CM-1-3-2-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.2.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3",
+  "slug": "CM-1-3-3",
+  "level": 3,
+  "name": "Offer Design & Development",
+  "skos_notation": "CM 1.3.3",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1",
+  "slug": "CM-1-3-3-1",
+  "level": 4,
+  "name": "Customer Offer Definition",
+  "skos_notation": "CM 1.3.3.1",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-1",
+  "slug": "CM-1-3-3-1-1",
+  "level": 5,
+  "name": "Define Target Customer Groups",
+  "skos_notation": "CM 1.3.3.1.1",
+  "parent_slug": "CM-1-3-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-2",
+  "slug": "CM-1-3-3-1-2",
+  "level": 5,
+  "name": "Define Customer Offer",
+  "skos_notation": "CM 1.3.3.1.2",
+  "parent_slug": "CM-1-3-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-3",
+  "slug": "CM-1-3-3-1-3",
+  "level": 5,
+  "name": "Validate Customer Offer",
+  "skos_notation": "CM 1.3.3.1.3",
+  "parent_slug": "CM-1-3-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-4",
+  "slug": "CM-1-3-3-1-4",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.1.4",
+  "parent_slug": "CM-1-3-3-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2",
+  "slug": "CM-1-3-3-2",
+  "level": 4,
+  "name": "Pricing Strategy Management",
+  "skos_notation": "CM 1.3.3.2",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-1",
+  "slug": "CM-1-3-3-2-1",
+  "level": 5,
+  "name": "Define Strategic Pricing Approach",
+  "skos_notation": "CM 1.3.3.2.1",
+  "parent_slug": "CM-1-3-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-2",
+  "slug": "CM-1-3-3-2-2",
+  "level": 5,
+  "name": "Develop Integrated Pricing Strategy",
+  "skos_notation": "CM 1.3.3.2.2",
+  "parent_slug": "CM-1-3-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-3",
+  "slug": "CM-1-3-3-2-3",
+  "level": 5,
+  "name": "Analyze Pricing Performance",
+  "skos_notation": "CM 1.3.3.2.3",
+  "parent_slug": "CM-1-3-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-4",
+  "slug": "CM-1-3-3-2-4",
+  "level": 5,
+  "name": "Conduct Pricing Pilots",
+  "skos_notation": "CM 1.3.3.2.4",
+  "parent_slug": "CM-1-3-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-5",
+  "slug": "CM-1-3-3-2-5",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.2.5",
+  "parent_slug": "CM-1-3-3-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3",
+  "slug": "CM-1-3-3-3",
+  "level": 4,
+  "name": "Sales & Distribution Channel Design",
+  "skos_notation": "CM 1.3.3.3",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-1",
+  "slug": "CM-1-3-3-3-1",
+  "level": 5,
+  "name": "Create Channel Offering & Value Proposition",
+  "skos_notation": "CM 1.3.3.3.1",
+  "parent_slug": "CM-1-3-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-2",
+  "slug": "CM-1-3-3-3-2",
+  "level": 5,
+  "name": "Define Channel Portfolio",
+  "skos_notation": "CM 1.3.3.3.2",
+  "parent_slug": "CM-1-3-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-3",
+  "slug": "CM-1-3-3-3-3",
+  "level": 5,
+  "name": "Segment Channels",
+  "skos_notation": "CM 1.3.3.3.3",
+  "parent_slug": "CM-1-3-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-4",
+  "slug": "CM-1-3-3-3-4",
+  "level": 5,
+  "name": "Develop Channel Structure, Size & Engagement Model",
+  "skos_notation": "CM 1.3.3.3.4",
+  "parent_slug": "CM-1-3-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-5",
+  "slug": "CM-1-3-3-3-5",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.3.5",
+  "parent_slug": "CM-1-3-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4",
+  "slug": "CM-1-3-3-4",
+  "level": 4,
+  "name": "Network Design (Retail)",
+  "skos_notation": "CM 1.3.3.4",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-1",
+  "slug": "CM-1-3-3-4-1",
+  "level": 5,
+  "name": "Define Target Location",
+  "skos_notation": "CM 1.3.3.4.1",
+  "parent_slug": "CM-1-3-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-2",
+  "slug": "CM-1-3-3-4-2",
+  "level": 5,
+  "name": "Formulate And Evaluate Strategic Operating Alternatives (network Strategy)",
+  "skos_notation": "CM 1.3.3.4.2",
+  "parent_slug": "CM-1-3-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-3",
+  "slug": "CM-1-3-3-4-3",
+  "level": 5,
+  "name": "Define Target Network Size",
+  "skos_notation": "CM 1.3.3.4.3",
+  "parent_slug": "CM-1-3-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-4",
+  "slug": "CM-1-3-3-4-4",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.4.4",
+  "parent_slug": "CM-1-3-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5",
+  "slug": "CM-1-3-3-5",
+  "level": 4,
+  "name": "Marketing Communications Strategy",
+  "skos_notation": "CM 1.3.3.5",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-1",
+  "slug": "CM-1-3-3-5-1",
+  "level": 5,
+  "name": "Define Media Strategy",
+  "skos_notation": "CM 1.3.3.5.1",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-2",
+  "slug": "CM-1-3-3-5-2",
+  "level": 5,
+  "name": "Define Direct Marketing Strategy",
+  "skos_notation": "CM 1.3.3.5.2",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-3",
+  "slug": "CM-1-3-3-5-3",
+  "level": 5,
+  "name": "Define Advertising Strategy",
+  "skos_notation": "CM 1.3.3.5.3",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-4",
+  "slug": "CM-1-3-3-5-4",
+  "level": 5,
+  "name": "Define POS Communication Strategy",
+  "skos_notation": "CM 1.3.3.5.4",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-5",
+  "slug": "CM-1-3-3-5-5",
+  "level": 5,
+  "name": "Define Digital Marketing Strategy",
+  "skos_notation": "CM 1.3.3.5.5",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-6",
+  "slug": "CM-1-3-3-5-6",
+  "level": 5,
+  "name": "Define Internal Marketing Communications Strategy",
+  "skos_notation": "CM 1.3.3.5.6",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-7",
+  "slug": "CM-1-3-3-5-7",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.5.7",
+  "parent_slug": "CM-1-3-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.5.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6",
+  "slug": "CM-1-3-3-6",
+  "level": 4,
+  "name": "Operating Model Design",
+  "skos_notation": "CM 1.3.3.6",
+  "parent_slug": "CM-1-3-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-1",
+  "slug": "CM-1-3-3-6-1",
+  "level": 5,
+  "name": "Develop Business Process Blueprint",
+  "skos_notation": "CM 1.3.3.6.1",
+  "parent_slug": "CM-1-3-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-2",
+  "slug": "CM-1-3-3-6-2",
+  "level": 5,
+  "name": "Develop Organizational Blueprint",
+  "skos_notation": "CM 1.3.3.6.2",
+  "parent_slug": "CM-1-3-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-3",
+  "slug": "CM-1-3-3-6-3",
+  "level": 5,
+  "name": "Determine Channel Of Trade Mix",
+  "skos_notation": "CM 1.3.3.6.3",
+  "parent_slug": "CM-1-3-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-4",
+  "slug": "CM-1-3-3-6-4",
+  "level": 5,
+  "name": "Define Procedural Framework & Guidelines",
+  "skos_notation": "CM 1.3.3.6.4",
+  "parent_slug": "CM-1-3-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-5",
+  "slug": "CM-1-3-3-6-5",
+  "level": 5,
+  "name": "Define KPI Framework",
+  "skos_notation": "CM 1.3.3.6.5",
+  "parent_slug": "CM-1-3-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.3.6.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4",
+  "slug": "CM-1-3-4",
+  "level": 3,
+  "name": "New Product & Service Development",
+  "skos_notation": "CM 1.3.4",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1",
+  "slug": "CM-1-3-4-1",
+  "level": 4,
+  "name": "Visioning And Implementation Planning",
+  "skos_notation": "CM 1.3.4.1",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-1",
+  "slug": "CM-1-3-4-1-1",
+  "level": 5,
+  "name": "Identify Market Needs",
+  "skos_notation": "CM 1.3.4.1.1",
+  "parent_slug": "CM-1-3-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-2",
+  "slug": "CM-1-3-4-1-2",
+  "level": 5,
+  "name": "Market Sensing",
+  "skos_notation": "CM 1.3.4.1.2",
+  "parent_slug": "CM-1-3-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-3",
+  "slug": "CM-1-3-4-1-3",
+  "level": 5,
+  "name": "Develop R&D Implementation Plans",
+  "skos_notation": "CM 1.3.4.1.3",
+  "parent_slug": "CM-1-3-4-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2",
+  "slug": "CM-1-3-4-2",
+  "level": 4,
+  "name": "Concept & Feasibility Study",
+  "skos_notation": "CM 1.3.4.2",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-1",
+  "slug": "CM-1-3-4-2-1",
+  "level": 5,
+  "name": "Ideation",
+  "skos_notation": "CM 1.3.4.2.1",
+  "parent_slug": "CM-1-3-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-2",
+  "slug": "CM-1-3-4-2-2",
+  "level": 5,
+  "name": "Conduct Research",
+  "skos_notation": "CM 1.3.4.2.2",
+  "parent_slug": "CM-1-3-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-3",
+  "slug": "CM-1-3-4-2-3",
+  "level": 5,
+  "name": "Manage Research",
+  "skos_notation": "CM 1.3.4.2.3",
+  "parent_slug": "CM-1-3-4-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3",
+  "slug": "CM-1-3-4-3",
+  "level": 4,
+  "name": "Product & Service Development",
+  "skos_notation": "CM 1.3.4.3",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-1",
+  "slug": "CM-1-3-4-3-1",
+  "level": 5,
+  "name": "Manage Product/Service Development",
+  "skos_notation": "CM 1.3.4.3.1",
+  "parent_slug": "CM-1-3-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-2",
+  "slug": "CM-1-3-4-3-2",
+  "level": 5,
+  "name": "Conduct Product Development",
+  "skos_notation": "CM 1.3.4.3.2",
+  "parent_slug": "CM-1-3-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-3",
+  "slug": "CM-1-3-4-3-3",
+  "level": 5,
+  "name": "Manage Product/Service Change",
+  "skos_notation": "CM 1.3.4.3.3",
+  "parent_slug": "CM-1-3-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4",
+  "slug": "CM-1-3-4-4",
+  "level": 4,
+  "name": "Manage Licensing & IP",
+  "skos_notation": "CM 1.3.4.4",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-1",
+  "slug": "CM-1-3-4-4-1",
+  "level": 5,
+  "name": "Set up Intellectual Asset Framework",
+  "skos_notation": "CM 1.3.4.4.1",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-2",
+  "slug": "CM-1-3-4-4-2",
+  "level": 5,
+  "name": "Register Intellectual Property",
+  "skos_notation": "CM 1.3.4.4.2",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-3",
+  "slug": "CM-1-3-4-4-3",
+  "level": 5,
+  "name": "Value Intellectual Assets",
+  "skos_notation": "CM 1.3.4.4.3",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-4",
+  "slug": "CM-1-3-4-4-4",
+  "level": 5,
+  "name": "Protect Intellectual Assets",
+  "skos_notation": "CM 1.3.4.4.4",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-5",
+  "slug": "CM-1-3-4-4-5",
+  "level": 5,
+  "name": "Exploit Intellectual Assets",
+  "skos_notation": "CM 1.3.4.4.5",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-6",
+  "slug": "CM-1-3-4-4-6",
+  "level": 5,
+  "name": "Manage Intellectual Asset Portfolios",
+  "skos_notation": "CM 1.3.4.4.6",
+  "parent_slug": "CM-1-3-4-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5",
+  "slug": "CM-1-3-4-5",
+  "level": 4,
+  "name": "Lifecycle Management",
+  "skos_notation": "CM 1.3.4.5",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-1",
+  "slug": "CM-1-3-4-5-1",
+  "level": 5,
+  "name": "Identify Technology Needs/Opportunities",
+  "skos_notation": "CM 1.3.4.5.1",
+  "parent_slug": "CM-1-3-4-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-2",
+  "slug": "CM-1-3-4-5-2",
+  "level": 5,
+  "name": "Value Projects/Portfolios",
+  "skos_notation": "CM 1.3.4.5.2",
+  "parent_slug": "CM-1-3-4-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-3",
+  "slug": "CM-1-3-4-5-3",
+  "level": 5,
+  "name": "Assess Portfolios",
+  "skos_notation": "CM 1.3.4.5.3",
+  "parent_slug": "CM-1-3-4-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-4",
+  "slug": "CM-1-3-4-5-4",
+  "level": 5,
+  "name": "Manage R&D Portfolios",
+  "skos_notation": "CM 1.3.4.5.4",
+  "parent_slug": "CM-1-3-4-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6",
+  "slug": "CM-1-3-4-6",
+  "level": 4,
+  "name": "R&D Collaboration",
+  "skos_notation": "CM 1.3.4.6",
+  "parent_slug": "CM-1-3-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-1",
+  "slug": "CM-1-3-4-6-1",
+  "level": 5,
+  "name": "Collaborate with Manufacturing",
+  "skos_notation": "CM 1.3.4.6.1",
+  "parent_slug": "CM-1-3-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-2",
+  "slug": "CM-1-3-4-6-2",
+  "level": 5,
+  "name": "Collaborate with Customers/Technical Service",
+  "skos_notation": "CM 1.3.4.6.2",
+  "parent_slug": "CM-1-3-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-3",
+  "slug": "CM-1-3-4-6-3",
+  "level": 5,
+  "name": "Collaborate with Research Partners",
+  "skos_notation": "CM 1.3.4.6.3",
+  "parent_slug": "CM-1-3-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-4",
+  "slug": "CM-1-3-4-6-4",
+  "level": 5,
+  "name": "Collaborate with marketing",
+  "skos_notation": "CM 1.3.4.6.4",
+  "parent_slug": "CM-1-3-4-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.4.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5",
+  "slug": "CM-1-3-5",
+  "level": 3,
+  "name": "Marketing & Sales Operations Planning",
+  "skos_notation": "CM 1.3.5",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1",
+  "slug": "CM-1-3-5-1",
+  "level": 4,
+  "name": "Sales Strategy & Planning",
+  "skos_notation": "CM 1.3.5.1",
+  "parent_slug": "CM-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-1",
+  "slug": "CM-1-3-5-1-1",
+  "level": 5,
+  "name": "Determine & Allocate Sales Targets",
+  "skos_notation": "CM 1.3.5.1.1",
+  "parent_slug": "CM-1-3-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-2",
+  "slug": "CM-1-3-5-1-2",
+  "level": 5,
+  "name": "Develop & Agree Demand Forecasting Process",
+  "skos_notation": "CM 1.3.5.1.2",
+  "parent_slug": "CM-1-3-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-3",
+  "slug": "CM-1-3-5-1-3",
+  "level": 5,
+  "name": "Perform Account Planning",
+  "skos_notation": "CM 1.3.5.1.3",
+  "parent_slug": "CM-1-3-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-4",
+  "slug": "CM-1-3-5-1-4",
+  "level": 5,
+  "name": "Analyze Gaps Between Forecast & Actual Margins",
+  "skos_notation": "CM 1.3.5.1.4",
+  "parent_slug": "CM-1-3-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-2",
+  "slug": "CM-1-3-5-2",
+  "level": 4,
+  "name": "Integrated Marketing Planning (Advertising)",
+  "skos_notation": "CM 1.3.5.2",
+  "parent_slug": "CM-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3",
+  "slug": "CM-1-3-5-3",
+  "level": 4,
+  "name": "Marketing Communications Planning",
+  "skos_notation": "CM 1.3.5.3",
+  "parent_slug": "CM-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-1",
+  "slug": "CM-1-3-5-3-1",
+  "level": 5,
+  "name": "Identify Marketing Needs",
+  "skos_notation": "CM 1.3.5.3.1",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-2",
+  "slug": "CM-1-3-5-3-2",
+  "level": 5,
+  "name": "Identify Target Groups",
+  "skos_notation": "CM 1.3.5.3.2",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-3",
+  "slug": "CM-1-3-5-3-3",
+  "level": 5,
+  "name": "Develop / Update Marketing Mix Model",
+  "skos_notation": "CM 1.3.5.3.3",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-4",
+  "slug": "CM-1-3-5-3-4",
+  "level": 5,
+  "name": "Develop / Update Campaigns",
+  "skos_notation": "CM 1.3.5.3.4",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-5",
+  "slug": "CM-1-3-5-3-5",
+  "level": 5,
+  "name": "Define Resource Allocation / Budgets",
+  "skos_notation": "CM 1.3.5.3.5",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-6",
+  "slug": "CM-1-3-5-3-6",
+  "level": 5,
+  "name": "Define Communications Plan",
+  "skos_notation": "CM 1.3.5.3.6",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-7",
+  "slug": "CM-1-3-5-3-7",
+  "level": 5,
+  "name": "Manage Use Of Brand",
+  "skos_notation": "CM 1.3.5.3.7",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-8",
+  "slug": "CM-1-3-5-3-8",
+  "level": 5,
+  "name": "Implement Promotional Advertising",
+  "skos_notation": "CM 1.3.5.3.8",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-9",
+  "slug": "CM-1-3-5-3-9",
+  "level": 5,
+  "name": "Implement Internal Communications",
+  "skos_notation": "CM 1.3.5.3.9",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-10",
+  "slug": "CM-1-3-5-3-10",
+  "level": 5,
+  "name": "Implement Brand Advertising / Communications",
+  "skos_notation": "CM 1.3.5.3.10",
+  "parent_slug": "CM-1-3-5-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.3.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4",
+  "slug": "CM-1-3-5-4",
+  "level": 4,
+  "name": "Promotions Planning",
+  "skos_notation": "CM 1.3.5.4",
+  "parent_slug": "CM-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-1",
+  "slug": "CM-1-3-5-4-1",
+  "level": 5,
+  "name": "Define Promotional Plan",
+  "skos_notation": "CM 1.3.5.4.1",
+  "parent_slug": "CM-1-3-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-2",
+  "slug": "CM-1-3-5-4-2",
+  "level": 5,
+  "name": "Create Promotional Event Calendar",
+  "skos_notation": "CM 1.3.5.4.2",
+  "parent_slug": "CM-1-3-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-3",
+  "slug": "CM-1-3-5-4-3",
+  "level": 5,
+  "name": "Create Point Of Purchase (Pop) Promotional Calendar",
+  "skos_notation": "CM 1.3.5.4.3",
+  "parent_slug": "CM-1-3-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-4",
+  "slug": "CM-1-3-5-4-4",
+  "level": 5,
+  "name": "Create Site Level Marketing Calendar",
+  "skos_notation": "CM 1.3.5.4.4",
+  "parent_slug": "CM-1-3-5-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5",
+  "slug": "CM-1-3-5-5",
+  "level": 4,
+  "name": "Marketing Performance Analysis",
+  "skos_notation": "CM 1.3.5.5",
+  "parent_slug": "CM-1-3-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-1",
+  "slug": "CM-1-3-5-5-1",
+  "level": 5,
+  "name": "Marketing Spend Analysis",
+  "skos_notation": "CM 1.3.5.5.1",
+  "parent_slug": "CM-1-3-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-2",
+  "slug": "CM-1-3-5-5-2",
+  "level": 5,
+  "name": "Campaign ROI Analysis",
+  "skos_notation": "CM 1.3.5.5.2",
+  "parent_slug": "CM-1-3-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-3",
+  "slug": "CM-1-3-5-5-3",
+  "level": 5,
+  "name": "Customer Program Analysis",
+  "skos_notation": "CM 1.3.5.5.3",
+  "parent_slug": "CM-1-3-5-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.5.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6",
+  "slug": "CM-1-3-6",
+  "level": 3,
+  "name": "Marketing & Sales Operations Management",
+  "skos_notation": "CM 1.3.6",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1",
+  "slug": "CM-1-3-6-1",
+  "level": 4,
+  "name": "Channel & Partner Management",
+  "skos_notation": "CM 1.3.6.1",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-1",
+  "slug": "CM-1-3-6-1-1",
+  "level": 5,
+  "name": "Manage Relationship with Franchise agreement",
+  "skos_notation": "CM 1.3.6.1.1",
+  "parent_slug": "CM-1-3-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-2",
+  "slug": "CM-1-3-6-1-2",
+  "level": 5,
+  "name": "Manage Relationship with License Brand Providers",
+  "skos_notation": "CM 1.3.6.1.2",
+  "parent_slug": "CM-1-3-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-3",
+  "slug": "CM-1-3-6-1-3",
+  "level": 5,
+  "name": "Report Franchise Performance",
+  "skos_notation": "CM 1.3.6.1.3",
+  "parent_slug": "CM-1-3-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-4",
+  "slug": "CM-1-3-6-1-4",
+  "level": 5,
+  "name": "Train and Certify AMPM Manager",
+  "skos_notation": "CM 1.3.6.1.4",
+  "parent_slug": "CM-1-3-6-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2",
+  "slug": "CM-1-3-6-2",
+  "level": 4,
+  "name": "Sales Execution",
+  "skos_notation": "CM 1.3.6.2",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-1",
+  "slug": "CM-1-3-6-2-1",
+  "level": 5,
+  "name": "Manage Sales Pipeline",
+  "skos_notation": "CM 1.3.6.2.1",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-2",
+  "slug": "CM-1-3-6-2-2",
+  "level": 5,
+  "name": "Manage Key Accounts",
+  "skos_notation": "CM 1.3.6.2.2",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-3",
+  "slug": "CM-1-3-6-2-3",
+  "level": 5,
+  "name": "Manage Opportunity",
+  "skos_notation": "CM 1.3.6.2.3",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-4",
+  "slug": "CM-1-3-6-2-4",
+  "level": 5,
+  "name": "Develop Quote",
+  "skos_notation": "CM 1.3.6.2.4",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-5",
+  "slug": "CM-1-3-6-2-5",
+  "level": 5,
+  "name": "Manage Contract & Order",
+  "skos_notation": "CM 1.3.6.2.5",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-6",
+  "slug": "CM-1-3-6-2-6",
+  "level": 5,
+  "name": "Serve to Customer (Non-Retail)",
+  "skos_notation": "CM 1.3.6.2.6",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-7",
+  "slug": "CM-1-3-6-2-7",
+  "level": 5,
+  "name": "Measure & report",
+  "skos_notation": "CM 1.3.6.2.7",
+  "parent_slug": "CM-1-3-6-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.2.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3",
+  "slug": "CM-1-3-6-3",
+  "level": 4,
+  "name": "Sales Pricing Management",
+  "skos_notation": "CM 1.3.6.3",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3-1",
+  "slug": "CM-1-3-6-3-1",
+  "level": 5,
+  "name": "Determine sales price",
+  "skos_notation": "CM 1.3.6.3.1",
+  "parent_slug": "CM-1-3-6-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3-2",
+  "slug": "CM-1-3-6-3-2",
+  "level": 5,
+  "name": "Implement sales price",
+  "skos_notation": "CM 1.3.6.3.2",
+  "parent_slug": "CM-1-3-6-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4",
+  "slug": "CM-1-3-6-4",
+  "level": 4,
+  "name": "Rebate Management",
+  "skos_notation": "CM 1.3.6.4",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-1",
+  "slug": "CM-1-3-6-4-1",
+  "level": 5,
+  "name": "Negotiate Rebate",
+  "skos_notation": "CM 1.3.6.4.1",
+  "parent_slug": "CM-1-3-6-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-2",
+  "slug": "CM-1-3-6-4-2",
+  "level": 5,
+  "name": "Implement Rebate",
+  "skos_notation": "CM 1.3.6.4.2",
+  "parent_slug": "CM-1-3-6-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-3",
+  "slug": "CM-1-3-6-4-3",
+  "level": 5,
+  "name": "Settle Rebate",
+  "skos_notation": "CM 1.3.6.4.3",
+  "parent_slug": "CM-1-3-6-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5",
+  "slug": "CM-1-3-6-5",
+  "level": 4,
+  "name": "Marketing Plan Execution",
+  "skos_notation": "CM 1.3.6.5",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-1",
+  "slug": "CM-1-3-6-5-1",
+  "level": 5,
+  "name": "Manage Advertising",
+  "skos_notation": "CM 1.3.6.5.1",
+  "parent_slug": "CM-1-3-6-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-2",
+  "slug": "CM-1-3-6-5-2",
+  "level": 5,
+  "name": "Manage Promotions/Events Execution",
+  "skos_notation": "CM 1.3.6.5.2",
+  "parent_slug": "CM-1-3-6-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-3",
+  "slug": "CM-1-3-6-5-3",
+  "level": 5,
+  "name": "Manage Direct Marketing",
+  "skos_notation": "CM 1.3.6.5.3",
+  "parent_slug": "CM-1-3-6-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6",
+  "slug": "CM-1-3-6-6",
+  "level": 4,
+  "name": "Loyalty And Cards Management - Marketing",
+  "skos_notation": "CM 1.3.6.6",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-1",
+  "slug": "CM-1-3-6-6-1",
+  "level": 5,
+  "name": "Setup Prospect",
+  "skos_notation": "CM 1.3.6.6.1",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-2",
+  "slug": "CM-1-3-6-6-2",
+  "level": 5,
+  "name": "Manage Invoicing",
+  "skos_notation": "CM 1.3.6.6.2",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-3",
+  "slug": "CM-1-3-6-6-3",
+  "level": 5,
+  "name": "Manage Reimbursement",
+  "skos_notation": "CM 1.3.6.6.3",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-4",
+  "slug": "CM-1-3-6-6-4",
+  "level": 5,
+  "name": "Manage Cards Administration (Order New Cards, Change Card Data)",
+  "skos_notation": "CM 1.3.6.6.4",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-5",
+  "slug": "CM-1-3-6-6-5",
+  "level": 5,
+  "name": "Handle Card Limits",
+  "skos_notation": "CM 1.3.6.6.5",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-6",
+  "slug": "CM-1-3-6-6-6",
+  "level": 5,
+  "name": "Manage Bad Debt",
+  "skos_notation": "CM 1.3.6.6.6",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-7",
+  "slug": "CM-1-3-6-6-7",
+  "level": 5,
+  "name": "Perform Transaction Analysis Reporting & Confirmation",
+  "skos_notation": "CM 1.3.6.6.7",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-8",
+  "slug": "CM-1-3-6-6-8",
+  "level": 5,
+  "name": "Ensure Card Design Compliance",
+  "skos_notation": "CM 1.3.6.6.8",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-9",
+  "slug": "CM-1-3-6-6-9",
+  "level": 5,
+  "name": "Analyze Consumption Planning & Monitor Stock",
+  "skos_notation": "CM 1.3.6.6.9",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-10",
+  "slug": "CM-1-3-6-6-10",
+  "level": 5,
+  "name": "Perform Physical Card Handling",
+  "skos_notation": "CM 1.3.6.6.10",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-11",
+  "slug": "CM-1-3-6-6-11",
+  "level": 5,
+  "name": "Manage Fraudulent Transactions",
+  "skos_notation": "CM 1.3.6.6.11",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.11"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-12",
+  "slug": "CM-1-3-6-6-12",
+  "level": 5,
+  "name": "Manage Additional Card Services (On Road Services)",
+  "skos_notation": "CM 1.3.6.6.12",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.12"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-13",
+  "slug": "CM-1-3-6-6-13",
+  "level": 5,
+  "name": "Manage Card Production & Monthly Reissue",
+  "skos_notation": "CM 1.3.6.6.13",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.13"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-14",
+  "slug": "CM-1-3-6-6-14",
+  "level": 5,
+  "name": "Manage Credit Card Transactions",
+  "skos_notation": "CM 1.3.6.6.14",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.14"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-15",
+  "slug": "CM-1-3-6-6-15",
+  "level": 5,
+  "name": "Manage Brand Loyalty Programs",
+  "skos_notation": "CM 1.3.6.6.15",
+  "parent_slug": "CM-1-3-6-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.6.15"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7",
+  "slug": "CM-1-3-6-7",
+  "level": 4,
+  "name": "Brand Standard Management",
+  "skos_notation": "CM 1.3.6.7",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-1",
+  "slug": "CM-1-3-6-7-1",
+  "level": 5,
+  "name": "Manage Brand Standards and Perform Inspection",
+  "skos_notation": "CM 1.3.6.7.1",
+  "parent_slug": "CM-1-3-6-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-2",
+  "slug": "CM-1-3-6-7-2",
+  "level": 5,
+  "name": "Manage Brand Imaging",
+  "skos_notation": "CM 1.3.6.7.2",
+  "parent_slug": "CM-1-3-6-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-8",
+  "slug": "CM-1-3-6-8",
+  "level": 4,
+  "name": "Compliance Management",
+  "skos_notation": "CM 1.3.6.8",
+  "parent_slug": "CM-1-3-6",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-8-1",
+  "slug": "CM-1-3-6-8-1",
+  "level": 5,
+  "name": "Conduct Audit To Validate Reported Sales",
+  "skos_notation": "CM 1.3.6.8.1",
+  "parent_slug": "CM-1-3-6-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.6.8.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7",
+  "slug": "CM-1-3-7",
+  "level": 3,
+  "name": "Order Management",
+  "skos_notation": "CM 1.3.7",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1",
+  "slug": "CM-1-3-7-1",
+  "level": 4,
+  "name": "Manage Master Data (Customer, Price, Product, Tax, Location)",
+  "skos_notation": "CM 1.3.7.1",
+  "parent_slug": "CM-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1",
+  "slug": "CM-1-3-7-1-1",
+  "level": 5,
+  "name": "Maintain Customer Master Data",
+  "skos_notation": "CM 1.3.7.1.1",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-2",
+  "slug": "CM-1-3-7-1-2",
+  "level": 5,
+  "name": "Maintain Price & Discount Master Data",
+  "skos_notation": "CM 1.3.7.1.2",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-3",
+  "slug": "CM-1-3-7-1-3",
+  "level": 5,
+  "name": "Maintain Product Master Data",
+  "skos_notation": "CM 1.3.7.1.3",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-4",
+  "slug": "CM-1-3-7-1-4",
+  "level": 5,
+  "name": "Maintain Tax Master Data",
+  "skos_notation": "CM 1.3.7.1.4",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-5",
+  "slug": "CM-1-3-7-1-5",
+  "level": 5,
+  "name": "Maintain Workflows",
+  "skos_notation": "CM 1.3.7.1.5",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-6",
+  "slug": "CM-1-3-7-1-6",
+  "level": 5,
+  "name": "Maintain Commercial Policies",
+  "skos_notation": "CM 1.3.7.1.6",
+  "parent_slug": "CM-1-3-7-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2",
+  "slug": "CM-1-3-7-2",
+  "level": 4,
+  "name": "Manage Pricing & Contracting (Manage Quote & Sale)",
+  "skos_notation": "CM 1.3.7.2",
+  "parent_slug": "CM-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1",
+  "slug": "CM-1-3-7-2-1",
+  "level": 5,
+  "name": "Establish Commercial Terms & Contracts",
+  "skos_notation": "CM 1.3.7.2.1",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-2",
+  "slug": "CM-1-3-7-2-2",
+  "level": 5,
+  "name": "Issue Quotes & Renewals",
+  "skos_notation": "CM 1.3.7.2.2",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-3",
+  "slug": "CM-1-3-7-2-3",
+  "level": 5,
+  "name": "Develop & Monitor Revenue Plan",
+  "skos_notation": "CM 1.3.7.2.3",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-4",
+  "slug": "CM-1-3-7-2-4",
+  "level": 5,
+  "name": "Define Financing & Payment Methods",
+  "skos_notation": "CM 1.3.7.2.4",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-5",
+  "slug": "CM-1-3-7-2-5",
+  "level": 5,
+  "name": "Analyze Customer Profitability",
+  "skos_notation": "CM 1.3.7.2.5",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-6",
+  "slug": "CM-1-3-7-2-6",
+  "level": 5,
+  "name": "Manage Customer Portal",
+  "skos_notation": "CM 1.3.7.2.6",
+  "parent_slug": "CM-1-3-7-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3",
+  "slug": "CM-1-3-7-3",
+  "level": 4,
+  "name": "Capture And Manage Order Fulfillment",
+  "skos_notation": "CM 1.3.7.3",
+  "parent_slug": "CM-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-1",
+  "slug": "CM-1-3-7-3-1",
+  "level": 5,
+  "name": "Capture & Validate Order",
+  "skos_notation": "CM 1.3.7.3.1",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-2",
+  "slug": "CM-1-3-7-3-2",
+  "level": 5,
+  "name": "Allocate & Release Order",
+  "skos_notation": "CM 1.3.7.3.2",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-3",
+  "slug": "CM-1-3-7-3-3",
+  "level": 5,
+  "name": "Change / Cancel Order",
+  "skos_notation": "CM 1.3.7.3.3",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-4",
+  "slug": "CM-1-3-7-3-4",
+  "level": 5,
+  "name": "Manage Fulfillment",
+  "skos_notation": "CM 1.3.7.3.4",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-5",
+  "slug": "CM-1-3-7-3-5",
+  "level": 5,
+  "name": "Track & Forecast Order",
+  "skos_notation": "CM 1.3.7.3.5",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-6",
+  "slug": "CM-1-3-7-3-6",
+  "level": 5,
+  "name": "Manage Returns",
+  "skos_notation": "CM 1.3.7.3.6",
+  "parent_slug": "CM-1-3-7-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.3.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4",
+  "slug": "CM-1-3-7-4",
+  "level": 4,
+  "name": "Manage Credit & Risk",
+  "skos_notation": "CM 1.3.7.4",
+  "parent_slug": "CM-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-1",
+  "slug": "CM-1-3-7-4-1",
+  "level": 5,
+  "name": "Maintain Credit Policies",
+  "skos_notation": "CM 1.3.7.4.1",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2",
+  "slug": "CM-1-3-7-4-2",
+  "level": 5,
+  "name": "Establish Credit Limit & Risk Code",
+  "skos_notation": "CM 1.3.7.4.2",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-3",
+  "slug": "CM-1-3-7-4-3",
+  "level": 5,
+  "name": "Monitor Credit Against Limit",
+  "skos_notation": "CM 1.3.7.4.3",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-4",
+  "slug": "CM-1-3-7-4-4",
+  "level": 5,
+  "name": "Analyze Portfolio Credit Risk",
+  "skos_notation": "CM 1.3.7.4.4",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-5",
+  "slug": "CM-1-3-7-4-5",
+  "level": 5,
+  "name": "Perform Customer Closure & Reinstatement",
+  "skos_notation": "CM 1.3.7.4.5",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6",
+  "slug": "CM-1-3-7-4-6",
+  "level": 5,
+  "name": "KYC Process",
+  "skos_notation": "CM 1.3.7.4.6",
+  "parent_slug": "CM-1-3-7-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5",
+  "slug": "CM-1-3-7-5",
+  "level": 4,
+  "name": "Manage Customer Requests and Inquiries",
+  "skos_notation": "CM 1.3.7.5",
+  "parent_slug": "CM-1-3-7",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-1",
+  "slug": "CM-1-3-7-5-1",
+  "level": 5,
+  "name": "Establish Priority Assignment of Customer Request/Inquiry",
+  "skos_notation": "CM 1.3.7.5.1",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-2",
+  "slug": "CM-1-3-7-5-2",
+  "level": 5,
+  "name": "Maintain Requests and Inquiries Master Database",
+  "skos_notation": "CM 1.3.7.5.2",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-3",
+  "slug": "CM-1-3-7-5-3",
+  "level": 5,
+  "name": "Process Inquiries and Requests",
+  "skos_notation": "CM 1.3.7.5.3",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-4",
+  "slug": "CM-1-3-7-5-4",
+  "level": 5,
+  "name": "Perform Customer Follow up",
+  "skos_notation": "CM 1.3.7.5.4",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-5",
+  "slug": "CM-1-3-7-5-5",
+  "level": 5,
+  "name": "Conduct Quarterly Review Meeting",
+  "skos_notation": "CM 1.3.7.5.5",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-6",
+  "slug": "CM-1-3-7-5-6",
+  "level": 5,
+  "name": "Provide Customer Training",
+  "skos_notation": "CM 1.3.7.5.6",
+  "parent_slug": "CM-1-3-7-5",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.7.5.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8",
+  "slug": "CM-1-3-8",
+  "level": 3,
+  "name": "Operational Accounting",
+  "skos_notation": "CM 1.3.8",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1",
+  "slug": "CM-1-3-8-1",
+  "level": 4,
+  "name": "Manage Customer Invoicing and Billing",
+  "skos_notation": "CM 1.3.8.1",
+  "parent_slug": "CM-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-1",
+  "slug": "CM-1-3-8-1-1",
+  "level": 5,
+  "name": "Create & Distribute Bill",
+  "skos_notation": "CM 1.3.8.1.1",
+  "parent_slug": "CM-1-3-8-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-2",
+  "slug": "CM-1-3-8-1-2",
+  "level": 5,
+  "name": "Perform Accounting For Self-billing",
+  "skos_notation": "CM 1.3.8.1.2",
+  "parent_slug": "CM-1-3-8-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-3",
+  "slug": "CM-1-3-8-1-3",
+  "level": 5,
+  "name": "Determine Taxability",
+  "skos_notation": "CM 1.3.8.1.3",
+  "parent_slug": "CM-1-3-8-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-4",
+  "slug": "CM-1-3-8-1-4",
+  "level": 5,
+  "name": "Create Credit Memo",
+  "skos_notation": "CM 1.3.8.1.4",
+  "parent_slug": "CM-1-3-8-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-5",
+  "slug": "CM-1-3-8-1-5",
+  "level": 5,
+  "name": "Create Exception & Reverse Invoice",
+  "skos_notation": "CM 1.3.8.1.5",
+  "parent_slug": "CM-1-3-8-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2",
+  "slug": "CM-1-3-8-2",
+  "level": 4,
+  "name": "Manage Cash Application, A/R & Revenue Accounting",
+  "skos_notation": "CM 1.3.8.2",
+  "parent_slug": "CM-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1",
+  "slug": "CM-1-3-8-2-1",
+  "level": 5,
+  "name": "Receive Cash Receipts / Payment",
+  "skos_notation": "CM 1.3.8.2.1",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-2",
+  "slug": "CM-1-3-8-2-2",
+  "level": 5,
+  "name": "Receive Remittance Advice",
+  "skos_notation": "CM 1.3.8.2.2",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-3",
+  "slug": "CM-1-3-8-2-3",
+  "level": 5,
+  "name": "Apply Receipts",
+  "skos_notation": "CM 1.3.8.2.3",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-4",
+  "slug": "CM-1-3-8-2-4",
+  "level": 5,
+  "name": "Manage Unapplied Receipts / Exceptions",
+  "skos_notation": "CM 1.3.8.2.4",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-5",
+  "slug": "CM-1-3-8-2-5",
+  "level": 5,
+  "name": "Perform Reconciliations & Settlements",
+  "skos_notation": "CM 1.3.8.2.5",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-6",
+  "slug": "CM-1-3-8-2-6",
+  "level": 5,
+  "name": "Perform Revenue Accounting",
+  "skos_notation": "CM 1.3.8.2.6",
+  "parent_slug": "CM-1-3-8-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.2.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3",
+  "slug": "CM-1-3-8-3",
+  "level": 4,
+  "name": "Manage Collection and Disputes",
+  "skos_notation": "CM 1.3.8.3",
+  "parent_slug": "CM-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1",
+  "slug": "CM-1-3-8-3-1",
+  "level": 5,
+  "name": "Dispute Management",
+  "skos_notation": "CM 1.3.8.3.1",
+  "parent_slug": "CM-1-3-8-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2",
+  "slug": "CM-1-3-8-3-2",
+  "level": 5,
+  "name": "Collection Management",
+  "skos_notation": "CM 1.3.8.3.2",
+  "parent_slug": "CM-1-3-8-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-3",
+  "slug": "CM-1-3-8-3-3",
+  "level": 5,
+  "name": "Bad Debt Allowance",
+  "skos_notation": "CM 1.3.8.3.3",
+  "parent_slug": "CM-1-3-8-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-4",
+  "slug": "CM-1-3-8-3-4",
+  "level": 5,
+  "name": "Develop Root Cause Analysis/Action Plan",
+  "skos_notation": "CM 1.3.8.3.4",
+  "parent_slug": "CM-1-3-8-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.3.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4",
+  "slug": "CM-1-3-8-4",
+  "level": 4,
+  "name": "Manage Accounting, Regulatory Reporting and Compliance",
+  "skos_notation": "CM 1.3.8.4",
+  "parent_slug": "CM-1-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-1",
+  "slug": "CM-1-3-8-4-1",
+  "level": 5,
+  "name": "Period End Processing",
+  "skos_notation": "CM 1.3.8.4.1",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-2",
+  "slug": "CM-1-3-8-4-2",
+  "level": 5,
+  "name": "AR Reconciliation / Compliance",
+  "skos_notation": "CM 1.3.8.4.2",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-3",
+  "slug": "CM-1-3-8-4-3",
+  "level": 5,
+  "name": "Accruals Analysis And Calculation",
+  "skos_notation": "CM 1.3.8.4.3",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-4",
+  "slug": "CM-1-3-8-4-4",
+  "level": 5,
+  "name": "Reconcile And Report Indirect Tax",
+  "skos_notation": "CM 1.3.8.4.4",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-5",
+  "slug": "CM-1-3-8-4-5",
+  "level": 5,
+  "name": "Determine Taxability",
+  "skos_notation": "CM 1.3.8.4.5",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-6",
+  "slug": "CM-1-3-8-4-6",
+  "level": 5,
+  "name": "Manage Intercompany Invoicing",
+  "skos_notation": "CM 1.3.8.4.6",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-7",
+  "slug": "CM-1-3-8-4-7",
+  "level": 5,
+  "name": "Manage Collection of Royalty and Fees",
+  "skos_notation": "CM 1.3.8.4.7",
+  "parent_slug": "CM-1-3-8-4",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.8.4.7"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9",
+  "slug": "CM-1-3-9",
+  "level": 3,
+  "name": "Customer Service & Support",
+  "skos_notation": "CM 1.3.9",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1",
+  "slug": "CM-1-3-9-1",
+  "level": 4,
+  "name": "Service & Support Enablement",
+  "skos_notation": "CM 1.3.9.1",
+  "parent_slug": "CM-1-3-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-1",
+  "slug": "CM-1-3-9-1-1",
+  "level": 5,
+  "name": "Define Operating Model",
+  "skos_notation": "CM 1.3.9.1.1",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-2",
+  "slug": "CM-1-3-9-1-2",
+  "level": 5,
+  "name": "Manage Operations",
+  "skos_notation": "CM 1.3.9.1.2",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-3",
+  "slug": "CM-1-3-9-1-3",
+  "level": 5,
+  "name": "Manage Service Employees",
+  "skos_notation": "CM 1.3.9.1.3",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-4",
+  "slug": "CM-1-3-9-1-4",
+  "level": 5,
+  "name": "Manage Facilities",
+  "skos_notation": "CM 1.3.9.1.4",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-5",
+  "slug": "CM-1-3-9-1-5",
+  "level": 5,
+  "name": "Manage Technology",
+  "skos_notation": "CM 1.3.9.1.5",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.5"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-6",
+  "slug": "CM-1-3-9-1-6",
+  "level": 5,
+  "name": "Manage Contact Center",
+  "skos_notation": "CM 1.3.9.1.6",
+  "parent_slug": "CM-1-3-9-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.1.6"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2",
+  "slug": "CM-1-3-9-2",
+  "level": 4,
+  "name": "Service & Support Delivery",
+  "skos_notation": "CM 1.3.9.2",
+  "parent_slug": "CM-1-3-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-1",
+  "slug": "CM-1-3-9-2-1",
+  "level": 5,
+  "name": "Manage Data",
+  "skos_notation": "CM 1.3.9.2.1",
+  "parent_slug": "CM-1-3-9-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.2.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-2",
+  "slug": "CM-1-3-9-2-2",
+  "level": 5,
+  "name": "Manage Customer",
+  "skos_notation": "CM 1.3.9.2.2",
+  "parent_slug": "CM-1-3-9-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.2.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-3",
+  "slug": "CM-1-3-9-2-3",
+  "level": 5,
+  "name": "Fulfill Service Event",
+  "skos_notation": "CM 1.3.9.2.3",
+  "parent_slug": "CM-1-3-9-2",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.2.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3",
+  "slug": "CM-1-3-9-3",
+  "level": 4,
+  "name": "Service & Support Measurement",
+  "skos_notation": "CM 1.3.9.3",
+  "parent_slug": "CM-1-3-9",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-1",
+  "slug": "CM-1-3-9-3-1",
+  "level": 5,
+  "name": "Measure Service Infrastructure",
+  "skos_notation": "CM 1.3.9.3.1",
+  "parent_slug": "CM-1-3-9-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.3.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-2",
+  "slug": "CM-1-3-9-3-2",
+  "level": 5,
+  "name": "Measure Service Employees",
+  "skos_notation": "CM 1.3.9.3.2",
+  "parent_slug": "CM-1-3-9-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.3.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-3",
+  "slug": "CM-1-3-9-3-3",
+  "level": 5,
+  "name": "Measure Service Effectiveness",
+  "skos_notation": "CM 1.3.9.3.3",
+  "parent_slug": "CM-1-3-9-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.9.3.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10",
+  "slug": "CM-1-3-10",
+  "level": 3,
+  "name": "Terminal Loading",
+  "skos_notation": "CM 1.3.10",
+  "parent_slug": "CM-1-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.10"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-1",
+  "slug": "CM-1-3-10-1",
+  "level": 4,
+  "name": "Setup and Maintain Customer In Terminal",
+  "skos_notation": "CM 1.3.10.1",
+  "parent_slug": "CM-1-3-10",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.10.1"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-2",
+  "slug": "CM-1-3-10-2",
+  "level": 4,
+  "name": "Process Forecast and Nominations",
+  "skos_notation": "CM 1.3.10.2",
+  "parent_slug": "CM-1-3-10",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.10.2"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-3",
+  "slug": "CM-1-3-10-3",
+  "level": 4,
+  "name": "Manage Allocation",
+  "skos_notation": "CM 1.3.10.3",
+  "parent_slug": "CM-1-3-10",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.10.3"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-4",
+  "slug": "CM-1-3-10-4",
+  "level": 4,
+  "name": "Capture Deal",
+  "skos_notation": "CM 1.3.10.4",
+  "parent_slug": "CM-1-3-10",
+  "minted": false,
+  "proposed_repo_id": "CM 1.3.10.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-4",
+  "slug": "CM-1-4",
+  "level": 2,
+  "name": "IT Services",
+  "skos_notation": "CM 1.4",
+  "parent_slug": "CM-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.4"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-refining",
+  "slug": "L1-refining",
+  "level": 1,
+  "name": "Refining",
+  "skos_notation": null,
+  "parent_slug": "L0-downstream-operations",
+  "minted": true,
+  "proposed_repo_id": "L1-refining"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-midstream",
+  "slug": "L1-midstream",
+  "level": 1,
+  "name": "Midstream",
+  "skos_notation": null,
+  "parent_slug": "L0-downstream-operations",
+  "minted": true,
+  "proposed_repo_id": "L1-midstream"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L0-enabling-functions",
+  "slug": "L0-enabling-functions",
+  "level": 0,
+  "name": "Enabling Functions",
+  "skos_notation": null,
+  "parent_slug": null,
+  "minted": true,
+  "proposed_repo_id": "L0-enabling-functions"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-supply-chain-mgmt",
+  "slug": "L1-supply-chain-mgmt",
+  "level": 1,
+  "name": "Supply Chain Mgmt.",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-supply-chain-mgmt"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-finance",
+  "slug": "L1-finance",
+  "level": 1,
+  "name": "Finance",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-finance"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-shared-services",
+  "slug": "L1-shared-services",
+  "level": 1,
+  "name": "Shared Services",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-shared-services"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-process-excellence-it",
+  "slug": "L1-process-excellence-it",
+  "level": 1,
+  "name": "Process Excellence & IT",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-process-excellence-it"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-human-resources",
+  "slug": "L1-human-resources",
+  "level": 1,
+  "name": "Human Resources",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-human-resources"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-legal-corp-comm",
+  "slug": "L1-legal-corp-comm",
+  "level": 1,
+  "name": "Legal & Corp Comm",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-legal-corp-comm"
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L1-ehs-gov-reporting",
+  "slug": "L1-ehs-gov-reporting",
+  "level": 1,
+  "name": "EHS & Gov Reporting",
+  "skos_notation": null,
+  "parent_slug": "L0-enabling-functions",
+  "minted": true,
+  "proposed_repo_id": "L1-ehs-gov-reporting"
+ }
+]
