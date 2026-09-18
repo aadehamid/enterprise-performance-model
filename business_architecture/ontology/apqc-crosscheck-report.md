@@ -1,7 +1,7 @@
 # APQC Downstream PCF v7.2.2 — Consistency Cross-Check
 
 **Date:** 2026-09-17
-**APQC source:** `~/workspace/apqc-downstream-pcf-7.2.2.xlsx` (official Excel, downloaded 2026-09-17;
+**APQC source:** `business_architecture/reference/APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx` (official Excel, downloaded 2026-09-17;
 2,012 elements, 13 L1 categories, sheets 1.0–13.0 + Combined)
 **Repo source:** `business_architecture/business_process/downstream_process_map.json` (680 nodes, L0–L6)
 **Method note:** Part A is mechanical (exact ID lookup). Part B is a first-pass heuristic —
@@ -30,7 +30,7 @@ numbers, and Turtle decimal literals.)
 **Result: 5 of 6 confirmed. One stale ID: 10006 → 20085.**
 The v7.2.2 workbook's Difference Index is 0 on every row, so no element changed
 between 7.2.1 and 7.2.2 — this renumbering is v5.0.3-era drift, not a recent change.
-Fix already folded into `~/workspace/apqc-7.2.2.patch` (the "+" line now cites 20085).
+Fix already landed in PR #25 (the Modeling Guide now cites 20085).
 
 ## Part B — Coverage scan (heuristic triage)
 

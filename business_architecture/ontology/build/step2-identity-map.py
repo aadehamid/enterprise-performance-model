@@ -2,7 +2,7 @@
 """Step 2 — Normalize identities for all 680 process-map nodes.
 
 Reads business_architecture/business_process/downstream_process_map.json
-from the repo clone, derives a URI slug for every node:
+from this clone, derives a URI slug for every node:
 
   - Nodes with an ID (e.g. "CM 1.2.1.3") -> slug "CM-1-2-1-3"
     (spaces and dots become hyphens; the original code is kept as
@@ -13,7 +13,7 @@ from the repo clone, derives a URI slug for every node:
 Verifies: every node gets exactly one slug; slugs are unique (injective);
 every stub slug is recorded for the later consolidated repo-JSON proposal.
 
-Outputs:
+Outputs (next to this script, under build/output/):
   - step2-identity-map.json : [{uri, slug, level, name, skos_notation,
                                  parent_slug, minted, proposed_repo_id}]
   - step2-identity-report.md : human-readable summary + collision checks
@@ -23,9 +23,9 @@ import re
 import unicodedata
 from pathlib import Path
 
-REPO = Path.home() / "workspace" / "enterprise-performance-model"
-SRC = REPO / "business_architecture" / "business_process" / "downstream_process_map.json"
-OUT_DIR = Path.home() / "workspace" / "ontology-build"
+ROOT = Path(__file__).resolve().parents[3]
+SRC = ROOT / "business_architecture" / "business_process" / "downstream_process_map.json"
+OUT_DIR = Path(__file__).resolve().parent / "output"
 BASE = "https://w3id.org/lsc/ontology/process/"
 
 ID_RE = re.compile(r"^[A-Z]+ \d+(\.\d+)*$")
@@ -74,7 +74,7 @@ def main() -> None:
                 "proposed_repo_id": proposed_repo_id,
             }
         )
-        for child in node.get("children", []):
+        for child in node.get("children", []) or []:
             walk(child, slug)
 
     for top in data:
