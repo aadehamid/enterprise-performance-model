@@ -44,16 +44,19 @@ quality reference.
 
 ## Column by column
 
-| Column | What to write |
-|---|---|
-| `definition` | 1–2 sentences: what the process **is and does**. Say what it accomplishes, not what it is called. |
-| `scope_note` | What it covers, plus the boundary sentences: what it explicitly **excludes**, and which sibling owns the excluded part. |
-| `in_scope` | Activities/cases that belong here (feeds the scope note). |
-| `out_of_scope` | Activities/cases that do **not** belong here — and who owns them instead. Always name the owner. |
-| `alt_labels` | Synonyms / alternate names, separated by `|`. |
-| `parked_children` | narrower concepts you notice while defining, separated by `|`. They become new nodes later — don't model them now. |
-| `terminology_notes` | Wording decisions (e.g. why "production horizons" not "run schedules") so nobody reopens them. |
-| `status` | `pending` → `approved`. Only `approved` rows merge. |
+| Column | What to write | Ontology target |
+|---|---|---|
+| `definition` | 1–2 sentences: what the process **is and does**. Say what it accomplishes, not what it is called. | `skos:definition` (`@en`, required on every concept) |
+| `scope_note` | What it covers, plus the boundary sentences: what it explicitly **excludes**, and which sibling owns the excluded part. | `skos:scopeNote` (`@en`) |
+| `in_scope` | Activities/cases that belong here (feeds the scope note). | folded into `skos:scopeNote` |
+| `out_of_scope` | Activities/cases that do **not** belong here — and who owns them instead. Always name the owner. | folded into `skos:scopeNote` |
+| `alt_labels` | Synonyms / alternate names, separated by `|`. | `skos:altLabel` (`@en`) |
+| `parked_children` | narrower concepts you notice while defining, separated by `|`. They become new nodes later — don't model them now. | future `skos:narrower` concepts |
+| `terminology_notes` | Wording decisions (e.g. why "production horizons" not "run schedules") so nobody reopens them. | editorial note on the JSON record |
+| `status` | `pending` → `approved`. Only `approved` rows merge. | workflow gate for `step3-skos-taxonomy.py --authored` |
+
+Provenance on merge: each approved row lands with `dcterms:source`
+"human-authored, approved by Hamid, dated".
 
 ## The quality bar
 
