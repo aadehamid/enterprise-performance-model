@@ -716,6 +716,32 @@ Facts about the source material that are easy to get wrong:
    modeling gap, not a bad question.
 5. **Boundary notes are decisions too.** "Out of scope" with a recorded
    reason beats silent omission; future-you will thank present-you.
+6. **Definition authoring workflow (Step 3c, locked 2026-09-18).**
+   Hamid fills `step3c-definition-authoring-workbook.xlsx` (the single
+   "Review & authoring" sheet) and gets it onto GitHub; the assistant
+   pulls it, runs `step3c-workbook-validate.py` (mechanical gate), then
+   performs a full semantic review against the enterprise-grade bar
+   below. Every doubt comes back to Hamid as a question. Only
+   `approved` rows whose questions are resolved merge into the taxonomy
+   via `step3-skos-taxonomy.py --authored`. Nothing merges on
+   assumption — the human gate from Step 3b applies to human-authored
+   text too.
+
+### Enterprise-grade definition review bar
+1. **Defined, not labeled.** No circular openings ("the finance
+   function…"); classify by primary purpose, not asset location.
+2. **Bounded.** Every definition ships with a scope note; every
+   out-of-scope item names the sibling that owns it.
+3. **Coherent upward.** The child must not contradict its parent's
+   definition or scope note.
+4. **Disjoint sideways.** No two siblings may claim the same activity —
+   overlaps are flagged as questions with both rows cited.
+5. **Terminology-stable.** The same term means the same thing in every
+   row; new terms go in `terminology_notes`.
+6. **Parked, not smuggled.** Future concepts noticed while defining go
+   in `parked_children`; constraints stay parked per Appendix A.
+7. **Provenance-clean.** Human-authored rows carry author, approver,
+   and date; APQC-sourced rows keep dual provenance.
 
 ---
 
