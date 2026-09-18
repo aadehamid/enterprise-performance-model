@@ -1,0 +1,4277 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix mod: <https://w3id.org/lsc/ontology/modules/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+
+proc:CM-1-1-1-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1.1" ;
+    skos:prefLabel "Prepare Master Data To Create Demand Forecast"@en .
+
+proc:CM-1-1-1-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1.2" ;
+    skos:prefLabel "Develop Statistical Baseline"@en .
+
+proc:CM-1-1-1-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1.3" ;
+    skos:prefLabel "Adjust Forecast Incorporating Customer Input and Market Intelligence"@en .
+
+proc:CM-1-1-1-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1.4" ;
+    skos:prefLabel "Publish Forecast and Generate Component Level Forecast Plan"@en .
+
+proc:CM-1-1-1-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1.5" ;
+    skos:prefLabel "Monitor Demand Forecasting Performance and Reporting"@en .
+
+proc:CM-1-1-2-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Check notifications for new materials or locations; potential connection to NPR (New Product Realization) process"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.1" ;
+    skos:prefLabel "Check if new location or material has been identified"@en .
+
+proc:CM-1-1-2-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Check if new location and / or material is included in XPIMS model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.2" ;
+    skos:prefLabel "Perform validation check for new location and material in XPIMS model"@en .
+
+proc:CM-1-1-2-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Update XPIMS model with new products (including pricing) and new location node, if needed"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.3" ;
+    skos:prefLabel "Update XPIMS model with new products and new location node"@en .
+
+proc:CM-1-1-2-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Cross validate XPIMS products and location nodes with DPO products and location nodes"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.4" ;
+    skos:prefLabel "Perform validation check for new location and material in DPO model"@en .
+
+proc:CM-1-1-2-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Update DPO model with new products and/or nodes"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.5" ;
+    skos:prefLabel "Update DPO model with new products and/or nodes"@en .
+
+proc:CM-1-1-2-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Update PPIMS model with New Products"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.6" ;
+    skos:prefLabel "Update PPIMS model with New Products"@en .
+
+proc:CM-1-1-2-1-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Develop price tags in MPR for each new location and / or material"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.7" ;
+    skos:prefLabel "Create price tags for new location / material"@en .
+
+proc:CM-1-1-2-1-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-1 ;
+    skos:definition "Update location and product tag mapping in Profisee for master tags"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1.8" ;
+    skos:prefLabel "Update location and product tag mapping"@en .
+
+proc:CM-1-1-2-10 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.10" ;
+    skos:prefLabel "Crude Allocation Decision"@en .
+
+proc:CM-1-1-2-11 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.11" ;
+    skos:prefLabel "Product Allocation Decision"@en .
+
+proc:CM-1-1-2-12 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.12" ;
+    skos:prefLabel "Maintain Supply Planning Master Data"@en .
+
+proc:CM-1-1-2-13 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.13" ;
+    skos:prefLabel "Plan Finished Goods Inventory"@en .
+
+proc:CM-1-1-2-2-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-1 ;
+    skos:definition "Decide on breakdown of periods for XPIMS and update the period definition in UI"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.1.1" ;
+    skos:prefLabel "Decide Upon Breakdown of Time Periods for XPIMS for Entire Planning Horizon"@en .
+
+proc:CM-1-1-2-2-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-1 ;
+    skos:definition "Decide on breakdown of periods for DPO and update the period definition in UI"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.1.2" ;
+    skos:prefLabel "Decide Upon Breakdown of Time Periods for DPO for Entire Planning Horizon"@en .
+
+proc:CM-1-1-2-2-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-2 ;
+    skos:definition "Automated data gathering of Clean Products demand and pricing into Planning and Scheduling Input UI"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.2.1" ;
+    skos:prefLabel "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"@en .
+
+proc:CM-1-1-2-2-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Manual data gathering of Petrochemical demand and pricing into model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.1" ;
+    skos:prefLabel "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Petrochemicals"@en .
+
+proc:CM-1-1-2-2-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Manual data gathering of Blendstock demand and pricing into model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.2" ;
+    skos:prefLabel "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)"@en .
+
+proc:CM-1-1-2-2-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Manual data gathering of Feedstock demand and pricing into model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.3" ;
+    skos:prefLabel "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Feedstocks (non-Crude)"@en .
+
+proc:CM-1-1-2-2-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Manual data gathering of Asphalt demand and pricing into model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.4" ;
+    skos:prefLabel "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Asphalt"@en .
+
+proc:CM-1-1-2-2-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Update Regional Premise"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.5" ;
+    skos:prefLabel "Update Regional Premise"@en .
+
+proc:CM-1-1-2-2-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-3 ;
+    skos:definition "Update Opening Inventory"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3.6" ;
+    skos:prefLabel "Update Opening Inventory"@en .
+
+proc:CM-1-1-2-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Update Crude Avails and Crude Cost"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.4" ;
+    skos:prefLabel "Update Crude Avails and Crude Cost"@en .
+
+proc:CM-1-1-2-2-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-5 ;
+    skos:definition "Use Planning and Scheduling UI to identify any data inconsistencies"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.5.1" ;
+    skos:prefLabel "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"@en .
+
+proc:CM-1-1-2-2-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-5 ;
+    skos:definition "Check if Regional and Distribution Plan inputs are consistent"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.5.2" ;
+    skos:prefLabel "Identify data gaps between Regional and Distribution Plan inputs"@en .
+
+proc:CM-1-1-2-2-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-6 ;
+    skos:definition "Fix data inconsistencies after validation check"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.6.1" ;
+    skos:prefLabel "Address Data Inconsistencies if they Exist (Demand, Price, Opening Inventory, and Supply)"@en .
+
+proc:CM-1-1-2-2-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2-6 ;
+    skos:definition "Perform overrides in Planning and Scheduling UI to address data gaps between Regional and Distribution Plan inputs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.6.2" ;
+    skos:prefLabel "Perform overrides against data gaps for Regional and Distribution Plan inputs"@en .
+
+proc:CM-1-1-2-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Review demand and pricing forecast and make updates to inputs as needed in preparation of Market Outlook and Avails Meeting"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.7" ;
+    skos:prefLabel "Review model inputs for Market Outlook and Avails meeting"@en .
+
+proc:CM-1-1-2-2-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Publish model input spreadsheets for XPIMS and DPO"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.8" ;
+    skos:prefLabel "Publish data for model input"@en .
+
+proc:CM-1-1-2-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-3 ;
+    skos:definition "Business Analyst conducts analysis on historical data going into meeting"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.3.1" ;
+    skos:prefLabel "Analyze Forecast and Historical Market Data"@en .
+
+proc:CM-1-1-2-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-3 ;
+    skos:definition "Meeting documentation includes insights to the historical market data"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.3.2" ;
+    skos:prefLabel "Prepare Meeting Documentation"@en .
+
+proc:CM-1-1-2-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-3 ;
+    skos:definition "Key meeting outcome includes aligned list of standard scenarios"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.3.3" ;
+    skos:prefLabel "Publish Meeting Outcomes"@en .
+
+proc:CM-1-1-2-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-3 ;
+    skos:definition "Update demand and pricing data based on market demand and pricing outlook discussions"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.3.4" ;
+    skos:prefLabel "Update Data Inputs Based on Outcomes of Market Outlook and Avails Meeting"@en .
+
+proc:CM-1-1-2-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-4 ;
+    skos:definition "Develop and stabilize input solution in PPIMS"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.4.1" ;
+    skos:prefLabel "Generate PPIMS Base Models"@en .
+
+proc:CM-1-1-2-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-4 ;
+    skos:definition "Run XPIMS model input spreadsheet and generate XPIMS base plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.4.2" ;
+    skos:prefLabel "Generate XPIMS Base Plan"@en .
+
+proc:CM-1-1-2-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Standard list of scenarios developed from Market Outlook and Avails; Run scenarios in XPIMS Base Plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.1" ;
+    skos:prefLabel "Run list of standard scenarios for evaluation"@en .
+
+proc:CM-1-1-2-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Initial analysis conducted by Regional Production Planner on recommended additional scenarios"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.2" ;
+    skos:prefLabel "Identify Additional scenarios based on outcome analysis"@en .
+
+proc:CM-1-1-2-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Review scenario results from XPIMS Base Plan and align on additional scenario runs if needed"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.3" ;
+    skos:prefLabel "Conduct Business Tactics Discussion"@en .
+
+proc:CM-1-1-2-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Run additional scenarios beyond standard list of scenarios aligned upon; analyze data and publish to Planning DB"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.4" ;
+    skos:prefLabel "Run additional scenarios identified from Business Tactics Discussion"@en .
+
+proc:CM-1-1-2-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Regional Production Planner and Distribution Planner collaborate to reconcile model outputs during XPIMS <> DPO Reconciliation; Run feasibility check with DPO model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.5" ;
+    skos:prefLabel "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"@en .
+
+proc:CM-1-1-2-5-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5-6 ;
+    skos:definition "Make updates to DPO model inputs based on outcomes of XPIMS <> DPO Reconciliation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.6.1" ;
+    skos:prefLabel "Update Network Constraints for DPO Plan"@en .
+
+proc:CM-1-1-2-5-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5-6 ;
+    skos:definition "Make updates to XPIMS model inputs based on outcomes of XPIMS <> DPO Reconciliation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.6.2" ;
+    skos:prefLabel "Update Model Constraints for XPIMS Plan"@en .
+
+proc:CM-1-1-2-5-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Check output of Reconciled Regional Plan and validate feasibility in PPIMS model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.7" ;
+    skos:prefLabel "Conduct plan feasibility check for PPIMS"@en .
+
+proc:CM-1-1-2-5-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Regional Production Planner and Distribution Planner collaborate to reconcile any additional model outputs from PPIMS feasibility check"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.8" ;
+    skos:prefLabel "Update XPIMS Plan based on PPIMS plan feasibility check"@en .
+
+proc:CM-1-1-2-5-9 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Regional Production Planner and Distribution Planner collaborate to reconcile any additional model outputs from PPIMS feasibility check"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.9" ;
+    skos:prefLabel "Consolidate MOP XPIMS plan for MOP Review"@en .
+
+proc:CM-1-1-2-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Obtain latest XPIMS model in support of COE; Validate latest plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.1" ;
+    skos:prefLabel "Obtain latest XPIMS MOP model"@en .
+
+proc:CM-1-1-2-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Refresh inputs going into COEs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.2" ;
+    skos:prefLabel "Refresh Crude Avails and Crude Cost"@en .
+
+proc:CM-1-1-2-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Align on step cases to run for COEs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.3" ;
+    skos:prefLabel "Develop Crude Evaluation Step Cases"@en .
+
+proc:CM-1-1-2-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Run Crude step cases in XPIMS"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.4" ;
+    skos:prefLabel "Run Base Case and Crude Step Cases"@en .
+
+proc:CM-1-1-2-6-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Generate COE Report for viewing"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.5" ;
+    skos:prefLabel "Publish COE results"@en .
+
+proc:CM-1-1-2-6-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-6 ;
+    skos:definition "Discuss COE results and additional scenarios to be run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6.6" ;
+    skos:prefLabel "Conduct Weekly Crude Optimization Meeting"@en .
+
+proc:CM-1-1-2-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-7 ;
+    skos:definition "Obtain latest XPIMS model in support of COP; Validate latest plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7.1" ;
+    skos:prefLabel "Obtain latest XPIMS MOP model"@en .
+
+proc:CM-1-1-2-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-7 ;
+    skos:definition "Refresh inputs going into COPs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7.2" ;
+    skos:prefLabel "Refresh Product Pricing and Demands"@en .
+
+proc:CM-1-1-2-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-7 ;
+    skos:definition "Align on step cases for out months"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7.3" ;
+    skos:prefLabel "Develop Step Cases for Out Month Horizon"@en .
+
+proc:CM-1-1-2-7-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-7 ;
+    skos:definition "Run step cases in XPIMS model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7.4" ;
+    skos:prefLabel "Run Step Cases for Out Month Horizon"@en .
+
+proc:CM-1-1-2-7-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-7 ;
+    skos:definition "Publish COP / ACOP reports"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7.5" ;
+    skos:prefLabel "Publish COP / ACOP results"@en .
+
+proc:CM-1-1-2-8-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-8 ;
+    skos:definition "Review Regional Plan, out-month strategy, and key scenarios"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.8.1" ;
+    skos:prefLabel "Conduct MOP Strategy Review"@en .
+
+proc:CM-1-1-2-8-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-8 ;
+    skos:definition "Review Look Forward Analysis and Scenarios Review Recommendations Analysis and scenarios"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.8.2" ;
+    skos:prefLabel "Conduct Management Review with Leadership"@en .
+
+proc:CM-1-1-2-8-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-8 ;
+    skos:definition "Update regional plan based on outputs of Management Review"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.8.3" ;
+    skos:prefLabel "Update Regional Plan"@en .
+
+proc:CM-1-1-2-8-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-8 ;
+    skos:definition "Report out actions and decisions from meeting"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.8.4" ;
+    skos:prefLabel "Communicate Decisions and Actions from Management Review Meeting"@en .
+
+proc:CM-1-1-2-9-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-9 ;
+    skos:definition "Update premise solution with regional priorities (e.g., inventory strategy, refinery transfers, product allocation, etc.)"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.9.1" ;
+    skos:prefLabel "Publish Local Refinery Targets for Regional to Local Transition"@en .
+
+proc:CM-1-1-2-9-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-9 ;
+    skos:definition "Publish distribution targets for in-month DPO Runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.9.2" ;
+    skos:prefLabel "Publish Distribution Targets"@en .
+
+proc:CM-1-1-3-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-1 ;
+    skos:definition "Review data objects included in Network Premise"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.1.1" ;
+    skos:prefLabel "Review business context and identify data objects requiring changes in Network Premise"@en .
+
+proc:CM-1-1-3-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-1 ;
+    skos:definition "Utilize Premise Review meeting to align on overrides required"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.1.2" ;
+    skos:prefLabel "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"@en .
+
+proc:CM-1-1-3-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-1 ;
+    skos:definition "Update Network Premise based on aligned overrides"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.1.3" ;
+    skos:prefLabel "Perform overrides (with rationale) in Network Premise"@en .
+
+proc:CM-1-1-3-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-1 ;
+    skos:definition "Review out of cycle constraints and update premise as needed"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.1.4" ;
+    skos:prefLabel "Identify changes needed out of cycle for network premise"@en .
+
+proc:CM-1-1-3-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-2 ;
+    skos:definition "Run DPO model input spreadsheet and generate DPO base plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.2.1" ;
+    skos:prefLabel "Generate DPO Base Plan"@en .
+
+proc:CM-1-1-3-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-2 ;
+    skos:definition "Review DPO Base Plan output in XPIMS <>DPO Reconciliation Meeting and reconcile model constraints between XPIMS and DPO"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.2.2" ;
+    skos:prefLabel "Share DPO Base Plan in XPIMS DPO Reconciliation"@en .
+
+proc:CM-1-1-3-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-3 ;
+    skos:definition "Review distribution network constraints and evaluate impacts to distribution plan (e.g., network maintenance activitiy)"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.3.1" ;
+    skos:prefLabel "Receive updated constraints from Schedulers for impacts to Distribution Plan"@en .
+
+proc:CM-1-1-3-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-3 ;
+    skos:definition "Make updates to Distribution Plan in DPO"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.3.2" ;
+    skos:prefLabel "Perform updates to Distribution Plan"@en .
+
+proc:CM-1-1-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:definition "Check and Update (as needed) Demand, Pricing, Crude, Premise, and Inventory Levels for Local Level for month M"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.4" ;
+    skos:prefLabel "Handover Final Distribution Plan"@en .
+
+proc:CM-1-1-3-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.5.1" ;
+    skos:prefLabel "Develop Short-Term Network Plan"@en .
+
+proc:CM-1-1-3-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.5.2" ;
+    skos:prefLabel "Coordinate Product Trading"@en .
+
+proc:CM-1-1-3-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.5.3" ;
+    skos:prefLabel "Process Business Renewal Request"@en .
+
+proc:CM-1-1-3-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.6.1" ;
+    skos:prefLabel "Plan & Execute Nominations"@en .
+
+proc:CM-1-1-3-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.6.2" ;
+    skos:prefLabel "Loading Shipment"@en .
+
+proc:CM-1-1-3-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.6.3" ;
+    skos:prefLabel "Track Movements and Inventory Management"@en .
+
+proc:CM-1-1-3-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.6.4" ;
+    skos:prefLabel "Discharge & Reconcile Load"@en .
+
+proc:CM-1-1-3-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.1" ;
+    skos:prefLabel "Develop Crude/Feedstock Inventory Policy"@en .
+
+proc:CM-1-1-3-7-10 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.10" ;
+    skos:prefLabel "Manage Lot/Batch Inventory"@en .
+
+proc:CM-1-1-3-7-11 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.11" ;
+    skos:prefLabel "Manage Third Party Storage"@en .
+
+proc:CM-1-1-3-7-12 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.12" ;
+    skos:prefLabel "Manage Inventory"@en .
+
+proc:CM-1-1-3-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.2" ;
+    skos:prefLabel "Develop Intermediates Inventory Policy"@en .
+
+proc:CM-1-1-3-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.3" ;
+    skos:prefLabel "Develop Finished Product Inventory Policy"@en .
+
+proc:CM-1-1-3-7-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.4" ;
+    skos:prefLabel "Measure Inventory"@en .
+
+proc:CM-1-1-3-7-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.5" ;
+    skos:prefLabel "Perform Inventory Reconciliation"@en .
+
+proc:CM-1-1-3-7-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.6" ;
+    skos:prefLabel "Manage Consignment Inventory"@en .
+
+proc:CM-1-1-3-7-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.7" ;
+    skos:prefLabel "Manage Commingled Inventory"@en .
+
+proc:CM-1-1-3-7-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.8" ;
+    skos:prefLabel "Manage Inventory Re-brands"@en .
+
+proc:CM-1-1-3-7-9 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7.9" ;
+    skos:prefLabel "Manage Inventory Replenishment"@en .
+
+proc:CM-1-1-3-8-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.8.1" ;
+    skos:prefLabel "Generate Orders"@en .
+
+proc:CM-1-1-3-8-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.8.2" ;
+    skos:prefLabel "Schedule Secondary Distribution"@en .
+
+proc:CM-1-1-3-8-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.8.3" ;
+    skos:prefLabel "Setup Scheduling System"@en .
+
+proc:CM-1-1-3-8-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.8.4" ;
+    skos:prefLabel "Monitor Secondary Distribution Performance"@en .
+
+proc:CM-1-1-4-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-1 ;
+    skos:definition "Review data objects included in Refinery Premise"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.1.1" ;
+    skos:prefLabel "Review business context and identify data objects requiring changes in Refinery Premise"@en .
+
+proc:CM-1-1-4-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-1 ;
+    skos:definition "Utilize Premise Review meeting to align on overrides required"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.1.2" ;
+    skos:prefLabel "Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise"@en .
+
+proc:CM-1-1-4-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-1 ;
+    skos:definition "Update Refinery Premise based on aligned overrides"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.1.3" ;
+    skos:prefLabel "Perform overrides (with rationale) in Refinery Premise"@en .
+
+proc:CM-1-1-4-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-1 ;
+    skos:definition "Review out of cycle constraints and update premise as needed"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.1.4" ;
+    skos:prefLabel "Identify changes needed out of cycle for refinery premise"@en .
+
+proc:CM-1-1-4-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-2 ;
+    skos:definition "Perform review of demand targets for month M+1"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.2.1" ;
+    skos:prefLabel "Perform Initial Review of M+1"@en .
+
+proc:CM-1-1-4-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-2 ;
+    skos:definition "Receive handover of M+1 plan from Planning team"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.2.2" ;
+    skos:prefLabel "Receive Handover of M+1 Plan"@en .
+
+proc:CM-1-1-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:definition "Check and Update (as needed) Demand, Pricing, Crude, Premise, and Inventory Levels for Local Level for month M"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.3" ;
+    skos:prefLabel "Refresh Refinery Plan for month M"@en .
+
+proc:CM-1-1-4-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-4 ;
+    skos:definition "Review Market Scenarios for prompt month horizon"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.4.1" ;
+    skos:prefLabel "Evaluate Market Scenarios Identified for Prompt Month Horizon"@en .
+
+proc:CM-1-1-4-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-4 ;
+    skos:definition "Develop step cases for aligned scenarios"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.4.2" ;
+    skos:prefLabel "Develop Step Cases for Prompt Month Horizon"@en .
+
+proc:CM-1-1-4-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-4 ;
+    skos:definition "Run Step Cases for Prompt Month Horizon; analyze and publish to Planning DB"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.4.3" ;
+    skos:prefLabel "Run Step Cases for Prompt Month Horizon"@en .
+
+proc:CM-1-1-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:definition "Communicate changes to plan to scheduling team"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.5" ;
+    skos:prefLabel "Communicate Changes to Scheduling"@en .
+
+proc:CM-1-1-4-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.6.1" ;
+    skos:prefLabel "Develop Strategic Business Plan"@en .
+
+proc:CM-1-1-4-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.6.2" ;
+    skos:prefLabel "Plan Budgets"@en .
+
+proc:CM-1-1-4-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.6.3" ;
+    skos:prefLabel "Manage Site Specific Business Risk"@en .
+
+proc:CM-1-1-4-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.1" ;
+    skos:prefLabel "Capture Product Demand Requirements"@en .
+
+proc:CM-1-1-4-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.2" ;
+    skos:prefLabel "Evaluate Crude & Feedstock"@en .
+
+proc:CM-1-1-4-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.3" ;
+    skos:prefLabel "Capture Crude Availability"@en .
+
+proc:CM-1-1-4-7-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.4" ;
+    skos:prefLabel "Capture Product/Crude/Feedstock Price"@en .
+
+proc:CM-1-1-4-7-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.5" ;
+    skos:prefLabel "Capture Refinery Level Constraints"@en .
+
+proc:CM-1-1-4-7-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.6" ;
+    skos:prefLabel "Capture Inventory"@en .
+
+proc:CM-1-1-4-7-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.7" ;
+    skos:prefLabel "Capture Monthly Operating Plan"@en .
+
+proc:CM-1-1-4-7-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-4-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7.8" ;
+    skos:prefLabel "Perform Scenario Analysis"@en .
+
+proc:CM-1-1-5-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1 ;
+    skos:definition "Aggregate periodic data inputs into month average values from regional forecast model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.1" ;
+    skos:prefLabel "Receive aggregated month average forecast data"@en .
+
+proc:CM-1-1-5-1-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actuals data for feedstock purchases / costs and IRT volumes / costs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.1" ;
+    skos:prefLabel "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"@en .
+
+proc:CM-1-1-5-1-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actuals data for product sales / purchases"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.2" ;
+    skos:prefLabel "Receive actual data for product sales/ purchases volumes"@en .
+
+proc:CM-1-1-5-1-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actuals data for refinery operations"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.3" ;
+    skos:prefLabel "Receive actual data for refinery operations"@en .
+
+proc:CM-1-1-5-1-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actuals data for network components - not currently including DPO information in PIMS backcast"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.4" ;
+    skos:prefLabel "Receive actual data for network components"@en .
+
+proc:CM-1-1-5-1-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actuals data for inventory & transfers"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.5" ;
+    skos:prefLabel "Receive actual data for inventory & transfers"@en .
+
+proc:CM-1-1-5-1-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1-2 ;
+    skos:definition "Receive actual data for product pricing"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2.6" ;
+    skos:prefLabel "Receive actual data product prices"@en .
+
+proc:CM-1-1-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Receive latest XPIMS forecast model and update data inputs to establish the aggregated month average forecast for regional backcast"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.2" ;
+    skos:prefLabel "Set up and Stabilize Aggregated Forecast Model"@en .
+
+proc:CM-1-1-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Update pricing to actuals and evaluate impact in backcasting dashboard (outside of LP)"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.3" ;
+    skos:prefLabel "Evaluate the price adjusted forecast against the original forecast"@en .
+
+proc:CM-1-1-5-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-4 ;
+    skos:definition "Evaluate the impact of updating the forecast pricing with actuals pricing"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.4.1" ;
+    skos:prefLabel "Build and run the LP price adjusted forecast"@en .
+
+proc:CM-1-1-5-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-4 ;
+    skos:definition "Publish backcasting case results to Planning DB"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.4.2" ;
+    skos:prefLabel "Publish LP Price Adjusted Forecast Results"@en .
+
+proc:CM-1-1-5-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of feed optimization case runs, including crude optimization and crude + feedstock optimization"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.1" ;
+    skos:prefLabel "Build and run feed optimization cases"@en .
+
+proc:CM-1-1-5-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of product optimization case runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.2" ;
+    skos:prefLabel "Build and run product optimization cases"@en .
+
+proc:CM-1-1-5-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of unit optimization case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.3" ;
+    skos:prefLabel "Build and run unit optimization case"@en .
+
+proc:CM-1-1-5-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of IRT case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.4" ;
+    skos:prefLabel "Build and run IRT optimization case"@en .
+
+proc:CM-1-1-5-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of distribution optimization case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.5" ;
+    skos:prefLabel "Build and run distribution optimization case"@en .
+
+proc:CM-1-1-5-5-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of blue sky case 1 run (combine feed + product + IRT optimization)"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.6" ;
+    skos:prefLabel "Build and run blue sky case 1"@en .
+
+proc:CM-1-1-5-5-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Evaluate impact of blue sky case 1 run (combine blue sky 1 + unit optimization)"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.7" ;
+    skos:prefLabel "Build and run blue sky case 2"@en .
+
+proc:CM-1-1-5-5-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-5 ;
+    skos:definition "Publish backcasting case results to Planning DB"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5.8" ;
+    skos:prefLabel "Publish optimization case results"@en .
+
+proc:CM-1-1-5-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals unplanned downtime case runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.1" ;
+    skos:prefLabel "Build and run unplanned downtime cases"@en .
+
+proc:CM-1-1-5-6-10 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Publish backcasting case results to Planning DB"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.10" ;
+    skos:prefLabel "Publish actuals case results"@en .
+
+proc:CM-1-1-5-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals global crude purchase case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.2" ;
+    skos:prefLabel "Build and run actual global crude purchase case"@en .
+
+proc:CM-1-1-5-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals crude allocation case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.3" ;
+    skos:prefLabel "Build and run actual crude allocation case"@en .
+
+proc:CM-1-1-5-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals non crude feed case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.4" ;
+    skos:prefLabel "Build and run actual non crude feed case"@en .
+
+proc:CM-1-1-5-6-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals IRTs case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.5" ;
+    skos:prefLabel "Build and run actual IRTs case"@en .
+
+proc:CM-1-1-5-6-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals product case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.6" ;
+    skos:prefLabel "Build and run actual product case"@en .
+
+proc:CM-1-1-5-6-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals supply case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.7" ;
+    skos:prefLabel "Build and run actual supply case"@en .
+
+proc:CM-1-1-5-6-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of actuals throughput case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.8" ;
+    skos:prefLabel "Build and run actual throughput case"@en .
+
+proc:CM-1-1-5-6-9 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-6 ;
+    skos:definition "Evaluate impact of final actuals case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6.9" ;
+    skos:prefLabel "Build and run final actual case"@en .
+
+proc:CM-1-1-5-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-7 ;
+    skos:definition "Analyze backcast results and note impact on margin categories"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7.1" ;
+    skos:prefLabel "Evaluate output w.r.t shift in margin and changes in parameters"@en .
+
+proc:CM-1-1-5-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-7 ;
+    skos:definition "Validate regional volume balance between final case and actuals"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7.2" ;
+    skos:prefLabel "Establish difference between regional volume in final case and actual volume"@en .
+
+proc:CM-1-1-5-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-7 ;
+    skos:definition "Validate refinery production volume vs. actual volumes between final case and actuals"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7.3" ;
+    skos:prefLabel "Establish difference between refinery production in final case and actual volumes"@en .
+
+proc:CM-1-1-5-7-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-7 ;
+    skos:definition "Identify GRM impact for each category on GRM waterfall visualization"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7.4" ;
+    skos:prefLabel "Capture the impact of each event on GRM waterfall"@en .
+
+proc:CM-1-1-5-7-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-7 ;
+    skos:definition "Analyze backcast results and note RCA outcomes"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7.5" ;
+    skos:prefLabel "Collate RCA and potential action items for all high-level impact areas"@en .
+
+proc:CM-1-1-5-8-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Generate materials to discuss GRM impacts for the region"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.1" ;
+    skos:prefLabel "Prepare monthly GRM waterfall for the region"@en .
+
+proc:CM-1-1-5-8-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Generate reports to discuss RCA outcomes"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.2" ;
+    skos:prefLabel "Prepare reports highlighting root causes for each events"@en .
+
+proc:CM-1-1-5-8-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Generate reports to discuss backcast reports and future opportunities"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.3" ;
+    skos:prefLabel "Prepare full potential (optimized) reports and trends"@en .
+
+proc:CM-1-1-5-8-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Communicate GRM impacts, RCA outcomes, and future opportunties"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.4" ;
+    skos:prefLabel "Conduct backcasting meeting(s)"@en .
+
+proc:CM-1-1-5-8-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Communicate GRM impacts, RCA outcomes, and future opportunities in broader, bimonthly meeting with leadership"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.5" ;
+    skos:prefLabel "Present outcomes in CCI Management Review meeting <TBD>"@en .
+
+proc:CM-1-1-5-8-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-8 ;
+    skos:definition "Identify improvement opportunities following RCA outcomes"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8.6" ;
+    skos:prefLabel "Review all root causes along with next steps with all business units"@en .
+
+proc:CM-1-1-5-9-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-9 ;
+    skos:definition "Make updates as needed to future backcasting case runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.9.1" ;
+    skos:prefLabel "Incorporate comments & notes from key meetings"@en .
+
+proc:CM-1-1-5-9-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-9 ;
+    skos:definition "Generate list of actions / improvement opportunities following key meetings and include in backcasting report"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.9.2" ;
+    skos:prefLabel "Prepare & review list of consolidated action items/ RCA opportunities"@en .
+
+proc:CM-1-1-5-9-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-9 ;
+    skos:definition "Finalize backcasting report and publish to stakeholders"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.9.3" ;
+    skos:prefLabel "Finalize Backcasting Report"@en .
+
+proc:CM-1-1-6-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-6-1 ;
+    skos:definition "Aggregate periodic data inputs into month average from forecast model"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.6.1.1" ;
+    skos:prefLabel "Aggregate periods for month average forecast"@en .
+
+proc:CM-1-1-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-6 ;
+    skos:definition "Build and run actuals case stack in DPO - DPO actuals case stack to be defined"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.6.2" ;
+    skos:prefLabel "Evaluate actuals cases in DPO"@en .
+
+proc:CM-1-1-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-6 ;
+    skos:definition "Build and run optimization case stack in DPO - DPO optimization case stack to be defined"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.6.3" ;
+    skos:prefLabel "Evaluate optimization cases in DPO"@en .
+
+proc:CM-1-1-7-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.1.1" ;
+    skos:prefLabel "Update Refinery Execution Instructions"@en .
+
+proc:CM-1-1-7-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.1.2" ;
+    skos:prefLabel "Schedule Resources"@en .
+
+proc:CM-1-1-7-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.1.3" ;
+    skos:prefLabel "Perform Production Accounting"@en .
+
+proc:CM-1-1-7-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.1" ;
+    skos:prefLabel "Maintain Production Scheduling Master Data"@en .
+
+proc:CM-1-1-7-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.2" ;
+    skos:prefLabel "Review Production Wheel and Run Length"@en .
+
+proc:CM-1-1-7-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.3" ;
+    skos:prefLabel "Create Production Scheduling and Sequencing Plan"@en .
+
+proc:CM-1-1-7-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.4" ;
+    skos:prefLabel "Manage Production Schedule Exceptions"@en .
+
+proc:CM-1-1-7-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.5" ;
+    skos:prefLabel "Measure Production Scheduling Performance"@en .
+
+proc:CM-1-1-7-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2.6" ;
+    skos:prefLabel "Manage The Interface to Planning, Operations, Engineering & Maintenance"@en .
+
+proc:CM-1-1-7-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.3.1" ;
+    skos:prefLabel "Optimize Internal vs. External Energy Sources"@en .
+
+proc:CM-1-1-7-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.3.2" ;
+    skos:prefLabel "Optimize Plant Energy Balance"@en .
+
+proc:CM-1-1-7-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.3.3" ;
+    skos:prefLabel "Manage and Support Emission Trading"@en .
+
+proc:CM-1-2-1-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.1" ;
+    skos:prefLabel "Receive Production Forecast"@en .
+
+proc:CM-1-2-1-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.2" ;
+    skos:prefLabel "Receive Demand Forecast"@en .
+
+proc:CM-1-2-1-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.3" ;
+    skos:prefLabel "Forecast Renewables"@en .
+
+proc:CM-1-2-1-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.4" ;
+    skos:prefLabel "Perform Asset Optimization"@en .
+
+proc:CM-1-2-1-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.5" ;
+    skos:prefLabel "Forecast Revenue"@en .
+
+proc:CM-1-2-1-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1.6" ;
+    skos:prefLabel "Receive Power Generation Forecast"@en .
+
+proc:CM-1-2-1-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.1" ;
+    skos:prefLabel "Create New Counterparty"@en .
+
+proc:CM-1-2-1-2-10 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.10" ;
+    skos:prefLabel "Manage Storage Contract"@en .
+
+proc:CM-1-2-1-2-11 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.11" ;
+    skos:prefLabel "Monitor Contracts"@en .
+
+proc:CM-1-2-1-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.2" ;
+    skos:prefLabel "Manage Existing Counterparty"@en .
+
+proc:CM-1-2-1-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.3" ;
+    skos:prefLabel "Terminate/Novate Counterparty"@en .
+
+proc:CM-1-2-1-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.4" ;
+    skos:prefLabel "Manage M&A Activity"@en .
+
+proc:CM-1-2-1-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.5" ;
+    skos:prefLabel "Create New Contract"@en .
+
+proc:CM-1-2-1-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.6" ;
+    skos:prefLabel "Manage Existing Contract"@en .
+
+proc:CM-1-2-1-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.7" ;
+    skos:prefLabel "Terminate/Novate Contract"@en .
+
+proc:CM-1-2-1-2-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.8" ;
+    skos:prefLabel "Manage Lease Contract"@en .
+
+proc:CM-1-2-1-2-9 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2.9" ;
+    skos:prefLabel "Manage Carrier Contracts"@en .
+
+proc:CM-1-2-1-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.1" ;
+    skos:prefLabel "Manage Pre-Trade Analysis"@en .
+
+proc:CM-1-2-1-3-10 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.10" ;
+    skos:prefLabel "Report Trades to SDR"@en .
+
+proc:CM-1-2-1-3-11 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.11" ;
+    skos:prefLabel "Capture Transmission Deals"@en .
+
+proc:CM-1-2-1-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.2" ;
+    skos:prefLabel "Obtain Trade Approval"@en .
+
+proc:CM-1-2-1-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.3" ;
+    skos:prefLabel "Capture Physical Trades"@en .
+
+proc:CM-1-2-1-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.4" ;
+    skos:prefLabel "Capture Exchange Trades"@en .
+
+proc:CM-1-2-1-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.5" ;
+    skos:prefLabel "Capture Storage Deals"@en .
+
+proc:CM-1-2-1-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.6" ;
+    skos:prefLabel "Capture Environmental/Renewable Deals"@en .
+
+proc:CM-1-2-1-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.7" ;
+    skos:prefLabel "Capture Financial (OTC) Trades"@en .
+
+proc:CM-1-2-1-3-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.8" ;
+    skos:prefLabel "Capture Structured Deals"@en .
+
+proc:CM-1-2-1-3-9 a skos:Concept ;
+    skos:broader proc:CM-1-2-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3.9" ;
+    skos:prefLabel "Capture Transportation Deals"@en .
+
+proc:CM-1-2-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.4" ;
+    skos:prefLabel "Trading Strategy Management"@en .
+
+proc:CM-1-2-2-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.1" ;
+    skos:prefLabel "Perform Counterparty Credit Reviews"@en .
+
+proc:CM-1-2-2-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.2" ;
+    skos:prefLabel "Manage Credit Limits"@en .
+
+proc:CM-1-2-2-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.3" ;
+    skos:prefLabel "Manage Collateral"@en .
+
+proc:CM-1-2-2-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.4" ;
+    skos:prefLabel "Calculate Credit Exposure"@en .
+
+proc:CM-1-2-2-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.5" ;
+    skos:prefLabel "Perform Margining"@en .
+
+proc:CM-1-2-2-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.6" ;
+    skos:prefLabel "Perform Advanced Credit Risk Analytics"@en .
+
+proc:CM-1-2-2-1-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.7" ;
+    skos:prefLabel "Monitor & Analyze Credit"@en .
+
+proc:CM-1-2-2-1-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1.8" ;
+    skos:prefLabel "Manage Credit Risk Reporting"@en .
+
+proc:CM-1-2-2-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2.1" ;
+    skos:prefLabel "Generate Confirms"@en .
+
+proc:CM-1-2-2-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2.2" ;
+    skos:prefLabel "Manage Confirmation Documentation"@en .
+
+proc:CM-1-2-2-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2.3" ;
+    skos:prefLabel "Manage Trade Modifications"@en .
+
+proc:CM-1-2-2-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2.4" ;
+    skos:prefLabel "Report Confirmation To SDR"@en .
+
+proc:CM-1-2-2-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2.5" ;
+    skos:prefLabel "Manage Confirm Disputes"@en .
+
+proc:CM-1-2-2-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.1" ;
+    skos:prefLabel "Establish And Maintain Book Structure"@en .
+
+proc:CM-1-2-2-3-10 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.10" ;
+    skos:prefLabel "Monitor Risk Policy Compliance"@en .
+
+proc:CM-1-2-2-3-11 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.11" ;
+    skos:prefLabel "Manage And Run Risk Scenarios"@en .
+
+proc:CM-1-2-2-3-12 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.12" ;
+    skos:prefLabel "Conduct Advanced Risk Analytics"@en .
+
+proc:CM-1-2-2-3-13 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.13" ;
+    skos:prefLabel "Manage Risk Reporting"@en .
+
+proc:CM-1-2-2-3-14 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.14" ;
+    skos:prefLabel "Manage Volatilities And Correlations"@en .
+
+proc:CM-1-2-2-3-15 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.15" ;
+    skos:prefLabel "Manage Commodity Valuations"@en .
+
+proc:CM-1-2-2-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.2" ;
+    skos:prefLabel "Establish & Maintain Delegation Of Authority (DOA)"@en .
+
+proc:CM-1-2-2-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.3" ;
+    skos:prefLabel "Setup And Manage Curves"@en .
+
+proc:CM-1-2-2-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.4" ;
+    skos:prefLabel "Perform End-of-day (EOD) Process"@en .
+
+proc:CM-1-2-2-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.5" ;
+    skos:prefLabel "Perform End-of-Month (EOM) Process"@en .
+
+proc:CM-1-2-2-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.6" ;
+    skos:prefLabel "Manage Risk Limits"@en .
+
+proc:CM-1-2-2-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.7" ;
+    skos:prefLabel "Measure Risk"@en .
+
+proc:CM-1-2-2-3-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.8" ;
+    skos:prefLabel "Monitor Risk"@en .
+
+proc:CM-1-2-2-3-9 a skos:Concept ;
+    skos:broader proc:CM-1-2-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3.9" ;
+    skos:prefLabel "Perform Position & PNL Analysis"@en .
+
+proc:CM-1-2-3-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.1" ;
+    skos:prefLabel "Perform Pipeline Actualization"@en .
+
+proc:CM-1-2-3-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.2" ;
+    skos:prefLabel "Perform Truck Actualization"@en .
+
+proc:CM-1-2-3-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.3" ;
+    skos:prefLabel "Perform Railcar Actualization"@en .
+
+proc:CM-1-2-3-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.4" ;
+    skos:prefLabel "Perform Vessel & Barge Actualization"@en .
+
+proc:CM-1-2-3-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.5" ;
+    skos:prefLabel "Perform Terminal/Storage Actualization"@en .
+
+proc:CM-1-2-3-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.6" ;
+    skos:prefLabel "Perform Lease Actualization"@en .
+
+proc:CM-1-2-3-1-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.7" ;
+    skos:prefLabel "Perform RINs/REC Actualization"@en .
+
+proc:CM-1-2-3-1-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1.8" ;
+    skos:prefLabel "Manage Actualization Disputes"@en .
+
+proc:CM-1-2-4-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.1" ;
+    skos:prefLabel "Settle Crude Oil"@en .
+
+proc:CM-1-2-4-1-10 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.10" ;
+    skos:prefLabel "Settle Natural Gas"@en .
+
+proc:CM-1-2-4-1-11 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.11" ;
+    skos:prefLabel "Settle Financial OTC Trades"@en .
+
+proc:CM-1-2-4-1-12 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.12" ;
+    skos:prefLabel "Settle Pipelines"@en .
+
+proc:CM-1-2-4-1-13 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.13" ;
+    skos:prefLabel "Settle Rail"@en .
+
+proc:CM-1-2-4-1-14 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.14" ;
+    skos:prefLabel "Settle Terminal/Storage"@en .
+
+proc:CM-1-2-4-1-15 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.15" ;
+    skos:prefLabel "Settle Power"@en .
+
+proc:CM-1-2-4-1-16 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.16" ;
+    skos:prefLabel "Settle Broker"@en .
+
+proc:CM-1-2-4-1-17 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.17" ;
+    skos:prefLabel "Manage Settlement Disputes"@en .
+
+proc:CM-1-2-4-1-18 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.18" ;
+    skos:prefLabel "Settle Intermediates"@en .
+
+proc:CM-1-2-4-1-19 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.19" ;
+    skos:prefLabel "Settle Other Commodities"@en .
+
+proc:CM-1-2-4-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.2" ;
+    skos:prefLabel "Settle Products"@en .
+
+proc:CM-1-2-4-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.3" ;
+    skos:prefLabel "Settle Exchange Trades"@en .
+
+proc:CM-1-2-4-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.4" ;
+    skos:prefLabel "Settle Trucks"@en .
+
+proc:CM-1-2-4-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.5" ;
+    skos:prefLabel "Settle Vessels & Barge"@en .
+
+proc:CM-1-2-4-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.6" ;
+    skos:prefLabel "Settle First Purchaser/Leases"@en .
+
+proc:CM-1-2-4-1-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.7" ;
+    skos:prefLabel "Settle ISO/Power Pools"@en .
+
+proc:CM-1-2-4-1-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.8" ;
+    skos:prefLabel "Settle Emissions"@en .
+
+proc:CM-1-2-4-1-9 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1.9" ;
+    skos:prefLabel "Manage Settlement Documents"@en .
+
+proc:CM-1-2-4-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.1" ;
+    skos:prefLabel "Manage Accounting Treatments"@en .
+
+proc:CM-1-2-4-2-10 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.10" ;
+    skos:prefLabel "Manage Accruals"@en .
+
+proc:CM-1-2-4-2-11 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.11" ;
+    skos:prefLabel "Manage Taxes"@en .
+
+proc:CM-1-2-4-2-12 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.12" ;
+    skos:prefLabel "Develop Accounting Policies & Procedures"@en .
+
+proc:CM-1-2-4-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.2" ;
+    skos:prefLabel "Manage Production Accounting"@en .
+
+proc:CM-1-2-4-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.3" ;
+    skos:prefLabel "Manage Marketing Interests & Royalty Payments"@en .
+
+proc:CM-1-2-4-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.4" ;
+    skos:prefLabel "Manage AR/AP & Actuals"@en .
+
+proc:CM-1-2-4-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.5" ;
+    skos:prefLabel "Manage Trading Sub-Ledger"@en .
+
+proc:CM-1-2-4-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.6" ;
+    skos:prefLabel "Reconcile Economic PNL To Accounting PNL"@en .
+
+proc:CM-1-2-4-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.7" ;
+    skos:prefLabel "Manage Financial Info. Documentation & Reporting"@en .
+
+proc:CM-1-2-4-2-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.8" ;
+    skos:prefLabel "Manage Financial System/GL"@en .
+
+proc:CM-1-2-4-2-9 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2.9" ;
+    skos:prefLabel "Manage Cash Application"@en .
+
+proc:CM-1-2-4-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.1" ;
+    skos:prefLabel "Develop Compliance Policies & Procedures"@en .
+
+proc:CM-1-2-4-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.2" ;
+    skos:prefLabel "Monitor External Trading Compliance"@en .
+
+proc:CM-1-2-4-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.3" ;
+    skos:prefLabel "Monitor Internal Trading Compliance"@en .
+
+proc:CM-1-2-4-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.4" ;
+    skos:prefLabel "Monitor Internal Trade Controls"@en .
+
+proc:CM-1-2-4-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.5" ;
+    skos:prefLabel "Manage Tax Compliance"@en .
+
+proc:CM-1-2-4-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.6" ;
+    skos:prefLabel "Manage RINs Reporting"@en .
+
+proc:CM-1-2-4-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3.7" ;
+    skos:prefLabel "Manage Exceptions"@en .
+
+proc:CM-1-2-4-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.1" ;
+    skos:prefLabel "Identify Potential Demurrage"@en .
+
+proc:CM-1-2-4-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.2" ;
+    skos:prefLabel "Create Claim"@en .
+
+proc:CM-1-2-4-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.3" ;
+    skos:prefLabel "Receive Demurrage Claim"@en .
+
+proc:CM-1-2-4-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.4" ;
+    skos:prefLabel "Assess Claim"@en .
+
+proc:CM-1-2-4-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.5" ;
+    skos:prefLabel "Communicate and Negotiate Claim"@en .
+
+proc:CM-1-2-4-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.6" ;
+    skos:prefLabel "Validate and Negotiate Claim"@en .
+
+proc:CM-1-2-4-4-7 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.7" ;
+    skos:prefLabel "Send Claim Invoice"@en .
+
+proc:CM-1-2-4-4-8 a skos:Concept ;
+    skos:broader proc:CM-1-2-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4.8" ;
+    skos:prefLabel "Receive Claim Invoice"@en .
+
+proc:CM-1-2-5-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.1.1" ;
+    skos:prefLabel "Manage feedstock Data Quality"@en .
+
+proc:CM-1-2-5-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.1.2" ;
+    skos:prefLabel "Review LP Model Integrity"@en .
+
+proc:CM-1-2-5-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.1.3" ;
+    skos:prefLabel "Develop Term Slate"@en .
+
+proc:CM-1-2-5-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.1.4" ;
+    skos:prefLabel "Develop Spot Slate"@en .
+
+proc:CM-1-2-5-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.2.1" ;
+    skos:prefLabel "Coordinate Feedstock Trading"@en .
+
+proc:CM-1-2-5-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.2.2" ;
+    skos:prefLabel "Develop Feedstock Demand"@en .
+
+proc:CM-1-2-5-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.2.3" ;
+    skos:prefLabel "Plan Optimal Feedstock Slate And Run Rate"@en .
+
+proc:CM-1-2-5-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.3.1" ;
+    skos:prefLabel "Manage Feedstock Transportation"@en .
+
+proc:CM-1-2-5-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.3.2" ;
+    skos:prefLabel "Schedule Feedstock Delivery"@en .
+
+proc:CM-1-2-5-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.3.3" ;
+    skos:prefLabel "Plan Feedstock Arrival"@en .
+
+proc:CM-1-2-5-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.4.1" ;
+    skos:prefLabel "Assess & Manage Inventory Risk"@en .
+
+proc:CM-1-2-5-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.4.2" ;
+    skos:prefLabel "Manage Feedstock Inventory"@en .
+
+proc:CM-1-2-6-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.1.1" ;
+    skos:prefLabel "Segment Customers"@en .
+
+proc:CM-1-2-6-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.1.2" ;
+    skos:prefLabel "Evaluate Market Attractiveness"@en .
+
+proc:CM-1-2-6-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.1.3" ;
+    skos:prefLabel "Assess Cost-to-Serve Performance"@en .
+
+proc:CM-1-2-6-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.2.1" ;
+    skos:prefLabel "Manage Refined Product Demand"@en .
+
+proc:CM-1-2-6-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.2.2" ;
+    skos:prefLabel "Manage Refined Product Exchanges"@en .
+
+proc:CM-1-2-6-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.2.3" ;
+    skos:prefLabel "Forecast Refined Product Demand"@en .
+
+proc:CM-1-2-6-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.3.1" ;
+    skos:prefLabel "Manage Primary Distribution Operations"@en .
+
+proc:CM-1-2-6-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.3.2" ;
+    skos:prefLabel "Manage Replenishment"@en .
+
+proc:CM-1-2-6-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-6-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.3.3" ;
+    skos:prefLabel "Manage Primary Distribution Transportation"@en .
+
+proc:CM-1-2-7-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.1.1" ;
+    skos:prefLabel "Manage Product Exchange Agreements"@en .
+
+proc:CM-1-2-7-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.1.2" ;
+    skos:prefLabel "Manage Product Transport Agreements"@en .
+
+proc:CM-1-2-7-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.1.3" ;
+    skos:prefLabel "Negotiate Storage / Throughput Agreements"@en .
+
+proc:CM-1-2-7-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.2.1" ;
+    skos:prefLabel "Manage Safety (Materials, Staff, Contractor)"@en .
+
+proc:CM-1-2-7-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.2.2" ;
+    skos:prefLabel "Manage Fleet (Own/Third Party)"@en .
+
+proc:CM-1-2-7-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.2.3" ;
+    skos:prefLabel "Manage Site Assets (Tank, Rack, Etc.)"@en .
+
+proc:CM-1-3-1-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.1.1" ;
+    skos:prefLabel "Source & Collect Information"@en .
+
+proc:CM-1-3-1-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.1.2" ;
+    skos:prefLabel "Define Analysis Objectives & Scope"@en .
+
+proc:CM-1-3-1-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.1.3" ;
+    skos:prefLabel "Analyze Data"@en .
+
+proc:CM-1-3-1-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.1.4" ;
+    skos:prefLabel "Document Findings"@en .
+
+proc:CM-1-3-1-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.2.1" ;
+    skos:prefLabel "Source & Collect Information"@en .
+
+proc:CM-1-3-1-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.2.2" ;
+    skos:prefLabel "Define Analysis Objectives & Scope"@en .
+
+proc:CM-1-3-1-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.2.3" ;
+    skos:prefLabel "Analyze Data"@en .
+
+proc:CM-1-3-1-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.2.4" ;
+    skos:prefLabel "Document Findings"@en .
+
+proc:CM-1-3-1-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.3.1" ;
+    skos:prefLabel "Source & Collect Information"@en .
+
+proc:CM-1-3-1-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.3.2" ;
+    skos:prefLabel "Define Analysis Objectives & Scope"@en .
+
+proc:CM-1-3-1-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.3.3" ;
+    skos:prefLabel "Analyze Data"@en .
+
+proc:CM-1-3-1-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.3.4" ;
+    skos:prefLabel "Document Findings"@en .
+
+proc:CM-1-3-1-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.4.1" ;
+    skos:prefLabel "Source & Collect Information"@en .
+
+proc:CM-1-3-1-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.4.2" ;
+    skos:prefLabel "Define Analysis Objectives & Scope"@en .
+
+proc:CM-1-3-1-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.4.3" ;
+    skos:prefLabel "Analyze Data"@en .
+
+proc:CM-1-3-1-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.4.4" ;
+    skos:prefLabel "Document Findings"@en .
+
+proc:CM-1-3-1-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.5.1" ;
+    skos:prefLabel "Source & Collect Information"@en .
+
+proc:CM-1-3-1-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.5.2" ;
+    skos:prefLabel "Define Analysis Objectives & Scope"@en .
+
+proc:CM-1-3-1-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.5.3" ;
+    skos:prefLabel "Analyze Data"@en .
+
+proc:CM-1-3-1-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.5.4" ;
+    skos:prefLabel "Document Findings"@en .
+
+proc:CM-1-3-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.6" ;
+    skos:prefLabel "Insight and Metrics"@en .
+
+proc:CM-1-3-10-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-10 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.10.1" ;
+    skos:prefLabel "Setup and Maintain Customer In Terminal"@en .
+
+proc:CM-1-3-10-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-10 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.10.2" ;
+    skos:prefLabel "Process Forecast and Nominations"@en .
+
+proc:CM-1-3-10-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-10 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.10.3" ;
+    skos:prefLabel "Manage Allocation"@en .
+
+proc:CM-1-3-10-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-10 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.10.4" ;
+    skos:prefLabel "Capture Deal"@en .
+
+proc:CM-1-3-2-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.1.1" ;
+    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternative"@en .
+
+proc:CM-1-3-2-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.1.2" ;
+    skos:prefLabel "Establish Brand Objectives and hypothesis"@en .
+
+proc:CM-1-3-2-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.1.3" ;
+    skos:prefLabel "Develop & Test Brand Hypothesis"@en .
+
+proc:CM-1-3-2-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.1.4" ;
+    skos:prefLabel "Develop / update Brand"@en .
+
+proc:CM-1-3-2-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.2.1" ;
+    skos:prefLabel "Test Customer value proposition"@en .
+
+proc:CM-1-3-2-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.2.2" ;
+    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternatives (CVP)"@en .
+
+proc:CM-1-3-2-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.2.3" ;
+    skos:prefLabel "Establish CVP principles and objectives"@en .
+
+proc:CM-1-3-2-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.2.4" ;
+    skos:prefLabel "Develop/Update Strategy (CVP)"@en .
+
+proc:CM-1-3-2-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.3.1" ;
+    skos:prefLabel "Test Customer value proposition"@en .
+
+proc:CM-1-3-2-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.3.2" ;
+    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternatives (CVP)"@en .
+
+proc:CM-1-3-2-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.3.3" ;
+    skos:prefLabel "Establish CVP principles and objectives"@en .
+
+proc:CM-1-3-2-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.3.4" ;
+    skos:prefLabel "Develop/Update Strategy (CVP)"@en .
+
+proc:CM-1-3-2-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.4.1" ;
+    skos:prefLabel "Conduct Channel of trade diagnostics"@en .
+
+proc:CM-1-3-2-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.4.2" ;
+    skos:prefLabel "Establish operating Objectives and develop Channel Strategy Hypothesis"@en .
+
+proc:CM-1-3-2-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.5.1" ;
+    skos:prefLabel "Identify Customer Experience Aspiration"@en .
+
+proc:CM-1-3-2-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.5.2" ;
+    skos:prefLabel "Define Customer Experience Guiding Principles"@en .
+
+proc:CM-1-3-2-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.5.3" ;
+    skos:prefLabel "Establish Customer Experience Strategic Pillars"@en .
+
+proc:CM-1-3-3-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.1.1" ;
+    skos:prefLabel "Define Target Customer Groups"@en .
+
+proc:CM-1-3-3-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.1.2" ;
+    skos:prefLabel "Define Customer Offer"@en .
+
+proc:CM-1-3-3-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.1.3" ;
+    skos:prefLabel "Validate Customer Offer"@en .
+
+proc:CM-1-3-3-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.1.4" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-3-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2.1" ;
+    skos:prefLabel "Define Strategic Pricing Approach"@en .
+
+proc:CM-1-3-3-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2.2" ;
+    skos:prefLabel "Develop Integrated Pricing Strategy"@en .
+
+proc:CM-1-3-3-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2.3" ;
+    skos:prefLabel "Analyze Pricing Performance"@en .
+
+proc:CM-1-3-3-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2.4" ;
+    skos:prefLabel "Conduct Pricing Pilots"@en .
+
+proc:CM-1-3-3-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2.5" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-3-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3.1" ;
+    skos:prefLabel "Create Channel Offering & Value Proposition"@en .
+
+proc:CM-1-3-3-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3.2" ;
+    skos:prefLabel "Define Channel Portfolio"@en .
+
+proc:CM-1-3-3-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3.3" ;
+    skos:prefLabel "Segment Channels"@en .
+
+proc:CM-1-3-3-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3.4" ;
+    skos:prefLabel "Develop Channel Structure, Size & Engagement Model"@en .
+
+proc:CM-1-3-3-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3.5" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-3-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.4.1" ;
+    skos:prefLabel "Define Target Location"@en .
+
+proc:CM-1-3-3-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.4.2" ;
+    skos:prefLabel "Formulate And Evaluate Strategic Operating Alternatives (network Strategy)"@en .
+
+proc:CM-1-3-3-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.4.3" ;
+    skos:prefLabel "Define Target Network Size"@en .
+
+proc:CM-1-3-3-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.4.4" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-3-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.1" ;
+    skos:prefLabel "Define Media Strategy"@en .
+
+proc:CM-1-3-3-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.2" ;
+    skos:prefLabel "Define Direct Marketing Strategy"@en .
+
+proc:CM-1-3-3-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.3" ;
+    skos:prefLabel "Define Advertising Strategy"@en .
+
+proc:CM-1-3-3-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.4" ;
+    skos:prefLabel "Define POS Communication Strategy"@en .
+
+proc:CM-1-3-3-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.5" ;
+    skos:prefLabel "Define Digital Marketing Strategy"@en .
+
+proc:CM-1-3-3-5-6 a skos:Concept ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:identifier "https://www.techtarget.com/whatis/definition/internal-marketing" ;
+            dcterms:title "Independent validator (web): TechTarget: 'Internal marketing' (agreement 0.62)"@en ],
+        [ a dcterms:BibliographicResource ;
+            dcterms:identifier "16852" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 16852 'Define internal marketing communication strategy'"@en ] ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:definition "Developing a program to promote the objectives, values, products and services of the company to its employees by treating them as potential customers, in order to extend company client base, increase employee engagement or to foster brand advocacy."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.6" ;
+    skos:prefLabel "Define Internal Marketing Communications Strategy"@en .
+
+proc:CM-1-3-3-5-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5.7" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-3-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6.1" ;
+    skos:prefLabel "Develop Business Process Blueprint"@en .
+
+proc:CM-1-3-3-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6.2" ;
+    skos:prefLabel "Develop Organizational Blueprint"@en .
+
+proc:CM-1-3-3-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6.3" ;
+    skos:prefLabel "Determine Channel Of Trade Mix"@en .
+
+proc:CM-1-3-3-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6.4" ;
+    skos:prefLabel "Define Procedural Framework & Guidelines"@en .
+
+proc:CM-1-3-3-6-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6.5" ;
+    skos:prefLabel "Define KPI Framework"@en .
+
+proc:CM-1-3-4-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.1.1" ;
+    skos:prefLabel "Identify Market Needs"@en .
+
+proc:CM-1-3-4-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.1.2" ;
+    skos:prefLabel "Market Sensing"@en .
+
+proc:CM-1-3-4-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.1.3" ;
+    skos:prefLabel "Develop R&D Implementation Plans"@en .
+
+proc:CM-1-3-4-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.2.1" ;
+    skos:prefLabel "Ideation"@en .
+
+proc:CM-1-3-4-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.2.2" ;
+    skos:prefLabel "Conduct Research"@en .
+
+proc:CM-1-3-4-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.2.3" ;
+    skos:prefLabel "Manage Research"@en .
+
+proc:CM-1-3-4-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.3.1" ;
+    skos:prefLabel "Manage Product/Service Development"@en .
+
+proc:CM-1-3-4-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.3.2" ;
+    skos:prefLabel "Conduct Product Development"@en .
+
+proc:CM-1-3-4-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.3.3" ;
+    skos:prefLabel "Manage Product/Service Change"@en .
+
+proc:CM-1-3-4-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.1" ;
+    skos:prefLabel "Set up Intellectual Asset Framework"@en .
+
+proc:CM-1-3-4-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.2" ;
+    skos:prefLabel "Register Intellectual Property"@en .
+
+proc:CM-1-3-4-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.3" ;
+    skos:prefLabel "Value Intellectual Assets"@en .
+
+proc:CM-1-3-4-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.4" ;
+    skos:prefLabel "Protect Intellectual Assets"@en .
+
+proc:CM-1-3-4-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.5" ;
+    skos:prefLabel "Exploit Intellectual Assets"@en .
+
+proc:CM-1-3-4-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4.6" ;
+    skos:prefLabel "Manage Intellectual Asset Portfolios"@en .
+
+proc:CM-1-3-4-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.5.1" ;
+    skos:prefLabel "Identify Technology Needs/Opportunities"@en .
+
+proc:CM-1-3-4-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.5.2" ;
+    skos:prefLabel "Value Projects/Portfolios"@en .
+
+proc:CM-1-3-4-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.5.3" ;
+    skos:prefLabel "Assess Portfolios"@en .
+
+proc:CM-1-3-4-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.5.4" ;
+    skos:prefLabel "Manage R&D Portfolios"@en .
+
+proc:CM-1-3-4-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.6.1" ;
+    skos:prefLabel "Collaborate with Manufacturing"@en .
+
+proc:CM-1-3-4-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.6.2" ;
+    skos:prefLabel "Collaborate with Customers/Technical Service"@en .
+
+proc:CM-1-3-4-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.6.3" ;
+    skos:prefLabel "Collaborate with Research Partners"@en .
+
+proc:CM-1-3-4-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-4-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.6.4" ;
+    skos:prefLabel "Collaborate with marketing"@en .
+
+proc:CM-1-3-5-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.1.1" ;
+    skos:prefLabel "Determine & Allocate Sales Targets"@en .
+
+proc:CM-1-3-5-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.1.2" ;
+    skos:prefLabel "Develop & Agree Demand Forecasting Process"@en .
+
+proc:CM-1-3-5-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.1.3" ;
+    skos:prefLabel "Perform Account Planning"@en .
+
+proc:CM-1-3-5-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.1.4" ;
+    skos:prefLabel "Analyze Gaps Between Forecast & Actual Margins"@en .
+
+proc:CM-1-3-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.2" ;
+    skos:prefLabel "Integrated Marketing Planning (Advertising)"@en .
+
+proc:CM-1-3-5-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.1" ;
+    skos:prefLabel "Identify Marketing Needs"@en .
+
+proc:CM-1-3-5-3-10 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.10" ;
+    skos:prefLabel "Implement Brand Advertising / Communications"@en .
+
+proc:CM-1-3-5-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.2" ;
+    skos:prefLabel "Identify Target Groups"@en .
+
+proc:CM-1-3-5-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.3" ;
+    skos:prefLabel "Develop / Update Marketing Mix Model"@en .
+
+proc:CM-1-3-5-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.4" ;
+    skos:prefLabel "Develop / Update Campaigns"@en .
+
+proc:CM-1-3-5-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.5" ;
+    skos:prefLabel "Define Resource Allocation / Budgets"@en .
+
+proc:CM-1-3-5-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.6" ;
+    skos:prefLabel "Define Communications Plan"@en .
+
+proc:CM-1-3-5-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.7" ;
+    skos:prefLabel "Manage Use Of Brand"@en .
+
+proc:CM-1-3-5-3-8 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.8" ;
+    skos:prefLabel "Implement Promotional Advertising"@en .
+
+proc:CM-1-3-5-3-9 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3.9" ;
+    skos:prefLabel "Implement Internal Communications"@en .
+
+proc:CM-1-3-5-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.4.1" ;
+    skos:prefLabel "Define Promotional Plan"@en .
+
+proc:CM-1-3-5-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.4.2" ;
+    skos:prefLabel "Create Promotional Event Calendar"@en .
+
+proc:CM-1-3-5-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.4.3" ;
+    skos:prefLabel "Create Point Of Purchase (Pop) Promotional Calendar"@en .
+
+proc:CM-1-3-5-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.4.4" ;
+    skos:prefLabel "Create Site Level Marketing Calendar"@en .
+
+proc:CM-1-3-5-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.5.1" ;
+    skos:prefLabel "Marketing Spend Analysis"@en .
+
+proc:CM-1-3-5-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.5.2" ;
+    skos:prefLabel "Campaign ROI Analysis"@en .
+
+proc:CM-1-3-5-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-5-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.5.3" ;
+    skos:prefLabel "Customer Program Analysis"@en .
+
+proc:CM-1-3-6-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.1.1" ;
+    skos:prefLabel "Manage Relationship with Franchise agreement"@en .
+
+proc:CM-1-3-6-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.1.2" ;
+    skos:prefLabel "Manage Relationship with License Brand Providers"@en .
+
+proc:CM-1-3-6-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.1.3" ;
+    skos:prefLabel "Report Franchise Performance"@en .
+
+proc:CM-1-3-6-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.1.4" ;
+    skos:prefLabel "Train and Certify AMPM Manager"@en .
+
+proc:CM-1-3-6-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.1" ;
+    skos:prefLabel "Manage Sales Pipeline"@en .
+
+proc:CM-1-3-6-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.2" ;
+    skos:prefLabel "Manage Key Accounts"@en .
+
+proc:CM-1-3-6-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.3" ;
+    skos:prefLabel "Manage Opportunity"@en .
+
+proc:CM-1-3-6-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.4" ;
+    skos:prefLabel "Develop Quote"@en .
+
+proc:CM-1-3-6-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.5" ;
+    skos:prefLabel "Manage Contract & Order"@en .
+
+proc:CM-1-3-6-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.6" ;
+    skos:prefLabel "Serve to Customer (Non-Retail)"@en .
+
+proc:CM-1-3-6-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2.7" ;
+    skos:prefLabel "Measure & report"@en .
+
+proc:CM-1-3-6-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.3.1" ;
+    skos:prefLabel "Determine sales price"@en .
+
+proc:CM-1-3-6-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.3.2" ;
+    skos:prefLabel "Implement sales price"@en .
+
+proc:CM-1-3-6-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.4.1" ;
+    skos:prefLabel "Negotiate Rebate"@en .
+
+proc:CM-1-3-6-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.4.2" ;
+    skos:prefLabel "Implement Rebate"@en .
+
+proc:CM-1-3-6-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.4.3" ;
+    skos:prefLabel "Settle Rebate"@en .
+
+proc:CM-1-3-6-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.5.1" ;
+    skos:prefLabel "Manage Advertising"@en .
+
+proc:CM-1-3-6-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.5.2" ;
+    skos:prefLabel "Manage Promotions/Events Execution"@en .
+
+proc:CM-1-3-6-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.5.3" ;
+    skos:prefLabel "Manage Direct Marketing"@en .
+
+proc:CM-1-3-6-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.1" ;
+    skos:prefLabel "Setup Prospect"@en .
+
+proc:CM-1-3-6-6-10 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.10" ;
+    skos:prefLabel "Perform Physical Card Handling"@en .
+
+proc:CM-1-3-6-6-11 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.11" ;
+    skos:prefLabel "Manage Fraudulent Transactions"@en .
+
+proc:CM-1-3-6-6-12 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.12" ;
+    skos:prefLabel "Manage Additional Card Services (On Road Services)"@en .
+
+proc:CM-1-3-6-6-13 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.13" ;
+    skos:prefLabel "Manage Card Production & Monthly Reissue"@en .
+
+proc:CM-1-3-6-6-14 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.14" ;
+    skos:prefLabel "Manage Credit Card Transactions"@en .
+
+proc:CM-1-3-6-6-15 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.15" ;
+    skos:prefLabel "Manage Brand Loyalty Programs"@en .
+
+proc:CM-1-3-6-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.2" ;
+    skos:prefLabel "Manage Invoicing"@en .
+
+proc:CM-1-3-6-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.3" ;
+    skos:prefLabel "Manage Reimbursement"@en .
+
+proc:CM-1-3-6-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.4" ;
+    skos:prefLabel "Manage Cards Administration (Order New Cards, Change Card Data)"@en .
+
+proc:CM-1-3-6-6-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.5" ;
+    skos:prefLabel "Handle Card Limits"@en .
+
+proc:CM-1-3-6-6-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.6" ;
+    skos:prefLabel "Manage Bad Debt"@en .
+
+proc:CM-1-3-6-6-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.7" ;
+    skos:prefLabel "Perform Transaction Analysis Reporting & Confirmation"@en .
+
+proc:CM-1-3-6-6-8 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.8" ;
+    skos:prefLabel "Ensure Card Design Compliance"@en .
+
+proc:CM-1-3-6-6-9 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6.9" ;
+    skos:prefLabel "Analyze Consumption Planning & Monitor Stock"@en .
+
+proc:CM-1-3-6-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.7.1" ;
+    skos:prefLabel "Manage Brand Standards and Perform Inspection"@en .
+
+proc:CM-1-3-6-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.7.2" ;
+    skos:prefLabel "Manage Brand Imaging"@en .
+
+proc:CM-1-3-6-8-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.8.1" ;
+    skos:prefLabel "Conduct Audit To Validate Reported Sales"@en .
+
+proc:CM-1-3-7-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.1" ;
+    skos:prefLabel "Maintain Customer Master Data"@en .
+
+proc:CM-1-3-7-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.2" ;
+    skos:prefLabel "Maintain Price & Discount Master Data"@en .
+
+proc:CM-1-3-7-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.3" ;
+    skos:prefLabel "Maintain Product Master Data"@en .
+
+proc:CM-1-3-7-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.4" ;
+    skos:prefLabel "Maintain Tax Master Data"@en .
+
+proc:CM-1-3-7-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.5" ;
+    skos:prefLabel "Maintain Workflows"@en .
+
+proc:CM-1-3-7-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1.6" ;
+    skos:prefLabel "Maintain Commercial Policies"@en .
+
+proc:CM-1-3-7-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.1" ;
+    skos:prefLabel "Establish Commercial Terms & Contracts"@en .
+
+proc:CM-1-3-7-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.2" ;
+    skos:prefLabel "Issue Quotes & Renewals"@en .
+
+proc:CM-1-3-7-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.3" ;
+    skos:prefLabel "Develop & Monitor Revenue Plan"@en .
+
+proc:CM-1-3-7-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.4" ;
+    skos:prefLabel "Define Financing & Payment Methods"@en .
+
+proc:CM-1-3-7-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.5" ;
+    skos:prefLabel "Analyze Customer Profitability"@en .
+
+proc:CM-1-3-7-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2.6" ;
+    skos:prefLabel "Manage Customer Portal"@en .
+
+proc:CM-1-3-7-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.1" ;
+    skos:prefLabel "Capture & Validate Order"@en .
+
+proc:CM-1-3-7-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.2" ;
+    skos:prefLabel "Allocate & Release Order"@en .
+
+proc:CM-1-3-7-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.3" ;
+    skos:prefLabel "Change / Cancel Order"@en .
+
+proc:CM-1-3-7-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.4" ;
+    skos:prefLabel "Manage Fulfillment"@en .
+
+proc:CM-1-3-7-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.5" ;
+    skos:prefLabel "Track & Forecast Order"@en .
+
+proc:CM-1-3-7-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3.6" ;
+    skos:prefLabel "Manage Returns"@en .
+
+proc:CM-1-3-7-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.1" ;
+    skos:prefLabel "Maintain Credit Policies"@en .
+
+proc:CM-1-3-7-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.2" ;
+    skos:prefLabel "Establish Credit Limit & Risk Code"@en .
+
+proc:CM-1-3-7-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.3" ;
+    skos:prefLabel "Monitor Credit Against Limit"@en .
+
+proc:CM-1-3-7-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.4" ;
+    skos:prefLabel "Analyze Portfolio Credit Risk"@en .
+
+proc:CM-1-3-7-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.5" ;
+    skos:prefLabel "Perform Customer Closure & Reinstatement"@en .
+
+proc:CM-1-3-7-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4.6" ;
+    skos:prefLabel "KYC Process"@en .
+
+proc:CM-1-3-7-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.1" ;
+    skos:prefLabel "Establish Priority Assignment of Customer Request/Inquiry"@en .
+
+proc:CM-1-3-7-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.2" ;
+    skos:prefLabel "Maintain Requests and Inquiries Master Database"@en .
+
+proc:CM-1-3-7-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.3" ;
+    skos:prefLabel "Process Inquiries and Requests"@en .
+
+proc:CM-1-3-7-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.4" ;
+    skos:prefLabel "Perform Customer Follow up"@en .
+
+proc:CM-1-3-7-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.5" ;
+    skos:prefLabel "Conduct Quarterly Review Meeting"@en .
+
+proc:CM-1-3-7-5-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-7-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5.6" ;
+    skos:prefLabel "Provide Customer Training"@en .
+
+proc:CM-1-3-8-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1.1" ;
+    skos:prefLabel "Create & Distribute Bill"@en .
+
+proc:CM-1-3-8-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1.2" ;
+    skos:prefLabel "Perform Accounting For Self-billing"@en .
+
+proc:CM-1-3-8-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1.3" ;
+    skos:prefLabel "Determine Taxability"@en .
+
+proc:CM-1-3-8-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1.4" ;
+    skos:prefLabel "Create Credit Memo"@en .
+
+proc:CM-1-3-8-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1.5" ;
+    skos:prefLabel "Create Exception & Reverse Invoice"@en .
+
+proc:CM-1-3-8-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.1" ;
+    skos:prefLabel "Receive Cash Receipts / Payment"@en .
+
+proc:CM-1-3-8-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.2" ;
+    skos:prefLabel "Receive Remittance Advice"@en .
+
+proc:CM-1-3-8-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.3" ;
+    skos:prefLabel "Apply Receipts"@en .
+
+proc:CM-1-3-8-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.4" ;
+    skos:prefLabel "Manage Unapplied Receipts / Exceptions"@en .
+
+proc:CM-1-3-8-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.5" ;
+    skos:prefLabel "Perform Reconciliations & Settlements"@en .
+
+proc:CM-1-3-8-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2.6" ;
+    skos:prefLabel "Perform Revenue Accounting"@en .
+
+proc:CM-1-3-8-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.3.1" ;
+    skos:prefLabel "Dispute Management"@en .
+
+proc:CM-1-3-8-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.3.2" ;
+    skos:prefLabel "Collection Management"@en .
+
+proc:CM-1-3-8-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.3.3" ;
+    skos:prefLabel "Bad Debt Allowance"@en .
+
+proc:CM-1-3-8-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.3.4" ;
+    skos:prefLabel "Develop Root Cause Analysis/Action Plan"@en .
+
+proc:CM-1-3-8-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.1" ;
+    skos:prefLabel "Period End Processing"@en .
+
+proc:CM-1-3-8-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.2" ;
+    skos:prefLabel "AR Reconciliation / Compliance"@en .
+
+proc:CM-1-3-8-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.3" ;
+    skos:prefLabel "Accruals Analysis And Calculation"@en .
+
+proc:CM-1-3-8-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.4" ;
+    skos:prefLabel "Reconcile And Report Indirect Tax"@en .
+
+proc:CM-1-3-8-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.5" ;
+    skos:prefLabel "Determine Taxability"@en .
+
+proc:CM-1-3-8-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.6" ;
+    skos:prefLabel "Manage Intercompany Invoicing"@en .
+
+proc:CM-1-3-8-4-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-8-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4.7" ;
+    skos:prefLabel "Manage Collection of Royalty and Fees"@en .
+
+proc:CM-1-3-9-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.1" ;
+    skos:prefLabel "Define Operating Model"@en .
+
+proc:CM-1-3-9-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.2" ;
+    skos:prefLabel "Manage Operations"@en .
+
+proc:CM-1-3-9-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.3" ;
+    skos:prefLabel "Manage Service Employees"@en .
+
+proc:CM-1-3-9-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.4" ;
+    skos:prefLabel "Manage Facilities"@en .
+
+proc:CM-1-3-9-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.5" ;
+    skos:prefLabel "Manage Technology"@en .
+
+proc:CM-1-3-9-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1.6" ;
+    skos:prefLabel "Manage Contact Center"@en .
+
+proc:CM-1-3-9-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.2.1" ;
+    skos:prefLabel "Manage Data"@en .
+
+proc:CM-1-3-9-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.2.2" ;
+    skos:prefLabel "Manage Customer"@en .
+
+proc:CM-1-3-9-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.2.3" ;
+    skos:prefLabel "Fulfill Service Event"@en .
+
+proc:CM-1-3-9-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.3.1" ;
+    skos:prefLabel "Measure Service Infrastructure"@en .
+
+proc:CM-1-3-9-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.3.2" ;
+    skos:prefLabel "Measure Service Employees"@en .
+
+proc:CM-1-3-9-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-9-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.3.3" ;
+    skos:prefLabel "Measure Service Effectiveness"@en .
+
+proc:CM-1-4 a skos:Concept ;
+    skos:broader proc:CM-1 ;
+    skos:definition "Information Technology Includes Processes Related To Providing IT Support Across Commercial Operations. It Covers Strategy, Delivery & Governance Processes. Commercial Information Technology Includes Hardware, Software & Communication Infrastructure."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.4" ;
+    skos:prefLabel "IT Services"@en .
+
+proc:L1-ehs-gov-reporting a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "EHS & Gov Reporting"@en .
+
+proc:L1-finance a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Finance"@en .
+
+proc:L1-human-resources a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Human Resources"@en .
+
+proc:L1-legal-corp-comm a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Legal & Corp Comm"@en .
+
+proc:L1-midstream a skos:Concept ;
+    skos:broader proc:L0-downstream-operations ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Midstream"@en .
+
+proc:L1-process-excellence-it a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Process Excellence & IT"@en .
+
+proc:L1-refining a skos:Concept ;
+    skos:broader proc:L0-downstream-operations ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Refining"@en .
+
+proc:L1-shared-services a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Shared Services"@en .
+
+proc:L1-supply-chain-mgmt a skos:Concept ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Supply Chain Mgmt."@en .
+
+src:eia-glossary a dcterms:BibliographicResource ;
+    dcterms:publisher "U.S. Energy Information Administration"@en ;
+    dcterms:rights "U.S. federal government work; public domain."@en ;
+    dcterms:title "U.S. Energy Information Administration (EIA) Glossary"@en .
+
+proc:CM-1-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:definition "Demand forecasting processes for commercial planning across the value chain."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1" ;
+    skos:prefLabel "Demand Forecasting"@en .
+
+proc:CM-1-1-2-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Gather committed deals, spot opportunities, and export opportunities for Clean Products in Planning and Scheduling UI"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.2" ;
+    skos:prefLabel "Gather Automated Data Inputs"@en .
+
+proc:CM-1-1-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-6 ;
+    skos:definition "Update data inputs and obtain model to run distribution backcast"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.6.1" ;
+    skos:prefLabel "Set up and stabilize base case for Distribution Backcast"@en .
+
+proc:CM-1-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Actualizations is performed by scheduler who assigns the final ticket volumes to the trades according to the preset priority."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3" ;
+    skos:prefLabel "Actualizations"@en .
+
+proc:CM-1-3-6-8 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.8" ;
+    skos:prefLabel "Compliance Management"@en .
+
+src:apqc-pcf-7.2.2 a dcterms:BibliographicResource ;
+    dcterms:issued "2025-05-30" ;
+    dcterms:publisher "APQC"@en ;
+    dcterms:rights "Used with attribution per the APQC/IBM license."@en ;
+    dcterms:title "APQC Process Classification Framework (PCF) for Downstream Petroleum, version 7.2.2"@en .
+
+proc:CM-1-1-2-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Review draft refinery and network premise to align on period definition and updates to regional premise"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.1" ;
+    skos:prefLabel "Conduct Regional Premise Review"@en .
+
+proc:CM-1-1-2-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Check data for inconsistencies or gaps"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.5" ;
+    skos:prefLabel "Perform data validation checks"@en .
+
+proc:CM-1-1-2-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Update data to address data inconsistencies"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.6" ;
+    skos:prefLabel "Update data inputs to address data inconsistencies and gaps"@en .
+
+proc:CM-1-1-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Base Regional Plan is key input for XPIMS <> DPO Reconciliation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.4" ;
+    skos:prefLabel "Develop Base Regional Plan"@en .
+
+proc:CM-1-1-2-5-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-5 ;
+    skos:definition "Make updates to models inputs based on outcomes of XPIMS <> DPO Reconciliation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5.6" ;
+    skos:prefLabel "Update Model Constraints based on Outcomes of XPIMS <> DPO Reconciliation"@en .
+
+proc:CM-1-1-2-9 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Handover Regional Plan for execution"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.9" ;
+    skos:prefLabel "Handover Regional Plan"@en .
+
+proc:CM-1-1-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:definition "Base Distribution Plan is reconciled with Base Regional Plan in XPIMS <> DPO Reconciliation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.2" ;
+    skos:prefLabel "Develop Base Distribution Plan"@en .
+
+proc:CM-1-1-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:definition "Check and Update (as needed) Demand, Pricing, Crude, Premise, and Inventory Levels for Local Level for month M"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.3" ;
+    skos:prefLabel "Develop Final Distribution Plan"@en .
+
+proc:CM-1-1-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:definition "Receive Handover of M+1 Month Plan from Planning to Business Including Refinery Level Demand Targets from Regional Plan Output"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.2" ;
+    skos:prefLabel "Receive RO Targets"@en .
+
+proc:CM-1-1-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Receive actuals and forecast data for backcast runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1" ;
+    skos:prefLabel "Generate Inputs for Regional Backcast"@en .
+
+proc:CM-1-1-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Evaluate impact of LP price adjusted case run"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.4" ;
+    skos:prefLabel "Evaluate the LP price adjusted forecast against the original forecast"@en .
+
+proc:CM-1-2-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.4" ;
+    skos:prefLabel "Crude/Feed Supply Management"@en .
+
+proc:CM-1-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Product distribution management involves managing product and transportation agreements, terminal operations."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7" ;
+    skos:prefLabel "Products Distribution Management"@en .
+
+proc:CM-1-3-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.4" ;
+    skos:prefLabel "Sales & Distribution Channel Strategy"@en .
+
+proc:CM-1-3-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.3" ;
+    skos:prefLabel "Sales Pricing Management"@en .
+
+proc:CM-1-3-6-7 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.7" ;
+    skos:prefLabel "Brand Standard Management"@en .
+
+proc:CM-1-1-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.5" ;
+    skos:prefLabel "Product Scheduling"@en .
+
+proc:CM-1-1-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:definition "Evaluate aligned scenarios for prompt month horizon"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.4" ;
+    skos:prefLabel "Perform Prompt Month Evaluations"@en .
+
+proc:CM-1-1-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.6" ;
+    skos:prefLabel "Commercial Development"@en .
+
+proc:CM-1-1-5-9 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Review notes and actions from key meetings and finalize backcasting report"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.9" ;
+    skos:prefLabel "Distribute final report with agreed upon action plans"@en .
+
+proc:CM-1-1-6 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.6" ;
+    skos:prefLabel "Distribution Backcasting"@en .
+
+proc:CM-1-1-7 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:definition "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7" ;
+    skos:prefLabel "Refinery Scheduling"@en .
+
+proc:CM-1-1-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.1" ;
+    skos:prefLabel "Daily Execution Planning"@en .
+
+proc:CM-1-1-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.3" ;
+    skos:prefLabel "Energy & Utility Management"@en .
+
+proc:CM-1-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Confirmations and Risk management consists of processes performed in the middle office to minimize risk of losses in the trading book due to change in market conditions i.e. commodity prices, interest rates, credit spreads, foreign-exchange rates. Middle office is responsible for managing confirmations, scenario modelling and price forecasting."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2" ;
+    skos:prefLabel "Confirmations & Risk Management"@en .
+
+proc:CM-1-2-5-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.2" ;
+    skos:prefLabel "Crude/Feed Demand Management"@en .
+
+proc:CM-1-2-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.3" ;
+    skos:prefLabel "Crude/Feed Transportation Management"@en .
+
+proc:CM-1-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Refined product supply chain management consist of processes that are required to maintain an optimal supply network. This covers the generation of the demand forecast, associated customer allocations, the demand & supply balancing process & the execution of terminal replenishment."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6" ;
+    skos:prefLabel "Refined Product Supply Chain Management"@en .
+
+proc:CM-1-2-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.1" ;
+    skos:prefLabel "Network Management"@en .
+
+proc:CM-1-2-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.2" ;
+    skos:prefLabel "Refined Product Demand Management"@en .
+
+proc:CM-1-2-6-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.6.3" ;
+    skos:prefLabel "Supply Operations"@en .
+
+proc:CM-1-2-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.1" ;
+    skos:prefLabel "Contractual Agreements Management"@en .
+
+proc:CM-1-2-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.7.2" ;
+    skos:prefLabel "Terminal Operations Management"@en .
+
+proc:CM-1-3-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.5" ;
+    skos:prefLabel "Customer Experience Strategy"@en .
+
+proc:CM-1-3-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.1" ;
+    skos:prefLabel "Visioning And Implementation Planning"@en .
+
+proc:CM-1-3-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.2" ;
+    skos:prefLabel "Concept & Feasibility Study"@en .
+
+proc:CM-1-3-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.3" ;
+    skos:prefLabel "Product & Service Development"@en .
+
+proc:CM-1-3-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.5" ;
+    skos:prefLabel "Marketing Performance Analysis"@en .
+
+proc:CM-1-3-6-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.4" ;
+    skos:prefLabel "Rebate Management"@en .
+
+proc:CM-1-3-6-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.5" ;
+    skos:prefLabel "Marketing Plan Execution"@en .
+
+proc:CM-1-3-9 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Customer service & support consist of processes such as all support & service offerings to consumers & business partners both from a conceptual & operational view. It ranges from defining the methods of interaction (e.g., on site, call center, web), along defining, setting up & operating facilities & technology down to managing service staff."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9" ;
+    skos:prefLabel "Customer Service & Support"@en .
+
+proc:CM-1-3-9-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-9 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.2" ;
+    skos:prefLabel "Service & Support Delivery"@en .
+
+proc:CM-1-3-9-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-9 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.3" ;
+    skos:prefLabel "Service & Support Measurement"@en .
+
+proc:CM-1 a skos:Concept ;
+    skos:broader proc:L0-downstream-operations ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1" ;
+    skos:prefLabel "Commercial & Marketing"@en .
+
+proc:CM-1-1-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Discuss market demand and pricing outlook and align on list of standard scenarios for evaluation"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.3" ;
+    skos:prefLabel "Conduct Market Outlook and Avails Meeting"@en .
+
+proc:CM-1-1-2-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Review plan outlook and strategy with management team"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.8" ;
+    skos:prefLabel "Management Review"@en .
+
+proc:CM-1-1-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:definition "Network premise is an input into regional optimization plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.1" ;
+    skos:prefLabel "Develop Network Premise for Prompt and Out Month"@en .
+
+proc:CM-1-1-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.6" ;
+    skos:prefLabel "Physical Distribution Scheduling"@en .
+
+proc:CM-1-1-3-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.8" ;
+    skos:prefLabel "Secondary Distribution Management"@en .
+
+proc:CM-1-1-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:definition "Refinery Premise serves as input into Regional Optimization Plan"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.1" ;
+    skos:prefLabel "Develop Refinery Premise for Prompt and Out Month"@en .
+
+proc:CM-1-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Trading management consists of processes performed in the front office such as forecasting, pre-trade analysis, managing counterparty credit and contracts, executing and capturing trades."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1" ;
+    skos:prefLabel "Trading Management"@en .
+
+proc:CM-1-2-4 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Settlements and Accounting process covers deal attributes and deal terms at time of trade execution with counterparty through netting, invoicing and settlement post trade expiry and various accounting postings throughout deal lifecycle."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4" ;
+    skos:prefLabel "Settlements & Accounting"@en .
+
+proc:CM-1-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-2 ;
+    skos:definition "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5" ;
+    skos:prefLabel "Crude/Feed Supply Chain Management"@en .
+
+proc:CM-1-2-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.5.1" ;
+    skos:prefLabel "Crude/Feed Quality Management"@en .
+
+proc:CM-1-3-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.1" ;
+    skos:prefLabel "Market Analysis"@en .
+
+proc:CM-1-3-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.2" ;
+    skos:prefLabel "Company Analysis"@en .
+
+proc:CM-1-3-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.3" ;
+    skos:prefLabel "Consumer Analysis"@en .
+
+proc:CM-1-3-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.4" ;
+    skos:prefLabel "Customer And Marketer Analysis"@en .
+
+proc:CM-1-3-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1.5" ;
+    skos:prefLabel "Competitor Analysis"@en .
+
+proc:CM-1-3-10 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Terminal Loading consist of processes such as monitoring customer sales activity and implementing control strategies based upon supply, customer credit and/or contract limitations. Allocation decisions are based on evaluating deals and transaction data to determine which product at the terminal should be made available to the customers. It is responsible for sending locks and unlocks to the terminal when it determines that availability should change."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.10" ;
+    skos:prefLabel "Terminal Loading"@en .
+
+proc:CM-1-3-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.1" ;
+    skos:prefLabel "Brand Strategy"@en .
+
+proc:CM-1-3-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.2" ;
+    skos:prefLabel "Customer And Marketer Value Proposition"@en .
+
+proc:CM-1-3-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2.3" ;
+    skos:prefLabel "Consumer Value Proposition"@en .
+
+proc:CM-1-3-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.1" ;
+    skos:prefLabel "Customer Offer Definition"@en .
+
+proc:CM-1-3-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.4" ;
+    skos:prefLabel "Network Design (Retail)"@en .
+
+proc:CM-1-3-4-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.5" ;
+    skos:prefLabel "Lifecycle Management"@en .
+
+proc:CM-1-3-4-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.6" ;
+    skos:prefLabel "R&D Collaboration"@en .
+
+proc:CM-1-3-5-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.1" ;
+    skos:prefLabel "Sales Strategy & Planning"@en .
+
+proc:CM-1-3-5-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.4" ;
+    skos:prefLabel "Promotions Planning"@en .
+
+proc:CM-1-3-6-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.1" ;
+    skos:prefLabel "Channel & Partner Management"@en .
+
+proc:CM-1-3-8 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Operational Accounting includes processes that denotes the ledger like capability leveraged by the users for the ease of auditing and record keeping."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8" ;
+    skos:prefLabel "Operational Accounting"@en .
+
+proc:CM-1-3-8-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.3" ;
+    skos:prefLabel "Manage Collection and Disputes"@en .
+
+proc:L0-downstream-operations a skos:Concept ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Downstream Operations"@en ;
+    skos:topConceptOf mod:core .
+
+proc:CM-1-1-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.1.1" ;
+    skos:prefLabel "Demand Forecasting"@en .
+
+proc:CM-1-1-2-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Perform Product Evaluations - COP / ACOP"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.7" ;
+    skos:prefLabel "Perform Product Evaluations - COP / ACOP"@en .
+
+proc:CM-1-1-5-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Analyze backcast run outcomes and communicate learnings"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.7" ;
+    skos:prefLabel "Compile and communicate learnings by business decisions and functions"@en .
+
+proc:CM-1-2-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.2" ;
+    skos:prefLabel "Confirmations Management"@en .
+
+proc:CM-1-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Strategy process establishes target markets to work in and, at a micro level, provides the strategy for where store locations should be established. For B2B this considers supply envelopes & establishes target geographic markets."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.2" ;
+    skos:prefLabel "Strategy"@en .
+
+proc:CM-1-3-3-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.2" ;
+    skos:prefLabel "Pricing Strategy Management"@en .
+
+proc:CM-1-3-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.3" ;
+    skos:prefLabel "Sales & Distribution Channel Design"@en .
+
+proc:CM-1-3-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.6" ;
+    skos:prefLabel "Operating Model Design"@en .
+
+proc:CM-1-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Marketing sales & operations planning consist of processes that define the go-to-market approach to a level of detail that enables activity planning, forecasting, & performance review against each of the elements (customer offer, sales channel & operations, distribution network)."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5" ;
+    skos:prefLabel "Marketing & Sales Operations Planning"@en .
+
+proc:CM-1-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Order Management is the end-to-end process that addresses all aspects of collecting cash - from initial order receipt & credit authorization to collections & revenue assurance activities."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7" ;
+    skos:prefLabel "Order Management"@en .
+
+proc:CM-1-3-8-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.1" ;
+    skos:prefLabel "Manage Customer Invoicing and Billing"@en .
+
+proc:CM-1-1-2-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-1-2-2 ;
+    skos:definition "Gather committed deals and spot opportunities for Petrochemicals, Blendstocks, Feedstocks, and Asphalt"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2.3" ;
+    skos:prefLabel "Gather Manual Data Inputs"@en .
+
+proc:CM-1-1-2-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Perform Crude Oil Evaluations"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.6" ;
+    skos:prefLabel "Perform Crude Oil Evaluations"@en .
+
+proc:CM-1-1-5-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-5-1 ;
+    skos:definition "Receive actuals data for backcast runs"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.1.2" ;
+    skos:prefLabel "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"@en .
+
+proc:CM-1-1-5-8 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Communicate all backcasting results with stakeholders and identify actions / opportunities for improvement"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.8" ;
+    skos:prefLabel "Conduct backcasting meeting(s) with key stakeholders"@en .
+
+proc:CM-1-1-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.7.2" ;
+    skos:prefLabel "Production Scheduling"@en .
+
+proc:CM-1-2-1-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.1" ;
+    skos:prefLabel "Forecasting & Optimization"@en .
+
+proc:CM-1-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Market analysis & insight process determines market attractiveness & identifies evolving opportunities & threats as to the industry in general & company specifically."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.1" ;
+    skos:prefLabel "Market Analysis & Insight"@en .
+
+proc:CM-1-3-3 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Offer design & development process consist of the elements of the go-to-market approach determined in the marketing operations strategy. It links the long-term strategy with the operational planning by detailing all strategic aspects (customer offer, sales channel & operations, distribution network)."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3" ;
+    skos:prefLabel "Offer Design & Development"@en .
+
+proc:CM-1-3-4 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "New product & service development process details step-by-step procedure to do feasibility study for a new product and conceptualize it, defines vision based on market need and developed implementation plan, and manages R&D collaboration, licensing & IP, and lifecycle management."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4" ;
+    skos:prefLabel "New Product & Service Development"@en .
+
+proc:CM-1-3-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.4.4" ;
+    skos:prefLabel "Manage Licensing & IP"@en .
+
+proc:CM-1-3-7-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.1" ;
+    skos:prefLabel "Manage Master Data (Customer, Price, Product, Tax, Location)"@en .
+
+proc:CM-1-3-7-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.2" ;
+    skos:prefLabel "Manage Pricing & Contracting (Manage Quote & Sale)"@en .
+
+proc:CM-1-3-7-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.3" ;
+    skos:prefLabel "Capture And Manage Order Fulfillment"@en .
+
+proc:CM-1-3-7-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.4" ;
+    skos:prefLabel "Manage Credit & Risk"@en .
+
+proc:CM-1-3-7-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-7 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.7.5" ;
+    skos:prefLabel "Manage Customer Requests and Inquiries"@en .
+
+proc:CM-1-3-8-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.2" ;
+    skos:prefLabel "Manage Cash Application, A/R & Revenue Accounting"@en .
+
+proc:CM-1-3-9-1 a skos:Concept ;
+    skos:broader proc:CM-1-3-9 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.9.1" ;
+    skos:prefLabel "Service & Support Enablement"@en .
+
+proc:CM-1-1 a skos:Concept ;
+    skos:broader proc:CM-1 ;
+    skos:definition "Planning And Optimization Includes Processes Such As Demand Forecasting, Local And Regional Optimization, Backcasting And Inventory Management Across The Value Chain."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1" ;
+    skos:prefLabel "Planning & Scheduling"@en .
+
+proc:CM-1-1-4 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4" ;
+    skos:prefLabel "Refinery Planning"@en .
+
+proc:CM-1-2 a skos:Concept ;
+    skos:broader proc:CM-1 ;
+    skos:definition "Supply And Trading Includes Processes Such As Managing Supply, Demand And Trading Of Crude Oil And Refined Products. It Involves Trading As Well As Planning & Managing Movements In The Most Efficient Way, Including Primary & Secondary Distribution."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2" ;
+    skos:prefLabel "Supply And Trading"@en .
+
+proc:CM-1-2-4-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.3" ;
+    skos:prefLabel "Regulatory & Compliance"@en .
+
+proc:CM-1-3-3-5 a skos:Concept ;
+    skos:broader proc:CM-1-3-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.3.5" ;
+    skos:prefLabel "Marketing Communications Strategy"@en .
+
+proc:CM-1-3-6-2 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.2" ;
+    skos:prefLabel "Sales Execution"@en .
+
+proc:CM-1-3-8-4 a skos:Concept ;
+    skos:broader proc:CM-1-3-8 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.8.4" ;
+    skos:prefLabel "Manage Accounting, Regulatory Reporting and Compliance"@en .
+
+proc:CM-1-1-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Make updates to models and other systems (Profisee) in response to new configurations required."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.1" ;
+    skos:prefLabel "Model and System Maintenance"@en .
+
+proc:CM-1-1-2-2 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Generate model input spreadsheet in Planning and Scheduling UI"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.2" ;
+    skos:prefLabel "Generate Inputs for Regional Optimization Plan"@en .
+
+proc:CM-1-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:definition "Covers distribution planning connections to Regional Optimization plus product scheduling, physical distribution scheduling, inventory management, and secondary distribution."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3" ;
+    skos:prefLabel "Distribution Planning & Scheduling and Inventory Management"@en .
+
+proc:CM-1-1-4-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.7" ;
+    skos:prefLabel "Refinery Optimization"@en .
+
+proc:CM-1-1-5-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Build and run optimization case stack in XPIMS against the plan and actual prices"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.5" ;
+    skos:prefLabel "Evaluate optimization cases"@en .
+
+proc:CM-1-2-2-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.1" ;
+    skos:prefLabel "Credit Risk Management"@en .
+
+proc:CM-1-2-3-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.3.1" ;
+    skos:prefLabel "Actualizations"@en .
+
+proc:CM-1-2-4-4 a skos:Concept ;
+    skos:broader proc:CM-1-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.4" ;
+    skos:prefLabel "Demurrage Management"@en .
+
+proc:CM-1-3-6 a skos:Concept ;
+    skos:broader proc:CM-1-3 ;
+    skos:definition "Marketing & Sales Operations Management covers channel & partner management, sales execution, pricing, rebates, loyalty/cards, brand standards, compliance, and marketing plan execution."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6" ;
+    skos:prefLabel "Marketing & Sales Operations Management"@en .
+
+proc:L0-enabling-functions a skos:Concept ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Enabling Functions"@en ;
+    skos:topConceptOf mod:core .
+
+proc:CM-1-1-2-5 a skos:Concept ;
+    skos:broader proc:CM-1-1-2 ;
+    skos:definition "Run XPIMS scenarios and finalize the MOP"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2.5" ;
+    skos:prefLabel "Develop Final Regional Plan"@en .
+
+proc:CM-1-1-5 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5" ;
+    skos:prefLabel "Regional Backcasting"@en .
+
+proc:CM-1-1-5-6 a skos:Concept ;
+    skos:broader proc:CM-1-1-5 ;
+    skos:definition "Build and run actuals case stack in XPIMS"@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.5.6" ;
+    skos:prefLabel "Evaluate actuals cases"@en .
+
+proc:CM-1-3 a skos:Concept ;
+    skos:broader proc:CM-1 ;
+    skos:definition "Marketing Includes Processes Such As Performing Market Analysis, Developing Marketing Strategy, New Product Development, Managing Retail Marketing Operations. It Includes Processes Required To Take The Products & Services From Strategic Conception, Through Planning To Operational Execution."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3" ;
+    skos:prefLabel "Marketing"@en .
+
+proc:CM-1-3-5-3 a skos:Concept ;
+    skos:broader proc:CM-1-3-5 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.5.3" ;
+    skos:prefLabel "Marketing Communications Planning"@en .
+
+proc:CM-1-2-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.2" ;
+    skos:prefLabel "Contract Management"@en .
+
+proc:CM-1-2-1-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.1.3" ;
+    skos:prefLabel "Trade Capture"@en .
+
+proc:CM-1-1-3-7 a skos:Concept ;
+    skos:broader proc:CM-1-1-3 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.3.7" ;
+    skos:prefLabel "Inventory"@en .
+
+proc:CM-1-2-4-2 a skos:Concept ;
+    skos:broader proc:CM-1-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.2" ;
+    skos:prefLabel "Accounting"@en .
+
+proc:CM-1-1-2 a skos:Concept ;
+    skos:broader proc:CM-1-1 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.2" ;
+    skos:prefLabel "Regional Optimization"@en .
+
+proc:CM-1-2-2-3 a skos:Concept ;
+    skos:broader proc:CM-1-2-2 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.2.3" ;
+    skos:prefLabel "Market Risk Management"@en .
+
+proc:CM-1-3-6-6 a skos:Concept ;
+    skos:broader proc:CM-1-3-6 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.3.6.6" ;
+    skos:prefLabel "Loyalty And Cards Management - Marketing"@en .
+
+proc:CM-1-2-4-1 a skos:Concept ;
+    skos:broader proc:CM-1-2-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.2.4.1" ;
+    skos:prefLabel "Settlements"@en .
+
+mod:core a skos:ConceptScheme ;
+    dcterms:description "SKOS taxonomy of Lagos Specialty Chemicals' downstream petroleum business processes (levels L0-L6), derived from business_architecture/business_process/downstream_process_map.json. The core module namespace serves as the ConceptScheme."@en ;
+    dcterms:title "LSC downstream process taxonomy"@en ;
+    skos:hasTopConcept proc:L0-downstream-operations,
+        proc:L0-enabling-functions .
+
