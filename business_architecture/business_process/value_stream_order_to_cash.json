@@ -10,11 +10,7 @@
    "catalogFile": "data_product_portfolio.json",
    "processMapFile": "downstream_process_map.json",
    "notes": [
-     "OTC value-stream OVERLAY: each L2 process from the O2C taxonomy is listed with its deck definition; linkedProcessIds reference existing CM nodes (no duplicated process tree).",
-     "Capability descriptions are the deck's process-group definitions (verbatim).",
-     "Process descriptions are the deck's L2 definitions (verbatim).",
-     "Naming guard: O2C Credit & Risk = customer AR credit, NOT Commercial Risk (ETRM) data portfolio.",
-     "Maintain Commercial Policies sits under Quote & Sale in the deck; LSC placed it under CM 1.3.7.1.6 (master data) — linked accordingly."
+     "Maintain Commercial Policies sits under Quote & Sale; LSC places it under CM 1.3.7.1.6 (master data)."
    ]
  },
  "id": "vs-order-to-cash",
@@ -129,8 +125,7 @@
          "produces": [],
          "consumes": [
            "dp-master-pricing"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-maintain-product-master",
@@ -225,8 +220,7 @@
          "consumes": [
            "dp-master-pricing",
            "dp-product-availability-allocations"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-develop-monitor-revenue-plan",
@@ -270,8 +264,7 @@
            "CM 1.3.7.4.1"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "consumes": []
        },
        {
          "id": "p-otc-establish-credit-limit-risk-code",
@@ -283,8 +276,7 @@
            "CM 1.3.7.4.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "consumes": []
        },
        {
          "id": "p-otc-monitor-credit-against-limit",
@@ -296,8 +288,7 @@
            "CM 1.3.7.4.3"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "consumes": []
        },
        {
          "id": "p-otc-review-credit-limit-risk-code",
@@ -308,7 +299,7 @@
          "linkedProcessIds": [],
          "produces": [],
          "consumes": [],
-         "rationale": "Present in O2C taxonomy with definition; no dedicated L5 in LSC. Closest: Monitor Credit Against Limit (CM 1.3.7.4.3). AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "rationale": "Present in the O2C process with a definition; no dedicated L5 in LSC. Closest: Monitor Credit Against Limit (CM 1.3.7.4.3)."
        },
        {
          "id": "p-otc-analyze-portfolio-credit-risk",
@@ -320,8 +311,7 @@
            "CM 1.3.7.4.4"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "consumes": []
        },
        {
          "id": "p-otc-customer-closure-reinstatement",
@@ -333,8 +323,7 @@
            "CM 1.3.7.4.5"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "AR customer credit — distinct from ETRM Commercial Risk data portfolio; no AR credit portfolio in catalog yet."
+         "consumes": []
        }
      ]
    },
@@ -368,8 +357,7 @@
          "produces": [],
          "consumes": [
            "dp-product-availability-allocations"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-track-forecast-order",
@@ -407,8 +395,7 @@
          "produces": [],
          "consumes": [
            "dp-logistic-execution"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-manage-returns",
@@ -443,8 +430,7 @@
          "consumes": [
            "dp-master-pricing",
            "dp-rack-pricing"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-accounting-self-billing",
@@ -502,8 +488,7 @@
          "produces": [],
          "consumes": [
            "dp-retail-payments"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-receive-remittance-advice",
@@ -529,8 +514,7 @@
          "produces": [],
          "consumes": [
            "dp-retail-payments"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog."
+         ]
        },
        {
          "id": "p-otc-manage-unapplied-receipts",
@@ -574,8 +558,7 @@
            "CM 1.3.8.3.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-analyze-ar-aging",
@@ -587,8 +570,7 @@
            "CM 1.3.8.3.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-execute-collections",
@@ -600,8 +582,7 @@
            "CM 1.3.8.3.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-negotiate-settlements",
@@ -613,8 +594,7 @@
            "CM 1.3.8.3.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-initiate-legal-action",
@@ -626,8 +606,7 @@
            "CM 1.3.8.3.2"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Collection Management (CM 1.3.8.3.2) in the process map."
+         "consumes": []
        }
      ]
    },
@@ -647,8 +626,7 @@
            "CM 1.3.8.3.1"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-receive-validate-queries",
@@ -662,8 +640,7 @@
          "produces": [],
          "consumes": [
            "dp-loss-control"
-         ],
-         "rationale": "Sparse critical-path data link from Commercial data portfolio catalog. Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+         ]
        },
        {
          "id": "p-otc-create-credit-memo-chargeback",
@@ -687,8 +664,7 @@
            "CM 1.3.8.3.1"
          ],
          "produces": [],
-         "consumes": [],
-         "rationale": "Deck L2 collapsed under Dispute Management (CM 1.3.8.3.1) in the process map."
+         "consumes": []
        },
        {
          "id": "p-otc-root-cause-action-plan",
@@ -767,7 +743,7 @@
      "from": "p-otc-root-cause-action-plan",
      "to": "p-otc-maintain-commercial-policies",
      "kind": "feeds",
-     "note": "Deck: dispute root-cause analysis informs upstream continuous improvement across end-to-end O2C"
+     "note": "Dispute root-cause analysis informs upstream continuous improvement across end-to-end O2C"
    }
  ],
  "gapAnalysis": [
@@ -777,7 +753,7 @@
      "closestProcessIds": [
        "CM 1.3.7.4.3"
      ],
-     "note": "Deck L2 present in this value stream with definition; no dedicated L5 in LSC."
+     "note": "Present in this value stream with a definition; no dedicated L5 in LSC."
    },
    {
      "item": "Collection L2 detail",
@@ -785,7 +761,7 @@
      "closestProcessIds": [
        "CM 1.3.8.3.2"
      ],
-     "note": "Five deck L2s all link to Collection Management (CM 1.3.8.3.2) — process map collapsed them."
+     "note": "Five collection L2s all link to Collection Management (CM 1.3.8.3.2) — process map collapsed them."
    },
    {
      "item": "Dispute L2 detail (Validate Deductions; Receive & Validate Queries; Perform Appeasements)",
@@ -793,7 +769,7 @@
      "closestProcessIds": [
        "CM 1.3.8.3.1"
      ],
-     "note": "Multiple deck L2s collapse to Dispute Management L5; Create Credit Memo is CM 1.3.8.1.4; Root Cause is CM 1.3.8.3.4."
+     "note": "Multiple dispute L2s collapse to Dispute Management L5; Create Credit Memo is CM 1.3.8.1.4; Root Cause is CM 1.3.8.3.4."
    },
    {
      "item": "Close AR Sub Ledger",

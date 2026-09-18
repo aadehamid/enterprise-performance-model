@@ -6,12 +6,6 @@
       "Data Product Lines & Data Portfolio slide (Commercial / Midstream / Corporate)",
       "Commercial Business Process Lifecycle slide (Rack Pricing, Loss Control additions)",
       "EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (term: Data Product Portfolio)"
-    ],
-    "notes": [
-      "Blue rectangles on the source slide = Data Product Lines (containers); boxes inside = Data Portfolios (data products).",
-      "Engagement/project-management coverage tags are intentionally excluded from this model.",
-      "Handbook synonym: a Data Portfolio item here corresponds to an entry in the handbook's Data Product Portfolio workstream.",
-      "Foundational vs derived classification per handbook can be added per portfolio later."
     ]
   },
   "aliases": {
@@ -132,7 +126,7 @@
         {
           "id": "dpl-planning-optimization",
           "name": "Planning & Optimization",
-          "description": "Value chain planning and optimization data products. Referenced on lifecycle slides by shorthand 'P&O' (a product line, not a portfolio item).",
+          "description": "Value chain planning and optimization data products. Referenced as 'P&O' (a product line, not a portfolio item).",
           "status": "active",
           "portfolios": [
             {
