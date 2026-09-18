@@ -244,6 +244,9 @@ orphans (verified by script, not by eye).
   `output/step2-identity-map.json` (680 rows: uri, slug, level, name,
   skos_notation, parent_slug, minted, proposed_repo_id),
   `output/step2-identity-report.md`.
+- **Delivered** via PR #26 (`ontology/foundations`), with the playbook,
+  competency questions, APQC scope decisions, cross-check report, and
+  all build scripts/outputs under `business_architecture/ontology/`.
 
 ---
 
