@@ -1,6 +1,6 @@
 # Competency Questions — Baseline
 
-**Status:** Draft under review (2026-09-18).
+**Status:** Locked 2026-09-18.
 **Purpose:** the acceptance test for the ontology. If the model cannot
 answer a question here, the model is incomplete — not the question.
 These double as the Step 11 SPARQL regression tests.

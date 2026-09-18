@@ -25,7 +25,8 @@ see what changed and why.
   `apqc_crosscheck.py`) and their generated outputs under `build/output/`
 
 The copies under `business_architecture/ontology/` in the repo are the
-published versions; `~/workspace/ontology-build/` holds working copies.
+published versions. Scripts under `build/` read the repo tree and write
+`build/output/`.
 
 ---
 

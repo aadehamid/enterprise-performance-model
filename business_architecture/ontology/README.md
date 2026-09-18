@@ -17,7 +17,7 @@ before making any modeling choice.
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |
 | `build/step2-identity-map.py` | Reproducible script: URI slug for every one of the 680 nodes |
-| `build/apqc_crosscheck.py` | The APQC cross-check script (historical run; local paths as executed) |
+| `build/apqc_crosscheck.py` | Reproducible script: cited-ID check + coverage scores vs the vendored v7.2.2 workbook |
 | `build/output/step2-identity-map.json` | 680 rows: uri, slug, level, name, skos_notation, parent_slug, minted flag |
 | `build/output/step2-identity-report.md` | Identity normalization summary |
 | `build/output/apqc_crosscheck_results.json` | Raw cross-check scores |
