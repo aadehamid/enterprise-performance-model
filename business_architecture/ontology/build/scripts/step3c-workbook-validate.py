@@ -70,9 +70,9 @@ def main():
         if any(nw in lead for nw in name_words[:2]):
             add(QUESTION, slug, "circular-opening",
                 f"Definition opens with the concept's own name ({g('name')!r}) — restate by purpose, not label.")
-        if not scope and not (in_sc or out_sc):
-            add(QUESTION, slug, "missing-scope-note",
-                "No scope note or in/out-of-scope content — boundary is undefined.")
+        if not scope:
+            add(BLOCKING, slug, "missing-scope-note",
+                "Locked instruction: every approved row requires a non-empty scope_note with at least one meaningful boundary.")
         if out_sc and not re.search(r"\b(owned by|belongs to|sibling|see |under )\b", out_sc, re.I):
             add(NOTE, slug, "out-of-scope-owner",
                 "Out-of-scope text doesn't name the owning sibling — consider adding it.")
