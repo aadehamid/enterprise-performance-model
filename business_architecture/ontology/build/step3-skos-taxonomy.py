@@ -72,10 +72,18 @@ def main() -> None:
     ap.add_argument('--adoptions', default=None,
                     help='step3b-adoptions.json: slug -> adopted definition '
                          '+ provenance (triangulated APQC/EIA definitions)')
+    ap.add_argument('--authored', default=None,
+                    help='step3c-authored-definitions.json: slug -> human-'
+                         'authored definition + scope note (approved by Hamid)')
     args = ap.parse_args()
     adoptions = {}
     if args.adoptions:
         adoptions = json.loads(Path(args.adoptions).read_text(encoding='utf-8'))
+    authored = {}
+    if args.authored:
+        for d in json.loads(Path(args.authored).read_text(encoding='utf-8')):
+            if d.get("status") == "approved":
+                authored[d["slug"]] = d
 
     rows = json.loads(IDENTITY_MAP.read_text(encoding="utf-8"))
     assert len(rows) == 680, f"expected 680 rows, got {len(rows)}"
@@ -102,6 +110,7 @@ def main() -> None:
     by_slug = {r["slug"]: r for r in rows}
     with_definition = 0
     adopted = 0
+    authored_count = 0
 
     if adoptions:
         # source registry: where adopted definitions come from
@@ -157,6 +166,21 @@ def main() -> None:
                 if v.get("url"):
                     g.add((bv, DCTERMS.identifier, Literal(v["url"])))
                 g.add((c, DCTERMS.source, bv))
+        elif r["slug"] in authored:
+            d = authored[r["slug"]]
+            g.add((c, SKOS.definition, Literal(d["definition"], lang=EN)))
+            with_definition += 1
+            authored_count += 1
+            if d.get("scope_note"):
+                g.add((c, SKOS.scopeNote,
+                       Literal(d["scope_note"], lang=EN)))
+            # provenance: human-authored, approved by the domain owner
+            ba = BNode()
+            g.add((ba, RDF.type, DCTERMS.BibliographicResource))
+            g.add((ba, DCTERMS.title, Literal(
+                f"Human-authored definition, approved by Hamid "
+                f"({d.get('date', '')})", lang=EN)))
+            g.add((c, DCTERMS.source, ba))
         parent = r["parent_slug"]
         if parent is None:
             g.add((c, SKOS.topConceptOf, SCHEME))
@@ -215,7 +239,7 @@ def main() -> None:
 - `skos:broader` links: 678 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
-- `skos:definition` present: {with_definition} of 680{f" ({adopted} triangulated APQC/EIA)" if adopted else ""}
+- `skos:definition` present: {with_definition} of 680{f" ({adopted} triangulated APQC/EIA, {authored_count} human-authored)" if (adopted or authored_count) else ""}
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme
@@ -244,7 +268,7 @@ round-trip lossless.
 """
     (OUT_DIR / "step3-taxonomy-report.md").write_text(report, encoding="utf-8")
     print(f"OK: 680 concepts, {n_triples} triples, "
-          f"{with_definition}/680 definitions ({adopted} triangulated).")
+          f"{with_definition}/680 definitions ({adopted} triangulated, {authored_count} human-authored).")
 
 
 if __name__ == "__main__":
