@@ -1,0 +1,5663 @@
+[
+ {
+  "status": "THIN",
+  "avg": 0.3645909645909646,
+  "label": "1.1 Define the business concept and long-term vision",
+  "n": 39,
+  "gaps": [
+   {
+    "hier": "1.1.1",
+    "name": "Assess the external environment",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "1.1.1.2",
+    "name": "Analyze and evaluate competition",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.1.3",
+    "name": "Identify economic trends",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.1.1.4",
+    "name": "Identify political and regulatory issues",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.1.1.8",
+    "name": "Identify ecological concerns",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.1.1.9",
+    "name": "Identify trends in future demand for products and product specifications",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "1.1.1.11",
+    "name": "Evaluate IP acquisition options",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "1.1.2",
+    "name": "Survey market and determine customer needs and wants",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "1.1.2.2",
+    "name": "Capture customer needs and wants",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "1.1.2.3",
+    "name": "Assess customer needs and wants",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "1.1.3",
+    "name": "Assess the internal environment",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "1.1.3.1",
+    "name": "Analyze organizational characteristics",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.3.3",
+    "name": "Create baselines for current processes",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "1.1.3.4",
+    "name": "Analyze systems and technology",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.3.5",
+    "name": "Analyze future product specifications and throughput limitations",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "1.1.3.6",
+    "name": "Analyze financial health",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.3.7",
+    "name": "Identify core competencies",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.1.3.8",
+    "name": "Analyze changing feedstock/petroleum cost and supply",
+    "repo_hit": "Monitor & Analyze Credit"
+   },
+   {
+    "hier": "1.1.3.9",
+    "name": "Analyze asset reconfiguration alternatives and investment requirements",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.4.2",
+    "name": "Align stakeholders around strategic vision",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "1.1.4.3",
+    "name": "Communicate strategic vision to stakeholders",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "1.1.5",
+    "name": "Conduct organization restructuring opportunities",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "1.1.5.2",
+    "name": "Perform due-diligence",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "1.1.5.2.1",
+    "name": "Benchmark asset performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "1.1.5.3",
+    "name": "Analyze deal options",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.1.5.3.1",
+    "name": "Evaluate acquisition options",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "1.1.5.3.2",
+    "name": "Evaluate merger options",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "1.1.5.3.3",
+    "name": "Evaluate de-merger options",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "1.1.5.3.4",
+    "name": "Evaluate divesture options",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.42241019214703424,
+  "label": "1.2 Develop business strategy",
+  "n": 57,
+  "gaps": [
+   {
+    "hier": "1.2.1",
+    "name": "Develop overall mission statement",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "1.2.1.1",
+    "name": "Define current business",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "1.2.2",
+    "name": "Define and evaluate strategic options to achieve the objectives",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "1.2.2.2",
+    "name": "Assess and analyze impact of each option",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.2.2.2.1",
+    "name": "Select partnerships and relationships to support the extended enterprise",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "1.2.2.2.2",
+    "name": "Identify implications for key operating model business elements that require change",
+    "repo_hit": "Develop Business Process Blueprint"
+   },
+   {
+    "hier": "1.2.2.6",
+    "name": "Develop merger/demerger/acquisition/exit strategy",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "1.2.3",
+    "name": "Coordinate and align functional and process strategies",
+    "repo_hit": "Coordinate Product Trading"
+   },
+   {
+    "hier": "1.2.4.1",
+    "name": "Evaluate breadth and depth of organizational structure",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "1.2.4.2",
+    "name": "Perform job-specific roles mapping and value-added analyses",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "1.2.4.3",
+    "name": "Develop role activity diagrams to assess hand-off activity",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "1.2.4.4",
+    "name": "Perform organization redesign workshops",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "1.2.4.6",
+    "name": "Develop role analysis and activity diagrams for key processes",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "1.2.4.7",
+    "name": "Assess organizational implication of feasible alternatives",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "1.2.4.8",
+    "name": "Migrate to new organization",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "1.2.5.1",
+    "name": "Identify organizational goals",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.2.5.2",
+    "name": "Establish baseline metrics",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "1.2.6",
+    "name": "Formulate business unit strategies",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "1.2.6.1",
+    "name": "Analyze business unit strategies",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "1.2.6.3",
+    "name": "Refine business unit strategies in support of company strategy",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "1.2.7.2.6",
+    "name": "Align experience with brand values and business strategies",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "1.2.7.3.1",
+    "name": "Identify required capabilities",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.2.7.3.2",
+    "name": "Identify impact on functional processes",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.2.7.4",
+    "name": "Develop customer experience roadmap to develop and implement defined capabilities",
+    "repo_hit": "Develop/Update Strategy (CVP)"
+   },
+   {
+    "hier": "1.2.8",
+    "name": "Communicate strategies internally and externally",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4996825396825397,
+  "label": "1.3 Execute and measure strategic initiatives",
+  "n": 15,
+  "gaps": [
+   {
+    "hier": "1.3.1.1",
+    "name": "Identify strategic priorities",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.3.3",
+    "name": "Select strategic initiatives",
+    "repo_hit": "Develop Strategic Business Plan"
+   },
+   {
+    "hier": "1.3.3.1",
+    "name": "Prioritize strategic initiatives",
+    "repo_hit": "Develop Strategic Business Plan"
+   },
+   {
+    "hier": "1.3.5",
+    "name": "Execute strategic initiatives",
+    "repo_hit": "Plan & Execute Nominations"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.38636363636363635,
+  "label": "1.4 Develop and maintain business models",
+  "n": 11,
+  "gaps": [
+   {
+    "hier": "1.4.1.2",
+    "name": "Secure appropriate approvals",
+    "repo_hit": null
+   },
+   {
+    "hier": "1.4.1.3",
+    "name": "Identify integration points with existing models",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "1.4.2",
+    "name": "Maintain business models",
+    "repo_hit": "Generate PPIMS Base Models"
+   },
+   {
+    "hier": "1.4.2.3",
+    "name": "Prioritize and manage incoming feedback",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "1.4.2.4",
+    "name": "Update existing models",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.36515151515151517,
+  "label": "10.1 Plan and acquire assets",
+  "n": 22,
+  "gaps": [
+   {
+    "hier": "10.1.1",
+    "name": "Develop property strategy and long term vision",
+    "repo_hit": "Develop Short-Term Network Plan"
+   },
+   {
+    "hier": "10.1.1.1",
+    "name": "Confirm alignment of property requirements with business strategy",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "10.1.1.2",
+    "name": "Appraise the external environment",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "10.1.1.3",
+    "name": "Determine build or buy decision",
+    "repo_hit": "Crude Allocation Decision"
+   },
+   {
+    "hier": "10.1.3.4",
+    "name": "Negotiate terms for facility",
+    "repo_hit": "Communicate and Negotiate Claim"
+   },
+   {
+    "hier": "10.1.3.5",
+    "name": "Manage construction or modification to building",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "10.1.4",
+    "name": "Provide workspace and facilities",
+    "repo_hit": "Provide Customer Training"
+   },
+   {
+    "hier": "10.1.4.1",
+    "name": "Acquire workspace and facilities",
+    "repo_hit": "Manage Facilities"
+   },
+   {
+    "hier": "10.1.4.2",
+    "name": "Change fit/form/function of workspace and facilities",
+    "repo_hit": "Manage Product/Service Change"
+   },
+   {
+    "hier": "10.1.5",
+    "name": "Plan major maintenance and plant turnarounds",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "10.1.6",
+    "name": "Analyze assets and predict facility maintenance requirements",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "10.1.8",
+    "name": "Plan ongoing maintenance",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "10.1.9",
+    "name": "Manage plant shutdown",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "10.1.10.1",
+    "name": "Relocate people",
+    "repo_hit": null
+   },
+   {
+    "hier": "10.1.10.2",
+    "name": "Relocate material and tools",
+    "repo_hit": "Check if new location or material has been identified"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.419047619047619,
+  "label": "10.2 Design and construct productive assets",
+  "n": 21,
+  "gaps": [
+   {
+    "hier": "10.2.1.2",
+    "name": "Monitor capital program",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "10.2.1.3",
+    "name": "Secure construction financing",
+    "repo_hit": "Define Financing & Payment Methods"
+   },
+   {
+    "hier": "10.2.2",
+    "name": "Design and plan asset construction",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "10.2.2.3",
+    "name": "Obtain construction permissions",
+    "repo_hit": "Obtain latest XPIMS MOP model"
+   },
+   {
+    "hier": "10.2.2.5",
+    "name": "Plan construction resources",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "10.2.3",
+    "name": "Schedule and perform construction work",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "10.2.3.1",
+    "name": "Schedule construction work",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "10.2.3.4",
+    "name": "Augment existing assets",
+    "repo_hit": "Manage Existing Counterparty"
+   },
+   {
+    "hier": "10.2.3.5",
+    "name": "Renew/Replace assets",
+    "repo_hit": "Manage Site Assets (Tank, Rack, Etc.)"
+   },
+   {
+    "hier": "10.2.4.2",
+    "name": "Undertake construction quality control",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "10.2.4.3",
+    "name": "Create work and asset records",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.40075757575757576,
+  "label": "10.3 Maintain productive assets",
+  "n": 22,
+  "gaps": [
+   {
+    "hier": "10.3.1",
+    "name": "Plan asset maintenance",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "10.3.1.1",
+    "name": "Develop maintenance strategies",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "10.3.1.2",
+    "name": "Analyze assets and predict maintenance requirements",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "10.3.1.3",
+    "name": "Specify maintenance policies",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "10.3.1.7",
+    "name": "Create work plans",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "10.3.2.1",
+    "name": "Schedule maintenance work",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "10.3.2.2",
+    "name": "Obtain required resources",
+    "repo_hit": "Obtain latest XPIMS MOP model"
+   },
+   {
+    "hier": "10.3.2.3",
+    "name": "Undertake quality control",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "10.3.2.4",
+    "name": "Update work and asset records",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "10.3.2.6",
+    "name": "Define maintenance performance targets",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "10.3.2.7",
+    "name": "Monitor maintenance performance against targets/contracts",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "10.3.3.4",
+    "name": "Identify unplanned maintenance requirements",
+    "repo_hit": "Model and System Maintenance"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.44666666666666666,
+  "label": "10.4 Dispose of assets",
+  "n": 5,
+  "gaps": [
+   {
+    "hier": "10.4.2",
+    "name": "Decommission productive assets",
+    "repo_hit": "Manage Site Assets (Tank, Rack, Etc.)"
+   },
+   {
+    "hier": "10.4.3",
+    "name": "Perform sale or trade",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3547936507936508,
+  "label": "11.1 Manage enterprise risk",
+  "n": 25,
+  "gaps": [
+   {
+    "hier": "11.1.1.1",
+    "name": "Determine risk tolerance for organization",
+    "repo_hit": "Manage Site Specific Business Risk"
+   },
+   {
+    "hier": "11.1.1.3",
+    "name": "Identify and implement enterprise risk management tools",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "11.1.1.4",
+    "name": "Coordinate the sharing of risk knowledge across the organization",
+    "repo_hit": "Coordinate Product Trading"
+   },
+   {
+    "hier": "11.1.2",
+    "name": "Oversee and coordinate enterprise risk management activities",
+    "repo_hit": "Coordinate Product Trading"
+   },
+   {
+    "hier": "11.1.2.1",
+    "name": "Identify enterprise level risks",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "11.1.2.2",
+    "name": "Assess risks to determine which to mitigate",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "11.1.2.3",
+    "name": "Develop risk mitigation and management strategy and integrate with existing performance management processes",
+    "repo_hit": "Develop Integrated Pricing Strategy"
+   },
+   {
+    "hier": "11.1.2.4",
+    "name": "Verify business unit and functional risk mitigation plans are implemented",
+    "repo_hit": "Manage Site Specific Business Risk"
+   },
+   {
+    "hier": "11.1.2.5",
+    "name": "Ensure risks and risk mitigation actions are monitored",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "11.1.2.7",
+    "name": "Coordinate business unit and functional risk management activities",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "11.1.2.8",
+    "name": "Ensure that each business unit/function follows the enterprise risk management process",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "11.1.2.9",
+    "name": "Ensure that each business unit/function follows the enterprise risk reporting process",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "11.1.3.2",
+    "name": "Assess risks using enterprise risk framework policies and procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "11.1.3.3.1",
+    "name": "Assess adequacy of insurance coverage",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "11.1.3.4",
+    "name": "Implement mitigation plans for risks",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.45260416666666664,
+  "label": "11.2 Manage compliance",
+  "n": 16,
+  "gaps": [
+   {
+    "hier": "11.2.1.2",
+    "name": "Implement enterprise compliance activities",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "11.2.1.3",
+    "name": "Manage internal audits",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "11.2.1.4",
+    "name": "Maintain controls-related technologies and tools",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "11.2.2.2",
+    "name": "Identify applicable regulatory requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "11.2.2.3",
+    "name": "Monitor the regulatory environment for changing or emerging regulations",
+    "repo_hit": "Monitor External Trading Compliance"
+   },
+   {
+    "hier": "11.2.2.4",
+    "name": "Assess current compliance position and identify weaknesses or shortfalls therein",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "11.2.2.9",
+    "name": "Compile and report carbon and sustainability data",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "11.2.2.10",
+    "name": "Maintain relationships with regulators as appropriate",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.3333333333333333,
+  "label": "11.3 Manage remediation efforts",
+  "n": 6,
+  "gaps": [
+   {
+    "hier": "11.3.1",
+    "name": "Create remediation plans",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "11.3.2",
+    "name": "Contact and confer with experts",
+    "repo_hit": "Manage Contact Center"
+   },
+   {
+    "hier": "11.3.3",
+    "name": "Identify/dedicate resources",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "11.3.4",
+    "name": "Investigate legal aspects",
+    "repo_hit": "Legal & Corp Comm"
+   },
+   {
+    "hier": "11.3.5",
+    "name": "Investigate damage cause",
+    "repo_hit": "Develop Root Cause Analysis/Action Plan"
+   },
+   {
+    "hier": "11.3.6",
+    "name": "Amend or create policy",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.44857142857142857,
+  "label": "11.4 Manage business resiliency",
+  "n": 5,
+  "gaps": [
+   {
+    "hier": "11.4.5",
+    "name": "Share knowledge of specific risks across other parts of the organization",
+    "repo_hit": "Share DPO Base Plan in XPIMS DPO Reconciliation"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.43333333333333335,
+  "label": "12.1 Build investor relationships",
+  "n": 3,
+  "gaps": []
+ },
+ {
+  "status": "GAP",
+  "avg": 0.32941176470588235,
+  "label": "12.2 Manage government and industry relationships",
+  "n": 17,
+  "gaps": [
+   {
+    "hier": "12.2.1",
+    "name": "Manage government relations",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.2.1.2",
+    "name": "Appoint responsible executives",
+    "repo_hit": null
+   },
+   {
+    "hier": "12.2.1.4",
+    "name": "Receive input from internal advisors",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "12.2.1.5",
+    "name": "Receive input from external advisors",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "12.2.1.6",
+    "name": "Liaise with authorities",
+    "repo_hit": null
+   },
+   {
+    "hier": "12.2.2",
+    "name": "Manage relations with quasi-government bodies",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.2.2.1",
+    "name": "Establish relationships with agencies",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "12.2.2.2",
+    "name": "Respond to audit inquiries",
+    "repo_hit": "Conduct Audit To Validate Reported Sales"
+   },
+   {
+    "hier": "12.2.2.3",
+    "name": "Maintain documentation of contacts",
+    "repo_hit": "Prepare Meeting Documentation"
+   },
+   {
+    "hier": "12.2.3.2",
+    "name": "Monitor the success of the partnerships",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "12.2.3.3",
+    "name": "Extend or change the relationships",
+    "repo_hit": "Manage Product/Service Change"
+   },
+   {
+    "hier": "12.2.4",
+    "name": "Manage lobby activities",
+    "repo_hit": "Manage Consignment Inventory"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.3333333333333333,
+  "label": "12.3 Manage relations with board of directors",
+  "n": 2,
+  "gaps": [
+   {
+    "hier": "12.3.1",
+    "name": "Report financial results",
+    "repo_hit": "Publish COE results"
+   },
+   {
+    "hier": "12.3.2",
+    "name": "Report audit findings",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3524943310657596,
+  "label": "12.4 Manage legal and ethical issues",
+  "n": 21,
+  "gaps": [
+   {
+    "hier": "12.4.1",
+    "name": "Create ethics policies",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "12.4.4.1",
+    "name": "Plan and initiate compliance program",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "12.4.4.2",
+    "name": "Execute compliance program",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "12.4.5",
+    "name": "Manage outside counsel",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.4.5.1",
+    "name": "Assess problem and determine work requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "12.4.5.2",
+    "name": "Engage/Retain outside counsel if necessary",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "12.4.5.3",
+    "name": "Receive strategy/budget",
+    "repo_hit": "Conduct MOP Strategy Review"
+   },
+   {
+    "hier": "12.4.5.4",
+    "name": "Receive work product and manage/monitor case and work performed",
+    "repo_hit": "Receive actual data for product sales/ purchases volumes"
+   },
+   {
+    "hier": "12.4.5.5",
+    "name": "Process payment for legal services",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "12.4.5.6",
+    "name": "Track legal activity/performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "12.4.6.1",
+    "name": "Manage copyrights, patents, and trademarks",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.4.6.3",
+    "name": "Administer licensing terms",
+    "repo_hit": "Manage Licensing & IP"
+   },
+   {
+    "hier": "12.4.6.4",
+    "name": "Administer options",
+    "repo_hit": null
+   },
+   {
+    "hier": "12.4.7",
+    "name": "Resolve disputes and litigations",
+    "repo_hit": "Manage Confirm Disputes"
+   },
+   {
+    "hier": "12.4.8",
+    "name": "Provide legal advice/counseling",
+    "repo_hit": "Provide Customer Training"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.26666666666666666,
+  "label": "12.5 Manage public relations program",
+  "n": 5,
+  "gaps": [
+   {
+    "hier": "12.5.1",
+    "name": "Manage community relations",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.5.2",
+    "name": "Manage media relations",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "12.5.3",
+    "name": "Promote political stability",
+    "repo_hit": null
+   },
+   {
+    "hier": "12.5.4",
+    "name": "Create press releases",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "12.5.5",
+    "name": "Issue press releases",
+    "repo_hit": "Issue Quotes & Renewals"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.427536231884058,
+  "label": "13.1 Manage business processes",
+  "n": 23,
+  "gaps": [
+   {
+    "hier": "13.1.1.3",
+    "name": "Assign and support process ownership",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "13.1.2.2",
+    "name": "Identify cross-functional processes",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.1.3.2.1",
+    "name": "Identify published best practices",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.1.3.3",
+    "name": "Model and document processes",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "13.1.4.2",
+    "name": "Support process execution",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "13.1.5",
+    "name": "Improve processes",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.1.5.2",
+    "name": "Manage improvement projects",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "13.1.5.3",
+    "name": "Perform continuous improvement activities",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4131313131313131,
+  "label": "13.2 Manage portfolio, program, and project",
+  "n": 33,
+  "gaps": [
+   {
+    "hier": "13.2.1.3",
+    "name": "Monitor and control portfolio",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.2.2.2",
+    "name": "Manage program stakeholders and partners",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "13.2.3.1",
+    "name": "Establish project scope",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "13.2.3.1.1",
+    "name": "Identify project requirements and objectives",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.2.3.1.2",
+    "name": "Identify project resource requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.2.3.1.3",
+    "name": "Assess culture and readiness for project management approach",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "13.2.3.1.5",
+    "name": "Develop project measures and indicators",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "13.2.3.3.1",
+    "name": "Define roles and resources",
+    "repo_hit": "Schedule Resources"
+   },
+   {
+    "hier": "13.2.3.3.2",
+    "name": "Acquire/secure project resources",
+    "repo_hit": "Schedule Resources"
+   },
+   {
+    "hier": "13.2.3.3.3",
+    "name": "Identify specific IT requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.2.3.3.4",
+    "name": "Create training and communication plans",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.2.3.3.5",
+    "name": "Design recognition and reward approaches",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "13.2.3.3.6",
+    "name": "Design and plan launch of project",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "13.2.3.3.7",
+    "name": "Deploy the project",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.2.3.4.1",
+    "name": "Evaluate impact of project management (strategy and projects) on measures and outcomes",
+    "repo_hit": "Conduct MOP Strategy Review"
+   },
+   {
+    "hier": "13.2.3.4.2",
+    "name": "Report the status of project",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   },
+   {
+    "hier": "13.2.3.4.3",
+    "name": "Manage project scope",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "13.2.3.4.4",
+    "name": "Promote and sustain activity and involvement",
+    "repo_hit": "Manage M&A Activity"
+   },
+   {
+    "hier": "13.2.3.4.5",
+    "name": "Realign and refresh project management strategy and approaches",
+    "repo_hit": "Conduct MOP Strategy Review"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.35634920634920636,
+  "label": "13.3 Manage enterprise quality",
+  "n": 39,
+  "gaps": [
+   {
+    "hier": "13.3.1",
+    "name": "Establish quality requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "13.3.1.1",
+    "name": "Define critical-to-quality characteristics",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "13.3.1.2",
+    "name": "Define preventive quality activities",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "13.3.1.3.1",
+    "name": "Define process steps for controls (or integration points)",
+    "repo_hit": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"
+   },
+   {
+    "hier": "13.3.1.3.3",
+    "name": "Identify measurement methods",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.3.1.3.4",
+    "name": "Define required competencies",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "13.3.1.4",
+    "name": "Prove capability to assess compliance with requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "13.3.1.5",
+    "name": "Finalize quality plan",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "13.3.2",
+    "name": "Evaluate performance to requirements",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.3.2.1.2",
+    "name": "Record result(s)",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.3.2.1.3",
+    "name": "Determine disposition of result(s)",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "13.3.2.2",
+    "name": "Assess results of tests",
+    "repo_hit": "Publish COE results"
+   },
+   {
+    "hier": "13.3.2.2.1",
+    "name": "Assess sample significance",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "13.3.2.2.2",
+    "name": "Summarize result(s)",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.3.3",
+    "name": "Manage non-conformance",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)"
+   },
+   {
+    "hier": "13.3.3.2",
+    "name": "Determine immediate action(s)",
+    "repo_hit": "Collate RCA and potential action items for all high-level impact areas"
+   },
+   {
+    "hier": "13.3.3.4",
+    "name": "Take corrective or preventative action",
+    "repo_hit": "Collate RCA and potential action items for all high-level impact areas"
+   },
+   {
+    "hier": "13.3.3.5",
+    "name": "Close non-conformance",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)"
+   },
+   {
+    "hier": "13.3.4",
+    "name": "Implement and maintain the enterprise quality management system (EQMS)",
+    "repo_hit": "Setup Scheduling System"
+   },
+   {
+    "hier": "13.3.4.2",
+    "name": "Plan and deploy the EQMS scope, targets, and goals",
+    "repo_hit": "Publish Local Refinery Targets for Regional to Local Transition"
+   },
+   {
+    "hier": "13.3.4.3",
+    "name": "Identify core EQMS processes, controls, and metrics",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.3.4.6",
+    "name": "Create environment and capability for EQMS improvement(s)",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.3.4.6.1",
+    "name": "Reward quality excellence",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "13.3.4.6.2",
+    "name": "Create and maintain quality partnerships",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.3.4.6.3",
+    "name": "Maintain talent capabilities and competencies",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "13.3.4.6.4",
+    "name": "Incorporate EQMS messaging into communication channels",
+    "repo_hit": "Incorporate comments & notes from key meetings"
+   },
+   {
+    "hier": "13.3.4.6.5",
+    "name": "Assure independent EQMS management access to appropriate authority in the organization",
+    "repo_hit": "Establish & Maintain Delegation Of Authority (DOA)"
+   },
+   {
+    "hier": "13.3.4.6.6",
+    "name": "Transfer proven EQMS methods",
+    "repo_hit": "Define Financing & Payment Methods"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.39350064350064345,
+  "label": "13.4 Manage change",
+  "n": 37,
+  "gaps": [
+   {
+    "hier": "13.4.1.1",
+    "name": "Select process improvement methodology",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "13.4.1.3",
+    "name": "Assess readiness for change",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "13.4.1.4",
+    "name": "Identify change champion(s)",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.4.1.5",
+    "name": "Form design team",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "13.4.1.7",
+    "name": "Understand current state",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.4.1.8",
+    "name": "Define future state",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "13.4.1.10",
+    "name": "Assess cultural issues",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "13.4.1.12",
+    "name": "Determine degree/extent of impact",
+    "repo_hit": "Capture the impact of each event on GRM waterfall"
+   },
+   {
+    "hier": "13.4.1.14",
+    "name": "Identify barriers to change",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.4.1.15",
+    "name": "Determine change enablers",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "13.4.2.1",
+    "name": "Assess connection to other initiatives",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "13.4.2.5",
+    "name": "Assign change champion(s)",
+    "repo_hit": "Manage Product/Service Change"
+   },
+   {
+    "hier": "13.4.2.7",
+    "name": "Establish change adoption metrics",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "13.4.2.8",
+    "name": "Establish/Clarify new roles",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "13.4.2.9",
+    "name": "Identify budget/roles",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.4.3.1",
+    "name": "Create commitment for improvement/change",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.4.3.2",
+    "name": "Reengineer business processes and systems",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "13.4.3.3",
+    "name": "Support transition to new roles or exit strategies for incumbents",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "13.4.4",
+    "name": "Sustain improvement",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.4.4.2",
+    "name": "Capture and reuse lessons learned from change process",
+    "repo_hit": "Change / Cancel Order"
+   },
+   {
+    "hier": "13.4.4.3",
+    "name": "Take corrective action as necessary",
+    "repo_hit": "Collate RCA and potential action items for all high-level impact areas"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3986111111111111,
+  "label": "13.5 Develop and manage enterprise-wide knowledge management (KM) capability",
+  "n": 24,
+  "gaps": [
+   {
+    "hier": "13.5.1.2",
+    "name": "Define roles and accountability of core group versus operating units",
+    "repo_hit": "Define Procedural Framework & Guidelines"
+   },
+   {
+    "hier": "13.5.1.4",
+    "name": "Identify links to key initiatives",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.5.1.5",
+    "name": "Develop core KM methodologies",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "13.5.1.6",
+    "name": "Assess IT needs and engage IT function",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "13.5.2.1",
+    "name": "Assess maturity of existing KM initiatives",
+    "repo_hit": "Manage Existing Counterparty"
+   },
+   {
+    "hier": "13.5.2.2",
+    "name": "Evaluate existing KM approaches",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "13.5.3",
+    "name": "Design and implement KM capabilities",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "13.5.3.3",
+    "name": "Implement new KM approaches",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "13.5.3.4",
+    "name": "Leverage and enhance IT for KM approaches",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.5.4",
+    "name": "Evolve and sustain KM capabilities",
+    "repo_hit": null
+   },
+   {
+    "hier": "13.5.4.1",
+    "name": "Enhance/Modify existing KM approaches",
+    "repo_hit": "Manage Existing Counterparty"
+   },
+   {
+    "hier": "13.5.4.2",
+    "name": "\u00a0Sustain awareness and engagement",
+    "repo_hit": "Develop Channel Structure, Size & Engagement Model"
+   },
+   {
+    "hier": "13.5.4.3",
+    "name": "Expand KM infrastructure to meet demand",
+    "repo_hit": "Demand Forecasting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4,
+  "label": "13.6 Measure and benchmark",
+  "n": 21,
+  "gaps": [
+   {
+    "hier": "13.6.1.2",
+    "name": "Measure process efficiency",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "13.6.1.4",
+    "name": "Measure staff productivity",
+    "repo_hit": "Measure Inventory"
+   },
+   {
+    "hier": "13.6.1.5",
+    "name": "Measure cycle time",
+    "repo_hit": "Decide Upon Breakdown of Time Periods for XPIMS for Entire Planning Horizon"
+   },
+   {
+    "hier": "13.6.2.1",
+    "name": "Conduct performance assessments",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.6.2.2",
+    "name": "Develop benchmarking capabilities",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "13.6.2.3",
+    "name": "Conduct internal process and external competitive benchmarking",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "13.6.2.4",
+    "name": "Conduct gap analysis",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "13.6.2.5",
+    "name": "Establish need for change",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "13.6.3",
+    "name": "Evaluate process performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.6.3.1",
+    "name": "Establish appropriate performance indicators (metrics)",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.6.3.2",
+    "name": "Establish monitoring frequency",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "13.6.3.3",
+    "name": "Collect performance data",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.6.3.4",
+    "name": "Calculate performance measures",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "13.6.3.5",
+    "name": "Identify performance trends",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.34744268077601415,
+  "label": "13.7 Manage environmental health and safety (EHS)",
+  "n": 27,
+  "gaps": [
+   {
+    "hier": "13.7.1",
+    "name": "Determine environmental health and safety impacts",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "13.7.1.1",
+    "name": "Evaluate environmental impact of products, services, and operations",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "13.7.1.2",
+    "name": "Conduct health and safety and environmental audits",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "13.7.2.1",
+    "name": "Establish supporting agreements with local, regional and specialized for HSSE support",
+    "repo_hit": "Publish Local Refinery Targets for Regional to Local Transition"
+   },
+   {
+    "hier": "13.7.3",
+    "name": "Develop and execute functional EHS program",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "13.7.3.1",
+    "name": "Identify regulatory and stakeholder requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "13.7.3.2",
+    "name": "Assess future risks and opportunities",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "13.7.3.3",
+    "name": "Create EHS policy",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "13.7.3.7",
+    "name": "Develop and manage location awareness HSSE program",
+    "repo_hit": "Manage Master Data (Customer, Price, Product, Tax, Location)"
+   },
+   {
+    "hier": "13.7.3.8",
+    "name": "Develop and manage location awareness for emissions monitoring/control program",
+    "repo_hit": "Manage Master Data (Customer, Price, Product, Tax, Location)"
+   },
+   {
+    "hier": "13.7.4",
+    "name": "Train and educate functional employees",
+    "repo_hit": "Train and Certify AMPM Manager"
+   },
+   {
+    "hier": "13.7.4.1",
+    "name": "Communicate HSSE issues to stakeholders and provide support",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "13.7.5.1",
+    "name": "Manage HSSE costs and benefits",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "13.7.5.3",
+    "name": "Implement emergency response program",
+    "repo_hit": "Implement Promotional Advertising"
+   },
+   {
+    "hier": "13.7.5.4",
+    "name": "Implement pollution prevention program",
+    "repo_hit": "Implement Promotional Advertising"
+   },
+   {
+    "hier": "13.7.5.5",
+    "name": "Manage and operate Permit to Work (PtW) system",
+    "repo_hit": "Manage Financial System/GL"
+   },
+   {
+    "hier": "13.7.5.6",
+    "name": "Manage and operate HSSE contractor and visitor access system",
+    "repo_hit": "Manage Financial System/GL"
+   }
+  ]
+ },
+ {
+  "status": "COVERED",
+  "avg": 0.6,
+  "label": "13.8 Develop, Manage, and Deliver Analytics",
+  "n": 5,
+  "gaps": [
+   {
+    "hier": "13.8.5",
+    "name": "Identify remedial actions",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.43963414634146336,
+  "label": "2.1 Govern and manage product/service development program",
+  "n": 41,
+  "gaps": [
+   {
+    "hier": "2.1.1.1",
+    "name": "Evaluate performance of existing products/services against market opportunities",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "2.1.1.2",
+    "name": "Evaluate performance of existing products/services against regulatory requirements",
+    "repo_hit": "Evaluate the price adjusted forecast against the original forecast"
+   },
+   {
+    "hier": "2.1.1.3",
+    "name": "Confirm alignment of product/service concepts with business strategy",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "2.1.1.6",
+    "name": "Specify development timing targets",
+    "repo_hit": "Publish Local Refinery Targets for Regional to Local Transition"
+   },
+   {
+    "hier": "2.1.2.3",
+    "name": "Retire outdated products/services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.1.2.4",
+    "name": "Identify and refine performance indicators",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "2.1.2.5.1",
+    "name": "Carry out post launch analytics to test the acceptability in the market",
+    "repo_hit": "Conduct Advanced Risk Analytics"
+   },
+   {
+    "hier": "2.1.3.1",
+    "name": "Conduct mandatory and elective reviews",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "2.1.3.2",
+    "name": "Review infringement of patents and copyrights",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "2.1.3.3",
+    "name": "Determine patent and copyright needs",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "2.1.3.4",
+    "name": "Define product technical documentation management requirements",
+    "repo_hit": "Product Scheduling"
+   },
+   {
+    "hier": "2.1.3.5.1",
+    "name": "Train employees on appropriate regulatory requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "2.1.3.5.2",
+    "name": "Maintain records for regulatory agencies",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "2.1.4.2",
+    "name": "Manage bills of material",
+    "repo_hit": "Check if new location or material has been identified"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.45202020202020204,
+  "label": "2.2 Generate and define new product/service ideas",
+  "n": 22,
+  "gaps": [
+   {
+    "hier": "2.2.1",
+    "name": "Perform discovery research",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "2.2.2.5",
+    "name": "Identify potential improvements to existing products and services",
+    "repo_hit": "Identify Potential Demurrage"
+   },
+   {
+    "hier": "2.2.3.1.1",
+    "name": "Define basic functional requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "2.2.3.1.2",
+    "name": "Derive interoperability requirements for products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.2.3.1.4",
+    "name": "Derive security requirements for products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.2.3.1.6",
+    "name": "Derive requirements from industry standards",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "2.2.3.1.7",
+    "name": "Develop user experience requirements",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "2.2.3.1.8",
+    "name": "Derive \u2018services-as-a-product\u2019 offering",
+    "repo_hit": "Update location and product tag mapping"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.37180451127819547,
+  "label": "2.3 Develop products and services",
+  "n": 38,
+  "gaps": [
+   {
+    "hier": "2.3.1",
+    "name": "Design and prototype products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.3.1.5",
+    "name": "Provide warranty-related recommendations",
+    "repo_hit": "Provide Customer Training"
+   },
+   {
+    "hier": "2.3.1.6",
+    "name": "Document design specifications",
+    "repo_hit": "Document Findings"
+   },
+   {
+    "hier": "2.3.1.7",
+    "name": "Conduct mandatory and elective external reviews",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "2.3.1.8",
+    "name": "Design products/services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.3.1.8.2",
+    "name": "Design for product servicing",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "2.3.1.8.4",
+    "name": "Review product troubleshooting methodology",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "2.3.1.8.6",
+    "name": "Design for product upgrades",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "2.3.1.9",
+    "name": "Build prototypes/proof of concepts",
+    "repo_hit": "Build and run the LP price adjusted forecast"
+   },
+   {
+    "hier": "2.3.1.10",
+    "name": "Develop and test prototype production and/or service delivery process",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "2.3.1.11",
+    "name": "Eliminate quality and reliability problems",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "2.3.1.12.1",
+    "name": "Conduct fleet vehicle tests, emissions tests, chemical analysis",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "2.3.1.12.2",
+    "name": "Evaluate extent to which component blend meets product specifications and regulatory standards",
+    "repo_hit": "Build and run product optimization cases"
+   },
+   {
+    "hier": "2.3.2",
+    "name": "Test market for new or revised products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "2.3.2.3",
+    "name": "Finalize product/service characteristics and business cases",
+    "repo_hit": "Develop Step Cases for Out Month Horizon"
+   },
+   {
+    "hier": "2.3.2.4",
+    "name": "Finalize technical requirements",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "2.3.3.1",
+    "name": "Design and obtain necessary capabilities/materials and equipment",
+    "repo_hit": "Obtain latest XPIMS MOP model"
+   },
+   {
+    "hier": "2.3.3.3",
+    "name": "Identify requirements for changes to manufacturing/delivery processes",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "2.3.3.5",
+    "name": "Install and validate production/service delivery process",
+    "repo_hit": "Service & Support Delivery"
+   },
+   {
+    "hier": "2.3.3.5.1",
+    "name": "Monitor initial production runs",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "2.3.3.6",
+    "name": "Validate launch procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3805764411027569,
+  "label": "3.1 Understand markets, customers, and capabilities",
+  "n": 19,
+  "gaps": [
+   {
+    "hier": "3.1.1.1.1",
+    "name": "Understand consumer needs and predict customer purchasing behavior",
+    "repo_hit": "Test Customer value proposition"
+   },
+   {
+    "hier": "3.1.1.3",
+    "name": "Identify boundaries, coverage, and constraints imposed by regulatory agencies",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "3.1.1.3.1",
+    "name": "Determine market share gain/loss",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.1.1.5",
+    "name": "Analyze competing organizations, competitive/substitute products/services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "3.1.1.6",
+    "name": "Evaluate existing products/services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "3.1.2.1",
+    "name": "Quantify market opportunities",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.1.2.2",
+    "name": "Determine target segments",
+    "repo_hit": "Define Target Customer Groups"
+   },
+   {
+    "hier": "3.1.2.3",
+    "name": "Prioritize opportunities consistent with capabilities and overall business strategy",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "3.1.2.4.2",
+    "name": "Test with customers/consumers",
+    "repo_hit": "Segment Customers"
+   },
+   {
+    "hier": "3.1.2.4.3",
+    "name": "Confirm internal capabilities",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.5081216931216931,
+  "label": "3.2 Develop marketing strategy",
+  "n": 45,
+  "gaps": [
+   {
+    "hier": "3.2.1.1",
+    "name": "Define offering and positioning",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "3.2.2.2",
+    "name": "Establish guidelines for applying pricing and discounting of products/services",
+    "repo_hit": "Establish Commercial Terms & Contracts"
+   },
+   {
+    "hier": "3.2.2.4",
+    "name": "Approve pricing strategies/policies and targets",
+    "repo_hit": "Refresh Product Pricing and Demands"
+   },
+   {
+    "hier": "3.2.3.1",
+    "name": "Determine channels to be supported",
+    "repo_hit": "Segment Channels"
+   },
+   {
+    "hier": "3.2.3.3",
+    "name": "Determine channel role and fit with target segments",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "3.2.3.4",
+    "name": "Select channels for target segments",
+    "repo_hit": "Define Target Customer Groups"
+   },
+   {
+    "hier": "3.2.3.5",
+    "name": "Identify required channel capabilities",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "3.2.3.6",
+    "name": "Evaluate channel attributes and potential partners",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "3.2.3.9",
+    "name": "Orchestrate seamless customer experience across supported channels",
+    "repo_hit": "Customer Experience Strategy"
+   },
+   {
+    "hier": "3.2.4.3",
+    "name": "Monitor and report events influencing factors",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "3.2.6.3",
+    "name": "Build engagement and relationship with members",
+    "repo_hit": "Build and run the LP price adjusted forecast"
+   },
+   {
+    "hier": "3.2.6.4",
+    "name": "Monitor customer loyalty program benefits to the enterprise and the customer",
+    "repo_hit": "Customer Program Analysis"
+   },
+   {
+    "hier": "3.2.6.5",
+    "name": "Optimize loyalty program value to both the enterprise and the customer",
+    "repo_hit": "Customer And Marketer Value Proposition"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.46198593073593075,
+  "label": "3.3 Develop and manage marketing plans",
+  "n": 44,
+  "gaps": [
+   {
+    "hier": "3.3.3.3",
+    "name": "Understand resource requirements for each product/service and delivery channel/method",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "3.3.3.4",
+    "name": "Determine corporate incentives",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "3.3.3.8",
+    "name": "Achieve regulatory approval for pricing",
+    "repo_hit": "Refresh Product Pricing and Demands"
+   },
+   {
+    "hier": "3.3.4.5",
+    "name": "Execute promotional activities",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "3.3.4.6",
+    "name": "Evaluate promotional performance metrics",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "3.3.4.7",
+    "name": "Refine promotional performance metrics",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "3.3.4.8",
+    "name": "Incorporate learning into future/planned consumer promotions",
+    "repo_hit": "Incorporate comments & notes from key meetings"
+   },
+   {
+    "hier": "3.3.5.5",
+    "name": "Revise customer strategies, objectives, and plans based on metrics",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "3.3.6.1",
+    "name": "Monitor and respond to social media activity",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "3.3.6.4",
+    "name": "Develop business rules to provide personalized offers",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "3.3.6.5",
+    "name": "Monitor effectiveness of personalized offers and adjust offers accordingly",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.3.7.1",
+    "name": "Plan packaging strategy",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "3.3.7.2",
+    "name": "Test packaging options",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "3.3.7.3",
+    "name": "Execute packaging strategy",
+    "repo_hit": "Conduct MOP Strategy Review"
+   },
+   {
+    "hier": "3.3.7.4",
+    "name": "Refine packaging",
+    "repo_hit": null
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.41251920122887864,
+  "label": "3.4 Develop sales strategy",
+  "n": 31,
+  "gaps": [
+   {
+    "hier": "3.4.1.1",
+    "name": "Gather current and historic order information",
+    "repo_hit": "Gather Automated Data Inputs"
+   },
+   {
+    "hier": "3.4.2.2",
+    "name": "Design alliance programs and methods for selecting and managing relationships",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "3.4.2.3",
+    "name": "Select alliances",
+    "repo_hit": null
+   },
+   {
+    "hier": "3.4.2.5",
+    "name": "Define trade programs and funding options",
+    "repo_hit": "Trade Capture"
+   },
+   {
+    "hier": "3.4.2.6",
+    "name": "Conduct planning activities for major trade customers",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "3.4.2.9",
+    "name": "Establish partner and alliance agreements",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "3.4.2.11",
+    "name": "Create strategic and tactical sales plans by customer",
+    "repo_hit": "Formulate and Evaluate Strategic Operating Alternatives (CVP)"
+   },
+   {
+    "hier": "3.4.3.2",
+    "name": "Calculate product revenue",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "3.4.3.3",
+    "name": "Determine variable costs",
+    "repo_hit": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"
+   },
+   {
+    "hier": "3.4.3.4",
+    "name": "Determine overhead and fixed costs",
+    "repo_hit": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"
+   },
+   {
+    "hier": "3.4.3.5",
+    "name": "Calculate net profit",
+    "repo_hit": "Calculate Credit Exposure"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.41914965986394553,
+  "label": "3.5 Develop and manage sales plans",
+  "n": 70,
+  "gaps": [
+   {
+    "hier": "3.5.1",
+    "name": "Manage leads/opportunities",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "3.5.1.3",
+    "name": "Validate and qualify leads/opportunities",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "3.5.1.4",
+    "name": "Match opportunities to business strategy",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "3.5.3.1",
+    "name": "Establish lifting agreements",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "3.5.3.2",
+    "name": "Qualify truck transportation",
+    "repo_hit": "Capture Transportation Deals"
+   },
+   {
+    "hier": "3.5.3.3",
+    "name": "Establish rack clearances",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "3.5.3.4",
+    "name": "Sell ancillary products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "3.5.4",
+    "name": "Develop and manage sales proposals, bids, and quotes",
+    "repo_hit": "Establish operating Objectives and develop Channel Strategy Hypothesis"
+   },
+   {
+    "hier": "3.5.4.1",
+    "name": "Receive Request For Proposal (RFP)/Request For Quote (RFQ)",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "3.5.4.2",
+    "name": "Refine customer requirements",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.5.4.3",
+    "name": "Review RFP/RFQ request",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "3.5.4.5",
+    "name": "Validate with strategy/business plans",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "3.5.4.6",
+    "name": "Understand customer business and requirements",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.5.4.7",
+    "name": "Develop solution and delivery approach",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "3.5.4.8",
+    "name": "Identify staffing requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "3.5.4.10",
+    "name": "Conduct profitability analysis",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "3.5.4.11",
+    "name": "Manage internal reviews",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "3.5.4.12",
+    "name": "Manage internal approvals",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "3.5.4.13",
+    "name": "Submit/present bid/proposal/quote to customer",
+    "repo_hit": "Analyze Customer Profitability"
+   },
+   {
+    "hier": "3.5.4.14",
+    "name": "Revise bid/proposal/quote",
+    "repo_hit": "Develop Quote"
+   },
+   {
+    "hier": "3.5.4.15",
+    "name": "Manage notification outcome",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "3.5.5.2.1",
+    "name": "Administer key account details",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "3.5.5.2.2",
+    "name": "Retrieve full customer details",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.5.5.2.3",
+    "name": "Modify involved party details",
+    "repo_hit": "Manage Third Party Storage"
+   },
+   {
+    "hier": "3.5.5.2.4",
+    "name": "Record address details",
+    "repo_hit": "Update data inputs to address data inconsistencies and gaps"
+   },
+   {
+    "hier": "3.5.5.2.5",
+    "name": "Record contact details",
+    "repo_hit": "Manage Contact Center"
+   },
+   {
+    "hier": "3.5.5.2.6",
+    "name": "Record key customer communication profile details",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.5.5.2.7",
+    "name": "Review involved party information",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "3.5.5.2.8",
+    "name": "Terminate involved party information",
+    "repo_hit": "Manage Third Party Storage"
+   },
+   {
+    "hier": "3.5.5.4",
+    "name": "Determine fulfillment process",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "3.5.5.5",
+    "name": "Enter orders into system",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "3.5.5.7",
+    "name": "Process back orders and updates",
+    "repo_hit": "Perform updates to Distribution Plan"
+   },
+   {
+    "hier": "3.5.5.8",
+    "name": "Handle sales order inquiries including post-order fulfillment transactions",
+    "repo_hit": "Manage Contract & Order"
+   },
+   {
+    "hier": "3.5.6.1.2",
+    "name": "Manage certifications and skills",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "3.5.6.1.3",
+    "name": "Provide support to partners/alliances",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "3.5.6.2",
+    "name": "Provide marketing materials to sales partners/alliances",
+    "repo_hit": "Receive actual data for product sales/ purchases volumes"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.40158525684841473,
+  "label": "3.6 Trade commodity products",
+  "n": 19,
+  "gaps": [
+   {
+    "hier": "3.6.1",
+    "name": "Develop overall trading strategy and measurement approach",
+    "repo_hit": "Trading Strategy Management"
+   },
+   {
+    "hier": "3.6.1.2",
+    "name": "Define evaluation criteria",
+    "repo_hit": "Run list of standard scenarios for evaluation"
+   },
+   {
+    "hier": "3.6.1.3",
+    "name": "Assess and analyze long term market dynamics",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "3.6.1.4",
+    "name": "Develop possible strategies",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "3.6.1.5",
+    "name": "Test strategies under various scenarios and conditions (market, environmental)",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "3.6.1.6",
+    "name": "Evaluate trade-offs, refine and select strategy",
+    "repo_hit": "Formulate and Evaluate Strategic Operating Alternative"
+   },
+   {
+    "hier": "3.6.2.2",
+    "name": "Discover potential value in opportunities consistent with trading strategy and objectives and within established capital allocation and risk limits",
+    "repo_hit": "Manage Credit Limits"
+   },
+   {
+    "hier": "3.6.3",
+    "name": "Execute spot purchases, sales and buy/sells",
+    "repo_hit": "Receive actual data for product sales/ purchases volumes"
+   },
+   {
+    "hier": "3.6.3.1",
+    "name": "Select and contact counterparties",
+    "repo_hit": "Manage Contact Center"
+   },
+   {
+    "hier": "3.6.3.3",
+    "name": "Obtain credit clearance or collateralization",
+    "repo_hit": "Obtain latest XPIMS MOP model"
+   },
+   {
+    "hier": "3.6.3.4",
+    "name": "Finalize terms & confirm",
+    "repo_hit": "Engage Key stakeholders to finalize overrides and develop rationale for Network Premise"
+   },
+   {
+    "hier": "3.6.3.5",
+    "name": "Communicate deal terms to operations for deal execution and fulfillment",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "3.6.5",
+    "name": "Execute paper deals",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.34751552795031054,
+  "label": "3.7 Manage commodity positions",
+  "n": 23,
+  "gaps": [
+   {
+    "hier": "3.7.1",
+    "name": "Manage volumetric position",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "3.7.1.1",
+    "name": "Monitor current and forward commodity positions",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "3.7.3",
+    "name": "Calculate trading profit and loss (mark to market)",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "3.7.3.2",
+    "name": "Calculate change in market value of positions",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.7.3.3",
+    "name": "Determine other margins and costs",
+    "repo_hit": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"
+   },
+   {
+    "hier": "3.7.3.5",
+    "name": "Create and communicate pricing exposure report",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "3.7.4",
+    "name": "Manage carbon (certificate) position and profit and loss",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "3.7.4.1",
+    "name": "Calculate carbon certificate position",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "3.7.4.2",
+    "name": "Determine current carbon certificate position/obligations by vintage",
+    "repo_hit": "Perform Position & PNL Analysis"
+   },
+   {
+    "hier": "3.7.4.3",
+    "name": "Determine carbon trading marker",
+    "repo_hit": "Coordinate Product Trading"
+   },
+   {
+    "hier": "3.7.4.4",
+    "name": "Obtain market and internal carbon pricing data",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "3.7.4.5",
+    "name": "Determine cost and value of certificate creation",
+    "repo_hit": "Update Crude Avails and Crude Cost"
+   },
+   {
+    "hier": "3.7.4.6",
+    "name": "Determine recovery from customers",
+    "repo_hit": "Segment Customers"
+   },
+   {
+    "hier": "3.7.4.7",
+    "name": "Calculate change in market value of carbon positions",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "3.7.4.8",
+    "name": "Determine other carbon margins and costs",
+    "repo_hit": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4686619718309859,
+  "label": "4.1 Plan for and align supply chain resources",
+  "n": 71,
+  "gaps": [
+   {
+    "hier": "4.1.1.1",
+    "name": "Define manufacturing goals",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "4.1.1.2",
+    "name": "Define labor and materials policies",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "4.1.1.3",
+    "name": "Define outsourcing policies",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "4.1.1.4",
+    "name": "Define capital expense policies",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "4.1.1.7",
+    "name": "Define production process",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "4.1.1.9",
+    "name": "Define production workplace layout and infrastructure",
+    "repo_hit": "Establish difference between refinery production in final case and actual volumes"
+   },
+   {
+    "hier": "4.1.2.5",
+    "name": "Determine available to promise",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "4.1.2.7",
+    "name": "Monitor activity against demand forecast and revise forecast",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "4.1.3.4",
+    "name": "Identify long and short positions",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "4.1.4.2",
+    "name": "Collaborate with supplier and contract manufacturers",
+    "repo_hit": "Contract Management"
+   },
+   {
+    "hier": "4.1.4.3",
+    "name": "Identify critical materials and supplier capacity",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "4.1.4.4",
+    "name": "Monitor material specifications",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.1.4.6",
+    "name": "Define production balance and control",
+    "repo_hit": "Establish difference between refinery production in final case and actual volumes"
+   },
+   {
+    "hier": "4.1.6.4",
+    "name": "Calculate requirements at destination",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "4.1.6.4.2",
+    "name": "Calculate requirements for fuel additives",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "4.1.6.5",
+    "name": "Calculate consolidation at source",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "4.1.6.7",
+    "name": "Calculate and optimize destination dispatch plan",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "4.1.6.9",
+    "name": "Calculate and optimize destination load plans",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "4.1.6.12",
+    "name": "Manage capacity utilization",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.1.7",
+    "name": "Evaluate commodity values",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "4.1.7.1",
+    "name": "Gather market prices",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "4.1.7.2",
+    "name": "Forecast commodity prices",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "4.1.7.3",
+    "name": "Develop and calculate forward curves",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "4.1.7.4",
+    "name": "Develop and maintain benchmark prices",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "4.1.9.2",
+    "name": "Establish sourcing relationships",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "4.1.9.3",
+    "name": "Establish dynamic deployment policies",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "4.1.10.1",
+    "name": "Establish quality targets",
+    "repo_hit": "Publish Local Refinery Targets for Regional to Local Transition"
+   },
+   {
+    "hier": "4.1.10.3",
+    "name": "Establish in-house and contract certified laboratory for fuel quality analysis",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "4.1.10.4",
+    "name": "Communicate quality specifications",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3706896551724138,
+  "label": "4.2 Procure materials and services",
+  "n": 29,
+  "gaps": [
+   {
+    "hier": "4.2.1",
+    "name": "Provide sourcing governance and perform category management",
+    "repo_hit": "Perform overrides (with rationale) in Network Premise"
+   },
+   {
+    "hier": "4.2.1.2",
+    "name": "Clarify purchasing requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "4.2.1.4",
+    "name": "Match needs to supply capabilities",
+    "repo_hit": "Address Data Inconsistencies if they Exist (Demand, Price, Opening Inventory, and Supply)"
+   },
+   {
+    "hier": "4.2.1.5",
+    "name": "Analyze organization\u2019s spend profile",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "4.2.1.6",
+    "name": "Seek opportunities to improve efficiency and value",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "4.2.3",
+    "name": "Select suppliers and develop/maintain contracts",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "4.2.3.1",
+    "name": "Select suppliers",
+    "repo_hit": null
+   },
+   {
+    "hier": "4.2.3.2",
+    "name": "Certify and validate suppliers",
+    "repo_hit": "Validate and Negotiate Claim"
+   },
+   {
+    "hier": "4.2.4",
+    "name": "Order materials and services",
+    "repo_hit": "Manage Safety (Materials, Staff, Contractor)"
+   },
+   {
+    "hier": "4.2.4.1",
+    "name": "Process/Review requisitions",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "4.2.4.2",
+    "name": "Approve requisitions",
+    "repo_hit": null
+   },
+   {
+    "hier": "4.2.4.3",
+    "name": "Solicit/Track vendor quotes",
+    "repo_hit": "Track Movements and Inventory Management"
+   },
+   {
+    "hier": "4.2.4.5",
+    "name": "Expedite orders and satisfy inquiries",
+    "repo_hit": "Generate Orders"
+   },
+   {
+    "hier": "4.2.4.6",
+    "name": "Reconcile purchase orders",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "4.2.4.7",
+    "name": "Research/Resolve order exceptions",
+    "repo_hit": "Manage Production Schedule Exceptions"
+   },
+   {
+    "hier": "4.2.5.3",
+    "name": "Support inventory and production processes",
+    "repo_hit": "Update Opening Inventory"
+   },
+   {
+    "hier": "4.2.5.4",
+    "name": "Monitor quality of product delivered",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.383452380952381,
+  "label": "4.3 Produce/Assemble/Test product",
+  "n": 40,
+  "gaps": [
+   {
+    "hier": "4.3.1.1",
+    "name": "Model and simulate plant",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "4.3.1.3",
+    "name": "Generate detailed schedule",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "4.3.1.5",
+    "name": "Schedule preventive (planned) maintenance (preventive maintenance orders)",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "4.3.1.6",
+    "name": "Schedule requested (unplanned) maintenance (work order cycle)",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "4.3.2",
+    "name": "Produce/Assemble product",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "4.3.2.2",
+    "name": "Execute detailed line schedule",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "4.3.2.3",
+    "name": "Report maintenance issues",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "4.3.2.4",
+    "name": "Rerun defective items",
+    "repo_hit": "Collate RCA and potential action items for all high-level impact areas"
+   },
+   {
+    "hier": "4.3.2.5",
+    "name": "Monitor and optimize production process",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.3.2.5.1",
+    "name": "Automate and control plant",
+    "repo_hit": "Optimize Plant Energy Balance"
+   },
+   {
+    "hier": "4.3.2.5.4",
+    "name": "Manage plant alarms and alerts",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.3.2.8",
+    "name": "Monitor plant inventories",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.3.2.11",
+    "name": "Optimize production and yield",
+    "repo_hit": "Establish difference between refinery production in final case and actual volumes"
+   },
+   {
+    "hier": "4.3.3",
+    "name": "Perform quality testing",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "4.3.3.1",
+    "name": "Calibrate test equipment",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "4.3.3.4",
+    "name": "Record test results",
+    "repo_hit": "Publish COE results"
+   },
+   {
+    "hier": "4.3.3.5",
+    "name": "Track and analyze non-conformance trends",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)"
+   },
+   {
+    "hier": "4.3.4",
+    "name": "Maintain production records and manage lot traceability",
+    "repo_hit": "Manage Lot/Batch Inventory"
+   },
+   {
+    "hier": "4.3.4.1",
+    "name": "Determine lot numbering system",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "4.3.4.2",
+    "name": "Determine lot use",
+    "repo_hit": "Manage Lot/Batch Inventory"
+   },
+   {
+    "hier": "4.3.5",
+    "name": "Perform quality assurance",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "4.3.5.1",
+    "name": "Monitor and control production quality for each stream",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.3.5.1.1",
+    "name": "Measure product quality",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "4.3.5.2",
+    "name": "Monitor quality of delivered or received materials",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.3.5.3",
+    "name": "Operate laboratory",
+    "repo_hit": null
+   },
+   {
+    "hier": "4.3.5.4",
+    "name": "Report quality and volumes to regulatory agencies as required",
+    "repo_hit": "Reconcile And Report Indirect Tax"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3869239631336405,
+  "label": "4.4 Manage logistics and warehousing",
+  "n": 62,
+  "gaps": [
+   {
+    "hier": "4.4.1",
+    "name": "Provide logistics governance",
+    "repo_hit": "Provide Customer Training"
+   },
+   {
+    "hier": "4.4.1.3",
+    "name": "Communicate outsourcing needs",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "4.4.1.5",
+    "name": "Optimize transportation schedules and costs",
+    "repo_hit": "Receive actual data for feedstock (crude, gas oil, etc.) purchases / costs and IRT volumes / costs"
+   },
+   {
+    "hier": "4.4.1.6",
+    "name": "Define key performance measures",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.4.1.8",
+    "name": "Manage redirects/rerouting",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.1",
+    "name": "Arrange logistics contracts",
+    "repo_hit": "Manage Carrier Contracts"
+   },
+   {
+    "hier": "4.4.2.2",
+    "name": "Schedule and nominate pipeline, truck, rail, barge and/or tanker shipments",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "4.4.2.6",
+    "name": "Schedule wharves/berths",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "4.4.2.7",
+    "name": "Manage vessel shipments",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.9",
+    "name": "Manage rail shipments",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.10",
+    "name": "Schedule bulk truck shipments",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "4.4.2.11",
+    "name": "Manage bulk truck shipments",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.12",
+    "name": "Manage book transfers",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.13",
+    "name": "Manage net outs",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.2.15",
+    "name": "Process and audit bulk carrier invoices and documents",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "4.4.3.1",
+    "name": "Plan inbound material receipts",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "4.4.3.2",
+    "name": "Manage inbound material flow",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "4.4.3.5",
+    "name": "Control quality of returned parts",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "4.4.3.7",
+    "name": "Salvage or repair returned products",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "4.4.3.7.1",
+    "name": "Perform salvage activities",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "4.4.3.7.2",
+    "name": "Manage repair/refurbishment and return to customer/stock",
+    "repo_hit": "Manage Master Data (Customer, Price, Product, Tax, Location)"
+   },
+   {
+    "hier": "4.4.4",
+    "name": "Operate warehousing",
+    "repo_hit": null
+   },
+   {
+    "hier": "4.4.4.2",
+    "name": "Receive, inspect, and store inbound deliveries",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "4.4.4.3",
+    "name": "Track product availability",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "4.4.4.4",
+    "name": "Pick, pack, and ship product for delivery",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "4.4.4.8",
+    "name": "Manage warehouse transfers",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.5",
+    "name": "Manage bulk inventories",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.5.2",
+    "name": "Manage leased space (throughputs)",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.5.4",
+    "name": "Manage bulk in-transit inventories",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "4.4.6.2",
+    "name": "Monitor current and forward physical inventories positions",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.4.6.4",
+    "name": "Monitor customer inventories",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "4.4.7",
+    "name": "Operate outbound transportation",
+    "repo_hit": "Capture Transportation Deals"
+   },
+   {
+    "hier": "4.4.7.2",
+    "name": "Track carrier delivery performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "4.4.7.4",
+    "name": "Monitor product quality, volumes and losses through transport",
+    "repo_hit": "Receive actual data for product sales/ purchases volumes"
+   },
+   {
+    "hier": "4.4.7.5",
+    "name": "Process and audit carrier invoices and documents",
+    "repo_hit": "Process Business Renewal Request"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4514652014652014,
+  "label": "5.1 Establish service delivery governance and strategies",
+  "n": 13,
+  "gaps": [
+   {
+    "hier": "5.1.1.1",
+    "name": "Set up and maintain service delivery governance and management system",
+    "repo_hit": "Setup Scheduling System"
+   },
+   {
+    "hier": "5.1.2.2",
+    "name": "Define labor policies",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "5.1.2.3",
+    "name": "Evaluate resource availability",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "5.1.2.4",
+    "name": "Define service delivery network and supply constraints",
+    "repo_hit": "Update Network Constraints for DPO Plan"
+   },
+   {
+    "hier": "5.1.2.7",
+    "name": "Define service delivery workplace layout and infrastructure",
+    "repo_hit": "Define Operating Model"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.44097222222222227,
+  "label": "5.2 Manage service delivery resources",
+  "n": 24,
+  "gaps": [
+   {
+    "hier": "5.2.1.4",
+    "name": "Develop consensus forecast",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "5.2.1.5",
+    "name": "Determine availability of skills to deliver on current and forecast customer orders",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "5.2.1.7",
+    "name": "Evaluate and revise forecasting approach",
+    "repo_hit": "Demand Forecasting"
+   },
+   {
+    "hier": "5.2.1.8",
+    "name": "Measure forecast accuracy",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "5.2.2.3",
+    "name": "Match resource demand with capacity, skills, and capabilities",
+    "repo_hit": "Demand Forecasting"
+   },
+   {
+    "hier": "5.2.2.4",
+    "name": "Collaborate with suppliers and partners to supplement skills and capabilities",
+    "repo_hit": "Collaborate with Research Partners"
+   },
+   {
+    "hier": "5.2.2.5",
+    "name": "Identify critical resources and supplier capacity",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "5.2.3.2",
+    "name": "Develop training materials",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "5.2.3.5",
+    "name": "Deliver technical training",
+    "repo_hit": "Collaborate with Customers/Technical Service"
+   },
+   {
+    "hier": "5.2.3.6",
+    "name": "Perform skill and capability testing",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "5.2.3.7",
+    "name": "Evaluate training effectiveness",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4456043956043956,
+  "label": "5.3 Deliver service to customer",
+  "n": 26,
+  "gaps": [
+   {
+    "hier": "5.3.1.2",
+    "name": "Understand customer requirements and define refine approach",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "5.3.1.3",
+    "name": "Modify/revise and approve project plan",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "5.3.1.5",
+    "name": "Confirm environmental readiness",
+    "repo_hit": "Capture Environmental/Renewable Deals"
+   },
+   {
+    "hier": "5.3.1.6",
+    "name": "Identify, select, and assign resources",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "5.3.1.6.2",
+    "name": "Establish engagement rules",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "5.3.2.6",
+    "name": "Make build/buy solution",
+    "repo_hit": "Build and run the LP price adjusted forecast"
+   },
+   {
+    "hier": "5.3.2.7",
+    "name": "Deploy solution",
+    "repo_hit": null
+   },
+   {
+    "hier": "5.3.3.1",
+    "name": "Conduct service delivery/project review and evaluate success",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "5.3.3.3",
+    "name": "Confirm delivery according to contract terms",
+    "repo_hit": "Contract Management"
+   },
+   {
+    "hier": "5.3.3.6",
+    "name": "Harvest knowledge",
+    "repo_hit": null
+   },
+   {
+    "hier": "5.3.3.7",
+    "name": "Archive records and update systems",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.40992063492063496,
+  "label": "6.1 Develop customer care/customer service strategy",
+  "n": 12,
+  "gaps": [
+   {
+    "hier": "6.1.5",
+    "name": "Establish target service level for each customer segment",
+    "repo_hit": "Establish CVP principles and objectives"
+   },
+   {
+    "hier": "6.1.6",
+    "name": "Define warranty offering",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "6.1.6.1",
+    "name": "Determine and document warranty policies",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "6.1.6.2",
+    "name": "Create and manage warranty rules/claim codes for products",
+    "repo_hit": "Create Claim"
+   },
+   {
+    "hier": "6.1.6.3",
+    "name": "Agree on warranty responsibilities with suppliers",
+    "repo_hit": "Develop & Agree Demand Forecasting Process"
+   },
+   {
+    "hier": "6.1.6.4",
+    "name": "Define warranty related offerings for customers",
+    "repo_hit": "Segment Customers"
+   },
+   {
+    "hier": "6.1.6.5",
+    "name": "Communicate warranty policies and offerings",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4175324675324675,
+  "label": "6.2 Plan and manage customer service contacts",
+  "n": 22,
+  "gaps": [
+   {
+    "hier": "6.2.1.3",
+    "name": "Track work force utilization",
+    "repo_hit": "Track Movements and Inventory Management"
+   },
+   {
+    "hier": "6.2.1.4",
+    "name": "Monitor and evaluate quality of customer interactions with customer service representatives",
+    "repo_hit": "Formulate and Evaluate Strategic Operating Alternatives (CVP)"
+   },
+   {
+    "hier": "6.2.2.5",
+    "name": "Identify and capture upsell/cross-sell opportunities",
+    "repo_hit": "Identify Technology Needs/Opportunities"
+   },
+   {
+    "hier": "6.2.3.1",
+    "name": "Receive customer complaints",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "6.2.3.2",
+    "name": "Route customer complaints",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "6.2.3.3",
+    "name": "Resolve customer complaints",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "6.2.3.4",
+    "name": "Respond to customer complaints",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "6.2.4.1",
+    "name": "Authorize return",
+    "repo_hit": null
+   },
+   {
+    "hier": "6.2.4.2",
+    "name": "Process return and record reason",
+    "repo_hit": "Process Business Renewal Request"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.40315315315315314,
+  "label": "6.3 Service products after sales",
+  "n": 37,
+  "gaps": [
+   {
+    "hier": "6.3.2",
+    "name": "Process warranty claims",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "6.3.2.3",
+    "name": "Investigate warranty issues",
+    "repo_hit": null
+   },
+   {
+    "hier": "6.3.2.3.2",
+    "name": "Schedule field service",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "6.3.2.3.3",
+    "name": "Request and receive defective part",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "6.3.2.3.5",
+    "name": "Receive investigation result/recommendation for corrective action",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "6.3.2.4",
+    "name": "Determine responsible party",
+    "repo_hit": "Manage Third Party Storage"
+   },
+   {
+    "hier": "6.3.2.6",
+    "name": "Approve or reject warranty claim",
+    "repo_hit": "Create Claim"
+   },
+   {
+    "hier": "6.3.2.7",
+    "name": "Notify originator of approve/reject decision",
+    "repo_hit": "Crude Allocation Decision"
+   },
+   {
+    "hier": "6.3.2.10",
+    "name": "Reconcile warranty transaction disposition",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "6.3.3",
+    "name": "Manage supplier recovery",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "6.3.3.1",
+    "name": "Create supplier recovery claims",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "6.3.3.2",
+    "name": "Negotiate recoveries with suppliers",
+    "repo_hit": "Communicate and Negotiate Claim"
+   },
+   {
+    "hier": "6.3.4.1",
+    "name": "Confirm specific service requirements for individual customer",
+    "repo_hit": "Customer Service & Support"
+   },
+   {
+    "hier": "6.3.4.1.3",
+    "name": "Generate service order",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "6.3.4.2",
+    "name": "Identify and schedule resources to meet service requirements",
+    "repo_hit": "Schedule Resources"
+   },
+   {
+    "hier": "6.3.4.3.1",
+    "name": "Organize daily service order fulfillment schedule",
+    "repo_hit": "Schedule Resources"
+   },
+   {
+    "hier": "6.3.4.3.2",
+    "name": "Execute product repair",
+    "repo_hit": "Update location and product tag mapping"
+   },
+   {
+    "hier": "6.3.4.4",
+    "name": "Ensure quality of service",
+    "repo_hit": "Crude/Feed Quality Management"
+   },
+   {
+    "hier": "6.3.4.4.3",
+    "name": "Solicit customer feedback on services delivered",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.2638888888888889,
+  "label": "6.4 Manage product recalls and regulatory audits",
+  "n": 6,
+  "gaps": [
+   {
+    "hier": "6.4.1",
+    "name": "Initiate recall",
+    "repo_hit": null
+   },
+   {
+    "hier": "6.4.2",
+    "name": "Assess the likelihood and consequences of occurrence of any hazards",
+    "repo_hit": "Assess Claim"
+   },
+   {
+    "hier": "6.4.4",
+    "name": "Submit regulatory reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   },
+   {
+    "hier": "6.4.5",
+    "name": "Monitor and audit recall effectiveness",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "6.4.6",
+    "name": "Manage recall termination",
+    "repo_hit": "Manage Consignment Inventory"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3832199546485261,
+  "label": "6.5 Evaluate customer service operations and customer satisfaction",
+  "n": 21,
+  "gaps": [
+   {
+    "hier": "6.5.2",
+    "name": "Measure customer satisfaction with customer- complaint handling and resolution",
+    "repo_hit": "Measure Service Infrastructure"
+   },
+   {
+    "hier": "6.5.2.1",
+    "name": "Solicit customer feedback on complaint handling and resolution",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "6.5.3.1",
+    "name": "Gather and solicit post-sale customer feedback on products and services",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "6.5.3.2",
+    "name": "Solicit post-sale customer feedback on ad effectiveness",
+    "repo_hit": "Analyze Customer Profitability"
+   },
+   {
+    "hier": "6.5.3.3",
+    "name": "Solicit customer feedback on cross-channel experience",
+    "repo_hit": "Customer Experience Strategy"
+   },
+   {
+    "hier": "6.5.4",
+    "name": "Evaluate and manage warranty performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "6.5.4.1",
+    "name": "Measure customer satisfaction with warranty handling and resolution",
+    "repo_hit": "Measure Service Infrastructure"
+   },
+   {
+    "hier": "6.5.4.5",
+    "name": "Investigate fraudulent claims",
+    "repo_hit": "Manage Fraudulent Transactions"
+   },
+   {
+    "hier": "6.5.5",
+    "name": "Evaluate recall performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4292460317460317,
+  "label": "7.1 Develop and manage human resources (HR) planning, policies, and strategies",
+  "n": 30,
+  "gaps": [
+   {
+    "hier": "7.1.1.2",
+    "name": "Define HR and business function roles and accountability",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "7.1.1.7",
+    "name": "Manage employer branding",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.1.2.1",
+    "name": "Gather skill requirements according to corporate strategy and market environment",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "7.1.2.2",
+    "name": "Plan employee resourcing requirements per business unit/organization",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "7.1.2.3.1",
+    "name": "Establish incentive plan",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "7.1.2.5",
+    "name": "Develop high performers/leadership programs",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.1.2.7",
+    "name": "Develop training program",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.1.2.8",
+    "name": "Develop recruitment program",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.1.2.12",
+    "name": "Plan employee benefits",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "7.1.2.14",
+    "name": "Implement workforce strategy models",
+    "repo_hit": "Generate PPIMS Base Models"
+   },
+   {
+    "hier": "7.1.3.1",
+    "name": "Measure realization of objectives",
+    "repo_hit": "Measure Inventory"
+   },
+   {
+    "hier": "7.1.3.2",
+    "name": "Measure contribution to business strategy",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "7.1.3.3",
+    "name": "Communicate plans and provide updates to stakeholders",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.375,
+  "label": "7.10 Manage union relations",
+  "n": 4,
+  "gaps": [
+   {
+    "hier": "7.10.1",
+    "name": "Evaluate union relations internally",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "7.10.2",
+    "name": "Evaluate union relations externally",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.2689655172413793,
+  "label": "7.2 Recruit, source, and select employees",
+  "n": 29,
+  "gaps": [
+   {
+    "hier": "7.2.1",
+    "name": "Manage employee requisitions",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.2.1.1",
+    "name": "Align staffing plan to work force plan and business unit strategies/resource needs",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "7.2.1.2",
+    "name": "Develop and maintain job descriptions",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.2.1.3",
+    "name": "Open job requisitions",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.1.4",
+    "name": "Post job requisitions",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.1.5",
+    "name": "Modify job requisitions",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.1.6",
+    "name": "Notify hiring manager",
+    "repo_hit": "Train and Certify AMPM Manager"
+   },
+   {
+    "hier": "7.2.1.7",
+    "name": "Manage requisition dates",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.2.2",
+    "name": "Recruit/Source candidates",
+    "repo_hit": "Source & Collect Information"
+   },
+   {
+    "hier": "7.2.2.1",
+    "name": "Determine recruitment methods and channels",
+    "repo_hit": "Segment Channels"
+   },
+   {
+    "hier": "7.2.2.2",
+    "name": "Perform recruiting activities/events",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "7.2.2.3",
+    "name": "Manage recruitment vendors",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.2.2.5",
+    "name": "Manage recruitment channels",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.2.3",
+    "name": "Screen and select candidates",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.3.1",
+    "name": "Identify and deploy candidate selection tools",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "7.2.3.2",
+    "name": "Interview candidates",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.3.4",
+    "name": "Select and reject candidates",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.4.1",
+    "name": "Draw up and make offer",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "7.2.4.3",
+    "name": "Hire candidate",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.2.5.1",
+    "name": "Obtain candidate background information",
+    "repo_hit": "Obtain latest XPIMS MOP model"
+   },
+   {
+    "hier": "7.2.5.2",
+    "name": "Create applicant record",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "7.2.5.3.1",
+    "name": "Complete position classification and level of experience",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "7.2.5.4",
+    "name": "Archive and retain records of non-hires",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, and Export Demand at Regional Level for Blendstocks (non-Crude)"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.33752380952380956,
+  "label": "7.3 Manage employee on-boarding, development, and training",
+  "n": 25,
+  "gaps": [
+   {
+    "hier": "7.3.1",
+    "name": "Manage employee orientation and deployment",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.3.1.1",
+    "name": "Create/maintain employee on-boarding program",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "7.3.1.1.1",
+    "name": "Develop employee induction program",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.3.1.1.2",
+    "name": "Maintain/Update employee induction program",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "7.3.1.2",
+    "name": "Evaluate the effectiveness of the employee on-boarding program",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "7.3.1.3",
+    "name": "Execute on-boarding program",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "7.3.2",
+    "name": "Manage employee performance",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "7.3.4",
+    "name": "Develop and train employees",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.3.4.2",
+    "name": "Define employee competencies",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "7.3.4.3",
+    "name": "Align learning programs with competencies",
+    "repo_hit": "Manage Brand Loyalty Programs"
+   },
+   {
+    "hier": "7.3.4.4",
+    "name": "Establish training needs by analysis of required and available skills",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "7.3.4.6",
+    "name": "Manage examinations and certifications",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.3.4.6.1",
+    "name": "Liaise with external certification authorities",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "7.3.4.6.2",
+    "name": "Administer certification tests",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.3.4.6.3",
+    "name": "Appraise experience qualifications",
+    "repo_hit": "Customer Experience Strategy"
+   },
+   {
+    "hier": "7.3.4.6.4",
+    "name": "Administer certificate issue and maintenance",
+    "repo_hit": "Model and System Maintenance"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.41666666666666663,
+  "label": "7.4 Manage employee relations",
+  "n": 4,
+  "gaps": [
+   {
+    "hier": "7.4.1",
+    "name": "Manage labor relations",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.4.4",
+    "name": "Manage employee grievances",
+    "repo_hit": "Manage Consignment Inventory"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.33082010582010585,
+  "label": "7.5 Reward and retain employees",
+  "n": 18,
+  "gaps": [
+   {
+    "hier": "7.5.1",
+    "name": "Develop and manage reward, recognition, and motivation programs",
+    "repo_hit": "Manage Brand Loyalty Programs"
+   },
+   {
+    "hier": "7.5.1.4",
+    "name": "Identify compensation requirements based on financial, benefits, and HR policies",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "7.5.1.5",
+    "name": "Administer compensation and rewards to employees",
+    "repo_hit": "Manage Service Employees"
+   },
+   {
+    "hier": "7.5.1.6",
+    "name": "Reward and motivate employees",
+    "repo_hit": "Manage Service Employees"
+   },
+   {
+    "hier": "7.5.2",
+    "name": "Manage and administer benefits",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.5.2.1",
+    "name": "Deliver employee benefits program",
+    "repo_hit": "Customer Program Analysis"
+   },
+   {
+    "hier": "7.5.2.2",
+    "name": "Administer benefit enrollment",
+    "repo_hit": null
+   },
+   {
+    "hier": "7.5.3",
+    "name": "Manage employee assistance and retention",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.5.3.1",
+    "name": "Deliver programs to support work/life balance for employees",
+    "repo_hit": "Manage Service Employees"
+   },
+   {
+    "hier": "7.5.3.2",
+    "name": "Develop family support systems",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.5.3.3",
+    "name": "Review retention and motivation indicators",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "7.5.4",
+    "name": "Administer payroll",
+    "repo_hit": null
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.42833333333333334,
+  "label": "7.6 Redeploy and retire employees",
+  "n": 10,
+  "gaps": [
+   {
+    "hier": "7.6.4",
+    "name": "Manage leave of absence",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "7.6.5",
+    "name": "Develop and implement employee outplacement",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "7.6.6.1",
+    "name": "Receive required resources/skills and capabilities",
+    "repo_hit": "Receive updated constraints from Schedulers for impacts to Distribution Plan"
+   },
+   {
+    "hier": "7.6.6.2",
+    "name": "Manage resource deployment",
+    "repo_hit": "Manage Consignment Inventory"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4976190476190476,
+  "label": "7.7 Manage employee information and analytics",
+  "n": 7,
+  "gaps": [
+   {
+    "hier": "7.7.4",
+    "name": "Manage human resource information systems HRIS",
+    "repo_hit": "Manage Financial Info. Documentation & Reporting"
+   },
+   {
+    "hier": "7.7.7",
+    "name": "Manage/Collect employee suggestions and perform employee research",
+    "repo_hit": "Manage Research"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.375,
+  "label": "7.8 Manage employee communication",
+  "n": 2,
+  "gaps": [
+   {
+    "hier": "7.8.2",
+    "name": "Conduct employee engagement surveys",
+    "repo_hit": "Conduct Regional Premise Review"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.47131782945736433,
+  "label": "8.1 Develop and manage IT customer relationships",
+  "n": 43,
+  "gaps": [
+   {
+    "hier": "8.1.1",
+    "name": "Understand IT customer needs",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "8.1.1.1",
+    "name": "Understand IT customer communities",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "8.1.2.1",
+    "name": "Understand business requirements for IT capabilities",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.1.2.2",
+    "name": "Understand IT landscape",
+    "repo_hit": null
+   },
+   {
+    "hier": "8.1.2.4",
+    "name": "Outline IT service expectations",
+    "repo_hit": "New Product & Service Development"
+   },
+   {
+    "hier": "8.1.3",
+    "name": "Plan and communicate IT services",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.1.3.2",
+    "name": "Define future IT services",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "8.1.3.3",
+    "name": "Determine  IT performance indicators",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.1.4",
+    "name": "Provide IT transformation guidance",
+    "repo_hit": "Provide Customer Training"
+   },
+   {
+    "hier": "8.1.4.5",
+    "name": "Facilitate solution design activities",
+    "repo_hit": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"
+   },
+   {
+    "hier": "8.1.4.9",
+    "name": "Develop transformation roadmap",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "8.1.5.1",
+    "name": "Understand IT service requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "8.1.5.3",
+    "name": "Maintain IT services catalog",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "8.1.5.7",
+    "name": "Develop and maintain improvement processes",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "8.1.6.3",
+    "name": "Understand  IT customer environment",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "8.1.7.1",
+    "name": "Assess SLA compliance",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "8.1.7.2",
+    "name": "Triage SLA compliance issues",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "8.1.7.3",
+    "name": "Collect feedback about IT products and services",
+    "repo_hit": "Update XPIMS model with new products and new location node"
+   },
+   {
+    "hier": "8.1.7.4",
+    "name": "Synthesize and distribute IT performance information",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4019285714285714,
+  "label": "8.2 Develop and manage IT business strategy",
+  "n": 50,
+  "gaps": [
+   {
+    "hier": "8.2.1.1",
+    "name": "Build and maintain IT strategic intelligence",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "8.2.1.2",
+    "name": "Monitor and map current and emerging technologies",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.2.1.5",
+    "name": "Articulate IT alignment principles",
+    "repo_hit": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"
+   },
+   {
+    "hier": "8.2.1.6",
+    "name": "Maintain IT strategic alignment",
+    "repo_hit": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"
+   },
+   {
+    "hier": "8.2.2.2",
+    "name": "Determine IT portfolio investment balance",
+    "repo_hit": "Optimize Plant Energy Balance"
+   },
+   {
+    "hier": "8.2.2.3",
+    "name": "Evaluate  proposed IT investment projects",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "8.2.2.5",
+    "name": "Align IT resources to strategic priorities",
+    "repo_hit": "Develop Strategic Business Plan"
+   },
+   {
+    "hier": "8.2.2.6",
+    "name": "Align IT portfolio to business objectives",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.2.3",
+    "name": "Define and maintain enterprise architecture",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "8.2.3.1",
+    "name": "Create and publish enterprise architecture principles",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.2.3.2",
+    "name": "Establish and operate enterprise architecture governance",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "8.2.3.3",
+    "name": "Research technologies to innovate IT services and solutions",
+    "repo_hit": "Conduct Research"
+   },
+   {
+    "hier": "8.2.3.4",
+    "name": "Provide input to definition and prioritization of IT projects",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "8.2.5.1",
+    "name": "Determine IT performance measures",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.2.5.2",
+    "name": "Define IT control points and assurance procedures governance model",
+    "repo_hit": "Define Procedural Framework & Guidelines"
+   },
+   {
+    "hier": "8.2.5.9",
+    "name": "Select, deploy, and operate IT performance analytics tools",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.2.6.1",
+    "name": "Assess performance against IT service and project value criteria",
+    "repo_hit": "Assess Cost-to-Serve Performance"
+   },
+   {
+    "hier": "8.2.6.2",
+    "name": "Quantify value of IT service and project portfolio investments",
+    "repo_hit": "Value Intellectual Assets"
+   },
+   {
+    "hier": "8.2.6.4",
+    "name": "Determine and implement IT portfolio adjustments",
+    "repo_hit": "Define Channel Portfolio"
+   },
+   {
+    "hier": "8.2.7.1",
+    "name": "Establish selection criteria for research initiatives",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "8.2.7.2",
+    "name": "Analyze emerging technology concepts",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "8.2.7.4",
+    "name": "Execute IT research projects",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "8.2.7.5",
+    "name": "Evaluate IT research project outcomes",
+    "repo_hit": "Publish Meeting Outcomes"
+   },
+   {
+    "hier": "8.2.7.6",
+    "name": "Identify and promote viable concepts",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3802107728337237,
+  "label": "8.3 Develop and manage IT resilience and risk",
+  "n": 61,
+  "gaps": [
+   {
+    "hier": "8.3.1.7",
+    "name": "Identify systems to support compliance",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "8.3.1.8",
+    "name": "Identify and evaluate IT risk",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "8.3.1.9",
+    "name": "Evaluate  IT-related risks resiliency",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "8.3.1.10",
+    "name": "Create IT risk mitigation strategies and approaches",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.3.2.1",
+    "name": "Determine IT delivery resiliency",
+    "repo_hit": "Schedule Feedstock Delivery"
+   },
+   {
+    "hier": "8.3.2.2",
+    "name": "Determine critical IT risks",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "8.3.2.3",
+    "name": "Prioritize IT risks",
+    "repo_hit": null
+   },
+   {
+    "hier": "8.3.2.4",
+    "name": "Establish mitigation approaches for IT risks",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "8.3.3.2",
+    "name": "Analyze IT security threat impact",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "8.3.3.3",
+    "name": "Create and maintain IT compliance requirements",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.3.3.4",
+    "name": "Create and maintain IT security policies, standards, and procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "8.3.3.7",
+    "name": "Establish communication standards",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "8.3.3.10",
+    "name": "Identify, supervise and monitor IT risk mitigation measures",
+    "repo_hit": "Monitor & Analyze Credit"
+   },
+   {
+    "hier": "8.3.5",
+    "name": "Develop and manage IT security, privacy, and data protection",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "8.3.5.2",
+    "name": "Create IT security, privacy, and data protection risk governance",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.3.5.3",
+    "name": "Define IT data security and privacy policies, standards, and procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "8.3.5.4",
+    "name": "Review and monitor physical and logical IT data security measures",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "8.3.5.6",
+    "name": "Review and monitor IT physical environment security controls",
+    "repo_hit": "Monitor Internal Trade Controls"
+   },
+   {
+    "hier": "8.3.5.7",
+    "name": "Monitor/analyze network intrusion detection data and resolve threats",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "8.3.6.1",
+    "name": "Conduct projects to enhance IT compliance and remediate risk",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "8.3.6.2",
+    "name": "Conduct IT compliance control auditing of internal and external services",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "8.3.6.4",
+    "name": "Identify and escalate IT compliance issues and remediation requirements",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "8.3.6.5",
+    "name": "Support external audits and reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   },
+   {
+    "hier": "8.3.7.1",
+    "name": "Conduct IT resilience improvement projects",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "8.3.7.3",
+    "name": "Implement and enforce change control procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "8.3.7.4",
+    "name": "Execute recurring IT service provider business continuity",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.3.8",
+    "name": "Manage IT user identity and authorization",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.3.8.1",
+    "name": "Support integration of identity and authorization policies",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "8.3.8.2",
+    "name": "Manage IT user directory",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.3.8.3",
+    "name": "Manage IT user authorization",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.3.8.4",
+    "name": "Manage IT user authentication mechanisms",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.3.8.5",
+    "name": "Audit IT user identity and authorization systems",
+    "repo_hit": "Conduct Audit To Validate Reported Sales"
+   },
+   {
+    "hier": "8.3.8.6",
+    "name": "Respond to IT information security and network breaches",
+    "repo_hit": "Update Network Constraints for DPO Plan"
+   },
+   {
+    "hier": "8.3.8.7",
+    "name": "Conduct penetration testing",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "8.3.8.8",
+    "name": "Audit integration of user identity and authorization systems",
+    "repo_hit": "Conduct Audit To Validate Reported Sales"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.28915343915343916,
+  "label": "8.4 Manage information",
+  "n": 18,
+  "gaps": [
+   {
+    "hier": "8.4.1.2",
+    "name": "Establish data, information, and analytic governance",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.4.1.3",
+    "name": "Access IT data/analytic capabilities",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.4.2",
+    "name": "Define and maintain business information architecture",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.4.2.1",
+    "name": "Determine enterprise business information requirements",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.4.2.2",
+    "name": "Define enterprise data models",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.4.2.4",
+    "name": "Establish  data ownership and stewardship responsibilities",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.4.2.5",
+    "name": "Maintain and evolve enterprise data and information architecture",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "8.4.3",
+    "name": "Define and execute business information lifecycle planning and control",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.4.3.1",
+    "name": "Define and maintain enterprise information policies, standards, and procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "8.4.4.1",
+    "name": "Monitor and control business information",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.4.4.2",
+    "name": "Maintain business information feeds and repositories",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.4.4.3",
+    "name": "Perform internal usage audits",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "8.4.4.4",
+    "name": "Implement and administer business information access",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3581196581196581,
+  "label": "8.5 Develop and manage services/solutions",
+  "n": 39,
+  "gaps": [
+   {
+    "hier": "8.5.1.2",
+    "name": "Define IT service/solution development processes/standards",
+    "repo_hit": "Define Target Customer Groups"
+   },
+   {
+    "hier": "8.5.1.3",
+    "name": "Identify, deploy, and support development methodologies and tools",
+    "repo_hit": "Identify Market Needs"
+   },
+   {
+    "hier": "8.5.1.4",
+    "name": "Establish service component criteria",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.5.1.5",
+    "name": "Understand and select reusable service components",
+    "repo_hit": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"
+   },
+   {
+    "hier": "8.5.1.6",
+    "name": "Maintain service component portfolio",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.5.1.7",
+    "name": "Establish development standards exception governance",
+    "repo_hit": "Commercial Development"
+   },
+   {
+    "hier": "8.5.2.1",
+    "name": "Monitor and track emerging technology capabilities",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.5.2.2",
+    "name": "Identify IT services/solutions",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "8.5.2.3",
+    "name": "Determine IT service/solution approach",
+    "repo_hit": "Define Strategic Pricing Approach"
+   },
+   {
+    "hier": "8.5.2.4",
+    "name": "Define IT solution lifecycle",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "8.5.3.1",
+    "name": "Assess IT application and infrastructure architecture constraints",
+    "repo_hit": "Update Model Constraints based on Outcomes of XPIMS <> DPO Reconciliation"
+   },
+   {
+    "hier": "8.5.3.3",
+    "name": "Determine IT component integration requirements",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.5.3.5",
+    "name": "Promote adoption of existing service/solution architecture",
+    "repo_hit": "Manage Existing Counterparty"
+   },
+   {
+    "hier": "8.5.4",
+    "name": "Execute IT service/solution creation and testing",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "8.5.4.1.3",
+    "name": "Build and test IT service/solution components",
+    "repo_hit": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"
+   },
+   {
+    "hier": "8.5.4.1.4",
+    "name": "Integrate IT components and services",
+    "repo_hit": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"
+   },
+   {
+    "hier": "8.5.4.1.5",
+    "name": "Execute IT service/solution validation",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "8.5.4.1.6",
+    "name": "Bundle service/solution deployment packaging",
+    "repo_hit": "New Product & Service Development"
+   },
+   {
+    "hier": "8.5.5.1.2",
+    "name": "Modify service/solution design",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "8.5.5.1.3",
+    "name": "Perform IT service/solution remediation",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "8.5.5.1.5",
+    "name": "Prepare fixed/enhanced service/solution packaging",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.34471544715447155,
+  "label": "8.6 Deploy services/solutions",
+  "n": 41,
+  "gaps": [
+   {
+    "hier": "8.6.1",
+    "name": "Develop and manage service/solution deployment strategy",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "8.6.1.2",
+    "name": "Establish IT deployment policies",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "8.6.1.3",
+    "name": "Define and create deployment procedure workflow",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.6.1.4",
+    "name": "Define IT change/release standards",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "8.6.1.5",
+    "name": "Assign deployment approval responsibilities",
+    "repo_hit": "Obtain Trade Approval"
+   },
+   {
+    "hier": "8.6.1.6",
+    "name": "Analyze deployments outcomes",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "8.6.2.2",
+    "name": "Define implementation schedule and roll-out sequence",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "8.6.2.3",
+    "name": "Determine implementation requirements",
+    "repo_hit": "Capture Product Demand Requirements"
+   },
+   {
+    "hier": "8.6.2.4",
+    "name": "Plan and align user testing and resources",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.6.2.6",
+    "name": "Create implementation communications",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.6.2.7",
+    "name": "Manage IT roll-back procedures",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.6.3.1",
+    "name": "Asses IT change/release impact",
+    "repo_hit": "Capture the impact of each event on GRM waterfall"
+   },
+   {
+    "hier": "8.6.3.2",
+    "name": "Confirm change/release compliance",
+    "repo_hit": "Manage Confirm Disputes"
+   },
+   {
+    "hier": "8.6.3.5",
+    "name": "Create and communicate deployment schedule",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "8.6.3.6",
+    "name": "Approve change/release deployment",
+    "repo_hit": "Manage Product/Service Change"
+   },
+   {
+    "hier": "8.6.3.7",
+    "name": "Document IT change/release outcome",
+    "repo_hit": "Identify Additional scenarios based on outcome analysis"
+   },
+   {
+    "hier": "8.6.4",
+    "name": "Implement technology solutions",
+    "repo_hit": "Identify Technology Needs/Opportunities"
+   },
+   {
+    "hier": "8.6.4.1",
+    "name": "Confirm hardware/software operational status",
+    "repo_hit": "Manage Confirm Disputes"
+   },
+   {
+    "hier": "8.6.4.2",
+    "name": "Confirm operational availability",
+    "repo_hit": "Capture Crude Availability"
+   },
+   {
+    "hier": "8.6.4.4",
+    "name": "Confirm implementation completion",
+    "repo_hit": "Manage Confirm Disputes"
+   },
+   {
+    "hier": "8.6.4.5",
+    "name": "Implement software change/release",
+    "repo_hit": "Manage Product/Service Change"
+   },
+   {
+    "hier": "8.6.4.6",
+    "name": "Perform post-installation testing",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "8.6.4.8",
+    "name": "Verify change/release implementation success",
+    "repo_hit": "Visioning And Implementation Planning"
+   },
+   {
+    "hier": "8.6.5",
+    "name": "Perform service and solution rollout",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "8.6.5.3",
+    "name": "Support organizational changes",
+    "repo_hit": "Review business context and identify data objects requiring changes in Network Premise"
+   },
+   {
+    "hier": "8.6.5.4",
+    "name": "Execute rollout plans",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "8.6.5.5",
+    "name": "Provide rollout support",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "8.6.5.7",
+    "name": "Monitor and record rollout issues",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.40331772053083526,
+  "label": "8.7 Create and manage support services/solutions",
+  "n": 61,
+  "gaps": [
+   {
+    "hier": "8.7.3.1.2",
+    "name": "Maintain/optimize batch job schedule",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "8.7.3.1.3",
+    "name": "Schedule change/release windows",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "8.7.3.1.4",
+    "name": "Schedule/optimize backup and archive activities",
+    "repo_hit": "Schedule Secondary Distribution"
+   },
+   {
+    "hier": "8.7.3.1.5",
+    "name": "Balance operational workloads across available infrastructure components",
+    "repo_hit": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"
+   },
+   {
+    "hier": "8.7.3.1.6",
+    "name": "Determine specific problem support procedures",
+    "repo_hit": "Manage Site Specific Business Risk"
+   },
+   {
+    "hier": "8.7.4.2",
+    "name": "Assess IT infrastructure business objectives",
+    "repo_hit": "Conduct Business Tactics Discussion"
+   },
+   {
+    "hier": "8.7.4.3",
+    "name": "Determine ongoing IT infrastructure capabilities",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "8.7.4.4",
+    "name": "Plan IT infrastructure change",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.7.4.5",
+    "name": "Plan and budget IT license usage volumes",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "8.7.5.1",
+    "name": "Understand IT support demand patterns",
+    "repo_hit": "Demand Forecasting"
+   },
+   {
+    "hier": "8.7.5.2",
+    "name": "Determine required support resource levels, responsibilities, and capabilities",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "8.7.5.6",
+    "name": "Define IT escalation mechanisms",
+    "repo_hit": "Define Analysis Objectives & Scope"
+   },
+   {
+    "hier": "8.7.5.8",
+    "name": "Coordinate with external support providers",
+    "repo_hit": "Coordinate Product Trading"
+   },
+   {
+    "hier": "8.7.6.1",
+    "name": "Operate and monitor online systems",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.7.6.2",
+    "name": "Run and monitor batch job schedule",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.7.6.4",
+    "name": "Manage infrastructure performance and capacity",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.7.6.5",
+    "name": "Respond to unplanned operational issues",
+    "repo_hit": "Build and run unplanned downtime cases"
+   },
+   {
+    "hier": "8.7.6.6",
+    "name": "Produce and distribute output media",
+    "repo_hit": "Facilitate Alignment for Identified Points of Reconciliation between XPIMS and DPO Output"
+   },
+   {
+    "hier": "8.7.6.7",
+    "name": "Monitor IT infrastructure security",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "8.7.7.1",
+    "name": "Manage infrastructure configuration",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "8.7.7.3",
+    "name": "Install/configure/upgrade infrastructure components",
+    "repo_hit": "Receive actual data for feedstock, products, IRTS, refinery operations, inventory, network components, and prices"
+   },
+   {
+    "hier": "8.7.7.4",
+    "name": "Maintain IT asset records",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "8.7.7.5",
+    "name": "Administer IT licenses/user agreements",
+    "repo_hit": "Contractual Agreements Management"
+   },
+   {
+    "hier": "8.7.8",
+    "name": "Operate IT user support",
+    "repo_hit": "Manage and Support Emission Trading"
+   },
+   {
+    "hier": "8.7.8.1",
+    "name": "Triage IT issues/requests",
+    "repo_hit": "Manage Customer Requests and Inquiries"
+   },
+   {
+    "hier": "8.7.8.2",
+    "name": "Provide IT resolution capabilities",
+    "repo_hit": "Provide Customer Training"
+   },
+   {
+    "hier": "8.7.8.5",
+    "name": "Resolve IT issues/requests",
+    "repo_hit": "Manage Customer Requests and Inquiries"
+   },
+   {
+    "hier": "8.7.8.6",
+    "name": "Execute IT continuity and recovery action",
+    "repo_hit": "Plan & Execute Nominations"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4544871794871795,
+  "label": "9.1 Perform planning and management accounting",
+  "n": 26,
+  "gaps": [
+   {
+    "hier": "9.1.1.3",
+    "name": "Operationalize and implement plans to achieve budget",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   },
+   {
+    "hier": "9.1.1.4",
+    "name": "Prepare periodic financial forecasts",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.1.1.5",
+    "name": "Perform variance analysis against forecasts and budgets",
+    "repo_hit": "Perform overrides against data gaps for Regional and Distribution Plan inputs"
+   },
+   {
+    "hier": "9.1.3.1",
+    "name": "Determine key cost drivers",
+    "repo_hit": "Update Crude Avails and Crude Cost"
+   },
+   {
+    "hier": "9.1.3.2",
+    "name": "Measure cost drivers",
+    "repo_hit": "Update Crude Avails and Crude Cost"
+   },
+   {
+    "hier": "9.1.3.3",
+    "name": "Determine critical activities",
+    "repo_hit": "Determine Channel Of Trade Mix"
+   },
+   {
+    "hier": "9.1.4.3",
+    "name": "Perform life cycle costing",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "9.1.4.5",
+    "name": "Track performance of new-customer and product strategies",
+    "repo_hit": "Assess Cost-to-Serve Performance"
+   },
+   {
+    "hier": "9.1.4.6",
+    "name": "Prepare activity-based performance measures",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.1.4.7",
+    "name": "Manage continuous cost improvement",
+    "repo_hit": "Update Crude Avails and Crude Cost"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.5208333333333334,
+  "label": "9.10 Manage international funds/consolidation",
+  "n": 4,
+  "gaps": [
+   {
+    "hier": "9.10.1",
+    "name": "Monitor international rates",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.10.3",
+    "name": "Monitor currency exposure/hedge currency",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4083333333333333,
+  "label": "9.11 Perform global trade services",
+  "n": 10,
+  "gaps": [
+   {
+    "hier": "9.11.1",
+    "name": "Screen sanctioned party list",
+    "repo_hit": "Run list of standard scenarios for evaluation"
+   },
+   {
+    "hier": "9.11.2",
+    "name": "Control exports and imports",
+    "repo_hit": "Gather Committed Deals, Spot Opportunities, Exports opportunities at Regional Level for Clean Products"
+   },
+   {
+    "hier": "9.11.4",
+    "name": "Perform currency conversion",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "9.11.8",
+    "name": "Process trade preferences",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.11.10",
+    "name": "Prepare letter of credit",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.4191056910569106,
+  "label": "9.2 Perform revenue accounting",
+  "n": 41,
+  "gaps": [
+   {
+    "hier": "9.2.1.2",
+    "name": "Analyze/Approve new account applications",
+    "repo_hit": "Check if new location or material has been identified"
+   },
+   {
+    "hier": "9.2.1.4",
+    "name": "Forecast credit scoring requirement",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.2.1.5",
+    "name": "Review existing accounts",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "9.2.1.6",
+    "name": "Produce credit/collection reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   },
+   {
+    "hier": "9.2.1.7",
+    "name": "Reinstate or suspend accounts based on credit policies",
+    "repo_hit": "Maintain Credit Policies"
+   },
+   {
+    "hier": "9.2.2.4",
+    "name": "Generate term purchase/sale statement",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "9.2.2.5",
+    "name": "Generate throughput statement",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "9.2.2.6",
+    "name": "Generate exchange statement",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "9.2.2.8",
+    "name": "Generate retailer invoice",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "9.2.2.9",
+    "name": "Transmit billing data to customers",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.2.2.10",
+    "name": "Post receivable entries",
+    "repo_hit": null
+   },
+   {
+    "hier": "9.2.3",
+    "name": "Process accounts receivable (AR)",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.2.3.2",
+    "name": "Receive/Deposit customer payments",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "9.2.3.5",
+    "name": "Post AR activity to the general ledger",
+    "repo_hit": "Manage M&A Activity"
+   },
+   {
+    "hier": "9.2.4.1",
+    "name": "Establish policies for delinquent accounts",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "9.2.4.2",
+    "name": "Analyze delinquent account balances",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "9.2.4.3",
+    "name": "Correspond/Negotiate with delinquent accounts",
+    "repo_hit": "Communicate and Negotiate Claim"
+   },
+   {
+    "hier": "9.2.4.4",
+    "name": "Discuss account resolution with internal parties",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "9.2.4.5",
+    "name": "Process adjustments/write off balances",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.2.4.6",
+    "name": "Perform recovery workout",
+    "repo_hit": "Perform validation check for new location and material in XPIMS model"
+   },
+   {
+    "hier": "9.2.5.3",
+    "name": "Correspond/Negotiate with customer",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "9.2.5.4",
+    "name": "Discuss resolution with internal parties",
+    "repo_hit": "Optimize Internal vs. External Energy Sources"
+   },
+   {
+    "hier": "9.2.5.5",
+    "name": "Prepare chargeback invoices",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.2.5.6",
+    "name": "Process related entries",
+    "repo_hit": "Process Business Renewal Request"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.39452380952380955,
+  "label": "9.3 Perform general accounting and reporting",
+  "n": 35,
+  "gaps": [
+   {
+    "hier": "9.3.1.4",
+    "name": "Set and enforce approval limits",
+    "repo_hit": "Set up and Stabilize Aggregated Forecast Model"
+   },
+   {
+    "hier": "9.3.1.5",
+    "name": "Establish common financial systems",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "9.3.2.1",
+    "name": "Maintain chart of accounts",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "9.3.2.2",
+    "name": "Process journal entries",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.3.2.5",
+    "name": "Post and reconcile intercompany transactions",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "9.3.2.6",
+    "name": "Reconcile general ledger accounts",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "9.3.2.8",
+    "name": "Prepare trial balance",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.3.2.9",
+    "name": "Prepare and post management adjustments",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.3.3.3",
+    "name": "Process and record fixed-asset additions and retires",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.3.3.4",
+    "name": "Process and record fixed-asset adjustments, enhancements, revaluations, and transfers",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.3.3.5",
+    "name": "Process and record fixed-asset maintenance and repair expenses",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "9.3.3.6",
+    "name": "Calculate and record depreciation expense",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "9.3.3.7",
+    "name": "Reconcile fixed-asset ledger",
+    "repo_hit": "Discharge & Reconcile Load"
+   },
+   {
+    "hier": "9.3.3.9",
+    "name": "Provide fixed-asset data to support tax, statutory, and regulatory reporting",
+    "repo_hit": "Reconcile And Report Indirect Tax"
+   },
+   {
+    "hier": "9.3.4.1",
+    "name": "Prepare business unit financial statements",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.3.4.6",
+    "name": "Produce quarterly/annual filings and shareholder reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   },
+   {
+    "hier": "9.3.4.7",
+    "name": "Produce regulatory reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   }
+  ]
+ },
+ {
+  "status": "GAP",
+  "avg": 0.3038961038961039,
+  "label": "9.4 Manage fixed-asset project accounting",
+  "n": 11,
+  "gaps": [
+   {
+    "hier": "9.4.1.2",
+    "name": "Develop and approve capital expenditure plans and budgets",
+    "repo_hit": "Develop R&D Implementation Plans"
+   },
+   {
+    "hier": "9.4.1.3",
+    "name": "Review and approve capital projects and fixed-asset acquisitions",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "9.4.1.4",
+    "name": "Conduct financial justification for project approval",
+    "repo_hit": "Conduct Regional Premise Review"
+   },
+   {
+    "hier": "9.4.2.1",
+    "name": "Create project account codes",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.4.2.2",
+    "name": "Record project-related transactions",
+    "repo_hit": "Manage Fraudulent Transactions"
+   },
+   {
+    "hier": "9.4.2.3",
+    "name": "Monitor and track capital projects and budget spending",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.4.2.4",
+    "name": "Close/capitalize projects",
+    "repo_hit": "Value Projects/Portfolios"
+   },
+   {
+    "hier": "9.4.2.5",
+    "name": "Measure financial returns on completed capital projects",
+    "repo_hit": "Measure Inventory"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3484126984126984,
+  "label": "9.5 Process payroll",
+  "n": 21,
+  "gaps": [
+   {
+    "hier": "9.5.1.2",
+    "name": "Collect and record employee time worked",
+    "repo_hit": "Decide Upon Breakdown of Time Periods for XPIMS for Entire Planning Horizon"
+   },
+   {
+    "hier": "9.5.1.3",
+    "name": "Analyze and report paid and unpaid leave",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "9.5.1.4",
+    "name": "Monitor regular, overtime, and other hours",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.5.1.5",
+    "name": "Analyze and report employee utilization",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "9.5.2.1",
+    "name": "Enter employee time worked into payroll system",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "9.5.2.2",
+    "name": "Maintain and administer employee earnings information",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "9.5.2.3",
+    "name": "Maintain and administer applicable deductions",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "9.5.2.4",
+    "name": "Monitor changes in tax status of employees",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.5.2.5",
+    "name": "Process and distribute payments",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.5.2.6",
+    "name": "Process and distribute manual checks",
+    "repo_hit": "Gather Manual Data Inputs"
+   },
+   {
+    "hier": "9.5.2.8",
+    "name": "Respond to employee payroll inquiries",
+    "repo_hit": "Manage Customer Requests and Inquiries"
+   },
+   {
+    "hier": "9.5.3.3",
+    "name": "Calculate and pay applicable payroll taxes",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "9.5.3.4",
+    "name": "Produce and distribute employee annual tax statements",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.38161904761904764,
+  "label": "9.6 Process accounts payable and expense reimbursements",
+  "n": 25,
+  "gaps": [
+   {
+    "hier": "9.6.1",
+    "name": "Process accounts payable (AP)",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.6.1.1",
+    "name": "Verify AP pay file with purchase order vendor master file",
+    "repo_hit": "Manage Master Data (Customer, Price, Product, Tax, Location)"
+   },
+   {
+    "hier": "9.6.1.3",
+    "name": "Audit invoices and key data in AP system",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.6.1.5",
+    "name": "Process financial accruals and reversals",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.6.1.6",
+    "name": "Process payables taxes",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.6.1.7",
+    "name": "Research/Resolve payable exceptions",
+    "repo_hit": "Manage Production Schedule Exceptions"
+   },
+   {
+    "hier": "9.6.1.10",
+    "name": "Retain records",
+    "repo_hit": null
+   },
+   {
+    "hier": "9.6.1.11",
+    "name": "Adjust accounting records",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "9.6.2",
+    "name": "Process expense reimbursements",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.6.2.1",
+    "name": "Establish and communicate expense reimbursement policies and approval limits",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "9.6.2.3",
+    "name": "Approve reimbursements and advances",
+    "repo_hit": null
+   },
+   {
+    "hier": "9.6.2.4",
+    "name": "Process reimbursements and advances",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.6.3.1",
+    "name": "Establish corporate credit card policies and approval limits",
+    "repo_hit": "Manage Credit Limits"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.38633879781420766,
+  "label": "9.7 Manage treasury operations",
+  "n": 61,
+  "gaps": [
+   {
+    "hier": "9.7.1.2",
+    "name": "Establish and publish treasury policies",
+    "repo_hit": "Publish Forecast and Generate Component Level Forecast Plan"
+   },
+   {
+    "hier": "9.7.1.4",
+    "name": "Monitor treasury procedures",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.7.1.5",
+    "name": "Audit treasury procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "9.7.1.6",
+    "name": "Revise treasury procedures",
+    "repo_hit": "Develop Accounting Policies & Procedures"
+   },
+   {
+    "hier": "9.7.1.8",
+    "name": "Define system security requirements",
+    "repo_hit": "Model and System Maintenance"
+   },
+   {
+    "hier": "9.7.2.3",
+    "name": "Process and oversee electronic fund transfers (EFTs)",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.7.2.4",
+    "name": "Develop cash flow forecasts",
+    "repo_hit": "Develop Statistical Baseline"
+   },
+   {
+    "hier": "9.7.2.6",
+    "name": "Produce cash management accounting transactions and reports",
+    "repo_hit": "Manage Cash Application"
+   },
+   {
+    "hier": "9.7.2.7",
+    "name": "Manage and oversee banking relationships",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "9.7.2.8",
+    "name": "Analyze, negotiate, resolve, and confirm bank fees",
+    "repo_hit": "Analyze Forecast and Historical Market Data"
+   },
+   {
+    "hier": "9.7.3.2",
+    "name": "Manage and facilitate inter-company borrowing transactions",
+    "repo_hit": "Manage Fraudulent Transactions"
+   },
+   {
+    "hier": "9.7.3.3",
+    "name": "Manage centralized outgoing payments on behalf of subsidiaries",
+    "repo_hit": "Manage Marketing Interests & Royalty Payments"
+   },
+   {
+    "hier": "9.7.3.4",
+    "name": "Manage central incoming payments on behalf of subsidiaries",
+    "repo_hit": "Manage Marketing Interests & Royalty Payments"
+   },
+   {
+    "hier": "9.7.3.6",
+    "name": "Calculate interest and fees for in-house bank accounts",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "9.7.3.7",
+    "name": "Provide account statements for in-house bank accounts",
+    "repo_hit": "Perform Account Planning"
+   },
+   {
+    "hier": "9.7.4.1",
+    "name": "Establish investment policy",
+    "repo_hit": "Develop Crude/Feedstock Inventory Policy"
+   },
+   {
+    "hier": "9.7.4.4",
+    "name": "Manage issuer exposure",
+    "repo_hit": "Manage Consignment Inventory"
+   },
+   {
+    "hier": "9.7.4.5",
+    "name": "Process and oversee debt and investment transactions",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.7.4.6",
+    "name": "Process and oversee foreign currency transactions",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.7.4.7",
+    "name": "Produce debt and investment accounting transaction reports",
+    "repo_hit": "Bad Debt Allowance"
+   },
+   {
+    "hier": "9.7.4.8",
+    "name": "Process and oversee interest rate transactions",
+    "repo_hit": "Process Business Renewal Request"
+   },
+   {
+    "hier": "9.7.5.2.2",
+    "name": "Determine interest rate exposure for all markets",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "9.7.5.2.3",
+    "name": "Determine interest rate hedge requirements in accordance with risk policy",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "9.7.5.2.4",
+    "name": "Execute interest rate trades",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "9.7.5.3.2",
+    "name": "Determine foreign exchange exposure for all currencies",
+    "repo_hit": "Identify inaccurate, out of range, or missing data for all data in UI (including periods identified)"
+   },
+   {
+    "hier": "9.7.5.3.3",
+    "name": "Determine foreign exchange hedge requirements in accordance with risk policy",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "9.7.5.3.5",
+    "name": "Manage foreign exchange balance sheet risk",
+    "repo_hit": "Manage Site Specific Business Risk"
+   },
+   {
+    "hier": "9.7.5.4.1",
+    "name": "Determine current customer exposures and limit exceptions",
+    "repo_hit": "Determine Taxability"
+   },
+   {
+    "hier": "9.7.5.4.2",
+    "name": "Resolve customer exposure limit violations",
+    "repo_hit": "Adjust Forecast Incorporating Customer Input and Market Intelligence"
+   },
+   {
+    "hier": "9.7.5.5",
+    "name": "Execute hedging transactions",
+    "repo_hit": "Plan & Execute Nominations"
+   },
+   {
+    "hier": "9.7.5.5.1",
+    "name": "Measure physical positions",
+    "repo_hit": "Physical Distribution Scheduling"
+   },
+   {
+    "hier": "9.7.5.5.3",
+    "name": "Unwind hedges",
+    "repo_hit": null
+   },
+   {
+    "hier": "9.7.5.5.4",
+    "name": "Evaluate and refine hedging positions",
+    "repo_hit": "Evaluate Market Scenarios Identified for Prompt Month Horizon"
+   },
+   {
+    "hier": "9.7.5.6",
+    "name": "Produce hedge accounting transactions and reports",
+    "repo_hit": "Prepare reports highlighting root causes for each events"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.3404166666666667,
+  "label": "9.8 Manage internal controls",
+  "n": 20,
+  "gaps": [
+   {
+    "hier": "9.8.1.1",
+    "name": "Establish board of directors and audit committee",
+    "repo_hit": "Establish difference between regional volume in final case and actual volume"
+   },
+   {
+    "hier": "9.8.1.2",
+    "name": "Define and communicate code of ethics",
+    "repo_hit": "Communicate Decisions and Actions from Management Review Meeting"
+   },
+   {
+    "hier": "9.8.1.5",
+    "name": "Define entity/unit risk tolerances",
+    "repo_hit": "Manage Site Specific Business Risk"
+   },
+   {
+    "hier": "9.8.2.1",
+    "name": "Design and implement control activities",
+    "repo_hit": "Offer Design & Development"
+   },
+   {
+    "hier": "9.8.2.1.2",
+    "name": "Execute daily contract (sales, purchases, other) compliance tests",
+    "repo_hit": "Receive actual data for product sales/ purchases volumes"
+   },
+   {
+    "hier": "9.8.2.2",
+    "name": "Monitor control effectiveness",
+    "repo_hit": "Monitor Demand Forecasting Performance and Reporting"
+   },
+   {
+    "hier": "9.8.2.3",
+    "name": "Remediate control deficiencies",
+    "repo_hit": null
+   },
+   {
+    "hier": "9.8.2.4",
+    "name": "Create compliance function",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.8.2.5",
+    "name": "Operate compliance function",
+    "repo_hit": "Monitor Risk Policy Compliance"
+   },
+   {
+    "hier": "9.8.2.6",
+    "name": "Implement and maintain controls-related enabling technologies and tools",
+    "repo_hit": "Maintain Supply Planning Master Data"
+   },
+   {
+    "hier": "9.8.3.1",
+    "name": "Report to external auditors",
+    "repo_hit": "Distribute final report with agreed upon action plans"
+   },
+   {
+    "hier": "9.8.3.2",
+    "name": "Report to regulators, share-/debt-holders, securities exchanges, etc.",
+    "repo_hit": "Share DPO Base Plan in XPIMS DPO Reconciliation"
+   },
+   {
+    "hier": "9.8.3.3",
+    "name": "Report to third parties",
+    "repo_hit": "Manage Third Party Storage"
+   }
+  ]
+ },
+ {
+  "status": "THIN",
+  "avg": 0.49464285714285716,
+  "label": "9.9 Manage taxes",
+  "n": 12,
+  "gaps": [
+   {
+    "hier": "9.9.1.1",
+    "name": "Develop foreign, national, state, and local tax strategy",
+    "repo_hit": "Develop & Test Brand Hypothesis"
+   },
+   {
+    "hier": "9.9.2.2",
+    "name": "Prepare tax returns",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.9.2.3",
+    "name": "Prepare foreign taxes",
+    "repo_hit": "Prepare Master Data To Create Demand Forecast"
+   },
+   {
+    "hier": "9.9.2.4",
+    "name": "Calculate deferred taxes",
+    "repo_hit": "Calculate Credit Exposure"
+   },
+   {
+    "hier": "9.9.2.7",
+    "name": "Address tax inquiries",
+    "repo_hit": "Update data inputs to address data inconsistencies and gaps"
+   }
+  ]
+ }
+]
