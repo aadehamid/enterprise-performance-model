@@ -717,31 +717,38 @@ Facts about the source material that are easy to get wrong:
 5. **Boundary notes are decisions too.** "Out of scope" with a recorded
    reason beats silent omission; future-you will thank present-you.
 6. **Definition authoring workflow (Step 3c, locked 2026-09-18).**
-   Hamid fills `step3c-definition-authoring-workbook.xlsx` (the single
-   "Review & authoring" sheet) and gets it onto GitHub; the assistant
-   pulls it, runs `step3c-workbook-validate.py` (mechanical gate), then
-   performs a full semantic review against the enterprise-grade bar
-   below. Every doubt comes back to Hamid as a question. Only
+   Hamid or a designated reviewer fills
+   `step3c-definition-authoring-workbook.xlsx` (the single "Review &
+   authoring" sheet) and returns it to Hamid or commits it to a reviewer
+   branch — never `main` directly. The assistant pulls it, runs
+   `step3c-workbook-validate.py` (mechanical gate), then performs a full
+   semantic review. Every doubt comes back to Hamid as a question. Only
    `approved` rows whose questions are resolved merge into the taxonomy
    via `step3-skos-taxonomy.py --authored`. Nothing merges on
    assumption — the human gate from Step 3b applies to human-authored
    text too.
+   The locked reviewer guide is
+   `business_architecture/ontology/step3c-reviewer-instructions.md`
+   (v2026-09-18, reviewer-feedback incorporated); its 10-point quality
+   bar is the merge gate. Hard requirements enforced mechanically:
+   every approved row has a non-empty `definition` and a non-empty
+   `scope_note` with at least one meaningful boundary; `status` is
+   `pending` or `approved`; no `altLabel` collides with another
+   concept's `prefLabel`. Semantic checks done by the reviewer: parent
+   test, sibling disjointness, primary-purpose classification,
+   terminology stability, no invented owners, no smuggled constraints.
 
-### Enterprise-grade definition review bar
-1. **Defined, not labeled.** No circular openings ("the finance
-   function…"); classify by primary purpose, not asset location.
-2. **Bounded.** Every definition ships with a scope note; every
-   out-of-scope item names the sibling that owns it.
-3. **Coherent upward.** The child must not contradict its parent's
-   definition or scope note.
-4. **Disjoint sideways.** No two siblings may claim the same activity —
-   overlaps are flagged as questions with both rows cited.
-5. **Terminology-stable.** The same term means the same thing in every
-   row; new terms go in `terminology_notes`.
-6. **Parked, not smuggled.** Future concepts noticed while defining go
-   in `parked_children`; constraints stay parked per Appendix A.
-7. **Provenance-clean.** Human-authored rows carry author, approver,
-   and date; APQC-sourced rows keep dual provenance.
+### Enterprise-grade definition review bar (summary; authoritative text in the reviewer guide)
+1. **Define, don't label** — state the recurring activity and intended outcome.
+2. **Primary purpose** — the decision/outcome/responsibility served, not asset, department, or data source; no duplicated concepts for multi-purpose activities.
+3. **Bounded** — scope note required on every approved row; exclusions name the owner only when established in the taxonomy.
+4. **Parent test** — "this process is a way of carrying out [parent process]" must hold.
+5. **Sibling-disjoint** — no two siblings claim the same primary activity.
+6. **Terminology-stable** — one meaning per material term across the scheme.
+7. **Park, don't smuggle** — future processes in `parked_children`; no data fields, systems, KPIs, controls, or thresholds as concepts.
+8. **Evidence-based** — high-quality references inform; nothing copied verbatim.
+9. **Planning baseline preserved** — backcasting compares against the approved plan and contemporaneous assumptions.
+10. **Provenance-clean** — `dcterms:source` records human authorship, Hamid's approval, and date.
 
 ---
 
