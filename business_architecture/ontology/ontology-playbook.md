@@ -280,6 +280,9 @@ triples, in stable document order.
   fields — Steps 4/5. This file is the taxonomy, nothing more.
 - **Artifacts:** `~/workspace/ontology-build/step3-skos-taxonomy.py`,
   `step3-taxonomy.ttl`, `step3-taxonomy-report.md`.
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
+  2026-09-18, together with Step 3b) — `downstream_process_map.json`
+  untouched.
 
 ### Step 3b — definition triangulation ✅ (2026-09-18, complete)
 
@@ -322,6 +325,9 @@ descriptions triangulated against public industry definitions.
   `…/source/apqc-pcf-7.2.2` and `…/source/eia-glossary` (title, publisher,
   issued, rights). Wired via `step3-skos-taxonomy.py --adoptions`;
   base build without adoptions reproduces byte-identical output.
+- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened
+  2026-09-18, together with Step 3) — review CSV, adoptions, validation
+  records, and both build scripts included.
 
 ---
 
