@@ -64,7 +64,7 @@ ontology; everything else points at it.
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
-| 3c | Human definition authoring (14 L1–L3 gaps authored one at a time with Hamid; merged into taxonomy: 192/680 definitions, 3,660 triples) | ✅ Done 2026-09-18 |
+| 3c | Human definition authoring (14 L1–L3 merged 2026-09-18 → 192/680 definitions; semantic-intake workbook #31; review batch 01 #32 → 20 workbook-approved / 483 pending; gate synced v2026-09-19) | 🔄 In progress |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -321,6 +321,37 @@ Backcasting).
   **680 concepts, 678 broader links, 192 definitions, 3,660 triples.**
 - **Delivered** via the Step 3c PR (new branch off main, after PR #28
   merged 2026-09-18) — `downstream_process_map.json` untouched.
+
+### Step 3c — semantic intake + L4 review batches 🔄 (2026-09-19, in progress)
+
+The L1–L3 pass above is closed. Authoring continues on L4–L6 against a
+workbook whose contract changed after that pass. This log records why
+the gate was rewritten before the next batch.
+
+- **#31 (2026-09-18) — workbook contract.**
+  `step3c-definition-authoring-workbook.xlsx` became a 6-sheet
+  semantic-intake workbook: Start Here, Review & authoring, Column
+  guide, Controlled vocabularies, Reference register, External
+  mappings. Nine Phase 1/2 columns sit before `status`. Status vocab
+  is now `pending | approved | blocked | retired`. No RDF emission,
+  no taxonomy/JSON/script change.
+- **#32 (2026-09-19) — review batch 01.**
+  Five L4 children of Regional Optimization / Refinery Planning
+  approved with Phase 1 + Phase 2 filled. `CM-1-1-4-6` Commercial
+  Development left `pending` (`mixed/needs-review`); accepted tree
+  move parked as **PTC-001** in `step3c-parked-tree-changes.md`.
+  Workbook counts: 20 approved / 483 pending. Taxonomy still 192/680
+  — the five new rows have not been `--authored` yet.
+- **This follow-up — gate sync (v2026-09-19).**
+  Same move as #30 after #29: retarget the locked reviewer guide and
+  `step3c-workbook-validate.py` to the live workbook. Phase 1 is
+  required on new approvals. The 15 #29 rows are listed in
+  `PRE_INTAKE_APPROVED` and flagged as NOTE when Phase 1 is empty —
+  not silently waived, not blocked, not backfilled here.
+  `CM-1-3-3-5-6` missing `scope_note` stays BLOCKING.
+- **Still not in scope.** Emitting the new fields as RDF; merging
+  batch 01 into the TTL; backfilling Phase 1 onto the 15; applying
+  PTC-001 to `downstream_process_map.json`.
 
 ### Step 3b — definition triangulation ✅ (2026-09-18, complete)
 
@@ -716,27 +747,35 @@ Facts about the source material that are easy to get wrong:
    modeling gap, not a bad question.
 5. **Boundary notes are decisions too.** "Out of scope" with a recorded
    reason beats silent omission; future-you will thank present-you.
-6. **Definition authoring workflow (Step 3c, locked 2026-09-18).**
-   Hamid or a designated reviewer fills
-   `step3c-definition-authoring-workbook.xlsx` (the single "Review &
-   authoring" sheet) and returns it to Hamid or commits it to a reviewer
-   branch — never `main` directly. The assistant pulls it, runs
-   `step3c-workbook-validate.py` (mechanical gate), then performs a full
-   semantic review. Every doubt comes back to Hamid as a question. Only
-   `approved` rows whose questions are resolved merge into the taxonomy
-   via `step3-skos-taxonomy.py --authored`. Nothing merges on
-   assumption — the human gate from Step 3b applies to human-authored
-   text too.
+6. **Definition authoring workflow (Step 3c, locked 2026-09-19).**
+   Hamid or a designated reviewer fills the 6-sheet semantic-intake
+   workbook `step3c-definition-authoring-workbook.xlsx` and returns it
+   to Hamid or commits it to a reviewer branch — never `main` directly.
+   The assistant pulls it, runs `step3c-workbook-validate.py`
+   (mechanical gate), then performs a full semantic review. Every doubt
+   comes back to Hamid as a question. Only `approved` rows whose
+   questions are resolved merge into the taxonomy via
+   `step3-skos-taxonomy.py --authored`. Nothing merges on assumption —
+   the human gate from Step 3b applies to human-authored text too.
    The locked reviewer guide is
    `business_architecture/ontology/step3c-reviewer-instructions.md`
-   (v2026-09-18, reviewer-feedback incorporated); its 10-point quality
-   bar is the merge gate. Hard requirements enforced mechanically:
-   every approved row has a non-empty `definition` and a non-empty
-   `scope_note` with at least one meaningful boundary; `status` is
-   `pending` or `approved`; no `altLabel` collides with another
-   concept's `prefLabel`. Semantic checks done by the reviewer: parent
-   test, sibling disjointness, primary-purpose classification,
-   terminology stability, no invented owners, no smuggled constraints.
+   (v2026-09-19, retargeted after #31/#32 the same way #30 retargeted
+   after #29); its 10-point quality bar is the merge gate. Hard
+   requirements enforced mechanically: every approved row has a
+   non-empty `definition` and a non-empty `scope_note` with at least
+   one meaningful boundary; `status` is `pending`, `approved`,
+   `blocked`, or `retired` (only `approved` merges); new approvals
+   also require `concept_type_check` ∈ {process, capability},
+   `primary_purpose`, and `reference_sources` that resolve to the
+   Reference register; `open_questions` must be empty on `approved`;
+   no `altLabel` collides with another concept's `prefLabel`. The 15
+   rows approved in #29 are explicitly grandfathered for Phase 1
+   (`PRE_INTAKE_APPROVED` → NOTE, not BLOCKING). Semantic checks done
+   by the reviewer: parent test, sibling disjointness, primary-purpose
+   classification, terminology stability, no invented owners, no
+   smuggled constraints. Tree moves accepted during review go in
+   `step3c-parked-tree-changes.md` and stay pending until a JSON/TTL
+   pass.
 
 ### Enterprise-grade definition review bar (summary; authoritative text in the reviewer guide)
 1. **Define, don't label** — state the recurring activity and intended outcome.

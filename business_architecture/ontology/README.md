@@ -26,12 +26,16 @@ before making any modeling choice.
 | `build/output/step3-taxonomy-report.md` | Step 3 build summary |
 | `build/step3b-definition-triangulation.py` | Reproducible script: APQC candidate matching + EIA/web triangulation over the 503 definition gaps |
 | `build/step3b-merge-validations.py` | Merge automated + human validation records into final adoption decisions |
-| `build/output/step3b-definition-review.csv` | All 503 definition-gap review rows: 1 adopted, 10 rejected at the human gate, 14 human-authored in Step 3c; 488 gaps remain (all L4–L6) |
+| `build/output/step3b-definition-review.csv` | All 503 definition-gap review rows: 1 adopted, 10 rejected at the human gate, 14 human-authored in Step 3c; L4–L6 authoring continues in the intake workbook |
 | `build/output/step3b-adoptions.json` | The single adopted definition (internal marketing communications strategy) with provenance |
 | `build/output/step3b-web-input.json` | 131 strong-match rows sent for web validation |
 | `build/output/step3b-web-validations.json` | 111 automated web-validation records |
 | `build/output/step3b-web-validations-manual.json` | 11 human-vetted manual validation records |
-| `build/output/step3c-authored-definitions.json` | 14 human-authored definitions (approved by Hamid 2026-09-18) with scope notes, parked concepts, and planned children |
+| `build/output/step3c-authored-definitions.json` | 14 human-authored L1–L3 definitions (approved by Hamid 2026-09-18) merged into the taxonomy |
+| `build/output/step3c-definition-authoring-workbook.xlsx` | Semantic-intake workbook (6 sheets, 503 rows). After #32: 20 approved / 483 pending |
+| `build/scripts/step3c-workbook-validate.py` | Mechanical review gate. Synced v2026-09-19 to the intake workbook |
+| `step3c-reviewer-instructions.md` | Locked reviewer guide (v2026-09-19) |
+| `step3c-parked-tree-changes.md` | Structural moves accepted in review and deferred to a later JSON/TTL pass |
 
 ## Standing conventions
 
@@ -45,6 +49,9 @@ before making any modeling choice.
 ## Status
 
 Steps 0 (APQC alignment), 1 (foundations), 2 (identity normalization),
-3 (SKOS taxonomy), 3b (definition triangulation), 3c (human definition
-authoring), and 8 (APQC scope review) are complete. See the playbook's
-plan table.
+3 (SKOS taxonomy), 3b (definition triangulation), and 8 (APQC scope
+review) are complete. Step 3c L1–L3 authoring is merged (192/680
+definitions); L4–L6 continues on the semantic-intake workbook (20
+approved / 483 pending after batch 01). Reviewer guide and validator
+were retargeted v2026-09-19 after #31/#32 — same follow-up as #30
+after #29. See the playbook's plan table.
