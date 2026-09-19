@@ -39,6 +39,29 @@ from openpyxl import load_workbook
 
 BLOCKING, QUESTION, NOTE = "BLOCKING", "QUESTION", "NOTE"
 
+# ---------------------------------------------------------------------------
+# Parked tree changes (PTC register)
+# ---------------------------------------------------------------------------
+# A definition batch may not edit downstream_process_map.json or the TTL. When
+# a row cannot be defined without first moving it, the change is recorded in
+# step3c-parked-tree-changes.md instead. That file used to be prose nothing
+# checked, so the tree pass depended on someone remembering to open it.
+#
+# These checks bind the register to the gate in both directions, so an open
+# parked change cannot be silently dropped:
+#   - a blocked/retired row must cite the PTC that parks it
+#   - a cited PTC must exist and still be open
+#   - an open PTC must be cited by at least one row (no orphans)
+#   - Step 3c cannot be declared complete while any PTC is open
+#
+# The last rule is the one that survives the end of the review exercise. The
+# others only fire while batches are still running; that one fires exactly
+# when the queue empties and the batch reminders stop.
+PTC_ID_RE = re.compile(r"\bPTC-(\d{3,})\b")
+PTC_HEADING_RE = re.compile(r"^##\s+(PTC-\d{3,})\b", re.M)
+# Tolerates bolded status values (`**Status:** **Closed** 2026-09-18 — ...`).
+PTC_STATUS_RE = re.compile(r"^\*\*Status:\*\*\s*\**(\w+)", re.M)
+
 # Workbook Controlled vocabularies sheet, field `status`.
 # `blocked` / `retired` are legal parking states; they never merge.
 STATUS_OK = {"pending", "approved", "blocked", "retired"}
@@ -102,6 +125,7 @@ SOURCE_ID_RE = re.compile(r"(SRC-[A-Z0-9-]+)")
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_IDENTITY = HERE.parent / "output" / "step2-identity-map.json"
+DEFAULT_PTC_REGISTER = HERE.parents[1] / "step3c-parked-tree-changes.md"
 
 
 def cell(value) -> str:
@@ -156,9 +180,32 @@ def load_allowed_values(wb, field: str, fallback: set[str]) -> set[str]:
     return set(fallback)
 
 
+def load_ptc_register(path: Path) -> dict[str, str]:
+    """Return {ptc_id: 'open'|'closed'} from the parked-tree-changes register.
+
+    Parses the per-entry `## PTC-NNN` sections, not the summary table, so the
+    table cannot drift from the entries without being caught.
+    """
+    if not path.exists():
+        return {}
+    text = path.read_text(encoding="utf-8")
+    entries: dict[str, str] = {}
+    marks = list(PTC_HEADING_RE.finditer(text))
+    for i, m in enumerate(marks):
+        body = text[m.end(): marks[i + 1].start() if i + 1 < len(marks) else len(text)]
+        status = PTC_STATUS_RE.search(body)
+        entries[m.group(1)] = (status.group(1).lower() if status else "open")
+    return entries
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workbook", required=True)
+    ap.add_argument(
+        "--ptc-register",
+        default=str(DEFAULT_PTC_REGISTER),
+        help="Parked tree changes register (defaults to ../../step3c-parked-tree-changes.md)",
+    )
     ap.add_argument("--out", default="step3c-workbook-findings.md")
     ap.add_argument(
         "--identity-map",
@@ -201,6 +248,10 @@ def main() -> int:
         },
     )
 
+    ptc_register = load_ptc_register(Path(a.ptc_register))
+    ptc_open = {k for k, v in ptc_register.items() if v == "open"}
+    ptc_cited: dict[str, list[str]] = {k: [] for k in ptc_register}
+
     findings = []
     seen = set()
     stats = {"rows": 0, "approved": 0, "pending": 0, "blocked": 0, "retired": 0}
@@ -227,6 +278,7 @@ def main() -> int:
         purpose = cell(g("primary_purpose"))
         sources = cell(g("reference_sources"))
         questions = cell(g("open_questions"))
+        notes = cell(g("terminology_notes"))
         horizon = cell(g("process_horizon"))
 
         if slug in seen:
@@ -260,10 +312,46 @@ def main() -> int:
             )
 
         # blocked / retired are parking states. Count them; do not run
-        # the approved-row merge gate. A later tree pass (see PTC-001)
+        # the approved-row merge gate. A later tree pass (playbook Step 3d)
         # is what retires or moves the node in the repo JSON.
+        #
+        # A parked row must say what it is waiting for, or it is just a row
+        # nobody will come back to. Accepts a PTC id or an ADR reference in
+        # terminology_notes / open_questions.
         if status in ("blocked", "retired"):
             stats[status] += 1
+            reason_text = f"{notes} {questions}"
+            cited = sorted(set(PTC_ID_RE.findall(reason_text)))
+            has_adr = re.search(r"\bADR-[\w-]+", reason_text)
+            if not cited and not has_adr:
+                add(
+                    BLOCKING,
+                    slug,
+                    "parked-without-reason",
+                    f"status={status} but terminology_notes cites no PTC id or ADR — "
+                    "a parked row must name the tree change or decision it waits on.",
+                )
+            for num in cited:
+                ptc_id = f"PTC-{num}"
+                if ptc_id not in ptc_register:
+                    add(
+                        BLOCKING,
+                        slug,
+                        "ptc-unknown",
+                        f"cites {ptc_id}, which has no entry in the parked-tree-changes "
+                        "register. Add the entry before parking rows against it.",
+                    )
+                    continue
+                ptc_cited[ptc_id].append(slug)
+                if ptc_register[ptc_id] != "open":
+                    add(
+                        BLOCKING,
+                        slug,
+                        "ptc-closed",
+                        f"still {status} against {ptc_id}, which the register records as "
+                        f"{ptc_register[ptc_id]}. Closing a tree change means re-statusing "
+                        "the rows it parked — a half-applied tree pass cannot merge.",
+                    )
             continue
 
         if status == "pending":
@@ -426,6 +514,36 @@ def main() -> int:
                     f"altLabel {label!r} collides with another concept's preferred label.",
                 )
 
+    # ---- PTC register binding -------------------------------------------
+    if not ptc_register:
+        add(
+            NOTE,
+            "-",
+            "ptc-register-missing",
+            f"No parked-tree-changes register found at {a.ptc_register}. "
+            "Parked/blocked rows cannot be bound to a tree change.",
+        )
+    for ptc_id, slugs in ptc_cited.items():
+        if ptc_register.get(ptc_id) == "open" and not slugs:
+            add(
+                BLOCKING,
+                "-",
+                "ptc-orphaned",
+                f"{ptc_id} is open but no workbook row cites it. An open tree change "
+                "with no affected row will be forgotten — cite it from the rows it "
+                "parks, or close it in the register.",
+            )
+    if stats["pending"] == 0 and ptc_open:
+        add(
+            BLOCKING,
+            "-",
+            "step-3c-not-complete",
+            "Definition queue is empty but "
+            + ", ".join(sorted(ptc_open))
+            + " still open. Step 3c is not complete until every parked tree change is "
+            "applied and closed. Run the tree pass (playbook Step 3d).",
+        )
+
     # cross-row: two approved siblings with near-identical definitions
     # (light heuristic; reviewer does the real boundary check)
     with open(a.out, "w") as f:
@@ -440,6 +558,13 @@ def main() -> int:
             "(semantic-intake sync after #31/#32). "
             "PRE_INTAKE_APPROVED empty Phase 1 is NOTE, not BLOCKING.\n\n"
         )
+        if ptc_register:
+            f.write(
+                "Parked tree changes: "
+                + ", ".join(f"{k} ({v})" for k, v in sorted(ptc_register.items()))
+                + ". Step 3c cannot be completed while any is open — see playbook "
+                "Step 3d.\n\n"
+            )
         for sev in (BLOCKING, QUESTION, NOTE):
             items = [x for x in findings if x["severity"] == sev]
             f.write(f"## {sev} ({len(items)})\n\n")
@@ -451,7 +576,8 @@ def main() -> int:
         f"rows={stats['rows']} approved={stats['approved']} pending={stats['pending']} "
         f"blocked={stats['blocked']} retired={stats['retired']} "
         f"blocking={blocking} questions={sum(1 for x in findings if x['severity']==QUESTION)} "
-        f"notes={sum(1 for x in findings if x['severity']==NOTE)}"
+        f"notes={sum(1 for x in findings if x['severity']==NOTE)} "
+        f"open_ptc={len(ptc_open)}"
     )
     print("report:", a.out)
     return 1 if blocking else 0
