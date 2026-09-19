@@ -18,6 +18,7 @@ decision is recorded here instead of being resolved silently inside a definition
 | ID | Affected node | Status | Decision | Blocks |
 | --- | --- | --- | --- | --- |
 | PTC-001 | `CM-1-1-4-6` Commercial Development | Open — accepted, awaiting tree pass | Option A, accepted by Hamid 2026-09-18 | 4 rows |
+| PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | Open — raised, not yet decided | None yet | 1 row |
 
 ---
 
@@ -95,3 +96,56 @@ These were not settled on 2026-09-18 and must be answered before the move is app
 The full structured question, with options and evidence, is preserved verbatim in the
 `open_questions` cell of row `CM-1-1-4-6` in
 `business_architecture/ontology/build/output/step3c-definition-authoring-workbook.xlsx`.
+
+---
+
+## PTC-002 — Slate and run-rate planning appears in two branches
+
+**Raised:** 2026-09-18, review batch 02
+**Status:** Open — raised, no decision taken
+**Decision needed from:** Hamid
+
+### Affected rows
+
+| Slug | Level | Label | Branch | Current status |
+| --- | --- | --- | --- | --- |
+| `CM-1-2-5-2-3` | 5 | Plan Optimal Feedstock Slate And Run Rate | Supply And Trading > Crude/Feed Demand Management | `pending`, untouched |
+
+### The problem
+
+`CM-1-1-4` Refinery Planning is approved as owning the commercially optimal refinery production
+plan, explicitly including crude slate and throughput targets. On its label, `CM-1-2-5-2-3` claims
+the same two decisions from inside Supply And Trading.
+
+This is not the locked SCM-versus-Commercial boundary, and it is not resolved by it. Both nodes sit
+inside Commercial & Marketing. The question is which branch decides slate and run rate, and what
+the other one does instead.
+
+### Why it was not resolved in batch 02
+
+Batch 02 defined `CM-1-1-4-7-2 Evaluate Crude & Feedstock` bounded strictly as evaluation —
+assessing suitability and economic value — with slate approval left explicitly with Refinery
+Planning. That definition holds whichever way PTC-002 is decided, so the batch did not need the
+answer. Reconciling the two nodes is a tree change and out of scope for a definition batch.
+
+### Options
+
+1. **Refinery Planning decides; Supply And Trading advises.** `CM-1-2-5-2-3` is redefined as the
+   trading-side recommendation of an economically attractive feedstock slate, feeding the plan but
+   not setting it. Smallest change, no move.
+2. **Retire `CM-1-2-5-2-3` as a duplicate.** Its intent is already carried by `CM-1-1-4-7-2` plus
+   `CM-1-1-4-7` Refinery Optimization.
+3. **Split by horizon.** Supply And Trading plans the forward-quarter indicative slate for
+   procurement; Refinery Planning sets the binding monthly plan. Requires both definitions to state
+   the horizon boundary explicitly, or the overlap returns.
+
+**Leaning toward Option 1** — it preserves the locked Refinery Planning accountability, keeps the
+trading-side activity that genuinely exists, and needs no node moved. Not recorded as a decision.
+
+### Closure checklist
+
+- [ ] Option chosen and recorded in the Architecture Decision Log.
+- [ ] `CM-1-2-5-2-3` redefined, retired, or re-scoped per the decision.
+- [ ] Horizon boundary stated in both definitions if Option 3 is chosen.
+- [ ] `terminology_notes` on `CM-1-1-4-7-2` updated to point at the resolution.
+- [ ] PTC-002 marked closed here with the date and decision-log reference.
