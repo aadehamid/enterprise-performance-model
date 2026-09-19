@@ -790,8 +790,8 @@ Facts about the source material that are easy to get wrong:
    the human gate from Step 3b applies to human-authored text too.
    The locked reviewer guide is
    `business_architecture/ontology/step3c-reviewer-instructions.md`
-   (v2026-09-19, retargeted after #31/#32 the same way #30 retargeted
-   after #29); its 10-point quality bar is the merge gate. Hard
+   (v2026-09-19b, PTC parking rule after #35); its 10-point quality bar
+   is the merge gate. Hard
    requirements enforced mechanically: every approved row has a
    non-empty `definition` and a non-empty `scope_note` with at least
    one meaningful boundary; `status` is `pending`, `approved`,
@@ -805,8 +805,8 @@ Facts about the source material that are easy to get wrong:
    by the reviewer: parent test, sibling disjointness, primary-purpose
    classification, terminology stability, no invented owners, no
    smuggled constraints. Tree moves accepted during review go in
-   `step3c-parked-tree-changes.md` and stay pending until a JSON/TTL
-   pass.
+   `step3c-parked-tree-changes.md`; affected rows are `blocked` or
+   `retired` until the Step 3d JSON/TTL pass.
 
 ### Enterprise-grade definition review bar (summary; authoritative text in the reviewer guide)
 1. **Define, don't label** — state the recurring activity and intended outcome.

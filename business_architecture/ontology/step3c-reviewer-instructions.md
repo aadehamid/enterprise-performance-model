@@ -1,6 +1,6 @@
 # Definition Reviewer Instructions — Downstream Process Ontology (Step 3c)
 
-**Locked version:** v2026-09-19 (semantic-intake sync after #31 / #32)
+**Locked version:** v2026-09-19b (PTC parking rule: blocked/retired, not pending)
 
 This is the same class of follow-up as #30: the workbook contract changed, so this guide and `step3c-workbook-validate.py` were rewritten to match it. Locked boundary rules and the 10-point quality bar are unchanged. Phase 1 fields are required on **new** approvals. The 15 rows approved in #29 stay `approved` with empty Phase 1 until a later backfill pass — they are flagged by the validator as `NOTE`, not silently waived and not blocked.
 
@@ -33,7 +33,7 @@ Use `business_architecture/ontology/build/output/step3c-definition-authoring-wor
 | **Reference register** | Reusable `source_id`s. Register a source here before citing it |
 | **External mappings** | Reviewed cross-scheme mappings only. Leave empty unless Hamid has accepted a mapping |
 
-Structural tree moves accepted during review but **not** applied in a definition batch are recorded in `business_architecture/ontology/step3c-parked-tree-changes.md` (PTC IDs). An open PTC keeps every affected row `pending`.
+Structural tree moves accepted during review but **not** applied in a definition batch are recorded in `business_architecture/ontology/step3c-parked-tree-changes.md` (PTC IDs). An open PTC parks every affected row as `blocked` (cannot be defined until the tree pass) or `retired` (will not be defined). Never leave it `pending` — `pending` means queued for authoring. Put the PTC ID in `terminology_notes`. `retired` may keep that citation after the PTC closes; `blocked` may not.
 
 On **Review & authoring**:
 
@@ -54,7 +54,7 @@ On **Review & authoring**:
 5. **Work parent-first.** Normally complete L4 concepts before their L5 children, then L6. If a parent is ambiguous, resolve or escalate it before defining its children.
 6. **Fill every Phase 1 yellow column.** Fill Phase 2 columns when the evidence supports them; do not invent inputs, outputs, or relations to look complete.
 7. **Run the parent test and sibling-boundary test.** If either fails, do not force the row through.
-8. **Set `status` to `approved` only when complete and defensible.** Leave it `pending` if any material uncertainty remains. Use `blocked` only after Hamid parks the row; use `retired` only after a closed PTC (or equivalent) retires the node. Pending, blocked, and retired rows are never merged.
+8. **Set `status` to `approved` only when complete and defensible.** Leave it `pending` if any material uncertainty remains and the row is still authorable. Use `blocked` after Hamid parks a row that cannot be defined until its PTC closes. Use `retired` when the node will not be defined (the PTC may still be open). Pending, blocked, and retired rows are never merged.
 9. **Return the workbook to Hamid or commit it to a reviewer branch.** Do not overwrite `main` directly. The assistant runs the mechanical validation and a full semantic review before any merge. Every unresolved doubt goes back to Hamid as a question.
 
 ## Column by column
@@ -77,7 +77,7 @@ On **Review & authoring**:
 | `related_concepts` | Typed syntax `relation: Canonical Concept Label`, entries separated by ` \| `. Relation from the controlled `relationship_type` list. | Typed relations; `skos:related` only for genuinely associative links. Not emitted yet. | Phase 2 — optional-preferred |
 | `responsible_domain` | Canonical taxonomy domain accountable for primary purpose, policy, and decision authority — not necessarily the executor. | Future accountable-owner relation. Not emitted yet. | Phase 2 — optional-preferred |
 | `process_horizon` | Controlled value from the Controlled vocabularies sheet. | Future temporal/cadence model. Not emitted yet. | Phase 2 — optional-preferred |
-| `status` | `pending` → `approved` when the row passes all checks. `blocked` and `retired` only after Hamid parks or a PTC retires the node. Only `approved` rows merge. | Workflow gate for `step3-skos-taxonomy.py --authored` | Workflow |
+| `status` | `pending` → `approved` when the row passes all checks. `blocked` = parked on an open PTC (or equivalent). `retired` = will not be defined; citation may survive PTC close. Only `approved` rows merge. | Workflow gate for `step3-skos-taxonomy.py --authored` | Workflow |
 
 Provenance on merge: each approved row is merged with `dcterms:source` recording that it is human-authored, approved by Hamid, and dated. Phase 1/2 enrichment fields are **not** emitted as RDF in this step.
 
@@ -88,7 +88,7 @@ Provenance on merge: each approved row is merged with `dcterms:source` recording
    - Acceptable: “Develop the commercially optimal refinery production plan by selecting feedstock, operating-mode, throughput, yield, and quality targets within feasible commercial and technical constraints.”
 2. **State the primary purpose.** Classify an activity by the decision, outcome, or recurring responsibility it primarily serves—not by the asset, department, application, report, or data source involved. Write that statement in `primary_purpose` as well as embodying it in `definition`.
 3. **Bound every concept.** Every approved row must have a non-empty `scope_note` containing at least one meaningful boundary. Use a concise boundary where the concept is naturally narrow; give explicit exclusions and ownership when ambiguity is material.
-4. **Pass the parent test.** A child must be a more specific recurring activity inside the parent’s scope. Test it as: “This process is a way of carrying out [parent process].” If that is false, placement or definition requires review. If the row cannot be defined without moving it, open a PTC and leave it `pending`.
+4. **Pass the parent test.** A child must be a more specific recurring activity inside the parent’s scope. Test it as: “This process is a way of carrying out [parent process].” If that is false, placement or definition requires review. If the row cannot be defined without moving it, open a PTC, set the row `blocked` or `retired`, and put the PTC ID in `terminology_notes`.
 5. **Keep siblings disjoint.** Siblings must not claim the same primary activity. If two siblings plausibly overlap, document the boundary question in `open_questions` and keep the row `pending` until Hamid decides.
 6. **Use terms consistently.** A material term should mean the same thing throughout the scheme. Reuse approved terminology unless there is a documented reason to introduce a different term.
 7. **Park, do not smuggle.** Put a genuinely distinct future process/capability in `parked_children`. Put an accepted-but-unapplied tree move in `step3c-parked-tree-changes.md`. Do not turn a definition into a hidden hierarchy, add unapproved children, or model constraints, thresholds, rules, data objects, systems, or KPIs as process concepts.
