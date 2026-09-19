@@ -367,16 +367,33 @@ def main() -> int:
                 "short-definition",
                 f"Only {len(words)} words — likely too thin for enterprise grade.",
             )
-        # circular opening: definition starts with the concept's own name words
-        name_words = [w.lower() for w in re.findall(r"[A-Za-z]+", g("name") or "") if len(w) > 3]
-        lead = " ".join(words[:6]).lower()
-        if any(nw in lead for nw in name_words[:2]):
-            add(
-                QUESTION,
-                slug,
-                "circular-opening",
-                f"Definition opens with the concept's own name ({g('name')!r}) — restate by purpose, not label.",
+        # Circular definition: the definition restates the label instead of
+        # explaining it — "Refinery Planning is the process of refinery
+        # planning". Reusing a domain noun is NOT circular: "Regional
+        # Optimization" must be free to say "regional". The pre-#34 test
+        # substring-matched either of the first two label words anywhere in the
+        # first six words, which fired on 10 rows, none of them circular,
+        # including four approved L3 parents. Now anchored at the opening.
+        name = (g("name") or "").strip()
+        if name:
+            name_pat = r"\s+".join(re.escape(w) for w in name.split())
+            lead_raw = " ".join(words[:14])
+            circular = re.match(
+                rf"^(the\s+)?{name_pat}\b\s*(is|are|means|refers to|covers|involves|:|,|\u2014|-|$)",
+                lead_raw,
+                re.I,
+            ) or re.search(
+                rf"\b(is|are)\s+the\s+(process|activity|practice|act|function)\s+of\s+{name_pat}\b",
+                lead_raw,
+                re.I,
             )
+            if circular:
+                add(
+                    QUESTION,
+                    slug,
+                    "circular-definition",
+                    f"Definition restates the label ({name!r}) instead of explaining it — define by purpose.",
+                )
         if not scope:
             add(
                 BLOCKING,
@@ -386,7 +403,14 @@ def main() -> int:
             )
         # NOTE, not BLOCKING: #30 locked "do not invent an owner". A
         # missing owner name is a hint, not a failed merge.
-        if out_sc and not re.search(r"\b(owned by|belongs to|sibling|see |under )\b", out_sc, re.I):
+        # Recognises the two conventions actually in use: a prose owner phrase,
+        # and a trailing parenthetical owner or slug — "trade execution (Supply
+        # And Trading)", "(CM-1-1-2-10)". Pre-#34 this only matched the prose
+        # form and noted all five #32 rows, each of which does name its owners.
+        _owner_named = re.search(
+            r"\b(owned by|belongs to|sibling|see |under )\b", out_sc or "", re.I
+        ) or re.search(r"\(\s*(?:CM-[\d-]+|L\d[\w-]*|[A-Z][^()]{2,})\)", out_sc or "")
+        if out_sc and not _owner_named:
             add(
                 NOTE,
                 slug,
