@@ -351,7 +351,38 @@ the gate was rewritten before the next batch.
   `CM-1-3-3-5-6` missing `scope_note` stays BLOCKING.
 - **Still not in scope.** Emitting the new fields as RDF; merging
   batch 01 into the TTL; backfilling Phase 1 onto the 15; applying
-  PTC-001 to `downstream_process_map.json`.
+  PTC-001 to `downstream_process_map.json` (now Step 3d, below).
+
+### Step 3d — tree reconciliation ⏸ (not started, blocked on open PTCs)
+
+The successor to Step 3c, registered here as a numbered step rather than a
+note, so it can be scheduled rather than remembered.
+
+Definition batches are forbidden from editing
+`downstream_process_map.json`, the TTL, or the build scripts. Structural
+problems found while authoring are therefore parked in
+`step3c-parked-tree-changes.md` as PTC entries. Step 3d is the single
+consolidated pass that applies them.
+
+- **Preconditions — the open PTC entries.** Currently **PTC-001**
+  (`CM-1-1-4-6` Commercial Development does not belong under Refinery
+  Planning; 1 row retired, 3 blocked). PTC-002 closed 2026-09-18 with no
+  tree change needed. The register is the live list; this line will go
+  stale, the register will not.
+- **Known scope beyond the moves.** PTC-001 cannot be applied as
+  accepted. Only Commercial & Marketing is decomposed — 492 of 503 rows
+  sit under it, and the other nine L1s have no children. There is no
+  destination for any parked child, so Step 3d includes decomposing at
+  least one undecomposed L1. That is a domain-architecture pass, not a
+  reparenting chore, and it needs Hamid's explicit scope expansion.
+- **How it gets picked up.** Not by memory. The gate reads the register
+  every run, prints `open_ptc=N` in its summary line (which lands in
+  every batch PR body), and raises BLOCKING `step-3c-not-complete` if the
+  definition queue reaches zero while any entry is open. Step 3c cannot
+  be declared finished with a tree change outstanding.
+- **Done when.** Every PTC entry closed with its checklist worked, parked
+  rows re-statused to `pending` under real parents, identity map and TTL
+  regenerated, and the gate reporting `open_ptc=0`.
 
 ### Step 3b — definition triangulation ✅ (2026-09-18, complete)
 
