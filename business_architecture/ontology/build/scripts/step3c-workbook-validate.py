@@ -4,7 +4,7 @@
 Synced 2026-09-19 to the post-#31 semantic-intake workbook. This is the
 same class of follow-up as #30 (lock the reviewer guide, then make the
 script enforce it). The locked human text is
-`step3c-reviewer-instructions.md` v2026-09-19.
+`step3c-reviewer-instructions.md` v2026-09-19b.
 
 Why this sync exists
 --------------------
@@ -50,7 +50,10 @@ BLOCKING, QUESTION, NOTE = "BLOCKING", "QUESTION", "NOTE"
 # These checks bind the register to the gate in both directions, so an open
 # parked change cannot be silently dropped:
 #   - a blocked/retired row must cite the PTC that parks it
-#   - a cited PTC must exist and still be open
+#   - a cited PTC must exist; a blocked row cannot stay parked against
+#     a Closed entry. retired is terminal provenance and may keep the
+#     citation after close (the Step 3d end state for a node that will
+#     not be defined)
 #   - an open PTC must be cited by at least one row (no orphans)
 #   - Step 3c cannot be declared complete while any PTC is open
 #
@@ -343,14 +346,17 @@ def main() -> int:
                     )
                     continue
                 ptc_cited[ptc_id].append(slug)
-                if ptc_register[ptc_id] != "open":
+                # retired is terminal: the node will not be defined, so the
+                # citation is provenance after close. blocked means "waiting
+                # on this PTC" — that is illegal once the entry is Closed.
+                if status == "blocked" and ptc_register[ptc_id] != "open":
                     add(
                         BLOCKING,
                         slug,
                         "ptc-closed",
-                        f"still {status} against {ptc_id}, which the register records as "
+                        f"still blocked against {ptc_id}, which the register records as "
                         f"{ptc_register[ptc_id]}. Closing a tree change means re-statusing "
-                        "the rows it parked — a half-applied tree pass cannot merge.",
+                        "the blocked rows it parked — a half-applied tree pass cannot merge.",
                     )
             continue
 
@@ -554,8 +560,8 @@ def main() -> int:
             f"retired: {stats['retired']}\n\n"
         )
         f.write(
-            "Gate: step3c-reviewer-instructions.md v2026-09-19 "
-            "(semantic-intake sync after #31/#32). "
+            "Gate: step3c-reviewer-instructions.md v2026-09-19b "
+            "(PTC parking: blocked/retired; ptc-closed is blocked-only). "
             "PRE_INTAKE_APPROVED empty Phase 1 is NOTE, not BLOCKING.\n\n"
         )
         if ptc_register:
