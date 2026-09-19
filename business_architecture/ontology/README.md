@@ -33,8 +33,8 @@ before making any modeling choice.
 | `build/output/step3b-web-validations-manual.json` | 11 human-vetted manual validation records |
 | `build/output/step3c-authored-definitions.json` | 14 human-authored L1–L3 definitions (approved by Hamid 2026-09-18) merged into the taxonomy |
 | `build/output/step3c-definition-authoring-workbook.xlsx` | Semantic-intake workbook (6 sheets, 503 rows). After #32: 20 approved / 483 pending |
-| `build/scripts/step3c-workbook-validate.py` | Mechanical review gate. Synced v2026-09-19 to the intake workbook |
-| `step3c-reviewer-instructions.md` | Locked reviewer guide (v2026-09-19) |
+| `build/scripts/step3c-workbook-validate.py` | Mechanical review gate. Synced v2026-09-19b (`ptc-closed` is blocked-only) |
+| `step3c-reviewer-instructions.md` | Locked reviewer guide (v2026-09-19b) |
 | `step3c-parked-tree-changes.md` | Structural moves accepted in review and deferred to a later JSON/TTL pass |
 
 ## Standing conventions
@@ -53,5 +53,6 @@ Steps 0 (APQC alignment), 1 (foundations), 2 (identity normalization),
 review) are complete. Step 3c L1–L3 authoring is merged (192/680
 definitions); L4–L6 continues on the semantic-intake workbook (20
 approved / 483 pending after batch 01). Reviewer guide and validator
-were retargeted v2026-09-19 after #31/#32 — same follow-up as #30
-after #29. See the playbook's plan table.
+were retargeted v2026-09-19 after #31/#32 and bumped to v2026-09-19b
+for the PTC parking rule (`blocked`/`retired`, not `pending`). See the
+playbook's plan table.

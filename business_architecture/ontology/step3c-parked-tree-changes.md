@@ -20,7 +20,8 @@ decision is recorded here instead of being resolved silently inside a definition
 
 **This register is enforced, not advisory.** `step3c-workbook-validate.py` reads this file on every
 run and fails the gate when the two drift: a `blocked` or `retired` row that names no PTC, a row
-citing a PTC that does not exist here, a row still parked against an entry recorded as Closed, or an
+citing a PTC that does not exist here, a `blocked` row still parked against an entry recorded as
+Closed (`retired` may keep the citation as provenance), or an
 open entry that no row cites. The gate also refuses to let the definition queue reach zero while any
 entry is open — finding `step-3c-not-complete` — so Step 3c cannot be declared finished with a tree
 change outstanding. The open count prints in the gate's summary line, which lands in every batch PR
@@ -128,7 +129,7 @@ forcing them here would set domain architecture as a side effect of a definition
 - [ ] PTC-001 marked closed here with the date and decision-log reference.
 - [ ] Parked row statuses lifted from `blocked` to `pending` as each child gets a real parent — the
       gate fails on a row still blocked against a Closed entry, so closure and re-statusing are one
-      change, not two.
+      change, not two. `CM-1-1-4-6` stays `retired` and may keep the PTC-001 citation.
 
 The full structured question, with options and evidence, is preserved verbatim in the
 `open_questions` cell of row `CM-1-1-4-6` in
