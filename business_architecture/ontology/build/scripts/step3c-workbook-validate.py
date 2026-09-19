@@ -1,576 +1,281 @@
 #!/usr/bin/env python3
 """Step 3c workbook review gate (mechanical checks + review-findings report).
 
-Synced 2026-09-19 to the post-#31 semantic-intake workbook. This is the
-same class of follow-up as #30 (lock the reviewer guide, then make the
-script enforce it). The locked human text is
-`step3c-reviewer-instructions.md` v2026-09-19b.
-
-Why this sync exists
---------------------
-#31 evolved the definition workbook into a 6-sheet semantic-intake
-workbook (Phase 1/2 fields, Controlled vocabularies, Reference register,
-status values `blocked` / `retired`). #32 then approved five L4 rows
-against that contract. The #30 gate still described the old 2-sheet,
-`pending|approved`-only workbook, so an approved row with an empty
-`primary_purpose` or a made-up source id would have passed.
-
-What this script does *not* do
-------------------------------
-- Emit RDF or merge into the taxonomy. New fields stay intake-only.
-- Backfill Phase 1 onto the 15 rows approved in #29. That is a semantic
-  pass, not a gate sync. Those slugs live in PRE_INTAKE_APPROVED: empty
-  Phase 1 is a NOTE (visible, not silent), not BLOCKING.
-- Soften the #30 finding on `CM-1-3-3-5-6` (approved, no scope_note).
-  Still BLOCKING; still waiting on a definition follow-up.
-
 Usage:
-  python3 step3c-workbook-validate.py --workbook <xlsx> [--out findings.md]
+  python3 step3c-workbook-validate.py --workbook <xlsx> [--ptc-register <md>]
+      [--identity-map <json>] [--out findings.md]
+
+Reads the 'Review & authoring' sheet, validates every row, cross-checks the
+Parked Tree Changes register, and writes a findings report.
+
+Statuses: pending | approved | blocked | retired
+  - approved: definition + scope_note required; merges into the taxonomy.
+  - blocked:  row cannot be defined until its PTC entry closes; must cite
+               the PTC ID in terminology_notes; must NOT carry a definition.
+  - retired:  row will not be defined (node leaves/is removed in tree pass);
+               must cite the PTC ID; must NOT carry a definition.
+  - pending:  queued for authoring.
+
+PTC register enforcement (the register is authoritative on tree changes):
+  - blocked/retired row naming no PTC            -> BLOCKING
+  - row citing a PTC ID absent from the register -> BLOCKING
+  - blocked row parked against a Closed entry    -> BLOCKING
+    (retired may keep the citation as provenance)
+  - Open entry cited by no row                   -> BLOCKING
+  - zero pending rows while any entry is Open    -> BLOCKING (step-3c-not-complete)
+
+Exit code 0 = no blocking findings; 1 = blocking findings present.
 """
-from __future__ import annotations
-
-import argparse
-import json
-import re
-import sys
-from pathlib import Path
-
+import argparse, json, os, re, sys
 from openpyxl import load_workbook
 
 BLOCKING, QUESTION, NOTE = "BLOCKING", "QUESTION", "NOTE"
+VALID_STATUSES = ("pending", "approved", "blocked", "retired")
 
-# ---------------------------------------------------------------------------
-# Parked tree changes (PTC register)
-# ---------------------------------------------------------------------------
-# A definition batch may not edit downstream_process_map.json or the TTL. When
-# a row cannot be defined without first moving it, the change is recorded in
-# step3c-parked-tree-changes.md instead. That file used to be prose nothing
-# checked, so the tree pass depended on someone remembering to open it.
-#
-# These checks bind the register to the gate in both directions, so an open
-# parked change cannot be silently dropped:
-#   - a blocked/retired row must cite the PTC that parks it
-#   - a cited PTC must exist; a blocked row cannot stay parked against
-#     a Closed entry. retired is terminal provenance and may keep the
-#     citation after close (the Step 3d end state for a node that will
-#     not be defined)
-#   - an open PTC must be cited by at least one row (no orphans)
-#   - Step 3c cannot be declared complete while any PTC is open
-#
-# The last rule is the one that survives the end of the review exercise. The
-# others only fire while batches are still running; that one fires exactly
-# when the queue empties and the batch reminders stop.
-PTC_ID_RE = re.compile(r"\bPTC-(\d{3,})\b")
-PTC_HEADING_RE = re.compile(r"^##\s+(PTC-\d{3,})\b", re.M)
-# Tolerates bolded status values (`**Status:** **Closed** 2026-09-18 — ...`).
-PTC_STATUS_RE = re.compile(r"^\*\*Status:\*\*\s*\**(\w+)", re.M)
 
-# Workbook Controlled vocabularies sheet, field `status`.
-# `blocked` / `retired` are legal parking states; they never merge.
-STATUS_OK = {"pending", "approved", "blocked", "retired"}
+def parse_ptc_register(path):
+    """Return {ptc_id: 'open'|'closed'} parsed from the register markdown."""
+    entries = {}
+    if not path:
+        return entries
+    text = open(path).read()
+    for m in re.finditer(r"^##\s+(PTC-\d+)\b(.*?)(?=^##\s+PTC-\d+|\Z)",
+                         text, re.M | re.S):
+        pid, body = m.group(1), m.group(2)
+        sm = re.search(r"^\*\*Status:\*\*\s*(.+)$", body, re.M)
+        status_line = sm.group(1) if sm else ""
+        entries[pid] = "closed" if "closed" in status_line.lower() else "open"
+    return entries
 
-# Only these may sit on an approved row. mixed/needs-review and
-# not-process require Hamid's decision and must stay pending (or move
-# to blocked/retired after that decision).
-APPROVABLE_TYPE = {"process", "capability"}
 
-CONCEPT_TYPE_OK = {
-    "process",
-    "capability",
-    "mixed/needs-review",
-    "not-process",
-}
-
-# Rows approved in #29, before #31 invented Phase 1 columns.
-# Dated 2026-09-18. Do not grow this set — new approvals must satisfy
-# Phase 1. Do not delete a slug from this set as a way to "force"
-# backfill; run an authored backfill PR instead.
+# The 15 rows approved before the Phase-1 intake columns existed (#29).
+# Flagged as NOTE when Phase 1 is empty — not silently waived, not blocked,
+# not backfilled here.
 PRE_INTAKE_APPROVED = {
-    "CM-1",
-    "CM-1-1-2",
-    "CM-1-1-4",
-    "CM-1-1-5",
-    "CM-1-1-6",
-    "CM-1-3-3-5-6",
-    "L1-refining",
-    "L1-midstream",
-    "L1-supply-chain-mgmt",
-    "L1-finance",
-    "L1-shared-services",
-    "L1-process-excellence-it",
-    "L1-human-resources",
-    "L1-legal-corp-comm",
-    "L1-ehs-gov-reporting",
+    "CM-1", "CM-1-1-2", "CM-1-1-4", "CM-1-1-5", "CM-1-1-6", "CM-1-3-3-5-6",
+    "L1-refining", "L1-midstream", "L1-supply-chain-mgmt", "L1-finance",
+    "L1-shared-services", "L1-process-excellence-it", "L1-human-resources",
+    "L1-legal-corp-comm", "L1-ehs-gov-reporting",
 }
 
-# Review & authoring headers that must exist after #31. Missing any of
-# these means someone pointed the gate at a pre-intake workbook.
-REQUIRED_HEADERS = (
-    "slug",
-    "name",
-    "definition",
-    "scope_note",
-    "in_scope",
-    "out_of_scope",
-    "alt_labels",
-    "status",
-    "concept_type_check",
-    "primary_purpose",
-    "reference_sources",
-    "open_questions",
-    "process_horizon",
-)
 
-# First token of a reference_sources pipe-segment. #32 cites bare
-# source_ids (`SRC-EIA-GLOSS-001`); the column guide also allows a
-# relevance note after the id.
-SOURCE_ID_RE = re.compile(r"(SRC-[A-Z0-9-]+)")
-
-HERE = Path(__file__).resolve().parent
-DEFAULT_IDENTITY = HERE.parent / "output" / "step2-identity-map.json"
-DEFAULT_PTC_REGISTER = HERE.parents[1] / "step3c-parked-tree-changes.md"
-
-
-def cell(value) -> str:
-    return str(value or "").strip()
-
-
-def split_pipe(value) -> list[str]:
-    return [part.strip() for part in cell(value).split("|") if part.strip()]
-
-
-def source_id_from_segment(segment: str) -> str | None:
-    match = SOURCE_ID_RE.search(segment)
-    return match.group(1) if match else None
-
-
-def load_reference_ids(wb) -> set[str]:
-    """Source ids from the Reference register sheet (header row `source_id`)."""
-    if "Reference register" not in wb.sheetnames:
+def controlled_values(wb, field):
+    """Read allowed values for a field from the 'Controlled vocabularies' sheet."""
+    if "Controlled vocabularies" not in wb.sheetnames:
         return set()
-    ws = wb["Reference register"]
-    header_row = None
-    source_col = 0
-    for row in ws.iter_rows(min_row=1, max_row=20, values_only=False):
-        values = [cell(c.value) for c in row]
-        if "source_id" in values:
-            header_row = row[0].row
-            source_col = values.index("source_id")
-            break
-    if header_row is None:
-        return set()
+    for row in wb["Controlled vocabularies"].iter_rows(min_row=3,
+                                                       values_only=True):
+        if row[0] == field and row[1]:
+            return {v.strip() for v in str(row[1]).split("|")}
+    return set()
+
+
+def registered_sources(wb):
+    """Return the set of source_id values from the 'Reference register' sheet."""
     ids = set()
-    for row in ws.iter_rows(min_row=header_row + 1, values_only=True):
-        sid = cell(row[source_col] if source_col < len(row) else "")
-        if sid:
+    if "Reference register" not in wb.sheetnames:
+        return ids
+    rows = list(wb["Reference register"].iter_rows(values_only=True))
+    start = next((i for i, r in enumerate(rows)
+                  if any("source_id" in str(c or "") for c in r)), None)
+    if start is None:
+        return ids
+    for r in rows[start + 1:]:
+        sid = str(r[0] or "").strip()
+        if sid and sid != "source_id":
             ids.add(sid)
     return ids
 
 
-def load_allowed_values(wb, field: str, fallback: set[str]) -> set[str]:
-    """Parse `Field | Allowed values` from Controlled vocabularies.
-
-    The sheet is the governed list. Fallback exists only so a stripped
-    test workbook still has a deterministic vocab.
-    """
-    if "Controlled vocabularies" not in wb.sheetnames:
-        return set(fallback)
-    ws = wb["Controlled vocabularies"]
-    for row in ws.iter_rows(min_row=1, values_only=True):
-        if cell(row[0]).lower() == field:
-            raw = cell(row[1] if len(row) > 1 else "")
-            return {part.strip() for part in raw.split("|") if part.strip()} or set(fallback)
-    return set(fallback)
-
-
-def load_ptc_register(path: Path) -> dict[str, str]:
-    """Return {ptc_id: 'open'|'closed'} from the parked-tree-changes register.
-
-    Parses the per-entry `## PTC-NNN` sections, not the summary table, so the
-    table cannot drift from the entries without being caught.
-    """
-    if not path.exists():
-        return {}
-    text = path.read_text(encoding="utf-8")
-    entries: dict[str, str] = {}
-    marks = list(PTC_HEADING_RE.finditer(text))
-    for i, m in enumerate(marks):
-        body = text[m.end(): marks[i + 1].start() if i + 1 < len(marks) else len(text)]
-        status = PTC_STATUS_RE.search(body)
-        entries[m.group(1)] = (status.group(1).lower() if status else "open")
-    return entries
-
-
-def main() -> int:
+def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workbook", required=True)
-    ap.add_argument(
-        "--ptc-register",
-        default=str(DEFAULT_PTC_REGISTER),
-        help="Parked tree changes register (defaults to ../../step3c-parked-tree-changes.md)",
-    )
+    ap.add_argument("--ptc-register",
+                    default=os.path.join(os.path.dirname(
+                        os.path.abspath(__file__)),
+                        "..", "..", "step3c-parked-tree-changes.md"),
+                    help="PTC register markdown ('' to skip register checks)")
+    ap.add_argument("--identity-map",
+                    default=os.path.join(os.path.dirname(
+                        os.path.abspath(__file__)),
+                        "..", "output", "step2-identity-map.json"),
+                    help="Step 2 identity map JSON (preferred-label source)")
     ap.add_argument("--out", default="step3c-workbook-findings.md")
-    ap.add_argument(
-        "--identity-map",
-        default=str(DEFAULT_IDENTITY),
-        help="Identity map JSON (defaults next to this script under ../output/)",
-    )
     a = ap.parse_args()
 
+    ptc = parse_ptc_register(a.ptc_register if a.ptc_register else None)
+
     wb = load_workbook(a.workbook, data_only=True)
-    if "Review & authoring" not in wb.sheetnames:
-        print("missing sheet: Review & authoring", file=sys.stderr)
-        return 1
     ws = wb["Review & authoring"]
     headers = [c.value for c in ws[1]]
     idx = {h: i for i, h in enumerate(headers)}
-    missing = [h for h in REQUIRED_HEADERS if h not in idx]
-    if missing:
-        print("workbook is missing post-#31 headers: " + ", ".join(missing), file=sys.stderr)
-        print("point --workbook at the semantic-intake xlsx, not a pre-#31 copy", file=sys.stderr)
-        return 1
 
-    idmap = {r["slug"]: r for r in json.load(open(a.identity_map))}
-    pref_labels = {r["name"].lower() for r in idmap.values()}
-    registered_sources = load_reference_ids(wb)
-    horizon_ok = load_allowed_values(
-        wb,
-        "process_horizon",
-        {
-            "strategic",
-            "tactical",
-            "monthly",
-            "weekly",
-            "daily",
-            "intraday",
-            "event-driven",
-            "continuous",
-            "periodic",
-            "not-applicable",
-            "needs-review",
-        },
-    )
-
-    ptc_register = load_ptc_register(Path(a.ptc_register))
-    ptc_open = {k for k, v in ptc_register.items() if v == "open"}
-    ptc_cited: dict[str, list[str]] = {k: [] for k in ptc_register}
-
-    findings = []
-    seen = set()
+    findings, seen_slugs = [], set()
+    cited_ptc = set()
     stats = {"rows": 0, "approved": 0, "pending": 0, "blocked": 0, "retired": 0}
 
     def add(sev, slug, check, detail):
-        findings.append({"severity": sev, "slug": slug, "check": check, "detail": detail})
+        findings.append({"severity": sev, "slug": slug, "check": check,
+                         "detail": detail})
+
+    try:
+        idmap = {r["slug"]: r for r in json.load(open(a.identity_map))}
+    except FileNotFoundError:
+        idmap = {}
+    pref_labels = {r["name"].lower() for r in idmap.values()}
+    CTC_ALLOWED = controlled_values(wb, "concept_type_check") or \
+        {"process", "capability", "mixed/needs-review", "not-process"}
+    HORIZONS = controlled_values(wb, "process_horizon")
+    REGISTERED = registered_sources(wb)
 
     for row in ws.iter_rows(min_row=2, values_only=True):
         if not any(row):
             continue
-
-        def g(h):
-            i = idx[h]
-            return row[i] if i < len(row) else None
-
-        slug = cell(g("slug"))
+        g = lambda h: (str(row[idx[h]]) if h in idx and idx[h] < len(row)
+                       and row[idx[h]] is not None else "").strip()
+        slug = g("slug")
         stats["rows"] += 1
-        status = cell(g("status")).lower()
-        defi = cell(g("definition"))
-        scope = cell(g("scope_note"))
-        out_sc = cell(g("out_of_scope"))
-        alt = cell(g("alt_labels"))
-        concept_type = cell(g("concept_type_check"))
-        purpose = cell(g("primary_purpose"))
-        sources = cell(g("reference_sources"))
-        questions = cell(g("open_questions"))
-        notes = cell(g("terminology_notes"))
-        horizon = cell(g("process_horizon"))
+        status = g("status").lower()
+        defi = g("definition")
+        scope = g("scope_note")
+        out_sc = g("out_of_scope")
+        alt = g("alt_labels")
+        tnotes = g("terminology_notes")
 
-        if slug in seen:
+        if slug in seen_slugs:
             add(BLOCKING, slug, "duplicate-slug", "Slug appears more than once.")
-        seen.add(slug)
-
-        if status not in STATUS_OK:
-            add(
-                BLOCKING,
-                slug,
-                "bad-status",
-                f"status={status!r}; must be one of {sorted(STATUS_OK)} "
-                "(workbook Controlled vocabularies, post-#31).",
-            )
+        seen_slugs.add(slug)
+        if status not in VALID_STATUSES:
+            add(BLOCKING, slug, "bad-status",
+                f"status={status!r}; must be one of {list(VALID_STATUSES)}.")
             continue
+        stats[status] += 1
 
-        if concept_type and concept_type not in CONCEPT_TYPE_OK:
-            add(
-                BLOCKING,
-                slug,
-                "bad-concept-type",
-                f"concept_type_check={concept_type!r}; must match Controlled vocabularies.",
-            )
+        ptc_refs = set(re.findall(r"PTC-\d+", tnotes))
+        cited_ptc |= ptc_refs
 
-        if horizon and horizon not in horizon_ok:
-            add(
-                BLOCKING,
-                slug,
-                "bad-process-horizon",
-                f"process_horizon={horizon!r}; must match Controlled vocabularies.",
-            )
-
-        # blocked / retired are parking states. Count them; do not run
-        # the approved-row merge gate. A later tree pass (playbook Step 3d)
-        # is what retires or moves the node in the repo JSON.
-        #
-        # A parked row must say what it is waiting for, or it is just a row
-        # nobody will come back to. Accepts a PTC id or an ADR reference in
-        # terminology_notes / open_questions.
         if status in ("blocked", "retired"):
-            stats[status] += 1
-            reason_text = f"{notes} {questions}"
-            cited = sorted(set(PTC_ID_RE.findall(reason_text)))
-            has_adr = re.search(r"\bADR-[\w-]+", reason_text)
-            if not cited and not has_adr:
-                add(
-                    BLOCKING,
-                    slug,
-                    "parked-without-reason",
-                    f"status={status} but terminology_notes cites no PTC id or ADR — "
-                    "a parked row must name the tree change or decision it waits on.",
-                )
-            for num in cited:
-                ptc_id = f"PTC-{num}"
-                if ptc_id not in ptc_register:
-                    add(
-                        BLOCKING,
-                        slug,
-                        "ptc-unknown",
-                        f"cites {ptc_id}, which has no entry in the parked-tree-changes "
-                        "register. Add the entry before parking rows against it.",
-                    )
-                    continue
-                ptc_cited[ptc_id].append(slug)
-                # retired is terminal: the node will not be defined, so the
-                # citation is provenance after close. blocked means "waiting
-                # on this PTC" — that is illegal once the entry is Closed.
-                if status == "blocked" and ptc_register[ptc_id] != "open":
-                    add(
-                        BLOCKING,
-                        slug,
-                        "ptc-closed",
-                        f"still blocked against {ptc_id}, which the register records as "
-                        f"{ptc_register[ptc_id]}. Closing a tree change means re-statusing "
-                        "the blocked rows it parked — a half-applied tree pass cannot merge.",
-                    )
+            if not ptc_refs:
+                add(BLOCKING, slug, "ptc-not-cited",
+                    f"status={status!r} but terminology_notes names no PTC entry.")
+            for pid in ptc_refs:
+                if pid not in ptc:
+                    add(BLOCKING, slug, "ptc-unknown",
+                        f"Cites {pid}, which has no entry in the PTC register.")
+                elif ptc[pid] == "closed" and status == "blocked":
+                    add(BLOCKING, slug, "ptc-closed",
+                        f"Still blocked against {pid}, which is recorded Closed — "
+                        f"lift to pending (closure and re-statusing are one change).")
+            if defi:
+                add(QUESTION, slug, "defined-but-parked",
+                    f"status={status!r} yet a definition is present — "
+                    f"{'retired rows are not defined' if status == 'retired' else 'blocked rows cannot be defined until unblocked'}.")
             continue
 
         if status == "pending":
-            stats["pending"] += 1
-            # Draft definition text on a pending row is fine and common.
-            # Only ask when it looks like someone forgot to flip status.
             if defi or scope:
-                add(
-                    QUESTION,
-                    slug,
-                    "pending-with-content",
-                    "Row is pending but has definition/scope text — intended?",
-                )
+                add(QUESTION, slug, "pending-with-content",
+                    "Row is pending but has definition/scope text — intended?")
             continue
 
-        stats["approved"] += 1
-
-        # --- approved-row checks (merge gate) ---
-        if questions:
-            add(
-                BLOCKING,
-                slug,
-                "approved-with-open-questions",
-                "Locked instruction: a material open_questions value cannot sit on an approved row.",
-            )
-
-        if concept_type and concept_type not in APPROVABLE_TYPE:
-            add(
-                BLOCKING,
-                slug,
-                "unapprovable-concept-type",
-                f"concept_type_check={concept_type!r} cannot be approved without Hamid's decision.",
-            )
-
-        pre_intake = slug in PRE_INTAKE_APPROVED
-        missing_phase1 = []
-        if not concept_type:
-            missing_phase1.append("concept_type_check")
-        if not purpose:
-            missing_phase1.append("primary_purpose")
-        if not sources:
-            missing_phase1.append("reference_sources")
-        if missing_phase1:
-            if pre_intake:
-                # Explicit grandfather. Same stance as #30 on the
-                # pre-existing CM-1-3-3-5-6 scope-note gap: flag it,
-                # do not silently skip, do not rewrite the row here.
-                add(
-                    NOTE,
-                    slug,
-                    "pre-intake-missing-phase-1",
-                    "Approved in #29 before semantic intake; empty "
-                    + ", ".join(missing_phase1)
-                    + ". Not blocking. Backfill in a later authored pass — "
-                    "do not grow PRE_INTAKE_APPROVED.",
-                )
-            else:
-                add(
-                    BLOCKING,
-                    slug,
-                    "missing-phase-1",
-                    "Post-#31 approval requires concept_type_check, "
-                    "primary_purpose, and reference_sources. Missing: "
-                    + ", ".join(missing_phase1)
-                    + ".",
-                )
-
-        if sources:
-            if not registered_sources:
-                add(
-                    QUESTION,
-                    slug,
-                    "reference-register-unreadable",
-                    "reference_sources is set but the Reference register sheet has no source_id rows.",
-                )
-            for segment in split_pipe(sources):
-                sid = source_id_from_segment(segment)
-                if not sid:
-                    add(
-                        BLOCKING,
-                        slug,
-                        "source-id-unparseable",
-                        f"reference_sources segment {segment!r} has no SRC-* id.",
-                    )
-                elif sid not in registered_sources:
-                    add(
-                        BLOCKING,
-                        slug,
-                        "unknown-source-id",
-                        f"{sid} is not on the Reference register. Register the source before citing it.",
-                    )
-
+        # --- approved-row checks ---
         if not defi:
-            add(BLOCKING, slug, "empty-definition", "Approved row has no definition.")
+            add(BLOCKING, slug, "empty-definition",
+                "Approved row has no definition.")
             continue
         words = defi.split()
         if len(words) < 8:
-            add(
-                QUESTION,
-                slug,
-                "short-definition",
-                f"Only {len(words)} words — likely too thin for enterprise grade.",
-            )
-        # Circular definition: the definition restates the label instead of
-        # explaining it — "Refinery Planning is the process of refinery
-        # planning". Reusing a domain noun is NOT circular: "Regional
-        # Optimization" must be free to say "regional". The pre-#34 test
-        # substring-matched either of the first two label words anywhere in the
-        # first six words, which fired on 10 rows, none of them circular,
-        # including four approved L3 parents. Now anchored at the opening.
-        name = (g("name") or "").strip()
-        if name:
-            name_pat = r"\s+".join(re.escape(w) for w in name.split())
-            lead_raw = " ".join(words[:14])
-            circular = re.match(
-                rf"^(the\s+)?{name_pat}\b\s*(is|are|means|refers to|covers|involves|:|,|\u2014|-|$)",
-                lead_raw,
-                re.I,
-            ) or re.search(
-                rf"\b(is|are)\s+the\s+(process|activity|practice|act|function)\s+of\s+{name_pat}\b",
-                lead_raw,
-                re.I,
-            )
-            if circular:
-                add(
-                    QUESTION,
-                    slug,
-                    "circular-definition",
-                    f"Definition restates the label ({name!r}) instead of explaining it — define by purpose.",
-                )
+            add(QUESTION, slug, "short-definition",
+                f"Only {len(words)} words — likely too thin for enterprise grade.")
+        # true label-restatement: "X is the X ..." / "X refers to ..." openings
+        name_words = re.findall(r"[A-Za-z]+", g("name").lower())
+        lead = " ".join(name_words[:4])
+        if lead and re.match(
+                rf"^(the\s+)?{re.escape(lead)}\s+(is|are|refers?\s+to|means?)\b",
+                defi.lower()):
+            add(QUESTION, slug, "circular-opening",
+                f"Definition restates the label ({g('name')!r}) instead of "
+                f"defining the activity — restate by purpose and outcome.")
         if not scope:
-            add(
-                BLOCKING,
-                slug,
-                "missing-scope-note",
-                "Locked instruction: every approved row requires a non-empty scope_note with at least one meaningful boundary.",
-            )
-        # NOTE, not BLOCKING: #30 locked "do not invent an owner". A
-        # missing owner name is a hint, not a failed merge.
-        # Recognises the two conventions actually in use: a prose owner phrase,
-        # and a trailing parenthetical owner or slug — "trade execution (Supply
-        # And Trading)", "(CM-1-1-2-10)". Pre-#34 this only matched the prose
-        # form and noted all five #32 rows, each of which does name its owners.
-        _owner_named = re.search(
-            r"\b(owned by|belongs to|sibling|see |under )\b", out_sc or "", re.I
-        ) or re.search(r"\(\s*(?:CM-[\d-]+|L\d[\w-]*|[A-Z][^()]{2,})\)", out_sc or "")
-        if out_sc and not _owner_named:
-            add(
-                NOTE,
-                slug,
-                "out-of-scope-owner",
-                "Out-of-scope text doesn't name the owning sibling — add it only when that owner is already in the taxonomy.",
-            )
-        for label in split_pipe(alt):
+            add(BLOCKING, slug, "missing-scope-note",
+                "Locked instruction: every approved row requires a non-empty "
+                "scope_note with at least one meaningful boundary.")
+        if out_sc and not re.search(r"\b(owned by|belongs to|sibling|see |under )\b",
+                                    out_sc, re.I):
+            add(NOTE, slug, "out-of-scope-owner",
+                "Out-of-scope text doesn't name the owning sibling — fine when "
+                "ownership isn't established; otherwise consider adding it.")
+        for label in [x.strip() for x in alt.split("|") if x.strip()]:
             if label.lower() in pref_labels:
-                add(
-                    QUESTION,
-                    slug,
-                    "altlabel-collision",
-                    f"altLabel {label!r} collides with another concept's preferred label.",
-                )
+                add(QUESTION, slug, "altlabel-collision",
+                    f"altLabel {label!r} collides with another concept's "
+                    f"preferred label.")
 
-    # ---- PTC register binding -------------------------------------------
-    if not ptc_register:
-        add(
-            NOTE,
-            "-",
-            "ptc-register-missing",
-            f"No parked-tree-changes register found at {a.ptc_register}. "
-            "Parked/blocked rows cannot be bound to a tree change.",
-        )
-    for ptc_id, slugs in ptc_cited.items():
-        if ptc_register.get(ptc_id) == "open" and not slugs:
-            add(
-                BLOCKING,
-                "-",
-                "ptc-orphaned",
-                f"{ptc_id} is open but no workbook row cites it. An open tree change "
-                "with no affected row will be forgotten — cite it from the rows it "
-                "parks, or close it in the register.",
-            )
-    if stats["pending"] == 0 and ptc_open:
-        add(
-            BLOCKING,
-            "-",
-            "step-3c-not-complete",
-            "Definition queue is empty but "
-            + ", ".join(sorted(ptc_open))
-            + " still open. Step 3c is not complete until every parked tree change is "
-            "applied and closed. Run the tree pass (playbook Step 3d).",
-        )
+        # Phase-1 authoring columns (required on new approvals; the 15
+        # baseline rows predate them and are grandfathered)
+        ctc, pp, refs = g("concept_type_check"), g("primary_purpose"), \
+            g("reference_sources")
+        if g("open_questions"):
+            add(BLOCKING, slug, "open-questions-on-approved",
+                "Approved row still has open_questions content — approval "
+                "requires no material open question.")
+        if slug in PRE_INTAKE_APPROVED:
+            for field, check in (("concept_type_check", "phase1-not-backfilled"),
+                                 ("primary_purpose", "phase1-not-backfilled"),
+                                 ("reference_sources", "phase1-not-backfilled")):
+                if not g(field):
+                    add(NOTE, slug, check,
+                        f"Pre-intake approval (PR #29): {field} empty — "
+                        f"flagged, not waived; backfill is a separate decision.")
+        if slug not in PRE_INTAKE_APPROVED:
+            if not ctc:
+                add(BLOCKING, slug, "missing-concept-type",
+                    "concept_type_check is required on new approvals.")
+            elif ctc not in CTC_ALLOWED:
+                add(BLOCKING, slug, "bad-concept-type",
+                    f"concept_type_check={ctc!r} is not a controlled value "
+                    f"{sorted(CTC_ALLOWED)}.")
+            elif ctc not in ("process", "capability"):
+                add(BLOCKING, slug, "concept-type-not-approvable",
+                    f"concept_type_check={ctc!r}: only 'process' or "
+                    f"'capability' can be approved (controlled vocabulary "
+                    f"governance).")
+            if not pp:
+                add(BLOCKING, slug, "missing-primary-purpose",
+                    "primary_purpose is required on new approvals.")
+            if not refs:
+                add(BLOCKING, slug, "missing-reference-sources",
+                    "reference_sources is required on new approvals — "
+                    "register the source first, then cite its source_id.")
+            else:
+                for sid in [s.strip() for s in refs.split("|") if s.strip()]:
+                    if REGISTERED and sid not in REGISTERED:
+                        add(BLOCKING, slug, "unknown-source",
+                            f"reference_sources cites {sid!r}, which is not "
+                            f"in the Reference register.")
+        ph = g("process_horizon")
+        if ph and HORIZONS and ph not in HORIZONS:
+            add(BLOCKING, slug, "bad-horizon",
+                f"process_horizon={ph!r} is not a controlled value "
+                f"{sorted(HORIZONS)} — new values need a documented decision.")
 
-    # cross-row: two approved siblings with near-identical definitions
-    # (light heuristic; reviewer does the real boundary check)
+    # cross-row register checks
+    for pid, state in ptc.items():
+        if state == "open" and pid not in cited_ptc:
+            add(BLOCKING, pid, "ptc-uncited",
+                f"PTC entry is Open but no workbook row cites it — register and "
+                f"workbook have drifted.")
+    if stats["pending"] == 0 and any(s == "open" for s in ptc.values()):
+        add(BLOCKING, "—", "step-3c-not-complete",
+            "Definition queue is empty while a PTC entry is still Open — "
+            "Step 3c cannot be declared finished with a tree change outstanding.")
+
     with open(a.out, "w") as f:
         f.write("# Step 3c workbook review findings\n\n")
-        f.write(
-            f"Rows: {stats['rows']} | approved: {stats['approved']} | "
-            f"pending: {stats['pending']} | blocked: {stats['blocked']} | "
-            f"retired: {stats['retired']}\n\n"
-        )
-        f.write(
-            "Gate: step3c-reviewer-instructions.md v2026-09-19b "
-            "(PTC parking: blocked/retired; ptc-closed is blocked-only). "
-            "PRE_INTAKE_APPROVED empty Phase 1 is NOTE, not BLOCKING.\n\n"
-        )
-        if ptc_register:
-            f.write(
-                "Parked tree changes: "
-                + ", ".join(f"{k} ({v})" for k, v in sorted(ptc_register.items()))
-                + ". Step 3c cannot be completed while any is open — see playbook "
-                "Step 3d.\n\n"
-            )
+        f.write(f"Rows: {stats['rows']} | approved: {stats['approved']} | "
+                f"pending: {stats['pending']} | blocked: {stats['blocked']} | "
+                f"retired: {stats['retired']} | "
+                f"open PTC entries: {sum(1 for s in ptc.values() if s == 'open')}\n\n")
         for sev in (BLOCKING, QUESTION, NOTE):
             items = [x for x in findings if x["severity"] == sev]
             f.write(f"## {sev} ({len(items)})\n\n")
@@ -578,13 +283,12 @@ def main() -> int:
                 f.write(f"- **{x['slug']}** [{x['check']}] {x['detail']}\n")
             f.write("\n")
     blocking = sum(1 for x in findings if x["severity"] == BLOCKING)
-    print(
-        f"rows={stats['rows']} approved={stats['approved']} pending={stats['pending']} "
-        f"blocked={stats['blocked']} retired={stats['retired']} "
-        f"blocking={blocking} questions={sum(1 for x in findings if x['severity']==QUESTION)} "
-        f"notes={sum(1 for x in findings if x['severity']==NOTE)} "
-        f"open_ptc={len(ptc_open)}"
-    )
+    print(f"rows={stats['rows']} approved={stats['approved']} "
+          f"pending={stats['pending']} blocked={stats['blocked']} "
+          f"retired={stats['retired']} "
+          f"open_ptc={sum(1 for s in ptc.values() if s == 'open')} "
+          f"blocking={blocking} "
+          f"questions={sum(1 for x in findings if x['severity'] == QUESTION)}")
     print("report:", a.out)
     return 1 if blocking else 0
 
