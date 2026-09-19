@@ -11,21 +11,32 @@ decision is recorded here instead of being resolved silently inside a definition
 **Rules.**
 
 - An entry is closed only by an explicit tree pass, never by a definition batch.
-- While an entry is open, every affected row stays `status = pending`.
+- A row that cannot be defined until its entry closes is `blocked`; a row that will not be defined
+  at all is `retired`. Neither is left `pending`, because `pending` means queued for authoring and
+  these rows are not. *(Amended 2026-09-18; the earlier rule kept them `pending`, which hid four
+  unworkable rows inside the authoring queue.)*
 - An affected row's `terminology_notes` must name its PTC ID so the two never drift apart.
 - Closing an entry requires the checklist in that entry to be fully worked, not just the move applied.
 
-| ID | Affected node | Status | Decision | Blocks |
+**This register is enforced, not advisory.** `step3c-workbook-validate.py` reads this file on every
+run and fails the gate when the two drift: a `blocked` or `retired` row that names no PTC, a row
+citing a PTC that does not exist here, a row still parked against an entry recorded as Closed, or an
+open entry that no row cites. The gate also refuses to let the definition queue reach zero while any
+entry is open — finding `step-3c-not-complete` — so Step 3c cannot be declared finished with a tree
+change outstanding. The open count prints in the gate's summary line, which lands in every batch PR
+body. See playbook §3, Step 3d.
+
+| ID | Affected node | Status | Decision | Rows parked |
 | --- | --- | --- | --- | --- |
-| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — accepted, awaiting tree pass | Option A, accepted by Hamid 2026-09-18 | 4 rows |
-| PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | Open — raised, not yet decided | None yet | 1 row |
+| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — accepted, awaiting tree pass | Option A, accepted by Hamid 2026-09-18; sub-decisions settled 2026-09-18 | 4 (1 retired, 3 blocked) |
+| PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | **Closed** 2026-09-18 — no tree change required | Option 1, accepted by Hamid | 0 |
 
 ---
 
 ## PTC-001 — Commercial Development does not belong under Refinery Planning
 
 **Raised:** 2026-09-18, review batch 01
-**Accepted:** 2026-09-18 by Hamid (Option A)
+**Accepted:** 2026-09-18 by Hamid (Option A); sub-decisions 1–4 settled 2026-09-18
 **Status:** Open — awaiting the consolidated repo-JSON tree pass
 **Precedent:** handled the same way as the parked `IT Services` reparenting question recorded on
 the approved `CM-1` record, which was likewise deferred rather than churning the tree mid-pass.
@@ -34,10 +45,13 @@ the approved `CM-1` record, which was likewise deferred rather than churning the
 
 | Slug | Level | Label | Current parent | Current status |
 | --- | --- | --- | --- | --- |
-| `CM-1-1-4-6` | 4 | Commercial Development | Refinery Planning | `pending`, `concept_type_check = mixed/needs-review` |
-| `CM-1-1-4-6-1` | 5 | Develop Strategic Business Plan | Commercial Development | `pending`, untouched |
-| `CM-1-1-4-6-2` | 5 | Plan Budgets | Commercial Development | `pending`, untouched |
-| `CM-1-1-4-6-3` | 5 | Manage Site Specific Business Risk | Commercial Development | `pending`, untouched |
+| `CM-1-1-4-6` | 4 | Commercial Development | Refinery Planning | `retired`, `not-process` |
+| `CM-1-1-4-6-1` | 5 | Develop Strategic Business Plan | Commercial Development | `blocked`, destination undecided |
+| `CM-1-1-4-6-2` | 5 | Plan Budgets | Commercial Development | `blocked`, destination Finance |
+| `CM-1-1-4-6-3` | 5 | Manage Site Specific Business Risk | Commercial Development | `blocked`, destination undecided |
+
+Statuses set 2026-09-18. `retired` here means "will not be defined", not "removed from the tree" —
+all four nodes are still present in `downstream_process_map.json` until the Step 3d tree pass.
 
 ### The problem
 
@@ -67,31 +81,54 @@ Refinery Planning. That is why no definition was authored.
 Steps 3 and 4 require **new nodes** — this is why the change cannot be a simple move. Two of the
 three children have no destination in the current tree.
 
-### Open sub-decisions to settle during the tree pass
+### Why Option A is not executable as written
 
-These were not settled on 2026-09-18 and must be answered before the move is applied:
+Verified against `downstream_process_map.json` 2026-09-18. Only **Commercial & Marketing** is
+decomposed — Planning & Scheduling (7), Supply And Trading (7), Marketing (10) — and 492 of the 503
+workbook rows sit under it. Finance, Refining, Midstream, Supply Chain Mgmt., Shared Services,
+Process Excellence & IT, Human Resources, Legal & Corp Comm, and EHS & Gov Reporting each have **no
+children at all**. There is no destination node for any of the three L5 children, including the
+reparenting of `Plan Budgets` to Finance, which reads like a simple move but is not.
 
-1. **Where does site/enterprise business planning live?** The L1 domain set has no Strategy node.
-   Options: a new strategic-planning node under an existing L1; a site business-planning node
-   under Refining as asset owner; or a new enterprise-level branch.
-2. **Who owns non-financial, non-EHS site business risk?** Candidate is Refining as asset owner,
-   bounded against EHS assurance and Finance. Confirm whether an enterprise risk-management
-   capability should exist instead, since the taxonomy currently has none.
-3. **Does `Commercial Development` survive anywhere?** Option A retires it. If a genuine site
-   commercial business-development process exists, it needs its own definition and placement
-   rather than inheriting this node.
-4. **Does `Plan Budgets` split?** Confirm whether the operational planning input and the financial
-   governance process are one node under Finance or two linked nodes.
+This makes the tree pass larger than moving three nodes: it requires decomposing at least one
+undecomposed L1 far enough to give them a parent. Recorded here so the scope is not rediscovered.
+
+### Sub-decisions — settled 2026-09-18
+
+1. **Where does site/enterprise business planning live?** *Undecided, deliberately.* No new Strategy
+   L1 — the ten L1 definitions are approved baseline and changing the L1 set is a charter-level
+   decision, not an ontology-batch one. `Develop Strategic Business Plan` stays unplaced until the
+   L1 question is taken up on its own terms.
+2. **Who owns non-financial, non-EHS site business risk?** *Undecided, deliberately.* Refining is
+   the sensible owner as asset owner, but Refining is undecomposed. Confirmed that the taxonomy has
+   no enterprise risk capability anywhere: the only risk nodes are credit, market, and inventory
+   risk, all inside Supply And Trading, and EHS owns EHS risk only. Whether that capability should
+   exist is a domain-architecture question, carried forward into the tree pass.
+3. **Does `Commercial Development` survive anywhere?** **No — retired.** No local meaning, WEAK APQC
+   provenance against "Manage employee development," and all children leave. If a genuine site
+   commercial business-development process exists, it gets its own node and definition rather than
+   inheriting this one.
+4. **Does `Plan Budgets` split?** **No — one node under Finance.** The refinery's operational input
+   to budgeting is already carried by the Refinery Optimization case basis (`CM-1-1-4-7-1` to `-6`)
+   and the Refinery Planning outputs approved in batch 02. A second node would duplicate that work.
+
+Sub-decisions 1 and 2 stay open by choice, not by neglect: both are larger than this entry, and
+forcing them here would set domain architecture as a side effect of a definition batch.
 
 ### Closure checklist
 
-- [ ] Sub-decisions 1–4 answered and recorded in the Architecture Decision Log.
+- [x] Sub-decisions 3 and 4 answered (2026-09-18). 1 and 2 deliberately deferred as L1/domain-set
+      questions — record them in the Architecture Decision Log when that artifact exists.
 - [ ] New parent nodes created in `downstream_process_map.json` with slugs assigned.
 - [ ] Three L5 children reparented; `CM-1-1-4-6` retired or redefined.
 - [ ] Affected workbook rows re-queued for definition authoring under their new parents.
-- [ ] `CM-1-1-4-6` row set to `retired`, or given a definition if it survives.
+- [x] `CM-1-1-4-6` row set to `retired` (2026-09-18) — it does not survive, so no definition is owed.
 - [ ] Identity map and taxonomy TTL regenerated.
+- [ ] At least one currently undecomposed L1 decomposed far enough to host the moved children.
 - [ ] PTC-001 marked closed here with the date and decision-log reference.
+- [ ] Parked row statuses lifted from `blocked` to `pending` as each child gets a real parent — the
+      gate fails on a row still blocked against a Closed entry, so closure and re-statusing are one
+      change, not two.
 
 The full structured question, with options and evidence, is preserved verbatim in the
 `open_questions` cell of row `CM-1-1-4-6` in
@@ -102,14 +139,14 @@ The full structured question, with options and evidence, is preserved verbatim i
 ## PTC-002 — Slate and run-rate planning appears in two branches
 
 **Raised:** 2026-09-18, review batch 02
-**Status:** Open — raised, no decision taken
-**Decision needed from:** Hamid
+**Status:** **Closed** 2026-09-18 — Option 1 accepted by Hamid, no tree change required
+**Decided by:** Hamid
 
 ### Affected rows
 
 | Slug | Level | Label | Branch | Current status |
 | --- | --- | --- | --- | --- |
-| `CM-1-2-5-2-3` | 5 | Plan Optimal Feedstock Slate And Run Rate | Supply And Trading > Crude/Feed Demand Management | `pending`, untouched |
+| `CM-1-2-5-2-3` | 5 | Plan Optimal Feedstock Slate And Run Rate | Supply And Trading > Crude/Feed Demand Management | `pending` — queued for the Supply And Trading batch, with the boundary recorded in `terminology_notes` |
 
 ### The problem
 
@@ -139,13 +176,28 @@ answer. Reconciling the two nodes is a tree change and out of scope for a defini
    procurement; Refinery Planning sets the binding monthly plan. Requires both definitions to state
    the horizon boundary explicitly, or the overlap returns.
 
-**Leaning toward Option 1** — it preserves the locked Refinery Planning accountability, keeps the
-trading-side activity that genuinely exists, and needs no node moved. Not recorded as a decision.
+### Decision — Option 1, accepted 2026-09-18
+
+**Refinery Planning decides; Supply And Trading advises.** `CM-1-1-4` sets the binding crude slate
+and run rate. `CM-1-2-5-2-3` is the trading-side recommendation of an economically attractive
+feedstock slate and run rate, feeding the plan without setting it. It preserves the locked Refinery
+Planning accountability, keeps a trading activity that genuinely exists, and moves no node.
+
+Option 2 was rejected because the trading-side recommendation is real work that would lose its home.
+Option 3 was rejected because a horizon split only holds if both definitions restate it, and the
+overlap returns the moment one is reworded.
+
+Because no node moves, this entry needed no tree pass and is closed here. What survives is a
+**definition constraint**, recorded in `terminology_notes` on `CM-1-2-5-2-3`: whoever authors that
+row must scope it as advisory and must not claim the slate or throughput decision. The row stays
+`pending` — it belongs to the Supply And Trading cluster and gets its definition in that batch.
 
 ### Closure checklist
 
-- [ ] Option chosen and recorded in the Architecture Decision Log.
-- [ ] `CM-1-2-5-2-3` redefined, retired, or re-scoped per the decision.
-- [ ] Horizon boundary stated in both definitions if Option 3 is chosen.
-- [ ] `terminology_notes` on `CM-1-1-4-7-2` updated to point at the resolution.
-- [ ] PTC-002 marked closed here with the date and decision-log reference.
+- [x] Option chosen (Option 1, 2026-09-18). Record in the Architecture Decision Log when that
+      artifact exists.
+- [x] `CM-1-2-5-2-3` re-scoped: advisory boundary written into `terminology_notes` as a binding
+      constraint on its future definition.
+- [x] Horizon boundary — not applicable, Option 3 not chosen.
+- [x] `terminology_notes` on `CM-1-1-4-7-2` updated to point at the resolution.
+- [x] PTC-002 marked closed here, 2026-09-18.
