@@ -1,7 +1,7 @@
 # Step 3 — SKOS taxonomy report
 
 - Concepts: 680 (one per process-map node, stable document order)
-- Triples: 9038
+- Triples: 9999
 - `skos:broader` links: 678 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
@@ -23,12 +23,16 @@ Each approved row contributes: `skos:definition`, `skos:scopeNote`
 `skos:altLabel`s, a `dcterms:references` link to the APQC PCF element,
 `dcterms:source` provenance, and verbatim Phase-1 capture under the
 provisional `intake:` namespace
-(`https://w3id.org/lsc/ontology/intake/` — keyInputs, primaryOutput,
-relatedConcepts, responsibleDomain, processHorizon, primaryPurpose,
-referenceSources, terminologyNotes, conceptTypeCheck, parkedChildren).
+(`https://w3id.org/lsc/ontology/intake/` — level, keyInputs,
+primaryOutput, relatedConcepts, responsibleDomain, processHorizon,
+primaryPurpose, referenceSources, terminologyNotes, conceptTypeCheck,
+parkedChildren, apqcDecision, status).
 These annotations are explicitly NOT the Step 4 model: they preserve the
 reviewer's text in the graph so nothing is lost, and Step 4 promotes them
-to real properties between concept URIs.
+to real properties between concept URIs. `intake:level` carries the locked
+L0–L6 taxonomy level; `intake:apqcDecision` records the mapping call
+(REVIEW LINK / ADOPTED / REJECTED / NO CANDIDATE / NO SOURCE) — REJECTED
+rows are the deliberate APQC divergences (competency Q12).
 Blocked rows appear with `intake:status "blocked"` and no definition
 (the locked rule: a parked row must not carry one). Retired rows are
 `owl:deprecated` (not deleted, per version policy); `dcterms:isReplacedBy`
