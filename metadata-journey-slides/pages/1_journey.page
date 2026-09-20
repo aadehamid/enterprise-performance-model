@@ -1,0 +1,1027 @@
+pageType: content
+background:
+  type: solid
+  color: "#FFFFFF"
+notes: |
+  Advisory (off-slide, for the metadata-integration workstream — not shown):
+  1. Compliance depth: draft covers classification + certified uses but not retention rules / regulatory tags. Proposed: capture Stage 1, enforce Stage 6.
+  2. Reference data & units of measure: not staged in the draft; owner unassigned — decision needed. Proposed: Stage 1/3 as governed domain concepts.
+  3. Social / usage metadata (popularity, access frequency): emerging fifth category; agent recommendation signal. Proposed: Stage 7 → Purview.
+  4. AI-readiness metadata: the data-contract standard has moved two major versions past what the draft cites (2.1.0); agent-oriented ports are now defined by the standard. Proposed: Stage 6 + 7.
+elements:
+  # ===================== HEADER =====================
+  - elementId: title
+    elementType: text
+    bounds: [18, 10, 760, 32]
+    content:
+      style: "$h1"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p>The Metadata <span style="color:$green"><em>Journey</em></span></p>
+  - elementId: wip-badge-bg
+    elementType: shape
+    bounds: [828, 14, 114, 22]
+    shapeName: roundRect
+    adjustments: [30000]
+    fill: {type: solid, color: "#EFEFEF"}
+  - elementId: wip-badge-text
+    elementType: text
+    bounds: [828, 14, 114, 22]
+    content:
+      fontSize: 8.5
+      bold: true
+      color: "#C0392B"
+      align: [center, middle]
+      wrap: false
+      text: WORKING DRAFT
+  - elementId: subtitle
+    elementType: text
+    bounds: [18, 42, 924, 14]
+    content:
+      style: "$subtitle"
+      align: [left, middle]
+      wrap: false
+      text: "How metadata flows end to end — the stages a KPI moves through, the metadata each stage introduces, and the one system that owns it. Captured once at origin; referenced downstream by URI / IRI."
+
+  # ===================== BUCKET BAND =====================
+  - elementId: label-journey
+    elementType: text
+    bounds: [18, 62, 700, 12]
+    content:
+      style: "$sectionLabel"
+      align: [left, middle]
+      wrap: false
+      text: THE JOURNEY — FIVE BUCKETS, ONE DIRECTION
+
+  - elementId: bucket1-bg
+    elementType: shape
+    bounds: [18, 76, 172, 56]
+    shapeName: roundRect
+    adjustments: [12000]
+    fill: {type: solid, color: "$greenLight"}
+  - elementId: bucket1-title
+    elementType: text
+    bounds: [28, 82, 152, 14]
+    content:
+      fontSize: 9.5
+      bold: true
+      color: "$green"
+      align: [left, middle]
+      wrap: false
+      text: DOMAIN & MEANING · 1–2
+  - elementId: bucket1-desc
+    elementType: text
+    bounds: [28, 97, 152, 30]
+    content:
+      fontSize: 7.2
+      color: "$grey"
+      lineHeight: 1.25
+      align: [left, top]
+      text: From business language to a modeled domain and its process context
+
+  - elementId: arrow-b1
+    elementType: text
+    bounds: [191, 96, 13, 16]
+    content: {fontSize: 11, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: bucket2-bg
+    elementType: shape
+    bounds: [205, 76, 172, 56]
+    shapeName: roundRect
+    adjustments: [12000]
+    fill: {type: solid, color: "$orangeLight"}
+  - elementId: bucket2-title
+    elementType: text
+    bounds: [215, 82, 152, 14]
+    content:
+      fontSize: 9.5
+      bold: true
+      color: "$orange"
+      align: [left, middle]
+      wrap: false
+      text: KPI CERTIFICATION · 3
+  - elementId: bucket2-desc
+    elementType: text
+    bounds: [215, 97, 152, 30]
+    content:
+      fontSize: 7.2
+      color: "$grey"
+      lineHeight: 1.25
+      align: [left, top]
+      text: From candidate metric to certified Named KPI with a permanent Ontology IRI
+
+  - elementId: arrow-b2
+    elementType: text
+    bounds: [378, 96, 13, 16]
+    content: {fontSize: 11, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: bucket3-bg
+    elementType: shape
+    bounds: [392, 76, 172, 56]
+    shapeName: roundRect
+    adjustments: [12000]
+    fill: {type: solid, color: "$blueLight"}
+  - elementId: bucket3-title
+    elementType: text
+    bounds: [402, 82, 152, 14]
+    content:
+      fontSize: 9.5
+      bold: true
+      color: "$blue"
+      align: [left, middle]
+      wrap: false
+      text: BUILD & CERTIFY · 4–5
+  - elementId: bucket3-desc
+    elementType: text
+    bounds: [402, 97, 152, 30]
+    content:
+      fontSize: 7.2
+      color: "$grey"
+      lineHeight: 1.25
+      align: [left, top]
+      text: From physical ingredients to a compiled, certified measure
+
+  - elementId: arrow-b3
+    elementType: text
+    bounds: [565, 96, 13, 16]
+    content: {fontSize: 11, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: bucket4-bg
+    elementType: shape
+    bounds: [579, 76, 172, 56]
+    shapeName: roundRect
+    adjustments: [12000]
+    fill: {type: solid, color: "$navyLight"}
+  - elementId: bucket4-title
+    elementType: text
+    bounds: [589, 82, 152, 14]
+    content:
+      fontSize: 9.5
+      bold: true
+      color: "$navy"
+      align: [left, middle]
+      wrap: false
+      text: DATA CONTRACT · 6
+  - elementId: bucket4-desc
+    elementType: text
+    bounds: [589, 97, 152, 30]
+    content:
+      fontSize: 7.2
+      color: "$grey"
+      lineHeight: 1.25
+      align: [left, top]
+      text: From certified measure to contracted, versioned data product
+
+  - elementId: arrow-b4
+    elementType: text
+    bounds: [752, 96, 13, 16]
+    content: {fontSize: 11, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: bucket5-bg
+    elementType: shape
+    bounds: [766, 76, 172, 56]
+    shapeName: roundRect
+    adjustments: [12000]
+    fill: {type: solid, color: "$tealLight"}
+  - elementId: bucket5-title
+    elementType: text
+    bounds: [776, 82, 152, 14]
+    content:
+      fontSize: 9.5
+      bold: true
+      color: "$teal"
+      align: [left, middle]
+      wrap: false
+      text: CONSUME & MONITOR · 7
+  - elementId: bucket5-desc
+    elementType: text
+    bounds: [776, 97, 152, 30]
+    content:
+      fontSize: 7.2
+      color: "$grey"
+      lineHeight: 1.25
+      align: [left, top]
+      text: From contract to governed consumption — and feedback
+
+  # ===================== STAGE BAND LABEL =====================
+  - elementId: label-stages
+    elementType: text
+    bounds: [18, 138, 800, 12]
+    content:
+      style: "$sectionLabel"
+      align: [left, middle]
+      wrap: false
+      text: "THE SEVEN STAGES — STAGES 1–3 MEANING PLANE · STAGE 3 CERTIFIES THE KPI · STAGES 4–7 COMPUTE PLANE"
+
+  # ===================== STAGE 1 =====================
+  - elementId: s1-bg
+    elementType: shape
+    bounds: [18, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s1-bar
+    elementType: shape
+    bounds: [18, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$green"}
+  - elementId: s1-num-bg
+    elementType: shape
+    bounds: [26, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$green"}
+  - elementId: s1-num
+    elementType: text
+    bounds: [26, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "1"}
+  - elementId: s1-name
+    elementType: text
+    bounds: [47, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Domain Analysis & Definition
+  - elementId: s1-sor
+    elementType: text
+    bounds: [26, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: ER/Studio (CDM) · Git Turtle"
+  - elementId: s1-div
+    elementType: line
+    bounds: [26, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s1-lab-h
+    elementType: text
+    bounds: [26, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s1-happens
+    elementType: text
+    bounds: [26, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• Business terms & ubiquitous language defined</p>
+        <p>• Domain boundaries & context established</p>
+        <p>• Tier 1 domain owner assigned</p>
+  - elementId: s1-lab-m
+    elementType: text
+    bounds: [26, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s1-meta
+    elementType: text
+    bounds: [26, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>Domain name & description — <span style="color:$green"><strong>ER/Studio</strong></span></p>
+        <p>Business terms / ubiq. language — <span style="color:$green"><strong>ER/Studio</strong></span> → Turtle</p>
+        <p>Taxonomies & domain context — <span style="color:$green"><strong>Git Turtle</strong></span></p>
+        <p>Data classification — <span style="color:$green"><strong>ER/Studio</strong></span></p>
+  - elementId: s1-foot
+    elementType: text
+    bounds: [26, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "→ Purview receives the business-glossary projection"
+
+  # ===================== STAGE 2 =====================
+  - elementId: s2-bg
+    elementType: shape
+    bounds: [151, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s2-bar
+    elementType: shape
+    bounds: [151, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$green"}
+  - elementId: s2-num-bg
+    elementType: shape
+    bounds: [159, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$green"}
+  - elementId: s2-num
+    elementType: text
+    bounds: [159, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "2"}
+  - elementId: s2-name
+    elementType: text
+    bounds: [180, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Domain & Process Modeling
+  - elementId: s2-sor
+    elementType: text
+    bounds: [159, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: ER/Studio (LDM) · business_architecture/"
+  - elementId: s2-div
+    elementType: line
+    bounds: [159, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s2-lab-h
+    elementType: text
+    bounds: [159, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s2-happens
+    elementType: text
+    bounds: [159, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• Entities & relationships modeled (CDM → LDM)</p>
+        <p>• Value streams & process steps documented</p>
+        <p>• Candidates linked to process context (“used in”)</p>
+  - elementId: s2-lab-m
+    elementType: text
+    bounds: [159, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s2-meta
+    elementType: text
+    bounds: [159, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>Entities & relationships — <span style="color:$green"><strong>ER/Studio</strong></span></p>
+        <p>Attribute definitions — <span style="color:$green"><strong>ER/Studio LDM</strong></span></p>
+        <p>Process step IDs — <span style="color:$green"><strong>business_architecture/</strong></span> (JSON)</p>
+        <p>“Used in” context — <span style="color:$green"><strong>business_architecture/</strong></span></p>
+  - elementId: s2-foot
+    elementType: text
+    bounds: [159, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "Process SoR is business_architecture/ only — not a SQL join key"
+
+  # ===================== STAGE 3 =====================
+  - elementId: s3-bg
+    elementType: shape
+    bounds: [284, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1.5, color: "$orange"}
+  - elementId: s3-bar
+    elementType: shape
+    bounds: [284, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$orange"}
+  - elementId: s3-num-bg
+    elementType: shape
+    bounds: [292, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$orange"}
+  - elementId: s3-num
+    elementType: text
+    bounds: [292, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "3"}
+  - elementId: s3-name
+    elementType: text
+    bounds: [313, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: KPI Identification & Certification
+  - elementId: s3-sor
+    elementType: text
+    bounds: [292, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: Purview catalog · Git Turtle (IRI)"
+  - elementId: s3-div
+    elementType: line
+    bounds: [292, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s3-lab-h
+    elementType: text
+    bounds: [292, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s3-happens
+    elementType: text
+    bounds: [292, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• Candidate KPI enters the intake register</p>
+        <p>• Vetted for uniqueness in the Graph of Meaning</p>
+        <p>• Certified → Ontology IRI · steward verifies · owner approves</p>
+  - elementId: s3-lab-m
+    elementType: text
+    bounds: [292, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s3-meta
+    elementType: text
+    bounds: [292, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>KPI business name & definition — <span style="color:$orange"><strong>Purview</strong></span></p>
+        <p>Ontology IRI — <span style="color:$orange"><strong>Git Turtle</strong></span> → Purview</p>
+        <p>Catalog status (4 states) — <span style="color:$orange"><strong>Purview</strong></span></p>
+        <p>Measure Bind (abstract) — <span style="color:$orange"><strong>Purview</strong></span></p>
+        <p>Steward & owners (4 tiers) — <span style="color:$orange"><strong>Purview</strong></span></p>
+  - elementId: s3-foot
+    elementType: text
+    bounds: [292, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "KPI Store is the physical seat; Purview catalogs the business metadata"
+
+  # ===================== STAGE 4 =====================
+  - elementId: s4-bg
+    elementType: shape
+    bounds: [417, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s4-bar
+    elementType: shape
+    bounds: [417, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: s4-num-bg
+    elementType: shape
+    bounds: [425, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$blue"}
+  - elementId: s4-num
+    elementType: text
+    bounds: [425, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "4"}
+  - elementId: s4-name
+    elementType: text
+    bounds: [446, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Data Product
+  - elementId: s4-sor
+    elementType: text
+    bounds: [425, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: ER/Studio (PDM) · Databricks Silver"
+  - elementId: s4-div
+    elementType: line
+    bounds: [425, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s4-lab-h
+    elementType: text
+    bounds: [425, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s4-happens
+    elementType: text
+    bounds: [425, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• PDM forward-engineers DDL</p>
+        <p>• Silver star schema built (facts & dims)</p>
+        <p>• KPI metadata syncs one-way for local joins</p>
+  - elementId: s4-lab-m
+    elementType: text
+    bounds: [425, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s4-meta
+    elementType: text
+    bounds: [425, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>Schemas & column types — <span style="color:$blue"><strong>PDM</strong></span> → Silver</p>
+        <p>Primary / foreign keys — <span style="color:$blue"><strong>ER/Studio PDM</strong></span></p>
+        <p>Grain keys & hierarchies — <span style="color:$blue"><strong>PDM · Silver</strong></span></p>
+        <p>KPI metadata copy (read-only) — <span style="color:$blue"><strong>from Purview</strong></span></p>
+  - elementId: s4-foot
+    elementType: text
+    bounds: [425, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "Unity Catalog: assets, access control, masking & RLS"
+
+  # ===================== STAGE 5 =====================
+  - elementId: s5-bg
+    elementType: shape
+    bounds: [550, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s5-bar
+    elementType: shape
+    bounds: [550, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: s5-num-bg
+    elementType: shape
+    bounds: [558, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$blue"}
+  - elementId: s5-num
+    elementType: text
+    bounds: [558, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "5"}
+  - elementId: s5-name
+    elementType: text
+    bounds: [579, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Metric Compilation (Semantic Layer)
+  - elementId: s5-sor
+    elementType: text
+    bounds: [558, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: Semantic Layer + Compiler"
+  - elementId: s5-div
+    elementType: line
+    bounds: [558, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s5-lab-h
+    elementType: text
+    bounds: [558, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s5-happens
+    elementType: text
+    bounds: [558, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• Certified measure object built</p>
+        <p>• Measure Bind resolves to the measure</p>
+        <p>• Compiler validates vs Silver · materializes Gold</p>
+  - elementId: s5-lab-m
+    elementType: text
+    bounds: [558, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s5-meta
+    elementType: text
+    bounds: [558, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>Certified measure object — <span style="color:$blue"><strong>Semantic Layer</strong></span></p>
+        <p>Aggregation & filters — <span style="color:$blue"><strong>Semantic Layer</strong></span></p>
+        <p>Dimensions & joins — <span style="color:$blue"><strong>Semantic Layer</strong></span></p>
+        <p>Gold cuts at agreed grain — <span style="color:$blue"><strong>Databricks Gold</strong></span></p>
+  - elementId: s5-foot
+    elementType: text
+    bounds: [558, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "Agents submit measures to the compiler — never author logic"
+
+  # ===================== STAGE 6 =====================
+  - elementId: s6-bg
+    elementType: shape
+    bounds: [683, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1.5, color: "$navy"}
+  - elementId: s6-bar
+    elementType: shape
+    bounds: [683, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$navy"}
+  - elementId: s6-num-bg
+    elementType: shape
+    bounds: [691, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$navy"}
+  - elementId: s6-num
+    elementType: text
+    bounds: [691, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "6"}
+  - elementId: s6-name
+    elementType: text
+    bounds: [712, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Data Contract
+  - elementId: s6-sor
+    elementType: text
+    bounds: [691, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: Data Contract manifest (YAML, Git)"
+  - elementId: s6-div
+    elementType: line
+    bounds: [691, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s6-lab-a
+    elementType: text
+    bounds: [691, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: ASSEMBLED — BY REFERENCE}
+  - elementId: s6-assembled
+    elementType: text
+    bounds: [691, 233, 110, 74]
+    content:
+      fontSize: 6.5
+      color: "$grey"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p>Ontology IRI ← Turtle</p>
+        <p>KPI identity · status · Measure Bind ← Purview</p>
+        <p>Schema · grain · keys ← PDM / Silver</p>
+        <p>Upstream lineage ← Stage 4</p>
+        <p>Four-tier ownership ← Stages 1–3</p>
+  - elementId: s6-lab-b
+    elementType: text
+    bounds: [691, 311, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$navy", letterSpacing: 1, align: [left, middle], wrap: false, text: BORN AT THE CONTRACT}
+  - elementId: s6-born
+    elementType: text
+    bounds: [691, 322, 110, 72]
+    content:
+      fontSize: 6.5
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p>SLA / SLO declarations</p>
+        <p>Output ports (SQL · REST · PBI)</p>
+        <p>Certified / prohibited uses</p>
+        <p>DQ rules → <span style="color:$navy"><strong>BigEye</strong></span></p>
+        <p>Version & change policy</p>
+  - elementId: s6-foot
+    elementType: text
+    bounds: [691, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "Generated by the automated metadata compiler — never hand-written"
+
+  # ===================== STAGE 7 =====================
+  - elementId: s7-bg
+    elementType: shape
+    bounds: [816, 152, 126, 258]
+    shapeName: rect
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s7-bar
+    elementType: shape
+    bounds: [816, 152, 126, 4]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: s7-num-bg
+    elementType: shape
+    bounds: [824, 162, 16, 16]
+    shapeName: ellipse
+    fill: {type: solid, color: "$blue"}
+  - elementId: s7-num
+    elementType: text
+    bounds: [824, 162, 16, 16]
+    content: {fontSize: 9, bold: true, color: "#FFFFFF", align: [center, middle], wrap: false, text: "7"}
+  - elementId: s7-name
+    elementType: text
+    bounds: [845, 160, 91, 30]
+    content:
+      style: "$cardTitle"
+      lineHeight: 1.15
+      align: [left, middle]
+      text: Observability & Consumption
+  - elementId: s7-sor
+    elementType: text
+    bounds: [824, 194, 110, 20]
+    content:
+      style: "$sor"
+      align: [left, top]
+      text: "SoR: BigEye · consuming clients & agents"
+  - elementId: s7-div
+    elementType: line
+    bounds: [824, 218, 110, 1]
+    viewBox: [110, 1]
+    points: "0,0.5 110,0.5"
+    curve: sharp
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: s7-lab-h
+    elementType: text
+    bounds: [824, 222, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: WHAT HAPPENS}
+  - elementId: s7-happens
+    elementType: text
+    bounds: [824, 233, 110, 58]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>• BigEye pulls rules via API, runs tests</p>
+        <p>• Health scores emitted to catalog</p>
+        <p>• Agents query certified ports only · audit trail</p>
+  - elementId: s7-lab-m
+    elementType: text
+    bounds: [824, 295, 110, 9]
+    content: {fontSize: 5.8, bold: true, color: "$grey", letterSpacing: 1, align: [left, middle], wrap: false, text: KEY METADATA}
+  - elementId: s7-meta
+    elementType: text
+    bounds: [824, 306, 110, 84]
+    content:
+      style: "$micro"
+      align: [left, top]
+      text: |
+        <p>DQ run metrics & test state — <span style="color:$blue"><strong>BigEye</strong></span></p>
+        <p>Freshness & anomaly results — <span style="color:$blue"><strong>BigEye</strong></span></p>
+        <p>Consumer queries — <span style="color:$blue"><strong>Clients / Agents</strong></span></p>
+        <p>Audit traces — <span style="color:$blue"><strong>Databricks engine</strong></span></p>
+        <p>Drift status → <span style="color:$blue"><strong>KPI Store</strong></span></p>
+  - elementId: s7-foot
+    elementType: text
+    bounds: [824, 394, 110, 14]
+    content:
+      style: "$footnote"
+      align: [left, top]
+      text: "Purview: discovery incl. KPI Store metadata · UC: technical catalog"
+
+  # ===================== SYSTEM RIBBON =====================
+  - elementId: label-systems
+    elementType: text
+    bounds: [18, 418, 600, 12]
+    content:
+      style: "$sectionLabel"
+      align: [left, middle]
+      wrap: false
+      text: SYSTEMS IN THE FLOW
+
+  - elementId: r1-bg
+    elementType: shape
+    bounds: [18, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r1-icon
+    elementType: icon
+    bounds: [25, 439, 11, 11]
+    iconName: "fas:database"
+    fill: {type: solid, color: "$green"}
+  - elementId: r1-name
+    elementType: text
+    bounds: [40, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: ER/Studio}
+  - elementId: r1-role
+    elementType: text
+    bounds: [25, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Models: CDM · LDM · PDM"}
+  - elementId: r-arrow1
+    elementType: text
+    bounds: [111, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r2-bg
+    elementType: shape
+    bounds: [122, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r2-icon
+    elementType: icon
+    bounds: [129, 439, 11, 11]
+    iconName: "fas:diagram-project"
+    fill: {type: solid, color: "$green"}
+  - elementId: r2-name
+    elementType: text
+    bounds: [144, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: Git Ontology}
+  - elementId: r2-role
+    elementType: text
+    bounds: [129, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Turtle SoT · Graph of Meaning"}
+  - elementId: r-arrow2
+    elementType: text
+    bounds: [215, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r3-bg
+    elementType: shape
+    bounds: [226, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r3-icon
+    elementType: icon
+    bounds: [233, 439, 11, 11]
+    iconName: "fas:clipboard-list"
+    fill: {type: solid, color: "$orange"}
+  - elementId: r3-name
+    elementType: text
+    bounds: [248, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: KPI Store}
+  - elementId: r3-role
+    elementType: text
+    bounds: [233, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Physical seat · cataloged in Purview"}
+  - elementId: r-arrow3
+    elementType: text
+    bounds: [319, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r4-bg
+    elementType: shape
+    bounds: [330, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r4-icon
+    elementType: icon
+    bounds: [337, 439, 11, 11]
+    iconName: "fas:layer-group"
+    fill: {type: solid, color: "$blue"}
+  - elementId: r4-name
+    elementType: text
+    bounds: [352, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: Unity Catalog}
+  - elementId: r4-role
+    elementType: text
+    bounds: [337, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Technical catalog · access & security"}
+  - elementId: r-arrow4
+    elementType: text
+    bounds: [423, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r5-bg
+    elementType: shape
+    bounds: [434, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r5-icon
+    elementType: icon
+    bounds: [441, 439, 11, 11]
+    iconName: "fas:calculator"
+    fill: {type: solid, color: "$blue"}
+  - elementId: r5-name
+    elementType: text
+    bounds: [456, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: Semantic Layer}
+  - elementId: r5-role
+    elementType: text
+    bounds: [441, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "+ Compiler · certified measures · Gold cuts"}
+  - elementId: r-arrow5
+    elementType: text
+    bounds: [527, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r6-bg
+    elementType: shape
+    bounds: [538, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r6-icon
+    elementType: icon
+    bounds: [545, 439, 11, 11]
+    iconName: "fas:file-contract"
+    fill: {type: solid, color: "$navy"}
+  - elementId: r6-name
+    elementType: text
+    bounds: [560, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: Data Contract}
+  - elementId: r6-role
+    elementType: text
+    bounds: [545, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "YAML in Git · SLA · ports · DQ"}
+  - elementId: r-arrow6
+    elementType: text
+    bounds: [631, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r7-bg
+    elementType: shape
+    bounds: [642, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r7-icon
+    elementType: icon
+    bounds: [649, 439, 11, 11]
+    iconName: "fas:eye"
+    fill: {type: solid, color: "$teal"}
+  - elementId: r7-name
+    elementType: text
+    bounds: [664, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: BigEye}
+  - elementId: r7-role
+    elementType: text
+    bounds: [649, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Quality monitors · anomaly alerts"}
+  - elementId: r-arrow7
+    elementType: text
+    bounds: [735, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r8-bg
+    elementType: shape
+    bounds: [746, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r8-icon
+    elementType: icon
+    bounds: [753, 439, 11, 11]
+    iconName: "fas:compass"
+    fill: {type: solid, color: "$teal"}
+  - elementId: r8-name
+    elementType: text
+    bounds: [768, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: MS Purview}
+  - elementId: r8-role
+    elementType: text
+    bounds: [753, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "Business catalog · discovery projection"}
+  - elementId: r-arrow8
+    elementType: text
+    bounds: [839, 450, 10, 14]
+    content: {fontSize: 9, bold: true, color: "$grey", align: [center, middle], wrap: false, text: "→"}
+
+  - elementId: r9-bg
+    elementType: shape
+    bounds: [850, 432, 92, 58]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#FFFFFF"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: r9-icon
+    elementType: icon
+    bounds: [857, 439, 11, 11]
+    iconName: "fas:robot"
+    fill: {type: solid, color: "$teal"}
+  - elementId: r9-name
+    elementType: text
+    bounds: [872, 437, 66, 15]
+    content: {fontSize: 7.3, bold: true, color: "$text", align: [left, middle], wrap: false, text: Consumers}
+  - elementId: r9-role
+    elementType: text
+    bounds: [857, 455, 80, 30]
+    content: {fontSize: 6.2, color: "$grey", lineHeight: 1.25, align: [left, top], text: "& AI agents · certified ports only · audited"}
+
+  # ===================== LEGEND =====================
+  - elementId: legend
+    elementType: text
+    bounds: [18, 500, 924, 14]
+    content:
+      fontSize: 7
+      color: "$grey"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="color:$green">■</span> Meaning Plane (Stages 1–3)    <span style="color:$blue">■</span> Compute Plane (Stages 4–7)    <span style="color:$orange">■</span> Certification (Stage 3)    <strong>bold tag</strong> = birth system (SoR)    → Purview / UC = catalog projections</p>
