@@ -154,7 +154,7 @@ constraints are not being modeled; the Customer/Party domain is.
   (`core`, `party`, `kpi`, `organization`).
 - **Not tied to a person or a project.** Rationale: usernames change and
   people change roles; project names get rebranded (this repo already
-  went Lagos Specialty Chemicals → LSC). Only the company abbreviation appears, and even
+  went through one). Only the company abbreviation appears, and even
   that sits behind w3id.org redirects — a future rebrand updates one
   redirect, not 680 identities.
 - **Local IDs are preserved, never replaced by APQC IDs.**
