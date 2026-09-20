@@ -1,0 +1,361 @@
+pageType: content
+background:
+  type: solid
+  color: "#FFFFFF"
+notes: |
+  Advisory (off-slide, for the metadata-integration workstream — not shown on slide):
+  1. Compliance depth: draft covers classification + certified uses but not retention rules / regulatory tags. Proposed: capture at Stage 1, enforce at Stage 6.
+  2. Reference data & units of measure: not staged in the draft; owner unassigned — decision needed. Proposed: Stage 1/3 as governed domain concepts.
+  3. Social / usage metadata (popularity, access frequency, consuming reports): emerging fifth category; the signal AI agents use for asset recommendation. Proposed: Stage 7 → Purview.
+  4. AI-readiness metadata: the data-contract standard has moved two major versions past what the draft cites (2.1.0); agent-oriented ports are now defined by the standard. Proposed: Stage 6 + 7.
+elements:
+  # ===================== HEADER =====================
+  - elementId: title
+    elementType: text
+    bounds: [18, 10, 760, 32]
+    content:
+      style: "$h1"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p>The Metadata <span style="color:$green"><em>Field Sets</em></span></p>
+  - elementId: wip-badge-bg
+    elementType: shape
+    bounds: [828, 14, 114, 22]
+    shapeName: roundRect
+    adjustments: [30000]
+    fill: {type: solid, color: "#EFEFEF"}
+  - elementId: wip-badge-text
+    elementType: text
+    bounds: [828, 14, 114, 22]
+    content:
+      fontSize: 8.5
+      bold: true
+      color: "#C0392B"
+      align: [center, middle]
+      wrap: false
+      text: WORKING DRAFT
+  - elementId: subtitle
+    elementType: text
+    bounds: [18, 42, 924, 14]
+    content:
+      style: "$subtitle"
+      align: [left, middle]
+      wrap: false
+      text: "The full field set introduced at each stage — where each item is born (system of record) and where it is cataloged. Everything downstream references; nothing is re-keyed."
+
+  # ===================== COLUMN 1 =====================
+  - elementId: c1-bg
+    elementType: shape
+    bounds: [18, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c1-band
+    elementType: shape
+    bounds: [18, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$green"}
+  - elementId: c1-num
+    elementType: text
+    bounds: [24, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "1"}
+  - elementId: c1-name
+    elementType: text
+    bounds: [40, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Domain Analysis & Definition}
+  - elementId: c1-fields
+    elementType: text
+    bounds: [26, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>Domain name & description</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">ER/Studio CDM → Purview</span></p>
+        <p style="margin-top:6px"><strong>Business terms / ubiquitous language</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">ER/Studio CDM → Turtle → Purview</span></p>
+        <p style="margin-top:6px"><strong>Taxonomies & domain context</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">Git Turtle → Purview</span></p>
+        <p style="margin-top:6px"><strong>Domain Data Owner (Tier 1)</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">Purview identity → Contract</span></p>
+        <p style="margin-top:6px"><strong>Data classification</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">ER/Studio CDM → Contract</span></p>
+
+  # ===================== COLUMN 2 =====================
+  - elementId: c2-bg
+    elementType: shape
+    bounds: [151, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c2-band
+    elementType: shape
+    bounds: [151, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$green"}
+  - elementId: c2-num
+    elementType: text
+    bounds: [157, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "2"}
+  - elementId: c2-name
+    elementType: text
+    bounds: [173, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Domain & Process Modeling}
+  - elementId: c2-fields
+    elementType: text
+    bounds: [159, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>Entities & relationships</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">ER/Studio CDM/LDM → UC</span></p>
+        <p style="margin-top:6px"><strong>Attribute definitions</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">ER/Studio LDM → UC</span></p>
+        <p style="margin-top:6px"><strong>Value stream & process step IDs</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">business_architecture/ (JSON) → Purview</span></p>
+        <p style="margin-top:6px"><strong>“Used in” process context</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$green">business_architecture/ (JSON) → Purview</span></p>
+        <p style="margin-top:6px"><span style="font-size:6.2px; color:$grey"><em>Process SoR is business_architecture/ only — not domain/, not Turtle, not a SQL join key.</em></span></p>
+
+  # ===================== COLUMN 3 =====================
+  - elementId: c3-bg
+    elementType: shape
+    bounds: [284, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1.5, color: "$orange"}
+  - elementId: c3-band
+    elementType: shape
+    bounds: [284, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$orange"}
+  - elementId: c3-num
+    elementType: text
+    bounds: [290, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "3"}
+  - elementId: c3-name
+    elementType: text
+    bounds: [306, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: KPI Identification & Certification}
+  - elementId: c3-fields
+    elementType: text
+    bounds: [292, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>KPI business name & definition</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Purview catalog</span></p>
+        <p style="margin-top:6px"><strong>Ontology IRI</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Git Turtle → Purview → Contract</span></p>
+        <p style="margin-top:6px"><strong>Catalog status</strong> <span style="font-size:6.2px; color:$grey">(proposed · approved · drifted · archived)</span></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Purview catalog</span></p>
+        <p style="margin-top:6px"><strong>Measure Bind</strong> <span style="font-size:6.2px; color:$grey">(abstract, versioned)</span></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Purview catalog → Contract</span></p>
+        <p style="margin-top:6px"><strong>Steward & four-tier owner identities</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Purview catalog</span></p>
+        <p style="margin-top:6px"><strong>Certification record</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$orange">Purview catalog</span></p>
+
+  # ===================== COLUMN 4 =====================
+  - elementId: c4-bg
+    elementType: shape
+    bounds: [417, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c4-band
+    elementType: shape
+    bounds: [417, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: c4-num
+    elementType: text
+    bounds: [423, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "4"}
+  - elementId: c4-name
+    elementType: text
+    bounds: [445, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Data Product}
+  - elementId: c4-fields
+    elementType: text
+    bounds: [425, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>Table & column names, data types</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">ER/Studio PDM → Silver → UC</span></p>
+        <p style="margin-top:6px"><strong>Primary / foreign keys</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">ER/Studio PDM → UC</span></p>
+        <p style="margin-top:6px"><strong>Grain keys & dimensionality</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">PDM / Silver → Contract</span></p>
+        <p style="margin-top:6px"><strong>Dimensional hierarchies</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Silver → Semantic Layer</span></p>
+        <p style="margin-top:6px"><strong>KPI metadata read-only copy</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Purview (1-way sync) → Silver</span></p>
+
+  # ===================== COLUMN 5 =====================
+  - elementId: c5-bg
+    elementType: shape
+    bounds: [550, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c5-band
+    elementType: shape
+    bounds: [550, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: c5-num
+    elementType: text
+    bounds: [556, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "5"}
+  - elementId: c5-name
+    elementType: text
+    bounds: [578, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Metric Compilation (Semantic Layer)}
+  - elementId: c5-fields
+    elementType: text
+    bounds: [558, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>Certified measure object name</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Semantic Layer → Contract</span></p>
+        <p style="margin-top:6px"><strong>Aggregation functions & filter constraints</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Semantic Layer → Purview / Contract</span></p>
+        <p style="margin-top:6px"><strong>Available dimensions & joins</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Semantic Layer</span></p>
+        <p style="margin-top:6px"><strong>Compile-time parameters</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Semantic Layer</span></p>
+        <p style="margin-top:6px"><strong>Gold cuts at agreed grains</strong> <span style="font-size:6.2px; color:$grey">(no secondary client SUMs)</span></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Databricks Gold</span></p>
+
+  # ===================== COLUMN 6 =====================
+  - elementId: c6-bg
+    elementType: shape
+    bounds: [683, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1.5, color: "$navy"}
+  - elementId: c6-band
+    elementType: shape
+    bounds: [683, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$navy"}
+  - elementId: c6-num
+    elementType: text
+    bounds: [689, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "6"}
+  - elementId: c6-name
+    elementType: text
+    bounds: [711, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Data Contract}
+  - elementId: c6-fields
+    elementType: text
+    bounds: [691, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><span style="font-size:6px; color:$grey"><strong>ASSEMBLED — BY REFERENCE</strong></span></p>
+        <p style="margin-top:4px"><span style="font-size:6.4px; color:$grey">Ontology IRI ← Git Turtle</span></p>
+        <p style="margin-top:2px"><span style="font-size:6.4px; color:$grey">KPI identity · status · Measure Bind ← Purview</span></p>
+        <p style="margin-top:2px"><span style="font-size:6.4px; color:$grey">Schema · grain keys · column types ← PDM / Silver</span></p>
+        <p style="margin-top:2px"><span style="font-size:6.4px; color:$grey">Upstream lineage ← Stage 4</span></p>
+        <p style="margin-top:2px"><span style="font-size:6.4px; color:$grey">Four-tier ownership ← Stages 1–3</span></p>
+        <p style="margin-top:8px"><span style="font-size:6px; color:$navy"><strong>BORN AT THE CONTRACT</strong></span></p>
+        <p style="margin-top:4px"><strong>SLA / SLO declarations</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$navy">declared here · SoR: Databricks orchestration / SRE</span></p>
+        <p style="margin-top:6px"><strong>Output ports</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$navy">SQL warehouse · REST API · PBI semantic model</span></p>
+        <p style="margin-top:6px"><strong>Certified vs prohibited uses & exclusions</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$navy">SoR: Data Governance Board · enforced here</span></p>
+        <p style="margin-top:6px"><strong>DQ rule definitions</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$navy">authored here → pushed to BigEye via API</span></p>
+        <p style="margin-top:6px"><strong>Version & change policy</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$navy">SemVer · ≥90-day deprecation</span></p>
+
+  # ===================== COLUMN 7 =====================
+  - elementId: c7-bg
+    elementType: shape
+    bounds: [816, 70, 126, 396]
+    shapeName: rect
+    fill: {type: solid, color: "#FBFCFD"}
+    border: {style: solid, width: 1, color: "$line"}
+  - elementId: c7-band
+    elementType: shape
+    bounds: [816, 70, 126, 32]
+    shapeName: rect
+    fill: {type: solid, color: "$blue"}
+  - elementId: c7-num
+    elementType: text
+    bounds: [822, 70, 14, 32]
+    content: {fontSize: 11, bold: true, color: "#FFFFFF", align: [left, middle], wrap: false, text: "7"}
+  - elementId: c7-name
+    elementType: text
+    bounds: [844, 72, 100, 28]
+    content: {fontSize: 7.8, bold: true, color: "#FFFFFF", lineHeight: 1.15, align: [left, middle], text: Observability & Consumption}
+  - elementId: c7-fields
+    elementType: text
+    bounds: [824, 108, 110, 350]
+    content:
+      fontSize: 7.2
+      color: "$text"
+      lineHeight: 1.3
+      align: [left, top]
+      text: |
+        <p style="margin-top:2px"><strong>DQ run metrics & test execution state</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">BigEye → Purview</span></p>
+        <p style="margin-top:6px"><strong>Freshness & anomaly detection results</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">BigEye</span></p>
+        <p style="margin-top:6px"><strong>Consumer queries</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Clients / AI Agents → audit</span></p>
+        <p style="margin-top:6px"><strong>Audit traces</strong> <span style="font-size:6.2px; color:$grey">(run IDs · SQL · timestamps)</span></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">Databricks execution engine → compliance logs</span></p>
+        <p style="margin-top:6px"><strong>Drift status</strong></p>
+        <p style="margin-top:1px"><span style="font-size:6.2px; color:$blue">→ KPI Store lifecycle</span></p>
+
+  # ===================== FOOTER LEGEND =====================
+  - elementId: legend-bg
+    elementType: shape
+    bounds: [18, 476, 924, 50]
+    shapeName: roundRect
+    adjustments: [10000]
+    fill: {type: solid, color: "#F4F6F8"}
+  - elementId: legend-line1
+    elementType: text
+    bounds: [34, 484, 892, 14]
+    content:
+      fontSize: 7.5
+      color: "$grey"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p><span style="color:$green">■</span> Meaning Plane (Stages 1–3)    <span style="color:$blue">■</span> Compute Plane (Stages 4–7)    <span style="color:$orange">■</span> Certification (Stage 3)    <strong>bold tag</strong> = birth system (SoR)</p>
+  - elementId: legend-line2
+    elementType: text
+    bounds: [34, 500, 892, 14]
+    content:
+      fontSize: 7.5
+      color: "$grey"
+      align: [left, middle]
+      wrap: false
+      text: |
+        <p>→ Purview = business catalog projection (incl. KPI Store metadata)    → UC = technical catalog    → Contract = Data Contract manifest    Column 6: grey items assembled by reference · navy items born at the contract</p>
