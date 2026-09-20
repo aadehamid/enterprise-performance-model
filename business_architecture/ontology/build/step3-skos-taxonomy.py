@@ -121,6 +121,7 @@ def read_workbook(path):
             "out_of_scope": (r[idx["out_of_scope"]] or "").strip(),
             "alt_labels": split_pipe(r[idx["alt_labels"]]),
             "apqc_id": (r[idx["apqc_id"]] or "").strip(),
+            "apqc_decision": (r[idx["apqc_decision"]] or "").strip(),
             "key_inputs": (r[idx["key_inputs"]] or "").strip(),
             "primary_output": (r[idx["primary_output"]] or "").strip(),
             "related_concepts": (r[idx["related_concepts"]] or "").strip(),
@@ -250,6 +251,9 @@ def main() -> None:
         g.add((c, SKOS.prefLabel, Literal(r["name"], lang=EN)))
         if r["skos_notation"]:
             g.add((c, SKOS.notation, Literal(r["skos_notation"])))
+        # L0–L6 level: locked taxonomy structure (Step 2/3), carried as an
+        # intake annotation until Step 4 decides its permanent predicate.
+        g.add((c, INTAKE["level"], Literal(f"L{r['level']}", lang=EN)))
         key = r["skos_notation"] or ("L%d %s" % (r["level"], r["name"]))
 
         w = wb_rows.get(slug)
@@ -279,6 +283,12 @@ def main() -> None:
             if w["apqc_id"]:
                 apqc_ref(c, w["apqc_id"])
                 workbook_apqc_refs += 1
+            # The APQC mapping decision (REVIEW LINK / ADOPTED / REJECTED /
+            # NO CANDIDATE / NO SOURCE) is ontology-relevant provenance:
+            # REJECTED rows are deliberate divergences (competency Q12).
+            if w["apqc_decision"]:
+                g.add((c, INTAKE["apqcDecision"],
+                       Literal(w["apqc_decision"], lang=EN)))
             # Provisional intake annotations — verbatim reviewer capture,
             # to be promoted to real Step 4 properties between concept URIs.
             for col, pred in (
@@ -398,7 +408,7 @@ def main() -> None:
                   INTAKE.processHorizon, INTAKE.primaryPurpose,
                   INTAKE.referenceSources, INTAKE.terminologyNotes,
                   INTAKE.conceptTypeCheck, INTAKE.parkedChildren,
-                  INTAKE.status}
+                  INTAKE.status, INTAKE.level, INTAKE.apqcDecision}
     untagged = [str(o) for s, p, o in g
                 if isinstance(o, Literal) and o.language is None
                 and isinstance(o.value, str) and p in lang_props]
@@ -448,12 +458,16 @@ Each approved row contributes: `skos:definition`, `skos:scopeNote`
 `skos:altLabel`s, a `dcterms:references` link to the APQC PCF element,
 `dcterms:source` provenance, and verbatim Phase-1 capture under the
 provisional `intake:` namespace
-(`https://w3id.org/lsc/ontology/intake/` — keyInputs, primaryOutput,
-relatedConcepts, responsibleDomain, processHorizon, primaryPurpose,
-referenceSources, terminologyNotes, conceptTypeCheck, parkedChildren).
+(`https://w3id.org/lsc/ontology/intake/` — level, keyInputs,
+primaryOutput, relatedConcepts, responsibleDomain, processHorizon,
+primaryPurpose, referenceSources, terminologyNotes, conceptTypeCheck,
+parkedChildren, apqcDecision, status).
 These annotations are explicitly NOT the Step 4 model: they preserve the
 reviewer's text in the graph so nothing is lost, and Step 4 promotes them
-to real properties between concept URIs.
+to real properties between concept URIs. `intake:level` carries the locked
+L0–L6 taxonomy level; `intake:apqcDecision` records the mapping call
+(REVIEW LINK / ADOPTED / REJECTED / NO CANDIDATE / NO SOURCE) — REJECTED
+rows are the deliberate APQC divergences (competency Q12).
 Blocked rows appear with `intake:status "blocked"` and no definition
 (the locked rule: a parked row must not carry one). Retired rows are
 `owl:deprecated` (not deleted, per version policy); `dcterms:isReplacedBy`
