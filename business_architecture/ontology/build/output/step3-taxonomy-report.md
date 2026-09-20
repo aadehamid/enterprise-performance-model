@@ -1,11 +1,12 @@
 # Step 3 — SKOS taxonomy report
 
 - Concepts: 680 (one per process-map node, stable document order)
-- Triples: 3660
+- Triples: 9038
 - `skos:broader` links: 678 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
-- `skos:definition` present: 192 of 680 (1 triangulated APQC/EIA, 14 human-authored)
+- `skos:definition` present: 458 of 680 (0 triangulated APQC/EIA, 0 human-authored L1-L3, 281 workbook-approved)
+- Workbook overlay: 281 approved rows (definitions, scope notes, 239 altLabels, 281 APQC references, intake annotations); 3 blocked rows (definition-less, parked); 1 retired row(s) marked owl:deprecated
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme
@@ -13,6 +14,25 @@ The core module namespace URI
 `https://w3id.org/lsc/ontology/modules/core`
 doubles as the `skos:ConceptScheme`. Rationale: the module's entire
 current content *is* the taxonomy; one URI, one thing.
+
+## Workbook overlay (Step 3c)
+Approved workbook rows overlay the taxonomy with definition precedence
+workbook > human-authored L1–L3 > step3b adoption > repo description.
+Each approved row contributes: `skos:definition`, `skos:scopeNote`
+(scope note with in/out-of-scope boundaries folded in),
+`skos:altLabel`s, a `dcterms:references` link to the APQC PCF element,
+`dcterms:source` provenance, and verbatim Phase-1 capture under the
+provisional `intake:` namespace
+(`https://w3id.org/lsc/ontology/intake/` — keyInputs, primaryOutput,
+relatedConcepts, responsibleDomain, processHorizon, primaryPurpose,
+referenceSources, terminologyNotes, conceptTypeCheck, parkedChildren).
+These annotations are explicitly NOT the Step 4 model: they preserve the
+reviewer's text in the graph so nothing is lost, and Step 4 promotes them
+to real properties between concept URIs.
+Blocked rows appear with `intake:status "blocked"` and no definition
+(the locked rule: a parked row must not carry one). Retired rows are
+`owl:deprecated` (not deleted, per version policy); `dcterms:isReplacedBy`
+is left for the Step 3d tree pass, when destinations are decided.
 
 ## Known gaps (not invented here)
 - **Concepts without `skos:definition`.** The repo describes only 177
