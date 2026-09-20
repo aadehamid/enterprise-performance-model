@@ -64,7 +64,7 @@ ontology; everything else points at it.
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
-| 3c | Human definition authoring (14 L1–L3 merged 2026-09-18 → 192/680 definitions; semantic-intake workbook #31; review batch 01 #32 → 20 workbook-approved / 483 pending; gate synced v2026-09-19) | 🔄 In progress |
+| 3c | Human definition authoring — semantic-intake workbook; review batches 01–22 → 281/503 approved (2026-09-20); taxonomy regenerated from the workbook via PR #59 (458/680 defined, 9,999 triples; Phase-1 capture under provisional `intake:` annotations) | 🔄 In progress |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -349,9 +349,23 @@ the gate was rewritten before the next batch.
   `PRE_INTAKE_APPROVED` and flagged as NOTE when Phase 1 is empty —
   not silently waived, not blocked, not backfilled here.
   `CM-1-3-3-5-6` missing `scope_note` stays BLOCKING.
-- **Still not in scope.** Emitting the new fields as RDF; merging
-  batch 01 into the TTL; backfilling Phase 1 onto the 15; applying
+- **Still not in scope.** ~~Emitting the new fields as RDF; merging
+  batch 01 into the TTL;~~ backfilling Phase 1 onto the 15; applying
   PTC-001 to `downstream_process_map.json` (now Step 3d, below).
+- **Taxonomy regen from the workbook (2026-09-20, PR #59).**
+  The "still not in scope" RDF emission above is now done, mechanically:
+  `build/step3-skos-taxonomy.py` gained a `--workbook` overlay and the
+  TTL was regenerated from the 281 approved rows — 680 concepts, 9,999
+  triples, 458/680 definitions, 239 altLabels, 281 APQC references. Definition precedence:
+  workbook-approved > human-authored L1–L3 > step3b adoption > repo
+  description (all 14 authored + the 1 adoption are now approved workbook
+  rows; non-workbook concepts verified triple-identical — no regression).
+  Phase-1 capture is preserved verbatim under the provisional `intake:`
+  namespace (see decision log); Step 4 promotes it to real properties.
+  Blocked rows are definition-less; the retired row is `owl:deprecated`
+  (`dcterms:isReplacedBy` waits for Step 3d). Sequencing agreed with
+  Hamid: regen now (parallel to review batches) → finish 3c → 3d tree
+  reconciliation → Step 4 design together.
 
 ### Step 3d — tree reconciliation ⏸ (not started, blocked on open PTCs)
 
@@ -453,6 +467,25 @@ without a dated amendment and Hamid's explicit agreement.
   the ontology — they do not become a second one (2026-09-18).
 
 ### Modeling
+- **Provisional `intake:` namespace for workbook Phase-1 capture
+  (2026-09-20).** Approved workbook rows are preserved verbatim in the
+  graph under `https://w3id.org/lsc/ontology/intake/` (keyInputs,
+  primaryOutput, relatedConcepts, responsibleDomain, processHorizon,
+  primaryPurpose, referenceSources, terminologyNotes, conceptTypeCheck,
+  parkedChildren, level, apqcDecision, status) so nothing the reviewer
+  captured is lost between the workbook and the ontology. This is
+  explicitly NOT the Step 4 model: Step 4 promotes these annotations to
+  real properties between concept URIs. `intake:level` carries the locked
+  L0–L6 taxonomy level; `intake:apqcDecision` records the mapping call
+  (REVIEW LINK / ADOPTED / REJECTED / NO CANDIDATE / NO SOURCE) —
+  REJECTED rows are the deliberate APQC divergences (competency Q12).
+- **Workbook definition precedence (2026-09-20):** workbook-approved >
+  human-authored L1–L3 > step3b adoption > repo description.
+- **Parked rows in the graph (2026-09-20):** blocked rows appear with
+  `intake:status "blocked"` and no `skos:definition` (the locked rule: a
+  parked row must not carry one); retired rows are `owl:deprecated`, not
+  deleted — `dcterms:isReplacedBy` is left for the Step 3d tree pass, when
+  destinations are decided.
 - **SKOS-first taxonomy.** Do not mechanically convert each process /
   hierarchy level into an OWL class/subclass (2026-09-17).
 - **URI base is `https://w3id.org/lsc/ontology/`** — company-scoped,
@@ -619,6 +652,14 @@ without a dated amendment and Hamid's explicit agreement.
   governance, and domain outcomes stay with the accountable owner.
 
 ### Validation and process
+- **Competency-question coverage is the acceptance gate (2026-09-20).**
+  First coverage check against the 44 baseline questions: 4 answerable,
+  10 partial, 30 not answerable — the 30 map exactly to unbuilt plan
+  scope (Step 4 relations/systems/lanes/capabilities, party/kpi/
+  organization modules, SHACL, DCAT, agent contracts), not to capture
+  failures. Re-run after Step 4 and after each module lands; nothing is
+  "done" until its questions flip to answerable. (Report:
+  `competency-coverage-2026-09-20.md`.)
 - **Core SHACL where sufficient; SHACL-SPARQL only when Core cannot
   express a constraint** (2026-09-17).
 - **Record APQC v7.2.2 with `dcterms:references`**; preserve source,
