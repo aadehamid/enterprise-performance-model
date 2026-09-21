@@ -1,8 +1,9 @@
 # Step 2 — Identity normalization report
 
-- Nodes processed: 680
+- Nodes processed: 682
 - IDs preserved as skos:notation: 669 (all unique, all match `CM <dotted>` pattern)
-- Minted stub slugs: 11
+- Minted stub slugs: 13
+- Deprecated tombstones: 1
 - Slug collisions: none
 - URI collisions: none
 - Orphan nodes: none
@@ -13,10 +14,12 @@
 |---|---|---|---|
 | L0 | Downstream Operations | `L0-downstream-operations` | `L0-downstream-operations` |
 | L1 | Refining | `L1-refining` | `L1-refining` |
+| L2 | Refinery Performance and Risk Coordination | `L2-refinery-performance-and-risk-coordination` | `L2-refinery-performance-and-risk-coordination` |
 | L1 | Midstream | `L1-midstream` | `L1-midstream` |
 | L0 | Enabling Functions | `L0-enabling-functions` | `L0-enabling-functions` |
 | L1 | Supply Chain Mgmt. | `L1-supply-chain-mgmt` | `L1-supply-chain-mgmt` |
 | L1 | Finance | `L1-finance` | `L1-finance` |
+| L2 | Financial Planning and Performance Management | `L2-financial-planning-and-performance-management` | `L2-financial-planning-and-performance-management` |
 | L1 | Shared Services | `L1-shared-services` | `L1-shared-services` |
 | L1 | Process Excellence & IT | `L1-process-excellence-it` | `L1-process-excellence-it` |
 | L1 | Human Resources | `L1-human-resources` | `L1-human-resources` |
