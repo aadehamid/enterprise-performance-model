@@ -4901,7 +4901,7 @@ Out of scope: Enterprise accounting policy and material technical-accounting con
     intake:primaryPurpose "Ensure every transaction is recorded under a correct, documented, policy-compliant treatment with material conclusions properly approved."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-FASB-ASC815-001"@en ;
-    intake:relatedConcepts "informed-by: Trade Capture | enables: Manage Trading Sub-Ledger | governed-by: Develop Accounting Policies & Procedures"@en ;
+    intake:relatedConcepts "informed-by: Trade Capture | enables: Manage Trading Sub-Ledger | governed-by: Maintain Trading Accounting Procedures and Guidance (CM-1-2-4-2-12)"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
     intake:terminologyNotes "Batch 15 (2026-09-20). Assess-document-apply with escalation (Hamid, batch 15): treatment work is performed under approved policy with Finance/controller approval for material conclusions — delegated technical-accounting authority is operating-model-specific and not assumed. Batch 12 exclusion on CM-1-2-2-3-15 honored: valuation execution does not approve accounting classification; classification assessment lands here, policy and material conclusions with Finance. ASC 815 supports the accounting concepts, not the organization's approval design. Standards are jurisdiction-specific: ASC 815 under US GAAP; IFRS 9 and related standards elsewhere. APQC 10731 is a fixed-asset candidate, unrelated."@en .
 
@@ -4955,7 +4955,7 @@ Out of scope: Tax policy, strategy, legal positions, registrations, licenses, an
     intake:primaryPurpose "Ensure every trading transaction carries correct, evidenced transaction-tax treatment under approved rules."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-IRS-P510-001"@en ;
-    intake:relatedConcepts "uses-input: Actualizations | enables: Manage Trading Sub-Ledger | informed-by: Develop Accounting Policies & Procedures"@en ;
+    intake:relatedConcepts "uses-input: Actualizations | enables: Manage Trading Sub-Ledger | informed-by: Maintain Trading Accounting Procedures and Guidance (CM-1-2-4-2-12)"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
     intake:terminologyNotes "Batch 15 (2026-09-20). Q3 decision (Hamid): transaction- and commodity-tax accounting execution under approved rules — tax-determination data, licenses, exemption certificates, and classifications are consumed from their accountable owners (Tax, Legal, EHS, or master-data governance per the operating model), validated for presence and applicability, never owned here; separation-of-duties in downstream fuels taxation. Motor-fuels excise is jurisdiction-specific; IRS Publication 510 covers the US federal regime as context, not tax advice; state and non-US regimes differ. APQC 10736 'Manage taxes' scored 1.0 at 3b but NO SOURCE — honored; that candidate is the corporate tax function, broader than this execution row."@en .
 
@@ -4966,13 +4966,13 @@ proc:CM-1-2-4-2-12 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 16592"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Trading Accounting Procedures and Guidance"@en,
+    skos:altLabel "Develop Accounting Policies & Procedures"@en,
         "Manage Trading Accounting Procedures"@en ;
     skos:broader proc:CM-1-2-4-2 ;
     skos:definition "Develop, maintain, version, and communicate trading-specific accounting procedures, close instructions, and implementation guidance that operationalize Finance-owned enterprise accounting policy for supply and trading activity."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.2.12" ;
-    skos:prefLabel "Develop Accounting Policies & Procedures"@en ;
+    skos:prefLabel "Maintain Trading Accounting Procedures and Guidance"@en ;
     skos:scopeNote """Covers trading accounting procedure management: developing and maintaining desk-level procedures, close instructions, and implementation guidance that operationalize enterprise accounting policy for trading transaction types; assessing new products, structures, and standards changes for procedural impact and coordinating with Manage Accounting Treatments (CM-1-2-4-2-1) on treatment consequences; escalating policy gaps and interpretation questions to Finance; and maintaining procedure currency and version control. Boundary rule: Finance/Controller establishes enterprise accounting policy and decides material new policy questions (supported by technical accounting where applicable); Manage Accounting Treatments determines transaction-level treatment under approved policy; this process maintains the procedures, close instructions, and operational guidance; the accounting processes execute them. This process implements policy and never sets it, on the set-versus-apply pattern established in batches 07 and 11. Excludes enterprise accounting policy and material policy interpretation (Finance, locked rule); transaction-level treatment assessment (CM-1-2-4-2-1); enterprise records-retention and governance policy (governance owners).
 In scope: Develop, maintain, version, and communicate trading accounting procedures and close instructions implementing enterprise policy | assess new products and standards changes for procedural impact | escalate policy gaps and questions to Finance | maintain procedure currency and version control
 Out of scope: Enterprise accounting policy and material policy interpretation (Finance, locked rule) | transaction-level treatment assessment (CM-1-2-4-2-1) | enterprise governance and retention policy (governance owners)"""@en ;
@@ -4986,7 +4986,7 @@ Out of scope: Enterprise accounting policy and material policy interpretation (F
     intake:referenceSources "SRC-FASB-ASC815-001 | SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "governed-by: Accounting | enables: Manage Accounting Treatments | informed-by: Trade Capture"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
-    intake:terminologyNotes "Batch 15 (2026-09-20). Q4 decision (Hamid): despite the row name, this process develops procedures within — never policy above — the Finance-owned framework; the set-versus-apply pattern (batches 07/11) governs. The displayed label overstates the mandate: preferred normalized label 'Maintain Trading Accounting Procedures and Guidance' (alternative 'Manage Trading Accounting Procedures') recorded as alt labels and queued for the naming pass with priority. APQC 16592 scored STRONG at 3b but NO SOURCE — honored; it is a retail omni-channel candidate."@en .
+    intake:terminologyNotes "Batch 15 (2026-09-20). Q4 decision (Hamid): despite the row name, this process develops procedures within — never policy above — the Finance-owned framework; the set-versus-apply pattern (batches 07/11) governs. The displayed label overstates the mandate: preferred normalized label 'Maintain Trading Accounting Procedures and Guidance' (alternative 'Manage Trading Accounting Procedures') recorded as alt labels and queued for the naming pass with priority. APQC 16592 scored STRONG at 3b but NO SOURCE — honored; it is a retail omni-channel candidate. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Develop Accounting Policies & Procedures' -> 'Maintain Trading Accounting Procedures and Guidance' — the label overstated the mandate: the concept maintains trading accounting procedures and guidance, it does not develop accounting policy."@en .
 
 proc:CM-1-2-4-2-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5695,7 +5695,7 @@ Out of scope: Binding production slate (CM-1-1-4, PTC-002) | crude evaluation (C
     intake:primaryPurpose "Anchor base-load feedstock supply on quality-compatible, economically sustained term choices."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Plan Optimal Feedstock Slate And Run Rate | informed-by: Evaluate Crude & Feedstock | precedes: Create New Contract"@en ;
+    intake:relatedConcepts "enables: Recommend Feedstock Slate And Run Rate (CM-1-2-5-2-3) | informed-by: Evaluate Crude & Feedstock | precedes: Create New Contract"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Q3 decision: 'term slate' read as the term procurement portfolio recommendation — base-load supply anchored by continuing commitments — not the production slate (PTC-002 forecloses that reading). Glossary rule (Hamid, batch 18): term supply is feedstock sourced under an agreement with a multi-period or continuing commercial commitment; spot supply is assessed or acquired for a discrete, near-term market opportunity or short-duration requirement; no fixed duration threshold is assumed — classifications vary by company, market, and contract. Quality screening justifies the Quality Management placement. APQC: no meaningful candidate."@en .
 
@@ -5722,7 +5722,7 @@ Out of scope: Binding production slate (CM-1-1-4, PTC-002) | trade execution (CM
     intake:primaryPurpose "Give spot procurement a vetted, ranked, refinery-compatible option set at market speed."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Plan Optimal Feedstock Slate And Run Rate | enables: Coordinate Feedstock Trading | informed-by: Develop Term Slate"@en ;
+    intake:relatedConcepts "enables: Recommend Feedstock Slate And Run Rate (CM-1-2-5-2-3) | enables: Coordinate Feedstock Trading | informed-by: Develop Term Slate"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Q3 decision with Hamid's wording correction: spot is not only deficit-filling — it addresses residual demand, disruption replacement, quality constraints, timing needs, and economic opportunity. Glossary rule per CM-1-2-5-1-3 note: no fixed duration threshold. Faster cadence than the term slate reflects spot market rhythm. APQC: no meaningful candidate."@en .
 
@@ -5787,12 +5787,12 @@ proc:CM-1-2-5-2-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10215"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Recommend Feedstock Slate And Run Rate"@en ;
+    skos:altLabel "Plan Optimal Feedstock Slate And Run Rate"@en ;
     skos:broader proc:CM-1-2-5-2 ;
     skos:definition "Recommend the economically attractive feedstock slate and run rate to Refinery Planning — combining the demand signal, procurement slates, market prices, and supply economics into a trading-side recommendation that feeds the binding plan without setting it — so the refinery plan is informed by the best current supply-market view."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.2.3" ;
-    skos:prefLabel "Plan Optimal Feedstock Slate And Run Rate"@en ;
+    skos:prefLabel "Recommend Feedstock Slate And Run Rate"@en ;
     skos:scopeNote """Covers the trading-side slate and run-rate recommendation under PTC-002 (Option 1, closed 2026-09-18): assembling the economically attractive feedstock slate and run-rate case from the demand signal (CM-1-2-5-2-2), term and spot procurement slates (CM-1-2-5-1-3/-4), current market prices and differentials, and supply logistics; submitting the recommendation to Refinery Planning; and iterating as market conditions change. Refinery Planning (CM-1-1-4) decides the binding crude slate and run rate; this process advises and never sets, approves, or revises the plan. Crude evaluation is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding slate and run-rate decision (CM-1-1-4, PTC-002); crude evaluation (CM-1-1-4-7-2); procurement slate development (CM-1-2-5-1-3/-4); trade execution (CM-1-2-1-3).
 In scope: Assemble the economically attractive slate and run-rate case from demand, slates, and market economics | submit the recommendation to Refinery Planning | iterate the recommendation as markets move
 Out of scope: Binding slate and run-rate decision (CM-1-1-4, PTC-002) | crude evaluation (CM-1-1-4-7-2) | procurement slate development (CM-1-2-5-1-3/-4) | trade execution (CM-1-2-1-3)"""@en ;
@@ -5806,7 +5806,7 @@ Out of scope: Binding slate and run-rate decision (CM-1-1-4, PTC-002) | crude ev
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001"@en ;
     intake:relatedConcepts "enables: Refinery Planning | uses-input: Develop Feedstock Demand | uses-input: Develop Spot Slate"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 18 (2026-09-20). PTC-002 implementation (Option 1, Hamid, closed 2026-09-18, quoted): 'Refinery Planning decides; Supply And Trading advises. CM-1-1-4 sets the binding crude slate and run rate. CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'Recommend Feedstock Slate And Run Rate' is strongly queued for the naming pass to protect the PTC-002 decision from later misreading. Decide-versus-advise pattern (PTC-002 is its founding instance). APQC: no meaningful candidate."@en .
+    intake:terminologyNotes "Batch 18 (2026-09-20). PTC-002 implementation (Option 1, Hamid, closed 2026-09-18, quoted): 'Refinery Planning decides; Supply And Trading advises. CM-1-1-4 sets the binding crude slate and run rate. CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'Recommend Feedstock Slate And Run Rate' is strongly queued for the naming pass to protect the PTC-002 decision from later misreading. Decide-versus-advise pattern (PTC-002 is its founding instance). APQC: no meaningful candidate. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Plan Optimal Feedstock Slate And Run Rate' -> 'Recommend Feedstock Slate And Run Rate' — the trading-side concept recommends an economically attractive feedstock slate and run rate; it feeds the plan without setting it (decide-versus-advise, PTC-002 pattern)."@en .
 
 proc:CM-1-2-5-3-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5993,7 +5993,7 @@ Out of scope: Participation and allocation decisions (CM-1-1-2, accountable owne
     intake:primaryPurpose "A consistent economic answer to 'is this market worth serving from our network?'"@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EIA-STEO-001 | SRC-LNL-T2S-001"@en ;
-    intake:relatedConcepts "uses-input: Segment Customers | enables: Network Management | informed-by: Assess Cost-to-Serve Performance"@en ;
+    intake:relatedConcepts "uses-input: Segment Customers | enables: Supply Network Participation Analysis (CM-1-2-6-1) | informed-by: Assess Cost-to-Serve Performance"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Supply-network-centered evaluation (Hamid, batch 19), not generic market-entry strategy — the question is what the network can serve profitably. Evaluate-and-rank, decide-elsewhere (batch 11 pattern); jurisdiction and specification requirements vary by market. APQC candidate is a WEAK generic match."@en .
 
@@ -6020,7 +6020,7 @@ Out of scope: Cost accounting production and allocation rules (CM-1-2-4-2, Finan
     intake:primaryPurpose "Know what serving each customer and market truly costs — and show it with evidence."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-LNL-T2S-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Segment Customers | enables: Network Management | uses-input: Accounting"@en ;
+    intake:relatedConcepts "uses-input: Segment Customers | enables: Supply Network Participation Analysis (CM-1-2-6-1) | uses-input: Accounting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Assessment on governed data at an agreed allocation basis — consumes Accounting and logistics costs, never creates allocation or transfer-pricing rules (Hamid, batch 19); plan-variance backcasting remains with Distribution Backcasting under its locked rule (batch 03). APQC candidate is a WEAK production-performance match."@en .
 
@@ -6113,12 +6113,12 @@ proc:CM-1-2-6-3-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10734"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Coordinate S&T Source-Point Supply Operations"@en ;
+    skos:altLabel "Manage Primary Distribution Operations"@en ;
     skos:broader proc:CM-1-2-6-3 ;
     skos:definition "Coordinate commercial supply status at the source points where Supply And Trading supplies primary distribution — monitoring availability, loading capability, and product quality at purchased-supply, exchange, transfer, and third-party terminal locations, resolving supply issues with operators and counterparties, and keeping source-point status current for replenishment fulfillment and scheduling."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.3.1" ;
-    skos:prefLabel "Manage Primary Distribution Operations"@en ;
+    skos:prefLabel "Coordinate S&T Source-Point Supply Operations"@en ;
     skos:scopeNote """Covers S&T-side source-point coordination: monitoring product availability, allocation, loading capability, and quality status at locations where the network is supplied from purchases, exchanges, transfers, and third-party terminals; resolving availability, quality, and loading issues with terminal operators, exchange partners, and suppliers; and maintaining current source-point status for replenishment fulfillment (CM-1-2-6-3-2), demand management (CM-1-2-6-2-1), and the scheduling processes. Physical terminal operations belong to the operators; own-refinery rack and terminal operations to Refining and Midstream; movement scheduling to CM-1-1-3-6. Excludes physical terminal operations (operators, Midstream); own-production scheduling and administration (CM-1-1-3-5/-6); terminal contracting (commercial processes); terminal/storage settlement (CM-1-2-4-1-14).
 In scope: Monitor availability, loading capability, and quality at S&T-supplied source points | resolve supply issues with operators and counterparties | keep source-point status current for replenishment fulfillment and scheduling
 Out of scope: Physical terminal operations (operators, Midstream) | own-production scheduling (CM-1-1-3-5/-6) | terminal contracting (commercial processes) | terminal settlement (CM-1-2-4-1-14)"""@en ;
@@ -6132,7 +6132,7 @@ Out of scope: Physical terminal operations (operators, Midstream) | own-producti
     intake:referenceSources "SRC-EI-HM32-001 | SRC-ORP-DPSC-001"@en ;
     intake:relatedConcepts "enables: Manage Replenishment | uses-input: Manage Refined Product Exchanges | uses-input: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 19 (2026-09-20). Coordinates-commercial-status, never operates (owner-versus-executor pattern, batch 05): operators run the terminals; this process coordinates the S&T supply interest at them. Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). APQC 'Manage treasury operations' is a false lexical match on 'operations'."@en .
+    intake:terminologyNotes "Batch 19 (2026-09-20). Coordinates-commercial-status, never operates (owner-versus-executor pattern, batch 05): operators run the terminals; this process coordinates the S&T supply interest at them. Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). APQC 'Manage treasury operations' is a false lexical match on 'operations'. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Manage Primary Distribution Operations' -> 'Coordinate S&T Source-Point Supply Operations' — the concept coordinates S&T source-point supply operations; the old label invited mistaken inference of physical operations."@en .
 
 proc:CM-1-2-6-3-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6158,7 +6158,7 @@ Out of scope: Replenishment decisions (CM-1-1-3-7-9, batch 04) | allocation deci
     intake:primaryPurpose "Fulfill approved replenishment requirements from feasible commercial sources while returning confirmed timing, constraints, and exceptions to the replenishment decision owner."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Inventory Replenishment | uses-input: Manage Primary Distribution Operations | enables: Coordinate Product Trading"@en ;
+    intake:relatedConcepts "uses-input: Manage Inventory Replenishment | uses-input: Coordinate S&T Source-Point Supply Operations (CM-1-2-6-3-1) | enables: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Q2 decision at its sharpest point: the batch 04 decision right ('Manage Inventory Replenishment owns the replenishment decision') is preserved verbatim — this row is the S&T fulfillment counterpart, decide-versus-fulfill mirroring decide-versus-advise. Normalized label 'Fulfill Replenishment From Trading Sources' queued with priority (Hamid, batch 19: highest naming collision in the batch; names mirror the locked taxonomy, so carried as alt label until the naming pass). APQC 'Manage collaborative replenishment planning' scored STRONG at 3b but NO SOURCE — honored."@en .
 
@@ -8789,7 +8789,7 @@ Out of scope: Recommendations (CM-1-3-4-5-4) | decisions (delegated authorities)
     intake:primaryPurpose "An honest picture of what the portfolio is, before deciding what it should be."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Value Projects/Portfolios | precedes: Manage R&D Portfolios | governed-by: Lifecycle Management"@en ;
+    intake:relatedConcepts "follows: Value Projects/Portfolios | precedes: Develop Portfolio Recommendations and Track Decisions (CM-1-3-4-5-4) | governed-by: Lifecycle Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 26 (2026-09-20). Assessment step; review readiness dimensions verbatim — maturity and readiness across the non-financial dimensions weigh alongside financial performance. APQC 'Assess IT remediation' is a FALSE lexical match."@en .
 
@@ -8800,12 +8800,13 @@ proc:CM-1-3-4-5-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11743"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Product, Service, and R&D Portfolios"@en ;
+    skos:altLabel "Manage Product, Service, and R&D Portfolios"@en,
+        "Manage R&D Portfolios"@en ;
     skos:broader proc:CM-1-3-4-5 ;
     skos:definition "Develop the portfolio recommendations and track delegated decisions — consolidating assessments into stage, stop, accelerate, extend, reposition, and retirement recommendations across the product, service, and R&D portfolios, submitting them to the applicable delegated authorities, and tracking execution of approved decisions through the accountable processes."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.4.5.4" ;
-    skos:prefLabel "Manage R&D Portfolios"@en ;
+    skos:prefLabel "Develop Portfolio Recommendations and Track Decisions"@en ;
     skos:scopeNote """Covers portfolio management: consolidating valuations and assessments into portfolio recommendations; submitting recommendations through the applicable delegation of authority; recording approved decisions; and tracking their execution — development changes via the stage gates (CM-1-3-4-3-1), product retirement, extension, and repositioning via Manage Product/Service Change (CM-1-3-4-3-3) and the transition planning of the accountable processes (per the L4 transition statement). Scope spans the product, service, and R&D portfolios — the locked name understates this (preferred label queued). Recommends and tracks; never approves investments (delegated authorities) or executes changes (accountable processes). Excludes investment and portfolio approval (delegated authorities); change execution (CM-1-3-4-3-3, operating processes); development governance (CM-1-3-4-3-1); IP portfolio stewardship (CM-1-3-4-4-6).
 In scope: Consolidate assessments into portfolio recommendations across product, service, and R&D portfolios | submit through delegated authority and record decisions | track execution through the accountable processes
 Out of scope: Investment/portfolio approval (delegated authorities) | change execution (CM-1-3-4-3-3, operating processes) | development governance (CM-1-3-4-3-1) | IP portfolios (CM-1-3-4-4-6)"""@en ;
@@ -8819,7 +8820,7 @@ Out of scope: Investment/portfolio approval (delegated authorities) | change exe
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Assess Portfolios | enables: Manage Product/Service Change | governed-by: Lifecycle Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 26 (2026-09-20). Manage step of the portfolio cycle — conceptually 'Develop Portfolio Recommendations and Track Decisions' per review; the locked name 'Manage R&D Portfolios' is too narrow for its product/service/R&D scope, so the review's preferred label is queued prominently for the naming pass. Governance-safe wording (recommend/record/track, b22 pattern); execution routes through the b25 change-control discipline. APQC 'Manage routings' is a FALSE match (manufacturing routings — second occurrence)."@en .
+    intake:terminologyNotes "Batch 26 (2026-09-20). Manage step of the portfolio cycle — conceptually 'Develop Portfolio Recommendations and Track Decisions' per review; the locked name 'Manage R&D Portfolios' is too narrow for its product/service/R&D scope, so the review's preferred label is queued prominently for the naming pass. Governance-safe wording (recommend/record/track, b22 pattern); execution routes through the b25 change-control discipline. APQC 'Manage routings' is a FALSE match (manufacturing routings — second occurrence). Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Manage R&D Portfolios' -> 'Develop Portfolio Recommendations and Track Decisions' — the 'Manage' step of the portfolio cycle develops recommendations and tracks decisions across product/service/R&D scope (governance-safe recommend/record/track wording)."@en .
 
 proc:CM-1-3-4-6-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -8952,7 +8953,7 @@ Out of scope: The forecast (CM-1-1-1-1) | quotas and incentive design (HR, perfo
     intake:primaryPurpose "Commitments people can be held to, derived from evidence they can see."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "precedes: Perform Account Planning | governed-by: Sales Strategy & Planning"@en ;
+    intake:relatedConcepts "precedes: Perform Account Planning | governed-by: Sales Planning (CM-1-3-5-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). Target step; review validation statement verbatim; target-versus-quota distinction per the L4 glossary. APQC 'Determine inventory targets' is a FALSE lexical match."@en .
 
@@ -8979,7 +8980,7 @@ Out of scope: Forecast production/methods/publication/adjustment (CM-1-1-1-1, lo
     intake:primaryPurpose "The forecast fed well by sales, and never fought by sales."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Determine & Allocate Sales Targets | enables: Perform Account Planning | governed-by: Sales Strategy & Planning"@en ;
+    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Determine & Allocate Sales Targets | enables: Perform Account Planning | governed-by: Sales Planning (CM-1-3-5-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). The batch's sharpest boundary row: the locked name could read as owning the forecasting process — the canonical rule (verbatim in scope note) fixes the reading: sales-side input process only, agreed with the forecast owner. Relation decision (review): an enduring operating agreement, so it enables targets and account planning rather than strictly preceding them each cycle. APQC 'Develop baseline demand forecasts' is a false-direction match (forecast production, exactly what this row must not do)."@en .
 
@@ -9034,7 +9035,7 @@ Out of scope: Financial reporting (Finance) | forecast adjustment (CM-1-1-1-1) |
     intake:primaryPurpose "Next year's plan built on why this year's plan missed."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Perform Account Planning | enables: Sales Strategy & Planning | informed-by: Marketing Performance Analysis"@en ;
+    intake:relatedConcepts "follows: Perform Account Planning | enables: Sales Planning (CM-1-3-5-1) | informed-by: Marketing Performance Analysis"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). Feedback step of the sales-planning cycle; review terminology correction — forecast (demand/volume) and margin (financial expectation) are different objects, so the comparison set is spelled out and the corrected label queued; governed-actuals discipline (Finance data consumed, never produced). APQC returned NONE — 'Analyze demographics' is a false match."@en .
 
@@ -12976,12 +12977,12 @@ proc:CM-1-2-6-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 12899"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Supply Network Participation Analysis"@en ;
+    skos:altLabel "Network Management"@en ;
     skos:broader proc:CM-1-2-6 ;
     skos:definition "Analyze the refined-product supply network's market participation — segmenting customers and markets on supply economics, evaluating market attractiveness for supply-network participation, and assessing cost-to-serve performance — and recommend where and whom the network should serve profitably, informing the network and participation decisions of the accountable commercial and planning owners."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.1" ;
-    skos:prefLabel "Network Management"@en ;
+    skos:prefLabel "Supply Network Participation Analysis"@en ;
     skos:scopeNote """Covers the market-participation analysis cycle: supply-economics customer and market segmentation (CM-1-2-6-1-1), market attractiveness evaluation (CM-1-2-6-1-2), and cost-to-serve assessment (CM-1-2-6-1-3), combined into recommendations on network participation, service levels, and supply-envelope choices. Analyze-and-recommend (batch 11 pattern): supply, production, inventory, and allocation decisions are owned by Regional Optimization (CM-1-1-2, batch 03 rule); commercial and brand segmentation, pricing, and customer strategy by the Marketing processes (CM-1-3) where defined; network-investment decisions by their accountable owners. Excludes supply and allocation decisions (CM-1-1-2); commercial segmentation, pricing, and customer strategy (CM-1-3); network investment decisions (accountable owners); demand forecasting (CM-1-2-6-2-3, CM-1-1-1-1).
 In scope: Segment customers and markets on supply economics | evaluate market attractiveness for supply-network participation | assess cost-to-serve performance | recommend network participation and service choices to accountable owners
 Out of scope: Supply and allocation decisions (CM-1-1-2) | commercial segmentation, pricing, and customer strategy (CM-1-3) | network investment decisions (accountable owners) | demand forecasting (CM-1-2-6-2-3, CM-1-1-1-1)"""@en ;
@@ -12995,7 +12996,7 @@ Out of scope: Supply and allocation decisions (CM-1-1-2) | commercial segmentati
     intake:referenceSources "SRC-LNL-T2S-001 | SRC-ORP-DPSC-001"@en ;
     intake:relatedConcepts "enables: Regional Optimization | informed-by: Assess Cost-to-Serve Performance | enables: Refined Product Demand Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 19 (2026-09-20). Concept-type: process — one periodic analysis cycle (segment, evaluate, assess, recommend). Q5 decision: supply-economics analysis, distinct from Marketing's commercial segmentation; analyze-and-recommend with decisions at the accountable owners. Normalized label 'Supply Network Participation Analysis' queued — the current label sounds like network design/operations ownership (Hamid, batch 19). APQC candidates are WEAK generic matches."@en .
+    intake:terminologyNotes "Batch 19 (2026-09-20). Concept-type: process — one periodic analysis cycle (segment, evaluate, assess, recommend). Q5 decision: supply-economics analysis, distinct from Marketing's commercial segmentation; analyze-and-recommend with decisions at the accountable owners. Normalized label 'Supply Network Participation Analysis' queued — the current label sounds like network design/operations ownership (Hamid, batch 19). APQC candidates are WEAK generic matches. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Network Management' -> 'Supply Network Participation Analysis' — the concept analyzes supply-network participation; the old label sounded like network design/operations ownership."@en .
 
 proc:CM-1-2-6-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -13240,7 +13241,7 @@ Out of scope: Framework definition (b23/24 rows) | metrics stewardship (CM-1-3-1
     intake:primaryPurpose "Marketing measured against its own frameworks, honestly."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Insight and Metrics | enables: Marketing Communications Planning | enables: Sales Strategy & Planning"@en ;
+    intake:relatedConcepts "uses-input: Insight and Metrics | enables: Marketing Communications Planning | enables: Sales Planning (CM-1-3-5-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). Concept-type: process — the measurement-execution cluster batches 21–24 pointed at; periodic; three parallel children converging into planning, promotions, and strategy/design refresh cycles. Review role statement verbatim in scope note — executes measurement, decides nothing that belongs to planning, Finance, KPI Store, or Legal. APQC 'Analyze performance' is a WEAK match at this L4."@en .
 
@@ -13514,7 +13515,7 @@ Out of scope: Binding production slate and run rate (CM-1-1-4, PTC-002) | crude 
     intake:primaryPurpose "Make every feedstock decision run on validated quality data, sound models, and quality-screened procurement options."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-DOE-SPRASSAY-001 | SRC-CMU-REFPLAN-001"@en ;
-    intake:relatedConcepts "enables: Plan Optimal Feedstock Slate And Run Rate | informed-by: Evaluate Crude & Feedstock | enables: Coordinate Feedstock Trading"@en ;
+    intake:relatedConcepts "enables: Recommend Feedstock Slate And Run Rate (CM-1-2-5-2-3) | informed-by: Evaluate Crude & Feedstock | enables: Coordinate Feedstock Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Concept-type: capability per the batch 11/12/15 test — data stewardship, model review, and slate development are heterogeneous concurrent functions. PTC-002 honored: production slate decided by CM-1-1-4; procurement slates recommended here. The L4 label understates the slate-development content; naming-pass note recorded. APQC: no meaningful candidate."@en .
 
@@ -13857,12 +13858,12 @@ proc:CM-1-3-5-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10103"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Sales Planning"@en ;
+    skos:altLabel "Sales Strategy & Planning"@en ;
     skos:broader proc:CM-1-3-5 ;
     skos:definition "Plan the sales effort that delivers the approved strategies — the agreed sales-input process into the governed demand forecast, allocated sales targets, account plans, and the margin-gap feedback loop — so sales execution runs against deliberate, evidenced plans rather than improvised quotas."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.5.1" ;
-    skos:prefLabel "Sales Strategy & Planning"@en ;
+    skos:prefLabel "Sales Planning"@en ;
     skos:scopeNote """Covers the sales-planning cycle: the enduring sales-side forecast-input operating agreement (CM-1-3-5-1-2), determining and allocating sales targets (CM-1-3-5-1-1), performing account planning (CM-1-3-5-1-3), and analyzing gaps between forecast, plan, targets, and actual margin performance (CM-1-3-5-1-4) as the feedback loop into the next cycle and forecast-input improvements. The enterprise demand forecast is produced, published, changed, versioned, and governed only by Produce Demand Forecast (CM-1-1-1-1). The sales organization supplies agreed sales intelligence, account plans, pipeline evidence, promotion calendars, channel signals, and other approved inputs to that process. Sales targets are management-accountability commitments allocated from approved plans, not forecasts; they must never be relabeled, substituted for, or used to overwrite the governed demand forecast. Plans within approved direction: sales strategy direction is owned by the strategy branch (CM-1-3-2-4, CM-1-3-2-2, batch 22) — this cluster is sales planning, not strategy; sales force sizing assumptions come from the channel structure designs (CM-1-3-3-3-4, batch 23 headcount boundary — HR and management own headcount). Excludes sales strategy direction (CM-1-3-2, batch 22); the enterprise demand forecast (CM-1-1-1-1, locked); sales execution (CM-1-3-6-2); pricing (CM-1-3-3-2, CM-1-3-6-3); channel/partner management (CM-1-3-6-1); headcount and appointments (HR, management); quote/contract processes (CM-1-3-7-2).
 In scope: Run the sales-planning cycle | maintain the agreed sales input process into the governed forecast | allocate targets from approved plans | plan accounts | analyze forecast/plan/target/actual margin gaps as feedback
 Out of scope: Sales strategy direction (CM-1-3-2, batch 22) | enterprise demand forecast (CM-1-1-1-1, locked) | sales execution (CM-1-3-6-2) | pricing (CM-1-3-3-2, CM-1-3-6-3) | partner management (CM-1-3-6-1) | headcount (HR, management) | quotes/contracts (CM-1-3-7-2)"""@en ;
@@ -13876,7 +13877,7 @@ Out of scope: Sales strategy direction (CM-1-3-2, batch 22) | enterprise demand 
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Sales & Distribution Channel Strategy | uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Sales Execution"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 27 (2026-09-20). Concept-type: process — one sales-planning cycle with a feedback loop; tactical. Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. Canonical forecast-versus-targets rule verbatim in scope note. Glossary distinctions (review): demand forecast = governed prediction produced through Produce Demand Forecast; sales target = management commitment or plan expectation allocated to a segment, channel, account group, or period; quota = individual/team performance commitment in performance-management or incentive context; sales plan = planned actions, account priorities, resources, and commercial activity to pursue targets; actual = governed realized volume, margin, revenue, cost, or activity evidence from accountable systems/processes. Lifecycle: forecast-input agreement (enduring) enables targets and account planning → margin-gap analysis → next cycle. APQC 'Develop sales strategy' STRONG, no validator — genuine anchor, direction owned at CM-1-3-2."@en .
+    intake:terminologyNotes "Batch 27 (2026-09-20). Concept-type: process — one sales-planning cycle with a feedback loop; tactical. Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. Canonical forecast-versus-targets rule verbatim in scope note. Glossary distinctions (review): demand forecast = governed prediction produced through Produce Demand Forecast; sales target = management commitment or plan expectation allocated to a segment, channel, account group, or period; quota = individual/team performance commitment in performance-management or incentive context; sales plan = planned actions, account priorities, resources, and commercial activity to pursue targets; actual = governed realized volume, margin, revenue, cost, or activity evidence from accountable systems/processes. Lifecycle: forecast-input agreement (enduring) enables targets and account planning → margin-gap analysis → next cycle. APQC 'Develop sales strategy' STRONG, no validator — genuine anchor, direction owned at CM-1-3-2. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Sales Strategy & Planning' -> 'Sales Planning' — strategy direction is owned upstream (CM-1-3-2); the concept is sales planning, not sales strategy."@en .
 
 proc:CM-1-3-5-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -14144,7 +14145,7 @@ Out of scope: HR headcount and appointments (HR, management) | enterprise policy
     intake:primaryPurpose "An operating model designed for the strategy it serves."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "informed-by: Sales & Distribution Channel Design | enables: Sales Strategy & Planning | enables: Marketing Plan Execution"@en ;
+    intake:relatedConcepts "informed-by: Sales & Distribution Channel Design | enables: Sales Planning (CM-1-3-5-1) | enables: Marketing Plan Execution"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 24 (2026-09-20). Concept-type: process — one operating-model design lifecycle; tactical. Review definition adopted verbatim: an architecture/blueprint process, never an organizational-decision, technology-architecture, HR, or policy owner. Lifecycle: Determine Channel Of Trade Mix (translation) → Develop Business Process Blueprint → Develop Organizational Blueprint → Define Procedural Framework & Guidelines → Define Operating Model Measurement Framework, with the process and organizational blueprints co-developed iteratively per review. Technology-implication statement verbatim in scope note — connects to the future System Integration and Domain Modeling workstreams without expanding scope. APQC 'Design resource model for KM approaches' is a WEAK false-direction match."@en .
 
@@ -14631,7 +14632,7 @@ Out of scope: O2C transaction processing (CM-1-3-7-2/-3, CM-1-3-8) | credit (CM-
     intake:primaryPurpose "The plan turned into orders, one pursued opportunity at a time."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "informed-by: Sales Strategy & Planning | uses-input: Sales Pricing Management | enables: Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
+    intake:relatedConcepts "informed-by: Sales Planning (CM-1-3-5-1) | uses-input: Sales Pricing Management | enables: Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 28 (2026-09-20). Concept-type: process — the standing commercial-pursuit cluster; continuous. Lifecycle: Pipeline → Opportunity → Quote → Commercial Contract and Order Relationship → Serve, with Key Accounts a continuous overlay across the full lifecycle and Measure & report the periodic feedback loop to planning, pipeline, account plans, offers, and pricing strategy — not a strict line (review). Controlled-handoff wording per review: won business exists only after quote acceptance, credit clearance, contract/legal readiness, and order acceptance in the accountable processes. APQC 'Develop sales strategy' is a WEAK strategy-side match."@en .
 
@@ -15016,7 +15017,7 @@ Out of scope: Enterprise accounting policy, valuation policy, material technical
     intake:primaryPurpose "Give supply and trading activity a complete, controlled, and reconciled financial record within enterprise policy."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-FASB-ASC815-001 | SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Settlements | uses-input: Perform End-of-Month (EOM) Process | governed-by: Develop Accounting Policies & Procedures"@en ;
+    intake:relatedConcepts "follows: Settlements | uses-input: Perform End-of-Month (EOM) Process | governed-by: Maintain Trading Accounting Procedures and Guidance (CM-1-2-4-2-12)"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
     intake:terminologyNotes "Batch 15 (2026-09-20). Concept-type: capability per the batch 11/12 test — heterogeneous concurrent record-and-control functions, not one per-transaction lifecycle. Organizational neutrality (Hamid, batch 15): responsible domain recorded as Finance-enabled Supply & Trading — a trading-accounting capability serving Supply & Trading, delivered through Product Control, Trading Accounting, Finance Operations, Accounting, Shared Services, or another designated function per the operating model; taxonomy branch placement under Commercial & Marketing does not prescribe the accountable owner. Execute-within-policy pattern: accounting executes within the Finance-owned policy framework, parallel to the batch 11 limits and batch 12 valuation-control precedents. 'P&L' in prose per the batch 12 convention. APQC 10774 is a WEAK financial-accounting candidate, comparative evidence only."@en .
 

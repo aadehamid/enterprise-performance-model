@@ -22,7 +22,7 @@ all other categories ride the same pass without gating it.
 
 **Execution status 2026-09-21:** all 9 critical-collision entries executed in Step 3d Phase 1
 (Hamid approval 2026-09-21, including the 6th 'Define KPI Framework' row discovered after
-the initial 8-rename execution). The remaining 84 queue entries are still queued for the consolidated naming pass.
+the initial 8-rename execution). All 6 authority-risk entries executed 2026-09-21 (Step 3d naming pass, Hamid approval 2026-09-21). The remaining 78 queue entries are still queued for the consolidated naming pass.
 
 ## Critical semantic collision (9)
 
@@ -38,16 +38,16 @@ the initial 8-rename execution). The remaining 84 queue entries are still queued
 | `CM-1-3-3-6-5` | Define KPI Framework | Define Operating Model Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Operating Model Measurement Framework' queued prominently per review; full measurement-framework routing statement in scope note. **EXECUTED 2026-09-21** (Step 3d Phase 1: renamed to 'Define Operating Model Measurement Framework'; see naming PR). |
 | `CM-1-3-3-5-7` | Define KPI Framework | Define Marketing Communications Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Marketing Communications Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. Sixth 'Define KPI Framework' collision, discovered after the 8-rename Phase 1 execution. **EXECUTED 2026-09-21** (Step 3d Phase 1 follow-up: renamed to 'Define Marketing Communications Measurement Framework'; see naming PR). |
 
-## Authority-risk label (6)
+## Authority-risk label (6 — all executed 2026-09-21)
 
 | Slug | Locked name | Queued label(s) | Note |
 |---|---|---|---|
-| `CM-1-2-4-2-12` | Develop Accounting Policies & Procedures | Maintain Trading Accounting Procedures and Guidance **[priority]** | The displayed label overstates the mandate: preferred normalized label 'Maintain Trading Accounting Procedures and Guidance' (alternative 'Manage Trading Accounting Procedures') recorded as alt labels and queued for the naming pass with priority. |
-| `CM-1-2-5-2-3` | Plan Optimal Feedstock Slate And Run Rate | Recommend Feedstock Slate And Run Rate **[priority]** | CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'R |
-| `CM-1-2-6-1` | Network Management | Supply Network Participation Analysis | Normalized label 'Supply Network Participation Analysis' queued — the current label sounds like network design/operations ownership (Hamid, batch 19). |
-| `CM-1-2-6-3-1` | Manage Primary Distribution Operations | Coordinate S&T Source-Point Supply Operations | Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). |
-| `CM-1-3-4-5-4` | Manage R&D Portfolios | *(see note)* **[priority]** | Manage step of the portfolio cycle — conceptually 'Develop Portfolio Recommendations and Track Decisions' per review; the locked name 'Manage R&D Portfolios' is too narrow for its product/service/R&D scope, so the review's preferred label is queued prominently |
-| `CM-1-3-5-1` | Sales Strategy & Planning | Sales Planning **[priority]** | Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. |
+| `CM-1-2-4-2-12` | Develop Accounting Policies & Procedures | Maintain Trading Accounting Procedures and Guidance **[priority]** | The displayed label overstates the mandate: preferred normalized label 'Maintain Trading Accounting Procedures and Guidance' (alternative 'Manage Trading Accounting Procedures') recorded as alt labels and queued for the naming pass with priority. **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Maintain Trading Accounting Procedures and Guidance'; see naming PR). |
+| `CM-1-2-5-2-3` | Plan Optimal Feedstock Slate And Run Rate | Recommend Feedstock Slate And Run Rate **[priority]** | CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'R **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Recommend Feedstock Slate And Run Rate'; see naming PR). |
+| `CM-1-2-6-1` | Network Management | Supply Network Participation Analysis | Normalized label 'Supply Network Participation Analysis' queued — the current label sounds like network design/operations ownership (Hamid, batch 19). **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Supply Network Participation Analysis'; see naming PR). |
+| `CM-1-2-6-3-1` | Manage Primary Distribution Operations | Coordinate S&T Source-Point Supply Operations | Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Coordinate S&T Source-Point Supply Operations'; see naming PR). |
+| `CM-1-3-4-5-4` | Manage R&D Portfolios | *(see note)* **[priority]** | Manage step of the portfolio cycle — conceptually 'Develop Portfolio Recommendations and Track Decisions' per review; the locked name 'Manage R&D Portfolios' is too narrow for its product/service/R&D scope, so the review's preferred label is queued prominently **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Develop Portfolio Recommendations and Track Decisions'; see naming PR). |
+| `CM-1-3-5-1` | Sales Strategy & Planning | Sales Planning **[priority]** | Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. **EXECUTED 2026-09-21** (Step 3d naming pass, authority-risk category: renamed to 'Sales Planning'; see naming PR). |
 
 ## Scope ambiguity (33)
 
