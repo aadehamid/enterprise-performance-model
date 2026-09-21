@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples) | In progress — naming queue categories 2–6 still queued; PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (93 queued, 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batch merged (PR #89 — 14,473 triples) | In progress — naming queue categories 3–6 still queued (78 remaining); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -487,6 +487,28 @@ consolidated pass that applies them.
   blocking=0, questions=0. TTL: 682 concepts, 14,472 triples, 679/682
   defined. No new duplicate prefLabel groups; tombstone and blocked row
   untouched.
+- **Authority-risk naming batch — executed and merged 2026-09-21 (PR #89).**
+  The second naming-pass category: 6 labels that overstated each concept's
+  mandate, renamed per Hamid's approval 2026-09-21 — `CM-1-2-4-2-12` →
+  Maintain Trading Accounting Procedures and Guidance; `CM-1-2-5-2-3` →
+  Recommend Feedstock Slate And Run Rate (protects the PTC-002
+  decide-vs-advise boundary: S&T recommends, Refinery Planning decides);
+  `CM-1-2-6-1` → Supply Network Participation Analysis; `CM-1-2-6-3-1` →
+  Coordinate S&T Source-Point Supply Operations; `CM-1-3-4-5-4` → Develop
+  Portfolio Recommendations and Track Decisions; `CM-1-3-5-1` → Sales
+  Planning. Old labels retained as safe altLabels (plus two
+  workbook-recorded alternatives); 16 `related_concepts` cross-references
+  swept to the new labels with slug annotations; workbook
+  breadcrumb/parent display columns refreshed for the renamed rows and
+  their descendants; identity-map `prior_name`/`name_change_note` overlays
+  added with all 10 pre-existing overlays intact. Independent review
+  APPROVE-WITH-NOTES (both notes addressed before merge: identity-map
+  indentation normalized, breadcrumbs refreshed). Workbook: 505 rows, 502
+  approved; gate blocking=0, questions=0. TTL: 682 concepts, 14,473
+  triples (+1: the added second R&D altLabel), 679/682 defined. No new
+  duplicate prefLabel groups; zero definition changes; IRIs/slugs
+  unchanged; `downstream_process_map.json` untouched. Naming queue: 78 of
+  93 entries remaining (categories 3–6).
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),

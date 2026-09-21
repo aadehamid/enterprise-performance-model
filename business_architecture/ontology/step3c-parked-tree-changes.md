@@ -201,7 +201,7 @@ The full structured question, with options and evidence, is preserved verbatim i
 
 | Slug | Level | Label | Branch | Current status |
 | --- | --- | --- | --- | --- |
-| `CM-1-2-5-2-3` | 5 | Plan Optimal Feedstock Slate And Run Rate | Supply And Trading > Crude/Feed Demand Management | `pending` — queued for the Supply And Trading batch, with the boundary recorded in `terminology_notes` |
+| `CM-1-2-5-2-3` | 5 | Recommend Feedstock Slate And Run Rate | Supply And Trading > Crude/Feed Demand Management | `executed` 2026-09-21 — renamed from `Plan Optimal Feedstock Slate And Run Rate` (PR #89); the PTC-002 decide-vs-advise boundary (Refinery Planning decides, S&T recommends) is preserved and recorded in `terminology_notes` |
 
 ### The problem
 
