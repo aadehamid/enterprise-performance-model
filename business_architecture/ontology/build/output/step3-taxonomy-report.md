@@ -1,12 +1,12 @@
 # Step 3 — SKOS taxonomy report
 
 - Concepts: 682 (one per process-map node, stable document order)
-- Triples: 14473
+- Triples: 14474
 - `skos:broader` links: 680 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
 - `skos:definition` present: 679 of 682 (0 triangulated APQC/EIA, 0 human-authored L1-L3, 502 workbook-approved)
-- Workbook overlay: 502 approved rows (definitions, scope notes, 309 altLabels, 500 APQC references, intake annotations); 1 blocked rows (definition-less, parked); 1 retired row(s) marked owl:deprecated
+- Workbook overlay: 502 approved rows (definitions, scope notes, 310 altLabels, 500 APQC references, intake annotations); 1 blocked rows (definition-less, parked); 1 retired row(s) marked owl:deprecated
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme

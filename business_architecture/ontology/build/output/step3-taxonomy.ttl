@@ -889,7 +889,7 @@ Out of scope: Carrier pipeline scheduling and batching operation (carriers, Mids
     intake:primaryPurpose "Secure and maintain the carrier capacity the schedule needs, cycle by cycle."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-DOE-RPPL-001"@en ;
-    intake:relatedConcepts "follows: Develop Short-Term Network Plan | precedes: Loading Shipment"@en ;
+    intake:relatedConcepts "follows: Develop Short-Term Network Plan | precedes: Administer Scheduled Shipment Loading (CM-1-1-3-6-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 05 (2026-09-19). Nomination practice per the DOE backgrounder: shippers nominate to common carriers roughly monthly, movements schedule in multi-day cycles, batches are segregated or fungible per tariff specification; revision and allocation management is intra-cycle. Evidence is contextual — nomination frequency, tariffs, and cycle structures vary by carrier and are not asserted as this organization's model. 'Execute' is read as executing the nomination process, not the physical movement. APQC 20851 is an unrelated IT candidate."@en .
 
@@ -901,12 +901,13 @@ proc:CM-1-1-3-6-2 a skos:Concept ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "Load Administration"@en,
+        "Loading Shipment"@en,
         "Shipment Loading Administration"@en ;
     skos:broader proc:CM-1-1-3-6 ;
     skos:definition "Administer the loading of scheduled shipments at refineries and terminals — authorizing the lifting, confirming loaded quantities and quality documentation, and capturing the load into movement and inventory records — so each shipment leaves accounted for and per schedule."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.6.2" ;
-    skos:prefLabel "Loading Shipment"@en ;
+    skos:prefLabel "Administer Scheduled Shipment Loading"@en ;
     skos:scopeNote """Covers shipper-side load administration: releasing and authorizing scheduled loads, confirming loaded volumes and documentation (measurement tickets, bills of lading, quality certificates) per despatch practice (EI HM 32), recording the load against movement and stock records, and flagging load exceptions. The physical loading operation is owned by the terminal operator (Midstream or third party) per the locked Midstream rule. Excludes nomination management (CM-1-1-3-6-1) and in-transit tracking (CM-1-1-3-6-3).
 In scope: Authorize and release scheduled loads | confirm loaded quantities and quality documentation | record loads into movement and inventory records | flag load exceptions
 Out of scope: Physical loading operation (terminal operator: Midstream or third party) | nomination management (CM-1-1-3-6-1) | in-transit tracking (CM-1-1-3-6-3)"""@en ;
@@ -920,7 +921,7 @@ Out of scope: Physical loading operation (terminal operator: Midstream or third 
     intake:referenceSources "SRC-EI-HM32-001 | SRC-DOE-RPPL-001"@en ;
     intake:relatedConcepts "follows: Plan & Execute Nominations | precedes: Track Movements and Inventory Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 05 (2026-09-19). Owner-versus-executor per the locked Midstream rule, following the batch 04 Measure Inventory precedent; despatch measurement and documentation practice per EI HM 32. Preferred normalized label 'Administer Shipment Loading' queued for the naming pass (Hamid, batch 05) — the current label reads as an activity in progress rather than a stable process name. APQC: no meaningful candidate."@en .
+    intake:terminologyNotes "Batch 05 (2026-09-19). Owner-versus-executor per the locked Midstream rule, following the batch 04 Measure Inventory precedent; despatch measurement and documentation practice per EI HM 32. Preferred normalized label 'Administer Shipment Loading' queued for the naming pass (Hamid, batch 05) — the current label reads as an activity in progress rather than a stable process name. APQC: no meaningful candidate. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Loading Shipment' to 'Administer Scheduled Shipment Loading'. Prior label(s) retained as altLabel(s): 'Loading Shipment | Load Administration | Shipment Loading Administration'."@en .
 
 proc:CM-1-1-3-6-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -947,7 +948,7 @@ Out of scope: Stock-point position stewardship (Monitor and Control Inventory Po
     intake:primaryPurpose "Keep en-route product visible and the schedule honest about arrivals."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-LNL-T2S-001 | SRC-EI-HM32-001"@en ;
-    intake:relatedConcepts "follows: Loading Shipment | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12) | precedes: Discharge & Reconcile Load"@en ;
+    intake:relatedConcepts "follows: Administer Scheduled Shipment Loading (CM-1-1-3-6-2) | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12) | precedes: Discharge & Reconcile Load"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 05 (2026-09-19). The label's 'Inventory Management' is bounded to in-transit, movement-linked inventory; stock-point positions belong to CM-1-1-3-7-12 per batch 04. APQC 10353 'Track inventory deployment' is contextual evidence only (review-link)."@en .
 
@@ -1390,12 +1391,12 @@ proc:CM-1-1-3-8-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10198"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Secondary Distribution Scheduling Basis"@en ;
+    skos:altLabel "Setup Scheduling System"@en ;
     skos:broader proc:CM-1-1-3-8 ;
     skos:definition "Maintain the reference data, constraints, and operating parameters used for secondary-distribution scheduling — including sites, tanks, vehicles, compartments, drivers, routes, access windows, product-compatibility rules, and scheduling parameters — so generated orders and delivery schedules reflect the current operating network."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.8.3" ;
-    skos:prefLabel "Setup Scheduling System"@en ;
+    skos:prefLabel "Maintain Secondary Distribution Scheduling Basis"@en ;
     skos:scopeNote """Covers stewardship and controlled maintenance of the secondary-distribution scheduling basis: onboarding, changing, validating, and retiring sites, tanks, vehicles, compartments, drivers, routes, constraints, and scheduling parameters; validating the impact of material changes; and confirming that generated schedules remain operationally feasible. Excludes selection, implementation, configuration, enhancement, integration, technical support, infrastructure operation, and cybersecurity of the scheduling application or platform, which belong to Process Excellence & IT. Excludes enterprise master-data policy, canonical-data-model design, and platform integration architecture, governed through the applicable enterprise data-governance and Process Excellence & IT capabilities. Excludes commercial customer and site onboarding, and the scheduling decisions made in Schedule Secondary Distribution (CM-1-1-3-8-2).
 In scope: Onboard, change, validate, and retire sites, tanks, vehicles, compartments, and drivers in the scheduling basis | maintain constraints, compatibility rules, and scheduling parameters | validate the impact of material changes | confirm schedules remain operationally feasible after changes
 Out of scope: Scheduling application implementation, support, and platform operation (Process Excellence & IT) | enterprise master-data policy and canonical-data-model design (enterprise data governance) | delivery scheduling decisions (CM-1-1-3-8-2) | commercial customer and site onboarding (Marketing)"""@en ;
@@ -1409,7 +1410,7 @@ Out of scope: Scheduling application implementation, support, and platform opera
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-LNL-T2S-001"@en ;
     intake:relatedConcepts "enables: Schedule Secondary Distribution | enables: Generate Orders"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 05 (2026-09-19). Q2 decision (Hamid, Option A): a recurring process — maintenance of the secondary-distribution scheduling basis — not system implementation, consistent with the master-data precedent (CM-1-1-2-12, CM-1-1-1-1-1, CM-1-1-7-2-1). 'Tanks' added at Hamid's direction as essential to managed-site ordering and run-out prevention; definition opens with 'Maintain' to avoid the one-time-implementation reading. Preferred normalized label 'Maintain Secondary Distribution Scheduling Basis' queued for the naming pass; current label retained for traceability. The parked master-data consolidation question (CM-1-1-2-12, 2026-09-18) applies to this node as well. APQC 10198 is an unrelated sales-order candidate."@en .
+    intake:terminologyNotes "Batch 05 (2026-09-19). Q2 decision (Hamid, Option A): a recurring process — maintenance of the secondary-distribution scheduling basis — not system implementation, consistent with the master-data precedent (CM-1-1-2-12, CM-1-1-1-1-1, CM-1-1-7-2-1). 'Tanks' added at Hamid's direction as essential to managed-site ordering and run-out prevention; definition opens with 'Maintain' to avoid the one-time-implementation reading. Preferred normalized label 'Maintain Secondary Distribution Scheduling Basis' queued for the naming pass; current label retained for traceability. The parked master-data consolidation question (CM-1-1-2-12, 2026-09-18) applies to this node as well. APQC 10198 is an unrelated sales-order candidate. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Setup Scheduling System' to 'Maintain Secondary Distribution Scheduling Basis'. Prior label(s) retained as altLabel(s): 'Setup Scheduling System'."@en .
 
 proc:CM-1-1-3-8-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -1609,7 +1610,7 @@ proc:CM-1-1-4-7-1 a skos:Concept ;
     skos:prefLabel "Capture Product Demand Requirements"@en ;
     skos:scopeNote """Covers converting demand signals into the demand basis of an optimization case: selecting the applicable forecast version, adding firm contractual and internal transfer obligations, reconciling units and product grades to planning definitions, and confirming the basis with the demand owner. Excludes producing or owning the forecast itself, which belongs to Produce Demand Forecast (CM-1-1-1-1) and Refined Product Demand Management (CM-1-2-6-2). Excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7).
 In scope: Select the applicable approved demand forecast version | add firm contractual and term commitments | add internal and inter-refinery transfer requirements | reconcile product grades, units, and periods to planning definitions | confirm the agreed demand basis for the case
-Out of scope: Producing or owning the demand forecast, owned by Produce Demand Forecast (CM-1-1-1-1) | forecasting refined product demand, owned by Forecast Refined Product Demand (CM-1-2-6-2-3) | capturing and committing customer orders, owned by Order Management (CM-1-3-7) | negotiating the underlying customer commitment, owned by Commercial & Marketing sales | placing supply against demand, owned by Product Allocation Decision (CM-1-1-2-11)"""@en ;
+Out of scope: Producing or owning the demand forecast, owned by Produce Demand Forecast (CM-1-1-1-1) | forecasting refined product demand, owned by Forecast Operational Refined Product Demand (CM-1-2-6-2-3) | capturing and committing customer orders, owned by Order Management (CM-1-3-7) | negotiating the underlying customer commitment, owned by Commercial & Marketing sales | placing supply against demand, owned by Product Allocation Decision (CM-1-1-2-11)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved demand forecast | firm contracts and term commitments | internal and inter-refinery transfer requirements | product grade and specification definitions"@en ;
@@ -2583,7 +2584,7 @@ proc:CM-1-2-1-1-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1.2" ;
     skos:prefLabel "Receive Demand Forecast"@en ;
-    skos:scopeNote """Covers the intake of the approved commercial planning forecast, which is owned by Produce Demand Forecast (CM-1-1-1-1) and released by Publish Forecast and Generate Component Level Forecast Plan (CM-1-1-1-1-4) per the batch 03 decision — this node consumes the published version and must not claim its production. Excludes Supply And Trading's own operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3), which serves the supply-chain-management context under the batch 03 constraint. Excludes adjusting or overriding the forecast — trading views that differ from the published forecast are trading positions, not forecast revisions.
+    skos:scopeNote """Covers the intake of the approved commercial planning forecast, which is owned by Produce Demand Forecast (CM-1-1-1-1) and released by Publish Forecast and Generate Component Level Forecast Plan (CM-1-1-1-1-4) per the batch 03 decision — this node consumes the published version and must not claim its production. Excludes Supply And Trading's own operational refined-product demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3), which serves the supply-chain-management context under the batch 03 constraint. Excludes adjusting or overriding the forecast — trading views that differ from the published forecast are trading positions, not forecast revisions.
 In scope: Receive and validate the published forecast version | translate to trading granularity | refresh trading assumptions on new versions | flag material forecast changes to trading
 Out of scope: Forecast production and ownership (CM-1-1-1-1) | operational refined-product demand forecasting (CM-1-2-6-2-3) | forecast adjustment or override (trading positions are not forecast revisions)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -3230,7 +3231,7 @@ proc:CM-1-2-1-3-6 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.3.6" ;
     skos:prefLabel "Capture Environmental/Renewable Deals"@en ;
-    skos:scopeNote """Covers deal entry for environmental and renewable instruments, treating each as program-specific per the batch 07 decision: capturing program, instrument type, vintage, and compliance-period attributes alongside commercial terms. Excludes forecasting the position (Forecast Renewables, CM-1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1-7); excludes emissions settlement (Settle Emissions, CM-1-2-4-1-8); excludes regulatory filing (EHS & Government Reporting, locked rule) and the allowance-position economics (Manage and Support Emission Trading, CM-1-1-7-3-3). Program applicability is jurisdiction-specific.
+    skos:scopeNote """Covers deal entry for environmental and renewable instruments, treating each as program-specific per the batch 07 decision: capturing program, instrument type, vintage, and compliance-period attributes alongside commercial terms. Excludes forecasting the position (Forecast Renewables, CM-1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1-7); excludes emissions settlement (Settle Environmental Instruments, CM-1-2-4-1-8); excludes regulatory filing (EHS & Government Reporting, locked rule) and the allowance-position economics (Manage and Support Emission Trading, CM-1-1-7-3-3). Program applicability is jurisdiction-specific.
 In scope: Capture environmental and renewable deal terms with program, vintage, and period attributes | link deals to compliance positions, books, and strategies | validate against execution evidence | correct capture errors
 Out of scope: Position forecasting (CM-1-2-1-1-3) | instrument actualization (CM-1-2-3-1-7) | settlement (CM-1-2-4-1-8) | regulatory filing (EHS & Government Reporting) | allowance-position economics (CM-1-1-7-3-3)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -4322,7 +4323,7 @@ proc:CM-1-2-3-1-7 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.3.1.7" ;
     skos:prefLabel "Perform RINs/REC Actualization"@en ;
-    skos:scopeNote """Covers transaction-level recording, controlled submission or instruction of registry events where authorized, receipt of registry confirmations, internal-to-registry position reconciliation, exception investigation, and evidence retention for RIN, REC, and other in-scope environmental instruments. For US RFS transactions, EMTS transaction reporting is subject to the applicable EPA rules and account-holder and delegation model (40 CFR 80.1452). For RECs, registry actions are subject to the applicable regional tracking system and program rules; program applicability is jurisdiction-specific. Excludes regulatory-policy interpretation, compliance-applicability and compliance-accountability decisions, periodic regulatory filing, attestation, audit response, renewable-volume-obligation demonstration, and broader EHS compliance reporting, owned by EHS & Government Reporting under its locked rule; position forecasting (Forecast Renewables, CM-1-2-1-1-3); deal capture (Capture Environmental/Renewable Deals, CM-1-2-1-3-6); environmental instrument settlement (Settle Emissions, CM-1-2-4-1-8); actualization disputes (CM-1-2-3-1-8).
+    skos:scopeNote """Covers transaction-level recording, controlled submission or instruction of registry events where authorized, receipt of registry confirmations, internal-to-registry position reconciliation, exception investigation, and evidence retention for RIN, REC, and other in-scope environmental instruments. For US RFS transactions, EMTS transaction reporting is subject to the applicable EPA rules and account-holder and delegation model (40 CFR 80.1452). For RECs, registry actions are subject to the applicable regional tracking system and program rules; program applicability is jurisdiction-specific. Excludes regulatory-policy interpretation, compliance-applicability and compliance-accountability decisions, periodic regulatory filing, attestation, audit response, renewable-volume-obligation demonstration, and broader EHS compliance reporting, owned by EHS & Government Reporting under its locked rule; position forecasting (Forecast Renewables, CM-1-2-1-1-3); deal capture (Capture Environmental/Renewable Deals, CM-1-2-1-3-6); environmental instrument settlement (Settle Environmental Instruments, CM-1-2-4-1-8); actualization disputes (CM-1-2-3-1-8).
 In scope: Record registry lifecycle events against deals and positions | submit or instruct registry events where the organization has assigned registry-account authority | reconcile internal instrument positions to EMTS and registry records | investigate exceptions and retain registry evidence
 Out of scope: Regulatory policy, compliance accountability, periodic filings, attestations, audit response, and RVO demonstrations (EHS & Government Reporting, locked rule) | position forecasting (CM-1-2-1-1-3) | deal capture (CM-1-2-1-3-6) | settlement (CM-1-2-4-1-8) | actualization disputes (CM-1-2-3-1-8)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -4333,7 +4334,7 @@ Out of scope: Regulatory policy, compliance accountability, periodic filings, at
     intake:primaryPurpose "Keep instrument positions verified against the applicable regulatory and registry systems of record."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-EPA-RFS-001 | SRC-EPA-EMTS-001 | SRC-EPA-REC-001"@en ;
-    intake:relatedConcepts "follows: Capture Environmental/Renewable Deals | informed-by: Forecast Renewables | precedes: Settle Emissions"@en ;
+    intake:relatedConcepts "follows: Capture Environmental/Renewable Deals | informed-by: Forecast Renewables | precedes: Settle Environmental Instruments (CM-1-2-4-1-8)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 13 (2026-09-19). Q3 decision (Hamid): approve operational registry-event processing where the function is authorized — this process records, submits, receives, reconciles, and evidences transaction-level registry lifecycle events where the organization has assigned registry-account authority and the event is part of the transaction lifecycle; EHS & Government Reporting retains regulatory policy, compliance applicability, periodic compliance demonstrations, attestations, regulatory reporting, and final compliance accountability. Registry events are not necessarily submitted by this process — they may be initiated by a compliance team, producer, obligated party, registry administrator, or delegated service provider per the operating model (organizational neutrality, batch 10). EMTS is the RFS database of record for RIN transactions (40 CFR 80.1452); RECs are tracked in regional energy-attribute tracking systems whose specific operating rules are registry-specific — EPA material is context, not a universal registry-operating standard. Report Trades to SDR precedent (batch 08) applied. APQC: no meaningful candidate."@en .
 
@@ -4830,12 +4831,12 @@ proc:CM-1-2-4-1-8 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19511"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Settle Environmental Instruments"@en ;
+    skos:altLabel "Settle Emissions"@en ;
     skos:broader proc:CM-1-2-4-1 ;
     skos:definition "Settle environmental and renewable instrument transactions — RINs, allowances, RECs, and similar program instruments — calculating amounts due from actualized registry transfers and contractual pricing, generating and validating invoices, and submitting authorized payment instructions against confirmed instrument delivery — so instrument trades complete financially on verified registry actuals."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.1.8" ;
-    skos:prefLabel "Settle Emissions"@en ;
+    skos:prefLabel "Settle Environmental Instruments"@en ;
     skos:scopeNote """Covers financial settlement of environmental-instrument transactions: assembling actualized registry lifecycle events (Perform RINs/REC Actualization, CM-1-2-3-1-7), applying contract pricing, generating and validating invoices, preparing and submitting authorized payment instructions through the designated finance processes against confirmed registry transfer or retirement where the contract links payment to delivery, and evidencing completion. Program applicability is jurisdiction-specific. Excludes instrument actualization and registry-event processing (CM-1-2-3-1-7); deal capture (CM-1-2-1-3-6); compliance filings and RVO demonstrations (EHS & Government Reporting, locked rule); allowance-position economics (CM-1-1-7-3-3); settlement disputes (CM-1-2-4-1-17).
 In scope: Calculate amounts due from actualized registry events and contract pricing | generate and validate instrument invoices | prepare and submit authorized payment or receipt instructions through the designated finance processes and track status | evidence completion against confirmed transfers
 Out of scope: Registry-event processing and reconciliation (CM-1-2-3-1-7) | deal capture (CM-1-2-1-3-6) | compliance filings (EHS & Government Reporting) | allowance-position economics (CM-1-1-7-3-3) | settlement disputes (CM-1-2-4-1-17)"""@en ;
@@ -4849,7 +4850,7 @@ Out of scope: Registry-event processing and reconciliation (CM-1-2-3-1-7) | deal
     intake:referenceSources "SRC-EPA-RFS-001 | SRC-EPA-REC-001"@en ;
     intake:relatedConcepts "follows: Perform RINs/REC Actualization | precedes: Manage AR/AP & Actuals"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 14 (2026-09-20). Row name reads 'Emissions' but the settled scope spans the environmental-instrument families handled by capture (CM-1-2-1-3-6) and actualization (CM-1-2-3-1-7): RINs, allowances, RECs, and similar program instruments; 'Settle Environmental Instruments' queued for the naming pass. Payment-versus-transfer linkage is contract-specific. APQC 19511 is a vehicle-testing candidate, unrelated."@en .
+    intake:terminologyNotes "Batch 14 (2026-09-20). Row name reads 'Emissions' but the settled scope spans the environmental-instrument families handled by capture (CM-1-2-1-3-6) and actualization (CM-1-2-3-1-7): RINs, allowances, RECs, and similar program instruments; 'Settle Environmental Instruments' queued for the naming pass. Payment-versus-transfer linkage is contract-specific. APQC 19511 is a vehicle-testing candidate, unrelated. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Settle Emissions' to 'Settle Environmental Instruments'. Prior label(s) retained as altLabel(s): 'Settle Emissions'."@en .
 
 proc:CM-1-2-4-1-9 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -4995,12 +4996,12 @@ proc:CM-1-2-4-2-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10224"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Production & Inventory Accounting"@en ;
+    skos:altLabel "Manage Production Accounting"@en ;
     skos:broader proc:CM-1-2-4-2 ;
     skos:definition "Maintain the financial accounting of production and inventory for supply and trading activity — recording and reconciling financial inventory balances and cost-of-sales effects under the enterprise-approved inventory valuation methodology, from verified operational balances — so the financial books carry a complete, correctly valued representation of physical activity."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.2.2" ;
-    skos:prefLabel "Manage Production Accounting"@en ;
+    skos:prefLabel "Manage Production & Inventory Accounting"@en ;
     skos:scopeNote """Covers the financial-accounting side of production and inventory: recording and valuing production receipts, inventory movements, transfers, and exchange imbalances into the sub-ledger and GL; recording and reconciling financial inventory balances and cost-of-sales effects under the enterprise-approved inventory valuation methodology; and reconciling the financial inventory records to the operational balances. Operational quantities arrive as controlled inputs: the refinery daily material balance is owned by Perform Production Accounting (CM-1-1-7-1-3, batch 06) and network book-to-physical reconciliation by Perform Inventory Reconciliation (CM-1-1-3-7-5, batch 04) — this process values what those processes have verified; it does not re-perform the operational balance. Financial reconciliation to operational balances may identify differences for investigation but does not authorize operational stock adjustments, production remeasurement, or physical loss determination. Inventory valuation methodology, write-off approval, and valuation entries policy are owned by Finance under the locked rule. Excludes the operational balances (CM-1-1-7-1-3, CM-1-1-3-7-5); operational stock adjustments and loss determination (operational owners); valuation policy and write-offs (Finance); settlement (CM-1-2-4-1).
 In scope: Record and value production receipts, inventory movements, and exchanges into the accounting records | record and reconcile financial inventory balances and cost-of-sales effects per the approved methodology | reconcile financial records to operational balances and refer differences for investigation | post correcting entries per approved corrections
 Out of scope: Refinery material balance (CM-1-1-7-1-3) | network stock reconciliation (CM-1-1-3-7-5) | operational stock adjustments, remeasurement, and loss determination (operational owners) | valuation methodology and write-offs (Finance, locked rule) | settlement (CM-1-2-4-1)"""@en ;
@@ -5014,7 +5015,7 @@ Out of scope: Refinery material balance (CM-1-1-7-1-3) | network stock reconcili
     intake:referenceSources "SRC-EI-HM31-001 | SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Perform Production Accounting | uses-input: Perform Inventory Reconciliation | enables: Manage Trading Sub-Ledger"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
-    intake:terminologyNotes "Batch 15 (2026-09-20). Q2 decision: financial production and inventory accounting here; operational material balance and stock reconciliation with their batch 04/06 owners — the same operational source feeds each process, but each owns a different record and decision, extending the batch 13 record-partition principle into the accounting layer. Record-not-compute (Hamid, batch 15): this process maintains the financial representation of verified balances; it does not compute inventory independently of operational systems. Preferred normalized label 'Manage Production & Inventory Accounting' recorded as alt label and queued for the naming pass (row names mirror the locked taxonomy). APQC 10224 is a scheduling candidate, unrelated."@en .
+    intake:terminologyNotes "Batch 15 (2026-09-20). Q2 decision: financial production and inventory accounting here; operational material balance and stock reconciliation with their batch 04/06 owners — the same operational source feeds each process, but each owns a different record and decision, extending the batch 13 record-partition principle into the accounting layer. Record-not-compute (Hamid, batch 15): this process maintains the financial representation of verified balances; it does not compute inventory independently of operational systems. Preferred normalized label 'Manage Production & Inventory Accounting' recorded as alt label and queued for the naming pass (row names mirror the locked taxonomy). APQC 10224 is a scheduling candidate, unrelated. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Manage Production Accounting' to 'Manage Production & Inventory Accounting'. Prior label(s) retained as altLabel(s): 'Manage Production Accounting'."@en .
 
 proc:CM-1-2-4-2-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6047,7 +6048,7 @@ Out of scope: Allocation decisions (CM-1-1-2) | order capture and commitment (CM
     intake:primaryPurpose "No demand shortfall or surplus that nobody saw coming."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Forecast Refined Product Demand | enables: Manage Replenishment | enables: Coordinate Product Trading"@en ;
+    intake:relatedConcepts "uses-input: Forecast Operational Refined Product Demand (CM-1-2-6-2-3) | enables: Fulfill Replenishment From Trading Sources (CM-1-2-6-3-2) | enables: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Recommends-and-routes (Hamid, batch 19): the process actively recommends supply actions and contingencies while the batch 03/04 decision rights stay with their owners — allocation with Regional Optimization, replenishment with CM-1-1-3-7-9. APQC candidate is an unrelated image-management match."@en .
 
@@ -6085,12 +6086,12 @@ proc:CM-1-2-6-2-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20634"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Forecast Operational Refined Product Demand"@en ;
+    skos:altLabel "Forecast Refined Product Demand"@en ;
     skos:broader proc:CM-1-2-6-2 ;
     skos:definition "Forecast refined-product demand operationally for the supply-chain context — projecting short-horizon demand by product, location, and period from lifting history, orders, seasonality, and local market signals, calibrated against the published enterprise forecast — so supply operations and replenishment run on location-level demand projections at operational granularity."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.2.3" ;
-    skos:prefLabel "Forecast Refined Product Demand"@en ;
+    skos:prefLabel "Forecast Operational Refined Product Demand"@en ;
     skos:scopeNote """Covers operational demand forecasting under the batch 03 constraint: short-horizon, location-level projections by product and period for supply operations, replenishment support, and exchange utilization; built from rack lifting history, current orders, seasonality, weather and local market signals; calibrated against the published enterprise forecast (CM-1-1-1-1) and reconciled through governed exception and variance processes where material differences arise — operational forecasts can legitimately differ on local timing, geography, product granularity, and immediate operational signals, and this process consumes the enterprise forecast without producing, revising, republishing, or overriding it. The batch 03 three-way partition: enterprise published forecast at CM-1-1-1-1; trading intake at CM-1-2-1-1-2; operational SCM-context forecasting here. Excludes the enterprise published forecast (CM-1-1-1-1, batch 03); trading forecast intake and forward views (CM-1-2-1-1-2); the refinery-planning demand basis (CM-1-1-4-7-1); feedstock demand (CM-1-2-5-2-2, batch 18).
 In scope: Project short-horizon demand by product, location, and period | build from lifting history, orders, and local signals | calibrate against the published enterprise forecast and reconcile material differences through governed variance processes | publish operational projections to supply operations and replenishment
 Out of scope: Enterprise published forecast (CM-1-1-1-1) | trading forecast intake (CM-1-2-1-1-2) | refinery demand basis (CM-1-1-4-7-1) | feedstock demand (CM-1-2-5-2-2)"""@en ;
@@ -6102,9 +6103,9 @@ Out of scope: Enterprise published forecast (CM-1-1-1-1) | trading forecast inta
     intake:primaryPurpose "Location-level demand projections at the granularity supply operations actually runs on."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-EIA-STEO-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Manage Refined Product Demand | enables: Manage Replenishment"@en ;
+    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Manage Refined Product Demand | enables: Fulfill Replenishment From Trading Sources (CM-1-2-6-3-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 19 (2026-09-20). Batch 03 constraint implemented: operational SCM-context forecasting consuming the published forecast as calibration input; legitimate local differences reconcile through governed exception/variance processes, not forced equality (Hamid, batch 19). Normalized label 'Forecast Operational Refined Product Demand' queued to make the boundary visible. The variance threshold that triggers escalation is an operating-model follow-up carried in the batch 19 PR. APQC 'Forecast IT service demand' is a false lexical match."@en .
+    intake:terminologyNotes "Batch 19 (2026-09-20). Batch 03 constraint implemented: operational SCM-context forecasting consuming the published forecast as calibration input; legitimate local differences reconcile through governed exception/variance processes, not forced equality (Hamid, batch 19). Normalized label 'Forecast Operational Refined Product Demand' queued to make the boundary visible. The variance threshold that triggers escalation is an operating-model follow-up carried in the batch 19 PR. APQC 'Forecast IT service demand' is a false lexical match. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Forecast Refined Product Demand' to 'Forecast Operational Refined Product Demand'. Prior label(s) retained as altLabel(s): 'Forecast Refined Product Demand'."@en .
 
 proc:CM-1-2-6-3-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6130,7 +6131,7 @@ Out of scope: Physical terminal operations (operators, Midstream) | own-producti
     intake:primaryPurpose "Every S&T-supplied source point ready to load the right product when the network needs it."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "enables: Manage Replenishment | uses-input: Manage Refined Product Exchanges | uses-input: Coordinate Product Trading"@en ;
+    intake:relatedConcepts "enables: Fulfill Replenishment From Trading Sources (CM-1-2-6-3-2) | uses-input: Manage Refined Product Exchanges | uses-input: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Coordinates-commercial-status, never operates (owner-versus-executor pattern, batch 05): operators run the terminals; this process coordinates the S&T supply interest at them. Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). APQC 'Manage treasury operations' is a false lexical match on 'operations'. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Manage Primary Distribution Operations' -> 'Coordinate S&T Source-Point Supply Operations' — the concept coordinates S&T source-point supply operations; the old label invited mistaken inference of physical operations."@en .
 
@@ -6141,12 +6142,12 @@ proc:CM-1-2-6-3-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10256"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Fulfill Replenishment From Trading Sources"@en ;
+    skos:altLabel "Manage Replenishment"@en ;
     skos:broader proc:CM-1-2-6-3 ;
     skos:definition "Fulfill network replenishment requirements from Supply And Trading sources — receiving the replenishment quantities and timing decided by the network replenishment owner, sourcing them from purchased, exchanged, and transferred product where own production does not cover them, and confirming fulfillment plans, constraints, and exceptions back — so replenishment decisions are met without S&T re-deciding them."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.3.2" ;
-    skos:prefLabel "Manage Replenishment"@en ;
+    skos:prefLabel "Fulfill Replenishment From Trading Sources"@en ;
     skos:scopeNote """Covers replenishment fulfillment from commercial sources: receiving replenishment requirements decided by Manage Inventory Replenishment (CM-1-1-3-7-9, batch 04 — that process owns when and how much to resupply each stock point); determining the feasible S&T source — purchased product, exchange liftings (CM-1-2-6-2-2), or transfers — where own production and the regional plan do not cover the requirement; initiating the sourcing through the coordination and trading processes; and confirming fulfillment plans, timing, constraints, and exceptions back to the requirement owner — under supply constraint, fulfillment may differ from the request, and the confirmation returns what is feasible for the owner's decision. This process fulfills, and never makes, the replenishment decision. Excludes the replenishment decision (CM-1-1-3-7-9, batch 04); allocation decisions (CM-1-1-2); trade execution (CM-1-2-1-3); movement scheduling (CM-1-1-3-6); feedstock replenishment (CM-1-2-5, batch 18).
 In scope: Receive replenishment requirements from the deciding owner | determine the feasible S&T source where own production does not cover | initiate sourcing through coordination and trading processes | confirm fulfillment plans, constraints, and exceptions back to the requirement owner
 Out of scope: Replenishment decisions (CM-1-1-3-7-9, batch 04) | allocation decisions (CM-1-1-2) | trade execution (CM-1-2-1-3) | movement scheduling (CM-1-1-3-6) | feedstock replenishment (CM-1-2-5)"""@en ;
@@ -6160,7 +6161,7 @@ Out of scope: Replenishment decisions (CM-1-1-3-7-9, batch 04) | allocation deci
     intake:referenceSources "SRC-ORP-DPSC-001"@en ;
     intake:relatedConcepts "uses-input: Manage Inventory Replenishment | uses-input: Coordinate S&T Source-Point Supply Operations (CM-1-2-6-3-1) | enables: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 19 (2026-09-20). Q2 decision at its sharpest point: the batch 04 decision right ('Manage Inventory Replenishment owns the replenishment decision') is preserved verbatim — this row is the S&T fulfillment counterpart, decide-versus-fulfill mirroring decide-versus-advise. Normalized label 'Fulfill Replenishment From Trading Sources' queued with priority (Hamid, batch 19: highest naming collision in the batch; names mirror the locked taxonomy, so carried as alt label until the naming pass). APQC 'Manage collaborative replenishment planning' scored STRONG at 3b but NO SOURCE — honored."@en .
+    intake:terminologyNotes "Batch 19 (2026-09-20). Q2 decision at its sharpest point: the batch 04 decision right ('Manage Inventory Replenishment owns the replenishment decision') is preserved verbatim — this row is the S&T fulfillment counterpart, decide-versus-fulfill mirroring decide-versus-advise. Normalized label 'Fulfill Replenishment From Trading Sources' queued with priority (Hamid, batch 19: highest naming collision in the batch; names mirror the locked taxonomy, so carried as alt label until the naming pass). APQC 'Manage collaborative replenishment planning' scored STRONG at 3b but NO SOURCE — honored. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Manage Replenishment' to 'Fulfill Replenishment From Trading Sources'. Prior label(s) retained as altLabel(s): 'Manage Replenishment'."@en .
 
 proc:CM-1-2-6-3-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6169,12 +6170,12 @@ proc:CM-1-2-6-3-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 12923"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Coordinate S&T-Sourced Primary Transportation"@en ;
+    skos:altLabel "Manage Primary Distribution Transportation"@en ;
     skos:broader proc:CM-1-2-6-3 ;
     skos:definition "Coordinate transportation arrangements for Supply And Trading-sourced primary product movements — pipeline, marine, rail, and truck arrangements under available carrier contracts, capacity, and transport agreements for volumes S&T supplies into the network — providing confirmed movement requirements to the processes that own scheduling and actualization."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.3.3" ;
-    skos:prefLabel "Manage Primary Distribution Transportation"@en ;
+    skos:prefLabel "Coordinate S&T-Sourced Primary Transportation"@en ;
     skos:scopeNote """Covers transportation coordination for S&T-sourced product movements, the product-side counterpart of the batch 18 feedstock transportation cluster: coordinating and monitoring the commercial and logistical arrangements to move S&T-sourced volumes — purchases, exchange liftings, transfers — under carrier contracts (CM-1-2-1-2-9), capacity rights, and transportation deals (CM-1-2-1-3-9); requesting or coordinating nominations, bookings, and carrier actions under the batch 18 coordinate-not-execute rule; tracking status and resolving in-transit issues; and providing the confirmed source, transport, capacity, timing, and commercial-movement requirements to Physical Distribution Scheduling (CM-1-1-3-6), which owns primary movement nomination and shipper-side administration, and to Actualizations (CM-1-2-3-1), which owns commercial movement actuals. Excludes primary movement nomination, scheduling, and shipper-side administration (CM-1-1-3-6, batch 05); carrier contracting (CM-1-2-1-2-9); transportation deal capture (CM-1-2-1-3-9); charter-party negotiation and physical transport (marine logistics, carriers); actualization and freight settlement (CM-1-2-3-1, CM-1-2-4-1); secondary distribution (CM-1-1-3-8).
 In scope: Coordinate transport arrangements for S&T-sourced product movements under existing contracts and capacity | request or coordinate nominations, bookings, and carrier actions | track status and resolve in-transit issues | provide confirmed movement requirements to Physical Distribution Scheduling and Actualizations
 Out of scope: Primary movement nomination and administration (CM-1-1-3-6) | carrier contracting (CM-1-2-1-2-9) | transportation deal capture (CM-1-2-1-3-9) | charter negotiation and physical transport (marine logistics, carriers) | actualization and settlement (CM-1-2-3-1, CM-1-2-4-1) | secondary distribution (CM-1-1-3-8)"""@en ;
@@ -6186,9 +6187,9 @@ Out of scope: Primary movement nomination and administration (CM-1-1-3-6) | carr
     intake:primaryPurpose "S&T-sourced product moved on managed arrangements, handed unconditionally to the processes that schedule and account for it."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-ORP-DPSC-001 | SRC-DOE-RPPL-001"@en ;
-    intake:relatedConcepts "follows: Manage Replenishment | uses-input: Manage Carrier Contracts | precedes: Physical Distribution Scheduling"@en ;
+    intake:relatedConcepts "follows: Fulfill Replenishment From Trading Sources (CM-1-2-6-3-2) | uses-input: Manage Carrier Contracts | precedes: Physical Distribution Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 19 (2026-09-20). Deterministic handoff (Hamid, batch 19): confirmed movement requirements go to Physical Distribution Scheduling, which owns primary movement nomination and shipper-side administration (batch 05), and to Actualizations for commercial movement actuals — the handoff is unconditional, making the batch 05 boundary enforceable. Coordinate-not-execute per batch 18. Normalized label 'Coordinate S&T-Sourced Primary Transportation' queued. APQC 'Manage bulk transportation' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 19 (2026-09-20). Deterministic handoff (Hamid, batch 19): confirmed movement requirements go to Physical Distribution Scheduling, which owns primary movement nomination and shipper-side administration (batch 05), and to Actualizations for commercial movement actuals — the handoff is unconditional, making the batch 05 boundary enforceable. Coordinate-not-execute per batch 18. Normalized label 'Coordinate S&T-Sourced Primary Transportation' queued. APQC 'Manage bulk transportation' is a WEAK generic match. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Manage Primary Distribution Transportation' to 'Coordinate S&T-Sourced Primary Transportation'. Prior label(s) retained as altLabel(s): 'Manage Primary Distribution Transportation'."@en .
 
 proc:CM-1-2-7-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6961,9 +6962,9 @@ proc:CM-1-3-10-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.2" ;
     skos:prefLabel "Process Forecast and Nominations"@en ;
-    skos:scopeNote """Customer-facing intake side of the nomination relationship, honoring the commercial/physical split (b33): this process handles lifting forecasts and nominations received from terminal customers; nominations the company itself submits to pipelines, vessels, rail, and terminal operators as shipper are owned by Plan & Execute Nominations. A confirmed customer lifting nomination is a confirmed commercial lifting allocation/outlook, not a physical loading schedule; physical scheduling remains with the operational scheduling processes. Customer lifting nominations may be monthly, weekly, daily, or event-driven by channel, agreement, and terminal practice; the process operates on the applicable nomination cycle and supports in-cycle revisions. Confirmed customer lifting nominations and the confirmed commercial lifting outlook feed the operational demand view (Manage Refined Product Demand) and the lifting-history-based forecast (Forecast Refined Product Demand), and set the volumes Manage Allocation enforces. A confirmed nomination is not a sales contract (Capture Deal) and not a commercial order (Capture And Manage Order Fulfillment).
+    skos:scopeNote """Customer-facing intake side of the nomination relationship, honoring the commercial/physical split (b33): this process handles lifting forecasts and nominations received from terminal customers; nominations the company itself submits to pipelines, vessels, rail, and terminal operators as shipper are owned by Plan & Execute Nominations. A confirmed customer lifting nomination is a confirmed commercial lifting allocation/outlook, not a physical loading schedule; physical scheduling remains with the operational scheduling processes. Customer lifting nominations may be monthly, weekly, daily, or event-driven by channel, agreement, and terminal practice; the process operates on the applicable nomination cycle and supports in-cycle revisions. Confirmed customer lifting nominations and the confirmed commercial lifting outlook feed the operational demand view (Manage Refined Product Demand) and the lifting-history-based forecast (Forecast Operational Refined Product Demand, CM-1-2-6-2-3), and set the volumes Manage Allocation enforces. A confirmed nomination is not a sales contract (Capture Deal) and not a commercial order (Capture And Manage Order Fulfillment).
 In scope: Customer forecast and nomination intake and validation | feasibility checks against supply position, allocation, and terminal capability | confirmation, adjustment, and decline decisions within approved rules | in-cycle revision management | communication of confirmed customer lifting nominations | nominated-versus-lifted performance tracking
-Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nominations) | supply-side demand forecasting (Forecast Refined Product Demand) | allocation enforcement (Manage Allocation) | physical loading scheduling (Operational scheduling processes) | order capture and fulfillment (Capture And Manage Order Fulfillment)"""@en ;
+Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nominations) | supply-side demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3) | allocation enforcement (Manage Allocation) | physical loading scheduling (Operational scheduling processes) | order capture and fulfillment (Capture And Manage Order Fulfillment)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Customer forecasts and nominations | supply positions and replenishment plans | allocation limits (CM-1-3-10-3) | terminal capability and constraints | deal terms (CM-1-3-10-4)"@en ;
@@ -6972,7 +6973,7 @@ Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nomi
     intake:primaryPurpose "Customer lifting intent is validated and confirmed against what the supply system can actually serve."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-DOE-RPPL-001"@en ;
-    intake:relatedConcepts "uses-input: Setup and Maintain Customer In Terminal | uses-input: Capture Deal | constrained-by: Manage Allocation | informed-by: Manage Refined Product Demand | precedes: Loading Shipment"@en ;
+    intake:relatedConcepts "uses-input: Setup and Maintain Customer In Terminal | uses-input: Capture Deal | constrained-by: Manage Allocation | informed-by: Manage Refined Product Demand | precedes: Administer Scheduled Shipment Loading (CM-1-1-3-6-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 41 (2026-09-21). Customer-intake counterpart of shipper-side Plan & Execute Nominations per the b33 commercial/physical split; nomination-cycle wording and 'confirmed commercial lifting allocation/outlook, not a physical loading schedule' correction adopted verbatim from review. Naming queue: preferred label 'Process Customer Lifting Forecasts and Nominations'. APQC 'Process returns' is unrelated; comparative only."@en .
 
@@ -10156,7 +10157,7 @@ Out of scope: Partner contracting terms (contract management; Legal) | invoicing
     intake:primaryPurpose "Reliable supplementary services adding card-program value under executed agreements."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Contract & Order | enables: Manage Invoicing"@en ;
+    intake:relatedConcepts "uses-input: Manage Contract & Order | enables: Manage Card Program Billing Coordination (CM-1-3-6-6-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 29 (2026-09-20). b26 no-implied-obligations rule applied to service partners. Normalized label 'Manage Additional Card Services' recorded as alt label and queued — parenthetical examples belong in the definition."@en .
 
@@ -10248,12 +10249,12 @@ proc:CM-1-3-6-6-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11743"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Card Program Billing Coordination"@en ;
+    skos:altLabel "Manage Invoicing"@en ;
     skos:broader proc:CM-1-3-6-6 ;
     skos:definition "Coordinate card-program billing readiness and program-specific statement requirements; provide validated transaction, account, and presentation data to enterprise invoicing. Manage program-specific presentation such as consolidated statements and itemization, and resolve program-level invoice inquiries."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.2" ;
-    skos:prefLabel "Manage Invoicing"@en ;
+    skos:prefLabel "Manage Card Program Billing Coordination"@en ;
     skos:scopeNote """Boundary statement: invoice creation, taxability determination, distribution, corrections, reversals, and credit memos execute under Manage Customer Invoicing and Billing (CM-1-3-8-1) and its controls; this process supplies validated transaction, account, and presentation data and program statement requirements and never issues, corrects, or reverses invoices outside those controls. Receivables, cash application, collections, and payment execution remain with their O2C, Finance, and Treasury owners. Transaction completeness for each cycle is confirmed by Perform Transaction Analysis Reporting & Confirmation.
 In scope: Billing-cycle readiness coordination | validated transaction, account, and presentation data to enterprise invoicing | program statement and itemization requirements | program-level inquiry resolution and routing
 Out of scope: Invoice creation, distribution, correction, reversal, credit memos (CM-1-3-8-1) | taxability (its owners) | cash application and A/R (CM-1-3-8-2) | collections and disputes (CM-1-3-8-3)"""@en ;
@@ -10267,7 +10268,7 @@ Out of scope: Invoice creation, distribution, correction, reversal, credit memos
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Perform Transaction Analysis Reporting & Confirmation | enables: Manage Customer Invoicing and Billing"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Review billing-coordination wording adopted verbatim; preferred label 'Manage Card Program Billing Coordination' recorded as alt label and queued for the naming pass — the locked name 'Manage Invoicing' understates the coordination-only role and collides semantically with CM-1-3-8-1."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Review billing-coordination wording adopted verbatim; preferred label 'Manage Card Program Billing Coordination' recorded as alt label and queued for the naming pass — the locked name 'Manage Invoicing' understates the coordination-only role and collides semantically with CM-1-3-8-1. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Manage Invoicing' to 'Manage Card Program Billing Coordination'. Prior label(s) retained as altLabel(s): 'Manage Invoicing'."@en .
 
 proc:CM-1-3-6-6-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10358,12 +10359,12 @@ proc:CM-1-3-6-6-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10761"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Card Delinquency and Collections Referral"@en ;
+    skos:altLabel "Manage Bad Debt"@en ;
     skos:broader proc:CM-1-3-6-6 ;
     skos:definition "Manage the card program's exposure to non-paying accounts at program level: monitor delinquency signals on card accounts, apply program-level servicing responses such as card blocking, transaction holds, and limit suspension, refer delinquent accounts to collections, and supply program data for bad-debt assessment."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.6" ;
-    skos:prefLabel "Manage Bad Debt"@en ;
+    skos:prefLabel "Manage Card Delinquency and Collections Referral"@en ;
     skos:scopeNote """Boundary statement: bad-debt allowance, impairment, write-off decisions, and their financial treatment remain with Finance (Bad Debt Allowance); collection strategy, disputed debt, and recovery operations remain with Manage Collection and Disputes. This process's authority is program-level servicing action — block, suspend, hold, notify, refer, and reinstate after resolution — and data supply; it never decides write-offs, sets allowances, or conducts collections.
 In scope: Delinquency-signal monitoring on card accounts | program-level blocks, holds, and suspensions per policy | referral to collections with complete account data | program data for bad-debt assessment | reinstatement servicing after resolution
 Out of scope: Bad-debt allowance, impairment, write-offs, and financial treatment (Finance; CM-1-3-8-3) | collection strategy and recovery operations (CM-1-3-8-3) | credit limit decisions (CM-1-3-7-4)"""@en ;
@@ -10377,7 +10378,7 @@ Out of scope: Bad-debt allowance, impairment, write-offs, and financial treatmen
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Monitor Credit Against Limit | triggers: Collection Management | enables: Bad Debt Allowance"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Finance valuation/write-off lock continued; review program-action list (block/suspend/hold/notify/refer/reinstate) adopted. Normalized label 'Manage Card Delinquency and Collections Referral' recorded as alt label and queued — the locked name 'Manage Bad Debt' misleadingly implies bad-debt accounting ownership."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Finance valuation/write-off lock continued; review program-action list (block/suspend/hold/notify/refer/reinstate) adopted. Normalized label 'Manage Card Delinquency and Collections Referral' recorded as alt label and queued — the locked name 'Manage Bad Debt' misleadingly implies bad-debt accounting ownership. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Manage Bad Debt' to 'Manage Card Delinquency and Collections Referral'. Prior label(s) retained as altLabel(s): 'Manage Bad Debt'."@en .
 
 proc:CM-1-3-6-6-7 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10403,7 +10404,7 @@ Out of scope: Fraud investigation (CM-1-3-6-6-11; Security) | invoicing executio
     intake:primaryPurpose "Transaction completeness and accuracy assured as the evidence base for billing, reimbursement, and fraud response."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Manage Invoicing | enables: Manage Reimbursement | triggers: Manage Fraudulent Transactions"@en ;
+    intake:relatedConcepts "enables: Manage Card Program Billing Coordination (CM-1-3-6-6-2) | enables: Manage Reimbursement | triggers: Manage Fraudulent Transactions"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 29 (2026-09-20). b21/b23 measurement-framework rule applied — evidence-layer metrics, candidate KPIs only via the KPI Store. Normalized label 'Analyze and Confirm Card Transactions' recorded as alt label and queued."@en .
 
@@ -10524,12 +10525,12 @@ proc:CM-1-3-6-8-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10194"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Conduct Commercial Audit to Validate Reported Sales"@en ;
+    skos:altLabel "Conduct Audit To Validate Reported Sales"@en ;
     skos:broader proc:CM-1-3-6-8 ;
     skos:definition "Conduct agreement-based commercial reviews of sales reported by franchisees, dealers, licensees, marketers, and partners; examine supporting records within contractual audit rights; quantify discrepancies affecting contract-based fees, royalties, rebates, contributions, or commitments; and route findings for financial, relationship, legal, or corrective resolution."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.8.1" ;
-    skos:prefLabel "Conduct Audit To Validate Reported Sales"@en ;
+    skos:prefLabel "Conduct Commercial Audit to Validate Reported Sales"@en ;
     skos:scopeNote """Audit rights and records access are exercised only as the executed agreements provide, within valid review periods. This is an agreement-rights commercial audit, not Internal Audit: it exercises specific rights under partner, franchise, and license agreements to validate the inputs to royalties, fees, rebates, and contract obligations, and routes discrepancies to Finance/O2C, relationship management, and Legal. Independent enterprise assurance under an audit charter, control-effectiveness assessment, and Audit Committee reporting remain with Internal Audit. Verify evidence of agreed corrective actions or corrected reporting, while Finance/O2C, Relationship Management, and Legal own financial adjustment, collection, remedy, and legal action. Sales and supporting records obtained during the review are commercially sensitive and must be accessed, retained, shared, and disposed of only in accordance with the agreement, confidentiality terms, legal holds, records-retention requirements, privacy obligations where applicable, and delegated audit protocols. Fact-dependent statement: where a remedy would affect a franchise relationship governed by the Petroleum Marketing Practices Act, the determination is reserved to Legal. Distinct from Report Franchise Performance, which reports operational performance: this process validates the accuracy of reported sales and reported obligation bases under the agreement's audit rights — a partner can perform well while reporting inaccurately, or report accurately while performing poorly.
 In scope: Audit program planning within agreement rights and review periods | examination of reported sales against supporting records | discrepancy quantification for contract-based fees, royalties, rebates, contributions, and commitments | findings reports routed for financial, relationship, legal, or corrective resolution | verification of evidence of agreed corrective actions or corrected reporting
 Out of scope: Financial adjustment, collection, remedy, and legal action (Finance/O2C; relationship management; Legal) | accounting determinations (CM-1-3-8-4) | Internal Audit and statutory audit | records access beyond agreement rights"""@en ;
@@ -10543,7 +10544,7 @@ Out of scope: Financial adjustment, collection, remedy, and legal action (Financ
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PMPA-001"@en ;
     intake:relatedConcepts "enables: Manage Collection of Royalty and Fees | informed-by: Report Franchise Performance | governed-by: Compliance Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical commercial-audit definition, Internal Audit distinction, corrective-verification wording, and confidentiality rule adopted verbatim. Preferred label 'Conduct Commercial Audit to Validate Reported Sales' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical commercial-audit definition, Internal Audit distinction, corrective-verification wording, and confidentiality rule adopted verbatim. Preferred label 'Conduct Commercial Audit to Validate Reported Sales' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Conduct Audit To Validate Reported Sales' to 'Conduct Commercial Audit to Validate Reported Sales'. Prior label(s) retained as altLabel(s): 'Conduct Audit To Validate Reported Sales'."@en .
 
 proc:CM-1-3-7-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11116,7 +11117,7 @@ Out of scope: Limit and risk-code decisions (CM-1-3-7-4-2) | exposure policy def
     intake:primaryPurpose "No customer quietly exceeds the risk the business decided to take."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Establish Credit Limit & Risk Code | enables: Capture & Validate Order | enables: Manage Bad Debt | informed-by: Manage Cash Application, A/R & Revenue Accounting"@en ;
+    intake:relatedConcepts "uses-input: Establish Credit Limit & Risk Code | enables: Capture & Validate Order | enables: Manage Card Delinquency and Collections Referral (CM-1-3-6-6-6) | informed-by: Manage Cash Application, A/R & Revenue Accounting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 34 (2026-09-20). Review policy-qualified exposure model adopted verbatim (security/collateral offsets included; disputed balances per policy treatment, not all-in); hold automation/override rule adopted verbatim; sanctions-vs-credit hold distinction noted."@en .
 
@@ -11723,7 +11724,7 @@ Out of scope: Dispute adjudication (CM-1-3-8-3-1) | bill adjustment and credits 
     intake:primaryPurpose "Due money comes in — systematically, lawfully, and without anyone's authority being borrowed."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Apply Receipts | informed-by: Monitor Credit Against Limit | uses-input: Manage Bad Debt | enables: Bad Debt Allowance"@en ;
+    intake:relatedConcepts "uses-input: Apply Receipts | informed-by: Monitor Credit Against Limit | uses-input: Manage Card Delinquency and Collections Referral (CM-1-3-6-6-6) | enables: Bad Debt Allowance"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 38 (2026-09-21). Review payment-plan vs concession refinement adopted verbatim; consumer-debt statement in the review's general form (no statute named — no source registered, per the unclaimed-property precedent; Legal/Compliance determine applicability). Preferred label 'Manage Receivables Collections' recorded as alt label and queued."@en .
 
@@ -11973,7 +11974,7 @@ Out of scope: Reported-sales validation (CM-1-3-6-8-1) | agreement terms, interp
     intake:primaryPurpose "Every royalty and fee the agreements earn is computed from validated figures, billed, collected, and accounted — to the letter of the agreements."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PMPA-001"@en ;
-    intake:relatedConcepts "uses-input: Conduct Audit To Validate Reported Sales | uses-input: Report Franchise Performance | enables: Create & Distribute Bill | enables: Period End Processing"@en ;
+    intake:relatedConcepts "uses-input: Conduct Commercial Audit to Validate Reported Sales (CM-1-3-6-8-1) | uses-input: Report Franchise Performance | enables: Create & Distribute Bill | enables: Period End Processing"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 39 (2026-09-21). Review administered-funds record distinctions and contested-obligation routing adopted verbatim. Preferred label 'Administer Royalty, Brand Fee, and Contribution Streams' recorded as alt label and queued — removes the ambiguity with the collections process; administration here, collection execution in CM-1-3-8-3."@en .
 
@@ -14001,9 +14002,9 @@ proc:CM-1-1-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.1.1" ;
     skos:prefLabel "Produce Demand Forecast"@en ;
-    skos:scopeNote """Covers the recurring demand-forecast production cycle: preparing forecasting master data and history, developing the statistical baseline, adjusting it with customer input and market intelligence, publishing the approved forecast with its component-level breakdown, and monitoring forecast performance. Its output is the single approved demand forecast consumed by Regional Optimization, Refinery Optimization, and Supply And Trading. Excludes deciding how demand is met — supply, production, inventory, and allocation choices are owned by Regional Optimization (CM-1-1-2); excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7); excludes Supply And Trading's operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3), bounded per the batch 03 decision; excludes designing and agreeing the cross-functional forecasting process with sales, owned by Develop & Agree Demand Forecasting Process (CM-1-3-5-1-2).
+    skos:scopeNote """Covers the recurring demand-forecast production cycle: preparing forecasting master data and history, developing the statistical baseline, adjusting it with customer input and market intelligence, publishing the approved forecast with its component-level breakdown, and monitoring forecast performance. Its output is the single approved demand forecast consumed by Regional Optimization, Refinery Optimization, and Supply And Trading. Excludes deciding how demand is met — supply, production, inventory, and allocation choices are owned by Regional Optimization (CM-1-1-2); excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7); excludes Supply And Trading's operational refined-product demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3), bounded per the batch 03 decision; excludes designing and agreeing the cross-functional forecasting process with sales, owned by Develop & Agree Demand Forecasting Process (CM-1-3-5-1-2).
 In scope: Prepare and validate forecasting inputs | develop the statistical baseline forecast | incorporate customer input and market intelligence | publish the approved forecast and component-level forecast plan | monitor forecast accuracy, bias, and adjustment effect
-Out of scope: Supply, production, inventory, and allocation decisions (Regional Optimization, CM-1-1-2) | customer order capture and commitment (Order Management, CM-1-3-7) | trading-side receipt and use of the published forecast (Receive Demand Forecast, CM-1-2-1-1-2) | Supply And Trading operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3) | sales forecasting process design (Develop & Agree Demand Forecasting Process, CM-1-3-5-1-2)"""@en ;
+Out of scope: Supply, production, inventory, and allocation decisions (Regional Optimization, CM-1-1-2) | customer order capture and commitment (Order Management, CM-1-3-7) | trading-side receipt and use of the published forecast (Receive Demand Forecast, CM-1-2-1-1-2) | Supply And Trading operational refined-product demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3) | sales forecasting process design (Develop & Agree Demand Forecasting Process, CM-1-3-5-1-2)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "cleansed demand history | customer plans and commitments | market intelligence | product and market master data"@en ;
