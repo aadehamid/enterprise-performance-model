@@ -74,6 +74,16 @@ STATUS_OK = {"pending", "approved", "blocked", "retired"}
 # to blocked/retired after that decision).
 APPROVABLE_TYPE = {"process", "capability"}
 
+# The two L0 scheme roots, approved as taxonomy/navigation anchors with
+# concept_type_check 'not-process' by Hamid's batch 42 decision
+# (2026-09-21). Frozen like PRE_INTAKE_APPROVED: do not grow this set —
+# every other not-process row still requires its own explicit decision
+# and stays pending, blocked, or retired.
+SCHEME_ROOT_APPROVED = {
+    "L0-downstream-operations",
+    "L0-enabling-functions",
+}
+
 CONCEPT_TYPE_OK = {
     "process",
     "capability",
@@ -385,12 +395,13 @@ def main() -> int:
             )
 
         if concept_type and concept_type not in APPROVABLE_TYPE:
-            add(
-                BLOCKING,
-                slug,
-                "unapprovable-concept-type",
-                f"concept_type_check={concept_type!r} cannot be approved without Hamid's decision.",
-            )
+            if not (concept_type == "not-process" and slug in SCHEME_ROOT_APPROVED):
+                add(
+                    BLOCKING,
+                    slug,
+                    "unapprovable-concept-type",
+                    f"concept_type_check={concept_type!r} cannot be approved without Hamid's decision.",
+                )
 
         pre_intake = slug in PRE_INTAKE_APPROVED
         missing_phase1 = []
