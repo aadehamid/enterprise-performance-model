@@ -456,7 +456,7 @@ consolidated pass that applies them.
   use stable identifiers for technical relationships. Retain historical
   labels as altLabel only when uniquely resolvable and semantically
   safe.
-- **PTC-001 partial resolution — executed 2026-09-21 (PR pending).**
+- **PTC-001 partial resolution — executed 2026-09-21 (PR #86, open — merge on Hamid's approval).**
   Hamid approved the revised consolidated proposal
   (`files/ptc-001-tree-proposal.md`, four review adjustments adopted):
   new Candidate L2 **Financial Planning and Performance Management** under
