@@ -5419,7 +5419,7 @@ Out of scope: Time-fact actualization (CM-1-2-3-1-4) | claim creation and negoti
     intake:primaryPurpose "Catch every compensable delay — in either direction — before claim rights expire."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "uses-input: Perform Vessel & Barge Actualization | precedes: Create Claim"@en ;
+    intake:relatedConcepts "uses-input: Perform Vessel & Barge Actualization | precedes: Create Outbound Delay Compensation Claim (CM-1-2-4-4-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 17 (2026-09-20). Receiving end of the batch 13 handoff: actualization supplies the facts, this process makes the potential-claim determination. Contract-first rule (Hamid, batch 17): notice, documentation, and time-limit requirements vary by agreement and are identified per contract, not assumed uniform. APQC 10188 'Identify potential customers' scored STRONG at 3b but NO SOURCE — honored; false lexical match."@en .
 
@@ -5430,12 +5430,12 @@ proc:CM-1-2-4-4-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10147"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Create Outbound Delay Compensation Claim"@en ;
+    skos:altLabel "Create Claim"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Build outbound demurrage, despatch, and detention claims — performing the definitive laytime calculation under the governing terms, assembling the supporting evidence (notices of readiness, statements of fact, timesheets, port and terminal logs), verifying contractual notice, documentation, and time-limit requirements are met, obtaining the designated internal review, and issuing the claim to the responsible party — so outbound claims are complete, timely, and defensible."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.2" ;
-    skos:prefLabel "Create Claim"@en ;
+    skos:prefLabel "Create Outbound Delay Compensation Claim"@en ;
     skos:scopeNote """Covers outbound claim preparation and issuance: definitive laytime and quantum calculation under the governing charter party, contract, or terminal terms including the exceptions and interruptions the terms allow; evidence assembly; verification of contractual notice, documentation, and time-limit requirements; the designated internal review per the documented delegation, including legal review or privileged advice where required by the governing agreement, claim value, dispute status, or escalation threshold; and formal claim issuance to the counterparty, charterer, terminal, or other responsible party. A missed contractual time limit or required document may prejudice, limit, or bar recovery under the governing agreement; the claim process identifies and escalates such conditions promptly. This process routes legal questions; it does not itself make legal conclusions about enforceability. Excludes identification (CM-1-2-4-4-1); negotiation of the issued claim (CM-1-2-4-4-5); claim invoicing (CM-1-2-4-4-7); inbound claims (CM-1-2-4-4-3/-4/-6/-8); legal opinions (Legal & Corporate Communications).
 In scope: Perform definitive laytime and quantum calculations under governing terms | assemble notices, statements of fact, and supporting evidence | verify contractual notice, documentation, and time-limit compliance and obtain designated review including legal review where required | issue claims to responsible parties
 Out of scope: Identification (CM-1-2-4-4-1) | negotiation (CM-1-2-4-4-5) | claim invoicing (CM-1-2-4-4-7) | inbound claims (CM-1-2-4-4-3/-4/-6/-8) | legal opinions (Legal & Corporate Communications)"""@en ;
@@ -5447,9 +5447,9 @@ Out of scope: Identification (CM-1-2-4-4-1) | negotiation (CM-1-2-4-4-5) | claim
     intake:primaryPurpose "Issue outbound claims that are complete, timely, and hard to reject."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Identify Potential Demurrage | precedes: Communicate and Negotiate Claim"@en ;
+    intake:relatedConcepts "follows: Identify Potential Demurrage | precedes: Negotiate Outbound Claim (CM-1-2-4-4-5)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound leg of the two-directional lifecycle (Q3 reading); normalized label 'Create Outbound Delay Compensation Claim' queued for the naming pass. Legal-boundary rule (Hamid, batch 17): high-risk, high-value, or disputed claims route to legal review per threshold; time-limit consequences are contract-specific (may prejudice, limit, or bar recovery), never assumed. APQC 10147 is a budgeting candidate, a false match."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound leg of the two-directional lifecycle (Q3 reading); normalized label 'Create Outbound Delay Compensation Claim' queued for the naming pass. Legal-boundary rule (Hamid, batch 17): high-risk, high-value, or disputed claims route to legal review per threshold; time-limit consequences are contract-specific (may prejudice, limit, or bar recovery), never assumed. APQC 10147 is a budgeting candidate, a false match. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Create Claim' to 'Create Outbound Delay Compensation Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5458,13 +5458,13 @@ proc:CM-1-2-4-4-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20096"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Receive Inbound Delay Compensation Claim"@en ;
+    skos:altLabel "Receive Demurrage Claim"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Register inbound demurrage, despatch, and detention claims — logging received claims, acknowledging where the governing terms require, recording receipt-stage time-limit and documentation observations, and routing claims to assessment — so inbound claims enter a controlled process with their receipt-stage observations captured."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.3" ;
-    skos:prefLabel "Receive Demurrage Claim"@en ;
-    skos:scopeNote """Covers inbound claim intake: registration and logging of claims received from owners, counterparties, terminals, and other claimants; acknowledgement where contractually required; receipt-stage time-limit and documentation observations recorded and made available for assessment, legal/commercial review, and the response position; and routing to Assess Claim (CM-1-2-4-4-4). Receipt-stage observations inform the response position; their legal effect is assessed downstream, not prejudged at intake. Excludes merit and quantum assessment (CM-1-2-4-4-4); negotiation (CM-1-2-4-4-6); invoice processing (CM-1-2-4-4-8); outbound claims (CM-1-2-4-4-1/-2/-5/-7).
+    skos:prefLabel "Receive Inbound Delay Compensation Claim"@en ;
+    skos:scopeNote """Covers inbound claim intake: registration and logging of claims received from owners, counterparties, terminals, and other claimants; acknowledgement where contractually required; receipt-stage time-limit and documentation observations recorded and made available for assessment, legal/commercial review, and the response position; and routing to Assess Inbound Claim (CM-1-2-4-4-4). Receipt-stage observations inform the response position; their legal effect is assessed downstream, not prejudged at intake. Excludes merit and quantum assessment (CM-1-2-4-4-4); negotiation (CM-1-2-4-4-6); invoice processing (CM-1-2-4-4-8); outbound claims (CM-1-2-4-4-1/-2/-5/-7).
 In scope: Register and log received claims | acknowledge where required | record receipt-stage time-limit and documentation observations for assessment and review | route claims to assessment
 Out of scope: Merit and quantum assessment (CM-1-2-4-4-4) | negotiation (CM-1-2-4-4-6) | invoice processing (CM-1-2-4-4-8) | outbound claims (CM-1-2-4-4-1/-2/-5/-7)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -5475,9 +5475,9 @@ Out of scope: Merit and quantum assessment (CM-1-2-4-4-4) | negotiation (CM-1-2-
     intake:primaryPurpose "Give every inbound claim a controlled, recorded entry with receipt-stage observations captured at the door."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "precedes: Assess Claim | uses-input: Manage Carrier Contracts"@en ;
+    intake:relatedConcepts "precedes: Assess Inbound Claim (CM-1-2-4-4-4) | uses-input: Manage Carrier Contracts"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound leg intake (Q3 reading); normalized label 'Receive Inbound Delay Compensation Claim' queued. Receipt-stage observations are recorded without prejudging their legal effect (Hamid, batch 17) — assessment and legal/commercial review determine the response position. APQC 20096 'Receive warranty claim' scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound leg intake (Q3 reading); normalized label 'Receive Inbound Delay Compensation Claim' queued. Receipt-stage observations are recorded without prejudging their legal effect (Hamid, batch 17) — assessment and legal/commercial review determine the response position. APQC 20096 'Receive warranty claim' scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Receive Demurrage Claim' to 'Receive Inbound Delay Compensation Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5486,12 +5486,12 @@ proc:CM-1-2-4-4-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20105"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Assess Inbound Claim"@en ;
+    skos:altLabel "Assess Claim"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Assess the merit and quantum of inbound claims — recalculating laytime independently from the organization's own actualized records under the governing terms, applying contractual exceptions, interruptions, allocation provisions, notices, and responsibility rules as the governing agreement provides, and determining an evidenced accept, counter, or reject position — so inbound claims are paid only to the extent actually owed."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.4" ;
-    skos:prefLabel "Assess Claim"@en ;
+    skos:prefLabel "Assess Inbound Claim"@en ;
     skos:scopeNote """Covers inbound claim assessment: independent laytime and quantum recalculation from the organization's own actualized time facts (CM-1-2-3-1-4) rather than the claimant's figures; application of contractual exceptions, interruptions, allocation provisions, notices, and responsibility rules as the governing agreement provides — specific causes such as weather or berth availability have whatever effect the contract gives them, no more; comparison against the claimed amount; and determination of an evidenced accept, counter, or reject position with the designated review per the documented delegation. Where the underlying physical or measurement facts are themselves disputed, the actualization dispute is handled by Manage Actualization Disputes (CM-1-2-3-1-8) per the batch 10 partition. Excludes intake (CM-1-2-4-4-3); negotiation of the position (CM-1-2-4-4-6); physical-fact disputes (CM-1-2-3-1-8); legal opinions (Legal & Corporate Communications).
 In scope: Recalculate laytime and quantum independently from own records | apply contractual exceptions, interruptions, allocation provisions, notices, and responsibility rules as the agreement provides | determine evidenced accept, counter, or reject positions with designated review
 Out of scope: Intake (CM-1-2-4-4-3) | negotiation (CM-1-2-4-4-6) | underlying physical-fact disputes (CM-1-2-3-1-8) | legal opinions (Legal & Corporate Communications)"""@en ;
@@ -5503,9 +5503,9 @@ Out of scope: Intake (CM-1-2-4-4-3) | negotiation (CM-1-2-4-4-6) | underlying ph
     intake:primaryPurpose "Pay only what is actually owed, on an evidenced recalculation, never on the claimant's arithmetic."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Receive Demurrage Claim | precedes: Validate and Negotiate Claim | informed-by: Perform Vessel & Barge Actualization"@en ;
+    intake:relatedConcepts "follows: Receive Inbound Delay Compensation Claim (CM-1-2-4-4-3) | precedes: Validate and Negotiate Inbound Claim (CM-1-2-4-4-6) | informed-by: Perform Vessel & Barge Actualization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound assessment leg (Q3 reading); normalized label 'Assess Inbound Claim' queued. Independent-recalculation discipline mirrors the batch 11 validate-not-accept pattern. Contract-first rule: no cause is automatically exculpatory or compensable — the governing agreement decides. Dispute-partition routing: a disagreement about what physically happened goes to CM-1-2-3-1-8; a disagreement about compensability stays here. APQC 20105 is a claim-closure candidate, comparative only."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound assessment leg (Q3 reading); normalized label 'Assess Inbound Claim' queued. Independent-recalculation discipline mirrors the batch 11 validate-not-accept pattern. Contract-first rule: no cause is automatically exculpatory or compensable — the governing agreement decides. Dispute-partition routing: a disagreement about what physically happened goes to CM-1-2-3-1-8; a disagreement about compensability stays here. APQC 20105 is a claim-closure candidate, comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Assess Claim' to 'Assess Inbound Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-5 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5514,12 +5514,12 @@ proc:CM-1-2-4-4-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10046"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Negotiate Outbound Claim"@en ;
+    skos:altLabel "Communicate and Negotiate Claim"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Pursue issued outbound claims to resolution — presenting the claim and its evidence, responding to counterarguments and counter-calculations, negotiating commercial resolution within delegated claim-settlement authority, obtaining additional approval where a proposed compromise, waiver, credit, set-off, or write-down exceeds that authority, and agreeing resolution or escalating unresolved claims — so outbound entitlements convert to agreed, collectible amounts."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.5" ;
-    skos:prefLabel "Communicate and Negotiate Claim"@en ;
+    skos:prefLabel "Negotiate Outbound Claim"@en ;
     skos:scopeNote """Covers outbound claim negotiation and resolution: claim presentation and follow-up; evidence exchange and response to counterpositions; negotiation of commercial resolution within the documented delegation of claim-settlement authority, with additional approval obtained where a proposed compromise, waiver, credit, set-off, or write-down exceeds delegated authority — a resolution creating a financial concession routes through Finance or the designated authority; agreement of the settled amount; and escalation of aging, material, or deadlocked claims per procedure. Resolution may also come by contractual determination, surveyor or terminal evidence, settlement agreement, credit note, set-off, arbitration, or legal process; arbitration and litigation are conducted by Legal & Corporate Communications. Time-limit-preserving communications are maintained where negotiation extends near contractual limits. Excludes claim creation (CM-1-2-4-4-2); inbound negotiation (CM-1-2-4-4-6); claim invoicing (CM-1-2-4-4-7); write-off approval beyond delegated authority (Finance/designated authority); arbitration and litigation (Legal & Corporate Communications).
 In scope: Present claims and exchange evidence | respond to counterarguments and counter-calculations | negotiate commercial resolution within delegated authority and obtain additional approval for concessions beyond it | escalate aging, material, or deadlocked claims
 Out of scope: Claim creation (CM-1-2-4-4-2) | inbound negotiation (CM-1-2-4-4-6) | claim invoicing (CM-1-2-4-4-7) | write-offs and concessions beyond delegated authority (Finance/designated authority) | arbitration and litigation (Legal & Corporate Communications)"""@en ;
@@ -5531,9 +5531,9 @@ Out of scope: Claim creation (CM-1-2-4-4-2) | inbound negotiation (CM-1-2-4-4-6)
     intake:primaryPurpose "Convert issued claims into agreed, collectible amounts without surrendering entitled value or exceeding authority."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Create Claim | precedes: Send Claim Invoice"@en ;
+    intake:relatedConcepts "follows: Create Outbound Delay Compensation Claim (CM-1-2-4-4-2) | precedes: Invoice Agreed Outbound Claim (CM-1-2-4-4-7)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound negotiation leg (Q3 reading); normalized label 'Negotiate Outbound Claim' queued. Authority limitation (Hamid, batch 17): claim resolution can create a financial concession — compromises, waivers, credits, set-offs, and write-downs beyond the documented delegation require the designated approval; this process never silently owns a Finance write-off or legal settlement authority. Resolution modes extend beyond bilateral negotiation. APQC 10046 'Communicate mission' is an unrelated candidate."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound negotiation leg (Q3 reading); normalized label 'Negotiate Outbound Claim' queued. Authority limitation (Hamid, batch 17): claim resolution can create a financial concession — compromises, waivers, credits, set-offs, and write-downs beyond the documented delegation require the designated approval; this process never silently owns a Finance write-off or legal settlement authority. Resolution modes extend beyond bilateral negotiation. APQC 10046 'Communicate mission' is an unrelated candidate. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Communicate and Negotiate Claim' to 'Negotiate Outbound Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-6 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5542,12 +5542,12 @@ proc:CM-1-2-4-4-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 12671"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Validate and Negotiate Inbound Claim"@en ;
+    skos:altLabel "Validate and Negotiate Claim"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Resolve inbound claims from the assessed position — communicating the assessed position with its evidence, negotiating, accepting, partially accepting, countering, or rejecting the claim within delegated authority, routing concessions, waivers, or formal settlement agreements through the required approval path, and agreeing resolution or escalating unresolved claims — so inbound exposure closes at the evidenced amount, not the claimed one."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.6" ;
-    skos:prefLabel "Validate and Negotiate Claim"@en ;
+    skos:prefLabel "Validate and Negotiate Inbound Claim"@en ;
     skos:scopeNote """Covers inbound claim negotiation and resolution: communicating the assessed position (CM-1-2-4-4-4) and its recalculation evidence to the claimant; negotiating, accepting, partially accepting, countering, or rejecting the claim within the documented delegation of claim-settlement authority; routing concessions, waivers, or formal settlement agreements through the required approval path — a resolution creating a financial concession routes through Finance or the designated authority; and escalating material, aging, or deadlocked claims per procedure. Resolution may also come by contractual determination, surveyor or terminal evidence, settlement agreement, credit note, set-off, arbitration, or legal process; arbitration and litigation are conducted by Legal & Corporate Communications. Excludes the assessment itself (CM-1-2-4-4-4); outbound negotiation (CM-1-2-4-4-5); invoice processing (CM-1-2-4-4-8); concessions beyond delegated authority (Finance/designated authority); arbitration and litigation (Legal & Corporate Communications).
 In scope: Communicate assessed positions with evidence | negotiate, accept, partially accept, counter, or reject within delegated authority | route concessions, waivers, and settlement agreements through the required approval path | escalate material or deadlocked claims
 Out of scope: Assessment (CM-1-2-4-4-4) | outbound negotiation (CM-1-2-4-4-5) | invoice processing (CM-1-2-4-4-8) | concessions beyond delegated authority (Finance/designated authority) | arbitration and litigation (Legal & Corporate Communications)"""@en ;
@@ -5559,9 +5559,9 @@ Out of scope: Assessment (CM-1-2-4-4-4) | outbound negotiation (CM-1-2-4-4-5) | 
     intake:primaryPurpose "Close inbound exposure at the evidenced amount, under the right authority."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Assess Claim | precedes: Receive Claim Invoice"@en ;
+    intake:relatedConcepts "follows: Assess Inbound Claim (CM-1-2-4-4-4) | precedes: Process Invoice for Agreed Inbound Claim (CM-1-2-4-4-8)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound negotiation leg (Q3 reading); normalized label 'Validate and Negotiate Inbound Claim' queued. Same authority limitation as the outbound leg: concessions beyond the documented delegation route to the designated approval. APQC 12671 'Validate warranty claim' scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound negotiation leg (Q3 reading); normalized label 'Validate and Negotiate Inbound Claim' queued. Same authority limitation as the outbound leg: concessions beyond the documented delegation route to the designated approval. APQC 12671 'Validate warranty claim' scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Validate and Negotiate Claim' to 'Validate and Negotiate Inbound Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-7 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5570,12 +5570,12 @@ proc:CM-1-2-4-4-7 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20105"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Invoice Agreed Outbound Claim"@en ;
+    skos:altLabel "Send Claim Invoice"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Invoice agreed outbound claims — issuing the claim invoice and settlement statement for the negotiated amount with its supporting calculation, submitting the receivable into the designated finance processes, tracking expected receipt, and obtaining confirmation from Accounting that the receivable is booked and cash applied — so agreed entitlements are collected and evidenced."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.7" ;
-    skos:prefLabel "Send Claim Invoice"@en ;
+    skos:prefLabel "Invoice Agreed Outbound Claim"@en ;
     skos:scopeNote """Covers outbound claim invoicing: generating the claim invoice and supporting settlement statement for the agreed amount; issuing to the paying party; submitting the receivable into the designated finance processes for booking (Manage AR/AP & Actuals, CM-1-2-4-2-4) and receipt application (Manage Cash Application, CM-1-2-4-2-9) per the batch 14 payment-authority rule; tracking expected receipt and coordinating follow-up; obtaining confirmation from Accounting that the receivable has been booked and cash applied; and evidencing closure. A payment disagreement after agreement is a settlement dispute (CM-1-2-4-1-17) per the batch 10 partition. Excludes negotiation (CM-1-2-4-4-5); AR booking and cash application (CM-1-2-4-2-4, CM-1-2-4-2-9); post-agreement payment disputes (CM-1-2-4-1-17).
 In scope: Generate claim invoices and settlement statements for agreed amounts | issue to paying parties and submit receivables to the designated finance processes | track expected receipt and coordinate follow-up | obtain booking and cash-application confirmation from Accounting and evidence closure
 Out of scope: Negotiation (CM-1-2-4-4-5) | AR booking and cash application (CM-1-2-4-2-4, CM-1-2-4-2-9) | post-agreement payment disputes (CM-1-2-4-1-17)"""@en ;
@@ -5587,9 +5587,9 @@ Out of scope: Negotiation (CM-1-2-4-4-5) | AR booking and cash application (CM-1
     intake:primaryPurpose "Collect agreed claim amounts with a complete evidence trail."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Communicate and Negotiate Claim | precedes: Manage AR/AP & Actuals"@en ;
+    intake:relatedConcepts "follows: Negotiate Outbound Claim (CM-1-2-4-4-5) | precedes: Manage AR/AP & Actuals"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound invoicing leg (Q3 reading); normalized label 'Invoice Agreed Outbound Claim' queued. Batch 14 Q3 rule applied: this process prepares and submits; Accounting books and applies — closure is confirmed by Accounting, not assumed here. Agreed-then-unpaid transitions to the settlement-dispute quadrant. APQC 20105 is a claim-closure candidate, comparative only."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Outbound invoicing leg (Q3 reading); normalized label 'Invoice Agreed Outbound Claim' queued. Batch 14 Q3 rule applied: this process prepares and submits; Accounting books and applies — closure is confirmed by Accounting, not assumed here. Agreed-then-unpaid transitions to the settlement-dispute quadrant. APQC 20105 is a claim-closure candidate, comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Send Claim Invoice' to 'Invoice Agreed Outbound Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-4-8 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5598,12 +5598,12 @@ proc:CM-1-2-4-4-8 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20096"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Process Invoice for Agreed Inbound Claim"@en ;
+    skos:altLabel "Receive Claim Invoice"@en ;
     skos:broader proc:CM-1-2-4-4 ;
     skos:definition "Process invoices for agreed inbound claims — validating the received invoice against the negotiated resolution and its evidence, preparing and submitting a payment request supported by the agreed resolution and required approvals to the designated Accounts Payable/Treasury process, and evidencing closure — so the organization pays exactly what was agreed, once, with a complete trail."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.4.8" ;
-    skos:prefLabel "Receive Claim Invoice"@en ;
+    skos:prefLabel "Process Invoice for Agreed Inbound Claim"@en ;
     skos:scopeNote """Covers inbound claim invoice processing: validating received claim invoices against the agreed resolution (CM-1-2-4-4-6) and its recalculation evidence; rejecting or querying invoices that do not match the agreement; preparing and submitting a payment request supported by the agreed resolution and required approvals to the designated Accounts Payable/Treasury process per the batch 14 payment-authority rule — the designated payment authority approves and releases payment, not this process; and evidencing closure. Duplicate or mismatched invoicing is surfaced back through negotiation or the settlement-dispute quadrant (CM-1-2-4-1-17). Excludes negotiation (CM-1-2-4-4-6); AP booking, payment approval, and payment execution (CM-1-2-4-2-4, Treasury/banking, designated payment authority); post-agreement disputes (CM-1-2-4-1-17).
 In scope: Validate received invoices against agreed resolutions and evidence | reject or query mismatched invoices | prepare and submit payment requests with required approvals to the designated AP/Treasury process | evidence closure
 Out of scope: Negotiation (CM-1-2-4-4-6) | AP booking, payment approval, and payment execution (CM-1-2-4-2-4, Treasury/banking, designated authority) | post-agreement disputes (CM-1-2-4-1-17)"""@en ;
@@ -5615,9 +5615,9 @@ Out of scope: Negotiation (CM-1-2-4-4-6) | AP booking, payment approval, and pay
     intake:primaryPurpose "Pay agreed inbound claims exactly and once, with the trail to prove it."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-BIMCO-LD-001"@en ;
-    intake:relatedConcepts "follows: Validate and Negotiate Claim | precedes: Manage AR/AP & Actuals"@en ;
+    intake:relatedConcepts "follows: Validate and Negotiate Inbound Claim (CM-1-2-4-4-6) | precedes: Manage AR/AP & Actuals"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound invoicing leg (Q3 reading); normalized label 'Process Invoice for Agreed Inbound Claim' queued. Batch 14 Q3 rule applied: this process prepares the request; the designated payment authority approves and releases. Pay-what-was-agreed control: the invoice validates against the negotiated resolution, not the original claim. APQC 20096 scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only."@en .
+    intake:terminologyNotes "Batch 17 (2026-09-20). Inbound invoicing leg (Q3 reading); normalized label 'Process Invoice for Agreed Inbound Claim' queued. Batch 14 Q3 rule applied: this process prepares the request; the designated payment authority approves and releases. Pay-what-was-agreed control: the invoice validates against the negotiated resolution, not the original claim. APQC 20096 scored STRONG at 3b but NO SOURCE — honored; warranty analogy, comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Receive Claim Invoice' to 'Process Invoice for Agreed Inbound Claim'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-5-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7264,12 +7264,12 @@ proc:CM-1-3-2-3-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11168"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Test Consumer Value Proposition"@en ;
+    skos:altLabel "Test Customer value proposition"@en ;
     skos:broader proc:CM-1-3-2-3 ;
     skos:definition "Test the consumer value proposition against evidence — governed consumer findings, research, and authorized concept and market tests — so the consumer promise commits only to what the evidence supports."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.2.3.1" ;
-    skos:prefLabel "Test Customer value proposition"@en ;
+    skos:prefLabel "Test Consumer Value Proposition"@en ;
     skos:scopeNote """Covers proposition testing on the consumer lens: structuring the proposition into testable elements; testing against Consumer Analysis findings (CM-1-3-1-3), purpose-run research, and authorized concept or market tests; recording results and confidence; feeding the develop/update step (CM-1-3-2-3-4). Testing uses personal data only through the governed findings and controls of CM-1-3-1-3 (batch 21 shared statement); test publication follows the aggregate/de-identified default. Excludes the consumer analysis (CM-1-3-1-3); in-market test execution (CM-1-3-6); proposition strategy development and approval (CM-1-3-2-3-4).
 In scope: Structure the consumer proposition into testable elements | test against governed findings, research, and authorized tests | record results and confidence within privacy controls
 Out of scope: Consumer analysis (CM-1-3-1-3) | in-market execution (CM-1-3-6) | proposition strategy development and approval (CM-1-3-2-3-4)"""@en ;
@@ -7281,9 +7281,9 @@ Out of scope: Consumer analysis (CM-1-3-1-3) | in-market execution (CM-1-3-6) | 
     intake:primaryPurpose "A consumer promise tested before it is made."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Formulate and Evaluate Strategic Operating Alternatives (CVP) | precedes: Develop/Update Strategy (CVP)"@en ;
+    intake:relatedConcepts "follows: Formulate and Evaluate Consumer Value Proposition Alternatives (CM-1-3-2-3-2) | precedes: Develop and Update Consumer Value Proposition Strategy (CM-1-3-2-3-4)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Test step of the consumer VP lifecycle; the locked name reuses the template's 'Customer' wording — consumer-directional normalized label required by review, queued. Privacy controls inherited from batch 21. APQC 'Define offering and customer value proposition' STRONG, no validator — comparative anchor."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Test step of the consumer VP lifecycle; the locked name reuses the template's 'Customer' wording — consumer-directional normalized label required by review, queued. Privacy controls inherited from batch 21. APQC 'Define offering and customer value proposition' STRONG, no validator — comparative anchor. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Test Customer value proposition' to 'Test Consumer Value Proposition'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-3-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7292,12 +7292,12 @@ proc:CM-1-3-2-3-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10058"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Formulate and Evaluate Consumer Value Proposition Alternatives"@en ;
+    skos:altLabel "Formulate and Evaluate Strategic Operating Alternatives (CVP)"@en ;
     skos:broader proc:CM-1-3-2-3 ;
     skos:definition "Formulate alternative strategic models for delivering the consumer value proposition — fuel-led, convenience-led, loyalty-led, digital-led, and mixed models — and evaluate them against the proposition objectives and the governed evidence base."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.2.3.2" ;
-    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternatives (CVP)"@en ;
+    skos:prefLabel "Formulate and Evaluate Consumer Value Proposition Alternatives"@en ;
     skos:scopeNote """Covers alternative formulation and evaluation for the consumer proposition: defining candidate delivery models; evaluating against principles and objectives, consumer findings, retail economics, and brand direction; recommending the preferred alternative to the develop/update step (CM-1-3-2-3-4). Excludes proposition strategy development and approval (CM-1-3-2-3-4); retail network design (CM-1-3-3-4); offer definition (CM-1-3-3-1).
 In scope: Define candidate consumer-proposition delivery models | evaluate against objectives, evidence, and economics | recommend with evidence
 Out of scope: Proposition strategy development and approval (CM-1-3-2-3-4) | retail network design (CM-1-3-3-4) | offer definition (CM-1-3-3-1)"""@en ;
@@ -7309,9 +7309,9 @@ Out of scope: Proposition strategy development and approval (CM-1-3-2-3-4) | ret
     intake:primaryPurpose "The consumer promise delivered the best way, chosen from real alternatives."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Establish CVP principles and objectives | precedes: Test Customer value proposition | governed-by: Consumer Value Proposition"@en ;
+    intake:relatedConcepts "follows: Establish Consumer Value Proposition Principles and Objectives (CM-1-3-2-3-3) | precedes: Test Consumer Value Proposition (CM-1-3-2-3-1) | governed-by: Consumer Value Proposition"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Alternatives step of the consumer VP lifecycle; consumer-directional normalized label required by review, queued. APQC 'Evaluate strategic initiatives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Alternatives step of the consumer VP lifecycle; consumer-directional normalized label required by review, queued. APQC 'Evaluate strategic initiatives' is a WEAK generic match. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Formulate and Evaluate Strategic Operating Alternatives (CVP)' to 'Formulate and Evaluate Consumer Value Proposition Alternatives'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-3-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7320,12 +7320,12 @@ proc:CM-1-3-2-3-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20002"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Establish Consumer Value Proposition Principles and Objectives"@en ;
+    skos:altLabel "Establish CVP principles and objectives"@en ;
     skos:broader proc:CM-1-3-2-3 ;
     skos:definition "Establish the principles and objectives of the consumer value proposition — what the consumer promise must achieve and the principles any candidate proposition must satisfy."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.2.3.3" ;
-    skos:prefLabel "Establish CVP principles and objectives"@en ;
+    skos:prefLabel "Establish Consumer Value Proposition Principles and Objectives"@en ;
     skos:scopeNote """Covers principle and objective setting for the consumer proposition: translating commercial and brand strategy into consumer-proposition objectives; setting the principles (economic, brand, experience, privacy-by-design) candidates must satisfy; setting the cycle's decision calendar. First step of the consumer VP lifecycle. Excludes commercial strategy (its owner); alternatives and testing (CM-1-3-2-3-2/-1); proposition strategy development and approval (CM-1-3-2-3-4).
 In scope: Set consumer-proposition objectives | set the principles candidates must satisfy, including privacy-by-design | set the decision calendar
 Out of scope: Commercial strategy (its owner) | alternatives and testing (CM-1-3-2-3-2/-1) | proposition strategy development and approval (CM-1-3-2-3-4)"""@en ;
@@ -7337,9 +7337,9 @@ Out of scope: Commercial strategy (its owner) | alternatives and testing (CM-1-3
     intake:primaryPurpose "A consumer promise that knows what it must achieve before it is designed."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "precedes: Formulate and Evaluate Strategic Operating Alternatives (CVP) | precedes: Test Customer value proposition | governed-by: Consumer Value Proposition"@en ;
+    intake:relatedConcepts "precedes: Formulate and Evaluate Consumer Value Proposition Alternatives (CM-1-3-2-3-2) | precedes: Test Consumer Value Proposition (CM-1-3-2-3-1) | governed-by: Consumer Value Proposition"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). First step of the consumer VP lifecycle; consumer-directional normalized label required by review, queued. APQC 'Establish channel objectives' is a WEAK adjacent match."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). First step of the consumer VP lifecycle; consumer-directional normalized label required by review, queued. APQC 'Establish channel objectives' is a WEAK adjacent match. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Establish CVP principles and objectives' to 'Establish Consumer Value Proposition Principles and Objectives'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-3-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7348,12 +7348,12 @@ proc:CM-1-3-2-3-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11095"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Develop and Update Consumer Value Proposition Strategy"@en ;
+    skos:altLabel "Develop/Update Strategy (CVP)"@en ;
     skos:broader proc:CM-1-3-2-3 ;
     skos:definition "Develop or update the consumer value-proposition strategy from the tested elements and evaluated alternatives, secure the applicable approvals, and issue the approved proposition to offer definition, experience strategy, and consumer-facing planning."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.2.3.4" ;
-    skos:prefLabel "Develop/Update Strategy (CVP)"@en ;
+    skos:prefLabel "Develop and Update Consumer Value Proposition Strategy"@en ;
     skos:scopeNote """Covers consumer-proposition strategy development, approval, and maintenance: consolidating tested elements and the recommended delivery model into the proposition; developing, recommending, and maintaining the approved promise by consumer segment (marketing lens, batch 19/21) under the applicable delegation of authority; updating as cycles complete. Output feeds Customer Offer Definition (CM-1-3-3-1), Customer Experience Strategy (CM-1-3-2-5), and consumer-facing planning (CM-1-3-5). Develops and maintains the approved promise, not the offers, networks, or campaigns. Excludes offer definition (CM-1-3-3-1); network design (CM-1-3-3-4); campaign planning/execution (CM-1-3-5/6).
 In scope: Develop, recommend, and maintain the approved consumer proposition by segment | issue the approved proposition to offer, experience, and planning processes | update as cycles complete
 Out of scope: Offer definition (CM-1-3-3-1) | network design (CM-1-3-3-4) | campaign planning/execution (CM-1-3-5/6)"""@en ;
@@ -7365,9 +7365,9 @@ Out of scope: Offer definition (CM-1-3-3-1) | network design (CM-1-3-3-4) | camp
     intake:primaryPurpose "One approved consumer promise the offer and experience processes can build on."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Test Customer value proposition | enables: Customer Offer Definition | enables: Customer Experience Strategy"@en ;
+    intake:relatedConcepts "follows: Test Consumer Value Proposition (CM-1-3-2-3-1) | enables: Customer Offer Definition | enables: Customer Experience Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Develop-and-maintain step of the consumer VP lifecycle; governance-safe wording per review; consumer-directional normalized label required by review, queued. Same FALSE-match caution as CM-1-3-2-2-4: APQC 'Develop KM strategy' is a different 'strategy' sense; comparative only."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Develop-and-maintain step of the consumer VP lifecycle; governance-safe wording per review; consumer-directional normalized label required by review, queued. Same FALSE-match caution as CM-1-3-2-2-4: APQC 'Develop KM strategy' is a different 'strategy' sense; comparative only. Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed from 'Develop/Update Strategy (CVP)' to 'Develop and Update Consumer Value Proposition Strategy'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-4-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -13742,7 +13742,7 @@ Out of scope: B2B/marketer proposition (CM-1-3-2-2) | offer definition (CM-1-3-3
     intake:referenceSources "SRC-EIA-PMM-001 | SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Consumer Analysis | enables: Customer Offer Definition | enables: Customer Experience Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Concept-type: process — the consumer instance of the VP lifecycle template (shared with CM-1-3-2-2). Lifecycle order: Establish CVP principles and objectives → Formulate and Evaluate Strategic Operating Alternatives (CVP) → Test Customer value proposition → Develop/Update Strategy (CVP). Review naming decision: the child names reuse the template's 'Customer'/'CVP' wording under the Consumer cluster — consumer-directional normalized labels (Test Consumer Value Proposition; Formulate and Evaluate Consumer Value Proposition Alternatives; Establish Consumer Value Proposition Principles and Objectives; Develop and Update Consumer Value Proposition Strategy) queued for the naming pass to prevent B2C/B2B ontology confusion. Consumer evidence under the batch 21 privacy controls. Batch 22 durable rule and price-role boundary recorded verbatim in scope note. APQC 'Define offering and customer value proposition' is the comparative anchor."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Concept-type: process — the consumer instance of the VP lifecycle template (shared with CM-1-3-2-2). Lifecycle order: Establish Consumer Value Proposition Principles and Objectives → Formulate and Evaluate Consumer Value Proposition Alternatives → Test Consumer Value Proposition → Develop and Update Consumer Value Proposition Strategy. Review naming decision: the child names reuse the template's 'Customer'/'CVP' wording under the Consumer cluster — consumer-directional normalized labels (Test Consumer Value Proposition; Formulate and Evaluate Consumer Value Proposition Alternatives; Establish Consumer Value Proposition Principles and Objectives; Develop and Update Consumer Value Proposition Strategy) queued for the naming pass to prevent B2C/B2B ontology confusion. Consumer evidence under the batch 21 privacy controls. Batch 22 durable rule and price-role boundary recorded verbatim in scope note. APQC 'Define offering and customer value proposition' is the comparative anchor."@en .
 
 proc:CM-1-3-3-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
