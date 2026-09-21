@@ -1171,12 +1171,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-2",
   "slug": "CM-1-1-3-6-2",
   "level": 5,
-  "name": "Loading Shipment",
+  "name": "Administer Scheduled Shipment Loading",
   "skos_notation": "CM 1.1.3.6.2",
   "parent_slug": "CM-1-1-3-6",
   "minted": false,
   "proposed_repo_id": "CM 1.1.3.6.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Loading Shipment",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Loading Shipment' -> 'Administer Scheduled Shipment Loading' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-3",
@@ -1384,12 +1387,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-3",
   "slug": "CM-1-1-3-8-3",
   "level": 5,
-  "name": "Setup Scheduling System",
+  "name": "Maintain Secondary Distribution Scheduling Basis",
   "skos_notation": "CM 1.1.3.8.3",
   "parent_slug": "CM-1-1-3-8",
   "minted": false,
   "proposed_repo_id": "CM 1.1.3.8.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Setup Scheduling System",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Setup Scheduling System' -> 'Maintain Secondary Distribution Scheduling Basis' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-4",
@@ -3430,12 +3436,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-8",
   "slug": "CM-1-2-4-1-8",
   "level": 5,
-  "name": "Settle Emissions",
+  "name": "Settle Environmental Instruments",
   "skos_notation": "CM 1.2.4.1.8",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
   "proposed_repo_id": "CM 1.2.4.1.8",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Settle Emissions",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Settle Emissions' -> 'Settle Environmental Instruments' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-9",
@@ -3584,12 +3593,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-2",
   "slug": "CM-1-2-4-2-2",
   "level": 5,
-  "name": "Manage Production Accounting",
+  "name": "Manage Production & Inventory Accounting",
   "skos_notation": "CM 1.2.4.2.2",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
   "proposed_repo_id": "CM 1.2.4.2.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Production Accounting",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Production Accounting' -> 'Manage Production & Inventory Accounting' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-3",
@@ -4176,12 +4188,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-3",
   "slug": "CM-1-2-6-2-3",
   "level": 5,
-  "name": "Forecast Refined Product Demand",
+  "name": "Forecast Operational Refined Product Demand",
   "skos_notation": "CM 1.2.6.2.3",
   "parent_slug": "CM-1-2-6-2",
   "minted": false,
   "proposed_repo_id": "CM 1.2.6.2.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Forecast Refined Product Demand",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Forecast Refined Product Demand' -> 'Forecast Operational Refined Product Demand' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3",
@@ -4212,23 +4227,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-2",
   "slug": "CM-1-2-6-3-2",
   "level": 5,
-  "name": "Manage Replenishment",
+  "name": "Fulfill Replenishment From Trading Sources",
   "skos_notation": "CM 1.2.6.3.2",
   "parent_slug": "CM-1-2-6-3",
   "minted": false,
   "proposed_repo_id": "CM 1.2.6.3.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Replenishment",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Replenishment' -> 'Fulfill Replenishment From Trading Sources' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-3",
   "slug": "CM-1-2-6-3-3",
   "level": 5,
-  "name": "Manage Primary Distribution Transportation",
+  "name": "Coordinate S&T-Sourced Primary Transportation",
   "skos_notation": "CM 1.2.6.3.3",
   "parent_slug": "CM-1-2-6-3",
   "minted": false,
   "proposed_repo_id": "CM 1.2.6.3.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Primary Distribution Transportation",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Primary Distribution Transportation' -> 'Coordinate S&T-Sourced Primary Transportation' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7",
@@ -6249,12 +6270,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-2",
   "slug": "CM-1-3-6-6-2",
   "level": 5,
-  "name": "Manage Invoicing",
+  "name": "Manage Card Program Billing Coordination",
   "skos_notation": "CM 1.3.6.6.2",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Invoicing",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Invoicing' -> 'Manage Card Program Billing Coordination' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-3",
@@ -6293,12 +6317,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-6",
   "slug": "CM-1-3-6-6-6",
   "level": 5,
-  "name": "Manage Bad Debt",
+  "name": "Manage Card Delinquency and Collections Referral",
   "skos_notation": "CM 1.3.6.6.6",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Bad Debt",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Bad Debt' -> 'Manage Card Delinquency and Collections Referral' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-7",
@@ -6447,12 +6474,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-8-1",
   "slug": "CM-1-3-6-8-1",
   "level": 5,
-  "name": "Conduct Audit To Validate Reported Sales",
+  "name": "Conduct Commercial Audit to Validate Reported Sales",
   "skos_notation": "CM 1.3.6.8.1",
   "parent_slug": "CM-1-3-6-8",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.8.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Conduct Audit To Validate Reported Sales",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Conduct Audit To Validate Reported Sales' -> 'Conduct Commercial Audit to Validate Reported Sales' (approved by Hamid; prior label retained as skos:altLabel).",
+  "scoped_historical_alias": null
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7",
