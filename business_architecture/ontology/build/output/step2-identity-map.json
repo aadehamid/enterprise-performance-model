@@ -43,11 +43,13 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1",
   "slug": "CM-1-1-1-1",
   "level": 4,
-  "name": "Demand Forecasting",
+  "name": "Produce Demand Forecast",
   "skos_notation": "CM 1.1.1.1",
   "parent_slug": "CM-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1"
+  "proposed_repo_id": "CM 1.1.1.1",
+  "prior_name": "Demand Forecasting",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Demand Forecasting' -> 'Produce Demand Forecast' — critical semantic-collision resolution (approved by Hamid)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-1",
@@ -1093,11 +1095,13 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7",
   "slug": "CM-1-1-3-7",
   "level": 4,
-  "name": "Inventory",
+  "name": "Inventory Management",
   "skos_notation": "CM 1.1.3.7",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7"
+  "proposed_repo_id": "CM 1.1.3.7",
+  "prior_name": "Inventory",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Inventory' -> 'Inventory Management' — critical semantic-collision resolution (approved by Hamid)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-1",
@@ -1213,11 +1217,13 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-12",
   "slug": "CM-1-1-3-7-12",
   "level": 5,
-  "name": "Manage Inventory",
+  "name": "Monitor and Control Inventory Positions",
   "skos_notation": "CM 1.1.3.7.12",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.12"
+  "proposed_repo_id": "CM 1.1.3.7.12",
+  "prior_name": "Manage Inventory",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Inventory' -> 'Monitor and Control Inventory Positions' — critical semantic-collision resolution (approved by Hamid)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8",
@@ -4503,11 +4509,14 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-4",
   "slug": "CM-1-3-3-1-4",
   "level": 5,
-  "name": "Define KPI Framework",
+  "name": "Define Offer Measurement Framework",
   "skos_notation": "CM 1.3.3.1.4",
   "parent_slug": "CM-1-3-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.1.4"
+  "proposed_repo_id": "CM 1.3.3.1.4",
+  "prior_name": "Define KPI Framework",
+  "scoped_historical_alias": "Define KPI Framework (Offer)",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Offer Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Offer)' recorded here."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2",
@@ -4563,11 +4572,14 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-5",
   "slug": "CM-1-3-3-2-5",
   "level": 5,
-  "name": "Define KPI Framework",
+  "name": "Define Pricing Measurement Framework",
   "skos_notation": "CM 1.3.3.2.5",
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2.5"
+  "proposed_repo_id": "CM 1.3.3.2.5",
+  "prior_name": "Define KPI Framework",
+  "scoped_historical_alias": "Define KPI Framework (Pricing)",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Pricing Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Pricing)' recorded here."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3",
@@ -4623,11 +4635,14 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-5",
   "slug": "CM-1-3-3-3-5",
   "level": 5,
-  "name": "Define KPI Framework",
+  "name": "Define Channel Measurement Framework",
   "skos_notation": "CM 1.3.3.3.5",
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3.5"
+  "proposed_repo_id": "CM 1.3.3.3.5",
+  "prior_name": "Define KPI Framework",
+  "scoped_historical_alias": "Define KPI Framework (Channel)",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Channel Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Channel)' recorded here."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4",
@@ -4673,11 +4688,14 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-4",
   "slug": "CM-1-3-3-4-4",
   "level": 5,
-  "name": "Define KPI Framework",
+  "name": "Define Network Measurement Framework",
   "skos_notation": "CM 1.3.3.4.4",
   "parent_slug": "CM-1-3-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.4.4"
+  "proposed_repo_id": "CM 1.3.3.4.4",
+  "prior_name": "Define KPI Framework",
+  "scoped_historical_alias": "Define KPI Framework (Network)",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Network Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Network)' recorded here."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5",
@@ -4813,11 +4831,14 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-5",
   "slug": "CM-1-3-3-6-5",
   "level": 5,
-  "name": "Define KPI Framework",
+  "name": "Define Operating Model Measurement Framework",
   "skos_notation": "CM 1.3.3.6.5",
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6.5"
+  "proposed_repo_id": "CM 1.3.3.6.5",
+  "prior_name": "Define KPI Framework",
+  "scoped_historical_alias": "Define KPI Framework (Operating Model)",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Operating Model Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Operating Model)' recorded here."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4",

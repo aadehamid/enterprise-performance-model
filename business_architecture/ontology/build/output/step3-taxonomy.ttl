@@ -31,7 +31,7 @@ Out of scope: Supply-planning master data (Maintain Supply Planning Master Data,
     intake:primaryPurpose "Ensure each forecast cycle starts from validated reference data and cleansed demand history."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-GLOSS-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "precedes: Develop Statistical Baseline | enables: Demand Forecasting"@en ;
+    intake:relatedConcepts "precedes: Develop Statistical Baseline | enables: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 03 (2026-09-19). Fourth of the four parallel master-data nodes; consolidation under a governed master-data capability is parked for the EPM Data Governance workstream per the decision recorded on CM-1-1-2-12 (2026-09-18) and deliberately not resolved here — the boundary to CM-1-1-2-12 was already established from its approved out_of_scope. APQC 10252 'Maintain master data' is a WEAK distribution-master-data candidate; comparative evidence only."@en .
 
@@ -147,7 +147,7 @@ Out of scope: Plan-versus-actual supply and distribution variance analysis (Regi
     intake:primaryPurpose "Establish whether published forecasts are getting more or less reliable, and why, so the forecasting cycle improves."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-STEO-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "follows: Publish Forecast and Generate Component Level Forecast Plan | uses-input: Adjust Forecast Incorporating Customer Input and Market Intelligence | enables: Demand Forecasting"@en ;
+    intake:relatedConcepts "follows: Publish Forecast and Generate Component Level Forecast Plan | uses-input: Adjust Forecast Incorporating Customer Input and Market Intelligence | enables: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 03 (2026-09-19). Measures the forecast against actual demand using the as-published version as the fixed comparison basis — the same contemporaneous-baseline discipline locked for Regional and Distribution Backcasting, applied to the demand side. EIA's published STEO forecast-accuracy evaluations are the reference practice for measuring product-demand forecasts against realized data. Specific accuracy metrics and thresholds are deliberately not named; they belong to the KPI workstream, not the process definition. APQC 16574 'Monitor and report performance' is a WEAK marketing-channel candidate; comparative evidence only."@en .
 
@@ -242,7 +242,7 @@ Out of scope: Crude purchasing and trade execution (Supply And Trading) | physic
     intake:primaryPurpose "Decide which refinery receives which crude and feedstock volumes, and when, so the regional plan is met at best delivered economics."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | constrained-by: Inventory | precedes: Refinery Scheduling"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Label retains the existing “Decision” suffix, but the concept is authored as the recurring allocation process, not the decision record or its output. A later naming pass should consider “Allocate Crude & Feedstock” for verb consistency with sibling labels; not changed in this batch. The boundary against Supply And Trading follows the locked SCM/Commercial rule: this concept places already-secured supply and does not choose counterparty, price, or contract."@en .
 
@@ -273,7 +273,7 @@ Out of scope: Order-level allocation and release (Allocate & Release Order, Orde
     intake:primaryPurpose "Decide where available finished product is placed across markets, channels, and supply points to protect commitments and regional margin."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "informed-by: Demand Forecasting | constrained-by: Inventory | enables: Order Management | enables: Terminal Loading"@en ;
+    intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | constrained-by: Inventory Management (CM-1-1-3-7) | enables: Order Management | enables: Terminal Loading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Three allocation concepts coexist at different grains and are deliberately bounded here: plan-level placement (this node), order-level allocation and release (Order Management), and loading-time allocation enforcement (Terminal Loading). The “Decision” suffix is retained pending the same naming pass noted on CM-1-1-2-10."@en .
 
@@ -293,7 +293,7 @@ proc:CM-1-1-2-12 a skos:Concept ;
     skos:prefLabel "Maintain Supply Planning Master Data"@en ;
     skos:scopeNote """Covers stewardship of supply-planning-specific reference and parameter data over its lifecycle, including requesting and validating changes, applying effective dates, and confirming that planning results remain consistent after a change. Excludes enterprise master-data policy, standards, and governance, which sit with the Data Governance workstream; excludes customer, price, product, tax, and location master data, owned by Manage Master Data under Order Management; excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data under Refinery Scheduling.
 In scope: Planning network and location data | sourcing and supply-path data | planning capacity and rate parameters | lead times and transit assumptions | planning yields and product groupings | change request, validation, and effective dating of planning parameters
-Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Master Data, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Demand Forecasting) | planning application administration and platform support (Process Excellence & IT)"""@en ;
+Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Master Data, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Produce Demand Forecast (CM-1-1-1-1)) | planning application administration and platform support (Process Excellence & IT)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "planning parameter change requests | network, capacity, and sourcing changes | refinery and logistics capability updates | product and grade structure changes | enterprise data-governance standards"@en ;
@@ -321,9 +321,9 @@ proc:CM-1-1-2-13 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.2.13" ;
     skos:prefLabel "Plan Finished Goods Inventory"@en ;
-    skos:scopeNote """Covers the planning decision on how much finished product should be held, in which grades, and at which supply points and terminals across the regional plan horizon, including target and minimum operating positions, seasonal and pre-build positions, and the inventory consequences of allocation and production choices. Excludes the setting of inventory policy itself, and excludes inventory measurement, reconciliation, replenishment, consignment, commingled, and re-brand inventory management, all owned by the Inventory cluster under Distribution Planning & Scheduling. Excludes physical storage operation, owned by Midstream.
+    skos:scopeNote """Covers the planning decision on how much finished product should be held, in which grades, and at which supply points and terminals across the regional plan horizon, including target and minimum operating positions, seasonal and pre-build positions, and the inventory consequences of allocation and production choices. Excludes the setting of inventory policy itself, and excludes inventory measurement, reconciliation, replenishment, consignment, commingled, and re-brand inventory management, all owned by the Inventory Management cluster under Distribution Planning & Scheduling. Excludes physical storage operation, owned by Midstream.
 In scope: Planned finished-product inventory targets by grade and location | minimum operating and safety positions within policy | seasonal and pre-build inventory positioning | inventory implications of allocation and production plan choices | working-capital and storage-cost trade-offs in the plan
-Out of scope: Finished-product inventory policy setting (Develop Finished Product Inventory Policy, Inventory) | inventory measurement and reconciliation (Inventory) | replenishment execution (Manage Inventory Replenishment, Inventory) | consignment, commingled, lot/batch, and re-brand inventory management (Inventory) | physical tank and terminal storage operation (Midstream)"""@en ;
+Out of scope: Finished-product inventory policy setting (Develop Finished Product Inventory Policy, Inventory Management) | inventory measurement and reconciliation (Inventory Management) | replenishment execution (Manage Inventory Replenishment, Inventory Management) | consignment, commingled, lot/batch, and re-brand inventory management (Inventory Management) | physical tank and terminal storage operation (Midstream)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "demand forecast | planned production and supply availability | approved inventory policy | storage and terminal capacity | product specifications and seasonal grade changes | working-capital and storage-cost assumptions"@en ;
@@ -333,9 +333,9 @@ Out of scope: Finished-product inventory policy setting (Develop Finished Produc
     intake:primaryPurpose "Decide how much finished product should be held, in which grades, and where, across the regional plan horizon."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-SNF-REFPS-001"@en ;
-    intake:relatedConcepts "constrained-by: Inventory | informed-by: Demand Forecasting | informed-by: Refinery Planning | enables: Product Allocation Decision"@en ;
+    intake:relatedConcepts "constrained-by: Inventory Management (CM-1-1-3-7) | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning | enables: Product Allocation Decision"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Boundary resolved per Hamid's decision (2026-09-18, Option 1): this node owns the planned inventory level and position inside the regional plan, while the Inventory cluster under Distribution Planning & Scheduling (CM-1-1-3-7) retains policy, measurement, reconciliation, and replenishment. This preserves both approved scope notes — Regional Optimization explicitly names “inventory positioning” — and the locked SCM rule, by separating the plan-period target decision from ongoing inventory management. No tree change required. “Finished goods” retained from the existing label although “finished product” is the more common downstream term; alt labels carry both."@en .
+    intake:terminologyNotes "Boundary resolved per Hamid's decision (2026-09-18, Option 1): this node owns the planned inventory level and position inside the regional plan, while the Inventory Management cluster under Distribution Planning & Scheduling (CM-1-1-3-7) retains policy, measurement, reconciliation, and replenishment. This preserves both approved scope notes — Regional Optimization explicitly names “inventory positioning” — and the locked SCM rule, by separating the plan-period target decision from ongoing inventory management. No tree change required. “Finished goods” retained from the existing label although “finished product” is the more common downstream term; alt labels carry both."@en .
 
 proc:CM-1-1-2-2-1-1 a skos:Concept ;
     skos:broader proc:CM-1-1-2-2-1 ;
@@ -936,9 +936,9 @@ proc:CM-1-1-3-6-3 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.6.3" ;
     skos:prefLabel "Track Movements and Inventory Management"@en ;
-    skos:scopeNote """Covers in-transit tracking and its inventory effects: movement status against schedule, arrival estimates and delays, in-transit stock by product and movement, and feeding position updates to inventory and scheduling processes. The label's 'Inventory Management' is bounded to movement-linked in-transit inventory only; stock-point position stewardship is owned by Manage Inventory (CM-1-1-3-7-12) per batch 04. Excludes carrier transport operation, owned by Midstream and carriers.
+    skos:scopeNote """Covers in-transit tracking and its inventory effects: movement status against schedule, arrival estimates and delays, in-transit stock by product and movement, and feeding position updates to inventory and scheduling processes. The label's 'Inventory Management' is bounded to movement-linked in-transit inventory only; stock-point position stewardship is owned by Monitor and Control Inventory Positions (CM-1-1-3-7-12) per batch 04. Excludes carrier transport operation, owned by Midstream and carriers.
 In scope: Monitor movement status and arrival estimates against schedule | maintain in-transit inventory visibility by movement | update scheduling and inventory records as movements progress | flag movement delays and exceptions
-Out of scope: Stock-point position stewardship (Manage Inventory, CM-1-1-3-7-12) | carrier transport operation (Midstream, carriers) | discharge administration (CM-1-1-3-6-4)"""@en ;
+Out of scope: Stock-point position stewardship (Monitor and Control Inventory Positions, CM-1-1-3-7-12) | carrier transport operation (Midstream, carriers) | discharge administration (CM-1-1-3-6-4)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "load records | carrier status and arrival estimates | movement schedule"@en ;
@@ -947,7 +947,7 @@ Out of scope: Stock-point position stewardship (Manage Inventory, CM-1-1-3-7-12)
     intake:primaryPurpose "Keep en-route product visible and the schedule honest about arrivals."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-LNL-T2S-001 | SRC-EI-HM32-001"@en ;
-    intake:relatedConcepts "follows: Loading Shipment | enables: Manage Inventory | precedes: Discharge & Reconcile Load"@en ;
+    intake:relatedConcepts "follows: Loading Shipment | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12) | precedes: Discharge & Reconcile Load"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 05 (2026-09-19). The label's 'Inventory Management' is bounded to in-transit, movement-linked inventory; stock-point positions belong to CM-1-1-3-7-12 per batch 04. APQC 10353 'Track inventory deployment' is contextual evidence only (review-link)."@en .
 
@@ -1004,7 +1004,7 @@ Out of scope: Day-to-day feedstock position management (Manage Feedstock Invento
     intake:primaryPurpose "Set the binding policy for how much crude and feedstock is held, where, and under what rules."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM31-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | enables: Manage Inventory"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). One of three sibling policy nodes split by material class; the split follows the physical flow (feedstock → intermediates → finished product), and each policy binds the processes managing that class. APQC 10346 is a WEAK delivery-service-policy candidate; comparative evidence only."@en .
 
@@ -1074,12 +1074,12 @@ proc:CM-1-1-3-7-12 a skos:Concept ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "Inventory Position Management"@en,
-        "Monitor and Control Inventory Positions"@en ;
+        "Manage Inventory"@en ;
     skos:broader proc:CM-1-1-3-7 ;
     skos:definition "Monitor and control actual and projected inventory positions for finished products and intermediates: identify operating-limit, availability, ownership, quality, location, and balance exceptions, coordinate timely response, and provide reliable current-position information to planning and operational stakeholders."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.7.12" ;
-    skos:prefLabel "Manage Inventory"@en ;
+    skos:prefLabel "Monitor and Control Inventory Positions"@en ;
     skos:scopeNote """Covers the recurring review of physical and book inventory positions, movements, and commitments; minimum, maximum, safety-stock, and operating-limit exceptions; short-term availability and imbalance risks; escalation and coordination of corrective actions; and maintenance of the operational inventory-position view that planning and execution consume — a recurring operational control rhythm that complements planning cycles. Excludes inventory-policy design (CM-1-1-3-7-1/-2/-3), formal measurement methodology (CM-1-1-3-7-4), reconciliation and adjustment governance (CM-1-1-3-7-5), and replenishment planning (CM-1-1-3-7-9); excludes the specialized consignment, commingled, re-brand, lot/batch, and third-party-storage arrangements (CM-1-1-3-7-6/-7/-8/-10/-11), except where those arrangements create an operational position exception requiring response; excludes day-to-day crude and feedstock position management, owned by Manage Feedstock Inventory (CM-1-2-5-4-2).
 In scope: Review physical and book positions, movements, and commitments by location | detect operating-limit, availability, and balance exceptions | escalate and coordinate corrective actions | maintain the operational position view for planning and execution
 Out of scope: Inventory policy design (CM-1-1-3-7-1/-2/-3) | measurement methodology (CM-1-1-3-7-4) | reconciliation governance (CM-1-1-3-7-5) | replenishment planning and decisions (CM-1-1-3-7-9) | specialized arrangement controls (CM-1-1-3-7-6/-7/-8/-10/-11) | feedstock position management (CM-1-2-5-4-2)"""@en ;
@@ -1093,7 +1093,7 @@ Out of scope: Inventory policy design (CM-1-1-3-7-1/-2/-3) | measurement methodo
     intake:referenceSources "SRC-EI-HM32-001 | SRC-LNL-T2S-001"@en ;
     intake:relatedConcepts "uses-input: Measure Inventory | triggers: Manage Inventory Replenishment | governed-by: Develop Finished Product Inventory Policy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 04 (2026-09-19). Q2 decision (Hamid, Option A, tightened): approved in place as a distinct operational process — position stewardship and exception response, which no sibling owns — with material scope limited to finished products and intermediates so it cannot silently reclaim feedstock (Q3). Preferred normalized label 'Monitor and Control Inventory Positions' recorded for the consolidated naming pass; current label retained for traceability, and the collision with the L4 label is queued with it. Decision right: this process identifies and escalates replenishment needs; Manage Inventory Replenishment (CM-1-1-3-7-9) owns the replenishment decision. Daily stock control as distinct from periodic reconciliation follows EI HM 32 practice. APQC 12942 'Manage bulk inventory' STRONG with no validator; comparative evidence only."@en .
+    intake:terminologyNotes "Batch 04 (2026-09-19). Q2 decision (Hamid, Option A, tightened): approved in place as a distinct operational process — position stewardship and exception response, which no sibling owns — with material scope limited to finished products and intermediates so it cannot silently reclaim feedstock (Q3). Preferred normalized label 'Monitor and Control Inventory Positions' recorded for the consolidated naming pass; current label retained for traceability, and the collision with the L4 label is queued with it. Decision right: this process identifies and escalates replenishment needs; Manage Inventory Replenishment (CM-1-1-3-7-9) owns the replenishment decision. Daily stock control as distinct from periodic reconciliation follows EI HM 32 practice. APQC 12942 'Manage bulk inventory' STRONG with no validator; comparative evidence only. Step 3d naming pass (2026-09-21): renamed from 'Manage Inventory' to 'Monitor and Control Inventory Positions' — critical semantic-collision resolution. Prior label 'Manage Inventory' retained as altLabel."@en .
 
 proc:CM-1-1-3-7-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -1119,7 +1119,7 @@ Out of scope: Intermediate tank and transfer operation (Refining) | production p
     intake:primaryPurpose "Set the binding policy for intermediate and blendstock holdings between processing and blending."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM31-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | enables: Manage Inventory"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). 'Intermediates' read as unfinished refinery streams and blend components held between processing and blending. Middle node of the three material-class policy siblings. Operational accountability for intermediates (Refining versus planning domains) is a follow-up noted in the batch 04 PR; it does not affect this node's placement or definition."@en .
 
@@ -1148,7 +1148,7 @@ Out of scope: Plan-period inventory targets (Plan Finished Goods Inventory, CM-1
     intake:primaryPurpose "Set the binding policy for finished-product holdings across the network."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "enables: Plan Finished Goods Inventory | enables: Manage Inventory Replenishment | informed-by: Demand Forecasting"@en ;
+    intake:relatedConcepts "enables: Plan Finished Goods Inventory | enables: Manage Inventory Replenishment | informed-by: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). Boundary to CM-1-1-2-13 was fixed in batch 01 (Hamid, 2026-09-18): policy here, plan-period target decision there. 'Finished product' preferred in text; the batch-01 sibling retains 'finished goods' in its label, with both carried as alt labels there."@en .
 
@@ -1177,7 +1177,7 @@ Out of scope: Book-versus-physical reconciliation (CM-1-1-3-7-5) | operating tan
     intake:primaryPurpose "Produce the accurate, standards-based physical inventory position the network runs on."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-API-MPMS-001 | SRC-EI-HM32-001"@en ;
-    intake:relatedConcepts "precedes: Perform Inventory Reconciliation | enables: Manage Inventory"@en ;
+    intake:relatedConcepts "precedes: Perform Inventory Reconciliation | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). Measurement practice follows API MPMS (Chapter 3 tank gauging and related chapters) as the reference standard set. Ownership-versus-execution split follows the locked EHS pattern: asset owners execute readings on assets they operate; this process owns the measurement basis and the official measured position. APQC 16436 'Measure and benchmark' is a WEAK organizational-performance candidate; comparative evidence only."@en .
 
@@ -1206,7 +1206,7 @@ Out of scope: Physical measurement (CM-1-1-3-7-4) | financial write-offs and val
     intake:primaryPurpose "Keep book stock true to physical stock and make gains and losses visible and explained."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-API-MPMS-001"@en ;
-    intake:relatedConcepts "follows: Measure Inventory | enables: Distribution Backcasting | enables: Manage Inventory"@en ;
+    intake:relatedConcepts "follows: Measure Inventory | enables: Distribution Backcasting | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). APQC 10507 'Perform benefit reconciliation' was REJECTED at the Step 3b human gate as a false lexical match (HR benefits); authored independently, honoring that rejection. Apparent-versus-physical loss classification follows EI HM 32. Loss-control ownership beyond reconciliation reporting is deliberately left open per playbook step 7 — naming an owner here would silently resolve a cross-model question."@en .
 
@@ -1292,7 +1292,7 @@ Out of scope: Physical additive injection, blending, and testing (Midstream, Ref
     intake:primaryPurpose "Ensure re-designated stock is qualified, authorized, and correctly reflected in records."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Manage Inventory | uses-input: Measure Inventory"@en ;
+    intake:relatedConcepts "enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12) | uses-input: Measure Inventory"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). 'Re-brand' read in the fuels-inventory sense — controlled re-designation of existing stock between branded/unbranded, grade, commercial identity, or market designation categories — not consumer brand management. The node governs the redesignation decision and records; approved physical blending or additive work is execution by the operating asset. APQC 12410 'Develop and manage brands' scored STRONG lexically but is marketing brand management; treated as a false match, comparative evidence only."@en .
 
@@ -1323,7 +1323,7 @@ Out of scope: Plan-period inventory targets (CM-1-1-2-13) | movement scheduling 
     intake:referenceSources "SRC-LNL-T2S-001 | SRC-ASCM-CSCP-001"@en ;
     intake:relatedConcepts "governed-by: Develop Finished Product Inventory Policy | precedes: Physical Distribution Scheduling | informed-by: Plan Finished Goods Inventory"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 04 (2026-09-19). Batch 01 already carved 'replenishment execution' out of Plan Finished Goods Inventory to this node; authored to receive that boundary. Scope is finished-product network replenishment; crude and feedstock resupply sits with Supply And Trading per the Q3 decision. Decision right confirmed in batch 04: this node owns the replenishment decision (when and how much); Manage Inventory (CM-1-1-3-7-12) detects and escalates exceptions but does not own the decision; movement scheduling and physical execution remain excluded."@en .
+    intake:terminologyNotes "Batch 04 (2026-09-19). Batch 01 already carved 'replenishment execution' out of Plan Finished Goods Inventory to this node; authored to receive that boundary. Scope is finished-product network replenishment; crude and feedstock resupply sits with Supply And Trading per the Q3 decision. Decision right confirmed in batch 04: this node owns the replenishment decision (when and how much); Monitor and Control Inventory Positions (CM-1-1-3-7-12) detects and escalates exceptions but does not own the decision; movement scheduling and physical execution remain excluded."@en .
 
 proc:CM-1-1-3-8-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -1350,7 +1350,7 @@ Out of scope: Customer-initiated order capture (Order Management, CM-1-3-7) | te
     intake:primaryPurpose "Turn site stock and consumption signals into deliverable orders before run-outs."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-LNL-T2S-001"@en ;
-    intake:relatedConcepts "precedes: Schedule Secondary Distribution | informed-by: Demand Forecasting"@en ;
+    intake:relatedConcepts "precedes: Schedule Secondary Distribution | informed-by: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 05 (2026-09-19). Three order/replenishment boundaries hold together: customer-initiated orders (CM-1-3-7), network stock-point replenishment (CM-1-1-3-7-9, batch 04), and managed-site delivery orders (here). APQC 10136 'Generate sales forecast' is an unrelated candidate."@en .
 
@@ -1570,9 +1570,9 @@ proc:CM-1-1-4-7-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.7.1" ;
     skos:prefLabel "Capture Product Demand Requirements"@en ;
-    skos:scopeNote """Covers converting demand signals into the demand basis of an optimization case: selecting the applicable forecast version, adding firm contractual and internal transfer obligations, reconciling units and product grades to planning definitions, and confirming the basis with the demand owner. Excludes producing or owning the forecast itself, which belongs to Demand Forecasting (CM-1-1-1-1) and Refined Product Demand Management (CM-1-2-6-2). Excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7).
+    skos:scopeNote """Covers converting demand signals into the demand basis of an optimization case: selecting the applicable forecast version, adding firm contractual and internal transfer obligations, reconciling units and product grades to planning definitions, and confirming the basis with the demand owner. Excludes producing or owning the forecast itself, which belongs to Produce Demand Forecast (CM-1-1-1-1) and Refined Product Demand Management (CM-1-2-6-2). Excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7).
 In scope: Select the applicable approved demand forecast version | add firm contractual and term commitments | add internal and inter-refinery transfer requirements | reconcile product grades, units, and periods to planning definitions | confirm the agreed demand basis for the case
-Out of scope: Producing or owning the demand forecast, owned by Demand Forecasting (CM-1-1-1-1) | forecasting refined product demand, owned by Forecast Refined Product Demand (CM-1-2-6-2-3) | capturing and committing customer orders, owned by Order Management (CM-1-3-7) | negotiating the underlying customer commitment, owned by Commercial & Marketing sales | placing supply against demand, owned by Product Allocation Decision (CM-1-1-2-11)"""@en ;
+Out of scope: Producing or owning the demand forecast, owned by Produce Demand Forecast (CM-1-1-1-1) | forecasting refined product demand, owned by Forecast Refined Product Demand (CM-1-2-6-2-3) | capturing and committing customer orders, owned by Order Management (CM-1-3-7) | negotiating the underlying customer commitment, owned by Commercial & Marketing sales | placing supply against demand, owned by Product Allocation Decision (CM-1-1-2-11)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved demand forecast | firm contracts and term commitments | internal and inter-refinery transfer requirements | product grade and specification definitions"@en ;
@@ -1581,7 +1581,7 @@ Out of scope: Producing or owning the demand forecast, owned by Demand Forecasti
     intake:primaryPurpose "Establish the agreed demand basis the refinery production case must satisfy."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-LFMM-001 | SRC-BJCE-REFPS-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "enables: Refinery Optimization | informed-by: Demand Forecasting | informed-by: Refined Product Demand Management | precedes: Perform Scenario Analysis"@en ;
+    intake:relatedConcepts "enables: Refinery Optimization | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refined Product Demand Management | precedes: Perform Scenario Analysis"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 02 (2026-09-18). Read as a case-basis assembly step inside the CM-1-1-4-7 Refinery Optimization run cycle: this node establishes one input of the optimization case, it does not own the underlying business decision or the source data. Sibling “Capture …” nodes were defined together so their boundaries partition the case basis without overlap. “Requirements” is read as the obligations the plan must meet, not as product specification requirements. Verb kept as the taxonomy label “Capture”; “Receive Demand Forecast” (CM-1-2-1-1-2) is the existing precedent for a consume-not-produce node."@en .
 
@@ -1731,7 +1731,7 @@ Out of scope: Measuring, counting, and reconciling inventory, owned by Measure I
     intake:primaryPurpose "Establish the opening and required closing inventory position bounding the optimization case."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-LFMM-001 | SRC-BJCE-REFPS-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "enables: Refinery Optimization | uses-input: Plan Finished Goods Inventory | informed-by: Measure Inventory | constrained-by: Inventory"@en ;
+    intake:relatedConcepts "enables: Refinery Optimization | uses-input: Plan Finished Goods Inventory | informed-by: Measure Inventory | constrained-by: Inventory Management (CM-1-1-3-7)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 02 (2026-09-18). Read as a case-basis assembly step inside the CM-1-1-4-7 Refinery Optimization run cycle: this node establishes one input of the optimization case, it does not own the underlying business decision or the source data. Sibling “Capture …” nodes were defined together so their boundaries partition the case basis without overlap. Three inventory nodes are now distinct and must stay that way: this node states the position as a case boundary condition, Plan Finished Goods Inventory (CM-1-1-2-13, approved) sets the plan-period target, and the Inventory cluster (CM-1-1-3-7) owns policy, measurement, reconciliation, and replenishment. The bare taxonomy label “Capture Inventory” is the weakest of the eight and “Capture Inventory Position” is recorded as the preferred alternate label."@en .
 
@@ -2302,7 +2302,7 @@ Out of scope: Dated schedule construction (CM-1-1-7-2-3) | plan-period product m
     intake:primaryPurpose "Keep the campaign structure the schedule runs on economically sound."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-BJCE-REFPS-001"@en ;
-    intake:relatedConcepts "enables: Create Production Scheduling and Sequencing Plan | informed-by: Demand Forecasting"@en ;
+    intake:relatedConcepts "enables: Create Production Scheduling and Sequencing Plan | informed-by: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 06 (2026-09-19). 'Production wheel' is the standard campaign-scheduling structure where sequence-dependent changeovers matter — directly relevant to specialty and blended product lines. Whether the wheel structure applies across all units or only campaign-oriented lines is a follow-up noted in the batch 06 PR. APQC 12916 is a WEAK review-link; comparative evidence only."@en .
 
@@ -2546,7 +2546,7 @@ proc:CM-1-2-1-1-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1.2" ;
     skos:prefLabel "Receive Demand Forecast"@en ;
-    skos:scopeNote """Covers the intake of the approved commercial planning forecast, which is owned by Demand Forecasting (CM-1-1-1-1) and released by Publish Forecast and Generate Component Level Forecast Plan (CM-1-1-1-1-4) per the batch 03 decision — this node consumes the published version and must not claim its production. Excludes Supply And Trading's own operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3), which serves the supply-chain-management context under the batch 03 constraint. Excludes adjusting or overriding the forecast — trading views that differ from the published forecast are trading positions, not forecast revisions.
+    skos:scopeNote """Covers the intake of the approved commercial planning forecast, which is owned by Produce Demand Forecast (CM-1-1-1-1) and released by Publish Forecast and Generate Component Level Forecast Plan (CM-1-1-1-1-4) per the batch 03 decision — this node consumes the published version and must not claim its production. Excludes Supply And Trading's own operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3), which serves the supply-chain-management context under the batch 03 constraint. Excludes adjusting or overriding the forecast — trading views that differ from the published forecast are trading positions, not forecast revisions.
 In scope: Receive and validate the published forecast version | translate to trading granularity | refresh trading assumptions on new versions | flag material forecast changes to trading
 Out of scope: Forecast production and ownership (CM-1-1-1-1) | operational refined-product demand forecasting (CM-1-2-6-2-3) | forecast adjustment or override (trading positions are not forecast revisions)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -2557,9 +2557,9 @@ Out of scope: Forecast production and ownership (CM-1-1-1-1) | operational refin
     intake:primaryPurpose "Keep trading assumptions aligned to the current published demand forecast."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-STEO-001"@en ;
-    intake:relatedConcepts "informed-by: Demand Forecasting | uses-input: Publish Forecast and Generate Component Level Forecast Plan | enables: Perform Asset Optimization"@en ;
+    intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | uses-input: Publish Forecast and Generate Component Level Forecast Plan | enables: Perform Asset Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 07 (2026-09-19). Batch 02 already cited this node as 'the existing precedent for a consume-not-produce node'; authored to honor that reading and the batch 03 Q2 decision (Demand Forecasting owns the approved forecast). APQC 20634 scored STRONG but is IT-service demand; false lexical match, comparative evidence only."@en .
+    intake:terminologyNotes "Batch 07 (2026-09-19). Batch 02 already cited this node as 'the existing precedent for a consume-not-produce node'; authored to honor that reading and the batch 03 Q2 decision (Produce Demand Forecast owns the approved forecast). APQC 20634 scored STRONG but is IT-service demand; false lexical match, comparative evidence only."@en .
 
 proc:CM-1-2-1-1-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5891,7 +5891,7 @@ proc:CM-1-2-5-4-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.4.2" ;
     skos:prefLabel "Manage Feedstock Inventory"@en ;
-    skos:scopeNote """Covers feedstock position stewardship, the feedstock counterpart of Manage Inventory (CM-1-1-3-7-12) under the batch 04 reciprocal constraint: recurring review of physical and book feedstock positions, movements, in-transit volumes, and commitments; minimum, maximum, safety-stock, and operating-limit exceptions against refinery run requirements; short-term availability and quality-segregation risks; escalation and coordination of corrective actions through the accountable owners; and maintenance of the position view that demand development (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. Excludes inventory policy design (CM-1-1-3-7-1); measurement methodology (CM-1-1-3-7-4); book-to-physical reconciliation (CM-1-1-3-7-5); finished-product and intermediates positions (CM-1-1-3-7-12, batch 04 reciprocal); tank operations (Refining); feedstock sourcing, purchase, exchange, and replenishment decision rights, which belong to the applicable supply-planning, Refinery Planning, and authorized trading processes.
+    skos:scopeNote """Covers feedstock position stewardship, the feedstock counterpart of Monitor and Control Inventory Positions (CM-1-1-3-7-12) under the batch 04 reciprocal constraint: recurring review of physical and book feedstock positions, movements, in-transit volumes, and commitments; minimum, maximum, safety-stock, and operating-limit exceptions against refinery run requirements; short-term availability and quality-segregation risks; escalation and coordination of corrective actions through the accountable owners; and maintenance of the position view that demand development (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. Excludes inventory policy design (CM-1-1-3-7-1); measurement methodology (CM-1-1-3-7-4); book-to-physical reconciliation (CM-1-1-3-7-5); finished-product and intermediates positions (CM-1-1-3-7-12, batch 04 reciprocal); tank operations (Refining); feedstock sourcing, purchase, exchange, and replenishment decision rights, which belong to the applicable supply-planning, Refinery Planning, and authorized trading processes.
 In scope: Monitor physical, book, and in-transit feedstock positions against requirements | identify and escalate operating-limit, availability, and quality exceptions | coordinate corrective action through accountable owners | maintain the current-position view for planning, trading, and logistics
 Out of scope: Inventory policy (CM-1-1-3-7-1) | measurement methodology (CM-1-1-3-7-4) | reconciliation (CM-1-1-3-7-5) | finished-product/intermediates positions (CM-1-1-3-7-12) | tank operations (Refining) | sourcing, purchase, exchange, and replenishment decisions (supply-planning, Refinery Planning, and authorized trading processes)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -6065,7 +6065,7 @@ Out of scope: Enterprise published forecast (CM-1-1-1-1) | trading forecast inta
     intake:primaryPurpose "Location-level demand projections at the granularity supply operations actually runs on."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-EIA-STEO-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Demand Forecasting | enables: Manage Refined Product Demand | enables: Manage Replenishment"@en ;
+    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Manage Refined Product Demand | enables: Manage Replenishment"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Batch 03 constraint implemented: operational SCM-context forecasting consuming the published forecast as calibration input; legitimate local differences reconcile through governed exception/variance processes, not forced equality (Hamid, batch 19). Normalized label 'Forecast Operational Refined Product Demand' queued to make the boundary visible. The variance threshold that triggers escalation is an operating-model follow-up carried in the batch 19 PR. APQC 'Forecast IT service demand' is a false lexical match."@en .
 
@@ -7545,7 +7545,7 @@ Out of scope: In-market execution (CM-1-3-6) | the analyses (CM-1-3-1) | launch 
     intake:primaryPurpose "No offer reaches the market untested."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Define Customer Offer | precedes: Define KPI Framework"@en ;
+    intake:relatedConcepts "follows: Define Customer Offer | precedes: Define Offer Measurement Framework (CM-1-3-3-1-4)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 23 (2026-09-20). Validation step; go/no-go distinction per review — this process recommends, the applicable approval and launch-planning process decides. Privacy controls and publication default inherited (batch 21); consumes batch 19 cost-to-serve as governed input. APQC 'Validate with customers' is a WEAK generic match."@en .
 
@@ -7556,12 +7556,11 @@ proc:CM-1-3-3-1-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Offer Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-1 ;
     skos:definition "Define the measurement framework for customer offers — the metric definitions, baselines, targets, and measurement responsibilities by which offer performance will be managed — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.1.4" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Offer Measurement Framework"@en ;
     skos:scopeNote """Covers offer measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate offer, pricing, or channel design outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Offer measures span uptake, mix, margin contribution, target-group penetration, and retention effect, aligned with the marketing-analysis metrics stewarded at CM-1-3-1-6. Excludes enterprise KPI definition and KPI Store governance (KPI workstream); performance measurement execution (CM-1-3-5-5); the metrics stewardship capability (CM-1-3-1-6).
 In scope: Define offer measures, baselines, targets, responsibilities, data sources, and review cadence | align with stewarded marketing-analysis metrics | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | measurement execution (CM-1-3-5-5) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -7575,7 +7574,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Validate Customer Offer | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (identical name at CM-1-3-3-2-5 and CM-1-3-3-3-5 by design). Review terminology decision: this is a domain measurement framework, not KPI governance — 'KPI Framework' in the locked name is easy to misread as KPI approval authority; preferred label 'Define Offer Measurement Framework' queued prominently for the naming pass. Standard measurement-framework statement verbatim in scope note; routing via Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (sibling rows CM-1-3-3-2-5 and CM-1-3-3-3-5 by design). Review terminology decision: this is a domain measurement framework, not KPI governance — 'KPI Framework' in the locked name is easy to misread as KPI approval authority; preferred label 'Define Offer Measurement Framework' queued prominently for the naming pass. Standard measurement-framework statement verbatim in scope note; routing via Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Offer Measurement Framework' — critical semantic-collision resolution. Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Offer)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-3-2-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7627,7 +7626,7 @@ Out of scope: Transaction prices (CM-1-3-6-3, CM-1-3-7-2) | rebate administratio
     intake:primaryPurpose "One coherent, documented price system instead of a thousand unconnected prices."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-FTC-RP-001 | SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Define Strategic Pricing Approach | precedes: Define KPI Framework | informed-by: Conduct Pricing Pilots | informed-by: Analyze Pricing Performance | enables: Sales Pricing Management"@en ;
+    intake:relatedConcepts "follows: Define Strategic Pricing Approach | precedes: Define Pricing Measurement Framework (CM-1-3-3-2-5) | informed-by: Conduct Pricing Pilots | informed-by: Analyze Pricing Performance | enables: Sales Pricing Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 23 (2026-09-20). Core development step of the pricing lifecycle; review governance wording verbatim in scope note. Feedback relations: pilots and performance analysis inform this process — Hamid's relation rule ('informs: Develop Integrated Pricing Strategy' from pilots) is vocabulary-missing, applied as informed-by on this receiving row per the batch 10 conditional-relation precedent. APQC 'Develop KM strategy' is a FALSE lexical match (third occurrence of the knowledge-management 'strategy' confusion — carried forward); comparative only."@en .
 
@@ -7654,7 +7653,7 @@ Out of scope: Price corrections (CM-1-3-6-3) | improper price intelligence (proh
     intake:primaryPurpose "Pricing strategy corrected by evidence, not anecdote."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EIA-PMM-001 | SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Define KPI Framework | informed-by: Sales Pricing Management | informed-by: Conduct Pricing Pilots | enables: Develop Integrated Pricing Strategy"@en ;
+    intake:relatedConcepts "follows: Define Pricing Measurement Framework (CM-1-3-3-2-5) | informed-by: Sales Pricing Management | informed-by: Conduct Pricing Pilots | enables: Develop Integrated Pricing Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 23 (2026-09-20). The recurring feedback loop of the pricing lifecycle; legal-escalation boundary per review verbatim in scope note. Pilots also inform this analysis (vocabulary-missing 'informs', applied as informed-by here per the batch 10 precedent). APQC 'Analyze performance' scored 0.8 STRONG — genuine match. EIA PMM price statistics are aggregate external context within their b21 limitations."@en .
 
@@ -7692,12 +7691,11 @@ proc:CM-1-3-3-2-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Pricing Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-2 ;
     skos:definition "Define the measurement framework for pricing — realization, margin, differential-integrity, and competitive-position measures with their definitions, baselines, targets, and measurement responsibilities — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.2.5" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Pricing Measurement Framework"@en ;
     skos:scopeNote """Covers pricing measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate offer, pricing, or channel design outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Pricing measures span price realization, margin capture, differential integrity, discount leakage, and competitive position, supplying the framework Analyze Pricing Performance measures against and aligning with the metrics stewarded at CM-1-3-1-6. Excludes enterprise KPI definition and KPI Store governance (KPI workstream); the measurement itself (CM-1-3-3-2-3); metrics stewardship (CM-1-3-1-6).
 In scope: Define pricing measures, baselines, targets, responsibilities, data sources, and review cadence | supply the framework for pricing performance analysis | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | performance measurement (CM-1-3-3-2-3) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -7711,7 +7709,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Develop Integrated Pricing Strategy | precedes: Analyze Pricing Performance | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Pricing Measurement Framework' queued prominently. Standard measurement-framework statement verbatim in scope note. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Pricing Measurement Framework' queued prominently. Standard measurement-framework statement verbatim in scope note. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Pricing Measurement Framework' — critical semantic-collision resolution. Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Pricing)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-3-3-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7817,7 +7815,7 @@ Out of scope: Partner management execution (CM-1-3-6-1) | sales force planning (
     intake:primaryPurpose "Every channel sized and engaged by design, not by history."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Create Channel Offering & Value Proposition | precedes: Define KPI Framework | enables: Channel & Partner Management"@en ;
+    intake:relatedConcepts "follows: Create Channel Offering & Value Proposition | precedes: Define Channel Measurement Framework (CM-1-3-3-3-5) | enables: Channel & Partner Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 23 (2026-09-20). Structure step of the channel-design lifecycle; review headcount/organization boundary verbatim in scope note — protects batch 24 Operating Model Design and future Sales Planning; organizational neutrality per b10/15/16/20. APQC 'Develop omni-channel policies and procedures' is a WEAK adjacent match."@en .
 
@@ -7828,12 +7826,11 @@ proc:CM-1-3-3-3-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Channel Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-3 ;
     skos:definition "Define the measurement framework for the channel system — coverage, throughput, economics, and engagement measures with their definitions, baselines, targets, and measurement responsibilities — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.3.5" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Channel Measurement Framework"@en ;
     skos:scopeNote """Covers channel measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate offer, pricing, or channel design outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Channel measures span coverage, volume and share by segment, channel economics and cost-to-serve trends, and engagement and partner health, aligned with the metrics stewarded at CM-1-3-1-6 and the diagnostics at CM-1-3-2-4-1. Excludes enterprise KPI definition and KPI Store governance (KPI workstream); measurement execution (CM-1-3-5-5, CM-1-3-6-1); metrics stewardship (CM-1-3-1-6).
 In scope: Define channel measures, baselines, targets, responsibilities, data sources, and review cadence | align with stewarded metrics and channel diagnostics | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | measurement execution (CM-1-3-5-5, CM-1-3-6-1) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -7847,7 +7844,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Develop Channel Structure, Size & Engagement Model | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Channel Measurement Framework' queued prominently. Standard measurement-framework statement verbatim in scope note. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 23 (2026-09-20). Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Channel Measurement Framework' queued prominently. Standard measurement-framework statement verbatim in scope note. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Channel Measurement Framework' — critical semantic-collision resolution. Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Channel)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-3-4-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7872,7 +7869,7 @@ Out of scope: Site transactions, diligence decisions, and approvals (investment/
     intake:primaryPurpose "The next site chosen by criteria, not by accident."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Define Target Network Size | precedes: Define KPI Framework | governed-by: Network Design (Retail)"@en ;
+    intake:relatedConcepts "follows: Define Target Network Size | precedes: Define Network Measurement Framework (CM-1-3-3-4-4) | governed-by: Network Design (Retail)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 24 (2026-09-20). Location step of the network-design lifecycle; review safeguard verbatim in scope note — targets are hypotheses for diligence, never acquisition decisions; iterates with Define Target Network Size per review. APQC 'Define target audience' STRONG, no validator — false-direction lexical match (audience targeting, not location targeting); comparative only."@en .
 
@@ -7938,12 +7935,11 @@ proc:CM-1-3-3-4-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Network Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-4 ;
     skos:definition "Define the measurement framework for the retail network — coverage, throughput, unit economics, and network-health measures with their definitions, baselines, targets, and measurement responsibilities — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.4.4" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Network Measurement Framework"@en ;
     skos:scopeNote """Covers network measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate retail-network design outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Network measures span coverage against targets, per-site and network unit economics, format performance, and network health, aligned with the metrics stewarded at CM-1-3-1-6. Excludes enterprise KPI definition and KPI Store governance (KPI workstream); measurement execution (CM-1-3-5-5, operating processes); metrics stewardship (CM-1-3-1-6).
 In scope: Define network measures, baselines, targets, responsibilities, data sources, and review cadence | align with stewarded metrics | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | measurement execution (CM-1-3-5-5, operating processes) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -7957,7 +7953,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Define Target Location | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label 'Define Network Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label 'Define Network Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Network Measurement Framework' — critical semantic-collision resolution. Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Network)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-3-5-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -8244,7 +8240,7 @@ Out of scope: Policy ownership (accountable functions) | compliance framework ow
     intake:primaryPurpose "Policies made usable at the working level, without being rewritten."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Develop Organizational Blueprint | precedes: Define KPI Framework | governed-by: Operating Model Design"@en ;
+    intake:relatedConcepts "follows: Develop Organizational Blueprint | precedes: Define Operating Model Measurement Framework (CM-1-3-3-6-5) | governed-by: Operating Model Design"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 24 (2026-09-20). Procedural step; b15 procedures-not-policy discipline is the governing rule; review controlled-document requirement verbatim in scope note (owner, version, effective date, approval, review trigger, evidence requirements, escalation path) — supports the project's artifact-control principles. APQC 'Define communication guidelines and mechanisms' is a WEAK adjacent match."@en .
 
@@ -8255,12 +8251,11 @@ proc:CM-1-3-3-6-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Operating Model Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-6 ;
     skos:definition "Define the measurement framework for the marketing operating model — process performance, capability health, and operating-efficiency measures with their definitions, baselines, targets, and measurement responsibilities — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.6.5" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Operating Model Measurement Framework"@en ;
     skos:scopeNote """Covers operating-model measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate operating-model design outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Operating-model measures span process cycle and quality performance against the blueprint, capability health, and operating efficiency, aligned with the metrics stewarded at CM-1-3-1-6. Excludes enterprise KPI definition and KPI Store governance (KPI workstream); measurement execution (operating processes, CM-1-3-5-5); metrics stewardship (CM-1-3-1-6).
 In scope: Define operating-model measures, baselines, targets, responsibilities, data sources, and review cadence | align with stewarded metrics | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | measurement execution (operating processes, CM-1-3-5-5) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -8274,7 +8269,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Define Procedural Framework & Guidelines | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label 'Define Operating Model Measurement Framework' queued prominently per review; full measurement-framework routing statement in scope note. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label 'Define Operating Model Measurement Framework' queued prominently per review; full measurement-framework routing statement in scope note. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Operating Model Measurement Framework' — critical semantic-collision resolution. Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Operating Model)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-4-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -8933,22 +8928,22 @@ proc:CM-1-3-5-1-2 a skos:Concept ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:broader proc:CM-1-3-5-1 ;
-    skos:definition "Develop and agree the sales-side input process into the governed demand forecast — which sales intelligence, account plans, and pipeline evidence feed Demand Forecasting, in what form, cadence, and quality — never producing or adjusting the forecast itself."@en ;
+    skos:definition "Develop and agree the sales-side input process into the governed demand forecast — which sales intelligence, account plans, and pipeline evidence feed Produce Demand Forecast, in what form, cadence, and quality — never producing or adjusting the forecast itself."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.5.1.2" ;
     skos:prefLabel "Develop & Agree Demand Forecasting Process"@en ;
-    skos:scopeNote """Covers the forecast-input operating agreement: agreeing with Demand Forecasting (CM-1-1-1-1) what sales-side inputs the governed forecast consumes (account intelligence, pipeline evidence, promotional and campaign calendars, channel signals); defining input form, cadence, quality expectations, and accountabilities on the sales side; and maintaining the agreement as planning evolves — an enduring operating agreement rather than a recurring annual phase (review). The enterprise demand forecast is produced, published, changed, versioned, and governed only by Demand Forecasting (CM-1-1-1-1). The sales organization supplies agreed sales intelligence, account plans, pipeline evidence, promotion calendars, channel signals, and other approved inputs to that process. Sales targets are management-accountability commitments allocated from approved plans, not forecasts; they must never be relabeled, substituted for, or used to overwrite the governed demand forecast. The forecast process itself, its methods, and its publication are Demand Forecasting's; disagreements about forecast content follow that process's governance. Excludes forecast production, methods, publication, and adjustment (CM-1-1-1-1, locked); forecast-process ownership (CM-1-1-1-1); the inputs' downstream use (CM-1-1-1-1).
-In scope: Agree the sales-input set, form, cadence, and quality with Demand Forecasting | define sales-side input accountabilities | maintain the enduring input agreement
+    skos:scopeNote """Covers the forecast-input operating agreement: agreeing with Produce Demand Forecast (CM-1-1-1-1) what sales-side inputs the governed forecast consumes (account intelligence, pipeline evidence, promotional and campaign calendars, channel signals); defining input form, cadence, quality expectations, and accountabilities on the sales side; and maintaining the agreement as planning evolves — an enduring operating agreement rather than a recurring annual phase (review). The enterprise demand forecast is produced, published, changed, versioned, and governed only by Produce Demand Forecast (CM-1-1-1-1). The sales organization supplies agreed sales intelligence, account plans, pipeline evidence, promotion calendars, channel signals, and other approved inputs to that process. Sales targets are management-accountability commitments allocated from approved plans, not forecasts; they must never be relabeled, substituted for, or used to overwrite the governed demand forecast. The forecast process itself, its methods, and its publication are Produce Demand Forecast's; disagreements about forecast content follow that process's governance. Excludes forecast production, methods, publication, and adjustment (CM-1-1-1-1, locked); forecast-process ownership (CM-1-1-1-1); the inputs' downstream use (CM-1-1-1-1).
+In scope: Agree the sales-input set, form, cadence, and quality with Produce Demand Forecast | define sales-side input accountabilities | maintain the enduring input agreement
 Out of scope: Forecast production/methods/publication/adjustment (CM-1-1-1-1, locked) | forecast-process ownership (CM-1-1-1-1) | downstream input use (CM-1-1-1-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
-    intake:keyInputs "Demand Forecasting's input requirements (CM-1-1-1-1) | sales planning outputs | promotional calendars (CM-1-3-5-4)"@en ;
+    intake:keyInputs "Produce Demand Forecast's input requirements (CM-1-1-1-1) | sales planning outputs | promotional calendars (CM-1-3-5-4)"@en ;
     intake:level "L5"@en ;
     intake:primaryOutput "The agreed, maintained sales-input process into the governed forecast"@en ;
     intake:primaryPurpose "The forecast fed well by sales, and never fought by sales."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Demand Forecasting | enables: Determine & Allocate Sales Targets | enables: Perform Account Planning | governed-by: Sales Strategy & Planning"@en ;
+    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Determine & Allocate Sales Targets | enables: Perform Account Planning | governed-by: Sales Strategy & Planning"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). The batch's sharpest boundary row: the locked name could read as owning the forecasting process — the canonical rule (verbatim in scope note) fixes the reading: sales-side input process only, agreed with the forecast owner. Relation decision (review): an enduring operating agreement, so it enables targets and account planning rather than strictly preceding them each cycle. APQC 'Develop baseline demand forecasts' is a false-direction match (forecast production, exactly what this row must not do)."@en .
 
@@ -8992,7 +8987,7 @@ proc:CM-1-3-5-1-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.5.1.4" ;
     skos:prefLabel "Analyze Gaps Between Forecast & Actual Margins"@en ;
-    skos:scopeNote """Covers margin-gap analysis: comparing governed actual volume, mix, and margin (Finance and settlement data — consumed, never produced) against the demand forecast and sales-plan assumptions, targets, and margin expectations; building the margin bridge and decomposing variance drivers by segment, channel, account, and cause; distinguishing plan quality, input quality, execution, and market causes; and feeding findings to the next cycle, the forecast-input process, and Marketing Performance Analysis (CM-1-3-5-5). Terminology (review): the locked name compares objects of different kinds — the process compares demand forecast and sales-plan assumptions, targets, actual volume/mix/margin, and the margin bridge/variance drivers; the preferred label is queued. Analysis, not correction: pricing corrections follow the pricing processes; forecast-method questions follow Demand Forecasting's governance; findings with potential legal or compliance implications escalate to Legal/Compliance (b23 pattern). Excludes financial reporting production (Finance); forecast adjustment (CM-1-1-1-1); pricing corrections (CM-1-3-6-3); target changes (CM-1-3-5-1-1 with approvals); legal determinations (Legal/Compliance).
+    skos:scopeNote """Covers margin-gap analysis: comparing governed actual volume, mix, and margin (Finance and settlement data — consumed, never produced) against the demand forecast and sales-plan assumptions, targets, and margin expectations; building the margin bridge and decomposing variance drivers by segment, channel, account, and cause; distinguishing plan quality, input quality, execution, and market causes; and feeding findings to the next cycle, the forecast-input process, and Marketing Performance Analysis (CM-1-3-5-5). Terminology (review): the locked name compares objects of different kinds — the process compares demand forecast and sales-plan assumptions, targets, actual volume/mix/margin, and the margin bridge/variance drivers; the preferred label is queued. Analysis, not correction: pricing corrections follow the pricing processes; forecast-method questions follow Produce Demand Forecast's governance; findings with potential legal or compliance implications escalate to Legal/Compliance (b23 pattern). Excludes financial reporting production (Finance); forecast adjustment (CM-1-1-1-1); pricing corrections (CM-1-3-6-3); target changes (CM-1-3-5-1-1 with approvals); legal determinations (Legal/Compliance).
 In scope: Compare governed actuals to forecast assumptions, plans, and targets | build the margin bridge and decompose variance drivers | distinguish plan, input, execution, and market causes | feed findings to the next cycle and performance analysis
 Out of scope: Financial reporting (Finance) | forecast adjustment (CM-1-1-1-1) | pricing corrections (CM-1-3-6-3) | target changes (CM-1-3-5-1-1) | legal determinations (Legal/Compliance)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -12713,7 +12708,7 @@ Out of scope: Plan-period supply and disposition optimization (Regional Optimiza
     intake:primaryPurpose "Decide the short-term product movement schedule the primary network runs on."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-ORP-DPSC-001 | SRC-LNL-T2S-001"@en ;
-    intake:relatedConcepts "informed-by: Regional Optimization | precedes: Physical Distribution Scheduling | uses-input: Manage Inventory"@en ;
+    intake:relatedConcepts "informed-by: Regional Optimization | precedes: Physical Distribution Scheduling | uses-input: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 05 (2026-09-19). Sits between the approved monthly regional plan (CM-1-1-2) and movement administration (CM-1-1-3-6): this L4 decides the short-term schedule; its sibling administers the movements it creates. APQC 16820 'Design for product servicing' is an unrelated lexical match; no meaningful candidate."@en .
 
@@ -12858,7 +12853,7 @@ Out of scope: Binding slate, run rate, and production plan (CM-1-1-4, PTC-002) |
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-ORP-DPSC-001"@en ;
     intake:relatedConcepts "informed-by: Refinery Planning | enables: Trading Management | uses-input: Crude/Feed Quality Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 18 (2026-09-20). Concept-type: process — one demand-to-coordination planning cycle (develop, recommend, coordinate), like the batch 03 Demand Forecasting precedent. PTC-002 honored at cluster level: this cluster advises and coordinates; Refinery Planning decides. APQC: no meaningful candidate."@en .
+    intake:terminologyNotes "Batch 18 (2026-09-20). Concept-type: process — one demand-to-coordination planning cycle (develop, recommend, coordinate), like the batch 03 Produce Demand Forecast precedent. PTC-002 honored at cluster level: this cluster advises and coordinates; Refinery Planning decides. APQC: no meaningful candidate."@en .
 
 proc:CM-1-2-5-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12937,7 +12932,7 @@ proc:CM-1-2-6-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.6.2" ;
     skos:prefLabel "Refined Product Demand Management"@en ;
-    skos:scopeNote """Covers the operational demand cycle: managing the current demand picture against supply capability (CM-1-2-6-2-1), operational location-level demand forecasting for the supply-chain context (CM-1-2-6-2-3, under the batch 03 constraint), and operational management of product-exchange volumes as a supply and demand balancing lever (CM-1-2-6-2-2). The enterprise published demand forecast is owned by Demand Forecasting (CM-1-1-1-1) and consumed here as an input; trading's forward-view intake is Receive Demand Forecast (CM-1-2-1-1-2); the refinery-planning demand basis is Capture Product Demand Requirements (CM-1-1-4-7-1). Excludes the enterprise published forecast (CM-1-1-1-1, batch 03); trading forecast intake (CM-1-2-1-1-2); the refinery demand basis (CM-1-1-4-7-1); order capture and commitment (CM-1-3-7); supply and allocation decisions (CM-1-1-2).
+    skos:scopeNote """Covers the operational demand cycle: managing the current demand picture against supply capability (CM-1-2-6-2-1), operational location-level demand forecasting for the supply-chain context (CM-1-2-6-2-3, under the batch 03 constraint), and operational management of product-exchange volumes as a supply and demand balancing lever (CM-1-2-6-2-2). The enterprise published demand forecast is owned by Produce Demand Forecast (CM-1-1-1-1) and consumed here as an input; trading's forward-view intake is Receive Demand Forecast (CM-1-2-1-1-2); the refinery-planning demand basis is Capture Product Demand Requirements (CM-1-1-4-7-1). Excludes the enterprise published forecast (CM-1-1-1-1, batch 03); trading forecast intake (CM-1-2-1-1-2); the refinery demand basis (CM-1-1-4-7-1); order capture and commitment (CM-1-3-7); supply and allocation decisions (CM-1-1-2).
 In scope: Maintain the operational demand picture against supply capability | forecast location-level demand for supply operations | manage exchange volumes as a balancing lever | supply one operational demand view to supply operations and trading coordination
 Out of scope: Enterprise published forecast (CM-1-1-1-1) | trading forecast intake (CM-1-2-1-1-2) | refinery demand basis (CM-1-1-4-7-1) | order capture (CM-1-3-7) | supply and allocation decisions (CM-1-1-2)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -12948,7 +12943,7 @@ Out of scope: Enterprise published forecast (CM-1-1-1-1) | trading forecast inta
     intake:primaryPurpose "One current operational demand view behind supply operations, replenishment, and trading coordination."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-EIA-STEO-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Demand Forecasting | enables: Supply Operations | enables: Coordinate Product Trading"@en ;
+    intake:relatedConcepts "uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Supply Operations | enables: Coordinate Product Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 19 (2026-09-20). Concept-type: process — one operational demand cycle. Batch 03 three-way forecast partition implemented: enterprise published forecast (CM-1-1-1-1), trading intake (CM-1-2-1-1-2), operational SCM-context forecasting here. APQC candidate is an unrelated documentation match."@en .
 
@@ -13457,7 +13452,7 @@ proc:CM-1-3-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.1.1" ;
     skos:prefLabel "Market Analysis"@en ;
-    skos:scopeNote """Covers the recurring market-analysis lifecycle for downstream fuels and products markets: sourcing market data (CM-1-3-1-1-1), defining each cycle's objectives and scope (CM-1-3-1-1-2), analyzing market size, demand and supply, channel structure, pricing environments, and margin pools (CM-1-3-1-1-3), and documenting governed findings (CM-1-3-1-1-4). Analyze-and-inform: strategy decisions belong to the strategy and planning branches (CM-1-3-2/3/5); the enterprise demand forecast to Demand Forecasting (CM-1-1-1-1, batch 03); supply-network economics to CM-1-2-6-1 (batch 19 four-lens rule); enterprise KPI definition to the KPI workstream. Excludes strategy decisions (CM-1-3-2/3); demand forecast production (CM-1-1-1-1); supply-economics analysis (CM-1-2-6-1); KPI definition (KPI workstream); competitor-specific analysis (CM-1-3-1-5).
+    skos:scopeNote """Covers the recurring market-analysis lifecycle for downstream fuels and products markets: sourcing market data (CM-1-3-1-1-1), defining each cycle's objectives and scope (CM-1-3-1-1-2), analyzing market size, demand and supply, channel structure, pricing environments, and margin pools (CM-1-3-1-1-3), and documenting governed findings (CM-1-3-1-1-4). Analyze-and-inform: strategy decisions belong to the strategy and planning branches (CM-1-3-2/3/5); the enterprise demand forecast to Produce Demand Forecast (CM-1-1-1-1, batch 03); supply-network economics to CM-1-2-6-1 (batch 19 four-lens rule); enterprise KPI definition to the KPI workstream. Excludes strategy decisions (CM-1-3-2/3); demand forecast production (CM-1-1-1-1); supply-economics analysis (CM-1-2-6-1); KPI definition (KPI workstream); competitor-specific analysis (CM-1-3-1-5).
 In scope: Run the recurring market-analysis cycle | analyze market size, demand-supply, channels, and margin pools | maintain a current evidenced market view | feed strategy, planning, and Insight and Metrics
 Out of scope: Strategy decisions (CM-1-3-2/3) | demand forecast production (CM-1-1-1-1) | supply-economics analysis (CM-1-2-6-1) | KPI definition (KPI workstream) | competitor analysis (CM-1-3-1-5)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -13468,7 +13463,7 @@ Out of scope: Strategy decisions (CM-1-3-2/3) | demand forecast production (CM-1
     intake:primaryPurpose "A current, evidenced market view under every marketing decision."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EIA-PMM-001 | SRC-EIA-STEO-001"@en ;
-    intake:relatedConcepts "enables: Insight and Metrics | enables: Brand Strategy | informed-by: Demand Forecasting"@en ;
+    intake:relatedConcepts "enables: Insight and Metrics | enables: Brand Strategy | informed-by: Produce Demand Forecast (CM-1-1-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 21 (2026-09-20). Concept-type: process — one four-step analysis lifecycle (the batch 08 variant pattern; this cluster is the template's first instance), confirmed in review. Lifecycle order normalized per review: Define Objectives & Scope precedes Source & Collect Information precedes Analyze Data precedes Document Findings. Market data for US fuels marketing is anchored by EIA's Petroleum Marketing Monthly and STEO within their US-only, survey-category limitations; vendor data under its licensing terms (batch 12 follow-up). Batch 21 durable rule (review): \"Marketing Analysis produces governed evidence, insight, hypotheses, and recommendations. It does not itself set strategy, approve investments, establish prices, allocate product, publish the enterprise forecast, define enterprise KPIs, make commercial offers, or execute campaigns.\" APQC candidate is a WEAK generic intelligence match."@en .
 
@@ -13694,7 +13689,7 @@ Out of scope: VP strategy (CM-1-3-2-2/-3) | pricing (CM-1-3-3-2, CM-1-3-6-3) | p
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Customer And Marketer Value Proposition | informed-by: Consumer Value Proposition | enables: Sales Execution"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 23 (2026-09-20). Concept-type: process — one offer-design lifecycle; horizon tactical (design layer). Lifecycle order: Define Target Customer Groups → Define Customer Offer → Validate Customer Offer → Define KPI Framework. Middle layer of the batch 22 three-layer rule: designs within approved strategic direction, never re-decides it. Launch control per review: defined does not mean sellable — the applicable approval controls gate executability. APQC 'Negotiate offer' is a FALSE match (HR job-offer negotiation)."@en .
+    intake:terminologyNotes "Batch 23 (2026-09-20). Concept-type: process — one offer-design lifecycle; horizon tactical (design layer). Lifecycle order: Define Target Customer Groups → Define Customer Offer → Validate Customer Offer → Define Offer Measurement Framework. Middle layer of the batch 22 three-layer rule: designs within approved strategic direction, never re-decides it. Launch control per review: defined does not mean sellable — the applicable approval controls gate executability. APQC 'Negotiate offer' is a FALSE match (HR job-offer negotiation)."@en .
 
 proc:CM-1-3-3-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -13790,7 +13785,7 @@ proc:CM-1-3-5-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.5.1" ;
     skos:prefLabel "Sales Strategy & Planning"@en ;
-    skos:scopeNote """Covers the sales-planning cycle: the enduring sales-side forecast-input operating agreement (CM-1-3-5-1-2), determining and allocating sales targets (CM-1-3-5-1-1), performing account planning (CM-1-3-5-1-3), and analyzing gaps between forecast, plan, targets, and actual margin performance (CM-1-3-5-1-4) as the feedback loop into the next cycle and forecast-input improvements. The enterprise demand forecast is produced, published, changed, versioned, and governed only by Demand Forecasting (CM-1-1-1-1). The sales organization supplies agreed sales intelligence, account plans, pipeline evidence, promotion calendars, channel signals, and other approved inputs to that process. Sales targets are management-accountability commitments allocated from approved plans, not forecasts; they must never be relabeled, substituted for, or used to overwrite the governed demand forecast. Plans within approved direction: sales strategy direction is owned by the strategy branch (CM-1-3-2-4, CM-1-3-2-2, batch 22) — this cluster is sales planning, not strategy; sales force sizing assumptions come from the channel structure designs (CM-1-3-3-3-4, batch 23 headcount boundary — HR and management own headcount). Excludes sales strategy direction (CM-1-3-2, batch 22); the enterprise demand forecast (CM-1-1-1-1, locked); sales execution (CM-1-3-6-2); pricing (CM-1-3-3-2, CM-1-3-6-3); channel/partner management (CM-1-3-6-1); headcount and appointments (HR, management); quote/contract processes (CM-1-3-7-2).
+    skos:scopeNote """Covers the sales-planning cycle: the enduring sales-side forecast-input operating agreement (CM-1-3-5-1-2), determining and allocating sales targets (CM-1-3-5-1-1), performing account planning (CM-1-3-5-1-3), and analyzing gaps between forecast, plan, targets, and actual margin performance (CM-1-3-5-1-4) as the feedback loop into the next cycle and forecast-input improvements. The enterprise demand forecast is produced, published, changed, versioned, and governed only by Produce Demand Forecast (CM-1-1-1-1). The sales organization supplies agreed sales intelligence, account plans, pipeline evidence, promotion calendars, channel signals, and other approved inputs to that process. Sales targets are management-accountability commitments allocated from approved plans, not forecasts; they must never be relabeled, substituted for, or used to overwrite the governed demand forecast. Plans within approved direction: sales strategy direction is owned by the strategy branch (CM-1-3-2-4, CM-1-3-2-2, batch 22) — this cluster is sales planning, not strategy; sales force sizing assumptions come from the channel structure designs (CM-1-3-3-3-4, batch 23 headcount boundary — HR and management own headcount). Excludes sales strategy direction (CM-1-3-2, batch 22); the enterprise demand forecast (CM-1-1-1-1, locked); sales execution (CM-1-3-6-2); pricing (CM-1-3-3-2, CM-1-3-6-3); channel/partner management (CM-1-3-6-1); headcount and appointments (HR, management); quote/contract processes (CM-1-3-7-2).
 In scope: Run the sales-planning cycle | maintain the agreed sales input process into the governed forecast | allocate targets from approved plans | plan accounts | analyze forecast/plan/target/actual margin gaps as feedback
 Out of scope: Sales strategy direction (CM-1-3-2, batch 22) | enterprise demand forecast (CM-1-1-1-1, locked) | sales execution (CM-1-3-6-2) | pricing (CM-1-3-3-2, CM-1-3-6-3) | partner management (CM-1-3-6-1) | headcount (HR, management) | quotes/contracts (CM-1-3-7-2)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -13801,9 +13796,9 @@ Out of scope: Sales strategy direction (CM-1-3-2, batch 22) | enterprise demand 
     intake:primaryPurpose "A sales effort planned on evidence, measured against its own plan."@en ;
     intake:processHorizon "tactical"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "informed-by: Sales & Distribution Channel Strategy | uses-input: Demand Forecasting | enables: Sales Execution"@en ;
+    intake:relatedConcepts "informed-by: Sales & Distribution Channel Strategy | uses-input: Produce Demand Forecast (CM-1-1-1-1) | enables: Sales Execution"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 27 (2026-09-20). Concept-type: process — one sales-planning cycle with a feedback loop; tactical. Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. Canonical forecast-versus-targets rule verbatim in scope note. Glossary distinctions (review): demand forecast = governed prediction produced through Demand Forecasting; sales target = management commitment or plan expectation allocated to a segment, channel, account group, or period; quota = individual/team performance commitment in performance-management or incentive context; sales plan = planned actions, account priorities, resources, and commercial activity to pursue targets; actual = governed realized volume, margin, revenue, cost, or activity evidence from accountable systems/processes. Lifecycle: forecast-input agreement (enduring) enables targets and account planning → margin-gap analysis → next cycle. APQC 'Develop sales strategy' STRONG, no validator — genuine anchor, direction owned at CM-1-3-2."@en .
+    intake:terminologyNotes "Batch 27 (2026-09-20). Concept-type: process — one sales-planning cycle with a feedback loop; tactical. Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. Canonical forecast-versus-targets rule verbatim in scope note. Glossary distinctions (review): demand forecast = governed prediction produced through Produce Demand Forecast; sales target = management commitment or plan expectation allocated to a segment, channel, account group, or period; quota = individual/team performance commitment in performance-management or incentive context; sales plan = planned actions, account priorities, resources, and commercial activity to pursue targets; actual = governed realized volume, margin, revenue, cost, or activity evidence from accountable systems/processes. Lifecycle: forecast-input agreement (enduring) enables targets and account planning → margin-gap analysis → next cycle. APQC 'Develop sales strategy' STRONG, no validator — genuine anchor, direction owned at CM-1-3-2."@en .
 
 proc:CM-1-3-5-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -13926,7 +13921,7 @@ proc:CM-1-1-1-1 a skos:Concept ;
     skos:definition "Develop, agree, and publish the recurring product demand forecast that downstream commercial planning runs on — expected demand by product, market, location, and period — by combining a statistical baseline with customer input and market intelligence, and monitor forecast performance so the published forecast remains a reliable planning basis."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.1.1" ;
-    skos:prefLabel "Demand Forecasting"@en ;
+    skos:prefLabel "Produce Demand Forecast"@en ;
     skos:scopeNote """Covers the recurring demand-forecast production cycle: preparing forecasting master data and history, developing the statistical baseline, adjusting it with customer input and market intelligence, publishing the approved forecast with its component-level breakdown, and monitoring forecast performance. Its output is the single approved demand forecast consumed by Regional Optimization, Refinery Optimization, and Supply And Trading. Excludes deciding how demand is met — supply, production, inventory, and allocation choices are owned by Regional Optimization (CM-1-1-2); excludes capturing or committing customer orders, owned by Order Management (CM-1-3-7); excludes Supply And Trading's operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3), bounded per the batch 03 decision; excludes designing and agreeing the cross-functional forecasting process with sales, owned by Develop & Agree Demand Forecasting Process (CM-1-3-5-1-2).
 In scope: Prepare and validate forecasting inputs | develop the statistical baseline forecast | incorporate customer input and market intelligence | publish the approved forecast and component-level forecast plan | monitor forecast accuracy, bias, and adjustment effect
 Out of scope: Supply, production, inventory, and allocation decisions (Regional Optimization, CM-1-1-2) | customer order capture and commitment (Order Management, CM-1-3-7) | trading-side receipt and use of the published forecast (Receive Demand Forecast, CM-1-2-1-1-2) | Supply And Trading operational refined-product demand forecasting (Forecast Refined Product Demand, CM-1-2-6-2-3) | sales forecasting process design (Develop & Agree Demand Forecasting Process, CM-1-3-5-1-2)"""@en ;
@@ -13940,7 +13935,7 @@ Out of scope: Supply, production, inventory, and allocation decisions (Regional 
     intake:referenceSources "SRC-IEA-OMR-001 | SRC-EIA-STEO-001 | SRC-ORP-DPSC-001 | SRC-ASCM-CSCP-001"@en ;
     intake:relatedConcepts "precedes: Regional Optimization | enables: Capture Product Demand Requirements | enables: Receive Demand Forecast"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 03 (2026-09-19). Q1 decision (Hamid, 2026-09-19, Option A): the L4 carries the same label as its L3 parent (CM-1-1-1) and is its only child; authored in place as the operational forecast-production cycle, with the L3 remaining the domain umbrella — no tree change, consistent with the restraint precedent on PTC-001; a later naming pass may disambiguate the duplicate prefLabels. Q2 decision (Hamid, 2026-09-19, Option A): binding constraint on the future definition of CM-1-2-6-2-3 — it must be scoped as Supply And Trading's operational demand forecasting within Refined Product Supply Chain Management and must not claim ownership of the approved commercial planning forecast; same decide-versus-advise pattern as PTC-002. Evidence basis: the planning-cycle forecast (monthly, product/market level; IEA OMR and EIA STEO practice) is distinct from operational network demand forecasting (short-notice, terminal/station level; Mota et al. 2017). APQC 10240 'Evaluate and revise demand forecasting approach' is REVIEW LINK only; approach-governance content sits closest to CM-1-3-5-1-2, not here."@en .
+    intake:terminologyNotes "Batch 03 (2026-09-19). Q1 decision (Hamid, 2026-09-19, Option A): the L4 carries the same label as its L3 parent (CM-1-1-1) and is its only child; authored in place as the operational forecast-production cycle, with the L3 remaining the domain umbrella — no tree change, consistent with the restraint precedent on PTC-001; a later naming pass may disambiguate the duplicate prefLabels. Q2 decision (Hamid, 2026-09-19, Option A): binding constraint on the future definition of CM-1-2-6-2-3 — it must be scoped as Supply And Trading's operational demand forecasting within Refined Product Supply Chain Management and must not claim ownership of the approved commercial planning forecast; same decide-versus-advise pattern as PTC-002. Evidence basis: the planning-cycle forecast (monthly, product/market level; IEA OMR and EIA STEO practice) is distinct from operational network demand forecasting (short-notice, terminal/station level; Mota et al. 2017). APQC 10240 'Evaluate and revise demand forecasting approach' is REVIEW LINK only; approach-governance content sits closest to CM-1-3-5-1-2, not here. Step 3d naming pass (2026-09-21): renamed from 'Demand Forecasting' to 'Produce Demand Forecast' — critical semantic-collision resolution. Prior label not retained as altLabel: the L3 keeps it as prefLabel."@en .
 
 proc:CM-1-1-2-7 a skos:Concept ;
     skos:broader proc:CM-1-1-2 ;
@@ -14046,7 +14041,7 @@ Out of scope: Channel strategy (CM-1-3-2-4) | retail network design (CM-1-3-3-4)
     intake:referenceSources "SRC-PMPA-001 | SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Sales & Distribution Channel Strategy | enables: Channel & Partner Management | enables: Network Design (Retail)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 23 (2026-09-20). Concept-type: process — one channel-design lifecycle; horizon tactical. Lifecycle order: Segment Channels → Define Channel Portfolio → Create Channel Offering & Value Proposition → Develop Channel Structure, Size & Engagement Model → Define KPI Framework. Middle layer of the batch 22 three-layer rule; PMPA applies fact-dependently per the batch 22 statement (referenced, not restated); partner-selection exclusion per review verbatim in scope note. APQC returned NONE — no meaningful candidate; 'Design for manufacturing' is a false match."@en .
+    intake:terminologyNotes "Batch 23 (2026-09-20). Concept-type: process — one channel-design lifecycle; horizon tactical. Lifecycle order: Segment Channels → Define Channel Portfolio → Create Channel Offering & Value Proposition → Develop Channel Structure, Size & Engagement Model → Define Channel Measurement Framework. Middle layer of the batch 22 three-layer rule; PMPA applies fact-dependently per the batch 22 statement (referenced, not restated); partner-selection exclusion per review verbatim in scope note. APQC returned NONE — no meaningful candidate; 'Design for manufacturing' is a false match."@en .
 
 proc:CM-1-3-3-6 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -14073,7 +14068,7 @@ Out of scope: HR headcount and appointments (HR, management) | enterprise policy
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Sales & Distribution Channel Design | enables: Sales Strategy & Planning | enables: Marketing Plan Execution"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 24 (2026-09-20). Concept-type: process — one operating-model design lifecycle; tactical. Review definition adopted verbatim: an architecture/blueprint process, never an organizational-decision, technology-architecture, HR, or policy owner. Lifecycle: Determine Channel Of Trade Mix (translation) → Develop Business Process Blueprint → Develop Organizational Blueprint → Define Procedural Framework & Guidelines → Define KPI Framework, with the process and organizational blueprints co-developed iteratively per review. Technology-implication statement verbatim in scope note — connects to the future System Integration and Domain Modeling workstreams without expanding scope. APQC 'Design resource model for KM approaches' is a WEAK false-direction match."@en .
+    intake:terminologyNotes "Batch 24 (2026-09-20). Concept-type: process — one operating-model design lifecycle; tactical. Review definition adopted verbatim: an architecture/blueprint process, never an organizational-decision, technology-architecture, HR, or policy owner. Lifecycle: Determine Channel Of Trade Mix (translation) → Develop Business Process Blueprint → Develop Organizational Blueprint → Define Procedural Framework & Guidelines → Define Operating Model Measurement Framework, with the process and organizational blueprints co-developed iteratively per review. Technology-implication statement verbatim in scope note — connects to the future System Integration and Domain Modeling workstreams without expanding scope. APQC 'Design resource model for KM approaches' is a WEAK false-direction match."@en .
 
 proc:CM-1-3-5 a skos:Concept ;
     skos:broader proc:CM-1-3 ;
@@ -14191,7 +14186,7 @@ proc:CM-1-2-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1" ;
     skos:prefLabel "Forecasting & Optimization"@en ;
-    skos:scopeNote """Covers receiving and consolidating production, demand, and power-generation forecasts from their owning processes; producing the renewables forward view; identifying and valuing commercial use of asset flexibility; and projecting trading revenue, margin, and exposure. This capability consumes forecasts rather than owning their production: the approved demand forecast is owned by Demand Forecasting (CM-1-1-1-1) per the batch 03 decision, and production plans and schedules by Refinery Planning (CM-1-1-4) and Refinery Scheduling (CM-1-1-7). Excludes trade execution and capture, owned by Trade Capture (CM-1-2-1-3); excludes setting the regional or refinery plans, owned under the locked Regional Optimization and Refinery Planning rules; excludes risk measurement and limits, owned by Market Risk Management (CM-1-2-2-3).
+    skos:scopeNote """Covers receiving and consolidating production, demand, and power-generation forecasts from their owning processes; producing the renewables forward view; identifying and valuing commercial use of asset flexibility; and projecting trading revenue, margin, and exposure. This capability consumes forecasts rather than owning their production: the approved demand forecast is owned by Produce Demand Forecast (CM-1-1-1-1) per the batch 03 decision, and production plans and schedules by Refinery Planning (CM-1-1-4) and Refinery Scheduling (CM-1-1-7). Excludes trade execution and capture, owned by Trade Capture (CM-1-2-1-3); excludes setting the regional or refinery plans, owned under the locked Regional Optimization and Refinery Planning rules; excludes risk measurement and limits, owned by Market Risk Management (CM-1-2-2-3).
 In scope: Receive and consolidate production, demand, and generation forecasts | develop the renewables forward view | identify and value commercial use of asset flexibility | project trading revenue, margin, and exposure
 Out of scope: Forecast production ownership (CM-1-1-1-1, CM-1-1-4, CM-1-1-7) | trade execution and capture (CM-1-2-1-3) | regional and refinery plan setting (locked rules) | risk measurement and limits (CM-1-2-2-3)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -14202,7 +14197,7 @@ Out of scope: Forecast production ownership (CM-1-1-1-1, CM-1-1-4, CM-1-1-7) | t
     intake:primaryPurpose "Keep trading running on a current forward commercial view and an identified, valued set of asset opportunities."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-CFTC-GLOSS-001 | SRC-EIA-STEO-001"@en ;
-    intake:relatedConcepts "informed-by: Demand Forecasting | informed-by: Refinery Planning | enables: Trading Strategy Management"@en ;
+    intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning | enables: Trading Strategy Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 07 (2026-09-19). Q1 decision (Hamid, Option A): capability — it comprises distinct forecast-intake, renewable-position forecasting, asset-optimization, and revenue-projection processes that collectively enable a current front-office forward view and commercially optimized asset position; it is not a single sequential process. Same test as the batch 04 Inventory L4. Front-office framing per the approved Trading Management (CM-1-2-1) definition; 'market conditions' made explicit at Hamid's direction so the forward-curve context is not read as physical volumes only. Q2 boundary recorded on CM-1-2-1-1-4. APQC 19569 'Perform real-time optimization' is process-control software; no meaningful candidate."@en .
 
@@ -14640,7 +14635,7 @@ Out of scope: Approval and ownership of the production plan and its commercial t
     intake:primaryPurpose "Produce and recommend the economically preferred refinery production case for the planning period."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Refinery Planning | informed-by: Demand Forecasting | informed-by: Crude Allocation Decision | constrained-by: Inventory | precedes: Refinery Scheduling"@en ;
+    intake:relatedConcepts "enables: Refinery Planning | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Crude Allocation Decision | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Parent-versus-child distinctness resolved per Hamid's decision (2026-09-18, Option 1): Refinery Planning (CM-1-1-4) owns the approved plan and its commercial targets; this node owns the recurring optimization run cycle that produces the candidate plan. Without that split the two primary purposes were near-identical. The eight existing L5 children — six “Capture …” nodes, Evaluate Crude & Feedstock, and Perform Scenario Analysis — are coherent under this reading as case-basis assembly and case analysis. “Capture Monthly Operating Plan” (CM-1-1-4-7-7) appears to name a document rather than a process and is flagged for review in the L5 batch, not resolved here. Avoided naming a specific optimization application; “LP” appears only as an alternate label because it is established industry shorthand."@en .
 
@@ -14887,7 +14882,7 @@ Out of scope: Trade execution as an act of purchasing or selling (authorized tra
     intake:referenceSources "SRC-CFTC-GLOSS-001"@en ;
     intake:relatedConcepts "follows: Trading Strategy Management | precedes: Confirmations Management | enables: Market Risk Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 08 (2026-09-19). Q1 decision (Hamid, Option A): process — the children form a per-transaction lifecycle (analyze, authorize, capture by deal type, report) with the eight capture nodes as instrument-specific variants of one controlled deal-entry activity; the Demand Forecasting process precedent applies, not the batch 04 capability test. Reworded at Hamid's direction to distinguish trade execution from trade capture: this process controls what happens before, at, and immediately after execution and records the trade; it does not execute it. Whether the enterprise's system of record supports a single deal record or a governed golden-deal model across systems is a follow-up noted in the batch 08 PR. APQC 14095 'Document trade' is a WEAK international-trade candidate; comparative evidence only."@en .
+    intake:terminologyNotes "Batch 08 (2026-09-19). Q1 decision (Hamid, Option A): process — the children form a per-transaction lifecycle (analyze, authorize, capture by deal type, report) with the eight capture nodes as instrument-specific variants of one controlled deal-entry activity; the Produce Demand Forecast process precedent applies, not the batch 04 capability test. Reworded at Hamid's direction to distinguish trade execution from trade capture: this process controls what happens before, at, and immediately after execution and records the trade; it does not execute it. Whether the enterprise's system of record supports a single deal record or a governed golden-deal model across systems is a follow-up noted in the batch 08 PR. APQC 14095 'Document trade' is a WEAK international-trade candidate; comparative evidence only."@en .
 
 proc:CM-1-1-3-7 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -14896,13 +14891,13 @@ proc:CM-1-1-3-7 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 12900"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Inventory Management"@en,
+    skos:altLabel "Inventory"@en,
         "Stock Management"@en ;
     skos:broader proc:CM-1-1-3 ;
     skos:definition "The capability to govern, measure, reconcile, control, position, replenish, and account for petroleum feedstocks, intermediates, and refined products across the downstream network, including their quantity, quality, location, ownership, entitlement, identity, and availability."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.7" ;
-    skos:prefLabel "Inventory"@en ;
+    skos:prefLabel "Inventory Management"@en ;
     skos:scopeNote """Covers development and maintenance of inventory policies by material class; physical inventory measurement and the volumetric inputs to valuation; book-to-physical reconciliation; replenishment management; and stewardship of inventory held under consignment, commingling, third-party-storage, lot/batch, and re-brand arrangements, including controls over ownership, entitlement, product identity, custody, quality, location, and availability. Excludes setting plan-period finished-product inventory targets inside the regional plan, owned by Plan Finished Goods Inventory (CM-1-1-2-13); excludes physical tank, terminal, and pipeline operation, owned by Midstream; excludes inventory valuation, accounting, and financial reporting, owned by Finance; excludes day-to-day crude and refinery-feedstock position management, owned by Manage Feedstock Inventory (CM-1-2-5-4-2) per the batch 04 decision.
 In scope: Inventory policy by material class | physical inventory measurement and volumetric inputs to valuation | book-to-physical reconciliation | replenishment management | consignment, commingled, re-brand, lot/batch, and third-party storage stewardship
 Out of scope: Plan-period inventory targets in the regional plan (Plan Finished Goods Inventory, CM-1-1-2-13) | physical storage and movement operation (Midstream) | inventory valuation, accounting, and financial reporting (Finance) | day-to-day feedstock position management (Manage Feedstock Inventory, CM-1-2-5-4-2) | trading inventory risk management (Supply And Trading)"""@en ;
@@ -14916,7 +14911,7 @@ Out of scope: Plan-period inventory targets in the regional plan (Plan Finished 
     intake:referenceSources "SRC-EI-HM32-001 | SRC-API-MPMS-001 | SRC-ASCM-CSCP-001"@en ;
     intake:relatedConcepts "enables: Regional Optimization | enables: Capture Inventory | informed-by: Plan Finished Goods Inventory"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 04 (2026-09-19). Q1 decision (Hamid, Option A): capability, not process — the children are distinct recurring processes that jointly enable inventory stewardship, not stages of one cycle. The bare-noun label can denote the asset/state, a count, or the function; this node denotes the capability. Preferred normalized label 'Inventory Management' queued for the consolidated naming pass; current label retained for batch traceability, together with the L4-versus-L5 'Manage Inventory' label collision. Placement rule: Supply Chain Management answers what should be held, moved, made, or replenished, where and when; this capability answers what inventory exists, under what identity, ownership, and entitlement, in what quantity and location, and whether it is controlled and reconciled; Midstream answers how bulk material is physically received, stored, transferred, and transported. Feedstock boundary constraint (Q3 decision, Hamid, Option A): Manage Feedstock Inventory (CM-1-2-5-4-2) owns the day-to-day monitoring, control, and operational management of crude and refinery-feedstock inventory positions within Crude/Feed Supply Management; this cluster owns cross-material inventory policy, measurement, reconciliation, and specialized inventory-arrangement controls, and does not own day-to-day feedstock position management. A reciprocal note is recorded on CM-1-2-5-4-2. Hydrocarbon loss-control ownership beyond reconciliation reporting has no home in the current tree; playbook step 7 carries that question — deliberately not resolved here."@en .
+    intake:terminologyNotes "Batch 04 (2026-09-19). Q1 decision (Hamid, Option A): capability, not process — the children are distinct recurring processes that jointly enable inventory stewardship, not stages of one cycle. The bare-noun label can denote the asset/state, a count, or the function; this node denotes the capability. Step 3d naming pass (2026-09-21): renamed to 'Inventory Management' ('Inventory' retained as altLabel); the L4-versus-L5 label collision is resolved — the L5 is now 'Monitor and Control Inventory Positions' ('Manage Inventory' retained as its altLabel). Placement rule: Supply Chain Management answers what should be held, moved, made, or replenished, where and when; this capability answers what inventory exists, under what identity, ownership, and entitlement, in what quantity and location, and whether it is controlled and reconciled; Midstream answers how bulk material is physically received, stored, transferred, and transported. Feedstock boundary constraint (Q3 decision, Hamid, Option A): Manage Feedstock Inventory (CM-1-2-5-4-2) owns the day-to-day monitoring, control, and operational management of crude and refinery-feedstock inventory positions within Crude/Feed Supply Management; this cluster owns cross-material inventory policy, measurement, reconciliation, and specialized inventory-arrangement controls, and does not own day-to-day feedstock position management. A reciprocal note is recorded on CM-1-2-5-4-2. Hydrocarbon loss-control ownership beyond reconciliation reporting has no home in the current tree; playbook step 7 carries that question — deliberately not resolved here. Step 3d naming pass (2026-09-21): renamed from 'Inventory' to 'Inventory Management' — critical semantic-collision resolution. Prior label 'Inventory' retained as altLabel."@en .
 
 proc:CM-1-2-4-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
