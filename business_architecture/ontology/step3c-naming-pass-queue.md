@@ -22,7 +22,7 @@ all other categories ride the same pass without gating it.
 
 **Execution status 2026-09-21:** all 9 critical-collision entries executed in Step 3d Phase 1
 (Hamid approval 2026-09-21, including the 6th 'Define KPI Framework' row discovered after
-the initial 8-rename execution). All 6 authority-risk entries executed 2026-09-21 (Step 3d naming pass, Hamid approval 2026-09-21). 10 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 1 A+B+C, Hamid approval 2026-09-21) and 11 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 2 D, Hamid approval 2026-09-21) and 12 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 3 E+F, Hamid approval 2026-09-21) and 8 directionality-missing entries executed 2026-09-21 (Step 3d naming pass Batch 4, Hamid approval 2026-09-21). The remaining 34 queue entries are still queued for the consolidated naming pass.
+the initial 8-rename execution). All 6 authority-risk entries executed 2026-09-21 (Step 3d naming pass, Hamid approval 2026-09-21). 10 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 1 A+B+C, Hamid approval 2026-09-21) and 11 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 2 D, Hamid approval 2026-09-21) and 12 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 3 E+F, Hamid approval 2026-09-21) and 8 directionality-missing entries executed 2026-09-21 (Step 3d naming pass Batch 4, Hamid approval 2026-09-21). The remaining 37 queue entries are still queued for the consolidated naming pass.
 
 ## Critical semantic collision (9)
 
