@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 9 critical collisions executed 2026-09-21 — PR #84 (8 renames) merged to main; PR #85 (9th rename) open for review) | In progress — naming PR under review; then needs Hamid's scope call on the L1/decomposition question |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples) | In progress — naming queue categories 2–6 still queued; PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -414,8 +414,8 @@ consolidated pass that applies them.
   with the old name kept as alt label (subject to the collision and
   refinement rules recorded 2026-09-21, below), then sweeps the workbook,
   TTL regen, identity map, and cross-references, and re-runs the gate.
-- **Phase 1 executed 2026-09-21 — 8 of 9 merged, 9th in review.** All 9 critical
-  collisions renamed per Hamid's approval (2026-09-21), with two
+- **Phase 1 executed and merged 2026-09-21 — all 9 critical collisions.** All 9
+  critical collisions renamed per Hamid's approval (2026-09-21), with two
   refinements over the queued labels: `CM-1-1-1-1` → **Produce Demand
   Forecast** (verb-led; `Demand Forecasting` is NOT kept as an altLabel
   because the L3 parent keeps it as prefLabel) and the six
@@ -425,8 +425,8 @@ consolidated pass that applies them.
   the identity/migration map). The sixth KPI row (`CM-1-3-3-5-7`,
   Marketing Communications) was discovered after the initial 8-rename
   execution and renamed in a follow-up commit per Hamid's decision
-  the same day. PR #84 (8 renames) was merged by Hamid 2026-09-21; PR #85
-  (9th rename) open for review — **nothing merges on assumption**.
+  the same day. PR #84 (8 renames) and PR #85 (9th rename) both merged
+  by Hamid 2026-09-21 — **nothing merged on assumption**.
   Approved labels:
   `CM-1-1-1-1` → Produce Demand Forecast; `CM-1-1-3-7` → Inventory
   Management (`Inventory` kept as altLabel); `CM-1-1-3-7-12` → Monitor
@@ -438,9 +438,9 @@ consolidated pass that applies them.
   `CM-1-3-3-6-5` → Define Operating Model Measurement Framework;
   `CM-1-3-3-5-7` → Define Marketing Communications Measurement Framework.
   No definitions, hierarchy, process identities, authority boundaries,
-  source evidence, slugs, or IRIs change. The 9th rename lives on branch
-  `step3d/naming-kpi6-marcomms` (from merged main `86d6fbb`); PR #85 open
-  for review — **nothing merges on assumption**. The taxonomy is
+  source evidence, slugs, or IRIs change. The 9th rename lived on branch
+  `step3d/naming-kpi6-marcomms` (from merged main `86d6fbb`); PR #85 merged
+  by Hamid 2026-09-21 — **nothing merged on assumption**. The taxonomy is
   unpublished with no external consumers (Hamid, 2026-09-21), so no
   deprecation period or consumer notice is needed; the repository-wide
   cross-reference sweep was still run (workbook, identity map,
@@ -456,7 +456,7 @@ consolidated pass that applies them.
   use stable identifiers for technical relationships. Retain historical
   labels as altLabel only when uniquely resolvable and semantically
   safe.
-- **PTC-001 partial resolution — executed 2026-09-21 (PR #86, open — merge on Hamid's approval).**
+- **PTC-001 partial resolution — executed and merged 2026-09-21 (PR #86).**
   Hamid approved the revised consolidated proposal
   (`files/ptc-001-tree-proposal.md`, four review adjustments adopted):
   new Candidate L2 **Financial Planning and Performance Management** under
@@ -467,12 +467,32 @@ consolidated pass that applies them.
   from active navigation); **Develop Strategic Business Plan** stays
   `blocked` under the named **PTC-001-B** strategy-ownership decision.
   682 concepts, 13 minted stubs. PTC-001 stays open until PTC-001-B closes.
+- **PTC-001 definition mini-batch — authored and merged 2026-09-21 (PR #87).**
+  The four rows left `pending` by the tree pass got full Phase 1 + Phase 2
+  authoring, parent-first: the two Candidate L2 stubs and the two
+  reparented L3s (Plan Budgets; Coordinate Site Business Risk Management).
+  The independent review came back APPROVE-WITH-NOTES; two non-blocking
+  cleanups were applied before merge per Hamid's call: (1) the risk L3's
+  scope note now states the hybrid cadence — event-driven for new/changed
+  risks, incidents, breaches, and escalations, with periodic monitoring
+  and review of ownership, treatment plans, and status; (2) the Refining
+  L2's scope note states that refinery performance oversight remains at
+  capability level pending the future Refining-domain decomposition, so
+  the risk-coordination child is never misread as the owner of
+  throughput/yield/performance management. The `approve` wording in Plan
+  Budgets is retained deliberately — the terminology note fences it to the
+  budget-review workflow the process administers while final approval stays
+  with the delegated authority. Workbook: 505 rows, 502 approved
+  (1 intentional pending hold, 1 blocked PTC-001-B, 1 retired); gate
+  blocking=0, questions=0. TTL: 682 concepts, 14,472 triples, 679/682
+  defined. No new duplicate prefLabel groups; tombstone and blocked row
+  untouched.
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),
-  1 blocked (PTC-001-B), 2 rehomed to pending). PTC-002 closed 2026-09-18 with no
-  tree change needed. The register is the live list; this line will go
-  stale, the register will not.
+  1 blocked (PTC-001-B), 2 rehomed and definition-approved via PR #87).
+  PTC-002 closed 2026-09-18 with no tree change needed. The register is
+  the live list; this line will go stale, the register will not.
 - **Known scope beyond the moves.** PTC-001 cannot be applied as
   accepted. Only Commercial & Marketing is decomposed — 492 of 503 rows
   sit under it, and the other nine L1s have no children. There is no
@@ -576,6 +596,19 @@ without a dated amendment and Hamid's explicit agreement.
   parked row must not carry one); retired rows are `owl:deprecated`, not
   deleted — `dcterms:isReplacedBy` is left for the Step 3d tree pass, when
   destinations are decided.
+- **PTC-001 definition batch (2026-09-21, PR #87).** The four rows left
+  `pending` by the PTC-001 tree pass are authored and approved: the two
+  Candidate L2s (Financial Planning and Performance Management; Refinery
+  Performance and Risk Coordination) and the two reparented L3s (Plan
+  Budgets; Coordinate Site Business Risk Management). Reviewer-driven
+  refinements baked in: the risk L3's scope note states the hybrid
+  event-driven/periodic cadence, and the Refining L2's scope note keeps
+  performance oversight at capability level pending future Refining
+  decomposition. `approve` in Plan Budgets means administering the
+  budget-review workflow — final approval stays with the delegated
+  authority. Workbook: 502/505 approved, gate blocking=0 questions=0;
+  TTL: 679/682 defined, 14,472 triples. PTC-001 stays open until
+  PTC-001-B (Develop Strategic Business Plan) closes.
 - **SKOS-first taxonomy.** Do not mechanically convert each process /
   hierarchy level into an OWL class/subclass (2026-09-17).
 - **URI base is `https://w3id.org/lsc/ontology/`** — company-scoped,
