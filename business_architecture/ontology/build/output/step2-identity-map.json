@@ -6499,23 +6499,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1",
   "slug": "CM-1-3-7-1",
   "level": 4,
-  "name": "Manage Master Data (Customer, Price, Product, Tax, Location)",
+  "name": "Manage Commercial Master Data Stewardship",
   "skos_notation": "CM 1.3.7.1",
   "parent_slug": "CM-1-3-7",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Master Data (Customer, Price, Product, Tax, Location)",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Master Data (Customer, Price, Product, Tax, Location)' -> 'Manage Commercial Master Data Stewardship' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1",
   "slug": "CM-1-3-7-1-1",
   "level": 5,
-  "name": "Maintain Customer Master Data",
+  "name": "Maintain Customer and Commercial Account Master Data",
   "skos_notation": "CM 1.3.7.1.1",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.1.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Maintain Customer Master Data",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Customer Master Data' -> 'Maintain Customer and Commercial Account Master Data' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-2",
@@ -6532,12 +6538,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-3",
   "slug": "CM-1-3-7-1-3",
   "level": 5,
-  "name": "Maintain Product Master Data",
+  "name": "Maintain Product and Service Master Data",
   "skos_notation": "CM 1.3.7.1.3",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.1.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Maintain Product Master Data",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Product Master Data' -> 'Maintain Product and Service Master Data' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-4",
@@ -6554,34 +6563,43 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-5",
   "slug": "CM-1-3-7-1-5",
   "level": 5,
-  "name": "Maintain Workflows",
+  "name": "Maintain Commercial Workflow Configuration",
   "skos_notation": "CM 1.3.7.1.5",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.1.5",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Maintain Workflows",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Workflows' -> 'Maintain Commercial Workflow Configuration' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-6",
   "slug": "CM-1-3-7-1-6",
   "level": 5,
-  "name": "Maintain Commercial Policies",
+  "name": "Maintain Commercial Policy Content and Approved Parameters",
   "skos_notation": "CM 1.3.7.1.6",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.1.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Maintain Commercial Policies",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Commercial Policies' -> 'Maintain Commercial Policy Content and Approved Parameters' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2",
   "slug": "CM-1-3-7-2",
   "level": 4,
-  "name": "Manage Pricing & Contracting (Manage Quote & Sale)",
+  "name": "Manage Commercial Terms, Quoting, and Customer Commercial Services",
   "skos_notation": "CM 1.3.7.2",
   "parent_slug": "CM-1-3-7",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Pricing & Contracting (Manage Quote & Sale)",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Pricing & Contracting (Manage Quote & Sale)' -> 'Manage Commercial Terms, Quoting, and Customer Commercial Services' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1",
@@ -6719,12 +6737,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-6",
   "slug": "CM-1-3-7-3-6",
   "level": 5,
-  "name": "Manage Returns",
+  "name": "Manage Commercial Returns Authorization and Coordination",
   "skos_notation": "CM 1.3.7.3.6",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.3.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Returns",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Returns' -> 'Manage Commercial Returns Authorization and Coordination' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4",
@@ -6785,23 +6806,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-5",
   "slug": "CM-1-3-7-4-5",
   "level": 5,
-  "name": "Perform Customer Closure & Reinstatement",
+  "name": "Perform Credit-Driven Customer Closure and Reinstatement",
   "skos_notation": "CM 1.3.7.4.5",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.4.5",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Customer Closure & Reinstatement",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Perform Customer Closure & Reinstatement' -> 'Perform Credit-Driven Customer Closure and Reinstatement' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6",
   "slug": "CM-1-3-7-4-6",
   "level": 5,
-  "name": "KYC Process",
+  "name": "Perform KYC Due Diligence",
   "skos_notation": "CM 1.3.7.4.6",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.4.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "KYC Process",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'KYC Process' -> 'Perform KYC Due Diligence' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5",
@@ -6818,23 +6845,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-1",
   "slug": "CM-1-3-7-5-1",
   "level": 5,
-  "name": "Establish Priority Assignment of Customer Request/Inquiry",
+  "name": "Prioritize Customer Requests and Inquiries",
   "skos_notation": "CM 1.3.7.5.1",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.5.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Establish Priority Assignment of Customer Request/Inquiry",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Establish Priority Assignment of Customer Request/Inquiry' -> 'Prioritize Customer Requests and Inquiries' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-2",
   "slug": "CM-1-3-7-5-2",
   "level": 5,
-  "name": "Maintain Requests and Inquiries Master Database",
+  "name": "Maintain Customer Request and Inquiry Records",
   "skos_notation": "CM 1.3.7.5.2",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.5.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Maintain Requests and Inquiries Master Database",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Requests and Inquiries Master Database' -> 'Maintain Customer Request and Inquiry Records' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-3",

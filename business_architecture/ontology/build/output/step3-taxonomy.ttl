@@ -20,9 +20,9 @@ proc:CM-1-1-1-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.1.1.1" ;
     skos:prefLabel "Prepare Master Data To Create Demand Forecast"@en ;
-    skos:scopeNote """Covers per-cycle readiness of forecasting inputs: maintaining forecast-specific reference data, aligning product and market hierarchies to planning definitions, and cleansing demand history for outliers, supply disruptions, and other events that would distort the baseline. Excludes supply-planning reference and parameter data, owned by Maintain Supply Planning Master Data (CM-1-1-2-12); excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data (CM-1-1-7-2-1); excludes customer, price, product, tax, and location master data, owned by Manage Master Data under Order Management (CM-1-3-7-1); excludes enterprise master-data policy and governance, which sit with the Data Governance workstream.
+    skos:scopeNote """Covers per-cycle readiness of forecasting inputs: maintaining forecast-specific reference data, aligning product and market hierarchies to planning definitions, and cleansing demand history for outliers, supply disruptions, and other events that would distort the baseline. Excludes supply-planning reference and parameter data, owned by Maintain Supply Planning Master Data (CM-1-1-2-12); excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data (CM-1-1-7-2-1); excludes customer, price, product, tax, and location master data, owned by Manage Commercial Master Data Stewardship under Order Management (CM-1-3-7-1); excludes enterprise master-data policy and governance, which sit with the Data Governance workstream.
 In scope: Maintain forecast-specific reference data | align product and market hierarchies to planning definitions | cleanse and adjust demand history for distorting events | validate data readiness for the forecast cycle
-Out of scope: Supply-planning master data (Maintain Supply Planning Master Data, CM-1-1-2-12) | production-scheduling master data (Maintain Production Scheduling Master Data, CM-1-1-7-2-1) | customer, price, product, tax, and location master data (Manage Master Data, CM-1-3-7-1) | enterprise master-data policy and governance (Data Governance workstream) | statistical model development (Develop Statistical Baseline, CM-1-1-1-1-2)"""@en ;
+Out of scope: Supply-planning master data (Maintain Supply Planning Master Data, CM-1-1-2-12) | production-scheduling master data (Maintain Production Scheduling Master Data, CM-1-1-7-2-1) | customer, price, product, tax, and location master data (Manage Commercial Master Data Stewardship, CM-1-3-7-1) | enterprise master-data policy and governance (Data Governance workstream) | statistical model development (Develop Statistical Baseline, CM-1-1-1-1-2)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "raw sales and lifting history | product and market hierarchy definitions | customer and location groupings | recorded demand-distorting events"@en ;
@@ -291,9 +291,9 @@ proc:CM-1-1-2-12 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.2.12" ;
     skos:prefLabel "Maintain Supply Planning Master Data"@en ;
-    skos:scopeNote """Covers stewardship of supply-planning-specific reference and parameter data over its lifecycle, including requesting and validating changes, applying effective dates, and confirming that planning results remain consistent after a change. Excludes enterprise master-data policy, standards, and governance, which sit with the Data Governance workstream; excludes customer, price, product, tax, and location master data, owned by Manage Master Data under Order Management; excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data under Refinery Scheduling.
+    skos:scopeNote """Covers stewardship of supply-planning-specific reference and parameter data over its lifecycle, including requesting and validating changes, applying effective dates, and confirming that planning results remain consistent after a change. Excludes enterprise master-data policy, standards, and governance, which sit with the Data Governance workstream; excludes customer, price, product, tax, and location master data, owned by Manage Commercial Master Data Stewardship under Order Management; excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data under Refinery Scheduling.
 In scope: Planning network and location data | sourcing and supply-path data | planning capacity and rate parameters | lead times and transit assumptions | planning yields and product groupings | change request, validation, and effective dating of planning parameters
-Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Master Data, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Produce Demand Forecast (CM-1-1-1-1)) | planning application administration and platform support (Process Excellence & IT)"""@en ;
+Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Commercial Master Data Stewardship, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Produce Demand Forecast (CM-1-1-1-1)) | planning application administration and platform support (Process Excellence & IT)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "planning parameter change requests | network, capacity, and sourcing changes | refinery and logistics capability updates | product and grade structure changes | enterprise data-governance standards"@en ;
@@ -305,7 +305,7 @@ Out of scope: Enterprise master-data policy and governance standards (Data Gover
     intake:referenceSources "SRC-ASCM-CSCP-001"@en ;
     intake:relatedConcepts "enables: Regional Optimization | governed-by: Data Governance | informed-by: Refinery Planning"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Defined narrowly per Hamid's decision (2026-09-18, Option 1): scope is the supply-planning-specific reference and parameter data consumed by the regional planning model, not master data generally. The taxonomy currently carries four parallel master-data nodes — this one, Maintain Production Scheduling Master Data (CM-1-1-7-2-1), Manage Master Data (CM-1-3-7-1), and Prepare Master Data To Create Demand Forecast (CM-1-1-1-1-1). Their consolidation, and whether a single governed master-data capability should own them, is parked for the EPM Data Governance workstream and is deliberately not resolved here. APQC candidate “Maintain master data” was triaged STRONG but accepted by no validator; used as comparative evidence only, not adopted."@en .
+    intake:terminologyNotes "Defined narrowly per Hamid's decision (2026-09-18, Option 1): scope is the supply-planning-specific reference and parameter data consumed by the regional planning model, not master data generally. The taxonomy currently carries four parallel master-data nodes — this one, Maintain Production Scheduling Master Data (CM-1-1-7-2-1), Manage Commercial Master Data Stewardship (CM-1-3-7-1), and Prepare Master Data To Create Demand Forecast (CM-1-1-1-1-1). Their consolidation, and whether a single governed master-data capability should own them, is parked for the EPM Data Governance workstream and is deliberately not resolved here. APQC candidate “Maintain master data” was triaged STRONG but accepted by no validator; used as comparative evidence only, not adopted."@en .
 
 proc:CM-1-1-2-13 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -2300,7 +2300,7 @@ proc:CM-1-1-7-2-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.2.1" ;
     skos:prefLabel "Maintain Production Scheduling Master Data"@en ;
-    skos:scopeNote """Covers stewardship of production-scheduling-specific reference and parameter data over its lifecycle: requesting and validating changes, applying effective dates, and confirming scheduling results remain consistent after a change. Excludes supply-planning master data, owned by Maintain Supply Planning Master Data (CM-1-1-2-12); excludes demand-forecast data preparation (CM-1-1-1-1-1); excludes customer, price, product, tax, and location master data (Manage Master Data, CM-1-3-7-1); excludes enterprise master-data policy and governance, which sit with the Data Governance workstream.
+    skos:scopeNote """Covers stewardship of production-scheduling-specific reference and parameter data over its lifecycle: requesting and validating changes, applying effective dates, and confirming scheduling results remain consistent after a change. Excludes supply-planning master data, owned by Maintain Supply Planning Master Data (CM-1-1-2-12); excludes demand-forecast data preparation (CM-1-1-1-1-1); excludes customer, price, product, tax, and location master data (Manage Commercial Master Data Stewardship, CM-1-3-7-1); excludes enterprise master-data policy and governance, which sit with the Data Governance workstream.
 In scope: Maintain unit capacity, constraint, and recipe data | maintain transition and changeover rules | apply and validate effective-dated changes | confirm scheduling consistency after changes
 Out of scope: Supply-planning master data (CM-1-1-2-12) | demand-forecast data preparation (CM-1-1-1-1-1) | commercial master data (CM-1-3-7-1) | enterprise master-data policy (Data Governance workstream)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -2725,7 +2725,7 @@ proc:CM-1-2-1-2-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.2.1" ;
     skos:prefLabel "Create New Counterparty"@en ;
-    skos:scopeNote """Covers counterparty onboarding coordination: documentation collection and completeness validation, initiation and tracking of required clearances through their owning processes, setup of the counterparty record with settlement instructions and hierarchy links, and activation for trading once approvals are complete. Credit reviews and limits are owned by Perform Counterparty Credit Reviews (CM-1-2-2-1-1) and Manage Credit Limits (CM-1-2-2-1-2); compliance policy by Regulatory & Compliance (CM-1-2-4-3); legal review by Legal & Corporate Communications. Excludes independent KYC/sanctions determination, beneficial-owner due diligence, and regulatory-risk acceptance, which sit with the appropriate Regulatory & Compliance or Legal process when its detailed taxonomy is authored. Excludes commercial customer master data, owned by Manage Master Data under Order Management (CM-1-3-7-1) — trading counterparty records live here.
+    skos:scopeNote """Covers counterparty onboarding coordination: documentation collection and completeness validation, initiation and tracking of required clearances through their owning processes, setup of the counterparty record with settlement instructions and hierarchy links, and activation for trading once approvals are complete. Credit reviews and limits are owned by Perform Counterparty Credit Reviews (CM-1-2-2-1-1) and Manage Credit Limits (CM-1-2-2-1-2); compliance policy by Regulatory & Compliance (CM-1-2-4-3); legal review by Legal & Corporate Communications. Excludes independent KYC/sanctions determination, beneficial-owner due diligence, and regulatory-risk acceptance, which sit with the appropriate Regulatory & Compliance or Legal process when its detailed taxonomy is authored. Excludes commercial customer master data, owned by Manage Commercial Master Data Stewardship under Order Management (CM-1-3-7-1) — trading counterparty records live here.
 In scope: Collect and validate completeness of counterparty documentation | initiate and record required clearances through their accountable owners | create the counterparty record and settlement details once approvals complete | activate the counterparty for trading
 Out of scope: Independent KYC/sanctions determination, beneficial-owner due diligence, and regulatory-risk acceptance (Regulatory & Compliance / Legal) | credit reviews and limit setting (CM-1-2-2-1-1, CM-1-2-2-1-2) | legal review (Legal & Corporate Communications) | commercial customer master data (CM-1-3-7-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -6934,9 +6934,9 @@ proc:CM-1-3-10-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.1" ;
     skos:prefLabel "Setup and Maintain Customer In Terminal"@en ;
-    skos:scopeNote """This process maintains terminal-loading authorization and credential records from approved upstream decisions. It may record carrier, driver, vehicle, terminal, product, supply-position, tax-status, and credential eligibility attributes where required by the terminal operating model. It does not determine safety qualification, driver licensing, carrier eligibility, hazardous-materials compliance, tax status, credit status, or master identity; it consumes and applies the authoritative outcomes from their owning processes. Commercial eligibility is decided by the onboarding processes under the Governed Submission and Stewardship Rule, credit standing and holds by Manage Credit & Risk, due-diligence outcomes by KYC Process, and the governed customer record by Maintain Customer Master Data. Loading-Authorized Party is a governed role/relationship, not merely an access-control flag: setup resolves the approved customer-domain role decided under the governed customer model (Maintain Customer Master Data) and never redefines it. Authorization lifecycle: approved customer/carrier/driver/vehicle/product/supply-position data leads to terminal authorization/credential configuration, then authorization activation, ongoing monitoring of upstream status changes, suspension/revocation on loss of eligibility, and an audit trail with reactivation only on approved restoration. Fact-dependent statement: where applicable to a US terminal/rack transaction, the terminal commercial setup process consumes Tax-approved registration, certificate, position-holder, notification, and exemption-status outcomes required by the relevant federal, state, and contractual framework (SRC-IRS-P510-001 context). Tax and Legal determine applicability, legal status, and required evidence; setup records and applies the approved outcomes to terminal-loading authorization controls. Physical terminal operation belongs to the terminal operator (Terminal Operations Management, where company-operated per the locked Midstream rule).
+    skos:scopeNote """This process maintains terminal-loading authorization and credential records from approved upstream decisions. It may record carrier, driver, vehicle, terminal, product, supply-position, tax-status, and credential eligibility attributes where required by the terminal operating model. It does not determine safety qualification, driver licensing, carrier eligibility, hazardous-materials compliance, tax status, credit status, or master identity; it consumes and applies the authoritative outcomes from their owning processes. Commercial eligibility is decided by the onboarding processes under the Governed Submission and Stewardship Rule, credit standing and holds by Manage Credit & Risk, due-diligence outcomes by Perform KYC Due Diligence, and the governed customer record by Maintain Customer and Commercial Account Master Data. Loading-Authorized Party is a governed role/relationship, not merely an access-control flag: setup resolves the approved customer-domain role decided under the governed customer model (Maintain Customer and Commercial Account Master Data) and never redefines it. Authorization lifecycle: approved customer/carrier/driver/vehicle/product/supply-position data leads to terminal authorization/credential configuration, then authorization activation, ongoing monitoring of upstream status changes, suspension/revocation on loss of eligibility, and an audit trail with reactivation only on approved restoration. Fact-dependent statement: where applicable to a US terminal/rack transaction, the terminal commercial setup process consumes Tax-approved registration, certificate, position-holder, notification, and exemption-status outcomes required by the relevant federal, state, and contractual framework (SRC-IRS-P510-001 context). Tax and Legal determine applicability, legal status, and required evidence; setup records and applies the approved outcomes to terminal-loading authorization controls. Physical terminal operation belongs to the terminal operator (Terminal Operations Management, where company-operated per the locked Midstream rule).
 In scope: Lifting-authorization and credential record creation and maintenance in terminal loading systems | authorization activation | loading credential issuance, update, and revocation | permitted terminal, product, and supply-position mapping | carrier, driver, and vehicle authorization records (record-only, from accountable owners) | linkage of credit and allocation controls into loading authorization | recording of Tax-approved status outcomes | ongoing monitoring of upstream status changes | suspension, revocation, and audit-trailed reactivation on approved restoration
-Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners under the Governed Submission and Stewardship Rule) | credit decisions and holds (Manage Credit & Risk) | safety qualification, driver licensing, carrier eligibility, and hazardous-materials compliance (Safety and Carrier-management owners) | tax status determination (Tax and Legal) | customer master record ownership (Maintain Customer Master Data) | security and identity frameworks (Security owners) | physical terminal operations (Terminal Operations Management) | deal creation (Capture Deal)"""@en ;
+Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners under the Governed Submission and Stewardship Rule) | credit decisions and holds (Manage Credit & Risk) | safety qualification, driver licensing, carrier eligibility, and hazardous-materials compliance (Safety and Carrier-management owners) | tax status determination (Tax and Legal) | customer master record ownership (Maintain Customer and Commercial Account Master Data) | security and identity frameworks (Security owners) | physical terminal operations (Terminal Operations Management) | deal creation (Capture Deal)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Governed customer master records (CM-1-3-7-1-1) | credit standing and controls (CM-1-3-7-4) | KYC outcomes (CM-1-3-7-4-6) | executed deals (CM-1-3-10-4) | carrier/driver/vehicle qualification outcomes from accountable owners | Tax-approved status outcomes"@en ;
@@ -6945,7 +6945,7 @@ Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners
     intake:primaryPurpose "Only eligible, credit-cleared, tax-valid parties can lift product, and access ends when eligibility does."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-IRS-P510-001 | SRC-FMCSA-001"@en ;
-    intake:relatedConcepts "uses-input: Maintain Customer Master Data | informed-by: Manage Credit & Risk | informed-by: KYC Process | uses-input: Capture Deal | enables: Process Forecast and Nominations | enables: Manage Allocation"@en ;
+    intake:relatedConcepts "uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6) | uses-input: Capture Deal | enables: Process Forecast and Nominations | enables: Manage Allocation"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 41 (2026-09-21). Record-versus-decision wording, authorization lifecycle, and Tax/Legal-approved status wording adopted verbatim from review; Loading-Authorized Party is a governed role/relationship (CM-1-3-7-1-1), not merely an access-control flag. Receiving end of the onboarding/credit/KYC chain (b28/b31/b34). Naming queue: preferred label 'Set Up and Maintain Terminal Customer Authorization'. APQC 'Maintain IT customer contracts' is unrelated; comparative only."@en .
 
@@ -7020,7 +7020,7 @@ proc:CM-1-3-10-4 a skos:Concept ;
     skos:prefLabel "Capture Deal"@en ;
     skos:scopeNote """Boundary with Trade Capture (dual test, batch 41 decision): Terminal Sales Deal Capture records customer-facing terminal/rack commercial arrangements in the governed commercial/O2C pricing system when those arrangements authorize lifting, price commercial rack/spot supply, and feed terminal authorization, customer lifting nominations, allocation enforcement, billing, and customer service. Trade Capture records transactions governed in the trading book — trading-book physical purchases/sales, exchange, storage, financial, structured, transportation, and transmission deals — with their associated trading controls, confirmations, risk, actualization, settlement, and trading-accounting lifecycle. Where an arrangement has both terminal-commercial and trading-book representation, the authoritative record, system/interface, and reconciliation responsibility must be explicitly defined; neither process may create duplicate uncontrolled deal records. A deal belongs here only where the approved operating model identifies the commercial/O2C terminal sales record as the system of record for the customer-facing arrangement. If a trading-book deal also creates terminal lifting rights, the terminal authorization record must reference the governed trading/commercial deal identifier and consume the approved terms through controlled integration rather than re-create the deal. The process records the legal/commercial status assigned by the approved quote, agreement, contract, or order framework. It does not independently determine whether a document is binding, negotiate terms, approve a commercial arrangement, or establish price/discount master data. Captured deal content includes, as applicable: customer/supply account, terminal/rack, product/grade, supply position, contract/arrangement reference, price basis/mechanism, effective dates, volume commitment or lifting right, tax status, credit/authorization prerequisites, channel/brand status, terms references, deal/document legal status, and version/audit lineage. Price and discount conditions are maintained in governed price master data by their owning processes; this process links deals to them and never invents prices, honoring the Billing Integrity Rule's requirement for governed commercial inputs. Capture corrections are controlled commercial-record events that preserve the original record, reason, authorizing source, effective date, and downstream impact assessment. They do not silently overwrite lifting, billing, price, tax, or contractual history.
 In scope: Deal entry and validation against execution evidence | completeness checks on commercial terms | linkage to customer, supply account, terminal, product, supply position, price mechanism, and terms | recording of deal/document legal status and version/audit lineage | controlled correction of capture errors | making deal data available to setup, nominations, allocation, pricing application, and billing
-Out of scope: Deal negotiation and approval (Commercial owners under the delegation of authority) | binding-status determination (Approved quote, agreement, contract, or order framework owners) | trading-book transaction capture (Trade Capture) | price and discount master data (Manage Master Data owning processes) | billing execution (Manage Customer Invoicing and Billing)"""@en ;
+Out of scope: Deal negotiation and approval (Commercial owners under the delegation of authority) | binding-status determination (Approved quote, agreement, contract, or order framework owners) | trading-book transaction capture (Trade Capture) | price and discount master data (Manage Commercial Master Data Stewardship owning processes) | billing execution (Manage Customer Invoicing and Billing)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Executed deal terms and evidence | governed customer master (CM-1-3-7-1-1) | governed price and terms data (CM-1-3-7-1) | credit eligibility (CM-1-3-7-4)"@en ;
@@ -7029,7 +7029,7 @@ Out of scope: Deal negotiation and approval (Commercial owners under the delegat
     intake:primaryPurpose "Every terminal lifting traces to a completely recorded, authorized commercial arrangement."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-EIA-PMM-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Setup and Maintain Customer In Terminal | enables: Process Forecast and Nominations | uses-input: Maintain Customer Master Data | informed-by: Manage Credit & Risk"@en ;
+    intake:relatedConcepts "enables: Setup and Maintain Customer In Terminal | enables: Process Forecast and Nominations | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 41 (2026-09-21). Dual book-ownership/system-of-record boundary with Trade Capture (CM-1-2-1-3), legal-status wording, captured-content list, and controlled-correction wording adopted verbatim from review; the boundary is recorded as scope text because no controlled relationship type expresses a boundary. Naming queue: preferred label 'Capture Terminal Sales Deal' — high-priority name normalization. APQC 'Analyze deal options' (M&A) is unrelated; comparative only."@en .
 
@@ -8547,7 +8547,7 @@ Out of scope: Portfolio/retirement decisions (CM-1-3-4-5) | regulatory action ex
     intake:primaryPurpose "No change sneaks past the gates the product already earned."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-EPA-FF-001 | SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Product & Service Development | triggers: Manage Master Data (Customer, Price, Product, Tax, Location)"@en ;
+    intake:relatedConcepts "governed-by: Product & Service Development | triggers: Manage Commercial Master Data Stewardship (CM-1-3-7-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 25 (2026-09-20). Change-control child; review definition adopted verbatim with the broadened impact domains and effective-dated transition. Regulated-characteristic changes are potential triggers — Regulatory and Legal determine the applicable action (review wording verbatim in scope note). Relation rule (Hamid, review): change control 'governs-change-to' development outputs and 'may-follow' release rather than strictly following Conduct Product Development — these relation types are vocabulary-missing, so the strict precedes/follows chain is omitted per the batch 10 conditional-relation precedent and this rule is recorded verbatim: change control can apply during late development, validation, post-release maintenance, or service evolution. APQC 'Manage product and service portfolio' STRONG, no validator — adjacent match (portfolio is CM-1-3-4-5's); comparative only."@en .
 
@@ -9747,7 +9747,7 @@ Out of scope: Transaction processing (CM-1-3-7-2) | price determination/exceptio
     intake:primaryPurpose "Quotes that are sellable, priceable, and deliverable before they are sent — and binding only after the controls."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Manage Opportunity | precedes: Manage Contract & Order | enables: Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
+    intake:relatedConcepts "follows: Manage Opportunity | precedes: Manage Contract & Order | enables: Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 28 (2026-09-20). Commercial quote step of the partition — content here, transaction at CM-1-3-7-2; review non-binding statement and content specification verbatim in scope note. APQC 'Develop other HR programs' is a FALSE lexical match."@en .
 
@@ -10064,7 +10064,7 @@ proc:CM-1-3-6-6-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.1" ;
     skos:prefLabel "Setup Prospect"@en ;
-    skos:scopeNote """Onboarding coordination model (b28 precedent): setup coordinates commercial qualification and activation readiness through the owning controls — credit through Establish Credit Limit & Risk Code, identity through KYC Process, customer records through Maintain Customer Master Data — and each control retains its owner. Setup never grants credit, bypasses KYC, or writes directly into governed master data: it requests governed record creation and consumes the outcomes. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
+    skos:scopeNote """Onboarding coordination model (b28 precedent): setup coordinates commercial qualification and activation readiness through the owning controls — credit through Establish Credit Limit & Risk Code, identity through Perform KYC Due Diligence, customer records through Maintain Customer and Commercial Account Master Data — and each control retains its owner. Setup never grants credit, bypasses KYC, or writes directly into governed master data: it requests governed record creation and consumes the outcomes. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Application capture and completeness validation | initiation of Credit, KYC, Compliance, Master Data, contract, and program-eligibility controls | requests for governed record creation | activation readiness confirmation
 Out of scope: Credit decisions and limit setting (CM-1-3-7-4) | identity/KYC determinations (their owners) | master-data record ownership and writes outside governed submission (CM-1-3-7-1) | marketing acquisition campaigns"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -10075,7 +10075,7 @@ Out of scope: Credit decisions and limit setting (CM-1-3-7-4) | identity/KYC det
     intake:primaryPurpose "Qualified applicants converted into activation-ready members/cardholders through the owning controls."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "requires: KYC Process | requires: Establish Credit Limit & Risk Code | uses-input: Maintain Customer Master Data"@en ;
+    intake:relatedConcepts "requires: Perform KYC Due Diligence (CM-1-3-7-4-6) | requires: Establish Credit Limit & Risk Code | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 29 (2026-09-20). Review onboarding wording adopted verbatim; records are requested through governed controls, never owned here. Normalized label 'Set Up Prospect' recorded as alt label and queued for the naming pass."@en .
 
@@ -10321,7 +10321,7 @@ Out of scope: Credit and limit decisions (CM-1-3-7-4; Handle Card Limits within 
     intake:primaryPurpose "Card accounts kept accurate and serviced on authenticated customer instruction."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PCI-DSS-001"@en ;
-    intake:relatedConcepts "triggers: Manage Card Production & Monthly Reissue | uses-input: Maintain Customer Master Data"@en ;
+    intake:relatedConcepts "triggers: Manage Card Production & Monthly Reissue | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 29 (2026-09-20). Review authentication/authorization/audit rule adopted verbatim. Normalized label 'Manage Card Administration' recorded as alt label and queued — parenthetical examples belong in the definition, not the label."@en .
 
@@ -10553,14 +10553,14 @@ proc:CM-1-3-7-1-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10252"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Customer and Commercial Account Master Data"@en ;
+    skos:altLabel "Maintain Customer Master Data"@en ;
     skos:broader proc:CM-1-3-7-1 ;
     skos:definition "Maintain governed Party, Customer Account, account-role, hierarchy, address/location-reference, contact, commercial attribute, and relationship records as defined by the approved customer domain model. A customer master record may represent a party, account, role, relationship, or system-specific record according to the governed model; it must not collapse Sold-To, Bill-To, Payer, Ship-To, Loading-Authorized Party, dealer, distributor, or marketer meanings. Create, validate, update, deduplicate, and retire these records on authorized submissions, keeping them accurate, unique within the governed model, and consumable by sales, fulfillment, billing, credit, and service processes."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1.1" ;
-    skos:prefLabel "Maintain Customer Master Data"@en ;
-    skos:scopeNote """Who decides: commercial qualification, credit standing, and KYC outcomes are decided by their owning processes (prospect onboarding coordination, Manage Credit & Risk, KYC Process); this process records and maintains the governed result and never grants status. Record creation is requested through governed submission (the Setup Prospect rule, owner's side). Customer personal data is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit. Contact details, communication preferences, suppression indicators, and consent/lawful-basis records may be linked to commercial master data where authorized, but the existence of an email, phone number, address, account relationship, or contactability attribute never creates marketing permission. The consent/preference framework remains separately governed.
-In scope: Party, account, role, hierarchy, and relationship record creation on authorized request | validation, enrichment, deduplication within the governed customer domain model | change application with audit trails | quality monitoring and remediation | controlled retirement/closure recording per Perform Customer Closure & Reinstatement decisions
+    skos:prefLabel "Maintain Customer and Commercial Account Master Data"@en ;
+    skos:scopeNote """Who decides: commercial qualification, credit standing, and KYC outcomes are decided by their owning processes (prospect onboarding coordination, Manage Credit & Risk, Perform KYC Due Diligence); this process records and maintains the governed result and never grants status. Record creation is requested through governed submission (the Setup Prospect rule, owner's side). Customer personal data is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit. Contact details, communication preferences, suppression indicators, and consent/lawful-basis records may be linked to commercial master data where authorized, but the existence of an email, phone number, address, account relationship, or contactability attribute never creates marketing permission. The consent/preference framework remains separately governed.
+In scope: Party, account, role, hierarchy, and relationship record creation on authorized request | validation, enrichment, deduplication within the governed customer domain model | change application with audit trails | quality monitoring and remediation | controlled retirement/closure recording per Perform Credit-Driven Customer Closure and Reinstatement decisions
 Out of scope: Credit, KYC, and qualification decisions (their owners) | consent creation or consent/preference framework ownership | customer relationship management | customer domain model definition (Data Governance) | privacy framework setting"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
@@ -10570,9 +10570,9 @@ Out of scope: Credit, KYC, and qualification decisions (their owners) | consent 
     intake:primaryPurpose "Accurate, governed party and account records, distinct by role, consumable everywhere needed."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Setup Prospect | enables: Manage Customer Invoicing and Billing | informed-by: KYC Process"@en ;
+    intake:relatedConcepts "enables: Setup Prospect | enables: Manage Customer Invoicing and Billing | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 31 (2026-09-20). Review Party/Customer Account/role wording adopted verbatim — never collapses Sold-To, Bill-To, Payer, Ship-To, Loading-Authorized Party, dealer, distributor, or marketer meanings; strengthened consent separation adopted verbatim. Preferred label 'Maintain Customer and Commercial Account Master Data' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 31 (2026-09-20). Review Party/Customer Account/role wording adopted verbatim — never collapses Sold-To, Bill-To, Payer, Ship-To, Loading-Authorized Party, dealer, distributor, or marketer meanings; strengthened consent separation adopted verbatim. Preferred label 'Maintain Customer and Commercial Account Master Data' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Customer Master Data' to 'Maintain Customer and Commercial Account Master Data'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-1-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10608,12 +10608,12 @@ proc:CM-1-3-7-1-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10252"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Product and Service Master Data"@en ;
+    skos:altLabel "Maintain Product Master Data"@en ;
     skos:broader proc:CM-1-3-7-1 ;
     skos:definition "Maintain governed product and service master records: create and update records, attributes, units of measure, classifications, and hierarchies on authorized submissions from the accountable product owners, keeping the catalog accurate and consumable by pricing, ordering, fulfillment, and billing."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1.3" ;
-    skos:prefLabel "Maintain Product Master Data"@en ;
+    skos:prefLabel "Maintain Product and Service Master Data"@en ;
     skos:scopeNote """Product master data maintains the approved commercial/product catalog representation, including identifiers, product hierarchy, UoM, commercial attributes, tax/handling classifications, lifecycle status, and approved specification references. The authoritative technical specification, quality, regulatory, formulation, and manufacturing sources remain with their accountable owners. Who decides: product and service definitions, specifications, formulations, and lifecycle decisions (introduce, change, discontinue) belong to the accountable product management and innovation processes; this process records the decided catalog content with effective-dating and never defines, approves, or discontinues an offer.
 In scope: Product and service record creation and maintenance on authorized submission | identifiers, hierarchy, UoM, commercial attributes, tax/handling classifications | effective-dated lifecycle status recording | approved specification references | quality monitoring and remediation | audit trails
 Out of scope: Product/service definition, specification, and lifecycle decisions (product management/innovation) | authoritative technical specification, quality, regulatory, formulation, and manufacturing sources (their owners) | pricing (CM-1-3-7-1-2) | inventory (supply chain)"""@en ;
@@ -10627,7 +10627,7 @@ Out of scope: Product/service definition, specification, and lifecycle decisions
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "enables: Capture & Validate Order | enables: Create & Distribute Bill"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 31 (2026-09-20). Review specification distinction adopted verbatim — catalog representation here, authoritative technical/quality/regulatory sources with their owners (material for fuels, additives, lubricants, and regulated products). Preferred label 'Maintain Product and Service Master Data' recorded as alt label and queued — scope includes services."@en .
+    intake:terminologyNotes "Batch 31 (2026-09-20). Review specification distinction adopted verbatim — catalog representation here, authoritative technical/quality/regulatory sources with their owners (material for fuels, additives, lubricants, and regulated products). Preferred label 'Maintain Product and Service Master Data' recorded as alt label and queued — scope includes services. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Product Master Data' to 'Maintain Product and Service Master Data'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-1-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10663,12 +10663,12 @@ proc:CM-1-3-7-1-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20950"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Commercial Workflow Configuration"@en ;
+    skos:altLabel "Maintain Workflows"@en ;
     skos:broader proc:CM-1-3-7-1 ;
     skos:definition "Maintain the governed workflow configurations that control commercial transactions and master-data changes — approval chains, routing rules, thresholds, and escalation paths — keeping them aligned with approved delegations of authority and process designs, tested, versioned, and auditable."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1.5" ;
-    skos:prefLabel "Maintain Workflows"@en ;
+    skos:prefLabel "Maintain Commercial Workflow Configuration"@en ;
     skos:scopeNote """Workflow configurations implement approved delegations of authority and process designs; they never create authority. A workflow that routes an approval differently from the approved delegation is a defect to correct, not a decision to make — changes to authority itself are approved through the delegation governance owners before any configuration change. The process owns business configuration requirements and validation of workflow behavior against approved authorities. IT owns platform administration, application security, code/configuration deployment controls, integration operation, monitoring, recovery, and technical change management.
 In scope: Business configuration requirements and workflow-behavior validation against approved authorities | threshold, routing, and escalation rule administration | configuration testing and version control | periodic reconciliation of configurations against approved delegations | audit trails
 Out of scope: Delegation of authority approval (DoA governance owners) | process design approval (accountable process owners) | platform administration, application security, deployment controls, integration operation, monitoring, recovery, and technical change management (IT / Process Excellence) | the approvals the workflows route (their accountable processes)"""@en ;
@@ -10680,9 +10680,9 @@ Out of scope: Delegation of authority approval (DoA governance owners) | process
     intake:primaryPurpose "Every approval routed exactly as the approved authority prescribes."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Manage Master Data (Customer, Price, Product, Tax, Location) | enables: Establish Commercial Terms & Contracts"@en ;
+    intake:relatedConcepts "governed-by: Manage Commercial Master Data Stewardship (CM-1-3-7-1) | enables: Establish Commercial Terms & Contracts"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 31 (2026-09-20). Review technical-controls distinction adopted verbatim — business configuration here, platform controls with IT (low-code/ERP/CRM ambiguity resolved). Preferred label 'Maintain Commercial Workflow Configuration' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 31 (2026-09-20). Review technical-controls distinction adopted verbatim — business configuration here, platform controls with IT (low-code/ERP/CRM ambiguity resolved). Preferred label 'Maintain Commercial Workflow Configuration' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Workflows' to 'Maintain Commercial Workflow Configuration'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-1-6 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10691,12 +10691,12 @@ proc:CM-1-3-7-1-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10771"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Commercial Policy Content and Parameters"@en ;
+    skos:altLabel "Maintain Commercial Policies"@en ;
     skos:broader proc:CM-1-3-7-1 ;
     skos:definition "Maintain commercial policy content and system-consumable policy parameters as governed reference content. Formal policy approval, legal review, corporate publication, retention schedule, and enterprise document-management controls remain with the accountable governance and document-management owners. Administer, publish, version, and distribute the commercial policy content and parameters that transactions and workflows reference — terms frameworks, condition catalogs, policy parameters — keeping the published version identical to the approved one."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1.6" ;
-    skos:prefLabel "Maintain Commercial Policies"@en ;
+    skos:prefLabel "Maintain Commercial Policy Content and Approved Parameters"@en ;
     skos:scopeNote """Who decides: policy approval authority remains with the accountable governance owners — commercial leadership, Finance, Legal, and the applicable delegations; this process administers and publishes approved policy content and never approves, amends, or waives a policy. Policy parameters consumed by systems are maintained on the owners' approved direction with effective-dating; waivers and exceptions are decisions of the policy owners under the delegations of authority, recorded — not granted — here. Formal enterprise policy documents remain under the accountable governance and document-management controls; this process holds the commercial reference content and system-consumable parameters, not enterprise document-management authority.
 In scope: Commercial policy content administration, publication, versioning, distribution | system-consumable policy parameter maintenance on approved direction | effective-dating | retirement of superseded versions | audit trails
 Out of scope: Policy approval, amendment, waiver, and exception decisions (governance owners; delegations of authority) | legal review (Legal) | corporate publication, retention schedules, and enterprise document-management controls (their owners) | the commercial decisions policies govern"""@en ;
@@ -10708,9 +10708,9 @@ Out of scope: Policy approval, amendment, waiver, and exception decisions (gover
     intake:primaryPurpose "The policy content everyone consumes is exactly the content that was approved."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Manage Master Data (Customer, Price, Product, Tax, Location) | enables: Establish Commercial Terms & Contracts"@en ;
+    intake:relatedConcepts "governed-by: Manage Commercial Master Data Stewardship (CM-1-3-7-1) | enables: Establish Commercial Terms & Contracts"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 31 (2026-09-20). Review controlled-document distinction adopted verbatim — reference content and parameters here, enterprise policy-document authority with governance/document-management owners. Preferred label 'Maintain Commercial Policy Content and Parameters' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 31 (2026-09-20). Review controlled-document distinction adopted verbatim — reference content and parameters here, enterprise policy-document authority with governance/document-management owners. Preferred label 'Maintain Commercial Policy Content and Parameters' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Commercial Policies' to 'Maintain Commercial Policy Content and Approved Parameters'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-2-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10735,7 +10735,7 @@ Out of scope: Policy approval (governance owners) | price determination (CM-1-3-
     intake:primaryPurpose "Durable customer arrangements that downstream transactions apply without renegotiation."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Maintain Commercial Policies | enables: Manage Contract & Order | enables: Issue Quotes & Renewals"@en ;
+    intake:relatedConcepts "uses-input: Maintain Commercial Policy Content and Approved Parameters (CM-1-3-7-1-6) | enables: Manage Contract & Order | enables: Issue Quotes & Renewals"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 32 (2026-09-20). Review framework-vs-deal split confirmed (Establish here; Manage Contract & Order transacts within it); Legal/Contract Management/Master Data role split adopted verbatim; commercial-vs-legal lifecycle wording adopted verbatim."@en .
 
@@ -10898,7 +10898,7 @@ Out of scope: Credit decisions and hold releases (CM-1-3-7-4) | price/terms/tax 
     intake:primaryPurpose "Only valid, authorized, creditworthy orders enter the fulfillment pipeline."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Customer Portal | uses-input: Maintain Customer Master Data | informed-by: Monitor Credit Against Limit | precedes: Allocate & Release Order"@en ;
+    intake:relatedConcepts "uses-input: Manage Customer Portal | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Monitor Credit Against Limit | precedes: Allocate & Release Order"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 33 (2026-09-20). Review Party/Account/Role resolution sentence, applicable-eligibility-controls sentence, and duplicate-detection control adopted verbatim; b31 Party model and b32 portal rule receiving end."@en .
 
@@ -10953,7 +10953,7 @@ Out of scope: Overriding physical status or logistics cutoffs (physical processe
     intake:primaryPurpose "Order changes happen only when valid, priced right, fully propagated, and fully evidenced."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Capture & Validate Order | uses-input: Manage Fulfillment | enables: Manage Returns"@en ;
+    intake:relatedConcepts "follows: Capture & Validate Order | uses-input: Manage Fulfillment | enables: Manage Commercial Returns Authorization and Coordination (CM-1-3-7-3-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 33 (2026-09-20). Review history-preservation rule adopted verbatim. Normalized label 'Change or Cancel Order' recorded as alt label and queued."@en .
 
@@ -11019,12 +11019,12 @@ proc:CM-1-3-7-3-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11743"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Commercial Returns Authorization and Coordination"@en ;
+    skos:altLabel "Manage Returns"@en ;
     skos:broader proc:CM-1-3-7-3 ;
     skos:definition "Manage commercial return authorization and coordination; it does not determine product disposition, direct hazardous-product transport, issue a credit memo, or authorize a refund. Validate return requests against policy and the original order, coordinate authorized physical return through the accountable logistics and quality processes, route product disposition to its owners, and hand financial credit to the billing controls."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.3.6" ;
-    skos:prefLabel "Manage Returns"@en ;
+    skos:prefLabel "Manage Commercial Returns Authorization and Coordination"@en ;
     skos:scopeNote """Downstream return taxonomy: bulk fuel/product returns are exceptional — off-spec, contamination, delivery error, tank-integrity concern, custody/quality dispute, or safety/EHS incident — with disposition (return to stock, downgrade, reprocess, dispose) a Quality/EHS/Operations determination; packaged lubricants/consumables return per commercial policy with warehouse/logistics and quality; damaged/defective and misdelivery/wrong-product recovery combine quality, logistics, and commercial coordination; containers, totes, cylinders, and similar assets follow the asset/container processes; cancellation before dispatch is Change / Cancel Order's; billing adjustment without physical return is the invoicing/credit-memo/dispute processes'. Return transport of hazardous product follows the applicable transport safety regulations and company procedures (FMCSA cited as transport-safety context only — PHMSA/HMR, state, maritime/rail, and site rules may also apply). Financial credit flows exclusively through Manage Customer Invoicing and Billing controls; the payment-authority rule applies to any refund instruction. Root causes feed quality and order-process improvement.
 In scope: Return request validation against policy and original order | commercial return authorization | coordination of authorized physical return with logistics and quality owners | disposition routing to Quality/EHS/Operations owners | credit handoff to billing controls | return records and root-cause routing
 Out of scope: Product disposition decisions (Quality/EHS/Operations) | physical return transport execution (logistics; applicable transport regulations) | container/asset recovery processes (their owners) | credit memo issuance (CM-1-3-8-1) | refund execution (Finance; payment-authority rule) | return policy setting (policy owners)"""@en ;
@@ -11038,7 +11038,7 @@ Out of scope: Product disposition decisions (Quality/EHS/Operations) | physical 
     intake:referenceSources "SRC-APQC-PCF-001; SRC-FMCSA-001"@en ;
     intake:relatedConcepts "follows: Change / Cancel Order | enables: Create Credit Memo | uses-input: Manage Fulfillment"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 33 (2026-09-20). Review authorization-and-coordination wording and return-category taxonomy adopted verbatim; FMCSA retained as transport-safety context only per review. Preferred label 'Manage Commercial Returns Authorization and Coordination' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 33 (2026-09-20). Review authorization-and-coordination wording and return-category taxonomy adopted verbatim; FMCSA retained as transport-safety context only per review. Preferred label 'Manage Commercial Returns Authorization and Coordination' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Manage Returns' to 'Manage Commercial Returns Authorization and Coordination'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-4-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11052,7 +11052,7 @@ proc:CM-1-3-7-4-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.4.1" ;
     skos:prefLabel "Maintain Credit Policies"@en ;
-    skos:scopeNote """Policies encode an appetite decided above: enterprise credit risk appetite is Finance's, and policy changes are approved through the credit governance owners (credit committee, Finance, delegations of authority) — this process drafts, maintains, and operationalizes, and its changes take effect only after that approval. Credit Policy owns substantive credit criteria and business rules; Maintain Commercial Policies administers controlled publication and system-consumable policy content. Neither process changes Finance-approved risk appetite without the required governance approval. Fact-dependent legal obligations affecting credit policy (including U.S. ECOA/Regulation B where applicable) are determined by Legal/Compliance and incorporated as they direct.
+    skos:scopeNote """Policies encode an appetite decided above: enterprise credit risk appetite is Finance's, and policy changes are approved through the credit governance owners (credit committee, Finance, delegations of authority) — this process drafts, maintains, and operationalizes, and its changes take effect only after that approval. Credit Policy owns substantive credit criteria and business rules; Maintain Commercial Policy Content and Approved Parameters administers controlled publication and system-consumable policy content. Neither process changes Finance-approved risk appetite without the required governance approval. Fact-dependent legal obligations affecting credit policy (including U.S. ECOA/Regulation B where applicable) are determined by Legal/Compliance and incorporated as they direct.
 In scope: Credit policy drafting and maintenance within approved appetite | credit standards, terms eligibility, security requirements, hold/release rules, delegation thresholds | policy performance review and revision proposals | publication through governed policy content | incorporation of Legal/Compliance-directed requirements
 Out of scope: Risk appetite setting and policy approval (Finance; credit governance; DoA) | customer-level decisions (CM-1-3-7-4-2) | policy content platform stewardship (CM-1-3-7-1-6) | legal determinations (Legal/Compliance)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -11063,7 +11063,7 @@ Out of scope: Risk appetite setting and policy approval (Finance; credit governa
     intake:primaryPurpose "One current, approved credit rulebook every credit decision runs on."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-REG-B-001"@en ;
-    intake:relatedConcepts "informed-by: Analyze Portfolio Credit Risk | enables: Establish Credit Limit & Risk Code | uses-input: Maintain Commercial Policies"@en ;
+    intake:relatedConcepts "informed-by: Analyze Portfolio Credit Risk | enables: Establish Credit Limit & Risk Code | uses-input: Maintain Commercial Policy Content and Approved Parameters (CM-1-3-7-1-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 34 (2026-09-20). Review policy-document distinction adopted verbatim, protecting the b31 policy-content rule."@en .
 
@@ -11090,7 +11090,7 @@ Out of scope: Policy setting (CM-1-3-7-4-1) | KYC execution (CM-1-3-7-4-6) | ove
     intake:primaryPurpose "Every customer's credit envelope is decided, evidenced, current, and governed."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-REG-B-001"@en ;
-    intake:relatedConcepts "follows: KYC Process | governed-by: Maintain Credit Policies | enables: Monitor Credit Against Limit | enables: Setup Prospect"@en ;
+    intake:relatedConcepts "follows: Perform KYC Due Diligence (CM-1-3-7-4-6) | governed-by: Maintain Credit Policies | enables: Monitor Credit Against Limit | enables: Setup Prospect"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 34 (2026-09-20). Review evidence hierarchy and mandatory-criteria rule adopted verbatim — a favorable financial assessment cannot override a Compliance/Legal restriction; fact-dependent ECOA/Regulation B statement retained with SRC-REG-B-001 registered for traceability per review."@en .
 
@@ -11155,13 +11155,13 @@ proc:CM-1-3-7-4-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10106"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Perform Credit-Driven Customer Closure and Reinstatement"@en ;
+    skos:altLabel "Perform Customer Closure & Reinstatement"@en ;
     skos:broader proc:CM-1-3-7-4 ;
     skos:definition "Determine and coordinate credit-driven suspension, closure, or reinstatement of commercial eligibility under approved policy. It does not dissolve a legal entity, unilaterally terminate contracts, extinguish debt, delete master data, or prevent Legal/Commercial owners from managing non-credit exits. Coordinate the closure or reinstatement workflow through the owning processes so records, orders, cards, collections, and contracts land consistently."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.4.5" ;
-    skos:prefLabel "Perform Customer Closure & Reinstatement"@en ;
-    skos:scopeNote """Decision here, execution through owners: master-data retirement or reactivation records through governed submission (Maintain Customer Master Data records per this process's decisions); open orders resolve through the order processes; card servicing through the card program; collections continue through Manage Collection and Disputes — closure never extinguishes a debt or a collection; contract termination executes through Legal and Contract Management under the agreements. Commercial exits for non-credit reasons are decisions of the accountable commercial owners; legal-entity closure, account closure, service shutdown, and regulatory deactivation have their own owners. Reinstatement requires the applicable credit reassessment (limits, KYC refresh) before reopening.
+    skos:prefLabel "Perform Credit-Driven Customer Closure and Reinstatement"@en ;
+    skos:scopeNote """Decision here, execution through owners: master-data retirement or reactivation records through governed submission (Maintain Customer and Commercial Account Master Data records per this process's decisions); open orders resolve through the order processes; card servicing through the card program; collections continue through Manage Collection and Disputes — closure never extinguishes a debt or a collection; contract termination executes through Legal and Contract Management under the agreements. Commercial exits for non-credit reasons are decisions of the accountable commercial owners; legal-entity closure, account closure, service shutdown, and regulatory deactivation have their own owners. Reinstatement requires the applicable credit reassessment (limits, KYC refresh) before reopening.
 In scope: Credit-driven suspension, closure, and reinstatement decisions of commercial eligibility per policy and DoA | workflow coordination across master data, orders, cards, collections, and contracts | reinstatement reassessment gating | complete closure records
 Out of scope: Non-credit commercial exits (commercial owners) | legal-entity dissolution, contract termination execution, and regulatory deactivation (Legal; Contract Management; their owners) | debt extinguishment and collections (CM-1-3-8-3) | master-data deletion or writes outside governed submission"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -11172,9 +11172,9 @@ Out of scope: Non-credit commercial exits (commercial owners) | legal-entity dis
     intake:primaryPurpose "Credit eligibility closes and reopens deliberately, completely, and on the record."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "informed-by: Monitor Credit Against Limit | enables: Maintain Customer Master Data | uses-input: Collection Management"@en ;
+    intake:relatedConcepts "informed-by: Monitor Credit Against Limit | enables: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | uses-input: Collection Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 34 (2026-09-20). Review credit-driven recast adopted verbatim — suspension/closure/reinstatement of commercial eligibility only, never entity dissolution, contract termination, debt extinguishment, or data deletion. Preferred label 'Perform Credit-Driven Customer Closure and Reinstatement' recorded as alt label and queued (more than punctuation: prevents conflict with general customer-closure processes)."@en .
+    intake:terminologyNotes "Batch 34 (2026-09-20). Review credit-driven recast adopted verbatim — suspension/closure/reinstatement of commercial eligibility only, never entity dissolution, contract termination, debt extinguishment, or data deletion. Preferred label 'Perform Credit-Driven Customer Closure and Reinstatement' recorded as alt label and queued (more than punctuation: prevents conflict with general customer-closure processes). Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Perform Customer Closure & Reinstatement' to 'Perform Credit-Driven Customer Closure and Reinstatement'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-4-6 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11183,12 +11183,12 @@ proc:CM-1-3-7-4-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20094"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Perform KYC Due Diligence"@en ;
+    skos:altLabel "KYC Process"@en ;
     skos:broader proc:CM-1-3-7-4 ;
     skos:definition "Execute know-your-customer due diligence: verify customer identity and legal existence, collect, verify, and maintain beneficial-ownership information where required by applicable policy, law, regulation, customer type, or risk rating, screen customers and counterparties against sanctions and watchlists, assess KYC risk per the enterprise framework, and refresh due diligence on the required cycles and trigger events."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.4.6" ;
-    skos:prefLabel "KYC Process"@en ;
+    skos:prefLabel "Perform KYC Due Diligence"@en ;
     skos:scopeNote """Execution, not framework ownership: the sanctions compliance and financial-crime frameworks are owned by Compliance and Legal; this process executes them. Potential sanctions, watchlist, PEP, adverse-media, beneficial-ownership, identity, or document discrepancies are escalated for designated Compliance/Legal review. The KYC process does not clear a true/false match, grant exceptions, or determine permissibility of a relationship. Fact-dependent statement: U.S. sanctions administered by OFAC apply broadly to U.S. persons — customer and counterparty screening against the SDN and other OFAC lists is performed per the enterprise sanctions compliance program; anti-money-laundering program obligations are fact-dependent on the entity's regulatory status and activities; applicability and program design are Compliance/Legal determinations. Refresh triggers may be time-based, event-driven, risk-rating driven, ownership/control-change driven, negative-news or sanctions-driven, or transaction/activity-triggered. KYC outcomes gate onboarding (Setup Prospect requires them; customer master records them) and feed credit assessment. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Identity and legal-existence verification | collection, verification, and maintenance of beneficial-ownership information where required | sanctions and watchlist screening per the enterprise program | KYC risk assessment per framework | refresh on required cycles and trigger events | escalation of potential matches and discrepancies to designated Compliance/Legal review | KYC records
 Out of scope: Sanctions/AML framework ownership, match clearing, exceptions, and relationship-permissibility determinations (Compliance; Legal) | credit decisions (CM-1-3-7-4-2) | onboarding coordination (Setup Prospect) | privacy framework setting"""@en ;
@@ -11202,7 +11202,7 @@ Out of scope: Sanctions/AML framework ownership, match clearing, exceptions, and
     intake:referenceSources "SRC-APQC-PCF-001; SRC-OFAC-001"@en ;
     intake:relatedConcepts "enables: Setup Prospect | enables: Establish Credit Limit & Risk Code | governed-by: Manage Credit & Risk"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 34 (2026-09-20). Review beneficial-ownership wording (collect/verify/maintain, never legally 'establish') and match-escalation rule adopted verbatim; refresh-trigger taxonomy per review. Preferred label 'Perform KYC Due Diligence' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 34 (2026-09-20). Review beneficial-ownership wording (collect/verify/maintain, never legally 'establish') and match-escalation rule adopted verbatim; refresh-trigger taxonomy per review. Preferred label 'Perform KYC Due Diligence' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'KYC Process' to 'Perform KYC Due Diligence'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-5-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11211,12 +11211,12 @@ proc:CM-1-3-7-5-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10324"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Prioritize Customer Requests and Inquiries"@en ;
+    skos:altLabel "Establish Priority Assignment of Customer Request/Inquiry"@en ;
     skos:broader proc:CM-1-3-7-5 ;
     skos:definition "Assign priority to each incoming customer request, inquiry, or complaint per the approved prioritization framework, and maintain that framework current with service experience. Priority is assigned using an approved framework that may include safety/regulatory escalation, customer impact, service commitment, financial/commercial impact, vulnerability/criticality, operational impact, recurrence, and required response time."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.5.1" ;
-    skos:prefLabel "Establish Priority Assignment of Customer Request/Inquiry"@en ;
+    skos:prefLabel "Prioritize Customer Requests and Inquiries"@en ;
     skos:scopeNote """Safety first, outside the queue: Any request, complaint, or communication indicating a potential product-quality, safety, environmental, spill/release, contamination, security, or regulatory event is immediately captured and escalated to the accountable Quality, EHS, Security, and Operations processes under their incident protocols. The service capability does not assess severity, determine reportability, investigate the event, delay escalation pending normal prioritization, or close the incident; it tracks the customer-facing case and communications. Priority frameworks, tiers, and service-level commitments are approved through the accountable service governance; per-case assignment applies the approved framework (apply-not-make, the standing pattern). Customer-tier treatment follows approved commercial terms, never ad-hoc preference.
 In scope: Per-case priority assignment per approved framework | immediate safety/quality/environmental/security escalation under incident protocols | framework maintenance proposals from service experience | priority-queue integrity
 Out of scope: Framework, tier, and service-level approval (service governance) | safety/quality/security assessment and incident ownership (Quality; EHS; Security; Operations) | resolution execution (CM-1-3-7-5-3) | commercial terms decisions"""@en ;
@@ -11230,7 +11230,7 @@ Out of scope: Framework, tier, and service-level approval (service governance) |
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "precedes: Process Inquiries and Requests | governed-by: Manage Customer Requests and Inquiries"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 35 (2026-09-20). Review priority-taxonomy sentence adopted verbatim (framework-defined, not universally numerical); safety-escalation rule per the L4. Preferred label 'Prioritize Customer Requests and Inquiries' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 35 (2026-09-20). Review priority-taxonomy sentence adopted verbatim (framework-defined, not universally numerical); safety-escalation rule per the L4. Preferred label 'Prioritize Customer Requests and Inquiries' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Establish Priority Assignment of Customer Request/Inquiry' to 'Prioritize Customer Requests and Inquiries'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-5-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11239,12 +11239,12 @@ proc:CM-1-3-7-5-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10252"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Maintain Customer Request and Inquiry Records"@en ;
+    skos:altLabel "Maintain Requests and Inquiries Master Database"@en ;
     skos:broader proc:CM-1-3-7-5 ;
     skos:definition "Maintain governed operational case and interaction records for customer requests, inquiries, complaints, and service communications, including categorization, ownership, status, timestamps, routing, correspondence, evidence links, resolution outcome, and retention classification."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.5.2" ;
-    skos:prefLabel "Maintain Requests and Inquiries Master Database"@en ;
+    skos:prefLabel "Maintain Customer Request and Inquiry Records"@en ;
     skos:scopeNote """Case records, not master data: these are operational service records, distinct from the enterprise master-data domains (batch 31) — nothing here creates or changes customer, price, product, or tax master data, which move only through governed submission. Case records carry: unique case identifier; channel/source; customer/account/party reference; request category/subcategory; priority; safety/compliance flag; owning process/queue; status; timestamps; SLA/commitment; escalation history; related order/invoice/contract/card/incident identifiers; resolution code; customer communication evidence; and retention/disposition classification. Case merge preserves original identifiers, source events, communications, audit history, and linked outcomes; it must not delete or obscure complaint/incident evidence. The service record references the incident/case identifier managed by the accountable process. It does not become the incident system of record. Platform administration, application security, and technical operations are IT's (the batch 31 technical-controls distinction). Personal data in case records is governed under the enterprise personal-data governance framework; retention, legal holds, and disposal follow the records-management policy.
 In scope: Case record stewardship across channels and routed processes | categorization taxonomy maintenance | data quality and status integrity | duplicate merge preserving identifiers, communications, audit history, and linked outcomes | retention, legal-hold, and disposal handling per records policy | case reporting data provision
 Out of scope: Master-data domains and changes (CM-1-3-7-1; governed submission) | incident system of record (accountable incident processes) | platform and technical operations (IT) | case resolution (CM-1-3-7-5-3) | records-management policy setting"""@en ;
@@ -11258,7 +11258,7 @@ Out of scope: Master-data domains and changes (CM-1-3-7-1; governed submission) 
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "enables: Process Inquiries and Requests | enables: Perform Customer Follow up | governed-by: Manage Customer Requests and Inquiries"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 35 (2026-09-20). Review refined definition, case-state control list, and merge safeguard adopted verbatim — merge never deletes or obscures complaint/incident evidence (matters for disputes, EHS complaints, regulated issues, legal holds). Preferred label 'Maintain Customer Request and Inquiry Records' recorded as alt label and queued — removes the incorrect 'master' implication."@en .
+    intake:terminologyNotes "Batch 35 (2026-09-20). Review refined definition, case-state control list, and merge safeguard adopted verbatim — merge never deletes or obscures complaint/incident evidence (matters for disputes, EHS complaints, regulated issues, legal holds). Preferred label 'Maintain Customer Request and Inquiry Records' recorded as alt label and queued — removes the incorrect 'master' implication. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Requests and Inquiries Master Database' to 'Maintain Customer Request and Inquiry Records'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-5-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11283,7 +11283,7 @@ Out of scope: Dispute adjudication (CM-1-3-8-3-1) | billing corrections and cred
     intake:primaryPurpose "Every case resolves through the right owner, and the customer always hears back."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Establish Priority Assignment of Customer Request/Inquiry | enables: Dispute Management | enables: Perform Customer Follow up"@en ;
+    intake:relatedConcepts "follows: Prioritize Customer Requests and Inquiries (CM-1-3-7-5-1) | enables: Dispute Management | enables: Perform Customer Follow up"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 35 (2026-09-20). Review information-source safeguard adopted verbatim — the no-shadow-decision rule's answer-side twin: governed content or confirmed owner outcomes only, no inference or promises."@en .
 
@@ -11475,7 +11475,7 @@ Out of scope: Credit decisions and instructions (rebates, returns, disputes, cor
     intake:primaryPurpose "Every customer credit is instructed, evidenced, approved, and traceable end to end."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Settle Rebate | uses-input: Manage Returns | uses-input: Dispute Management | enables: Manage Cash Application, A/R & Revenue Accounting"@en ;
+    intake:relatedConcepts "uses-input: Settle Rebate | uses-input: Manage Commercial Returns Authorization and Coordination (CM-1-3-7-3-6) | uses-input: Dispute Management | enables: Manage Cash Application, A/R & Revenue Accounting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 36 (2026-09-21). Review originating-process validation list and governed-data/downstream-process conditions adopted verbatim; credit-memo vs refund vs offset vs write-off distinctions per review. Review preferred an 'informs' relation toward cash application — 'informs' is not in the relationship vocabulary (b10/b23 precedent): recorded here verbatim, nearest vocabulary applied to the locked L4 name."@en .
 
@@ -12165,7 +12165,7 @@ Out of scope: Master data (CM-1-3-7-1; governed submission) | the case record (C
     intake:primaryPurpose "Delivery always runs on accurate, linked, governed operational data."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Fulfill Service Event | uses-input: Maintain Customer Master Data"@en ;
+    intake:relatedConcepts "enables: Fulfill Service Event | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review five-way data distinction adopted verbatim. Preferred label 'Manage Service Delivery Data' recorded as alt label and queued — disambiguates the generic locked name."@en .
 
@@ -13919,7 +13919,7 @@ proc:CM-1-3-6-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.1" ;
     skos:prefLabel "Channel & Partner Management"@en ;
-    skos:scopeNote """Covers channel partner relationship execution: managing franchisee relationships under their franchise agreements (CM-1-3-6-1-1), managing licensed-brand provider relationships (CM-1-3-6-1-2), reporting franchise performance (CM-1-3-6-1-3), and training and certifying franchise site managers (CM-1-3-6-1-4). Executes the engagement models designed at CM-1-3-3-3-4 and the channel offerings created at CM-1-3-3-3-1. Onboarding model (review): this process owns the commercial side — coordinate commercial partner qualification, selection recommendation, onboarding readiness, and relationship activation through the applicable delegated approvals, Credit, Compliance, Legal, Contract Management, Master Data, training, and operating-readiness processes — while each control retains its owner: credit review and limits with the credit process (b11); compliance/KYC/sanctions with Compliance, Legal, and the counterparty process; contract drafting, review, and execution with Legal; contract record administration with Contract Management where applicable; master-data setup with Manage Master Data (CM-1-3-7-1); brand/operator training via CM-1-3-6-1-4; site and operating readiness with the operating functions; final onboarding approval with the delegated authority. Where an arrangement meets the applicable statutory and contractual criteria for a motor-fuel franchise, changes involving trademark, supply, lease, renewal, termination, or non-renewal may be subject to PMPA and state-law constraints. Legal & Corporate Communications determines applicability, notice requirements, legal analysis, documentation, and formal legal action. Brand standards are owned at CM-1-3-6-7 (applied and reinforced here); rebates at CM-1-3-6-4. Excludes channel strategy and design (CM-1-3-2-4, CM-1-3-3-3); franchise and licensing legal work (Legal, locked rule); credit decisions (b11 boundary); compliance/KYC ownership (Compliance, Legal); master-data setup (CM-1-3-7-1); brand standards ownership (CM-1-3-6-7); rebate administration (CM-1-3-6-4); pricing (CM-1-3-6-3); site operations (operating functions).
+    skos:scopeNote """Covers channel partner relationship execution: managing franchisee relationships under their franchise agreements (CM-1-3-6-1-1), managing licensed-brand provider relationships (CM-1-3-6-1-2), reporting franchise performance (CM-1-3-6-1-3), and training and certifying franchise site managers (CM-1-3-6-1-4). Executes the engagement models designed at CM-1-3-3-3-4 and the channel offerings created at CM-1-3-3-3-1. Onboarding model (review): this process owns the commercial side — coordinate commercial partner qualification, selection recommendation, onboarding readiness, and relationship activation through the applicable delegated approvals, Credit, Compliance, Legal, Contract Management, Master Data, training, and operating-readiness processes — while each control retains its owner: credit review and limits with the credit process (b11); compliance/KYC/sanctions with Compliance, Legal, and the counterparty process; contract drafting, review, and execution with Legal; contract record administration with Contract Management where applicable; master-data setup with Manage Commercial Master Data Stewardship (CM-1-3-7-1); brand/operator training via CM-1-3-6-1-4; site and operating readiness with the operating functions; final onboarding approval with the delegated authority. Where an arrangement meets the applicable statutory and contractual criteria for a motor-fuel franchise, changes involving trademark, supply, lease, renewal, termination, or non-renewal may be subject to PMPA and state-law constraints. Legal & Corporate Communications determines applicability, notice requirements, legal analysis, documentation, and formal legal action. Brand standards are owned at CM-1-3-6-7 (applied and reinforced here); rebates at CM-1-3-6-4. Excludes channel strategy and design (CM-1-3-2-4, CM-1-3-3-3); franchise and licensing legal work (Legal, locked rule); credit decisions (b11 boundary); compliance/KYC ownership (Compliance, Legal); master-data setup (CM-1-3-7-1); brand standards ownership (CM-1-3-6-7); rebate administration (CM-1-3-6-4); pricing (CM-1-3-6-3); site operations (operating functions).
 In scope: Execute the designed partner engagement models | manage franchisee and licensed-brand relationships within their legal frameworks | coordinate commercial partner qualification, selection recommendation, onboarding readiness, and relationship activation through the accountable control owners | report partner performance and develop partner capability
 Out of scope: Channel strategy/design (CM-1-3-2-4, CM-1-3-3-3) | franchise/licensing legal work (Legal, locked rule) | credit decisions (b11) | compliance/KYC ownership (Compliance, Legal) | master-data setup (CM-1-3-7-1) | brand standards ownership (CM-1-3-6-7) | rebates (CM-1-3-6-4) | pricing (CM-1-3-6-3) | site operations (operating functions)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -14339,12 +14339,12 @@ proc:CM-1-3-7-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 14208"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Commercial Master Data Stewardship"@en ;
+    skos:altLabel "Manage Master Data (Customer, Price, Product, Tax, Location)"@en ;
     skos:broader proc:CM-1-3-7 ;
     skos:definition "The capability that stewards the governed commercial master data on which sales, pricing, fulfillment, billing, and service transactions depend — customer, price and discount, product and service, tax, and location/site records, together with the workflow configurations and commercial policy content that control how they change — maintaining each domain as validated, effective-dated, auditable records through concurrent stewardship processes."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1" ;
-    skos:prefLabel "Manage Master Data (Customer, Price, Product, Tax, Location)"@en ;
+    skos:prefLabel "Manage Commercial Master Data Stewardship"@en ;
     skos:scopeNote """Governed Submission and Stewardship Rule: accountable business processes decide the business content of a governed record — such as a price, rebate term, credit status, tax position, product definition, policy, workflow authority, or customer qualification outcome. Master-data stewardship validates submission completeness and authority, applies only approved changes through controlled workflows, effective-dates and versions the record, preserves lineage and audit evidence, monitors quality, and distributes the governed record to consumers. Submitting processes do not write directly to governed master data. Master-data processes do not create, alter, waive, or self-authorize the business decision encoded in the record. This capability is cross-functional. Commercial, Sales, Pricing, Product, Tax, Finance, Legal, Credit, Compliance, Operations, Data Governance, Security, and IT own different business decisions, controls, systems, and policies represented in commercial master data. The master-data stewardship capability governs controlled application, effective dating, quality, lineage, access, and distribution of approved records; taxonomy placement does not assign a single organizational owner. Location/site master stewardship is in scope at the capability level pending taxonomy normalization. It includes governed commercial location references needed for transactions — terminal, depot, rack, station, customer site, ship-to, delivery point, airport, port, route/service point, and related location-role mappings — applied from authorized submissions under location/governance controls. The capability operates within the enterprise data governance framework and Security-defined access controls. Customer personal data is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Customer, price/discount, product and service, tax, and location/site master data stewardship | governed change validation and application | data quality monitoring and remediation | effective-dating, versioning, lineage, and audit trails | workflow configuration and commercial policy content administration | access-controlled distribution to consuming processes
 Out of scope: The business decisions records encode (pricing, credit, KYC, tax positions, product definitions, policy approvals — their accountable processes) | direct writes by submitting processes | data platform/tooling ownership (IT) | enterprise data governance framework setting (Data Governance) | consent creation (consent/preference framework owner)"""@en ;
@@ -14358,7 +14358,7 @@ Out of scope: The business decisions records encode (pricing, credit, KYC, tax p
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "enables: Capture And Manage Order Fulfillment | enables: Manage Customer Invoicing and Billing | uses-input: Implement sales price"@en ;
     intake:responsibleDomain "Cross-functional (Commercial & Marketing / Data Governance / Sales / Pricing / Product / Tax / Finance / Legal / Credit / Compliance / Operations / Security / IT)"@en ;
-    intake:terminologyNotes "Batch 31 (2026-09-20). Capability per the heterogeneous-concurrent-control test; review cross-functional operating-model statement adopted verbatim and responsible_domain set cross-functional (b26 precedent); canonical Governed Submission and Stewardship Rule adopted verbatim as a durable decision. OPEN TAXONOMY ISSUE (logged, no PTC): the locked taxonomy lacks a dedicated 'Maintain Location and Site Master Data' child although the L4 name lists Location — location/site stewardship carried at capability level pending taxonomy normalization. Preferred label 'Manage Commercial Master Data Stewardship' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 31 (2026-09-20). Capability per the heterogeneous-concurrent-control test; review cross-functional operating-model statement adopted verbatim and responsible_domain set cross-functional (b26 precedent); canonical Governed Submission and Stewardship Rule adopted verbatim as a durable decision. OPEN TAXONOMY ISSUE (logged, no PTC): the locked taxonomy lacks a dedicated 'Maintain Location and Site Master Data' child although the L4 name lists Location — location/site stewardship carried at capability level pending taxonomy normalization. Preferred label 'Manage Commercial Master Data Stewardship' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Manage Master Data (Customer, Price, Product, Tax, Location)' to 'Manage Commercial Master Data Stewardship'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -14367,12 +14367,12 @@ proc:CM-1-3-7-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20593"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Commercial Terms, Quoting, and Customer Commercial Services"@en ;
+    skos:altLabel "Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
     skos:broader proc:CM-1-3-7 ;
     skos:definition "The capability that turns approved prices, policies, and credit decisions into governed customer commercial arrangements: establishing commercial terms and customer-facing frameworks, issuing quotes and renewals, planning and monitoring commercial revenue, defining offered financing and payment methods, analyzing customer profitability, and operating the customer self-service portal — concurrent commercial controls in O2C operations."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.2" ;
-    skos:prefLabel "Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
+    skos:prefLabel "Manage Commercial Terms, Quoting, and Customer Commercial Services"@en ;
     skos:scopeNote """This capability operationalizes decisions made elsewhere and decides none of them: prices are determined under Sales Pricing Management and pricing governance; policies are approved by their governance owners and consumed from governed policy content; credit terms and exposure are Credit's; payment instruments and banking arrangements are Treasury's; legal terms are Legal's. This capability establishes O2C commercial terms and customer-facing commercial frameworks. Enterprise/trading contract lifecycle administration, legal document control, counterparty-contract records, novation, termination, and master-agreement administration remain with Contract Management and Legal where applicable. Its rows are the operational counterparts of the sales-motion rows in Sales Execution: Establish Commercial Terms & Contracts sets up the durable terms framework within which Manage Contract & Order transacts deal-by-deal, and Issue Quotes & Renewals formally issues and lifecycle-manages what Develop Quote composes. All records flow through the Governed Submission and Stewardship Rule — terms, conditions, and methods take effect only as governed master data and policy content.
 In scope: Commercial terms and customer-facing framework establishment | quote issuance and renewal management | commercial revenue planning and monitoring | definition of offered financing and payment methods within approved instruments | customer profitability analysis | customer portal channel operation
 Out of scope: Price and discount determination (CM-1-3-6-3; CM-1-3-3-2) | credit decisions (CM-1-3-7-4) | payment instruments and banking arrangements (Treasury) | enterprise/trading contract lifecycle, legal document control, and counterparty-contract records (Contract Management; Legal) | order capture and fulfillment (CM-1-3-7-3) | invoicing (CM-1-3-8-1) | targets and quotas (their owners)"""@en ;
@@ -14384,9 +14384,9 @@ Out of scope: Price and discount determination (CM-1-3-6-3; CM-1-3-3-2) | credit
     intake:primaryPurpose "Every customer relationship transacts on governed, current, approved commercial arrangements."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Maintain Price & Discount Master Data | uses-input: Maintain Commercial Policies | enables: Capture And Manage Order Fulfillment"@en ;
+    intake:relatedConcepts "uses-input: Maintain Price & Discount Master Data | uses-input: Maintain Commercial Policy Content and Approved Parameters (CM-1-3-7-1-6) | enables: Capture And Manage Order Fulfillment"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 32 (2026-09-20). Capability per the heterogeneous-concurrent-control test; review Contract Management (batch 09) distinction adopted verbatim; 'Pricing' in the locked name is a misnomer — pricing authority is deliberately elsewhere. Preferred label 'Manage Commercial Terms, Quoting, and Customer Commercial Services' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 32 (2026-09-20). Capability per the heterogeneous-concurrent-control test; review Contract Management (batch 09) distinction adopted verbatim; 'Pricing' in the locked name is a misnomer — pricing authority is deliberately elsewhere. Preferred label 'Manage Commercial Terms, Quoting, and Customer Commercial Services' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Manage Pricing & Contracting (Manage Quote & Sale)' to 'Manage Commercial Terms, Quoting, and Customer Commercial Services'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -14411,7 +14411,7 @@ Out of scope: Physical scheduling, dispatch, loading, transport, delivery, and c
     intake:primaryPurpose "Every order flows from capture to evidenced fulfillment under governed controls, ready to bill."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Master Data (Customer, Price, Product, Tax, Location) | governed-by: Manage Credit & Risk | enables: Manage Customer Invoicing and Billing"@en ;
+    intake:relatedConcepts "uses-input: Manage Commercial Master Data Stewardship (CM-1-3-7-1) | governed-by: Manage Credit & Risk | enables: Manage Customer Invoicing and Billing"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 33 (2026-09-20). Review wording adopted verbatim: governed commercial order lifecycle and commercial fulfillment coordination; the order/fulfillment/inventory/custody/title/billing/payment status distinction; and the commercial-exception model. Evidence is received, linked, validated, and retained — never created — by O2C."@en .
 
@@ -14633,7 +14633,7 @@ Out of scope: O2C transaction processing (CM-1-3-7-2/-3, CM-1-3-8) | credit (CM-
     intake:primaryPurpose "The plan turned into orders, one pursued opportunity at a time."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "informed-by: Sales Planning (CM-1-3-5-1) | uses-input: Sales Pricing Management | enables: Manage Pricing & Contracting (Manage Quote & Sale)"@en ;
+    intake:relatedConcepts "informed-by: Sales Planning (CM-1-3-5-1) | uses-input: Sales Pricing Management | enables: Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 28 (2026-09-20). Concept-type: process — the standing commercial-pursuit cluster; continuous. Lifecycle: Pipeline → Opportunity → Quote → Commercial Contract and Order Relationship → Serve, with Key Accounts a continuous overlay across the full lifecycle and Measure & report the periodic feedback loop to planning, pipeline, account plans, offers, and pricing strategy — not a strict line (review). Controlled-handoff wording per review: won business exists only after quote acceptance, credit clearance, contract/legal readiness, and order acceptance in the accountable processes. APQC 'Develop sales strategy' is a WEAK strategy-side match."@en .
 
