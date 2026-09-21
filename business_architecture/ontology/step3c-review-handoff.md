@@ -206,12 +206,22 @@ Sheets: `Start Here — Decisions & Phases`, `Review & authoring`, `Column guide
 - Batch sizing suggestion: offer 40 = CM-1-3-9 (15 rows), 41 = CM-1-3-10 (4 rows), with the option to take them whole — Hamid decides.
 
 **Held (not yours to author without instruction):**
-- `CM-1-1-3-5-3 Process Business Renewal Request` — pending Hamid's business confirmation.
-- `L0-downstream-operations`, `L0-enabling-functions` — L0 roots, pending; raise their disposition (author, backfill pass, or leave) with Hamid at the end.
+- `CM-1-1-3-5-3 Process Business Renewal Request` — pending Hamid's business confirmation. The sole intentional pending row after batch 42; do not force it approved.
 - PTC-001 rows (retired/blocked) — untouchable; PTC-001 closes in Step 3d.
 - The 15 pre-intake notes — backfill in a later authored pass, per the validator's own instruction.
+- ~~`L0-downstream-operations`, `L0-enabling-functions`~~ — dispositioned: approved as scheme roots in batch 42 (PR #82) under the `SCHEME_ROOT_APPROVED` gate whitelist.
 
-**After the last batch:** the naming-pass queue (accumulated in terminology notes and PR bodies), the open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, etc. — all recorded in PR follow-up sections), and Step 3d (PTC resolution) are the known next workstreams — Hamid directs them.
+**THE INTAKE IS COMPLETE (batch 42, PR #82). The next work item is the naming pass.**
+
+The queue is the controlled Draft artifact `business_architecture/ontology/step3c-naming-pass-queue.md` (**EPM-BA-NAMING-QUEUE-001**) — 92 queued renames extracted from the completed workbook's terminology notes, classified six ways. Execute it as the **first Step 3d activity**, in this order and under these rules:
+
+1. **Critical semantic collision first** (8 entries — duplicate prefLabels such as the two `Determine Taxability` rows, the five `Define KPI Framework` rows, `Demand Forecasting` L3/L4, `Inventory`/`Manage Inventory`). These are the only entries that gate semantic-model publication; nothing publishes with duplicate prefLabels outstanding.
+2. Then authority-risk, scope-ambiguity, directionality, generic-label, and normalization-only categories — same pass, no publication gate.
+3. Deliver the proposed rename set to Hamid **in chat for review before any file changes**, exactly like a definition batch. The queue artifact itself authorizes no renames.
+4. Each executed rename: queued label becomes the prefLabel, the old name becomes an alt label — nothing is deleted, only re-ranked. Renames ripple into the workbook name column, the TTL regeneration, the identity map, breadcrumbs, and every `related_concepts` cell naming the row — the pass must sweep all of them and re-run the validation gate and taxonomy regen.
+5. After the naming pass: PTC-001 resolution and the pre-intake backfill authored pass (the rest of Step 3d, see the ontology playbook), and the `CM-1-1-3-5-3` disposition whenever the business owner answers.
+
+The open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, terminal system-of-record questions, etc. — all recorded in PR follow-up sections) remains a parallel backlog Hamid directs.
 
 ---
 

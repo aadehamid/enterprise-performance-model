@@ -378,6 +378,16 @@ problems found while authoring are therefore parked in
 `step3c-parked-tree-changes.md` as PTC entries. Step 3d is the single
 consolidated pass that applies them.
 
+- **First 3d activity — the naming pass (added 2026-09-21, batch 42).**
+  The Step 3c intake completed with 498 approved rows (PR #82) and a
+  controlled rename backlog: `step3c-naming-pass-queue.md`
+  (EPM-BA-NAMING-QUEUE-001, Draft), 92 queued renames in six categories.
+  The **Critical semantic collision** category (duplicate prefLabels)
+  gates semantic-model publication and runs first; the queue authorizes
+  no renames by itself — proposals go to Hamid for review like any
+  batch, and each executed rename promotes the queued label to prefLabel
+  with the old name kept as alt label, then sweeps the workbook, TTL
+  regen, identity map, and cross-references, and re-runs the gate.
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; 1 row retired, 3 blocked). PTC-002 closed 2026-09-18 with no
