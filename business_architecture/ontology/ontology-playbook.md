@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued renames, none applied yet) | Next — needs Hamid's scope call on the L1/decomposition question |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 8 critical collisions executed 2026-09-21 — in review, not merged) | In progress — naming PR under review; then needs Hamid's scope call on the L1/decomposition question |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -411,8 +411,42 @@ consolidated pass that applies them.
   gates semantic-model publication and runs first; the queue authorizes
   no renames by itself — proposals go to Hamid for review like any
   batch, and each executed rename promotes the queued label to prefLabel
-  with the old name kept as alt label, then sweeps the workbook, TTL
-  regen, identity map, and cross-references, and re-runs the gate.
+  with the old name kept as alt label (subject to the collision and
+  refinement rules recorded 2026-09-21, below), then sweeps the workbook,
+  TTL regen, identity map, and cross-references, and re-runs the gate.
+- **Phase 1 executed 2026-09-21 — in review, not merged.** All 8 critical
+  collisions renamed per Hamid's approval (2026-09-21), with two
+  refinements over the queued labels: `CM-1-1-1-1` → **Produce Demand
+  Forecast** (verb-led; `Demand Forecasting` is NOT kept as an altLabel
+  because the L3 parent keeps it as prefLabel) and the five
+  `Define KPI Framework` rows take domain-specific labels with the
+  shared generic label NOT kept as an ontology altLabel (scoped
+  historical aliases such as `Define KPI Framework (Offer)` recorded in
+  the identity/migration map). Approved labels:
+  `CM-1-1-1-1` → Produce Demand Forecast; `CM-1-1-3-7` → Inventory
+  Management (`Inventory` kept as altLabel); `CM-1-1-3-7-12` → Monitor
+  and Control Inventory Positions (`Manage Inventory` kept as altLabel);
+  `CM-1-3-3-1-4` → Define Offer Measurement Framework;
+  `CM-1-3-3-2-5` → Define Pricing Measurement Framework;
+  `CM-1-3-3-3-5` → Define Channel Measurement Framework;
+  `CM-1-3-3-4-4` → Define Network Measurement Framework;
+  `CM-1-3-3-6-5` → Define Operating Model Measurement Framework.
+  No definitions, hierarchy, process identities, authority boundaries,
+  source evidence, slugs, or IRIs change. Branch
+  `step3d/naming-critical-collisions` (from PR #83's `081ae5b`); PR open
+  for review — **nothing merges on assumption**. The taxonomy is
+  unpublished with no external consumers (Hamid, 2026-09-21), so no
+  deprecation period or consumer notice is needed; the repository-wide
+  cross-reference sweep was still run (workbook, identity map,
+  terminology notes; TTL regenerated with the exact PR #83 invocation —
+  byte-identical reproduction verified before the edits).
+- **Label-governance policy (standing, 2026-09-21).** Labels are governed
+  presentation metadata; stable slugs/IRIs are concept identity. Never
+  use a prefLabel or workbook name as a join key, DAX lookup key, RLS
+  condition, contract key, API key, KPI identity, or logic condition —
+  use stable identifiers for technical relationships. Retain historical
+  labels as altLabel only when uniquely resolvable and semantically
+  safe.
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; 1 row retired, 3 blocked). PTC-002 closed 2026-09-18 with no
@@ -749,6 +783,25 @@ each node is an ontological class.
 OWL class/subclass. That would assert logical commitments (disjointness,
 inheritance of restrictions) that a naming hierarchy does not support —
 and that no reasoner could then be trusted to check.
+**Decisions (2026-09-21, Step 3d Phase 1, Hamid):** 8 critical-collision
+renames approved — `CM-1-1-1-1` → Produce Demand Forecast (verb-led;
+`Demand Forecasting` not retained as altLabel since the L3 parent keeps
+it as prefLabel); `CM-1-1-3-7` → Inventory Management (`Inventory` kept
+as altLabel); `CM-1-1-3-7-12` → Monitor and Control Inventory Positions
+(`Manage Inventory` kept as altLabel); the five shared
+`Define KPI Framework` rows → Define Offer / Pricing / Channel /
+Network / Operating Model Measurement Framework (the shared generic
+label retired from ontology aliases; scoped historical aliases such as
+`Define KPI Framework (Offer)` recorded in the identity/migration map).
+No definitions, hierarchy, process identities, slugs, or IRIs change.
+**Label governance (standing, 2026-09-21):** labels are governed
+presentation metadata; stable slugs/IRIs are concept identity. Never use
+a prefLabel or workbook name as a join key, DAX lookup key, RLS
+condition, contract key, API key, KPI identity, or logic condition — use
+stable identifiers for technical relationships. Retain historical labels
+as altLabel only when uniquely resolvable and semantically safe.
+**Taxonomy unpublished (2026-09-21, Hamid):** no external consumers, so
+renames need no deprecation period or consumer notice.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,
