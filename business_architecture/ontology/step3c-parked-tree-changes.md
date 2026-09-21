@@ -49,16 +49,18 @@ four review adjustments adopted):
 
 | Slug | Resolution |
 | --- | --- |
-| `CM-1-1-4-6-2` Plan Budgets | Reparented to new L2 **Financial Planning and Performance Management** under Finance (`L2-financial-planning-and-performance-management`); level 5 → 3; workbook `blocked` → `pending` |
-| `CM-1-1-4-6-3` → **Coordinate Site Business Risk Management** | Reparented to new L2 **Refinery Performance and Risk Coordination** under Refining (`L2-refinery-performance-and-risk-coordination`); renamed (prior name kept as altLabel); level 5 → 3; workbook `blocked` → `pending` |
+| `CM-1-1-4-6-2` Plan Budgets | Reparented to new L2 **Financial Planning and Performance Management** under Finance (`L2-financial-planning-and-performance-management`); level 5 → 3; workbook `blocked` → `pending` → `approved` (PR #87, 2026-09-21) |
+| `CM-1-1-4-6-3` → **Coordinate Site Business Risk Management** | Reparented to new L2 **Refinery Performance and Risk Coordination** under Refining (`L2-refinery-performance-and-risk-coordination`); renamed (prior name kept as altLabel); level 5 → 3; workbook `blocked` → `pending` → `approved` (PR #87, 2026-09-21) |
 | `CM-1-1-4-6` Commercial Development | Tombstoned as `owl:deprecated` (kept in JSON/identity map/TTL, removed from active navigation); workbook stays `retired` |
 | `CM-1-1-4-6-1` Develop Strategic Business Plan | Stays `blocked` under **PTC-001-B** (below); kept as the tombstone's child so the blocked row is never orphaned |
 
 Deviations from the proposal's §7, recorded: the tombstone keeps its one parked child
 (proposal said "no children") — this is the orphan-safe reading of the reviewer's
 "keep its parent" option, and preserves the blocked row's historical traceability until
-PTC-001-B rehomes it. The two new L2s are Candidate architecture nodes: structurally
-approved via the proposal, queued for definition authoring as `pending` workbook rows.
+PTC-001-B rehomes it. The two new L2s were Candidate architecture nodes: structurally
+approved via the proposal, and definition-authored as `approved` workbook rows via
+PR #87 (2026-09-21) — hybrid risk cadence and capability-level performance-oversight
+notes included per the independent review.
 
 ### PTC-001-B — Strategy-ownership decision (open)
 
