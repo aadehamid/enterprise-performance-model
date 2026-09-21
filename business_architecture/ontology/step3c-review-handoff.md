@@ -211,7 +211,7 @@ Sheets: `Start Here — Decisions & Phases`, `Review & authoring`, `Column guide
 - PTC-001 rows (retired/blocked) — untouchable; PTC-001 closes in Step 3d.
 - The 15 pre-intake notes — backfill in a later authored pass, per the validator's own instruction.
 
-**After the last batch:** the naming-pass queue (accumulated in terminology notes and PR bodies), the open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, etc. — all recorded in PR follow-up sections), and Step 3d (PTC resolution) are the known next workstreams — Hamid directs them.
+**After the last batch (required):** update `business-process-architecture-playbook.md` — append the final batch-log entries, move any new durable rules into its decision log, and regenerate the source-to-process traceability appendix (`python3 business_architecture/ontology/build/scripts/step3c-source-traceability.py`) so it reflects the finished workbook. Then: the naming-pass queue (accumulated in terminology notes and PR bodies), the open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, etc. — all recorded in PR follow-up sections), and Step 3d (PTC resolution) are the known next workstreams — Hamid directs them.
 
 ---
 
