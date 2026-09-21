@@ -1538,18 +1538,59 @@ proc:CM-1-1-4-6-1 a skos:Concept ;
     intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination undecided: Finance or a future strategy domain. Hamid ruled out creating a Strategy L1, since the ten L1 definitions are approved baseline and changing the L1 set is a charter-level decision. Step 3d PTC-001 tree pass (2026-09-21): stays blocked under PTC-001-B — enterprise strategy-ownership decision (options: Corporate Planning within Finance / Corporate Strategy / executive cross-functional governance). Parent Commercial Development tombstoned (owl:deprecated) pending PTC-001-B resolution."@en .
 
 proc:CM-1-1-4-6-2 a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "10943" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10943"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:broader proc:L2-financial-planning-and-performance-management ;
+    skos:definition "Develop, coordinate, consolidate, challenge, approve, publish, monitor, and refresh enterprise and business-unit budgets in accordance with the approved financial-planning calendar, planning assumptions, delegated authorities, and financial-control requirements. Operating domains own their underlying demand, volume, margin, capacity, operating-cost, capital, and resource assumptions; Finance owns the financial planning process, consolidation, control, and reporting framework."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6.2" ;
     skos:prefLabel "Plan Budgets"@en ;
-    intake:level "L3"@en .
+    skos:scopeNote """Develops, coordinates, consolidates, challenges, publishes, monitors, and refreshes enterprise and business-unit budgets in accordance with the approved financial-planning calendar, planning assumptions, delegated authorities, and financial-control requirements. Operating domains own their underlying demand, volume, margin, capacity, operating-cost, capital, and resource assumptions and supply their plans and forecasts as inputs; Finance owns the budget process, consolidation, control framework, and reporting. The process produces the budget envelopes that functional allocation processes distribute within their own plans; final approval remains with the applicable delegated authority.
+In scope: budget development, consolidation, challenge, and version governance | budget publication and refresh | budget monitoring against actuals | administration of the budget review and approval workflow
+Out of scope: enterprise strategic direction, portfolio choices, and capital allocation decisions (pending PTC-001-B) | underlying demand, volume, margin, capacity, operating-cost, capital, and resource assumptions (operating domains) | final budget approval (applicable delegated authority) | distribution of an approved envelope within a domain plan (e.g., marketing communications resource allocation, CM-1-3-5-3-5) | transaction recording, accounting, and treasury"""@en ;
+    intake:apqcDecision "REVIEW LINK"@en ;
+    intake:conceptTypeCheck "process"@en ;
+    intake:keyInputs "approved financial-planning calendar and planning assumptions | business-unit plans, forecasts, and assumption sets from operating domains | actual results against current budgets"@en ;
+    intake:level "L3"@en ;
+    intake:primaryOutput "approved, published, version-governed enterprise and business-unit budgets | budget variance monitoring reports"@en ;
+    intake:primaryPurpose "Deliver the published, version-governed enterprise and business-unit budgets that authorize spending and investment for the plan period."@en ;
+    intake:processHorizon "periodic"@en ;
+    intake:referenceSources "SRC-APQC-PCF-001 — PCF Finance & accounting sections as the structural consistency reference (discovery/comparison only)"@en ;
+    intake:relatedConcepts "governed-by: Financial Planning and Performance Management"@en ;
+    intake:responsibleDomain "Finance"@en ;
+    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. Decided 2026-09-18: no split — one node under Finance. The refinery's operational input to budgeting is already carried by the Refinery Optimization case basis (CM-1-1-4-7-1 to -6) and the Refinery Planning outputs, so a second node would duplicate batch 02. Moved to Finance L2 'Financial Planning and Performance Management' by the Step 3d PTC-001 tree pass (2026-09-21); level 5 → 3; old notation CM 1.1.4.6.2 kept as historical provenance. Definition authored 2026-09-21 under the tree-pass mini-batch. 'approve' in the definition refers to the budget-review/approval workflow the process administers; final approval authority remains with the applicable delegated authority per the locked boundary."@en .
 
 proc:CM-1-1-4-6-3 a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "17462" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 17462"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:altLabel "Manage Site Specific Business Risk"@en ;
     skos:broader proc:L2-refinery-performance-and-risk-coordination ;
+    skos:definition "Identify, assess, document, prioritize, coordinate treatment of, monitor, and escalate site-specific business risks affecting refinery objectives, production reliability, cost, schedule, asset availability, supply, product disposition, and local stakeholder commitments, in accordance with enterprise risk policy, delegated authority, and specialist-control requirements."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6.3" ;
     skos:prefLabel "Coordinate Site Business Risk Management"@en ;
-    intake:level "L3"@en .
+    skos:scopeNote """Coordinates site-level risk ownership, treatment, monitoring, and escalation; it does not set enterprise risk appetite or policy, replace EHS / process-safety management, administer insurance, approve capital, manage financial-market risk, conduct Internal Audit, or own Legal, Compliance, Security, Cybersecurity, or business-continuity authorities.
+In scope: identification, assessment, documentation, and prioritization of site-specific business risks | coordination of risk ownership and treatment | risk monitoring and escalation
+Out of scope: enterprise risk appetite and policy | EHS and process-safety management | insurance administration | capital approval | financial-market risk | Internal Audit | Legal, Compliance, Security, Cybersecurity, and business-continuity authorities | operation of refinery units"""@en ;
+    intake:apqcDecision "NO SOURCE"@en ;
+    intake:conceptTypeCheck "process"@en ;
+    intake:keyInputs "site risk registers, risk assessments, and incident records | refinery performance data against refinery objectives | enterprise risk policy, delegated authorities, and specialist-control requirements"@en ;
+    intake:level "L3"@en ;
+    intake:primaryOutput "assigned site-risk ownership and coordinated treatment plans | monitored risk status with escalations"@en ;
+    intake:primaryPurpose "Ensure every site business risk has an owner, a treatment plan, and a monitored status — and that what the site cannot resolve is escalated through delegated authority."@en ;
+    intake:processHorizon "event-driven"@en ;
+    intake:referenceSources "SRC-OSHA-PSM-001 — process-safety boundary: site business risk excludes EHS/process-safety management | SRC-EPA-ER-001 — emergency-response boundary: release and emergency response sit with EHS | SRC-APQC-PCF-001 — structural consistency reference (discovery/comparison only)"@en ;
+    intake:relatedConcepts "governed-by: Refinery Performance and Risk Coordination"@en ;
+    intake:responsibleDomain "Refining"@en ;
+    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. Renamed 2026-09-21 by the Step 3d PTC-001 tree pass (naming-pass discipline: prior name 'Manage Site Specific Business Risk' retained as altLabel and in migration metadata); moved to Refining L2 'Refinery Performance and Risk Coordination', level 5 → 3. 'Coordinate' is deliberate: this process coordinates ownership, treatment, monitoring, and escalation of site business risks — it does not set enterprise risk policy or own specialist controls. The taxonomy holds no enterprise risk capability; this row must not be read as one."@en .
 
 proc:CM-1-1-4-7-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12483,16 +12524,46 @@ proc:L1-refining a skos:Concept ;
     intake:level "L1"@en .
 
 proc:L2-financial-planning-and-performance-management a skos:Concept ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:broader proc:L1-finance ;
+    skos:definition "The Finance-owned capability that establishes and operates the financial planning and performance-management framework; coordinates, consolidates, challenges, validates, publishes, monitors, and refreshes enterprise and business-unit financial plans and budgets in accordance with the approved planning calendar, planning assumptions, delegated authorities, and financial-control requirements; and measures and reports financial performance against those plans."@en ;
     skos:inScheme mod:core ;
     skos:prefLabel "Financial Planning and Performance Management"@en ;
-    intake:level "L2"@en .
+    skos:scopeNote """Includes the financial planning calendar and planning assumptions; budget development, consolidation, and version governance; capital and operating expenditure planning controls; forecasting; financial performance reporting, variance analysis, escalation, and financial-plan review and approval-workflow administration. Operating domains own their underlying demand, volume, margin, capacity, operating-cost, capital, and resource assumptions and provide their plans and forecasts as inputs. Finance owns the financial planning process, consolidation, control framework, and financial reporting. Final approval remains with the applicable delegated authority. Excludes enterprise strategic direction, portfolio choices, and capital allocation decisions pending PTC-001-B. Excludes fixed-asset project accounting where intentionally governed and executed as an ERP-native capability.
+In scope: financial planning calendar and planning assumptions | budget development, consolidation, and version governance | capital and operating expenditure planning controls | forecasting | financial performance reporting, variance analysis, and escalation | financial-plan review and approval-workflow administration
+Out of scope: enterprise strategic direction, portfolio choices, and capital allocation decisions (pending PTC-001-B) | underlying demand, volume, margin, capacity, operating-cost, capital, and resource assumptions (operating domains) | final plan and budget approval (applicable delegated authority) | fixed-asset project accounting where intentionally governed and executed as an ERP-native capability"""@en ;
+    intake:conceptTypeCheck "capability"@en ;
+    intake:keyInputs "approved financial-planning calendar and planning assumptions | business-unit plans, forecasts, and assumption sets from operating domains | actual financial results against plan baselines"@en ;
+    intake:level "L2"@en ;
+    intake:primaryOutput "published, version-governed enterprise and business-unit budgets and financial plans | financial performance reports with variance analysis and escalations"@en ;
+    intake:primaryPurpose "Maintain the governed framework by which enterprise and business-unit financial plans and budgets are built, consolidated, challenged, published, and held to account."@en ;
+    intake:processHorizon "periodic"@en ;
+    intake:referenceSources "SRC-APQC-PCF-001 — PCF Finance & accounting sections as the structural consistency reference (discovery/comparison only)"@en ;
+    intake:relatedConcepts "enables: Plan Budgets"@en ;
+    intake:responsibleDomain "Finance"@en ;
+    intake:terminologyNotes "Step 3d PTC-001 tree pass (2026-09-21): new Candidate architecture node — structural placement approved via ptc-001-tree-proposal.md (Hamid). Definition authoring queued as a follow-up mini-batch. Naming: 'Performance Management' covers the reporting, variance-analysis, and escalation loop that turns plans into governed performance — deliberate distinction from a pure budgeting node. This batch validates only the definition, not the node's existence (structural approval granted via ptc-001-tree-proposal.md, Hamid, 2026-09-21)."@en .
 
 proc:L2-refinery-performance-and-risk-coordination a skos:Concept ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:broader proc:L1-refining ;
+    skos:definition "The Refining-owned capability that coordinates refinery performance oversight and site-level business-risk management, including the identification, assessment, treatment coordination, monitoring, and escalation of risks that may affect refinery objectives."@en ;
     skos:inScheme mod:core ;
     skos:prefLabel "Refinery Performance and Risk Coordination"@en ;
-    intake:level "L2"@en .
+    skos:scopeNote """Includes coordination of site business-risk ownership and treatment for risks affecting production reliability, throughput, feedstock and product quality, turnaround execution, cost, schedule, asset availability, supply, product disposition, and local stakeholder commitments. Does not operate refinery units; set enterprise risk appetite or policy; replace EHS or process-safety management; administer insurance; approve capital; manage financial-market risk; conduct Internal Audit; or own Legal, Compliance, Security, Cybersecurity, or business-continuity authorities.
+In scope: site business-risk ownership and treatment coordination for risks affecting production reliability, throughput, feedstock and product quality, turnaround execution, cost, schedule, asset availability, supply, product disposition, and local stakeholder commitments | refinery performance oversight coordination
+Out of scope: operation of refinery units and unit-level scheduling (Refining operations) | enterprise risk appetite and policy | EHS and process-safety management | insurance administration | capital approval | financial-market risk | Internal Audit | Legal, Compliance, Security, Cybersecurity, and business-continuity authorities"""@en ;
+    intake:conceptTypeCheck "capability"@en ;
+    intake:keyInputs "site risk registers, risk assessments, and incident records | refinery performance data against refinery objectives | enterprise risk policy and delegated authorities | specialist-control requirements"@en ;
+    intake:level "L2"@en ;
+    intake:primaryOutput "assigned site-risk ownership and coordinated treatment plans | monitored risk status with escalations"@en ;
+    intake:primaryPurpose "Hold site-level ownership, treatment, monitoring, and escalation of business risks that can affect refinery objectives — and coordinate the performance oversight that reveals them."@en ;
+    intake:processHorizon "periodic"@en ;
+    intake:referenceSources "SRC-OSHA-PSM-001 — process-safety management boundary: site business risk excludes EHS/process-safety management | SRC-APQC-PCF-001 — structural consistency reference (discovery/comparison only)"@en ;
+    intake:relatedConcepts "enables: Coordinate Site Business Risk Management"@en ;
+    intake:responsibleDomain "Refining"@en ;
+    intake:terminologyNotes "Step 3d PTC-001 tree pass (2026-09-21): new Candidate architecture node — structural placement approved via ptc-001-tree-proposal.md (Hamid). Definition authoring queued as a follow-up mini-batch. Name narrowed per the reviewer's second assessment (2026-09-21): 'Performance and Risk Coordination' scopes this to site-level coordination, not enterprise risk ownership. The taxonomy holds no enterprise risk capability; this row must not be read as one. This batch validates only the definition, not the node's existence (structural approval granted via ptc-001-tree-proposal.md, Hamid, 2026-09-21)."@en .
 
 proc:CM-1-1-2-2-1 a skos:Concept ;
     skos:broader proc:CM-1-1-2-2 ;
