@@ -4651,12 +4651,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-6",
   "slug": "CM-1-3-1-6",
   "level": 4,
-  "name": "Insight and Metrics",
+  "name": "Marketing Insight and Metrics Stewardship",
   "skos_notation": "CM 1.3.1.6",
   "parent_slug": "CM-1-3-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.1.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Insight and Metrics",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Insight and Metrics' -> 'Marketing Insight and Metrics Stewardship' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2",
@@ -6950,12 +6953,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-2",
   "slug": "CM-1-3-8-1-2",
   "level": 5,
-  "name": "Perform Accounting For Self-billing",
+  "name": "Perform Self-Billing Accounting",
   "skos_notation": "CM 1.3.8.1.2",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.1.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Accounting For Self-billing",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Accounting For Self-billing' -> 'Perform Self-Billing Accounting' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-3",
@@ -6983,12 +6989,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-5",
   "slug": "CM-1-3-8-1-5",
   "level": 5,
-  "name": "Create Exception & Reverse Invoice",
+  "name": "Manage Invoice Exceptions, Reversals, and Rebilling",
   "skos_notation": "CM 1.3.8.1.5",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.1.5",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Create Exception & Reverse Invoice",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Create Exception & Reverse Invoice' -> 'Manage Invoice Exceptions, Reversals, and Rebilling' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2",
@@ -7005,12 +7014,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1",
   "slug": "CM-1-3-8-2-1",
   "level": 5,
-  "name": "Receive Cash Receipts / Payment",
+  "name": "Record Customer Receipts and Payment Notifications",
   "skos_notation": "CM 1.3.8.2.1",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.2.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Receive Cash Receipts / Payment",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Receive Cash Receipts / Payment' -> 'Record Customer Receipts and Payment Notifications' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-2",
@@ -7038,23 +7050,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-4",
   "slug": "CM-1-3-8-2-4",
   "level": 5,
-  "name": "Manage Unapplied Receipts / Exceptions",
+  "name": "Manage Unapplied Receipts and Exceptions",
   "skos_notation": "CM 1.3.8.2.4",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.2.4",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Unapplied Receipts / Exceptions",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Unapplied Receipts / Exceptions' -> 'Manage Unapplied Receipts and Exceptions' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-5",
   "slug": "CM-1-3-8-2-5",
   "level": 5,
-  "name": "Perform Reconciliations & Settlements",
+  "name": "Perform Cash, Acquirer, and Receivables Reconciliations",
   "skos_notation": "CM 1.3.8.2.5",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.2.5",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Reconciliations & Settlements",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Reconciliations & Settlements' -> 'Perform Cash, Acquirer, and Receivables Reconciliations' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-6",
@@ -7071,56 +7089,71 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3",
   "slug": "CM-1-3-8-3",
   "level": 4,
-  "name": "Manage Collection and Disputes",
+  "name": "Manage Receivables Resolution",
   "skos_notation": "CM 1.3.8.3",
   "parent_slug": "CM-1-3-8",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Collection and Disputes",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection and Disputes' -> 'Manage Receivables Resolution' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1",
   "slug": "CM-1-3-8-3-1",
   "level": 5,
-  "name": "Dispute Management",
+  "name": "Manage Receivables Disputes",
   "skos_notation": "CM 1.3.8.3.1",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.3.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Dispute Management",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Dispute Management' -> 'Manage Receivables Disputes' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2",
   "slug": "CM-1-3-8-3-2",
   "level": 5,
-  "name": "Collection Management",
+  "name": "Manage Receivables Collections",
   "skos_notation": "CM 1.3.8.3.2",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.3.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Collection Management",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Collection Management' -> 'Manage Receivables Collections' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-3",
   "slug": "CM-1-3-8-3-3",
   "level": 5,
-  "name": "Bad Debt Allowance",
+  "name": "Determine Bad Debt Allowance",
   "skos_notation": "CM 1.3.8.3.3",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.3.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Bad Debt Allowance",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Bad Debt Allowance' -> 'Determine Bad Debt Allowance' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-4",
   "slug": "CM-1-3-8-3-4",
   "level": 5,
-  "name": "Develop Root Cause Analysis/Action Plan",
+  "name": "Develop Root-Cause Analyses and Action Plans",
   "skos_notation": "CM 1.3.8.3.4",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.3.4",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Develop Root Cause Analysis/Action Plan",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Develop Root Cause Analysis/Action Plan' -> 'Develop Root-Cause Analyses and Action Plans' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4",
@@ -7203,12 +7236,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-7",
   "slug": "CM-1-3-8-4-7",
   "level": 5,
-  "name": "Manage Collection of Royalty and Fees",
+  "name": "Administer Royalty, Brand Fee, and Contribution Streams",
   "skos_notation": "CM 1.3.8.4.7",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.4.7",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Collection of Royalty and Fees",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection of Royalty and Fees' -> 'Administer Royalty, Brand Fee, and Contribution Streams' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9",
