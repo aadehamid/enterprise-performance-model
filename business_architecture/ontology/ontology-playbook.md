@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 9 critical collisions executed 2026-09-21 — in review, not merged) | In progress — naming PR under review; then needs Hamid's scope call on the L1/decomposition question |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued, 9 critical collisions executed 2026-09-21 — PR #84 (8 renames) merged to main; PR #85 (9th rename) open for review) | In progress — naming PR under review; then needs Hamid's scope call on the L1/decomposition question |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -414,7 +414,7 @@ consolidated pass that applies them.
   with the old name kept as alt label (subject to the collision and
   refinement rules recorded 2026-09-21, below), then sweeps the workbook,
   TTL regen, identity map, and cross-references, and re-runs the gate.
-- **Phase 1 executed 2026-09-21 — in review, not merged.** All 9 critical
+- **Phase 1 executed 2026-09-21 — 8 of 9 merged, 9th in review.** All 9 critical
   collisions renamed per Hamid's approval (2026-09-21), with two
   refinements over the queued labels: `CM-1-1-1-1` → **Produce Demand
   Forecast** (verb-led; `Demand Forecasting` is NOT kept as an altLabel
@@ -425,7 +425,9 @@ consolidated pass that applies them.
   the identity/migration map). The sixth KPI row (`CM-1-3-3-5-7`,
   Marketing Communications) was discovered after the initial 8-rename
   execution and renamed in a follow-up commit per Hamid's decision
-  the same day. Approved labels:
+  the same day. PR #84 (8 renames) was merged by Hamid 2026-09-21; PR #85
+  (9th rename) open for review — **nothing merges on assumption**.
+  Approved labels:
   `CM-1-1-1-1` → Produce Demand Forecast; `CM-1-1-3-7` → Inventory
   Management (`Inventory` kept as altLabel); `CM-1-1-3-7-12` → Monitor
   and Control Inventory Positions (`Manage Inventory` kept as altLabel);
@@ -436,8 +438,8 @@ consolidated pass that applies them.
   `CM-1-3-3-6-5` → Define Operating Model Measurement Framework;
   `CM-1-3-3-5-7` → Define Marketing Communications Measurement Framework.
   No definitions, hierarchy, process identities, authority boundaries,
-  source evidence, slugs, or IRIs change. Branch
-  `step3d/naming-critical-collisions` (from PR #83's `081ae5b`); PR open
+  source evidence, slugs, or IRIs change. The 9th rename lives on branch
+  `step3d/naming-kpi6-marcomms` (from merged main `86d6fbb`); PR #85 open
   for review — **nothing merges on assumption**. The taxonomy is
   unpublished with no external consumers (Hamid, 2026-09-21), so no
   deprecation period or consumer notice is needed; the repository-wide
