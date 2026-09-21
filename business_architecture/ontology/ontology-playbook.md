@@ -64,7 +64,8 @@ ontology; everything else points at it.
 | 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
-| 3c | Human definition authoring — semantic-intake workbook; review batches 01–22 → 281/503 approved (2026-09-20); taxonomy regenerated from the workbook via PR #59 (458/680 defined, 9,999 triples; Phase-1 capture under provisional `intake:` annotations) | 🔄 In progress |
+| 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued renames, none applied yet) | Next — needs Hamid's scope call on the L1/decomposition question |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -322,7 +323,7 @@ Backcasting).
 - **Delivered** via the Step 3c PR (new branch off main, after PR #28
   merged 2026-09-18) — `downstream_process_map.json` untouched.
 
-### Step 3c — semantic intake + L4 review batches 🔄 (2026-09-19, in progress)
+### Step 3c — semantic intake + L4 review batches ✅ (2026-09-21, complete)
 
 The L1–L3 pass above is closed. Authoring continues on L4–L6 against a
 workbook whose contract changed after that pass. This log records why
@@ -366,6 +367,30 @@ the gate was rewritten before the next batch.
   (`dcterms:isReplacedBy` waits for Step 3d). Sequencing agreed with
   Hamid: regen now (parallel to review batches) → finish 3c → 3d tree
   reconciliation → Step 4 design together.
+
+- **Closeout (2026-09-21, batch 42, PR #82).** Step 3c is finished:
+  approved=498, pending=1 (`CM-1-1-3-5-3`, the intentional business-evidence
+  hold from batch 05 — not forced), blocked=3 (PTC-001), retired=1
+  (`CM-1-1-4-6`); gate blocking=0, questions=0, notes=15, open_ptc=1.
+  Hamid's **option A** decision admitted the two L0 scheme roots
+  (`L0-downstream-operations`, `L0-enabling-functions`) as the only approved
+  `not-process` rows via a frozen `SCHEME_ROOT_APPROVED` whitelist, mirroring
+  the `PRE_INTAKE_APPROVED` pattern. Batches 23–41 covered Offer/Pricing/
+  Channel (23), Network/Communications/Operating Model (24), Visioning/Concept/
+  Product Development (25), Order Management, SCM, Finance/Accounting, Service
+  & Support, and Terminal Commercial Operations (41).
+- **Final TTL regen (2026-09-21, PR #83).** Per Hamid's sequencing decision
+  (regen once at the end of Step 3c, not per batch): 680 concepts, 14,403
+  triples, 675/680 defined (498 workbook + 177 repo descriptions); the 5
+  definition-less are the 3 blocked, 1 retired, 1 pending hold. 182
+  non-workbook concepts verified triple-identical to the PR #59/#61 snapshot.
+  L0 roots defined; naming queue (92 renames) NOT applied — labels stay as
+  locked in Step 3c.
+- **Carried forward.** `step3c-naming-pass-queue.md` (EPM-BA-NAMING-QUEUE-001,
+  Draft): 92 queued renames in six categories; the **Critical semantic
+  collision** category (duplicate prefLabels) gates semantic-model
+  publication and runs first in Step 3d. The queue authorizes no renames by
+  itself — proposals go to Hamid for review like any batch.
 
 ### Step 3d — tree reconciliation ⏸ (not started, blocked on open PTCs)
 
@@ -679,6 +704,19 @@ without a dated amendment and Hamid's explicit agreement.
   source of truth per decision (2026-09-17).
 - **Every new process gets an L0–L6 level** slotted from the existing
   hierarchy — no level-less nodes (2026-09-17).
+- **Step 3c closed 2026-09-21 with 498/503 approved** (2026-09-21).
+  Batches 01–42. 1 pending is an intentional business-evidence hold
+  (`CM-1-1-3-5-3`, batch 05), 3 blocked await the Step 3d tree pass
+  (PTC-001), 1 retired (`CM-1-1-4-6`). Gate: 0 blocking, 0 questions.
+- **Taxonomy TTL regenerates once at the end of Step 3c** (2026-09-20,
+  Hamid's decision): the graph is a snapshot and may lag the workbook
+  mid-pass; the final regen (PR #83, 14,403 triples, 675/680 defined)
+  is the handoff into Step 3d.
+- **Naming normalization is a Step 3d activity, not a Step 3c one**
+  (2026-09-21). 92 queued renames live in `step3c-naming-pass-queue.md`;
+  duplicate-prefLabel collisions gate semantic-model publication.
+  Queued labels stay alt labels until the pass executes, then sweep the
+  workbook, TTL, identity map, and cross-references.
 - **Confirm the `sioc` JSON field's meaning** (SIPOC/SIOC?) before
   naming ontology terms; do not confuse it with the W3C SIOC vocabulary
   (2026-09-17).
