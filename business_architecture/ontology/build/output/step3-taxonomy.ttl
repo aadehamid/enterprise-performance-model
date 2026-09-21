@@ -8114,12 +8114,11 @@ proc:CM-1-3-3-5-7 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19521"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Define Marketing Communications Measurement Framework"@en ;
     skos:broader proc:CM-1-3-3-5 ;
     skos:definition "Define the measurement framework for marketing communications — reach, engagement, effectiveness, and efficiency measures across the communication channels with their definitions, baselines, targets, and measurement responsibilities — as evidence-layer measures with governed routing toward enterprise KPIs."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.3.5.7" ;
-    skos:prefLabel "Define KPI Framework"@en ;
+    skos:prefLabel "Define Marketing Communications Measurement Framework"@en ;
     skos:scopeNote """Covers communications measurement design. Defines domain-level measures, baselines, targets, measurement responsibilities, data sources, and review cadence needed to evaluate marketing-communications outcomes. The framework may nominate measures as candidate KPIs but does not approve, publish, version, calculate, certify, or govern enterprise KPIs. Those activities follow the Enterprise Measurement Catalog, Candidate KPI Register, Enterprise KPI Catalog, and KPI Store governance process. Communications measures span reach and audience delivery, engagement, message effectiveness, and cost-efficiency by channel, aligned with the metrics stewarded at CM-1-3-1-6 and consumed by Marketing Performance Analysis (CM-1-3-5-5). Excludes enterprise KPI definition and KPI Store governance (KPI workstream); measurement execution (CM-1-3-5-5); metrics stewardship (CM-1-3-1-6).
 In scope: Define communications measures, baselines, targets, responsibilities, data sources, and review cadence | align with stewarded metrics | nominate candidate KPIs into KPI Store governance
 Out of scope: Enterprise KPI approval, publication, and governance (KPI Store workstream) | measurement execution (CM-1-3-5-5) | metrics stewardship (CM-1-3-1-6)"""@en ;
@@ -8133,7 +8132,7 @@ Out of scope: Enterprise KPI approval, publication, and governance (KPI Store wo
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "governed-by: Marketing Communications Strategy | uses-input: Insight and Metrics"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label queued prominently; full measurement-framework routing statement in scope note per review. APQC 'Define objectives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 24 (2026-09-20). Template row (batch 23 treatment); preferred label queued prominently; full measurement-framework routing statement in scope note per review. APQC 'Define objectives' is a WEAK generic match. Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to 'Define Marketing Communications Measurement Framework' — sixth and final 'Define KPI Framework' collision resolved (Hamid's follow-up decision, discovered after the 8-rename Phase 1 execution). Prior label retired from ontology aliases (a shared generic altLabel would recreate the collision); scoped historical alias 'Define KPI Framework (Marketing Communications)' recorded in the identity/migration map."@en .
 
 proc:CM-1-3-3-6-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;

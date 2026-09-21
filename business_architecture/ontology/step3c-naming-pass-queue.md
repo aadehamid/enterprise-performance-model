@@ -20,10 +20,11 @@ carry no alt label (validator collision rule). Entries marked **[priority]** wer
 priority in review. The **Critical semantic collision** category gates semantic-model publication;
 all other categories ride the same pass without gating it.
 
-**Execution status 2026-09-21:** all 8 critical-collision entries executed in Step 3d Phase 1
-(Hamid approval 2026-09-21). The remaining 84 queue entries are still queued for the consolidated naming pass.
+**Execution status 2026-09-21:** all 9 critical-collision entries executed in Step 3d Phase 1
+(Hamid approval 2026-09-21, including the 6th 'Define KPI Framework' row discovered after
+the initial 8-rename execution). The remaining 84 queue entries are still queued for the consolidated naming pass.
 
-## Critical semantic collision (8)
+## Critical semantic collision (9)
 
 | Slug | Locked name | Queued label(s) | Note |
 |---|---|---|---|
@@ -35,6 +36,7 @@ all other categories ride the same pass without gating it.
 | `CM-1-3-3-3-5` | Define KPI Framework | Define Channel Measurement Framework **[priority]** | Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Channel Measurement Framework' queued prominently. **EXECUTED 2026-09-21** (Step 3d Phase 1: renamed to 'Define Channel Measurement Framework'; see naming PR). |
 | `CM-1-3-3-4-4` | Define KPI Framework | Define Network Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Network Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. **EXECUTED 2026-09-21** (Step 3d Phase 1: renamed to 'Define Network Measurement Framework'; see naming PR). |
 | `CM-1-3-3-6-5` | Define KPI Framework | Define Operating Model Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Operating Model Measurement Framework' queued prominently per review; full measurement-framework routing statement in scope note. **EXECUTED 2026-09-21** (Step 3d Phase 1: renamed to 'Define Operating Model Measurement Framework'; see naming PR). |
+| `CM-1-3-3-5-7` | Define KPI Framework | Define Marketing Communications Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Marketing Communications Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. Sixth 'Define KPI Framework' collision, discovered after the 8-rename Phase 1 execution. **EXECUTED 2026-09-21** (Step 3d Phase 1 follow-up: renamed to 'Define Marketing Communications Measurement Framework'; see naming PR). |
 
 ## Authority-risk label (6)
 
