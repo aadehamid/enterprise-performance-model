@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (93 queued, 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batch merged (PR #89 — 14,473 triples) | In progress — naming queue categories 3–6 still queued (78 remaining); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (93 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples) | In progress — 57 queue entries still queued (12 scope-ambiguity, 8 directionality-missing, 11 generic-operational, 26 normalization-only); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -509,6 +509,45 @@ consolidated pass that applies them.
   duplicate prefLabel groups; zero definition changes; IRIs/slugs
   unchanged; `downstream_process_map.json` untouched. Naming queue: 78 of
   93 entries remaining (categories 3–6).
+- **Scope-ambiguity naming batches 1 & 2 — executed and merged 2026-09-21
+  (PR #91, PR #92).** The third naming-pass category: 21 labels whose
+  wording left the process scope ambiguous, renamed per Hamid's approval
+  2026-09-21 in two batches. Batch 1 (A+B+C, 10 renames, PR #91, merged
+  2026-09-21): `CM-1-1-3-6-2` → Administer Scheduled Shipment Loading;
+  `CM-1-1-3-8-3` → Maintain Secondary Distribution Scheduling Basis;
+  `CM-1-2-4-1-8` → Settle Environmental Instruments; `CM-1-2-4-2-2` →
+  Manage Production & Inventory Accounting; `CM-1-2-6-2-3` → Forecast
+  Operational Refined Product Demand; `CM-1-2-6-3-2` → Fulfill
+  Replenishment From Trading Sources; `CM-1-2-6-3-3` → Coordinate
+  S&T-Sourced Primary Transportation; `CM-1-3-6-6-2` → Manage Card
+  Program Billing Coordination; `CM-1-3-6-6-6` → Manage Card Delinquency
+  and Collections Referral; `CM-1-3-6-8-1` → Conduct Commercial Audit to
+  Validate Reported Sales. Batch 2 (D, 11 renames, PR #92, merged
+  2026-09-21): `CM-1-3-7-1` → Manage Commercial Master Data Stewardship;
+  `CM-1-3-7-1-1` → Maintain Customer and Commercial Account Master Data;
+  `CM-1-3-7-1-3` → Maintain Product and Service Master Data;
+  `CM-1-3-7-1-5` → Maintain Commercial Workflow Configuration;
+  `CM-1-3-7-1-6` → Maintain Commercial Policy Content and Approved
+  Parameters; `CM-1-3-7-2` → Manage Commercial Terms, Quoting, and
+  Customer Commercial Services; `CM-1-3-7-3-6` → Manage Commercial
+  Returns Authorization and Coordination; `CM-1-3-7-4-5` → Perform
+  Credit-Driven Customer Closure and Reinstatement; `CM-1-3-7-4-6` → KYC
+  Process → Perform KYC Due Diligence; `CM-1-3-7-5-1` → Prioritize
+  Customer Requests and Inquiries; `CM-1-3-7-5-2` → Maintain Customer
+  Request and Inquiry Records. Old labels retained as `skos:altLabel`;
+  `prior_name`/`name_change_note` recorded in the identity map;
+  `scoped_historical_alias` stays null; slugs, IRIs, hierarchy, and
+  definitions unchanged; workbook cross-references and breadcrumbs swept;
+  `downstream_process_map.json` untouched. Batch 2 independent review
+  APPROVE-WITH-NOTES (KYC scope confirmed under the approved boundary:
+  Commercial/Credit executes KYC due diligence and escalates
+  discrepancies; Compliance/Legal own the sanctions-compliance and
+  financial-crime frameworks — no definition change authorized or made).
+  Workbook: 505 rows, 502 approved; gate blocking=0, questions=0,
+  notes=18, open_ptc=1. TTL: 682 concepts, 14,474 triples, 679/682
+  defined, 680 broader links. Naming queue: 57 of 93 entries remaining
+  (12 scope-ambiguity, 8 directionality-missing, 11 generic-operational,
+  26 normalization-only).
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),
