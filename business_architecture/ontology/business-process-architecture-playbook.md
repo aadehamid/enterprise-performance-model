@@ -98,6 +98,7 @@ Full operational detail (scripts, validator behavior, git mechanics, package for
 | 39 | Accounting, Reporting & Compliance (CM-1-3-8-4, 8) | #77 | **Accounting Execution Rule** (durable) with governed close exceptions; compliance = O2C control-operation evidence only; taxability recommendations for Tax approval; intercompany execution per approved transfer-pricing basis; royalty/fee stream administration; completed CM-1-3-8. |
 | 40 | Service & Support (CM-1-3-9, 15 rows) | #80 | Enablement and Delivery as continuous capabilities (Delivery reclassified in review); canonical request/enable/deliver/measure rule with case-to-service-event linkage; HR/IT/Facilities/contact-center corporate boundaries; five-way service data distinction; service-event outcome taxonomy + billable-evidence rule; workforce-data and formal-research controls; five generic-name alt labels. |
 | 41 | Terminal commercial operations (CM-1-3-10, 4 rows) | #81 | **Final intake batch.** Dual book-ownership/system-of-record boundary between Trade Capture and terminal sales-deal capture (durable); terminal authorization record-versus-decision rule with explicit lifecycle; Tax/Legal-approved rack-tax status consumed, not determined; customer lifting nominations vs shipper-side nominations (b33 split completed); rack allocation enforcement with title/rights limitation and four-way control separation; controlled deal-capture corrections; four preferred labels queued (Capture Terminal Sales Deal high-priority). |
+| 42 | L0 scheme roots + Step 3c closeout (2 rows) | #82 | **Closeout batch.** Downstream Operations and Enabling Functions approved as scheme roots (taxonomy/navigation anchors, `not-process`, no authority conferred by grouping); Midstream scoped to the downstream enterprise model, no categorical industry claim; gate amended with the frozen SCHEME_ROOT_APPROVED whitelist (option A, Hamid); naming-pass queue committed as controlled Draft artifact EPM-BA-NAMING-QUEUE-001 (`step3c-naming-pass-queue.md`, 92 entries in six categories); `CM-1-1-3-5-3` retained as the sole intentional pending business-evidence hold. Final state: approved=498 pending=1 blocked=3 retired=1. |
 
 ---
 
@@ -127,7 +128,7 @@ These rules were locked by explicit review decisions and govern all content, pre
 
 **Ownership locks (who decides, everywhere):** Finance — accounting/revenue-recognition/costing policy, appetite, reserves, write-offs, valuation, close, consolidation. Treasury — instruments, banking/acquirer arrangements, funds movement. Tax — positions, interpretations, filings, taxability rules, transfer-pricing policy. Legal/Compliance — all legal determinations (PMPA franchise remedies, Robinson-Patman, ECOA/Reg B, sanctions/AML frameworks, consumer-collection conduct, competition information). Credit — the credit envelope. Security — card-data/PCI scope, identity/access standards, fraud investigation. IT — platforms, deployment, integration operations (business owns configuration content). Quality/EHS/Operations — product disposition, incidents, physical work. Data Governance — the customer-domain (Party/Account/role) model and data standards.
 
-**Structural distinctions that keep look-alike rows apart:** compose-vs-issue quotes and deal-vs-framework contracting (b32); transaction-time vs compliance-time taxability (b36/b39); operational performance reporting vs reported-sales audit (b30); case records vs master data (b35); receivables reconciliation "settlement" vs Trading Settlement (b37); royalty-stream administration vs collections execution (b39); loyalty program vs card program within one capability (b29); customer lifting nominations vs shipper-side carrier nominations (b41, completing the b33 split); confirmed commercial lifting outlook vs physical loading schedule (b41).
+**Structural distinctions that keep look-alike rows apart:** compose-vs-issue quotes and deal-vs-framework contracting (b32); transaction-time vs compliance-time taxability (b36/b39); operational performance reporting vs reported-sales audit (b30); case records vs master data (b35); receivables reconciliation "settlement" vs Trading Settlement (b37); royalty-stream administration vs collections execution (b39); loyalty program vs card program within one capability (b29); customer lifting nominations vs shipper-side carrier nominations (b41, completing the b33 split); confirmed commercial lifting outlook vs physical loading schedule (b41); scheme roots vs business concepts — the two L0 roots are taxonomy/navigation anchors (`not-process`, definition and scope only, no authority conferred by grouping), approved under the frozen SCHEME_ROOT_APPROVED gate whitelist (b42).
 
 ---
 
@@ -156,9 +157,9 @@ Reading guide: each entry shows the source's organization, reference, access/ver
 
 ## 9. Completion checklist (fill in when Step 3c closes)
 
-- [ ] Final batches (CM-1-3-9, CM-1-3-10) merged; batch log entries appended above.
-- [ ] Held rows dispositioned with Hamid: `CM-1-1-3-5-3`, the two L0 roots, pre-intake backfill plan.
+- [x] Final batches (CM-1-3-9, CM-1-3-10) merged (#80, #81); batch log entries appended above.
+- [x] Held rows dispositioned with Hamid (b42): the two L0 roots approved as scheme roots; `CM-1-1-3-5-3` retained pending as the intentional business-evidence hold (batch 05 decision) — do not force it approved; pre-intake backfill remains a Step 3d authored pass (do not grow PRE_INTAKE_APPROVED).
 - [ ] PTC-001 resolved in Step 3d; PTC register updated.
-- [ ] Traceability appendix regenerated against the finished workbook.
-- [ ] Naming-pass queue extracted from terminology notes and PR bodies into a single list for the taxonomy-normalization cycle.
+- [x] Traceability appendix regenerated against the finished workbook (#81).
+- [x] Naming-pass queue extracted into the controlled Draft artifact `step3c-naming-pass-queue.md` (EPM-BA-NAMING-QUEUE-001, b42). Execution is the first Step 3d activity: Critical semantic collision category gates semantic publication; the queue itself authorizes no renames.
 - [ ] Batches 1–20 log entries backfilled from PR history (dated amendment).

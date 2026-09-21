@@ -1,0 +1,144 @@
+# Step 3c Taxonomy Naming Normalization Queue
+
+```text
+ID: EPM-BA-NAMING-QUEUE-001
+Title: Step 3c Taxonomy Naming Normalization Queue
+Version: 0.1
+Status: Draft
+Owner: Downstream Business Architecture / Taxonomy Owner
+Scope: Preferred-label, duplicate-label, ambiguity, capitalization,
+       punctuation, and hierarchy-collision normalization candidates
+Source: Step 3c completed workbook terminology notes
+Review trigger: Before Step 3d normalization / before semantic publication
+```
+
+Extracted 2026-09-21 from the completed Step 3c workbook (post-batch-41). Row names were locked
+throughout Step 3c; every entry is a queued rename awaiting the formal taxonomy-normalization pass.
+This queue is **not an authorization** to change approved labels outside that pass. Queued labels
+recorded as alt labels remain alt labels until the pass executes; case/punctuation-only changes
+carry no alt label (validator collision rule). Entries marked **[priority]** were flagged with
+priority in review. The **Critical semantic collision** category gates semantic-model publication;
+all other categories ride the same pass without gating it.
+
+## Critical semantic collision (8)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-1-1-1` | Demand Forecasting | *(see note)* | Q1 decision (Hamid, 2026-09-19, Option A): the L4 carries the same label as its L3 parent (CM-1-1-1) and is its only child; authored in place as the operational forecast-production cycle, with the L3 remaining the domain umbrella — no tree change, consistent w |
+| `CM-1-1-3-7` | Inventory | Inventory Management | Preferred normalized label 'Inventory Management' queued for the consolidated naming pass; current label retained for batch traceability, together with the L4-versus-L5 'Manage Inventory' label collision. |
+| `CM-1-1-3-7-12` | Manage Inventory | Monitor and Control Inventory Positions | Preferred normalized label 'Monitor and Control Inventory Positions' recorded for the consolidated naming pass; current label retained for traceability, and the collision with the L4 label is queued with it. |
+| `CM-1-3-3-1-4` | Define KPI Framework | Define Offer Measurement Framework **[priority]** | Review terminology decision: this is a domain measurement framework, not KPI governance — 'KPI Framework' in the locked name is easy to misread as KPI approval authority; preferred label 'Define Offer Measurement Framework' queued prominently for the naming pa |
+| `CM-1-3-3-2-5` | Define KPI Framework | Define Pricing Measurement Framework **[priority]** | Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Pricing Measurement Framework' queued prominently. |
+| `CM-1-3-3-3-5` | Define KPI Framework | Define Channel Measurement Framework **[priority]** | Template row (see CM-1-3-3-1-4); review terminology decision: domain measurement framework, not KPI governance — preferred label 'Define Channel Measurement Framework' queued prominently. |
+| `CM-1-3-3-4-4` | Define KPI Framework | Define Network Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Network Measurement Framework' queued prominently; full measurement-framework routing statement in scope note per review. |
+| `CM-1-3-3-6-5` | Define KPI Framework | Define Operating Model Measurement Framework **[priority]** | Template row (batch 23 treatment); preferred label 'Define Operating Model Measurement Framework' queued prominently per review; full measurement-framework routing statement in scope note. |
+
+## Authority-risk label (6)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-2-4-2-12` | Develop Accounting Policies & Procedures | Maintain Trading Accounting Procedures and Guidance **[priority]** | The displayed label overstates the mandate: preferred normalized label 'Maintain Trading Accounting Procedures and Guidance' (alternative 'Manage Trading Accounting Procedures') recorded as alt labels and queued for the naming pass with priority. |
+| `CM-1-2-5-2-3` | Plan Optimal Feedstock Slate And Run Rate | Recommend Feedstock Slate And Run Rate **[priority]** | CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'R |
+| `CM-1-2-6-1` | Network Management | Supply Network Participation Analysis | Normalized label 'Supply Network Participation Analysis' queued — the current label sounds like network design/operations ownership (Hamid, batch 19). |
+| `CM-1-2-6-3-1` | Manage Primary Distribution Operations | Coordinate S&T Source-Point Supply Operations | Normalized label 'Coordinate S&T Source-Point Supply Operations' queued to prevent mistaken inference of physical operations (Hamid, batch 19). |
+| `CM-1-3-4-5-4` | Manage R&D Portfolios | *(see note)* **[priority]** | Manage step of the portfolio cycle — conceptually 'Develop Portfolio Recommendations and Track Decisions' per review; the locked name 'Manage R&D Portfolios' is too narrow for its product/service/R&D scope, so the review's preferred label is queued prominently |
+| `CM-1-3-5-1` | Sales Strategy & Planning | Sales Planning **[priority]** | Review label decision: strategy direction is owned upstream (batch 22), so the preferred label 'Sales Planning' is queued prominently to prevent scope creep from the locked 'Sales Strategy & Planning' name. |
+
+## Scope ambiguity (33)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-1-3-6-2` | Loading Shipment | Administer Shipment Loading | Preferred normalized label 'Administer Shipment Loading' queued for the naming pass (Hamid, batch 05) — the current label reads as an activity in progress rather than a stable process name. |
+| `CM-1-1-3-8-3` | Setup Scheduling System | Maintain Secondary Distribution Scheduling Basis | Preferred normalized label 'Maintain Secondary Distribution Scheduling Basis' queued for the naming pass; current label retained for traceability. |
+| `CM-1-2-4-1-8` | Settle Emissions | *(see note)* | Row name reads 'Emissions' but the settled scope spans the environmental-instrument families handled by capture (CM-1-2-1-3-6) and actualization (CM-1-2-3-1-7): RINs, allowances, RECs, and similar program instruments; 'Settle Environmental Instruments' queued  |
+| `CM-1-2-4-2-2` | Manage Production Accounting | Manage Production & Inventory Accounting | Preferred normalized label 'Manage Production & Inventory Accounting' recorded as alt label and queued for the naming pass (row names mirror the locked taxonomy). |
+| `CM-1-2-6-2-3` | Forecast Refined Product Demand | Forecast Operational Refined Product Demand | Normalized label 'Forecast Operational Refined Product Demand' queued to make the boundary visible. |
+| `CM-1-2-6-3-2` | Manage Replenishment | Fulfill Replenishment From Trading Sources **[priority]** | Normalized label 'Fulfill Replenishment From Trading Sources' queued with priority (Hamid, batch 19: highest naming collision in the batch; names mirror the locked taxonomy, so carried as alt label until the naming pass). |
+| `CM-1-2-6-3-3` | Manage Primary Distribution Transportation | Coordinate S&T-Sourced Primary Transportation | Normalized label 'Coordinate S&T-Sourced Primary Transportation' queued. |
+| `CM-1-3-1-6` | Insight and Metrics | Marketing Insight and Metrics Stewardship | Preferred label 'Marketing Insight and Metrics Stewardship' recorded as alt label and queued for the naming pass (row name mirrors the locked taxonomy). |
+| `CM-1-3-6-6-2` | Manage Invoicing | Manage Card Program Billing Coordination | Review billing-coordination wording adopted verbatim; preferred label 'Manage Card Program Billing Coordination' recorded as alt label and queued for the naming pass — the locked name 'Manage Invoicing' understates the coordination-only role and collides seman |
+| `CM-1-3-6-6-6` | Manage Bad Debt | Manage Card Delinquency and Collections Referral | Normalized label 'Manage Card Delinquency and Collections Referral' recorded as alt label and queued — the locked name 'Manage Bad Debt' misleadingly implies bad-debt accounting ownership. |
+| `CM-1-3-6-8-1` | Conduct Audit To Validate Reported Sales | Conduct Commercial Audit to Validate Reported Sales | Preferred label 'Conduct Commercial Audit to Validate Reported Sales' recorded as alt label and queued. |
+| `CM-1-3-7-1` | Manage Master Data (Customer, Price, Product, Tax, Location) | Manage Commercial Master Data Stewardship | Preferred label 'Manage Commercial Master Data Stewardship' recorded as alt label and queued. |
+| `CM-1-3-7-1-1` | Maintain Customer Master Data | Maintain Customer and Commercial Account Master Data | Preferred label 'Maintain Customer and Commercial Account Master Data' recorded as alt label and queued. |
+| `CM-1-3-7-1-3` | Maintain Product Master Data | Maintain Product and Service Master Data | Preferred label 'Maintain Product and Service Master Data' recorded as alt label and queued — scope includes services. |
+| `CM-1-3-7-1-5` | Maintain Workflows | Maintain Commercial Workflow Configuration | Preferred label 'Maintain Commercial Workflow Configuration' recorded as alt label and queued. |
+| `CM-1-3-7-1-6` | Maintain Commercial Policies | Maintain Commercial Policy Content and Parameters | Preferred label 'Maintain Commercial Policy Content and Parameters' recorded as alt label and queued. |
+| `CM-1-3-7-2` | Manage Pricing & Contracting (Manage Quote & Sale) | Manage Commercial Terms, Quoting, and Customer Commercial Services | Preferred label 'Manage Commercial Terms, Quoting, and Customer Commercial Services' recorded as alt label and queued. |
+| `CM-1-3-7-3-6` | Manage Returns | Manage Commercial Returns Authorization and Coordination | Preferred label 'Manage Commercial Returns Authorization and Coordination' recorded as alt label and queued. |
+| `CM-1-3-7-4-5` | Perform Customer Closure & Reinstatement | Perform Credit-Driven Customer Closure and Reinstatement | Preferred label 'Perform Credit-Driven Customer Closure and Reinstatement' recorded as alt label and queued (more than punctuation: prevents conflict with general customer-closure processes). |
+| `CM-1-3-7-4-6` | KYC Process | Perform KYC Due Diligence | Preferred label 'Perform KYC Due Diligence' recorded as alt label and queued. |
+| `CM-1-3-7-5-1` | Establish Priority Assignment of Customer Request/Inquiry | Prioritize Customer Requests and Inquiries | Preferred label 'Prioritize Customer Requests and Inquiries' recorded as alt label and queued. |
+| `CM-1-3-7-5-2` | Maintain Requests and Inquiries Master Database | Maintain Customer Request and Inquiry Records | Preferred label 'Maintain Customer Request and Inquiry Records' recorded as alt label and queued — removes the incorrect 'master' implication. |
+| `CM-1-3-8-1-2` | Perform Accounting For Self-billing | Perform Self-Billing Accounting | Preferred label 'Perform Self-Billing Accounting' recorded as alt label and queued. |
+| `CM-1-3-8-1-5` | Create Exception & Reverse Invoice | Manage Invoice Exceptions, Reversals, and Rebilling | Review document-category taxonomy adopted verbatim; preferred label 'Manage Invoice Exceptions, Reversals, and Rebilling' recorded as alt label and queued. |
+| `CM-1-3-8-2-1` | Receive Cash Receipts / Payment | Record Customer Receipts and Payment Notifications | Preferred label 'Record Customer Receipts and Payment Notifications' recorded as alt label and queued — reflects what the process actually does. |
+| `CM-1-3-8-2-4` | Manage Unapplied Receipts / Exceptions | Manage Unapplied Receipts and Exceptions | Preferred label 'Manage Unapplied Receipts and Exceptions' recorded as alt label and queued. |
+| `CM-1-3-8-2-5` | Perform Reconciliations & Settlements | Perform Cash, Acquirer, and Receivables Reconciliations | Preferred label 'Perform Cash, Acquirer, and Receivables Reconciliations' recorded as alt label and queued. |
+| `CM-1-3-8-3` | Manage Collection and Disputes | Manage Receivables Resolution | Preferred label 'Manage Receivables Resolution' recorded as alt label and queued. |
+| `CM-1-3-8-3-1` | Dispute Management | Manage Receivables Disputes | Preferred label 'Manage Receivables Disputes' recorded as alt label and queued. |
+| `CM-1-3-8-3-2` | Collection Management | Manage Receivables Collections | Preferred label 'Manage Receivables Collections' recorded as alt label and queued. |
+| `CM-1-3-8-3-3` | Bad Debt Allowance | Determine Bad Debt Allowance | Preferred label 'Determine Bad Debt Allowance' recorded as alt label and queued (verb-led per the taxonomy convention). |
+| `CM-1-3-8-3-4` | Develop Root Cause Analysis/Action Plan | Develop Root-Cause Analyses and Action Plans | Preferred label 'Develop Root-Cause Analyses and Action Plans' recorded as alt label and queued. |
+| `CM-1-3-8-4-7` | Manage Collection of Royalty and Fees | Administer Royalty, Brand Fee, and Contribution Streams | Preferred label 'Administer Royalty, Brand Fee, and Contribution Streams' recorded as alt label and queued — removes the ambiguity with the collections process; administration here, collection execution in CM-1-3-8-3. |
+
+## Directionality missing (8)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-2-4-4-2` | Create Claim | Create Outbound Delay Compensation Claim | Outbound leg of the two-directional lifecycle (Q3 reading); normalized label 'Create Outbound Delay Compensation Claim' queued for the naming pass. |
+| `CM-1-2-4-4-3` | Receive Demurrage Claim | Receive Inbound Delay Compensation Claim | Inbound leg intake (Q3 reading); normalized label 'Receive Inbound Delay Compensation Claim' queued. |
+| `CM-1-2-4-4-4` | Assess Claim | Assess Inbound Claim | Inbound assessment leg (Q3 reading); normalized label 'Assess Inbound Claim' queued. |
+| `CM-1-2-4-4-5` | Communicate and Negotiate Claim | Negotiate Outbound Claim | Outbound negotiation leg (Q3 reading); normalized label 'Negotiate Outbound Claim' queued. |
+| `CM-1-2-4-4-6` | Validate and Negotiate Claim | Validate and Negotiate Inbound Claim | Inbound negotiation leg (Q3 reading); normalized label 'Validate and Negotiate Inbound Claim' queued. |
+| `CM-1-2-4-4-7` | Send Claim Invoice | Invoice Agreed Outbound Claim | Outbound invoicing leg (Q3 reading); normalized label 'Invoice Agreed Outbound Claim' queued. |
+| `CM-1-2-4-4-8` | Receive Claim Invoice | Process Invoice for Agreed Inbound Claim | Inbound invoicing leg (Q3 reading); normalized label 'Process Invoice for Agreed Inbound Claim' queued. |
+| `CM-1-3-2-3` | Consumer Value Proposition | *(see note)* | Review naming decision: the child names reuse the template's 'Customer'/'CVP' wording under the Consumer cluster — consumer-directional normalized labels (Test Consumer Value Proposition; Formulate and Evaluate Consumer Value Proposition Alternatives; Establis |
+
+## Generic operational label (11)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-3-10-1` | Setup and Maintain Customer In Terminal | Set Up and Maintain Terminal Customer Authorization | Naming queue: preferred label 'Set Up and Maintain Terminal Customer Authorization'. |
+| `CM-1-3-10-2` | Process Forecast and Nominations | Process Customer Lifting Forecasts and Nominations | Naming queue: preferred label 'Process Customer Lifting Forecasts and Nominations'. |
+| `CM-1-3-10-3` | Manage Allocation | Manage Terminal Lifting Allocation | Naming queue: preferred label 'Manage Terminal Lifting Allocation'. |
+| `CM-1-3-10-4` | Capture Deal | Capture Terminal Sales Deal **[priority]** | Naming queue: preferred label 'Capture Terminal Sales Deal' — high-priority name normalization. |
+| `CM-1-3-6-8` | Compliance Management | Commercial Agreement Compliance Management | Preferred label 'Commercial Agreement Compliance Management' recorded as alt label and queued as the priority rename: it encodes the approved narrow scope. |
+| `CM-1-3-7-5-5` | Conduct Quarterly Review Meeting | Conduct Customer Service Reviews | Preferred label 'Conduct Customer Service Reviews' recorded as alt label and queued. |
+| `CM-1-3-9-1-2` | Manage Operations | Manage Service Operations | Preferred label 'Manage Service Operations' recorded as alt label and queued. |
+| `CM-1-3-9-2-1` | Manage Data | Manage Service Delivery Data | Preferred label 'Manage Service Delivery Data' recorded as alt label and queued — disambiguates the generic locked name. |
+| `CM-1-3-9-2-2` | Manage Customer | Manage Customer Interaction in Service Delivery | Preferred label 'Manage Customer Interaction in Service Delivery' recorded as alt label and queued. |
+| `CM-1-3-9-2-3` | Fulfill Service Event | Fulfill Service Events | Preferred label 'Fulfill Service Events' recorded as alt label and queued. |
+| `CM-1-3-9-3-2` | Measure Service Employees | Measure Service Workforce Performance | Preferred label 'Measure Service Workforce Performance' recorded as alt label and queued. |
+
+## Normalization only (26)
+
+| Slug | Locked name | Queued label(s) | Note |
+|---|---|---|---|
+| `CM-1-1-2-10` | Crude Allocation Decision | *(see note)* | A later naming pass should consider “Allocate Crude & Feedstock” for verb consistency with sibling labels; not changed in this batch. |
+| `CM-1-1-2-11` | Product Allocation Decision | *(see note)* | The “Decision” suffix is retained pending the same naming pass noted on CM-1-1-2-10. |
+| `CM-1-1-7-3-3` | Manage and Support Emission Trading | Manage and Support Emissions Trading | Preferred normalized label 'Manage and Support Emissions Trading' (plural) queued for the naming pass per Hamid. |
+| `CM-1-2-2-3-9` | Perform Position & PNL Analysis | *(see note)* | Business-facing label 'Perform Position & P&L Analysis' queued for the naming pass per Hamid — 'PNL' retained in the technical label, 'P&L' used in prose. |
+| `CM-1-2-4-2-6` | Reconcile Economic PNL To Accounting PNL | *(see note)* | 'PNL' retained in the technical label; 'P&L' in prose per the batch 12 convention, label queued for the naming pass. |
+| `CM-1-2-4-2-7` | Manage Financial Info. Documentation & Reporting | Manage Financial Information Documentation and Reporting | Normalized label 'Manage Financial Information Documentation and Reporting' recorded as alt label and queued for the naming pass — the 'Info.' abbreviation should not survive into the canonical glossary. |
+| `CM-1-2-5-1-1` | Manage feedstock Data Quality | *(see note)* | The row name's lowercase 'feedstock' is a typographical artifact — corrected capitalization queued for the naming pass. |
+| `CM-1-3-2-1-1` | Formulate and Evaluate Strategic Operating Alternative | *(see note)* | Name is singular in the locked taxonomy; plural normalized label queued for the naming pass. |
+| `CM-1-3-6-5-2` | Manage Promotions/Events Execution | Manage Promotions and Events Execution | Normalized label 'Manage Promotions and Events Execution' recorded as alt label and queued for the naming pass. |
+| `CM-1-3-6-6` | Loyalty And Cards Management - Marketing | Loyalty and Cards Management (Marketing) | Normalized label 'Loyalty and Cards Management (Marketing)' is a case/punctuation-only change — queued for the naming pass, not recorded as an alt label. |
+| `CM-1-3-6-6-1` | Setup Prospect | Set Up Prospect | Normalized label 'Set Up Prospect' recorded as alt label and queued for the naming pass. |
+| `CM-1-3-6-6-12` | Manage Additional Card Services (On Road Services) | Manage Additional Card Services | Normalized label 'Manage Additional Card Services' recorded as alt label and queued — parenthetical examples belong in the definition. |
+| `CM-1-3-6-6-4` | Manage Cards Administration (Order New Cards, Change Card Data) | Manage Card Administration | Normalized label 'Manage Card Administration' recorded as alt label and queued — parenthetical examples belong in the definition, not the label. |
+| `CM-1-3-6-6-7` | Perform Transaction Analysis Reporting & Confirmation | Analyze and Confirm Card Transactions | Normalized label 'Analyze and Confirm Card Transactions' recorded as alt label and queued. |
+| `CM-1-3-6-6-9` | Analyze Consumption Planning & Monitor Stock | Plan Card Stock Consumption and Monitor Inventory | Normalized label 'Plan Card Stock Consumption and Monitor Inventory' recorded as alt label and queued. |
+| `CM-1-3-6-7` | Brand Standard Management | Brand Standards Management | Normalized label 'Brand Standards Management' recorded as alt label and queued for the naming pass. |
+| `CM-1-3-6-7-1` | Manage Brand Standards and Perform Inspection | Manage Brand Standards and Inspections | Normalized label 'Manage Brand Standards and Inspections' recorded as alt label and queued. |
+| `CM-1-3-7-2-3` | Develop & Monitor Revenue Plan | Develop and Monitor Commercial Revenue Plan | Preferred label 'Develop and Monitor Commercial Revenue Plan' recorded as alt label and queued. |
+| `CM-1-3-7-3-3` | Change / Cancel Order | Change or Cancel Order | Normalized label 'Change or Cancel Order' recorded as alt label and queued. |
+| `CM-1-3-7-3-5` | Track & Forecast Order | Track Orders and Forecast Order Book | Normalized label 'Track Orders and Forecast Order Book' recorded as alt label and queued. |
+| `CM-1-3-7-5-4` | Perform Customer Follow up | Perform Customer Follow-Up | Normalized label 'Perform Customer Follow-Up' is punctuation-only — queued for the naming pass, no alt label (validator lesson). |
+| `CM-1-3-8-1-1` | Create & Distribute Bill | Create and Distribute Bill | Normalized label 'Create and Distribute Bill' is punctuation-only — queued, no alt label. |
+| `CM-1-3-8-4-1` | Period End Processing | Perform Period-End Processing | Preferred label 'Perform Period-End Processing' recorded as alt label and queued. |
+| `CM-1-3-8-4-2` | AR Reconciliation / Compliance | Perform AR Reconciliation and Compliance | Preferred label 'Perform AR Reconciliation and Compliance' recorded as alt label and queued. |
+| `CM-1-3-8-4-3` | Accruals Analysis And Calculation | Analyze and Calculate Accruals | Preferred label 'Analyze and Calculate Accruals' recorded as alt label and queued. |
+| `L1-ehs-gov-reporting` | EHS & Gov Reporting | Environment, Health, Safety & Government Reporting | Queued by the batch 42 review as the consistent expanded presentation; the L1 row is not edited. |
+
