@@ -96,7 +96,8 @@ Full operational detail (scripts, validator behavior, git mechanics, package for
 | 37 | Cash Application, A/R & Revenue Accounting (CM-1-3-8-2, 7) | #75 | **Cash Application Integrity Rule** (durable); recording-not-receiving Treasury boundary; unapplied cash as owned aged exception; revenue-evidence model (approved unbilled bases); SRC-FASB-ASC606-001. |
 | 38 | Collection & Disputes (CM-1-3-8-3, 5) | #76 | **Receivables Resolution Separation Rule** (durable); disputed-portion-only holds; payment plans vs concessions; Finance-authority write-offs (accounting event ≠ forgiveness); SRC-FASB-ASC326-001. |
 | 39 | Accounting, Reporting & Compliance (CM-1-3-8-4, 8) | #77 | **Accounting Execution Rule** (durable) with governed close exceptions; compliance = O2C control-operation evidence only; taxability recommendations for Tax approval; intercompany execution per approved transfer-pricing basis; royalty/fee stream administration; completed CM-1-3-8. |
-| 40+ | Service & Support (CM-1-3-9, 15) and terminal commercial operations (CM-1-3-10, 4) | — | *Pending — append on completion.* |
+| 40 | Service & Support (CM-1-3-9, 15 rows) | #80 | Enablement and Delivery as continuous capabilities (Delivery reclassified in review); canonical request/enable/deliver/measure rule with case-to-service-event linkage; HR/IT/Facilities/contact-center corporate boundaries; five-way service data distinction; service-event outcome taxonomy + billable-evidence rule; workforce-data and formal-research controls; five generic-name alt labels. |
+| 41 | Terminal commercial operations (CM-1-3-10, 4 rows) | — | *Pending — append on completion.* |
 
 ---
 
