@@ -1,7 +1,7 @@
 # Source-to-Process Traceability
 
 **Generated:** 2026-09-21 by `build/scripts/step3c-source-traceability.py` — do not edit by hand; regenerate instead.
-**Workbook:** `output/step3c-definition-authoring-workbook.xlsx` · 50 registered sources · 462 rows carry citations.
+**Workbook:** `output/step3c-definition-authoring-workbook.xlsx` · 50 registered sources · 481 rows carry citations.
 
 Each registered source below lists the process areas and rows whose definitions it informs, with the source's permitted-use limits. Sources are evidence, not authority: permitted-use text records what each source may and may not determine.
 
@@ -16,6 +16,22 @@ Each registered source below lists the process areas and rows whose definitions 
 
 **Informs:**
 
+- *Commercial & Marketing > Marketing > Customer Service & Support*
+  - `CM-1-3-9-1` — Service & Support Enablement
+  - `CM-1-3-9-1-1` — Define Operating Model
+  - `CM-1-3-9-1-2` — Manage Operations
+  - `CM-1-3-9-1-3` — Manage Service Employees
+  - `CM-1-3-9-1-4` — Manage Facilities
+  - `CM-1-3-9-1-5` — Manage Technology
+  - `CM-1-3-9-1-6` — Manage Contact Center
+  - `CM-1-3-9-2` — Service & Support Delivery
+  - `CM-1-3-9-2-1` — Manage Data
+  - `CM-1-3-9-2-2` — Manage Customer
+  - `CM-1-3-9-2-3` — Fulfill Service Event
+  - `CM-1-3-9-3` — Service & Support Measurement
+  - `CM-1-3-9-3-1` — Measure Service Infrastructure
+  - `CM-1-3-9-3-2` — Measure Service Employees
+  - `CM-1-3-9-3-3` — Measure Service Effectiveness
 - *Commercial & Marketing > Marketing > Market Analysis & Insight*
   - `CM-1-3-1-1-2` — Define Analysis Objectives & Scope
   - `CM-1-3-1-1-3` — Analyze Data
@@ -266,6 +282,8 @@ Each registered source below lists the process areas and rows whose definitions 
   - `CM-1-3-2-5-1` — Identify Customer Experience Aspiration
   - `CM-1-3-2-5-2` — Define Customer Experience Guiding Principles
   - `CM-1-3-2-5-3` — Establish Customer Experience Strategic Pillars
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-3` — Manage Allocation
 - *Commercial & Marketing > Supply And Trading > Products Distribution Management*
   - `CM-1-2-7-1` — Contractual Agreements Management
   - `CM-1-2-7-1-1` — Manage Product Exchange Agreements
@@ -314,6 +332,8 @@ Each registered source below lists the process areas and rows whose definitions 
 
 **Informs:**
 
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-4` — Capture Deal
 - *Commercial & Marketing > Planning & Scheduling > Demand Forecasting*
   - `CM-1-1-1-1-1` — Prepare Master Data To Create Demand Forecast
 - *Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management*
@@ -691,6 +711,10 @@ Each registered source below lists the process areas and rows whose definitions 
 
 **Informs:**
 
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-1` — Setup and Maintain Customer In Terminal
+  - `CM-1-3-10-2` — Process Forecast and Nominations
+  - `CM-1-3-10-3` — Manage Allocation
 - *Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management*
   - `CM-1-1-3-6` — Physical Distribution Scheduling
   - `CM-1-1-3-6-2` — Loading Shipment
@@ -740,6 +764,8 @@ Each registered source below lists the process areas and rows whose definitions 
 
 **Informs:**
 
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-2` — Process Forecast and Nominations
 - *Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management*
   - `CM-1-1-3-6` — Physical Distribution Scheduling
   - `CM-1-1-3-6-1` — Plan & Execute Nominations
@@ -1072,6 +1098,8 @@ Each registered source below lists the process areas and rows whose definitions 
 - *Commercial & Marketing > Marketing > Operational Accounting*
   - `CM-1-3-8-1-3` — Determine Taxability
   - `CM-1-3-8-4-4` — Reconcile And Report Indirect Tax
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-1` — Setup and Maintain Customer In Terminal
 - *Commercial & Marketing > Supply And Trading > Settlements & Accounting*
   - `CM-1-2-4-2-11` — Manage Taxes
   - `CM-1-2-4-3-5` — Manage Tax Compliance
@@ -1142,6 +1170,8 @@ Each registered source below lists the process areas and rows whose definitions 
 
 - *Commercial & Marketing > Marketing > Order Management*
   - `CM-1-3-7-3-6` — Manage Returns
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-1` — Setup and Maintain Customer In Terminal
 - *Commercial & Marketing > Supply And Trading > Products Distribution Management*
   - `CM-1-2-7-2-2` — Manage Fleet (Own/Third Party)
 
@@ -1186,6 +1216,8 @@ Each registered source below lists the process areas and rows whose definitions 
   - `CM-1-3-2-3` — Consumer Value Proposition
   - `CM-1-3-2-4` — Sales & Distribution Channel Strategy
   - `CM-1-3-2-4-1` — Conduct Channel of trade diagnostics
+- *Commercial & Marketing > Marketing > Terminal Loading*
+  - `CM-1-3-10-4` — Capture Deal
 
 ## SRC-PMPA-001
 
