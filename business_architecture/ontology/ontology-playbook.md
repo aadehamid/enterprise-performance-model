@@ -392,7 +392,7 @@ the gate was rewritten before the next batch.
   publication and runs first in Step 3d. The queue authorizes no renames by
   itself — proposals go to Hamid for review like any batch.
 
-### Step 3d — tree reconciliation ⏸ (not started, blocked on open PTCs)
+### Step 3d — tree reconciliation 🔄 (PTC-001 partially resolved 2026-09-21)
 
 The successor to Step 3c, registered here as a numbered step rather than a
 note, so it can be scheduled rather than remembered.
@@ -456,9 +456,21 @@ consolidated pass that applies them.
   use stable identifiers for technical relationships. Retain historical
   labels as altLabel only when uniquely resolvable and semantically
   safe.
+- **PTC-001 partial resolution — executed 2026-09-21 (PR #86, open — merge on Hamid's approval).**
+  Hamid approved the revised consolidated proposal
+  (`files/ptc-001-tree-proposal.md`, four review adjustments adopted):
+  new Candidate L2 **Financial Planning and Performance Management** under
+  Finance hosting **Plan Budgets** (L3); new Candidate L2 **Refinery
+  Performance and Risk Coordination** under Refining hosting **Coordinate
+  Site Business Risk Management** (renamed, L3); **Commercial Development**
+  tombstoned as `owl:deprecated` (kept in JSON/identity map/TTL, removed
+  from active navigation); **Develop Strategic Business Plan** stays
+  `blocked` under the named **PTC-001-B** strategy-ownership decision.
+  682 concepts, 13 minted stubs. PTC-001 stays open until PTC-001-B closes.
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
-  Planning; 1 row retired, 3 blocked). PTC-002 closed 2026-09-18 with no
+  Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),
+  1 blocked (PTC-001-B), 2 rehomed to pending). PTC-002 closed 2026-09-18 with no
   tree change needed. The register is the live list; this line will go
   stale, the register will not.
 - **Known scope beyond the moves.** PTC-001 cannot be applied as

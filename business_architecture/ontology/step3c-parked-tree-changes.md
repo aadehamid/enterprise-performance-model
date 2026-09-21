@@ -29,7 +29,7 @@ body. See playbook §3, Step 3d.
 
 | ID | Affected node | Status | Decision | Rows parked |
 | --- | --- | --- | --- | --- |
-| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — accepted, awaiting tree pass | Option A, accepted by Hamid 2026-09-18; sub-decisions settled 2026-09-18 | 4 (1 retired, 3 blocked) |
+| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — partially resolved 2026-09-21 (PTC-001-B sub-decision open) | Option A, accepted by Hamid 2026-09-18; sub-decisions settled 2026-09-18; partial-resolution proposal approved by Hamid 2026-09-21 | 2 (1 retired tombstone, 1 blocked) |
 | PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | **Closed** 2026-09-18 — no tree change required | Option 1, accepted by Hamid | 0 |
 
 ---
@@ -38,11 +38,57 @@ body. See playbook §3, Step 3d.
 
 **Raised:** 2026-09-18, review batch 01
 **Accepted:** 2026-09-18 by Hamid (Option A); sub-decisions 1–4 settled 2026-09-18
-**Status:** Open — awaiting the consolidated repo-JSON tree pass
+**Status:** Open — partially resolved 2026-09-21 (tree pass executed; PTC-001-B strategy-ownership sub-decision open)
 **Precedent:** handled the same way as the parked `IT Services` reparenting question recorded on
 the approved `CM-1` record, which was likewise deferred rather than churning the tree mid-pass.
 
-### Affected rows
+### Partial resolution — executed 2026-09-21
+
+Hamid approved the revised consolidated proposal (`ptc-001-tree-proposal.md`,
+four review adjustments adopted):
+
+| Slug | Resolution |
+| --- | --- |
+| `CM-1-1-4-6-2` Plan Budgets | Reparented to new L2 **Financial Planning and Performance Management** under Finance (`L2-financial-planning-and-performance-management`); level 5 → 3; workbook `blocked` → `pending` |
+| `CM-1-1-4-6-3` → **Coordinate Site Business Risk Management** | Reparented to new L2 **Refinery Performance and Risk Coordination** under Refining (`L2-refinery-performance-and-risk-coordination`); renamed (prior name kept as altLabel); level 5 → 3; workbook `blocked` → `pending` |
+| `CM-1-1-4-6` Commercial Development | Tombstoned as `owl:deprecated` (kept in JSON/identity map/TTL, removed from active navigation); workbook stays `retired` |
+| `CM-1-1-4-6-1` Develop Strategic Business Plan | Stays `blocked` under **PTC-001-B** (below); kept as the tombstone's child so the blocked row is never orphaned |
+
+Deviations from the proposal's §7, recorded: the tombstone keeps its one parked child
+(proposal said "no children") — this is the orphan-safe reading of the reviewer's
+"keep its parent" option, and preserves the blocked row's historical traceability until
+PTC-001-B rehomes it. The two new L2s are Candidate architecture nodes: structurally
+approved via the proposal, queued for definition authoring as `pending` workbook rows.
+
+### PTC-001-B — Strategy-ownership decision (open)
+
+**Question:** Is enterprise strategic-business planning owned by
+(A) Corporate Planning within Finance,
+(B) Corporate Strategy / Corporate Development, or
+(C) an executive cross-functional governance process?
+
+**Evidence required:** operating model, executive/Board planning calendar,
+delegated authority, corporate-planning charter, current planning artifacts.
+
+**Constraint:** no new Strategy L1 without a charter-level decision (sub-decision 1,
+2026-09-18, stands). Do not place the row under Finance as a side effect.
+
+**Blocked row:** `CM-1-1-4-6-1` Develop Strategic Business Plan (workbook `blocked`,
+terminology_notes cites PTC-001-B; the gate resolves the citation to PTC-001, which
+remains open until PTC-001-B closes).
+
+### Affected rows (post-tree-pass, 2026-09-21)
+
+| Slug | Level | Label | Current parent | Current status |
+| --- | --- | --- | --- | --- |
+| `CM-1-1-4-6` | 4 | Commercial Development | Refinery Planning | `retired` (owl:deprecated tombstone) |
+| `CM-1-1-4-6-1` | 5 | Develop Strategic Business Plan | Commercial Development (tombstone) | `blocked`, PTC-001-B |
+| `CM-1-1-4-6-2` | 3 | Plan Budgets | Financial Planning and Performance Management (Finance) | `pending` |
+| `CM-1-1-4-6-3` | 3 | Coordinate Site Business Risk Management | Refinery Performance and Risk Coordination (Refining) | `pending` |
+| `L2-financial-planning-and-performance-management` | 2 | Financial Planning and Performance Management | Finance | `pending` (Candidate) |
+| `L2-refinery-performance-and-risk-coordination` | 2 | Refinery Performance and Risk Coordination | Refining | `pending` (Candidate) |
+
+### Affected rows (pre-tree-pass, 2026-09-18) — historical
 
 | Slug | Level | Label | Current parent | Current status |
 | --- | --- | --- | --- | --- |
@@ -120,16 +166,22 @@ forcing them here would set domain architecture as a side effect of a definition
 
 - [x] Sub-decisions 3 and 4 answered (2026-09-18). 1 and 2 deliberately deferred as L1/domain-set
       questions — record them in the Architecture Decision Log when that artifact exists.
-- [ ] New parent nodes created in `downstream_process_map.json` with slugs assigned.
-- [ ] Three L5 children reparented; `CM-1-1-4-6` retired or redefined.
-- [ ] Affected workbook rows re-queued for definition authoring under their new parents.
+- [x] New parent nodes created in `downstream_process_map.json` with slugs assigned (2026-09-21:
+      `L2-financial-planning-and-performance-management` under Finance,
+      `L2-refinery-performance-and-risk-coordination` under Refining).
+- [x] Two L5 children reparented (2026-09-21); `CM-1-1-4-6` tombstoned as `owl:deprecated`
+      rather than removed — deletion would orphan the still-blocked `CM-1-1-4-6-1`, whose slug
+      encodes that parentage. The tombstone keeps the parked child until PTC-001-B rehomes it.
+- [x] Affected workbook rows re-queued for definition authoring under their new parents (2026-09-21:
+      `CM-1-1-4-6-2` and `CM-1-1-4-6-3` `blocked` → `pending`; two new Candidate L2 rows appended).
 - [x] `CM-1-1-4-6` row set to `retired` (2026-09-18) — it does not survive, so no definition is owed.
 - [ ] Identity map and taxonomy TTL regenerated.
-- [ ] At least one currently undecomposed L1 decomposed far enough to host the moved children.
-- [ ] PTC-001 marked closed here with the date and decision-log reference.
-- [ ] Parked row statuses lifted from `blocked` to `pending` as each child gets a real parent — the
-      gate fails on a row still blocked against a Closed entry, so closure and re-statusing are one
-      change, not two. `CM-1-1-4-6` stays `retired` and may keep the PTC-001 citation.
+- [x] Two currently undecomposed L1s decomposed one level to host the moved children (Finance,
+      Refining — minimal Candidate branches, 2026-09-21).
+- [ ] PTC-001 marked closed here with the date and decision-log reference — **waiting on PTC-001-B**.
+- [x] Parked row statuses lifted from `blocked` to `pending` as each child got a real parent
+      (2026-09-21). `CM-1-1-4-6-1` stays `blocked` against the still-open entry, citing PTC-001-B.
+      `CM-1-1-4-6` stays `retired` and keeps the PTC-001 citation as provenance.
 
 The full structured question, with options and evidence, is preserved verbatim in the
 `open_questions` cell of row `CM-1-1-4-6` in

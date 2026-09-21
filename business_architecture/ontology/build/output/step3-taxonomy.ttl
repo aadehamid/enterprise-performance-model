@@ -1535,25 +1535,21 @@ proc:CM-1-1-4-6-1 a skos:Concept ;
     skos:prefLabel "Develop Strategic Business Plan"@en ;
     intake:level "L5"@en ;
     intake:status "blocked"@en ;
-    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination undecided: Finance or a future strategy domain. Hamid ruled out creating a Strategy L1, since the ten L1 definitions are approved baseline and changing the L1 set is a charter-level decision."@en .
+    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination undecided: Finance or a future strategy domain. Hamid ruled out creating a Strategy L1, since the ten L1 definitions are approved baseline and changing the L1 set is a charter-level decision. Step 3d PTC-001 tree pass (2026-09-21): stays blocked under PTC-001-B — enterprise strategy-ownership decision (options: Corporate Planning within Finance / Corporate Strategy / executive cross-functional governance). Parent Commercial Development tombstoned (owl:deprecated) pending PTC-001-B resolution."@en .
 
 proc:CM-1-1-4-6-2 a skos:Concept ;
-    skos:broader proc:CM-1-1-4-6 ;
+    skos:broader proc:L2-financial-planning-and-performance-management ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6.2" ;
     skos:prefLabel "Plan Budgets"@en ;
-    intake:level "L5"@en ;
-    intake:status "blocked"@en ;
-    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination is Finance, per the locked boundary that Finance owns financial governance. Decided 2026-09-18: no split — one node under Finance. The refinery's operational input to budgeting is already carried by the Refinery Optimization case basis (CM-1-1-4-7-1 to -6) and the Refinery Planning outputs, so a second node would duplicate batch 02."@en .
+    intake:level "L3"@en .
 
 proc:CM-1-1-4-6-3 a skos:Concept ;
-    skos:broader proc:CM-1-1-4-6 ;
+    skos:broader proc:L2-refinery-performance-and-risk-coordination ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6.3" ;
-    skos:prefLabel "Manage Site Specific Business Risk"@en ;
-    intake:level "L5"@en ;
-    intake:status "blocked"@en ;
-    intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination undecided. Refining is the sensible owner as asset owner, but Refining is also undecomposed. Note the taxonomy has no enterprise risk capability anywhere: the only risk nodes are credit, market, and inventory risk, all inside Supply And Trading (CM-1-2-2, CM-1-2-5-4-1), and EHS owns EHS risk only. Whether an enterprise risk capability should exist is part of PTC-001 sub-decision 2."@en .
+    skos:prefLabel "Coordinate Site Business Risk Management"@en ;
+    intake:level "L3"@en .
 
 proc:CM-1-1-4-7-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12291,21 +12287,6 @@ proc:L1-ehs-gov-reporting a skos:Concept ;
     intake:apqcDecision "REJECTED"@en ;
     intake:level "L1"@en .
 
-proc:L1-finance a skos:Concept ;
-    dcterms:references [ a dcterms:BibliographicResource ;
-            dcterms:identifier "10922" ;
-            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
-            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10922"@en ] ;
-    dcterms:source [ a dcterms:BibliographicResource ;
-            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:broader proc:L0-enabling-functions ;
-    skos:definition "Planning, recording, controlling, reporting, and managing the financial resources, performance, obligations, and risks of the downstream business, including financial planning and analysis, accounting, reporting, payroll, treasury, tax, and internal financial controls."@en ;
-    skos:inScheme mod:core ;
-    skos:prefLabel "Finance"@en ;
-    skos:scopeNote "Includes budgeting, forecasting, financial and management accounting, period close, statutory and management reporting, accounts payable, expense reimbursement, payroll, treasury, liquidity and cash management, tax, financial compliance, internal controls, audit support, and financial risk management. Supports commercial, supply-chain, refining, midstream, distribution, and enabling-function processes through financial governance, measurement, and transaction processing. Excludes operational execution in those business domains and fixed-asset project accounting where it is intentionally governed and executed as an ERP-native capability outside this taxonomy's modeled scope."@en ;
-    intake:apqcDecision "NO CANDIDATE"@en ;
-    intake:level "L1"@en .
-
 proc:L1-human-resources a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
             dcterms:identifier "20958" ;
@@ -12366,21 +12347,6 @@ proc:L1-process-excellence-it a skos:Concept ;
     intake:apqcDecision "REJECTED"@en ;
     intake:level "L1"@en .
 
-proc:L1-refining a skos:Concept ;
-    dcterms:references [ a dcterms:BibliographicResource ;
-            dcterms:identifier "19948" ;
-            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
-            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19948"@en ] ;
-    dcterms:source [ a dcterms:BibliographicResource ;
-            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:broader proc:L0-downstream-operations ;
-    skos:definition "The operation of petroleum refineries to convert crude oil and other hydrocarbon feedstocks into specification-compliant fuels, blendstocks, lubricants, asphalt, petrochemical feedstocks, and other refined products through separation, conversion, treatment, blending, and associated refinery operations."@en ;
-    skos:inScheme mod:core ;
-    skos:prefLabel "Refining"@en ;
-    skos:scopeNote "Encompasses refinery production operations and the planning, execution, and recovery activities required to maintain refinery assets, reliability, integrity, safety, and operating availability, including major maintenance and turnarounds."@en ;
-    intake:apqcDecision "NO CANDIDATE"@en ;
-    intake:level "L1"@en .
-
 proc:L1-shared-services a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
             dcterms:identifier "19951" ;
@@ -12432,6 +12398,16 @@ proc:CM-1-1-2-2-2 a skos:Concept ;
     skos:prefLabel "Gather Automated Data Inputs"@en ;
     intake:level "L5"@en .
 
+proc:CM-1-1-4-6 a skos:Concept ;
+    owl:deprecated true ;
+    skos:broader proc:CM-1-1-4 ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4.6" ;
+    skos:prefLabel "Commercial Development"@en ;
+    intake:level "L4"@en ;
+    intake:status "retired"@en ;
+    intake:terminologyNotes "Retired per PTC-001 (step3c-parked-tree-changes.md), decided by Hamid 2026-09-18. The node carries no local meaning: its Step 3b provenance is a WEAK match against the APQC element “Manage employee development”, and under Option A all three of its children leave. Nothing remains to define, so it is retired rather than defined or left pending. The node itself is still present in downstream_process_map.json — removing it is a Step 3d tree change, not a workbook change. Retired here means “will not be defined”, not “gone from the tree”. Step 3d PTC-001 tree pass (2026-09-21): tombstoned as owl:deprecated — removed from active navigation, retained for lineage (PTC-001 / PTC-001-B traceability). Physical removal is a later explicit retirement decision once PTC-001-B is resolved."@en .
+
 proc:CM-1-1-6-1 a skos:Concept ;
     skos:broader proc:CM-1-1-6 ;
     skos:definition "Update data inputs and obtain model to run distribution backcast"@en ;
@@ -12475,6 +12451,48 @@ Out of scope: Regulatory compliance programs (EHS, fuels, trade — their functi
     intake:relatedConcepts "enables: Manage Collection of Royalty and Fees | informed-by: Report Franchise Performance"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical definition, narrow-scope statement, and agreement-rights conditions adopted verbatim — commercial-agreement compliance only, never an enterprise compliance catch-all. Preferred label 'Commercial Agreement Compliance Management' recorded as alt label and queued as the priority rename: it encodes the approved narrow scope."@en .
+
+proc:L1-finance a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "10922" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10922"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:broader proc:L0-enabling-functions ;
+    skos:definition "Planning, recording, controlling, reporting, and managing the financial resources, performance, obligations, and risks of the downstream business, including financial planning and analysis, accounting, reporting, payroll, treasury, tax, and internal financial controls."@en ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Finance"@en ;
+    skos:scopeNote "Includes budgeting, forecasting, financial and management accounting, period close, statutory and management reporting, accounts payable, expense reimbursement, payroll, treasury, liquidity and cash management, tax, financial compliance, internal controls, audit support, and financial risk management. Supports commercial, supply-chain, refining, midstream, distribution, and enabling-function processes through financial governance, measurement, and transaction processing. Excludes operational execution in those business domains and fixed-asset project accounting where it is intentionally governed and executed as an ERP-native capability outside this taxonomy's modeled scope."@en ;
+    intake:apqcDecision "NO CANDIDATE"@en ;
+    intake:level "L1"@en .
+
+proc:L1-refining a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "19948" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19948"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:broader proc:L0-downstream-operations ;
+    skos:definition "The operation of petroleum refineries to convert crude oil and other hydrocarbon feedstocks into specification-compliant fuels, blendstocks, lubricants, asphalt, petrochemical feedstocks, and other refined products through separation, conversion, treatment, blending, and associated refinery operations."@en ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Refining"@en ;
+    skos:scopeNote "Encompasses refinery production operations and the planning, execution, and recovery activities required to maintain refinery assets, reliability, integrity, safety, and operating availability, including major maintenance and turnarounds."@en ;
+    intake:apqcDecision "NO CANDIDATE"@en ;
+    intake:level "L1"@en .
+
+proc:L2-financial-planning-and-performance-management a skos:Concept ;
+    skos:broader proc:L1-finance ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Financial Planning and Performance Management"@en ;
+    intake:level "L2"@en .
+
+proc:L2-refinery-performance-and-risk-coordination a skos:Concept ;
+    skos:broader proc:L1-refining ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Refinery Performance and Risk Coordination"@en ;
+    intake:level "L2"@en .
 
 proc:CM-1-1-2-2-1 a skos:Concept ;
     skos:broader proc:CM-1-1-2-2 ;
@@ -12718,16 +12736,6 @@ proc:CM-1-1-4-4 a skos:Concept ;
     skos:notation "CM 1.1.4.4" ;
     skos:prefLabel "Perform Prompt Month Evaluations"@en ;
     intake:level "L4"@en .
-
-proc:CM-1-1-4-6 a skos:Concept ;
-    owl:deprecated true ;
-    skos:broader proc:CM-1-1-4 ;
-    skos:inScheme mod:core ;
-    skos:notation "CM 1.1.4.6" ;
-    skos:prefLabel "Commercial Development"@en ;
-    intake:level "L4"@en ;
-    intake:status "retired"@en ;
-    intake:terminologyNotes "Retired per PTC-001 (step3c-parked-tree-changes.md), decided by Hamid 2026-09-18. The node carries no local meaning: its Step 3b provenance is a WEAK match against the APQC element “Manage employee development”, and under Option A all three of its children leave. Nothing remains to define, so it is retired rather than defined or left pending. The node itself is still present in downstream_process_map.json — removing it is a Step 3d tree change, not a workbook change. Retired here means “will not be defined”, not “gone from the tree”."@en .
 
 proc:CM-1-1-5-9 a skos:Concept ;
     skos:broader proc:CM-1-1-5 ;

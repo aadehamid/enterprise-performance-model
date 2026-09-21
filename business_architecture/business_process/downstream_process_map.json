@@ -4592,21 +4592,12 @@
                     "id": "CM 1.1.4.6",
                     "level": 4,
                     "name": "Commercial Development",
+                    "deprecated": true,
                     "children": [
                       {
                         "id": "CM 1.1.4.6.1",
                         "level": 5,
                         "name": "Develop Strategic Business Plan"
-                      },
-                      {
-                        "id": "CM 1.1.4.6.2",
-                        "level": 5,
-                        "name": "Plan Budgets"
-                      },
-                      {
-                        "id": "CM 1.1.4.6.3",
-                        "level": 5,
-                        "name": "Manage Site Specific Business Risk"
                       }
                     ]
                   },
@@ -9882,7 +9873,20 @@
       },
       {
         "level": 1,
-        "name": "Refining"
+        "name": "Refining",
+        "children": [
+          {
+            "level": 2,
+            "name": "Refinery Performance and Risk Coordination",
+            "children": [
+              {
+                "id": "CM 1.1.4.6.3",
+                "level": 3,
+                "name": "Coordinate Site Business Risk Management"
+              }
+            ]
+          }
+        ]
       },
       {
         "level": 1,
@@ -9900,7 +9904,20 @@
       },
       {
         "level": 1,
-        "name": "Finance"
+        "name": "Finance",
+        "children": [
+          {
+            "level": 2,
+            "name": "Financial Planning and Performance Management",
+            "children": [
+              {
+                "id": "CM 1.1.4.6.2",
+                "level": 3,
+                "name": "Plan Budgets"
+              }
+            ]
+          }
+        ]
       },
       {
         "level": 1,

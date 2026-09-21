@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step 2 — Normalize identities for all 680 process-map nodes.
+"""Step 2 — Normalize identities for all 682 process-map nodes.
 
 Reads business_architecture/business_process/downstream_process_map.json
 from this clone, derives a URI slug for every node:
@@ -7,15 +7,21 @@ from this clone, derives a URI slug for every node:
   - Nodes with an ID (e.g. "CM 1.2.1.3") -> slug "CM-1-2-1-3"
     (spaces and dots become hyphens; the original code is kept as
     skos:notation, and the URI is https://w3id.org/lsc/ontology/process/{slug})
-  - The 11 ID-less stubs -> minted slug "L{level}-{name-slug}"
+  - The 13 ID-less stubs -> minted slug "L{level}-{name-slug}"
     (e.g. "L1-human-resources")
+
+A node marked "deprecated": true in the JSON (e.g. the CM-1-1-4-6
+Commercial Development tombstone from the Step 3d PTC-001 tree pass)
+carries deprecated: true into the identity map; its slug/URI are
+preserved for lineage.
 
 Verifies: every node gets exactly one slug; slugs are unique (injective);
 every stub slug is recorded for the later consolidated repo-JSON proposal.
 
 Outputs (next to this script, under build/output/):
   - step2-identity-map.json : [{uri, slug, level, name, skos_notation,
-                                 parent_slug, minted, proposed_repo_id}]
+                                 parent_slug, minted, proposed_repo_id,
+                                 deprecated}]
   - step2-identity-report.md : human-readable summary + collision checks
 """
 import json
@@ -72,6 +78,7 @@ def main() -> None:
                 "parent_slug": parent_slug,
                 "minted": minted,
                 "proposed_repo_id": proposed_repo_id,
+                "deprecated": bool(node.get("deprecated", False)),
             }
         )
         for child in node.get("children", []) or []:
@@ -81,7 +88,7 @@ def main() -> None:
         walk(top, None)
 
     # --- checks ---
-    assert len(rows) == 680, f"expected 680 nodes, got {len(rows)}"
+    assert len(rows) == 682, f"expected 682 nodes, got {len(rows)}"
     slugs = [r["slug"] for r in rows]
     assert len(set(slugs)) == len(slugs), "slug collision detected"
     uris = [r["uri"] for r in rows]
@@ -96,7 +103,7 @@ def main() -> None:
     assert len(set(notations)) == len(notations), "notation collision"
 
     minted = [r for r in rows if r["minted"]]
-    assert len(minted) == 11, f"expected 11 minted stubs, got {len(minted)}"
+    assert len(minted) == 13, f"expected 13 minted stubs, got {len(minted)}"
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     (OUT_DIR / "step2-identity-map.json").write_text(
@@ -109,6 +116,7 @@ def main() -> None:
         f"- Nodes processed: {len(rows)}",
         f"- IDs preserved as skos:notation: {len(notations)} (all unique, all match `CM <dotted>` pattern)",
         f"- Minted stub slugs: {len(minted)}",
+        f"- Deprecated tombstones: {sum(1 for r in rows if r['deprecated'])}",
         "- Slug collisions: none",
         "- URI collisions: none",
         "- Orphan nodes: none",

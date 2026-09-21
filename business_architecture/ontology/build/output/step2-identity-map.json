@@ -7,7 +7,8 @@
   "skos_notation": null,
   "parent_slug": null,
   "minted": true,
-  "proposed_repo_id": "L0-downstream-operations"
+  "proposed_repo_id": "L0-downstream-operations",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1",
@@ -17,7 +18,8 @@
   "skos_notation": "CM 1",
   "parent_slug": "L0-downstream-operations",
   "minted": false,
-  "proposed_repo_id": "CM 1"
+  "proposed_repo_id": "CM 1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1",
@@ -27,7 +29,8 @@
   "skos_notation": "CM 1.1",
   "parent_slug": "CM-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1"
+  "proposed_repo_id": "CM 1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1",
@@ -37,7 +40,8 @@
   "skos_notation": "CM 1.1.1",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1"
+  "proposed_repo_id": "CM 1.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1",
@@ -48,6 +52,7 @@
   "parent_slug": "CM-1-1-1",
   "minted": false,
   "proposed_repo_id": "CM 1.1.1.1",
+  "deprecated": false,
   "prior_name": "Demand Forecasting",
   "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Demand Forecasting' -> 'Produce Demand Forecast' — critical semantic-collision resolution (approved by Hamid)."
  },
@@ -59,7 +64,8 @@
   "skos_notation": "CM 1.1.1.1.1",
   "parent_slug": "CM-1-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1.1"
+  "proposed_repo_id": "CM 1.1.1.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-2",
@@ -69,7 +75,8 @@
   "skos_notation": "CM 1.1.1.1.2",
   "parent_slug": "CM-1-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1.2"
+  "proposed_repo_id": "CM 1.1.1.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-3",
@@ -79,7 +86,8 @@
   "skos_notation": "CM 1.1.1.1.3",
   "parent_slug": "CM-1-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1.3"
+  "proposed_repo_id": "CM 1.1.1.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-4",
@@ -89,7 +97,8 @@
   "skos_notation": "CM 1.1.1.1.4",
   "parent_slug": "CM-1-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1.4"
+  "proposed_repo_id": "CM 1.1.1.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-5",
@@ -99,7 +108,8 @@
   "skos_notation": "CM 1.1.1.1.5",
   "parent_slug": "CM-1-1-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.1.1.5"
+  "proposed_repo_id": "CM 1.1.1.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2",
@@ -109,7 +119,8 @@
   "skos_notation": "CM 1.1.2",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2"
+  "proposed_repo_id": "CM 1.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1",
@@ -119,7 +130,8 @@
   "skos_notation": "CM 1.1.2.1",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1"
+  "proposed_repo_id": "CM 1.1.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-1",
@@ -129,7 +141,8 @@
   "skos_notation": "CM 1.1.2.1.1",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.1"
+  "proposed_repo_id": "CM 1.1.2.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-2",
@@ -139,7 +152,8 @@
   "skos_notation": "CM 1.1.2.1.2",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.2"
+  "proposed_repo_id": "CM 1.1.2.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-3",
@@ -149,7 +163,8 @@
   "skos_notation": "CM 1.1.2.1.3",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.3"
+  "proposed_repo_id": "CM 1.1.2.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-4",
@@ -159,7 +174,8 @@
   "skos_notation": "CM 1.1.2.1.4",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.4"
+  "proposed_repo_id": "CM 1.1.2.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-5",
@@ -169,7 +185,8 @@
   "skos_notation": "CM 1.1.2.1.5",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.5"
+  "proposed_repo_id": "CM 1.1.2.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-6",
@@ -179,7 +196,8 @@
   "skos_notation": "CM 1.1.2.1.6",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.6"
+  "proposed_repo_id": "CM 1.1.2.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-7",
@@ -189,7 +207,8 @@
   "skos_notation": "CM 1.1.2.1.7",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.7"
+  "proposed_repo_id": "CM 1.1.2.1.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-8",
@@ -199,7 +218,8 @@
   "skos_notation": "CM 1.1.2.1.8",
   "parent_slug": "CM-1-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.1.8"
+  "proposed_repo_id": "CM 1.1.2.1.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2",
@@ -209,7 +229,8 @@
   "skos_notation": "CM 1.1.2.2",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2"
+  "proposed_repo_id": "CM 1.1.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1",
@@ -219,7 +240,8 @@
   "skos_notation": "CM 1.1.2.2.1",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.1"
+  "proposed_repo_id": "CM 1.1.2.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1",
@@ -229,7 +251,8 @@
   "skos_notation": "CM 1.1.2.2.1.1",
   "parent_slug": "CM-1-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.1.1"
+  "proposed_repo_id": "CM 1.1.2.2.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2",
@@ -239,7 +262,8 @@
   "skos_notation": "CM 1.1.2.2.1.2",
   "parent_slug": "CM-1-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.1.2"
+  "proposed_repo_id": "CM 1.1.2.2.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2",
@@ -249,7 +273,8 @@
   "skos_notation": "CM 1.1.2.2.2",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.2"
+  "proposed_repo_id": "CM 1.1.2.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2-1",
@@ -259,7 +284,8 @@
   "skos_notation": "CM 1.1.2.2.2.1",
   "parent_slug": "CM-1-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.2.1"
+  "proposed_repo_id": "CM 1.1.2.2.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3",
@@ -269,7 +295,8 @@
   "skos_notation": "CM 1.1.2.2.3",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3"
+  "proposed_repo_id": "CM 1.1.2.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-1",
@@ -279,7 +306,8 @@
   "skos_notation": "CM 1.1.2.2.3.1",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.1"
+  "proposed_repo_id": "CM 1.1.2.2.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-2",
@@ -289,7 +317,8 @@
   "skos_notation": "CM 1.1.2.2.3.2",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.2"
+  "proposed_repo_id": "CM 1.1.2.2.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-3",
@@ -299,7 +328,8 @@
   "skos_notation": "CM 1.1.2.2.3.3",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.3"
+  "proposed_repo_id": "CM 1.1.2.2.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-4",
@@ -309,7 +339,8 @@
   "skos_notation": "CM 1.1.2.2.3.4",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.4"
+  "proposed_repo_id": "CM 1.1.2.2.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-5",
@@ -319,7 +350,8 @@
   "skos_notation": "CM 1.1.2.2.3.5",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.5"
+  "proposed_repo_id": "CM 1.1.2.2.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-6",
@@ -329,7 +361,8 @@
   "skos_notation": "CM 1.1.2.2.3.6",
   "parent_slug": "CM-1-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.3.6"
+  "proposed_repo_id": "CM 1.1.2.2.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-4",
@@ -339,7 +372,8 @@
   "skos_notation": "CM 1.1.2.2.4",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.4"
+  "proposed_repo_id": "CM 1.1.2.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5",
@@ -349,7 +383,8 @@
   "skos_notation": "CM 1.1.2.2.5",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.5"
+  "proposed_repo_id": "CM 1.1.2.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-1",
@@ -359,7 +394,8 @@
   "skos_notation": "CM 1.1.2.2.5.1",
   "parent_slug": "CM-1-1-2-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.5.1"
+  "proposed_repo_id": "CM 1.1.2.2.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-2",
@@ -369,7 +405,8 @@
   "skos_notation": "CM 1.1.2.2.5.2",
   "parent_slug": "CM-1-1-2-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.5.2"
+  "proposed_repo_id": "CM 1.1.2.2.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6",
@@ -379,7 +416,8 @@
   "skos_notation": "CM 1.1.2.2.6",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.6"
+  "proposed_repo_id": "CM 1.1.2.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-1",
@@ -389,7 +427,8 @@
   "skos_notation": "CM 1.1.2.2.6.1",
   "parent_slug": "CM-1-1-2-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.6.1"
+  "proposed_repo_id": "CM 1.1.2.2.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-2",
@@ -399,7 +438,8 @@
   "skos_notation": "CM 1.1.2.2.6.2",
   "parent_slug": "CM-1-1-2-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.6.2"
+  "proposed_repo_id": "CM 1.1.2.2.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-7",
@@ -409,7 +449,8 @@
   "skos_notation": "CM 1.1.2.2.7",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.7"
+  "proposed_repo_id": "CM 1.1.2.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-8",
@@ -419,7 +460,8 @@
   "skos_notation": "CM 1.1.2.2.8",
   "parent_slug": "CM-1-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.2.8"
+  "proposed_repo_id": "CM 1.1.2.2.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3",
@@ -429,7 +471,8 @@
   "skos_notation": "CM 1.1.2.3",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.3"
+  "proposed_repo_id": "CM 1.1.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-1",
@@ -439,7 +482,8 @@
   "skos_notation": "CM 1.1.2.3.1",
   "parent_slug": "CM-1-1-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.3.1"
+  "proposed_repo_id": "CM 1.1.2.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-2",
@@ -449,7 +493,8 @@
   "skos_notation": "CM 1.1.2.3.2",
   "parent_slug": "CM-1-1-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.3.2"
+  "proposed_repo_id": "CM 1.1.2.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-3",
@@ -459,7 +504,8 @@
   "skos_notation": "CM 1.1.2.3.3",
   "parent_slug": "CM-1-1-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.3.3"
+  "proposed_repo_id": "CM 1.1.2.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-4",
@@ -469,7 +515,8 @@
   "skos_notation": "CM 1.1.2.3.4",
   "parent_slug": "CM-1-1-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.3.4"
+  "proposed_repo_id": "CM 1.1.2.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4",
@@ -479,7 +526,8 @@
   "skos_notation": "CM 1.1.2.4",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.4"
+  "proposed_repo_id": "CM 1.1.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-1",
@@ -489,7 +537,8 @@
   "skos_notation": "CM 1.1.2.4.1",
   "parent_slug": "CM-1-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.4.1"
+  "proposed_repo_id": "CM 1.1.2.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-2",
@@ -499,7 +548,8 @@
   "skos_notation": "CM 1.1.2.4.2",
   "parent_slug": "CM-1-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.4.2"
+  "proposed_repo_id": "CM 1.1.2.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5",
@@ -509,7 +559,8 @@
   "skos_notation": "CM 1.1.2.5",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5"
+  "proposed_repo_id": "CM 1.1.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-1",
@@ -519,7 +570,8 @@
   "skos_notation": "CM 1.1.2.5.1",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.1"
+  "proposed_repo_id": "CM 1.1.2.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-2",
@@ -529,7 +581,8 @@
   "skos_notation": "CM 1.1.2.5.2",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.2"
+  "proposed_repo_id": "CM 1.1.2.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3",
@@ -539,7 +592,8 @@
   "skos_notation": "CM 1.1.2.5.3",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.3"
+  "proposed_repo_id": "CM 1.1.2.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-4",
@@ -549,7 +603,8 @@
   "skos_notation": "CM 1.1.2.5.4",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.4"
+  "proposed_repo_id": "CM 1.1.2.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-5",
@@ -559,7 +614,8 @@
   "skos_notation": "CM 1.1.2.5.5",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.5"
+  "proposed_repo_id": "CM 1.1.2.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6",
@@ -569,7 +625,8 @@
   "skos_notation": "CM 1.1.2.5.6",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.6"
+  "proposed_repo_id": "CM 1.1.2.5.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-1",
@@ -579,7 +636,8 @@
   "skos_notation": "CM 1.1.2.5.6.1",
   "parent_slug": "CM-1-1-2-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.6.1"
+  "proposed_repo_id": "CM 1.1.2.5.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-2",
@@ -589,7 +647,8 @@
   "skos_notation": "CM 1.1.2.5.6.2",
   "parent_slug": "CM-1-1-2-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.6.2"
+  "proposed_repo_id": "CM 1.1.2.5.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-7",
@@ -599,7 +658,8 @@
   "skos_notation": "CM 1.1.2.5.7",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.7"
+  "proposed_repo_id": "CM 1.1.2.5.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-8",
@@ -609,7 +669,8 @@
   "skos_notation": "CM 1.1.2.5.8",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.8"
+  "proposed_repo_id": "CM 1.1.2.5.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-9",
@@ -619,7 +680,8 @@
   "skos_notation": "CM 1.1.2.5.9",
   "parent_slug": "CM-1-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.5.9"
+  "proposed_repo_id": "CM 1.1.2.5.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6",
@@ -629,7 +691,8 @@
   "skos_notation": "CM 1.1.2.6",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6"
+  "proposed_repo_id": "CM 1.1.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-1",
@@ -639,7 +702,8 @@
   "skos_notation": "CM 1.1.2.6.1",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.1"
+  "proposed_repo_id": "CM 1.1.2.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-2",
@@ -649,7 +713,8 @@
   "skos_notation": "CM 1.1.2.6.2",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.2"
+  "proposed_repo_id": "CM 1.1.2.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-3",
@@ -659,7 +724,8 @@
   "skos_notation": "CM 1.1.2.6.3",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.3"
+  "proposed_repo_id": "CM 1.1.2.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-4",
@@ -669,7 +735,8 @@
   "skos_notation": "CM 1.1.2.6.4",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.4"
+  "proposed_repo_id": "CM 1.1.2.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-5",
@@ -679,7 +746,8 @@
   "skos_notation": "CM 1.1.2.6.5",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.5"
+  "proposed_repo_id": "CM 1.1.2.6.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-6",
@@ -689,7 +757,8 @@
   "skos_notation": "CM 1.1.2.6.6",
   "parent_slug": "CM-1-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.6.6"
+  "proposed_repo_id": "CM 1.1.2.6.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7",
@@ -699,7 +768,8 @@
   "skos_notation": "CM 1.1.2.7",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7"
+  "proposed_repo_id": "CM 1.1.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-1",
@@ -709,7 +779,8 @@
   "skos_notation": "CM 1.1.2.7.1",
   "parent_slug": "CM-1-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7.1"
+  "proposed_repo_id": "CM 1.1.2.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-2",
@@ -719,7 +790,8 @@
   "skos_notation": "CM 1.1.2.7.2",
   "parent_slug": "CM-1-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7.2"
+  "proposed_repo_id": "CM 1.1.2.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-3",
@@ -729,7 +801,8 @@
   "skos_notation": "CM 1.1.2.7.3",
   "parent_slug": "CM-1-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7.3"
+  "proposed_repo_id": "CM 1.1.2.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-4",
@@ -739,7 +812,8 @@
   "skos_notation": "CM 1.1.2.7.4",
   "parent_slug": "CM-1-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7.4"
+  "proposed_repo_id": "CM 1.1.2.7.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-5",
@@ -749,7 +823,8 @@
   "skos_notation": "CM 1.1.2.7.5",
   "parent_slug": "CM-1-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.7.5"
+  "proposed_repo_id": "CM 1.1.2.7.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8",
@@ -759,7 +834,8 @@
   "skos_notation": "CM 1.1.2.8",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.8"
+  "proposed_repo_id": "CM 1.1.2.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-1",
@@ -769,7 +845,8 @@
   "skos_notation": "CM 1.1.2.8.1",
   "parent_slug": "CM-1-1-2-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.8.1"
+  "proposed_repo_id": "CM 1.1.2.8.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-2",
@@ -779,7 +856,8 @@
   "skos_notation": "CM 1.1.2.8.2",
   "parent_slug": "CM-1-1-2-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.8.2"
+  "proposed_repo_id": "CM 1.1.2.8.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-3",
@@ -789,7 +867,8 @@
   "skos_notation": "CM 1.1.2.8.3",
   "parent_slug": "CM-1-1-2-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.8.3"
+  "proposed_repo_id": "CM 1.1.2.8.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-4",
@@ -799,7 +878,8 @@
   "skos_notation": "CM 1.1.2.8.4",
   "parent_slug": "CM-1-1-2-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.8.4"
+  "proposed_repo_id": "CM 1.1.2.8.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9",
@@ -809,7 +889,8 @@
   "skos_notation": "CM 1.1.2.9",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.9"
+  "proposed_repo_id": "CM 1.1.2.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-1",
@@ -819,7 +900,8 @@
   "skos_notation": "CM 1.1.2.9.1",
   "parent_slug": "CM-1-1-2-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.9.1"
+  "proposed_repo_id": "CM 1.1.2.9.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-2",
@@ -829,7 +911,8 @@
   "skos_notation": "CM 1.1.2.9.2",
   "parent_slug": "CM-1-1-2-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.9.2"
+  "proposed_repo_id": "CM 1.1.2.9.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-10",
@@ -839,7 +922,8 @@
   "skos_notation": "CM 1.1.2.10",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.10"
+  "proposed_repo_id": "CM 1.1.2.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-11",
@@ -849,7 +933,8 @@
   "skos_notation": "CM 1.1.2.11",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.11"
+  "proposed_repo_id": "CM 1.1.2.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-12",
@@ -859,7 +944,8 @@
   "skos_notation": "CM 1.1.2.12",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.12"
+  "proposed_repo_id": "CM 1.1.2.12",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-13",
@@ -869,7 +955,8 @@
   "skos_notation": "CM 1.1.2.13",
   "parent_slug": "CM-1-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.2.13"
+  "proposed_repo_id": "CM 1.1.2.13",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3",
@@ -879,7 +966,8 @@
   "skos_notation": "CM 1.1.3",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3"
+  "proposed_repo_id": "CM 1.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1",
@@ -889,7 +977,8 @@
   "skos_notation": "CM 1.1.3.1",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.1"
+  "proposed_repo_id": "CM 1.1.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-1",
@@ -899,7 +988,8 @@
   "skos_notation": "CM 1.1.3.1.1",
   "parent_slug": "CM-1-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.1.1"
+  "proposed_repo_id": "CM 1.1.3.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-2",
@@ -909,7 +999,8 @@
   "skos_notation": "CM 1.1.3.1.2",
   "parent_slug": "CM-1-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.1.2"
+  "proposed_repo_id": "CM 1.1.3.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-3",
@@ -919,7 +1010,8 @@
   "skos_notation": "CM 1.1.3.1.3",
   "parent_slug": "CM-1-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.1.3"
+  "proposed_repo_id": "CM 1.1.3.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-4",
@@ -929,7 +1021,8 @@
   "skos_notation": "CM 1.1.3.1.4",
   "parent_slug": "CM-1-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.1.4"
+  "proposed_repo_id": "CM 1.1.3.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2",
@@ -939,7 +1032,8 @@
   "skos_notation": "CM 1.1.3.2",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.2"
+  "proposed_repo_id": "CM 1.1.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-1",
@@ -949,7 +1043,8 @@
   "skos_notation": "CM 1.1.3.2.1",
   "parent_slug": "CM-1-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.2.1"
+  "proposed_repo_id": "CM 1.1.3.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-2",
@@ -959,7 +1054,8 @@
   "skos_notation": "CM 1.1.3.2.2",
   "parent_slug": "CM-1-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.2.2"
+  "proposed_repo_id": "CM 1.1.3.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3",
@@ -969,7 +1065,8 @@
   "skos_notation": "CM 1.1.3.3",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.3"
+  "proposed_repo_id": "CM 1.1.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-1",
@@ -979,7 +1076,8 @@
   "skos_notation": "CM 1.1.3.3.1",
   "parent_slug": "CM-1-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.3.1"
+  "proposed_repo_id": "CM 1.1.3.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-2",
@@ -989,7 +1087,8 @@
   "skos_notation": "CM 1.1.3.3.2",
   "parent_slug": "CM-1-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.3.2"
+  "proposed_repo_id": "CM 1.1.3.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-4",
@@ -999,7 +1098,8 @@
   "skos_notation": "CM 1.1.3.4",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.4"
+  "proposed_repo_id": "CM 1.1.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5",
@@ -1009,7 +1109,8 @@
   "skos_notation": "CM 1.1.3.5",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.5"
+  "proposed_repo_id": "CM 1.1.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-1",
@@ -1019,7 +1120,8 @@
   "skos_notation": "CM 1.1.3.5.1",
   "parent_slug": "CM-1-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.5.1"
+  "proposed_repo_id": "CM 1.1.3.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-2",
@@ -1029,7 +1131,8 @@
   "skos_notation": "CM 1.1.3.5.2",
   "parent_slug": "CM-1-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.5.2"
+  "proposed_repo_id": "CM 1.1.3.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-5-3",
@@ -1039,7 +1142,8 @@
   "skos_notation": "CM 1.1.3.5.3",
   "parent_slug": "CM-1-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.5.3"
+  "proposed_repo_id": "CM 1.1.3.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6",
@@ -1049,7 +1153,8 @@
   "skos_notation": "CM 1.1.3.6",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.6"
+  "proposed_repo_id": "CM 1.1.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-1",
@@ -1059,7 +1164,8 @@
   "skos_notation": "CM 1.1.3.6.1",
   "parent_slug": "CM-1-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.6.1"
+  "proposed_repo_id": "CM 1.1.3.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-2",
@@ -1069,7 +1175,8 @@
   "skos_notation": "CM 1.1.3.6.2",
   "parent_slug": "CM-1-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.6.2"
+  "proposed_repo_id": "CM 1.1.3.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-3",
@@ -1079,7 +1186,8 @@
   "skos_notation": "CM 1.1.3.6.3",
   "parent_slug": "CM-1-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.6.3"
+  "proposed_repo_id": "CM 1.1.3.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-6-4",
@@ -1089,7 +1197,8 @@
   "skos_notation": "CM 1.1.3.6.4",
   "parent_slug": "CM-1-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.6.4"
+  "proposed_repo_id": "CM 1.1.3.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7",
@@ -1100,6 +1209,7 @@
   "parent_slug": "CM-1-1-3",
   "minted": false,
   "proposed_repo_id": "CM 1.1.3.7",
+  "deprecated": false,
   "prior_name": "Inventory",
   "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Inventory' -> 'Inventory Management' — critical semantic-collision resolution (approved by Hamid)."
  },
@@ -1111,7 +1221,8 @@
   "skos_notation": "CM 1.1.3.7.1",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.1"
+  "proposed_repo_id": "CM 1.1.3.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-2",
@@ -1121,7 +1232,8 @@
   "skos_notation": "CM 1.1.3.7.2",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.2"
+  "proposed_repo_id": "CM 1.1.3.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-3",
@@ -1131,7 +1243,8 @@
   "skos_notation": "CM 1.1.3.7.3",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.3"
+  "proposed_repo_id": "CM 1.1.3.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-4",
@@ -1141,7 +1254,8 @@
   "skos_notation": "CM 1.1.3.7.4",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.4"
+  "proposed_repo_id": "CM 1.1.3.7.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-5",
@@ -1151,7 +1265,8 @@
   "skos_notation": "CM 1.1.3.7.5",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.5"
+  "proposed_repo_id": "CM 1.1.3.7.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-6",
@@ -1161,7 +1276,8 @@
   "skos_notation": "CM 1.1.3.7.6",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.6"
+  "proposed_repo_id": "CM 1.1.3.7.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-7",
@@ -1171,7 +1287,8 @@
   "skos_notation": "CM 1.1.3.7.7",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.7"
+  "proposed_repo_id": "CM 1.1.3.7.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-8",
@@ -1181,7 +1298,8 @@
   "skos_notation": "CM 1.1.3.7.8",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.8"
+  "proposed_repo_id": "CM 1.1.3.7.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-9",
@@ -1191,7 +1309,8 @@
   "skos_notation": "CM 1.1.3.7.9",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.9"
+  "proposed_repo_id": "CM 1.1.3.7.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-10",
@@ -1201,7 +1320,8 @@
   "skos_notation": "CM 1.1.3.7.10",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.10"
+  "proposed_repo_id": "CM 1.1.3.7.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-11",
@@ -1211,7 +1331,8 @@
   "skos_notation": "CM 1.1.3.7.11",
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.7.11"
+  "proposed_repo_id": "CM 1.1.3.7.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-12",
@@ -1222,6 +1343,7 @@
   "parent_slug": "CM-1-1-3-7",
   "minted": false,
   "proposed_repo_id": "CM 1.1.3.7.12",
+  "deprecated": false,
   "prior_name": "Manage Inventory",
   "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Inventory' -> 'Monitor and Control Inventory Positions' — critical semantic-collision resolution (approved by Hamid)."
  },
@@ -1233,7 +1355,8 @@
   "skos_notation": "CM 1.1.3.8",
   "parent_slug": "CM-1-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.8"
+  "proposed_repo_id": "CM 1.1.3.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-1",
@@ -1243,7 +1366,8 @@
   "skos_notation": "CM 1.1.3.8.1",
   "parent_slug": "CM-1-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.8.1"
+  "proposed_repo_id": "CM 1.1.3.8.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-2",
@@ -1253,7 +1377,8 @@
   "skos_notation": "CM 1.1.3.8.2",
   "parent_slug": "CM-1-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.8.2"
+  "proposed_repo_id": "CM 1.1.3.8.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-3",
@@ -1263,7 +1388,8 @@
   "skos_notation": "CM 1.1.3.8.3",
   "parent_slug": "CM-1-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.8.3"
+  "proposed_repo_id": "CM 1.1.3.8.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8-4",
@@ -1273,7 +1399,8 @@
   "skos_notation": "CM 1.1.3.8.4",
   "parent_slug": "CM-1-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.3.8.4"
+  "proposed_repo_id": "CM 1.1.3.8.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4",
@@ -1283,7 +1410,8 @@
   "skos_notation": "CM 1.1.4",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4"
+  "proposed_repo_id": "CM 1.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1",
@@ -1293,7 +1421,8 @@
   "skos_notation": "CM 1.1.4.1",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.1"
+  "proposed_repo_id": "CM 1.1.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-1",
@@ -1303,7 +1432,8 @@
   "skos_notation": "CM 1.1.4.1.1",
   "parent_slug": "CM-1-1-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.1.1"
+  "proposed_repo_id": "CM 1.1.4.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-2",
@@ -1313,7 +1443,8 @@
   "skos_notation": "CM 1.1.4.1.2",
   "parent_slug": "CM-1-1-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.1.2"
+  "proposed_repo_id": "CM 1.1.4.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-3",
@@ -1323,7 +1454,8 @@
   "skos_notation": "CM 1.1.4.1.3",
   "parent_slug": "CM-1-1-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.1.3"
+  "proposed_repo_id": "CM 1.1.4.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-4",
@@ -1333,7 +1465,8 @@
   "skos_notation": "CM 1.1.4.1.4",
   "parent_slug": "CM-1-1-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.1.4"
+  "proposed_repo_id": "CM 1.1.4.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2",
@@ -1343,7 +1476,8 @@
   "skos_notation": "CM 1.1.4.2",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.2"
+  "proposed_repo_id": "CM 1.1.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-1",
@@ -1353,7 +1487,8 @@
   "skos_notation": "CM 1.1.4.2.1",
   "parent_slug": "CM-1-1-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.2.1"
+  "proposed_repo_id": "CM 1.1.4.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-2",
@@ -1363,7 +1498,8 @@
   "skos_notation": "CM 1.1.4.2.2",
   "parent_slug": "CM-1-1-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.2.2"
+  "proposed_repo_id": "CM 1.1.4.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-3",
@@ -1373,7 +1509,8 @@
   "skos_notation": "CM 1.1.4.3",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.3"
+  "proposed_repo_id": "CM 1.1.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4",
@@ -1383,7 +1520,8 @@
   "skos_notation": "CM 1.1.4.4",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.4"
+  "proposed_repo_id": "CM 1.1.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-1",
@@ -1393,7 +1531,8 @@
   "skos_notation": "CM 1.1.4.4.1",
   "parent_slug": "CM-1-1-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.4.1"
+  "proposed_repo_id": "CM 1.1.4.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-2",
@@ -1403,7 +1542,8 @@
   "skos_notation": "CM 1.1.4.4.2",
   "parent_slug": "CM-1-1-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.4.2"
+  "proposed_repo_id": "CM 1.1.4.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-3",
@@ -1413,7 +1553,8 @@
   "skos_notation": "CM 1.1.4.4.3",
   "parent_slug": "CM-1-1-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.4.3"
+  "proposed_repo_id": "CM 1.1.4.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-5",
@@ -1423,7 +1564,8 @@
   "skos_notation": "CM 1.1.4.5",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.5"
+  "proposed_repo_id": "CM 1.1.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6",
@@ -1433,7 +1575,8 @@
   "skos_notation": "CM 1.1.4.6",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.6"
+  "proposed_repo_id": "CM 1.1.4.6",
+  "deprecated": true
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1",
@@ -1443,27 +1586,8 @@
   "skos_notation": "CM 1.1.4.6.1",
   "parent_slug": "CM-1-1-4-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.6.1"
- },
- {
-  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-2",
-  "slug": "CM-1-1-4-6-2",
-  "level": 5,
-  "name": "Plan Budgets",
-  "skos_notation": "CM 1.1.4.6.2",
-  "parent_slug": "CM-1-1-4-6",
-  "minted": false,
-  "proposed_repo_id": "CM 1.1.4.6.2"
- },
- {
-  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-3",
-  "slug": "CM-1-1-4-6-3",
-  "level": 5,
-  "name": "Manage Site Specific Business Risk",
-  "skos_notation": "CM 1.1.4.6.3",
-  "parent_slug": "CM-1-1-4-6",
-  "minted": false,
-  "proposed_repo_id": "CM 1.1.4.6.3"
+  "proposed_repo_id": "CM 1.1.4.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7",
@@ -1473,7 +1597,8 @@
   "skos_notation": "CM 1.1.4.7",
   "parent_slug": "CM-1-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7"
+  "proposed_repo_id": "CM 1.1.4.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-1",
@@ -1483,7 +1608,8 @@
   "skos_notation": "CM 1.1.4.7.1",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.1"
+  "proposed_repo_id": "CM 1.1.4.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-2",
@@ -1493,7 +1619,8 @@
   "skos_notation": "CM 1.1.4.7.2",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.2"
+  "proposed_repo_id": "CM 1.1.4.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-3",
@@ -1503,7 +1630,8 @@
   "skos_notation": "CM 1.1.4.7.3",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.3"
+  "proposed_repo_id": "CM 1.1.4.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4",
@@ -1513,7 +1641,8 @@
   "skos_notation": "CM 1.1.4.7.4",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.4"
+  "proposed_repo_id": "CM 1.1.4.7.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-5",
@@ -1523,7 +1652,8 @@
   "skos_notation": "CM 1.1.4.7.5",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.5"
+  "proposed_repo_id": "CM 1.1.4.7.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-6",
@@ -1533,7 +1663,8 @@
   "skos_notation": "CM 1.1.4.7.6",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.6"
+  "proposed_repo_id": "CM 1.1.4.7.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-7",
@@ -1543,7 +1674,8 @@
   "skos_notation": "CM 1.1.4.7.7",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.7"
+  "proposed_repo_id": "CM 1.1.4.7.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-8",
@@ -1553,7 +1685,8 @@
   "skos_notation": "CM 1.1.4.7.8",
   "parent_slug": "CM-1-1-4-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.4.7.8"
+  "proposed_repo_id": "CM 1.1.4.7.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5",
@@ -1563,7 +1696,8 @@
   "skos_notation": "CM 1.1.5",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5"
+  "proposed_repo_id": "CM 1.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1",
@@ -1573,7 +1707,8 @@
   "skos_notation": "CM 1.1.5.1",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1"
+  "proposed_repo_id": "CM 1.1.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-1",
@@ -1583,7 +1718,8 @@
   "skos_notation": "CM 1.1.5.1.1",
   "parent_slug": "CM-1-1-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.1"
+  "proposed_repo_id": "CM 1.1.5.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2",
@@ -1593,7 +1729,8 @@
   "skos_notation": "CM 1.1.5.1.2",
   "parent_slug": "CM-1-1-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2"
+  "proposed_repo_id": "CM 1.1.5.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-1",
@@ -1603,7 +1740,8 @@
   "skos_notation": "CM 1.1.5.1.2.1",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.1"
+  "proposed_repo_id": "CM 1.1.5.1.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-2",
@@ -1613,7 +1751,8 @@
   "skos_notation": "CM 1.1.5.1.2.2",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.2"
+  "proposed_repo_id": "CM 1.1.5.1.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-3",
@@ -1623,7 +1762,8 @@
   "skos_notation": "CM 1.1.5.1.2.3",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.3"
+  "proposed_repo_id": "CM 1.1.5.1.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-4",
@@ -1633,7 +1773,8 @@
   "skos_notation": "CM 1.1.5.1.2.4",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.4"
+  "proposed_repo_id": "CM 1.1.5.1.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5",
@@ -1643,7 +1784,8 @@
   "skos_notation": "CM 1.1.5.1.2.5",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.5"
+  "proposed_repo_id": "CM 1.1.5.1.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6",
@@ -1653,7 +1795,8 @@
   "skos_notation": "CM 1.1.5.1.2.6",
   "parent_slug": "CM-1-1-5-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.1.2.6"
+  "proposed_repo_id": "CM 1.1.5.1.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-2",
@@ -1663,7 +1806,8 @@
   "skos_notation": "CM 1.1.5.2",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.2"
+  "proposed_repo_id": "CM 1.1.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-3",
@@ -1673,7 +1817,8 @@
   "skos_notation": "CM 1.1.5.3",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.3"
+  "proposed_repo_id": "CM 1.1.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4",
@@ -1683,7 +1828,8 @@
   "skos_notation": "CM 1.1.5.4",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.4"
+  "proposed_repo_id": "CM 1.1.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-1",
@@ -1693,7 +1839,8 @@
   "skos_notation": "CM 1.1.5.4.1",
   "parent_slug": "CM-1-1-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.4.1"
+  "proposed_repo_id": "CM 1.1.5.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-2",
@@ -1703,7 +1850,8 @@
   "skos_notation": "CM 1.1.5.4.2",
   "parent_slug": "CM-1-1-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.4.2"
+  "proposed_repo_id": "CM 1.1.5.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5",
@@ -1713,7 +1861,8 @@
   "skos_notation": "CM 1.1.5.5",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5"
+  "proposed_repo_id": "CM 1.1.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-1",
@@ -1723,7 +1872,8 @@
   "skos_notation": "CM 1.1.5.5.1",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.1"
+  "proposed_repo_id": "CM 1.1.5.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-2",
@@ -1733,7 +1883,8 @@
   "skos_notation": "CM 1.1.5.5.2",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.2"
+  "proposed_repo_id": "CM 1.1.5.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-3",
@@ -1743,7 +1894,8 @@
   "skos_notation": "CM 1.1.5.5.3",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.3"
+  "proposed_repo_id": "CM 1.1.5.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-4",
@@ -1753,7 +1905,8 @@
   "skos_notation": "CM 1.1.5.5.4",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.4"
+  "proposed_repo_id": "CM 1.1.5.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-5",
@@ -1763,7 +1916,8 @@
   "skos_notation": "CM 1.1.5.5.5",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.5"
+  "proposed_repo_id": "CM 1.1.5.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-6",
@@ -1773,7 +1927,8 @@
   "skos_notation": "CM 1.1.5.5.6",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.6"
+  "proposed_repo_id": "CM 1.1.5.5.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-7",
@@ -1783,7 +1938,8 @@
   "skos_notation": "CM 1.1.5.5.7",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.7"
+  "proposed_repo_id": "CM 1.1.5.5.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-8",
@@ -1793,7 +1949,8 @@
   "skos_notation": "CM 1.1.5.5.8",
   "parent_slug": "CM-1-1-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.5.8"
+  "proposed_repo_id": "CM 1.1.5.5.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6",
@@ -1803,7 +1960,8 @@
   "skos_notation": "CM 1.1.5.6",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6"
+  "proposed_repo_id": "CM 1.1.5.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-1",
@@ -1813,7 +1971,8 @@
   "skos_notation": "CM 1.1.5.6.1",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.1"
+  "proposed_repo_id": "CM 1.1.5.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-2",
@@ -1823,7 +1982,8 @@
   "skos_notation": "CM 1.1.5.6.2",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.2"
+  "proposed_repo_id": "CM 1.1.5.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-3",
@@ -1833,7 +1993,8 @@
   "skos_notation": "CM 1.1.5.6.3",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.3"
+  "proposed_repo_id": "CM 1.1.5.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-4",
@@ -1843,7 +2004,8 @@
   "skos_notation": "CM 1.1.5.6.4",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.4"
+  "proposed_repo_id": "CM 1.1.5.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-5",
@@ -1853,7 +2015,8 @@
   "skos_notation": "CM 1.1.5.6.5",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.5"
+  "proposed_repo_id": "CM 1.1.5.6.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-6",
@@ -1863,7 +2026,8 @@
   "skos_notation": "CM 1.1.5.6.6",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.6"
+  "proposed_repo_id": "CM 1.1.5.6.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-7",
@@ -1873,7 +2037,8 @@
   "skos_notation": "CM 1.1.5.6.7",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.7"
+  "proposed_repo_id": "CM 1.1.5.6.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-8",
@@ -1883,7 +2048,8 @@
   "skos_notation": "CM 1.1.5.6.8",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.8"
+  "proposed_repo_id": "CM 1.1.5.6.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-9",
@@ -1893,7 +2059,8 @@
   "skos_notation": "CM 1.1.5.6.9",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.9"
+  "proposed_repo_id": "CM 1.1.5.6.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-10",
@@ -1903,7 +2070,8 @@
   "skos_notation": "CM 1.1.5.6.10",
   "parent_slug": "CM-1-1-5-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.6.10"
+  "proposed_repo_id": "CM 1.1.5.6.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7",
@@ -1913,7 +2081,8 @@
   "skos_notation": "CM 1.1.5.7",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7"
+  "proposed_repo_id": "CM 1.1.5.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-1",
@@ -1923,7 +2092,8 @@
   "skos_notation": "CM 1.1.5.7.1",
   "parent_slug": "CM-1-1-5-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7.1"
+  "proposed_repo_id": "CM 1.1.5.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-2",
@@ -1933,7 +2103,8 @@
   "skos_notation": "CM 1.1.5.7.2",
   "parent_slug": "CM-1-1-5-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7.2"
+  "proposed_repo_id": "CM 1.1.5.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-3",
@@ -1943,7 +2114,8 @@
   "skos_notation": "CM 1.1.5.7.3",
   "parent_slug": "CM-1-1-5-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7.3"
+  "proposed_repo_id": "CM 1.1.5.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-4",
@@ -1953,7 +2125,8 @@
   "skos_notation": "CM 1.1.5.7.4",
   "parent_slug": "CM-1-1-5-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7.4"
+  "proposed_repo_id": "CM 1.1.5.7.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-5",
@@ -1963,7 +2136,8 @@
   "skos_notation": "CM 1.1.5.7.5",
   "parent_slug": "CM-1-1-5-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.7.5"
+  "proposed_repo_id": "CM 1.1.5.7.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8",
@@ -1973,7 +2147,8 @@
   "skos_notation": "CM 1.1.5.8",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8"
+  "proposed_repo_id": "CM 1.1.5.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-1",
@@ -1983,7 +2158,8 @@
   "skos_notation": "CM 1.1.5.8.1",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.1"
+  "proposed_repo_id": "CM 1.1.5.8.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-2",
@@ -1993,7 +2169,8 @@
   "skos_notation": "CM 1.1.5.8.2",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.2"
+  "proposed_repo_id": "CM 1.1.5.8.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-3",
@@ -2003,7 +2180,8 @@
   "skos_notation": "CM 1.1.5.8.3",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.3"
+  "proposed_repo_id": "CM 1.1.5.8.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-4",
@@ -2013,7 +2191,8 @@
   "skos_notation": "CM 1.1.5.8.4",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.4"
+  "proposed_repo_id": "CM 1.1.5.8.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-5",
@@ -2023,7 +2202,8 @@
   "skos_notation": "CM 1.1.5.8.5",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.5"
+  "proposed_repo_id": "CM 1.1.5.8.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-6",
@@ -2033,7 +2213,8 @@
   "skos_notation": "CM 1.1.5.8.6",
   "parent_slug": "CM-1-1-5-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.8.6"
+  "proposed_repo_id": "CM 1.1.5.8.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9",
@@ -2043,7 +2224,8 @@
   "skos_notation": "CM 1.1.5.9",
   "parent_slug": "CM-1-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.9"
+  "proposed_repo_id": "CM 1.1.5.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-1",
@@ -2053,7 +2235,8 @@
   "skos_notation": "CM 1.1.5.9.1",
   "parent_slug": "CM-1-1-5-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.9.1"
+  "proposed_repo_id": "CM 1.1.5.9.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-2",
@@ -2063,7 +2246,8 @@
   "skos_notation": "CM 1.1.5.9.2",
   "parent_slug": "CM-1-1-5-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.9.2"
+  "proposed_repo_id": "CM 1.1.5.9.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-3",
@@ -2073,7 +2257,8 @@
   "skos_notation": "CM 1.1.5.9.3",
   "parent_slug": "CM-1-1-5-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.5.9.3"
+  "proposed_repo_id": "CM 1.1.5.9.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6",
@@ -2083,7 +2268,8 @@
   "skos_notation": "CM 1.1.6",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.6"
+  "proposed_repo_id": "CM 1.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1",
@@ -2093,7 +2279,8 @@
   "skos_notation": "CM 1.1.6.1",
   "parent_slug": "CM-1-1-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.6.1"
+  "proposed_repo_id": "CM 1.1.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1-1",
@@ -2103,7 +2290,8 @@
   "skos_notation": "CM 1.1.6.1.1",
   "parent_slug": "CM-1-1-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.6.1.1"
+  "proposed_repo_id": "CM 1.1.6.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-2",
@@ -2113,7 +2301,8 @@
   "skos_notation": "CM 1.1.6.2",
   "parent_slug": "CM-1-1-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.6.2"
+  "proposed_repo_id": "CM 1.1.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-6-3",
@@ -2123,7 +2312,8 @@
   "skos_notation": "CM 1.1.6.3",
   "parent_slug": "CM-1-1-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.6.3"
+  "proposed_repo_id": "CM 1.1.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7",
@@ -2133,7 +2323,8 @@
   "skos_notation": "CM 1.1.7",
   "parent_slug": "CM-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7"
+  "proposed_repo_id": "CM 1.1.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1",
@@ -2143,7 +2334,8 @@
   "skos_notation": "CM 1.1.7.1",
   "parent_slug": "CM-1-1-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.1"
+  "proposed_repo_id": "CM 1.1.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-1",
@@ -2153,7 +2345,8 @@
   "skos_notation": "CM 1.1.7.1.1",
   "parent_slug": "CM-1-1-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.1.1"
+  "proposed_repo_id": "CM 1.1.7.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-2",
@@ -2163,7 +2356,8 @@
   "skos_notation": "CM 1.1.7.1.2",
   "parent_slug": "CM-1-1-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.1.2"
+  "proposed_repo_id": "CM 1.1.7.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1-3",
@@ -2173,7 +2367,8 @@
   "skos_notation": "CM 1.1.7.1.3",
   "parent_slug": "CM-1-1-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.1.3"
+  "proposed_repo_id": "CM 1.1.7.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2",
@@ -2183,7 +2378,8 @@
   "skos_notation": "CM 1.1.7.2",
   "parent_slug": "CM-1-1-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2"
+  "proposed_repo_id": "CM 1.1.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-1",
@@ -2193,7 +2389,8 @@
   "skos_notation": "CM 1.1.7.2.1",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.1"
+  "proposed_repo_id": "CM 1.1.7.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-2",
@@ -2203,7 +2400,8 @@
   "skos_notation": "CM 1.1.7.2.2",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.2"
+  "proposed_repo_id": "CM 1.1.7.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-3",
@@ -2213,7 +2411,8 @@
   "skos_notation": "CM 1.1.7.2.3",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.3"
+  "proposed_repo_id": "CM 1.1.7.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-4",
@@ -2223,7 +2422,8 @@
   "skos_notation": "CM 1.1.7.2.4",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.4"
+  "proposed_repo_id": "CM 1.1.7.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-5",
@@ -2233,7 +2433,8 @@
   "skos_notation": "CM 1.1.7.2.5",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.5"
+  "proposed_repo_id": "CM 1.1.7.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-6",
@@ -2243,7 +2444,8 @@
   "skos_notation": "CM 1.1.7.2.6",
   "parent_slug": "CM-1-1-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.2.6"
+  "proposed_repo_id": "CM 1.1.7.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3",
@@ -2253,7 +2455,8 @@
   "skos_notation": "CM 1.1.7.3",
   "parent_slug": "CM-1-1-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.3"
+  "proposed_repo_id": "CM 1.1.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-1",
@@ -2263,7 +2466,8 @@
   "skos_notation": "CM 1.1.7.3.1",
   "parent_slug": "CM-1-1-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.3.1"
+  "proposed_repo_id": "CM 1.1.7.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-2",
@@ -2273,7 +2477,8 @@
   "skos_notation": "CM 1.1.7.3.2",
   "parent_slug": "CM-1-1-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.3.2"
+  "proposed_repo_id": "CM 1.1.7.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-3",
@@ -2283,7 +2488,8 @@
   "skos_notation": "CM 1.1.7.3.3",
   "parent_slug": "CM-1-1-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.1.7.3.3"
+  "proposed_repo_id": "CM 1.1.7.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2",
@@ -2293,7 +2499,8 @@
   "skos_notation": "CM 1.2",
   "parent_slug": "CM-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2"
+  "proposed_repo_id": "CM 1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1",
@@ -2303,7 +2510,8 @@
   "skos_notation": "CM 1.2.1",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1"
+  "proposed_repo_id": "CM 1.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1",
@@ -2313,7 +2521,8 @@
   "skos_notation": "CM 1.2.1.1",
   "parent_slug": "CM-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1"
+  "proposed_repo_id": "CM 1.2.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-1",
@@ -2323,7 +2532,8 @@
   "skos_notation": "CM 1.2.1.1.1",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.1"
+  "proposed_repo_id": "CM 1.2.1.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-2",
@@ -2333,7 +2543,8 @@
   "skos_notation": "CM 1.2.1.1.2",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.2"
+  "proposed_repo_id": "CM 1.2.1.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-3",
@@ -2343,7 +2554,8 @@
   "skos_notation": "CM 1.2.1.1.3",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.3"
+  "proposed_repo_id": "CM 1.2.1.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-4",
@@ -2353,7 +2565,8 @@
   "skos_notation": "CM 1.2.1.1.4",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.4"
+  "proposed_repo_id": "CM 1.2.1.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-5",
@@ -2363,7 +2576,8 @@
   "skos_notation": "CM 1.2.1.1.5",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.5"
+  "proposed_repo_id": "CM 1.2.1.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-1-6",
@@ -2373,7 +2587,8 @@
   "skos_notation": "CM 1.2.1.1.6",
   "parent_slug": "CM-1-2-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.1.6"
+  "proposed_repo_id": "CM 1.2.1.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2",
@@ -2383,7 +2598,8 @@
   "skos_notation": "CM 1.2.1.2",
   "parent_slug": "CM-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2"
+  "proposed_repo_id": "CM 1.2.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-1",
@@ -2393,7 +2609,8 @@
   "skos_notation": "CM 1.2.1.2.1",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.1"
+  "proposed_repo_id": "CM 1.2.1.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-2",
@@ -2403,7 +2620,8 @@
   "skos_notation": "CM 1.2.1.2.2",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.2"
+  "proposed_repo_id": "CM 1.2.1.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-3",
@@ -2413,7 +2631,8 @@
   "skos_notation": "CM 1.2.1.2.3",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.3"
+  "proposed_repo_id": "CM 1.2.1.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-4",
@@ -2423,7 +2642,8 @@
   "skos_notation": "CM 1.2.1.2.4",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.4"
+  "proposed_repo_id": "CM 1.2.1.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-5",
@@ -2433,7 +2653,8 @@
   "skos_notation": "CM 1.2.1.2.5",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.5"
+  "proposed_repo_id": "CM 1.2.1.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-6",
@@ -2443,7 +2664,8 @@
   "skos_notation": "CM 1.2.1.2.6",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.6"
+  "proposed_repo_id": "CM 1.2.1.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-7",
@@ -2453,7 +2675,8 @@
   "skos_notation": "CM 1.2.1.2.7",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.7"
+  "proposed_repo_id": "CM 1.2.1.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-8",
@@ -2463,7 +2686,8 @@
   "skos_notation": "CM 1.2.1.2.8",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.8"
+  "proposed_repo_id": "CM 1.2.1.2.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-9",
@@ -2473,7 +2697,8 @@
   "skos_notation": "CM 1.2.1.2.9",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.9"
+  "proposed_repo_id": "CM 1.2.1.2.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-10",
@@ -2483,7 +2708,8 @@
   "skos_notation": "CM 1.2.1.2.10",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.10"
+  "proposed_repo_id": "CM 1.2.1.2.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-2-11",
@@ -2493,7 +2719,8 @@
   "skos_notation": "CM 1.2.1.2.11",
   "parent_slug": "CM-1-2-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.2.11"
+  "proposed_repo_id": "CM 1.2.1.2.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3",
@@ -2503,7 +2730,8 @@
   "skos_notation": "CM 1.2.1.3",
   "parent_slug": "CM-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3"
+  "proposed_repo_id": "CM 1.2.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-1",
@@ -2513,7 +2741,8 @@
   "skos_notation": "CM 1.2.1.3.1",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.1"
+  "proposed_repo_id": "CM 1.2.1.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-2",
@@ -2523,7 +2752,8 @@
   "skos_notation": "CM 1.2.1.3.2",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.2"
+  "proposed_repo_id": "CM 1.2.1.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-3",
@@ -2533,7 +2763,8 @@
   "skos_notation": "CM 1.2.1.3.3",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.3"
+  "proposed_repo_id": "CM 1.2.1.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-4",
@@ -2543,7 +2774,8 @@
   "skos_notation": "CM 1.2.1.3.4",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.4"
+  "proposed_repo_id": "CM 1.2.1.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-5",
@@ -2553,7 +2785,8 @@
   "skos_notation": "CM 1.2.1.3.5",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.5"
+  "proposed_repo_id": "CM 1.2.1.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-6",
@@ -2563,7 +2796,8 @@
   "skos_notation": "CM 1.2.1.3.6",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.6"
+  "proposed_repo_id": "CM 1.2.1.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-7",
@@ -2573,7 +2807,8 @@
   "skos_notation": "CM 1.2.1.3.7",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.7"
+  "proposed_repo_id": "CM 1.2.1.3.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-8",
@@ -2583,7 +2818,8 @@
   "skos_notation": "CM 1.2.1.3.8",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.8"
+  "proposed_repo_id": "CM 1.2.1.3.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-9",
@@ -2593,7 +2829,8 @@
   "skos_notation": "CM 1.2.1.3.9",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.9"
+  "proposed_repo_id": "CM 1.2.1.3.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-10",
@@ -2603,7 +2840,8 @@
   "skos_notation": "CM 1.2.1.3.10",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.10"
+  "proposed_repo_id": "CM 1.2.1.3.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-3-11",
@@ -2613,7 +2851,8 @@
   "skos_notation": "CM 1.2.1.3.11",
   "parent_slug": "CM-1-2-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.3.11"
+  "proposed_repo_id": "CM 1.2.1.3.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-1-4",
@@ -2623,7 +2862,8 @@
   "skos_notation": "CM 1.2.1.4",
   "parent_slug": "CM-1-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.1.4"
+  "proposed_repo_id": "CM 1.2.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2",
@@ -2633,7 +2873,8 @@
   "skos_notation": "CM 1.2.2",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2"
+  "proposed_repo_id": "CM 1.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1",
@@ -2643,7 +2884,8 @@
   "skos_notation": "CM 1.2.2.1",
   "parent_slug": "CM-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1"
+  "proposed_repo_id": "CM 1.2.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-1",
@@ -2653,7 +2895,8 @@
   "skos_notation": "CM 1.2.2.1.1",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.1"
+  "proposed_repo_id": "CM 1.2.2.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-2",
@@ -2663,7 +2906,8 @@
   "skos_notation": "CM 1.2.2.1.2",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.2"
+  "proposed_repo_id": "CM 1.2.2.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-3",
@@ -2673,7 +2917,8 @@
   "skos_notation": "CM 1.2.2.1.3",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.3"
+  "proposed_repo_id": "CM 1.2.2.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-4",
@@ -2683,7 +2928,8 @@
   "skos_notation": "CM 1.2.2.1.4",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.4"
+  "proposed_repo_id": "CM 1.2.2.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-5",
@@ -2693,7 +2939,8 @@
   "skos_notation": "CM 1.2.2.1.5",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.5"
+  "proposed_repo_id": "CM 1.2.2.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-6",
@@ -2703,7 +2950,8 @@
   "skos_notation": "CM 1.2.2.1.6",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.6"
+  "proposed_repo_id": "CM 1.2.2.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-7",
@@ -2713,7 +2961,8 @@
   "skos_notation": "CM 1.2.2.1.7",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.7"
+  "proposed_repo_id": "CM 1.2.2.1.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-1-8",
@@ -2723,7 +2972,8 @@
   "skos_notation": "CM 1.2.2.1.8",
   "parent_slug": "CM-1-2-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.1.8"
+  "proposed_repo_id": "CM 1.2.2.1.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2",
@@ -2733,7 +2983,8 @@
   "skos_notation": "CM 1.2.2.2",
   "parent_slug": "CM-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2"
+  "proposed_repo_id": "CM 1.2.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-1",
@@ -2743,7 +2994,8 @@
   "skos_notation": "CM 1.2.2.2.1",
   "parent_slug": "CM-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2.1"
+  "proposed_repo_id": "CM 1.2.2.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-2",
@@ -2753,7 +3005,8 @@
   "skos_notation": "CM 1.2.2.2.2",
   "parent_slug": "CM-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2.2"
+  "proposed_repo_id": "CM 1.2.2.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-3",
@@ -2763,7 +3016,8 @@
   "skos_notation": "CM 1.2.2.2.3",
   "parent_slug": "CM-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2.3"
+  "proposed_repo_id": "CM 1.2.2.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-4",
@@ -2773,7 +3027,8 @@
   "skos_notation": "CM 1.2.2.2.4",
   "parent_slug": "CM-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2.4"
+  "proposed_repo_id": "CM 1.2.2.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-2-5",
@@ -2783,7 +3038,8 @@
   "skos_notation": "CM 1.2.2.2.5",
   "parent_slug": "CM-1-2-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.2.5"
+  "proposed_repo_id": "CM 1.2.2.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3",
@@ -2793,7 +3049,8 @@
   "skos_notation": "CM 1.2.2.3",
   "parent_slug": "CM-1-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3"
+  "proposed_repo_id": "CM 1.2.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-1",
@@ -2803,7 +3060,8 @@
   "skos_notation": "CM 1.2.2.3.1",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.1"
+  "proposed_repo_id": "CM 1.2.2.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-2",
@@ -2813,7 +3071,8 @@
   "skos_notation": "CM 1.2.2.3.2",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.2"
+  "proposed_repo_id": "CM 1.2.2.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-3",
@@ -2823,7 +3082,8 @@
   "skos_notation": "CM 1.2.2.3.3",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.3"
+  "proposed_repo_id": "CM 1.2.2.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-4",
@@ -2833,7 +3093,8 @@
   "skos_notation": "CM 1.2.2.3.4",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.4"
+  "proposed_repo_id": "CM 1.2.2.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-5",
@@ -2843,7 +3104,8 @@
   "skos_notation": "CM 1.2.2.3.5",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.5"
+  "proposed_repo_id": "CM 1.2.2.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-6",
@@ -2853,7 +3115,8 @@
   "skos_notation": "CM 1.2.2.3.6",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.6"
+  "proposed_repo_id": "CM 1.2.2.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-7",
@@ -2863,7 +3126,8 @@
   "skos_notation": "CM 1.2.2.3.7",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.7"
+  "proposed_repo_id": "CM 1.2.2.3.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-8",
@@ -2873,7 +3137,8 @@
   "skos_notation": "CM 1.2.2.3.8",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.8"
+  "proposed_repo_id": "CM 1.2.2.3.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-9",
@@ -2883,7 +3148,8 @@
   "skos_notation": "CM 1.2.2.3.9",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.9"
+  "proposed_repo_id": "CM 1.2.2.3.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-10",
@@ -2893,7 +3159,8 @@
   "skos_notation": "CM 1.2.2.3.10",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.10"
+  "proposed_repo_id": "CM 1.2.2.3.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-11",
@@ -2903,7 +3170,8 @@
   "skos_notation": "CM 1.2.2.3.11",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.11"
+  "proposed_repo_id": "CM 1.2.2.3.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-12",
@@ -2913,7 +3181,8 @@
   "skos_notation": "CM 1.2.2.3.12",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.12"
+  "proposed_repo_id": "CM 1.2.2.3.12",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-13",
@@ -2923,7 +3192,8 @@
   "skos_notation": "CM 1.2.2.3.13",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.13"
+  "proposed_repo_id": "CM 1.2.2.3.13",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-14",
@@ -2933,7 +3203,8 @@
   "skos_notation": "CM 1.2.2.3.14",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.14"
+  "proposed_repo_id": "CM 1.2.2.3.14",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-15",
@@ -2943,7 +3214,8 @@
   "skos_notation": "CM 1.2.2.3.15",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.2.3.15"
+  "proposed_repo_id": "CM 1.2.2.3.15",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3",
@@ -2953,7 +3225,8 @@
   "skos_notation": "CM 1.2.3",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3"
+  "proposed_repo_id": "CM 1.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1",
@@ -2963,7 +3236,8 @@
   "skos_notation": "CM 1.2.3.1",
   "parent_slug": "CM-1-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1"
+  "proposed_repo_id": "CM 1.2.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-1",
@@ -2973,7 +3247,8 @@
   "skos_notation": "CM 1.2.3.1.1",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.1"
+  "proposed_repo_id": "CM 1.2.3.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-2",
@@ -2983,7 +3258,8 @@
   "skos_notation": "CM 1.2.3.1.2",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.2"
+  "proposed_repo_id": "CM 1.2.3.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-3",
@@ -2993,7 +3269,8 @@
   "skos_notation": "CM 1.2.3.1.3",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.3"
+  "proposed_repo_id": "CM 1.2.3.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-4",
@@ -3003,7 +3280,8 @@
   "skos_notation": "CM 1.2.3.1.4",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.4"
+  "proposed_repo_id": "CM 1.2.3.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-5",
@@ -3013,7 +3291,8 @@
   "skos_notation": "CM 1.2.3.1.5",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.5"
+  "proposed_repo_id": "CM 1.2.3.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-6",
@@ -3023,7 +3302,8 @@
   "skos_notation": "CM 1.2.3.1.6",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.6"
+  "proposed_repo_id": "CM 1.2.3.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-7",
@@ -3033,7 +3313,8 @@
   "skos_notation": "CM 1.2.3.1.7",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.7"
+  "proposed_repo_id": "CM 1.2.3.1.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-3-1-8",
@@ -3043,7 +3324,8 @@
   "skos_notation": "CM 1.2.3.1.8",
   "parent_slug": "CM-1-2-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.3.1.8"
+  "proposed_repo_id": "CM 1.2.3.1.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4",
@@ -3053,7 +3335,8 @@
   "skos_notation": "CM 1.2.4",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4"
+  "proposed_repo_id": "CM 1.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1",
@@ -3063,7 +3346,8 @@
   "skos_notation": "CM 1.2.4.1",
   "parent_slug": "CM-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1"
+  "proposed_repo_id": "CM 1.2.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-1",
@@ -3073,7 +3357,8 @@
   "skos_notation": "CM 1.2.4.1.1",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.1"
+  "proposed_repo_id": "CM 1.2.4.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-2",
@@ -3083,7 +3368,8 @@
   "skos_notation": "CM 1.2.4.1.2",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.2"
+  "proposed_repo_id": "CM 1.2.4.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-3",
@@ -3093,7 +3379,8 @@
   "skos_notation": "CM 1.2.4.1.3",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.3"
+  "proposed_repo_id": "CM 1.2.4.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-4",
@@ -3103,7 +3390,8 @@
   "skos_notation": "CM 1.2.4.1.4",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.4"
+  "proposed_repo_id": "CM 1.2.4.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-5",
@@ -3113,7 +3401,8 @@
   "skos_notation": "CM 1.2.4.1.5",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.5"
+  "proposed_repo_id": "CM 1.2.4.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-6",
@@ -3123,7 +3412,8 @@
   "skos_notation": "CM 1.2.4.1.6",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.6"
+  "proposed_repo_id": "CM 1.2.4.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-7",
@@ -3133,7 +3423,8 @@
   "skos_notation": "CM 1.2.4.1.7",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.7"
+  "proposed_repo_id": "CM 1.2.4.1.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-8",
@@ -3143,7 +3434,8 @@
   "skos_notation": "CM 1.2.4.1.8",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.8"
+  "proposed_repo_id": "CM 1.2.4.1.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-9",
@@ -3153,7 +3445,8 @@
   "skos_notation": "CM 1.2.4.1.9",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.9"
+  "proposed_repo_id": "CM 1.2.4.1.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-10",
@@ -3163,7 +3456,8 @@
   "skos_notation": "CM 1.2.4.1.10",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.10"
+  "proposed_repo_id": "CM 1.2.4.1.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-11",
@@ -3173,7 +3467,8 @@
   "skos_notation": "CM 1.2.4.1.11",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.11"
+  "proposed_repo_id": "CM 1.2.4.1.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-12",
@@ -3183,7 +3478,8 @@
   "skos_notation": "CM 1.2.4.1.12",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.12"
+  "proposed_repo_id": "CM 1.2.4.1.12",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-13",
@@ -3193,7 +3489,8 @@
   "skos_notation": "CM 1.2.4.1.13",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.13"
+  "proposed_repo_id": "CM 1.2.4.1.13",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-14",
@@ -3203,7 +3500,8 @@
   "skos_notation": "CM 1.2.4.1.14",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.14"
+  "proposed_repo_id": "CM 1.2.4.1.14",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-15",
@@ -3213,7 +3511,8 @@
   "skos_notation": "CM 1.2.4.1.15",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.15"
+  "proposed_repo_id": "CM 1.2.4.1.15",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-16",
@@ -3223,7 +3522,8 @@
   "skos_notation": "CM 1.2.4.1.16",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.16"
+  "proposed_repo_id": "CM 1.2.4.1.16",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-17",
@@ -3233,7 +3533,8 @@
   "skos_notation": "CM 1.2.4.1.17",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.17"
+  "proposed_repo_id": "CM 1.2.4.1.17",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-18",
@@ -3243,7 +3544,8 @@
   "skos_notation": "CM 1.2.4.1.18",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.18"
+  "proposed_repo_id": "CM 1.2.4.1.18",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-1-19",
@@ -3253,7 +3555,8 @@
   "skos_notation": "CM 1.2.4.1.19",
   "parent_slug": "CM-1-2-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.1.19"
+  "proposed_repo_id": "CM 1.2.4.1.19",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2",
@@ -3263,7 +3566,8 @@
   "skos_notation": "CM 1.2.4.2",
   "parent_slug": "CM-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2"
+  "proposed_repo_id": "CM 1.2.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-1",
@@ -3273,7 +3577,8 @@
   "skos_notation": "CM 1.2.4.2.1",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.1"
+  "proposed_repo_id": "CM 1.2.4.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-2",
@@ -3283,7 +3588,8 @@
   "skos_notation": "CM 1.2.4.2.2",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.2"
+  "proposed_repo_id": "CM 1.2.4.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-3",
@@ -3293,7 +3599,8 @@
   "skos_notation": "CM 1.2.4.2.3",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.3"
+  "proposed_repo_id": "CM 1.2.4.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-4",
@@ -3303,7 +3610,8 @@
   "skos_notation": "CM 1.2.4.2.4",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.4"
+  "proposed_repo_id": "CM 1.2.4.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-5",
@@ -3313,7 +3621,8 @@
   "skos_notation": "CM 1.2.4.2.5",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.5"
+  "proposed_repo_id": "CM 1.2.4.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-6",
@@ -3323,7 +3632,8 @@
   "skos_notation": "CM 1.2.4.2.6",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.6"
+  "proposed_repo_id": "CM 1.2.4.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-7",
@@ -3333,7 +3643,8 @@
   "skos_notation": "CM 1.2.4.2.7",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.7"
+  "proposed_repo_id": "CM 1.2.4.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-8",
@@ -3343,7 +3654,8 @@
   "skos_notation": "CM 1.2.4.2.8",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.8"
+  "proposed_repo_id": "CM 1.2.4.2.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-9",
@@ -3353,7 +3665,8 @@
   "skos_notation": "CM 1.2.4.2.9",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.9"
+  "proposed_repo_id": "CM 1.2.4.2.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-10",
@@ -3363,7 +3676,8 @@
   "skos_notation": "CM 1.2.4.2.10",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.10"
+  "proposed_repo_id": "CM 1.2.4.2.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-11",
@@ -3373,7 +3687,8 @@
   "skos_notation": "CM 1.2.4.2.11",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.11"
+  "proposed_repo_id": "CM 1.2.4.2.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-12",
@@ -3383,7 +3698,8 @@
   "skos_notation": "CM 1.2.4.2.12",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.2.12"
+  "proposed_repo_id": "CM 1.2.4.2.12",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3",
@@ -3393,7 +3709,8 @@
   "skos_notation": "CM 1.2.4.3",
   "parent_slug": "CM-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3"
+  "proposed_repo_id": "CM 1.2.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-1",
@@ -3403,7 +3720,8 @@
   "skos_notation": "CM 1.2.4.3.1",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.1"
+  "proposed_repo_id": "CM 1.2.4.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-2",
@@ -3413,7 +3731,8 @@
   "skos_notation": "CM 1.2.4.3.2",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.2"
+  "proposed_repo_id": "CM 1.2.4.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-3",
@@ -3423,7 +3742,8 @@
   "skos_notation": "CM 1.2.4.3.3",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.3"
+  "proposed_repo_id": "CM 1.2.4.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-4",
@@ -3433,7 +3753,8 @@
   "skos_notation": "CM 1.2.4.3.4",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.4"
+  "proposed_repo_id": "CM 1.2.4.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-5",
@@ -3443,7 +3764,8 @@
   "skos_notation": "CM 1.2.4.3.5",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.5"
+  "proposed_repo_id": "CM 1.2.4.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-6",
@@ -3453,7 +3775,8 @@
   "skos_notation": "CM 1.2.4.3.6",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.6"
+  "proposed_repo_id": "CM 1.2.4.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-7",
@@ -3463,7 +3786,8 @@
   "skos_notation": "CM 1.2.4.3.7",
   "parent_slug": "CM-1-2-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.3.7"
+  "proposed_repo_id": "CM 1.2.4.3.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4",
@@ -3473,7 +3797,8 @@
   "skos_notation": "CM 1.2.4.4",
   "parent_slug": "CM-1-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4"
+  "proposed_repo_id": "CM 1.2.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-1",
@@ -3483,7 +3808,8 @@
   "skos_notation": "CM 1.2.4.4.1",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.1"
+  "proposed_repo_id": "CM 1.2.4.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-2",
@@ -3493,7 +3819,8 @@
   "skos_notation": "CM 1.2.4.4.2",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.2"
+  "proposed_repo_id": "CM 1.2.4.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-3",
@@ -3503,7 +3830,8 @@
   "skos_notation": "CM 1.2.4.4.3",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.3"
+  "proposed_repo_id": "CM 1.2.4.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-4",
@@ -3513,7 +3841,8 @@
   "skos_notation": "CM 1.2.4.4.4",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.4"
+  "proposed_repo_id": "CM 1.2.4.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-5",
@@ -3523,7 +3852,8 @@
   "skos_notation": "CM 1.2.4.4.5",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.5"
+  "proposed_repo_id": "CM 1.2.4.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-6",
@@ -3533,7 +3863,8 @@
   "skos_notation": "CM 1.2.4.4.6",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.6"
+  "proposed_repo_id": "CM 1.2.4.4.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-7",
@@ -3543,7 +3874,8 @@
   "skos_notation": "CM 1.2.4.4.7",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.7"
+  "proposed_repo_id": "CM 1.2.4.4.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4-8",
@@ -3553,7 +3885,8 @@
   "skos_notation": "CM 1.2.4.4.8",
   "parent_slug": "CM-1-2-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.4.4.8"
+  "proposed_repo_id": "CM 1.2.4.4.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5",
@@ -3563,7 +3896,8 @@
   "skos_notation": "CM 1.2.5",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5"
+  "proposed_repo_id": "CM 1.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1",
@@ -3573,7 +3907,8 @@
   "skos_notation": "CM 1.2.5.1",
   "parent_slug": "CM-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.1"
+  "proposed_repo_id": "CM 1.2.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-1",
@@ -3583,7 +3918,8 @@
   "skos_notation": "CM 1.2.5.1.1",
   "parent_slug": "CM-1-2-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.1.1"
+  "proposed_repo_id": "CM 1.2.5.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-2",
@@ -3593,7 +3929,8 @@
   "skos_notation": "CM 1.2.5.1.2",
   "parent_slug": "CM-1-2-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.1.2"
+  "proposed_repo_id": "CM 1.2.5.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-3",
@@ -3603,7 +3940,8 @@
   "skos_notation": "CM 1.2.5.1.3",
   "parent_slug": "CM-1-2-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.1.3"
+  "proposed_repo_id": "CM 1.2.5.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-4",
@@ -3613,7 +3951,8 @@
   "skos_notation": "CM 1.2.5.1.4",
   "parent_slug": "CM-1-2-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.1.4"
+  "proposed_repo_id": "CM 1.2.5.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2",
@@ -3623,7 +3962,8 @@
   "skos_notation": "CM 1.2.5.2",
   "parent_slug": "CM-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.2"
+  "proposed_repo_id": "CM 1.2.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-1",
@@ -3633,7 +3973,8 @@
   "skos_notation": "CM 1.2.5.2.1",
   "parent_slug": "CM-1-2-5-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.2.1"
+  "proposed_repo_id": "CM 1.2.5.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-2",
@@ -3643,7 +3984,8 @@
   "skos_notation": "CM 1.2.5.2.2",
   "parent_slug": "CM-1-2-5-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.2.2"
+  "proposed_repo_id": "CM 1.2.5.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2-3",
@@ -3653,7 +3995,8 @@
   "skos_notation": "CM 1.2.5.2.3",
   "parent_slug": "CM-1-2-5-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.2.3"
+  "proposed_repo_id": "CM 1.2.5.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3",
@@ -3663,7 +4006,8 @@
   "skos_notation": "CM 1.2.5.3",
   "parent_slug": "CM-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.3"
+  "proposed_repo_id": "CM 1.2.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-1",
@@ -3673,7 +4017,8 @@
   "skos_notation": "CM 1.2.5.3.1",
   "parent_slug": "CM-1-2-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.3.1"
+  "proposed_repo_id": "CM 1.2.5.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-2",
@@ -3683,7 +4028,8 @@
   "skos_notation": "CM 1.2.5.3.2",
   "parent_slug": "CM-1-2-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.3.2"
+  "proposed_repo_id": "CM 1.2.5.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-3-3",
@@ -3693,7 +4039,8 @@
   "skos_notation": "CM 1.2.5.3.3",
   "parent_slug": "CM-1-2-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.3.3"
+  "proposed_repo_id": "CM 1.2.5.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4",
@@ -3703,7 +4050,8 @@
   "skos_notation": "CM 1.2.5.4",
   "parent_slug": "CM-1-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.4"
+  "proposed_repo_id": "CM 1.2.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4-1",
@@ -3713,7 +4061,8 @@
   "skos_notation": "CM 1.2.5.4.1",
   "parent_slug": "CM-1-2-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.4.1"
+  "proposed_repo_id": "CM 1.2.5.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-4-2",
@@ -3723,7 +4072,8 @@
   "skos_notation": "CM 1.2.5.4.2",
   "parent_slug": "CM-1-2-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.5.4.2"
+  "proposed_repo_id": "CM 1.2.5.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6",
@@ -3733,7 +4083,8 @@
   "skos_notation": "CM 1.2.6",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6"
+  "proposed_repo_id": "CM 1.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1",
@@ -3743,7 +4094,8 @@
   "skos_notation": "CM 1.2.6.1",
   "parent_slug": "CM-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.1"
+  "proposed_repo_id": "CM 1.2.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-1",
@@ -3753,7 +4105,8 @@
   "skos_notation": "CM 1.2.6.1.1",
   "parent_slug": "CM-1-2-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.1.1"
+  "proposed_repo_id": "CM 1.2.6.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-2",
@@ -3763,7 +4116,8 @@
   "skos_notation": "CM 1.2.6.1.2",
   "parent_slug": "CM-1-2-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.1.2"
+  "proposed_repo_id": "CM 1.2.6.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-1-3",
@@ -3773,7 +4127,8 @@
   "skos_notation": "CM 1.2.6.1.3",
   "parent_slug": "CM-1-2-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.1.3"
+  "proposed_repo_id": "CM 1.2.6.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2",
@@ -3783,7 +4138,8 @@
   "skos_notation": "CM 1.2.6.2",
   "parent_slug": "CM-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.2"
+  "proposed_repo_id": "CM 1.2.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-1",
@@ -3793,7 +4149,8 @@
   "skos_notation": "CM 1.2.6.2.1",
   "parent_slug": "CM-1-2-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.2.1"
+  "proposed_repo_id": "CM 1.2.6.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-2",
@@ -3803,7 +4160,8 @@
   "skos_notation": "CM 1.2.6.2.2",
   "parent_slug": "CM-1-2-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.2.2"
+  "proposed_repo_id": "CM 1.2.6.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-2-3",
@@ -3813,7 +4171,8 @@
   "skos_notation": "CM 1.2.6.2.3",
   "parent_slug": "CM-1-2-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.2.3"
+  "proposed_repo_id": "CM 1.2.6.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3",
@@ -3823,7 +4182,8 @@
   "skos_notation": "CM 1.2.6.3",
   "parent_slug": "CM-1-2-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.3"
+  "proposed_repo_id": "CM 1.2.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-1",
@@ -3833,7 +4193,8 @@
   "skos_notation": "CM 1.2.6.3.1",
   "parent_slug": "CM-1-2-6-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.3.1"
+  "proposed_repo_id": "CM 1.2.6.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-2",
@@ -3843,7 +4204,8 @@
   "skos_notation": "CM 1.2.6.3.2",
   "parent_slug": "CM-1-2-6-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.3.2"
+  "proposed_repo_id": "CM 1.2.6.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-6-3-3",
@@ -3853,7 +4215,8 @@
   "skos_notation": "CM 1.2.6.3.3",
   "parent_slug": "CM-1-2-6-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.6.3.3"
+  "proposed_repo_id": "CM 1.2.6.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7",
@@ -3863,7 +4226,8 @@
   "skos_notation": "CM 1.2.7",
   "parent_slug": "CM-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7"
+  "proposed_repo_id": "CM 1.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1",
@@ -3873,7 +4237,8 @@
   "skos_notation": "CM 1.2.7.1",
   "parent_slug": "CM-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.1"
+  "proposed_repo_id": "CM 1.2.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-1",
@@ -3883,7 +4248,8 @@
   "skos_notation": "CM 1.2.7.1.1",
   "parent_slug": "CM-1-2-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.1.1"
+  "proposed_repo_id": "CM 1.2.7.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-2",
@@ -3893,7 +4259,8 @@
   "skos_notation": "CM 1.2.7.1.2",
   "parent_slug": "CM-1-2-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.1.2"
+  "proposed_repo_id": "CM 1.2.7.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-1-3",
@@ -3903,7 +4270,8 @@
   "skos_notation": "CM 1.2.7.1.3",
   "parent_slug": "CM-1-2-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.1.3"
+  "proposed_repo_id": "CM 1.2.7.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2",
@@ -3913,7 +4281,8 @@
   "skos_notation": "CM 1.2.7.2",
   "parent_slug": "CM-1-2-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.2"
+  "proposed_repo_id": "CM 1.2.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-1",
@@ -3923,7 +4292,8 @@
   "skos_notation": "CM 1.2.7.2.1",
   "parent_slug": "CM-1-2-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.2.1"
+  "proposed_repo_id": "CM 1.2.7.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-2",
@@ -3933,7 +4303,8 @@
   "skos_notation": "CM 1.2.7.2.2",
   "parent_slug": "CM-1-2-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.2.2"
+  "proposed_repo_id": "CM 1.2.7.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-7-2-3",
@@ -3943,7 +4314,8 @@
   "skos_notation": "CM 1.2.7.2.3",
   "parent_slug": "CM-1-2-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.2.7.2.3"
+  "proposed_repo_id": "CM 1.2.7.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3",
@@ -3953,7 +4325,8 @@
   "skos_notation": "CM 1.3",
   "parent_slug": "CM-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3"
+  "proposed_repo_id": "CM 1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1",
@@ -3963,7 +4336,8 @@
   "skos_notation": "CM 1.3.1",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1"
+  "proposed_repo_id": "CM 1.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1",
@@ -3973,7 +4347,8 @@
   "skos_notation": "CM 1.3.1.1",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.1"
+  "proposed_repo_id": "CM 1.3.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-1",
@@ -3983,7 +4358,8 @@
   "skos_notation": "CM 1.3.1.1.1",
   "parent_slug": "CM-1-3-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.1.1"
+  "proposed_repo_id": "CM 1.3.1.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-2",
@@ -3993,7 +4369,8 @@
   "skos_notation": "CM 1.3.1.1.2",
   "parent_slug": "CM-1-3-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.1.2"
+  "proposed_repo_id": "CM 1.3.1.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-3",
@@ -4003,7 +4380,8 @@
   "skos_notation": "CM 1.3.1.1.3",
   "parent_slug": "CM-1-3-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.1.3"
+  "proposed_repo_id": "CM 1.3.1.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-1-4",
@@ -4013,7 +4391,8 @@
   "skos_notation": "CM 1.3.1.1.4",
   "parent_slug": "CM-1-3-1-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.1.4"
+  "proposed_repo_id": "CM 1.3.1.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2",
@@ -4023,7 +4402,8 @@
   "skos_notation": "CM 1.3.1.2",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.2"
+  "proposed_repo_id": "CM 1.3.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-1",
@@ -4033,7 +4413,8 @@
   "skos_notation": "CM 1.3.1.2.1",
   "parent_slug": "CM-1-3-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.2.1"
+  "proposed_repo_id": "CM 1.3.1.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-2",
@@ -4043,7 +4424,8 @@
   "skos_notation": "CM 1.3.1.2.2",
   "parent_slug": "CM-1-3-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.2.2"
+  "proposed_repo_id": "CM 1.3.1.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-3",
@@ -4053,7 +4435,8 @@
   "skos_notation": "CM 1.3.1.2.3",
   "parent_slug": "CM-1-3-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.2.3"
+  "proposed_repo_id": "CM 1.3.1.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-2-4",
@@ -4063,7 +4446,8 @@
   "skos_notation": "CM 1.3.1.2.4",
   "parent_slug": "CM-1-3-1-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.2.4"
+  "proposed_repo_id": "CM 1.3.1.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3",
@@ -4073,7 +4457,8 @@
   "skos_notation": "CM 1.3.1.3",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.3"
+  "proposed_repo_id": "CM 1.3.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-1",
@@ -4083,7 +4468,8 @@
   "skos_notation": "CM 1.3.1.3.1",
   "parent_slug": "CM-1-3-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.3.1"
+  "proposed_repo_id": "CM 1.3.1.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-2",
@@ -4093,7 +4479,8 @@
   "skos_notation": "CM 1.3.1.3.2",
   "parent_slug": "CM-1-3-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.3.2"
+  "proposed_repo_id": "CM 1.3.1.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-3",
@@ -4103,7 +4490,8 @@
   "skos_notation": "CM 1.3.1.3.3",
   "parent_slug": "CM-1-3-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.3.3"
+  "proposed_repo_id": "CM 1.3.1.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-3-4",
@@ -4113,7 +4501,8 @@
   "skos_notation": "CM 1.3.1.3.4",
   "parent_slug": "CM-1-3-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.3.4"
+  "proposed_repo_id": "CM 1.3.1.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4",
@@ -4123,7 +4512,8 @@
   "skos_notation": "CM 1.3.1.4",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.4"
+  "proposed_repo_id": "CM 1.3.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-1",
@@ -4133,7 +4523,8 @@
   "skos_notation": "CM 1.3.1.4.1",
   "parent_slug": "CM-1-3-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.4.1"
+  "proposed_repo_id": "CM 1.3.1.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-2",
@@ -4143,7 +4534,8 @@
   "skos_notation": "CM 1.3.1.4.2",
   "parent_slug": "CM-1-3-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.4.2"
+  "proposed_repo_id": "CM 1.3.1.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-3",
@@ -4153,7 +4545,8 @@
   "skos_notation": "CM 1.3.1.4.3",
   "parent_slug": "CM-1-3-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.4.3"
+  "proposed_repo_id": "CM 1.3.1.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-4-4",
@@ -4163,7 +4556,8 @@
   "skos_notation": "CM 1.3.1.4.4",
   "parent_slug": "CM-1-3-1-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.4.4"
+  "proposed_repo_id": "CM 1.3.1.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5",
@@ -4173,7 +4567,8 @@
   "skos_notation": "CM 1.3.1.5",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.5"
+  "proposed_repo_id": "CM 1.3.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-1",
@@ -4183,7 +4578,8 @@
   "skos_notation": "CM 1.3.1.5.1",
   "parent_slug": "CM-1-3-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.5.1"
+  "proposed_repo_id": "CM 1.3.1.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-2",
@@ -4193,7 +4589,8 @@
   "skos_notation": "CM 1.3.1.5.2",
   "parent_slug": "CM-1-3-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.5.2"
+  "proposed_repo_id": "CM 1.3.1.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-3",
@@ -4203,7 +4600,8 @@
   "skos_notation": "CM 1.3.1.5.3",
   "parent_slug": "CM-1-3-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.5.3"
+  "proposed_repo_id": "CM 1.3.1.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-5-4",
@@ -4213,7 +4611,8 @@
   "skos_notation": "CM 1.3.1.5.4",
   "parent_slug": "CM-1-3-1-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.5.4"
+  "proposed_repo_id": "CM 1.3.1.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-1-6",
@@ -4223,7 +4622,8 @@
   "skos_notation": "CM 1.3.1.6",
   "parent_slug": "CM-1-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.1.6"
+  "proposed_repo_id": "CM 1.3.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2",
@@ -4233,7 +4633,8 @@
   "skos_notation": "CM 1.3.2",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2"
+  "proposed_repo_id": "CM 1.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1",
@@ -4243,7 +4644,8 @@
   "skos_notation": "CM 1.3.2.1",
   "parent_slug": "CM-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.1"
+  "proposed_repo_id": "CM 1.3.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-1",
@@ -4253,7 +4655,8 @@
   "skos_notation": "CM 1.3.2.1.1",
   "parent_slug": "CM-1-3-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.1.1"
+  "proposed_repo_id": "CM 1.3.2.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-2",
@@ -4263,7 +4666,8 @@
   "skos_notation": "CM 1.3.2.1.2",
   "parent_slug": "CM-1-3-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.1.2"
+  "proposed_repo_id": "CM 1.3.2.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-3",
@@ -4273,7 +4677,8 @@
   "skos_notation": "CM 1.3.2.1.3",
   "parent_slug": "CM-1-3-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.1.3"
+  "proposed_repo_id": "CM 1.3.2.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-4",
@@ -4283,7 +4688,8 @@
   "skos_notation": "CM 1.3.2.1.4",
   "parent_slug": "CM-1-3-2-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.1.4"
+  "proposed_repo_id": "CM 1.3.2.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2",
@@ -4293,7 +4699,8 @@
   "skos_notation": "CM 1.3.2.2",
   "parent_slug": "CM-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.2"
+  "proposed_repo_id": "CM 1.3.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-1",
@@ -4303,7 +4710,8 @@
   "skos_notation": "CM 1.3.2.2.1",
   "parent_slug": "CM-1-3-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.2.1"
+  "proposed_repo_id": "CM 1.3.2.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-2",
@@ -4313,7 +4721,8 @@
   "skos_notation": "CM 1.3.2.2.2",
   "parent_slug": "CM-1-3-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.2.2"
+  "proposed_repo_id": "CM 1.3.2.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-3",
@@ -4323,7 +4732,8 @@
   "skos_notation": "CM 1.3.2.2.3",
   "parent_slug": "CM-1-3-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.2.3"
+  "proposed_repo_id": "CM 1.3.2.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-2-4",
@@ -4333,7 +4743,8 @@
   "skos_notation": "CM 1.3.2.2.4",
   "parent_slug": "CM-1-3-2-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.2.4"
+  "proposed_repo_id": "CM 1.3.2.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3",
@@ -4343,7 +4754,8 @@
   "skos_notation": "CM 1.3.2.3",
   "parent_slug": "CM-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.3"
+  "proposed_repo_id": "CM 1.3.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-1",
@@ -4353,7 +4765,8 @@
   "skos_notation": "CM 1.3.2.3.1",
   "parent_slug": "CM-1-3-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.3.1"
+  "proposed_repo_id": "CM 1.3.2.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-2",
@@ -4363,7 +4776,8 @@
   "skos_notation": "CM 1.3.2.3.2",
   "parent_slug": "CM-1-3-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.3.2"
+  "proposed_repo_id": "CM 1.3.2.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-3",
@@ -4373,7 +4787,8 @@
   "skos_notation": "CM 1.3.2.3.3",
   "parent_slug": "CM-1-3-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.3.3"
+  "proposed_repo_id": "CM 1.3.2.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-3-4",
@@ -4383,7 +4798,8 @@
   "skos_notation": "CM 1.3.2.3.4",
   "parent_slug": "CM-1-3-2-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.3.4"
+  "proposed_repo_id": "CM 1.3.2.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4",
@@ -4393,7 +4809,8 @@
   "skos_notation": "CM 1.3.2.4",
   "parent_slug": "CM-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.4"
+  "proposed_repo_id": "CM 1.3.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4-1",
@@ -4403,7 +4820,8 @@
   "skos_notation": "CM 1.3.2.4.1",
   "parent_slug": "CM-1-3-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.4.1"
+  "proposed_repo_id": "CM 1.3.2.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-4-2",
@@ -4413,7 +4831,8 @@
   "skos_notation": "CM 1.3.2.4.2",
   "parent_slug": "CM-1-3-2-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.4.2"
+  "proposed_repo_id": "CM 1.3.2.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5",
@@ -4423,7 +4842,8 @@
   "skos_notation": "CM 1.3.2.5",
   "parent_slug": "CM-1-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.5"
+  "proposed_repo_id": "CM 1.3.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-1",
@@ -4433,7 +4853,8 @@
   "skos_notation": "CM 1.3.2.5.1",
   "parent_slug": "CM-1-3-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.5.1"
+  "proposed_repo_id": "CM 1.3.2.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-2",
@@ -4443,7 +4864,8 @@
   "skos_notation": "CM 1.3.2.5.2",
   "parent_slug": "CM-1-3-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.5.2"
+  "proposed_repo_id": "CM 1.3.2.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-5-3",
@@ -4453,7 +4875,8 @@
   "skos_notation": "CM 1.3.2.5.3",
   "parent_slug": "CM-1-3-2-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.2.5.3"
+  "proposed_repo_id": "CM 1.3.2.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3",
@@ -4463,7 +4886,8 @@
   "skos_notation": "CM 1.3.3",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3"
+  "proposed_repo_id": "CM 1.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1",
@@ -4473,7 +4897,8 @@
   "skos_notation": "CM 1.3.3.1",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.1"
+  "proposed_repo_id": "CM 1.3.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-1",
@@ -4483,7 +4908,8 @@
   "skos_notation": "CM 1.3.3.1.1",
   "parent_slug": "CM-1-3-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.1.1"
+  "proposed_repo_id": "CM 1.3.3.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-2",
@@ -4493,7 +4919,8 @@
   "skos_notation": "CM 1.3.3.1.2",
   "parent_slug": "CM-1-3-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.1.2"
+  "proposed_repo_id": "CM 1.3.3.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-3",
@@ -4503,7 +4930,8 @@
   "skos_notation": "CM 1.3.3.1.3",
   "parent_slug": "CM-1-3-3-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.1.3"
+  "proposed_repo_id": "CM 1.3.3.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-1-4",
@@ -4514,9 +4942,10 @@
   "parent_slug": "CM-1-3-3-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.1.4",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Offer)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Offer Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Offer)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Offer Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Offer)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Offer)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2",
@@ -4526,7 +4955,8 @@
   "skos_notation": "CM 1.3.3.2",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2"
+  "proposed_repo_id": "CM 1.3.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-1",
@@ -4536,7 +4966,8 @@
   "skos_notation": "CM 1.3.3.2.1",
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2.1"
+  "proposed_repo_id": "CM 1.3.3.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-2",
@@ -4546,7 +4977,8 @@
   "skos_notation": "CM 1.3.3.2.2",
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2.2"
+  "proposed_repo_id": "CM 1.3.3.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-3",
@@ -4556,7 +4988,8 @@
   "skos_notation": "CM 1.3.3.2.3",
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2.3"
+  "proposed_repo_id": "CM 1.3.3.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-4",
@@ -4566,7 +4999,8 @@
   "skos_notation": "CM 1.3.3.2.4",
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.2.4"
+  "proposed_repo_id": "CM 1.3.3.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-2-5",
@@ -4577,9 +5011,10 @@
   "parent_slug": "CM-1-3-3-2",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.2.5",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Pricing)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Pricing Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Pricing)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Pricing Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Pricing)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Pricing)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3",
@@ -4589,7 +5024,8 @@
   "skos_notation": "CM 1.3.3.3",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3"
+  "proposed_repo_id": "CM 1.3.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-1",
@@ -4599,7 +5035,8 @@
   "skos_notation": "CM 1.3.3.3.1",
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3.1"
+  "proposed_repo_id": "CM 1.3.3.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-2",
@@ -4609,7 +5046,8 @@
   "skos_notation": "CM 1.3.3.3.2",
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3.2"
+  "proposed_repo_id": "CM 1.3.3.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-3",
@@ -4619,7 +5057,8 @@
   "skos_notation": "CM 1.3.3.3.3",
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3.3"
+  "proposed_repo_id": "CM 1.3.3.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-4",
@@ -4629,7 +5068,8 @@
   "skos_notation": "CM 1.3.3.3.4",
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.3.4"
+  "proposed_repo_id": "CM 1.3.3.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-3-5",
@@ -4640,9 +5080,10 @@
   "parent_slug": "CM-1-3-3-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.3.5",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Channel)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Channel Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Channel)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Channel Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Channel)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Channel)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4",
@@ -4652,7 +5093,8 @@
   "skos_notation": "CM 1.3.3.4",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.4"
+  "proposed_repo_id": "CM 1.3.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-1",
@@ -4662,7 +5104,8 @@
   "skos_notation": "CM 1.3.3.4.1",
   "parent_slug": "CM-1-3-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.4.1"
+  "proposed_repo_id": "CM 1.3.3.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-2",
@@ -4672,7 +5115,8 @@
   "skos_notation": "CM 1.3.3.4.2",
   "parent_slug": "CM-1-3-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.4.2"
+  "proposed_repo_id": "CM 1.3.3.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-3",
@@ -4682,7 +5126,8 @@
   "skos_notation": "CM 1.3.3.4.3",
   "parent_slug": "CM-1-3-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.4.3"
+  "proposed_repo_id": "CM 1.3.3.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-4-4",
@@ -4693,9 +5138,10 @@
   "parent_slug": "CM-1-3-3-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.4.4",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Network)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Network Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Network)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Network Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Network)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Network)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5",
@@ -4705,7 +5151,8 @@
   "skos_notation": "CM 1.3.3.5",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5"
+  "proposed_repo_id": "CM 1.3.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-1",
@@ -4715,7 +5162,8 @@
   "skos_notation": "CM 1.3.3.5.1",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.1"
+  "proposed_repo_id": "CM 1.3.3.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-2",
@@ -4725,7 +5173,8 @@
   "skos_notation": "CM 1.3.3.5.2",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.2"
+  "proposed_repo_id": "CM 1.3.3.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-3",
@@ -4735,7 +5184,8 @@
   "skos_notation": "CM 1.3.3.5.3",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.3"
+  "proposed_repo_id": "CM 1.3.3.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-4",
@@ -4745,7 +5195,8 @@
   "skos_notation": "CM 1.3.3.5.4",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.4"
+  "proposed_repo_id": "CM 1.3.3.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-5",
@@ -4755,7 +5206,8 @@
   "skos_notation": "CM 1.3.3.5.5",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.5"
+  "proposed_repo_id": "CM 1.3.3.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-6",
@@ -4765,7 +5217,8 @@
   "skos_notation": "CM 1.3.3.5.6",
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.5.6"
+  "proposed_repo_id": "CM 1.3.3.5.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-5-7",
@@ -4776,9 +5229,10 @@
   "parent_slug": "CM-1-3-3-5",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.5.7",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Marketing Communications)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Marketing Communications Measurement Framework' — sixth and final 'Define KPI Framework' collision resolved (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Marketing Communications)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Marketing Communications Measurement Framework' — sixth and final 'Define KPI Framework' collision resolved (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Marketing Communications)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Marketing Communications)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6",
@@ -4788,7 +5242,8 @@
   "skos_notation": "CM 1.3.3.6",
   "parent_slug": "CM-1-3-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6"
+  "proposed_repo_id": "CM 1.3.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-1",
@@ -4798,7 +5253,8 @@
   "skos_notation": "CM 1.3.3.6.1",
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6.1"
+  "proposed_repo_id": "CM 1.3.3.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-2",
@@ -4808,7 +5264,8 @@
   "skos_notation": "CM 1.3.3.6.2",
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6.2"
+  "proposed_repo_id": "CM 1.3.3.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-3",
@@ -4818,7 +5275,8 @@
   "skos_notation": "CM 1.3.3.6.3",
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6.3"
+  "proposed_repo_id": "CM 1.3.3.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-4",
@@ -4828,7 +5286,8 @@
   "skos_notation": "CM 1.3.3.6.4",
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.3.6.4"
+  "proposed_repo_id": "CM 1.3.3.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-3-6-5",
@@ -4839,9 +5298,10 @@
   "parent_slug": "CM-1-3-3-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.3.6.5",
+  "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "scoped_historical_alias": "Define KPI Framework (Operating Model)",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Operating Model Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Operating Model)' recorded here."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Operating Model Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Operating Model)' recorded here.",
+  "scoped_historical_alias": "Define KPI Framework (Operating Model)"
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4",
@@ -4851,7 +5311,8 @@
   "skos_notation": "CM 1.3.4",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4"
+  "proposed_repo_id": "CM 1.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1",
@@ -4861,7 +5322,8 @@
   "skos_notation": "CM 1.3.4.1",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.1"
+  "proposed_repo_id": "CM 1.3.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-1",
@@ -4871,7 +5333,8 @@
   "skos_notation": "CM 1.3.4.1.1",
   "parent_slug": "CM-1-3-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.1.1"
+  "proposed_repo_id": "CM 1.3.4.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-2",
@@ -4881,7 +5344,8 @@
   "skos_notation": "CM 1.3.4.1.2",
   "parent_slug": "CM-1-3-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.1.2"
+  "proposed_repo_id": "CM 1.3.4.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-1-3",
@@ -4891,7 +5355,8 @@
   "skos_notation": "CM 1.3.4.1.3",
   "parent_slug": "CM-1-3-4-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.1.3"
+  "proposed_repo_id": "CM 1.3.4.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2",
@@ -4901,7 +5366,8 @@
   "skos_notation": "CM 1.3.4.2",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.2"
+  "proposed_repo_id": "CM 1.3.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-1",
@@ -4911,7 +5377,8 @@
   "skos_notation": "CM 1.3.4.2.1",
   "parent_slug": "CM-1-3-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.2.1"
+  "proposed_repo_id": "CM 1.3.4.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-2",
@@ -4921,7 +5388,8 @@
   "skos_notation": "CM 1.3.4.2.2",
   "parent_slug": "CM-1-3-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.2.2"
+  "proposed_repo_id": "CM 1.3.4.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-2-3",
@@ -4931,7 +5399,8 @@
   "skos_notation": "CM 1.3.4.2.3",
   "parent_slug": "CM-1-3-4-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.2.3"
+  "proposed_repo_id": "CM 1.3.4.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3",
@@ -4941,7 +5410,8 @@
   "skos_notation": "CM 1.3.4.3",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.3"
+  "proposed_repo_id": "CM 1.3.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-1",
@@ -4951,7 +5421,8 @@
   "skos_notation": "CM 1.3.4.3.1",
   "parent_slug": "CM-1-3-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.3.1"
+  "proposed_repo_id": "CM 1.3.4.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-2",
@@ -4961,7 +5432,8 @@
   "skos_notation": "CM 1.3.4.3.2",
   "parent_slug": "CM-1-3-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.3.2"
+  "proposed_repo_id": "CM 1.3.4.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-3-3",
@@ -4971,7 +5443,8 @@
   "skos_notation": "CM 1.3.4.3.3",
   "parent_slug": "CM-1-3-4-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.3.3"
+  "proposed_repo_id": "CM 1.3.4.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4",
@@ -4981,7 +5454,8 @@
   "skos_notation": "CM 1.3.4.4",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4"
+  "proposed_repo_id": "CM 1.3.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-1",
@@ -4991,7 +5465,8 @@
   "skos_notation": "CM 1.3.4.4.1",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.1"
+  "proposed_repo_id": "CM 1.3.4.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-2",
@@ -5001,7 +5476,8 @@
   "skos_notation": "CM 1.3.4.4.2",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.2"
+  "proposed_repo_id": "CM 1.3.4.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-3",
@@ -5011,7 +5487,8 @@
   "skos_notation": "CM 1.3.4.4.3",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.3"
+  "proposed_repo_id": "CM 1.3.4.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-4",
@@ -5021,7 +5498,8 @@
   "skos_notation": "CM 1.3.4.4.4",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.4"
+  "proposed_repo_id": "CM 1.3.4.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-5",
@@ -5031,7 +5509,8 @@
   "skos_notation": "CM 1.3.4.4.5",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.5"
+  "proposed_repo_id": "CM 1.3.4.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-4-6",
@@ -5041,7 +5520,8 @@
   "skos_notation": "CM 1.3.4.4.6",
   "parent_slug": "CM-1-3-4-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.4.6"
+  "proposed_repo_id": "CM 1.3.4.4.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5",
@@ -5051,7 +5531,8 @@
   "skos_notation": "CM 1.3.4.5",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.5"
+  "proposed_repo_id": "CM 1.3.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-1",
@@ -5061,7 +5542,8 @@
   "skos_notation": "CM 1.3.4.5.1",
   "parent_slug": "CM-1-3-4-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.5.1"
+  "proposed_repo_id": "CM 1.3.4.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-2",
@@ -5071,7 +5553,8 @@
   "skos_notation": "CM 1.3.4.5.2",
   "parent_slug": "CM-1-3-4-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.5.2"
+  "proposed_repo_id": "CM 1.3.4.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-3",
@@ -5081,7 +5564,8 @@
   "skos_notation": "CM 1.3.4.5.3",
   "parent_slug": "CM-1-3-4-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.5.3"
+  "proposed_repo_id": "CM 1.3.4.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-5-4",
@@ -5091,7 +5575,8 @@
   "skos_notation": "CM 1.3.4.5.4",
   "parent_slug": "CM-1-3-4-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.5.4"
+  "proposed_repo_id": "CM 1.3.4.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6",
@@ -5101,7 +5586,8 @@
   "skos_notation": "CM 1.3.4.6",
   "parent_slug": "CM-1-3-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.6"
+  "proposed_repo_id": "CM 1.3.4.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-1",
@@ -5111,7 +5597,8 @@
   "skos_notation": "CM 1.3.4.6.1",
   "parent_slug": "CM-1-3-4-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.6.1"
+  "proposed_repo_id": "CM 1.3.4.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-2",
@@ -5121,7 +5608,8 @@
   "skos_notation": "CM 1.3.4.6.2",
   "parent_slug": "CM-1-3-4-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.6.2"
+  "proposed_repo_id": "CM 1.3.4.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-3",
@@ -5131,7 +5619,8 @@
   "skos_notation": "CM 1.3.4.6.3",
   "parent_slug": "CM-1-3-4-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.6.3"
+  "proposed_repo_id": "CM 1.3.4.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-4-6-4",
@@ -5141,7 +5630,8 @@
   "skos_notation": "CM 1.3.4.6.4",
   "parent_slug": "CM-1-3-4-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.4.6.4"
+  "proposed_repo_id": "CM 1.3.4.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5",
@@ -5151,7 +5641,8 @@
   "skos_notation": "CM 1.3.5",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5"
+  "proposed_repo_id": "CM 1.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1",
@@ -5161,7 +5652,8 @@
   "skos_notation": "CM 1.3.5.1",
   "parent_slug": "CM-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.1"
+  "proposed_repo_id": "CM 1.3.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-1",
@@ -5171,7 +5663,8 @@
   "skos_notation": "CM 1.3.5.1.1",
   "parent_slug": "CM-1-3-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.1.1"
+  "proposed_repo_id": "CM 1.3.5.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-2",
@@ -5181,7 +5674,8 @@
   "skos_notation": "CM 1.3.5.1.2",
   "parent_slug": "CM-1-3-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.1.2"
+  "proposed_repo_id": "CM 1.3.5.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-3",
@@ -5191,7 +5685,8 @@
   "skos_notation": "CM 1.3.5.1.3",
   "parent_slug": "CM-1-3-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.1.3"
+  "proposed_repo_id": "CM 1.3.5.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-4",
@@ -5201,7 +5696,8 @@
   "skos_notation": "CM 1.3.5.1.4",
   "parent_slug": "CM-1-3-5-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.1.4"
+  "proposed_repo_id": "CM 1.3.5.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-2",
@@ -5211,7 +5707,8 @@
   "skos_notation": "CM 1.3.5.2",
   "parent_slug": "CM-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.2"
+  "proposed_repo_id": "CM 1.3.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3",
@@ -5221,7 +5718,8 @@
   "skos_notation": "CM 1.3.5.3",
   "parent_slug": "CM-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3"
+  "proposed_repo_id": "CM 1.3.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-1",
@@ -5231,7 +5729,8 @@
   "skos_notation": "CM 1.3.5.3.1",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.1"
+  "proposed_repo_id": "CM 1.3.5.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-2",
@@ -5241,7 +5740,8 @@
   "skos_notation": "CM 1.3.5.3.2",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.2"
+  "proposed_repo_id": "CM 1.3.5.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-3",
@@ -5251,7 +5751,8 @@
   "skos_notation": "CM 1.3.5.3.3",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.3"
+  "proposed_repo_id": "CM 1.3.5.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-4",
@@ -5261,7 +5762,8 @@
   "skos_notation": "CM 1.3.5.3.4",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.4"
+  "proposed_repo_id": "CM 1.3.5.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-5",
@@ -5271,7 +5773,8 @@
   "skos_notation": "CM 1.3.5.3.5",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.5"
+  "proposed_repo_id": "CM 1.3.5.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-6",
@@ -5281,7 +5784,8 @@
   "skos_notation": "CM 1.3.5.3.6",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.6"
+  "proposed_repo_id": "CM 1.3.5.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-7",
@@ -5291,7 +5795,8 @@
   "skos_notation": "CM 1.3.5.3.7",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.7"
+  "proposed_repo_id": "CM 1.3.5.3.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-8",
@@ -5301,7 +5806,8 @@
   "skos_notation": "CM 1.3.5.3.8",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.8"
+  "proposed_repo_id": "CM 1.3.5.3.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-9",
@@ -5311,7 +5817,8 @@
   "skos_notation": "CM 1.3.5.3.9",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.9"
+  "proposed_repo_id": "CM 1.3.5.3.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-3-10",
@@ -5321,7 +5828,8 @@
   "skos_notation": "CM 1.3.5.3.10",
   "parent_slug": "CM-1-3-5-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.3.10"
+  "proposed_repo_id": "CM 1.3.5.3.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4",
@@ -5331,7 +5839,8 @@
   "skos_notation": "CM 1.3.5.4",
   "parent_slug": "CM-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.4"
+  "proposed_repo_id": "CM 1.3.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-1",
@@ -5341,7 +5850,8 @@
   "skos_notation": "CM 1.3.5.4.1",
   "parent_slug": "CM-1-3-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.4.1"
+  "proposed_repo_id": "CM 1.3.5.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-2",
@@ -5351,7 +5861,8 @@
   "skos_notation": "CM 1.3.5.4.2",
   "parent_slug": "CM-1-3-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.4.2"
+  "proposed_repo_id": "CM 1.3.5.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-3",
@@ -5361,7 +5872,8 @@
   "skos_notation": "CM 1.3.5.4.3",
   "parent_slug": "CM-1-3-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.4.3"
+  "proposed_repo_id": "CM 1.3.5.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-4-4",
@@ -5371,7 +5883,8 @@
   "skos_notation": "CM 1.3.5.4.4",
   "parent_slug": "CM-1-3-5-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.4.4"
+  "proposed_repo_id": "CM 1.3.5.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5",
@@ -5381,7 +5894,8 @@
   "skos_notation": "CM 1.3.5.5",
   "parent_slug": "CM-1-3-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.5"
+  "proposed_repo_id": "CM 1.3.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-1",
@@ -5391,7 +5905,8 @@
   "skos_notation": "CM 1.3.5.5.1",
   "parent_slug": "CM-1-3-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.5.1"
+  "proposed_repo_id": "CM 1.3.5.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-2",
@@ -5401,7 +5916,8 @@
   "skos_notation": "CM 1.3.5.5.2",
   "parent_slug": "CM-1-3-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.5.2"
+  "proposed_repo_id": "CM 1.3.5.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5-3",
@@ -5411,7 +5927,8 @@
   "skos_notation": "CM 1.3.5.5.3",
   "parent_slug": "CM-1-3-5-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.5.5.3"
+  "proposed_repo_id": "CM 1.3.5.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6",
@@ -5421,7 +5938,8 @@
   "skos_notation": "CM 1.3.6",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6"
+  "proposed_repo_id": "CM 1.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1",
@@ -5431,7 +5949,8 @@
   "skos_notation": "CM 1.3.6.1",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.1"
+  "proposed_repo_id": "CM 1.3.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-1",
@@ -5441,7 +5960,8 @@
   "skos_notation": "CM 1.3.6.1.1",
   "parent_slug": "CM-1-3-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.1.1"
+  "proposed_repo_id": "CM 1.3.6.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-2",
@@ -5451,7 +5971,8 @@
   "skos_notation": "CM 1.3.6.1.2",
   "parent_slug": "CM-1-3-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.1.2"
+  "proposed_repo_id": "CM 1.3.6.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-3",
@@ -5461,7 +5982,8 @@
   "skos_notation": "CM 1.3.6.1.3",
   "parent_slug": "CM-1-3-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.1.3"
+  "proposed_repo_id": "CM 1.3.6.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-1-4",
@@ -5471,7 +5993,8 @@
   "skos_notation": "CM 1.3.6.1.4",
   "parent_slug": "CM-1-3-6-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.1.4"
+  "proposed_repo_id": "CM 1.3.6.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2",
@@ -5481,7 +6004,8 @@
   "skos_notation": "CM 1.3.6.2",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2"
+  "proposed_repo_id": "CM 1.3.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-1",
@@ -5491,7 +6015,8 @@
   "skos_notation": "CM 1.3.6.2.1",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.1"
+  "proposed_repo_id": "CM 1.3.6.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-2",
@@ -5501,7 +6026,8 @@
   "skos_notation": "CM 1.3.6.2.2",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.2"
+  "proposed_repo_id": "CM 1.3.6.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-3",
@@ -5511,7 +6037,8 @@
   "skos_notation": "CM 1.3.6.2.3",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.3"
+  "proposed_repo_id": "CM 1.3.6.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-4",
@@ -5521,7 +6048,8 @@
   "skos_notation": "CM 1.3.6.2.4",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.4"
+  "proposed_repo_id": "CM 1.3.6.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-5",
@@ -5531,7 +6059,8 @@
   "skos_notation": "CM 1.3.6.2.5",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.5"
+  "proposed_repo_id": "CM 1.3.6.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-6",
@@ -5541,7 +6070,8 @@
   "skos_notation": "CM 1.3.6.2.6",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.6"
+  "proposed_repo_id": "CM 1.3.6.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-2-7",
@@ -5551,7 +6081,8 @@
   "skos_notation": "CM 1.3.6.2.7",
   "parent_slug": "CM-1-3-6-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.2.7"
+  "proposed_repo_id": "CM 1.3.6.2.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3",
@@ -5561,7 +6092,8 @@
   "skos_notation": "CM 1.3.6.3",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.3"
+  "proposed_repo_id": "CM 1.3.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3-1",
@@ -5571,7 +6103,8 @@
   "skos_notation": "CM 1.3.6.3.1",
   "parent_slug": "CM-1-3-6-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.3.1"
+  "proposed_repo_id": "CM 1.3.6.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-3-2",
@@ -5581,7 +6114,8 @@
   "skos_notation": "CM 1.3.6.3.2",
   "parent_slug": "CM-1-3-6-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.3.2"
+  "proposed_repo_id": "CM 1.3.6.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4",
@@ -5591,7 +6125,8 @@
   "skos_notation": "CM 1.3.6.4",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.4"
+  "proposed_repo_id": "CM 1.3.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-1",
@@ -5601,7 +6136,8 @@
   "skos_notation": "CM 1.3.6.4.1",
   "parent_slug": "CM-1-3-6-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.4.1"
+  "proposed_repo_id": "CM 1.3.6.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-2",
@@ -5611,7 +6147,8 @@
   "skos_notation": "CM 1.3.6.4.2",
   "parent_slug": "CM-1-3-6-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.4.2"
+  "proposed_repo_id": "CM 1.3.6.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-4-3",
@@ -5621,7 +6158,8 @@
   "skos_notation": "CM 1.3.6.4.3",
   "parent_slug": "CM-1-3-6-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.4.3"
+  "proposed_repo_id": "CM 1.3.6.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5",
@@ -5631,7 +6169,8 @@
   "skos_notation": "CM 1.3.6.5",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.5"
+  "proposed_repo_id": "CM 1.3.6.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-1",
@@ -5641,7 +6180,8 @@
   "skos_notation": "CM 1.3.6.5.1",
   "parent_slug": "CM-1-3-6-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.5.1"
+  "proposed_repo_id": "CM 1.3.6.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-2",
@@ -5651,7 +6191,8 @@
   "skos_notation": "CM 1.3.6.5.2",
   "parent_slug": "CM-1-3-6-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.5.2"
+  "proposed_repo_id": "CM 1.3.6.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-3",
@@ -5661,7 +6202,8 @@
   "skos_notation": "CM 1.3.6.5.3",
   "parent_slug": "CM-1-3-6-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.5.3"
+  "proposed_repo_id": "CM 1.3.6.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6",
@@ -5671,7 +6213,8 @@
   "skos_notation": "CM 1.3.6.6",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6"
+  "proposed_repo_id": "CM 1.3.6.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-1",
@@ -5681,7 +6224,8 @@
   "skos_notation": "CM 1.3.6.6.1",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.1"
+  "proposed_repo_id": "CM 1.3.6.6.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-2",
@@ -5691,7 +6235,8 @@
   "skos_notation": "CM 1.3.6.6.2",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.2"
+  "proposed_repo_id": "CM 1.3.6.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-3",
@@ -5701,7 +6246,8 @@
   "skos_notation": "CM 1.3.6.6.3",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.3"
+  "proposed_repo_id": "CM 1.3.6.6.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-4",
@@ -5711,7 +6257,8 @@
   "skos_notation": "CM 1.3.6.6.4",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.4"
+  "proposed_repo_id": "CM 1.3.6.6.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-5",
@@ -5721,7 +6268,8 @@
   "skos_notation": "CM 1.3.6.6.5",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.5"
+  "proposed_repo_id": "CM 1.3.6.6.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-6",
@@ -5731,7 +6279,8 @@
   "skos_notation": "CM 1.3.6.6.6",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.6"
+  "proposed_repo_id": "CM 1.3.6.6.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-7",
@@ -5741,7 +6290,8 @@
   "skos_notation": "CM 1.3.6.6.7",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.7"
+  "proposed_repo_id": "CM 1.3.6.6.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-8",
@@ -5751,7 +6301,8 @@
   "skos_notation": "CM 1.3.6.6.8",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.8"
+  "proposed_repo_id": "CM 1.3.6.6.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-9",
@@ -5761,7 +6312,8 @@
   "skos_notation": "CM 1.3.6.6.9",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.9"
+  "proposed_repo_id": "CM 1.3.6.6.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-10",
@@ -5771,7 +6323,8 @@
   "skos_notation": "CM 1.3.6.6.10",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.10"
+  "proposed_repo_id": "CM 1.3.6.6.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-11",
@@ -5781,7 +6334,8 @@
   "skos_notation": "CM 1.3.6.6.11",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.11"
+  "proposed_repo_id": "CM 1.3.6.6.11",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-12",
@@ -5791,7 +6345,8 @@
   "skos_notation": "CM 1.3.6.6.12",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.12"
+  "proposed_repo_id": "CM 1.3.6.6.12",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-13",
@@ -5801,7 +6356,8 @@
   "skos_notation": "CM 1.3.6.6.13",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.13"
+  "proposed_repo_id": "CM 1.3.6.6.13",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-14",
@@ -5811,7 +6367,8 @@
   "skos_notation": "CM 1.3.6.6.14",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.14"
+  "proposed_repo_id": "CM 1.3.6.6.14",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-15",
@@ -5821,7 +6378,8 @@
   "skos_notation": "CM 1.3.6.6.15",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.6.15"
+  "proposed_repo_id": "CM 1.3.6.6.15",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7",
@@ -5831,7 +6389,8 @@
   "skos_notation": "CM 1.3.6.7",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.7"
+  "proposed_repo_id": "CM 1.3.6.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-1",
@@ -5841,7 +6400,8 @@
   "skos_notation": "CM 1.3.6.7.1",
   "parent_slug": "CM-1-3-6-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.7.1"
+  "proposed_repo_id": "CM 1.3.6.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-2",
@@ -5851,7 +6411,8 @@
   "skos_notation": "CM 1.3.6.7.2",
   "parent_slug": "CM-1-3-6-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.7.2"
+  "proposed_repo_id": "CM 1.3.6.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-8",
@@ -5861,7 +6422,8 @@
   "skos_notation": "CM 1.3.6.8",
   "parent_slug": "CM-1-3-6",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.8"
+  "proposed_repo_id": "CM 1.3.6.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-8-1",
@@ -5871,7 +6433,8 @@
   "skos_notation": "CM 1.3.6.8.1",
   "parent_slug": "CM-1-3-6-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.6.8.1"
+  "proposed_repo_id": "CM 1.3.6.8.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7",
@@ -5881,7 +6444,8 @@
   "skos_notation": "CM 1.3.7",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7"
+  "proposed_repo_id": "CM 1.3.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1",
@@ -5891,7 +6455,8 @@
   "skos_notation": "CM 1.3.7.1",
   "parent_slug": "CM-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1"
+  "proposed_repo_id": "CM 1.3.7.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1",
@@ -5901,7 +6466,8 @@
   "skos_notation": "CM 1.3.7.1.1",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.1"
+  "proposed_repo_id": "CM 1.3.7.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-2",
@@ -5911,7 +6477,8 @@
   "skos_notation": "CM 1.3.7.1.2",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.2"
+  "proposed_repo_id": "CM 1.3.7.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-3",
@@ -5921,7 +6488,8 @@
   "skos_notation": "CM 1.3.7.1.3",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.3"
+  "proposed_repo_id": "CM 1.3.7.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-4",
@@ -5931,7 +6499,8 @@
   "skos_notation": "CM 1.3.7.1.4",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.4"
+  "proposed_repo_id": "CM 1.3.7.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-5",
@@ -5941,7 +6510,8 @@
   "skos_notation": "CM 1.3.7.1.5",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.5"
+  "proposed_repo_id": "CM 1.3.7.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-1-6",
@@ -5951,7 +6521,8 @@
   "skos_notation": "CM 1.3.7.1.6",
   "parent_slug": "CM-1-3-7-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.1.6"
+  "proposed_repo_id": "CM 1.3.7.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2",
@@ -5961,7 +6532,8 @@
   "skos_notation": "CM 1.3.7.2",
   "parent_slug": "CM-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2"
+  "proposed_repo_id": "CM 1.3.7.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1",
@@ -5971,7 +6543,8 @@
   "skos_notation": "CM 1.3.7.2.1",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.1"
+  "proposed_repo_id": "CM 1.3.7.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-2",
@@ -5981,7 +6554,8 @@
   "skos_notation": "CM 1.3.7.2.2",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.2"
+  "proposed_repo_id": "CM 1.3.7.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-3",
@@ -5991,7 +6565,8 @@
   "skos_notation": "CM 1.3.7.2.3",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.3"
+  "proposed_repo_id": "CM 1.3.7.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-4",
@@ -6001,7 +6576,8 @@
   "skos_notation": "CM 1.3.7.2.4",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.4"
+  "proposed_repo_id": "CM 1.3.7.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-5",
@@ -6011,7 +6587,8 @@
   "skos_notation": "CM 1.3.7.2.5",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.5"
+  "proposed_repo_id": "CM 1.3.7.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-6",
@@ -6021,7 +6598,8 @@
   "skos_notation": "CM 1.3.7.2.6",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.2.6"
+  "proposed_repo_id": "CM 1.3.7.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3",
@@ -6031,7 +6609,8 @@
   "skos_notation": "CM 1.3.7.3",
   "parent_slug": "CM-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3"
+  "proposed_repo_id": "CM 1.3.7.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-1",
@@ -6041,7 +6620,8 @@
   "skos_notation": "CM 1.3.7.3.1",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.1"
+  "proposed_repo_id": "CM 1.3.7.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-2",
@@ -6051,7 +6631,8 @@
   "skos_notation": "CM 1.3.7.3.2",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.2"
+  "proposed_repo_id": "CM 1.3.7.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-3",
@@ -6061,7 +6642,8 @@
   "skos_notation": "CM 1.3.7.3.3",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.3"
+  "proposed_repo_id": "CM 1.3.7.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-4",
@@ -6071,7 +6653,8 @@
   "skos_notation": "CM 1.3.7.3.4",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.4"
+  "proposed_repo_id": "CM 1.3.7.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-5",
@@ -6081,7 +6664,8 @@
   "skos_notation": "CM 1.3.7.3.5",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.5"
+  "proposed_repo_id": "CM 1.3.7.3.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-6",
@@ -6091,7 +6675,8 @@
   "skos_notation": "CM 1.3.7.3.6",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.3.6"
+  "proposed_repo_id": "CM 1.3.7.3.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4",
@@ -6101,7 +6686,8 @@
   "skos_notation": "CM 1.3.7.4",
   "parent_slug": "CM-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4"
+  "proposed_repo_id": "CM 1.3.7.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-1",
@@ -6111,7 +6697,8 @@
   "skos_notation": "CM 1.3.7.4.1",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.1"
+  "proposed_repo_id": "CM 1.3.7.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2",
@@ -6121,7 +6708,8 @@
   "skos_notation": "CM 1.3.7.4.2",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.2"
+  "proposed_repo_id": "CM 1.3.7.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-3",
@@ -6131,7 +6719,8 @@
   "skos_notation": "CM 1.3.7.4.3",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.3"
+  "proposed_repo_id": "CM 1.3.7.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-4",
@@ -6141,7 +6730,8 @@
   "skos_notation": "CM 1.3.7.4.4",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.4"
+  "proposed_repo_id": "CM 1.3.7.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-5",
@@ -6151,7 +6741,8 @@
   "skos_notation": "CM 1.3.7.4.5",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.5"
+  "proposed_repo_id": "CM 1.3.7.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6",
@@ -6161,7 +6752,8 @@
   "skos_notation": "CM 1.3.7.4.6",
   "parent_slug": "CM-1-3-7-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.4.6"
+  "proposed_repo_id": "CM 1.3.7.4.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5",
@@ -6171,7 +6763,8 @@
   "skos_notation": "CM 1.3.7.5",
   "parent_slug": "CM-1-3-7",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5"
+  "proposed_repo_id": "CM 1.3.7.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-1",
@@ -6181,7 +6774,8 @@
   "skos_notation": "CM 1.3.7.5.1",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.1"
+  "proposed_repo_id": "CM 1.3.7.5.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-2",
@@ -6191,7 +6785,8 @@
   "skos_notation": "CM 1.3.7.5.2",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.2"
+  "proposed_repo_id": "CM 1.3.7.5.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-3",
@@ -6201,7 +6796,8 @@
   "skos_notation": "CM 1.3.7.5.3",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.3"
+  "proposed_repo_id": "CM 1.3.7.5.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-4",
@@ -6211,7 +6807,8 @@
   "skos_notation": "CM 1.3.7.5.4",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.4"
+  "proposed_repo_id": "CM 1.3.7.5.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-5",
@@ -6221,7 +6818,8 @@
   "skos_notation": "CM 1.3.7.5.5",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.5"
+  "proposed_repo_id": "CM 1.3.7.5.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-6",
@@ -6231,7 +6829,8 @@
   "skos_notation": "CM 1.3.7.5.6",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.7.5.6"
+  "proposed_repo_id": "CM 1.3.7.5.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8",
@@ -6241,7 +6840,8 @@
   "skos_notation": "CM 1.3.8",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8"
+  "proposed_repo_id": "CM 1.3.8",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1",
@@ -6251,7 +6851,8 @@
   "skos_notation": "CM 1.3.8.1",
   "parent_slug": "CM-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1"
+  "proposed_repo_id": "CM 1.3.8.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-1",
@@ -6261,7 +6862,8 @@
   "skos_notation": "CM 1.3.8.1.1",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1.1"
+  "proposed_repo_id": "CM 1.3.8.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-2",
@@ -6271,7 +6873,8 @@
   "skos_notation": "CM 1.3.8.1.2",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1.2"
+  "proposed_repo_id": "CM 1.3.8.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-3",
@@ -6281,7 +6884,8 @@
   "skos_notation": "CM 1.3.8.1.3",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1.3"
+  "proposed_repo_id": "CM 1.3.8.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-4",
@@ -6291,7 +6895,8 @@
   "skos_notation": "CM 1.3.8.1.4",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1.4"
+  "proposed_repo_id": "CM 1.3.8.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-5",
@@ -6301,7 +6906,8 @@
   "skos_notation": "CM 1.3.8.1.5",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.1.5"
+  "proposed_repo_id": "CM 1.3.8.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2",
@@ -6311,7 +6917,8 @@
   "skos_notation": "CM 1.3.8.2",
   "parent_slug": "CM-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2"
+  "proposed_repo_id": "CM 1.3.8.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1",
@@ -6321,7 +6928,8 @@
   "skos_notation": "CM 1.3.8.2.1",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.1"
+  "proposed_repo_id": "CM 1.3.8.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-2",
@@ -6331,7 +6939,8 @@
   "skos_notation": "CM 1.3.8.2.2",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.2"
+  "proposed_repo_id": "CM 1.3.8.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-3",
@@ -6341,7 +6950,8 @@
   "skos_notation": "CM 1.3.8.2.3",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.3"
+  "proposed_repo_id": "CM 1.3.8.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-4",
@@ -6351,7 +6961,8 @@
   "skos_notation": "CM 1.3.8.2.4",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.4"
+  "proposed_repo_id": "CM 1.3.8.2.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-5",
@@ -6361,7 +6972,8 @@
   "skos_notation": "CM 1.3.8.2.5",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.5"
+  "proposed_repo_id": "CM 1.3.8.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-2-6",
@@ -6371,7 +6983,8 @@
   "skos_notation": "CM 1.3.8.2.6",
   "parent_slug": "CM-1-3-8-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.2.6"
+  "proposed_repo_id": "CM 1.3.8.2.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3",
@@ -6381,7 +6994,8 @@
   "skos_notation": "CM 1.3.8.3",
   "parent_slug": "CM-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.3"
+  "proposed_repo_id": "CM 1.3.8.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-1",
@@ -6391,7 +7005,8 @@
   "skos_notation": "CM 1.3.8.3.1",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.3.1"
+  "proposed_repo_id": "CM 1.3.8.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2",
@@ -6401,7 +7016,8 @@
   "skos_notation": "CM 1.3.8.3.2",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.3.2"
+  "proposed_repo_id": "CM 1.3.8.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-3",
@@ -6411,7 +7027,8 @@
   "skos_notation": "CM 1.3.8.3.3",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.3.3"
+  "proposed_repo_id": "CM 1.3.8.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-3-4",
@@ -6421,7 +7038,8 @@
   "skos_notation": "CM 1.3.8.3.4",
   "parent_slug": "CM-1-3-8-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.3.4"
+  "proposed_repo_id": "CM 1.3.8.3.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4",
@@ -6431,7 +7049,8 @@
   "skos_notation": "CM 1.3.8.4",
   "parent_slug": "CM-1-3-8",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4"
+  "proposed_repo_id": "CM 1.3.8.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-1",
@@ -6441,7 +7060,8 @@
   "skos_notation": "CM 1.3.8.4.1",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.1"
+  "proposed_repo_id": "CM 1.3.8.4.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-2",
@@ -6451,7 +7071,8 @@
   "skos_notation": "CM 1.3.8.4.2",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.2"
+  "proposed_repo_id": "CM 1.3.8.4.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-3",
@@ -6461,7 +7082,8 @@
   "skos_notation": "CM 1.3.8.4.3",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.3"
+  "proposed_repo_id": "CM 1.3.8.4.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-4",
@@ -6471,7 +7093,8 @@
   "skos_notation": "CM 1.3.8.4.4",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.4"
+  "proposed_repo_id": "CM 1.3.8.4.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-5",
@@ -6481,7 +7104,8 @@
   "skos_notation": "CM 1.3.8.4.5",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.5"
+  "proposed_repo_id": "CM 1.3.8.4.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-6",
@@ -6491,7 +7115,8 @@
   "skos_notation": "CM 1.3.8.4.6",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.6"
+  "proposed_repo_id": "CM 1.3.8.4.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-7",
@@ -6501,7 +7126,8 @@
   "skos_notation": "CM 1.3.8.4.7",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.8.4.7"
+  "proposed_repo_id": "CM 1.3.8.4.7",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9",
@@ -6511,7 +7137,8 @@
   "skos_notation": "CM 1.3.9",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9"
+  "proposed_repo_id": "CM 1.3.9",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1",
@@ -6521,7 +7148,8 @@
   "skos_notation": "CM 1.3.9.1",
   "parent_slug": "CM-1-3-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1"
+  "proposed_repo_id": "CM 1.3.9.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-1",
@@ -6531,7 +7159,8 @@
   "skos_notation": "CM 1.3.9.1.1",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.1"
+  "proposed_repo_id": "CM 1.3.9.1.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-2",
@@ -6541,7 +7170,8 @@
   "skos_notation": "CM 1.3.9.1.2",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.2"
+  "proposed_repo_id": "CM 1.3.9.1.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-3",
@@ -6551,7 +7181,8 @@
   "skos_notation": "CM 1.3.9.1.3",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.3"
+  "proposed_repo_id": "CM 1.3.9.1.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-4",
@@ -6561,7 +7192,8 @@
   "skos_notation": "CM 1.3.9.1.4",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.4"
+  "proposed_repo_id": "CM 1.3.9.1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-5",
@@ -6571,7 +7203,8 @@
   "skos_notation": "CM 1.3.9.1.5",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.5"
+  "proposed_repo_id": "CM 1.3.9.1.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-1-6",
@@ -6581,7 +7214,8 @@
   "skos_notation": "CM 1.3.9.1.6",
   "parent_slug": "CM-1-3-9-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.1.6"
+  "proposed_repo_id": "CM 1.3.9.1.6",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2",
@@ -6591,7 +7225,8 @@
   "skos_notation": "CM 1.3.9.2",
   "parent_slug": "CM-1-3-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.2"
+  "proposed_repo_id": "CM 1.3.9.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-1",
@@ -6601,7 +7236,8 @@
   "skos_notation": "CM 1.3.9.2.1",
   "parent_slug": "CM-1-3-9-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.2.1"
+  "proposed_repo_id": "CM 1.3.9.2.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-2",
@@ -6611,7 +7247,8 @@
   "skos_notation": "CM 1.3.9.2.2",
   "parent_slug": "CM-1-3-9-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.2.2"
+  "proposed_repo_id": "CM 1.3.9.2.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-2-3",
@@ -6621,7 +7258,8 @@
   "skos_notation": "CM 1.3.9.2.3",
   "parent_slug": "CM-1-3-9-2",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.2.3"
+  "proposed_repo_id": "CM 1.3.9.2.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3",
@@ -6631,7 +7269,8 @@
   "skos_notation": "CM 1.3.9.3",
   "parent_slug": "CM-1-3-9",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.3"
+  "proposed_repo_id": "CM 1.3.9.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-1",
@@ -6641,7 +7280,8 @@
   "skos_notation": "CM 1.3.9.3.1",
   "parent_slug": "CM-1-3-9-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.3.1"
+  "proposed_repo_id": "CM 1.3.9.3.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-2",
@@ -6651,7 +7291,8 @@
   "skos_notation": "CM 1.3.9.3.2",
   "parent_slug": "CM-1-3-9-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.3.2"
+  "proposed_repo_id": "CM 1.3.9.3.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-9-3-3",
@@ -6661,7 +7302,8 @@
   "skos_notation": "CM 1.3.9.3.3",
   "parent_slug": "CM-1-3-9-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.9.3.3"
+  "proposed_repo_id": "CM 1.3.9.3.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10",
@@ -6671,7 +7313,8 @@
   "skos_notation": "CM 1.3.10",
   "parent_slug": "CM-1-3",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.10"
+  "proposed_repo_id": "CM 1.3.10",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-1",
@@ -6681,7 +7324,8 @@
   "skos_notation": "CM 1.3.10.1",
   "parent_slug": "CM-1-3-10",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.10.1"
+  "proposed_repo_id": "CM 1.3.10.1",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-2",
@@ -6691,7 +7335,8 @@
   "skos_notation": "CM 1.3.10.2",
   "parent_slug": "CM-1-3-10",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.10.2"
+  "proposed_repo_id": "CM 1.3.10.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-3",
@@ -6701,7 +7346,8 @@
   "skos_notation": "CM 1.3.10.3",
   "parent_slug": "CM-1-3-10",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.10.3"
+  "proposed_repo_id": "CM 1.3.10.3",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-10-4",
@@ -6711,7 +7357,8 @@
   "skos_notation": "CM 1.3.10.4",
   "parent_slug": "CM-1-3-10",
   "minted": false,
-  "proposed_repo_id": "CM 1.3.10.4"
+  "proposed_repo_id": "CM 1.3.10.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-4",
@@ -6721,7 +7368,8 @@
   "skos_notation": "CM 1.4",
   "parent_slug": "CM-1",
   "minted": false,
-  "proposed_repo_id": "CM 1.4"
+  "proposed_repo_id": "CM 1.4",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-refining",
@@ -6731,7 +7379,32 @@
   "skos_notation": null,
   "parent_slug": "L0-downstream-operations",
   "minted": true,
-  "proposed_repo_id": "L1-refining"
+  "proposed_repo_id": "L1-refining",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L2-refinery-performance-and-risk-coordination",
+  "slug": "L2-refinery-performance-and-risk-coordination",
+  "level": 2,
+  "name": "Refinery Performance and Risk Coordination",
+  "skos_notation": null,
+  "parent_slug": "L1-refining",
+  "minted": true,
+  "proposed_repo_id": "L2-refinery-performance-and-risk-coordination",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-3",
+  "slug": "CM-1-1-4-6-3",
+  "level": 3,
+  "name": "Coordinate Site Business Risk Management",
+  "skos_notation": "CM 1.1.4.6.3",
+  "parent_slug": "L2-refinery-performance-and-risk-coordination",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6.3",
+  "deprecated": false,
+  "prior_name": "Manage Site Specific Business Risk",
+  "name_change_note": "Step 3d PTC-001 tree pass (2026-09-21): renamed 'Manage Site Specific Business Risk' -> 'Coordinate Site Business Risk Management' on reparenting from Commercial Development to Refinery Performance and Risk Coordination (approved by Hamid). Prior label retained as altLabel (no collision)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-midstream",
@@ -6741,7 +7414,8 @@
   "skos_notation": null,
   "parent_slug": "L0-downstream-operations",
   "minted": true,
-  "proposed_repo_id": "L1-midstream"
+  "proposed_repo_id": "L1-midstream",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L0-enabling-functions",
@@ -6751,7 +7425,8 @@
   "skos_notation": null,
   "parent_slug": null,
   "minted": true,
-  "proposed_repo_id": "L0-enabling-functions"
+  "proposed_repo_id": "L0-enabling-functions",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-supply-chain-mgmt",
@@ -6761,7 +7436,8 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-supply-chain-mgmt"
+  "proposed_repo_id": "L1-supply-chain-mgmt",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-finance",
@@ -6771,7 +7447,30 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-finance"
+  "proposed_repo_id": "L1-finance",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/L2-financial-planning-and-performance-management",
+  "slug": "L2-financial-planning-and-performance-management",
+  "level": 2,
+  "name": "Financial Planning and Performance Management",
+  "skos_notation": null,
+  "parent_slug": "L1-finance",
+  "minted": true,
+  "proposed_repo_id": "L2-financial-planning-and-performance-management",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-2",
+  "slug": "CM-1-1-4-6-2",
+  "level": 3,
+  "name": "Plan Budgets",
+  "skos_notation": "CM 1.1.4.6.2",
+  "parent_slug": "L2-financial-planning-and-performance-management",
+  "minted": false,
+  "proposed_repo_id": "CM 1.1.4.6.2",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-shared-services",
@@ -6781,7 +7480,8 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-shared-services"
+  "proposed_repo_id": "L1-shared-services",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-process-excellence-it",
@@ -6791,7 +7491,8 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-process-excellence-it"
+  "proposed_repo_id": "L1-process-excellence-it",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-human-resources",
@@ -6801,7 +7502,8 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-human-resources"
+  "proposed_repo_id": "L1-human-resources",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-legal-corp-comm",
@@ -6811,7 +7513,8 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-legal-corp-comm"
+  "proposed_repo_id": "L1-legal-corp-comm",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-ehs-gov-reporting",
@@ -6821,6 +7524,7 @@
   "skos_notation": null,
   "parent_slug": "L0-enabling-functions",
   "minted": true,
-  "proposed_repo_id": "L1-ehs-gov-reporting"
+  "proposed_repo_id": "L1-ehs-gov-reporting",
+  "deprecated": false
  }
 ]
