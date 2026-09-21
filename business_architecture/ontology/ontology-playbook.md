@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (93 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples) | In progress — 45 queue entries still queued (8 directionality-missing, 11 generic-operational, 26 normalization-only; scope-ambiguity category fully executed); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (93 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples) | In progress — 37 queue entries still queued (11 generic-operational, 26 normalization-only; scope-ambiguity and directionality-missing categories fully executed); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -582,6 +582,43 @@ consolidated pass that applies them.
   normalization-only) — the scope-ambiguity category is closed; whether
   `CM-1-3-1-6` is a capability or a process stays an exploratory modeling
   follow-up, out of the label-only pass.
+- **Directionality-missing naming batch — executed and merged 2026-09-21
+  (PR #96).** The fourth naming-pass category: 11 labels whose wording
+  hid the direction of economic exposure or the Consumer-versus-B2B
+  distinction, renamed per Hamid's approval 2026-09-21. Claims lifecycle
+  (`CM-1-2-4-4-2..8`): Create Claim → Create Outbound Delay
+  Compensation Claim; Receive Demurrage Claim → Receive Inbound Delay
+  Compensation Claim; Assess Claim → Assess Inbound Claim; Communicate
+  and Negotiate Claim → Negotiate Outbound Claim; Validate and Negotiate
+  Claim → Validate and Negotiate Inbound Claim; Send Claim Invoice →
+  Invoice Agreed Outbound Claim; Receive Claim Invoice → Process Invoice
+  for Agreed Inbound Claim. Consumer value-proposition children of
+  `CM-1-3-2-3`: `CM-1-3-2-3-1` → Test Consumer Value Proposition;
+  `CM-1-3-2-3-2` → Formulate and Evaluate Consumer Value Proposition
+  Alternatives; `CM-1-3-2-3-3` → Establish Consumer Value Proposition
+  Principles and Objectives; `CM-1-3-2-3-4` → Develop and Update
+  Consumer Value Proposition Strategy (workbook queued label; the
+  chat-table "Develop/Update" slash form retained as the historical
+  alias). Old labels retained as `skos:altLabel`;
+  `prior_name`/`name_change_note` recorded in the identity map;
+  `scoped_historical_alias` stays null; slugs, IRIs, hierarchy, and
+  definitions unchanged. The B2B siblings `CM-1-3-2-2-1..4` are
+  untouched — they legitimately keep the Customer/CVP labels — with all
+  consumer-row replacements scoped to `CM-1-3-2-3*` rows; 4 of the 11
+  pre-existing duplicate prefLabel pairs resolved (7 remain). TTL diff:
+  47 replacement hunks, zero inserted/deleted; one scopeNote change is
+  label-text only; workbook cross-references and breadcrumbs swept;
+  `downstream_process_map.json` untouched. Independent review
+  APPROVE-WITH-NOTES: the 4 historic consumer aliases retained despite
+  overlapping the B2B siblings' live prefLabels — non-blocking validator
+  questions kept intentionally as controlled exceptions (labels are
+  presentation metadata; identity is by slug/IRI), recorded for future
+  consumer-impact review; the "Develop and Update" form stands.
+  Workbook: 505 rows, 502 approved; gate blocking=0, questions=4,
+  notes=18, open_ptc=1. TTL: 682 concepts, 14,474 triples, 679/682
+  defined, 680 broader links. Naming queue: 37 of 93 entries remaining
+  (11 generic-operational, 26 normalization-only) — the
+  directionality-missing category is closed.
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),

@@ -291,7 +291,7 @@ def main() -> int:
     new_status = ("and 12 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass "
                   "Batch 3 E+F, Hamid approval 2026-09-21) and 8 directionality-missing "
                   "entries executed 2026-09-21 (Step 3d naming pass Batch 4, Hamid approval "
-                  "2026-09-21). The remaining 34 queue entries are still queued for the "
+                  "2026-09-21). The remaining 37 queue entries are still queued for the "
                   "consolidated naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"
     text = text.replace(old_status, new_status)
