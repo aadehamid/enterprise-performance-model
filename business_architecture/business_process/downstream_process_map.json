@@ -3945,727 +3945,6 @@
                 ]
               },
               {
-                "id": "CM 1.1.4",
-                "level": 3,
-                "name": "Refinery Planning",
-                "children": [
-                  {
-                    "id": "CM 1.1.4.1",
-                    "level": 4,
-                    "name": "Develop Refinery Premise for Prompt and Out Month",
-                    "description": "Refinery Premise serves as input into Regional Optimization Plan",
-                    "raci": {
-                      "responsible": [
-                        "Refinery Planner"
-                      ],
-                      "accountable": [
-                        "Regional Business Director"
-                      ],
-                      "consulted": [
-                        "Regional Production Planner",
-                        "Distribution Planner"
-                      ],
-                      "informed": [
-                        "Refinery Scheduler"
-                      ]
-                    },
-                    "sioc": {
-                      "suppliers": [
-                        "Refinery Technical Services Representative",
-                        "Refinery Scheduler",
-                        "Distribution Planner",
-                        "Export Trader",
-                        "CP Scheduler",
-                        "Gasoline Blend Optimizer",
-                        "Commercial Schedulers"
-                      ],
-                      "inputs": [
-                        "Planned Shutdown",
-                        "Unit Slowdown / Performance Issues",
-                        "Adjustments to Feedrates for Specific Streams",
-                        "ECPs and Cutpoints",
-                        "Logistics Constraints",
-                        "Etc.",
-                        "Recommended Overrides for Refinery Premise"
-                      ],
-                      "outputs": [
-                        "Refinery Premise (Changes to PIMS model tables of PROCLIM, CAPS, BOUNDS, etc.; Rationale for changes / comments)"
-                      ],
-                      "customers": [
-                        "Refinery Planner",
-                        "Regional Production Planner",
-                        "Distribution Planner"
-                      ]
-                    },
-                    "systems": [
-                      "APS",
-                      "MS Excel",
-                      "KittyHawk",
-                      "Refinery Premise Document",
-                      "Manual"
-                    ],
-                    "jobAidNeeded": true,
-                    "children": [
-                      {
-                        "id": "CM 1.1.4.1.1",
-                        "level": 5,
-                        "name": "Review business context and identify data objects requiring changes in Refinery Premise",
-                        "description": "Review data objects included in Refinery Premise",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "E&P Supervisor"
-                          ],
-                          "consulted": [
-                            "Refinery Scheduler",
-                            "Tech Services",
-                            "Operations",
-                            "PSM",
-                            "Site Tactical Team",
-                            "Refinery Planner",
-                            "Gasoline Blend Optimizer"
-                          ],
-                          "informed": [
-                            "Regional Business Director"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Refinery Technical Services Representative",
-                            "Refinery Scheduler",
-                            "Distribution Planner",
-                            "Export Trader",
-                            "CP Scheduler",
-                            "Gasoline Blend Optimizer",
-                            "Commercial Schedulers"
-                          ],
-                          "inputs": [
-                            "Data objects for Refinery Premise"
-                          ],
-                          "outputs": [
-                            "Updated Data Objects for Refinery Premise"
-                          ],
-                          "customers": [
-                            "Refinery Planner"
-                          ]
-                        },
-                        "systems": [
-                          "APS",
-                          "MS Excel",
-                          "KittyHawk",
-                          "Manual"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.1.2",
-                        "level": 5,
-                        "name": "Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise",
-                        "description": "Utilize Premise Review meeting to align on overrides required",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "E&P Supervisor"
-                          ],
-                          "consulted": [
-                            "Refinery Scheduler",
-                            "Tech Services",
-                            "Operations",
-                            "PSM",
-                            "Site Tactical Team",
-                            "Refinery Planner",
-                            "Gasoline Blend Optimizer"
-                          ],
-                          "informed": [
-                            "Regional Business Director",
-                            "Regional Production Planner"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Refinery Planner",
-                            "Commercial Schedulers"
-                          ],
-                          "inputs": [
-                            "Updated Data Objects for Refinery Premise"
-                          ],
-                          "outputs": [
-                            "Overrides Required in Network Premise"
-                          ],
-                          "customers": [
-                            "Refinery Planner"
-                          ]
-                        },
-                        "systems": [
-                          "MS Teams",
-                          "Refinery Premise Document"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.1.3",
-                        "level": 5,
-                        "name": "Perform overrides (with rationale) in Refinery Premise",
-                        "description": "Update Refinery Premise based on aligned overrides",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "E&P Supervisor"
-                          ],
-                          "consulted": [
-                            "Refinery Scheduler",
-                            "Tech Services",
-                            "Operations"
-                          ],
-                          "informed": [
-                            "Regional Business Director",
-                            "Regional Production Planner"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Refinery Planner",
-                            "Commercial Schedulers"
-                          ],
-                          "inputs": [
-                            "Overrides Required in Network Premise"
-                          ],
-                          "outputs": [
-                            "Draft Refinery Premise"
-                          ],
-                          "customers": [
-                            "Refinery Planner"
-                          ]
-                        },
-                        "systems": [
-                          "Refinery Premise Document"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.1.4",
-                        "level": 5,
-                        "name": "Identify changes needed out of cycle for refinery premise",
-                        "description": "Review out of cycle constraints and update premise as needed",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "E&P Supervisor"
-                          ],
-                          "consulted": [
-                            "Refinery Planner",
-                            "Regional Production Planner"
-                          ],
-                          "informed": [
-                            "Regional Production Planner"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Refinery Planner",
-                            "Regional Production Planner"
-                          ],
-                          "inputs": [
-                            "Draft Refinery Premise",
-                            "Recommended Out of Cycle Refinery Premise Updates"
-                          ],
-                          "outputs": [
-                            "Finalized Refinery Premise"
-                          ],
-                          "customers": [
-                            "Refinery Planner"
-                          ]
-                        },
-                        "systems": [
-                          "Refinery Premise Document"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.2",
-                    "level": 4,
-                    "name": "Receive RO Targets",
-                    "description": "Receive Handover of M+1 Month Plan from Planning to Business Including Refinery Level Demand Targets from Regional Plan Output",
-                    "raci": {
-                      "responsible": [
-                        "Refinery Planner"
-                      ],
-                      "accountable": [
-                        "Regional Business Director"
-                      ],
-                      "consulted": [
-                        "Regional Production Planner",
-                        "Distribution Planner"
-                      ],
-                      "informed": [
-                        "Refinery Scheduler"
-                      ]
-                    },
-                    "sioc": {
-                      "suppliers": [
-                        "Regional Production Planner"
-                      ],
-                      "inputs": [
-                        "Reconciled Regional Plan",
-                        "Finalized Refinery Premise",
-                        "Plan Handed Over for Execution",
-                        "Refinery Premise (Assumption Basis)"
-                      ],
-                      "outputs": [
-                        "Final Updated Plan of M+1 (PPIMS)"
-                      ],
-                      "customers": [
-                        "Refinery Planner",
-                        "Refinery Scheduler (APS)"
-                      ]
-                    },
-                    "systems": [
-                      "PPIMS",
-                      "APS",
-                      "Planning DB"
-                    ],
-                    "children": [
-                      {
-                        "id": "CM 1.1.4.2.1",
-                        "level": 5,
-                        "name": "Perform Initial Review of M+1",
-                        "description": "Perform review of demand targets for month M+1",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "Regional Business Director"
-                          ],
-                          "consulted": [
-                            "Regional Production Planner",
-                            "Distribution Planner"
-                          ],
-                          "informed": [
-                            "Refinery Scheduler"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Regional Production Planner"
-                          ],
-                          "inputs": [
-                            "Reconciled Regional Plan",
-                            "Finalized Refinery Premise",
-                            "Refinery Premise (Assumption Basis)"
-                          ],
-                          "outputs": [
-                            "Suggested Changes to Premise (if needed)",
-                            "Recommended Out of Cycle Refinery Premise Updates",
-                            "Draft Plan of M+1 (PPIMS)"
-                          ],
-                          "customers": [
-                            "Refinery Planner",
-                            "Regional Production Planner",
-                            "Refinery Scheduler (APS)"
-                          ]
-                        },
-                        "systems": [
-                          "PPIMS",
-                          "APS"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.2.2",
-                        "level": 5,
-                        "name": "Receive Handover of M+1 Plan",
-                        "description": "Receive handover of M+1 plan from Planning team",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "Regional Business Director"
-                          ],
-                          "consulted": [
-                            "Regional Production Planner",
-                            "Distribution Planner"
-                          ],
-                          "informed": [
-                            "Refinery Scheduler"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Regional Production Planner"
-                          ],
-                          "inputs": [
-                            "Plan Handed Over for Execution"
-                          ],
-                          "outputs": [
-                            "Final Updated Plan of M+1 (PPIMS)"
-                          ],
-                          "customers": [
-                            "Refinery Scheduler (APS)"
-                          ]
-                        },
-                        "systems": [
-                          "PPIMS",
-                          "APS",
-                          "Planning DB"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.3",
-                    "level": 4,
-                    "name": "Refresh Refinery Plan for month M",
-                    "description": "Check and Update (as needed) Demand, Pricing, Crude, Premise, and Inventory Levels for Local Level for month M",
-                    "raci": {
-                      "responsible": [
-                        "Refinery Planner"
-                      ],
-                      "accountable": [
-                        "Regional Business Director"
-                      ],
-                      "consulted": [
-                        "Regional Production Planner"
-                      ],
-                      "informed": [
-                        "Refinery Scheduler"
-                      ]
-                    },
-                    "sioc": {
-                      "suppliers": [
-                        "Refinery Planner"
-                      ],
-                      "inputs": [
-                        "Updates Post P-B Handover",
-                        "Updated Plan of M+1 (PPIMS)"
-                      ],
-                      "outputs": [
-                        "Refreshed Final Plan of Month M (PPIMS)"
-                      ],
-                      "customers": [
-                        "Refinery Scheduler (APS)"
-                      ]
-                    },
-                    "systems": [
-                      "PPIMS"
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.4",
-                    "level": 4,
-                    "name": "Perform Prompt Month Evaluations",
-                    "description": "Evaluate aligned scenarios for prompt month horizon",
-                    "raci": {
-                      "responsible": [
-                        "Refinery Planner"
-                      ],
-                      "accountable": [
-                        "Regional Business Director"
-                      ],
-                      "consulted": [
-                        "Regional Production Planner"
-                      ],
-                      "informed": [
-                        "RVCO Advisor"
-                      ]
-                    },
-                    "sioc": {
-                      "suppliers": [
-                        "RVCO Advisor",
-                        "Gasoline Trader",
-                        "Supply Coordinator - Asphalt",
-                        "Intermediate and Component Trader",
-                        "Refinery Planner"
-                      ],
-                      "inputs": [
-                        "Final Plan of Month M (PPIMS)",
-                        "Evaluation Scenarios Identified for Prompt Month Horizon",
-                        "Step Cases for Gasoline COPs",
-                        "Step Cases for Asphalt COPs",
-                        "Step Cases for Intermediate and Component COPs",
-                        "Step Cases for Gas Oil COPs",
-                        "Step Cases for NGL COPs",
-                        "Step Cases for Heavy Oil COPs",
-                        "Step Cases for Alky Feed COPs",
-                        "Step Cases for PetChem (Cumene) COPs"
-                      ],
-                      "outputs": [
-                        "COP / ACOP Reports - Refinery Incentives"
-                      ],
-                      "customers": [
-                        "Gasoline Trader",
-                        "Supply Coordinator - Asphalt",
-                        "Intermediate and Component Trader",
-                        "Refinery Feedstock Coordinator",
-                        "RVCO Advisor",
-                        "Supply Coordinator - Clean Products",
-                        "(Other recipients based on scenarios)"
-                      ]
-                    },
-                    "systems": [
-                      "PPIMS",
-                      "APS Planning DB"
-                    ],
-                    "children": [
-                      {
-                        "id": "CM 1.1.4.4.1",
-                        "level": 5,
-                        "name": "Evaluate Market Scenarios Identified for Prompt Month Horizon",
-                        "description": "Review Market Scenarios for prompt month horizon",
-                        "regionalNuance": "South: Market Scenarios from VCO Collaboration Meeting",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "Regional Business Director"
-                          ],
-                          "consulted": [
-                            "Regional Production Planner"
-                          ],
-                          "informed": [
-                            "RVCO Advisor"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "RVCO Advisor"
-                          ],
-                          "inputs": [
-                            "Evaluation Scenarios Identified for Prompt Month Horizon"
-                          ],
-                          "outputs": [
-                            "Evaluation Outcomes for identified scenarios"
-                          ],
-                          "customers": [
-                            "Traders",
-                            "Refinery Feedstock Coordinator",
-                            "RVCO Advisor",
-                            "Supply Coordinator",
-                            "(Other recipients based on scenarios)"
-                          ]
-                        },
-                        "systems": [
-                          "PPIMS"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.4.2",
-                        "level": 5,
-                        "name": "Develop Step Cases for Prompt Month Horizon",
-                        "description": "Develop step cases for aligned scenarios",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "Regional Business Director"
-                          ],
-                          "consulted": [
-                            "Regional Production Planner"
-                          ],
-                          "informed": [
-                            "RVCO Advisor"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Gasoline Trader / Distribution Planner",
-                            "Supply Coordinator - Asphalt",
-                            "Intermediate and Component Trader",
-                            "Gas Oil Trader",
-                            "NGL Trader",
-                            "Heavy Oils Trader",
-                            "Alky Feed Trader",
-                            "Petrochemicals Trader"
-                          ],
-                          "inputs": [
-                            "Step Cases for Gasoline COPs",
-                            "Step Cases for Asphalt COPs",
-                            "Step Cases for Intermediate and Component COPs",
-                            "Step Cases for Gas Oil COPs",
-                            "Step Cases for NGL COPs",
-                            "Step Cases for Heavy Oil COPs",
-                            "Step Cases for Alky Feed COPs",
-                            "Step Cases for PetChem (Cumene) COPs"
-                          ],
-                          "outputs": [
-                            "Step Cases Created in PPIMS"
-                          ],
-                          "customers": [
-                            "Refinery Planner"
-                          ]
-                        },
-                        "systems": [
-                          "PPIMS"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.4.3",
-                        "level": 5,
-                        "name": "Run Step Cases for Prompt Month Horizon",
-                        "description": "Run Step Cases for Prompt Month Horizon; analyze and publish to Planning DB",
-                        "raci": {
-                          "responsible": [
-                            "Refinery Planner"
-                          ],
-                          "accountable": [
-                            "Regional Business Director"
-                          ],
-                          "consulted": [
-                            "Regional Production Planner"
-                          ],
-                          "informed": [
-                            "RVCO Advisor"
-                          ]
-                        },
-                        "sioc": {
-                          "suppliers": [
-                            "Refinery Planner"
-                          ],
-                          "inputs": [
-                            "Step Cases Created in PPIMS",
-                            "Final Plan of Month M (PPIMS)"
-                          ],
-                          "outputs": [
-                            "COP / ACOP Reports - Refinery Incentives"
-                          ],
-                          "customers": [
-                            "Gasoline Trader / Distribution Planner",
-                            "Supply Coordinator - Asphalt",
-                            "Intermediate and Component Trader"
-                          ]
-                        },
-                        "systems": [
-                          "PPIMS",
-                          "Planning DB"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.5",
-                    "level": 4,
-                    "name": "Communicate Changes to Scheduling",
-                    "description": "Communicate changes to plan to scheduling team",
-                    "raci": {
-                      "responsible": [
-                        "Refinery Planner"
-                      ],
-                      "accountable": [
-                        "Regional Business Director"
-                      ],
-                      "consulted": [
-                        "Regional Production Planner"
-                      ],
-                      "informed": [
-                        "Refinery Scheduler"
-                      ]
-                    },
-                    "sioc": {
-                      "suppliers": [
-                        "Refinery Planner"
-                      ],
-                      "inputs": [
-                        "Final Plan of M+1 (PPIMS)",
-                        "Final Plan of Month M (PPIMS)"
-                      ],
-                      "outputs": [
-                        "Schedule in APS"
-                      ],
-                      "customers": [
-                        "Refinery Scheduler (APS)"
-                      ]
-                    },
-                    "systems": [
-                      "PPIMS",
-                      "APS"
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.6",
-                    "level": 4,
-                    "name": "Commercial Development",
-                    "deprecated": true,
-                    "children": [
-                      {
-                        "id": "CM 1.1.4.6.1",
-                        "level": 5,
-                        "name": "Develop Strategic Business Plan"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.4.7",
-                    "level": 4,
-                    "name": "Refinery Optimization",
-                    "children": [
-                      {
-                        "id": "CM 1.1.4.7.1",
-                        "level": 5,
-                        "name": "Capture Product Demand Requirements",
-                        "variants": [
-                          "products"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.7.2",
-                        "level": 5,
-                        "name": "Evaluate Crude & Feedstock",
-                        "variants": [
-                          "crude",
-                          "feedstock"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.7.3",
-                        "level": 5,
-                        "name": "Capture Crude Availability",
-                        "variants": [
-                          "crude"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.7.4",
-                        "level": 5,
-                        "name": "Capture Product/Crude/Feedstock Price",
-                        "variants": [
-                          "crude",
-                          "feedstock",
-                          "products"
-                        ]
-                      },
-                      {
-                        "id": "CM 1.1.4.7.5",
-                        "level": 5,
-                        "name": "Capture Refinery Level Constraints"
-                      },
-                      {
-                        "id": "CM 1.1.4.7.6",
-                        "level": 5,
-                        "name": "Capture Inventory"
-                      },
-                      {
-                        "id": "CM 1.1.4.7.7",
-                        "level": 5,
-                        "name": "Capture Monthly Operating Plan"
-                      },
-                      {
-                        "id": "CM 1.1.4.7.8",
-                        "level": 5,
-                        "name": "Perform Scenario Analysis"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "CM 1.1.5",
                 "level": 3,
                 "name": "Regional Backcasting",
@@ -7177,95 +6456,15 @@
                 ]
               },
               {
-                "id": "CM 1.1.7",
+                "id": "CM 1.1.4.6",
                 "level": 3,
-                "name": "Refinery Scheduling",
-                "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management.",
+                "name": "Commercial Development",
+                "deprecated": true,
                 "children": [
                   {
-                    "id": "CM 1.1.7.1",
+                    "id": "CM 1.1.4.6.1",
                     "level": 4,
-                    "name": "Daily Execution Planning",
-                    "children": [
-                      {
-                        "id": "CM 1.1.7.1.1",
-                        "level": 5,
-                        "name": "Update Refinery Execution Instructions"
-                      },
-                      {
-                        "id": "CM 1.1.7.1.2",
-                        "level": 5,
-                        "name": "Schedule Resources"
-                      },
-                      {
-                        "id": "CM 1.1.7.1.3",
-                        "level": 5,
-                        "name": "Perform Production Accounting"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.7.2",
-                    "level": 4,
-                    "name": "Production Scheduling",
-                    "children": [
-                      {
-                        "id": "CM 1.1.7.2.1",
-                        "level": 5,
-                        "name": "Maintain Production Scheduling Master Data"
-                      },
-                      {
-                        "id": "CM 1.1.7.2.2",
-                        "level": 5,
-                        "name": "Review Production Wheel and Run Length"
-                      },
-                      {
-                        "id": "CM 1.1.7.2.3",
-                        "level": 5,
-                        "name": "Create Production Scheduling and Sequencing Plan"
-                      },
-                      {
-                        "id": "CM 1.1.7.2.4",
-                        "level": 5,
-                        "name": "Manage Production Schedule Exceptions"
-                      },
-                      {
-                        "id": "CM 1.1.7.2.5",
-                        "level": 5,
-                        "name": "Measure Production Scheduling Performance"
-                      },
-                      {
-                        "id": "CM 1.1.7.2.6",
-                        "level": 5,
-                        "name": "Manage The Interface to Planning, Operations, Engineering & Maintenance"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "CM 1.1.7.3",
-                    "level": 4,
-                    "name": "Energy & Utility Management",
-                    "children": [
-                      {
-                        "id": "CM 1.1.7.3.1",
-                        "level": 5,
-                        "name": "Optimize Internal vs. External Energy Sources"
-                      },
-                      {
-                        "id": "CM 1.1.7.3.2",
-                        "level": 5,
-                        "name": "Optimize Plant Energy Balance"
-                      },
-                      {
-                        "id": "CM 1.1.7.3.3",
-                        "level": 5,
-                        "name": "Manage and Support Emission Trading",
-                        "variants": [
-                          "emissions"
-                        ],
-                        "renewablesSpecific": true
-                      }
-                    ]
+                    "name": "Develop Strategic Business Plan"
                   }
                 ]
               }
@@ -9885,6 +9084,812 @@
                 "name": "Coordinate Site Business Risk Management"
               }
             ]
+          },
+          {
+            "id": "CM 1.1.4",
+            "level": 2,
+            "name": "Refinery Planning and Optimization",
+            "children": [
+              {
+                "id": "CM 1.1.4.1",
+                "level": 3,
+                "name": "Develop Refinery Premise for Prompt and Out Month",
+                "description": "Refinery Premise serves as input into Regional Optimization Plan",
+                "raci": {
+                  "responsible": [
+                    "Refinery Planner"
+                  ],
+                  "accountable": [
+                    "Regional Business Director"
+                  ],
+                  "consulted": [
+                    "Regional Production Planner",
+                    "Distribution Planner"
+                  ],
+                  "informed": [
+                    "Refinery Scheduler"
+                  ]
+                },
+                "sioc": {
+                  "suppliers": [
+                    "Refinery Technical Services Representative",
+                    "Refinery Scheduler",
+                    "Distribution Planner",
+                    "Export Trader",
+                    "CP Scheduler",
+                    "Gasoline Blend Optimizer",
+                    "Commercial Schedulers"
+                  ],
+                  "inputs": [
+                    "Planned Shutdown",
+                    "Unit Slowdown / Performance Issues",
+                    "Adjustments to Feedrates for Specific Streams",
+                    "ECPs and Cutpoints",
+                    "Logistics Constraints",
+                    "Etc.",
+                    "Recommended Overrides for Refinery Premise"
+                  ],
+                  "outputs": [
+                    "Refinery Premise (Changes to PIMS model tables of PROCLIM, CAPS, BOUNDS, etc.; Rationale for changes / comments)"
+                  ],
+                  "customers": [
+                    "Refinery Planner",
+                    "Regional Production Planner",
+                    "Distribution Planner"
+                  ]
+                },
+                "systems": [
+                  "APS",
+                  "MS Excel",
+                  "KittyHawk",
+                  "Refinery Premise Document",
+                  "Manual"
+                ],
+                "jobAidNeeded": true,
+                "children": [
+                  {
+                    "id": "CM 1.1.4.1.1",
+                    "level": 4,
+                    "name": "Review business context and identify data objects requiring changes in Refinery Premise",
+                    "description": "Review data objects included in Refinery Premise",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "E&P Supervisor"
+                      ],
+                      "consulted": [
+                        "Refinery Scheduler",
+                        "Tech Services",
+                        "Operations",
+                        "PSM",
+                        "Site Tactical Team",
+                        "Refinery Planner",
+                        "Gasoline Blend Optimizer"
+                      ],
+                      "informed": [
+                        "Regional Business Director"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Refinery Technical Services Representative",
+                        "Refinery Scheduler",
+                        "Distribution Planner",
+                        "Export Trader",
+                        "CP Scheduler",
+                        "Gasoline Blend Optimizer",
+                        "Commercial Schedulers"
+                      ],
+                      "inputs": [
+                        "Data objects for Refinery Premise"
+                      ],
+                      "outputs": [
+                        "Updated Data Objects for Refinery Premise"
+                      ],
+                      "customers": [
+                        "Refinery Planner"
+                      ]
+                    },
+                    "systems": [
+                      "APS",
+                      "MS Excel",
+                      "KittyHawk",
+                      "Manual"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.1.2",
+                    "level": 4,
+                    "name": "Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise",
+                    "description": "Utilize Premise Review meeting to align on overrides required",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "E&P Supervisor"
+                      ],
+                      "consulted": [
+                        "Refinery Scheduler",
+                        "Tech Services",
+                        "Operations",
+                        "PSM",
+                        "Site Tactical Team",
+                        "Refinery Planner",
+                        "Gasoline Blend Optimizer"
+                      ],
+                      "informed": [
+                        "Regional Business Director",
+                        "Regional Production Planner"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Refinery Planner",
+                        "Commercial Schedulers"
+                      ],
+                      "inputs": [
+                        "Updated Data Objects for Refinery Premise"
+                      ],
+                      "outputs": [
+                        "Overrides Required in Network Premise"
+                      ],
+                      "customers": [
+                        "Refinery Planner"
+                      ]
+                    },
+                    "systems": [
+                      "MS Teams",
+                      "Refinery Premise Document"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.1.3",
+                    "level": 4,
+                    "name": "Perform overrides (with rationale) in Refinery Premise",
+                    "description": "Update Refinery Premise based on aligned overrides",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "E&P Supervisor"
+                      ],
+                      "consulted": [
+                        "Refinery Scheduler",
+                        "Tech Services",
+                        "Operations"
+                      ],
+                      "informed": [
+                        "Regional Business Director",
+                        "Regional Production Planner"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Refinery Planner",
+                        "Commercial Schedulers"
+                      ],
+                      "inputs": [
+                        "Overrides Required in Network Premise"
+                      ],
+                      "outputs": [
+                        "Draft Refinery Premise"
+                      ],
+                      "customers": [
+                        "Refinery Planner"
+                      ]
+                    },
+                    "systems": [
+                      "Refinery Premise Document"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.1.4",
+                    "level": 4,
+                    "name": "Identify changes needed out of cycle for refinery premise",
+                    "description": "Review out of cycle constraints and update premise as needed",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "E&P Supervisor"
+                      ],
+                      "consulted": [
+                        "Refinery Planner",
+                        "Regional Production Planner"
+                      ],
+                      "informed": [
+                        "Regional Production Planner"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Refinery Planner",
+                        "Regional Production Planner"
+                      ],
+                      "inputs": [
+                        "Draft Refinery Premise",
+                        "Recommended Out of Cycle Refinery Premise Updates"
+                      ],
+                      "outputs": [
+                        "Finalized Refinery Premise"
+                      ],
+                      "customers": [
+                        "Refinery Planner"
+                      ]
+                    },
+                    "systems": [
+                      "Refinery Premise Document"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "CM 1.1.4.2",
+                "level": 3,
+                "name": "Receive RO Targets",
+                "description": "Receive Handover of M+1 Month Plan from Planning to Business Including Refinery Level Demand Targets from Regional Plan Output",
+                "raci": {
+                  "responsible": [
+                    "Refinery Planner"
+                  ],
+                  "accountable": [
+                    "Regional Business Director"
+                  ],
+                  "consulted": [
+                    "Regional Production Planner",
+                    "Distribution Planner"
+                  ],
+                  "informed": [
+                    "Refinery Scheduler"
+                  ]
+                },
+                "sioc": {
+                  "suppliers": [
+                    "Regional Production Planner"
+                  ],
+                  "inputs": [
+                    "Reconciled Regional Plan",
+                    "Finalized Refinery Premise",
+                    "Plan Handed Over for Execution",
+                    "Refinery Premise (Assumption Basis)"
+                  ],
+                  "outputs": [
+                    "Final Updated Plan of M+1 (PPIMS)"
+                  ],
+                  "customers": [
+                    "Refinery Planner",
+                    "Refinery Scheduler (APS)"
+                  ]
+                },
+                "systems": [
+                  "PPIMS",
+                  "APS",
+                  "Planning DB"
+                ],
+                "children": [
+                  {
+                    "id": "CM 1.1.4.2.1",
+                    "level": 4,
+                    "name": "Perform Initial Review of M+1",
+                    "description": "Perform review of demand targets for month M+1",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "Regional Business Director"
+                      ],
+                      "consulted": [
+                        "Regional Production Planner",
+                        "Distribution Planner"
+                      ],
+                      "informed": [
+                        "Refinery Scheduler"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Regional Production Planner"
+                      ],
+                      "inputs": [
+                        "Reconciled Regional Plan",
+                        "Finalized Refinery Premise",
+                        "Refinery Premise (Assumption Basis)"
+                      ],
+                      "outputs": [
+                        "Suggested Changes to Premise (if needed)",
+                        "Recommended Out of Cycle Refinery Premise Updates",
+                        "Draft Plan of M+1 (PPIMS)"
+                      ],
+                      "customers": [
+                        "Refinery Planner",
+                        "Regional Production Planner",
+                        "Refinery Scheduler (APS)"
+                      ]
+                    },
+                    "systems": [
+                      "PPIMS",
+                      "APS"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.2.2",
+                    "level": 4,
+                    "name": "Receive Handover of M+1 Plan",
+                    "description": "Receive handover of M+1 plan from Planning team",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "Regional Business Director"
+                      ],
+                      "consulted": [
+                        "Regional Production Planner",
+                        "Distribution Planner"
+                      ],
+                      "informed": [
+                        "Refinery Scheduler"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Regional Production Planner"
+                      ],
+                      "inputs": [
+                        "Plan Handed Over for Execution"
+                      ],
+                      "outputs": [
+                        "Final Updated Plan of M+1 (PPIMS)"
+                      ],
+                      "customers": [
+                        "Refinery Scheduler (APS)"
+                      ]
+                    },
+                    "systems": [
+                      "PPIMS",
+                      "APS",
+                      "Planning DB"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "CM 1.1.4.3",
+                "level": 3,
+                "name": "Refresh Refinery Plan for month M",
+                "description": "Check and Update (as needed) Demand, Pricing, Crude, Premise, and Inventory Levels for Local Level for month M",
+                "raci": {
+                  "responsible": [
+                    "Refinery Planner"
+                  ],
+                  "accountable": [
+                    "Regional Business Director"
+                  ],
+                  "consulted": [
+                    "Regional Production Planner"
+                  ],
+                  "informed": [
+                    "Refinery Scheduler"
+                  ]
+                },
+                "sioc": {
+                  "suppliers": [
+                    "Refinery Planner"
+                  ],
+                  "inputs": [
+                    "Updates Post P-B Handover",
+                    "Updated Plan of M+1 (PPIMS)"
+                  ],
+                  "outputs": [
+                    "Refreshed Final Plan of Month M (PPIMS)"
+                  ],
+                  "customers": [
+                    "Refinery Scheduler (APS)"
+                  ]
+                },
+                "systems": [
+                  "PPIMS"
+                ]
+              },
+              {
+                "id": "CM 1.1.4.4",
+                "level": 3,
+                "name": "Perform Prompt Month Evaluations",
+                "description": "Evaluate aligned scenarios for prompt month horizon",
+                "raci": {
+                  "responsible": [
+                    "Refinery Planner"
+                  ],
+                  "accountable": [
+                    "Regional Business Director"
+                  ],
+                  "consulted": [
+                    "Regional Production Planner"
+                  ],
+                  "informed": [
+                    "RVCO Advisor"
+                  ]
+                },
+                "sioc": {
+                  "suppliers": [
+                    "RVCO Advisor",
+                    "Gasoline Trader",
+                    "Supply Coordinator - Asphalt",
+                    "Intermediate and Component Trader",
+                    "Refinery Planner"
+                  ],
+                  "inputs": [
+                    "Final Plan of Month M (PPIMS)",
+                    "Evaluation Scenarios Identified for Prompt Month Horizon",
+                    "Step Cases for Gasoline COPs",
+                    "Step Cases for Asphalt COPs",
+                    "Step Cases for Intermediate and Component COPs",
+                    "Step Cases for Gas Oil COPs",
+                    "Step Cases for NGL COPs",
+                    "Step Cases for Heavy Oil COPs",
+                    "Step Cases for Alky Feed COPs",
+                    "Step Cases for PetChem (Cumene) COPs"
+                  ],
+                  "outputs": [
+                    "COP / ACOP Reports - Refinery Incentives"
+                  ],
+                  "customers": [
+                    "Gasoline Trader",
+                    "Supply Coordinator - Asphalt",
+                    "Intermediate and Component Trader",
+                    "Refinery Feedstock Coordinator",
+                    "RVCO Advisor",
+                    "Supply Coordinator - Clean Products",
+                    "(Other recipients based on scenarios)"
+                  ]
+                },
+                "systems": [
+                  "PPIMS",
+                  "APS Planning DB"
+                ],
+                "children": [
+                  {
+                    "id": "CM 1.1.4.4.1",
+                    "level": 4,
+                    "name": "Evaluate Market Scenarios Identified for Prompt Month Horizon",
+                    "description": "Review Market Scenarios for prompt month horizon",
+                    "regionalNuance": "South: Market Scenarios from VCO Collaboration Meeting",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "Regional Business Director"
+                      ],
+                      "consulted": [
+                        "Regional Production Planner"
+                      ],
+                      "informed": [
+                        "RVCO Advisor"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "RVCO Advisor"
+                      ],
+                      "inputs": [
+                        "Evaluation Scenarios Identified for Prompt Month Horizon"
+                      ],
+                      "outputs": [
+                        "Evaluation Outcomes for identified scenarios"
+                      ],
+                      "customers": [
+                        "Traders",
+                        "Refinery Feedstock Coordinator",
+                        "RVCO Advisor",
+                        "Supply Coordinator",
+                        "(Other recipients based on scenarios)"
+                      ]
+                    },
+                    "systems": [
+                      "PPIMS"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.4.2",
+                    "level": 4,
+                    "name": "Develop Step Cases for Prompt Month Horizon",
+                    "description": "Develop step cases for aligned scenarios",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "Regional Business Director"
+                      ],
+                      "consulted": [
+                        "Regional Production Planner"
+                      ],
+                      "informed": [
+                        "RVCO Advisor"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Gasoline Trader / Distribution Planner",
+                        "Supply Coordinator - Asphalt",
+                        "Intermediate and Component Trader",
+                        "Gas Oil Trader",
+                        "NGL Trader",
+                        "Heavy Oils Trader",
+                        "Alky Feed Trader",
+                        "Petrochemicals Trader"
+                      ],
+                      "inputs": [
+                        "Step Cases for Gasoline COPs",
+                        "Step Cases for Asphalt COPs",
+                        "Step Cases for Intermediate and Component COPs",
+                        "Step Cases for Gas Oil COPs",
+                        "Step Cases for NGL COPs",
+                        "Step Cases for Heavy Oil COPs",
+                        "Step Cases for Alky Feed COPs",
+                        "Step Cases for PetChem (Cumene) COPs"
+                      ],
+                      "outputs": [
+                        "Step Cases Created in PPIMS"
+                      ],
+                      "customers": [
+                        "Refinery Planner"
+                      ]
+                    },
+                    "systems": [
+                      "PPIMS"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.4.3",
+                    "level": 4,
+                    "name": "Run Step Cases for Prompt Month Horizon",
+                    "description": "Run Step Cases for Prompt Month Horizon; analyze and publish to Planning DB",
+                    "raci": {
+                      "responsible": [
+                        "Refinery Planner"
+                      ],
+                      "accountable": [
+                        "Regional Business Director"
+                      ],
+                      "consulted": [
+                        "Regional Production Planner"
+                      ],
+                      "informed": [
+                        "RVCO Advisor"
+                      ]
+                    },
+                    "sioc": {
+                      "suppliers": [
+                        "Refinery Planner"
+                      ],
+                      "inputs": [
+                        "Step Cases Created in PPIMS",
+                        "Final Plan of Month M (PPIMS)"
+                      ],
+                      "outputs": [
+                        "COP / ACOP Reports - Refinery Incentives"
+                      ],
+                      "customers": [
+                        "Gasoline Trader / Distribution Planner",
+                        "Supply Coordinator - Asphalt",
+                        "Intermediate and Component Trader"
+                      ]
+                    },
+                    "systems": [
+                      "PPIMS",
+                      "Planning DB"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "CM 1.1.4.5",
+                "level": 3,
+                "name": "Communicate Changes to Scheduling",
+                "description": "Communicate changes to plan to scheduling team",
+                "raci": {
+                  "responsible": [
+                    "Refinery Planner"
+                  ],
+                  "accountable": [
+                    "Regional Business Director"
+                  ],
+                  "consulted": [
+                    "Regional Production Planner"
+                  ],
+                  "informed": [
+                    "Refinery Scheduler"
+                  ]
+                },
+                "sioc": {
+                  "suppliers": [
+                    "Refinery Planner"
+                  ],
+                  "inputs": [
+                    "Final Plan of M+1 (PPIMS)",
+                    "Final Plan of Month M (PPIMS)"
+                  ],
+                  "outputs": [
+                    "Schedule in APS"
+                  ],
+                  "customers": [
+                    "Refinery Scheduler (APS)"
+                  ]
+                },
+                "systems": [
+                  "PPIMS",
+                  "APS"
+                ]
+              },
+              {
+                "id": "CM 1.1.4.7",
+                "level": 3,
+                "name": "Refinery Optimization",
+                "children": [
+                  {
+                    "id": "CM 1.1.4.7.1",
+                    "level": 4,
+                    "name": "Capture Product Demand Requirements",
+                    "variants": [
+                      "products"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.7.2",
+                    "level": 4,
+                    "name": "Evaluate Crude & Feedstock",
+                    "variants": [
+                      "crude",
+                      "feedstock"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.7.3",
+                    "level": 4,
+                    "name": "Capture Crude Availability",
+                    "variants": [
+                      "crude"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.7.4",
+                    "level": 4,
+                    "name": "Capture Product/Crude/Feedstock Price",
+                    "variants": [
+                      "crude",
+                      "feedstock",
+                      "products"
+                    ]
+                  },
+                  {
+                    "id": "CM 1.1.4.7.5",
+                    "level": 4,
+                    "name": "Capture Refinery Level Constraints"
+                  },
+                  {
+                    "id": "CM 1.1.4.7.6",
+                    "level": 4,
+                    "name": "Capture Inventory"
+                  },
+                  {
+                    "id": "CM 1.1.4.7.7",
+                    "level": 4,
+                    "name": "Capture Monthly Operating Plan"
+                  },
+                  {
+                    "id": "CM 1.1.4.7.8",
+                    "level": 4,
+                    "name": "Perform Scenario Analysis"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "CM 1.1.7",
+            "level": 2,
+            "name": "Refinery Production Planning and Scheduling",
+            "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management.",
+            "children": [
+              {
+                "id": "CM 1.1.7.1",
+                "level": 3,
+                "name": "Daily Execution Planning",
+                "children": [
+                  {
+                    "id": "CM 1.1.7.1.1",
+                    "level": 4,
+                    "name": "Update Refinery Execution Instructions"
+                  },
+                  {
+                    "id": "CM 1.1.7.1.2",
+                    "level": 4,
+                    "name": "Schedule Resources"
+                  },
+                  {
+                    "id": "CM 1.1.7.1.3",
+                    "level": 4,
+                    "name": "Perform Production Accounting"
+                  }
+                ]
+              },
+              {
+                "id": "CM 1.1.7.2",
+                "level": 3,
+                "name": "Production Scheduling",
+                "children": [
+                  {
+                    "id": "CM 1.1.7.2.1",
+                    "level": 4,
+                    "name": "Maintain Production Scheduling Master Data"
+                  },
+                  {
+                    "id": "CM 1.1.7.2.2",
+                    "level": 4,
+                    "name": "Review Production Wheel and Run Length"
+                  },
+                  {
+                    "id": "CM 1.1.7.2.3",
+                    "level": 4,
+                    "name": "Create Production Scheduling and Sequencing Plan"
+                  },
+                  {
+                    "id": "CM 1.1.7.2.4",
+                    "level": 4,
+                    "name": "Manage Production Schedule Exceptions"
+                  },
+                  {
+                    "id": "CM 1.1.7.2.5",
+                    "level": 4,
+                    "name": "Measure Production Scheduling Performance"
+                  },
+                  {
+                    "id": "CM 1.1.7.2.6",
+                    "level": 4,
+                    "name": "Manage The Interface to Planning, Operations, Engineering & Maintenance"
+                  }
+                ]
+              },
+              {
+                "id": "CM 1.1.7.3",
+                "level": 3,
+                "name": "Energy & Utility Management",
+                "children": [
+                  {
+                    "id": "CM 1.1.7.3.1",
+                    "level": 4,
+                    "name": "Optimize Internal vs. External Energy Sources"
+                  },
+                  {
+                    "id": "CM 1.1.7.3.2",
+                    "level": 4,
+                    "name": "Optimize Plant Energy Balance"
+                  },
+                  {
+                    "id": "CM 1.1.7.3.3",
+                    "level": 4,
+                    "name": "Manage and Support Emission Trading",
+                    "variants": [
+                      "emissions"
+                    ],
+                    "renewablesSpecific": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "name": "Refinery Asset Reliability and Turnaround Coordination",
+            "children": []
           }
         ]
       },

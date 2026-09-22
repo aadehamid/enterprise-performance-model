@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step 2 — Normalize identities for all 682 process-map nodes.
+"""Step 2 — Normalize identities for all process-map nodes.
 
 Reads business_architecture/business_process/downstream_process_map.json
 from this clone, derives a URI slug for every node:
@@ -88,7 +88,13 @@ def main() -> None:
         walk(top, None)
 
     # --- checks ---
-    assert len(rows) == 682, f"expected 682 nodes, got {len(rows)}"
+    # expected counts are derived from the input JSON, not hardcoded: the
+    # tree grows (R1 added the Refinery Asset Reliability and Turnaround
+    # Coordination L2). The tripwire is node/row correspondence, not 682.
+    def count_nodes(nodes):
+        return sum(1 + count_nodes(n.get("children", []) or []) for n in nodes)
+    n_nodes = count_nodes(data)
+    assert len(rows) == n_nodes, f"node/row mismatch: {len(rows)} rows for {n_nodes} nodes"
     slugs = [r["slug"] for r in rows]
     assert len(set(slugs)) == len(slugs), "slug collision detected"
     uris = [r["uri"] for r in rows]
@@ -103,7 +109,12 @@ def main() -> None:
     assert len(set(notations)) == len(notations), "notation collision"
 
     minted = [r for r in rows if r["minted"]]
-    assert len(minted) == 13, f"expected 13 minted stubs, got {len(minted)}"
+    # minted stubs == ID-less nodes in the input (13 baseline + R1's new L2)
+    def count_idless(nodes):
+        return sum((0 if n.get("id") else 1) + count_idless(n.get("children", []) or [])
+                   for n in nodes)
+    assert len(minted) == count_idless(data), \
+        f"minted/ID-less mismatch: {len(minted)} minted"
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     (OUT_DIR / "step2-identity-map.json").write_text(

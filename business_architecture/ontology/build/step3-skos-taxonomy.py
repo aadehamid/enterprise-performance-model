@@ -16,14 +16,14 @@ one Turtle file. Optional overlays, in precedence order:
 
   - the core module namespace URI doubles as the skos:ConceptScheme
     (https://w3id.org/lsc/ontology/modules/core)
-  - 682 skos:Concepts, one per node, in stable document order
+  - one skos:Concept per node, in stable document order
   - per concept: skos:inScheme, skos:prefLabel (exactly one, @en),
     skos:notation (where the repo has an ID), skos:definition (where the
     repo has a description), skos:broader (all but the two L0 roots)
   - the two L0 roots as skos:topConceptOf / skos:hasTopConcept
 
 Language policy: every literal carries @en. Definitions are emitted only
-where the repo provides them (177/682); the 505 gaps are reported, not
+where the repo provides them; the 505 gaps are reported, not
 invented — authoring them (or a SHACL shape flagging them) is later work.
 
 Validates with rdflib: parses clean, then runs structural checks
@@ -167,7 +167,11 @@ def main() -> None:
         wb_rows = read_workbook(args.workbook)
 
     rows = json.loads(Path(args.identity_map).read_text(encoding="utf-8"))
-    assert len(rows) == 682, f"expected 682 rows, got {len(rows)}"
+    n_rows = len(rows)
+    assert n_rows > 0, "identity map is empty"
+    # broader links == parented rows (every concept except the L0 roots).
+    # Derived, not hardcoded: R1 added one concept (683) and one broader link.
+    n_broader_expected = sum(1 for r in rows if r["parent_slug"] is not None)
     descs = descriptions_by_id(args.src)
 
     g = Graph()
@@ -365,7 +369,7 @@ def main() -> None:
     q = lambda s: list(g.query(s, initNs={"skos": SKOS}))
     n_concepts = len(q(
         "SELECT ?c WHERE { ?c a skos:Concept }"))
-    assert n_concepts == 682, f"concepts: {n_concepts}"
+    assert n_concepts == n_rows, f"concepts: {n_concepts} != identity rows {n_rows}"
     multi_label = q(
         "SELECT ?c WHERE { ?c skos:prefLabel ?l1, ?l2 . FILTER(?l1 != ?l2) }")
     assert not multi_label, f"concepts with !=1 prefLabel: {len(multi_label)}"
@@ -374,7 +378,8 @@ def main() -> None:
         "{ ?c skos:inScheme ?s } }")
     assert not no_scheme, "concepts missing inScheme"
     n_broader = len(q("SELECT ?c WHERE { ?c skos:broader ?p }"))
-    assert n_broader == 680, f"broader links: {n_broader}"
+    assert n_broader == n_broader_expected, \
+        f"broader links: {n_broader} != parented rows {n_broader_expected}"
     dangling = q(
         "SELECT ?c ?p WHERE { ?c skos:broader ?p . "
         "FILTER NOT EXISTS { ?p a skos:Concept } }")
@@ -437,12 +442,12 @@ def main() -> None:
                    f"row(s) marked owl:deprecated")
     report = f"""# Step 3 — SKOS taxonomy report
 
-- Concepts: 682 (one per process-map node, stable document order)
+- Concepts: {n_rows} (one per process-map node, stable document order)
 - Triples: {n_triples}
-- `skos:broader` links: 680 (every concept except the two L0 roots)
+- `skos:broader` links: {n_broader} (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
-- `skos:definition` present: {with_definition} of 682{f" ({adopted} triangulated APQC/EIA, {authored_count} human-authored L1-L3, {workbook_count} workbook-approved)" if (adopted or authored_count or workbook_count) else ""}{wb_bits}
+- `skos:definition` present: {with_definition} of {n_rows}{f" ({adopted} triangulated APQC/EIA, {authored_count} human-authored L1-L3, {workbook_count} workbook-approved)" if (adopted or authored_count or workbook_count) else ""}{wb_bits}
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme
@@ -487,14 +492,14 @@ is left for the Step 3d tree pass, when destinations are decided.
   they belong to Steps 4/5. This file is the taxonomy, nothing more.
 
 ## Validation (rdflib, mechanical)
-Parsed clean; 682 concepts; exactly one `@en` prefLabel per concept;
+Parsed clean; {n_concepts} concepts; exactly one `@en` prefLabel per concept;
 every concept in scheme; 680 broader links, no dangling targets, no
 self-references; 2 top concepts; zero untagged literals; Turtle
 round-trip lossless.
 """
     (out_path / "step3-taxonomy-report.md").write_text(report, encoding="utf-8")
-    print(f"OK: 682 concepts, {n_triples} triples, "
-          f"{with_definition}/682 definitions ({adopted} triangulated, "
+    print(f"OK: {n_rows} concepts, {n_triples} triples, "
+          f"{with_definition}/{n_rows} definitions ({adopted} triangulated, "
           f"{authored_count} human-authored, {workbook_count} workbook).")
 
 
