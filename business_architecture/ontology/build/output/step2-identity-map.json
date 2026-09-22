@@ -918,23 +918,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-10",
   "slug": "CM-1-1-2-10",
   "level": 4,
-  "name": "Crude Allocation Decision",
+  "name": "Allocate Crude and Feedstock",
   "skos_notation": "CM 1.1.2.10",
   "parent_slug": "CM-1-1-2",
   "minted": false,
   "proposed_repo_id": "CM 1.1.2.10",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Crude Allocation Decision",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Crude Allocation Decision' -> 'Allocate Crude and Feedstock' (Hamid approval 2026-09-22). verb-led normalization; 'and Feedstock' per the approved definition's coverage of crude and feedstock cargoes; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-11",
   "slug": "CM-1-1-2-11",
   "level": 4,
-  "name": "Product Allocation Decision",
+  "name": "Allocate Finished Products",
   "skos_notation": "CM 1.1.2.11",
   "parent_slug": "CM-1-1-2",
   "minted": false,
   "proposed_repo_id": "CM 1.1.2.11",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Product Allocation Decision",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Product Allocation Decision' -> 'Allocate Finished Products' (Hamid approval 2026-09-22). verb-led normalization parallel to the crude/feedstock allocation row; 'Finished' distinguishes finished products from feedstock per the approved definition; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-2-12",
@@ -3646,12 +3652,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-6",
   "slug": "CM-1-2-4-2-6",
   "level": 5,
-  "name": "Reconcile Economic PNL To Accounting PNL",
+  "name": "Reconcile Economic PNL to Accounting PNL",
   "skos_notation": "CM 1.2.4.2.6",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
   "proposed_repo_id": "CM 1.2.4.2.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Reconcile Economic PNL To Accounting PNL",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Reconcile Economic PNL To Accounting PNL' -> 'Reconcile Economic PNL to Accounting PNL' (Hamid approval 2026-09-22). capitalization correction only ('To' -> 'to'); PNL retained in the technical label per the batch-12 convention, P&L in prose. Migration-map-only disposition: the old label is NOT retained as skos:altLabel — it differs from the new label by case only ('To' vs 'to'), which the validator flags as an altlabel-collision (queue rule: case/punctuation-only changes carry no alt label); it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-7",
@@ -6394,12 +6403,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-7",
   "slug": "CM-1-3-6-6-7",
   "level": 5,
-  "name": "Perform Transaction Analysis Reporting & Confirmation",
+  "name": "Analyze, Report, and Confirm Card Transactions",
   "skos_notation": "CM 1.3.6.6.7",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.7",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Transaction Analysis Reporting & Confirmation",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Perform Transaction Analysis Reporting & Confirmation' -> 'Analyze, Report, and Confirm Card Transactions' (Hamid approval 2026-09-22). verb-led normalization preserving all three approved definition verbs (analyze, report, confirm); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-8",
@@ -6416,12 +6428,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-9",
   "slug": "CM-1-3-6-6-9",
   "level": 5,
-  "name": "Analyze Consumption Planning & Monitor Stock",
+  "name": "Plan Card Stock Consumption and Monitor Inventory",
   "skos_notation": "CM 1.3.6.6.9",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.9",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Analyze Consumption Planning & Monitor Stock",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Analyze Consumption Planning & Monitor Stock' -> 'Plan Card Stock Consumption and Monitor Inventory' (Hamid approval 2026-09-22). verb-led normalization; 'card stock' is the scope note's blank-card/issuance-material inventory term; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-10",
@@ -6496,23 +6511,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7",
   "slug": "CM-1-3-6-7",
   "level": 4,
-  "name": "Brand Standard Management",
+  "name": "Brand Standards Management",
   "skos_notation": "CM 1.3.6.7",
   "parent_slug": "CM-1-3-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.7",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Brand Standard Management",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Brand Standard Management' -> 'Brand Standards Management' (Hamid approval 2026-09-22). plural alignment with the approved definition and the child row's terminology; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-1",
   "slug": "CM-1-3-6-7-1",
   "level": 5,
-  "name": "Manage Brand Standards and Perform Inspection",
+  "name": "Manage Brand Standards and Inspections",
   "skos_notation": "CM 1.3.6.7.1",
   "parent_slug": "CM-1-3-6-7",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.7.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Brand Standards and Perform Inspection",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Manage Brand Standards and Perform Inspection' -> 'Manage Brand Standards and Inspections' (Hamid approval 2026-09-22). plural alignment ('inspections'); the definition governs an inspection program, not a one-off inspection; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-7-2",
@@ -6696,12 +6717,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-3",
   "slug": "CM-1-3-7-2-3",
   "level": 5,
-  "name": "Develop & Monitor Revenue Plan",
+  "name": "Develop and Monitor Commercial Revenue Plan",
   "skos_notation": "CM 1.3.7.2.3",
   "parent_slug": "CM-1-3-7-2",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.2.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Develop & Monitor Revenue Plan",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Develop & Monitor Revenue Plan' -> 'Develop and Monitor Commercial Revenue Plan' (Hamid approval 2026-09-22). 'Commercial' qualifier per the approved definition ('the commercial revenue plan'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-2-4",
@@ -6798,12 +6822,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-5",
   "slug": "CM-1-3-7-3-5",
   "level": 5,
-  "name": "Track & Forecast Order",
+  "name": "Track Order Book and Forecast Order Volumes",
   "skos_notation": "CM 1.3.7.3.5",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.3.5",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Track & Forecast Order",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Track & Forecast Order' -> 'Track Order Book and Forecast Order Volumes' (Hamid approval 2026-09-22). object correction per the approved definition: track the order book; forecast order volumes (timing stays in the definition); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-6",
@@ -7248,34 +7275,43 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-1",
   "slug": "CM-1-3-8-4-1",
   "level": 5,
-  "name": "Period End Processing",
+  "name": "Perform Period-End Processing",
   "skos_notation": "CM 1.3.8.4.1",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.4.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Period End Processing",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Period End Processing' -> 'Perform Period-End Processing' (Hamid approval 2026-09-22). verb-led normalization with hyphenated 'Period-End'; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-2",
   "slug": "CM-1-3-8-4-2",
   "level": 5,
-  "name": "AR Reconciliation / Compliance",
+  "name": "Perform AR Reconciliation and Compliance",
   "skos_notation": "CM 1.3.8.4.2",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.4.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "AR Reconciliation / Compliance",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'AR Reconciliation / Compliance' -> 'Perform AR Reconciliation and Compliance' (Hamid approval 2026-09-22). verb-led normalization; the slash is replaced by 'and'; 'compliance' stays fenced to O2C control evidence by the approved scope note; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-3",
   "slug": "CM-1-3-8-4-3",
   "level": 5,
-  "name": "Accruals Analysis And Calculation",
+  "name": "Analyze and Calculate Accruals",
   "skos_notation": "CM 1.3.8.4.3",
   "parent_slug": "CM-1-3-8-4",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.4.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Accruals Analysis And Calculation",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Accruals Analysis And Calculation' -> 'Analyze and Calculate Accruals' (Hamid approval 2026-09-22). verb-led normalization mirroring the approved definition ('Analyze and calculate'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-4-4",
