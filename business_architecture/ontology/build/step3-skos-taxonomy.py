@@ -493,7 +493,7 @@ is left for the Step 3d tree pass, when destinations are decided.
 
 ## Validation (rdflib, mechanical)
 Parsed clean; {n_concepts} concepts; exactly one `@en` prefLabel per concept;
-every concept in scheme; 680 broader links, no dangling targets, no
+every concept in scheme; {n_broader} broader links, no dangling targets, no
 self-references; 2 top concepts; zero untagged literals; Turtle
 round-trip lossless.
 """
