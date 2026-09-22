@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated) | In progress — 12 queue entries still queued (12 normalization-only judgment rows; mechanical normalization closed; scope-ambiguity, directionality-missing, and generic-operational categories fully executed); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical); 12 normalization-only judgment renames executed and merged 2026-09-22 — PR #103 (Batch 7, judgment — final naming batch)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated; PR #103 — 14,481 triples, report regenerated) | In progress — naming queue closed 2026-09-22 (92/92 entries executed: normalization, scope-ambiguity, directionality-missing, and generic-operational categories all executed); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -706,6 +706,44 @@ consolidated pass that applies them.
   all pre-existing. Naming queue: 12 of 92 entries remaining (12
   normalization-only judgment rows) — mechanical normalization is closed;
   the judgment batch is proposed in chat before any repo changes.
+- **Normalization-only judgment batch — executed and merged 2026-09-22
+  (PR #103).** The second half of the sixth naming-pass category and the final
+  naming batch: 12 renames per Hamid's approved judgment proposal 2026-09-22
+  (proposal review: approve 11 as recommended, 1 with the concise refinement
+  — `Track Order Book and Forecast Order Volumes`, timing kept in the
+  definition — 1 conditional on the AR-compliance scope note, verified narrow).
+  `CM-1-1-2-10` → Allocate Crude and Feedstock; `CM-1-1-2-11` → Allocate
+  Finished Products; `CM-1-2-4-2-6` → Reconcile Economic PNL to Accounting
+  PNL; `CM-1-3-6-6-7` → Analyze, Report, and Confirm Card Transactions;
+  `CM-1-3-6-6-9` → Plan Card Stock Consumption and Monitor Inventory;
+  `CM-1-3-6-7` → Brand Standards Management; `CM-1-3-6-7-1` → Manage
+  Brand Standards and Inspections; `CM-1-3-7-2-3` → Develop and Monitor
+  Commercial Revenue Plan; `CM-1-3-7-3-5` → Track Order Book and Forecast
+  Order Volumes; `CM-1-3-8-4-1` → Perform Period-End Processing;
+  `CM-1-3-8-4-2` → Perform AR Reconciliation and Compliance;
+  `CM-1-3-8-4-3` → Analyze and Calculate Accruals. Eleven old labels
+  retained as `skos:altLabel` (all passed uniqueness/semantic-safety checks);
+  the PNL row's old label is migration-map-only — it differs from the new
+  label by case only (`To` vs `to`), which the validator flags as an
+  altlabel-collision (queue rule: case/punctuation-only changes carry no alt
+  label), so it lives only as `prior_name`/`name_change_note`. The two queued
+  near-miss variants (`Analyze and Confirm Card Transactions`, `Track Orders
+  and Forecast Order Book`) legitimately stay as second altLabels; 7 queued
+  labels were promoted out. Cross-reference sweep: 37 asserted scoped
+  replacements across `related_concepts` (+slug annotation), breadcrumbs,
+  parent display names, and prose (guarded matching for the Brand-Standards
+  singular/plural edge and the PNL case-only edge); final sweep found no stale
+  references outside intentional terminology-note and retained-alias
+  locations. Slugs, IRIs, hierarchy, definitions, and authority boundaries
+  unchanged; `downstream_process_map.json` untouched; taxonomy report
+  regenerated alongside the TTL. Independent review APPROVE (all 12 rows
+  verified in workbook, TTL, identity map, and queue; the +4 triple delta
+  fully reconciled: +11 old-label altLabels, −7 promoted queued altLabels).
+  Workbook: 505 rows, 502 approved; gate blocking=0, questions=4
+  (pre-existing altlabel-collision questions, unchanged), notes=18,
+  open_ptc=1. TTL: 682 concepts, 14,481 triples, 679/682 defined, 680
+  broader links, 317 altLabels; 7 duplicate prefLabel groups, all
+  pre-existing. **The naming queue is closed: all 92 entries executed.**
 - **Preconditions — the open PTC entries.** Currently **PTC-001**
   (`CM-1-1-4-6` Commercial Development does not belong under Refinery
   Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),
@@ -1083,6 +1121,21 @@ stable identifiers for technical relationships. Retain historical labels
 as altLabel only when uniquely resolvable and semantically safe.
 **Taxonomy unpublished (2026-09-21, Hamid):** no external consumers, so
 renames need no deprecation period or consumer notice.
+**Decisions (2026-09-22, Step 3d naming pass Batch 7, Hamid):** the 12
+normalization-only judgment renames approved as proposed, with three
+judgment calls: (1) the allocation pair stays together as verb-led
+`Allocate Crude and Feedstock` / `Allocate Finished Products`, bounded by
+the existing definitions — no authority expansion into production planning,
+policy, commercial-priority setting, or physical movement; (2) the
+card-transaction label keeps all three definition verbs — `Analyze, Report,
+and Confirm Card Transactions`; (3) the concise `Track Order Book and
+Forecast Order Volumes`, with timing kept in the definition, not the label.
+PNL stays the technical-label convention (`P&L` in prose); `card stock` is
+scoped to blank cards, secure card media, carriers, mailers, and issuance
+materials — not petroleum inventory. The `Reconcile Economic PNL To
+Accounting PNL` case-only variant is migration-map-only (no altLabel), and
+the queue rule now codified is: case/punctuation-only changes carry no alt
+label. No definitions, hierarchy, process identities, slugs, or IRIs change.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,
