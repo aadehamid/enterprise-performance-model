@@ -721,7 +721,8 @@ proc:CM-1-1-2-9-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.2.9.1" ;
     skos:prefLabel "Publish Local Refinery Targets for Regional to Local Transition"@en ;
-    intake:level "L5"@en .
+    intake:level "L5"@en ;
+    intake:relatedConcepts "informs: Refinery Planning and Optimization (CM-1-1-4)"@en .
 
 proc:CM-1-1-2-9-2 a skos:Concept ;
     skos:broader proc:CM-1-1-2-9 ;

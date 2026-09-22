@@ -8,11 +8,13 @@ instructions. All paths below are relative to the repository root.
 ## Gate 1 — hierarchy integrity
 
 **Mechanically re-verified with the independent checker
-`build/scripts/r1-gate-check.py` (all 29 checks PASS, exit 0) against the
+`business_architecture/ontology/build/scripts/r1-gate-check.py`
+(all 38 checks PASS, exit 0) against the
 committed regenerated outputs:**
 
-- 683 concepts (682 + 1 new R&T L2), 14,495 triples (baseline 14,481; +14
-  fully accounted for by the new L2's own triples — see §Delta below).
+- 683 concepts (682 + 1 new R&T L2), 14,496 triples (baseline 14,481; +14
+  for the new L2's own triples, +1 for the reviewed `CM-1-1-2-9-1`
+  interface triple — see §Delta below).
 - 681 `skos:broader` links — every non-root concept has exactly one; the two
   L0 roots (`L0-downstream-operations`, `L0-enabling-functions`) are the only
   concepts without a broader. (Note: the task text's "683 broader links"
@@ -29,8 +31,10 @@ committed regenerated outputs:**
 - Tombstone `CM-1-1-4-6` still `owl:deprecated`; still under `CM-1-1` (L3);
   `CM-1-1-4-6-1` still `intake:status "blocked"` (PTC-001-B hold intact).
 
-**Re-verify:** run the committed regenerated TTL and identity map through
-`python3 build/scripts/r1-gate-check.py`.
+**Re-verify:** from the repo root, run the committed regenerated TTL and
+identity map through the checker (baseline TTL + identity map from `main`
+are required arguments):
+`python3 business_architecture/ontology/build/scripts/r1-gate-check.py . <baseline_ttl> <baseline_identity_map>`.
 
 ## Gate 2 — path compatibility
 
@@ -69,13 +73,15 @@ all with the "No consumer — foundation stage" disposition.
 - Deliberately unchanged: PTC-001-B hold (still blocked under the tombstone);
   PTC-002-adjacent node `CM-1-1-4-6-3` (parent/level identical);
   Supply & Trading feedstock-quality cluster (16 `CM-1-2-5-*` nodes identical);
-  `CM-1-1-2-9-1` structural placement (stays under Regional Optimization,
-  `intake:relatedConcepts` interface only); all R2-deferred work
+  `CM-1-1-2-9-1` structural placement (stays under Regional Optimization;
+  its `intake:relatedConcepts` interface is now materialized in the TTL via
+  the reviewed-interface guard — Candidate package §1f, one entry); all
+  R2-deferred work
   (L3 decomposition, HR 7.x, EHS, 10.x asset maintenance, R2 energy scope
   decision).
 
-**Re-verify:** `python3 build/scripts/r1-gate-check.py` covers the unchanged
-checks; read any migrated row's `r1_migration` object in
+**Re-verify:** `python3 business_architecture/ontology/build/scripts/r1-gate-check.py`
+covers the unchanged checks; read any migrated row's `r1_migration` object in
 `build/output/step2-identity-map.json`.
 
 ## Gate 4 — regeneration evidence
@@ -102,6 +108,19 @@ checks; read any migrated row's `r1_migration` object in
 - Validator: `scripts/step3c-workbook-validate.py` — **0 blocking** on the
   updated workbook (522 rows: 503 approved, 17 pending, 1 blocked, 1 retired);
   the 4 questions and 18 notes are identical to baseline (all pre-existing).
+- Reviewed-interface guard: `build/step3-skos-taxonomy.py` carries an
+  explicit `REVIEWED_PENDING_INTERFACES` list (one entry:
+  `CM-1-1-2-9-1`). Pending-row `related_concepts` entries materialize as
+  `intake:relatedConcepts` only when reviewed and validated; any other
+  pending-row interface fails the build loudly (held for review, never
+  silently emitted). The gate checker independently re-verifies this
+  invariant against the workbook.
+- Outside-migration-set TTL changes are exactly 16 sanctioned subjects:
+  the reviewed interface row plus 15 mechanical §4(a)/(c) stale-label
+  corrections ("Refinery Planning" → "Refinery Planning and Optimization"
+  in definition/scopeNote text only — verified pure substitutions,
+  enumerated in `build/r1/r1-cell-diff.md`). The gate checker asserts this
+  exact set and that no other predicate changed on those subjects.
 
 **Re-verify:** run the workbook validator against
 `build/output/step3c-definition-authoring-workbook.xlsx`; confirm exit 0.
@@ -111,7 +130,7 @@ checks; read any migrated row's `r1_migration` object in
 | Measure | Baseline | R1 | Δ |
 |---|---|---|---|
 | Concepts | 682 | 683 | +1 (new R&T L2) |
-| Triples | 14,481 | 14,495 | +14 (new L2's own triples; nothing else changed) |
+| Triples | 14,481 | 14,496 | +14 (new L2's own triples) + 1 (reviewed `CM-1-1-2-9-1` interface) |
 | Definitions | 679/682 | 680/683 | +1 (new L2's approved definition) |
 | Broader links | 680 | 681 | +1 (new L2's broader) |
 | prefLabel changes | — | 2 | the two promoted L2s |

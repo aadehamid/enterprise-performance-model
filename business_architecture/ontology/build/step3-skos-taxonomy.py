@@ -88,13 +88,36 @@ def split_pipe(text):
     return [p.strip() for p in str(text or "").split("|") if p.strip()]
 
 
+# Reviewed interface list (R1). A workbook row whose status is not
+# approved/blocked/retired carries no definitions, scope notes, or
+# altLabels — but plan-execution interfaces MAY materialize as
+# intake:relatedConcepts only when explicitly reviewed and validated.
+# Each entry is asserted by the reviewed one-shot workbook script and
+# covered by the approved Candidate decision package (§1f).
+# slug -> exact expected related_concepts cell value. Any pending-row
+# interface not on this list is held for review and fails the build
+# loudly — it is never silently emitted.
+REVIEWED_PENDING_INTERFACES = {
+    "CM-1-1-2-9-1": "informs: Refinery Planning and Optimization (CM-1-1-4)",
+}
+
+
 def read_workbook(path):
     """Read the Step 3c definition workbook.
 
-    Returns {slug: dict} for rows with status approved/blocked/retired.
-    Pending rows add nothing beyond the base tree, so they are skipped.
+    Returns (rows, interfaces):
+      rows: {slug: dict} for rows with status approved/blocked/retired.
+        Pending rows add nothing beyond the base tree, so they are skipped.
+      interfaces: {slug: related_concepts} from approved/blocked/retired
+        rows, plus reviewed pending-row interfaces from
+        REVIEWED_PENDING_INTERFACES. Interfaces are plan-execution metadata,
+        not definitions: a reviewed pending row carries no
+        definitions/scope/altLabels, but its declared interfaces still
+        materialize as intake:relatedConcepts in the TTL.
     Raises on an approved row without a definition (the gate should have
-    caught it, but the taxonomy build must not silently emit one either).
+    caught it, but the taxonomy build must not silently emit one either),
+    and on any pending-row interface entry that is not reviewed and
+    validated (held for review — never silently emitted).
     """
     from openpyxl import load_workbook
 
@@ -103,12 +126,20 @@ def read_workbook(path):
     headers = [c.value for c in ws[1]]
     idx = {h: i for i, h in enumerate(headers)}
     rows = {}
+    interfaces = {}
+    held = {}
     for r in ws.iter_rows(min_row=2, values_only=True):
-        status = (r[idx["status"]] or "").strip()
-        if status not in ("approved", "blocked", "retired"):
-            continue
         slug = (r[idx["slug"]] or "").strip()
         if not slug:
+            continue
+        related = (r[idx["related_concepts"]] or "").strip()
+        status = (r[idx["status"]] or "").strip()
+        if status in ("approved", "blocked", "retired"):
+            if related:
+                interfaces[slug] = related
+        elif related:
+            held[slug] = related
+        if status not in ("approved", "blocked", "retired"):
             continue
         defi = (r[idx["definition"]] or "").strip()
         if status == "approved" and not defi:
@@ -133,7 +164,23 @@ def read_workbook(path):
             "concept_type_check": (r[idx["concept_type_check"]] or "").strip(),
             "parked_children": (r[idx["parked_children"]] or "").strip(),
         }
-    return rows
+    # Held-for-review gate: pending-row interfaces materialize ONLY when
+    # reviewed and validated. Anything else fails loudly here, never
+    # silently emitted into the TTL.
+    unexpected = {s: v for s, v in held.items()
+                  if s not in REVIEWED_PENDING_INTERFACES}
+    if unexpected:
+        raise ValueError(
+            "pending-row interface(s) not reviewed/validated — held for "
+            f"review, not emitted: {sorted(unexpected)}")
+    for s, expected in REVIEWED_PENDING_INTERFACES.items():
+        if s in held and held[s] != expected:
+            raise ValueError(
+                f"pending-row interface {s} changed since review: "
+                f"{held[s]!r} != reviewed {expected!r}")
+        if s in held:
+            interfaces[s] = held[s]
+    return rows, interfaces
 
 
 def main() -> None:
@@ -163,8 +210,9 @@ def main() -> None:
             if d.get("status") == "approved":
                 authored[d["slug"]] = d
     wb_rows = {}
+    wb_interfaces = {}
     if args.workbook:
-        wb_rows = read_workbook(args.workbook)
+        wb_rows, wb_interfaces = read_workbook(args.workbook)
 
     rows = json.loads(Path(args.identity_map).read_text(encoding="utf-8"))
     n_rows = len(rows)
@@ -355,6 +403,17 @@ def main() -> None:
         elif key in descs:
             g.add((c, SKOS.definition, Literal(descs[key], lang=EN)))
             defined = True
+        # --- interfaces: plan-execution metadata materializes regardless of
+        # --- row approval status, but ONLY for reviewed/validated entries
+        # --- (REVIEWED_PENDING_INTERFACES, enforced in read_workbook).
+        # --- A reviewed pending row contributes no definitions, scope
+        # --- notes, or altLabels — only its declared interfaces, e.g.
+        # --- CM-1-1-2-9-1 "informs: Refinery Planning and Optimization".
+        # --- Approved rows already emitted this in the approved branch
+        # --- above, so they are skipped here to avoid a duplicate triple.
+        if w_status != "approved" and slug in wb_interfaces:
+            g.add((c, INTAKE["relatedConcepts"],
+                   Literal(wb_interfaces[slug], lang=EN)))
         if defined:
             with_definition += 1
         parent = r["parent_slug"]
