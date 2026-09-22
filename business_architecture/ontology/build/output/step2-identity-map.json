@@ -2490,12 +2490,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-3-3",
   "slug": "CM-1-1-7-3-3",
   "level": 5,
-  "name": "Manage and Support Emission Trading",
+  "name": "Manage and Support Emissions Trading",
   "skos_notation": "CM 1.1.7.3.3",
   "parent_slug": "CM-1-1-7-3",
   "minted": false,
   "proposed_repo_id": "CM 1.1.7.3.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage and Support Emission Trading",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage and Support Emission Trading' -> 'Manage and Support Emissions Trading' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2",
@@ -3150,12 +3153,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-9",
   "slug": "CM-1-2-2-3-9",
   "level": 5,
-  "name": "Perform Position & PNL Analysis",
+  "name": "Perform Position & P&L Analysis",
   "skos_notation": "CM 1.2.2.3.9",
   "parent_slug": "CM-1-2-2-3",
   "minted": false,
   "proposed_repo_id": "CM 1.2.2.3.9",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Position & PNL Analysis",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Position & PNL Analysis' -> 'Perform Position & P&L Analysis' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-2-3-10",
@@ -3651,12 +3657,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-7",
   "slug": "CM-1-2-4-2-7",
   "level": 5,
-  "name": "Manage Financial Info. Documentation & Reporting",
+  "name": "Manage Financial Information Documentation and Reporting",
   "skos_notation": "CM 1.2.4.2.7",
   "parent_slug": "CM-1-2-4-2",
   "minted": false,
   "proposed_repo_id": "CM 1.2.4.2.7",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Financial Info. Documentation & Reporting",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Financial Info. Documentation & Reporting' -> 'Manage Financial Information Documentation and Reporting' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-2-8",
@@ -3950,12 +3959,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-1",
   "slug": "CM-1-2-5-1-1",
   "level": 5,
-  "name": "Manage feedstock Data Quality",
+  "name": "Manage Feedstock Data Quality",
   "skos_notation": "CM 1.2.5.1.1",
   "parent_slug": "CM-1-2-5-1",
   "minted": false,
   "proposed_repo_id": "CM 1.2.5.1.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage feedstock Data Quality",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage feedstock Data Quality' -> 'Manage Feedstock Data Quality' (Hamid approval 2026-09-21). Purely lexical capitalization fix; prior label NOT retained as skos:altLabel — it differs by case only and the validator flags case-only altLabels as collisions (queue rule: case/punctuation-only changes carry no alt label); preserved as prior_name in the identity/migration map. No identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-2",
@@ -4708,12 +4720,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-1",
   "slug": "CM-1-3-2-1-1",
   "level": 5,
-  "name": "Formulate and Evaluate Strategic Operating Alternative",
+  "name": "Formulate and Evaluate Strategic Operating Alternatives",
   "skos_notation": "CM 1.3.2.1.1",
   "parent_slug": "CM-1-3-2-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.2.1.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Formulate and Evaluate Strategic Operating Alternative",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Formulate and Evaluate Strategic Operating Alternative' -> 'Formulate and Evaluate Strategic Operating Alternatives' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-2-1-2",
@@ -6262,12 +6277,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-2",
   "slug": "CM-1-3-6-5-2",
   "level": 5,
-  "name": "Manage Promotions/Events Execution",
+  "name": "Manage Promotions and Events Execution",
   "skos_notation": "CM 1.3.6.5.2",
   "parent_slug": "CM-1-3-6-5",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.5.2",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Promotions/Events Execution",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Promotions/Events Execution' -> 'Manage Promotions and Events Execution' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-5-3",
@@ -6284,23 +6302,29 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6",
   "slug": "CM-1-3-6-6",
   "level": 4,
-  "name": "Loyalty And Cards Management - Marketing",
+  "name": "Loyalty and Cards Management (Marketing)",
   "skos_notation": "CM 1.3.6.6",
   "parent_slug": "CM-1-3-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Loyalty And Cards Management - Marketing",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Loyalty And Cards Management - Marketing' -> 'Loyalty and Cards Management (Marketing)' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-1",
   "slug": "CM-1-3-6-6-1",
   "level": 5,
-  "name": "Setup Prospect",
+  "name": "Set Up Prospect",
   "skos_notation": "CM 1.3.6.6.1",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Setup Prospect",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Setup Prospect' -> 'Set Up Prospect' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-2",
@@ -6331,12 +6355,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-4",
   "slug": "CM-1-3-6-6-4",
   "level": 5,
-  "name": "Manage Cards Administration (Order New Cards, Change Card Data)",
+  "name": "Manage Card Administration",
   "skos_notation": "CM 1.3.6.6.4",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.4",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Cards Administration (Order New Cards, Change Card Data)",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Cards Administration (Order New Cards, Change Card Data)' -> 'Manage Card Administration' (Hamid approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-5",
@@ -6422,12 +6449,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-12",
   "slug": "CM-1-3-6-6-12",
   "level": 5,
-  "name": "Manage Additional Card Services (On Road Services)",
+  "name": "Manage Additional Card Services",
   "skos_notation": "CM 1.3.6.6.12",
   "parent_slug": "CM-1-3-6-6",
   "minted": false,
   "proposed_repo_id": "CM 1.3.6.6.12",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Manage Additional Card Services (On Road Services)",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Additional Card Services (On Road Services)' -> 'Manage Additional Card Services' (Hamid approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-6-6-13",
@@ -6743,12 +6773,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-3",
   "slug": "CM-1-3-7-3-3",
   "level": 5,
-  "name": "Change / Cancel Order",
+  "name": "Change or Cancel Order",
   "skos_notation": "CM 1.3.7.3.3",
   "parent_slug": "CM-1-3-7-3",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.3.3",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Change / Cancel Order",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Change / Cancel Order' -> 'Change or Cancel Order' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-3-4",
@@ -6923,12 +6956,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-4",
   "slug": "CM-1-3-7-5-4",
   "level": 5,
-  "name": "Perform Customer Follow up",
+  "name": "Perform Customer Follow-Up",
   "skos_notation": "CM 1.3.7.5.4",
   "parent_slug": "CM-1-3-7-5",
   "minted": false,
   "proposed_repo_id": "CM 1.3.7.5.4",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Perform Customer Follow up",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Customer Follow up' -> 'Perform Customer Follow-Up' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-7-5-5",
@@ -6981,12 +7017,15 @@
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-1",
   "slug": "CM-1-3-8-1-1",
   "level": 5,
-  "name": "Create & Distribute Bill",
+  "name": "Create and Distribute Bill",
   "skos_notation": "CM 1.3.8.1.1",
   "parent_slug": "CM-1-3-8-1",
   "minted": false,
   "proposed_repo_id": "CM 1.3.8.1.1",
-  "deprecated": false
+  "deprecated": false,
+  "prior_name": "Create & Distribute Bill",
+  "scoped_historical_alias": null,
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Create & Distribute Bill' -> 'Create and Distribute Bill' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-3-8-1-2",

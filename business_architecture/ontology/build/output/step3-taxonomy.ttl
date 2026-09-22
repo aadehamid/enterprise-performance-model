@@ -1640,7 +1640,7 @@ proc:CM-1-1-4-7-2 a skos:Concept ;
     skos:prefLabel "Evaluate Crude & Feedstock"@en ;
     skos:scopeNote """Covers technical and economic screening of candidate crudes and feedstocks for planning: confirming assay and quality data is current and complete, estimating yields and processing fit against unit configuration and specification limits, valuing each candidate on a delivered-cost and netback basis, and flagging handling or compatibility issues. Excludes laboratory assay testing and certification, and excludes purchase, negotiation, and trade execution, owned by Supply And Trading (CM-1-2). Approval of the final crude slate remains with Refinery Planning (CM-1-1-4).
 In scope: Confirm assay and quality data currency and completeness | estimate yields and processing fit against refinery configuration | screen against specification and handling limits | value candidates on delivered cost and netback | rank and publish the evaluated crude and feedstock set
-Out of scope: Purchasing, negotiating, and executing crude and feedstock trades, owned by Supply And Trading (CM-1-2) | laboratory assay testing and certification, owned by Refining laboratory services | approving the final crude slate, owned by Refinery Planning (CM-1-1-4) | placing secured crude across refineries, owned by Crude Allocation Decision (CM-1-1-2-10) | crude and feedstock master data stewardship, owned by Manage feedstock Data Quality (CM-1-2-5-1-1)"""@en ;
+Out of scope: Purchasing, negotiating, and executing crude and feedstock trades, owned by Supply And Trading (CM-1-2) | laboratory assay testing and certification, owned by Refining laboratory services | approving the final crude slate, owned by Refinery Planning (CM-1-1-4) | placing secured crude across refineries, owned by Crude Allocation Decision (CM-1-1-2-10) | crude and feedstock master data stewardship, owned by Manage Feedstock Data Quality (CM-1-2-5-1-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "crude and feedstock assays and quality data | refinery configuration and unit capability | product specification limits | delivered cost, freight, and differential data | candidate supply offers"@en ;
@@ -2482,7 +2482,7 @@ Out of scope: Energy contract negotiation (commercial owner of energy supply) | 
     intake:primaryPurpose "Choose the cheapest reliable energy mix the refinery can run on."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EI-HM31-001"@en ;
-    intake:relatedConcepts "enables: Optimize Plant Energy Balance | informed-by: Manage and Support Emission Trading"@en ;
+    intake:relatedConcepts "enables: Optimize Plant Energy Balance | informed-by: Manage and Support Emissions Trading (CM-1-1-7-3-3)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 06 (2026-09-19). APQC 10113 is an unrelated strategy candidate; comparative evidence only."@en .
 
@@ -2522,12 +2522,13 @@ proc:CM-1-1-7-3-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19562"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Emissions Allowance Position Management"@en ;
+    skos:altLabel "Emissions Allowance Position Management"@en,
+        "Manage and Support Emission Trading"@en ;
     skos:broader proc:CM-1-1-7-3 ;
     skos:definition "Manage the refinery's emissions-allowance and credit position from the planning side — tracking emissions against allowances by program and period, forecasting surplus or shortfall from the production and energy plans, and supporting allowance purchase, sale, and banking decisions — so compliance obligations are met at the best economic outcome."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.3.3" ;
-    skos:prefLabel "Manage and Support Emission Trading"@en ;
+    skos:prefLabel "Manage and Support Emissions Trading"@en ;
     skos:scopeNote """Covers allowance position management per emissions-trading program mechanics: maintaining the position by program, forecasting surplus and shortfall from schedule and energy plans, preparing the economic case for trades and banking, incorporating allowance prices into scheduling and energy decisions, and supporting compliance true-up. Excludes regulatory emissions monitoring and reporting, owned by EHS & Government Reporting under its locked rule; excludes trade negotiation and execution, owned by the trading function (Supply And Trading where modeled); excludes the financial accounting treatment of allowances and credits, owned by Finance. 'Support' in the label reflects this advisory position: the node prepares and supports the decisions without executing trades or filing reports.
 In scope: Maintain the allowance and credit position by program | forecast surplus and shortfall from plans | prepare the economic case for trades and banking | support compliance true-up and reflect allowance cost in decisions
 Out of scope: Regulatory emissions monitoring and reporting (EHS & Government Reporting) | trade negotiation and execution (trading function) | financial accounting of allowances and credits (Finance) | emissions-reduction capital projects (Refining, engineering)"""@en ;
@@ -2541,7 +2542,7 @@ Out of scope: Regulatory emissions monitoring and reporting (EHS & Government Re
     intake:referenceSources "SRC-EPA-EMTR-001 | SRC-EI-HM31-001"@en ;
     intake:relatedConcepts "informed-by: Production Scheduling | enables: Optimize Internal vs. External Energy Sources"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 06 (2026-09-19). The decide-versus-advise pattern applies twice: EHS owns the regulator-facing report (locked rule); trading owns execution; Finance records the accounting treatment. 'Emissions allowances and credits' used throughout because programs use different, not always interchangeable, instruments. Preferred normalized label 'Manage and Support Emissions Trading' (plural) queued for the naming pass per Hamid. Program mechanics (cap, allowances, trading, banking, true-up) per EPA emissions-trading practice as reference evidence; applicability is jurisdiction- and program-specific. APQC 19562 'Manage support utilities' is a WEAK lexical match; comparative evidence only."@en .
+    intake:terminologyNotes "Batch 06 (2026-09-19). The decide-versus-advise pattern applies twice: EHS owns the regulator-facing report (locked rule); trading owns execution; Finance records the accounting treatment. 'Emissions allowances and credits' used throughout because programs use different, not always interchangeable, instruments. Preferred normalized label 'Manage and Support Emissions Trading' (plural) queued for the naming pass per Hamid. Program mechanics (cap, allowances, trading, banking, true-up) per EPA emissions-trading practice as reference evidence; applicability is jurisdiction- and program-specific. APQC 19562 'Manage support utilities' is a WEAK lexical match; comparative evidence only. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage and Support Emission Trading' to 'Manage and Support Emissions Trading'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-1-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -2669,7 +2670,7 @@ proc:CM-1-2-1-1-5 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1.5" ;
     skos:prefLabel "Forecast Revenue"@en ;
-    skos:scopeNote """Covers the front-office economic projection: projected revenue, gross margin, and exposure by book, strategy, and period, refreshed on market and position changes, with sensitivity to price scenarios. Excludes financial forecasting, budgeting, and reporting ownership, which sit with Finance under the locked rule; excludes official, controlled position and realized/unrealized P&L reporting, owned by Perform Position & PNL Analysis (CM-1-2-2-3-9) and the Accounting cluster (CM-1-2-4-2) — this is a forward-looking planning projection, not the governed result.
+    skos:scopeNote """Covers the front-office economic projection: projected revenue, gross margin, and exposure by book, strategy, and period, refreshed on market and position changes, with sensitivity to price scenarios. Excludes financial forecasting, budgeting, and reporting ownership, which sit with Finance under the locked rule; excludes official, controlled position and realized/unrealized P&L reporting, owned by Perform Position & P&L Analysis (CM-1-2-2-3-9) and the Accounting cluster (CM-1-2-4-2) — this is a forward-looking planning projection, not the governed result.
 In scope: Project revenue, gross margin, and exposure by book, strategy, and period | refresh projections on market and position changes | run price-scenario sensitivities | supply the economic outlook to management and strategy
 Out of scope: Financial forecasting and budgeting (Finance) | official, controlled position and realized/unrealized P&L reporting (CM-1-2-2-3-9, CM-1-2-4-2) | trading decisions themselves (strategy and capture processes)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -3231,7 +3232,7 @@ proc:CM-1-2-1-3-6 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.3.6" ;
     skos:prefLabel "Capture Environmental/Renewable Deals"@en ;
-    skos:scopeNote """Covers deal entry for environmental and renewable instruments, treating each as program-specific per the batch 07 decision: capturing program, instrument type, vintage, and compliance-period attributes alongside commercial terms. Excludes forecasting the position (Forecast Renewables, CM-1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1-7); excludes emissions settlement (Settle Environmental Instruments, CM-1-2-4-1-8); excludes regulatory filing (EHS & Government Reporting, locked rule) and the allowance-position economics (Manage and Support Emission Trading, CM-1-1-7-3-3). Program applicability is jurisdiction-specific.
+    skos:scopeNote """Covers deal entry for environmental and renewable instruments, treating each as program-specific per the batch 07 decision: capturing program, instrument type, vintage, and compliance-period attributes alongside commercial terms. Excludes forecasting the position (Forecast Renewables, CM-1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1-7); excludes emissions settlement (Settle Environmental Instruments, CM-1-2-4-1-8); excludes regulatory filing (EHS & Government Reporting, locked rule) and the allowance-position economics (Manage and Support Emissions Trading, CM-1-1-7-3-3). Program applicability is jurisdiction-specific.
 In scope: Capture environmental and renewable deal terms with program, vintage, and period attributes | link deals to compliance positions, books, and strategies | validate against execution evidence | correct capture errors
 Out of scope: Position forecasting (CM-1-2-1-1-3) | instrument actualization (CM-1-2-3-1-7) | settlement (CM-1-2-4-1-8) | regulatory filing (EHS & Government Reporting) | allowance-position economics (CM-1-1-7-3-3)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -3748,7 +3749,7 @@ Out of scope: Business strategy definition and stewardship (CM-1-2-1-4) | deal-t
     intake:primaryPurpose "One governed risk-reporting structure that every position and P&L number rolls up through."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-CCRO-002A"@en ;
-    intake:relatedConcepts "enables: Trade Capture | enables: Perform Position & PNL Analysis"@en ;
+    intake:relatedConcepts "enables: Trade Capture | enables: Perform Position & P&L Analysis (CM-1-2-2-3-9)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 12 (2026-09-19). Narrowed at Hamid's direction: strategy is business intent (Trading Strategy Management); the book is a controlled risk and P&L aggregation construct governed here — the two never collide. APQC 16385 is a generic framework candidate."@en .
 
@@ -3860,7 +3861,7 @@ Out of scope: Financial reporting and disclosures (Finance) | regulatory filing 
     intake:primaryPurpose "The risk picture reaches its decision-makers current, consistent, and on time."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-CCRO-002A"@en ;
-    intake:relatedConcepts "uses-input: Monitor Risk | uses-input: Perform Position & PNL Analysis | enables: Trading Strategy Management"@en ;
+    intake:relatedConcepts "uses-input: Monitor Risk | uses-input: Perform Position & P&L Analysis (CM-1-2-2-3-9) | enables: Trading Strategy Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 12 (2026-09-19). Mirrors the batch 11 reporting rule: internal production here; external reporting supported through, never owned instead of, accountable owners. APQC 10522 is an HR-reporting false match."@en .
 
@@ -3917,7 +3918,7 @@ Out of scope: Valuation policy, methodology approval, and independent model vali
     intake:primaryPurpose "One official value per position, methodologically defensible, every day."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-CCRO-002A | SRC-CCRO-002B | SRC-CFTC-GLOSS-001"@en ;
-    intake:relatedConcepts "uses-input: Setup And Manage Curves | uses-input: Manage Volatilities And Correlations | enables: Perform Position & PNL Analysis"@en ;
+    intake:relatedConcepts "uses-input: Setup And Manage Curves | uses-input: Manage Volatilities And Correlations | enables: Perform Position & P&L Analysis (CM-1-2-2-3-9)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 12 (2026-09-19). Adjustment ownership clarified at Hamid's direction: this process executes approved valuation-control procedures — adjustment categories apply only where relevant to the portfolio and approved methodology, and policy, accounting classification, and model methodology are owned elsewhere; which adjustments are material for the portfolio is a follow-up noted in the batch 12 PR. The valuation node batches 08 and 11 point at. Model-risk boundaries per CCRO Model Risk practice as evidence. APQC 12953 STRONG with no validator; supporting comparative evidence."@en .
 
@@ -4125,12 +4126,13 @@ proc:CM-1-2-2-3-9 a skos:Concept ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "P&L Attribution"@en,
+        "Perform Position & PNL Analysis"@en,
         "Position & P&L Control"@en ;
     skos:broader proc:CM-1-2-2-3 ;
     skos:definition "Produce and analyze the official, controlled position and realized and unrealized P&L picture — explaining daily P&L by its drivers (price, position, new deals, amendments, and other effects), investigating unexplained amounts, and delivering the validated P&L that management, risk, and the accounting reconciliation consume."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.2.3.9" ;
-    skos:prefLabel "Perform Position & PNL Analysis"@en ;
+    skos:prefLabel "Perform Position & P&L Analysis"@en ;
     skos:scopeNote """Covers official position and P&L production and attribution: daily P&L explanation by driver, unexplained-P&L investigation and thresholds, position validation against capture, and delivery of the controlled result to management, reporting, and Reconcile Economic PNL To Accounting PNL (CM-1-2-4-2-6). This is the official, controlled figure that batch 07's Forecast Revenue explicitly defers to — the forward-looking projection lives there (CM-1-2-1-1-5); the governed result lives here. Excludes accounting P&L and postings, owned by Accounting (CM-1-2-4-2); excludes valuation methodology (CM-1-2-2-3-15).
 In scope: Produce the official controlled position and P&L | attribute P&L to drivers and investigate unexplained amounts | validate positions against capture | deliver controlled results to management, reporting, and reconciliation
 Out of scope: Forward revenue projection (CM-1-2-1-1-5) | accounting P&L and postings (CM-1-2-4-2) | valuation methodology (CM-1-2-2-3-15)"""@en ;
@@ -4144,7 +4146,7 @@ Out of scope: Forward revenue projection (CM-1-2-1-1-5) | accounting P&L and pos
     intake:referenceSources "SRC-CCRO-002A | SRC-CFTC-GLOSS-001"@en ;
     intake:relatedConcepts "uses-input: Manage Commodity Valuations | enables: Reconcile Economic PNL To Accounting PNL | enables: Manage Risk Reporting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 12 (2026-09-19). Closes the batch 07 deferral: projected economics at CM-1-2-1-1-5, official controlled results here, accounting results at CM-1-2-4-2, reconciled at CM-1-2-4-2-6. Business-facing label 'Perform Position & P&L Analysis' queued for the naming pass per Hamid — 'PNL' retained in the technical label, 'P&L' used in prose. APQC 11783 is the competitive-analysis false match batch 02 already rejected."@en .
+    intake:terminologyNotes "Batch 12 (2026-09-19). Closes the batch 07 deferral: projected economics at CM-1-2-1-1-5, official controlled results here, accounting results at CM-1-2-4-2, reconciled at CM-1-2-4-2-6. Business-facing label 'Perform Position & P&L Analysis' queued for the naming pass per Hamid — 'PNL' retained in the technical label, 'P&L' used in prose. APQC 11783 is the competitive-analysis false match batch 02 already rejected. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Perform Position & PNL Analysis' to 'Perform Position & P&L Analysis'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-3-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5132,12 +5134,12 @@ proc:CM-1-2-4-2-7 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20765"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Financial Information Documentation and Reporting"@en ;
+    skos:altLabel "Manage Financial Info. Documentation & Reporting"@en ;
     skos:broader proc:CM-1-2-4-2 ;
     skos:definition "Prepare and control the financial documentation and internal financial reporting for supply and trading activity — management reporting on financial results, accounting workpapers and reconciliation evidence, and controlled inputs to external financial reporting through the accountable owners — so financial information about trading is complete, evidenced, and consistently produced."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.4.2.7" ;
-    skos:prefLabel "Manage Financial Info. Documentation & Reporting"@en ;
+    skos:prefLabel "Manage Financial Information Documentation and Reporting"@en ;
     skos:scopeNote """Covers financial information control for trading: producing internal financial and management reporting on trading results; maintaining accounting workpapers, reconciliation evidence, and close documentation (including the settlement-accounting records excluded from the batch 14 settlement-documents working set); and preparing controlled inputs to external financial reporting, statutory filings, and audit requests through the accountable Finance owners, per the batch 11 internal-reports-and-controlled-inputs precedent. Excludes external financial reporting ownership and statutory filings (Finance); risk reporting (Market Risk and Credit Risk reporting processes, batches 11-12); the settlement working document set (CM-1-2-4-1-9); enterprise records-retention policy (governance owner).
 In scope: Produce internal financial and management reporting on trading results | maintain accounting workpapers and close documentation | prepare controlled inputs to external reporting and audits through accountable owners
 Out of scope: External financial reporting and statutory filings (Finance) | risk reporting (CM-1-2-2-1, CM-1-2-2-3) | settlement working documents (CM-1-2-4-1-9) | records-retention policy (governance owner)"""@en ;
@@ -5151,7 +5153,7 @@ Out of scope: External financial reporting and statutory filings (Finance) | ris
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Reconcile Economic PNL To Accounting PNL | uses-input: Manage Trading Sub-Ledger | assures: Accounting"@en ;
     intake:responsibleDomain "Finance-enabled Supply & Trading"@en ;
-    intake:terminologyNotes "Batch 15 (2026-09-20). Internal reports plus controlled inputs through accountable owners, per the batch 11 precedent; external reporting accountability stays with Finance. Normalized label 'Manage Financial Information Documentation and Reporting' recorded as alt label and queued for the naming pass — the 'Info.' abbreviation should not survive into the canonical glossary. APQC 20765 'Manage information' is a generic IT candidate."@en .
+    intake:terminologyNotes "Batch 15 (2026-09-20). Internal reports plus controlled inputs through accountable owners, per the batch 11 precedent; external reporting accountability stays with Finance. Normalized label 'Manage Financial Information Documentation and Reporting' recorded as alt label and queued for the naming pass — the 'Info.' abbreviation should not survive into the canonical glossary. APQC 20765 'Manage information' is a generic IT candidate. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage Financial Info. Documentation & Reporting' to 'Manage Financial Information Documentation and Reporting'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-2-8 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5630,7 +5632,7 @@ proc:CM-1-2-5-1-1 a skos:Concept ;
     skos:definition "Steward the crude and feedstock quality data used in evaluation, planning, and trading — maintaining current, validated assays and quality records, tracking assay age and representativeness, incorporating new laboratory and cargo data under controlled update procedures, and distributing consistent quality data to the consuming models and processes."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.1.1" ;
-    skos:prefLabel "Manage feedstock Data Quality"@en ;
+    skos:prefLabel "Manage Feedstock Data Quality"@en ;
     skos:scopeNote """Covers feedstock quality-data stewardship: maintaining the assay and quality-data library used by evaluation (CM-1-1-4-7-2), LP models, slate development, and trading; validating and versioning updates from laboratory analyses, inspection results, and cargo experience; tracking assay currency and representativeness against actual received quality; and controlled distribution so all consumers work from the same data. Laboratory testing itself is performed by Refining and laboratory functions; cargo inspection data arrives through actualization (CM-1-2-3-1); enterprise master-data governance frameworks are excluded per the batch 05 precedent. Excludes laboratory operations (Refining/laboratory); inspection execution (independent inspectors, CM-1-2-3-1 evidence); model structures (CM-1-2-5-1-2 reviews, model owners own); enterprise master-data governance (batch 05 exclusion).
 In scope: Maintain validated, versioned assay and quality records | track assay currency and representativeness against received quality | incorporate laboratory, inspection, and cargo data under controlled updates | distribute consistent quality data to consumers
 Out of scope: Laboratory testing (Refining/laboratory) | inspection execution (CM-1-2-3-1 evidence chain) | model ownership (model owners) | enterprise master-data governance (batch 05 exclusion)"""@en ;
@@ -5644,7 +5646,7 @@ Out of scope: Laboratory testing (Refining/laboratory) | inspection execution (C
     intake:referenceSources "SRC-DOE-SPRASSAY-001 | SRC-API-MPMS-001"@en ;
     intake:relatedConcepts "enables: Review LP Model Integrity | enables: Develop Term Slate | uses-input: Perform Vessel & Barge Actualization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 18 (2026-09-20). Assay stewardship in the SPR Crude Oil Assay Manual sense: standardized characterization data maintained current and validated for planning and evaluation use; implementation-level work should cite the actual contractual assay clauses, refinery lab standards, inspector procedures, and applicable API/ASTM methods for the specific attribute governed (Hamid, batch 18). The row name's lowercase 'feedstock' is a typographical artifact — corrected capitalization queued for the naming pass. APQC: no meaningful candidate."@en .
+    intake:terminologyNotes "Batch 18 (2026-09-20). Assay stewardship in the SPR Crude Oil Assay Manual sense: standardized characterization data maintained current and validated for planning and evaluation use; implementation-level work should cite the actual contractual assay clauses, refinery lab standards, inspector procedures, and applicable API/ASTM methods for the specific attribute governed (Hamid, batch 18). The row name's lowercase 'feedstock' is a typographical artifact — corrected capitalization queued for the naming pass. APQC: no meaningful candidate. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage feedstock Data Quality' to 'Manage Feedstock Data Quality'. Prior label NOT retained as skos:altLabel: it differs from the new label by case only, which the validator flags as an altlabel-collision (queue rule: case/punctuation-only changes carry no alt label); preserved as prior_name in the identity/migration map."@en .
 
 proc:CM-1-2-5-1-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -5669,7 +5671,7 @@ Out of scope: Model validation certification and methodology approval (model gov
     intake:primaryPurpose "Keep the models behind feedstock decisions honest about the refinery and the market as they are today."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-EIA-LFMM-001"@en ;
-    intake:relatedConcepts "uses-input: Manage feedstock Data Quality | enables: Develop Term Slate | informed-by: Refinery Planning"@en ;
+    intake:relatedConcepts "uses-input: Manage Feedstock Data Quality (CM-1-2-5-1-1) | enables: Develop Term Slate | informed-by: Refinery Planning"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Q4 decision (Hamid): fitness-of-representation review distinguished from model ownership, methodology approval, and formal model validation — four responsibilities, four owners (data stewardship at CM-1-2-5-1-1; model architecture with Refinery Planning/designated owner; methodology approval and independent validation with model governance; representation review here). Review-and-escalate, never own (batch 11/12 patterns). LP modeling context per the refinery planning literature. APQC: no meaningful candidate."@en .
 
@@ -7040,12 +7042,13 @@ proc:CM-1-3-2-1-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10058"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Formulate and Evaluate Strategic Operating Alternatives (Brand)"@en ;
+    skos:altLabel "Formulate and Evaluate Strategic Operating Alternative"@en,
+        "Formulate and Evaluate Strategic Operating Alternatives (Brand)"@en ;
     skos:broader proc:CM-1-3-2-1 ;
     skos:definition "Formulate the alternative strategic operating models through which the brand could go to market — branded dealer and marketer networks, company-operated retail, unbranded participation, and mixed models — and evaluate them against the brand objectives and the governed evidence base."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.2.1.1" ;
-    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternative"@en ;
+    skos:prefLabel "Formulate and Evaluate Strategic Operating Alternatives"@en ;
     skos:scopeNote """Covers alternative formulation and evaluation for brand strategy: defining candidate operating alternatives; evaluating them against brand objectives, market and company findings, channel economics, and — where an arrangement meets the statutory and contractual franchise criteria — the PMPA and state-franchise constraints on changing branded arrangements (cluster PMPA statement at CM-1-3-2-1); and recommending the preferred alternative with its evidence to the develop/update step (CM-1-3-2-1-4). Evaluation, not commitment: strategy development and approval land at CM-1-3-2-1-4. Excludes strategy development and approval (CM-1-3-2-1-4); channel design (CM-1-3-3-3); operating model design (CM-1-3-3-6); franchise legal assessment (Legal, locked rule).
 In scope: Define candidate brand operating alternatives | evaluate against objectives, evidence, and applicable franchise constraints | recommend the preferred alternative with evidence
 Out of scope: Strategy development and approval (CM-1-3-2-1-4) | channel design (CM-1-3-3-3) | operating model design (CM-1-3-3-6) | franchise legal assessment (Legal)"""@en ;
@@ -7059,7 +7062,7 @@ Out of scope: Strategy development and approval (CM-1-3-2-1-4) | channel design 
     intake:referenceSources "SRC-APQC-PCF-001 | SRC-PMPA-001"@en ;
     intake:relatedConcepts "follows: Establish Brand Objectives and hypothesis | precedes: Develop & Test Brand Hypothesis | governed-by: Brand Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Second step of the brand-strategy lifecycle. Name is singular in the locked taxonomy; plural normalized label queued for the naming pass. APQC 'Evaluate strategic initiatives' is a WEAK generic match."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Second step of the brand-strategy lifecycle. Name is singular in the locked taxonomy; plural normalized label queued for the naming pass. APQC 'Evaluate strategic initiatives' is a WEAK generic match. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Formulate and Evaluate Strategic Operating Alternative' to 'Formulate and Evaluate Strategic Operating Alternatives'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-1-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7085,7 +7088,7 @@ Out of scope: Corporate strategy (its owner) | hypothesis testing (CM-1-3-2-1-3)
     intake:primaryPurpose "Brand strategy that knows what it is trying to achieve and what it is betting on."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "precedes: Formulate and Evaluate Strategic Operating Alternative | precedes: Develop & Test Brand Hypothesis | governed-by: Brand Strategy"@en ;
+    intake:relatedConcepts "precedes: Formulate and Evaluate Strategic Operating Alternatives (CM-1-3-2-1-1) | precedes: Develop & Test Brand Hypothesis | governed-by: Brand Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 22 (2026-09-20). First step of the brand-strategy lifecycle. Capitalization and plural normalized in the queued label; name locked. APQC 'Establish channel objectives' is a WEAK adjacent match."@en .
 
@@ -7113,7 +7116,7 @@ Out of scope: The analyses (CM-1-3-1) | in-channel pilot execution (CM-1-3-6) | 
     intake:primaryPurpose "Brand bets tested before they are placed."@en ;
     intake:processHorizon "strategic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Formulate and Evaluate Strategic Operating Alternative | precedes: Develop / update Brand"@en ;
+    intake:relatedConcepts "follows: Formulate and Evaluate Strategic Operating Alternatives (CM-1-3-2-1-1) | precedes: Develop / update Brand"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 22 (2026-09-20). Third step of the brand-strategy lifecycle; evidence controls inherited from batch 21 (privacy statement, competitor-information prohibition). APQC 'Develop marketing strategy' is a WEAK broad match."@en .
 
@@ -9529,7 +9532,7 @@ Out of scope: Loyalty/cards operation (CM-1-3-6-6) | eligibility, reward, accoun
     intake:primaryPurpose "Programs judged by evidence, run by their operators."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Marketing Performance Analysis | informed-by: Loyalty And Cards Management - Marketing"@en ;
+    intake:relatedConcepts "governed-by: Marketing Performance Analysis | informed-by: Loyalty and Cards Management (Marketing) (CM-1-3-6-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 27 (2026-09-20). Program child; review boundaries verbatim — analysis never drifts into operation, customer-service, fraud, privacy, or credit scope, and never redefines propositions, offers, mechanics, or experience strategy; b21 privacy statement and publication default inherited. APQC 'Define customer loyalty program' is a false-direction match (program design)."@en .
 
@@ -10003,12 +10006,12 @@ proc:CM-1-3-6-5-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 16408"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Promotions and Events Execution"@en ;
+    skos:altLabel "Manage Promotions/Events Execution"@en ;
     skos:broader proc:CM-1-3-6-5 ;
     skos:definition "Execute released promotions and events: coordinate site and channel readiness, deploy promotional materials, deliver events, coordinate participating partners, and close out each promotion or event with captured actuals."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.5.2" ;
-    skos:prefLabel "Manage Promotions/Events Execution"@en ;
+    skos:prefLabel "Manage Promotions and Events Execution"@en ;
     skos:scopeNote """The promotion-readiness conditional framework applies. Site, supply, inventory, price, promotional mechanics, legal terms, partner, EHS, POS, staffing, technology, and measurement readiness are confirmed by their accountable owners before activation. Marketing Plan Execution coordinates these confirmations; it does not certify the conditions itself. Price-affecting promotional mechanics are implemented only through Sales Pricing Management and governed Price & Discount Master Data submission; execution never configures prices or price displays directly (b24 POS price-display exclusion; b28 no-self-exception rule). Partner participation operates under executed agreements only.
 In scope: Coordinate readiness confirmation with accountable owners | promotional material deployment | event delivery and staffing coordination | partner execution coordination under executed agreements | teardown, closeout, and actuals capture
 Out of scope: Promotion design and approval (planning) | certifying readiness conditions (their accountable owners) | price setting or POS price configuration (CM-1-3-6-3; site operations) | legal terms drafting (Legal) | inventory ownership"""@en ;
@@ -10022,7 +10025,7 @@ Out of scope: Promotion design and approval (planning) | certifying readiness co
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Marketing Communications Planning | informed-by: Implement sales price"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Review readiness-owner list adopted verbatim; coordinates-but-does-not-certify qualifier per review; b27 promotion-readiness framework and b28 pricing rules inherited. Normalized label 'Manage Promotions and Events Execution' recorded as alt label and queued for the naming pass."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Review readiness-owner list adopted verbatim; coordinates-but-does-not-certify qualifier per review; b27 promotion-readiness framework and b28 pricing rules inherited. Normalized label 'Manage Promotions and Events Execution' recorded as alt label and queued for the naming pass. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage Promotions/Events Execution' to 'Manage Promotions and Events Execution'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-6-5-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10058,12 +10061,12 @@ proc:CM-1-3-6-6-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 18641"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Set Up Prospect"@en ;
+    skos:altLabel "Setup Prospect"@en ;
     skos:broader proc:CM-1-3-6-6 ;
     skos:definition "Coordinate prospective program-member/cardholder onboarding by capturing applications, validating completeness, and initiating required Credit, KYC, Compliance, Master Data, contract, and program-eligibility controls. Request establishment of governed customer, member, and card-account records through their owning master-data controls, and confirm activation readiness."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.1" ;
-    skos:prefLabel "Setup Prospect"@en ;
+    skos:prefLabel "Set Up Prospect"@en ;
     skos:scopeNote """Onboarding coordination model (b28 precedent): setup coordinates commercial qualification and activation readiness through the owning controls — credit through Establish Credit Limit & Risk Code, identity through Perform KYC Due Diligence, customer records through Maintain Customer and Commercial Account Master Data — and each control retains its owner. Setup never grants credit, bypasses KYC, or writes directly into governed master data: it requests governed record creation and consumes the outcomes. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Application capture and completeness validation | initiation of Credit, KYC, Compliance, Master Data, contract, and program-eligibility controls | requests for governed record creation | activation readiness confirmation
 Out of scope: Credit decisions and limit setting (CM-1-3-7-4) | identity/KYC determinations (their owners) | master-data record ownership and writes outside governed submission (CM-1-3-7-1) | marketing acquisition campaigns"""@en ;
@@ -10077,7 +10080,7 @@ Out of scope: Credit decisions and limit setting (CM-1-3-7-4) | identity/KYC det
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "requires: Perform KYC Due Diligence (CM-1-3-7-4-6) | requires: Establish Credit Limit & Risk Code | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Review onboarding wording adopted verbatim; records are requested through governed controls, never owned here. Normalized label 'Set Up Prospect' recorded as alt label and queued for the naming pass."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Review onboarding wording adopted verbatim; records are requested through governed controls, never owned here. Normalized label 'Set Up Prospect' recorded as alt label and queued for the naming pass. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Setup Prospect' to 'Set Up Prospect'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-6-6-10 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10091,7 +10094,7 @@ proc:CM-1-3-6-6-10 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.10" ;
     skos:prefLabel "Perform Physical Card Handling"@en ;
-    skos:scopeNote """Chain-of-custody and secure-handling controls are defined by Security and applied without exception. Quality checks may be performed by the card manufacturer or personalization vendor; this process coordinates and evidences quality acceptance rather than necessarily performing inspection itself. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty And Cards Management - Marketing (CM-1-3-6-6). Delivery exceptions route back through card administration.
+    skos:scopeNote """Chain-of-custody and secure-handling controls are defined by Security and applied without exception. Quality checks may be performed by the card manufacturer or personalization vendor; this process coordinates and evidences quality acceptance rather than necessarily performing inspection itself. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty and Cards Management (Marketing) (CM-1-3-6-6). Delivery exceptions route back through card administration.
 In scope: Personalization and fulfillment coordination | quality acceptance coordination and evidence | secure storage and chain of custody | distribution and delivery | return, destruction, and exception handling with records
 Out of scope: Security control definition (Security) | card production runs (CM-1-3-6-6-13) | design compliance (CM-1-3-6-6-8) | vendor contracting (Procurement)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -10140,12 +10143,11 @@ proc:CM-1-3-6-6-12 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10003"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Additional Card Services"@en ;
     skos:broader proc:CM-1-3-6-6 ;
     skos:definition "Manage supplementary services offered through the card program, such as on-road services (breakdown assistance, tolls, parking) and partner services: administer service enrollments, coordinate service-partner delivery, and handle service transactions within the program."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.12" ;
-    skos:prefLabel "Manage Additional Card Services (On Road Services)"@en ;
+    skos:prefLabel "Manage Additional Card Services"@en ;
     skos:scopeNote """Service-partner arrangements are contracted through the contract-management controls and create no obligations beyond executed agreements (b26 rule). Service transactions bill through the same program billing-coordination boundary as card transactions. Service scope offered to customers follows approved program terms; new service types are approved through program governance before offering.
 In scope: Service enrollment administration | partner delivery coordination under executed agreements | service transaction capture and routing to billing coordination | service-level issue resolution at program level
 Out of scope: Partner contracting terms (contract management; Legal) | invoicing execution (CM-1-3-8-1) | new service approval (program governance) | the partner's own service delivery"""@en ;
@@ -10159,7 +10161,7 @@ Out of scope: Partner contracting terms (contract management; Legal) | invoicing
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Manage Contract & Order | enables: Manage Card Program Billing Coordination (CM-1-3-6-6-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). b26 no-implied-obligations rule applied to service partners. Normalized label 'Manage Additional Card Services' recorded as alt label and queued — parenthetical examples belong in the definition."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). b26 no-implied-obligations rule applied to service partners. Normalized label 'Manage Additional Card Services' recorded as alt label and queued — parenthetical examples belong in the definition. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage Additional Card Services (On Road Services)' to 'Manage Additional Card Services'. Prior label NOT retained as skos:altLabel per the migration-map-only disposition (generic-alias precedent): the old label would falsely narrow scope / is not a useful synonym; preserved as prior_name in the identity/migration map."@en .
 
 proc:CM-1-3-6-6-13 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10173,7 +10175,7 @@ proc:CM-1-3-6-6-13 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.13" ;
     skos:prefLabel "Manage Card Production & Monthly Reissue"@en ;
-    skos:scopeNote """Production and personalization vendors operate under procurement and contract controls and under the applicable Security-defined and scheme secure-production requirements. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty And Cards Management - Marketing (CM-1-3-6-6). Production releases only designs verified by Ensure Card Design Compliance. Reissue scheduling coordinates with card-media inventory monitoring so cycles are supplied.
+    skos:scopeNote """Production and personalization vendors operate under procurement and contract controls and under the applicable Security-defined and scheme secure-production requirements. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty and Cards Management (Marketing) (CM-1-3-6-6). Production releases only designs verified by Ensure Card Design Compliance. Reissue scheduling coordinates with card-media inventory monitoring so cycles are supplied.
 In scope: Production and personalization scheduling | monthly reissue cycle management | vendor run coordination within contracts | handoff to physical handling | production records
 Out of scope: Vendor contracting (Procurement) | design compliance (CM-1-3-6-6-8) | physical distribution and custody (CM-1-3-6-6-10) | card-media purchasing"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -10200,7 +10202,7 @@ proc:CM-1-3-6-6-14 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.14" ;
     skos:prefLabel "Manage Credit Card Transactions"@en ;
-    skos:scopeNote """Coordinate, monitor, and reconcile acceptance-side transaction processing, including submission or transmission through approved processors/acquirers where that activity is assigned to the program. Submission to acquirers may be performed automatically by processors, gateways, POS systems, or merchant-services platforms; this process coordinates, monitors, and reconciles rather than assuming it performs acquiring, transmission, or settlement in every architecture. Acquirer, processor, issuer, gateway, and banking relationships are owned by Finance/Treasury; funds movement is never performed here — reconciliation and exception preparation only, coordinating with Perform Cash, Acquirer, and Receivables Reconciliations. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty And Cards Management - Marketing (CM-1-3-6-6).
+    skos:scopeNote """Coordinate, monitor, and reconcile acceptance-side transaction processing, including submission or transmission through approved processors/acquirers where that activity is assigned to the program. Submission to acquirers may be performed automatically by processors, gateways, POS systems, or merchant-services platforms; this process coordinates, monitors, and reconciles rather than assuming it performs acquiring, transmission, or settlement in every architecture. Acquirer, processor, issuer, gateway, and banking relationships are owned by Finance/Treasury; funds movement is never performed here — reconciliation and exception preparation only, coordinating with Perform Cash, Acquirer, and Receivables Reconciliations. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty and Cards Management (Marketing) (CM-1-3-6-6).
 In scope: Monitoring of approved processor/acquirer transaction flows | reconciliation of transaction submissions and settlement files | exception identification, preparation, and routing | coordination of resolution with Treasury, processors, O2C, and Security | processing records
 Out of scope: Acquirer/processor/issuer/gateway/banking relationships (Treasury) | funds movement and settlement execution | interchange and scheme fee terms (Treasury; networks) | cash application (CM-1-3-8-2)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -10304,13 +10306,12 @@ proc:CM-1-3-6-6-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11074"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Card Administration"@en ;
     skos:broader proc:CM-1-3-6-6 ;
     skos:definition "Administer card accounts day to day: process new-card orders, changes to card data such as vehicles, drivers, and purchase restrictions, renewals and replacements, and activations and blocks on customer instruction."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6.4" ;
-    skos:prefLabel "Manage Cards Administration (Order New Cards, Change Card Data)"@en ;
-    skos:scopeNote """Changes to card, driver, vehicle, contact, product restriction, and delivery data require authenticated instructions, authorization checks, audit logging, effective-dating, and applicable master-data synchronization. Changes to data held in governed master data are submitted through the owning master-data controls. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty And Cards Management - Marketing (CM-1-3-6-6).
+    skos:prefLabel "Manage Card Administration"@en ;
+    skos:scopeNote """Changes to card, driver, vehicle, contact, product restriction, and delivery data require authenticated instructions, authorization checks, audit logging, effective-dating, and applicable master-data synchronization. Changes to data held in governed master data are submitted through the owning master-data controls. Card-data security follows the fact-dependent PCI DSS scope statement and Security-defined controls stated at Loyalty and Cards Management (Marketing) (CM-1-3-6-6).
 In scope: New-card order processing | card data changes on authenticated, authorized instruction with audit logging and effective-dating | renewals, replacements, activations, blocks | master-data synchronization through governed submission | administration records
 Out of scope: Credit and limit decisions (CM-1-3-7-4; Handle Card Limits within envelope) | physical production and logistics (CM-1-3-6-6-10/-13) | master-data writes outside governed submission | security control definition (Security)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -10323,7 +10324,7 @@ Out of scope: Credit and limit decisions (CM-1-3-7-4; Handle Card Limits within 
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PCI-DSS-001"@en ;
     intake:relatedConcepts "triggers: Manage Card Production & Monthly Reissue | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Review authentication/authorization/audit rule adopted verbatim. Normalized label 'Manage Card Administration' recorded as alt label and queued — parenthetical examples belong in the definition, not the label."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Review authentication/authorization/audit rule adopted verbatim. Normalized label 'Manage Card Administration' recorded as alt label and queued — parenthetical examples belong in the definition, not the label. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Manage Cards Administration (Order New Cards, Change Card Data)' to 'Manage Card Administration'. Prior label NOT retained as skos:altLabel per the migration-map-only disposition (generic-alias precedent): the old label would falsely narrow scope / is not a useful synonym; preserved as prior_name in the identity/migration map."@en .
 
 proc:CM-1-3-6-6-5 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10459,7 +10460,7 @@ Out of scope: Purchasing and vendor contracting (Procurement) | production sched
     intake:primaryPurpose "Card issuance continuously supplied under secure custody, without excess or shortage."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Manage Card Production & Monthly Reissue | informed-by: Manage Cards Administration (Order New Cards, Change Card Data)"@en ;
+    intake:relatedConcepts "enables: Manage Card Production & Monthly Reissue | informed-by: Manage Card Administration (CM-1-3-6-6-4)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 29 (2026-09-20). Review secure-inventory terminology adopted verbatim; explicit disambiguation from petroleum 'stock'. Normalized label 'Plan Card Stock Consumption and Monitor Inventory' recorded as alt label and queued."@en .
 
@@ -10559,7 +10560,7 @@ proc:CM-1-3-7-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.1.1" ;
     skos:prefLabel "Maintain Customer and Commercial Account Master Data"@en ;
-    skos:scopeNote """Who decides: commercial qualification, credit standing, and KYC outcomes are decided by their owning processes (prospect onboarding coordination, Manage Credit & Risk, Perform KYC Due Diligence); this process records and maintains the governed result and never grants status. Record creation is requested through governed submission (the Setup Prospect rule, owner's side). Customer personal data is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit. Contact details, communication preferences, suppression indicators, and consent/lawful-basis records may be linked to commercial master data where authorized, but the existence of an email, phone number, address, account relationship, or contactability attribute never creates marketing permission. The consent/preference framework remains separately governed.
+    skos:scopeNote """Who decides: commercial qualification, credit standing, and KYC outcomes are decided by their owning processes (prospect onboarding coordination, Manage Credit & Risk, Perform KYC Due Diligence); this process records and maintains the governed result and never grants status. Record creation is requested through governed submission (the Set Up Prospect rule, owner's side). Customer personal data is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit. Contact details, communication preferences, suppression indicators, and consent/lawful-basis records may be linked to commercial master data where authorized, but the existence of an email, phone number, address, account relationship, or contactability attribute never creates marketing permission. The consent/preference framework remains separately governed.
 In scope: Party, account, role, hierarchy, and relationship record creation on authorized request | validation, enrichment, deduplication within the governed customer domain model | change application with audit trails | quality monitoring and remediation | controlled retirement/closure recording per Perform Credit-Driven Customer Closure and Reinstatement decisions
 Out of scope: Credit, KYC, and qualification decisions (their owners) | consent creation or consent/preference framework ownership | customer relationship management | customer domain model definition (Data Governance) | privacy framework setting"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
@@ -10570,7 +10571,7 @@ Out of scope: Credit, KYC, and qualification decisions (their owners) | consent 
     intake:primaryPurpose "Accurate, governed party and account records, distinct by role, consumable everywhere needed."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Setup Prospect | enables: Manage Customer Invoicing and Billing | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6)"@en ;
+    intake:relatedConcepts "enables: Set Up Prospect (CM-1-3-6-6-1) | enables: Manage Customer Invoicing and Billing | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 31 (2026-09-20). Review Party/Customer Account/role wording adopted verbatim — never collapses Sold-To, Bill-To, Payer, Ship-To, Loading-Authorized Party, dealer, distributor, or marketer meanings; strengthened consent separation adopted verbatim. Preferred label 'Maintain Customer and Commercial Account Master Data' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Customer Master Data' to 'Maintain Customer and Commercial Account Master Data'. Prior label retained as altLabel."@en .
 
@@ -10625,7 +10626,7 @@ Out of scope: Product/service definition, specification, and lifecycle decisions
     intake:primaryPurpose "An accurate governed catalog behind every quote, order, and invoice."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Capture & Validate Order | enables: Create & Distribute Bill"@en ;
+    intake:relatedConcepts "enables: Capture & Validate Order | enables: Create and Distribute Bill (CM-1-3-8-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 31 (2026-09-20). Review specification distinction adopted verbatim — catalog representation here, authoritative technical/quality/regulatory sources with their owners (material for fuels, additives, lubricants, and regulated products). Preferred label 'Maintain Product and Service Master Data' recorded as alt label and queued — scope includes services. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Product Master Data' to 'Maintain Product and Service Master Data'. Prior label retained as altLabel."@en .
 
@@ -10936,12 +10937,12 @@ proc:CM-1-3-7-3-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10332"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Change or Cancel Order"@en ;
+    skos:altLabel "Change / Cancel Order"@en ;
     skos:broader proc:CM-1-3-7-3 ;
     skos:definition "Process authenticated order change and cancellation requests: validate the request against the order's status and the applicable cutoff rules, re-run affected validations (price, credit, allocation, tax) for changes, apply approved change and cancellation fees per policy, and propagate the outcome to allocation, fulfillment, billing, and the customer."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.3.3" ;
-    skos:prefLabel "Change / Cancel Order"@en ;
+    skos:prefLabel "Change or Cancel Order"@en ;
     skos:scopeNote """Physical-status constraints govern feasibility: an order in loading or transit follows the physical processes' cutoff and return rules — this process never overrides a physical status. Changes re-validate through the same governed controls as capture (no-self-exception); repricing on change follows the applicable terms and governed price data. Fees apply per approved policy; waivers are decisions of the policy owners under the delegations of authority, recorded here. Change and cancellation handling preserves original order, revision, effective timestamp, approval, fee, allocation, credit, tax, and fulfillment evidence. It does not delete history. Cancellations after fulfillment route to returns authorization or billing correction, not deletion.
 In scope: Authenticated change/cancel request processing | cutoff and status validation | re-validation of affected controls | approved fee application | propagation to allocation, fulfillment, billing, and the customer | complete preserved change history
 Out of scope: Overriding physical status or logistics cutoffs (physical processes) | fee policy and waiver decisions (policy owners; DoA) | returns execution (CM-1-3-7-3-6) | invoicing corrections (CM-1-3-8-1)"""@en ;
@@ -10955,7 +10956,7 @@ Out of scope: Overriding physical status or logistics cutoffs (physical processe
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Capture & Validate Order | uses-input: Manage Fulfillment | enables: Manage Commercial Returns Authorization and Coordination (CM-1-3-7-3-6)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 33 (2026-09-20). Review history-preservation rule adopted verbatim. Normalized label 'Change or Cancel Order' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 33 (2026-09-20). Review history-preservation rule adopted verbatim. Normalized label 'Change or Cancel Order' recorded as alt label and queued. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Change / Cancel Order' to 'Change or Cancel Order'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-3-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10980,7 +10981,7 @@ Out of scope: Physical execution and custody transfer (supply chain/terminal/log
     intake:primaryPurpose "Every released order reaches evidenced completion, with billing-grade evidence, or a managed exception."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-API-MPMS-001"@en ;
-    intake:relatedConcepts "follows: Allocate & Release Order | enables: Create & Distribute Bill | enables: Track & Forecast Order"@en ;
+    intake:relatedConcepts "follows: Allocate & Release Order | enables: Create and Distribute Bill (CM-1-3-8-1-1) | enables: Track & Forecast Order"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 33 (2026-09-20). Review evidence wording adopted verbatim — received, linked, validated for commercial completeness, retained; never created or restated. API MPMS retained as contextual measurement/custody evidence only, with the review's qualifying note: the governing contract, operating procedure, applicable standard, and legal/regulatory regime determine transaction-specific evidence and quantity basis."@en .
 
@@ -11025,7 +11026,7 @@ proc:CM-1-3-7-3-6 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.3.6" ;
     skos:prefLabel "Manage Commercial Returns Authorization and Coordination"@en ;
-    skos:scopeNote """Downstream return taxonomy: bulk fuel/product returns are exceptional — off-spec, contamination, delivery error, tank-integrity concern, custody/quality dispute, or safety/EHS incident — with disposition (return to stock, downgrade, reprocess, dispose) a Quality/EHS/Operations determination; packaged lubricants/consumables return per commercial policy with warehouse/logistics and quality; damaged/defective and misdelivery/wrong-product recovery combine quality, logistics, and commercial coordination; containers, totes, cylinders, and similar assets follow the asset/container processes; cancellation before dispatch is Change / Cancel Order's; billing adjustment without physical return is the invoicing/credit-memo/dispute processes'. Return transport of hazardous product follows the applicable transport safety regulations and company procedures (FMCSA cited as transport-safety context only — PHMSA/HMR, state, maritime/rail, and site rules may also apply). Financial credit flows exclusively through Manage Customer Invoicing and Billing controls; the payment-authority rule applies to any refund instruction. Root causes feed quality and order-process improvement.
+    skos:scopeNote """Downstream return taxonomy: bulk fuel/product returns are exceptional — off-spec, contamination, delivery error, tank-integrity concern, custody/quality dispute, or safety/EHS incident — with disposition (return to stock, downgrade, reprocess, dispose) a Quality/EHS/Operations determination; packaged lubricants/consumables return per commercial policy with warehouse/logistics and quality; damaged/defective and misdelivery/wrong-product recovery combine quality, logistics, and commercial coordination; containers, totes, cylinders, and similar assets follow the asset/container processes; cancellation before dispatch is Change or Cancel Order's; billing adjustment without physical return is the invoicing/credit-memo/dispute processes'. Return transport of hazardous product follows the applicable transport safety regulations and company procedures (FMCSA cited as transport-safety context only — PHMSA/HMR, state, maritime/rail, and site rules may also apply). Financial credit flows exclusively through Manage Customer Invoicing and Billing controls; the payment-authority rule applies to any refund instruction. Root causes feed quality and order-process improvement.
 In scope: Return request validation against policy and original order | commercial return authorization | coordination of authorized physical return with logistics and quality owners | disposition routing to Quality/EHS/Operations owners | credit handoff to billing controls | return records and root-cause routing
 Out of scope: Product disposition decisions (Quality/EHS/Operations) | physical return transport execution (logistics; applicable transport regulations) | container/asset recovery processes (their owners) | credit memo issuance (CM-1-3-8-1) | refund execution (Finance; payment-authority rule) | return policy setting (policy owners)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -11036,7 +11037,7 @@ Out of scope: Product disposition decisions (Quality/EHS/Operations) | physical 
     intake:primaryPurpose "Every return is authorized, safely handled by its owners, dispositioned correctly, and credited through governed controls."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-FMCSA-001"@en ;
-    intake:relatedConcepts "follows: Change / Cancel Order | enables: Create Credit Memo | uses-input: Manage Fulfillment"@en ;
+    intake:relatedConcepts "follows: Change or Cancel Order (CM-1-3-7-3-3) | enables: Create Credit Memo | uses-input: Manage Fulfillment"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 33 (2026-09-20). Review authorization-and-coordination wording and return-category taxonomy adopted verbatim; FMCSA retained as transport-safety context only per review. Preferred label 'Manage Commercial Returns Authorization and Coordination' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Manage Returns' to 'Manage Commercial Returns Authorization and Coordination'. Prior label retained as altLabel."@en .
 
@@ -11090,7 +11091,7 @@ Out of scope: Policy setting (CM-1-3-7-4-1) | KYC execution (CM-1-3-7-4-6) | ove
     intake:primaryPurpose "Every customer's credit envelope is decided, evidenced, current, and governed."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-REG-B-001"@en ;
-    intake:relatedConcepts "follows: Perform KYC Due Diligence (CM-1-3-7-4-6) | governed-by: Maintain Credit Policies | enables: Monitor Credit Against Limit | enables: Setup Prospect"@en ;
+    intake:relatedConcepts "follows: Perform KYC Due Diligence (CM-1-3-7-4-6) | governed-by: Maintain Credit Policies | enables: Monitor Credit Against Limit | enables: Set Up Prospect (CM-1-3-6-6-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 34 (2026-09-20). Review evidence hierarchy and mandatory-criteria rule adopted verbatim — a favorable financial assessment cannot override a Compliance/Legal restriction; fact-dependent ECOA/Regulation B statement retained with SRC-REG-B-001 registered for traceability per review."@en .
 
@@ -11189,9 +11190,9 @@ proc:CM-1-3-7-4-6 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.4.6" ;
     skos:prefLabel "Perform KYC Due Diligence"@en ;
-    skos:scopeNote """Execution, not framework ownership: the sanctions compliance and financial-crime frameworks are owned by Compliance and Legal; this process executes them. Potential sanctions, watchlist, PEP, adverse-media, beneficial-ownership, identity, or document discrepancies are escalated for designated Compliance/Legal review. The KYC process does not clear a true/false match, grant exceptions, or determine permissibility of a relationship. Fact-dependent statement: U.S. sanctions administered by OFAC apply broadly to U.S. persons — customer and counterparty screening against the SDN and other OFAC lists is performed per the enterprise sanctions compliance program; anti-money-laundering program obligations are fact-dependent on the entity's regulatory status and activities; applicability and program design are Compliance/Legal determinations. Refresh triggers may be time-based, event-driven, risk-rating driven, ownership/control-change driven, negative-news or sanctions-driven, or transaction/activity-triggered. KYC outcomes gate onboarding (Setup Prospect requires them; customer master records them) and feed credit assessment. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
+    skos:scopeNote """Execution, not framework ownership: the sanctions compliance and financial-crime frameworks are owned by Compliance and Legal; this process executes them. Potential sanctions, watchlist, PEP, adverse-media, beneficial-ownership, identity, or document discrepancies are escalated for designated Compliance/Legal review. The KYC process does not clear a true/false match, grant exceptions, or determine permissibility of a relationship. Fact-dependent statement: U.S. sanctions administered by OFAC apply broadly to U.S. persons — customer and counterparty screening against the SDN and other OFAC lists is performed per the enterprise sanctions compliance program; anti-money-laundering program obligations are fact-dependent on the entity's regulatory status and activities; applicability and program design are Compliance/Legal determinations. Refresh triggers may be time-based, event-driven, risk-rating driven, ownership/control-change driven, negative-news or sanctions-driven, or transaction/activity-triggered. KYC outcomes gate onboarding (Set Up Prospect requires them; customer master records them) and feed credit assessment. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Identity and legal-existence verification | collection, verification, and maintenance of beneficial-ownership information where required | sanctions and watchlist screening per the enterprise program | KYC risk assessment per framework | refresh on required cycles and trigger events | escalation of potential matches and discrepancies to designated Compliance/Legal review | KYC records
-Out of scope: Sanctions/AML framework ownership, match clearing, exceptions, and relationship-permissibility determinations (Compliance; Legal) | credit decisions (CM-1-3-7-4-2) | onboarding coordination (Setup Prospect) | privacy framework setting"""@en ;
+Out of scope: Sanctions/AML framework ownership, match clearing, exceptions, and relationship-permissibility determinations (Compliance; Legal) | credit decisions (CM-1-3-7-4-2) | onboarding coordination (Set Up Prospect) | privacy framework setting"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Customer applications and documents | enterprise sanctions/AML framework | screening lists per the program | refresh triggers"@en ;
@@ -11200,7 +11201,7 @@ Out of scope: Sanctions/AML framework ownership, match clearing, exceptions, and
     intake:primaryPurpose "The business always knows who it is dealing with, and never deals with who it must not."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-OFAC-001"@en ;
-    intake:relatedConcepts "enables: Setup Prospect | enables: Establish Credit Limit & Risk Code | governed-by: Manage Credit & Risk"@en ;
+    intake:relatedConcepts "enables: Set Up Prospect (CM-1-3-6-6-1) | enables: Establish Credit Limit & Risk Code | governed-by: Manage Credit & Risk"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 34 (2026-09-20). Review beneficial-ownership wording (collect/verify/maintain, never legally 'establish') and match-escalation rule adopted verbatim; refresh-trigger taxonomy per review. Preferred label 'Perform KYC Due Diligence' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'KYC Process' to 'Perform KYC Due Diligence'. Prior label retained as altLabel."@en .
 
@@ -11256,7 +11257,7 @@ Out of scope: Master-data domains and changes (CM-1-3-7-1; governed submission) 
     intake:primaryPurpose "One trustworthy, auditable record per request, wherever the request goes."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Process Inquiries and Requests | enables: Perform Customer Follow up | governed-by: Manage Customer Requests and Inquiries"@en ;
+    intake:relatedConcepts "enables: Process Inquiries and Requests | enables: Perform Customer Follow-Up (CM-1-3-7-5-4) | governed-by: Manage Customer Requests and Inquiries"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 35 (2026-09-20). Review refined definition, case-state control list, and merge safeguard adopted verbatim — merge never deletes or obscures complaint/incident evidence (matters for disputes, EHS complaints, regulated issues, legal holds). Preferred label 'Maintain Customer Request and Inquiry Records' recorded as alt label and queued — removes the incorrect 'master' implication. Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed from 'Maintain Requests and Inquiries Master Database' to 'Maintain Customer Request and Inquiry Records'. Prior label retained as altLabel."@en .
 
@@ -11283,7 +11284,7 @@ Out of scope: Dispute adjudication (CM-1-3-8-3-1) | billing corrections and cred
     intake:primaryPurpose "Every case resolves through the right owner, and the customer always hears back."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Prioritize Customer Requests and Inquiries (CM-1-3-7-5-1) | enables: Manage Receivables Disputes (CM-1-3-8-3-1) | enables: Perform Customer Follow up"@en ;
+    intake:relatedConcepts "follows: Prioritize Customer Requests and Inquiries (CM-1-3-7-5-1) | enables: Manage Receivables Disputes (CM-1-3-8-3-1) | enables: Perform Customer Follow-Up (CM-1-3-7-5-4)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 35 (2026-09-20). Review information-source safeguard adopted verbatim — the no-shadow-decision rule's answer-side twin: governed content or confirmed owner outcomes only, no inference or promises."@en .
 
@@ -11294,11 +11295,12 @@ proc:CM-1-3-7-5-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10106"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:altLabel "Perform Customer Follow up"@en ;
     skos:broader proc:CM-1-3-7-5 ;
     skos:definition "Follow up resolved cases with the customer: confirm the resolution held, verify commitments made during resolution were met, capture satisfaction and residual issues, and reopen or re-route where resolution failed."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.5.4" ;
-    skos:prefLabel "Perform Customer Follow up"@en ;
+    skos:prefLabel "Perform Customer Follow-Up"@en ;
     skos:scopeNote """Follow-up communications are service communications tied to the customer's case — conducted through the customer's preferred service channels; marketing content requires the separate consent/contactability framework and never rides a service follow-up. Case-level follow-up feedback is operational service evidence. It does not replace governed Consumer Analysis, Customer/Marketer Analysis, formal survey design, loyalty analytics, or customer-experience measurement. Reopened cases re-enter prioritization; commitments verified are the owning processes' commitments, tracked here. Satisfaction signals and residual-issue patterns feed the service reviews and evidence-layer metrics (candidate KPIs via the KPI Store).
 In scope: Post-resolution confirmation | commitment verification | satisfaction and residual-issue capture as operational service evidence | reopening and re-routing on failed resolution | signal provision to service reviews
 Out of scope: Marketing communication (Marketing execution; consent/contactability framework) | formal survey design, consumer/customer analysis, loyalty analytics, and customer-experience measurement (Marketing Performance Analysis, CM-1-3-5-5) | re-resolution substance (owning processes) | KPI approval/publication (Enterprise measurement governance)"""@en ;
@@ -11312,7 +11314,7 @@ Out of scope: Marketing communication (Marketing execution; consent/contactabili
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "follows: Process Inquiries and Requests | enables: Conduct Customer Service Reviews (CM-1-3-7-5-5)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 35 (2026-09-20). Review formal-research distinction adopted verbatim — case-level feedback is operational service evidence, never a substitute for governed analysis processes. Normalized label 'Perform Customer Follow-Up' is punctuation-only — queued for the naming pass, no alt label (validator lesson)."@en .
+    intake:terminologyNotes "Batch 35 (2026-09-20). Review formal-research distinction adopted verbatim — case-level feedback is operational service evidence, never a substitute for governed analysis processes. Normalized label 'Perform Customer Follow-Up' is punctuation-only — queued for the naming pass, no alt label (validator lesson). Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Perform Customer Follow up' to 'Perform Customer Follow-Up'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-5-5 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11338,7 +11340,7 @@ Out of scope: Commercial negotiation, terms, pricing, volumes, and contract deci
     intake:primaryPurpose "Service performance reviewed with the customer, on cadence, with actions that actually close."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Perform Customer Follow up | enables: Manage Key Accounts | governed-by: Manage Customer Requests and Inquiries"@en ;
+    intake:relatedConcepts "uses-input: Perform Customer Follow-Up (CM-1-3-7-5-4) | enables: Manage Key Accounts | governed-by: Manage Customer Requests and Inquiries"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 35 (2026-09-20). Review commercial-referral and cadence sentences adopted verbatim — quarterly is the default cadence, not the concept. Preferred label 'Conduct Customer Service Reviews' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Conduct Quarterly Review Meeting' to 'Conduct Customer Service Reviews'. Prior label retained as altLabel."@en .
 
@@ -11376,11 +11378,12 @@ proc:CM-1-3-8-1-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10295"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:altLabel "Create & Distribute Bill"@en ;
     skos:broader proc:CM-1-3-8-1 ;
     skos:definition "Create customer invoices from confirmed channel evidence and governed commercial data on the customer's billing cadence — per delivery, consolidated, statement, or cycle — and distribute them through the customer's channels in the formats and content the applicable requirements mandate."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.8.1.1" ;
-    skos:prefLabel "Create & Distribute Bill"@en ;
+    skos:prefLabel "Create and Distribute Bill"@en ;
     skos:scopeNote """Billing consumes the contractually applicable fulfillment, custody, service-completion, or transaction evidence for the channel. The evidence source, quantity basis, timing, and billable event are defined by the agreement, applicable operational process, and governing measurement/transaction rules. Channel evidence includes, as applicable: bills of lading, delivery tickets and proof of delivery, rack meter tickets, terminal automation load records, into-plane uplift tickets, bunker delivery notes, pipeline nomination/allocation/statements, retail POS/shift/settlement evidence, service completion or fee events, contractual self-bill statements, and approved manual exception evidence. Billing runs detect duplicate, missing, out-of-period, held, incomplete, or conflicting billable events before invoice creation and route exceptions for correction. Invoices compute from confirmed, linked evidence and governed price, terms, and tax data — never from restated quantities or ad-hoc values (no-self-exception, billing side). Card-program statements assemble per the card-program billing coordination (b29). Tax/Legal determine applicable jurisdictional e-invoicing, invoice-content, digital-signature, clearance, archival, government-platform, and reporting requirements. Billing implements approved format, channel, content, delivery, and evidence rules; it does not determine legal applicability. Portal presentation flows through the portal channel (b32).
 In scope: Daily billing runs from confirmed channel evidence with duplicate, missing, out-of-period, held, incomplete, and conflict detection | per-delivery, consolidated, statement, and cycle billing per terms | invoice content assembly per governed data and Tax/Legal-directed mandates | multi-channel distribution including e-invoicing where directed | billing-run controls and completeness checks
 Out of scope: Quantity determination (measurement/fulfillment evidence owners) | pricing (governed data) | e-invoicing legal applicability (Tax; Legal) | credit memos and corrections (CM-1-3-8-1-4/-5) | cash application (CM-1-3-8-2)"""@en ;
@@ -11394,7 +11397,7 @@ Out of scope: Quantity determination (measurement/fulfillment evidence owners) |
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Manage Fulfillment | uses-input: Determine Taxability | enables: Record Customer Receipts and Payment Notifications (CM-1-3-8-2-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 36 (2026-09-21). Review channel-evidence definition and billing-run control adopted verbatim — evidence basis is contract/channel-dependent, never assumed to be a physical delivery quantity; e-invoicing implementation boundary adopted verbatim; fourth use of the daily horizon. Normalized label 'Create and Distribute Bill' is punctuation-only — queued, no alt label."@en .
+    intake:terminologyNotes "Batch 36 (2026-09-21). Review channel-evidence definition and billing-run control adopted verbatim — evidence basis is contract/channel-dependent, never assumed to be a physical delivery quantity; e-invoicing implementation boundary adopted verbatim; fourth use of the daily horizon. Normalized label 'Create and Distribute Bill' is punctuation-only — queued, no alt label. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Create & Distribute Bill' to 'Create and Distribute Bill'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-8-1-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -11448,7 +11451,7 @@ Out of scope: Tax positions, interpretations, and law-change responses (Tax func
     intake:primaryPurpose "Every invoice carries exactly the tax the Tax function's determinations require — or holds until it can."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-IRS-P510-001"@en ;
-    intake:relatedConcepts "uses-input: Maintain Tax Master Data | enables: Create & Distribute Bill | enables: Reconcile And Report Indirect Tax"@en ;
+    intake:relatedConcepts "uses-input: Maintain Tax Master Data | enables: Create and Distribute Bill (CM-1-3-8-1-1) | enables: Reconcile And Report Indirect Tax"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 36 (2026-09-21). Review tax-application wording and hold-don't-guess exception rule adopted verbatim; duplicate-name normalization queued per review ('Determine Transaction Taxability' here, recorded as alt label; compliance-side label reserved for CM-1-3-8-4-5); SRC-IRS-P510-001 scoped to federal fuel-excise context only."@en .
 
@@ -11503,7 +11506,7 @@ Out of scope: Evidence corrections (fulfillment/measurement owners) | credit mem
     intake:primaryPurpose "Billing errors die by the right controlled correction, with the full history intact."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Create & Distribute Bill | uses-input: Process Inquiries and Requests | enables: Manage Cash Application, A/R & Revenue Accounting"@en ;
+    intake:relatedConcepts "follows: Create and Distribute Bill (CM-1-3-8-1-1) | uses-input: Process Inquiries and Requests | enables: Manage Cash Application, A/R & Revenue Accounting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 36 (2026-09-21). Review document-category taxonomy adopted verbatim; preferred label 'Manage Invoice Exceptions, Reversals, and Rebilling' recorded as alt label and queued. Review preferred an 'informs' relation toward receivables/revenue accounting pending batch 37/38 authoring — 'informs' is vocabulary-missing (b10/b23 precedent): recorded here verbatim, nearest vocabulary applied to the locked L4 name. Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed from 'Create Exception & Reverse Invoice' to 'Manage Invoice Exceptions, Reversals, and Rebilling'. Prior label retained as altLabel."@en .
 
@@ -11531,7 +11534,7 @@ Out of scope: Bank, lockbox, and acquirer arrangements and funds movement (Treas
     intake:primaryPurpose "Every arriving payment is captured completely, daily, and staged with what's known about it."@en ;
     intake:processHorizon "daily"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Create & Distribute Bill | precedes: Apply Receipts | governed-by: Manage Cash Application, A/R & Revenue Accounting"@en ;
+    intake:relatedConcepts "uses-input: Create and Distribute Bill (CM-1-3-8-1-1) | precedes: Apply Receipts | governed-by: Manage Cash Application, A/R & Revenue Accounting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 37 (2026-09-21). Review recording/notification wording and settlement-finality boundary adopted verbatim. Preferred label 'Record Customer Receipts and Payment Notifications' recorded as alt label and queued — reflects what the process actually does. Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed from 'Receive Cash Receipts / Payment' to 'Record Customer Receipts and Payment Notifications'. Prior label retained as altLabel."@en .
 
@@ -11668,7 +11671,7 @@ Out of scope: Revenue-recognition policy, elections, judgments, and interpretati
     intake:primaryPurpose "Revenue on the books exactly when and as the approved model says, traceable to approved evidence."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-FASB-ASC606-001"@en ;
-    intake:relatedConcepts "uses-input: Create & Distribute Bill | uses-input: Perform Self-Billing Accounting (CM-1-3-8-1-2) | uses-input: Accruals Analysis And Calculation | enables: Period End Processing"@en ;
+    intake:relatedConcepts "uses-input: Create and Distribute Bill (CM-1-3-8-1-1) | uses-input: Perform Self-Billing Accounting (CM-1-3-8-1-2) | uses-input: Accruals Analysis And Calculation | enables: Period End Processing"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 37 (2026-09-21). Review revenue-evidence model adopted verbatim — approved unbilled bases are recognizable under Finance policy with audit trails; the earlier 'never-unbilled' phrasing was corrected as too restrictive for accrual accounting; posting-controls sentence adopted verbatim. APQC 'Perform revenue accounting' scored 1.0."@en .
 
@@ -11974,7 +11977,7 @@ Out of scope: Reported-sales validation (CM-1-3-6-8-1) | agreement terms, interp
     intake:primaryPurpose "Every royalty and fee the agreements earn is computed from validated figures, billed, collected, and accounted — to the letter of the agreements."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PMPA-001"@en ;
-    intake:relatedConcepts "uses-input: Conduct Commercial Audit to Validate Reported Sales (CM-1-3-6-8-1) | uses-input: Report Franchise Performance | enables: Create & Distribute Bill | enables: Period End Processing"@en ;
+    intake:relatedConcepts "uses-input: Conduct Commercial Audit to Validate Reported Sales (CM-1-3-6-8-1) | uses-input: Report Franchise Performance | enables: Create and Distribute Bill (CM-1-3-8-1-1) | enables: Period End Processing"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 39 (2026-09-21). Review administered-funds record distinctions and contested-obligation routing adopted verbatim. Preferred label 'Administer Royalty, Brand Fee, and Contribution Streams' recorded as alt label and queued — removes the ambiguity with the collections process; administration here, collection execution in CM-1-3-8-3. Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed from 'Manage Collection of Royalty and Fees' to 'Administer Royalty, Brand Fee, and Contribution Streams'. Prior label retained as altLabel."@en .
 
@@ -12220,7 +12223,7 @@ Out of scope: Case ownership (CM-1-3-7-5) | pricing, credits, tax, invoicing (Th
     intake:primaryPurpose "Every routed event ends in an explicit, evidenced outcome — back on the case, and billed only from evidence."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Manage Customer Interactions in Service Delivery (CM-1-3-9-2-2) | enables: Create & Distribute Bill | enables: Process Inquiries and Requests"@en ;
+    intake:relatedConcepts "follows: Manage Customer Interactions in Service Delivery (CM-1-3-9-2-2) | enables: Create and Distribute Bill (CM-1-3-8-1-1) | enables: Process Inquiries and Requests"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review outcome-status taxonomy and billable-evidence rule adopted verbatim. Preferred label 'Fulfill Service Events' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Fulfill Service Event' to 'Fulfill Service Events'. Prior label retained as altLabel."@en .
 
@@ -12302,7 +12305,7 @@ Out of scope: Service, staffing, and model decisions (Their owners) | costing me
     intake:primaryPurpose "Whether service actually works, for customers and the business — measured properly."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Perform Customer Follow up | enables: Define Operating Model"@en ;
+    intake:relatedConcepts "uses-input: Perform Customer Follow-Up (CM-1-3-7-5-4) | enables: Define Operating Model"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review metric-definition and formal-research control sentences adopted verbatim — the governed side of the batch 35 distinction."@en .
 
@@ -13330,7 +13333,7 @@ Out of scope: The request/case experience (CM-1-3-7-5) | prices, credits, tax ou
     intake:primaryPurpose "Service work done, evidenced, and returned to the case — and to billing only through evidence."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Customer Requests and Inquiries | enables: Create & Distribute Bill | uses-input: Service & Support Enablement"@en ;
+    intake:relatedConcepts "uses-input: Manage Customer Requests and Inquiries | enables: Create and Distribute Bill (CM-1-3-8-1-1) | uses-input: Service & Support Enablement"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Reclassified to capability per review — delivery data, customer interaction, and event fulfillment are concurrent controls, not a strict sequence; case-to-service-event linkage and billable-service evidence rules adopted verbatim."@en .
 
@@ -13357,7 +13360,7 @@ Out of scope: Staffing, technology, capital, and service-level decisions (Their 
     intake:primaryPurpose "One integrated, evidence-layer view of how the service operation actually performs."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Service & Support Delivery | uses-input: Perform Customer Follow up | enables: Define Operating Model"@en ;
+    intake:relatedConcepts "uses-input: Service & Support Delivery | uses-input: Perform Customer Follow-Up (CM-1-3-7-5-4) | enables: Define Operating Model"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Periodic process per review, with the integration-purpose scope sentence adopted verbatim — the L4 consolidates, it does not merely group."@en .
 
@@ -13687,7 +13690,7 @@ Out of scope: Brand standard enforcement (CM-1-3-6-7) | marketing communications
     intake:referenceSources "SRC-PMPA-001 | SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "informed-by: Marketing Insight and Metrics Stewardship (CM-1-3-1-6) | enables: Marketing Communications Strategy | enables: Sales & Distribution Channel Strategy"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 22 (2026-09-20). Concept-type: process — one hypothesis-driven strategy lifecycle (batch 08/21 variant pattern at the strategy layer). Lifecycle order: Establish Brand Objectives and hypothesis → Formulate and Evaluate Strategic Operating Alternative → Develop & Test Brand Hypothesis → Develop / update Brand. Review governance rule: strategy develops, recommends, and maintains approved direction under the applicable delegation of authority — it never unilaterally alters franchise, trademark, or investment commitments. PMPA applicability is fact-dependent (statement verbatim in scope note); Legal owns all franchise legal analysis. Batch 22 durable rule and price-role boundary recorded verbatim in scope note. APQC 'Develop KM strategy' is a false lexical match ('strategy' senses differ)."@en .
+    intake:terminologyNotes "Batch 22 (2026-09-20). Concept-type: process — one hypothesis-driven strategy lifecycle (batch 08/21 variant pattern at the strategy layer). Lifecycle order: Establish Brand Objectives and hypothesis → Formulate and Evaluate Strategic Operating Alternatives → Develop & Test Brand Hypothesis → Develop / update Brand. Review governance rule: strategy develops, recommends, and maintains approved direction under the applicable delegation of authority — it never unilaterally alters franchise, trademark, or investment commitments. PMPA applicability is fact-dependent (statement verbatim in scope note); Legal owns all franchise legal analysis. Batch 22 durable rule and price-role boundary recorded verbatim in scope note. APQC 'Develop KM strategy' is a false lexical match ('strategy' senses differ)."@en .
 
 proc:CM-1-3-2-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -15072,11 +15075,12 @@ proc:CM-1-3-6-6 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11522"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:altLabel "Loyalty And Cards Management - Marketing"@en ;
     skos:broader proc:CM-1-3-6 ;
     skos:definition "A capability that operates loyalty, proprietary-fuel-card, fleet-card, and, where applicable, network-payment-card programs through coordinated but distinct member-program and card-program processes: administering members and cardholders from prospect setup through issuance, servicing, transaction processing, billing coordination, and program benefits, across concurrently running controls for administration, financial coordination, fraud response, compliance, card logistics, and loyalty operation."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.6" ;
-    skos:prefLabel "Loyalty And Cards Management - Marketing"@en ;
+    skos:prefLabel "Loyalty and Cards Management (Marketing)"@en ;
     skos:scopeNote """Classified as a capability because its children are not lifecycle stages of one process but heterogeneous controls operating concurrently over ongoing programs. Internal conceptual split: the loyalty-program scope covers member accounts and tiers, earn/redemption mechanics, rewards fulfillment, loyalty communications under consent, program partner benefits, and loyalty operational records; the card-program scope covers cardholder/customer accounts, card issuance/activation/replacement, card limits and purchase restrictions, transaction authorization and processing coordination, billing and reimbursement coordination, fraud and service response, and secure card production and handling. Program-coordination statement: the programs coordinate member-facing financial touchpoints, but each enterprise control retains its owner — invoicing and billing execute under Manage Customer Invoicing and Billing; customer credit limits under Manage Credit & Risk; collection, disputes, and bad-debt allowance under Manage Receivables Resolution and Finance; payment execution under the payment-authority rule. Where the card program stores, processes, transmits, or can affect the security of payment-card account data within an applicable PCI payment-card environment, PCI DSS and related card-scheme obligations may apply. Closed-loop proprietary fuel-card programs may have different or no PCI DSS scope depending on the payment architecture, payment-card data handled, service providers, and applicable scheme arrangements. Security, with the accountable business, technology, processor, acquirer, and Treasury owners, determines scope and required controls. The program applies Security-defined card-data, authentication, access, encryption, tokenization, retention, vendor, incident-response, and secure-media controls. It does not define PCI scope, security architecture, security control standards, forensic investigation, or breach notification obligations. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit.
 In scope: Operate loyalty and card programs through distinct member-program and card-program processes | member/cardholder account administration | program-level financial coordination within owning-process controls | program fraud response and escalation | card logistics and production coordination | loyalty program operation
 Out of scope: Enterprise invoicing, credit, collections, and payment execution (their owning processes) | PCI scope determination, security architecture, and forensic investigation (Security) | card scheme rule-setting (external networks) | acquirer/banking relationships (Treasury) | program performance evaluation (Marketing Performance Analysis) | brand standards setting (Brand Standard Management)"""@en ;
@@ -15090,7 +15094,7 @@ Out of scope: Enterprise invoicing, credit, collections, and payment execution (
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PCI-DSS-001"@en ;
     intake:relatedConcepts "governed-by: Manage Credit & Risk | uses-input: Manage Customer Invoicing and Billing | enables: Customer Program Analysis"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 29 (2026-09-20). Capability per the heterogeneous-concurrent-control test (b21/b26 precedent); review-required loyalty-versus-card internal split stated; revised fact-dependent PCI DSS scope statement adopted verbatim (data handling and payment architecture, not branding alone); Security boundary statement adopted verbatim. Normalized label 'Loyalty and Cards Management (Marketing)' is a case/punctuation-only change — queued for the naming pass, not recorded as an alt label."@en .
+    intake:terminologyNotes "Batch 29 (2026-09-20). Capability per the heterogeneous-concurrent-control test (b21/b26 precedent); review-required loyalty-versus-card internal split stated; revised fact-dependent PCI DSS scope statement adopted verbatim (data handling and payment architecture, not branding alone); Security boundary statement adopted verbatim. Normalized label 'Loyalty and Cards Management (Marketing)' is a case/punctuation-only change — queued for the naming pass, not recorded as an alt label. Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed from 'Loyalty And Cards Management - Marketing' to 'Loyalty and Cards Management (Marketing)'. Prior label retained as altLabel."@en .
 
 proc:CM-1-2-4-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
