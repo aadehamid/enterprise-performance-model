@@ -243,7 +243,7 @@ Out of scope: Crude purchasing and trade execution (Supply And Trading) | physic
     intake:primaryPurpose "Decide which refinery receives which crude and feedstock volumes, and when, so the regional plan is met at best delivered economics."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Scheduling"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning and Optimization | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Production Planning and Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Historical note: the label retained the “Decision” suffix pending the naming pass, but the concept was always authored as the recurring allocation process, not the decision record or its output. The naming pass considered “Allocate Crude & Feedstock” for verb consistency with sibling labels; the executed label is “Allocate Crude and Feedstock”. The boundary against Supply And Trading follows the locked SCM/Commercial rule: this concept places already-secured supply and does not choose counterparty, price, or contract. Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed from 'Crude Allocation Decision' to 'Allocate Crude and Feedstock'. Prior label retained as altLabel."@en .
 
@@ -305,7 +305,7 @@ Out of scope: Enterprise master-data policy and governance standards (Data Gover
     intake:primaryPurpose "Keep the reference and parameter data behind regional supply planning accurate, current, and reproducible."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "enables: Regional Optimization | governed-by: Data Governance | informed-by: Refinery Planning"@en ;
+    intake:relatedConcepts "enables: Regional Optimization | governed-by: Data Governance | informed-by: Refinery Planning and Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Defined narrowly per Hamid's decision (2026-09-18, Option 1): scope is the supply-planning-specific reference and parameter data consumed by the regional planning model, not master data generally. The taxonomy currently carries four parallel master-data nodes — this one, Maintain Production Scheduling Master Data (CM-1-1-7-2-1), Manage Commercial Master Data Stewardship (CM-1-3-7-1), and Prepare Master Data To Create Demand Forecast (CM-1-1-1-1-1). Their consolidation, and whether a single governed master-data capability should own them, is parked for the EPM Data Governance workstream and is deliberately not resolved here. APQC candidate “Maintain master data” was triaged STRONG but accepted by no validator; used as comparative evidence only, not adopted."@en .
 
@@ -335,7 +335,7 @@ Out of scope: Finished-product inventory policy setting (Develop Finished Produc
     intake:primaryPurpose "Decide how much finished product should be held, in which grades, and where, across the regional plan horizon."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-SNF-REFPS-001"@en ;
-    intake:relatedConcepts "constrained-by: Inventory Management (CM-1-1-3-7) | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning | enables: Allocate Finished Products (CM-1-1-2-11)"@en ;
+    intake:relatedConcepts "constrained-by: Inventory Management (CM-1-1-3-7) | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning and Optimization | enables: Allocate Finished Products (CM-1-1-2-11)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Boundary resolved per Hamid's decision (2026-09-18, Option 1): this node owns the planned inventory level and position inside the regional plan, while the Inventory Management cluster under Distribution Planning & Scheduling (CM-1-1-3-7) retains policy, measurement, reconciliation, and replenishment. This preserves both approved scope notes — Regional Optimization explicitly names “inventory positioning” — and the locked SCM rule, by separating the plan-period target decision from ongoing inventory management. No tree change required. “Finished goods” retained from the existing label although “finished product” is the more common downstream term; alt labels carry both."@en .
 
@@ -1008,7 +1008,7 @@ Out of scope: Day-to-day feedstock position management (Manage Feedstock Invento
     intake:primaryPurpose "Set the binding policy for how much crude and feedstock is held, where, and under what rules."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM31-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning and Optimization | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). One of three sibling policy nodes split by material class; the split follows the physical flow (feedstock → intermediates → finished product), and each policy binds the processes managing that class. APQC 10346 is a WEAK delivery-service-policy candidate; comparative evidence only."@en .
 
@@ -1123,7 +1123,7 @@ Out of scope: Intermediate tank and transfer operation (Refining) | production p
     intake:primaryPurpose "Set the binding policy for intermediate and blendstock holdings between processing and blending."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM31-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning and Optimization | enables: Monitor and Control Inventory Positions (CM-1-1-3-7-12)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 04 (2026-09-19). 'Intermediates' read as unfinished refinery streams and blend components held between processing and blending. Middle node of the three material-class policy siblings. Operational accountability for intermediates (Refining versus planning domains) is a follow-up noted in the batch 04 PR; it does not affect this node's placement or definition."@en .
 
@@ -1803,7 +1803,7 @@ Out of scope: Selecting and approving the production plan, owned by Refinery Pla
     intake:primaryPurpose "Issue and register the approved monthly production plan as the plan of record."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-BJCE-REFPS-001 | SRC-SNF-REFPS-001 | SRC-CMU-REFPLAN-001 | SRC-EIA-LFMM-001"@en ;
-    intake:relatedConcepts "produces: Monthly Operating Plan | informed-by: Perform Scenario Analysis | governed-by: Refinery Planning | precedes: Refining | enables: Regional Backcasting"@en ;
+    intake:relatedConcepts "produces: Monthly Operating Plan | informed-by: Perform Scenario Analysis | governed-by: Refinery Planning and Optimization | precedes: Refining | enables: Regional Backcasting"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Resolved 2026-09-18, Hamid accepted Option 1 of the question raised in batch 02. The taxonomy label says “Capture”, but the monthly operating plan is the output of this cycle, not an input to it — SRC-BJCE-REFPS-001 describes monthly rolling plans as the product of tactical refinery planning, and SRC-SNF-REFPS-001 and SRC-CMU-REFPLAN-001 both place the plan as the planning-to-scheduling handover. Read as issuing and registering the plan, the node is a real process, needs no tree change, and gives the cycle the explicit handover to Refining that the locked Refining boundary implies but no other node carried. “Issue Monthly Operating Plan” is recorded as the preferred alternate label; if the label is ever corrected in the tree, that is a cosmetic Step 3d item, not a re-definition. The registered assumption set is also what the locked backcasting rule requires, since backcasting compares actuals to the approved plan and its contemporaneous assumptions, never a later reforecast."@en .
 
@@ -1833,7 +1833,7 @@ Out of scope: Selecting and approving the production plan, owned by Refinery Pla
     intake:primaryPurpose "Quantify and compare production alternatives and their sensitivities to support case selection."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-LFMM-001 | SRC-BJCE-REFPS-001 | SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001"@en ;
-    intake:relatedConcepts "enables: Refinery Optimization | uses-input: Capture Product Demand Requirements | uses-input: Capture Refinery Level Constraints | precedes: Refinery Planning"@en ;
+    intake:relatedConcepts "enables: Refinery Optimization | uses-input: Capture Product Demand Requirements | uses-input: Capture Refinery Level Constraints | precedes: Refinery Planning and Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 02 (2026-09-18). Read as a case-basis assembly step inside the CM-1-1-4-7 Refinery Optimization run cycle: this node is the analysis step rather than a case-basis input. Sibling “Capture …” nodes were defined together so their boundaries partition the case basis without overlap. Scenario analysis here is forward-looking case comparison within a planning period. It is distinct from backcasting, which is retrospective, and from trading risk scenarios, which test market exposure rather than production alternatives. The APQC candidate “Perform competitive analysis” scored STRONG but is about comparing bidder proposals and was rejected as a false lexical match."@en .
 
@@ -2457,7 +2457,7 @@ Out of scope: Plan targets (CM-1-1-4) | maintenance planning and turnaround exec
     intake:primaryPurpose "Keep the schedule and its neighboring functions mutually consistent."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-SNF-REFPS-001 | SRC-ASCM-CSCP-001"@en ;
-    intake:relatedConcepts "enables: Create Production Scheduling and Sequencing Plan | informed-by: Refinery Planning"@en ;
+    intake:relatedConcepts "enables: Create Production Scheduling and Sequencing Plan | informed-by: Refinery Planning and Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 06 (2026-09-19). Modeled as the recurring coordination process per the process-concept rule, not a role or an organizational unit. APQC 10734 'Manage treasury operations' is an unrelated false match."@en .
 
@@ -2571,7 +2571,7 @@ Out of scope: Producing or altering the plan or schedule (CM-1-1-4, CM-1-1-7) | 
     intake:primaryPurpose "Keep the trading view current with what the refinery is currently planned and scheduled to produce."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | informed-by: Production Scheduling | enables: Perform Asset Optimization"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning and Optimization | informed-by: Production Scheduling | enables: Perform Asset Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 07 (2026-09-19). A consume-not-produce node, per the precedent batch 02 recorded on its sibling CM-1-2-1-1-2. APQC 12901 'Forecast equity crude production' is a WEAK review-link; comparative evidence only."@en .
 
@@ -5674,7 +5674,7 @@ Out of scope: Model validation certification and methodology approval (model gov
     intake:primaryPurpose "Keep the models behind feedstock decisions honest about the refinery and the market as they are today."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-EIA-LFMM-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Feedstock Data Quality (CM-1-2-5-1-1) | enables: Develop Term Slate | informed-by: Refinery Planning"@en ;
+    intake:relatedConcepts "uses-input: Manage Feedstock Data Quality (CM-1-2-5-1-1) | enables: Develop Term Slate | informed-by: Refinery Planning and Optimization"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Q4 decision (Hamid): fitness-of-representation review distinguished from model ownership, methodology approval, and formal model validation — four responsibilities, four owners (data stewardship at CM-1-2-5-1-1; model architecture with Refinery Planning/designated owner; methodology approval and independent validation with model governance; representation review here). Review-and-escalate, never own (batch 11/12 patterns). LP modeling context per the refinery planning literature. APQC: no meaningful candidate."@en .
 
@@ -5782,7 +5782,7 @@ Out of scope: Production plan (CM-1-1-4, PTC-002) | product demand forecasting (
     intake:primaryPurpose "One validated feedstock demand signal behind every supply decision."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "uses-input: Refinery Planning | uses-input: Manage Feedstock Inventory | precedes: Coordinate Feedstock Trading"@en ;
+    intake:relatedConcepts "uses-input: Refinery Planning and Optimization | uses-input: Manage Feedstock Inventory | precedes: Coordinate Feedstock Trading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Derived-not-decided: demand is computed from the binding plan and positions; the plan is Refinery Planning's. APQC: no meaningful candidate."@en .
 
@@ -5810,7 +5810,7 @@ Out of scope: Binding slate and run-rate decision (CM-1-1-4, PTC-002) | crude ev
     intake:primaryPurpose "Put the best current supply-market case in front of the planner who decides."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001"@en ;
-    intake:relatedConcepts "enables: Refinery Planning | uses-input: Develop Feedstock Demand | uses-input: Develop Spot Slate"@en ;
+    intake:relatedConcepts "enables: Refinery Planning and Optimization | uses-input: Develop Feedstock Demand | uses-input: Develop Spot Slate"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). PTC-002 implementation (Option 1, Hamid, closed 2026-09-18, quoted): 'Refinery Planning decides; Supply And Trading advises. CM-1-1-4 sets the binding crude slate and run rate. CM-1-2-5-2-3 is the trading-side recommendation of an economically attractive feedstock slate and run rate, feeding the plan without setting it.' The row label overstates the mandate ('Plan Optimal') and, per Hamid's batch 18 direction, the normalized label 'Recommend Feedstock Slate And Run Rate' is strongly queued for the naming pass to protect the PTC-002 decision from later misreading. Decide-versus-advise pattern (PTC-002 is its founding instance). APQC: no meaningful candidate. Step 3d naming pass, authority-risk category (2026-09-21, Hamid approval): renamed 'Plan Optimal Feedstock Slate And Run Rate' -> 'Recommend Feedstock Slate And Run Rate' — the trading-side concept recommends an economically attractive feedstock slate and run rate; it feeds the plan without setting it (decide-versus-advise, PTC-002 pattern)."@en .
 
@@ -12939,7 +12939,7 @@ Out of scope: Binding slate, run rate, and production plan (CM-1-1-4, PTC-002) |
     intake:primaryPurpose "Keep feedstock supply planned against a validated demand and an economically informed, advisory recommendation."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-ORP-DPSC-001"@en ;
-    intake:relatedConcepts "informed-by: Refinery Planning | enables: Trading Management | uses-input: Crude/Feed Quality Management"@en ;
+    intake:relatedConcepts "informed-by: Refinery Planning and Optimization | enables: Trading Management | uses-input: Crude/Feed Quality Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 18 (2026-09-20). Concept-type: process — one demand-to-coordination planning cycle (develop, recommend, coordinate), like the batch 03 Produce Demand Forecast precedent. PTC-002 honored at cluster level: this cluster advises and coordinates; Refinery Planning decides. APQC: no meaningful candidate."@en .
 
@@ -14296,7 +14296,7 @@ Out of scope: Monthly production plan (CM-1-1-4) | unit-operation scheduling and
     intake:primaryPurpose "Turn the approved monthly plan into a current schedule that provides the approved basis for refinery execution."@en ;
     intake:processHorizon "weekly"@en ;
     intake:referenceSources "SRC-BJCE-REFPS-001 | SRC-SNF-REFPS-001 | SRC-CMU-REFPLAN-001"@en ;
-    intake:relatedConcepts "follows: Refinery Planning | precedes: Daily Execution Planning"@en ;
+    intake:relatedConcepts "follows: Refinery Planning and Optimization | precedes: Daily Execution Planning"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 06 (2026-09-19). Q1 decision (Hamid, 2026-09-19): the refinery planning-scheduling-operations hierarchy is approved. CM-1-1-7 owns the refinery production-scheduling layer: translating approved refinery plans into dated, feasible campaign, production, movement, and resource schedules; managing schedule exceptions and cross-functional interfaces; and maintaining schedule-level performance visibility. Refining owns detailed unit-operation scheduling and all operational execution, including process-control decisions, line-ups, transfers, blend execution, utility operation, and immediate safety/reliability departures from the schedule. Supported by the planning/scheduling/operations separation documented in SNF R29/08 and Moro (BJCE); the locked rule's 'detailed unit-operation scheduling' is the operations layer, not this one. APQC 10303 is a WEAK generic candidate; comparative evidence only."@en .
 
@@ -14324,7 +14324,7 @@ Out of scope: Forecast production ownership (CM-1-1-1-1, CM-1-1-4, CM-1-1-7) | t
     intake:primaryPurpose "Keep trading running on a current forward commercial view and an identified, valued set of asset opportunities."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-CFTC-GLOSS-001 | SRC-EIA-STEO-001"@en ;
-    intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning | enables: Trading Strategy Management"@en ;
+    intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Refinery Planning and Optimization | enables: Trading Strategy Management"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 07 (2026-09-19). Q1 decision (Hamid, Option A): capability — it comprises distinct forecast-intake, renewable-position forecasting, asset-optimization, and revenue-projection processes that collectively enable a current front-office forward view and commercially optimized asset position; it is not a single sequential process. Same test as the batch 04 Inventory L4. Front-office framing per the approved Trading Management (CM-1-2-1) definition; 'market conditions' made explicit at Hamid's direction so the forward-curve context is not read as physical volumes only. Q2 boundary recorded on CM-1-2-1-1-4. APQC 19569 'Perform real-time optimization' is process-control software; no meaningful candidate."@en .
 
@@ -14738,7 +14738,7 @@ Out of scope: Approval and ownership of the production plan and its commercial t
     intake:primaryPurpose "Produce and recommend the economically preferred refinery production case for the planning period."@en ;
     intake:processHorizon "monthly"@en ;
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Refinery Planning | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Allocate Crude and Feedstock (CM-1-1-2-10) | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Scheduling"@en ;
+    intake:relatedConcepts "enables: Refinery Planning and Optimization | informed-by: Produce Demand Forecast (CM-1-1-1-1) | informed-by: Allocate Crude and Feedstock (CM-1-1-2-10) | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Production Planning and Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Parent-versus-child distinctness resolved per Hamid's decision (2026-09-18, Option 1): Refinery Planning (CM-1-1-4) owns the approved plan and its commercial targets; this node owns the recurring optimization run cycle that produces the candidate plan. Without that split the two primary purposes were near-identical. The eight existing L5 children — six “Capture …” nodes, Evaluate Crude & Feedstock, and Perform Scenario Analysis — are coherent under this reading as case-basis assembly and case analysis. “Capture Monthly Operating Plan” (CM-1-1-4-7-7) appears to name a document rather than a process and is flagged for review in the L5 batch, not resolved here. Avoided naming a specific optimization application; “LP” appears only as an alternate label because it is established industry shorthand."@en .
 
