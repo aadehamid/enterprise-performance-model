@@ -1,6 +1,10 @@
 # R1 Path Compatibility Register
 
 **Status:** Gate 2 evidence — COMPLETE by attestation (foundation stage).
+**Migration status: IMPLEMENTED 2026-09-22** — PR #108 merged (merge commit
+`b75fd991e243248e60ecc832b3ad2c4f5c91740a`, 2026-09-22T12:51:35Z). All 42
+rows below are live in the merged taxonomy: 683 concepts, 14,496 triples,
+681 broader links.
 
 2026-09-22, Hamid confirmed: no consumers exist yet; the ontology is the foundation everything
 else will connect to later. All 42 dispositions are therefore `No consumer`. This register is
