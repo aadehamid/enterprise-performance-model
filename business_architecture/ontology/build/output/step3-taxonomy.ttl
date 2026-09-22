@@ -263,7 +263,7 @@ proc:CM-1-1-2-11 a skos:Concept ;
     skos:prefLabel "Product Allocation Decision"@en ;
     skos:scopeNote """Covers plan-level placement of finished product across markets, channels, and supply points, including the commercial priority rules applied when available supply cannot meet all demand, and reallocation when supply, demand, or logistics change. Excludes order-level allocation and release against an individual customer order, owned by Order Management; excludes rack and terminal loading allocation enforcement, owned by Terminal Loading; excludes physical movement and delivery execution, owned by Midstream and Distribution.
 In scope: Market and channel volume placement | supply-point-to-demand-point assignment | commercial priority rules under constrained supply | exchange and third-party placement within the plan | reallocation on plan change
-Out of scope: Order-level allocation and release (Allocate & Release Order, Order Management) | rack and terminal allocation enforcement (Manage Allocation, Terminal Loading) | sales-target setting (Determine & Allocate Sales Targets, Marketing) | pricing and offer construction (Commercial & Marketing pricing processes) | physical delivery (Midstream, Distribution)"""@en ;
+Out of scope: Order-level allocation and release (Allocate & Release Order, Order Management) | rack and terminal allocation enforcement (Manage Terminal Lifting Allocation, Terminal Loading) | sales-target setting (Determine & Allocate Sales Targets, Marketing) | pricing and offer construction (Commercial & Marketing pricing processes) | physical delivery (Midstream, Distribution)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "demand forecast | available and planned production | inventory position | contractual and regulatory supply obligations | logistics and terminal capacity | netback and margin economics"@en ;
@@ -6928,15 +6928,15 @@ proc:CM-1-3-10-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20637"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Set Up and Maintain Terminal Customer Authorization"@en ;
+    skos:altLabel "Setup and Maintain Customer In Terminal"@en ;
     skos:broader proc:CM-1-3-10 ;
     skos:definition "Set up and maintain authorized customers, carriers, and drivers in terminal loading systems: create lifting-authorization records in the terminal automation system from governed commercial, credit, and master data; assign loading credentials and permitted terminals, products, and supply positions; keep authorizations current as commercial, credit, and tax status change; and deactivate access when eligibility ends."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.1" ;
-    skos:prefLabel "Setup and Maintain Customer In Terminal"@en ;
+    skos:prefLabel "Set Up and Maintain Terminal Customer Authorization"@en ;
     skos:scopeNote """This process maintains terminal-loading authorization and credential records from approved upstream decisions. It may record carrier, driver, vehicle, terminal, product, supply-position, tax-status, and credential eligibility attributes where required by the terminal operating model. It does not determine safety qualification, driver licensing, carrier eligibility, hazardous-materials compliance, tax status, credit status, or master identity; it consumes and applies the authoritative outcomes from their owning processes. Commercial eligibility is decided by the onboarding processes under the Governed Submission and Stewardship Rule, credit standing and holds by Manage Credit & Risk, due-diligence outcomes by Perform KYC Due Diligence, and the governed customer record by Maintain Customer and Commercial Account Master Data. Loading-Authorized Party is a governed role/relationship, not merely an access-control flag: setup resolves the approved customer-domain role decided under the governed customer model (Maintain Customer and Commercial Account Master Data) and never redefines it. Authorization lifecycle: approved customer/carrier/driver/vehicle/product/supply-position data leads to terminal authorization/credential configuration, then authorization activation, ongoing monitoring of upstream status changes, suspension/revocation on loss of eligibility, and an audit trail with reactivation only on approved restoration. Fact-dependent statement: where applicable to a US terminal/rack transaction, the terminal commercial setup process consumes Tax-approved registration, certificate, position-holder, notification, and exemption-status outcomes required by the relevant federal, state, and contractual framework (SRC-IRS-P510-001 context). Tax and Legal determine applicability, legal status, and required evidence; setup records and applies the approved outcomes to terminal-loading authorization controls. Physical terminal operation belongs to the terminal operator (Terminal Operations Management, where company-operated per the locked Midstream rule).
 In scope: Lifting-authorization and credential record creation and maintenance in terminal loading systems | authorization activation | loading credential issuance, update, and revocation | permitted terminal, product, and supply-position mapping | carrier, driver, and vehicle authorization records (record-only, from accountable owners) | linkage of credit and allocation controls into loading authorization | recording of Tax-approved status outcomes | ongoing monitoring of upstream status changes | suspension, revocation, and audit-trailed reactivation on approved restoration
-Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners under the Governed Submission and Stewardship Rule) | credit decisions and holds (Manage Credit & Risk) | safety qualification, driver licensing, carrier eligibility, and hazardous-materials compliance (Safety and Carrier-management owners) | tax status determination (Tax and Legal) | customer master record ownership (Maintain Customer and Commercial Account Master Data) | security and identity frameworks (Security owners) | physical terminal operations (Terminal Operations Management) | deal creation (Capture Deal)"""@en ;
+Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners under the Governed Submission and Stewardship Rule) | credit decisions and holds (Manage Credit & Risk) | safety qualification, driver licensing, carrier eligibility, and hazardous-materials compliance (Safety and Carrier-management owners) | tax status determination (Tax and Legal) | customer master record ownership (Maintain Customer and Commercial Account Master Data) | security and identity frameworks (Security owners) | physical terminal operations (Terminal Operations Management) | deal creation (Capture Terminal Sales Deal)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Governed customer master records (CM-1-3-7-1-1) | credit standing and controls (CM-1-3-7-4) | KYC outcomes (CM-1-3-7-4-6) | executed deals (CM-1-3-10-4) | carrier/driver/vehicle qualification outcomes from accountable owners | Tax-approved status outcomes"@en ;
@@ -6945,9 +6945,9 @@ Out of scope: Commercial eligibility and onboarding decisions (Onboarding owners
     intake:primaryPurpose "Only eligible, credit-cleared, tax-valid parties can lift product, and access ends when eligibility does."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-IRS-P510-001 | SRC-FMCSA-001"@en ;
-    intake:relatedConcepts "uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6) | uses-input: Capture Deal | enables: Process Forecast and Nominations | enables: Manage Allocation"@en ;
+    intake:relatedConcepts "uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk | informed-by: Perform KYC Due Diligence (CM-1-3-7-4-6) | uses-input: Capture Terminal Sales Deal (CM-1-3-10-4) | enables: Process Customer Lifting Forecasts and Nominations (CM-1-3-10-2) | enables: Manage Terminal Lifting Allocation (CM-1-3-10-3)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 41 (2026-09-21). Record-versus-decision wording, authorization lifecycle, and Tax/Legal-approved status wording adopted verbatim from review; Loading-Authorized Party is a governed role/relationship (CM-1-3-7-1-1), not merely an access-control flag. Receiving end of the onboarding/credit/KYC chain (b28/b31/b34). Naming queue: preferred label 'Set Up and Maintain Terminal Customer Authorization'. APQC 'Maintain IT customer contracts' is unrelated; comparative only."@en .
+    intake:terminologyNotes "Batch 41 (2026-09-21). Record-versus-decision wording, authorization lifecycle, and Tax/Legal-approved status wording adopted verbatim from review; Loading-Authorized Party is a governed role/relationship (CM-1-3-7-1-1), not merely an access-control flag. Receiving end of the onboarding/credit/KYC chain (b28/b31/b34). Naming queue: preferred label 'Set Up and Maintain Terminal Customer Authorization'. APQC 'Maintain IT customer contracts' is unrelated; comparative only. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Setup and Maintain Customer In Terminal' to 'Set Up and Maintain Terminal Customer Authorization'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-10-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6956,15 +6956,15 @@ proc:CM-1-3-10-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20094"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Process Customer Lifting Forecasts and Nominations"@en ;
+    skos:altLabel "Process Forecast and Nominations"@en ;
     skos:broader proc:CM-1-3-10 ;
     skos:definition "Receive and process customer lifting forecasts and nominations at terminals: validate nominated volumes against supply positions, allocations, and terminal capability for the nomination period; confirm, adjust, or decline nominations within approved rules; manage in-cycle revisions; and maintain the confirmed commercial lifting outlook that supply, replenishment, and allocation processes consume."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.2" ;
-    skos:prefLabel "Process Forecast and Nominations"@en ;
-    skos:scopeNote """Customer-facing intake side of the nomination relationship, honoring the commercial/physical split (b33): this process handles lifting forecasts and nominations received from terminal customers; nominations the company itself submits to pipelines, vessels, rail, and terminal operators as shipper are owned by Plan & Execute Nominations. A confirmed customer lifting nomination is a confirmed commercial lifting allocation/outlook, not a physical loading schedule; physical scheduling remains with the operational scheduling processes. Customer lifting nominations may be monthly, weekly, daily, or event-driven by channel, agreement, and terminal practice; the process operates on the applicable nomination cycle and supports in-cycle revisions. Confirmed customer lifting nominations and the confirmed commercial lifting outlook feed the operational demand view (Manage Refined Product Demand) and the lifting-history-based forecast (Forecast Operational Refined Product Demand, CM-1-2-6-2-3), and set the volumes Manage Allocation enforces. A confirmed nomination is not a sales contract (Capture Deal) and not a commercial order (Capture And Manage Order Fulfillment).
+    skos:prefLabel "Process Customer Lifting Forecasts and Nominations"@en ;
+    skos:scopeNote """Customer-facing intake side of the nomination relationship, honoring the commercial/physical split (b33): this process handles lifting forecasts and nominations received from terminal customers; nominations the company itself submits to pipelines, vessels, rail, and terminal operators as shipper are owned by Plan & Execute Nominations. A confirmed customer lifting nomination is a confirmed commercial lifting allocation/outlook, not a physical loading schedule; physical scheduling remains with the operational scheduling processes. Customer lifting nominations may be monthly, weekly, daily, or event-driven by channel, agreement, and terminal practice; the process operates on the applicable nomination cycle and supports in-cycle revisions. Confirmed customer lifting nominations and the confirmed commercial lifting outlook feed the operational demand view (Manage Refined Product Demand) and the lifting-history-based forecast (Forecast Operational Refined Product Demand, CM-1-2-6-2-3), and set the volumes Manage Terminal Lifting Allocation enforces. A confirmed nomination is not a sales contract (Capture Terminal Sales Deal) and not a commercial order (Capture And Manage Order Fulfillment).
 In scope: Customer forecast and nomination intake and validation | feasibility checks against supply position, allocation, and terminal capability | confirmation, adjustment, and decline decisions within approved rules | in-cycle revision management | communication of confirmed customer lifting nominations | nominated-versus-lifted performance tracking
-Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nominations) | supply-side demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3) | allocation enforcement (Manage Allocation) | physical loading scheduling (Operational scheduling processes) | order capture and fulfillment (Capture And Manage Order Fulfillment)"""@en ;
+Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nominations) | supply-side demand forecasting (Forecast Operational Refined Product Demand, CM-1-2-6-2-3) | allocation enforcement (Manage Terminal Lifting Allocation) | physical loading scheduling (Operational scheduling processes) | order capture and fulfillment (Capture And Manage Order Fulfillment)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Customer forecasts and nominations | supply positions and replenishment plans | allocation limits (CM-1-3-10-3) | terminal capability and constraints | deal terms (CM-1-3-10-4)"@en ;
@@ -6973,9 +6973,9 @@ Out of scope: Shipper-side carrier and terminal nominations (Plan & Execute Nomi
     intake:primaryPurpose "Customer lifting intent is validated and confirmed against what the supply system can actually serve."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-DOE-RPPL-001"@en ;
-    intake:relatedConcepts "uses-input: Setup and Maintain Customer In Terminal | uses-input: Capture Deal | constrained-by: Manage Allocation | informed-by: Manage Refined Product Demand | precedes: Administer Scheduled Shipment Loading (CM-1-1-3-6-2)"@en ;
+    intake:relatedConcepts "uses-input: Set Up and Maintain Terminal Customer Authorization (CM-1-3-10-1) | uses-input: Capture Terminal Sales Deal (CM-1-3-10-4) | constrained-by: Manage Terminal Lifting Allocation (CM-1-3-10-3) | informed-by: Manage Refined Product Demand | precedes: Administer Scheduled Shipment Loading (CM-1-1-3-6-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 41 (2026-09-21). Customer-intake counterpart of shipper-side Plan & Execute Nominations per the b33 commercial/physical split; nomination-cycle wording and 'confirmed commercial lifting allocation/outlook, not a physical loading schedule' correction adopted verbatim from review. Naming queue: preferred label 'Process Customer Lifting Forecasts and Nominations'. APQC 'Process returns' is unrelated; comparative only."@en .
+    intake:terminologyNotes "Batch 41 (2026-09-21). Customer-intake counterpart of shipper-side Plan & Execute Nominations per the b33 commercial/physical split; nomination-cycle wording and 'confirmed commercial lifting allocation/outlook, not a physical loading schedule' correction adopted verbatim from review. Naming queue: preferred label 'Process Customer Lifting Forecasts and Nominations'. APQC 'Process returns' is unrelated; comparative only. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Process Forecast and Nominations' to 'Process Customer Lifting Forecasts and Nominations'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-10-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -6984,12 +6984,12 @@ proc:CM-1-3-10-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11743"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Terminal Lifting Allocation"@en ;
+    skos:altLabel "Manage Allocation"@en ;
     skos:broader proc:CM-1-3-10 ;
     skos:definition "Enforce approved allocation controls at terminals and loading racks: translate plan-level allocation decisions and confirmed customer lifting nominations into customer, product, and period lifting limits in terminal loading systems; monitor liftings against limits; apply authorized proration and shortage procedures; and adjust controls as supply positions and confirmed nominations change."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.3" ;
-    skos:prefLabel "Manage Allocation"@en ;
+    skos:prefLabel "Manage Terminal Lifting Allocation"@en ;
     skos:scopeNote """Enforcement, not decision — the same rule as Allocate & Release Order (b33): plan-level assignment of constrained supply to markets, channels, terminals, and commitments is owned by Product Allocation Decision, which delegates rack and terminal loading allocation enforcement here; order-level allocation and release is owned by Allocate & Release Order; this process applies the approved rules at the point of lifting, documents allocation actions, and escalates conflicts it cannot resolve within them. Shortage and disruption procedures are applied as authorized by the accountable commercial and supply leadership, never invented at the rack. Terminal allocation enforcement applies commercial supply-position and lifting limits at the rack. It does not determine title transfer, tax liability, physical custody, product quality, driver safety, terminal sequence, or physical load authorization beyond the approved commercial/credit/tax/allocation controls. Control separation: allocation control asks whether product is available to this customer and supply position under approved allocation; credit control whether the customer is eligible to lift under approved financial exposure rules; tax control whether the transaction is eligible under approved tax status; terminal/safety control whether the carrier, driver, vehicle, and site are authorized and operationally eligible. A successful allocation does not imply a successful loading authorization if another control fails. Continuous control with event-driven adjustment as positions change.
 In scope: Allocation limit configuration in terminal loading systems | lifting monitoring against limits | authorized proration and shortage procedure application | allocation adjustment on supply or nomination changes | allocation action documentation and conflict escalation
 Out of scope: Plan-level allocation decisions (Product Allocation Decision) | order-level allocation and release (Allocate & Release Order) | credit limit and hold decisions (Manage Credit & Risk) | title transfer, tax liability, custody, and product quality determinations (Their accountable owners) | physical loading execution (Terminal Operations Management)"""@en ;
@@ -7001,9 +7001,9 @@ Out of scope: Plan-level allocation decisions (Product Allocation Decision) | or
     intake:primaryPurpose "Constrained supply is lifted only within the volumes the business decided each customer should get."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-EI-HM32-001 | SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Product Allocation Decision | uses-input: Process Forecast and Nominations | uses-input: Setup and Maintain Customer In Terminal | informed-by: Manage Credit & Risk | follows: Allocate & Release Order"@en ;
+    intake:relatedConcepts "governed-by: Product Allocation Decision | uses-input: Process Customer Lifting Forecasts and Nominations (CM-1-3-10-2) | uses-input: Set Up and Maintain Terminal Customer Authorization (CM-1-3-10-1) | informed-by: Manage Credit & Risk | follows: Allocate & Release Order"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 41 (2026-09-21). Named home of 'rack and terminal loading allocation enforcement' delegated by CM-1-1-2-11 (b04); title/rights limitation and four-way control separation (allocation, credit, tax, terminal/safety — a successful allocation does not imply a successful loading authorization) adopted verbatim from review. Naming queue: preferred label 'Manage Terminal Lifting Allocation'. APQC 'Manage routings' is unrelated; APQC 'Manage rack allocations' is the closer partial match (comparative only, per the b20 note on CM-1-2-7-2-3)."@en .
+    intake:terminologyNotes "Batch 41 (2026-09-21). Named home of 'rack and terminal loading allocation enforcement' delegated by CM-1-1-2-11 (b04); title/rights limitation and four-way control separation (allocation, credit, tax, terminal/safety — a successful allocation does not imply a successful loading authorization) adopted verbatim from review. Naming queue: preferred label 'Manage Terminal Lifting Allocation'. APQC 'Manage routings' is unrelated; APQC 'Manage rack allocations' is the closer partial match (comparative only, per the b20 note on CM-1-2-7-2-3). Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Manage Allocation' to 'Manage Terminal Lifting Allocation'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-10-4 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -7012,12 +7012,12 @@ proc:CM-1-3-10-4 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 16795"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Capture Terminal Sales Deal"@en ;
+    skos:altLabel "Capture Deal"@en ;
     skos:broader proc:CM-1-3-10 ;
     skos:definition "Record concluded terminal sales arrangements — rack and spot sales, branded and unbranded supply arrangements, and terminal-specific pricing arrangements — completely and promptly in the governed commercial system: customer, product, terminal, volume basis, price and price mechanism, duration, and terms references — so authorized deals are available to customer setup, nomination processing, allocation, pricing application, and billing."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.10.4" ;
-    skos:prefLabel "Capture Deal"@en ;
+    skos:prefLabel "Capture Terminal Sales Deal"@en ;
     skos:scopeNote """Boundary with Trade Capture (dual test, batch 41 decision): Terminal Sales Deal Capture records customer-facing terminal/rack commercial arrangements in the governed commercial/O2C pricing system when those arrangements authorize lifting, price commercial rack/spot supply, and feed terminal authorization, customer lifting nominations, allocation enforcement, billing, and customer service. Trade Capture records transactions governed in the trading book — trading-book physical purchases/sales, exchange, storage, financial, structured, transportation, and transmission deals — with their associated trading controls, confirmations, risk, actualization, settlement, and trading-accounting lifecycle. Where an arrangement has both terminal-commercial and trading-book representation, the authoritative record, system/interface, and reconciliation responsibility must be explicitly defined; neither process may create duplicate uncontrolled deal records. A deal belongs here only where the approved operating model identifies the commercial/O2C terminal sales record as the system of record for the customer-facing arrangement. If a trading-book deal also creates terminal lifting rights, the terminal authorization record must reference the governed trading/commercial deal identifier and consume the approved terms through controlled integration rather than re-create the deal. The process records the legal/commercial status assigned by the approved quote, agreement, contract, or order framework. It does not independently determine whether a document is binding, negotiate terms, approve a commercial arrangement, or establish price/discount master data. Captured deal content includes, as applicable: customer/supply account, terminal/rack, product/grade, supply position, contract/arrangement reference, price basis/mechanism, effective dates, volume commitment or lifting right, tax status, credit/authorization prerequisites, channel/brand status, terms references, deal/document legal status, and version/audit lineage. Price and discount conditions are maintained in governed price master data by their owning processes; this process links deals to them and never invents prices, honoring the Billing Integrity Rule's requirement for governed commercial inputs. Capture corrections are controlled commercial-record events that preserve the original record, reason, authorizing source, effective date, and downstream impact assessment. They do not silently overwrite lifting, billing, price, tax, or contractual history.
 In scope: Deal entry and validation against execution evidence | completeness checks on commercial terms | linkage to customer, supply account, terminal, product, supply position, price mechanism, and terms | recording of deal/document legal status and version/audit lineage | controlled correction of capture errors | making deal data available to setup, nominations, allocation, pricing application, and billing
 Out of scope: Deal negotiation and approval (Commercial owners under the delegation of authority) | binding-status determination (Approved quote, agreement, contract, or order framework owners) | trading-book transaction capture (Trade Capture) | price and discount master data (Manage Commercial Master Data Stewardship owning processes) | billing execution (Manage Customer Invoicing and Billing)"""@en ;
@@ -7029,9 +7029,9 @@ Out of scope: Deal negotiation and approval (Commercial owners under the delegat
     intake:primaryPurpose "Every terminal lifting traces to a completely recorded, authorized commercial arrangement."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-EIA-PMM-001 | SRC-EIA-GLOSS-001"@en ;
-    intake:relatedConcepts "enables: Setup and Maintain Customer In Terminal | enables: Process Forecast and Nominations | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk"@en ;
+    intake:relatedConcepts "enables: Set Up and Maintain Terminal Customer Authorization (CM-1-3-10-1) | enables: Process Customer Lifting Forecasts and Nominations (CM-1-3-10-2) | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1) | informed-by: Manage Credit & Risk"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 41 (2026-09-21). Dual book-ownership/system-of-record boundary with Trade Capture (CM-1-2-1-3), legal-status wording, captured-content list, and controlled-correction wording adopted verbatim from review; the boundary is recorded as scope text because no controlled relationship type expresses a boundary. Naming queue: preferred label 'Capture Terminal Sales Deal' — high-priority name normalization. APQC 'Analyze deal options' (M&A) is unrelated; comparative only."@en .
+    intake:terminologyNotes "Batch 41 (2026-09-21). Dual book-ownership/system-of-record boundary with Trade Capture (CM-1-2-1-3), legal-status wording, captured-content list, and controlled-correction wording adopted verbatim from review; the boundary is recorded as scope text because no controlled relationship type expresses a boundary. Naming queue: preferred label 'Capture Terminal Sales Deal' — high-priority name normalization. APQC 'Analyze deal options' (M&A) is unrelated; comparative only. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Capture Deal' to 'Capture Terminal Sales Deal'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-2-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -10542,7 +10542,7 @@ Out of scope: Financial adjustment, collection, remedy, and legal action (Financ
     intake:primaryPurpose "Royalties, fees, rebates, and contributions computed from validated reported sales."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PMPA-001"@en ;
-    intake:relatedConcepts "enables: Administer Royalty, Brand Fee, and Contribution Streams (CM-1-3-8-4-7) | informed-by: Report Franchise Performance | governed-by: Compliance Management"@en ;
+    intake:relatedConcepts "enables: Administer Royalty, Brand Fee, and Contribution Streams (CM-1-3-8-4-7) | informed-by: Report Franchise Performance | governed-by: Commercial Agreement Compliance Management (CM-1-3-6-8)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical commercial-audit definition, Internal Audit distinction, corrective-verification wording, and confidentiality rule adopted verbatim. Preferred label 'Conduct Commercial Audit to Validate Reported Sales' recorded as alt label and queued. Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed from 'Conduct Audit To Validate Reported Sales' to 'Conduct Commercial Audit to Validate Reported Sales'. Prior label(s) retained as altLabel(s): 'Conduct Audit To Validate Reported Sales'."@en .
 
@@ -11310,7 +11310,7 @@ Out of scope: Marketing communication (Marketing execution; consent/contactabili
     intake:primaryPurpose "Resolution means resolved — verified with the customer, not assumed."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Process Inquiries and Requests | enables: Conduct Quarterly Review Meeting"@en ;
+    intake:relatedConcepts "follows: Process Inquiries and Requests | enables: Conduct Customer Service Reviews (CM-1-3-7-5-5)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 35 (2026-09-20). Review formal-research distinction adopted verbatim — case-level feedback is operational service evidence, never a substitute for governed analysis processes. Normalized label 'Perform Customer Follow-Up' is punctuation-only — queued for the naming pass, no alt label (validator lesson)."@en .
 
@@ -11321,12 +11321,12 @@ proc:CM-1-3-7-5-5 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11427"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Conduct Customer Service Reviews"@en ;
+    skos:altLabel "Conduct Quarterly Review Meeting"@en ;
     skos:broader proc:CM-1-3-7-5 ;
     skos:definition "Conduct structured periodic service reviews with customers: review service performance against commitments, open items and their paths to closure, complaint and issue trends, and agreed improvement actions, with tracked follow-through. Review cadence may be quarterly by default and adjusted by customer tier, agreement, issue profile, regulatory obligation, or service model."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.7.5.5" ;
-    skos:prefLabel "Conduct Quarterly Review Meeting"@en ;
+    skos:prefLabel "Conduct Customer Service Reviews"@en ;
     skos:scopeNote """Service review, not commercial negotiation: Service reviews may identify commercial opportunities, terms issues, pricing concerns, volume changes, contract questions, or strategic account topics, but those are recorded and referred to the appropriate commercial/account process rather than negotiated or decided in the service review. Review commitments entered are service commitments within existing authority; anything beyond routes for approval. Review outputs feed account management, service improvement, and the evidence layer.
 In scope: Periodic service review preparation and conduct, quarterly by default and adjusted per tier, agreement, issue profile, regulatory obligation, or service model | performance-against-commitment review | open-item and trend review | improvement action agreement within authority and tracked follow-through | recording and referral of commercial topics to their owners
 Out of scope: Commercial negotiation, terms, pricing, volumes, and contract decisions (Manage Key Accounts; commercial processes) | commitments beyond existing authority (approval paths) | account strategy (sales processes)"""@en ;
@@ -11340,7 +11340,7 @@ Out of scope: Commercial negotiation, terms, pricing, volumes, and contract deci
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
     intake:relatedConcepts "uses-input: Perform Customer Follow up | enables: Manage Key Accounts | governed-by: Manage Customer Requests and Inquiries"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 35 (2026-09-20). Review commercial-referral and cadence sentences adopted verbatim — quarterly is the default cadence, not the concept. Preferred label 'Conduct Customer Service Reviews' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 35 (2026-09-20). Review commercial-referral and cadence sentences adopted verbatim — quarterly is the default cadence, not the concept. Preferred label 'Conduct Customer Service Reviews' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Conduct Quarterly Review Meeting' to 'Conduct Customer Service Reviews'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-7-5-6 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12001,7 +12001,7 @@ Out of scope: Contractual service-level commitments (Commercial terms processes)
     intake:primaryPurpose "One approved, published model the whole service operation runs on."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Manage Operations | governed-by: Service & Support Enablement"@en ;
+    intake:relatedConcepts "enables: Manage Service Operations (CM-1-3-9-1-2) | governed-by: Service & Support Enablement"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review model-content and commercial-terms-approval sentences adopted verbatim."@en .
 
@@ -12012,12 +12012,12 @@ proc:CM-1-3-9-1-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10734"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Service Operations"@en ;
+    skos:altLabel "Manage Operations"@en ;
     skos:broader proc:CM-1-3-9-1 ;
     skos:definition "Run the service operation day to day: plan and schedule capacity against demand, balance workload across teams and channels, monitor operational quality and service-level attainment in real time, and manage operational incidents and escalations within the operating model."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.9.1.2" ;
-    skos:prefLabel "Manage Operations"@en ;
+    skos:prefLabel "Manage Service Operations"@en ;
     skos:scopeNote """Operates the model, never redefines it (changes route to Define Operating Model). Operational incidents are triaged according to the service operating model. Product-quality, safety, environmental, security, fraud, regulatory, or major continuity incidents follow immediate escalation protocols and are not resolved solely through service operations. Demand signals come from the request capability and order/portal channels; capacity actions on people route through Manage Service Employees within HR frameworks; technology incidents route to IT per the batch 31 split. Operational metrics are evidence-layer (KPI Store boundary).
 In scope: Capacity planning and scheduling against demand | workload balancing across teams and channels | real-time quality and service-level monitoring | operational incident triage per the operating model with immediate escalation of quality/safety/security/fraud/regulatory/continuity incidents to their protocols
 Out of scope: Operating-model changes (CM-1-3-9-1-1) | substantive incident resolution for escalated categories (Quality; EHS; Security; their protocols) | employment actions (HR) | technology operations (IT)"""@en ;
@@ -12029,9 +12029,9 @@ Out of scope: Operating-model changes (CM-1-3-9-1-1) | substantive incident reso
     intake:primaryPurpose "The service operation meets its levels every day, and the wrong incidents never stay in service hands."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Define Operating Model | uses-input: Manage Customer Requests and Inquiries | enables: Fulfill Service Event"@en ;
+    intake:relatedConcepts "uses-input: Define Operating Model | uses-input: Manage Customer Requests and Inquiries | enables: Fulfill Service Events (CM-1-3-9-2-3)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 40 (2026-09-21). Review incident-escalation sentence adopted verbatim. Preferred label 'Manage Service Operations' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 40 (2026-09-21). Review incident-escalation sentence adopted verbatim. Preferred label 'Manage Service Operations' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Manage Operations' to 'Manage Service Operations'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-9-1-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12056,7 +12056,7 @@ Out of scope: Employment status, classification, compensation, ratings, promotio
     intake:primaryPurpose "The right people, ready and scheduled — without ever borrowing HR's authority."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "uses-input: Manage Operations | governed-by: Service & Support Enablement"@en ;
+    intake:relatedConcepts "uses-input: Manage Service Operations (CM-1-3-9-1-2) | governed-by: Service & Support Enablement"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review workforce-planning boundary and third-party worker condition adopted verbatim."@en .
 
@@ -12083,7 +12083,7 @@ Out of scope: Leases, capital projects, construction, landlord contracts, buildi
     intake:primaryPurpose "Every service site fit for the operation — with the owners owning what's theirs."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "governed-by: Service & Support Enablement | enables: Manage Operations"@en ;
+    intake:relatedConcepts "governed-by: Service & Support Enablement | enables: Manage Service Operations (CM-1-3-9-1-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review occupant-side boundary and safety-escalation sentences adopted verbatim."@en .
 
@@ -12137,7 +12137,7 @@ Out of scope: Case decisions, credit decisions, refunds, order changes, complain
     intake:primaryPurpose "A channel that always answers — and never decides."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Process Inquiries and Requests | uses-input: Manage Operations"@en ;
+    intake:relatedConcepts "enables: Process Inquiries and Requests | uses-input: Manage Service Operations (CM-1-3-9-1-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Review channel does-not-own list, accessibility/vulnerable-customer sentence, and refined recording/monitoring statement adopted verbatim."@en .
 
@@ -12148,12 +12148,12 @@ proc:CM-1-3-9-2-1 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 11749"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Service Delivery Data"@en ;
+    skos:altLabel "Manage Data"@en ;
     skos:broader proc:CM-1-3-9-2 ;
     skos:definition "Maintain the operational data service delivery runs on: entitlement and coverage data, installed-base and service-history records, appointments, service tasks, and service-event data — captured and verified at delivery time, linked to the governed case and customer records."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.9.2.1" ;
-    skos:prefLabel "Manage Data"@en ;
+    skos:prefLabel "Manage Service Delivery Data"@en ;
     skos:scopeNote """Five data distinctions apply: master data belongs to the Master Data processes (governed Party, Account, Product, Price, Tax, Location); case data to Customer Requests and Inquiries (the issue/request record and communication loop); service delivery data to this capability (entitlements, service tasks, service events, appointments, installed base, completion evidence, service-history facts); operational/physical asset data to the relevant Operations/Engineering/Asset/Terminal processes; and billing evidence is consumed by Billing where the service is billable. The case record is stewarded by the request capability (b35) and referenced, not duplicated (the incident-linkage pattern). This process keeps delivery-operational records accurate, linked, and consumable. Personal data handled here is governed under the enterprise personal-data governance framework, with collection, use, retention, and disclosure limited to what the framework and applicable law permit. Retention per the records-management policy.
 In scope: Entitlement/coverage, installed-base, service-history, appointment, task, and event data stewardship | delivery-time capture and verification | linkage to governed case and customer records | quality and retention control
 Out of scope: Master data (CM-1-3-7-1; governed submission) | the case record (CM-1-3-7-5-2) | operational/physical asset data (Operations/Engineering/Asset/Terminal processes) | billing execution (CM-1-3-8-1)"""@en ;
@@ -12165,9 +12165,9 @@ Out of scope: Master data (CM-1-3-7-1; governed submission) | the case record (C
     intake:primaryPurpose "Delivery always runs on accurate, linked, governed operational data."@en ;
     intake:processHorizon "continuous"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Fulfill Service Event | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
+    intake:relatedConcepts "enables: Fulfill Service Events (CM-1-3-9-2-3) | uses-input: Maintain Customer and Commercial Account Master Data (CM-1-3-7-1-1)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 40 (2026-09-21). Review five-way data distinction adopted verbatim. Preferred label 'Manage Service Delivery Data' recorded as alt label and queued — disambiguates the generic locked name."@en .
+    intake:terminologyNotes "Batch 40 (2026-09-21). Review five-way data distinction adopted verbatim. Preferred label 'Manage Service Delivery Data' recorded as alt label and queued — disambiguates the generic locked name. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Manage Data' to 'Manage Service Delivery Data'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-9-2-2 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12176,12 +12176,11 @@ proc:CM-1-3-9-2-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 20085"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Manage Customer Interaction in Service Delivery"@en ;
     skos:broader proc:CM-1-3-9-2 ;
     skos:definition "Manage the customer interaction during service delivery: identify and verify the customer per the Security-defined controls, set expectations from confirmed information, keep the customer informed through service notices during the event, and confirm completion."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.9.2.2" ;
-    skos:prefLabel "Manage Customer"@en ;
+    skos:prefLabel "Manage Customer Interactions in Service Delivery"@en ;
     skos:scopeNote """Interaction, not relationship or case: account relationships belong to the commercial processes, the case loop to the request capability (b35). Service delivery interactions may communicate confirmed appointment, entitlement, scope, progress, service completion, and next-step information. They do not promise price, compensation, credit, product quality, tax, legal, regulatory, safety, or contract outcomes unless confirmed by the owning process. Verification per Security-defined identity controls; communications are service notices under the consent rules.
 In scope: Customer identification and verification per Security controls | expectation-setting from confirmed appointment, entitlement, scope, progress, completion, and next-step information | service notices during the event | completion confirmation
 Out of scope: Promises of price, compensation, credit, product quality, tax, legal, regulatory, safety, or contract outcomes (Owning processes confirm) | the case loop (CM-1-3-7-5) | account relationship management (Commercial processes) | consent creation (Consent framework)"""@en ;
@@ -12193,9 +12192,9 @@ Out of scope: Promises of price, compensation, credit, product quality, tax, leg
     intake:primaryPurpose "The customer always knows what's confirmed — and never hears a promise nobody owns."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Process Inquiries and Requests | enables: Fulfill Service Event"@en ;
+    intake:relatedConcepts "follows: Process Inquiries and Requests | enables: Fulfill Service Events (CM-1-3-9-2-3)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 40 (2026-09-21). Review confirmed-information rule adopted verbatim (the governed-answer rule, delivery side). Preferred label 'Manage Customer Interaction in Service Delivery' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 40 (2026-09-21). Review confirmed-information rule adopted verbatim (the governed-answer rule, delivery side). Preferred label 'Manage Customer Interaction in Service Delivery' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Manage Customer' to 'Manage Customer Interactions in Service Delivery'. Prior label 'Manage Customer' NOT retained as skos:altLabel per the alias-control exception (bare label is a prefix of live labels and would reintroduce retrieval ambiguity); preserved as prior_name in the identity/migration map."@en .
 
 proc:CM-1-3-9-2-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12204,12 +12203,12 @@ proc:CM-1-3-9-2-3 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10218"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Fulfill Service Events"@en ;
+    skos:altLabel "Fulfill Service Event"@en ;
     skos:broader proc:CM-1-3-9-2 ;
     skos:definition "Fulfill individual service events end to end: receive the routed event with its case linkage, verify entitlement from governed delivery data, execute the service work per the applicable agreement and procedures, capture completion evidence, and return the outcome to the case and — where billable — to billing."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.9.2.3" ;
-    skos:prefLabel "Fulfill Service Event"@en ;
+    skos:prefLabel "Fulfill Service Events"@en ;
     skos:scopeNote """Execution within everyone's authority: parts, logistics, and third-party service partners engage through their owning processes and executed agreements (the no-implied-obligations rule); safety-relevant findings escalate immediately per the batch 35 safety rule. Service events close with an explicit outcome status: completed, partially completed, unable to perform, rescheduled, cancelled, requires escalation, or requires follow-on event — each classified billable or non-billable. A billable service event is invoiced only from approved service-completion evidence, entitlement/contract terms, applicable pricing/tax data, and any required customer acceptance or service confirmation. Service Delivery does not create prices, credits, tax outcomes, or invoices. Failed or partial events re-route through the case, never silently closed. One customer request may produce zero, one, or many service events. Each service event is linked to the originating case where applicable, but the service event is not itself a new customer-request case. Completion evidence returns to the case record and, where billable, to Billing.
 In scope: Event receipt with case linkage | entitlement verification from governed data | service execution per agreements and approved procedures | explicit outcome-status closure (completed, partially completed, unable to perform, rescheduled, cancelled, requires escalation, requires follow-on event; billable/non-billable) | completion evidence capture | outcome return to the case and billing
 Out of scope: Case ownership (CM-1-3-7-5) | pricing, credits, tax, invoicing (Their owners; CM-1-3-8-1) | partner terms (Contract management; Legal) | safety/quality determinations (EHS; Quality; their protocols)"""@en ;
@@ -12221,9 +12220,9 @@ Out of scope: Case ownership (CM-1-3-7-5) | pricing, credits, tax, invoicing (Th
     intake:primaryPurpose "Every routed event ends in an explicit, evidenced outcome — back on the case, and billed only from evidence."@en ;
     intake:processHorizon "event-driven"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "follows: Manage Customer | enables: Create & Distribute Bill | enables: Process Inquiries and Requests"@en ;
+    intake:relatedConcepts "follows: Manage Customer Interactions in Service Delivery (CM-1-3-9-2-2) | enables: Create & Distribute Bill | enables: Process Inquiries and Requests"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 40 (2026-09-21). Review outcome-status taxonomy and billable-evidence rule adopted verbatim. Preferred label 'Fulfill Service Events' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 40 (2026-09-21). Review outcome-status taxonomy and billable-evidence rule adopted verbatim. Preferred label 'Fulfill Service Events' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Fulfill Service Event' to 'Fulfill Service Events'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-9-3-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12259,12 +12258,12 @@ proc:CM-1-3-9-3-2 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 10218"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Measure Service Workforce Performance"@en ;
+    skos:altLabel "Measure Service Employees"@en ;
     skos:broader proc:CM-1-3-9-3 ;
     skos:definition "Measure workforce operational performance in the service operation — handle times, quality scores, utilization, schedule adherence, readiness — as evidence for capacity planning, training, and service improvement."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.9.3.2" ;
-    skos:prefLabel "Measure Service Employees"@en ;
+    skos:prefLabel "Measure Service Workforce Performance"@en ;
     skos:scopeNote """The HR boundary, measurement side: individual performance evaluation, ratings, compensation decisions, and discipline are HR's and line management's under HR frameworks; this process's outputs inform them through those frameworks and never substitute for them. Service workforce metrics may be reported at team, queue, role, or aggregate level for capacity and improvement. Use of individual-level data for performance appraisal, compensation, discipline, surveillance, or employment action requires HR-approved process, lawful basis, privacy controls, transparency, and applicable labor/works-council controls. Employee personal data is governed under the enterprise personal-data governance framework exactly as customer data is. Evidence-layer; KPI Store.
 In scope: Team, queue, role, and aggregate-level workforce operational metrics for capacity and improvement | quality and adherence measurement per approved designs | evidence to workforce planning and training
 Out of scope: Individual performance appraisal, compensation, discipline, surveillance, employment actions (HR-approved processes with lawful basis, privacy, transparency, and labor/works-council controls) | measurement-design authority over HR data (HR; Privacy) | KPI publication (KPI Store governance)"""@en ;
@@ -12276,9 +12275,9 @@ Out of scope: Individual performance appraisal, compensation, discipline, survei
     intake:primaryPurpose "Operational workforce evidence for improvement — never a backdoor appraisal system."@en ;
     intake:processHorizon "periodic"@en ;
     intake:referenceSources "SRC-APQC-PCF-001"@en ;
-    intake:relatedConcepts "enables: Manage Service Employees | uses-input: Manage Operations"@en ;
+    intake:relatedConcepts "enables: Manage Service Employees | uses-input: Manage Service Operations (CM-1-3-9-1-2)"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 40 (2026-09-21). Review individual-level data rule adopted verbatim — sensitive contact-center productivity data handled deliberately. Preferred label 'Measure Service Workforce Performance' recorded as alt label and queued."@en .
+    intake:terminologyNotes "Batch 40 (2026-09-21). Review individual-level data rule adopted verbatim — sensitive contact-center productivity data handled deliberately. Preferred label 'Measure Service Workforce Performance' recorded as alt label and queued. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Measure Service Employees' to 'Measure Service Workforce Performance'. Prior label retained as altLabel."@en .
 
 proc:CM-1-3-9-3-3 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12474,12 +12473,12 @@ proc:CM-1-3-6-8 a skos:Concept ;
             dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 17467"@en ] ;
     dcterms:source [ a dcterms:BibliographicResource ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:altLabel "Commercial Agreement Compliance Management"@en ;
+    skos:altLabel "Compliance Management"@en ;
     skos:broader proc:CM-1-3-6 ;
     skos:definition "Manage compliance with commercial obligations in branded sales-network agreements by planning and conducting agreement-based reviews, validating reported sales and other obligation inputs, reporting discrepancies, and routing findings to the accountable relationship, Finance, O2C, Legal, and compliance owners for resolution."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.3.6.8" ;
-    skos:prefLabel "Compliance Management"@en ;
+    skos:prefLabel "Commercial Agreement Compliance Management"@en ;
     skos:scopeNote """Narrow-scope statement: Applies only to contractual/commercial obligations that partners, franchisees, dealers, licensees, marketers, or other network participants report under executed agreements — for example sales-based royalties, brand fees, rebates, promotional-fund contributions, volume commitments, reporting duties, and agreed standards evidence where audit rights exist. Reviews cover only obligations that are defined in an executed agreement, subject to review/audit rights, within a valid review period, and supported by agreed record-access rights. Enterprise regulatory compliance (fuels, environmental, safety, trade), corporate Internal Audit, financial-statement audit, and tax audit remain with their accountable functions. Findings route to their owners: financial adjustments and collections through the accountable Finance/O2C processes, including Administer Royalty, Brand Fee, and Contribution Streams; enforcement under agreements through relationship management and Legal. Fact-dependent statement: where a remedy would affect a franchise relationship governed by the Petroleum Marketing Practices Act, the determination is reserved to Legal.
 In scope: Agreement-based compliance review planning within audit rights and review periods | validation of reported sales and other obligation inputs | discrepancy reporting | findings routing to accountable relationship, Finance, O2C, Legal, and compliance owners | compliance status reporting
 Out of scope: Regulatory compliance programs (EHS, fuels, trade — their functions) | Internal Audit, financial-statement audit, and tax audit | collections and financial adjustment execution (Finance/O2C) | enforcement remedies (relationship management; Legal) | obligations outside executed agreements or valid review periods"""@en ;
@@ -12493,7 +12492,7 @@ Out of scope: Regulatory compliance programs (EHS, fuels, trade — their functi
     intake:referenceSources "SRC-APQC-PCF-001; SRC-PMPA-001"@en ;
     intake:relatedConcepts "enables: Administer Royalty, Brand Fee, and Contribution Streams (CM-1-3-8-4-7) | informed-by: Report Franchise Performance"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical definition, narrow-scope statement, and agreement-rights conditions adopted verbatim — commercial-agreement compliance only, never an enterprise compliance catch-all. Preferred label 'Commercial Agreement Compliance Management' recorded as alt label and queued as the priority rename: it encodes the approved narrow scope."@en .
+    intake:terminologyNotes "Batch 30 (2026-09-20). Review canonical definition, narrow-scope statement, and agreement-rights conditions adopted verbatim — commercial-agreement compliance only, never an enterprise compliance catch-all. Preferred label 'Commercial Agreement Compliance Management' recorded as alt label and queued as the priority rename: it encodes the approved narrow scope. Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed from 'Compliance Management' to 'Commercial Agreement Compliance Management'. Prior label retained as altLabel."@en .
 
 proc:L1-finance a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
