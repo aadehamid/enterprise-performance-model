@@ -927,6 +927,132 @@ without a dated amendment and Hamid's explicit agreement.
   change, removed concept, redefined meaning); minor = new concepts /
   modules / hierarchy changes; patch = label/definition wording fixes.
   Deprecate, never delete. Full detail in Appendix B (2026-09-18).
+- **Ontology identity (2026-09-22; IRI corrected to the locked Step 1
+  policy the same day).** The `core` module's ontology IRI is
+  `https://w3id.org/lsc/ontology/modules/core` — the locked
+  `…/modules/{module}` namespace pattern, which also doubles as the
+  module's ConceptScheme. Each release gets a version IRI of the form
+  `https://w3id.org/lsc/ontology/modules/core/1.0.0`.
+  Every release ships an explicit `owl:Ontology` header carrying
+  `dcterms:title`, `dcterms:description`, `owl:versionIRI`,
+  `owl:versionInfo`, `dcterms:issued`, `dcterms:creator`, and
+  `dcterms:license`. Term IRIs stay stable and unversioned —
+  `core:ProcessDefinition` is
+  `https://w3id.org/lsc/ontology/modules/core/ProcessDefinition`,
+  never `…/modules/core/1.0.0/…`. (The Q1 decision text originally used
+  the shorthand `…/ontology/core`; corrected on review — the Step 1
+  lock was never changed, the shorthand never shipped, nothing is
+  published, so no supersession record is needed.)
+- **First formal version: 1.0.0 (2026-09-22).** Step 4 ships `core`
+  1.0.0 — the first versioned release. It is the first release with
+  governed properties instead of provisional `intake:` annotations and
+  the first to carry the version header. 1.0.0 is the baseline that
+  Step 5 (organization), Step 6 (PROV-O), and later modules version
+  against. Recorded in Appendix B's version history.
+- **Flow modeling depth (2026-09-22).** Step 4 captures flows as
+  governed structured values on the input/output links — controlled,
+  consistently-spelled flow names (e.g. "demand forecast"), no new
+  nodes. The workbook's flow information is preserved and queryable
+  ("which processes consume the demand forecast?"). Minting
+  InformationObject nodes for every distinct flow (~1,900) is deferred:
+  it is a data-governance project — identity, dedup ("is the demand
+  forecast in 12 processes one thing or twelve?"), ownership, lifecycle
+  — that no Step 4 competency question or consumer requires. Revisit
+  trigger: a real use case that needs to trace a specific artefact
+  (e.g. audit lineage of the approved operating plan) — then mint that
+  flow as a node deliberately, one at a time. Composes with the Q4
+  decision: `core:dependsOnOutputOf` links consumer to producer
+  process; the structured value says
+  what travels on the link.
+- **Responsible-domain interim treatment (2026-09-22).** Step 4 keeps
+  `responsible_domain` as a governed literal on the process, explicitly
+  interim — no org nodes are minted. Step 5 (ORG/RACI) will map these
+  interim values to governed organization, role, and
+  ResponsibilityAssignment references where the operating model
+  evidences the relationship — some current labels are
+  business-architecture domains, not org units; the controlled list
+  makes that migration mechanical.
+  The workbook's 10 distinct values (456 of 485 rows "Commercial &
+  Marketing") are nearly controlled already — the value is in the
+  exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
+  6 cross-functional combos, normalized to a governed
+  "Cross-functional" value with detail preserved in a note).
+- **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
+  `core:conceptKind` is an object property to a controlled SKOS scheme,
+  not a string. Kinds: Process (real business process — inputs,
+  outputs, cadence), Capability (an ability the organization has,
+  realized by processes), StructuralAnchor (navigation/grouping node —
+  L0 roots, empty stubs, tombstones — not work anyone performs).
+  Consumers treat kinds differently: "all processes" must not return
+  navigation nodes; no RACI or cadence on anchors. Deliberate boundary:
+  this does NOT classify CM-1-3-1-6 ('Marketing Insight and Metrics
+  Stewardship') — that stays a parked modeling question. We build the
+  shelf; classification comes later. Composes with the parked
+  value-stream layer (Appendix A): `core:CapabilityKind` classifies a
+  concept as capability-like; actual business capabilities are a future
+  `core:BusinessCapability` class — architecture entities, not
+  classification values — linked to processes via `core:realizedBy`.
+- **Step 4 Q9: lifecycle model (2026-09-22).**
+  `core:lifecycleStatus` is an object property to a controlled SKOS
+  scheme with four states: Candidate → Approved → Deprecated →
+  Retired. Blocked/held are **not** states: a separate hold flag
+  applies to a concept in any lifecycle state, with a recorded reason
+  (a Candidate can be blocked; an Approved concept can be put on hold
+  without losing its state). The scheme does not conflict with OWL:
+  Deprecated ⇒ `owl:deprecated true` (required); Retired ⇒
+  `owl:deprecated true` (retired implies deprecated);
+  Candidate/Approved ⇒ `owl:deprecated` absent or false. Agreement is
+  enforced by SHACL in Step 9; the rule is stated now. Allowed
+  transitions: Candidate→Approved, Candidate→Retired (rejected before
+  publication), Approved→Deprecated, Deprecated→Approved
+  (undeprecation, governed), Deprecated→Retired. Retired is terminal —
+  never resurrect; mint a new concept instead. `dcterms:isReplacedBy`
+  points to the successor where one exists.
+- **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
+  `core:` carries foundational planned-process semantics only —
+  organization → Step 5, KPI semantics → `kpi`, observed execution →
+  PROV-O in Step 6; no `data:` module (adding one needs its own
+  decision). `core:ProcessDefinition` typing rule: approved processes +
+  capabilities, candidate structural/capability nodes with authored
+  definitions, blocked/retired only when retaining a meaningful record —
+  never L0 roots, pure structural anchors, tombstones, or not-process
+  roots. `core:conceptKind` and `core:lifecycleStatus` are object
+  properties to controlled SKOS schemes, not strings; three status
+  layers stay distinct (architecture artifact status vs concept
+  lifecycle vs authoring/review status). `core:taxonomyLevel` is derived
+  metadata ("current rendered depth") — never for security, KPI
+  ownership, criticality, or identity. Terminology notes migrate by
+  kind: authoring history → `skos:editorialNote`, migration history →
+  `dcterms:provenance`, review evidence → decision-log reference.
+- **Step 4 Q2: `intake:` retirement mode (2026-09-22).** Flag-day: all
+  `intake:` triples go in one Step 4 release — no deprecated-alias
+  transition (carrying ~5,571 dead staging triples is not worth it).
+  Preconditions before the release ships: reconfirm the no-consumer
+  attestation; per-predicate conservation ledger (`emitted + held =
+  source total`) — "zero `intake:` triples" proves deletion, not
+  replacement; explicit merge/release approval still required.
+- **Step 4 Q4: process dependency links (2026-09-22; property name
+  revised on review the same day).** When a workbook relation identifies
+  another process as the source of a needed input, model the
+  relationship as `core:dependsOnOutputOf` from the consumer process to
+  the producer process, with inverse `core:providesInputTo`. No new
+  nodes — the edge preserves the dependency chain ("what does this
+  process depend on; what breaks if it fails") that the competency
+  questions need. Governed structured flow values state what is
+  exchanged on that dependency. `core:consumes` and `core:produces`
+  remain reserved for future identified InformationObject instances.
+  (The Q4 decision originally named the property `core:usesInput`;
+  review corrected it — a process is not an input, its *output* is.)
+- **Step 4 Q6: `processHorizon` facet split (2026-09-22).** The workbook
+  field conflated three dimensions (8 distinct values across 485 rows:
+  event-driven/periodic/continuous are operating modes; daily/weekly/
+  monthly are cadences; tactical/strategic are planning levels). Step 4
+  splits it into `core:operatingMode` (event-driven | periodic |
+  continuous), `core:cadence` (daily | weekly | monthly | quarterly |
+  annual), and `core:planningLevel` (strategic | tactical |
+  operational) — each independently queryable. The 107 "periodic"-only
+  rows are recorded as cadence-unspecified: honest about the gap rather
+  than pretending "periodic" is a cadence.
 - **License: proprietary, all rights reserved** (2026-09-18). Hamid is
   the IP owner. Rationale: the ontology describes LSC's actual
   operations — competitively sensitive; can be opened later, cannot be
@@ -1499,6 +1625,47 @@ just KPIs.
 
 ---
 
+### Value-stream / capability / activity / event / decision / KPI / data-product layer (parked 2026-09-22)
+Not in 1.0.0. The fuller business-architecture hierarchy — domain >
+value stream > stages, value stream > capability > business process >
+activity, plus events, decisions, KPIs, and data products — is real and
+will be represented, but as **governed overlays over the process
+backbone, not as a second hierarchy inside it**. A value stream cuts
+across the tree (Order to Cash touches commercial, finance, credit,
+legal); the taxonomy gives every concept exactly one parent, so value
+streams cannot be parents — they are views. The existing JSON overlays
+already follow the right pattern: they *reference* process nodes via
+`linkedProcessIds` instead of duplicating them
+(`business_architecture/business_process/value_stream_*.json`,
+`business_architecture/schema/value_stream.schema.json`), and the data
+product portfolio links processes to data products with sparse
+produces/consumes relations (`business_architecture/business_process/
+data_product_portfolio.json`, dp-\*/dpl-\*). Where each layer lives:
+- Domain / value stream / stages / capabilities-as-views → parked
+  overlays (this item).
+- Capability kind → Q8 `conceptKind` (Step 4): `core:CapabilityKind`
+  classifies a concept as capability-like. Actual business capabilities
+  are a future `core:BusinessCapability` class (architecture entities,
+  not classification values), linked to processes via
+  `core:realizedBy` when the value-stream overlay is designed.
+- Business process → `core` 1.0.0 (Step 4).
+- Activity → future decomposition below L6.
+- Events → occurrences, Step 6 PROV-O.
+- Decisions → future decision modeling.
+- KPI → `kpi` module (Named KPIs bound to processes/capabilities; the
+  KPI Store on Databricks is the delivery side).
+- Data products → portfolio JSON now; ontology produces/consumes links
+  (critical-path only) when promoted.
+*Done when:* a consumer needs value-stream, capability, activity, event,
+decision, KPI, or data-product reasoning — then promote the overlays to
+governed ontology views, one at a time, against the stable 1.0.0
+backbone.
+Revival trigger: someone asks the model a question like "show me the
+Order-to-Cash value stream end to end" and the backbone alone cannot
+answer it.
+
+---
+
 ## Appendix B — Versioning in detail
 
 ### The rule in one sentence
@@ -1554,6 +1721,43 @@ silently.
 Rationale: deleting a URI orphans every catalog row, RACI assignment,
 and KPI binding that pointed at it. Storage is cheap; broken references
 are expensive.
+
+### Ontology identity and header
+The ontology is named, not anonymous. Each module ships one
+`owl:Ontology` resource that carries the release metadata:
+
+```turtle
+<https://w3id.org/lsc/ontology/modules/core>
+    a owl:Ontology ;
+    dcterms:title "LSC Core Process Ontology"@en ;
+    dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en ;
+    owl:versionIRI <https://w3id.org/lsc/ontology/modules/core/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    dcterms:issued "2026-09-22"^^xsd:date ;
+    dcterms:modified "2026-09-22"^^xsd:date ;
+    dcterms:creator "Hamid" ;
+    dcterms:license <https://w3id.org/lsc/ontology/modules/core/license> ;
+    dcterms:rights "© LSC. All rights reserved. APQC PCF content used with attribution per APQC/IBM terms."@en .
+```
+
+Rules:
+- **Ontology IRI is stable** (`…/ontology/modules/core`). It names the module,
+  not the release.
+- **Version IRI is per release** (`…/ontology/modules/core/1.0.0`). Consumers
+  who pin a release cite the version IRI; consumers who want currency
+  use the ontology IRI.
+- **Term IRIs never carry a version** (`core:ProcessDefinition`, not
+  `core/1.0.0/ProcessDefinition`). Versioning a term IRI would fork
+  identity — the exact thing this policy forbids.
+
+### Version history
+- **Pre-1.0.0 (before 2026-09-22).** Unversioned working builds. No
+  `owl:versionInfo` was shipped; the taxonomy iterated through Steps
+  1–3d and the R1 reclassification without a formal release.
+- **1.0.0 (Step 4, decided 2026-09-22).** First formal release of
+  `core`. Retires the provisional `intake:` namespace, promotes intake
+  annotations to governed properties, and ships the first explicit
+  version header. Baseline for everything after.
 
 ### What every release ships
 - `owl:versionInfo` on each module and on the release (`"1.2.0"`).
