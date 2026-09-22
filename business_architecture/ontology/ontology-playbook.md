@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical); 12 normalization-only judgment renames executed and merged 2026-09-22 — PR #103 (Batch 7, judgment — final naming batch)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated; PR #103 — 14,481 triples, report regenerated) | In progress — naming queue closed 2026-09-22 (92/92 entries executed: normalization, scope-ambiguity, directionality-missing, and generic-operational categories all executed); PTC-001-B (strategy ownership) open; future Refining-domain decomposition pending |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical); 12 normalization-only judgment renames executed and merged 2026-09-22 — PR #103 (Batch 7, judgment — final naming batch)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated; PR #103 — 14,481 triples, report regenerated) | ✅ Completed with explicit open exceptions 2026-09-22 — naming queue closed (92/92 entries executed: normalization, scope-ambiguity, directionality-missing, and generic-operational categories all executed); PTC-001 partially resolved (tombstone + 2 reparented L3s + 2 Candidate L2s); PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22) — Step 3d closed with that exception; Refining Architecture Scoping Decision created as Draft — R0 inventory next, no tree changes until L2 scope approved |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -1136,6 +1136,46 @@ materials — not petroleum inventory. The `Reconcile Economic PNL To
 Accounting PNL` case-only variant is migration-map-only (no altLabel), and
 the queue rule now codified is: case/punctuation-only changes carry no alt
 label. No definitions, hierarchy, process identities, slugs, or IRIs change.
+**Step 3d closure (2026-09-22, Hamid):** Step 3d closed as "Completed with
+explicit open exceptions" on Hamid's approval of the closeout recommendation.
+Naming normalization fully executed (92/92 queue entries); evidence-supported
+tree remediation complete (PTC-001 partial resolution: tombstone + 2 reparented
+L3s + 2 Candidate L2s).
+**PTC-001-B confirmed as intentional governance hold (2026-09-22, Hamid):**
+`Develop Strategic Business Plan` remains `blocked` under the retired
+`Commercial Development` tombstone until evidence establishes whether
+enterprise strategic-business planning is owned by (A) Corporate Planning
+within Finance, (B) Corporate Strategy / Corporate Development, or (C) an
+executive cross-functional governance process. Do not place it under Finance
+as a side effect; no new Strategy L1 without a charter-level decision.
+Evidence required: operating model, corporate-planning charter, executive and
+Board planning calendar, delegated authority, planning / portfolio /
+capital-allocation / business-plan artifacts. Review trigger: strategy
+operating-model definition, corporate-planning charter approval, or enterprise
+architecture/charter revision. A blocked row with a named decision, explicit
+options, evidence requirement, and review trigger is governance maturity —
+not incomplete work.
+**Refining Architecture Scoping Decision (2026-09-22, Hamid):** created as
+Draft. Next is a bounded R0 inventory delivered as a no-change proposal:
+inventory all Refining-related rows across the workbook, TTL, and process map;
+map existing hierarchy, concept type, approved definition/source evidence,
+candidate L2 placement, and dependencies; surface terminology inconsistencies
+(Refinery Planning, Optimization, Scheduling, Production, Reliability,
+Turnaround, process safety, quality/blending); establish the minimum business
+questions the decomposition must answer. No nodes added and no concepts moved
+until the L2 scope, definitions, boundaries, and sequencing are reviewed.
+Priority L2 candidates: Refinery Planning and Optimization; Refinery Operations
+and Production Management; Refinery Asset Reliability and Turnaround
+Coordination. EHS / process safety, enterprise risk, maintenance authority,
+Finance, Supply & Trading, Midstream, Commercial, Legal, Security, and IT
+boundaries stay explicit.
+**Definition-authoring process for new L2s (open, 2026-09-22):** the
+semantic-intake workbook closed with Step 3c; the R1 package needs an authoring
+route for new L2 definitions — decided alongside the L2 scope (small reviewer
+workbook round vs direct authoring).
+**SemVer treatment for Refining changes (2026-09-22):** new L2 nodes are
+additive (minor); reparenting existing concepts changes broader links and is
+flagged in the consumer-impact scan before merge.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,

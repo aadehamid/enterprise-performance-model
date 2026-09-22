@@ -159,7 +159,7 @@ Reading guide: each entry shows the source's organization, reference, access/ver
 
 - [x] Final batches (CM-1-3-9, CM-1-3-10) merged (#80, #81); batch log entries appended above.
 - [x] Held rows dispositioned with Hamid (b42): the two L0 roots approved as scheme roots; `CM-1-1-3-5-3` retained pending as the intentional business-evidence hold (batch 05 decision) — do not force it approved; pre-intake backfill remains a Step 3d authored pass (do not grow PRE_INTAKE_APPROVED).
-- [ ] PTC-001 resolved in Step 3d; PTC register updated.
+- [x] PTC-001 partially resolved in Step 3d; PTC-001-B confirmed as intentional strategy-ownership hold 2026-09-22 (Hamid) — Step 3d closed with that exception; PTC register updated.
 - [x] Traceability appendix regenerated against the finished workbook (#81).
 - [x] Naming-pass queue extracted into the controlled Draft artifact `step3c-naming-pass-queue.md` (EPM-BA-NAMING-QUEUE-001, b42). Execution is the first Step 3d activity: Critical semantic collision category gates semantic publication; the queue itself authorizes no renames.
 - [ ] Batches 1–20 log entries backfilled from PR history (dated amendment).
