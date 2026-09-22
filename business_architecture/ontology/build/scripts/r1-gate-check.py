@@ -21,6 +21,7 @@ Requires: rdflib, openpyxl.
 import csv
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -332,6 +333,36 @@ check("Step 3d lock: full breadcrumb == identity-map path",
       not path_bad, str(path_bad[:5]))
 check("CM-1-1-4-6-1 workbook status blocked", blocked461 is None,
       str(blocked461))
+
+# ---- Stale pre-R1 relationship targets: never again ----
+# R1 renamed CM-1-1-4 "Refinery Planning" -> "Refinery Planning and
+# Optimization" and CM-1-1-7 "Refinery Scheduling" -> "Refinery Production
+# Planning and Scheduling". The retired bare labels survive only as
+# prior_name history in the identity map; a relationship target must
+# always name the current executed label. This is a structural
+# precondition: any reappearance fails the gate loudly (do not "fix" by
+# extending this map — the workbook cell must name the current label).
+STALE_RELATIONSHIP_TARGETS = {
+    "Refinery Planning": "Refinery Planning and Optimization",
+    "Refinery Scheduling": "Refinery Production Planning and Scheduling",
+}
+stale_target_hits = []
+for r in ws.iter_rows(min_row=2, values_only=True):
+    s = (r[idx["slug"]] or "").strip()
+    if not s:
+        continue
+    cell = (r[idx["related_concepts"]] or "").strip()
+    for seg in cell.split("|"):
+        seg = seg.strip()
+        if ":" not in seg:
+            continue
+        target = seg.split(":", 1)[1].strip()
+        target = re.sub(r"\s*\([A-Za-z0-9.\-]+\)\s*$", "", target)
+        if target in STALE_RELATIONSHIP_TARGETS:
+            stale_target_hits.append(
+                (s, target, STALE_RELATIONSHIP_TARGETS[target]))
+check("no stale pre-R1 relationship targets",
+      not stale_target_hits, str(stale_target_hits[:5]))
 
 # ---- Gate 4: report consistency ----
 rep = (OUT / "step3-taxonomy-report.md").read_text(encoding="utf-8")
