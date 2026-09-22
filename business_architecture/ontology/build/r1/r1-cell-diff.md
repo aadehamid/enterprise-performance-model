@@ -731,3 +731,248 @@ Only cells that changed are listed. `terminology_notes` was never touched except
 
 - after: Publish Local Refinery Targets for Regional to Local Transition
 
+
+---
+
+## Follow-up: Step 3d breadcrumb-lock corrections (pre-merge, 2026-09-22)
+
+Hamid's pre-merge hold on one reverted Step 3d label in a breadcrumb cell (`CM-1-1-7-3-3`: crumb leaf "Manage and Support Emission Trading" vs executed "Manage and Support Emissions Trading"). Root cause: the R1 one-shot script rebuilt breadcrumbs from `downstream_process_map.json` node names, which carry stale pre-Step-3d labels; naming authority is the identity-map executed `name` (the same names that render TTL prefLabels). The script's breadcrumb logic is fixed in this commit to use the identity map; `tree_info` in `build/scripts/r1-workbook-update.py`.
+
+A systematic scan of all 522 workbook rows against the identity-map naming authority found 26 stale breadcrumb cells of the same class — 1 introduced by the R1 script (CM-1-1-7-3-3) and 25 older ones from prior steps — all corrected below. Every corrected cell's leaf now equals the row's executed `name`, and every segment equals the executed name of its concept. Process JSON untouched (out of scope); the JSON diff stays exactly as approved.
+
+Reason for every cell below: **Step 3d lock — stale pre-naming-pass label in breadcrumb; corrected to the executed Step 3d label** (identity-map naming authority).
+
+## `CM-1-1-1-1`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast
+
+## `CM-1-1-1-1-1`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting > Prepare Master Data To Create Demand Forecast
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast > Prepare Master Data To Create Demand Forecast
+
+## `CM-1-1-1-1-2`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting > Develop Statistical Baseline
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast > Develop Statistical Baseline
+
+## `CM-1-1-1-1-3`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting > Adjust Forecast Incorporating Customer Input and Market Intelligence
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast > Adjust Forecast Incorporating Customer Input and Market Intelligence
+
+## `CM-1-1-1-1-4`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting > Publish Forecast and Generate Component Level Forecast Plan
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast > Publish Forecast and Generate Component Level Forecast Plan
+
+## `CM-1-1-1-1-5`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Demand Forecasting'
+- executed segments: 'Produce Demand Forecast'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Demand Forecasting > Monitor Demand Forecasting Performance and Reporting
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Demand Forecasting > Produce Demand Forecast > Monitor Demand Forecasting Performance and Reporting
+
+## `CM-1-1-3-7`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management
+
+## `CM-1-1-3-7-1`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Develop Crude/Feedstock Inventory Policy
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Develop Crude/Feedstock Inventory Policy
+
+## `CM-1-1-3-7-2`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Develop Intermediates Inventory Policy
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Develop Intermediates Inventory Policy
+
+## `CM-1-1-3-7-3`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Develop Finished Product Inventory Policy
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Develop Finished Product Inventory Policy
+
+## `CM-1-1-3-7-4`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Measure Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Measure Inventory
+
+## `CM-1-1-3-7-5`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Perform Inventory Reconciliation
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Perform Inventory Reconciliation
+
+## `CM-1-1-3-7-6`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Consignment Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Consignment Inventory
+
+## `CM-1-1-3-7-7`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Commingled Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Commingled Inventory
+
+## `CM-1-1-3-7-8`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Inventory Re-brands
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Inventory Re-brands
+
+## `CM-1-1-3-7-9`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Inventory Replenishment
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Inventory Replenishment
+
+## `CM-1-1-3-7-10`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Lot/Batch Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Lot/Batch Inventory
+
+## `CM-1-1-3-7-11`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory'
+- executed segments: 'Inventory Management'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Third Party Storage
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Manage Third Party Storage
+
+## `CM-1-1-3-7-12`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Inventory' | 'Manage Inventory'
+- executed segments: 'Inventory Management' | 'Monitor and Control Inventory Positions'
+- before: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory > Manage Inventory
+- after: Downstream Operations > Commercial & Marketing > Planning & Scheduling > Distribution Planning & Scheduling and Inventory Management > Inventory Management > Monitor and Control Inventory Positions
+
+## `CM-1-1-7-3-3`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Manage and Support Emission Trading'
+- executed segments: 'Manage and Support Emissions Trading'
+- before: Downstream Operations > Refining > Refinery Production Planning and Scheduling > Energy & Utility Management > Manage and Support Emission Trading
+- after: Downstream Operations > Refining > Refinery Production Planning and Scheduling > Energy & Utility Management > Manage and Support Emissions Trading
+
+## `CM-1-3-3-1-4`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Offer Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Customer Offer Definition > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Customer Offer Definition > Define Offer Measurement Framework
+
+## `CM-1-3-3-2-5`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Pricing Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Pricing Strategy Management > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Pricing Strategy Management > Define Pricing Measurement Framework
+
+## `CM-1-3-3-3-5`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Channel Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Sales & Distribution Channel Design > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Sales & Distribution Channel Design > Define Channel Measurement Framework
+
+## `CM-1-3-3-4-4`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Network Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Network Design (Retail) > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Network Design (Retail) > Define Network Measurement Framework
+
+## `CM-1-3-3-5-7`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Marketing Communications Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Marketing Communications Strategy > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Marketing Communications Strategy > Define Marketing Communications Measurement Framework
+
+## `CM-1-3-3-6-5`
+
+### breadcrumb — Step 3d lock correction
+
+- stale segments: 'Define KPI Framework'
+- executed segments: 'Define Operating Model Measurement Framework'
+- before: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Operating Model Design > Define KPI Framework
+- after: Downstream Operations > Commercial & Marketing > Marketing > Offer Design & Development > Operating Model Design > Define Operating Model Measurement Framework
+

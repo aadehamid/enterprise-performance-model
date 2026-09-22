@@ -9,7 +9,7 @@ instructions. All paths below are relative to the repository root.
 
 **Mechanically re-verified with the independent checker
 `business_architecture/ontology/build/scripts/r1-gate-check.py`
-(all 38 checks PASS, exit 0) against the
+(all 42 checks PASS, exit 0) against the
 committed regenerated outputs:**
 
 - 683 concepts (682 + 1 new R&T L2), 14,496 triples (baseline 14,481; +14
@@ -82,7 +82,12 @@ all with the "No consumer — foundation stage" disposition.
 
 **Re-verify:** `python3 business_architecture/ontology/build/scripts/r1-gate-check.py`
 covers the unchanged checks; read any migrated row's `r1_migration` object in
-`build/output/step2-identity-map.json`.
+`build/output/step2-identity-map.json`. The checker also asserts
+`CM-1-1-4-6-1` keeps `intake:status "blocked"` (TTL) and workbook status
+`blocked`, and enforces the Step 3d lock: every workbook row's breadcrumb
+leaf equals its executed `name` and every segment equals the identity-map
+naming-authority path — no reverted labels, ever (26 stale breadcrumb cells
+corrected in this commit; enumerated in `build/r1/r1-cell-diff.md`).
 
 ## Gate 4 — regeneration evidence
 

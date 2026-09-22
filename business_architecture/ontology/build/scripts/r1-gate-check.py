@@ -167,6 +167,9 @@ check("tombstone broader CM-1-1", slug(broader(g_new, t)) == "CM-1-1")
 r61 = im_new.get("CM-1-1-4-6-1", {})
 check("CM-1-1-4-6-1 level 4 under tombstone",
       r61.get("parent_slug") == "CM-1-1-4-6" and r61.get("level") == 4)
+c461 = URIRef(PROC + "CM-1-1-4-6-1")
+st461 = [str(o) for o in g_new.objects(c461, URIRef(INTAKE + "status"))]
+check("CM-1-1-4-6-1 intake:status blocked", st461 == ["blocked"], str(st461))
 
 # ---- new L2 ----
 NL2 = "L2-refinery-asset-reliability-and-turnaround-coordination"
@@ -296,6 +299,39 @@ mismatch = {s: (pending_ifaces[s], REVIEWED_PENDING_INTERFACES[s])
             and pending_ifaces[s] != REVIEWED_PENDING_INTERFACES[s]}
 check("reviewed pending interfaces match reviewed values",
       not mismatch, str(mismatch))
+
+# ---- Step 3d label lock: no reverted labels in breadcrumbs, ever ----
+# Naming authority is the identity map (executed names == TTL prefLabels).
+# Breadcrumb leaf must equal the row's executed name; every segment must
+# equal the executed name of its concept (catches ancestor reverts too).
+leaf_bad, path_bad, blocked461 = [], [], None
+for r in ws.iter_rows(min_row=2, values_only=True):
+    s = (r[idx["slug"]] or "").strip()
+    if not s:
+        continue
+    name = (r[idx["name"]] or "").strip()
+    crumb = (r[idx["breadcrumb"]] or "").strip()
+    segs = [x.strip() for x in crumb.split(">")] if crumb else []
+    if segs and segs[-1] != name:
+        leaf_bad.append((s, segs[-1], name))
+    exp, seen, cur, ok_chain = [], set(), s, True
+    while cur:
+        if cur in seen or cur not in im_new:
+            ok_chain = False
+            break
+        seen.add(cur)
+        exp.append(im_new[cur]["name"])
+        cur = im_new[cur].get("parent_slug")
+    if ok_chain and crumb and crumb != " > ".join(reversed(exp)):
+        path_bad.append(s)
+    if s == "CM-1-1-4-6-1" and (r[idx["status"]] or "").strip() != "blocked":
+        blocked461 = (r[idx["status"]] or "")
+check("Step 3d lock: every breadcrumb leaf == executed name",
+      not leaf_bad, str(leaf_bad[:5]))
+check("Step 3d lock: full breadcrumb == identity-map path",
+      not path_bad, str(path_bad[:5]))
+check("CM-1-1-4-6-1 workbook status blocked", blocked461 is None,
+      str(blocked461))
 
 # ---- Gate 4: report consistency ----
 rep = (OUT / "step3-taxonomy-report.md").read_text(encoding="utf-8")

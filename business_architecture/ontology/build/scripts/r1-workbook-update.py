@@ -27,6 +27,14 @@ Usage:
 One-shot and asserted: it refuses to run twice (the new L2 row and the T9c
 addition are already present). Re-running on an updated workbook fails loudly
 rather than silently double-applying.
+
+Naming-authority note (2026-09-22 fix): breadcrumb and parent display names
+are reconstructed from the identity-map executed names, not from
+downstream_process_map.json node names. The JSON carried the stale
+pre-Step-3d label "Manage and Support Emission Trading" for CM-1-1-7-3-3,
+which the original breadcrumb logic copied verbatim into the workbook,
+reverting an executed Step 3d label. The identity map is the naming
+authority (same names that render TTL prefLabels).
 """
 import argparse
 import json
@@ -126,10 +134,18 @@ ASSERT_SLUGS = [  # moved concepts with no workbook row + the interface row
 ]
 
 
-def tree_info(src_json):
-    """slug -> {name, level, parent_name, breadcrumb} from the new tree."""
+def tree_info(src_json, idmap=None):
+    """slug -> {name, level, parent_name, breadcrumb} from the new tree.
+
+    Breadcrumb and parent display names come from the identity-map naming
+    authority (executed Step 3d labels), never from the JSON node names —
+    the JSON can carry stale pre-naming-pass labels (e.g. "Manage and
+    Support Emission Trading" vs executed "Manage and Support Emissions
+    Trading"), which previously leaked a reverted label into a breadcrumb.
+    """
     data = json.loads(Path(src_json).read_text(encoding="utf-8"))
     info = {}
+    idmap = idmap or {}
 
     def slug_of(node):
         pid = node.get("id")
@@ -140,13 +156,18 @@ def tree_info(src_json):
         t = re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")
         return f"L{node['level']}-{t}"
 
+    def disp_name(node):
+        slug = slug_of(node)
+        return idmap.get(slug, {}).get("name") or node["name"]
+
     def rec(node, parent_name, trail):
         slug = slug_of(node)
+        dn = disp_name(node)
         info[slug] = {"name": node["name"], "level": node["level"],
                       "parent_name": parent_name,
-                      "breadcrumb": " > ".join(trail + [node["name"]])}
+                      "breadcrumb": " > ".join(trail + [dn])}
         for c in node.get("children", []) or []:
-            rec(c, node["name"], trail + [node["name"]])
+            rec(c, dn, trail + [dn])
 
     for top in data:
         rec(top, None, [])
@@ -164,7 +185,9 @@ def main():
 
     idmap = {r["slug"]: r for r in
              json.loads(Path(a.identity_map).read_text(encoding="utf-8"))}
-    tinfo = tree_info(a.src_json)
+    # Naming authority: identity-map executed names. The JSON node names are
+    # never used for display strings (see tree_info).
+    tinfo = tree_info(a.src_json, idmap)
 
     wb = load_workbook(a.workbook_in)
     assert SHEET in wb.sheetnames
