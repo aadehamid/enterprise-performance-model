@@ -1,12 +1,12 @@
 # Step 3 — SKOS taxonomy report
 
-- Concepts: 682 (one per process-map node, stable document order)
-- Triples: 14481
-- `skos:broader` links: 680 (every concept except the two L0 roots)
+- Concepts: 683 (one per process-map node, stable document order)
+- Triples: 14496
+- `skos:broader` links: 681 (every concept except the two L0 roots)
 - Top concepts: `L0-downstream-operations`, `L0-enabling-functions`
 - `skos:notation` present: 669 (every ID'd node; original codes preserved)
-- `skos:definition` present: 679 of 682 (0 triangulated APQC/EIA, 0 human-authored L1-L3, 502 workbook-approved)
-- Workbook overlay: 502 approved rows (definitions, scope notes, 317 altLabels, 500 APQC references, intake annotations); 1 blocked rows (definition-less, parked); 1 retired row(s) marked owl:deprecated
+- `skos:definition` present: 680 of 683 (0 triangulated APQC/EIA, 0 human-authored L1-L3, 503 workbook-approved)
+- Workbook overlay: 503 approved rows (definitions, scope notes, 317 altLabels, 500 APQC references, intake annotations); 1 blocked rows (definition-less, parked); 1 retired row(s) marked owl:deprecated
 - Untagged literals: 0 (language policy holds)
 
 ## ConceptScheme
@@ -51,7 +51,7 @@ is left for the Step 3d tree pass, when destinations are decided.
   they belong to Steps 4/5. This file is the taxonomy, nothing more.
 
 ## Validation (rdflib, mechanical)
-Parsed clean; 682 concepts; exactly one `@en` prefLabel per concept;
-every concept in scheme; 680 broader links, no dangling targets, no
+Parsed clean; 683 concepts; exactly one `@en` prefLabel per concept;
+every concept in scheme; 681 broader links, no dangling targets, no
 self-references; 2 top concepts; zero untagged literals; Turtle
 round-trip lossless.

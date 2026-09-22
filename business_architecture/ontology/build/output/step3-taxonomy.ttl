@@ -107,7 +107,7 @@ proc:CM-1-1-1-1-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.1.1.4" ;
     skos:prefLabel "Publish Forecast and Generate Component Level Forecast Plan"@en ;
-    skos:scopeNote """Covers the release step of the forecast cycle: final approval, version identification, disaggregation of the agreed forecast to the component level used by planning, and distribution to its consumers. The published version is the fixed reference that both planning and forecast-performance measurement run against. Excludes acting on the forecast — supply, production, inventory, and allocation decisions are owned by Regional Optimization (CM-1-1-2) and Refinery Planning (CM-1-1-4); excludes the consumers' own receipt and case-assembly steps, owned by Receive Demand Forecast (CM-1-2-1-1-2) and Capture Product Demand Requirements (CM-1-1-4-7-1).
+    skos:scopeNote """Covers the release step of the forecast cycle: final approval, version identification, disaggregation of the agreed forecast to the component level used by planning, and distribution to its consumers. The published version is the fixed reference that both planning and forecast-performance measurement run against. Excludes acting on the forecast — supply, production, inventory, and allocation decisions are owned by Regional Optimization (CM-1-1-2) and Refinery Planning and Optimization (CM-1-1-4); excludes the consumers' own receipt and case-assembly steps, owned by Receive Demand Forecast (CM-1-2-1-1-2) and Capture Product Demand Requirements (CM-1-1-4-7-1).
 In scope: Approve and version the forecast for release | disaggregate to the component-level forecast plan | distribute the published forecast to consuming processes | maintain the published version as the fixed reference for the period
 Out of scope: Supply and allocation decisions (Regional Optimization, CM-1-1-2) | refinery case-basis assembly (Capture Product Demand Requirements, CM-1-1-4-7-1) | trading-side receipt (Receive Demand Forecast, CM-1-2-1-1-2) | forecast adjustment (CM-1-1-1-1-3)"""@en ;
     intake:apqcDecision "REJECTED"@en ;
@@ -233,7 +233,7 @@ proc:CM-1-1-2-10 a skos:Concept ;
     skos:prefLabel "Allocate Crude and Feedstock"@en ;
     skos:scopeNote """Covers the recurring allocation of secured or available crude and feedstock supply across competing refinery destinations, including grade-to-site matching, volume splits, timing of receipt windows, and reallocation when supply or plan assumptions change. Excludes crude purchase, negotiation, and trade execution, owned by Supply And Trading; excludes vessel, pipeline, and terminal movement execution, owned by Midstream; excludes the refinery's internal decision on which tanks and units process an allocated grade, owned by Refining.
 In scope: Grade-to-refinery assignment | volume split across sites | receipt-window timing | reallocation on supply disruption or plan change | allocation of term and spot volumes against planned refinery slates
-Out of scope: Crude purchasing and trade execution (Supply And Trading) | physical movement, berth and pipeline scheduling (Midstream) | unit-level crude processing decisions (Refining) | refinery slate economics selection (Refinery Planning)"""@en ;
+Out of scope: Crude purchasing and trade execution (Supply And Trading) | physical movement, berth and pipeline scheduling (Midstream) | unit-level crude processing decisions (Refining) | refinery slate economics selection (Refinery Planning and Optimization)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved refinery production plan | secured and available crude supply position | crude and feedstock quality assays | delivered-cost and freight economics | refinery receipt and storage constraints"@en ;
@@ -293,9 +293,9 @@ proc:CM-1-1-2-12 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.2.12" ;
     skos:prefLabel "Maintain Supply Planning Master Data"@en ;
-    skos:scopeNote """Covers stewardship of supply-planning-specific reference and parameter data over its lifecycle, including requesting and validating changes, applying effective dates, and confirming that planning results remain consistent after a change. Excludes enterprise master-data policy, standards, and governance, which sit with the Data Governance workstream; excludes customer, price, product, tax, and location master data, owned by Manage Commercial Master Data Stewardship under Order Management; excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data under Refinery Scheduling.
+    skos:scopeNote """Covers stewardship of supply-planning-specific reference and parameter data over its lifecycle, including requesting and validating changes, applying effective dates, and confirming that planning results remain consistent after a change. Excludes enterprise master-data policy, standards, and governance, which sit with the Data Governance workstream; excludes customer, price, product, tax, and location master data, owned by Manage Commercial Master Data Stewardship under Order Management; excludes production-scheduling master data, owned by Maintain Production Scheduling Master Data under Refinery Production Planning and Scheduling.
 In scope: Planning network and location data | sourcing and supply-path data | planning capacity and rate parameters | lead times and transit assumptions | planning yields and product groupings | change request, validation, and effective dating of planning parameters
-Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Commercial Master Data Stewardship, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Produce Demand Forecast (CM-1-1-1-1)) | planning application administration and platform support (Process Excellence & IT)"""@en ;
+Out of scope: Enterprise master-data policy and governance standards (Data Governance) | customer, price, product, tax, and location master data (Manage Commercial Master Data Stewardship, Order Management) | production-scheduling master data (Maintain Production Scheduling Master Data, Refinery Production Planning and Scheduling) | demand-forecast master data preparation (Prepare Master Data To Create Demand Forecast, Produce Demand Forecast (CM-1-1-1-1)) | planning application administration and platform support (Process Excellence & IT)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "planning parameter change requests | network, capacity, and sourcing changes | refinery and logistics capability updates | product and grade structure changes | enterprise data-governance standards"@en ;
@@ -721,7 +721,8 @@ proc:CM-1-1-2-9-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.2.9.1" ;
     skos:prefLabel "Publish Local Refinery Targets for Regional to Local Transition"@en ;
-    intake:level "L5"@en .
+    intake:level "L5"@en ;
+    intake:relatedConcepts "informs: Refinery Planning and Optimization (CM-1-1-4)"@en .
 
 proc:CM-1-1-2-9-2 a skos:Concept ;
     skos:broader proc:CM-1-1-2-9 ;
@@ -1111,9 +1112,9 @@ proc:CM-1-1-3-7-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.3.7.2" ;
     skos:prefLabel "Develop Intermediates Inventory Policy"@en ;
-    skos:scopeNote """Covers policy for unfinished streams held between refinery processing stages and blending, including working-level ranges that buffer unit outages and campaign changes, segregation rules that protect intermediate quality, and policy review cadence tied to unit campaigns and turnarounds. Excludes intermediate tank and transfer operation, owned by Refining; excludes the production decisions that generate intermediates, owned by Refinery Planning (CM-1-1-4) and Refining; excludes finished-product policy, owned by Develop Finished Product Inventory Policy (CM-1-1-3-7-3).
+    skos:scopeNote """Covers policy for unfinished streams held between refinery processing stages and blending, including working-level ranges that buffer unit outages and campaign changes, segregation rules that protect intermediate quality, and policy review cadence tied to unit campaigns and turnarounds. Excludes intermediate tank and transfer operation, owned by Refining; excludes the production decisions that generate intermediates, owned by Refinery Planning and Optimization (CM-1-1-4) and Refining; excludes finished-product policy, owned by Develop Finished Product Inventory Policy (CM-1-1-3-7-3).
 In scope: Set working-level ranges for intermediates and blendstocks | define segregation and quality-protection rules | define review triggers tied to campaigns and turnarounds | approve policy exceptions
-Out of scope: Intermediate tank and transfer operation (Refining) | production planning of intermediates (Refinery Planning, CM-1-1-4) | finished-product policy (CM-1-1-3-7-3) | crude and feedstock policy (CM-1-1-3-7-1)"""@en ;
+Out of scope: Intermediate tank and transfer operation (Refining) | production planning of intermediates (Refinery Planning and Optimization, CM-1-1-4) | finished-product policy (CM-1-1-3-7-3) | crude and feedstock policy (CM-1-1-3-7-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "unit campaign and turnaround plans | blending requirements | intermediate tankage constraints | quality-segregation requirements"@en ;
@@ -1449,7 +1450,7 @@ proc:CM-1-1-4-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.1.1" ;
     skos:prefLabel "Review business context and identify data objects requiring changes in Refinery Premise"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-1-2 a skos:Concept ;
     skos:broader proc:CM-1-1-4-1 ;
@@ -1457,7 +1458,7 @@ proc:CM-1-1-4-1-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.1.2" ;
     skos:prefLabel "Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-1-3 a skos:Concept ;
     skos:broader proc:CM-1-1-4-1 ;
@@ -1465,7 +1466,7 @@ proc:CM-1-1-4-1-3 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.1.3" ;
     skos:prefLabel "Perform overrides (with rationale) in Refinery Premise"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-1-4 a skos:Concept ;
     skos:broader proc:CM-1-1-4-1 ;
@@ -1473,7 +1474,7 @@ proc:CM-1-1-4-1-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.1.4" ;
     skos:prefLabel "Identify changes needed out of cycle for refinery premise"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-2-1 a skos:Concept ;
     skos:broader proc:CM-1-1-4-2 ;
@@ -1481,7 +1482,7 @@ proc:CM-1-1-4-2-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.2.1" ;
     skos:prefLabel "Perform Initial Review of M+1"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-2-2 a skos:Concept ;
     skos:broader proc:CM-1-1-4-2 ;
@@ -1489,7 +1490,7 @@ proc:CM-1-1-4-2-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.2.2" ;
     skos:prefLabel "Receive Handover of M+1 Plan"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-3 a skos:Concept ;
     skos:broader proc:CM-1-1-4 ;
@@ -1497,7 +1498,7 @@ proc:CM-1-1-4-3 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.3" ;
     skos:prefLabel "Refresh Refinery Plan for month M"@en ;
-    intake:level "L4"@en .
+    intake:level "L3"@en .
 
 proc:CM-1-1-4-4-1 a skos:Concept ;
     skos:broader proc:CM-1-1-4-4 ;
@@ -1505,7 +1506,7 @@ proc:CM-1-1-4-4-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.4.1" ;
     skos:prefLabel "Evaluate Market Scenarios Identified for Prompt Month Horizon"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-4-2 a skos:Concept ;
     skos:broader proc:CM-1-1-4-4 ;
@@ -1513,7 +1514,7 @@ proc:CM-1-1-4-4-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.4.2" ;
     skos:prefLabel "Develop Step Cases for Prompt Month Horizon"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-4-3 a skos:Concept ;
     skos:broader proc:CM-1-1-4-4 ;
@@ -1521,7 +1522,7 @@ proc:CM-1-1-4-4-3 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.4.3" ;
     skos:prefLabel "Run Step Cases for Prompt Month Horizon"@en ;
-    intake:level "L5"@en .
+    intake:level "L4"@en .
 
 proc:CM-1-1-4-5 a skos:Concept ;
     skos:broader proc:CM-1-1-4 ;
@@ -1529,14 +1530,14 @@ proc:CM-1-1-4-5 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.5" ;
     skos:prefLabel "Communicate Changes to Scheduling"@en ;
-    intake:level "L4"@en .
+    intake:level "L3"@en .
 
 proc:CM-1-1-4-6-1 a skos:Concept ;
     skos:broader proc:CM-1-1-4-6 ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6.1" ;
     skos:prefLabel "Develop Strategic Business Plan"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:status "blocked"@en ;
     intake:terminologyNotes "Parked by PTC-001 (step3c-parked-tree-changes.md), 2026-09-18. Hamid accepted Option A: this node leaves Refinery Planning. It cannot be moved yet — verified against downstream_process_map.json, the destination domain has no decomposition at all, so there is no parent to move it to. Set to blocked rather than left pending so it is not read as queued for definition. Revived by the Step 3d tree pass, not by a definition batch. Destination undecided: Finance or a future strategy domain. Hamid ruled out creating a Strategy L1, since the ten L1 definitions are approved baseline and changing the L1 set is a charter-level decision. Step 3d PTC-001 tree pass (2026-09-21): stays blocked under PTC-001-B — enterprise strategy-ownership decision (options: Corporate Planning within Finance / Corporate Strategy / executive cross-functional governance). Parent Commercial Development tombstoned (owl:deprecated) pending PTC-001-B resolution."@en .
 
@@ -1616,7 +1617,7 @@ Out of scope: Producing or owning the demand forecast, owned by Produce Demand F
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved demand forecast | firm contracts and term commitments | internal and inter-refinery transfer requirements | product grade and specification definitions"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "agreed product demand basis for the refinery optimization case"@en ;
     intake:primaryPurpose "Establish the agreed demand basis the refinery production case must satisfy."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1640,13 +1641,13 @@ proc:CM-1-1-4-7-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.7.2" ;
     skos:prefLabel "Evaluate Crude & Feedstock"@en ;
-    skos:scopeNote """Covers technical and economic screening of candidate crudes and feedstocks for planning: confirming assay and quality data is current and complete, estimating yields and processing fit against unit configuration and specification limits, valuing each candidate on a delivered-cost and netback basis, and flagging handling or compatibility issues. Excludes laboratory assay testing and certification, and excludes purchase, negotiation, and trade execution, owned by Supply And Trading (CM-1-2). Approval of the final crude slate remains with Refinery Planning (CM-1-1-4).
+    skos:scopeNote """Covers technical and economic screening of candidate crudes and feedstocks for planning: confirming assay and quality data is current and complete, estimating yields and processing fit against unit configuration and specification limits, valuing each candidate on a delivered-cost and netback basis, and flagging handling or compatibility issues. Excludes laboratory assay testing and certification, and excludes purchase, negotiation, and trade execution, owned by Supply And Trading (CM-1-2). Approval of the final crude slate remains with Refinery Planning and Optimization (CM-1-1-4).
 In scope: Confirm assay and quality data currency and completeness | estimate yields and processing fit against refinery configuration | screen against specification and handling limits | value candidates on delivered cost and netback | rank and publish the evaluated crude and feedstock set
-Out of scope: Purchasing, negotiating, and executing crude and feedstock trades, owned by Supply And Trading (CM-1-2) | laboratory assay testing and certification, owned by Refining laboratory services | approving the final crude slate, owned by Refinery Planning (CM-1-1-4) | placing secured crude across refineries, owned by Allocate Crude and Feedstock (CM-1-1-2-10) | crude and feedstock master data stewardship, owned by Manage Feedstock Data Quality (CM-1-2-5-1-1)"""@en ;
+Out of scope: Purchasing, negotiating, and executing crude and feedstock trades, owned by Supply And Trading (CM-1-2) | laboratory assay testing and certification, owned by Refining laboratory services | approving the final crude slate, owned by Refinery Planning and Optimization (CM-1-1-4) | placing secured crude across refineries, owned by Allocate Crude and Feedstock (CM-1-1-2-10) | crude and feedstock master data stewardship, owned by Manage Feedstock Data Quality (CM-1-2-5-1-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "crude and feedstock assays and quality data | refinery configuration and unit capability | product specification limits | delivered cost, freight, and differential data | candidate supply offers"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "evaluated and ranked crude and feedstock set with yield and value estimates"@en ;
     intake:primaryPurpose "Produce the technically and economically evaluated crude and feedstock set for the planning period."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1676,7 +1677,7 @@ Out of scope: Securing, negotiating, and executing supply, owned by Supply And T
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "term and spot supply contracts | lifting and nomination schedules | supplier availability advice | marine and pipeline logistics availability | port and tankage receipt limits"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "available crude and feedstock supply basis by grade, source, and arrival window"@en ;
     intake:primaryPurpose "Establish the crude and feedstock volumes and arrival windows available to the planning period."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1706,7 +1707,7 @@ Out of scope: Setting and implementing customer sales prices, owned by Sales Pri
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "published market quotations and forward curves | quality and location differentials | freight and logistics cost rates | internal transfer pricing policy | operating cost assumptions"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "versioned price and economic assumption set for the planning period"@en ;
     intake:primaryPurpose "Establish the reproducible price and economic assumption set used to value the optimization case."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1736,7 +1737,7 @@ Out of scope: Setting and owning unit operating limits and process control, owne
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "unit capacity and rate limits | planned maintenance and turnaround schedule | product specification and blending limits | tankage, jetty, and pipeline capacity | regulatory, permit, and contractual limits"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "validated refinery operating envelope and constraint set for the case"@en ;
     intake:primaryPurpose "Establish the validated feasible operating envelope the production case must respect."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1766,7 +1767,7 @@ Out of scope: Measuring, counting, and reconciling inventory, owned by Measure I
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "inventory system of record position | in-transit and committed volumes | minimum operating and unavailable stock levels | plan-period finished-goods inventory target | tankage and segregation constraints"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "opening and required closing inventory basis for the optimization case"@en ;
     intake:primaryPurpose "Establish the opening and required closing inventory position bounding the optimization case."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1791,13 +1792,13 @@ proc:CM-1-1-4-7-7 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.7.7" ;
     skos:prefLabel "Capture Monthly Operating Plan"@en ;
-    skos:scopeNote """Covers closing the optimization cycle: confirming which case was selected, registering the plan with its price, constraint, and inventory assumptions and a version identifier, publishing it to Refining and the affected commercial functions, and recording it as the baseline that later backcasting compares against. Excludes selecting and approving the plan, which is the Refinery Planning (CM-1-1-4) decision this step records. Excludes detailed scheduling, line-ups, and blend execution against the plan, owned by Refining. Excludes reforecasting or revising the plan mid-period.
+    skos:scopeNote """Covers closing the optimization cycle: confirming which case was selected, registering the plan with its price, constraint, and inventory assumptions and a version identifier, publishing it to Refining and the affected commercial functions, and recording it as the baseline that later backcasting compares against. Excludes selecting and approving the plan, which is the Refinery Planning and Optimization (CM-1-1-4) decision this step records. Excludes detailed scheduling, line-ups, and blend execution against the plan, owned by Refining. Excludes reforecasting or revising the plan mid-period.
 In scope: Confirm the selected production case and its approval | register the plan with its assumption set and version identifier | publish the plan of record to Refining and affected commercial functions | record the plan as the backcasting baseline | log in-period changes as versioned restatements
-Out of scope: Selecting and approving the production plan, owned by Refinery Planning (CM-1-1-4) | running and comparing the cases, owned by Perform Scenario Analysis (CM-1-1-4-7-8) | detailed scheduling and execution against the plan, owned by Refining | comparing actuals to the plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6) | mid-period reforecasting"""@en ;
+Out of scope: Selecting and approving the production plan, owned by Refinery Planning and Optimization (CM-1-1-4) | running and comparing the cases, owned by Perform Scenario Analysis (CM-1-1-4-7-8) | detailed scheduling and execution against the plan, owned by Refining | comparing actuals to the plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6) | mid-period reforecasting"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "selected and approved production case | case assumption set and scenario results | plan versioning and numbering convention | distribution list for the plan of record"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "issued and versioned monthly operating plan of record with its assumption set"@en ;
     intake:primaryPurpose "Issue and register the approved monthly production plan as the plan of record."@en ;
     intake:processHorizon "monthly"@en ;
@@ -1821,13 +1822,13 @@ proc:CM-1-1-4-7-8 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.7.8" ;
     skos:prefLabel "Perform Scenario Analysis"@en ;
-    skos:scopeNote """Covers case-based analysis inside the optimization cycle: defining the scenarios worth testing, running them against the case basis, reading marginal values and binding constraints, quantifying margin and feasibility differences, and documenting the comparison that supports the recommended case. Excludes selecting and approving the production plan, owned by Refinery Planning (CM-1-1-4). Excludes trading and market risk scenarios, owned by Manage And Run Risk Scenarios (CM-1-2-2-3-11). Excludes comparing actual performance to the approved plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6).
+    skos:scopeNote """Covers case-based analysis inside the optimization cycle: defining the scenarios worth testing, running them against the case basis, reading marginal values and binding constraints, quantifying margin and feasibility differences, and documenting the comparison that supports the recommended case. Excludes selecting and approving the production plan, owned by Refinery Planning and Optimization (CM-1-1-4). Excludes trading and market risk scenarios, owned by Manage And Run Risk Scenarios (CM-1-2-2-3-11). Excludes comparing actual performance to the approved plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6).
 In scope: Define the scenarios and sensitivities worth testing | run alternative cases against the case basis | read marginal values and identify binding constraints | quantify margin, yield, and feasibility differences | document the case comparison supporting the recommendation
-Out of scope: Selecting and approving the production plan, owned by Refinery Planning (CM-1-1-4) | trading and market risk scenarios, owned by Manage And Run Risk Scenarios (CM-1-2-2-3-11) | comparing actuals to the approved plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6) | investment and strategic configuration studies | optimization model and application administration, owned by Process Excellence & IT"""@en ;
+Out of scope: Selecting and approving the production plan, owned by Refinery Planning and Optimization (CM-1-1-4) | trading and market risk scenarios, owned by Manage And Run Risk Scenarios (CM-1-2-2-3-11) | comparing actuals to the approved plan, owned by Regional Backcasting (CM-1-1-5) and Distribution Backcasting (CM-1-1-6) | investment and strategic configuration studies | optimization model and application administration, owned by Process Excellence & IT"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "assembled case basis of demand, availability, price, constraints, and inventory | base optimization case and solution | candidate scenario definitions | marginal values and binding constraint output"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "documented case comparison with margin, feasibility, and sensitivity results"@en ;
     intake:primaryPurpose "Quantify and compare production alternatives and their sensitivities to support case selection."@en ;
     intake:processHorizon "monthly"@en ;
@@ -2217,13 +2218,13 @@ proc:CM-1-1-7-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.1.1" ;
     skos:prefLabel "Update Refinery Execution Instructions"@en ;
-    skos:scopeNote """Covers consolidation, versioning, communication, and controlled revision of the approved scheduling instruction set. It may communicate schedule-level requirements and constraints to refinery operations, but does not prescribe unit feed rates, operating modes, operating procedures, tank or transfer line-ups, blend execution, process-control settings, or other detailed execution methods — those remain within Refining. Excludes changing the monthly plan, owned by Refinery Planning (CM-1-1-4); material schedule deviations flow through Manage Production Schedule Exceptions (CM-1-1-7-2-4).
+    skos:scopeNote """Covers consolidation, versioning, communication, and controlled revision of the approved scheduling instruction set. It may communicate schedule-level requirements and constraints to refinery operations, but does not prescribe unit feed rates, operating modes, operating procedures, tank or transfer line-ups, blend execution, process-control settings, or other detailed execution methods — those remain within Refining. Excludes changing the monthly plan, owned by Refinery Planning and Optimization (CM-1-1-4); material schedule deviations flow through Manage Production Schedule Exceptions (CM-1-1-7-2-4).
 In scope: Consolidate approved schedule decisions into the instruction set | version and communicate instruction updates | control revisions on approved schedule changes | confirm instructions reflect the current approved schedule
 Out of scope: Unit feed rates, operating modes, and process-control settings (Refining) | operating procedures, line-ups, and blend execution (Refining) | monthly plan changes (CM-1-1-4) | schedule exception decisions (CM-1-1-7-2-4)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "current schedule and approved changes | schedule exception outcomes"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "issued, versioned schedule-level instruction set"@en ;
     intake:primaryPurpose "Keep the refinery's schedule-level instruction set current, traceable, and aligned with the approved schedule."@en ;
     intake:processHorizon "daily"@en ;
@@ -2251,7 +2252,7 @@ Out of scope: Physical line-ups, valve states, and resource operation (Refining,
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "daily plan | resource availability and outage windows | competing schedule demands"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "confirmed resource assignments for the daily basis"@en ;
     intake:primaryPurpose "Make sure the day's plan has the capacity it assumes."@en ;
     intake:processHorizon "daily"@en ;
@@ -2280,7 +2281,7 @@ Out of scope: Measurement basis and standards (CM-1-1-3-7-4) | network book-to-p
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "measured quantities and movement tickets | unit charge and yield data | shipment and inventory records"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "closed daily production balance with actualized yields"@en ;
     intake:primaryPurpose "Deliver a verified daily account of what the refinery actually received, made, shipped, and lost."@en ;
     intake:processHorizon "daily"@en ;
@@ -2308,7 +2309,7 @@ Out of scope: Supply-planning master data (CM-1-1-2-12) | demand-forecast data p
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "change requests from scheduling and operations | unit test-run and constraint updates | effective-dating rules"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "validated scheduling reference and parameter data"@en ;
     intake:primaryPurpose "Keep the scheduling model's reference data true to the real refinery."@en ;
     intake:processHorizon "periodic"@en ;
@@ -2331,13 +2332,13 @@ proc:CM-1-1-7-2-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.2.2" ;
     skos:prefLabel "Review Production Wheel and Run Length"@en ;
-    skos:scopeNote """Covers the periodic review of campaign sequence and duration: the transition structure (which product can follow which at what cost), wheel cycle time, run lengths per product against demand and storage, and wheel exceptions for demand shifts and outages. Excludes building the dated schedule itself, owned by Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3); excludes plan-period product mix decisions, owned by Refinery Planning (CM-1-1-4); excludes executing transitions, owned by Refining.
+    skos:scopeNote """Covers the periodic review of campaign sequence and duration: the transition structure (which product can follow which at what cost), wheel cycle time, run lengths per product against demand and storage, and wheel exceptions for demand shifts and outages. Excludes building the dated schedule itself, owned by Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3); excludes plan-period product mix decisions, owned by Refinery Planning and Optimization (CM-1-1-4); excludes executing transitions, owned by Refining.
 In scope: Maintain the campaign transition structure and costs | set wheel cycle time and run lengths | review the wheel against demand, inventory, and constraints | approve wheel exceptions
 Out of scope: Dated schedule construction (CM-1-1-7-2-3) | plan-period product mix (CM-1-1-4) | transition execution (Refining)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "demand and inventory coverage by product | transition cost and constraint data | unit campaign performance"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "maintained production wheel with approved run lengths"@en ;
     intake:primaryPurpose "Keep the campaign structure the schedule runs on economically sound."@en ;
     intake:processHorizon "periodic"@en ;
@@ -2366,7 +2367,7 @@ Out of scope: Unit-operation scheduling and line-ups (Refining) | daily instruct
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved monthly plan | production wheel and run lengths | scheduling master data | outage windows"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "published dated production schedule and sequencing plan"@en ;
     intake:primaryPurpose "Produce the dated, feasible schedule that implements the plan."@en ;
     intake:processHorizon "weekly"@en ;
@@ -2388,13 +2389,13 @@ proc:CM-1-1-7-2-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.2.4" ;
     skos:prefLabel "Manage Production Schedule Exceptions"@en ;
-    skos:scopeNote """Covers the schedule exception rhythm: monitoring execution feedback against the schedule, assessing deviation impact, deciding and coordinating the schedule response, triggering rescheduling through Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3), escalating plan-level breaks to Refinery Planning (CM-1-1-4), and recording exception causes for performance measurement. The operational decision to depart from the schedule for safety, reliability, or immediate process conditions belongs to Refining under the locked rule; this process manages the schedule consequence of such departures.
+    skos:scopeNote """Covers the schedule exception rhythm: monitoring execution feedback against the schedule, assessing deviation impact, deciding and coordinating the schedule response, triggering rescheduling through Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3), escalating plan-level breaks to Refinery Planning and Optimization (CM-1-1-4), and recording exception causes for performance measurement. The operational decision to depart from the schedule for safety, reliability, or immediate process conditions belongs to Refining under the locked rule; this process manages the schedule consequence of such departures.
 In scope: Monitor execution against schedule and detect deviations | assess deviation impact | decide and coordinate schedule responses | escalate plan-breaking deviations to planning | record exception causes
 Out of scope: Operational departures for safety and reliability (Refining) | rescheduling construction (CM-1-1-7-2-3) | plan revision (CM-1-1-4)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "execution feedback and deviation reports | schedule and plan constraints | impact assessments"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "decided schedule responses and escalations with recorded causes"@en ;
     intake:primaryPurpose "Keep the schedule valid when reality diverges from it."@en ;
     intake:processHorizon "event-driven"@en ;
@@ -2423,7 +2424,7 @@ Out of scope: Plan-versus-actual backcasting (Regional Backcasting, CM-1-1-5) | 
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "issued schedules and revisions | actualized production from production accounting | recorded exception causes"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "scheduling performance report with improvement recommendations"@en ;
     intake:primaryPurpose "Establish whether the schedule is being followed and whether it is worth following."@en ;
     intake:processHorizon "continuous"@en ;
@@ -2441,17 +2442,17 @@ proc:CM-1-1-7-2-6 a skos:Concept ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "Scheduling Interface Management"@en ;
     skos:broader proc:CM-1-1-7-2 ;
-    skos:definition "Run the structured coordination between production scheduling and its counterparties — feasibility and deviation feedback to Refinery Planning, executability alignment with refinery operations, and outage, turnaround, and maintenance windows from engineering and maintenance — so the schedule and its neighbors stay mutually consistent."@en ;
+    skos:definition "Run the structured coordination between production scheduling and its counterparties — feasibility and deviation feedback to Refinery Planning and Optimization, executability alignment with refinery operations, and outage, turnaround, and maintenance windows from engineering and maintenance — so the schedule and its neighbors stay mutually consistent."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.2.6" ;
     skos:prefLabel "Manage The Interface to Planning, Operations, Engineering & Maintenance"@en ;
-    skos:scopeNote """Covers recurring interface management: scheduled coordination and handoffs, intake of maintenance and turnaround windows into the schedule, executability confirmation with operations, feasibility feedback to planning, and documentation of interface agreements. Excludes the counterparties' own work: plan targets (Refinery Planning, CM-1-1-4), maintenance planning and turnaround execution (Refining, per the locked rule), and operational execution (Refining). The concept is the recurring coordination process, not an organizational liaison role.
+    skos:scopeNote """Covers recurring interface management: scheduled coordination and handoffs, intake of maintenance and turnaround windows into the schedule, executability confirmation with operations, feasibility feedback to planning, and documentation of interface agreements. Excludes the counterparties' own work: plan targets (Refinery Planning and Optimization, CM-1-1-4), maintenance planning and turnaround execution (Refining; refinery maintenance capability to be modeled in R2), and operational execution (Refining). The concept is the recurring coordination process, not an organizational liaison role.
 In scope: Run scheduled coordination and handoffs | intake outage, turnaround, and maintenance windows | confirm schedule executability with operations | feed feasibility and deviations back to planning
-Out of scope: Plan targets (CM-1-1-4) | maintenance planning and turnaround execution (Refining) | operational execution (Refining)"""@en ;
+Out of scope: Plan targets (CM-1-1-4) | maintenance planning and turnaround execution (Refining; refinery maintenance capability to be modeled in R2) | operational execution (Refining)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "maintenance and turnaround plans | operations executability feedback | plan updates and constraints"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "consistent interface agreements and window intake into the schedule"@en ;
     intake:primaryPurpose "Keep the schedule and its neighboring functions mutually consistent."@en ;
     intake:processHorizon "weekly"@en ;
@@ -2479,7 +2480,7 @@ Out of scope: Energy contract negotiation (commercial owner of energy supply) | 
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "internal generation costs | purchased energy prices and terms | reliability requirements | allowance prices"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "period energy sourcing plan"@en ;
     intake:primaryPurpose "Choose the cheapest reliable energy mix the refinery can run on."@en ;
     intake:processHorizon "monthly"@en ;
@@ -2508,7 +2509,7 @@ Out of scope: Real-time utility balancing, dispatch, process control, and flarin
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "site energy balance data | sourcing plan | production schedule | operating constraints"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "energy-balance planning targets and schedule-level recommendations"@en ;
     intake:primaryPurpose "Give the schedule sound energy-balance assumptions and targets, and flag deviations that change its economics."@en ;
     intake:processHorizon "daily"@en ;
@@ -2537,7 +2538,7 @@ Out of scope: Regulatory emissions monitoring and reporting (EHS & Government Re
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "emissions forecasts from production and energy plans | allowance holdings and prices | program rules and compliance deadlines"@en ;
-    intake:level "L5"@en ;
+    intake:level "L4"@en ;
     intake:primaryOutput "managed allowance position with trade and banking recommendations"@en ;
     intake:primaryPurpose "Keep the allowance position known, forecast, and economically managed without owning the trade or the report."@en ;
     intake:processHorizon "monthly"@en ;
@@ -2559,7 +2560,7 @@ proc:CM-1-2-1-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1.1" ;
     skos:prefLabel "Receive Production Forecast"@en ;
-    skos:scopeNote """Covers the intake side only: receiving the approved production plan and current schedule from Refinery Planning (CM-1-1-4) and Refinery Scheduling (CM-1-1-7), reconciling product, location, and period granularity to what the trading books use, and flagging material changes to traders. It consumes these plans and does not produce or alter them — their owners hold that right. Excludes the demand-side intake, owned by Receive Demand Forecast (CM-1-2-1-1-2).
+    skos:scopeNote """Covers the intake side only: receiving the approved production plan and current schedule from Refinery Planning and Optimization (CM-1-1-4) and Refinery Production Planning and Scheduling (CM-1-1-7), reconciling product, location, and period granularity to what the trading books use, and flagging material changes to traders. It consumes these plans and does not produce or alter them — their owners hold that right. Excludes the demand-side intake, owned by Receive Demand Forecast (CM-1-2-1-1-2).
 In scope: Receive the approved plan and current schedule | validate completeness and version | translate volumes to tradable supply granularity | flag material changes to trading
 Out of scope: Producing or altering the plan or schedule (CM-1-1-4, CM-1-1-7) | demand forecast intake (CM-1-2-1-1-2) | trading decisions on the supply (Trade Capture, strategy processes)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -2643,9 +2644,9 @@ proc:CM-1-2-1-1-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1.4" ;
     skos:prefLabel "Perform Asset Optimization"@en ;
-    skos:scopeNote """Covers evaluating storage economics and time spreads; capacity utilization, release, and throughput opportunities; exchange and location-arbitrage opportunities; and the commercial value of generation availability. It identifies and quantifies trading opportunities within approved regional, refinery, and scheduling plans. Excludes changing physical plans, owned under the locked Regional Optimization and Refinery Planning rules; excludes operating or dispatching assets, owned by Refining, Midstream, and the relevant system operators; excludes defining or approving trading strategies, owned by Trading Strategy Management (CM-1-2-1-4); excludes negotiating, executing, capturing, or settling trades, owned by Trade Capture (CM-1-2-1-3) and the Settlements cluster; excludes risk-limit setting and risk measurement, owned by Market Risk Management (CM-1-2-2-3).
+    skos:scopeNote """Covers evaluating storage economics and time spreads; capacity utilization, release, and throughput opportunities; exchange and location-arbitrage opportunities; and the commercial value of generation availability. It identifies and quantifies trading opportunities within approved regional, refinery, and scheduling plans. Excludes changing physical plans, owned under the locked Regional Optimization and Refinery Planning and Optimization rules; excludes operating or dispatching assets, owned by Refining, Midstream, and the relevant system operators; excludes defining or approving trading strategies, owned by Trading Strategy Management (CM-1-2-1-4); excludes negotiating, executing, capturing, or settling trades, owned by Trade Capture (CM-1-2-1-3) and the Settlements cluster; excludes risk-limit setting and risk measurement, owned by Market Risk Management (CM-1-2-2-3).
 In scope: Evaluate storage, capacity, exchange, and generation-availability economics against the market | identify and quantify opportunities within approved plans | value opportunities and their sensitivities | provide recommendations to approved trading strategies
-Out of scope: Physical plan changes (Regional Optimization, Refinery Planning — locked) | asset operation and dispatch (Refining, Midstream, system operators) | trading strategy definition and approval (CM-1-2-1-4) | trade negotiation, execution, capture, and settlement (CM-1-2-1-3, Settlements) | risk-limit setting and risk measurement (CM-1-2-2-3)"""@en ;
+Out of scope: Physical plan changes (Regional Optimization, Refinery Planning and Optimization — locked) | asset operation and dispatch (Refining, Midstream, system operators) | trading strategy definition and approval (CM-1-2-1-4) | trade negotiation, execution, capture, and settlement (CM-1-2-1-3, Settlements) | risk-limit setting and risk measurement (CM-1-2-2-3)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "forward view of supply, demand, and generation | market prices and forward curves | asset capacities and constraints | approved plans"@en ;
@@ -5662,7 +5663,7 @@ proc:CM-1-2-5-1-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.1.2" ;
     skos:prefLabel "Review LP Model Integrity"@en ;
-    skos:scopeNote """Covers input-and-representation integrity review: periodic verification that the LP and evaluation models consuming feedstock data reflect current validated assays (CM-1-2-5-1-1), actual refinery configuration, constraints, and capacities, and current price and market assumptions; back-checking model predictions against actual outcomes where available; documenting findings; and escalating stale, inconsistent, or incomplete representations to the accountable data and model owners for correction. This process does not independently certify model validation, approve model methodology, alter model code, change LP constraints, or approve planning conclusions. Model methodology, structure, and ownership remain with their accountable owners: the refinery planning LP with Refinery Planning (CM-1-1-4) and its tooling; model-methodology approval and independent validation with the applicable model governance and validation functions (batch 12 rule). Excludes model validation certification and methodology approval (model governance/validation functions); model ownership and implementation (model owners, CM-1-1-4); evaluation conclusions (CM-1-1-4-7-2); data stewardship (CM-1-2-5-1-1).
+    skos:scopeNote """Covers input-and-representation integrity review: periodic verification that the LP and evaluation models consuming feedstock data reflect current validated assays (CM-1-2-5-1-1), actual refinery configuration, constraints, and capacities, and current price and market assumptions; back-checking model predictions against actual outcomes where available; documenting findings; and escalating stale, inconsistent, or incomplete representations to the accountable data and model owners for correction. This process does not independently certify model validation, approve model methodology, alter model code, change LP constraints, or approve planning conclusions. Model methodology, structure, and ownership remain with their accountable owners: the refinery planning LP with Refinery Planning and Optimization (CM-1-1-4) and its tooling; model-methodology approval and independent validation with the applicable model governance and validation functions (batch 12 rule). Excludes model validation certification and methodology approval (model governance/validation functions); model ownership and implementation (model owners, CM-1-1-4); evaluation conclusions (CM-1-1-4-7-2); data stewardship (CM-1-2-5-1-1).
 In scope: Verify model inputs against validated quality data and current configuration | check price and assumption currency | back-check predictions against outcomes where available | document findings and escalate corrections to accountable data and model owners
 Out of scope: Model validation certification and methodology approval (model governance/validation) | model ownership, code, and constraints (model owners, CM-1-1-4) | evaluation conclusions (CM-1-1-4-7-2) | data stewardship (CM-1-2-5-1-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -5689,7 +5690,7 @@ proc:CM-1-2-5-1-3 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.1.3" ;
     skos:prefLabel "Develop Term Slate"@en ;
-    skos:scopeNote """Covers term procurement-slate development: identifying candidate term supplies, screening them against refinery quality capability using validated data (CM-1-2-5-1-1) and current evaluations (CM-1-1-4-7-2), assessing sustained economic attractiveness and supply reliability, and recommending the term slate that anchors base-load feedstock supply. Term supply means feedstock sourced under an agreement with a multi-period or continuing commercial commitment; the term-versus-spot classification follows the organization's own commercial definitions, not a fixed contractual duration. The output is a procurement recommendation: under PTC-002 the binding production slate is Refinery Planning's (CM-1-1-4), and term-contract negotiation and execution belong to the contract and trading processes (CM-1-2-1-2, CM-1-2-1-3). Excludes the binding production slate (CM-1-1-4, PTC-002); crude evaluation (CM-1-1-4-7-2); contract negotiation and trade execution (CM-1-2-1-2, CM-1-2-1-3); spot procurement (CM-1-2-5-1-4).
+    skos:scopeNote """Covers term procurement-slate development: identifying candidate term supplies, screening them against refinery quality capability using validated data (CM-1-2-5-1-1) and current evaluations (CM-1-1-4-7-2), assessing sustained economic attractiveness and supply reliability, and recommending the term slate that anchors base-load feedstock supply. Term supply means feedstock sourced under an agreement with a multi-period or continuing commercial commitment; the term-versus-spot classification follows the organization's own commercial definitions, not a fixed contractual duration. The output is a procurement recommendation: under PTC-002 the binding production slate is Refinery Planning and Optimization's (CM-1-1-4), and term-contract negotiation and execution belong to the contract and trading processes (CM-1-2-1-2, CM-1-2-1-3). Excludes the binding production slate (CM-1-1-4, PTC-002); crude evaluation (CM-1-1-4-7-2); contract negotiation and trade execution (CM-1-2-1-2, CM-1-2-1-3); spot procurement (CM-1-2-5-1-4).
 In scope: Identify and screen candidate term supplies against refinery capability | assess sustained economics and supply reliability | recommend the term procurement slate | feed the feedstock recommendation and contract processes
 Out of scope: Binding production slate (CM-1-1-4, PTC-002) | crude evaluation (CM-1-1-4-7-2) | contract negotiation and execution (CM-1-2-1-2, CM-1-2-1-3) | spot slate (CM-1-2-5-1-4)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -5716,7 +5717,7 @@ proc:CM-1-2-5-1-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.1.4" ;
     skos:prefLabel "Develop Spot Slate"@en ;
-    skos:scopeNote """Covers spot procurement-slate development: quantifying the requirement against current feedstock demand (CM-1-2-5-2-2) and committed term supply, screening available spot cargoes and grades for refinery quality compatibility, ranking candidates on current economics, logistics feasibility, and timing, and recommending the spot slate to the feedstock recommendation and trading processes. Spot supply means feedstock assessed or acquired for a discrete, near-term market opportunity or short-duration requirement — spot purchases may fill residual demand, replace disrupted term supply, resolve quality constraints, optimize economics, or create flexibility. The output is a procurement recommendation: the binding production slate is Refinery Planning's (CM-1-1-4, PTC-002); spot deal negotiation and execution belong to trading (CM-1-2-1-3). Excludes the binding production slate (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); term slate (CM-1-2-5-1-3); arrival and logistics planning (CM-1-2-5-3).
+    skos:scopeNote """Covers spot procurement-slate development: quantifying the requirement against current feedstock demand (CM-1-2-5-2-2) and committed term supply, screening available spot cargoes and grades for refinery quality compatibility, ranking candidates on current economics, logistics feasibility, and timing, and recommending the spot slate to the feedstock recommendation and trading processes. Spot supply means feedstock assessed or acquired for a discrete, near-term market opportunity or short-duration requirement — spot purchases may fill residual demand, replace disrupted term supply, resolve quality constraints, optimize economics, or create flexibility. The output is a procurement recommendation: the binding production slate is Refinery Planning and Optimization's (CM-1-1-4, PTC-002); spot deal negotiation and execution belong to trading (CM-1-2-1-3). Excludes the binding production slate (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); term slate (CM-1-2-5-1-3); arrival and logistics planning (CM-1-2-5-3).
 In scope: Quantify the spot requirement against demand and committed term supply | screen spot candidates for quality compatibility | rank candidates on economics, logistics feasibility, and timing | recommend the spot slate
 Out of scope: Binding production slate (CM-1-1-4, PTC-002) | trade execution (CM-1-2-1-3) | term slate (CM-1-2-5-1-3) | logistics planning (CM-1-2-5-3)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -5743,7 +5744,7 @@ proc:CM-1-2-5-2-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.2.1" ;
     skos:prefLabel "Coordinate Feedstock Trading"@en ;
-    skos:scopeNote """Covers the feedstock-side interface to trading, mirroring Coordinate Product Trading (CM-1-1-3-5-2, batch 05): specifying what the feedstock plan needs — grade, quality, quantity, timing, location, delivery basis; requesting trading action; evaluating proposed deals for refinery compatibility, schedule feasibility, and plan fit; and incorporating agreed volumes into the supply plan and downstream logistics planning (CM-1-2-5-3). Trading decides the deal; planning decides the plan (decide-versus-advise, batch 05); the binding plan is Refinery Planning's (PTC-002). Excludes trade negotiation and execution (CM-1-2-1-3); the binding production plan (CM-1-1-4); transportation arrangement (CM-1-2-5-3-1); exchange agreement administration (CM-1-2-7-1-1).
+    skos:scopeNote """Covers the feedstock-side interface to trading, mirroring Coordinate Product Trading (CM-1-1-3-5-2, batch 05): specifying what the feedstock plan needs — grade, quality, quantity, timing, location, delivery basis; requesting trading action; evaluating proposed deals for refinery compatibility, schedule feasibility, and plan fit; and incorporating agreed volumes into the supply plan and downstream logistics planning (CM-1-2-5-3). Trading decides the deal; planning decides the plan (decide-versus-advise, batch 05); the binding plan is Refinery Planning and Optimization's (PTC-002). Excludes trade negotiation and execution (CM-1-2-1-3); the binding production plan (CM-1-1-4); transportation arrangement (CM-1-2-5-3-1); exchange agreement administration (CM-1-2-7-1-1).
 In scope: Specify feedstock requirements for trading action | request purchases, sales, or exchanges | evaluate proposed deals for plan, schedule, and refinery fit | incorporate agreed volumes into the supply plan
 Out of scope: Trade negotiation and execution (CM-1-2-1-3) | binding production plan (CM-1-1-4) | transportation arrangement (CM-1-2-5-3-1) | exchange agreement administration (CM-1-2-7-1-1)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -5794,12 +5795,12 @@ proc:CM-1-2-5-2-3 a skos:Concept ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "Plan Optimal Feedstock Slate And Run Rate"@en ;
     skos:broader proc:CM-1-2-5-2 ;
-    skos:definition "Recommend the economically attractive feedstock slate and run rate to Refinery Planning — combining the demand signal, procurement slates, market prices, and supply economics into a trading-side recommendation that feeds the binding plan without setting it — so the refinery plan is informed by the best current supply-market view."@en ;
+    skos:definition "Recommend the economically attractive feedstock slate and run rate to Refinery Planning and Optimization — combining the demand signal, procurement slates, market prices, and supply economics into a trading-side recommendation that feeds the binding plan without setting it — so the refinery plan is informed by the best current supply-market view."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.2.3" ;
     skos:prefLabel "Recommend Feedstock Slate And Run Rate"@en ;
-    skos:scopeNote """Covers the trading-side slate and run-rate recommendation under PTC-002 (Option 1, closed 2026-09-18): assembling the economically attractive feedstock slate and run-rate case from the demand signal (CM-1-2-5-2-2), term and spot procurement slates (CM-1-2-5-1-3/-4), current market prices and differentials, and supply logistics; submitting the recommendation to Refinery Planning; and iterating as market conditions change. Refinery Planning (CM-1-1-4) decides the binding crude slate and run rate; this process advises and never sets, approves, or revises the plan. Crude evaluation is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding slate and run-rate decision (CM-1-1-4, PTC-002); crude evaluation (CM-1-1-4-7-2); procurement slate development (CM-1-2-5-1-3/-4); trade execution (CM-1-2-1-3).
-In scope: Assemble the economically attractive slate and run-rate case from demand, slates, and market economics | submit the recommendation to Refinery Planning | iterate the recommendation as markets move
+    skos:scopeNote """Covers the trading-side slate and run-rate recommendation under PTC-002 (Option 1, closed 2026-09-18): assembling the economically attractive feedstock slate and run-rate case from the demand signal (CM-1-2-5-2-2), term and spot procurement slates (CM-1-2-5-1-3/-4), current market prices and differentials, and supply logistics; submitting the recommendation to Refinery Planning and Optimization; and iterating as market conditions change. Refinery Planning and Optimization (CM-1-1-4) decides the binding crude slate and run rate; this process advises and never sets, approves, or revises the plan. Crude evaluation is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding slate and run-rate decision (CM-1-1-4, PTC-002); crude evaluation (CM-1-1-4-7-2); procurement slate development (CM-1-2-5-1-3/-4); trade execution (CM-1-2-1-3).
+In scope: Assemble the economically attractive slate and run-rate case from demand, slates, and market economics | submit the recommendation to Refinery Planning and Optimization | iterate the recommendation as markets move
 Out of scope: Binding slate and run-rate decision (CM-1-1-4, PTC-002) | crude evaluation (CM-1-1-4-7-2) | procurement slate development (CM-1-2-5-1-3/-4) | trade execution (CM-1-2-1-3)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
@@ -5933,9 +5934,9 @@ proc:CM-1-2-5-4-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.4.2" ;
     skos:prefLabel "Manage Feedstock Inventory"@en ;
-    skos:scopeNote """Covers feedstock position stewardship, the feedstock counterpart of Monitor and Control Inventory Positions (CM-1-1-3-7-12) under the batch 04 reciprocal constraint: recurring review of physical and book feedstock positions, movements, in-transit volumes, and commitments; minimum, maximum, safety-stock, and operating-limit exceptions against refinery run requirements; short-term availability and quality-segregation risks; escalation and coordination of corrective actions through the accountable owners; and maintenance of the position view that demand development (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. Excludes inventory policy design (CM-1-1-3-7-1); measurement methodology (CM-1-1-3-7-4); book-to-physical reconciliation (CM-1-1-3-7-5); finished-product and intermediates positions (CM-1-1-3-7-12, batch 04 reciprocal); tank operations (Refining); feedstock sourcing, purchase, exchange, and replenishment decision rights, which belong to the applicable supply-planning, Refinery Planning, and authorized trading processes.
+    skos:scopeNote """Covers feedstock position stewardship, the feedstock counterpart of Monitor and Control Inventory Positions (CM-1-1-3-7-12) under the batch 04 reciprocal constraint: recurring review of physical and book feedstock positions, movements, in-transit volumes, and commitments; minimum, maximum, safety-stock, and operating-limit exceptions against refinery run requirements; short-term availability and quality-segregation risks; escalation and coordination of corrective actions through the accountable owners; and maintenance of the position view that demand development (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. Excludes inventory policy design (CM-1-1-3-7-1); measurement methodology (CM-1-1-3-7-4); book-to-physical reconciliation (CM-1-1-3-7-5); finished-product and intermediates positions (CM-1-1-3-7-12, batch 04 reciprocal); tank operations (Refining); feedstock sourcing, purchase, exchange, and replenishment decision rights, which belong to the applicable supply-planning, Refinery Planning and Optimization, and authorized trading processes.
 In scope: Monitor physical, book, and in-transit feedstock positions against requirements | identify and escalate operating-limit, availability, and quality exceptions | coordinate corrective action through accountable owners | maintain the current-position view for planning, trading, and logistics
-Out of scope: Inventory policy (CM-1-1-3-7-1) | measurement methodology (CM-1-1-3-7-4) | reconciliation (CM-1-1-3-7-5) | finished-product/intermediates positions (CM-1-1-3-7-12) | tank operations (Refining) | sourcing, purchase, exchange, and replenishment decisions (supply-planning, Refinery Planning, and authorized trading processes)"""@en ;
+Out of scope: Inventory policy (CM-1-1-3-7-1) | measurement methodology (CM-1-1-3-7-4) | reconciliation (CM-1-1-3-7-5) | finished-product/intermediates positions (CM-1-1-3-7-12) | tank operations (Refining) | sourcing, purchase, exchange, and replenishment decisions (supply-planning, Refinery Planning and Optimization, and authorized trading processes)"""@en ;
     intake:apqcDecision "NO SOURCE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "Tank gaugings and book positions | in-transit movements (CM-1-2-5-3) | refinery run requirements | commitments and receipts"@en ;
@@ -12426,6 +12427,22 @@ proc:L1-supply-chain-mgmt a skos:Concept ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:level "L1"@en .
 
+proc:L2-refinery-asset-reliability-and-turnaround-coordination a skos:Concept ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:broader proc:L1-refining ;
+    skos:definition "The Refining capability that coordinates refinery availability, asset-condition and integrity inputs, maintenance and turnaround windows, production-plan impacts, readiness, and recovery interfaces so refinery performance objectives can be planned and managed against approved maintenance, integrity, and turnaround commitments."@en ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Refinery Asset Reliability and Turnaround Coordination"@en ;
+    skos:scopeNote """Coordinates the refinery-operating impact of asset reliability, inspections, integrity findings, planned maintenance, and turnaround work, including availability assumptions, outage-window integration, production-plan and schedule impacts, readiness dependencies, return-to-service coordination, and escalation of material risks or constraints.
+
+Does not own maintenance strategy, engineering design authority, inspection execution, process-safety policy, work permits, contractor management, capital approval, or maintenance/turnaround execution unless separately assigned by the enterprise operating model."""@en ;
+    intake:conceptTypeCheck "capability"@en ;
+    intake:level "L2"@en ;
+    intake:primaryPurpose "Coordinate the refinery-operating impact of asset reliability, integrity findings, planned maintenance, and turnaround work — availability assumptions, outage-window integration, production-plan and schedule impacts, readiness dependencies, return-to-service coordination, and escalation of material risks or constraints — against approved maintenance, integrity, and turnaround commitments."@en ;
+    intake:referenceSources "SRC-OSHA-PSM-001 — process-safety management boundary: coordination interfaces with maintenance/turnaround windows and integrity inputs; excludes PSM policy ownership and maintenance/turnaround execution"@en ;
+    intake:terminologyNotes "R1 Refining reclassification (2026-09-22): new Candidate architecture node — structural placement approved; initially unpopulated; coordination-only. Review trigger: R2 evidence package / refinery maintenance and turnaround operating model."@en .
+
 src:eia-glossary a dcterms:BibliographicResource ;
     dcterms:publisher "U.S. Energy Information Administration"@en ;
     dcterms:rights "U.S. federal government work; public domain."@en ;
@@ -12449,11 +12466,11 @@ proc:CM-1-1-2-2-2 a skos:Concept ;
 
 proc:CM-1-1-4-6 a skos:Concept ;
     owl:deprecated true ;
-    skos:broader proc:CM-1-1-4 ;
+    skos:broader proc:CM-1-1 ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.6" ;
     skos:prefLabel "Commercial Development"@en ;
-    intake:level "L4"@en ;
+    intake:level "L3"@en ;
     intake:status "retired"@en ;
     intake:terminologyNotes "Retired per PTC-001 (step3c-parked-tree-changes.md), decided by Hamid 2026-09-18. The node carries no local meaning: its Step 3b provenance is a WEAK match against the APQC element “Manage employee development”, and under Option A all three of its children leave. Nothing remains to define, so it is retired rather than defined or left pending. The node itself is still present in downstream_process_map.json — removing it is a Step 3d tree change, not a workbook change. Retired here means “will not be defined”, not “gone from the tree”. Step 3d PTC-001 tree pass (2026-09-21): tombstoned as owl:deprecated — removed from active navigation, retained for lineage (PTC-001 / PTC-001-B traceability). Physical removal is a later explicit retirement decision once PTC-001-B is resolved."@en .
 
@@ -12513,21 +12530,6 @@ proc:L1-finance a skos:Concept ;
     skos:inScheme mod:core ;
     skos:prefLabel "Finance"@en ;
     skos:scopeNote "Includes budgeting, forecasting, financial and management accounting, period close, statutory and management reporting, accounts payable, expense reimbursement, payroll, treasury, liquidity and cash management, tax, financial compliance, internal controls, audit support, and financial risk management. Supports commercial, supply-chain, refining, midstream, distribution, and enabling-function processes through financial governance, measurement, and transaction processing. Excludes operational execution in those business domains and fixed-asset project accounting where it is intentionally governed and executed as an ERP-native capability outside this taxonomy's modeled scope."@en ;
-    intake:apqcDecision "NO CANDIDATE"@en ;
-    intake:level "L1"@en .
-
-proc:L1-refining a skos:Concept ;
-    dcterms:references [ a dcterms:BibliographicResource ;
-            dcterms:identifier "19948" ;
-            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
-            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19948"@en ] ;
-    dcterms:source [ a dcterms:BibliographicResource ;
-            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:broader proc:L0-downstream-operations ;
-    skos:definition "The operation of petroleum refineries to convert crude oil and other hydrocarbon feedstocks into specification-compliant fuels, blendstocks, lubricants, asphalt, petrochemical feedstocks, and other refined products through separation, conversion, treatment, blending, and associated refinery operations."@en ;
-    skos:inScheme mod:core ;
-    skos:prefLabel "Refining"@en ;
-    skos:scopeNote "Encompasses refinery production operations and the planning, execution, and recovery activities required to maintain refinery assets, reliability, integrity, safety, and operating availability, including major maintenance and turnarounds."@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:level "L1"@en .
 
@@ -12643,7 +12645,7 @@ proc:CM-1-1-4-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.2" ;
     skos:prefLabel "Receive RO Targets"@en ;
-    intake:level "L4"@en .
+    intake:level "L3"@en .
 
 proc:CM-1-1-5-1 a skos:Concept ;
     skos:broader proc:CM-1-1-5 ;
@@ -12814,7 +12816,7 @@ proc:CM-1-1-4-4 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.4" ;
     skos:prefLabel "Perform Prompt Month Evaluations"@en ;
-    intake:level "L4"@en .
+    intake:level "L3"@en .
 
 proc:CM-1-1-5-9 a skos:Concept ;
     skos:broader proc:CM-1-1-5 ;
@@ -12841,12 +12843,12 @@ proc:CM-1-1-6 a skos:Concept ;
     intake:level "L3"@en .
 
 proc:CM-1-1-7 a skos:Concept ;
-    skos:broader proc:CM-1-1 ;
+    skos:broader proc:L1-refining ;
     skos:definition "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7" ;
-    skos:prefLabel "Refinery Scheduling"@en ;
-    intake:level "L3"@en .
+    skos:prefLabel "Refinery Production Planning and Scheduling"@en ;
+    intake:level "L2"@en .
 
 proc:CM-1-1-7-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -12861,13 +12863,13 @@ proc:CM-1-1-7-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.1" ;
     skos:prefLabel "Daily Execution Planning"@en ;
-    skos:scopeNote """Covers the daily schedule-to-execution cycle: issuing and updating the day's schedule-level instructions and commitments, assigning the schedule-level resources the day's plan assumes, and closing the daily production balance with actualized yields. Under the approved planning-scheduling-operations hierarchy, Refining owns unit-operation scheduling, tank and transfer line-ups, blend and process execution, and safe operational departures from the schedule; this process owns the daily schedule basis and its accounting. Excludes building the dated schedule itself, owned by Production Scheduling (CM-1-1-7-2); excludes the monthly plan (Refinery Planning, CM-1-1-4).
+    skos:scopeNote """Covers the daily schedule-to-execution cycle: issuing and updating the day's schedule-level instructions and commitments, assigning the schedule-level resources the day's plan assumes, and closing the daily production balance with actualized yields. Under the approved planning-scheduling-operations hierarchy, Refining owns unit-operation scheduling, tank and transfer line-ups, blend and process execution, and safe operational departures from the schedule; this process owns the daily schedule basis and its accounting. Excludes building the dated schedule itself, owned by Production Scheduling (CM-1-1-7-2); excludes the monthly plan (Refinery Planning and Optimization, CM-1-1-4).
 In scope: Issue and update daily schedule-level instructions and commitments | assign schedule-level resources for the day | close the daily production accounting balance | confirm daily feasibility of the issued basis
 Out of scope: Unit-operation scheduling, line-ups, and execution (Refining) | dated schedule construction (CM-1-1-7-2) | monthly plan targets (CM-1-1-4)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "current production schedule | execution feedback and measured actuals | resource availability"@en ;
-    intake:level "L4"@en ;
+    intake:level "L3"@en ;
     intake:primaryOutput "issued daily scheduling basis with closed production balance"@en ;
     intake:primaryPurpose "Give the refinery a current, feasible, accounted-for daily scheduling basis."@en ;
     intake:processHorizon "daily"@en ;
@@ -12896,7 +12898,7 @@ Out of scope: Utility system operation and control (Refining) | regulatory emiss
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "energy prices and contract terms | utility system capabilities and constraints | production schedule and emissions position"@en ;
-    intake:level "L4"@en ;
+    intake:level "L3"@en ;
     intake:primaryOutput "energy sourcing strategy, economic targets, and allowance-position recommendations"@en ;
     intake:primaryPurpose "Minimize energy cost and carbon exposure from the planning side, within reliable operations."@en ;
     intake:processHorizon "monthly"@en ;
@@ -12922,12 +12924,12 @@ proc:CM-1-2-5-2 a skos:Concept ;
             dcterms:title "Step 3c definition workbook, approved row"@en ] ;
     skos:altLabel "Feedstock Demand Planning"@en ;
     skos:broader proc:CM-1-2-5 ;
-    skos:definition "Translate the refinery production plan into feedstock supply action — developing the feedstock demand signal, recommending the economically attractive feedstock slate and run rate to Refinery Planning, and coordinating the resulting requirements with the trading processes — so feedstock supply is planned against a validated demand and an economically informed recommendation."@en ;
+    skos:definition "Translate the refinery production plan into feedstock supply action — developing the feedstock demand signal, recommending the economically attractive feedstock slate and run rate to Refinery Planning and Optimization, and coordinating the resulting requirements with the trading processes — so feedstock supply is planned against a validated demand and an economically informed recommendation."@en ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.2" ;
     skos:prefLabel "Crude/Feed Demand Management"@en ;
-    skos:scopeNote """Covers the feedstock demand cycle: developing projected feedstock requirements by grade, quality, quantity, and timing from the production plan (CM-1-2-5-2-2); recommending the economically attractive feedstock slate and run rate to Refinery Planning under PTC-002 (CM-1-2-5-2-3); and coordinating the resulting purchase, sale, and exchange requirements with the trading processes (CM-1-2-5-2-1). Under PTC-002 (Option 1, closed): Refinery Planning decides the binding slate and run rate; this cluster develops demand, recommends, and coordinates — it decides none of the plan. Trading decides the deal (batch 05 decide-versus-advise pattern). Excludes the binding production plan, slate, and run rate (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); crude evaluation (CM-1-1-4-7-2); procurement slate development (CM-1-2-5-1-3/-4).
-In scope: Develop the feedstock demand signal from the production plan | recommend the economically attractive slate and run rate to Refinery Planning | coordinate resulting requirements with trading | keep demand, recommendation, and coordination consistent
+    skos:scopeNote """Covers the feedstock demand cycle: developing projected feedstock requirements by grade, quality, quantity, and timing from the production plan (CM-1-2-5-2-2); recommending the economically attractive feedstock slate and run rate to Refinery Planning and Optimization under PTC-002 (CM-1-2-5-2-3); and coordinating the resulting purchase, sale, and exchange requirements with the trading processes (CM-1-2-5-2-1). Under PTC-002 (Option 1, closed): Refinery Planning and Optimization decides the binding slate and run rate; this cluster develops demand, recommends, and coordinates — it decides none of the plan. Trading decides the deal (batch 05 decide-versus-advise pattern). Excludes the binding production plan, slate, and run rate (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); crude evaluation (CM-1-1-4-7-2); procurement slate development (CM-1-2-5-1-3/-4).
+In scope: Develop the feedstock demand signal from the production plan | recommend the economically attractive slate and run rate to Refinery Planning and Optimization | coordinate resulting requirements with trading | keep demand, recommendation, and coordination consistent
 Out of scope: Binding slate, run rate, and production plan (CM-1-1-4, PTC-002) | trade execution (CM-1-2-1-3) | crude evaluation (CM-1-1-4-7-2) | procurement slates (CM-1-2-5-1-3/-4)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
@@ -13472,7 +13474,7 @@ proc:CM-1-1-4-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.1" ;
     skos:prefLabel "Develop Refinery Premise for Prompt and Out Month"@en ;
-    intake:level "L4"@en .
+    intake:level "L3"@en .
 
 proc:CM-1-2-1 a skos:Concept ;
     skos:broader proc:CM-1-2 ;
@@ -13511,7 +13513,7 @@ proc:CM-1-2-5-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.5.1" ;
     skos:prefLabel "Crude/Feed Quality Management"@en ;
-    skos:scopeNote """Covers the feedstock quality-information capability: crude and feedstock assay and quality-data stewardship (CM-1-2-5-1-1); integrity review of the LP and evaluation model representations that consume that data (CM-1-2-5-1-2); and development of the term (CM-1-2-5-1-3) and spot (CM-1-2-5-1-4) procurement slates, quality-screened against refinery capability. Under PTC-002 (Option 1, closed), the binding production slate and run rate are set by Refinery Planning (CM-1-1-4); this cluster's slates are procurement recommendations. Crude and feedstock evaluation — suitability and economic value of individual crudes — is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding production slate (CM-1-1-4, PTC-002); crude evaluation conclusions (CM-1-1-4-7-2); trade execution (CM-1-2-1-3); enterprise master-data governance (batch 05 exclusion); laboratory testing operations (Refining/laboratory functions).
+    skos:scopeNote """Covers the feedstock quality-information capability: crude and feedstock assay and quality-data stewardship (CM-1-2-5-1-1); integrity review of the LP and evaluation model representations that consume that data (CM-1-2-5-1-2); and development of the term (CM-1-2-5-1-3) and spot (CM-1-2-5-1-4) procurement slates, quality-screened against refinery capability. Under PTC-002 (Option 1, closed), the binding production slate and run rate are set by Refinery Planning and Optimization (CM-1-1-4); this cluster's slates are procurement recommendations. Crude and feedstock evaluation — suitability and economic value of individual crudes — is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding production slate (CM-1-1-4, PTC-002); crude evaluation conclusions (CM-1-1-4-7-2); trade execution (CM-1-2-1-3); enterprise master-data governance (batch 05 exclusion); laboratory testing operations (Refining/laboratory functions).
 In scope: Steward validated crude and feedstock quality data | review evaluation-model input integrity | develop quality-screened term and spot procurement slates | feed the feedstock recommendation and trading execution
 Out of scope: Binding production slate and run rate (CM-1-1-4, PTC-002) | crude evaluation (CM-1-1-4-7-2) | trade execution (CM-1-2-1-3) | enterprise master-data governance (batch 05 exclusion) | laboratory testing (Refining/laboratory)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
@@ -13995,6 +13997,21 @@ proc:L0-downstream-operations a skos:Concept ;
     intake:referenceSources "SRC-W3C-SKOS-001"@en ;
     intake:terminologyNotes "Batch 42 (2026-09-21). Scheme root approved per the structural-anchor review decision (definition + scope note; no horizon, domain, or relationships; no decision authority). concept_type_check 'not-process' approved under the SCHEME_ROOT_APPROVED gate amendment (option A, Hamid); primary_purpose and reference_sources populated because the post-#31 gate requires them on newly approved rows. Midstream scope wording per review: in-scope Midstream activities support the downstream model; no categorical industry claim."@en .
 
+proc:L1-refining a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "19948" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19948"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:broader proc:L0-downstream-operations ;
+    skos:definition "The operation of petroleum refineries to convert crude oil and other hydrocarbon feedstocks into specification-compliant fuels, blendstocks, lubricants, asphalt, petrochemical feedstocks, and other refined products through separation, conversion, treatment, blending, and associated refinery operations."@en ;
+    skos:inScheme mod:core ;
+    skos:prefLabel "Refining"@en ;
+    skos:scopeNote "Encompasses refinery production operations and the planning, execution, and recovery activities required to maintain refinery assets, reliability, integrity, safety, and operating availability, including major maintenance and turnarounds."@en ;
+    intake:apqcDecision "NO CANDIDATE"@en ;
+    intake:level "L1"@en .
+
 proc:CM-1-1-1-1 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
             dcterms:identifier "10240" ;
@@ -14199,6 +14216,14 @@ Out of scope: Price, terms, and rebate determination (their owners) | tax positi
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 36 (2026-09-21). Continuous process per review — one billing-document lifecycle with taxability and self-billing as controlled variants, not a capability; canonical Billing Integrity Rule adopted verbatim as a durable decision-log rule (the financial-document counterpart of the order-history and governed-submission rules)."@en .
 
+proc:CM-1-1 a skos:Concept ;
+    skos:broader proc:CM-1 ;
+    skos:definition "Planning And Optimization Includes Processes Such As Demand Forecasting, Local And Regional Optimization, Backcasting And Inventory Management Across The Value Chain."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1" ;
+    skos:prefLabel "Planning & Scheduling"@en ;
+    intake:level "L2"@en .
+
 proc:CM-1-1-2-2-3 a skos:Concept ;
     skos:broader proc:CM-1-1-2-2 ;
     skos:definition "Gather committed deals and spot opportunities for Petrochemicals, Blendstocks, Feedstocks, and Asphalt"@en ;
@@ -14214,6 +14239,22 @@ proc:CM-1-1-2-6 a skos:Concept ;
     skos:notation "CM 1.1.2.6" ;
     skos:prefLabel "Perform Crude Oil Evaluations"@en ;
     intake:level "L4"@en .
+
+proc:CM-1-1-4 a skos:Concept ;
+    dcterms:references [ a dcterms:BibliographicResource ;
+            dcterms:identifier "19243" ;
+            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
+            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19243"@en ] ;
+    dcterms:source [ a dcterms:BibliographicResource ;
+            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
+    skos:broader proc:L1-refining ;
+    skos:definition "Develop the commercially optimal refinery production plan — selecting crude and feedstock intake, refinery operating modes, unit-throughput targets, product yield and quality targets, and production horizons — to fulfill commercial commitments and maximize margin within feasible refinery, supply, inventory, product-specification, and contractual constraints."@en ;
+    skos:inScheme mod:core ;
+    skos:notation "CM 1.1.4" ;
+    skos:prefLabel "Refinery Planning and Optimization"@en ;
+    skos:scopeNote "Refinery Planning and Optimization owns the commercial and economic production-plan targets supplied to the refinery, including feedstock and crude-slate choices, target throughput and operating modes, target product yields and specifications, planned production availability, and economically preferred production alternatives. It does not own detailed unit-operation scheduling, tank and transfer line-ups, blend execution, process control, operating procedures, maintenance, turnaround execution, or the operational decision to depart from plan for safety, reliability, or immediate process conditions; those belong to Refining and its operating functions. It distinguishes the plan premise (input assumptions, CM-1-1-4-1), the approved plan (the decision this concept owns), and the plan of record (the versioned registered case, CM-1-1-4-7-7)."@en ;
+    intake:apqcDecision "REVIEW LINK"@en ;
+    intake:level "L2"@en .
 
 proc:CM-1-1-5-1-2 a skos:Concept ;
     skos:broader proc:CM-1-1-5-1 ;
@@ -14244,13 +14285,13 @@ proc:CM-1-1-7-2 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.7.2" ;
     skos:prefLabel "Production Scheduling"@en ;
-    skos:scopeNote """Covers the refinery scheduling layer between planning and operations: maintaining scheduling master data, reviewing the production wheel and run lengths, creating the dated sequencing plan, managing exceptions, measuring scheduling performance, and managing interfaces to planning, operations, and engineering and maintenance. Under the approved planning-scheduling-operations hierarchy, Refining owns detailed unit-operation scheduling and all operational execution; this L4 owns the production schedule that provides the approved basis for that execution. Excludes the monthly plan itself, owned by Refinery Planning (CM-1-1-4); excludes the daily scheduling basis, owned by Daily Execution Planning (CM-1-1-7-1).
+    skos:scopeNote """Covers the refinery scheduling layer between planning and operations: maintaining scheduling master data, reviewing the production wheel and run lengths, creating the dated sequencing plan, managing exceptions, measuring scheduling performance, and managing interfaces to planning, operations, and engineering and maintenance. Under the approved planning-scheduling-operations hierarchy, Refining owns detailed unit-operation scheduling and all operational execution; this L4 owns the production schedule that provides the approved basis for that execution. Excludes the monthly plan itself, owned by Refinery Planning and Optimization (CM-1-1-4); excludes the daily scheduling basis, owned by Daily Execution Planning (CM-1-1-7-1).
 In scope: Maintain the scheduling basis and master data | maintain the production wheel and run lengths | create and refresh the dated sequencing plan | manage schedule exceptions and interfaces | measure scheduling performance
 Out of scope: Monthly production plan (CM-1-1-4) | unit-operation scheduling and execution (Refining) | daily instruction issuance (CM-1-1-7-1)"""@en ;
     intake:apqcDecision "REVIEW LINK"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "approved monthly plan | production wheel and constraints | outage and turnaround windows | execution feedback"@en ;
-    intake:level "L4"@en ;
+    intake:level "L3"@en ;
     intake:primaryOutput "current production schedule providing the approved basis for execution"@en ;
     intake:primaryPurpose "Turn the approved monthly plan into a current schedule that provides the approved basis for refinery execution."@en ;
     intake:processHorizon "weekly"@en ;
@@ -14272,7 +14313,7 @@ proc:CM-1-2-1-1 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.2.1.1" ;
     skos:prefLabel "Forecasting & Optimization"@en ;
-    skos:scopeNote """Covers receiving and consolidating production, demand, and power-generation forecasts from their owning processes; producing the renewables forward view; identifying and valuing commercial use of asset flexibility; and projecting trading revenue, margin, and exposure. This capability consumes forecasts rather than owning their production: the approved demand forecast is owned by Produce Demand Forecast (CM-1-1-1-1) per the batch 03 decision, and production plans and schedules by Refinery Planning (CM-1-1-4) and Refinery Scheduling (CM-1-1-7). Excludes trade execution and capture, owned by Trade Capture (CM-1-2-1-3); excludes setting the regional or refinery plans, owned under the locked Regional Optimization and Refinery Planning rules; excludes risk measurement and limits, owned by Market Risk Management (CM-1-2-2-3).
+    skos:scopeNote """Covers receiving and consolidating production, demand, and power-generation forecasts from their owning processes; producing the renewables forward view; identifying and valuing commercial use of asset flexibility; and projecting trading revenue, margin, and exposure. This capability consumes forecasts rather than owning their production: the approved demand forecast is owned by Produce Demand Forecast (CM-1-1-1-1) per the batch 03 decision, and production plans and schedules by Refinery Planning and Optimization (CM-1-1-4) and Refinery Production Planning and Scheduling (CM-1-1-7). Excludes trade execution and capture, owned by Trade Capture (CM-1-2-1-3); excludes setting the regional or refinery plans, owned under the locked Regional Optimization and Refinery Planning and Optimization rules; excludes risk measurement and limits, owned by Market Risk Management (CM-1-2-2-3).
 In scope: Receive and consolidate production, demand, and generation forecasts | develop the renewables forward view | identify and value commercial use of asset flexibility | project trading revenue, margin, and exposure
 Out of scope: Forecast production ownership (CM-1-1-1-1, CM-1-1-4, CM-1-1-7) | trade execution and capture (CM-1-2-1-3) | regional and refinery plan setting (locked rules) | risk measurement and limits (CM-1-2-2-3)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
@@ -14529,30 +14570,6 @@ Out of scope: The customer-request experience (CM-1-3-7-5) | employment policy, 
     intake:responsibleDomain "Commercial & Marketing"@en ;
     intake:terminologyNotes "Batch 40 (2026-09-21). Capability per the concurrent-control test; canonical four-part request/enable/deliver/measure rule and delivery-model domain note adopted verbatim."@en .
 
-proc:CM-1-1 a skos:Concept ;
-    skos:broader proc:CM-1 ;
-    skos:definition "Planning And Optimization Includes Processes Such As Demand Forecasting, Local And Regional Optimization, Backcasting And Inventory Management Across The Value Chain."@en ;
-    skos:inScheme mod:core ;
-    skos:notation "CM 1.1" ;
-    skos:prefLabel "Planning & Scheduling"@en ;
-    intake:level "L2"@en .
-
-proc:CM-1-1-4 a skos:Concept ;
-    dcterms:references [ a dcterms:BibliographicResource ;
-            dcterms:identifier "19243" ;
-            dcterms:isPartOf src:apqc-pcf-7.2.2 ;
-            dcterms:title "APQC Downstream Petroleum PCF v7.2.2, element 19243"@en ] ;
-    dcterms:source [ a dcterms:BibliographicResource ;
-            dcterms:title "Step 3c definition workbook, approved row"@en ] ;
-    skos:broader proc:CM-1-1 ;
-    skos:definition "Develop the commercially optimal refinery production plan — selecting crude and feedstock intake, refinery operating modes, unit-throughput targets, product yield and quality targets, and production horizons — to fulfill commercial commitments and maximize margin within feasible refinery, supply, inventory, product-specification, and contractual constraints."@en ;
-    skos:inScheme mod:core ;
-    skos:notation "CM 1.1.4" ;
-    skos:prefLabel "Refinery Planning"@en ;
-    skos:scopeNote "Refinery Planning owns the commercial and economic production-plan targets supplied to the refinery, including feedstock and crude-slate choices, target throughput and operating modes, target product yields and specifications, planned production availability, and economically preferred production alternatives. It does not own detailed unit-operation scheduling, tank and transfer line-ups, blend execution, process control, operating procedures, maintenance, turnaround execution, or the operational decision to depart from plan for safety, reliability, or immediate process conditions; those belong to Refining and its operating functions."@en ;
-    intake:apqcDecision "REVIEW LINK"@en ;
-    intake:level "L3"@en .
-
 proc:CM-1-2 a skos:Concept ;
     skos:broader proc:CM-1 ;
     skos:definition "Supply And Trading Includes Processes Such As Managing Supply, Demand And Trading Of Crude Oil And Refined Products. It Involves Trading As Well As Planning & Managing Movements In The Most Efficient Way, Including Primary & Secondary Distribution."@en ;
@@ -14709,13 +14726,13 @@ proc:CM-1-1-4-7 a skos:Concept ;
     skos:inScheme mod:core ;
     skos:notation "CM 1.1.4.7" ;
     skos:prefLabel "Refinery Optimization"@en ;
-    skos:scopeNote """Covers the optimization cycle inside Refinery Planning: gathering the demand, crude availability, price, constraint, inventory, and current-plan basis for a case; building and running the optimization model; comparing alternatives through scenario analysis; and recommending the economically preferred case. Accountability for the approved production plan and its commercial targets remains with Refinery Planning. Excludes detailed unit-operation scheduling, tank and transfer line-ups, blend execution, and process control, owned by Refining; excludes optimization-model and application administration, owned by Process Excellence & IT.
+    skos:scopeNote """Covers the optimization cycle inside Refinery Planning and Optimization: gathering the demand, crude availability, price, constraint, inventory, and current-plan basis for a case; building and running the optimization model; comparing alternatives through scenario analysis; and recommending the economically preferred case. Accountability for the approved production plan and its commercial targets remains with Refinery Planning and Optimization. Excludes detailed unit-operation scheduling, tank and transfer line-ups, blend execution, and process control, owned by Refining; excludes optimization-model and application administration, owned by Process Excellence & IT.
 In scope: Assemble case basis from demand, crude availability, price, constraints, inventory, and current plan | build and run optimization cases | scenario and sensitivity analysis | compare production alternatives on margin | recommend the economically preferred production case
-Out of scope: Approval and ownership of the production plan and its commercial targets (Refinery Planning) | detailed unit scheduling, tank line-ups, and blend execution (Refining, Refinery Scheduling) | process control and operational departures from plan (Refining) | optimization application administration and model platform support (Process Excellence & IT) | real-time and closed-loop unit optimization (Refining)"""@en ;
+Out of scope: Approval and ownership of the production plan and its commercial targets (Refinery Planning and Optimization) | detailed unit scheduling, tank line-ups, and blend execution (Refining, Refinery Production Planning and Scheduling) | process control and operational departures from plan (Refining) | optimization application administration and model platform support (Process Excellence & IT) | real-time and closed-loop unit optimization (Refining)"""@en ;
     intake:apqcDecision "NO CANDIDATE"@en ;
     intake:conceptTypeCheck "process"@en ;
     intake:keyInputs "product demand requirements | crude and feedstock availability and assays | crude, feedstock, and product prices | refinery capacity and operating constraints | inventory position | current approved operating plan"@en ;
-    intake:level "L4"@en ;
+    intake:level "L3"@en ;
     intake:parkedChildren "Build Optimization Case | Validate Case Basis | Recommend Preferred Production Case"@en ;
     intake:primaryOutput "recommended economically preferred refinery production case with supporting scenario analysis"@en ;
     intake:primaryPurpose "Produce and recommend the economically preferred refinery production case for the planning period."@en ;

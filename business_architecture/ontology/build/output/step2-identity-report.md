@@ -1,8 +1,8 @@
 # Step 2 — Identity normalization report
 
-- Nodes processed: 682
+- Nodes processed: 683
 - IDs preserved as skos:notation: 669 (all unique, all match `CM <dotted>` pattern)
-- Minted stub slugs: 13
+- Minted stub slugs: 14
 - Deprecated tombstones: 1
 - Slug collisions: none
 - URI collisions: none
@@ -15,6 +15,7 @@
 | L0 | Downstream Operations | `L0-downstream-operations` | `L0-downstream-operations` |
 | L1 | Refining | `L1-refining` | `L1-refining` |
 | L2 | Refinery Performance and Risk Coordination | `L2-refinery-performance-and-risk-coordination` | `L2-refinery-performance-and-risk-coordination` |
+| L2 | Refinery Asset Reliability and Turnaround Coordination | `L2-refinery-asset-reliability-and-turnaround-coordination` | `L2-refinery-asset-reliability-and-turnaround-coordination` |
 | L1 | Midstream | `L1-midstream` | `L1-midstream` |
 | L0 | Enabling Functions | `L0-enabling-functions` | `L0-enabling-functions` |
 | L1 | Supply Chain Mgmt. | `L1-supply-chain-mgmt` | `L1-supply-chain-mgmt` |
