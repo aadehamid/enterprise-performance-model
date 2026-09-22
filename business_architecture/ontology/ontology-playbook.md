@@ -927,6 +927,44 @@ without a dated amendment and Hamid's explicit agreement.
   change, removed concept, redefined meaning); minor = new concepts /
   modules / hierarchy changes; patch = label/definition wording fixes.
   Deprecate, never delete. Full detail in Appendix B (2026-09-18).
+- **Ontology identity (2026-09-22).** The `core` module's ontology IRI
+  is `https://w3id.org/lsc/ontology/core`; each release gets a version
+  IRI of the form `https://w3id.org/lsc/ontology/core/1.0.0`.
+  Every release ships an explicit `owl:Ontology` header carrying
+  `dcterms:title`, `dcterms:description`, `owl:versionIRI`,
+  `owl:versionInfo`, `dcterms:issued`, `dcterms:creator`, and
+  `dcterms:license`. Term IRIs stay stable and unversioned —
+  `core:ProcessDefinition`, never `core/1.0.0/…`.
+- **First formal version: 1.0.0 (2026-09-22).** Step 4 ships `core`
+  1.0.0 — the first versioned release. It is the first release with
+  governed properties instead of provisional `intake:` annotations and
+  the first to carry the version header. 1.0.0 is the baseline that
+  Step 5 (organization), Step 6 (PROV-O), and later modules version
+  against. Recorded in Appendix B's version history.
+- **Flow modeling depth (2026-09-22).** Step 4 captures flows as
+  governed structured values on the input/output links — controlled,
+  consistently-spelled flow names (e.g. "demand forecast"), no new
+  nodes. The workbook's flow information is preserved and queryable
+  ("which processes consume the demand forecast?"). Minting
+  InformationObject nodes for every distinct flow (~1,900) is deferred:
+  it is a data-governance project — identity, dedup ("is the demand
+  forecast in 12 processes one thing or twelve?"), ownership, lifecycle
+  — that no Step 4 competency question or consumer requires. Revisit
+  trigger: a real use case that needs to trace a specific artefact
+  (e.g. audit lineage of the approved operating plan) — then mint that
+  flow as a node deliberately, one at a time. Composes with the Q4
+  decision: `core:usesInput` links processes; the structured value says
+  what travels on the link.
+- **Responsible-domain interim treatment (2026-09-22).** Step 4 keeps
+  `responsible_domain` as a governed literal on the process, explicitly
+  interim — no org nodes are minted. Step 5 (ORG/RACI) designs the org
+  model and replaces these labels with references to real org
+  units/roles; the controlled list makes that migration mechanical.
+  The workbook's 10 distinct values (456 of 485 rows "Commercial &
+  Marketing") are nearly controlled already — the value is in the
+  exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
+  6 cross-functional combos, normalized to a governed
+  "Cross-functional" value with detail preserved in a note).
 - **License: proprietary, all rights reserved** (2026-09-18). Hamid is
   the IP owner. Rationale: the ontology describes LSC's actual
   operations — competitively sensitive; can be opened later, cannot be
@@ -1554,6 +1592,43 @@ silently.
 Rationale: deleting a URI orphans every catalog row, RACI assignment,
 and KPI binding that pointed at it. Storage is cheap; broken references
 are expensive.
+
+### Ontology identity and header
+The ontology is named, not anonymous. Each module ships one
+`owl:Ontology` resource that carries the release metadata:
+
+```turtle
+<https://w3id.org/lsc/ontology/core>
+    a owl:Ontology ;
+    dcterms:title "LSC Core Process Ontology"@en ;
+    dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en ;
+    owl:versionIRI <https://w3id.org/lsc/ontology/core/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    dcterms:issued "2026-09-22"^^xsd:date ;
+    dcterms:modified "2026-09-22"^^xsd:date ;
+    dcterms:creator "Hamid" ;
+    dcterms:license <https://w3id.org/lsc/ontology/core/license> ;
+    dcterms:rights "© LSC. All rights reserved. APQC PCF content used with attribution per APQC/IBM terms."@en .
+```
+
+Rules:
+- **Ontology IRI is stable** (`…/ontology/core`). It names the module,
+  not the release.
+- **Version IRI is per release** (`…/ontology/core/1.0.0`). Consumers
+  who pin a release cite the version IRI; consumers who want currency
+  use the ontology IRI.
+- **Term IRIs never carry a version** (`core:ProcessDefinition`, not
+  `core/1.0.0/ProcessDefinition`). Versioning a term IRI would fork
+  identity — the exact thing this policy forbids.
+
+### Version history
+- **Pre-1.0.0 (before 2026-09-22).** Unversioned working builds. No
+  `owl:versionInfo` was shipped; the taxonomy iterated through Steps
+  1–3d and the R1 reclassification without a formal release.
+- **1.0.0 (Step 4, decided 2026-09-22).** First formal release of
+  `core`. Retires the provisional `intake:` namespace, promotes intake
+  annotations to governed properties, and ships the first explicit
+  version header. Baseline for everything after.
 
 ### What every release ships
 - `owl:versionInfo` on each module and on the release (`"1.2.0"`).
