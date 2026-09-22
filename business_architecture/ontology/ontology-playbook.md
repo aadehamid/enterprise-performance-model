@@ -65,7 +65,7 @@ ontology; everything else points at it.
 | 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
 | 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical); 12 normalization-only judgment renames executed and merged 2026-09-22 — PR #103 (Batch 7, judgment — final naming batch)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated; PR #103 — 14,481 triples, report regenerated) | ✅ Completed with explicit open exceptions 2026-09-22 — naming queue closed (92/92 entries executed: normalization, scope-ambiguity, directionality-missing, and generic-operational categories all executed); PTC-001 partially resolved (tombstone + 2 reparented L3s + 2 Candidate L2s); PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22) — Step 3d closed with that exception; Refining Architecture Scoping Decision created as Draft — R0 inventory next, no tree changes until L2 scope approved |
+| 3d | Tree reconciliation — naming pass first (critical semantic collisions gate publication), then the consolidated repo-JSON pass applying PTC-001: retire `CM-1-1-4-6`, reparent 3 blocked children, decompose ≥1 undecomposed L1; naming queue `step3c-naming-pass-queue.md` (92 queued; 9 critical collisions executed and merged 2026-09-21 — PR #84 (8 renames), PR #85 (9th rename); 6 authority-risk renames executed and merged 2026-09-21 — PR #89; 10 scope-ambiguity renames executed and merged 2026-09-21 — PR #91 (Batch 1, A+B+C); 11 scope-ambiguity renames executed and merged 2026-09-21 — PR #92 (Batch 2, D); 12 scope-ambiguity renames executed and merged 2026-09-21 — PR #94 (Batch 3, E+F); 11 directionality-missing renames executed and merged 2026-09-21 — PR #96 (Batch 4); 11 generic-operational renames executed and merged 2026-09-21 — PR #98 (Batch 5); 13 normalization-only mechanical renames executed and merged 2026-09-22 — PR #100 (Batch 6, mechanical); 12 normalization-only judgment renames executed and merged 2026-09-22 — PR #103 (Batch 7, judgment — final naming batch)); PTC-001 partially resolved and merged (PR #86 — tombstone + 2 reparented L3s + 2 Candidate L2s; 682 concepts); definition mini-batch authored and merged (PR #87 — 502/505 approved, 679/682 defined, 14,472 triples); naming batches merged (PR #89 — 14,473 triples; PR #91; PR #92 — 14,474 triples; PR #98 — 14,473 triples, report regenerated; PR #100 — 14,477 triples, report regenerated; PR #103 — 14,481 triples, report regenerated) | ✅ Completed with explicit open exceptions 2026-09-22 — naming queue closed (92/92 entries executed: normalization, scope-ambiguity, directionality-missing, and generic-operational categories all executed); PTC-001 partially resolved (tombstone + 2 reparented L3s + 2 Candidate L2s); PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22) — Step 3d closed with that exception; Refining Architecture Scoping Decision: R0 inventory complete; R1 structural decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed, review corrections incorporated); implementation PR gated on four-gate evidence incl. external hierarchy-consumer/RLS-OLS inventory |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
@@ -1155,27 +1155,102 @@ operating-model definition, corporate-planning charter approval, or enterprise
 architecture/charter revision. A blocked row with a named decision, explicit
 options, evidence requirement, and review trigger is governance maturity —
 not incomplete work.
-**Refining Architecture Scoping Decision (2026-09-22, Hamid):** created as
-Draft. Next is a bounded R0 inventory delivered as a no-change proposal:
-inventory all Refining-related rows across the workbook, TTL, and process map;
-map existing hierarchy, concept type, approved definition/source evidence,
-candidate L2 placement, and dependencies; surface terminology inconsistencies
-(Refinery Planning, Optimization, Scheduling, Production, Reliability,
-Turnaround, process safety, quality/blending); establish the minimum business
-questions the decomposition must answer. No nodes added and no concepts moved
-until the L2 scope, definitions, boundaries, and sequencing are reviewed.
-Priority L2 candidates: Refinery Planning and Optimization; Refinery Operations
-and Production Management; Refinery Asset Reliability and Turnaround
-Coordination. EHS / process safety, enterprise risk, maintenance authority,
-Finance, Supply & Trading, Midstream, Commercial, Legal, Security, and IT
-boundaries stay explicit.
-**Definition-authoring process for new L2s (open, 2026-09-22):** the
-semantic-intake workbook closed with Step 3c; the R1 package needs an authoring
-route for new L2 definitions — decided alongside the L2 scope (small reviewer
-workbook round vs direct authoring).
+**Refining Architecture Scoping Decision (2026-09-22, Hamid):** approved in
+principle with refinements; R1 is a controlled re-homing and normalization
+pass, not a greenfield refinery model. R0 inventory complete (2026-09-22):
+the Refining L1 holds only 3 concepts; the substantive refinery estate —
+Refinery Planning (26 concepts) and Refinery Scheduling (16 concepts) —
+sits under Commercial & Marketing → Planning & Scheduling. R1 therefore
+promotes existing approved concepts with stable slugs/IRIs rather than
+duplicating or recreating ~40 concepts.
+**Structural framing (Hamid correction, 2026-09-22):** the change is a
+**controlled structural reclassification and reparenting with stable
+identity** — NOT label-only. Parent-child relationships, concept levels,
+`skos:broader` links, hierarchy navigation, query paths, and
+hierarchy-dependent consumption (reports, RLS/OLS, Power BI) all change;
+only identity is stable. This framing makes the consumer-impact scan
+mandatory.
+Priority L2s: **Refinery Planning and Optimization** (promote `CM-1-1-4`,
+approved in principle subject to the consolidated hierarchy map and the
+Optimization-coverage evidence check); **Refinery Production Planning and
+Scheduling** (narrower R1 label for the promoted `CM-1-1-7` estate — Hamid's
+lean; the broader "Refinery Operations and Production Management" is NOT
+auto-approved and waits on the CM-1-1-7 evidence review, else arrives in R2
+when operating-execution concepts exist); **Refinery Asset Reliability and
+Turnaround Coordination** (new L2, created in R1 as a Candidate structural
+anchor, initially unpopulated, coordination-only — see definition below);
+**Refinery Performance and Risk Coordination** (existing Candidate L2,
+unchanged). Re-anchored under Planning & Scheduling (confirmed 2026-09-22): Commercial Development
+tombstone — it does **not** ride the promotion into Refining; PTC-001-B blocked row stays beneath
+it with status unchanged. Untouched in R1: PTC-002 feedstock-quality ownership, Supply & Trading
+quality cluster. `Publish Local Refinery Targets` stays under Regional Optimization;
+its relationship to Refining is modeled as an interface, not a reparenting.
+Energy & Utility Management follows its parent in R1 under Temporary/inherited placement status
+(review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision) —
+not a final ownership decision. EHS / process safety, enterprise risk, maintenance
+authority, Finance, Supply & Trading, Midstream, Commercial, Legal, Security,
+and IT boundaries stay explicit.
+**R&T L2 definition (Hamid-authored, 2026-09-22):** "The Refining capability
+that coordinates refinery availability, asset-condition and integrity inputs,
+maintenance and turnaround windows, production-plan impacts, readiness, and
+recovery interfaces so refinery performance objectives can be planned and
+managed against approved maintenance, integrity, and turnaround commitments."
+Scope note: coordinates the refinery-operating impact of asset reliability,
+inspections, integrity findings, planned maintenance, and turnaround work,
+including availability assumptions, outage-window integration,
+production-plan and schedule impacts, readiness dependencies,
+return-to-service coordination, and escalation of material risks or
+constraints. Does not own maintenance strategy, engineering design authority,
+inspection execution, process-safety policy, work permits, contractor
+management, capital approval, or maintenance/turnaround execution unless
+separately assigned by the enterprise operating model. Status: Candidate;
+review trigger: R2 evidence package / refinery maintenance and turnaround
+operating model.
+**Terminology governance (2026-09-22):** R1 resolves terminology only to the
+minimum required for an accurate hierarchy and non-misleading labels
+(stale parent/label/path references updated mechanically). Unresolved
+semantic distinctions (refinery plan vs monthly operating plan vs schedule
+vs unit-operation schedule; turnaround vs planned vs emergency shutdown;
+startup/restart; production vs operations management) go to an explicit R2
+Refinery Vocabulary and Operating-Lifecycle package — not settled silently
+in scope notes.
+**R1 authoring workflow — mini-batch control (2026-09-22):** new-L2
+definition + scope note authored in chat with explicit in/out-of-scope
+boundaries and source references; independent wording review; workbook row
+inserted/updated through an asserted one-shot script; cell diff generated;
+validation gate rerun; TTL regenerated; PR open for approval. Promoted L2s
+inherit/reframe their existing approved definitions — no substantive rewrite
+unless the move exposes a genuine scope conflict.
+**R1 merge gate (2026-09-22):** hierarchy-sensitive consumer-impact
+validation is a formal merge gate, not an execution task — ontology
+hierarchy integrity, semantic consumption (queries, navigation, Power BI,
+RLS/OLS, catalog, data products), governance/traceability (identity-map
+migration overlay, historical paths, PTC-001-B/tombstone/PTC-002 unchanged),
+and generation (workbook, JSON, TTL, gate, diffs) must pass before any
+structural change merges.
+**R1 structural decision package (approved as Candidate, 2026-09-22, Hamid):**
+delivered as a no-change proposal and approved as **Candidate** on Hamid's independent review:
+(1) current-to-target hierarchy map for 40 concepts with old/new parent and level, (2) candidate
+L2 definitions, (3) R1/R2 boundary, (4) terminology decision ledger, (5) impact analysis with the
+four-gate merge framework, (6) evidence (internal definitions, OSHA/Cal-OSHA/API context, APQC
+comparative structure). Review corrections incorporated: (a) scope-note wording — definitions,
+authority boundaries, sources, and business substance remain unchanged; scope notes are updated
+only where a parent-path, ownership-reference, or execution-interface statement would otherwise
+become factually stale, all enumerated in the cell diff; (b) transitive-path migration register
+(§1g) — direct broader IRIs are stable but ancestor paths and depths change, recorded for the
+consumer-impact scan. Tombstone re-anchor confirmed: `CM-1-1-4-6` (deprecated) and `CM-1-1-4-6-1`
+(PTC-001-B, blocked) move under `CM-1-1` Planning & Scheduling rather than riding the promotion
+into Refining. Energy & Utility Management subtree tagged Temporary/inherited through its
+scheduling parent (review trigger: R2 energy scope decision). Gate 2 requires a formal old→new
+path-mapping compatibility table for all 42 affected paths plus the externally supplied
+hierarchy-consumer and RLS/OLS inventory. No JSON or workbook modification until the
+implementation PR is explicitly approved.
+**Definition-authoring process for new L2s (decided, 2026-09-22):** mini-batch
+control above (replaces the open workbook-round-vs-direct-authoring
+question).
 **SemVer treatment for Refining changes (2026-09-22):** new L2 nodes are
 additive (minor); reparenting existing concepts changes broader links and is
-flagged in the consumer-impact scan before merge.
+validated by the consumer-impact merge gate before merge.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,
