@@ -79,6 +79,13 @@ delegated authority, corporate-planning charter, current planning artifacts.
 terminology_notes cites PTC-001-B; the gate resolves the citation to PTC-001, which
 remains open until PTC-001-B closes).
 
+**Hold confirmed 2026-09-22 (Hamid):** PTC-001-B is an intentional governance
+hold, not incomplete work — Step 3d closed with this exception. The row stays
+`blocked` under the tombstone so it is never orphaned. Do not place it under
+Finance as a side effect; no Strategy L1 without a charter-level decision.
+Review trigger: strategy operating-model definition, corporate-planning charter
+approval, or enterprise architecture/charter revision.
+
 ### Affected rows (post-tree-pass, 2026-09-21)
 
 | Slug | Level | Label | Current parent | Current status |
