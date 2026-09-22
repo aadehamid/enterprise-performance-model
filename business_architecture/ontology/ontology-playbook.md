@@ -992,22 +992,41 @@ without a dated amendment and Hamid's explicit agreement.
   concept as capability-like; actual business capabilities are a future
   `core:BusinessCapability` class — architecture entities, not
   classification values — linked to processes via `core:realizedBy`.
-- **Step 4 Q9: lifecycle model (2026-09-22).**
-  `core:lifecycleStatus` is an object property to a controlled SKOS
-  scheme with four states: Candidate → Approved → Deprecated →
-  Retired. Blocked/held are **not** states: a separate hold flag
-  applies to a concept in any lifecycle state, with a recorded reason
-  (a Candidate can be blocked; an Approved concept can be put on hold
-  without losing its state). The scheme does not conflict with OWL:
-  Deprecated ⇒ `owl:deprecated true` (required); Retired ⇒
-  `owl:deprecated true` (retired implies deprecated);
-  Candidate/Approved ⇒ `owl:deprecated` absent or false. Agreement is
-  enforced by SHACL in Step 9; the rule is stated now. Allowed
-  transitions: Candidate→Approved, Candidate→Retired (rejected before
-  publication), Approved→Deprecated, Deprecated→Approved
-  (undeprecation, governed), Deprecated→Retired. Retired is terminal —
-  never resurrect; mint a new concept instead. `dcterms:isReplacedBy`
-  points to the successor where one exists.
+- **Step 4 Q9: lifecycle model (2026-09-22; revised to three dimensions
+  on review the same day).** Status is three independent dimensions —
+  the original single chain (Candidate → Approved → Deprecated →
+  Retired) conflated them and is withdrawn:
+  - **Concept lifecycle** (`core:lifecycleStatus`, object property to a
+    SKOS scheme): Active, Deprecated, Retired. No conflict with OWL:
+    Deprecated ⇒ `owl:deprecated true` (required); Retired ⇒
+    `owl:deprecated true` (retired implies deprecated); Active ⇒
+    `owl:deprecated` absent or false — agreement enforced by SHACL in
+    Step 9. "Superseded" is not a fourth state: it is Deprecated +
+    `dcterms:isReplacedBy` pointing at the successor. Retired is
+    terminal for active use; the concept remains resolvable for
+    lineage, and restoration requires a new governance decision with
+    recorded provenance — never a silent flip.
+  - **Governance approval status** (`core:governanceStatus`, object
+    property to a SKOS scheme): the project's existing artifact-control
+    vocabulary, now formalized — Exploratory, Draft, Candidate,
+    ApprovedBaseline, Implemented. A concept can be Active while its
+    definition is still Draft (488 taxonomy concepts currently lack
+    authored definitions); a proposal can be Candidate while its
+    concepts are not yet Active.
+  - **Hold status** (`core:holdStatus`, object property to a SKOS
+    scheme): independent of the other two — NoHold, EvidenceHold,
+    OwnershipHold, DecisionHold, ImplementationHold. A hold applies in
+    any non-retired lifecycle state without disturbing it, with the
+    reason in `core:holdReason` and the evidence linked via the
+    decision-log reference convention. Live cases: CM-1-1-4-6-1 carries
+    OwnershipHold (PTC-001-B strategy-ownership decision);
+    CM-1-1-3-5-3 carries EvidenceHold (business-evidence hold).
+  - Worked examples:
+    - R1 reliability/turnaround L2: lifecycle Active, governance
+      Implemented, hold NoHold (it was a Candidate *proposal*;
+      Candidate was never the concept's lifecycle state).
+    - CM-1-1-4-6 tombstone: lifecycle Retired, `owl:deprecated true`,
+      governance Implemented, hold NoHold.
 - **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
   `core:` carries foundational planned-process semantics only —
   organization → Step 5, KPI semantics → `kpi`, observed execution →
