@@ -245,7 +245,7 @@ Out of scope: Crude purchasing and trade execution (Supply And Trading) | physic
     intake:referenceSources "SRC-CMU-REFPLAN-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
     intake:relatedConcepts "informed-by: Refinery Planning | constrained-by: Inventory Management (CM-1-1-3-7) | precedes: Refinery Scheduling"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Label retains the existing “Decision” suffix, but the concept is authored as the recurring allocation process, not the decision record or its output. A later naming pass should consider “Allocate Crude & Feedstock” for verb consistency with sibling labels; not changed in this batch. The boundary against Supply And Trading follows the locked SCM/Commercial rule: this concept places already-secured supply and does not choose counterparty, price, or contract. Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed from 'Crude Allocation Decision' to 'Allocate Crude and Feedstock'. Prior label retained as altLabel."@en .
+    intake:terminologyNotes "Historical note: the label retained the “Decision” suffix pending the naming pass, but the concept was always authored as the recurring allocation process, not the decision record or its output. The naming pass considered “Allocate Crude & Feedstock” for verb consistency with sibling labels; the executed label is “Allocate Crude and Feedstock”. The boundary against Supply And Trading follows the locked SCM/Commercial rule: this concept places already-secured supply and does not choose counterparty, price, or contract. Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed from 'Crude Allocation Decision' to 'Allocate Crude and Feedstock'. Prior label retained as altLabel."@en .
 
 proc:CM-1-1-2-11 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
@@ -277,7 +277,7 @@ Out of scope: Order-level allocation and release (Allocate & Release Order, Orde
     intake:referenceSources "SRC-ASCM-CSCP-001 | SRC-SNF-REFPS-001 | SRC-EIA-GLOSS-001"@en ;
     intake:relatedConcepts "informed-by: Produce Demand Forecast (CM-1-1-1-1) | constrained-by: Inventory Management (CM-1-1-3-7) | enables: Order Management | enables: Terminal Loading"@en ;
     intake:responsibleDomain "Commercial & Marketing"@en ;
-    intake:terminologyNotes "Three allocation concepts coexist at different grains and are deliberately bounded here: plan-level placement (this node), order-level allocation and release (Order Management), and loading-time allocation enforcement (Terminal Loading). The “Decision” suffix is retained pending the same naming pass noted on CM-1-1-2-10. Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed from 'Product Allocation Decision' to 'Allocate Finished Products'. Prior label retained as altLabel."@en .
+    intake:terminologyNotes "Three allocation concepts coexist at different grains and are deliberately bounded here: plan-level placement (this node), order-level allocation and release (Order Management), and loading-time allocation enforcement (Terminal Loading). Historical note: the “Decision” suffix was retained pending the same naming pass noted on CM-1-1-2-10. Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed from 'Product Allocation Decision' to 'Allocate Finished Products'. Prior label retained as altLabel."@en .
 
 proc:CM-1-1-2-12 a skos:Concept ;
     dcterms:references [ a dcterms:BibliographicResource ;
