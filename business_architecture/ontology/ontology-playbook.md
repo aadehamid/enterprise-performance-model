@@ -1103,6 +1103,38 @@ without a dated amendment and Hamid's explicit agreement.
   implementation design. The row-level target-disposition report
   (subject, verb, phrase, disposition, rationale, emit-triple-or-not)
   is the tracked pre-cutover instrument.
+- **Step 4 Q12: ambiguous relationship targets (2026-09-22).** A
+  lexical match is not a semantic resolution: resolve a relationship
+  target only where stable identifier evidence, or approved
+  contextual evidence sufficient to identify exactly one governed
+  target, exists; otherwise record `AmbiguousDeferred` with the raw
+  phrase, candidate set, evidence considered, reason, and review
+  trigger, and emit no process-dependency triple. Decision ladder, in
+  order: stable identifier → approved contextual evidence sufficient
+  to identify exactly one governed target → scoped historical alias
+  (valid context established) → defer. A label match — even an exact,
+  unique, qualified one — is a candidate filter, not a ladder step: it
+  may narrow the candidate set inside the contextual-evidence step,
+  but the resolution is recorded as the concept's slug. Labels are
+  never joined on, per the standing 2026-09-21 identity lock. Phrases that are not process
+  concepts fall back to the Q11 dispositions rather than forcing an
+  ambiguous process match. `AmbiguousDeferred` is the sixth
+  disposition type, extending Q11's five. Amendment to Q11: the single
+  bare `informed-by: Network Design` mention (Brand Imaging row) moves
+  from ParkedFutureConcept to AmbiguousDeferred — the network type is
+  uncertain, not merely unmodeled — with retail/supply/distribution/
+  terminal/channel candidates and review trigger at the R2
+  network-design decomposition or the first consumer need. The
+  row-level disposition report carries: source slug and label,
+  branch/domain, raw verb, raw target text, disposition, candidate
+  slugs/labels, resolution evidence, confidence
+  (Resolved/Contextual/Deferred), emission decision, reason, review
+  trigger, decision reference. Emission rules for the future promotion
+  script: ResolvedToConcept emits the approved triple;
+  StructuredFlowValue, ExternalGovernanceReference, ParkedFutureConcept,
+  and AmbiguousDeferred are retained through their disposition
+  mechanisms with no process triple; DroppedAsNonProcessProse retains
+  only its disposition record.
 - **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
   `core:` carries foundational planned-process semantics only —
   organization → Step 5, KPI semantics → `kpi`, observed execution →
