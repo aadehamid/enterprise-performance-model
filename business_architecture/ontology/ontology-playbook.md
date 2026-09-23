@@ -1027,6 +1027,30 @@ without a dated amendment and Hamid's explicit agreement.
       Candidate was never the concept's lifecycle state).
     - CM-1-1-4-6 tombstone: lifecycle Retired, `owl:deprecated true`,
       governance Implemented, hold NoHold.
+- **Step 4 Q10: terminology-note migration (2026-09-22).**
+  Selective-alias policy — a prior name becomes `skos:altLabel` only if
+  it is unique, non-misleading, non-colliding, and useful for retrieval
+  (`altLabel` is a live search commitment, not an archive field).
+  Generic, ambiguous, authority-overstating, case/punctuation-only, or
+  scope-limited former names are preserved in migration history via
+  `core:priorPreferredLabel` (annotation property) but are **not**
+  searchable. Scoped aliases (e.g. valid only in APQC-comparison
+  context) keep their context in the migration map and are never
+  flattened into `skos:altLabel`. One-line rename rationale →
+  `skos:editorialNote`; migration event and source →
+  `dcterms:provenance`; full reviewer reasoning stays in the decision
+  log / naming queue by reference. Conservation rule — extends the Q2
+  ledger and gates the `intake:` cutover: every non-null `prior_name`
+  gets exactly one recorded disposition; every non-empty
+  `name_change_note` has a recorded disposition — a concise rationale
+  plus migration provenance, consolidation into a canonical migration
+  event, formatting-only migration history, or explicit
+  supersession/duplication; every `scoped_historical_alias` has a
+  context or is explicitly rejected. Minimal Step 4 vocabulary: only
+  `core:priorPreferredLabel` is added; a reified historical-label
+  record is deferred until a real need appears. A 92-row
+  historical-label disposition report is the tracked pre-cutover
+  instrument for this rule.
 - **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
   `core:` carries foundational planned-process semantics only —
   organization → Step 5, KPI semantics → `kpi`, observed execution →
