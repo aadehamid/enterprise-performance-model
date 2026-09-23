@@ -1051,6 +1051,58 @@ without a dated amendment and Hamid's explicit agreement.
   record is deferred until a real need appears. A 92-row
   historical-label disposition report is the tracked pre-cutover
   instrument for this rule.
+- **Step 4 Q11: relationship target dispositions (2026-09-22; item
+  dispositions corrected the same day).** Governing rule: every
+  relationship mention gets a governed disposition; only mentions
+  classified as process-to-process become Step 4 object-property
+  triples. Structured-flow values, external governance references,
+  and parked future concepts are retained through their approved
+  disposition mechanisms and may receive separately approved
+  properties in future; they are excluded only from the initial
+  process-dependency migration. Five disposition types:
+  ResolvedToConcept, ParkedFutureConcept, StructuredFlowValue,
+  ExternalGovernanceReference, DroppedAsNonProcessProse. Matching
+  principle: **labels aren't identity** — parenthetical qualifiers
+  (`(DOA)`, `(Advertising)`, `(Non-Retail)`, `(CVP)`, `(Retail)`) are
+  part of the label that resolves the mention to its concept; the
+  first-cut "unmatched" report was wrong on six of the nine because
+  it matched bare phrases. Corrected dispositions, verified against
+  the identity map and the committed TTL:
+  - Establish & Maintain Delegation Of Authority →
+    ResolvedToConcept `CM-1-2-2-3-2`
+    ("Establish & Maintain Delegation Of Authority (DOA)").
+  - Integrated Marketing Planning → ResolvedToConcept `CM-1-3-5-2`
+    (all four mentions are the qualified
+    "Integrated Marketing Planning (Advertising)").
+  - Serve to Customer → ResolvedToConcept `CM-1-3-6-2-6` (the only
+    mention is the qualified "Serve to Customer (Non-Retail)").
+  - Develop/Update Strategy → ResolvedToConcept `CM-1-3-2-2-4`
+    (the remaining mention is the CVP-context
+    "Develop/Update Strategy (CVP)"); the no-global-lexical-
+    replacement rule stands for any future bare mentions.
+  - Manage Trading Books & Strategies Structure →
+    ResolvedToConcept `CM-1-2-2-3-1`
+    ("Establish And Maintain Book Structure", per the batch 12
+    split).
+  - Network Design → ResolvedToConcept `CM-1-3-3-4`
+    ("Network Design (Retail)") for all qualified mentions; the
+    single bare `informed-by: Network Design` mention (Brand
+    Imaging row) is genuinely unmatched → ParkedFutureConcept,
+    do not guess which network.
+  - The Regional Backcasting assumption basis →
+    StructuredFlowValue (unchanged; it is a `produces:` value,
+    per Q5).
+  - Monthly Operating Plan → StructuredFlowValue (unchanged; plan
+    artifact, per the R1 plan-vs-artifact distinction).
+  - Data Governance → ExternalGovernanceReference (unchanged;
+    cross-cutting enterprise domain, never a `proc:` node under
+    Commercial).
+  DroppedAsNonProcessProse remains a valid disposition type with no
+  current members. The repo-wide stale-target watch stays in place.
+  New properties for governance references are deferred to
+  implementation design. The row-level target-disposition report
+  (subject, verb, phrase, disposition, rationale, emit-triple-or-not)
+  is the tracked pre-cutover instrument.
 - **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
   `core:` carries foundational planned-process semantics only —
   organization → Step 5, KPI semantics → `kpi`, observed execution →
