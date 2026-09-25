@@ -863,8 +863,8 @@ remains blocked pending the review-batch decisions (changed-label,
 new-historical-label, ancestor/descendant, nearness-only, contradiction, and
 source-workbook correction batches). The operating discipline for promoting
 intake data without corrupting it is specified in the **Step 4 evidence
-discipline** section immediately following this step log (proposed
-2026-09-24; canonical on Hamid's approval).
+discipline** section immediately following this step log (approved
+2026-09-24; canonical).
 
 ---
 ## Step 4 evidence discipline — promoting intake data without corrupting it
