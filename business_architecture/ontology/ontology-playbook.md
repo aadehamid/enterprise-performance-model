@@ -1,20 +1,30 @@
-# Ontology Playbook — Downstream Process Map
+# Ontology Playbook
 
-**Status:** Living document. Updated as each plan step completes.
+**Status:** Living playbook. Prescriptive guidelines for building an ontology
+end-to-end; the worked example is the downstream process-map ontology.
 **Owner:** Hamid · **Built with:** Kailey
 **Started:** 2026-09-17
 
 ## About this document
 
-This is the working record of how the downstream process map becomes an
-ontology. It captures the plan, the decision at every step, the answer each
-step produced, and — most importantly for handover — *why* each standard was
-chosen and what was deliberately rejected.
+This is a **playbook, not a project journal**. It tells any team how to build
+a good ontology from scratch, step by step. The guidance is distilled from a
+real build — the downstream process-map ontology (the "worked example") — and
+that build is the proof the guidance works, not the subject of the document.
 
-**How to maintain it:** when a plan step completes, append its entry to
-§3 (Step log) and move any new durable decision into §4 (Decision log).
-Never rewrite history — correct it with a dated amendment so the team can
-see what changed and why.
+**How to read it.** §0–§4 are the method: foundations, the end-to-end
+sequence, the locked policies, the standards guide, and the working
+agreements. Follow them in order. §5 is the worked example — the
+instantiation of the playbook on a real build. It stays in this document
+by design: the example is how a reader checks that the guidance is real.
+Read it when a prescription needs a concrete illustration, not as the main
+text.
+
+**How to maintain it.** When the method improves, update the guidance
+section a teammate would look in, dated, with the reason — never in chat
+history. When a build step completes, extend the worked example (§5) and
+move any new durable decision into §2 (Policies). Never rewrite history:
+correct with a dated amendment so the team can see what changed and why.
 
 **Companion files:**
 - `competency-questions.md` — the merged competency-question baseline (the
@@ -24,1746 +34,568 @@ see what changed and why.
 - `build/` — reproducible build scripts (`step2-identity-map.py`,
   `apqc_crosscheck.py`) and their generated outputs under `build/output/`
 
-The copies under `business_architecture/ontology/` in the repo are the
-published versions; `~/workspace/ontology-build/` holds working copies.
-
 ---
 
-## 1. What we are building
+## 0. Foundations — the discipline everything else rests on
 
-**Source of truth.** The business processes in
-`business_architecture/business_process/downstream_process_map.json` in the
-`aadehamid/enterprise-performance-model` repo (680 nodes, levels L0–L6).
-We model *those* processes — we do not copy a reference framework into the
-model.
+*Distilled from Juha Korpela, "Building Semantics with Conceptual Models"*
+*(Common Sense Data, 2026). These are the load-bearing ideas: get them right
+and the rest of the playbook is execution; get them wrong and no amount of
+tooling will save the result.*
 
-**Consistency reference.** The APQC Process Classification Framework for
-Downstream Petroleum, v7.2.2. Every local process is checked against APQC;
-nothing in our model may contradict it. Where we deliberately diverge, the
-divergence is recorded as a boundary note, not hidden.
+### 0.1 Context is the product
 
-**End state.** A standards-based ontology (RDF) published as a versioned
-DCAT catalog: a SKOS taxonomy of the process hierarchy, process definitions
-separated from executions, explicit RACI responsibility assignments, system
-and data-product linkages, SHACL validation shapes, and SPARQL regression
-tests derived from the competency questions.
+In the agentic era, context is king. It used to be that Bob from Accounting
+could walk over and ask Juliet from Procurement what a field meant — human
+communication networks papered over our failure to capture data context.
+Agents cannot do that. Every consumer of your data, human or machine, needs
+to understand what it is consuming. The ontology is how you make that
+understanding durable, shared, and machine-readable.
 
-**Non-goals.** The ontology defines what things *are* — it does not
-calculate KPIs, does not execute processes, and does not replace the ERP,
-the KPI store ("the Store"), or the in-platform assistant (Genie). One
-ontology; everything else points at it.
+**Guideline:** build the foundation *before* anything consumes it, so that
+everything built later connects to something trustworthy. A foundation with
+no consumers yet is not unfinished — it is the whole point.
 
----
+### 0.2 Model the business, not the storage
 
-## 2. The plan
+Conceptual modeling is semantic work, not solution design. When you model
+for actual business concepts and the semantic structure of data, you do not
+care about databases, data lakes, warehouses, pipelines, or ETL. The same
+model can inform solution design later, but it does not have to — its job is
+to capture what the business *means*.
 
-| Step | Name | Status |
-|------|------|--------|
-| 0 | APQC reference alignment (v7.2.2, vendored workbook, ID corrections) | ✅ Done 2026-09-17 |
-| 1 | Foundations: competency questions; URI, language, version, license, module policies | ✅ Done 2026-09-18 |
-| 2 | Identity normalization (680 nodes; preserve IDs as notation; mint IDs for 11 ID-less stubs) | ✅ Done 2026-09-18 |
-| 3 | SKOS taxonomy (one ConceptScheme, broader/narrower, labels, definitions, notation) | ✅ Done 2026-09-18 |
-| 3b | Definition triangulation (APQC candidates + EIA/web agreement; 1 adopted, 10 rejected at the human gate) | ✅ Done 2026-09-18 |
-| 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
-| 3d | Tree reconciliation — naming pass first, then the consolidated repo-JSON tree pass (PTC-001). Summary of the completed step; the sub-logs below break it down. | ✅ Completed with explicit open exceptions 2026-09-22 |
-| 3d-a | Naming Pass Closure Log — 92/92 queued renames executed across 7 batches (PR #84, #85, #89, #91, #92, #94, #96, #98, #100, #103): critical collisions, authority-risk, scope-ambiguity, directionality-missing, generic-operational, normalization-only (mechanical then judgment). Final naming state 682 concepts, 14,481 triples, 317 altLabels. | ✅ Closed 2026-09-22 |
-| 3d-b | PTC-001 Tree Remediation Log — PR #86 (Commercial Development tombstone + 2 reparented L3s + 2 Candidate L2s); PR #87 definition mini-batch; PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22). PTC-001 stays open until PTC-001-B closes. | ✅ Partially resolved; hold by design |
-| 3d-c | R1 Refining Structural Reclassification — decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed); implementation PR #108 merged 2026-09-22 (merge b75fd991). 42 concepts reparented with stable slugs/IRIs/notations; two promoted L2s (Refinery Planning and Optimization; Refinery Production Planning and Scheduling); new Candidate R&T L2; tombstone re-anchored under Planning & Scheduling; reviewed RO→Refining interface relation materialized. 683 concepts, 14,496 triples (+15), 681 broader links. | ✅ Candidate → Implemented 2026-09-22 |
-| 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. | ⏳ Open |
-| 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
-| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
-| 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership) | Planned |
-| 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
-| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Planned |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership) | Planned |
+**Guideline:** never let a physical storage concern shape a concept. If a
+distinction exists only because of a table, a feed, or a system boundary, it
+does not belong in the conceptual model.
 
-Note: Step 8 was completed early (it was originally sequenced after
-integration) because the scope decisions shape the foundations. The plan
-order is otherwise unchanged.
+### 0.3 The two primitives
 
----
+In the end there are only two things of importance in a conceptual model:
 
-## 3. Step log
+1. **Entities** — things that exist in real life, that you have data about.
+2. **Relationships** — associations between two entities; assertions that
+   they have something to do with each other.
 
-### Step 0 — APQC reference alignment ✅ (2026-09-17)
+That is the structure of reality the model captures. Attributes can come
+later; do not start there. People get stuck in attributes and lose the
+structure.
 
-**What we did.**
-- Aligned to APQC Downstream Petroleum PCF **v7.2.2** (Excel + PDF,
-  published 2025-05-30). Verified the workbook: 2,012 PCF elements,
-  13 top-level categories, every Difference Index = 0 (no material
-  element changes vs 7.2.1).
-- Updated repo references from the v5.0.3 third-party mirror to the
-  official APQC v7.2.2 listings.
-- Vendored the official workbook at
-  `business_architecture/reference/APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx`
-  with the required APQC/IBM attribution in `reference/README.md`.
-  License check: APQC/IBM grant perpetual, worldwide, royalty-free use,
-  copying, publishing, modification, and derivative works provided the
-  copyright notice and attribution travel with copies.
-- Ran a cross-check of all 680 process-map nodes against APQC
-  (report: `business_architecture/ontology/apqc-crosscheck-report.md`).
-  Five of six repo-cited PCF IDs verified; one was stale:
-  **Manage Customer Service cited as 10006 (v5.0.3) is 20085 in v7.2.2**
-  — corrected.
-- Delivered via PR #25
-  (`update/apqc-pcf-7.2.2`), commits authored as
-  `aadehamid <aadehamid@gmail.com>` — **merged 2026-09-18**.
+### 0.4 Entities are singular nouns
 
-**Decisions.** APQC is a consistency reference, not the source model
-(§4). Cited APQC IDs are verified against the workbook, not trusted
-from older references.
+Name each entity as a singular noun: "Customer", not "Customers", and never
+"Customer Data". The test is a sentence test — each entity must be a noun in
+a sentence that describes how the business works, able to play the role of
+subject or object. Those nouns will soon need to play exactly those roles in
+your triples.
 
-### Step 8 — APQC scope review ✅ (2026-09-17)
+**Guideline:** if you cannot write a plain business sentence with the entity
+as subject or object, the entity is not well-formed. Rename it until you can.
 
-**What we did.** Reviewed seven APQC gap candidates one at a time.
-Each got an in-scope/out-of-scope call with rationale and connection
-points, recorded in
-`business_architecture/ontology/apqc-scope-decisions.md`.
+### 0.5 Every entity gets a definition. No exceptions.
 
-| # | APQC area | Call |
-|---|-----------|------|
-| 1 | 6.4 Product recalls / regulatory audits | **In scope** — downstream equivalent is off-spec/contaminated product events; connects to claims chain, finished-product quality, EHS |
-| 2 | 7.2/7.3/7.5 Human capital | **In scope** — fills the empty HR L1 stub; feeds the RACI layer |
-| 3 | 8.4 Data/analytics governance | **In scope** — the map maintains master data but governs none of it; required for a knowledge-graph effort |
-| 4 | 9.4 Fixed-asset project accounting | **Out** — ERP-native; nothing in the ontology depends on it (boundary note; revisit if turnaround accounting surfaces) |
-| 5 | 11.3 Remediation efforts | **In scope** — spill/release response; environmental-incident flavor |
-| 6 | 12.2/12.3/12.5 External relationships | **Out** — corporate affairs; no hook into value chain, RACI, or data products (boundary note) |
-| 7 | 10.x Asset-maintenance depth | **In scope** — turnarounds are nine-figure events with no home in the map |
+A good definition answers the question "what do you mean by
+<entityname>". Write it in simple business language. This is the basis of
+your glossary: **terms + definitions = semantics.** Capture definitions in
+whatever tool you have — an integrated glossary feature, a spreadsheet if
+necessary — but capture them, for every entity, with no deviations.
 
-**Standing principle established:** the ontology covers enabling functions,
-not only the hydrocarbon value chain — but only where the ontology has a
-genuine hook (HR→RACI, data governance→knowledge graph). ERP-native finance
-and corporate-affairs processes stay out.
+### 0.6 Relationships are verbs
 
-**How scope decisions are applied:** they accumulate in the decision log;
-they are *not* applied to `downstream_process_map.json` one at a time.
-After the modeling pass, one consolidated proposal (new nodes with parent
-and level) goes to the repo. Every new process gets an L0–L6 level from
-the existing hierarchy — no level-less nodes.
+Every relationship — every line between two boxes — must be named with a
+verb that describes the nature of the association: *why* is entity A related
+to entity B? Not because they share a foreign key in some table. Look at the
+real business and describe the real-life association.
 
-### Step 1 — Foundations ✅ (complete)
+This has two decisive benefits:
 
-**Competency questions** — reviewed and approved by Hamid; merged
-baseline of 44 questions in `competency-questions.md`, locked 2026-09-18.
-These double as the Step 11 SPARQL regression tests: the exam is written
-before the coursework. Constraints section removed at Hamid's direction —
-constraints are not being modeled; the Customer/Party domain is.
+1. The verbs become the **predicates** in your subject–predicate–object
+   triples when you construct the graph.
+2. Naming forces distinctions that unnamed lines hide: "owning" a bank
+   account is a completely different relationship from "having access to" a
+   bank account. Two verbs means two relationships — and two different
+   semantic facts your consumers will depend on.
 
-**URI policy — decided 2026-09-18.**
-- Base: `https://w3id.org/lsc/ontology/` (w3id.org persistent-identifier
-  service; `lsc` = Lagos Specialty Chemicals).
-- Patterns: `…/process/{slug}` for taxonomy concepts;
-  `…/modules/{module}` for module namespaces
-  (`core`, `party`, `kpi`, `organization`).
-- **Not tied to a person or a project.** Rationale: usernames change and
-  people change roles; project names get rebranded (this repo already
-  went through one). Only the company abbreviation appears, and even
-  that sits behind w3id.org redirects — a future rebrand updates one
-  redirect, not 680 identities.
-- **Local IDs are preserved, never replaced by APQC IDs.**
-  `CM 1.2.1.3` → slug `CM-1-2-1-3`, recorded as `skos:notation`. APQC
-  element IDs (e.g. `20110`) attach via `dcterms:references` only.
-  Rationale: the repo is the source of truth; most local processes have
-  no APQC counterpart and vice versa.
-- **The 11 ID-less stubs get minted slugs** (`L1-human-resources`,
-  `L0-downstream-operations`, …) — a slug is simply the URL-friendly
-  identifier coined where none existed.
-- **No version in the URI.** Identity survives definition changes;
-  versions ride on `owl:versionInfo` (answers competency question A-18
-  structurally).
-- Open action: register `w3id.org/lsc` (small request to the w3id.org
-  repo; does not block modeling).
+**Guideline:** an unnamed relationship is an undeclared meaning. If two
+different verbs describe two different business realities between the same
+pair of entities, model two relationships.
 
-**Language policy — decided 2026-09-18.**
-- Primary language: English. Every human-readable literal carries `@en`
-  (`"Create Claim"@en` — untagged and tagged literals are different RDF
-  terms; tagging everything avoids silent SPARQL mismatches).
-- One `skos:prefLabel` per language per concept (the official name);
-  aliases in `skos:altLabel`.
-- `skos:definition` required on every concept, in English.
-- Additional languages later slot in as `@fr`, `@ar`, … — no remodeling.
+### 0.7 Subtypes where they matter
 
-**Version policy — decided 2026-09-18.** SemVer per module and per
-release; URIs never change; deprecation via `owl:deprecated` +
-`dcterms:isReplacedBy`, never delete. Full operational detail in
-Appendix B.
+A subtype is a "kind of" thing; a supertype is the higher-level thing. A car
+is a kind of vehicle; a cat is a kind of mammal. Include sub/supertype
+structure where it is relevant — and only where it is relevant. Over-
+generalization makes models unreadable, but when people genuinely talk about
+"two kinds of accounts", model the two kinds and their supertype. These
+taxonomies are what your knowledge graph will need.
 
-**License policy — decided 2026-09-18.**
-- The ontology artifacts are **proprietary, all rights reserved**.
-  Hamid is the IP owner. Rationale: the ontology describes LSC's actual
-  operations (commercial processes, refinery planning, systems) —
-  competitively sensitive. Can be opened later; cannot be un-opened.
-- **APQC content remains usable.** The APQC/IBM license grants
-  perpetual, worldwide, royalty-free use, copying, publishing,
-  modification, and derivative works provided the copyright notice and
-  attribution travel with copies. Attribution ≠ open licensing — the
-  two coexist.
-- Team guidance: reference PCF IDs freely (`dcterms:references`);
-  quote element names/descriptions sparingly, each marked APQC-sourced;
-  adapt wording openly where downstream context needs it (derivative
-  works allowed); carry the APQC/IBM notice on every distribution via
-  `dcterms:rights` on the dataset. Do not republish whole APQC branches
-  as LSC's own — the repo's processes lead (source-of-truth principle).
+**Guideline:** subtype only on a genuine "kind of" relationship, and only
+when the business distinguishes the kinds in practice.
 
-**Module policy — decided 2026-09-18.**
-- Four modules, each with its own namespace, version, SHACL shapes,
-  and owner:
-  - `core` — process taxonomy + process definitions. Depends on nothing.
-  - `party` — Party, CustomerAccount, PartyRole,
-    TransactionPartyParticipation. Depends on nothing.
-  - `kpi` — Named KPI definitions. Depends on `core` and `party`.
-  - `organization` — roles and RACI ResponsibilityAssignments. Depends
-    on `core` only — `org:Role` (internal positions) and
-    `party:PartyRole` (external commercial roles) are different beasts;
-    no `organization` → `party` dependency.
-- Rules: dependencies point one way, no cycles (enforced by CI);
-  cross-module use is by URI reference, never by redefinition
-  (define once, reference everywhere); modules version and validate
-  independently; minor/patch approved by module owner, majors by Hamid.
+### 0.8 Declare, don't vibe
 
-- **`party` is the sole concept-owning module for the Customer domain.**
-  There is no `customer` module by design. Customer-domain *processes*
-  live in `core` (O2C chain), customer-grained KPIs in `kpi` (bound to
-  Party/Account/Role), RACI over customer-facing processes in
-  `organization` — the domain is a view across modules, its concepts
-  anchored in `party` (2026-09-18).
+A mindmap can help workshop participants reach an understanding, and that has
+value. But a mindmap has vibes, whereas a good conceptual model has
+structure. A mindmap is temporary, tied to a situation and a discussion; a
+good conceptual model is universally true until the business itself changes.
+A mindmap suggests; a good conceptual model **declares**.
 
-### Step 2 — Identity normalization ✅ (2026-09-18)
+**Guideline:** do the extra rigor. It is precisely what makes the model
+convertible into an ontology later. A mindmap left in a project folder is a
+wasted opportunity to build semantic architecture.
 
-All 680 nodes now have exactly one URI slug; zero collisions, zero
-orphans (verified by script, not by eye).
+### 0.9 The conversion ladder (conceptual model → ontology)
 
-- **669 ID'd nodes:** slug derived mechanically — `CM 1.2.1.3` →
-  `CM-1-2-1-3` (spaces and dots become hyphens). All 669 IDs were unique
-  and all matched the strict `CM <dotted-number>` pattern, so the
-  derivation is injective. Original codes preserved as `skos:notation`.
-- **11 ID-less stubs:** minted `L{level}-{name}` slugs
-  (`L0-downstream-operations`, `L1-refining`, `L1-midstream`,
-  `L0-enabling-functions`, `L1-supply-chain-mgmt`, `L1-finance`,
-  `L1-shared-services`, `L1-process-excellence-it`,
-  `L1-human-resources`, `L1-legal-corp-comm`, `L1-ehs-gov-reporting`).
-  Minted slugs double as the proposed repo `id` values for the
-  consolidated repo-JSON proposal (after the modeling pass).
-- **Artifacts** (in `business_architecture/ontology/build/`):
-  `step2-identity-map.py` (reproducible script),
-  `output/step2-identity-map.json` (680 rows: uri, slug, level, name,
-  skos_notation, parent_slug, minted, proposed_repo_id),
-  `output/step2-identity-report.md`.
-- **Delivered** via PR #26 (`ontology/foundations`), with the playbook,
-  competency questions, APQC scope decisions, cross-check report, and
-  all build scripts/outputs under `business_architecture/ontology/` —
-  **merged 2026-09-18** (main, as of today, also carries PR #25's APQC
-  v7.2.2 work).
+With the discipline above, turning a conceptual model into a formal ontology
+is mechanical:
 
-### Step 3 — SKOS taxonomy ✅ (2026-09-18)
+- Every entity becomes a class (`owl:Class`).
+- Every entity–relationship–entity pair becomes a triple.
+- Entity definitions become class definitions (`skos:definition`).
+- Subtypes/supertypes become `skos:broader` / `skos:narrower` or
+  `rdfs:subClassOf`.
+- The noun becomes the class name (`skos:prefLabel`).
+- The verb becomes the predicate (`owl:ObjectProperty`).
 
-The core module's taxonomy as Turtle: 680 `skos:Concept`s, 3,660
-triples, in stable document order.
-
-- **ConceptScheme:** the core module namespace URI itself —
-  `https://w3id.org/lsc/ontology/modules/core` — doubles as the
-  scheme (one URI, one thing: the module's entire current content *is*
-  the taxonomy). Carries `dcterms:title`/`description` and
-  `skos:hasTopConcept` for the two L0 roots.
-- **Per concept:** `skos:inScheme`, exactly one `skos:prefLabel` (`@en`),
-  `skos:notation` on all 669 ID'd nodes (codes correctly untagged —
-  notations are identifiers, not prose), `skos:definition` where the
-  repo provides one, `skos:broader` on all 678 non-root concepts.
-  `skos:narrower` not materialized (entailed via `owl:inverseOf`).
-- **Validation (rdflib, mechanical):** parses clean; 680 concepts; one
-  `@en` prefLabel each; every concept in scheme; 678 broader links, no
-  dangling targets, no self-references; 2 top concepts; zero untagged
-  prose literals; Turtle round-trip lossless.
-- **Known gap, not invented:** 503 concepts had no `skos:definition`
-  (the repo describes only 177 nodes). The language policy requires one
-  per concept — Step 3b (2026-09-18) triangulated 1 adoption;
-  **Step 3c** (2026-09-18) human-authored the 14 L1–L3 gaps with Hamid.
-  192/680 concepts now carry definitions; 488 gaps remain (all L4–L6),
-  for future authoring passes. A Step 9 SHACL shape can flag the
-  unfilled ones.
-- **Deliberately excluded:** RACI, systems, lanes, and all other node
-  fields — Steps 4/5. This file is the taxonomy, nothing more.
-- **Artifacts:** `~/workspace/ontology-build/step3-skos-taxonomy.py`,
-  `step3-taxonomy.ttl`, `step3-taxonomy-report.md`.
-- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened and
-  merged 2026-09-18, together with Step 3b) — `downstream_process_map.json`
-  untouched.
-
-### Step 3c — human definition authoring ✅ (2026-09-18, complete)
-
-The 14 L1–L3 definition gaps from the Step 3b workqueue, authored one
-at a time with Hamid: 10 L1 enabling/value-chain functions (Commercial
-& Marketing, Refining, Midstream, Supply Chain Management, Finance,
-Shared Services, Process Excellence & IT, Human Resources, Legal &
-Corporate Communications, EHS & Government Reporting) and 4 commercial
-planning stubs under C&M › Planning & Scheduling (Regional
-Optimization, Regional Backcasting, Refinery Planning, Distribution
-Backcasting).
-
-- **Working method:** draft → Hamid's wording (most L1s are his, verbatim
-  or near-verbatim) → approved definition + scope note recorded in
-  `step3c-authored-definitions.json` with parked child concepts,
-  planned Step 8 children, and terminology notes.
-- **Boundary rules locked in the decision log:** primary-purpose (not
-  asset-location) classification; domain placement questions for SCM,
-  C&M, Refining, Midstream, Distribution, Finance, PE&IT, HR, Legal,
-  EHS; Finance owns financial governance/transactions while domains own
-  the operational event; Shared Services executes but never replaces
-  the accountable functional owner; "Shared Services delivers IT
-  support on behalf of Process Excellence & IT"; the commercial
-  planning loop (Optimization → Refinery Planning → Refining execution
-  → Backcasting) and its distribution mirror.
-- **APQC candidates:** 5 more false matches rejected at the human gate
-  during authoring (total 10 rejected): "Process returns"→PE&IT,
-  "Develop human resources strategy"→HR function, "Determine corporate
-  incentives"→Legal & Corp Comm, "Manage reporting processes"→EHS,
-  "Supply chain resilience"→Regional Optimization.
-- **Merge:** `step3-skos-taxonomy.py --authored` adds `skos:definition`
-  + `skos:scopeNote` + `dcterms:source` (human-authored, approved by
-  Hamid, dated) per concept; validation asserts hold. Taxonomy now:
-  **680 concepts, 678 broader links, 192 definitions, 3,660 triples.**
-- **Delivered** via the Step 3c PR (new branch off main, after PR #28
-  merged 2026-09-18) — `downstream_process_map.json` untouched.
-
-### Step 3c — semantic intake + L4 review batches ✅ (2026-09-21, complete)
-
-The L1–L3 pass above is closed. Authoring continues on L4–L6 against a
-workbook whose contract changed after that pass. This log records why
-the gate was rewritten before the next batch.
-
-- **#31 (2026-09-18) — workbook contract.**
-  `step3c-definition-authoring-workbook.xlsx` became a 6-sheet
-  semantic-intake workbook: Start Here, Review & authoring, Column
-  guide, Controlled vocabularies, Reference register, External
-  mappings. Nine Phase 1/2 columns sit before `status`. Status vocab
-  is now `pending | approved | blocked | retired`. No RDF emission,
-  no taxonomy/JSON/script change.
-- **#32 (2026-09-19) — review batch 01.**
-  Five L4 children of Regional Optimization / Refinery Planning
-  approved with Phase 1 + Phase 2 filled. `CM-1-1-4-6` Commercial
-  Development left `pending` (`mixed/needs-review`); accepted tree
-  move parked as **PTC-001** in `step3c-parked-tree-changes.md`.
-  Workbook counts: 20 approved / 483 pending. Taxonomy still 192/680
-  — the five new rows have not been `--authored` yet.
-- **This follow-up — gate sync (v2026-09-19).**
-  Same move as #30 after #29: retarget the locked reviewer guide and
-  `step3c-workbook-validate.py` to the live workbook. Phase 1 is
-  required on new approvals. The 15 #29 rows are listed in
-  `PRE_INTAKE_APPROVED` and flagged as NOTE when Phase 1 is empty —
-  not silently waived, not blocked, not backfilled here.
-  `CM-1-3-3-5-6` missing `scope_note` stays BLOCKING.
-- **Still not in scope.** ~~Emitting the new fields as RDF; merging
-  batch 01 into the TTL;~~ backfilling Phase 1 onto the 15; applying
-  PTC-001 to `downstream_process_map.json` (now Step 3d, below).
-- **Taxonomy regen from the workbook (2026-09-20, PR #59).**
-  The "still not in scope" RDF emission above is now done, mechanically:
-  `build/step3-skos-taxonomy.py` gained a `--workbook` overlay and the
-  TTL was regenerated from the 281 approved rows — 680 concepts, 9,999
-  triples, 458/680 definitions, 239 altLabels, 281 APQC references. Definition precedence:
-  workbook-approved > human-authored L1–L3 > step3b adoption > repo
-  description (all 14 authored + the 1 adoption are now approved workbook
-  rows; non-workbook concepts verified triple-identical — no regression).
-  Phase-1 capture is preserved verbatim under the provisional `intake:`
-  namespace (see decision log); Step 4 promotes it to real properties.
-  Blocked rows are definition-less; the retired row is `owl:deprecated`
-  (`dcterms:isReplacedBy` waits for Step 3d). Sequencing agreed with
-  Hamid: regen now (parallel to review batches) → finish 3c → 3d tree
-  reconciliation → Step 4 design together.
-
-- **Closeout (2026-09-21, batch 42, PR #82).** Step 3c is finished:
-  approved=498, pending=1 (`CM-1-1-3-5-3`, the intentional business-evidence
-  hold from batch 05 — not forced), blocked=3 (PTC-001), retired=1
-  (`CM-1-1-4-6`); gate blocking=0, questions=0, notes=15, open_ptc=1.
-  Hamid's **option A** decision admitted the two L0 scheme roots
-  (`L0-downstream-operations`, `L0-enabling-functions`) as the only approved
-  `not-process` rows via a frozen `SCHEME_ROOT_APPROVED` whitelist, mirroring
-  the `PRE_INTAKE_APPROVED` pattern. Batches 23–41 covered Offer/Pricing/
-  Channel (23), Network/Communications/Operating Model (24), Visioning/Concept/
-  Product Development (25), Order Management, SCM, Finance/Accounting, Service
-  & Support, and Terminal Commercial Operations (41).
-- **Final TTL regen (2026-09-21, PR #83).** Per Hamid's sequencing decision
-  (regen once at the end of Step 3c, not per batch): 680 concepts, 14,403
-  triples, 675/680 defined (498 workbook + 177 repo descriptions); the 5
-  definition-less are the 3 blocked, 1 retired, 1 pending hold. 182
-  non-workbook concepts verified triple-identical to the PR #59/#61 snapshot.
-  L0 roots defined; naming queue (92 renames) NOT applied — labels stay as
-  locked in Step 3c.
-- **Carried forward.** `step3c-naming-pass-queue.md` (EPM-BA-NAMING-QUEUE-001,
-  Draft): 92 queued renames in six categories; the **Critical semantic
-  collision** category (duplicate prefLabels) gates semantic-model
-  publication and runs first in Step 3d. The queue authorizes no renames by
-  itself — proposals go to Hamid for review like any batch.
-
-### Step 3d — tree reconciliation 🔄 (PTC-001 partially resolved 2026-09-21)
-
-The successor to Step 3c, registered here as a numbered step rather than a
-note, so it can be scheduled rather than remembered.
-
-Definition batches are forbidden from editing
-`downstream_process_map.json`, the TTL, or the build scripts. Structural
-problems found while authoring are therefore parked in
-`step3c-parked-tree-changes.md` as PTC entries. Step 3d is the single
-consolidated pass that applies them.
-
-- **First 3d activity — the naming pass (added 2026-09-21, batch 42).**
-  The Step 3c intake completed with 498 approved rows (PR #82) and a
-  controlled rename backlog: `step3c-naming-pass-queue.md`
-  (EPM-BA-NAMING-QUEUE-001, Draft), 92 queued renames in six categories.
-  The **Critical semantic collision** category (duplicate prefLabels)
-  gates semantic-model publication and runs first; the queue authorizes
-  no renames by itself — proposals go to Hamid for review like any
-  batch, and each executed rename promotes the queued label to prefLabel
-  with the old name kept as alt label (subject to the collision and
-  refinement rules recorded 2026-09-21, below), then sweeps the workbook,
-  TTL regen, identity map, and cross-references, and re-runs the gate.
-- **Phase 1 executed and merged 2026-09-21 — all 9 critical collisions.** All 9
-  critical collisions renamed per Hamid's approval (2026-09-21), with two
-  refinements over the queued labels: `CM-1-1-1-1` → **Produce Demand
-  Forecast** (verb-led; `Demand Forecasting` is NOT kept as an altLabel
-  because the L3 parent keeps it as prefLabel) and the six
-  `Define KPI Framework` rows take domain-specific labels with the
-  shared generic label NOT kept as an ontology altLabel (scoped
-  historical aliases such as `Define KPI Framework (Offer)` recorded in
-  the identity/migration map). The sixth KPI row (`CM-1-3-3-5-7`,
-  Marketing Communications) was discovered after the initial 8-rename
-  execution and renamed in a follow-up commit per Hamid's decision
-  the same day. PR #84 (8 renames) and PR #85 (9th rename) both merged
-  by Hamid 2026-09-21 — **nothing merged on assumption**.
-  Approved labels:
-  `CM-1-1-1-1` → Produce Demand Forecast; `CM-1-1-3-7` → Inventory
-  Management (`Inventory` kept as altLabel); `CM-1-1-3-7-12` → Monitor
-  and Control Inventory Positions (`Manage Inventory` kept as altLabel);
-  `CM-1-3-3-1-4` → Define Offer Measurement Framework;
-  `CM-1-3-3-2-5` → Define Pricing Measurement Framework;
-  `CM-1-3-3-3-5` → Define Channel Measurement Framework;
-  `CM-1-3-3-4-4` → Define Network Measurement Framework;
-  `CM-1-3-3-6-5` → Define Operating Model Measurement Framework;
-  `CM-1-3-3-5-7` → Define Marketing Communications Measurement Framework.
-  No definitions, hierarchy, process identities, authority boundaries,
-  source evidence, slugs, or IRIs change. The 9th rename lived on branch
-  `step3d/naming-kpi6-marcomms` (from merged main `86d6fbb`); PR #85 merged
-  by Hamid 2026-09-21 — **nothing merged on assumption**. The taxonomy is
-  unpublished with no external consumers (Hamid, 2026-09-21), so no
-  deprecation period or consumer notice is needed; the repository-wide
-  cross-reference sweep was still run (workbook, identity map,
-  terminology notes; TTL regenerated with the exact PR #83 invocation —
-  byte-identical reproduction verified before the edits). The follow-up
-  9th rename regenerated again with the same invocation: 680 concepts,
-  14,397 triples (the expected −1: the promoted altLabel removed,
-  prefLabel changed in place), 675/680 definitions, 678 broader links.
-- **Label-governance policy (standing, 2026-09-21).** Labels are governed
-  presentation metadata; stable slugs/IRIs are concept identity. Never
-  use a prefLabel or workbook name as a join key, DAX lookup key, RLS
-  condition, contract key, API key, KPI identity, or logic condition —
-  use stable identifiers for technical relationships. Retain historical
-  labels as altLabel only when uniquely resolvable and semantically
-  safe.
-- **PTC-001 partial resolution — executed and merged 2026-09-21 (PR #86).**
-  Hamid approved the revised consolidated proposal
-  (`files/ptc-001-tree-proposal.md`, four review adjustments adopted):
-  new Candidate L2 **Financial Planning and Performance Management** under
-  Finance hosting **Plan Budgets** (L3); new Candidate L2 **Refinery
-  Performance and Risk Coordination** under Refining hosting **Coordinate
-  Site Business Risk Management** (renamed, L3); **Commercial Development**
-  tombstoned as `owl:deprecated` (kept in JSON/identity map/TTL, removed
-  from active navigation); **Develop Strategic Business Plan** stays
-  `blocked` under the named **PTC-001-B** strategy-ownership decision.
-  682 concepts, 13 minted stubs. PTC-001 stays open until PTC-001-B closes.
-- **PTC-001 definition mini-batch — authored and merged 2026-09-21 (PR #87).**
-  The four rows left `pending` by the tree pass got full Phase 1 + Phase 2
-  authoring, parent-first: the two Candidate L2 stubs and the two
-  reparented L3s (Plan Budgets; Coordinate Site Business Risk Management).
-  The independent review came back APPROVE-WITH-NOTES; two non-blocking
-  cleanups were applied before merge per Hamid's call: (1) the risk L3's
-  scope note now states the hybrid cadence — event-driven for new/changed
-  risks, incidents, breaches, and escalations, with periodic monitoring
-  and review of ownership, treatment plans, and status; (2) the Refining
-  L2's scope note states that refinery performance oversight remains at
-  capability level pending the future Refining-domain decomposition, so
-  the risk-coordination child is never misread as the owner of
-  throughput/yield/performance management. The `approve` wording in Plan
-  Budgets is retained deliberately — the terminology note fences it to the
-  budget-review workflow the process administers while final approval stays
-  with the delegated authority. Workbook: 505 rows, 502 approved
-  (1 intentional pending hold, 1 blocked PTC-001-B, 1 retired); gate
-  blocking=0, questions=0. TTL: 682 concepts, 14,472 triples, 679/682
-  defined. No new duplicate prefLabel groups; tombstone and blocked row
-  untouched.
-- **Authority-risk naming batch — executed and merged 2026-09-21 (PR #89).**
-  The second naming-pass category: 6 labels that overstated each concept's
-  mandate, renamed per Hamid's approval 2026-09-21 — `CM-1-2-4-2-12` →
-  Maintain Trading Accounting Procedures and Guidance; `CM-1-2-5-2-3` →
-  Recommend Feedstock Slate And Run Rate (protects the PTC-002
-  decide-vs-advise boundary: S&T recommends, Refinery Planning decides);
-  `CM-1-2-6-1` → Supply Network Participation Analysis; `CM-1-2-6-3-1` →
-  Coordinate S&T Source-Point Supply Operations; `CM-1-3-4-5-4` → Develop
-  Portfolio Recommendations and Track Decisions; `CM-1-3-5-1` → Sales
-  Planning. Old labels retained as safe altLabels (plus two
-  workbook-recorded alternatives); 16 `related_concepts` cross-references
-  swept to the new labels with slug annotations; workbook
-  breadcrumb/parent display columns refreshed for the renamed rows and
-  their descendants; identity-map `prior_name`/`name_change_note` overlays
-  added with all 10 pre-existing overlays intact. Independent review
-  APPROVE-WITH-NOTES (both notes addressed before merge: identity-map
-  indentation normalized, breadcrumbs refreshed). Workbook: 505 rows, 502
-  approved; gate blocking=0, questions=0. TTL: 682 concepts, 14,473
-  triples (+1: the added second R&D altLabel), 679/682 defined. No new
-  duplicate prefLabel groups; zero definition changes; IRIs/slugs
-  unchanged; `downstream_process_map.json` untouched. Naming queue: 78 of
-  93 entries remaining (categories 3–6).
-- **Scope-ambiguity naming batches 1 & 2 — executed and merged 2026-09-21
-  (PR #91, PR #92).** The third naming-pass category: 21 labels whose
-  wording left the process scope ambiguous, renamed per Hamid's approval
-  2026-09-21 in two batches. Batch 1 (A+B+C, 10 renames, PR #91, merged
-  2026-09-21): `CM-1-1-3-6-2` → Administer Scheduled Shipment Loading;
-  `CM-1-1-3-8-3` → Maintain Secondary Distribution Scheduling Basis;
-  `CM-1-2-4-1-8` → Settle Environmental Instruments; `CM-1-2-4-2-2` →
-  Manage Production & Inventory Accounting; `CM-1-2-6-2-3` → Forecast
-  Operational Refined Product Demand; `CM-1-2-6-3-2` → Fulfill
-  Replenishment From Trading Sources; `CM-1-2-6-3-3` → Coordinate
-  S&T-Sourced Primary Transportation; `CM-1-3-6-6-2` → Manage Card
-  Program Billing Coordination; `CM-1-3-6-6-6` → Manage Card Delinquency
-  and Collections Referral; `CM-1-3-6-8-1` → Conduct Commercial Audit to
-  Validate Reported Sales. Batch 2 (D, 11 renames, PR #92, merged
-  2026-09-21): `CM-1-3-7-1` → Manage Commercial Master Data Stewardship;
-  `CM-1-3-7-1-1` → Maintain Customer and Commercial Account Master Data;
-  `CM-1-3-7-1-3` → Maintain Product and Service Master Data;
-  `CM-1-3-7-1-5` → Maintain Commercial Workflow Configuration;
-  `CM-1-3-7-1-6` → Maintain Commercial Policy Content and Approved
-  Parameters; `CM-1-3-7-2` → Manage Commercial Terms, Quoting, and
-  Customer Commercial Services; `CM-1-3-7-3-6` → Manage Commercial
-  Returns Authorization and Coordination; `CM-1-3-7-4-5` → Perform
-  Credit-Driven Customer Closure and Reinstatement; `CM-1-3-7-4-6` → KYC
-  Process → Perform KYC Due Diligence; `CM-1-3-7-5-1` → Prioritize
-  Customer Requests and Inquiries; `CM-1-3-7-5-2` → Maintain Customer
-  Request and Inquiry Records. Old labels retained as `skos:altLabel`;
-  `prior_name`/`name_change_note` recorded in the identity map;
-  `scoped_historical_alias` stays null; slugs, IRIs, hierarchy, and
-  definitions unchanged; workbook cross-references and breadcrumbs swept;
-  `downstream_process_map.json` untouched. Batch 2 independent review
-  APPROVE-WITH-NOTES (KYC scope confirmed under the approved boundary:
-  Commercial/Credit executes KYC due diligence and escalates
-  discrepancies; Compliance/Legal own the sanctions-compliance and
-  financial-crime frameworks — no definition change authorized or made).
-  Workbook: 505 rows, 502 approved; gate blocking=0, questions=0,
-  notes=18, open_ptc=1. TTL: 682 concepts, 14,474 triples, 679/682
-  defined, 680 broader links. Naming queue: 57 of 93 entries remaining
-  (12 scope-ambiguity, 8 directionality-missing, 11 generic-operational,
-  26 normalization-only).
-- **Scope-ambiguity naming batch 3 — executed and merged 2026-09-21
-  (PR #94).** The last of the third naming-pass category: 12 labels (E+F)
-  whose wording left the process scope ambiguous, renamed per Hamid's
-  approval 2026-09-21: `CM-1-3-1-6` → Marketing Insight and Metrics
-  Stewardship; `CM-1-3-8-1-2` → Perform Self-Billing Accounting;
-  `CM-1-3-8-1-5` → Manage Invoice Exceptions, Reversals, and Rebilling;
-  `CM-1-3-8-2-1` → Record Customer Receipts and Payment Notifications;
-  `CM-1-3-8-2-4` → Manage Unapplied Receipts and Exceptions;
-  `CM-1-3-8-2-5` → Perform Cash, Acquirer, and Receivables
-  Reconciliations; `CM-1-3-8-3` → Manage Receivables Resolution;
-  `CM-1-3-8-3-1` → Manage Receivables Disputes; `CM-1-3-8-3-2` → Manage
-  Receivables Collections; `CM-1-3-8-3-3` → Determine Bad Debt
-  Allowance; `CM-1-3-8-3-4` → Develop Root-Cause Analyses and Action
-  Plans; `CM-1-3-8-4-7` → Administer Royalty, Brand Fee, and Contribution
-  Streams. Old labels retained as `skos:altLabel`; existing valid aliases
-  preserved; `prior_name`/`name_change_note` recorded in the identity map;
-  `scoped_historical_alias` stays null; slugs, IRIs, hierarchy unchanged.
-  TTL diff: 102 replacement hunks, zero inserted/deleted hunks; all IRIs,
-  notation, and broader links unchanged; exactly 4 definition literals
-  touched only to replace the "Insight and Metrics" cross-reference with
-  the new `CM-1-3-1-6` label — no substantive definition change; workbook
-  cross-references and breadcrumbs swept; `downstream_process_map.json`
-  untouched. Independent review APPROVE (all 11 pre-existing duplicate
-  prefLabel groups confirmed; Finance authority over bad-debt allowance
-  and reconciliation-without-settlement boundaries verified; workbook
-  `parent` column still carries the locked old label for `CM-1-3-8-3`
-  children — established behavior from prior batches). Workbook: 505
-  rows, 502 approved; gate blocking=0, questions=0, notes=18,
-  open_ptc=1. TTL: 682 concepts, 14,474 triples, 679/682 defined, 680
-  broader links. Naming queue: 45 of 93 entries remaining
-  (8 directionality-missing, 11 generic-operational, 26
-  normalization-only) — the scope-ambiguity category is closed; whether
-  `CM-1-3-1-6` is a capability or a process stays an exploratory modeling
-  follow-up, out of the label-only pass.
-- **Directionality-missing naming batch — executed and merged 2026-09-21
-  (PR #96).** The fourth naming-pass category: 11 labels whose wording
-  hid the direction of economic exposure or the Consumer-versus-B2B
-  distinction, renamed per Hamid's approval 2026-09-21. Claims lifecycle
-  (`CM-1-2-4-4-2..8`): Create Claim → Create Outbound Delay
-  Compensation Claim; Receive Demurrage Claim → Receive Inbound Delay
-  Compensation Claim; Assess Claim → Assess Inbound Claim; Communicate
-  and Negotiate Claim → Negotiate Outbound Claim; Validate and Negotiate
-  Claim → Validate and Negotiate Inbound Claim; Send Claim Invoice →
-  Invoice Agreed Outbound Claim; Receive Claim Invoice → Process Invoice
-  for Agreed Inbound Claim. Consumer value-proposition children of
-  `CM-1-3-2-3`: `CM-1-3-2-3-1` → Test Consumer Value Proposition;
-  `CM-1-3-2-3-2` → Formulate and Evaluate Consumer Value Proposition
-  Alternatives; `CM-1-3-2-3-3` → Establish Consumer Value Proposition
-  Principles and Objectives; `CM-1-3-2-3-4` → Develop and Update
-  Consumer Value Proposition Strategy (workbook queued label; the
-  chat-table "Develop/Update" slash form retained as the historical
-  alias). Old labels retained as `skos:altLabel`;
-  `prior_name`/`name_change_note` recorded in the identity map;
-  `scoped_historical_alias` stays null; slugs, IRIs, hierarchy, and
-  definitions unchanged. The B2B siblings `CM-1-3-2-2-1..4` are
-  untouched — they legitimately keep the Customer/CVP labels — with all
-  consumer-row replacements scoped to `CM-1-3-2-3*` rows; 4 of the 11
-  pre-existing duplicate prefLabel pairs resolved (7 remain). TTL diff:
-  47 replacement hunks, zero inserted/deleted; one scopeNote change is
-  label-text only; workbook cross-references and breadcrumbs swept;
-  `downstream_process_map.json` untouched. Independent review
-  APPROVE-WITH-NOTES: the 4 historic consumer aliases retained despite
-  overlapping the B2B siblings' live prefLabels — non-blocking validator
-  questions kept intentionally as controlled exceptions (labels are
-  presentation metadata; identity is by slug/IRI), recorded for future
-  consumer-impact review; the "Develop and Update" form stands.
-  Workbook: 505 rows, 502 approved; gate blocking=0, questions=4,
-  notes=18, open_ptc=1. TTL: 682 concepts, 14,474 triples, 679/682
-  defined, 680 broader links. Naming queue: 37 of 93 entries remaining
-  (11 generic-operational, 26 normalization-only) — the
-  directionality-missing category is closed.
-- **Generic-operational naming batch — executed and merged 2026-09-21
-  (PR #98).** The fifth naming-pass category: 11 labels whose wording was
-  generic (scope implied by the parent) rather than self-describing,
-  renamed per Hamid's approval 2026-09-21. Terminal commercial
-  (`CM-1-3-10-1..4`): `Setup and Maintain Customer In Terminal` -> Set Up
-  and Maintain Terminal Customer Authorization; `Process Forecast and
-  Nominations` -> Process Customer Lifting Forecasts and Nominations;
-  `Manage Allocation` -> Manage Terminal Lifting Allocation; `Capture
-  Deal` -> Capture Terminal Sales Deal. Commercial compliance
-  (`CM-1-3-6-8`): `Compliance Management` -> Commercial Agreement
-  Compliance Management. Service reviews (`CM-1-3-7-5-5`): `Conduct
-  Quarterly Review Meeting` -> Conduct Customer Service Reviews
-  (quarterly stays an adjustable default cadence in the definition/scope
-  note, not hard-coded in the label). Service operations
-  (`CM-1-3-9-1-2`): `Manage Operations` -> Manage Service Operations.
-  Service delivery (`CM-1-3-9-2-1..3`): `Manage Data` -> Manage Service
-  Delivery Data; `Manage Customer` -> Manage Customer Interactions in
-  Service Delivery (Hamid's approved plural refinement of the queued
-  singular); `Fulfill Service Event` -> Fulfill Service Events. Workforce
-  (`CM-1-3-9-3-2`): `Measure Service Employees` -> Measure Service
-  Workforce Performance. Ten old labels retained as `skos:altLabel`; the
-  bare `Manage Customer` kept only as `prior_name`/`name_change_note` in
-  the identity map — not a live `skos:altLabel` — because it is a prefix
-  of live labels (Manage Customer Portal, Manage Customer Invoicing and
-  Billing, Manage Customer Requests and Inquiries) and would reintroduce
-  search ambiguity; the queued singular near-duplicate `Manage Customer
-  Interaction in Service Delivery` was also dropped (Hamid approved the
-  drop 2026-09-21 on the reviewer's recommendation). Generic-alias
-  migration-map-only treatment is now the reusable naming-pass precedent
-  for the remaining normalization-only rows. Slugs, IRIs, hierarchy,
-  definitions, and authority boundaries unchanged; workbook
-  cross-references, breadcrumbs, and scopeNote prose swept;
-  `downstream_process_map.json` untouched; taxonomy report regenerated
-  alongside the TTL (14,473 triples, 309 altLabels). Independent review
-  APPROVE-WITH-NOTES (all 11 labels verified verbatim in workbook and
-  TTL; guarded stale-reference sweep clean; identity-map overlays exact;
-  semantic TTL diff contains only batch-5 changes; stale local repo HEAD
-  flagged and ignored — commit based directly on remote main). Workbook:
-  505 rows, 502 approved; gate blocking=0, questions=4 (pre-existing
-  Batch 4 consumer/B2B controlled exceptions), notes=18, open_ptc=1.
-  TTL: 682 concepts, 14,473 triples (-1: the deliberate `Manage
-  Customer` alias drop), 679/682 defined, 680 broader links; 7 duplicate
-  prefLabel groups, all pre-existing. Naming queue: 26 of 93 entries
-  remaining (26 normalization-only) — the generic-operational category is
-  closed.
-- **Normalization-only mechanical batch — executed and merged 2026-09-22
-  (PR #100).** The first half of the sixth naming-pass category, executed
-  per Hamid's approved sequencing (mechanical first, judgment second):
-  13 normalization-only renames approved 2026-09-21. `CM-1-1-7-3-3` →
-  Manage and Support Emissions Trading; `CM-1-2-2-3-9` → Perform Position
-  & P&L Analysis; `CM-1-2-4-2-7` → Manage Financial Information
-  Documentation and Reporting; `CM-1-2-5-1-1` → Manage Feedstock Data
-  Quality; `CM-1-3-2-1-1` → Formulate and Evaluate Strategic Operating
-  Alternatives; `CM-1-3-6-5-2` → Manage Promotions and Events Execution;
-  `CM-1-3-6-6` → Loyalty and Cards Management (Marketing); `CM-1-3-6-6-1`
-  → Set Up Prospect; `CM-1-3-6-6-12` → Manage Additional Card Services;
-  `CM-1-3-6-6-4` → Manage Card Administration; `CM-1-3-7-3-3` → Change or
-  Cancel Order; `CM-1-3-7-5-4` → Perform Customer Follow-Up; `CM-1-3-8-1-1`
-  → Create and Distribute Bill. Ten old labels retained as `skos:altLabel`
-  (all passed uniqueness/semantic-safety checks); the two parenthetical
-  card labels (`Manage Additional Card Services (On Road Services)`,
-  `Manage Cards Administration (Order New Cards, Change Card Data)`)
-  migration-map-only — kept as `prior_name`/`name_change_note` in the
-  identity map, not live aliases (generic-alias precedent from Batch 5);
-  the case-only `Manage feedstock Data Quality` not retained as an
-  altLabel either — the workbook validator flags case-only altLabels as
-  collisions (queue rule: case/punctuation-only changes carry no alt
-  label), so it lives only as `prior_name`. Cross-reference sweep: 31
-  asserted scoped replacements across `related_concepts`, breadcrumbs,
-  parent display names, and prose (guarded matching for PNL/P&L,
-  Setup/Set Up, singular/plural, case-only); final sweep found no stale
-  references outside intentional terminology-note and retained-alias
-  locations. Slugs, IRIs, hierarchy, definitions, and authority
-  boundaries unchanged; `downstream_process_map.json` untouched;
-  taxonomy report regenerated alongside the TTL. Independent review
-  APPROVE-WITH-NOTES (all 13 rows verified in workbook, TTL, identity
-  map, and queue; per-row altLabel triple deltas traced against the
-  pre-batch TTL: +1 × 6 rows, net 0 × 4 rows, −1 × 2 migration-map-only
-  rows, net 0 × 1 case-only row; the one actionable note — a stale queue
-  annotation for `CM-1-2-5-1-1` — corrected before merge). Workbook: 505
-  rows, 502 approved; gate blocking=0, questions=4 (pre-existing Batch 4
-  consumer/B2B controlled exceptions), notes=18, open_ptc=1. TTL: 682
-  concepts, 14,477 triples (+4 altLabel triples, fully accounted), 679/682
-  defined, 680 broader links, 313 altLabels; 7 duplicate prefLabel groups,
-  all pre-existing. Naming queue: 12 of 92 entries remaining (12
-  normalization-only judgment rows) — mechanical normalization is closed;
-  the judgment batch is proposed in chat before any repo changes.
-- **Normalization-only judgment batch — executed and merged 2026-09-22
-  (PR #103).** The second half of the sixth naming-pass category and the final
-  naming batch: 12 renames per Hamid's approved judgment proposal 2026-09-22
-  (proposal review: approve 11 as recommended, 1 with the concise refinement
-  — `Track Order Book and Forecast Order Volumes`, timing kept in the
-  definition — 1 conditional on the AR-compliance scope note, verified narrow).
-  `CM-1-1-2-10` → Allocate Crude and Feedstock; `CM-1-1-2-11` → Allocate
-  Finished Products; `CM-1-2-4-2-6` → Reconcile Economic PNL to Accounting
-  PNL; `CM-1-3-6-6-7` → Analyze, Report, and Confirm Card Transactions;
-  `CM-1-3-6-6-9` → Plan Card Stock Consumption and Monitor Inventory;
-  `CM-1-3-6-7` → Brand Standards Management; `CM-1-3-6-7-1` → Manage
-  Brand Standards and Inspections; `CM-1-3-7-2-3` → Develop and Monitor
-  Commercial Revenue Plan; `CM-1-3-7-3-5` → Track Order Book and Forecast
-  Order Volumes; `CM-1-3-8-4-1` → Perform Period-End Processing;
-  `CM-1-3-8-4-2` → Perform AR Reconciliation and Compliance;
-  `CM-1-3-8-4-3` → Analyze and Calculate Accruals. Eleven old labels
-  retained as `skos:altLabel` (all passed uniqueness/semantic-safety checks);
-  the PNL row's old label is migration-map-only — it differs from the new
-  label by case only (`To` vs `to`), which the validator flags as an
-  altlabel-collision (queue rule: case/punctuation-only changes carry no alt
-  label), so it lives only as `prior_name`/`name_change_note`. The two queued
-  near-miss variants (`Analyze and Confirm Card Transactions`, `Track Orders
-  and Forecast Order Book`) legitimately stay as second altLabels; 7 queued
-  labels were promoted out. Cross-reference sweep: 37 asserted scoped
-  replacements across `related_concepts` (+slug annotation), breadcrumbs,
-  parent display names, and prose (guarded matching for the Brand-Standards
-  singular/plural edge and the PNL case-only edge); final sweep found no stale
-  references outside intentional terminology-note and retained-alias
-  locations. Slugs, IRIs, hierarchy, definitions, and authority boundaries
-  unchanged; `downstream_process_map.json` untouched; taxonomy report
-  regenerated alongside the TTL. Independent review APPROVE (all 12 rows
-  verified in workbook, TTL, identity map, and queue; the +4 triple delta
-  fully reconciled: +11 old-label altLabels, −7 promoted queued altLabels).
-  Workbook: 505 rows, 502 approved; gate blocking=0, questions=4
-  (pre-existing altlabel-collision questions, unchanged), notes=18,
-  open_ptc=1. TTL: 682 concepts, 14,481 triples, 679/682 defined, 680
-  broader links, 317 altLabels; 7 duplicate prefLabel groups, all
-  pre-existing. **The naming queue is closed: all 92 entries executed.**
-- **Preconditions — the open PTC entries.** Currently **PTC-001**
-  (`CM-1-1-4-6` Commercial Development does not belong under Refinery
-  Planning; partially resolved 2026-09-21 — 1 row retired (tombstoned),
-  1 blocked (PTC-001-B), 2 rehomed and definition-approved via PR #87).
-  PTC-002 closed 2026-09-18 with no tree change needed. The register is
-  the live list; this line will go stale, the register will not.
-- **Known scope beyond the moves.** PTC-001 cannot be applied as
-  accepted. Only Commercial & Marketing is decomposed — 492 of 503 rows
-  sit under it, and the other nine L1s have no children. There is no
-  destination for any parked child, so Step 3d includes decomposing at
-  least one undecomposed L1. That is a domain-architecture pass, not a
-  reparenting chore, and it needs Hamid's explicit scope expansion.
-- **How it gets picked up.** Not by memory. The gate reads the register
-  every run, prints `open_ptc=N` in its summary line (which lands in
-  every batch PR body), and raises BLOCKING `step-3c-not-complete` if the
-  definition queue reaches zero while any entry is open. Step 3c cannot
-  be declared finished with a tree change outstanding.
-- **Done when.** Every PTC entry closed with its checklist worked, parked
-  rows re-statused to `pending` under real parents, identity map and TTL
-  regenerated, and the gate reporting `open_ptc=0`.
-- **R1 Refining structural reclassification — IMPLEMENTED 2026-09-22 (PR #108 merged).**
-  Hamid approved the Candidate package and, after two review rounds, merged PR #108
-  (merge `b75fd991e243248e60ecc832b3ad2c4f5c91740a`, 2026-09-22T12:51:35Z).
-  Status change: R1 moves from **Candidate** to **Implemented**; the Refining L1 now
-  carries four L2s — Refinery Planning and Optimization, Refinery Production
-  Planning and Scheduling, Refinery Performance and Risk Coordination (existing
-  candidate), and Refinery Asset Reliability and Turnaround Coordination (new
-  Candidate, unpopulated, coordination-only). Final counts: **683 concepts,
-  14,496 triples (+15 vs 14,481 baseline), 681 broader links.** The +15 delta is
-  fully accounted: +14 from the new R&T L2 and its generated metadata, +1 from the
-  approved `informs` interface relation on Publish Local Refinery Targets
-  (`proc:CM-1-1-2-9-1 intake:relatedConcepts "informs: Refinery Planning and
-  Optimization (CM-1-1-4)"@en`). Identity stable: slugs, IRIs, notations
-  unchanged; tombstone re-anchored under Planning & Scheduling; PTC-001-B still
-  blocked; PTC-002 and the S&T feedstock-quality cluster untouched.
-- **R1 review rounds (2026-09-22).** Round 1: Hamid returned "approve after one
-  required correction" — the taxonomy-report generator still hard-coded "680
-  broader links" in its validation prose; fixed to the derived count, report
-  regenerated, gates rerun. Round 2: Hamid requested (a) the report prose fix
-  be completed, (b) the reviewed RO→Refining interface relation materialized in
-  the TTL behind a reviewed-interface allowlist (any unreviewed pending-row
-  `related_concepts` entry fails the build loudly instead of emitting), and
-  (c) softened triple-delta wording; all applied and re-verified before merge.
-  Pre-merge Hamid caught one workbook-only regression the gates had missed: the
-  one-shot script rebuilt breadcrumbs from stale process-JSON names, reverting
-  `CM-1-1-7-3-3`'s leaf to "Manage and Support Emission Trading". A systematic
-  re-scan found 25 more stale-label breadcrumb cells (26 total, all corrected;
-  zero remaining across 522 rows). The checker now permanently locks this:
-  `CM-1-1-4-6-1` status `blocked` asserted in TTL and workbook, every breadcrumb
-  leaf must equal the executed `name`, and the full breadcrumb must equal the
-  identity-map naming-authority path. The one-shot script now rebuilds
-  breadcrumbs from identity-map names, with JSON names only as fallback.
-- **R1/R2 boundary wording (docs sync, 2026-09-22):** the planning/scheduling
-  estate **supports and governs refinery planning and scheduling; it does not
-  execute refinery operations** (unit operation, line-ups, blend execution,
-  process control, and operating execution remain unmodeled and belong to R2).
-  This phrasing supersedes the earlier PR-body wording.
-- **Standing after merge:** Step 4 (process-definition ontology; retirement of
-  the provisional `intake:` predicates) is NOT started — it still requires
-  Hamid's explicit approval. PR #30 remains parked. The consumer-inventory
-  checklist reactivates before the first hierarchy-dependent consumer connects.
-
-### Step 3b — definition triangulation ✅ (2026-09-18, complete)
-
-Filling the 503 definition gaps without inventing text: APQC element
-descriptions triangulated against public industry definitions.
-
-- **Part 1 — APQC candidates (done):** every definition-less node
-  matched to the best APQC PCF v7.2.2 element by name-token F1 (name-only
-  and name+context scored, best kept), with APQC hierarchy depth recorded
-  so level-equivalence is judged. Triage: 131 strong (≥0.6), 291 weak,
-  81 no candidate. Review sheet: `step3b-definition-review.csv`
-  (all 503 rows; also copied to the goal's files dir).
-- **Part 2 — public-source agreement (done 2026-09-18):** EIA glossary
-  leg finished first: 2,641 terms fetched across all 26 letter pages,
-  exact + verb-stripped matching → 5 broad noun hits, **0 adoptions**
-  (final verdict, none precise enough). Web leg then ran over the 131
-  strong rows: 111 automated validations (5 workers; 20 rows deliberately
-  omitted as too generic for any authoritative definition) + 11 human-vetted
-  manual records. Result: **1 ADOPTED** — "Define Internal Marketing
-  Communications Strategy" ← APQC 16852, validator TechTarget "Internal
-  marketing" (agreement 0.625), human-inspected as a genuine match.
-  **5 REJECTED** at the human gate: "Perform Inventory Reconciliation"→
-  benefit reconciliation (0.667 name similarity, HR vs inventory),
-  CVP strategy→KM strategy (different "strategy" senses), "Manage M&A
-  Activity"→IT activity risk ("manage"+"activity" token overlap), plus 2
-  circular APQC-validating-APQC records. Merge: `step3b-merge-validations.py`
-  (replaces the truncated, retired `step3b-adopt-definitions.py`).
-- **Adoption rule (locked):** ADOPTED = strong APQC link + independent
-  source agrees + human semantic inspection → APQC text adopted with
-  `dcterms:source` provenance. REVIEW LINK = weak link, human confirms.
-  NO AGREEMENT / NO SOURCE / NO CANDIDATE → author an LSC definition.
-  Nothing is adopted on a heuristic match alone; APQC may never validate
-  itself.
-- **Final tally (after Step 3c):** 192/680 definitions (177
-  repository-authored + 1 triangulated + 14 human-authored);
-  10 APQC candidates rejected at the human gate; 488 definition
-  gaps remain (all L4–L6) for future authoring passes.
-- **Provenance:** every adopted definition carries `dcterms:source` →
-  per-source `dcterms:BibliographicResource` blank nodes (element ID +
-  title), themselves `dcterms:isPartOf` registry resources
-  `…/source/apqc-pcf-7.2.2` and `…/source/eia-glossary` (title, publisher,
-  issued, rights). Wired via `step3-skos-taxonomy.py --adoptions`;
-  base build without adoptions reproduces byte-identical output.
-- **Delivered** via PR #28 (`ontology/taxonomy-definitions`, opened and
-  merged 2026-09-18, together with Step 3) — review CSV, adoptions,
-  validation records, and both build scripts included.
-
-### Step 4 — process-definition ontology 🔄 (design complete 2026-09-22; emission blocked)
-
-Step 4 design (Q1–Q12) is complete and on `main`; promotion-script emission
-remains blocked pending the review-batch decisions (changed-label,
-new-historical-label, ancestor/descendant, nearness-only, contradiction, and
-source-workbook correction batches). The operating discipline for promoting
-intake data without corrupting it is specified in the **Step 4 evidence
-discipline** section immediately following this step log (approved
-2026-09-24; canonical).
+Use the conceptual-modeling phase for what it is strongest at: building
+shared understanding with business stakeholders *before* formalizing syntax.
+Then continue building the ontology on that verified basic structure. The
+discipline is the handoff — without it, the diagram cannot become the graph.
 
 ---
-## Step 4 evidence discipline — promoting intake data without corrupting it
+## 1. The method — the end-to-end sequence
 
-Step 4 promotes the provisional `intake:` annotations to real ontology
-properties. The intake layer is the only copy of facts like "which process uses
-which input" and "which process the workbook says this one follows." If the
-promotion is sloppy, those facts are corrupted silently — the triples look
-fine, but they no longer say what the business said. The eleven rules below are
-how we keep that from happening. They were developed promoting 5,571 intake
-triples and 1,318 relationship mentions, and several of them exist because an
-earlier, weaker version of the check failed and we fixed the premise instead
-of patching the row.
+Follow the steps in order. Each step has a purpose, a procedure, and a
+"done when" acceptance gate. Do not start a step until the previous step's
+gate is met — the sequence is load-bearing: identity before taxonomy,
+taxonomy before relationships, relationships before responsibilities,
+responsibilities before interfaces, integration before validation,
+validation before publication.
 
-### The eleven rules
+Two principles govern the whole sequence:
 
-1. **Pin all evidence to one approved `main` SHA.** Every evidence file
-   (dispositions, reviews, ledgers) carries `baseline_sha`, and the byte
-   hashes of the baseline inputs are recorded. Before the eventual release,
-   re-pin to the then-current approved `main`; all build and evidence artifacts
-   must cite the same SHA.
+- **Write the exam before the coursework.** The competency questions (Step 1)
+  are approved before any modeling, and they become the executable
+  regression tests (Step 11). A question the model cannot answer is a
+  modeling gap, not a bad question.
+- **One step at a time, with a gate.** Work a single step to its acceptance
+  criteria before moving on. Scope decisions accumulate in the decision log;
+  the source of truth is updated by one consolidated proposal per step, never
+  churned per decision.
 
-2. **Regenerate old review packages after the taxonomy evolves.** A review
-   package built against last month's taxonomy is a review of last month's
-   data. After any rename/reparent/reclassification, regenerate the package
-   from the pinned baseline and diff it field-by-field against the old one —
-   do not merely re-validate the old CSV.
+### Step 0 — Align the reference framework
 
-3. **Carry approvals only for field-equivalent rows, except where an
-   evidence-strengthening change adds a stable identifier or source citation
-   while the source, verb, resolved target, and disposition remain unchanged.
-   The exception must be recorded explicitly.** An approval granted
-   against v1.1 carries to v2 only if the row is identical on every evidence
-   field (same concept, same label key, same candidate) — or qualifies under
-   the recorded strengthening exception. Anything else goes back for review —
-   only the differences, not the whole package.
+**Purpose.** If your domain has a published reference framework, align to it
+first. It becomes your consistency reference — the thing you check against,
+not the thing you copy.
 
-4. **Treat labels as candidate filters, never as identity evidence.**
-   A matching label proposes a candidate; it never proves the target. Slugs
-   and IRIs are identity. (PR #120.)
+**Procedure.**
+1. Adopt the official, current version of the framework. Verify any cited
+   element IDs against the actual published workbook — never trust
+   third-party mirrors or older citations.
+2. Vendor the reference into your repo with its required attribution and
+   license notice intact.
+3. Cross-check every local node against the framework. Record every
+   divergence as a boundary note with a reason — never hide it, never
+   silently conform to it.
+4. Decide the direction of the relationship once: the local model is the
+   source of truth; the framework is the consistency check. Framework IDs
+   attach by reference; they never replace local identities.
 
-5. **Structural nearness alone is sufficient only for approved local
-   sequence-pattern relations between sibling processes. For enables,
-   governed-by, requires, assures, and dependency relations, it must be
-   combined with independent definition, scope, reciprocal, or approved
-   decision evidence.** A unique label match earns a candidacy, not a triple.
-   Promotion needs at least one of: an explicit citation of the target in the
-   source's definition or scope note; a consistent two-way mention (strict
-   inverse pairs only); structural nearness inside the same decomposition
-   branch (siblings for sequences; shared L2/L3 branch and no
-   ancestor/descendant relation otherwise) *plus* one of the independent
-   evidence types above for non-sequence relations. Label match alone = held
-   for domain-batch review.
+**Done when:** every cited ID is verified against the published source; all
+divergences are recorded as boundary notes.
 
-6. **Sample every batch of automatic promotions per domain, and stop at the
-   first wrong resolution.** Sample `max(10, ceil(5%))` per domain (seeded, so
-   it is reproducible). A human reads each sampled row's definitions and
-   records OK or FLAG. One wrong resolution stops the line: tighten the rule
-   and re-run — never patch the single row.
+**Pitfall (from the worked example):** a repo-cited ID was stale across
+framework versions (10006 in the mirror vs 20085 in the official release).
+Verification against the workbook caught it. Trust, but verify — against the
+workbook, not the mirror.
 
-7. **Conserve every source predicate and every relationship mention through
-   migration.** The Q2 ledger accounts for all 5,571 intake triples across 13
-   predicates and all 1,318 relationship mentions: emitted, held, merged, or
-   redirected. No source record leaves the migration without a recorded
-   disposition. DroppedAsNonProcessProse is a governed disposition, not
-   unaccounted loss. Conservation is proved by arithmetic, not asserted; the
-   exact counts live in the ledger's evidence section, not in this rule.
+### Step 1 — Foundations
 
-8. **Store one canonical direction per fact; derive inverses, never store
-   mirrors.** `A precedes B` and `B follows A` are one fact stored as
-   `A core:precedes B`. Mirrored rows inflate the fact count and let
-   contradictions hide. Pairs that contradict one another under a property
-   that does not allow mutual relation are held, not emitted.
+**Purpose.** Lock the policies everything else will assume. Changing these
+later is expensive, so decide them before any modeling.
 
-9. **Keep raw verb and source-row evidence outside RDF reification for 1.0.0.**
-   The evidence (which workbook verb, which row, which test promoted it)
-   lives in versioned CSVs beside the build, not as reified triples. Revisit
-   after 1.0.0 if consumers need provenance in-graph.
+**Procedure.**
+1. **Competency questions.** Draft the questions the ontology must answer,
+   get them approved by the business owner, and lock them. They are the
+   acceptance test for the whole build (see Step 11).
+2. **URI policy.** Choose a persistent, redirect-backed base. It must be
+   company-scoped — never tied to a person (usernames change, people change
+   roles) and never tied to a project name (projects get rebranded). Preserve
+   local source IDs as `skos:notation`; never replace them with reference-
+   framework IDs. No version segment in URIs — versions ride on
+   `owl:versionInfo`.
+3. **Language policy.** Declare the primary language. Tag every literal
+   (untagged and tagged literals are different RDF terms — tag everything or
+   face silent SPARQL mismatches). One `skos:prefLabel` per language per
+   concept; aliases in `skos:altLabel`; `skos:definition` required on every
+   concept.
+4. **Version policy.** SemVer per module and per release. URIs are immutable;
+   deprecate with `owl:deprecated` + `dcterms:isReplacedBy`, never delete.
+   The meaning-change test: would every query and answer produced under the
+   old definition still be correct under the new one? Yes → patch. No →
+   major. When in doubt, it is major — a false major costs a version bump; a
+   false patch corrupts downstream consumers silently.
+5. **License policy.** Decide before publishing anything. A proprietary
+   artifact can be opened later; an open artifact cannot be un-opened.
+   Reference-framework licenses coexist with your own — carry attribution on
+   every distribution.
+6. **Module policy.** Carve the ontology into modules with one-way
+   dependencies, no cycles (CI-enforced). Cross-module use is by URI
+   reference, never by redefinition: define once, reference everywhere.
+   Modules version and validate independently.
 
-10. **Release gate: same-SHA evidence plus a fresh no-consumer attestation.**
-    The release build, the evidence package, and the consumer-impact scan must
-    all cite one SHA. And immediately before flag-day, re-confirm the
-    foundation-stage attestation (no consumers yet) — a stale attestation is
-    not an attestation.
+**Done when:** all six policies are recorded in the decision log with
+rationale; the competency questions are approved and locked.
 
-11. **Emission never changes source meaning.** Promotion may emit, hold, defer,
-    or reclassify a source relationship; it may not replace a verb, invent
-    a target, or reinterpret business meaning. Corrections are made in the
-    workbook through a reviewed authoring change.
+### Step 2 — Identity normalization
 
-### Why each rule exists (the failures that taught them)
+**Purpose.** Every node gets a stable identity before anything is said about
+it.
 
-- **Stale baselines silently approve different data.** The v1.1→v2 comparison
-  found 53 rows whose raw target labels changed under them (Step 3d renames),
-  1 genuinely new relationship row (the approved R1 interface), and 35 rows
-  whose evidence got *stronger* (slug parentheticals added to mentions). None
-  of that is visible without the SHA pin and the field-by-field diff (rules
-  1–3). Reviewing v2 rows against v1.1 approvals without the diff would have
-  approved renames nobody re-read.
-- **Labels drift and collide.** "Refinery Planning" became "Refinery Planning
-  and Optimization"; "Determine Taxability" names two different concepts in
-  two decompositions; the CVP strategy labels split four ways in Step 3d.
-  Any pipeline that joins on labels inherits every one of those events as a
-  silent misresolution (rule 4).
-- **The first context pass was confidently wrong.** It promoted 915 rows on
-  tests that did not test what they claimed: "explicit reference" read
-  terminology notes instead of definitions, any backlink counted as two-way
-  confirmation, and hierarchy proximity counted as relationship evidence.
-  The corrected pass promotes 852 and holds 169 — including rows the old
-  pass had blessed. The lesson was not "fix the 63 rows" but "the premise was
-  untested": we wrote the failing checks first, watched them fail, then fixed
-  the implementation (rule 5, and the attack-the-premise trigger below).
-- **Zero `intake:` triples proves deletion, not migration.** A build that
-  drops the intake namespace and shows no intake triples has proved the
-  annotations are gone. Migration is proved only by the ledger: every triple
-  and every mention accounted for, each with a recorded disposition (rule 7).
-- **Mirrored rows inflate facts.** 386 mentions collapse into 193 facts once
-  mirrors merge. Mirrored relationship mentions materially inflate the raw
-  mention count; the conservation ledger reports the exact
-  mention-to-canonical-fact reconciliation for each release (rule 8).
-- **Release evidence from mixed commits is invalid.** A consumer-impact scan
-  run against one SHA and a build cut from another is theater. One SHA for
-  build, evidence, and scan — re-pinned at release time (rule 10).
-- **Promotion logic must not author meaning.** A mistyped workbook verb
-  ("assures" where the business meant "satisfies") cannot be repaired by the
-  promotion script choosing a nicer predicate — that would launder an
-  authoring error into the ontology. The script emits, holds, or defers; the
-  correction goes through reviewed workbook authoring (rule 11).
+**Procedure.**
+1. Preserve existing local IDs as `skos:notation` and derive URI slugs from
+   them.
+2. Mint stable slugs for ID-less nodes — a slug is the URL-friendly
+   identifier coined where none existed.
+3. Lock the rule: **slugs/IRIs are identity; labels are presentation.**
+   Never use a label as a join, lookup, access-control, or API key. Labels
+   change; identity does not.
 
-### Standing triggers
+**Done when:** every node has a stable HTTP URI; no node is identified by
+label anywhere in the build.
 
-- **Attack the premise:** two failed fixes on the same gate, or two "the
-  checker never asserted that" moments on one class of check → stop writing
-  fixes; census what the check does *not* cover and fix the premise.
-- **Write the failing check first:** every regression fix starts with a gate
-  assertion watched failing on the broken state, then the fix, then the pass.
-- **Reviewer verdicts:** every evidence package gets the interrogate pass
-  (Act On / Consider / Noted / Dismissed) before Hamid reviews it.
+### Step 3 — SKOS taxonomy
 
----
+**Purpose.** Build the controlled vocabulary: the hierarchy of names, with
+labels and definitions. This is a vocabulary of names, not a class hierarchy
+— SKOS first, not OWL.
 
-## 4. Decision log
+**Procedure.**
+1. One `ConceptScheme`. `skos:broader`/`skos:narrower` for hierarchy,
+   `skos:prefLabel`/`skos:altLabel` for names, `skos:notation` for local IDs,
+   `skos:definition` on every concept.
+2. Author definitions against the quality bar (§4): define the activity, not
+   the label; state the primary purpose; bound the scope; pass the parent
+   test ("this is a way of carrying out [parent]"); keep siblings disjoint;
+   keep terminology stable; park future concepts instead of smuggling them in;
+   evidence every claim; keep provenance clean.
+3. Triangulate candidate definitions from references, but put every adoption
+   through a human gate — reference text informs, it is never copied
+   verbatim.
+4. Rejected: mechanically converting each hierarchy level into OWL
+   classes/subclasses. That asserts logical commitments (disjointness,
+   inheritance of restrictions) that a naming hierarchy does not support.
 
-Locked decisions. Newest first within each group. Nothing here changes
-without a dated amendment and Hamid's explicit agreement.
+**Done when:** every concept has a definition, a label, and a parent; the
+mechanical gate (labels present, hierarchy integrity, no label collisions) is
+clean.
 
-### Scope and source-of-truth
-- **Repo processes are the source of truth.** We model the business
-  processes in the repo's process map (2026-09-17).
-- **APQC is a consistency reference**, not the source we copy from. We
-  check that nothing is inconsistent with the published framework
-  (2026-09-17).
-- **APQC extensions come later.** Once the base model is built, we may
-  extend with additional APQC information (2026-09-17).
-- **Enabling-functions principle.** The ontology covers enabling
-  functions, not only the hydrocarbon value chain — but only where the
-  ontology has a genuine hook (2026-09-17, Step 8).
-- **The ontology defines; it does not calculate.** It answers what a
-  Named KPI *is*; the Store computes it. Genie and other agents point at
-  the ontology — they do not become a second one (2026-09-18).
+### Step 4 — The relationship layer
 
-### Modeling
-- **Provisional `intake:` namespace for workbook Phase-1 capture
-  (2026-09-20).** Approved workbook rows are preserved verbatim in the
-  graph under `https://w3id.org/lsc/ontology/intake/` (keyInputs,
-  primaryOutput, relatedConcepts, responsibleDomain, processHorizon,
-  primaryPurpose, referenceSources, terminologyNotes, conceptTypeCheck,
-  parkedChildren, level, apqcDecision, status) so nothing the reviewer
-  captured is lost between the workbook and the ontology. This is
-  explicitly NOT the Step 4 model: Step 4 promotes these annotations to
-  real properties between concept URIs. `intake:level` carries the locked
-  L0–L6 taxonomy level; `intake:apqcDecision` records the mapping call
-  (REVIEW LINK / ADOPTED / REJECTED / NO CANDIDATE / NO SOURCE) —
-  REJECTED rows are the deliberate APQC divergences (competency Q12).
-- **Workbook definition precedence (2026-09-20):** workbook-approved >
-  human-authored L1–L3 > step3b adoption > repo description.
-- **Parked rows in the graph (2026-09-20):** blocked rows appear with
-  `intake:status "blocked"` and no `skos:definition` (the locked rule: a
-  parked row must not carry one); retired rows are `owl:deprecated`, not
-  deleted — `dcterms:isReplacedBy` is left for the Step 3d tree pass, when
-  destinations are decided.
-- **PTC-001 definition batch (2026-09-21, PR #87).** The four rows left
-  `pending` by the PTC-001 tree pass are authored and approved: the two
-  Candidate L2s (Financial Planning and Performance Management; Refinery
-  Performance and Risk Coordination) and the two reparented L3s (Plan
-  Budgets; Coordinate Site Business Risk Management). Reviewer-driven
-  refinements baked in: the risk L3's scope note states the hybrid
-  event-driven/periodic cadence, and the Refining L2's scope note keeps
-  performance oversight at capability level pending future Refining
-  decomposition. `approve` in Plan Budgets means administering the
-  budget-review workflow — final approval stays with the delegated
-  authority. Workbook: 502/505 approved, gate blocking=0 questions=0;
-  TTL: 679/682 defined, 14,472 triples. PTC-001 stays open until
-  PTC-001-B (Develop Strategic Business Plan) closes.
-- **SKOS-first taxonomy.** Do not mechanically convert each process /
-  hierarchy level into an OWL class/subclass (2026-09-17).
-- **URI base is `https://w3id.org/lsc/ontology/`** — company-scoped,
-  person- and project-independent, redirect-backed (2026-09-18).
-- **Local process IDs are preserved, never replaced by APQC IDs.**
-  Existing codes are `skos:notation` and the basis of URI slugs; APQC
-  IDs attach via `dcterms:references` only (2026-09-18).
-- **No version segment in URIs.** Identity is stable across definition
-  changes; versions ride on `owl:versionInfo` (2026-09-18).
-- **Language: English primary** (`@en` on every literal; one
-  `skos:prefLabel` per language; aliases in `skos:altLabel`;
-  `skos:definition` required per concept) (2026-09-18).
-- **Versioning: SemVer, URIs immutable.** Major = breaking (URI
-  change, removed concept, redefined meaning); minor = new concepts /
-  modules / hierarchy changes; patch = label/definition wording fixes.
-  Deprecate, never delete. Full detail in Appendix B (2026-09-18).
-- **Ontology identity (2026-09-22; IRI corrected to the locked Step 1
-  policy the same day).** The `core` module's ontology IRI is
-  `https://w3id.org/lsc/ontology/modules/core` — the locked
-  `…/modules/{module}` namespace pattern, which also doubles as the
-  module's ConceptScheme. Each release gets a version IRI of the form
-  `https://w3id.org/lsc/ontology/modules/core/1.0.0`.
-  Every release ships an explicit `owl:Ontology` header carrying
-  `dcterms:title`, `dcterms:description`, `owl:versionIRI`,
-  `owl:versionInfo`, `dcterms:issued`, `dcterms:creator`, and
-  `dcterms:license`. Term IRIs stay stable and unversioned —
-  `core:ProcessDefinition` is
-  `https://w3id.org/lsc/ontology/modules/core/ProcessDefinition`,
-  never `…/modules/core/1.0.0/…`. (The Q1 decision text originally used
-  the shorthand `…/ontology/core`; corrected on review — the Step 1
-  lock was never changed, the shorthand never shipped, nothing is
-  published, so no supersession record is needed.)
-- **First formal version: 1.0.0 (2026-09-22).** Step 4 ships `core`
-  1.0.0 — the first versioned release. It is the first release with
-  governed properties instead of provisional `intake:` annotations and
-  the first to carry the version header. 1.0.0 is the baseline that
-  Step 5 (organization), Step 6 (PROV-O), and later modules version
-  against. Recorded in Appendix B's version history.
-- **Flow modeling depth (2026-09-22).** Step 4 captures flows as
-  governed structured values on the input/output links — controlled,
-  consistently-spelled flow names (e.g. "demand forecast"), no new
-  nodes. The workbook's flow information is preserved and queryable
-  ("which processes consume the demand forecast?"). Minting
-  InformationObject nodes for every distinct flow (~1,900) is deferred:
-  it is a data-governance project — identity, dedup ("is the demand
-  forecast in 12 processes one thing or twelve?"), ownership, lifecycle
-  — that no Step 4 competency question or consumer requires. Revisit
-  trigger: a real use case that needs to trace a specific artefact
-  (e.g. audit lineage of the approved operating plan) — then mint that
-  flow as a node deliberately, one at a time. Composes with the Q4
-  decision: `core:dependsOnOutputOf` links consumer to producer
-  process; the structured value says
-  what travels on the link.
-- **Responsible-domain interim treatment (2026-09-22).** Step 4 keeps
-  `responsible_domain` as a governed literal on the process, explicitly
-  interim — no org nodes are minted. Step 5 (ORG/RACI) will map these
-  interim values to governed organization, role, and
-  ResponsibilityAssignment references where the operating model
-  evidences the relationship — some current labels are
-  business-architecture domains, not org units; the controlled list
-  makes that migration mechanical.
-  The workbook's 10 distinct values (456 of 485 rows "Commercial &
-  Marketing") are nearly controlled already — the value is in the
-  exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
-  6 cross-functional combos, normalized to a governed
-  "Cross-functional" value with detail preserved in a note).
-- **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
-  `core:conceptKind` is an object property to a controlled SKOS scheme,
-  not a string. Kinds: Process (real business process — inputs,
-  outputs, cadence), Capability (an ability the organization has,
-  realized by processes), StructuralAnchor (navigation/grouping node —
-  L0 roots, empty stubs, tombstones — not work anyone performs).
-  Consumers treat kinds differently: "all processes" must not return
-  navigation nodes; no RACI or cadence on anchors. Deliberate boundary:
-  this does NOT classify CM-1-3-1-6 ('Marketing Insight and Metrics
-  Stewardship') — that stays a parked modeling question. We build the
-  shelf; classification comes later. Composes with the parked
-  value-stream layer (Appendix A): `core:CapabilityKind` classifies a
-  concept as capability-like; actual business capabilities are a future
-  `core:BusinessCapability` class — architecture entities, not
-  classification values — linked to processes via `core:realizedBy`.
-- **Step 4 Q9: lifecycle model (2026-09-22; revised to three dimensions
-  on review the same day).** Status is three independent dimensions —
-  the original single chain (Candidate → Approved → Deprecated →
-  Retired) conflated them and is withdrawn:
-  - **Concept lifecycle** (`core:lifecycleStatus`, object property to a
-    SKOS scheme): Active, Deprecated, Retired. No conflict with OWL:
-    Deprecated ⇒ `owl:deprecated true` (required); Retired ⇒
-    `owl:deprecated true` (retired implies deprecated); Active ⇒
-    `owl:deprecated` absent or false — agreement enforced by SHACL in
-    Step 9. "Superseded" is not a fourth state: it is Deprecated +
-    `dcterms:isReplacedBy` pointing at the successor. Retired is
-    terminal for active use; the concept remains resolvable for
-    lineage, and restoration requires a new governance decision with
-    recorded provenance — never a silent flip.
-  - **Governance approval status** (`core:governanceStatus`, object
-    property to a SKOS scheme): the project's existing artifact-control
-    vocabulary, now formalized — Exploratory, Draft, Candidate,
-    ApprovedBaseline, Implemented. A concept can be Active while its
-    definition is still Draft (488 taxonomy concepts currently lack
-    authored definitions); a proposal can be Candidate while its
-    concepts are not yet Active.
-  - **Hold status** (`core:holdStatus`, object property to a SKOS
-    scheme): independent of the other two — NoHold, EvidenceHold,
-    OwnershipHold, DecisionHold, ImplementationHold. A hold applies in
-    any non-retired lifecycle state without disturbing it, with the
-    reason in `core:holdReason` and the evidence linked via the
-    decision-log reference convention. Live cases: CM-1-1-4-6-1 carries
-    OwnershipHold (PTC-001-B strategy-ownership decision);
-    CM-1-1-3-5-3 carries EvidenceHold (business-evidence hold).
-  - Worked examples:
-    - R1 reliability/turnaround L2: lifecycle Active, governance
-      Implemented, hold NoHold (it was a Candidate *proposal*;
-      Candidate was never the concept's lifecycle state).
-    - CM-1-1-4-6 tombstone: lifecycle Retired, `owl:deprecated true`,
-      governance Implemented, hold NoHold.
-- **Step 4 Q10: terminology-note migration (2026-09-22).**
-  Selective-alias policy — a prior name becomes `skos:altLabel` only if
-  it is unique, non-misleading, non-colliding, and useful for retrieval
-  (`altLabel` is a live search commitment, not an archive field).
-  Generic, ambiguous, authority-overstating, case/punctuation-only, or
-  scope-limited former names are preserved in migration history via
-  `core:priorPreferredLabel` (annotation property) but are **not**
-  searchable. Scoped aliases (e.g. valid only in APQC-comparison
-  context) keep their context in the migration map and are never
-  flattened into `skos:altLabel`. One-line rename rationale →
-  `skos:editorialNote`; migration event and source →
-  `dcterms:provenance`; full reviewer reasoning stays in the decision
-  log / naming queue by reference. Conservation rule — extends the Q2
-  ledger and gates the `intake:` cutover: every non-null `prior_name`
-  gets exactly one recorded disposition; every non-empty
-  `name_change_note` has a recorded disposition — a concise rationale
-  plus migration provenance, consolidation into a canonical migration
-  event, formatting-only migration history, or explicit
-  supersession/duplication; every `scoped_historical_alias` has a
-  context or is explicitly rejected. Minimal Step 4 vocabulary: only
-  `core:priorPreferredLabel` is added; a reified historical-label
-  record is deferred until a real need appears. A 92-row
-  historical-label disposition report is the tracked pre-cutover
-  instrument for this rule.
-- **Step 4 Q11: relationship target dispositions (2026-09-22; item
-  dispositions corrected the same day).** Governing rule: every
-  relationship mention gets a governed disposition; only mentions
-  classified as process-to-process become Step 4 object-property
-  triples. Structured-flow values, external governance references,
-  and parked future concepts are retained through their approved
-  disposition mechanisms and may receive separately approved
-  properties in future; they are excluded only from the initial
-  process-dependency migration. Five disposition types:
-  ResolvedToConcept, ParkedFutureConcept, StructuredFlowValue,
-  ExternalGovernanceReference, DroppedAsNonProcessProse. Matching
-  principle: **labels aren't identity** — parenthetical qualifiers
-  (`(DOA)`, `(Advertising)`, `(Non-Retail)`, `(CVP)`, `(Retail)`) are
-  part of the label that resolves the mention to its concept; the
-  first-cut "unmatched" report was wrong on six of the nine because
-  it matched bare phrases. Corrected dispositions, verified against
-  the identity map and the committed TTL:
-  - Establish & Maintain Delegation Of Authority →
-    ResolvedToConcept `CM-1-2-2-3-2`
-    ("Establish & Maintain Delegation Of Authority (DOA)").
-  - Integrated Marketing Planning → ResolvedToConcept `CM-1-3-5-2`
-    (all four mentions are the qualified
-    "Integrated Marketing Planning (Advertising)").
-  - Serve to Customer → ResolvedToConcept `CM-1-3-6-2-6` (the only
-    mention is the qualified "Serve to Customer (Non-Retail)").
-  - Develop/Update Strategy → ResolvedToConcept `CM-1-3-2-2-4`
-    (the remaining mention is the CVP-context
-    "Develop/Update Strategy (CVP)"); the no-global-lexical-
-    replacement rule stands for any future bare mentions.
-  - Manage Trading Books & Strategies Structure →
-    ResolvedToConcept `CM-1-2-2-3-1`
-    ("Establish And Maintain Book Structure", per the batch 12
-    split).
-  - Network Design → ResolvedToConcept `CM-1-3-3-4`
-    ("Network Design (Retail)") for all qualified mentions; the
-    single bare `informed-by: Network Design` mention (Brand
-    Imaging row) is genuinely unmatched → ParkedFutureConcept,
-    do not guess which network.
-  - The Regional Backcasting assumption basis →
-    StructuredFlowValue (unchanged; it is a `produces:` value,
-    per Q5).
-  - Monthly Operating Plan → StructuredFlowValue (unchanged; plan
-    artifact, per the R1 plan-vs-artifact distinction).
-  - Data Governance → ExternalGovernanceReference (unchanged;
-    cross-cutting enterprise domain, never a `proc:` node under
-    Commercial).
-  DroppedAsNonProcessProse remains a valid disposition type with no
-  current members. The repo-wide stale-target watch stays in place.
-  New properties for governance references are deferred to
-  implementation design. The row-level target-disposition report
-  (subject, verb, phrase, disposition, rationale, emit-triple-or-not)
-  is the tracked pre-cutover instrument.
-- **Step 4 Q12: ambiguous relationship targets (2026-09-22).** A
-  lexical match is not a semantic resolution: resolve a relationship
-  target only where stable identifier evidence, or approved
-  contextual evidence sufficient to identify exactly one governed
-  target, exists; otherwise record `AmbiguousDeferred` with the raw
-  phrase, candidate set, evidence considered, reason, and review
-  trigger, and emit no process-dependency triple. Decision ladder, in
-  order: stable identifier → approved contextual evidence sufficient
-  to identify exactly one governed target → scoped historical alias
-  (valid context established) → defer. A label match — even an exact,
-  unique, qualified one — is a candidate filter, not a ladder step: it
-  may narrow the candidate set inside the contextual-evidence step,
-  but the resolution is recorded as the concept's slug. Labels are
-  never joined on, per the standing 2026-09-21 identity lock. Phrases that are not process
-  concepts fall back to the Q11 dispositions rather than forcing an
-  ambiguous process match. `AmbiguousDeferred` is the sixth
-  disposition type, extending Q11's five. Amendment to Q11: the single
-  bare `informed-by: Network Design` mention (Brand Imaging row) moves
-  from ParkedFutureConcept to AmbiguousDeferred — the network type is
-  uncertain, not merely unmodeled — with retail/supply/distribution/
-  terminal/channel candidates and review trigger at the R2
-  network-design decomposition or the first consumer need. The
-  row-level disposition report carries: source slug and label,
-  branch/domain, raw verb, raw target text, disposition, candidate
-  slugs/labels, resolution evidence, confidence
-  (Resolved/Contextual/Deferred), emission decision, reason, review
-  trigger, decision reference. Emission rules for the future promotion
-  script: ResolvedToConcept emits the approved triple;
-  StructuredFlowValue, ExternalGovernanceReference, ParkedFutureConcept,
-  and AmbiguousDeferred are retained through their disposition
-  mechanisms with no process triple; DroppedAsNonProcessProse retains
-  only its disposition record.
-- **Step 4 Q1 design refinements (2026-09-22).** Module-boundary rule:
-  `core:` carries foundational planned-process semantics only —
-  organization → Step 5, KPI semantics → `kpi`, observed execution →
-  PROV-O in Step 6; no `data:` module (adding one needs its own
-  decision). `core:ProcessDefinition` typing rule: approved processes +
-  capabilities, candidate structural/capability nodes with authored
-  definitions, blocked/retired only when retaining a meaningful record —
-  never L0 roots, pure structural anchors, tombstones, or not-process
-  roots. `core:conceptKind` and `core:lifecycleStatus` are object
-  properties to controlled SKOS schemes, not strings; three status
-  layers stay distinct (architecture artifact status vs concept
-  lifecycle vs authoring/review status). `core:taxonomyLevel` is derived
-  metadata ("current rendered depth") — never for security, KPI
-  ownership, criticality, or identity. Terminology notes migrate by
-  kind: authoring history → `skos:editorialNote`, migration history →
-  `dcterms:provenance`, review evidence → decision-log reference.
-- **Step 4 Q2: `intake:` retirement mode (2026-09-22).** Flag-day: all
-  `intake:` triples go in one Step 4 release — no deprecated-alias
-  transition (carrying ~5,571 dead staging triples is not worth it).
-  Preconditions before the release ships: reconfirm the no-consumer
-  attestation; per-predicate conservation ledger (`emitted + held =
-  source total`) — "zero `intake:` triples" proves deletion, not
-  replacement; explicit merge/release approval still required.
-- **Step 4 Q4: process dependency links (2026-09-22; property name
-  revised on review the same day).** When a workbook relation identifies
-  another process as the source of a needed input, model the
-  relationship as `core:dependsOnOutputOf` from the consumer process to
-  the producer process, with inverse `core:providesInputTo`. No new
-  nodes — the edge preserves the dependency chain ("what does this
-  process depend on; what breaks if it fails") that the competency
-  questions need. Governed structured flow values state what is
-  exchanged on that dependency. `core:consumes` and `core:produces`
-  remain reserved for future identified InformationObject instances.
-  (The Q4 decision originally named the property `core:usesInput`;
-  review corrected it — a process is not an input, its *output* is.)
-- **Step 4 Q6: `processHorizon` facet split (2026-09-22).** The workbook
-  field conflated three dimensions (8 distinct values across 485 rows:
-  event-driven/periodic/continuous are operating modes; daily/weekly/
-  monthly are cadences; tactical/strategic are planning levels). Step 4
-  splits it into `core:operatingMode` (event-driven | periodic |
-  continuous), `core:cadence` (daily | weekly | monthly | quarterly |
-  annual), and `core:planningLevel` (strategic | tactical |
-  operational) — each independently queryable. The 107 "periodic"-only
-  rows are recorded as cadence-unspecified: honest about the gap rather
-  than pretending "periodic" is a cadence.
-- **License: proprietary, all rights reserved** (2026-09-18). Hamid is
-  the IP owner. Rationale: the ontology describes LSC's actual
-  operations — competitively sensitive; can be opened later, cannot be
-  un-opened. APQC/IBM terms separately permit use, copying, publishing,
-  modification, and derivatives with attribution carried on every
-  distribution — attribution coexists with proprietary.
-- **Module policy** (2026-09-18): four modules, each with its own
-  namespace, version, SHACL shapes, and owner. `core` and `party` depend
-  on nothing; `kpi` depends on `core` + `party`; `organization` depends
-  on `core` only — `org:Role` (internal positions) and
-  `party:PartyRole` (external commercial roles) are different beasts.
-  Rules: dependencies point one way, no cycles (CI-enforced);
-  cross-module use by URI reference, never redefinition; independent
-  versioning/validation; minor/patch by module owner, majors by Hamid.
-- **`party` is the sole concept-owning module for the Customer domain** (2026-09-18). There is deliberately no `customer` module — it would reintroduce the overloading the August Party model eliminated. Customer-domain processes live in `core` (O2C), customer-grained KPIs in `kpi` bound to Party/Account/Role, RACI in `organization`; the domain is a view across modules, its concepts anchored in `party`.
-- **Separate definitions from occurrences.** Process types/definitions
-  are distinct from execution occurrences (2026-09-17).
-- **Do not auto-type taxonomy concepts as `prov:Activity`.**
-  `prov:Activity` is reserved for actual occurrences (2026-09-17).
-- **RACI is design-time responsibility** and needs an explicit n-ary
-  `ResponsibilityAssignment` model — not a simple property
-  (2026-09-17).
-- **Existing codes (e.g. `CM 1.2.1.3`) are `skos:notation`**, not
-  official APQC identifiers (2026-09-17).
-- **Mint stable HTTP URIs and persistent local IDs for every node**,
-  including the 11 ID-less roots/stubs (2026-09-17).
-- **Do not declare office lanes mutually disjoint** without evidence
-  (2026-09-17).
-- **Constraints are not modeled.** The constraints module and its
-  competency questions are parked; the "reference, don't subclass"
-  principle is parked with them (2026-09-18).
-- **Classify activities by primary purpose, not asset location**
-  (2026-09-18, from definition authoring): a tank, berth, pipeline,
-  rack, or laboratory can participate in multiple contexts without
-  being forced into one category. E.g. crude unloaded into refinery
-  tanks is Midstream receipt even when co-located with a refinery;
-  an intermediate transferred between refinery process units is
-  Refining even though it physically moves.
-- **Midstream/Refining conceptual split** (2026-09-18): Midstream
-  moves, stores, receives, transfers, and dispatches material;
-  Refining transforms material into different products or
-  specifications. Maintenance and turnarounds enable refining but do
-  not themselves refine — they live in scope notes, not definitions.
-- **Commercial & Marketing is the market-facing value-optimization
-  function** (2026-09-18): it creates, manages, and optimizes the
-  commercial value of products and services. It coordinates with
-  refining, midstream, distribution, finance, and IT — and spans the
-  commercial hydrocarbon lifecycle as an overlay — but does not
-  subsume their underlying physical operations or enterprise-wide
-  technology services.
-- **Domain placement rule — each L1 domain's primary question**
-  (2026-09-18): Supply Chain Management — "what should move, be
-  made, held, or replenished, where and when?" (orchestrates, does
-  not own execution); Commercial & Marketing — "for which
-  customer/market, under what offer, price, contract, or margin?";
-  Refining — "how is feedstock transformed into compliant
-  products?"; Midstream — "how are bulk feedstocks and products
-  physically received, stored, transferred, and transported?";
-  Distribution — "how are products fulfilled and delivered into
-  channels or to end customers?" Use this table as the placement
-  test when new processes are modeled.
-- **Finance owns financial governance and financial transactions;
-  business domains own the operational or commercial event that
-  creates them** (2026-09-18): Finance's primary question is "what is
-  the organization's financial position, performance, obligation,
-  exposure, and control requirement?" Commercial defines/negotiates
-  economic activity; Finance records, controls, settles, reports, and
-  analyzes it. SCM governs physical/inventory decisions; Finance
-  measures working capital, costs, valuation, cash consequences, and
-  financial performance. Procurement owns sourcing; Finance owns
-  invoice processing, payment, accounting, tax treatment, and
-  financial control. HR owns workforce policy and inputs; Finance
-  owns pay calculation, payment, withholding, and payroll accounting.
-- **Process Excellence & IT's primary question** (2026-09-18): "how
-  should the enterprise operate, and what technology enables it?" —
-  improve, standardize, govern, measure, automate, and digitally
-  enable how the enterprise operates. It does not own business
-  outcomes or physical execution in the other domains. IT Service
-  Management design belongs here; a centralized service desk or
-  transactional IT-admin team under Shared Services is a delivery
-  model — "Shared Services delivers IT support on behalf of Process
-  Excellence & IT", not a second IT domain (parked for Step 4/5).
-- **Human Resources' primary question** (2026-09-18): "what
-  workforce is needed, and how is it planned, attracted, developed,
-  rewarded, engaged, retained, and transitioned?" HR owns workforce
-  policies, people processes, employee experience, and workforce
-  information — including authorized payroll inputs; Finance owns
-  pay calculation, payment, withholding, and payroll accounting.
-- **Legal & Corporate Communications' primary question**
-  (2026-09-18): "what legal obligation, advice, contract support,
-  governance matter, or official internal message applies?" Legal
-  provides counsel, legal-risk management, and regulatory/compliance
-  advice; owns internal corporate communications and approved
-  enterprise messaging. Government/industry relations, investor
-  relations, and public/media/community relations are out of scope
-  (Step 8) — as are commercial incentives, which belong with
-  Commercial & Marketing.
-- **EHS & Government Reporting's primary question** (2026-09-18):
-  "is this safe, environmentally compliant, correctly managed when
-  events occur, and properly reported to regulators?" EHS defines
-  standards, assurance, reporting obligations, incident-management
-  methods, governance, and oversight — the functional or asset owner
-  operates, executes containment, and closes assigned actions.
-  Legal advises on privilege, exposure, and disclosure.
-- **Commercial planning vs. SCM planning** (2026-09-18, Regional
-  Optimization): commercial planning (e.g. Regional Optimization)
-  selects the *economically preferred* plan — which demand to serve,
-  how to allocate constrained molecules, buy/sell/exchange,
-  inventory positioning, margin subject to service commitments.
-  Supply Chain Management coordinates the cross-functional
-  *executable* plan. Operators execute production, storage,
-  transfers, blending, transport, and delivery. Generalizes to the
-  other commercial planning stubs.
-- **Optimization vs. Backcasting** (2026-09-18, regional planning
-  loop): Optimization asks "what is the best commercially feasible
-  regional plan?" Backcasting asks "what actually happened versus
-  that plan, why did it happen, what decision or constraint drove
-  it, and what should change next cycle?" Backcasting compares
-  against the approved plan *and its contemporaneous assumptions*,
-  not a later reforecast or rewritten baseline.
-- **Commercial planning loop — four-node boundary** (2026-09-18):
-  Regional Optimization → the integrated regional commercial plan
-  (best commercially feasible regional plan). Refinery Planning →
-  crude/feedstock slate, operating-mode, throughput, yield,
-  quality, and availability targets (what should this refinery
-  buy, run, make, and target). Refining → detailed
-  operating/scheduling decisions, unit operations, control,
-  maintenance, turnaround work (how is the refinery safely and
-  reliably operated — including authority to depart from plan).
-  Regional Backcasting → reconciled plan-vs-actual variance
-  explanations and learning.
-- **Distribution planning loop — four-node boundary**
-  (2026-09-18): Distribution planning/optimization → the approved
-  distribution plan, allocations, shipment/replenishment targets,
-  and constraints (what inventory moves through which route, mode,
-  source, and destination). Distribution Backcasting → reconciled
-  plan-vs-actual performance, variance drivers, preserved decision
-  context, planning improvements. Distribution execution →
-  executed movements, delivery confirmations, exceptions, operating
-  records (how today's shipments and deliveries are safely carried
-  out). Finance → invoices, accruals, settlements, official
-  financial results (freight, inventory, revenue, cost).
-- **Shared Services executes designated services; it does not replace
-  the accountable functional owner** (2026-09-18): Shared Services is
-  the delivery model and shared organization (standardized processes,
-  common platforms, defined service levels), not a second Finance, HR,
-  IT, or Procurement. Functional policy, strategy, design,
-  governance, and domain outcomes stay with the accountable owner.
+**Purpose.** Turn the verbs between concepts into governed semantic
+relationships — the predicates of your triples.
 
-### Validation and process
-- **Competency-question coverage is the acceptance gate (2026-09-20).**
-  First coverage check against the 44 baseline questions: 4 answerable,
-  10 partial, 30 not answerable — the 30 map exactly to unbuilt plan
-  scope (Step 4 relations/systems/lanes/capabilities, party/kpi/
-  organization modules, SHACL, DCAT, agent contracts), not to capture
-  failures. Re-run after Step 4 and after each module lands; nothing is
-  "done" until its questions flip to answerable. (Report:
-  `competency-coverage-2026-09-20.md`.)
-- **Core SHACL where sufficient; SHACL-SPARQL only when Core cannot
-  express a constraint** (2026-09-17).
-- **Record APQC v7.2.2 with `dcterms:references`**; preserve source,
-  version, license, and provenance (2026-09-17).
-- **Decisions accumulate in the log; the repo JSON gets one
-  consolidated proposal** after the modeling pass — never churn the
-  source of truth per decision (2026-09-17).
-- **Every new process gets an L0–L6 level** slotted from the existing
-  hierarchy — no level-less nodes (2026-09-17).
-- **Step 3c closed 2026-09-21 with 498/503 approved** (2026-09-21).
-  Batches 01–42. 1 pending is an intentional business-evidence hold
-  (`CM-1-1-3-5-3`, batch 05), 3 blocked await the Step 3d tree pass
-  (PTC-001), 1 retired (`CM-1-1-4-6`). Gate: 0 blocking, 0 questions.
-- **Taxonomy TTL regenerates once at the end of Step 3c** (2026-09-20,
-  Hamid's decision): the graph is a snapshot and may lag the workbook
-  mid-pass; the final regen (PR #83, 14,403 triples, 675/680 defined)
-  is the handoff into Step 3d.
-- **Naming normalization is a Step 3d activity, not a Step 3c one**
-  (2026-09-21). 92 queued renames live in `step3c-naming-pass-queue.md`;
-  duplicate-prefLabel collisions gate semantic-model publication.
-  Queued labels stay alt labels until the pass executes, then sweep the
-  workbook, TTL, identity map, and cross-references.
-- **Confirm the `sioc` JSON field's meaning** (SIPOC/SIOC?) before
-  naming ontology terms; do not confuse it with the W3C SIOC vocabulary
-  (2026-09-17).
+**Procedure.**
+1. Inventory every verb used between concepts. Write a locked definition for
+   each predicate you will emit (e.g. *enables*: the target is made capable
+   of operating; *informs*: provides context or planning input;
+   *dependsOnOutputOf*: consumes a specific needed output; *requires*: needs
+   an approved prerequisite).
+2. Map verbs to predicates in review batches, one predicate family at a
+   time, one row at a time. For each row: direction first, then the
+   definition test, then the verdict.
+3. **Hold ambiguous rows for source correction — never remap meaning at
+   emission.** A verb that seems better expressed as another predicate is
+   held and routed to the source author; semantic plausibility never
+   authorizes reclassification.
+4. Keep a conservation ledger: emitted + held + deferred = total, reconciled
+   mention by mention. Every count change gets a row-level entry (row ID,
+   old bucket, new bucket, reason).
+5. Keep promotion blocked until every verdict is recorded. The promotion
+   script is the last thing to run, not the first.
+
+**Locked rules (distilled from the worked example):**
+- Emission never changes a row's meaning: it emits, holds, or defers.
+  Workbook corrections return through reviewed authoring.
+- Approving an already-emitting row changes only its basis; counts move
+  only when a row changes bucket.
+- No reciprocal two-cycles for directional dependencies.
+- No semantic relationship emitted solely from hierarchy position — hold
+  unless independent evidence establishes it.
+- Duplicate merges are provenance-only: they never create facts, change
+  predicates, or change direction.
+- Evidence discipline: tests assert stored canonical facts, not source verb
+  strings.
+
+**Done when:** every row has a recorded verdict; the ledger reconciles; the
+evidence gate is green; the promotion preconditions (re-pin, attestation,
+regression, blast-radius proof) are met.
+
+### Step 5 — ORG and RACI
+
+**Purpose.** Say who is responsible. Roles are positions people hold, not
+people themselves — the same person can be Accountable for one process and
+merely Informed on another.
+
+**Procedure.** Model roles as `org:Role`; bind role + process + RACI level
+with an explicit n-ary `ResponsibilityAssignment` — a single property can
+never carry a three-way binding. RACI is design-time responsibility.
+
+**Done when:** every in-scope process has its RACI assignments; no
+responsibility is implied by hierarchy position.
+
+### Step 6 — Interfaces and PROV-O
+
+**Purpose.** Separate what is planned from what happened.
+
+**Procedure.** Model planned inputs/outputs on the definitions. Model actual
+occurrences as `prov:Activity` — and only occurrences. Never auto-type a
+definition as an activity: the recipe is not the meal. Use PROV-O's second
+job — trust — to record which source asserted a mapping, when, and under
+what authority.
+
+**Done when:** no definition is typed as an occurrence; every occurrence
+links to its definition.
+
+### Step 7 — Cross-model integration
+
+**Purpose.** Link the models to each other: processes to value streams,
+capabilities, systems, and data products.
+
+**Procedure.** Resolve the gaps the earlier steps exposed (empty output
+sets, ownership orphans, unlinked systems) one at a time, each as a recorded
+decision. Do not invent ownership to fill a gap — an explicit "unowned,
+parked" beats a guessed owner.
+
+**Done when:** every integration gap has a decision (linked or explicitly
+parked).
+
+### Step 8 — Scope review (do it early)
+
+**Purpose.** Decide what is in and out before the foundations harden.
+
+**Procedure.** Take each candidate area one at a time. In scope only with a
+genuine hook into the ontology's purpose (a value-chain link, a RACI feed, a
+data-product dependency). Out-of-scope gets a boundary note with a reason —
+"ERP-native, nothing depends on it" beats silent omission. Revisit triggers
+are recorded, not forgotten.
+
+**Done when:** every candidate has an in/out call with rationale and a
+revival trigger.
+
+### Step 9 — SHACL validation
+
+**Purpose.** Turn every locked decision that can be checked mechanically
+into a shape.
+
+**Procedure.** Core SHACL first; SHACL-SPARQL only where Core cannot express
+the constraint. Cover: labels present, identifier policy, hierarchy
+integrity (one parent per concept), controlled values, references present
+where alignment is claimed. Validation reports are data, not verdicts — a
+failing shape is a question for a human, not proof of a bad model.
+
+**Done when:** the shapes graph runs against the data graph with zero
+unexplained violations.
+
+### Step 10 — DCAT publication
+
+**Purpose.** Ship a published, versioned artifact — not a file on a disk.
+
+**Procedure.** `dcat:Catalog` → `dcat:Dataset` → `dcat:Distribution` /
+`dcat:DataService`. The dataset-vs-distribution distinction is load-bearing:
+one dataset, many serializations (Turtle, JSON-LD, SHACL shapes, HTML docs).
+Every release records its module versions, issued/modified dates, and
+changelog.
+
+**Done when:** the catalog resolves; the current release is retrievable as
+versioned distributions.
+
+### Step 11 — SPARQL regression tests
+
+**Purpose.** Prove the ontology keeps answering its exam.
+
+**Procedure.** Convert the Step 1 competency questions into executable
+SPARQL. Run them against every release. A failing test is a regression or a
+deliberate, recorded change — never a surprise.
+
+**Done when:** all competency questions execute green against the published
+release.
 
 ---
+## 2. Policies — the locked decisions
 
-## 5. Standards and why we chose them
+Prescriptive policies. Each states the rule and the reason it exists. They
+change only by dated amendment with the owner's explicit agreement — never
+by silent override. Project-specific applications live in the worked example
+(§5).
 
-Each entry: what the standard is, why it earned its place in this build,
-and what we deliberately do *not* use it for. The rejections matter as
-much as the adoptions — they are what keep the model honest.
+### Source of truth and scope
+- **Model your own business; use references as checks.** The local source
+  (your process map, your system inventory) is the source of truth. A
+  reference framework is a consistency reference — nothing in your model may
+  contradict it, and deliberate divergences are recorded as boundary notes,
+  never hidden.
+- **Cover enabling functions, not just the value chain** — but only where
+  the ontology has a genuine hook (a RACI feed, a data-product dependency).
+  Functions with no hook stay out, with a boundary note.
+- **The ontology defines; it does not calculate.** It answers what things
+  *are*. Computation, execution, and storage belong to the systems that point
+  at the ontology — they never become a second ontology.
+
+### Identity
+- **URIs are persistent, company-scoped, and person- and
+  project-independent.** People change roles and usernames; projects get
+  rebranded. Only the organization sits behind the redirect — a future
+  rebrand updates one redirect, not every identity.
+- **Preserve local IDs; never replace them with reference IDs.** Existing
+  codes are `skos:notation` and the basis of URI slugs. Reference-framework
+  IDs attach via `dcterms:references` only. Most local concepts have no
+  reference counterpart and vice versa — the local model leads.
+- **No version segment in URIs.** Identity survives definition changes;
+  versions ride on `owl:versionInfo`. A consumer who bookmarked a URI years
+  ago must still get a correct answer.
+- **Slugs/IRIs are identity; labels are presentation.** Never use a label
+  as a join, lookup, access-control, or API key. Labels change; identity
+  does not.
+
+### Language and versioning
+- **Tag every literal with its language.** Untagged and tagged literals are
+  different RDF terms — tag everything or face silent SPARQL mismatches. One
+  `skos:prefLabel` per language per concept; aliases in `skos:altLabel`;
+  `skos:definition` required on every concept.
+- **SemVer per module and per release; URIs immutable.** Major = breaking
+  (URI change, removal, redefined meaning — the test is whether existing
+  queries and answers stay correct). Minor = additive. Patch = wording.
+  **Deprecate, never delete** (`owl:deprecated` + `dcterms:isReplacedBy`) —
+  storage is cheap; broken references are expensive. Full operational detail
+  in Appendix B.
+
+### Licensing
+- **Decide the license before publishing anything.** A proprietary artifact
+  can be opened later; an open artifact cannot be un-opened. If the ontology
+  describes competitively sensitive operations, proprietary with the owner
+  as IP holder is the safe default.
+- **Reference-framework licenses coexist with your own.** Carry the
+  framework's attribution on every distribution; reference its IDs freely;
+  quote sparingly and marked; adapt openly where your context needs it —
+  but never republish whole reference branches as your own.
+
+### Modules
+- **Carve modules with one-way dependencies, no cycles** (CI-enforced).
+  Cross-module use is by URI reference, never by redefinition: define once,
+  reference everywhere. Modules version and validate independently; minor and
+  patch by the module owner, majors by the ontology owner.
+- **One module owns each domain's concepts.** Deliberately avoid duplicate
+  domain modules (no `customer` module alongside a `party` module) — the
+  domain is a view across modules, its concepts anchored in exactly one of
+  them.
+
+### Modeling discipline
+- **SKOS-first taxonomy.** A naming hierarchy is a controlled vocabulary,
+  not a class hierarchy. Never mechanically convert hierarchy levels into
+  OWL classes — that asserts logical commitments (disjointness, inheritance
+  of restrictions) the hierarchy does not support.
+- **Separate definitions from occurrences.** A process definition is not an
+  activity that happened. `prov:Activity` is reserved for actual occurrences
+  on dates.
+- **RACI is design-time responsibility** and needs an explicit n-ary model
+  binding role + process + level — a single property cannot carry a
+  three-way binding.
+- **Classify by primary purpose, not by location or asset.** A tank, a
+  system, or a team can participate in multiple contexts without being
+  forced into one category. When a concept could live in two domains, ask
+  each domain's primary question and place it where the question it answers
+  is asked. Technique: write one primary question per domain ("what is the
+  financial position, performance, obligation, and exposure?" for Finance)
+  and use the table as the placement test for every new concept.
+- **Do not declare disjointness without evidence.** Lanes, categories, and
+  classifications stay non-disjoint until the business guarantees they are.
+
+### Scope and change control
+- **Every new concept is slotted into the existing hierarchy** — no
+  level-less nodes.
+- **Scope decisions accumulate in the log; the source of truth is updated
+  by one consolidated proposal** after the modeling pass — never churn the
+  source per decision.
+- **Park, don't smuggle.** Future concepts go in an explicit parked list;
+  no data fields, systems, KPIs, controls, or thresholds as concepts.
+- **Confirm ambiguous source fields before naming ontology terms.** A field
+  named `sioc` is not the W3C SIOC vocabulary until proven — verify the
+  business meaning first.
+- **Do not invent ownership to fill a gap.** An explicit "unowned, parked"
+  beats a guessed owner every time.
+
+---
+## 3. Standards guide — why each standard earned its place
+
+Each entry: what the standard is, why it belongs in an ontology build, what
+it is *not* for, and what was deliberately rejected. The rejections matter as
+much as the adoptions — they are what keep a model honest.
 
 ### RDF — the grammar
-**What:** the subject–predicate–object triple model; everything else here
-is a vocabulary written in RDF.
+**What:** the subject–predicate–object triple model; everything else here is
+a vocabulary written in RDF.
 **Why:** it is the only layer the whole stack shares. Every statement the
-ontology makes is an RDF statement; every other standard is just an
-agreed set of predicates.
+ontology makes is an RDF statement; every other standard is just an agreed
+set of predicates.
 **Not for:** carrying meaning by itself — RDF without a vocabulary is
 punctuation without words.
 
 ### SKOS — the taxonomy backbone
 **What:** a vocabulary for governed concept systems: `ConceptScheme`,
 `prefLabel`/`altLabel`, `broader`/`narrower`, `notation`, `exactMatch`.
-**Why:** the 680-node process hierarchy is a *controlled vocabulary of
-process names*, not a class hierarchy of process types. SKOS gives us
-labels, aliases, hierarchy, and crosswalks (to APQC) without pretending
-each node is an ontological class.
-**Rejected:** mechanically converting each process/hierarchy level into an
-OWL class/subclass. That would assert logical commitments (disjointness,
-inheritance of restrictions) that a naming hierarchy does not support —
-and that no reasoner could then be trusted to check.
-**Decisions (2026-09-21, Step 3d Phase 1, Hamid):** 8 critical-collision
-renames approved — `CM-1-1-1-1` → Produce Demand Forecast (verb-led;
-`Demand Forecasting` not retained as altLabel since the L3 parent keeps
-it as prefLabel); `CM-1-1-3-7` → Inventory Management (`Inventory` kept
-as altLabel); `CM-1-1-3-7-12` → Monitor and Control Inventory Positions
-(`Manage Inventory` kept as altLabel); the five shared
-`Define KPI Framework` rows → Define Offer / Pricing / Channel /
-Network / Operating Model Measurement Framework (the shared generic
-label retired from ontology aliases; scoped historical aliases such as
-`Define KPI Framework (Offer)` recorded in the identity/migration map).
-No definitions, hierarchy, process identities, slugs, or IRIs change.
-**Decisions (2026-09-21, Step 3d Phase 1 follow-up, Hamid):** the sixth
-`Define KPI Framework` row (`CM-1-3-3-5-7`, under Marketing Communications
-Strategy) — discovered after the 8-rename execution — renamed to
-Define Marketing Communications Measurement Framework, matching the five
-siblings; the generic label is retired from ontology aliases
-(scoped historical alias `Define KPI Framework (Marketing Communications)`
-in the identity/migration map). No cross-references to the row existed
-in the workbook, so the rename is row-local.
-**Label governance (standing, 2026-09-21):** labels are governed
-presentation metadata; stable slugs/IRIs are concept identity. Never use
-a prefLabel or workbook name as a join key, DAX lookup key, RLS
-condition, contract key, API key, KPI identity, or logic condition — use
-stable identifiers for technical relationships. Retain historical labels
-as altLabel only when uniquely resolvable and semantically safe.
-**Taxonomy unpublished (2026-09-21, Hamid):** no external consumers, so
-renames need no deprecation period or consumer notice.
-**Decisions (2026-09-22, Step 3d naming pass Batch 7, Hamid):** the 12
-normalization-only judgment renames approved as proposed, with three
-judgment calls: (1) the allocation pair stays together as verb-led
-`Allocate Crude and Feedstock` / `Allocate Finished Products`, bounded by
-the existing definitions — no authority expansion into production planning,
-policy, commercial-priority setting, or physical movement; (2) the
-card-transaction label keeps all three definition verbs — `Analyze, Report,
-and Confirm Card Transactions`; (3) the concise `Track Order Book and
-Forecast Order Volumes`, with timing kept in the definition, not the label.
-PNL stays the technical-label convention (`P&L` in prose); `card stock` is
-scoped to blank cards, secure card media, carriers, mailers, and issuance
-materials — not petroleum inventory. The `Reconcile Economic PNL To
-Accounting PNL` case-only variant is migration-map-only (no altLabel), and
-the queue rule now codified is: case/punctuation-only changes carry no alt
-label. No definitions, hierarchy, process identities, slugs, or IRIs change.
-**Step 3d closure (2026-09-22, Hamid):** Step 3d closed as "Completed with
-explicit open exceptions" on Hamid's approval of the closeout recommendation.
-Naming normalization fully executed (92/92 queue entries); evidence-supported
-tree remediation complete (PTC-001 partial resolution: tombstone + 2 reparented
-L3s + 2 Candidate L2s).
-**PTC-001-B confirmed as intentional governance hold (2026-09-22, Hamid):**
-`Develop Strategic Business Plan` remains `blocked` under the retired
-`Commercial Development` tombstone until evidence establishes whether
-enterprise strategic-business planning is owned by (A) Corporate Planning
-within Finance, (B) Corporate Strategy / Corporate Development, or (C) an
-executive cross-functional governance process. Do not place it under Finance
-as a side effect; no new Strategy L1 without a charter-level decision.
-Evidence required: operating model, corporate-planning charter, executive and
-Board planning calendar, delegated authority, planning / portfolio /
-capital-allocation / business-plan artifacts. Review trigger: strategy
-operating-model definition, corporate-planning charter approval, or enterprise
-architecture/charter revision. A blocked row with a named decision, explicit
-options, evidence requirement, and review trigger is governance maturity —
-not incomplete work.
-**Refining Architecture Scoping Decision (2026-09-22, Hamid):** approved in
-principle with refinements; R1 is a controlled re-homing and normalization
-pass, not a greenfield refinery model. R0 inventory complete (2026-09-22):
-the Refining L1 holds only 3 concepts; the substantive refinery estate —
-Refinery Planning (26 concepts) and Refinery Scheduling (16 concepts) —
-sits under Commercial & Marketing → Planning & Scheduling. R1 therefore
-promotes existing approved concepts with stable slugs/IRIs rather than
-duplicating or recreating ~40 concepts.
-**Structural framing (Hamid correction, 2026-09-22):** the change is a
-**controlled structural reclassification and reparenting with stable
-identity** — NOT label-only. Parent-child relationships, concept levels,
-`skos:broader` links, hierarchy navigation, query paths, and
-hierarchy-dependent consumption (reports, RLS/OLS, Power BI) all change;
-only identity is stable. This framing makes the consumer-impact scan
-mandatory.
-Priority L2s: **Refinery Planning and Optimization** (promote `CM-1-1-4`,
-approved in principle subject to the consolidated hierarchy map and the
-Optimization-coverage evidence check); **Refinery Production Planning and
-Scheduling** (narrower R1 label for the promoted `CM-1-1-7` estate — Hamid's
-lean; the broader "Refinery Operations and Production Management" is NOT
-auto-approved and waits on the CM-1-1-7 evidence review, else arrives in R2
-when operating-execution concepts exist); **Refinery Asset Reliability and
-Turnaround Coordination** (new L2, created in R1 as a Candidate structural
-anchor, initially unpopulated, coordination-only — see definition below);
-**Refinery Performance and Risk Coordination** (existing Candidate L2,
-unchanged). Re-anchored under Planning & Scheduling (confirmed 2026-09-22): Commercial Development
-tombstone — it does **not** ride the promotion into Refining; PTC-001-B blocked row stays beneath
-it with status unchanged. Untouched in R1: PTC-002 feedstock-quality ownership, Supply & Trading
-quality cluster. `Publish Local Refinery Targets` stays under Regional Optimization;
-its relationship to Refining is modeled as an interface, not a reparenting.
-Energy & Utility Management follows its parent in R1 under Temporary/inherited placement status
-(review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision) —
-not a final ownership decision. EHS / process safety, enterprise risk, maintenance
-authority, Finance, Supply & Trading, Midstream, Commercial, Legal, Security,
-and IT boundaries stay explicit.
-**R&T L2 definition (Hamid-authored, 2026-09-22):** "The Refining capability
-that coordinates refinery availability, asset-condition and integrity inputs,
-maintenance and turnaround windows, production-plan impacts, readiness, and
-recovery interfaces so refinery performance objectives can be planned and
-managed against approved maintenance, integrity, and turnaround commitments."
-Scope note: coordinates the refinery-operating impact of asset reliability,
-inspections, integrity findings, planned maintenance, and turnaround work,
-including availability assumptions, outage-window integration,
-production-plan and schedule impacts, readiness dependencies,
-return-to-service coordination, and escalation of material risks or
-constraints. Does not own maintenance strategy, engineering design authority,
-inspection execution, process-safety policy, work permits, contractor
-management, capital approval, or maintenance/turnaround execution unless
-separately assigned by the enterprise operating model. Status: Candidate;
-review trigger: R2 evidence package / refinery maintenance and turnaround
-operating model.
-**Terminology governance (2026-09-22):** R1 resolves terminology only to the
-minimum required for an accurate hierarchy and non-misleading labels
-(stale parent/label/path references updated mechanically). Unresolved
-semantic distinctions (refinery plan vs monthly operating plan vs schedule
-vs unit-operation schedule; turnaround vs planned vs emergency shutdown;
-startup/restart; production vs operations management) go to an explicit R2
-Refinery Vocabulary and Operating-Lifecycle package — not settled silently
-in scope notes.
-**R1 authoring workflow — mini-batch control (2026-09-22):** new-L2
-definition + scope note authored in chat with explicit in/out-of-scope
-boundaries and source references; independent wording review; workbook row
-inserted/updated through an asserted one-shot script; cell diff generated;
-validation gate rerun; TTL regenerated; PR open for approval. Promoted L2s
-inherit/reframe their existing approved definitions — no substantive rewrite
-unless the move exposes a genuine scope conflict.
-**R1 merge gate (2026-09-22):** hierarchy-sensitive consumer-impact
-validation is a formal merge gate, not an execution task — ontology
-hierarchy integrity, semantic consumption (queries, navigation, Power BI,
-RLS/OLS, catalog, data products), governance/traceability (identity-map
-migration overlay, historical paths, PTC-001-B/tombstone/PTC-002 unchanged),
-and generation (workbook, JSON, TTL, gate, diffs) must pass before any
-structural change merges.
-**R1 structural decision package (approved as Candidate, 2026-09-22, Hamid):**
-delivered as a no-change proposal and approved as **Candidate** on Hamid's independent review:
-(1) current-to-target hierarchy map for 40 concepts with old/new parent and level, (2) candidate
-L2 definitions, (3) R1/R2 boundary, (4) terminology decision ledger, (5) impact analysis with the
-four-gate merge framework, (6) evidence (internal definitions, OSHA/Cal-OSHA/API context, APQC
-comparative structure). Review corrections incorporated: (a) scope-note wording — definitions,
-authority boundaries, sources, and business substance remain unchanged; scope notes are updated
-only where a parent-path, ownership-reference, or execution-interface statement would otherwise
-become factually stale, all enumerated in the cell diff; (b) transitive-path migration register
-(§1g) — direct broader IRIs are stable but ancestor paths and depths change, recorded for the
-consumer-impact scan. Tombstone re-anchor confirmed: `CM-1-1-4-6` (deprecated) and `CM-1-1-4-6-1`
-(PTC-001-B, blocked) move under `CM-1-1` Planning & Scheduling rather than riding the promotion
-into Refining. Energy & Utility Management subtree tagged Temporary/inherited through its
-scheduling parent (review trigger: R2 energy scope decision). Gate 2 requires a formal old→new
-path-mapping compatibility table for all 42 affected paths plus the externally supplied
-hierarchy-consumer and RLS/OLS inventory. No JSON or workbook modification until the
-implementation PR is explicitly approved.
-**Definition-authoring process for new L2s (decided, 2026-09-22):** mini-batch
-control above (replaces the open workbook-round-vs-direct-authoring
-question).
-**SemVer treatment for Refining changes (2026-09-22):** new L2 nodes are
-additive (minor); reparenting existing concepts changes broader links and is
-validated by the consumer-impact merge gate before merge.
-**R1 implementation — merged (2026-09-22, Hamid):** PR #108 merged as
-`b75fd991` (2026-09-22T12:51:35Z). R1 status **Candidate → Implemented**. Final
-state: 683 concepts, 14,496 triples, 681 broader links. Gate results at merge:
-hierarchy 42/42 checks (incl. the new blocked-status and breadcrumb-label locks),
-workbook validator 0 blocking, TTL regen verified byte-identical before the fix
-commits. Documentation-only follow-up opened as a separate PR — no further
-ontology-artifact changes.
-**R2 backlog (open by design, 2026-09-22):** (1) operating-execution layer —
-unit-operation scheduling, tank and transfer line-ups, blend execution, process
-control, operating procedures; (2) maintenance/turnaround ownership — which
-process or function owns maintenance strategy, inspection execution, reliability
-engineering, turnaround planning/execution in the enterprise operating model;
-(3) R2 Refinery Vocabulary and Operating-Lifecycle package — first-class
-distinctions for turnaround vs normal shutdown vs emergency shutdown,
-startup/restart, plan vs schedule vs unit-operation schedule, production vs
-operations management; (4) Energy & Utility Management temporary-placement
-review, triggered by the R2 Refinery Energy, Utilities, and Environmental
-Performance scope decision. PTC-001-B remains open (strategy-ownership hold);
-the R&T L2 remains Candidate until the ownership question is answered.
+**Why:** a process hierarchy is a *controlled vocabulary of names*, not a
+class hierarchy of types. SKOS gives labels, aliases, hierarchy, and
+crosswalks (to a reference framework) without pretending each node is an
+ontological class.
+**Rejected:** mechanically converting hierarchy levels into OWL
+classes/subclasses — that asserts logical commitments (disjointness,
+inheritance of restrictions) a naming hierarchy cannot support.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,
 `dcterms:provenance`, etc.
-**Why:** the ontology constantly talks *about* its sources — the APQC
-workbook version, the repo JSON, the license terms. Dublin Core is how a
-concept says "I was checked against APQC v7.2.2" (`dcterms:references`)
-and how a dataset says "you may reuse me under these terms."
-**Not for:** describing the domain (that's SKOS/domain classes).
+**Why:** the ontology constantly talks *about* its sources — the reference
+workbook version, the source JSON, the license terms. Dublin Core is how a
+concept says "I was checked against framework vX" and how a dataset says
+"you may reuse me under these terms."
+**Not for:** describing the domain (that is SKOS and the domain classes).
 
 ### RDFS / OWL — the schema layer, used sparingly
 **What:** classes, properties, subclass/subproperty, domain/range (RDFS);
 equivalence, disjointness, inverses, cardinality (OWL).
-**Why:** we need *some* real classes — `ProcessDefinition`,
-`ResponsibilityAssignment`, `NamedKPI` — and the relations
-between them. RDFS/OWL defines those precisely.
+**Why:** you need *some* real classes — process definitions,
+responsibility assignments, named KPIs — and the relations between them.
+RDFS/OWL defines those precisely.
 **Constrained:** RDFS/OWL is *inference*, not validation. Domain and range
-do not check data; they generate new triples. We never use OWL to "fix"
-the taxonomy, and we assert disjointness or cardinality only where the
-business actually guarantees it (cf. the office-lanes decision).
+do not check data; they generate new triples. Never use OWL to "fix" the
+taxonomy; assert disjointness or cardinality only where the business
+actually guarantees it.
 
 ### PROV-O — what happened and who vouches for it
-**What:** `prov:Entity`, `prov:Activity`, `prov:Agent` — provenance of
-how something came to be.
-**Why:** two jobs. (1) *Occurrences vs definitions:* a planned process
-is a definition; a run of it on a date is a `prov:Activity`. The split
-keeps the model from confusing the recipe with the meal. (2) *Trust:*
-which source asserted this mapping, when, under what authority.
+**What:** `prov:Entity`, `prov:Activity`, `prov:Agent`.
+**Why:** two jobs. (1) *Occurrences vs definitions:* a planned process is a
+definition; a run of it on a date is a `prov:Activity`. The split keeps the
+model from confusing the recipe with the meal. (2) *Trust:* which source
+asserted this mapping, when, under what authority.
 **Rejected:** typing taxonomy concepts as `prov:Activity` by default. A
 process definition is not an activity that happened.
 
-### ORG (Organization Ontology) — roles for RACI
+### ORG — roles for RACI
 **What:** `org:Role`, `org:Membership`, posts and organizations.
-**Why:** RACI needs roles that people hold, not people themselves — the
-same person can be Accountable for one process and merely Informed on
-another. `org:Role` gives us that indirection; the n-ary
-`ResponsibilityAssignment` then binds role + process + RACI level, which
-a single property never could.
-**With:** FOAF (`foaf:Agent`/`foaf:Person`) for the actual people and
-teams behind the roles, and `dcat:contactPoint` for ownership surfacing.
+**Why:** RACI needs roles that people hold, not people themselves. `org:Role`
+gives that indirection; the n-ary assignment then binds role + process +
+RACI level, which a single property never could.
+**With:** FOAF for the actual people and teams behind the roles, and
+`dcat:contactPoint` for ownership surfacing.
 
 ### SHACL — the checking layer
 **What:** a shapes graph of constraints, written in RDF, run against the
 data graph to produce a validation report.
 **Why:** every locked decision that can be checked mechanically becomes a
-shape: labels present, identifier policy followed, hierarchy integrity
-(one parent per concept), controlled values (lanes, RACI levels),
-`dcterms:references` present where APQC alignment is claimed.
+shape: labels present, identifier policy followed, hierarchy integrity (one
+parent per concept), controlled values, references present where alignment
+is claimed.
 **Constrained:** Core SHACL first; SHACL-SPARQL only where Core cannot
 express the constraint. Validation reports are data, not verdicts — a
 failing shape is a question for a human, not proof of a bad model.
@@ -1771,113 +603,193 @@ failing shape is a question for a human, not proof of a bad model.
 ### DCAT — publishing
 **What:** `dcat:Catalog` → `dcat:Dataset` → `dcat:Distribution` /
 `dcat:DataService`.
-**Why:** the end state is a *published, versioned artifact*, not a file
-on a disk. DCAT gives us the catalog record: what the dataset is, which
-version, which distributions (Turtle, JSON-LD, SHACL shapes, HTML docs),
-where it lives, who to contact. The dataset-vs-distribution distinction
-is load-bearing: one dataset, many serializations.
-**With:** DQV for quality measurements on the data products, and
-`dcterms:license` / ODRL where rights need expressing beyond a license
-URI.
+**Why:** the end state is a *published, versioned artifact*, not a file on
+a disk. The dataset-vs-distribution distinction is load-bearing: one
+dataset, many serializations (Turtle, JSON-LD, SHACL shapes, HTML docs).
+**With:** DQV for quality measurements on data products, and
+`dcterms:license` / ODRL where rights need expressing beyond a license URI.
 
-### What we evaluated and set aside
-- **W3C SIOC** (social/online-community vocabulary): not applicable;
-  the repo JSON's `sioc` field is still unconfirmed and must not be
-  confused with it.
+### What to evaluate and set aside
+- **W3C SIOC** (social/online-community vocabulary): not applicable to a
+  process ontology — and a source field named `sioc` must not be confused
+  with it (§2).
 - **ODPS family** (Open Data Product Specification / ODPC / ODPV / ODPG):
   mapped for awareness (ODPC→DCAT, ODPV→SKOS, ODPG→RDF) but not adopted —
-  the W3C stack covers our needs without adding a second modeling
-  idiom. Revisit if the data-product catalog work demands it.
+  the W3C stack covers the need without a second modeling idiom. Revisit if
+  the data-product catalog work demands it.
 
 ---
+## 4. Working agreements — how the team operates
 
-## 6. Repo-specific notes for the team
+### Read the playbook before deciding
+Before making any modeling choice, check §2. If the decision is locked,
+follow it; if you believe it is wrong, raise it with the owner and record a
+dated amendment. Never silently override.
 
-Facts about the source material that are easy to get wrong:
-
-- **Scale:** ~680 nodes, levels L0–L6 (L0: 2, L1: 10, L2: 4, L3: 24,
-  L4: 117, L5: 502, L6: 21). 669 nodes have IDs; **11 roots/stubs do
-  not** (Downstream Operations, Refining, Midstream, Enabling Functions,
-  Supply Chain Mgmt., Finance, Shared Services, Process Excellence & IT,
-  Human Resources, Legal & Corp Comm, EHS & Gov Reporting). Step 2 mints
-  IDs for all 11.
-- **Codes like `CM 1.2.1.3` are `skos:notation`**, not APQC identifiers
-  and not globally unique outside this map.
-- **`officeLane` values:** `front_office`, `middle_office`,
-  `back_office`, `operations`. Not declared disjoint.
-- **The `sioc` JSON field is unconfirmed.** Verify whether it means
-  SIPOC/SIOC in the business sense before minting any ontology term.
-- **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
-  processes have empty `produces` arrays; no AR credit/receivables/
-  collections portfolio exists (do not reuse `dp-commercial-risk`);
-  `office_lanes.json` is not linked by ID; Loss Control exists as a
-  data-product concern with no owning process.
-- **Systems vocabulary in the map:** XPIMS, DPO, PPIMS, MPR, Profisee,
-  KittyHawk, RightAngle. System-specific jargon depresses naive
-  term-overlap scores — coverage triage is human work.
-- **Local extensions to keep** even without APQC equivalents:
-  renewables/RINs, emissions trading, crude-allocation decisions,
-  XPIMS/DPO/PPIMS-specific processes.
-
-## 7. How the team should work from this playbook
-
-1. **Read §1–§2** for the shape of the whole build; **§5** before
-   touching any standard.
-2. **Check §4** before making any modeling choice — if the decision is
-   locked, follow it; if you believe it's wrong, raise it with Hamid
-   and record a dated amendment. Do not silently override.
-3. **Work one plan step at a time**, in order, appending the step's
-   entry to §3 with: what was done, what was decided, and what remains
-   open.
-4. **Run the competency questions** (`competency-questions.md`) against
-   the model early and often — a question the model can't answer is a
-   modeling gap, not a bad question.
-5. **Boundary notes are decisions too.** "Out of scope" with a recorded
-   reason beats silent omission; future-you will thank present-you.
-6. **Definition authoring workflow (Step 3c, locked 2026-09-19).**
-   Hamid or a designated reviewer fills the 6-sheet semantic-intake
-   workbook `step3c-definition-authoring-workbook.xlsx` and returns it
-   to Hamid or commits it to a reviewer branch — never `main` directly.
-   The assistant pulls it, runs `step3c-workbook-validate.py`
-   (mechanical gate), then performs a full semantic review. Every doubt
-   comes back to Hamid as a question. Only `approved` rows whose
-   questions are resolved merge into the taxonomy via
-   `step3-skos-taxonomy.py --authored`. Nothing merges on assumption —
-   the human gate from Step 3b applies to human-authored text too.
-   The locked reviewer guide is
-   `business_architecture/ontology/step3c-reviewer-instructions.md`
-   (v2026-09-19b, PTC parking rule after #35); its 10-point quality bar
-   is the merge gate. Hard
-   requirements enforced mechanically: every approved row has a
-   non-empty `definition` and a non-empty `scope_note` with at least
-   one meaningful boundary; `status` is `pending`, `approved`,
-   `blocked`, or `retired` (only `approved` merges); new approvals
-   also require `concept_type_check` ∈ {process, capability},
-   `primary_purpose`, and `reference_sources` that resolve to the
-   Reference register; `open_questions` must be empty on `approved`;
-   no `altLabel` collides with another concept's `prefLabel`. The 15
-   rows approved in #29 are explicitly grandfathered for Phase 1
-   (`PRE_INTAKE_APPROVED` → NOTE, not BLOCKING). Semantic checks done
-   by the reviewer: parent test, sibling disjointness, primary-purpose
-   classification, terminology stability, no invented owners, no
-   smuggled constraints. Tree moves accepted during review go in
-   `step3c-parked-tree-changes.md`; affected rows are `blocked` or
-   `retired` until the Step 3d JSON/TTL pass.
-
-### Enterprise-grade definition review bar (summary; authoritative text in the reviewer guide)
-1. **Define, don't label** — state the recurring activity and intended outcome.
-2. **Primary purpose** — the decision/outcome/responsibility served, not asset, department, or data source; no duplicated concepts for multi-purpose activities.
-3. **Bounded** — scope note required on every approved row; exclusions name the owner only when established in the taxonomy.
-4. **Parent test** — "this process is a way of carrying out [parent process]" must hold.
+### Definition quality bar
+Every authored definition must meet all ten — this is the merge gate for
+human-written text, and the human gate from triangulation applies here too:
+1. **Define, don't label** — state the recurring activity and intended
+   outcome.
+2. **Primary purpose** — the decision, outcome, or responsibility served;
+   not the asset, department, or data source. No duplicated concepts for
+   multi-purpose activities.
+3. **Bounded** — a scope note is required on every approved concept;
+   exclusions name an owner only when that owner is established in the
+   taxonomy.
+4. **Parent test** — "this process is a way of carrying out [parent
+   process]" must hold.
 5. **Sibling-disjoint** — no two siblings claim the same primary activity.
 6. **Terminology-stable** — one meaning per material term across the scheme.
-7. **Park, don't smuggle** — future processes in `parked_children`; no data fields, systems, KPIs, controls, or thresholds as concepts.
-8. **Evidence-based** — high-quality references inform; nothing copied verbatim.
-9. **Planning baseline preserved** — backcasting compares against the approved plan and contemporaneous assumptions.
-10. **Provenance-clean** — `dcterms:source` records human authorship, Hamid's approval, and date.
+7. **Park, don't smuggle** — future processes in `parked_children`; no data
+   fields, systems, KPIs, controls, or thresholds as concepts.
+8. **Evidence-based** — high-quality references inform; nothing is copied
+   verbatim.
+9. **Planning baseline preserved** — backcasting compares against the
+   approved plan and its contemporaneous assumptions, not a later
+   reforecast.
+10. **Provenance-clean** — record human authorship, the approver, and the
+    date.
+
+### Human-gated authoring workflow
+Subject-matter text (definitions, scope notes) is authored in a controlled
+workbook and merged only through a gate:
+1. The reviewer fills the intake workbook and returns it on a reviewer
+   branch — never directly to `main`.
+2. A mechanical validator runs first (required fields, controlled values,
+   no label collisions, no empty open questions on approved rows).
+3. A semantic review follows: parent test, sibling disjointness,
+   primary-purpose classification, terminology stability, no invented
+   owners, no smuggled constraints.
+4. Every doubt returns to the owner as a question. **Nothing merges on
+   assumption** — the human gate applies to human-authored text exactly as
+   it applies to triangulated text.
+
+### Review like an adversary before asking for review
+Every implementation PR and design proposal gets an adversarial pass before
+the owner sees it: independent review angles (correctness, structural fit,
+evidence), with verdicts Act On / Consider / Noted / Dismissed — reviewers
+never auto-apply changes.
+
+### Every push proves its safety
+Name the one safety fact the push depends on, prove it by running code
+against the real artifacts, and mark anything unproven as unproven — never
+write it up as settled. After a repeated checker failure on the same
+premise, **attack the premise** (census what the check does *not* cover)
+instead of writing another one-off fix. Every regression fix starts with a
+failing check, watched fail, then fixed, then watched pass.
+
+### Migrations prove replacement, not deletion
+Any migration that retires predicates or moves data ships with:
+- a per-predicate conservation ledger (emitted == planned, computed from
+  the source at cutover time — never from a stale snapshot);
+- a held-for-review report reconciled mention-by-mention (emitted + held ==
+  total), every held item carrying a recorded disposition in the source
+  itself, not a write-only side file;
+- a dry-run census (parseable / held / malformed counts) reviewed before
+  emission is approved.
+Ordering dependencies become structural assertions (fail fast on known
+stale state), not list-order conventions. Reruns on unchanged input
+reproduce identical output.
+
+### The playbook learns the same week
+A new best practice lands in the section a teammate would look in, dated,
+with the reason — not in chat history. Re-check this file's freshness
+whenever a step closes.
 
 ---
+## 5. Worked example — the downstream process-map ontology
 
+How the method played out on a real build. Illustrative, not normative: the
+prescriptions are in §0–§4; this is what following them looked like.
+
+**The build.** Source of truth: `downstream_process_map.json` in the
+`aadehamid/enterprise-performance-model` repo — ~680 process nodes across
+levels L0–L6. Consistency reference: the APQC Process Classification
+Framework for Downstream Petroleum, v7.2.2 (official release, vendored with
+attribution; delivered via PR #25). The published taxonomy reached 683
+concepts, 681 broader links, 14,496 triples.
+
+**Step 0 in practice.** Five of six repo-cited APQC IDs verified against the
+workbook; one was stale across versions (10006 in the old mirror, 20085 in
+v7.2.2) and corrected. The stale-ID catch is why the playbook says verify
+against the workbook, not the mirror.
+
+**Step 8 in practice (done early).** Seven APQC gap candidates, one at a
+time: product recalls, human capital, data governance, fixed-asset project
+accounting, remediation, external relationships, asset-maintenance depth.
+Five in scope, two out — fixed-asset accounting (ERP-native, no ontology
+hook) and external relationships (corporate affairs, no hook) got boundary
+notes with revival triggers instead of silent omission. The standing rule
+that emerged: cover enabling functions, not just the value chain, but only
+where the ontology has a genuine hook.
+
+**Steps 1–2 in practice.** URI base `https://w3id.org/lsc/ontology/`
+(company-scoped, redirect-backed; chosen because the repo had already
+rebranded once — person- and project-tied bases would not have survived).
+Local codes preserved as `skos:notation` and slugified
+(`CM 1.2.1.3` → `CM-1-2-1-3`); 11 ID-less stubs got minted slugs. The
+label-governance rule (slugs are identity, labels are presentation) was
+written after a regeneration script silently reverted hand-applied labels —
+the tooling lesson is in §4's working agreements.
+
+**Step 3 in practice.** SKOS-first: one ConceptScheme, broader/narrower,
+prefLabel/altLabel, definitions on every concept. Candidate definitions
+were triangulated from APQC and web sources — 1 adopted, 10 rejected at the
+human gate, which is why the playbook insists reference text informs but is
+never copied. Human authoring ran through the gated workbook workflow (§4);
+a tree pass reparented Finance and Refining subtrees with minimal new
+coordination nodes, tombstoned one node as `owl:deprecated` (never deleted),
+and left one strategy-ownership question explicitly blocked rather than
+forced into the wrong parent.
+
+**Step 4 in practice (the relationship layer).** Every inter-process verb
+was inventoried; each predicate got a locked business definition
+(*requires*: the source cannot validly proceed without the target;
+*assuredBy*: the assurance activity performs defined governance/oversight;
+*constrainedBy*: stored from the bounded activity to the binding source;
+*triggeredBy*: stored from the invoked activity to the trigger source;
+*enabledBy*: a maintained, governed, necessary base that makes the target
+able to function). Review ran one predicate family at a time, row by row:
+direction first, definition test, verdict. Ambiguous rows were held for
+source correction — never remapped at emission. The conservation ledger
+(1,094 emitting / 209 held / 894 canonical facts) reconciled mention by
+mention, and promotion stayed blocked until every verdict was recorded.
+The locked rules in §1, Step 4 are the distilled output of this pass.
+
+**The domain-question technique in practice.** Each L1 domain got one
+primary question, used as the placement test for every new concept:
+- Supply Chain Management — "what should move, be made, held, or
+  replenished, where and when?" (orchestrates; does not own execution)
+- Commercial & Marketing — "for which customer/market, under what offer,
+  price, contract, or margin?" (market-facing value optimization; does not
+  subsume physical operations)
+- Refining — "how is feedstock transformed into compliant products?"
+  (transformation; maintenance enables but does not refine)
+- Midstream — "how are bulk feedstocks and products physically received,
+  stored, transferred, and transported?" (movement and storage)
+- Finance — "what is the financial position, performance, obligation,
+  exposure, and control requirement?" (records, controls, settles, reports;
+  business domains own the operational event)
+- Process Excellence & IT — "how should the enterprise operate, and what
+  technology enables it?" (does not own business outcomes)
+- Human Resources — "what workforce is needed, and how is it planned,
+  attracted, developed, rewarded, engaged, retained, and transitioned?"
+- Legal & Corporate Communications — "what legal obligation, advice, or
+  official internal message applies?"
+- EHS & Government Reporting — "is this safe, environmentally compliant,
+  correctly managed when events occur, and properly reported?"
+- Shared Services — executes designated services; never replaces the
+  accountable functional owner.
+
+**Known source-material facts** (easy to get wrong; verify before modeling):
+codes like `CM 1.2.1.3` are local notation, not APQC identifiers;
+`officeLane` values are not declared disjoint; a JSON field named `sioc`
+is unconfirmed — verify its business meaning before minting terms; 46
+Order-to-Cash processes shipped with empty output sets and several
+ownership gaps, resolved in Step 7 as explicit decisions, not guesses.
+
+---
 ## Appendix A — Parked items
 
 Things deliberately deferred, with what it takes to revive them.
@@ -1897,47 +809,6 @@ a future pass can pick them up unchanged:
   them.
 Revival trigger: the Store or Genie needs to reason about limits, not
 just KPIs.
-
----
-
-### Value-stream / capability / activity / event / decision / KPI / data-product layer (parked 2026-09-22)
-Not in 1.0.0. The fuller business-architecture hierarchy — domain >
-value stream > stages, value stream > capability > business process >
-activity, plus events, decisions, KPIs, and data products — is real and
-will be represented, but as **governed overlays over the process
-backbone, not as a second hierarchy inside it**. A value stream cuts
-across the tree (Order to Cash touches commercial, finance, credit,
-legal); the taxonomy gives every concept exactly one parent, so value
-streams cannot be parents — they are views. The existing JSON overlays
-already follow the right pattern: they *reference* process nodes via
-`linkedProcessIds` instead of duplicating them
-(`business_architecture/business_process/value_stream_*.json`,
-`business_architecture/schema/value_stream.schema.json`), and the data
-product portfolio links processes to data products with sparse
-produces/consumes relations (`business_architecture/business_process/
-data_product_portfolio.json`, dp-\*/dpl-\*). Where each layer lives:
-- Domain / value stream / stages / capabilities-as-views → parked
-  overlays (this item).
-- Capability kind → Q8 `conceptKind` (Step 4): `core:CapabilityKind`
-  classifies a concept as capability-like. Actual business capabilities
-  are a future `core:BusinessCapability` class (architecture entities,
-  not classification values), linked to processes via
-  `core:realizedBy` when the value-stream overlay is designed.
-- Business process → `core` 1.0.0 (Step 4).
-- Activity → future decomposition below L6.
-- Events → occurrences, Step 6 PROV-O.
-- Decisions → future decision modeling.
-- KPI → `kpi` module (Named KPIs bound to processes/capabilities; the
-  KPI Store on Databricks is the delivery side).
-- Data products → portfolio JSON now; ontology produces/consumes links
-  (critical-path only) when promoted.
-*Done when:* a consumer needs value-stream, capability, activity, event,
-decision, KPI, or data-product reasoning — then promote the overlays to
-governed ontology views, one at a time, against the stable 1.0.0
-backbone.
-Revival trigger: someone asks the model a question like "show me the
-Order-to-Cash value stream end to end" and the backbone alone cannot
-answer it.
 
 ---
 
@@ -1997,43 +868,6 @@ Rationale: deleting a URI orphans every catalog row, RACI assignment,
 and KPI binding that pointed at it. Storage is cheap; broken references
 are expensive.
 
-### Ontology identity and header
-The ontology is named, not anonymous. Each module ships one
-`owl:Ontology` resource that carries the release metadata:
-
-```turtle
-<https://w3id.org/lsc/ontology/modules/core>
-    a owl:Ontology ;
-    dcterms:title "LSC Core Process Ontology"@en ;
-    dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en ;
-    owl:versionIRI <https://w3id.org/lsc/ontology/modules/core/1.0.0> ;
-    owl:versionInfo "1.0.0" ;
-    dcterms:issued "2026-09-22"^^xsd:date ;
-    dcterms:modified "2026-09-22"^^xsd:date ;
-    dcterms:creator "Hamid" ;
-    dcterms:license <https://w3id.org/lsc/ontology/modules/core/license> ;
-    dcterms:rights "© LSC. All rights reserved. APQC PCF content used with attribution per APQC/IBM terms."@en .
-```
-
-Rules:
-- **Ontology IRI is stable** (`…/ontology/modules/core`). It names the module,
-  not the release.
-- **Version IRI is per release** (`…/ontology/modules/core/1.0.0`). Consumers
-  who pin a release cite the version IRI; consumers who want currency
-  use the ontology IRI.
-- **Term IRIs never carry a version** (`core:ProcessDefinition`, not
-  `core/1.0.0/ProcessDefinition`). Versioning a term IRI would fork
-  identity — the exact thing this policy forbids.
-
-### Version history
-- **Pre-1.0.0 (before 2026-09-22).** Unversioned working builds. No
-  `owl:versionInfo` was shipped; the taxonomy iterated through Steps
-  1–3d and the R1 reclassification without a formal release.
-- **1.0.0 (Step 4, decided 2026-09-22).** First formal release of
-  `core`. Retires the provisional `intake:` namespace, promotes intake
-  annotations to governed properties, and ships the first explicit
-  version header. Baseline for everything after.
-
 ### What every release ships
 - `owl:versionInfo` on each module and on the release (`"1.2.0"`).
 - `dcterms:issued` (first publication) and `dcterms:modified` (this
@@ -2052,6 +886,29 @@ Rules:
   concept level: `…/releases/1.2.0/ontology.ttl` gives you the whole
   graph as of 1.2.0. Consumers who need reproducibility pin the
   distribution; consumers who need currency use the canonical URI.
+
+### Ontology IRI vs version IRI
+Term IRIs never carry versions (`core:ProcessDefinition`, not
+`core/1.0.0/consumes`). Each module is an explicit `owl:Ontology`
+resource at a stable ontology IRI; the release is identified by
+`owl:versionIRI`:
+
+```turtle
+<https://w3id.org/lsc/ontology/core>
+    a owl:Ontology ;
+    dcterms:title "Enterprise Performance Model Core Process Ontology"@en ;
+    dcterms:description "…"@en ;
+    owl:versionIRI <https://w3id.org/lsc/ontology/core/1.0.0> ;
+    owl:versionInfo "1.0.0" ;
+    dcterms:issued "2026-09-22"^^xsd:date ;
+    dcterms:creator <…> ;
+    dcterms:license <…> .
+```
+
+Consumers who need currency use the ontology IRI; consumers who need
+reproducibility pin the version IRI (or the versioned distribution
+below). Term stability and release versioning are separate concerns —
+do not mix them in one URI.
 
 ### APQC version changes
 When APQC publishes v7.3 or v8:
