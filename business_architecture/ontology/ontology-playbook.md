@@ -857,10 +857,13 @@ both definitions, the raw verb string, the evidence tier, and the
 pipeline's proposed disposition. The reviewer reads the definitions, not
 the pipeline's recommendation.
 
-**Phase 3 — Verdict each row.** For each row: direction first (is the
-arrow pointing the right way?), then the definition test (does the
-source-target pair satisfy the locked definition on the evidence in
-their definitions?), then the verdict: APPROVE, HOLD, or STAND.
+**Phase 3 — Verdict each row.** For each row: identity first (record the
+match type — stable ID or label only — and the rule 4/5 route; label-only
+rows need an affirmative citation, a strict two-way pair, or a recorded
+architecture decision), then direction (is the arrow pointing the right
+way?), then the definition test (does the source-target pair satisfy the
+locked definition on the evidence in their definitions?), then the
+verdict: APPROVE, HOLD, or STAND.
 - **APPROVE** means the row satisfies the definition and the fact is
   stored (or its basis is updated if already emitting).
 - **HOLD** means the row fails the definition or the evidence is
@@ -873,8 +876,22 @@ their definitions?), then the verdict: APPROVE, HOLD, or STAND.
   counts move only when a row changes bucket.
 
 **Phase 4 — Sample and reconcile.** For large batches, sample per the
-evidence discipline (Rule 6). Reconcile counts: every row has a verdict,
-every verdict is recorded, the ledger balances.
+evidence discipline (Rule 6): draw samples only from promotions, record
+outcomes as pending until Hamid reviews them. One wrong sample stops the
+pass. Reconcile counts: every row has a verdict, every verdict is
+recorded, the ledger balances.
+
+**Exclusion citations (all verbs).** Exclusion, boundary, "owned by", and
+"may be handled by" wording is never a route — for any verb. This is the
+REL-00009 precedent, applied across all predicates. A citation that only
+states where a boundary lies, who owns something, or what is excluded
+does not establish the relationship the verb asserts.
+
+**Approved-decision evidence.** Row-level verdicts are not
+approved-decision evidence. Only recorded architecture decisions count —
+for example, PR #110 and PR #119. A verdict recorded in a review batch
+documents the reviewer's judgment; it does not constitute an architecture
+decision.
 
 **Per-verb guidance.** Each entry: the locked definition, what counts as
 evidence, the common pitfall the definition guards against, and why the
@@ -902,10 +919,13 @@ boundary is drawn where it is.
 
 - **`core:informedBy` (source is informed by target).** *The target
   provides context, planning input, or situational awareness the source
-  uses.* Evidence: the source definition names the information or the
-  target as an input. Pitfall: promoting every data flow to informedBy.
-  The definition requires that the information actually shapes the
-  source's behavior, not merely that data moves between them.
+  uses. Information flows from target to source.* Evidence: the source
+  definition names the information or the target as an input. Pitfall:
+  promoting every data flow to informedBy. The definition requires that
+  the information actually shapes the source's behavior, not merely that
+  data moves between them. **Hold label:** "counterpart, opposite flow"
+  — when the citation shows information flowing from source to target,
+  the direction is reversed; hold, do not flip at emission time.
 
 - **`core:dependsOnOutputOf` (source consumes target's output).**
   *The source consumes a specific, identifiable output the target
@@ -952,28 +972,42 @@ boundary is drawn where it is.
   definition states the governance relationship. Pitfall: structural
   closeness. A process is not governed by its parent merely because the
   parent exists in the hierarchy. Governance requires an explicit
-  authority relationship, not a position on the org chart.
+  authority relationship, not a position on the org chart. **Hierarchy
+  exception (approved text, verb-predicate-mapping-v2.md §5):** Permitted
+  only if all six hold: (1) documented relationship beyond containment;
+  (2) the definition identifies distinct governance, control,
+  decision-right, output-consumption, or externally reusable enablement
+  semantics; (3) the rationale identifies that independent semantic
+  evidence rather than the hierarchy path; (4) the evidence ledger
+  preserves the hierarchy path and the exception rationale; (5) a
+  reviewer approves the row explicitly — no automatic promotion; (6) the
+  target is identified by source-backed evidence under the identity rule
+  as finally scoped. Each exception is recorded as "not a precedent"
+  for automatic emission.
 
 - **`core:triggeredBy` (source is triggered by target).** *The target
   generates, detects, manages, or records the event, exception,
   monitoring outcome, change, referral, or handoff that initiates the
   source.* Evidence: the source definition names the triggering
-  condition and the target as its origin. Pitfall: "feeds," "informs,"
-  "supports," "uses," or "precedes" do not become triggers without an
-  invoking event. A trigger is a discrete initiating condition, not a
-  standing relationship.
+  condition and the target as its origin, and the citation must tie the
+  source's event to the target — the target is where the event comes
+  from, not merely a process the source interacts with. Pitfall:
+  "feeds," "informs," "supports," "uses," or "precedes" do not become
+  triggers without an invoking event. A trigger is a discrete initiating
+  condition, not a standing relationship.
 
 - **`core:precedes` (source precedes target).** *The source completes
   before the target begins, as a sequence the business asserts.*
   Evidence (Rule 5): for siblings, structural nearness alone is
   sufficient — sibling sequence-pattern relations do not need an
-  additional citation; for non-siblings, an affirmative sequence
-  citation in the source definition ("arrives from," "routes to,"
-  "executes through," "comes from," an explicit handoff) or a strict
-  two-way mention. Pitfall: exclusion, boundary, or owned-by wording is
-  not a sequence route. "Excludes X" tells you where the boundary is,
-  not what happens first. A non-sibling row with only boundary wording
-  is held.
+  additional citation; for non-siblings, an affirmative sequence link
+  in the source definition ("arrives from," "routes to," "executes
+  through," "comes from," an explicit handoff) or a strict two-way
+  mention. The citation must be an affirmative sequence assertion, not
+  merely a mention of both processes. Pitfall: exclusion, boundary, or
+  owned-by wording is not a sequence route. "Excludes X" tells you where
+  the boundary is, not what happens first. A non-sibling row with only
+  boundary wording is held.
 
 **Why one verb per pass.** Verdicts require the reviewer to hold one
 definition in mind and apply it uniformly. Mixing verbs in a batch
