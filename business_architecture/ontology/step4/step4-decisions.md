@@ -418,3 +418,88 @@ source). Signals a potential verb fix, not a target fix.
 
 Totals: 761 → 666 emitting; 542 → 637 held; 603 → 508 facts.
 Conservation: 666 + 637 + 12 + 1 + 2 = 1,318. ✓
+
+## Governed-by pass: 10 supersessions (Hamid 2026-09-26)
+
+The 2026-09-25 row-level governed-by approvals are not approved decision
+evidence (recorded architecture decisions only: PR #110, PR #119). Each row
+below was re-tested with the strict citation test (slug, unique label, range
+— affirmative only). None carries an affirmative citation. Each is now:
+
+**HOLD / D:hamid-verdict / NoAffirmativeCitation / Supersedes2026-09-25Approval**
+
+The 2026-09-25 rationale is retained in provenance as superseded, not deleted.
+Scope conditions on REL-00907, REL-01228, and REL-01256 lapse with the hold.
+All ten are routed to the source workbooks for correction.
+
+- **REL-00050**: 2026-09-25 rationale (superseded): "Inventory monitoring
+  operates against policy-set min/max/safety-stock/operating-limit rules
+  (set-versus-apply)."
+- **REL-00067**: 2026-09-25 rationale (superseded): "Replenishment explicitly
+  operates within approved inventory policies and projected stock against
+  policy levels."
+- **REL-00394**: 2026-09-25 rationale (superseded): "External compliance
+  monitoring checks obligations against the exact compliance
+  policies/procedures."
+- **REL-00399**: 2026-09-25 rationale (superseded): "Internal trade-control
+  monitoring verifies controls against compliance-program requirements and
+  policies."
+- **REL-00406**: 2026-09-25 rationale (superseded): "RIN reporting coordination
+  operates under trading compliance program requirements, reporting controls,
+  escalation model."
+- **REL-00907**: 2026-09-25 rationale (superseded): "SCOPE: IP, licensing,
+  protected-mark, and Legal/IP governance boundaries only — not all
+  operational brand-standard content." Scope condition lapses.
+- **REL-00937**: 2026-09-25 rationale (superseded): "Financing/payment-method
+  definition depends on Treasury-approved instruments and Credit-approved
+  exposure/eligibility rules."
+- **REL-01005**: 2026-09-25 rationale (superseded): "Self-billing operates
+  only under executed agreements; commercial terms/contracts establish the
+  governing agreement framework."
+- **REL-01228**: 2026-09-25 rationale (superseded): "SCOPE:
+  trading-compliance, reporting, market-rule, and policy boundaries
+  applicable to confirmations — not the full commercial/operational
+  confirmation lifecycle." Scope condition lapses.
+- **REL-01256**: 2026-09-25 rationale (superseded): "SCOPE: credit-control
+  gates within fulfillment (no-self-exception rule) — not all
+  order/fulfillment decisions." Scope condition lapses.
+
+## Triggers pass: 2 stand, 5 promote, 11 hold (Hamid 2026-09-26)
+
+**STAND (rule 4, stable-ID):** REL-00725, REL-00897. Keep emitting; basis only.
+
+**PROMOTE (D:hamid-verdict):** REL-00127, REL-00235, REL-00236, REL-00246,
+REL-00901. Keep emitting; basis → D:hamid-verdict 2026-09-26.
+
+**HOLD (11):** The 2026-09-26 row-level "Trigger pattern" approvals are not
+approved decision evidence (recorded architecture decisions only: PR #110,
+PR #119). Each row was re-tested: an affirmative citation for `triggers`
+must tie the source's event or result to the target (trigger, route to,
+refer, escalate, hand off). A statement of where work is done does not
+count. None of the 11 carries such a citation. Each is now:
+
+**HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval**
+
+The 2026-09-26 "Trigger pattern" rationale is retained in provenance as
+superseded, not deleted. All eleven are routed to the source workbooks for
+correction.
+
+Exclusion/boundary citations (REL-00009 precedent):
+- **REL-00049**: scope excludes replenishment planning (CM-1-1-3-7-9); states
+  what the source does *not* do, not that its exceptions invoke the target.
+- **REL-00291**: "this process surfaces; limit actions are taken at
+  CM-1-2-2-3-6" — states where limit actions happen, not that monitoring
+  findings trigger them.
+- **REL-00892**: boundary-only citation; no event-to-target link.
+- **REL-00163**: scope says "excludes acting on the findings — amendments and
+  renewals run through Manage Existing Contract" — states where amendments
+  are done, not that monitoring findings start them (same wording class as
+  REL-00291).
+
+No citation:
+- **REL-00169**, **REL-00170**, **REL-00252**: no slug/label/range citation.
+- **REL-00396**, **REL-00398**, **REL-00400**, **REL-00403**: sibling
+  compliance-monitor rows with trigger-like semantics, but sibling nearness
+  alone is not a route for `triggers`.
+
+**Totals:** 646→635 emitting, 657→668 held, 488→477 facts. Conservation 1,318 ✓
