@@ -1673,3 +1673,28 @@ undefined in the playbook as merged — recommend pinning the definition via
 a small playbook amendment (PR + decision-log entry) before the per-verb
 pass relies on it. Hamid's reading is the safer one and is consistent with
 rule 6.
+
+## 2026-09-26 — PR #124 review fixes (Hamid: HOLD, not merging)
+
+Two leftover defects found on review of `step4/working` at `3a1a413`:
+
+1. **Lock 3 IRI fork.** Q1/Q3 APPROVED headers in `step4-decisions.md`,
+   `step4-design-proposal.md` (§2 and decision-question 1), and
+   `playbook/pr-body.md` still read `https://w3id.org/lsc/ontology/core`
+   (and `…/core/1.0.0`). Corrected to the locked Step 1 URI policy
+   `https://w3id.org/lsc/ontology/modules/core` (version IRI
+   `…/modules/core/1.0.0`), with dated correction notes. The fork-description
+   notes (the "IRI fork correction" section) are unchanged — they describe
+   the error, they don't restate it as approved.
+
+2. **Rule 7 conservation.** The REL-00873 supersession removed its fact
+   (717 → 716) but `evidence-gate.py` still asserted 717 and
+   `verb-predicate-mapping-v2.md` still cited 717. Updated: gate asserts
+   716/716, mapping doc cites 716 with the supersession noted, baseline
+   rebased to `a73d313` (PR #123). The gate's REL-00873 control case now
+   asserts emits-nothing (it previously asserted the removed fact was
+   stored). Historical ledger entries recording 717 at the time are
+   unchanged. Gate re-run: GREEN.
+
+Current: 917 emitting / 386 held / 716 facts. PR stays DO NOT MERGE;
+Hamid re-reviews after the sync.

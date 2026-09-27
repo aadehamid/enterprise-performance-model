@@ -10,8 +10,8 @@ decisions Q1 (namespaces/identity) and Q3 (first formal version 1.0.0).
 `business_architecture/ontology/ontology-playbook.md` only:
 
 1. **Decision log** — two new entries (2026-09-22):
-   - *Ontology identity*: ontology IRI `https://w3id.org/lsc/ontology/core`,
-     version IRI pattern `…/core/<version>`, the explicit `owl:Ontology`
+   - *Ontology identity*: ontology IRI `https://w3id.org/lsc/ontology/modules/core`,
+     version IRI pattern `…/modules/core/<version>`, the explicit `owl:Ontology`
      header contents, stable unversioned term IRIs.
    - *First formal version 1.0.0*: Step 4 ships `core` 1.0.0 — first
      release with governed properties and the first version header;

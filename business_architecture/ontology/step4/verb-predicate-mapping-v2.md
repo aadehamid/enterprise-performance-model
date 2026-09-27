@@ -2,9 +2,9 @@
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(917 emitting / 386 held / 717 facts); section-by-section approval pending.
+(917 emitting / 386 held / 716 facts — 717 before the 2026-09-26 REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (PR #120).
+**Baseline:** `a73d313ba922e323ccfeaad667efef42c194e4b8` (PR #123; was `6ab2197ba3fe6246bdb501391d22b71d0338d2c7`/PR #120 — rebased 2026-09-26 after the playbook rewrite adopted the evidence-discipline rules verbatim).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 (849 promoted / 172 context-held — the earlier draft said 812 promoted: that
 figure had netted 37 mention-level property-rule/hierarchy holds out of the
@@ -186,7 +186,7 @@ InformationObject instances (Q5).
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
 - Mentions attached to stored facts: **904** (829 map to their own predicate + 75 G1a duplicate evidence; 917 − 13 G2 no-triple).
-- Canonical facts (distinct stored subject/predicate/object): **717**.
+- Canonical facts (distinct stored subject/predicate/object): **716** (717 before the 2026-09-26 REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **187**, covering 374 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
 - Non-emitting mentions: 386 held + 12 deferred + 1 ExternalGovernanceReference

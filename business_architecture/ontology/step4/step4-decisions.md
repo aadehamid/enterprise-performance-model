@@ -4,12 +4,14 @@ Decisions taken with Hamid, one at a time. Folded into the design proposal revis
 
 ## Q1 — Vocabulary namespace (2026-09-22): APPROVED
 
-`core:` (`https://w3id.org/lsc/ontology/core/`) for reusable vocabulary — classes and properties.
+`core:` (`https://w3id.org/lsc/ontology/modules/core/`) for reusable vocabulary — classes and properties.
 `proc:` (`https://w3id.org/lsc/ontology/process/`) stays instance-only.
+
+*Correction 2026-09-26: the IRI above was first recorded as `…/ontology/core/`; corrected to the locked Step 1 URI policy (`…/ontology/modules/core/`). See "IRI fork correction" below.*
 
 Refinements (from external review, adopted):
 - Term IRIs stable and unversioned (`core:ProcessDefinition`, never `core/1.0.0/...`).
-- Ontology IRI `https://w3id.org/lsc/ontology/core`; version IRI `https://w3id.org/lsc/ontology/core/1.0.0`;
+- Ontology IRI `https://w3id.org/lsc/ontology/modules/core`; version IRI `https://w3id.org/lsc/ontology/modules/core/1.0.0`;
   explicit `owl:Ontology` header with `dcterms:title/description`, `owl:versionIRI`,
   `owl:versionInfo`, `dcterms:issued/creator/license` (answers the unnamed-header nit).
 - Module-boundary rule: `core:` = foundational planned-process semantics only.
@@ -77,7 +79,7 @@ Step 4 ships as `core` 1.0.0 — the first formal release of the core module.
 It is the first version with governed properties instead of provisional
 annotations, and the first to ship an explicit version header
 (`owl:versionInfo`, issued date, license, `owl:versionIRI`
-`https://w3id.org/lsc/ontology/core/1.0.0`). 1.0.0 becomes the baseline
+`https://w3id.org/lsc/ontology/modules/core/1.0.0`). 1.0.0 becomes the baseline
 that Step 5 (organization), Step 6 (PROV-O) and later modules version against.
 
 ## Q4 — uses-input (2026-09-22): APPROVED

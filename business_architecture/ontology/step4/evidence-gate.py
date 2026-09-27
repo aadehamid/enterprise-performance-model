@@ -186,14 +186,19 @@ for rid in ("REL-00050", "REL-00067", "REL-00190", "REL-00394", "REL-00399",
 for rid in ("REL-00274", "REL-01143", "REL-01286"):
     check(f"control-case hold {rid}", _emits_nothing(rid),
           "must stay held per Hamid 2026-09-25: no stored triple")
-# 2f. requires control cases (Hamid verdicts 2026-09-25). The 5 approved rows
-# must store (source, core:requires, target). REL-00208 is asserted above via
-# _emits_nothing: neither requires nor dependsOnOutputOf may be stored.
-for rid in ("REL-00158", "REL-00168", "REL-00247", "REL-00872", "REL-00873"):
+# 2f. requires control cases (Hamid verdicts 2026-09-25, as amended 2026-09-26).
+# The 4 still-approved rows must store (source, core:requires, target).
+# REL-00208 is asserted above via _emits_nothing: neither requires nor
+# dependsOnOutputOf may be stored. REL-00873 was superseded 2026-09-26
+# (identity-rule scope ruling: no rule 5 route) — it must emit nothing and
+# its former core:requires fact must be absent.
+for rid in ("REL-00158", "REL-00168", "REL-00247", "REL-00872"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
           f"approved as core:requires per Hamid 2026-09-25; expected stored fact {fact}")
+check("control-case hold REL-00873", _emits_nothing("REL-00873"),
+      "superseded 2026-09-26: no stored triple; fact removed")
 # 2g. assures control cases (Hamid verdicts 2026-09-26). The 5 approved rows
 # must store (assured, core:assuredBy, assurance-activity). REL-01106 is
 # asserted above via _emits_nothing: its assuredBy fact was removed and no
@@ -437,8 +442,8 @@ for rid in ("REL-00049", "REL-00127", "REL-00163", "REL-00169", "REL-00170",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==717", len(cf) == 717, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 717)
+check("canonical-facts==716", len(cf) == 716, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 716)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,

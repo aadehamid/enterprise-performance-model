@@ -34,7 +34,7 @@ Generation rule recap: approved rows emit the full Phase-1 column set; blocked/r
 
 ## 2. Proposed real properties
 
-**Module:** all in `core` (new vocabulary namespace `https://w3id.org/lsc/ontology/core/`, prefix `core:`). Rationale: the module policy makes `core` the owning module for the process domain; `proc:` stays the instance namespace for concepts.
+**Module:** all in `core` (new vocabulary namespace `https://w3id.org/lsc/ontology/modules/core/`, prefix `core:`). Rationale: the module policy makes `core` the owning module for the process domain; `proc:` stays the instance namespace for concepts.
 
 **New classes (Step 4):**
 - `core:ProcessDefinition` — every `proc:` concept gets `a core:ProcessDefinition` in addition to `a skos:Concept` (the class the playbook's RDFS/OWL section already anticipates).
@@ -138,7 +138,7 @@ Per the standing plan ("inputs/outputs → flow modeling"), Step 4 mints `core:I
 
 ## 9. Decision questions for Hamid
 
-1. **Vocabulary namespace:** `core:` (`https://w3id.org/lsc/ontology/core/`) for the new classes/properties, keeping `proc:` for concept instances? (Recommended: yes.)
+1. **Vocabulary namespace:** `core:` (`https://w3id.org/lsc/ontology/modules/core/`) for the new classes/properties, keeping `proc:` for concept instances? (Recommended: yes — APPROVED as Q1, 2026-09-22.)
 2. **Retirement mode:** flag-day removal of all `intake:` triples in the Step 4 release (recommended), vs. a deprecated-alias transition release?
 3. **First version:** ship Step 4 as `core`/`release` 1.0.0 with the `intake:` retirement recorded as the breaking change from the unversioned baseline?
 4. **`uses-input`:** keep as process→process `core:usesInput` edge (recommended), or fold entirely into the `InformationObject` flow model now?
