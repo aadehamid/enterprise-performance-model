@@ -1740,3 +1740,57 @@ held; 716 − 114 + 1 = 603 facts. Conservation: 761 + 542 = 1303. ✓
 **Gate:** updated for the new disposition (603 facts, 36 active G1a
 rows, REL-00873 stored, REL-01061 held, REL-00214 fact removed).
 Pre-existing SHA-pin failures unchanged.
+
+## Informed-by pass (2026-09-26, Hamid approved)
+
+139 emitting `informed-by` rows reviewed under the strict citation test
+(slug, unique label, or range in the source's definition or scope note),
+split affirmative/exclusion, with the two-way route, R1 decision evidence,
+and rule 5 checked per row.
+
+- **24 rows stand** under rule 4 (stable-ID identity; no rule 5 route required):
+  7 with an affirmative citation + 17 without.
+- **20 label-only rows promote** on an affirmative citation, recorded
+  `D:hamid-verdict`.
+- **95 rows held**: 55 exclusion/boundary-only citations, 1 counterpart
+  citation with information flowing the wrong way (REL-00476,
+  "counterpart, opposite flow"), 39 with no citation.
+- Two-way (strict inverse `informs` pair): 0. Approved decision evidence: 0
+  (R1 is the `informs` row itself, not in this population).
+- All 95 removed facts were unique single-row facts (mention_count=1);
+  no knock-on effects on other facts.
+
+**Totals:** 761 − 95 = **666** emitting; 542 + 95 = **637** held;
+603 − 95 = **508** facts. Conservation: 666 + 637 + 12 + 1 + 2 = 1,318. ✓
+
+**G1b gate amendment:** The approved section 4 gate check "reverse
+informed-by fact present through its own row-level evidence" is now
+conditional: the reverse fact is present **if** the reverse row has a route
+(stable-ID, affirmative citation, two-way, or approved decision); otherwise
+the reverse row is held with no fact.
+
+**15 G1b pairs held on both sides** (relationship disappears from the graph
+entirely; added to the backlog the same way as contradiction pair C):
+
+| G1b row | Informed-by row |
+|---|---|
+| REL-00469 | REL-01130 |
+| REL-00489 | REL-00476 |
+| REL-00499 | REL-00505 |
+| REL-00648 | REL-00643 |
+| REL-00974 | REL-00896 |
+| REL-00977 | REL-00965 |
+| REL-01112 | REL-00646 |
+| REL-01148 | REL-01150 |
+| REL-01151 | REL-01152 |
+| REL-01154 | REL-01205 |
+| REL-01184 | REL-01193 |
+| REL-01194 | REL-01199 |
+| REL-01197 | REL-01200 |
+| REL-01233 | REL-01217 |
+| REL-01273 | REL-01295 |
+
+The other 16 G1b reverse rows keep their facts: 6 STAND by rule 4
+(REL-00081, REL-00144, REL-00822, REL-01275, REL-00136, REL-01190) and
+10 PROMOTE (REL-00706, REL-00739, REL-00775, REL-00776, REL-00948,
+REL-01110, REL-01196, REL-01202, REL-01232, REL-01272).

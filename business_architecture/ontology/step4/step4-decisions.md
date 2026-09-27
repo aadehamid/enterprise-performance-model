@@ -382,3 +382,39 @@ Count refresh, not a rule change. The G1a "75 mentions emit" (from 77 approved)
 is now 33 emitting after the 2026-09-26 uses-input pass held 42 G1a mentions
 (k=42). The "77 → 75" line now reads "77 → 33". Rule text unchanged; only the
 counts reflect the applied pass.
+
+## G1b reverse-fact gate check amended (2026-09-26, Hamid)
+
+Amends approved rule text in section 4. The G1b gate check "reverse informed-by
+fact present through its own row-level evidence" is now conditional: the reverse
+fact is present **if** the reverse row has a route (stable-ID identity,
+affirmative citation, two-way inverse pair, or approved decision); otherwise the
+reverse row is held with no fact.
+
+Reason: The informed-by pass holds 15 reverse informed-by rows that lack a route.
+When both sides of a G1b pair are held, the relationship disappears from the
+graph entirely. The 15 pairs are on the backlog (contradiction-pair-C pattern).
+
+## Informed-by pass applied (2026-09-26, Hamid approved)
+
+139 emitting `informed-by` rows reviewed under the strict citation test:
+
+- **24 rows stand** under rule 4 (stable-ID identity; no rule 5 route required):
+  7 with an affirmative citation + 17 without (REL-00017, REL-00025, REL-00055,
+  REL-00071, REL-00123, REL-00136, REL-00365, REL-00877, REL-00905, REL-01107,
+  REL-01147, REL-01177, REL-01190, REL-01207, REL-01229, REL-01282, REL-01283).
+- **20 label-only rows promote** on an affirmative citation, recorded
+  `D:hamid-verdict` (REL-00114, REL-00116, REL-00141, REL-00224, REL-00244,
+  REL-00418, REL-00434, REL-00706, REL-00739, REL-00775, REL-00776, REL-00826,
+  REL-00948, REL-01110, REL-01140, REL-01196, REL-01202, REL-01232, REL-01244,
+  REL-01272).
+- **95 rows held**: 55 exclusion/boundary-only citations, 1 counterpart
+  citation with information flowing the wrong way (REL-00476, new hold label
+  "counterpart, opposite flow"), 39 with no citation.
+
+New hold label: "counterpart, opposite flow" — for rows where the citation
+shows information flowing the wrong way (source → target, not target →
+source). Signals a potential verb fix, not a target fix.
+
+Totals: 761 → 666 emitting; 542 → 637 held; 603 → 508 facts.
+Conservation: 666 + 637 + 12 + 1 + 2 = 1,318. ✓

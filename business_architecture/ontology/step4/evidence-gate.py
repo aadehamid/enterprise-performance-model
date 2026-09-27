@@ -451,8 +451,8 @@ for rid in ("REL-00049", "REL-00127", "REL-00163", "REL-00169", "REL-00170",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==603", len(cf) == 603, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 603)
+check("canonical-facts==508", len(cf) == 508, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 508)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
