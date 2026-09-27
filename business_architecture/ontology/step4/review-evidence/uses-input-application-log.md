@@ -1,6 +1,6 @@
 # uses-input pass application log — 2026-09-26
 
-Approved totals: 762 emitting / 541 held / 603 facts.
+Approved totals: 761 emitting / 542 held / 603 facts. (Corrected 2026-09-26: 917 baseline was stale, true pre-pass 916/387.)
 
 ## Hold list (114 rows)
 
