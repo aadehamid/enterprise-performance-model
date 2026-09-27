@@ -175,7 +175,7 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 716 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 749 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 761 emitting.
+**Reconciliation:** 715 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 748 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 761 emitting.
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -187,7 +187,7 @@ InformationObject instances (Q5).
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **749** (716 map to their own predicate + 33 G1a duplicate evidence; 761 − 13 G2 no-triple).
+- Mentions attached to stored facts: **748** (715 map to their own predicate + 33 G1a duplicate evidence; 761 − 13 G2 no-triple).
 - Canonical facts (distinct stored subject/predicate/object): **603** (716 before the 2026-09-26 uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
