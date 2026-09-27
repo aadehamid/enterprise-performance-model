@@ -190,15 +190,13 @@ for rid in ("REL-00274", "REL-01143", "REL-01286"):
 # The 4 still-approved rows must store (source, core:requires, target).
 # REL-00208 is asserted above via _emits_nothing: neither requires nor
 # dependsOnOutputOf may be stored. REL-00873 was superseded 2026-09-26
-# (identity-rule scope ruling: no rule 5 route) — it must emit nothing and
-# its former core:requires fact must be absent.
-for rid in ("REL-00158", "REL-00168", "REL-00247", "REL-00872"):
+# then REVERSED 2026-09-26 (scope-note label citation route) — its
+# core:requires fact is restored and stored.
+for rid in ("REL-00158", "REL-00168", "REL-00247", "REL-00872", "REL-00873"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
           f"approved as core:requires per Hamid 2026-09-25; expected stored fact {fact}")
-check("control-case hold REL-00873", _emits_nothing("REL-00873"),
-      "superseded 2026-09-26: no stored triple; fact removed")
 # 2g. assures control cases (Hamid verdicts 2026-09-26). The 5 approved rows
 # must store (assured, core:assuredBy, assurance-activity). REL-01106 is
 # asserted above via _emits_nothing: its assuredBy fact was removed and no
@@ -227,11 +225,14 @@ check("control-case hold REL-00097", _emits_nothing("REL-00097"),
 # 2j. dependsOnOutputOf contradiction control cases (Hamid verdicts 2026-09-26).
 # Retain one direction per pair; the reverse facts must be gone. Hard rule:
 # zero reciprocal two-cycles across all canonical dependsOnOutputOf facts.
-for rid in ("REL-00862", "REL-01029", "REL-01061"):
+# REL-01061 held in the 2026-09-26 uses-input pass (wrong-concept citation).
+for rid in ("REL-00862", "REL-01029"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
           f"retained direction per Hamid 2026-09-26; expected stored fact {fact}")
+check("control-case hold REL-01061", _emits_nothing("REL-01061"),
+      "held 2026-09-26 uses-input pass: wrong-concept citation; fact removed")
 for fact in (("CM-1-3-7-1-2", "core:dependsOnOutputOf", "CM-1-3-6-4-2"),
              ("CM-1-3-6-6-14", "core:dependsOnOutputOf", "CM-1-3-8-2-5"),
              ("CM-1-3-8-4-5", "core:dependsOnOutputOf", "CM-1-3-8-4-4")):
@@ -271,18 +272,20 @@ for rid in ("REL-00262", "REL-00458", "REL-01122", "REL-01129",
     check(f"control-case hold {rid}",
           _emits_nothing(rid),
           "S&T enables hold 2026-09-26; no emitted triple")
-# 2m. G1a duplicate-provenance rows (Hamid 2026-09-26). REL-00152 and REL-00436
-# are held as enables (no independent triple) but attached as duplicate
-# provenance on independently-evidenced uses-input facts. Each must appear
-# only alongside an independent uses-input evidence row for the same fact.
-for rid, fact, indep in (("REL-00152", ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4"), "REL-00214"),
-                         ("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"), "REL-00447")):
+# 2m. G1a duplicate-provenance rows (Hamid 2026-09-26, updated 2026-09-26
+# uses-input pass). REL-00436 is held as enables but attached as duplicate
+# provenance on the independently-evidenced uses-input fact (REL-00447,
+# via scope-note range citation). REL-00152's fact (via REL-00214) was
+# removed in the uses-input pass (no citation route); both are held.
+for rid, fact, indep in (("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"), "REL-00447"),):
     rids = _fact_rowids.get(fact, [])
     check(f"control-case provenance {rid}",
           rid in rids and indep in rids and all(v2d[_r]["verb"] == "uses-input" or _r == rid for _r in rids),
           "G1a duplicate-provenance attach 2026-09-26; independent uses-input fact retained")
-for rid, fact in (("REL-00214", ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4")),
-                  ("REL-00447", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"))):
+check("control-case provenance REL-00152 removed",
+      ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4") not in _fact_rowids,
+      "REL-00214 held 2026-09-26 (no route); fact removed; REL-00152 held with it")
+for rid, fact in (("REL-00447", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4")),):
     check(f"control-case fact preserved via {rid}",
           rid in _fact_rowids.get(fact, []),
           "independent approved evidence survives; G1a attach adds provenance only")
@@ -292,8 +295,12 @@ for rid, fact in (("REL-00214", ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2
 # fact; the fact must exist with that independent evidence; no G1a row may be
 # the sole evidence for its fact; no new fact may be created by a merge.
 g1a = list(rows("review-evidence/enables-g1a-duplicate-review-batch.csv"))
-check("G1a batch has 77 approved rows", len(g1a) == 77, str(len(g1a)))
-for g in g1a:
+# 2026-09-26 uses-input pass: 41 G1a mentions held with their uses-input facts.
+# 36 remain with surviving facts.
+g1a_held_20260926 = set("REL-00057,REL-00089,REL-00093,REL-00120,REL-00143,REL-00146,REL-00152,REL-00154,REL-00227,REL-00233,REL-00268,REL-00271,REL-00277,REL-00289,REL-00292,REL-00358,REL-00376,REL-00379,REL-00461,REL-00463,REL-00464,REL-00771,REL-00865,REL-00918,REL-00922,REL-00944,REL-00945,REL-00957,REL-00958,REL-00970,REL-00978,REL-00991,REL-01008,REL-01025,REL-01035,REL-01074,REL-01133,REL-01240,REL-01265,REL-01268,REL-01297".split(","))
+g1a_active = [g for g in g1a if g["row_id"] not in g1a_held_20260926]
+check("G1a batch has 36 active rows (41 held 2026-09-26)", len(g1a_active) == 36, str(len(g1a_active)))
+for g in g1a_active:
     rid, partners = g["row_id"], [x for x in g["merged_with_rows"].split(";") if x]
     fact = tuple(g["canonical_fact"].split())
     check(f"G1a {rid} names uses-input partner",
@@ -442,8 +449,8 @@ for rid in ("REL-00049", "REL-00127", "REL-00163", "REL-00169", "REL-00170",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==716", len(cf) == 716, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 716)
+check("canonical-facts==603", len(cf) == 603, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 603)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
