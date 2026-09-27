@@ -375,3 +375,10 @@ its fact was removed and the attached enables mention REL-00152 held
 with it. Precedent now reads: "REL-00436 attaches as duplicate
 provenance on the independently-evidenced uses-input fact (REL-00447,
 via scope-note range citation)."
+
+## G1a count refresh (2026-09-26)
+
+Count refresh, not a rule change. The G1a "75 mentions emit" (from 77 approved)
+is now 33 emitting after the 2026-09-26 uses-input pass held 42 G1a mentions
+(k=42). The "77 → 75" line now reads "77 → 33". Rule text unchanged; only the
+counts reflect the applied pass.

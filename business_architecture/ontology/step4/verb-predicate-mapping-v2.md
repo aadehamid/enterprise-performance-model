@@ -4,7 +4,7 @@
 Figures refreshed 2026-09-26 to the reviewed evidence package
 (761 emitting / 542 held / 603 facts — 716 before the 2026-09-26 uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #127; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
+**Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #126; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 (849 promoted / 172 context-held — the earlier draft said 812 promoted: that
 figure had netted 37 mention-level property-rule/hierarchy holds out of the
@@ -63,7 +63,7 @@ mapping applies those mention-level holds separately),
      REL-00304, REL-01006 (excluded as independent row-level `core:enabledBy`
      approvals — all three superseded 2026-09-26 in G3-B5, now held with no
      fact) and REL-00936 (held for source-classification review, no stored
-     fact). Of the 77 approved, 75 mentions emit and attach as provenance;
+     fact). Of the 77 approved, 33 mentions emit and attach as provenance (42 held in the 2026-09-26 uses-input pass);
      REL-00152 and REL-00436 are mention-level property-rule holds
      re-attached as duplicate provenance on independently-evidenced facts
      (REL-00214, REL-00447) — updated 2026-09-26: REL-00214 held (no
@@ -202,7 +202,7 @@ InformationObject instances (Q5).
 | uses-input | core:dependsOnOutputOf | 101 |
 | informed-by | core:informedBy | 139 |
 | informs | core:informedBy (inverse) | 1 |
-| requires | core:requires (5 approved 2026-09-25) | 5 |
+| requires | core:requires (5 approved 2026-09-25; REL-00873 supersession reversed 2026-09-26, scope-note label citation) | 5 |
 | precedes | core:precedes | 150 |
 | follows | core:precedes (canonicalized) | 164 |
 | governed-by | core:governedBy | 38 |
@@ -603,7 +603,7 @@ marking such rows `PROMOTE`.
   stay counted as held (in the 542), add no support, and are not
   emitting.
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
-  REL-01006 superseded; REL-00936 source-classification hold). 77 → 75
+  REL-01006 superseded; REL-00936 source-classification hold). 77 → 33
   emitting (REL-00152 and REL-00436 are held mentions). The G1a report was
   regenerated to replace the `<generator object …>` values with fixed,
   readable values.
@@ -634,9 +634,10 @@ marking such rows `PROMOTE`.
     REL-00489, REL-01124, REL-01174 (B5).
   - **13 held** for source correction: 5 REL-00445-pattern and 8 ambiguous.
   - **2 hierarchy holds** kept (REL-00466, REL-00469).
-  - REL-00152 and REL-00436 facts survive only on their independent
-    `uses-input` rows (REL-00214, REL-00447), not on the `enables`
-    assertion.
+  - REL-00436's fact survives on its independent `uses-input` row REL-00447
+    (range citation), not on the `enables` assertion. REL-00152's fact was
+    removed with REL-00214 (held, no citation route) in the 2026-09-26
+    uses-input pass.
 - **Scope limits on the surviving approvals:** REL-00433 and REL-01172
   enable the **production of the recommendation**. They do not assert
   decision authority, a binding plan, or trade approval.
