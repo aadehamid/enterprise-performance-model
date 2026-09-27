@@ -171,7 +171,7 @@ mapping applies those mention-level holds separately),
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
 | `triggers` (S, T) | `T core:triggeredBy S` | 18 rows |
 | `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
-| `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 75 G1a evidence-only + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
+| `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 33 G1a evidence-only + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
@@ -202,7 +202,7 @@ InformationObject instances (Q5).
 | uses-input | core:dependsOnOutputOf | 101 |
 | informed-by | core:informedBy | 139 |
 | informs | core:informedBy (inverse) | 1 |
-| requires | core:requires (6 approved; 5 on 2026-09-25 + REL-00873 restored 2026-09-26) | 6 |
+| requires | core:requires (5 approved 2026-09-25) | 5 |
 | precedes | core:precedes | 150 |
 | follows | core:precedes (canonicalized) | 164 |
 | governed-by | core:governedBy | 38 |
