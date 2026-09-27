@@ -572,45 +572,62 @@ against the full scope text (Evidence Discipline Rule 5). Each is now:
 
 All 20 routed to source workbooks for correction.
 
-## Requires pass (2026-09-25 approved; evidence package 2026-09-27)
+## Requires pass (2026-09-25 approved; revised 2026-09-27 — EVIDENCE ONLY)
+
+**Status:** Evidence only. The holds below are recorded here but not yet
+applied to `canonical-facts.csv`, the gate, the ledger, or the mapping doc.
+Projected totals: 611 / 692 / 453.
 
 Definition: `core:requires` — the source cannot validly start, proceed, or
 reach its controlled state without the target, its completed control, or its
 required condition. Not merely inferred because the target later
 consumes/calculates/uses related information.
 
-5 APPROVE (D:hamid-verdict 2026-09-25). 1 HOLD (D:hamid-verdict 2026-09-25).
-**NOT basis-only** — 1 fact not emitted.
+1 APPROVE (D:hamid-verdict). 5 HOLD (4 new + 1 existing).
 
-**5 approved:**
-- REL-00158: CM-1-2-1-2-1 (Create New Counterparty) requires CM-1-2-2-1-1
-  (Perform Counterparty Credit Reviews). Genuine precondition: credit clearance
-  must precede creation of the authorized counterparty and settlement records.
-- REL-00168: CM-1-2-1-2-3 (Terminate/Novate Counterparty) requires CM-1-2-2-1-3
-  (Manage Collateral). Valid closure-control prerequisite: collateral and
-  related obligations must be closed, settled, transferred, or queued before
-  the counterparty record is deactivated or transitioned.
-- REL-00247: CM-1-2-2-2-3 (Manage Trade Modifications) requires CM-1-2-1-3
-  (Trade Capture). Clear lifecycle dependency: a post-execution amendment,
-  allocation, or termination can only update a trade record that exists in
-  controlled trade capture.
-- REL-00872: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-6 (Perform KYC
-  Due Diligence). Legitimate onboarding gate: KYC due diligence is initiated
-  before governed customer/member/card-account records are established.
+### Identity routes (from identity-scope-match-types.csv)
+
+| Row | Match type (CSV) | Route | Verdict |
+|---|---|---|---|
+| REL-00158 | exact-unique-current | No strict citation — quote has no slug/label for target | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00168 | exact-unique-current | Ownership wording ("owned by") — never a route per #159 | **HOLD / D:hamid-verdict / OwnershipWording / Supersedes2026-09-25Approval** |
+| REL-00247 | nearness-only (shared L3) | No quote; G3-B1 bans nearness-only identity | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00872 | not in CSV | No exact quote naming target | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00873 | exact-unique-current | Scope note: "credit-controlled onboarding prerequisite only" | APPROVE |
+| REL-00208 | — | Insufficient prerequisite gate evidence | HOLD (existing) |
+
+### Rule 6 samples
+
+Drawn from 1 promotion (REL-00873), seed 42. Outcome: **PASS** (Hamid
+2026-09-27). Scope note states a credit-control prerequisite for
+onboarding.
+
+### Knock-on effects
+
+REL-00158, 00168, 00247, 00872: each held row's fact is stored in
+canonical-facts.csv; removal pending application.
+
+### Projected totals
+
+611 emitting / 692 held / 453 facts (615−4 / 688+4 / 457−4).
+
+### Supersessions
+
+- REL-00158: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+- REL-00168: **HOLD / D:hamid-verdict / OwnershipWording / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+- REL-00247: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+- REL-00872: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+
+**1 approved:**
 - REL-00873: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-2 (Establish
   Credit Limit & Risk Code). Restored 2026-09-26; supersession reversed;
-  basis: scope-note label citation. Scope note: credit-controlled onboarding
-  prerequisite only.
+  basis: exact-unique-current match + scope-note citation.
 
-**1 held:**
+**5 held:**
+- REL-00158, REL-00168, REL-00247, REL-00872: see supersessions above.
 - REL-00208: CM-1-2-1-3-8 (Capture Structured Deals) requires CM-1-2-2-3-15
-  (Manage Commodity Valuations). **HOLD / D:hamid-verdict**. The asserted
-  requires relation is not sufficiently supported as a prerequisite gate, and
-  the proposed remap to core:dependsOnOutputOf would alter source meaning at
-  emission time. Emit no triple. Route for source-workbook relationship review
-  and correction.
-
-No count changes — all 5 approved facts already stored in canonical-facts.csv.
+  (Manage Commodity Valuations). **HOLD / D:hamid-verdict**. Insufficient
+  prerequisite gate evidence. Emit no triple.
 
 ## Assures pass (approved; evidence package 2026-09-27)
 
