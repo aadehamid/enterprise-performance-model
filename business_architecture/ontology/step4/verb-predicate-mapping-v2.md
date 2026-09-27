@@ -65,10 +65,10 @@ mapping applies those mention-level holds separately),
      fact) and REL-00936 (held for source-classification review, no stored
      fact). Of the 77 approved, 33 mentions emit and attach as provenance (42 held in the 2026-09-26 uses-input pass);
      REL-00152 and REL-00436 are mention-level property-rule holds
-     re-attached as duplicate provenance on independently-evidenced facts
-     (REL-00214, REL-00447) — updated 2026-09-26: REL-00214 held (no
-     citation route) with REL-00152; REL-00447 retained via range
-     citation with REL-00436 attached;
+     re-attached as duplicate provenance on the independently-evidenced fact
+     (REL-00447) — updated 2026-09-26: REL-00214 held (no citation route)
+     with REL-00152 (fact removed); REL-00447 retained via range citation
+     with REL-00436 attached;
    - **G1b (29)** approved 2026-09-26: HOLD for workbook correction (merging
      into `dependsOnOutputOf` would change the verb — only an `informed-by`
      mention exists on the reverse pair);
