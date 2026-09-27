@@ -1,0 +1,65 @@
+row_id,verdict,affirmative_evidence,n_contexts
+REL-00012,exclusion,,1
+REL-00030,affirmative,consumes replenishment requirements from Manage Inventory Replenishment (CM-1-1-3-7-9),2
+REL-00048,exclusion,,2
+REL-00064,exclusion,,2
+REL-00101,exclusion,,2
+REL-00117,exclusion,,2
+REL-00145,affirmative,this node consumes the published version [released by CM-1-1-1-1-4],1
+REL-00181,exclusion,,2
+REL-00225,exclusion,,1
+REL-00242,exclusion,,2
+REL-00261,exclusion,,2
+REL-00269,affirmative,running mark-to-market valuations from the official curves (CM-1-2-2-3-3),1
+REL-00270,affirmative,running valuations from ... parameters (CM-1-2-2-3-14),1
+REL-00278,affirmative,Orchestrates outputs owned by the sibling processes (curves at CM-1-2-2-3-3...),1
+REL-00279,affirmative,Orchestrates outputs owned by the sibling processes (valuations at CM-1-2-2-3-15...),1
+REL-00293,exclusion,,2
+REL-00361,exclusion,,2
+REL-00369,affirmative,Operational quantities arrive as controlled inputs: ... owned by Perform Production Accounting (CM-1-1-7-1-3),3
+REL-00370,affirmative,this process values what those processes have verified [CM-1-1-3-7-5],3
+REL-00373,exclusion,,3
+REL-00378,exclusion,,3
+REL-00380,affirmative,taking the controlled economic P&L inputs delivered by ... (CM-1-2-2-3-5),1
+REL-00390,exclusion,,2
+REL-00404,affirmative,assembling RIN ... data from actualized registry records (CM-1-2-3-1-7),4
+REL-00410,affirmative,"screening completed movements using the actualized time, notice, and event facts (CM-1-2-3-1-4)",3
+REL-00442,affirmative,deriving requirements ... from the binding production plan (CM-1-1-4),3
+REL-00443,affirmative,deriving requirements ... net of ... inventory positions (CM-1-2-5-4-2),1
+REL-00446,affirmative,assembling ... from the demand signal (CM-1-2-5-2-2),1
+REL-00450,affirmative,coordinating nominations ... under contracts administered at CM-1-2-1-2-9,3
+REL-00470,affirmative,Uses governed cost and margin data from Accounting (CM-1-2-4-2),3
+REL-00474,affirmative,planning ... utilization ... against demand needs (CM-1-2-6-2-1),1
+REL-00483,affirmative,receiving replenishment requirements decided by Manage Inventory Replenishment (CM-1-1-3-7-9),3
+REL-00487,affirmative,coordinating ... under carrier contracts (CM-1-2-1-2-9),3
+REL-00549,affirmative,Cost-to-serve economics come from CM-1-2-6-1-3 as governed input,3
+REL-00563,affirmative,integrating governed findings from the five analysis processes (CM-1-3-1-1 through -5),3
+REL-00621,affirmative,consuming cost-to-serve assessments from CM-1-2-6-1-3 as governed inputs,3
+REL-00650,affirmative,coordinating pilot execution through the pricing execution processes (CM-1-3-6-3 executes),3
+REL-00662,affirmative,using governed ... cost-to-serve evidence (CM-1-2-6-1-3),1
+REL-00696,affirmative,taking the approved channel-of-trade mix (CM-1-3-2-4),4
+REL-00697,affirmative,taking ... channel-design outputs (CM-1-3-3-3),3
+REL-00759,affirmative,identifying and engaging partners against the technology needs (CM-1-3-4-5-1),1
+REL-00824,affirmative,conducting performance dialogue from the reported evidence (CM-1-3-6-1-3),1
+REL-00836,affirmative,executing account plans (CM-1-3-5-1-3),3
+REL-00849,exclusion,,3
+REL-00935,exclusion,,1
+REL-00941,exclusion,,1
+REL-00972,exclusion,,1
+REL-01007,exclusion,,1
+REL-01044,exclusion,,1
+REL-01062,exclusion,,1
+REL-01076,exclusion,,1
+REL-01114,exclusion,,1
+REL-01127,affirmative,Operates against carrier contracts administered under Manage Carrier Contracts (CM-1-2-1-2-9),3
+REL-01136,affirmative,consuming the replenishment decisions owned by Manage Inventory Replenishment (CM-1-1-3-7-9),3
+REL-01162,exclusion,,1
+REL-01164,exclusion,,1
+REL-01165,exclusion,,1
+REL-01180,exclusion,,2
+REL-01220,exclusion,,1
+REL-01246,exclusion,,2
+REL-01264,exclusion,,1
+REL-01276,affirmative,Prices are applied from Sales Pricing Management (CM-1-3-6-3),3
+REL-01278,exclusion,,1
+REL-01292,affirmative,"identifying potential claims from actualized time, notice, and event facts (CM-1-2-3-1-4)",3
