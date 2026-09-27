@@ -2,7 +2,7 @@
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(762 emitting / 541 held / 603 facts — 716 before the 2026-09-26 uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
+(761 emitting / 542 held / 603 facts — 716 before the 2026-09-26 uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
 **Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #127; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
@@ -175,7 +175,7 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 716 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 749 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 762 emitting.
+**Reconciliation:** 716 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 749 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 761 emitting.
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -183,17 +183,17 @@ InformationObject instances (Q5).
 
 ## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
 
-- Emitting mentions: **762**.
+- Emitting mentions: **761**.
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **749** (716 map to their own predicate + 33 G1a duplicate evidence; 762 − 13 G2 no-triple).
+- Mentions attached to stored facts: **749** (716 map to their own predicate + 33 G1a duplicate evidence; 761 − 13 G2 no-triple).
 - Canonical facts (distinct stored subject/predicate/object): **603** (716 before the 2026-09-26 uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 541 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 542 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 762 + 541 + 12 + 1 + 2 = 1,318. ✓
+  values). Total: 761 + 542 + 12 + 1 + 2 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -215,7 +215,7 @@ InformationObject instances (Q5).
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 762 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 761 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 
@@ -600,7 +600,7 @@ marking such rows `PROMOTE`.
   resolution; the fact survives if the `enables` mention is removed; no G1a
   row is the sole evidence for its fact; no merge creates a fact.
 - Held mentions attached as duplicate provenance (REL-00152, REL-00436)
-  stay counted as held (in the 541), add no support, and are not
+  stay counted as held (in the 542), add no support, and are not
   emitting.
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
   REL-01006 superseded; REL-00936 source-classification hold). 77 → 75
