@@ -69,6 +69,32 @@ All 96 Section B rows were held under the nearness-only identity rule: a candida
 | REL-01286 | `governed-by` (Credit Risk Management → Regulatory & Compliance): Credit Risk Management is an independent risk-control function with its own assessment, limits, collateral, margining, exposure, monitoring, and reporting. Trading Regulatory & Compliance does not establish authority over credit-risk policy. Possible future `subjectToComplianceRequirements` relation — not `governedBy`. Held by Hamid 2026-09-25. | 2026-09-25 | awaiting workbook authoring change |
 | — | Sequence contradictions held under the property rule (both directions of a mutual `precedes`): none currently in the emitting set (verified 2026-09-24). Future ones land here. | — | watching |
 
+## G1b pairs held on both sides (Hamid 2026-09-26)
+
+15 pairs where the G1b `enables` row is held (G1bNoVerbChange) and the reverse
+`informed-by` row is also held (no route in the 2026-09-26 informed-by pass).
+Both sides held → the relationship disappears from the graph entirely.
+Same pattern as contradiction pair C. The G1b gate check is now conditional:
+reverse fact present **if** its row has a route; otherwise held with no fact.
+
+| G1b row | informed-by row | status |
+|---|---|---|
+| REL-00469 | REL-01130 | both held — relationship absent from graph |
+| REL-00489 | REL-00476 | both held — relationship absent from graph |
+| REL-00499 | REL-00505 | both held — relationship absent from graph |
+| REL-00648 | REL-00643 | both held — relationship absent from graph |
+| REL-00974 | REL-00896 | both held — relationship absent from graph |
+| REL-00977 | REL-00965 | both held — relationship absent from graph |
+| REL-01112 | REL-00646 | both held — relationship absent from graph |
+| REL-01148 | REL-01150 | both held — relationship absent from graph |
+| REL-01151 | REL-01152 | both held — relationship absent from graph |
+| REL-01154 | REL-01205 | both held — relationship absent from graph |
+| REL-01184 | REL-01193 | both held — relationship absent from graph |
+| REL-01194 | REL-01199 | both held — relationship absent from graph |
+| REL-01197 | REL-01200 | both held — relationship absent from graph |
+| REL-01233 | REL-01217 | both held — relationship absent from graph |
+| REL-01273 | REL-01295 | both held — relationship absent from graph |
+
 ## Definitions
 
 - **Restates-hierarchy relation:** a relationship mention whose only content
@@ -250,3 +276,54 @@ All 96 Section B rows were held under the nearness-only identity rule: a candida
 | row_id | issue | parked | status |
 |---|---|---|---|
 | REL-00873 | `requires` (Set Up Prospect CM-1-3-6-6-1 → candidate Establish Credit Limit & Risk Code CM-1-3-7-4-2). Target identity UNCONFIRMED: exact-unique-current label match only. No rule 5 route — no explicit citation (partial "Credit" mention in the source definition does not count), no strict-inverse two-way mention (the reverse, REL-00971 `enables`, is not `requires`' inverse), no same-branch structural nearness (CM-1-3-6 vs CM-1-3-7). Prior 2026-09-25 approval (with credit-controlled-onboarding scope note) superseded 2026-09-26 under the all-verbs identity-rule scope ruling. The stored `core:requires` fact was removed (verified unique); no substitute emitted. Source author must name the intended target in the workbook; the row returns with an identity override and a fresh verdict. | 2026-09-26 | awaiting source-author target clarification |
+
+## Governed-by pass backlog (Hamid 2026-09-26)
+
+- **REL-00215** (`CM-1-2-1-4 core:governedBy CM-1-2-2-3`, held as exclusion):
+  Target-side affirmative evidence exists — the A6 definition of Market Risk
+  Management says strategy stewardship is "governed by these controls
+  (CM-1-2-1-4)". But rule 5's citation route requires the **source's**
+  definition or scope note. The source author should confirm whether
+  CM-1-2-1-4's definition/scope supports the governed-by relationship to
+  CM-1-2-2-3.
+
+- **REL-00190** (promoted): The cited slug is the child CM-1-2-2-3-2
+  (Establish & Maintain Delegation Of Authority); the row promotes on the
+  target's unique label "Market Risk Management" in an affirmative sentence.
+  The target stays at CM-1-2-2-3 (Rule 11: no re-targeting). The source
+  author should decide whether CM-1-2-2-3-2 is the more precise target.
+
+## Governed-by superseded approvals routed for source correction (Hamid 2026-09-26)
+
+The following 10 RELs had 2026-09-25 row-level approvals that are superseded
+(HOLD / D:hamid-verdict / NoAffirmativeCitation / Supersedes2026-09-25Approval).
+Each requires source-workbook correction to add an affirmative citation
+(slug, unique label, or range in source definition/scope note).
+
+- REL-00050
+- REL-00067
+- REL-00394
+- REL-00399
+- REL-00406
+- REL-00907 (scope conditions lapsed: credit eligibility, limits, holds/releases, risk-control constraints)
+- REL-00937
+- REL-01005
+- REL-01228 (scope conditions lapsed)
+- REL-01256 (scope conditions lapsed)
+
+## Triggers pass: 11 held rows routed for source correction (Hamid 2026-09-26)
+
+Each held row needs an affirmative citation tying the source's event or result
+to the target (trigger, route to, refer, escalate, hand off), added by the
+source author. Supersession entries in `step4-decisions.md`.
+
+- REL-00049 (exclusion/boundary)
+- REL-00291 (boundary: states where work happens)
+- REL-00892 (exclusion/boundary)
+- REL-00163 (boundary: states where amendments are done; no finding-to-target link)
+- REL-00169, REL-00170, REL-00252 (no citation)
+- REL-00396, REL-00398, REL-00400, REL-00403 (compliance monitors; no citation)
+
+Target-side check for the four compliance monitors: does Manage Exceptions
+(CM-1-2-4-3-7) cite its sources as a range? If so, that is target-side
+evidence and needs the source author to confirm (REL-00215 pattern).
