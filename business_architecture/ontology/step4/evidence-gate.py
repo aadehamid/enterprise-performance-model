@@ -472,10 +472,20 @@ for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval")
 
+# 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
+# 6 ExclusionBoundaryCitation + 13 exclusion/boundary/owned-by + REL-00307 (reference-data).
+for rid in ("REL-01223", "REL-01227", "REL-01241", "REL-01289", "REL-01291",
+            "REL-01294", "REL-00008", "REL-00068", "REL-00112", "REL-00149",
+            "REL-00184", "REL-00188", "REL-00193", "REL-00200", "REL-00206",
+            "REL-00319", "REL-00351", "REL-00374", "REL-00930", "REL-00307"):
+    check(f"precedes/follows held {rid} emits no triple",
+          _emits_nothing(rid),
+          "HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation / Supersedes2026-09-26Approval")
+
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==477", len(cf) == 477, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 477)
+check("canonical-facts==457", len(cf) == 457, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 457)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
