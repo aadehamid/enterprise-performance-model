@@ -1,0 +1,315 @@
+row_id,verb,source_slug,target_slug,route_type,route_detail,basis
+REL-00001,precedes,CM-1-1-1-1-1,CM-1-1-1-1-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00003:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00003,follows,CM-1-1-1-1-2,CM-1-1-1-1-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00001:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00004,precedes,CM-1-1-1-1-2,CM-1-1-1-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00005:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00005,follows,CM-1-1-1-1-3,CM-1-1-1-1-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00004:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00006,precedes,CM-1-1-1-1-3,CM-1-1-1-1-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00007:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00007,follows,CM-1-1-1-1-4,CM-1-1-1-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00006:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00008,precedes,CM-1-1-1-1-4,CM-1-1-2,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""owned by Regional Optimization"", not sequence",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00011,follows,CM-1-1-1-1-5,CM-1-1-1-1-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00031,precedes,CM-1-1-3-5-1,CM-1-1-3-6-1,two-way,two-way (yes:REL-00033:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00033,follows,CM-1-1-3-6-1,CM-1-1-3-5-1,two-way,two-way (yes:REL-00031:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00034,precedes,CM-1-1-3-6-1,CM-1-1-3-6-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00035,follows,CM-1-1-3-6-2,CM-1-1-3-6-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00034:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00036,precedes,CM-1-1-3-6-2,CM-1-1-3-6-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00037:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00037,follows,CM-1-1-3-6-3,CM-1-1-3-6-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00039,precedes,CM-1-1-3-6-3,CM-1-1-3-6-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00040:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00040,follows,CM-1-1-3-6-4,CM-1-1-3-6-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00039:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00056,precedes,CM-1-1-3-7-4,CM-1-1-3-7-5,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00058:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00058,follows,CM-1-1-3-7-5,CM-1-1-3-7-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00056:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00068,precedes,CM-1-1-3-7-9,CM-1-1-3-6,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""owned by Physical Distribution Scheduling"", not sequence",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00070,precedes,CM-1-1-3-8-1,CM-1-1-3-8-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00072:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00072,follows,CM-1-1-3-8-2,CM-1-1-3-8-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00070:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00073,precedes,CM-1-1-3-8-2,CM-1-1-3-8-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00076:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00076,follows,CM-1-1-3-8-4,CM-1-1-3-8-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00073:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00083,precedes,CM-1-1-4-7-1,CM-1-1-4-7-8,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00112,precedes,CM-1-1-4-7-8,CM-1-1-4,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""owned by Refinery Planning and Optimization"", not sequence",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00125,follows,CM-1-1-7-2-3,CM-1-1-7-2-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00131,follows,CM-1-1-7-2-5,CM-1-1-7-2-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00137,follows,CM-1-1-7-3-2,CM-1-1-7-3-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00149,precedes,CM-1-2-1-1-3,CM-1-2-3-1-7,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""owned by Perform RINs/REC Actualization"", not sequence",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00157,precedes,CM-1-2-1-2-1,CM-1-2-1-2-5,sibling+two-way,sibling-nearness + two-way (yes:REL-00171:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00159,follows,CM-1-2-1-2-10,CM-1-2-7-1-3,two-way+citation,two-way (yes:REL-00495:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00162,follows,CM-1-2-1-2-11,CM-1-2-1-2-6,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00165,follows,CM-1-2-1-2-2,CM-1-2-1-2-1,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00167,follows,CM-1-2-1-2-3,CM-1-2-1-2-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00171,follows,CM-1-2-1-2-5,CM-1-2-1-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00157:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00173,follows,CM-1-2-1-2-6,CM-1-2-1-2-5,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00175,follows,CM-1-2-1-2-7,CM-1-2-1-2-6,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00182,precedes,CM-1-2-1-3-1,CM-1-2-1-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00189:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00183,follows,CM-1-2-1-3-10,CM-1-2-1-3-7,sibling+two-way,sibling-nearness + two-way (yes:REL-00205:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00184,precedes,CM-1-2-1-3-10,CM-1-2-2-2-4,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""may be handled by"", conditional/boundary, not affirmative",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00186,follows,CM-1-2-1-3-11,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00188,precedes,CM-1-2-1-3-11,CM-1-2-4-1-15,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — target listed in branch, then excluded; not sequence",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00189,follows,CM-1-2-1-3-2,CM-1-2-1-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00182:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00191,precedes,CM-1-2-1-3-2,CM-1-2-1-3-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00192:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00192,follows,CM-1-2-1-3-3,CM-1-2-1-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00191:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00193,precedes,CM-1-2-1-3-3,CM-1-2-2-2,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""excludes confirmation with the counterparty""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00195,follows,CM-1-2-1-3-4,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00197,precedes,CM-1-2-1-3-4,CM-1-2-4-1-3,two-way+citation,two-way (yes:REL-00342:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00198,follows,CM-1-2-1-3-5,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00200,precedes,CM-1-2-1-3-5,CM-1-2-4-1-14,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""excludes storage settlement""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00201,follows,CM-1-2-1-3-6,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00203,precedes,CM-1-2-1-3-6,CM-1-2-3-1-7,two-way+citation,two-way (yes:REL-00309:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00204,follows,CM-1-2-1-3-7,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00205,precedes,CM-1-2-1-3-7,CM-1-2-1-3-10,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00183:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00206,precedes,CM-1-2-1-3-7,CM-1-2-2-2,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""excludes confirmation""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00207,follows,CM-1-2-1-3-8,CM-1-2-1-3-2,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00209,precedes,CM-1-2-1-3-8,CM-1-2-2-2,citation,"citation: ""and settlement, which follow their instrument types (Confirmations Management, CM-1-2-2-2; Settlements, CM-1-2-4-1). In scope: Decompose structured deals into capturable""",D:hamid-verdict / Rule 5 sequence route
+REL-00210,follows,CM-1-2-1-3-9,CM-1-2-1-3-2,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00212,precedes,CM-1-2-1-3-9,CM-1-2-4-1-12,citation,"citation: ""CM-1-1-3-6-1); transport settlement follows the mode-specific settlement nodes (CM-1-2-4-1-12/-13/-4/-5); physical transport operation is owned by Midstream and carriers. In""",D:hamid-verdict / Rule 5 sequence route
+REL-00219,follows,CM-1-2-2-1-2,CM-1-2-2-1-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00228,follows,CM-1-2-2-1-5,CM-1-2-1-3-4,citation,"citation: ""or liquidity visibility. Cleared positions arrive from Capture Exchange Trades (CM-1-2-1-3-4); contractual credit support is administered at Manage Collateral (CM-1-2-2-1-3""",D:hamid-verdict / Rule 5 sequence route
+REL-00230,precedes,CM-1-2-2-1-5,CM-1-2-4-1-16,citation,"citation: ""cash movements execute through settlement and finance processes (Settle Broker, CM-1-2-4-1-16). In scope: Validate externally calculated margin requirements and run internal""",D:hamid-verdict / Rule 5 sequence route
+REL-00240,follows,CM-1-2-2-2-1,CM-1-2-1-3,citation,"citation: ""CM-1-2-2-2-5); capture errors surfaced by matching route back to Trade Capture (CM-1-2-1-3) for correction. Excludes confirmation template and documentation control, owne""",D:hamid-verdict / Rule 5 sequence route
+REL-00241,precedes,CM-1-2-2-2-1,CM-1-2-2-2-5,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00251:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00245,follows,CM-1-2-2-2-3,CM-1-2-2-2-1,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00251,follows,CM-1-2-2-2-5,CM-1-2-2-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00241:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00280,precedes,CM-1-2-2-3-4,CM-1-2-2-3-5,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00281:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00281,follows,CM-1-2-2-3-5,CM-1-2-2-3-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00280:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00296,precedes,CM-1-2-3-1-1,CM-1-2-4-1-12,two-way+citation,two-way (yes:REL-00322:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00298,precedes,CM-1-2-3-1-2,CM-1-2-4-1-4,two-way+citation,two-way (yes:REL-00345:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00300,precedes,CM-1-2-3-1-3,CM-1-2-4-1-13,two-way+citation,two-way (yes:REL-00324:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00302,precedes,CM-1-2-3-1-4,CM-1-2-4-1-5,two-way+citation,two-way (yes:REL-00347:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00305,precedes,CM-1-2-3-1-5,CM-1-2-4-1-14,two-way+citation,two-way (yes:REL-00326:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00306,follows,CM-1-2-3-1-5,CM-1-2-1-3-5,citation,"citation: ""contractual bases. Storage-deal terms come from capture (Capture Storage Deals, CM-1-2-1-3-5). Excludes terminal operations and physical measurement (terminal operator); te""",D:hamid-verdict / Rule 5 sequence route
+REL-00307,follows,CM-1-2-3-1-6,CM-1-2-1-2-8,citation,"citation: ""ns, and division-of-interest references maintained under Manage Lease Contract (CM-1-2-1-2-8); and closing lease runs for settlement. Measurement procedures at the lease ta""",D:hamid-verdict / Rule 5 sequence route
+REL-00308,precedes,CM-1-2-3-1-6,CM-1-2-4-1-6,two-way+citation,two-way (yes:REL-00349:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00309,follows,CM-1-2-3-1-7,CM-1-2-1-3-6,two-way+citation,two-way (yes:REL-00203:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00311,precedes,CM-1-2-3-1-7,CM-1-2-4-1-8,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00319,follows,CM-1-2-4-1-11,CM-1-2-1-3-7,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""Excludes trade capture""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00322,follows,CM-1-2-4-1-12,CM-1-2-3-1-1,two-way+citation,two-way (yes:REL-00296:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00324,follows,CM-1-2-4-1-13,CM-1-2-3-1-3,two-way+citation,two-way (yes:REL-00300:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00326,follows,CM-1-2-4-1-14,CM-1-2-3-1-5,two-way+citation,two-way (yes:REL-00305:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00330,follows,CM-1-2-4-1-16,CM-1-2-4-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00344:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00342,follows,CM-1-2-4-1-3,CM-1-2-1-3-4,two-way+citation,two-way (yes:REL-00197:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00344,precedes,CM-1-2-4-1-3,CM-1-2-4-1-16,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00330:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00345,follows,CM-1-2-4-1-4,CM-1-2-3-1-2,two-way+citation,two-way (yes:REL-00298:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00347,follows,CM-1-2-4-1-5,CM-1-2-3-1-4,two-way+citation,two-way (yes:REL-00302:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00349,follows,CM-1-2-4-1-6,CM-1-2-3-1-6,two-way+citation,two-way (yes:REL-00308:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00350,precedes,CM-1-2-4-1-6,CM-1-2-4-2-3,two-way+citation,two-way (yes:REL-00372:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00351,follows,CM-1-2-4-1-7,CM-1-2-1-3-11,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""Excludes transmission deal capture""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00353,follows,CM-1-2-4-1-8,CM-1-2-3-1-7,two-way+citation,two-way (yes:REL-00311:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00372,follows,CM-1-2-4-2-3,CM-1-2-4-1-6,two-way+citation,two-way (yes:REL-00350:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00374,follows,CM-1-2-4-2-4,CM-1-2-4-1,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""Excludes settlement calculation and invoice validation""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00389,follows,CM-1-2-4-2-9,CM-1-2-4-2-4,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00407,follows,CM-1-2-4-3-7,CM-1-2-4-3-2,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00408,follows,CM-1-2-4-3-7,CM-1-2-4-3-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00411,precedes,CM-1-2-4-4-1,CM-1-2-4-4-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00412,follows,CM-1-2-4-4-2,CM-1-2-4-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00411:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00413,precedes,CM-1-2-4-4-2,CM-1-2-4-4-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00414,precedes,CM-1-2-4-4-3,CM-1-2-4-4-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00416,follows,CM-1-2-4-4-4,CM-1-2-4-4-3,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00417,precedes,CM-1-2-4-4-4,CM-1-2-4-4-6,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00419,follows,CM-1-2-4-4-5,CM-1-2-4-4-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00420,precedes,CM-1-2-4-4-5,CM-1-2-4-4-7,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00421,follows,CM-1-2-4-4-6,CM-1-2-4-4-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00422,precedes,CM-1-2-4-4-6,CM-1-2-4-4-8,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00423,follows,CM-1-2-4-4-7,CM-1-2-4-4-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00424,precedes,CM-1-2-4-4-7,CM-1-2-4-2-4,citation,"citation: ""able into the designated finance processes for booking (Manage AR/AP & Actuals, CM-1-2-4-2-4) and receipt application (Manage Cash Application, CM-1-2-4-2-9) per the batch""",D:hamid-verdict / Rule 5 sequence route
+REL-00425,follows,CM-1-2-4-4-8,CM-1-2-4-4-6,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00426,precedes,CM-1-2-4-4-8,CM-1-2-4-2-4,citation,"citation: ""egotiation (CM-1-2-4-4-6); AP booking, payment approval, and payment execution (CM-1-2-4-2-4, Treasury/banking, designated payment authority); post-agreement disputes (CM-1""",D:hamid-verdict / Rule 5 sequence route
+REL-00439,follows,CM-1-2-5-2-1,CM-1-2-5-2-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00444:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00441,precedes,CM-1-2-5-2-1,CM-1-2-5-3-1,two-way+citation,two-way (yes:REL-00448:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00444,precedes,CM-1-2-5-2-2,CM-1-2-5-2-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00439:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00448,follows,CM-1-2-5-3-1,CM-1-2-5-2-1,two-way,two-way (yes:REL-00441:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00449,precedes,CM-1-2-5-3-1,CM-1-2-5-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00451:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00451,follows,CM-1-2-5-3-2,CM-1-2-5-3-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00449:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00452,precedes,CM-1-2-5-3-2,CM-1-2-5-3-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00454:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00454,follows,CM-1-2-5-3-3,CM-1-2-5-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00452:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00486,follows,CM-1-2-6-3-3,CM-1-2-6-3-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00488,precedes,CM-1-2-6-3-3,CM-1-1-3-6,citation,"citation: ""ming, and commercial-movement requirements to Physical Distribution Scheduling (CM-1-1-3-6), which owns primary movement nomination and shipper-side administration, and t""",D:hamid-verdict / Rule 5 sequence route
+REL-00491,precedes,CM-1-2-7-1-1,CM-1-2-4-1-2,citation,"citation: ""3-4, batch 08). Exchange settlement executes per the agreements at Settlements (CM-1-2-4-1-2, batch 14). Excludes operational utilization planning (CM-1-2-6-2-2); futures-e""",D:hamid-verdict / Rule 5 sequence route
+REL-00495,precedes,CM-1-2-7-1-3,CM-1-2-1-2-10,two-way+citation,two-way (yes:REL-00159:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00496,precedes,CM-1-2-7-1-3,CM-1-2-1-3-5,citation,"citation: ""mercially distinct capacity transactions are captured by Capture Storage Deals (CM-1-2-1-3-5) — per the batch 09 caveat, not every storage agreement results in a separately""",D:hamid-verdict / Rule 5 sequence route
+REL-00507,follows,CM-1-3-1-1-1,CM-1-3-1-1-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00510:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00508,precedes,CM-1-3-1-1-1,CM-1-3-1-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00514:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00510,precedes,CM-1-3-1-1-2,CM-1-3-1-1-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00507:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00511,precedes,CM-1-3-1-1-2,CM-1-3-1-1-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00512,precedes,CM-1-3-1-1-2,CM-1-3-1-1-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00514,follows,CM-1-3-1-1-3,CM-1-3-1-1-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00508:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00515,precedes,CM-1-3-1-1-3,CM-1-3-1-1-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00516:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00516,follows,CM-1-3-1-1-4,CM-1-3-1-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00515:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00518,follows,CM-1-3-1-2-1,CM-1-3-1-2-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00521:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00519,precedes,CM-1-3-1-2-1,CM-1-3-1-2-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00525:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00521,precedes,CM-1-3-1-2-2,CM-1-3-1-2-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00518:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00522,precedes,CM-1-3-1-2-2,CM-1-3-1-2-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00523,precedes,CM-1-3-1-2-2,CM-1-3-1-2-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00525,follows,CM-1-3-1-2-3,CM-1-3-1-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00519:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00526,precedes,CM-1-3-1-2-3,CM-1-3-1-2-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00527:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00527,follows,CM-1-3-1-2-4,CM-1-3-1-2-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00526:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00529,follows,CM-1-3-1-3-1,CM-1-3-1-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00532:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00530,precedes,CM-1-3-1-3-1,CM-1-3-1-3-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00536:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00532,precedes,CM-1-3-1-3-2,CM-1-3-1-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00529:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00533,precedes,CM-1-3-1-3-2,CM-1-3-1-3-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00534,precedes,CM-1-3-1-3-2,CM-1-3-1-3-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00536,follows,CM-1-3-1-3-3,CM-1-3-1-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00530:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00537,precedes,CM-1-3-1-3-3,CM-1-3-1-3-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00538:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00538,follows,CM-1-3-1-3-4,CM-1-3-1-3-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00537:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00540,follows,CM-1-3-1-4-1,CM-1-3-1-4-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00543:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00541,precedes,CM-1-3-1-4-1,CM-1-3-1-4-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00547:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00543,precedes,CM-1-3-1-4-2,CM-1-3-1-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00540:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00544,precedes,CM-1-3-1-4-2,CM-1-3-1-4-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00545,precedes,CM-1-3-1-4-2,CM-1-3-1-4-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00547,follows,CM-1-3-1-4-3,CM-1-3-1-4-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00541:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00548,precedes,CM-1-3-1-4-3,CM-1-3-1-4-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00550:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00550,follows,CM-1-3-1-4-4,CM-1-3-1-4-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00548:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00552,follows,CM-1-3-1-5-1,CM-1-3-1-5-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00555:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00553,precedes,CM-1-3-1-5-1,CM-1-3-1-5-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00559:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00555,precedes,CM-1-3-1-5-2,CM-1-3-1-5-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00552:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00556,precedes,CM-1-3-1-5-2,CM-1-3-1-5-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00557,precedes,CM-1-3-1-5-2,CM-1-3-1-5-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00559,follows,CM-1-3-1-5-3,CM-1-3-1-5-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00553:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00560,precedes,CM-1-3-1-5-3,CM-1-3-1-5-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00561:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00561,follows,CM-1-3-1-5-4,CM-1-3-1-5-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00560:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00576,precedes,CM-1-3-10-2,CM-1-1-3-6-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00586,follows,CM-1-3-2-1-1,CM-1-3-2-1-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00589:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00587,precedes,CM-1-3-2-1-1,CM-1-3-2-1-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00592:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00589,precedes,CM-1-3-2-1-2,CM-1-3-2-1-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00590,precedes,CM-1-3-2-1-2,CM-1-3-2-1-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00592,follows,CM-1-3-2-1-3,CM-1-3-2-1-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00593,precedes,CM-1-3-2-1-3,CM-1-3-2-1-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00594:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00594,follows,CM-1-3-2-1-4,CM-1-3-2-1-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00593:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00597,follows,CM-1-3-2-2-1,CM-1-3-2-2-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00600:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00598,precedes,CM-1-3-2-2-1,CM-1-3-2-2-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00605:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00599,follows,CM-1-3-2-2-2,CM-1-3-2-2-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00602:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00600,precedes,CM-1-3-2-2-2,CM-1-3-2-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00597:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00602,precedes,CM-1-3-2-2-3,CM-1-3-2-2-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00599:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00603,precedes,CM-1-3-2-2-3,CM-1-3-2-2-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00605,follows,CM-1-3-2-2-4,CM-1-3-2-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00598:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00608,follows,CM-1-3-2-3-1,CM-1-3-2-3-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00609,precedes,CM-1-3-2-3-1,CM-1-3-2-3-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00610,follows,CM-1-3-2-3-2,CM-1-3-2-3-3,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00611,precedes,CM-1-3-2-3-2,CM-1-3-2-3-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00613,precedes,CM-1-3-2-3-3,CM-1-3-2-3-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00614,precedes,CM-1-3-2-3-3,CM-1-3-2-3-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00616,follows,CM-1-3-2-3-4,CM-1-3-2-3-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00619,precedes,CM-1-3-2-4-1,CM-1-3-2-4-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00622:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00622,follows,CM-1-3-2-4-2,CM-1-3-2-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00619:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00624,precedes,CM-1-3-2-5-1,CM-1-3-2-5-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00626:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00626,follows,CM-1-3-2-5-2,CM-1-3-2-5-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00624:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00627,precedes,CM-1-3-2-5-2,CM-1-3-2-5-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00628:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00628,follows,CM-1-3-2-5-3,CM-1-3-2-5-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00627:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00630,precedes,CM-1-3-3-1-1,CM-1-3-3-1-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00632:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00632,follows,CM-1-3-3-1-2,CM-1-3-3-1-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00630:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00633,precedes,CM-1-3-3-1-2,CM-1-3-3-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00634:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00634,follows,CM-1-3-3-1-3,CM-1-3-3-1-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00633:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00635,precedes,CM-1-3-3-1-3,CM-1-3-3-1-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00636,follows,CM-1-3-3-1-4,CM-1-3-3-1-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00635:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00638,precedes,CM-1-3-3-2-1,CM-1-3-3-2-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00640:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00640,follows,CM-1-3-3-2-2,CM-1-3-3-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00638:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00641,precedes,CM-1-3-3-2-2,CM-1-3-3-2-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00645,follows,CM-1-3-3-2-3,CM-1-3-3-2-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00649,follows,CM-1-3-3-2-4,CM-1-3-3-2-2,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00651,follows,CM-1-3-3-2-5,CM-1-3-3-2-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00641:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00652,precedes,CM-1-3-3-2-5,CM-1-3-3-2-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00645:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00654,follows,CM-1-3-3-3-1,CM-1-3-3-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00658:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00655,precedes,CM-1-3-3-3-1,CM-1-3-3-3-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00663:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00657,follows,CM-1-3-3-3-2,CM-1-3-3-3-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00660:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00658,precedes,CM-1-3-3-3-2,CM-1-3-3-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00654:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00660,precedes,CM-1-3-3-3-3,CM-1-3-3-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00657:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00663,follows,CM-1-3-3-3-4,CM-1-3-3-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00655:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00664,precedes,CM-1-3-3-3-4,CM-1-3-3-3-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00666,follows,CM-1-3-3-3-5,CM-1-3-3-3-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00664:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00668,follows,CM-1-3-3-4-1,CM-1-3-3-4-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00674:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00669,precedes,CM-1-3-3-4-1,CM-1-3-3-4-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00671,precedes,CM-1-3-3-4-2,CM-1-3-3-4-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00673:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00673,follows,CM-1-3-3-4-3,CM-1-3-3-4-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00671:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00674,precedes,CM-1-3-3-4-3,CM-1-3-3-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00668:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00676,follows,CM-1-3-3-4-4,CM-1-3-3-4-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00669:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00690,follows,CM-1-3-3-6-1,CM-1-3-3-6-3,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00691,precedes,CM-1-3-3-6-1,CM-1-3-3-6-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00693:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00693,follows,CM-1-3-3-6-2,CM-1-3-3-6-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00691:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00694,precedes,CM-1-3-3-6-2,CM-1-3-3-6-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00701:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00701,follows,CM-1-3-3-6-4,CM-1-3-3-6-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00694:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00702,precedes,CM-1-3-3-6-4,CM-1-3-3-6-5,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00704,follows,CM-1-3-3-6-5,CM-1-3-3-6-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00702:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00707,precedes,CM-1-3-4-1-1,CM-1-3-4-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00711:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00711,follows,CM-1-3-4-1-3,CM-1-3-4-1-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00707:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00714,precedes,CM-1-3-4-2-1,CM-1-3-4-2-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00716:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00716,follows,CM-1-3-4-2-2,CM-1-3-4-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00714:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00720,precedes,CM-1-3-4-3-1,CM-1-3-4-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00722:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00722,follows,CM-1-3-4-3-2,CM-1-3-4-3-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00720:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00729,follows,CM-1-3-4-4-2,CM-1-3-4-4-1,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00734,follows,CM-1-3-4-4-4,CM-1-3-4-4-1,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00736,follows,CM-1-3-4-4-5,CM-1-3-4-4-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00741,precedes,CM-1-3-4-5-1,CM-1-3-4-5-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00743:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00743,follows,CM-1-3-4-5-2,CM-1-3-4-5-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00741:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00744,precedes,CM-1-3-4-5-2,CM-1-3-4-5-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00746:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00746,follows,CM-1-3-4-5-3,CM-1-3-4-5-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00744:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00747,precedes,CM-1-3-4-5-3,CM-1-3-4-5-4,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00749,follows,CM-1-3-4-5-4,CM-1-3-4-5-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00747:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00763,precedes,CM-1-3-5-1-1,CM-1-3-5-1-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00769:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00769,follows,CM-1-3-5-1-3,CM-1-3-5-1-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00763:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00772,follows,CM-1-3-5-1-4,CM-1-3-5-1-3,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00778,precedes,CM-1-3-5-3-1,CM-1-3-5-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00783:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00780,follows,CM-1-3-5-3-10,CM-1-3-5-3-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00791:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00783,follows,CM-1-3-5-3-2,CM-1-3-5-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00778:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00784,precedes,CM-1-3-5-3-2,CM-1-3-5-3-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00786:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00786,follows,CM-1-3-5-3-3,CM-1-3-5-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00784:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00787,precedes,CM-1-3-5-3-3,CM-1-3-5-3-5,sibling+two-way,sibling-nearness + two-way (yes:REL-00793:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00789,follows,CM-1-3-5-3-4,CM-1-3-5-3-6,sibling+two-way,sibling-nearness + two-way (yes:REL-00797:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00790,precedes,CM-1-3-5-3-4,CM-1-3-5-3-8,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00802:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00791,precedes,CM-1-3-5-3-4,CM-1-3-5-3-10,sibling+two-way,sibling-nearness + two-way (yes:REL-00780:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00793,follows,CM-1-3-5-3-5,CM-1-3-5-3-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00787:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00794,precedes,CM-1-3-5-3-5,CM-1-3-5-3-6,sibling+two-way,sibling-nearness + two-way (yes:REL-00796:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00796,follows,CM-1-3-5-3-6,CM-1-3-5-3-5,sibling+two-way,sibling-nearness + two-way (yes:REL-00794:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00797,precedes,CM-1-3-5-3-6,CM-1-3-5-3-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00789:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00802,follows,CM-1-3-5-3-8,CM-1-3-5-3-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00790:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00805,follows,CM-1-3-5-3-9,CM-1-3-5-3-4,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00807,precedes,CM-1-3-5-4-1,CM-1-3-5-4-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00809:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00809,follows,CM-1-3-5-4-2,CM-1-3-5-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00807:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00812,follows,CM-1-3-5-4-3,CM-1-3-5-4-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00814,follows,CM-1-3-5-4-4,CM-1-3-5-4-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00832,precedes,CM-1-3-6-2-1,CM-1-3-6-2-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00838:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00838,follows,CM-1-3-6-2-3,CM-1-3-6-2-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00832:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00839,precedes,CM-1-3-6-2-3,CM-1-3-6-2-4,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00841:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00841,follows,CM-1-3-6-2-4,CM-1-3-6-2-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00839:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00842,precedes,CM-1-3-6-2-4,CM-1-3-6-2-5,sibling+two-way,sibling-nearness + two-way (yes:REL-00844:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00844,follows,CM-1-3-6-2-5,CM-1-3-6-2-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00842:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00845,precedes,CM-1-3-6-2-5,CM-1-3-6-2-6,sibling+two-way,sibling-nearness + two-way (yes:REL-00847:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00847,follows,CM-1-3-6-2-6,CM-1-3-6-2-5,sibling+two-way,sibling-nearness + two-way (yes:REL-00845:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00853,precedes,CM-1-3-6-3-1,CM-1-3-6-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00855:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00855,follows,CM-1-3-6-3-2,CM-1-3-6-3-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00853:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00859,precedes,CM-1-3-6-4-1,CM-1-3-6-4-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00860:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00860,follows,CM-1-3-6-4-2,CM-1-3-6-4-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00859:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00861,precedes,CM-1-3-6-4-2,CM-1-3-6-4-3,sibling+two-way,sibling-nearness + two-way (yes:REL-00863:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00863,follows,CM-1-3-6-4-3,CM-1-3-6-4-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00861:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00875,follows,CM-1-3-6-6-10,CM-1-3-6-6-13,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00883:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00881,follows,CM-1-3-6-6-13,CM-1-3-6-6-8,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00903:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00883,precedes,CM-1-3-6-6-13,CM-1-3-6-6-10,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00875:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00891,follows,CM-1-3-6-6-3,CM-1-3-6-6-14,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00903,precedes,CM-1-3-6-6-8,CM-1-3-6-6-13,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00881:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00930,follows,CM-1-3-7-2-2,CM-1-3-6-2-4,HELD,"HOLD / D:hamid-verdict / ExclusionBoundaryCitation — ""Out of scope: Quote content composition""",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-00949,precedes,CM-1-3-7-3-1,CM-1-3-7-3-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00950:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00950,follows,CM-1-3-7-3-2,CM-1-3-7-3-1,sibling+two-way,sibling-nearness + two-way (yes:REL-00949:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00951,precedes,CM-1-3-7-3-2,CM-1-3-7-3-4,sibling+two-way,sibling-nearness + two-way (yes:REL-00956:follows:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00953,follows,CM-1-3-7-3-3,CM-1-3-7-3-1,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-00956,follows,CM-1-3-7-3-4,CM-1-3-7-3-2,sibling+two-way,sibling-nearness + two-way (yes:REL-00951:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-00962,follows,CM-1-3-7-3-6,CM-1-3-7-3-3,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00968,follows,CM-1-3-7-4-2,CM-1-3-7-4-6,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00985,precedes,CM-1-3-7-5-1,CM-1-3-7-5-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-00990:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-00990,follows,CM-1-3-7-5-3,CM-1-3-7-5-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-00993,follows,CM-1-3-7-5-4,CM-1-3-7-5-3,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-01014,follows,CM-1-3-8-1-5,CM-1-3-8-1-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-01018,precedes,CM-1-3-8-2-1,CM-1-3-8-2-3,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01020,follows,CM-1-3-8-2-2,CM-1-3-8-2-1,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-01021,precedes,CM-1-3-8-2-2,CM-1-3-8-2-3,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-01023:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01023,follows,CM-1-3-8-2-3,CM-1-3-8-2-2,sibling+two-way,sibling-nearness + two-way (yes:REL-01021:precedes:emitting),D:hamid-verdict / Rule 5 sequence route
+REL-01026,follows,CM-1-3-8-2-4,CM-1-3-8-2-3,sibling,sibling-nearness,D:hamid-verdict / Rule 5 sequence route
+REL-01091,follows,CM-1-3-9-2-3,CM-1-3-9-2-2,stable-id,stable-ID (rule 4),Rule 4 stable-ID
+REL-01117,precedes,CM-1-1-3-5,CM-1-1-3-6,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-01168:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01119,follows,CM-1-1-7-1,CM-1-1-7-2,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-01242:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01137,precedes,CM-1-2-6-3,CM-1-1-3-6,citation,"citation: ""rack and terminal operations to Refining and Midstream; movement scheduling to CM-1-1-3-6. Excludes physical terminal operations (operators, Midstream); own-production s""",D:hamid-verdict / Rule 5 sequence route
+REL-01168,follows,CM-1-1-3-6,CM-1-1-3-5,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-01117:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01223,precedes,CM-1-1-1-1,CM-1-1-2,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01226,follows,CM-1-2-2-2,CM-1-2-1-3,two-way+citation,two-way (yes:REL-01302:precedes:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01227,precedes,CM-1-2-2-2,CM-1-2-4-1,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01241,follows,CM-1-1-7-2,CM-1-1-4,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01242,precedes,CM-1-1-7-2,CM-1-1-7-1,sibling+two-way+citation,sibling-nearness + two-way (yes:REL-01119:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01289,follows,CM-1-2-3-1,CM-1-2-1-3,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01291,precedes,CM-1-2-3-1,CM-1-2-4-1,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01294,precedes,CM-1-2-4-4,CM-1-2-4-2-4,HELD,"HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation — no citation in source artifacts, no two-way route",D:hamid-verdict / Supersedes2026-09-26Approval
+REL-01301,follows,CM-1-2-1-3,CM-1-2-1-4,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01302,precedes,CM-1-2-1-3,CM-1-2-2-2,two-way+citation,two-way (yes:REL-01226:follows:emitting) + citation,D:hamid-verdict / Rule 5 sequence route
+REL-01307,follows,CM-1-2-4-2,CM-1-2-4-1,sibling+citation,sibling-nearness + citation,D:hamid-verdict / Rule 5 sequence route

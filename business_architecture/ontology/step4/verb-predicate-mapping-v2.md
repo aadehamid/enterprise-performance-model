@@ -2,7 +2,7 @@
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(635 emitting / 668 held / 477 facts — 646/657/488 before the 2026-09-26 triggers pass; 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
+(616 emitting / 687 held / 458 facts — 635/668/477 before the 2026-09-27 precedes/follows amendment; 646/657/488 before the 2026-09-26 triggers pass; 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
 **Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #126; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
