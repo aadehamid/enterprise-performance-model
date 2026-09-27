@@ -1659,6 +1659,17 @@ one approval at a time.
 - REL-00873 superseded (no rule 5 route); its unique core:requires fact
   removed; row on the workbook backlog. Facts: 717 → 716. Emitting 917,
   held 386 unchanged (the row was already held).
+- **REL-00873 supersession REVERSED 2026-09-26.** The corrected citation
+  test found the scope note names "Establish Credit Limit & Risk Code"
+  — the target CM-1-3-7-4-2's exact unique prefLabel — affirmatively
+  ("requests governed record creation and consumes the outcomes").
+  Qualifies under the approved "scope-note label citation, unique
+  label" route. The 2026-09-25 predicate judgment (credit-controlled
+  onboarding prerequisite) stands as the predicate basis; the target
+  identity is now established by the citation route, not by the
+  predicate judgment. Fact restored. Supersession register:
+  *superseded 2026-09-26 on an incomplete census; reversed 2026-09-26
+  on the corrected citation test.*
 - G1a knock-on: 26 stable-id supporters keep standing; the 51 label-only
   supporters go through the uses-input pass — any held leaves its fact
   without independent support, and identity-unconfirmed enables mentions

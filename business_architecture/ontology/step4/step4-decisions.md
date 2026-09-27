@@ -349,3 +349,29 @@ candidate filter, never a join; resolutions recorded as slugs.
 Pre-cutover gates: 92-row label report, row-level target report,
 Q2 ledger, no-consumer confirmation. No implementation without
 Hamid's explicit approval.
+
+## Scope-note range citation route (2026-09-26, Hamid)
+
+A bounded range citation, written in the source's scope note, that
+explicitly covers the target and is affirmative, counts as a citation
+route for Rule 5. Recorded as a separate route, "scope-note range
+citation", auditable separately from whole-slug and label citations.
+Applied in the uses-input pass: REL-00447 (CM-1-2-5-1-3/-4) and
+REL-00564 (CM-1-3-1-1 through -5). Range-shaped citations in exclusion
+contexts (REL-01278, REL-01279) do not qualify.
+
+## Scope-note label citation route (2026-09-26, Hamid)
+
+A scope-note citation by the target's exact unique current preferred
+label counts as a citation route for Rule 5, recorded separately from
+slug citations. Applied: REL-00862 ("Maintain Price & Discount Master
+Data"), REL-01029 ("Manage Credit Card Transactions"), REL-00873
+("Establish Credit Limit & Risk Code" — supersession reversed).
+
+## Rule section 3 precedent reworded (2026-09-26)
+
+REL-00214 had no citation route and was held in the uses-input pass;
+its fact was removed and the attached enables mention REL-00152 held
+with it. Precedent now reads: "REL-00436 attaches as duplicate
+provenance on the independently-evidenced uses-input fact (REL-00447,
+via scope-note range citation)."

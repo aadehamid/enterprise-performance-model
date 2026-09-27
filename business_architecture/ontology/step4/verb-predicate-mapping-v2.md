@@ -66,7 +66,9 @@ mapping applies those mention-level holds separately),
      fact). Of the 77 approved, 75 mentions emit and attach as provenance;
      REL-00152 and REL-00436 are mention-level property-rule holds
      re-attached as duplicate provenance on independently-evidenced facts
-     (REL-00214, REL-00447);
+     (REL-00214, REL-00447) — updated 2026-09-26: REL-00214 held (no
+     citation route) with REL-00152; REL-00447 retained via range
+     citation with REL-00436 attached;
    - **G1b (29)** approved 2026-09-26: HOLD for workbook correction (merging
      into `dependsOnOutputOf` would change the verb — only an `informed-by`
      mention exists on the reverse pair);
@@ -581,10 +583,14 @@ marking such rows `PROMOTE`.
   by unique exact preferred-label only. A mention matched by nearness only
   attaches as **identity-unconfirmed provenance**: it never counts toward the
   fact surviving, and it never counts as corroboration.
-- Precedents: REL-00152 and REL-00436 attach as duplicate provenance on
-  independently-evidenced `uses-input` facts (REL-00214, REL-00447); the
-  facts survive through the approved `uses-input` rows alone. (REL-00152's
-  own target match was label-only — it is identity-unconfirmed provenance.)
+- Precedents: REL-00436 attaches as duplicate provenance on the
+  independently-evidenced `uses-input` fact (REL-00447, via the
+  2026-09-26 scope-note range citation route); the fact survives through
+  the approved `uses-input` row alone. REL-00214 had no citation route
+  and was held in the 2026-09-26 uses-input pass; its fact was removed
+  and the attached `enables` mention REL-00152 held with it.
+  (REL-00152's own target match was label-only — it is
+  identity-unconfirmed provenance.)
 - G1a applies only to true duplicates. The former exclusion for rows with
   row-level `core:enabledBy` approvals (REL-00243, REL-00304, REL-01006)
   is moot: those approvals were superseded 2026-09-26 (G3-B5) under the
