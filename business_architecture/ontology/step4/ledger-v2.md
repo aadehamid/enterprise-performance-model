@@ -735,7 +735,7 @@ every row exposes its named independent supporter in `merged_with_rows`.
 
 **Special provenance handling:** REL-00152 and REL-00436 re-attached as
 duplicate provenance on their independently-evidenced `uses-input` facts
-(via REL-00447; REL-00214's fact removed in the 2026-09-26 uses-input pass). `raw_verbs` preserves `uses-input; enables`.
+(via REL-00214 and REL-00447). `raw_verbs` preserves `uses-input; enables`.
 The facts survive through the approved `uses-input` rows alone.
 
 *Update 2026-09-26: Only REL-00447's fact survives; REL-00214's fact was removed (see above).*
