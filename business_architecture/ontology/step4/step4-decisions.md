@@ -382,3 +382,17 @@ Count refresh, not a rule change. The G1a "75 mentions emit" (from 77 approved)
 is now 33 emitting after the 2026-09-26 uses-input pass held 42 G1a mentions
 (k=42). The "77 → 75" line now reads "77 → 33". Rule text unchanged; only the
 counts reflect the applied pass.
+
+## G1b reverse-fact gate check amended (2026-09-26, Hamid)
+
+Amends approved rule text in section 4. The G1b gate check "reverse informed-by
+fact present through its own row-level evidence" is now conditional: the reverse
+fact is present **if** the reverse row has a route (stable-ID identity, affirmative
+citation, two-way inverse pair, or approved decision); otherwise the reverse row
+is held with no fact.
+
+Reason: The informed-by pass holds reverse informed-by rows that lack a route
+(e.g., REL-00643, 00646, 00896, 00961, 00965, 01150, 01152, 01193, 01199, 01200,
+01205, 01217, 01295). When both sides of a G1b pair are held, the relationship
+disappears from the graph entirely. This is recorded as a backlog item (same
+pattern as contradiction pair C).

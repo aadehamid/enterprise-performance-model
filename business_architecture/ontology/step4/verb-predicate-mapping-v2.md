@@ -675,7 +675,9 @@ marking such rows `PROMOTE`.
   because a reverse `informed-by` exists. For each held G1b row — no
   `core:dependsOnOutputOf` fact from its enables row; no fact emitted
   solely because reverse informed-by exists; reverse informed-by fact
-  present through its own row-level evidence. For REL-00489 — superseded;
+  present through its own row-level evidence **if** the reverse row has a
+  route (stable-ID, affirmative citation, two-way, or approved decision);
+  otherwise the reverse row is held with no fact. For REL-00489 — superseded;
   no emitted fact. For REL-00469 — no emitted fact.
 
 **Status: Approved Baseline (Hamid 2026-09-26).**
