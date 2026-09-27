@@ -1858,3 +1858,30 @@ Totals: 646 − 11 = **635** emitting; 657 + 11 = **668** held;
 All 11 held facts verified unique single-row; zero knock-on effects.
 11 supersession entries in `step4-decisions.md`; 11 backlog items for source
 correction (including target-side range check for the 4 compliance monitors).
+
+## Precedes/follows pass (Hamid 2026-09-26, AMENDED 2026-09-27)
+
+**Verdicts:**
+- **38 STAND** (rule 4, stable-ID mentions).
+- **257 PROMOTE** (D:hamid-verdict / Rule 5 sequence route).
+- **19 HOLD** (D:hamid-verdict / Supersedes2026-09-26Approval):
+  - 6 no citation, no two-way (REL-01223, 01227, 01241, 01289, 01291, 01294).
+  - 13 exclusion/boundary/owned-by as sole route (REL-00008, 00068, 00112,
+    00149, 00184, 00188, 00193, 00200, 00206, 00319, 00351, 00374, 00930).
+
+**NOT basis-only:** 19 facts removed (all unique single-row, zero knock-on).
+Raw `B follows A` retained in provenance for emitting rows.
+
+**Rule 6:** method approved 2026-09-26 (seed 42). Samples NOT yet reviewed —
+all outcomes pending `D:hamid-verdict`. REL-01241 held. CM-1-1-4 label corrected.
+Evidence in `review-evidence/precedes-follows-rule6-samples.md`.
+
+**Evidence Discipline Rule 5 (lock):** non-sibling precedes/follows needs an
+affirmative sequence citation (or two-way). Exclusion/boundary/owned-by is
+not a route (REL-00009 precedent).
+
+**Zero reciprocal `core:precedes` pairs** (183 facts checked). Hard gate GREEN.
+
+**Totals:** 635 − 19 = **616** emitting; 668 + 19 = **687** held;
+477 − 19 = **458** facts.
+Conservation: 616 + 687 + 12 + 1 + 2 = 1,318. ✓
