@@ -572,67 +572,66 @@ against the full scope text (Evidence Discipline Rule 5). Each is now:
 
 All 20 routed to source workbooks for correction.
 
-## Requires pass (2026-09-25 approved; revised 2026-09-27)
+## Requires pass (2026-09-25 approved; revised 2026-09-27 — EVIDENCE ONLY)
+
+**Status:** Evidence only. The holds below are recorded here but not yet
+applied to `canonical-facts.csv`, the gate, the ledger, or the mapping doc.
+Projected totals: 611 / 692 / 453.
 
 Definition: `core:requires` — the source cannot validly start, proceed, or
 reach its controlled state without the target, its completed control, or its
 required condition. Not merely inferred because the target later
 consumes/calculates/uses related information.
 
-2 APPROVE (D:hamid-verdict 2026-09-25). 4 HOLD (D:hamid-verdict 2026-09-25,
-3 pending strict citation).
-**NOT basis-only** — facts not emitted for held rows.
+1 APPROVE (D:hamid-verdict). 5 HOLD (4 new + 1 existing).
 
 ### Identity routes
 
 | Row | Match type | Route | Citation | Affirmative? | Verdict |
 |---|---|---|---|---|---|
-| REL-00158 | — | claimed "source names target slug" | Quote ("credit clearances through their accountable owners") has no slug or label for target | No | **HOLD** — needs strict citation |
-| REL-00168 | — | claimed explicit reference | "Collateral release is **owned by** Manage Collateral" — ownership wording is never a route per #159 | No | **HOLD** |
-| REL-00247 | — | claimed nearness + citation | No quote given; G3-B1 bans nearness-only identity | No | **HOLD** — needs strict citation |
-| REL-00872 | label citation (scope note) | scope-note label citation | Paraphrase given; exact wording needed | Pending | **PENDING** — quote exact wording |
-| REL-00873 | label citation (scope note) | scope-note label citation | "credit-controlled onboarding prerequisite only" | Yes — prerequisite stated | APPROVE |
-| REL-00208 | — | — | Insufficient prerequisite gate evidence | No | HOLD |
+| REL-00158 | — | claimed "source names target slug" | Quote has no slug or label for target | No | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00168 | — | claimed explicit reference | "owned by" — ownership wording never a route | No | **HOLD / D:hamid-verdict / OwnershipWording / Supersedes2026-09-25Approval** |
+| REL-00247 | — | claimed nearness + citation | No quote; G3-B1 bans nearness-only | No | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00872 | label citation (scope note) | scope-note label citation | No exact quote naming target | No | **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval** |
+| REL-00873 | label citation (scope note) | scope-note label citation | "credit-controlled onboarding prerequisite only" | Yes | APPROVE |
+| REL-00208 | — | — | Insufficient prerequisite gate evidence | No | HOLD (existing) |
 
 ### Rule 6 samples
 
-Drawn from promotions, seed 42. Outcomes pending Hamid review.
-
-*Samples to be drawn and recorded.*
+Drawn from 1 promotion (REL-00873), seed 42. Outcome: **PASS** (Hamid
+2026-09-27). Scope note states a credit-control prerequisite for
+onboarding.
 
 ### Knock-on effects
 
-REL-00158, REL-00168, REL-00247: each held row's fact was stored; removal
-requires supersession entries (below).
+REL-00158, 00168, 00247, 00872: each held row's fact is stored in
+canonical-facts.csv; removal pending application.
 
 ### Projected totals
 
-With 3 requires facts removed: 612 emitting / 691 held / 454 facts.
-(615−3 / 688+3 / 457−3)
+611 emitting / 692 held / 453 facts (615−4 / 688+4 / 457−4).
 
 ### Supersessions
 
-- REL-00158: emitting → held (pending strict citation)
-- REL-00168: emitting → held (ownership wording, never a route)
-- REL-00247: emitting → held (pending strict citation)
+- REL-00158: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale (genuine precondition) kept in provenance.
+- REL-00168: **HOLD / D:hamid-verdict / OwnershipWording / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+- REL-00247: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
+- REL-00872: **HOLD / D:hamid-verdict / NoStrictCitation / Supersedes2026-09-25Approval**. 2026-09-25 rationale kept in provenance.
 
-**2 approved:**
-- REL-00872: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-6 (Perform KYC
-  Due Diligence). **PENDING** exact scope-note quote.
+**1 approved:**
 - REL-00873: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-2 (Establish
   Credit Limit & Risk Code). Restored 2026-09-26; supersession reversed;
   basis: scope-note label citation. Scope note: credit-controlled onboarding
   prerequisite only.
 
-**1 held:**
+**5 held:**
+- REL-00158, REL-00168, REL-00247, REL-00872: see supersessions above.
 - REL-00208: CM-1-2-1-3-8 (Capture Structured Deals) requires CM-1-2-2-3-15
   (Manage Commodity Valuations). **HOLD / D:hamid-verdict**. The asserted
   requires relation is not sufficiently supported as a prerequisite gate, and
   the proposed remap to core:dependsOnOutputOf would alter source meaning at
   emission time. Emit no triple. Route for source-workbook relationship review
   and correction.
-
-No count changes — all 5 approved facts already stored in canonical-facts.csv.
 
 ## Assures pass (approved; revised 2026-09-27)
 
@@ -677,10 +676,9 @@ reflected in the 615/688/457 totals.
 
 ### Rule 6 samples
 
-Drawn from 2 promotions, seed 42. Outcomes **pending** Hamid review.
-
-- REL-00872: pending
-- REL-00873: pending
+Drawn from 5 promotions (REL-00401, 00719, 00801, 01269, 01270), seed 42.
+Sample: REL-00401, REL-01270, REL-00801. Outcomes **pending** Hamid review.
+(Hamid 2026-09-27: assures not yet reviewed — no samples drawn.)
 
 ### Knock-on effects
 
@@ -691,8 +689,8 @@ None. All 5 approved facts are unique single-row.
 No change: 615 emitting / 688 held / 457 facts.
 
 **5 approved:**
-- REL-00401: CM-1-2-4-2-11 (Manage Tax Compliance) assuredBy CM-1-2-4-3-5
-  (Manage Taxes). Manage Tax Compliance reviews registrations, licensing,
+- REL-00401: CM-1-2-4-2-11 (Manage Taxes) assuredBy CM-1-2-4-3-5
+  (Manage Tax Compliance). Manage Tax Compliance reviews registrations, licensing,
   exemption certificates, filing-calendar compliance, tax-determination
   controls, and gaps.
 - REL-00719: CM-1-3-4-2-2 (Conduct Research) assuredBy CM-1-3-4-2-3 (Manage
@@ -756,11 +754,10 @@ route needed. The descriptions below are supporting context, not the route.
 
 ### Rule 6 samples
 
-Drawn from 10 promotions, seed 42. Outcomes **pending** Hamid review.
-
-- REL-00018: pending
-- REL-00015: pending
-- REL-00091: pending
+Drawn from 10 promotions, seed 42. Sample: REL-00018, REL-00015, REL-00091.
+Outcomes: **PASS** (Hamid 2026-09-27). They stand on stable IDs, and each
+is a genuine binding constraint (inventory on allocation, refinery
+constraints on availability capture).
 
 ### Knock-on effects
 
