@@ -1709,3 +1709,30 @@ Two leftover defects found on review of `step4/working` at `3a1a413`:
 
 Current: 917 emitting / 386 held / 716 facts. PR stays DO NOT MERGE;
 Hamid re-reviews after the sync.
+
+## uses-input pass applied (2026-09-26)
+
+Hamid approved the 33/31 citation split and the disposition at
+762 emitting / 541 held / 603 facts (PR #125, #126; fourth revision).
+
+**Applied:**
+- 114 uses-input rows moved emitting → held (82 no-citation, 31
+  exclusion/boundary, REL-01061 wrong-concept). Full list in
+  `review-evidence/uses-input-application-log.md`.
+- 114 canonical facts removed (73 sole-evidence, 41 G1a-shared; the
+  enables mentions cannot carry a fact alone).
+- 42 enables mentions moved emitting → held (k=42; G1a 75 → 33).
+  REL-00436 was already held (in the 386) and not counted in k.
+- REL-00873 supersession reversed; core:requires fact restored
+  (basis: scope-note label citation).
+- REL-00564 promoted on the scope-note range citation route; its fact
+  retained with REL-01188 attached (emitting).
+- REL-00447 promoted on the scope-note range citation route; its fact
+  retained with REL-00436 attached (held).
+
+**Totals:** 917 − 114 − 42 + 1 = 762 emitting; 386 + 114 + 42 − 1 = 541
+held; 716 − 114 + 1 = 603 facts. Conservation: 762 + 541 = 1303. ✓
+
+**Gate:** updated for the new disposition (603 facts, 36 active G1a
+rows, REL-00873 stored, REL-01061 held, REL-00214 fact removed).
+Pre-existing SHA-pin failures unchanged.
