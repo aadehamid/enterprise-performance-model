@@ -1,0 +1,281 @@
+--- /tmp/mapping-v2-before-refresh.md	2026-09-26 18:52:55.644811631 -0500
++++ verb-predicate-mapping-v2.md	2026-09-26 18:53:07.918642784 -0500
+@@ -1,11 +1,12 @@
+ # Verb → Predicate Mapping v2 — CANDIDATE FOR REVIEW (not approved)
+ 
+ **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
++Figures refreshed 2026-09-26 to the reviewed evidence package
++(917 emitting / 386 held / 717 facts); section-by-section approval pending.
+ No emission script may use this mapping until Hamid approves it row by row.
+ **Baseline:** `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (PR #120).
+ **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
+-(812 promoted / 172 context-held — 37 property-rule/hierarchy holds,
+-37 control-case regression tests green),
++(849 promoted / 172 context-held),
+ `requires-review.csv`, `assures-review.csv`, `enables-review.csv`,
+ `canonical-facts.csv`, `contradictions.csv`.
+ 
+@@ -18,21 +19,27 @@
+    `informs` is its inverse and covers the approved R1 interface
+    (`CM-1-1-2-9-1 informs CM-1-1-4`, stored as `CM-1-1-4 core:informedBy CM-1-1-2-9-1`).
+ 3. **`enables` → `core:enabledBy`** only for genuine enablement. Current
+-   disposition of the 367 emitting `enables` mentions:
+-   - **242** G3 stored as `core:enabledBy` (proposed);
+-   - **5** row-level verdicts stored as `core:enabledBy`, overriding the group
+-     proposal: REL-00243, REL-00304, REL-01006 (G1a) and REL-00129,
+-     REL-00728 (G2) — approved as `core:enables` by Hamid 2026-09-25;
+-   - **G1a (77 remaining)** proposed: merge as extra evidence on the existing
+-     `dependsOnOutputOf` fact (duplicate merge, not a verb change);
+-   - **G1b (30)** proposed: HOLD for workbook correction (merging into
+-     `dependsOnOutputOf` would change the verb — only an `informed-by`
++   disposition of the 172 emitting `enables` mentions (refreshed 2026-09-26):
++   - **G3 (84)** stored as `core:enabledBy` (approved by Hamid 2026-09-26 —
++     the Section A explicit-reference approvals; Section B's 96 nearness-only
++     rows are all held);
++   - **5 former row-level verdicts** stored as `core:enabledBy` (REL-00243,
++     REL-00304, REL-01006 approved 2026-09-25 as G1a independent facts;
++     REL-00129, REL-00728 approved 2026-09-25 as G2 exceptions) — all five
++     **formally superseded** 2026-09-26 under the nearness-only identity
++     rule; their facts were verified unique and removed; none remains
++     emitting;
++   - **G1a (77)** approved 2026-09-26: merge as extra evidence on the existing
++     `dependsOnOutputOf` fact (duplicate merge, not a verb change); the 75
++     emitting mentions attach as provenance only;
++   - **G1b (29)** approved 2026-09-26: HOLD for workbook correction (merging
++     into `dependsOnOutputOf` would change the verb — only an `informed-by`
+      mention exists on the reverse pair);
+-   - **G2 (13)** approved 2026-09-26: no separate triple — the sequence fact
+-     already records it (Hamid verdict: NoSeparateEnablesFact; the enables
+-     assertion is kept as non-emitting evidence).
+-   The G1 split lives in `review-evidence/enables-g1-split.csv`. Hamid decides
+-   each group; the 5 row-level verdicts stand unless he revisits them.
++   - **G2 (15)** approved 2026-09-26: no separate triple — the sequence fact
++     already records it (13 Hamid verdicts: NoSeparateEnablesFact; plus the 2
++     former row-level exceptions, superseded 2026-09-26); the enables
++     assertions are kept as non-emitting evidence.
++   The G1 split lives in `review-evidence/enables-g1-split.csv`.
+ 
+    **Disguised-sequence control (implemented 2026-09-26):** when an `enables`
+    assertion connects same-parent sibling activities and a documented
+@@ -90,34 +97,33 @@
+ | `uses-input` (S, T) | `S core:dependsOnOutputOf T` | — |
+ | `informed-by` (S, T) | `S core:informedBy T` | — |
+ | `informs` (S, T) | `T core:informedBy S` | R1: `CM-1-1-4 informedBy CM-1-1-2-9-1` |
+-| `requires` (S, T) | `S core:requires T` | 5 rows; REL-00208 → `dependsOnOutputOf` |
++| `requires` (S, T) | `S core:requires T` | 5 rows approved 2026-09-25; REL-00208 held for workbook correction, no remap |
+ | `precedes` (S, T) | `S core:precedes T` | — |
+ | `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes` |
+ | `governed-by` (S, T) | `S core:governedBy T` | — |
+ | `constrained-by` (S, T) | `S core:constrainedBy T` | — |
+ | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
+ | `triggers` (S, T) | `T core:triggeredBy S` | 18 rows |
+-| `assures` (S, T) | `T core:assuredBy S` | 8 rows reviewed; 6 emitting, 2 held |
+-| `enables` (S, T) | `T core:enabledBy S` (G3 only) | G1→`dependsOnOutputOf`, G2→no triple |
++| `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
++| `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 approved G3 rows; G1a→duplicate evidence, G1b→held, G2→no triple |
+ 
+ The raw verb is retained in migration/provenance evidence on every emitted triple.
+ `core:consumes` / `core:produces` stay reserved for future identified
+ InformationObject instances (Q5).
+ 
+-## Mention → canonical fact → mirror accounting (proposed mapping)
++## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
+ 
+-- Emitting mentions: **1,066** (282 ResolvedToConcept + 812 context-promoted
+-  minus 28 G1b holds; 65 property-rule/hierarchy holds excluded).
+-- G2 enables emitting no triple: 13 (approved 2026-09-26; 2 decided as enabledBy by
+-  row-level verdict).
+-- Mentions yielding stored triples: **1,053** (1,066 − 13 G2).
+-- Canonical facts (distinct stored subject/predicate/object): **866**.
++- Emitting mentions: **917**.
++- G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
++  row-level exceptions superseded the same day — all 15 G2 rows now emit no
++  `core:enabledBy` fact).
++- Mentions yielding stored triples: **904** (917 − 13 G2).
++- Canonical facts (distinct stored subject/predicate/object): **717**.
+ - Facts absorbing >1 mention (mirror/duplicate merges): **187**, covering 374 mentions.
+   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
+-- Non-emitting mentions: 237 held (172 context + 65 property-rule/hierarchy holds)
+-  + 12 AmbiguousDeferred + 1 ExternalGovernanceReference (held pending property
+-  design) + 2 StructuredFlowValue (redirected to Q5 flow values).
+-  Total: 1,066 + 237 + 12 + 1 + 2 = 1,318. ✓
++- Non-emitting mentions: 386 held + 12 deferred + 1 ExternalGovernanceReference
++  (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
++  values). Total: 917 + 386 + 12 + 1 + 2 = 1,318. ✓
+ 
+ ## Per-verb proposed predicate counts (emitting mentions)
+ 
+@@ -129,17 +135,20 @@
+ | requires | core:requires (5 approved 2026-09-25) | 5 |
+ | precedes | core:precedes | 150 |
+ | follows | core:precedes (canonicalized) | 164 |
+-| governed-by | core:governedBy | 43 |
++| governed-by | core:governedBy | 38 |
+ | constrained-by | core:constrainedBy | 9 |
+ | constrains | core:constrainedBy (inverse) | 1 |
+ | triggers | core:triggeredBy | 18 |
+-| assures | core:assuredBy | 6 |
+-| enables G3 | core:enabledBy (proposed) | 242 |
+-| enables G1a/G2 | core:enabledBy (row-level verdicts, 5 rows) | 5 |
+-| enables G1a | merge as evidence on existing dependsOnOutputOf fact | 77 |
+-| enables G1b | HOLD for workbook correction (approved 2026-09-26) | 29 |
++| assures | core:assuredBy (5 approved 2026-09-26) | 5 |
++| enables G3 | core:enabledBy (84 approved 2026-09-26) | 84 |
++| enables G1a | merge as evidence on existing dependsOnOutputOf fact | 75 |
++| enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
+ | enables G2 | no triple (approved 2026-09-26) | 13 |
+ 
++Emitting mentions in this table: 917 (the G1b row is non-emitting and shown
++for completeness). The 5 former row-level `core:enabledBy` verdicts were
++superseded 2026-09-26; none remains emitting.
++
+ ## Contradictions (3) — for Hamid
+ 
+ **Property rule (Hamid 2026-09-24):** whether a mutual pair is a contradiction
+@@ -166,19 +175,22 @@
+   child governs how the parent executes). REL-00366 held — **restates
+   hierarchy**: child "governed by" parent mostly repeats `skos:broader`.
+ 
+-`contradictions.csv` carries the full rows. Summary:
++`contradictions.csv` carries the full rows; it is 0 (empty) — all three
++reciprocal pairs resolved 2026-09-26, each reverse fact verified unique
++before removal. Summary:
+ 
+ 1. **Mutual dependsOnOutputOf** — `Reconcile And Report Indirect Tax` ↔
+-   `Determine Taxability` (REL-01061 / REL-01065). Allowed loop; REL-01061
+-   awaits the sibling review batch, REL-01065 emits.
++   `Determine Taxability` (REL-01061 / REL-01065). Retained REL-01061
++   (tax reporting consumes taxability); held REL-00917's pair REL-01065.
+ 2. **Mutual dependsOnOutputOf** — `Maintain Price & Discount Master Data` ↔
+-   `Implement Rebate` (REL-00917 / REL-00862). Allowed loop; both directions
+-   B-only — each has its own evidence, both emit. Recorded as intentional
+-   feedback loop.
++   `Implement Rebate` (REL-00917 / REL-00862). Retained REL-00862
++   (rebate consumes price/discount master data); held REL-00917.
+ 3. **Mutual dependsOnOutputOf** — `Manage Credit Card Transactions` ↔ `Perform
+    Cash, Acquirer, and Receivables Reconciliation` (REL-00884 / REL-01029).
+-   Allowed loop; REL-00884 slug-carried, REL-01029 B-only — each has its own
+-   evidence, both emit. Recorded as intentional feedback loop.
++   Retained REL-01029 (reconciliation consumes card transactions);
++   held REL-00884.
++
++Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
+ 
+ ## Review instruments
+ 
+@@ -186,22 +198,32 @@
+   5 approved as `core:requires` (REL-00158, REL-00168, REL-00247, REL-00872,
+   REL-00873, the last with a credit-controlled-onboarding scope note);
+   REL-00208 held for workbook correction (no remap at emission).
+-- `assures-review.csv` — 8 rows; 6 emitting (proposed KEEP as
+-  `core:assuredBy`), 2 held by the corrected context pass (REL-00355,
+-  REL-00385 — predicate assignment provisional, no emission proposed).
+-  None names Internal Audit as source — no false audit-authority grant.
+-  REL-01106 direction flagged for confirmation (deferred).
++- `assures-review.csv` — 8 rows decided 2026-09-26: 5 approved as
++  `core:assuredBy` (REL-00401, REL-00719, REL-00801, REL-01269, REL-01270);
++  3 held — REL-00355 and REL-00385 (context holds retained:
++  support/documentation is not assurance), REL-01106 (held for workbook
++  correction; its `core:assuredBy` fact was removed, verified unique, and no
++  substitute emitted). None names Internal Audit as source — no false
++  audit-authority grant.
+ - `enables-review.csv` — all 399 rows with pipeline-built group, proposed
+   disposition, decision cells blank.
+ - `review-evidence/enables-g1-split.csv` — G1 split per Hamid 2026-09-25:
+   **G1a (81)** duplicates proposed for merge as evidence; **G1b (31)**
+   proposed hold for workbook correction (verb change, not a duplicate).
+-- `review-evidence/enables-g3-evidence-batch.csv` — G3 (270 rows) with the
+-  evidence type that promoted each row: 143 with explicit reference
+-  (54 resolved + 89 context), 106 nearness-only, 21 held.
++- `review-evidence/enables-g3-genuine-enablement-review-batch.csv` — G3
++  (249 review rows: 143 explicit-reference, 106 nearness-only; 21
++  context-held rows outside the review population). Decided 2026-09-26:
++  Section A — 84 approvals emitting (explicit target identity); Section B —
++  all 96 rows held (60 in B1–B4, 42 in B5: 9 prior-approval supersessions +
++  33-row class verdict), none emitting. Every emitting `core:enabledBy`
++  fact was matched to its target by an explicit reference in the source
++  definition and carries a row-level approval.
+ - `review-evidence/st-enables-search.csv` — Supply & Trading enables sweep:
+-  21 rows where the source definition says recommend/advise, triaged into
+-  5 pattern-holds, 9 genuine-enablement, 7 ambiguous.
++  21 rows. Verdicts 2026-09-26: 2 approved as bounded `core:enabledBy`
++  (REL-00433, REL-01172) and emitting; 4 prior approvals superseded under
++  the nearness-only identity rule (REL-00437 in G3-B3; REL-00489, REL-01124,
++  REL-01174 in G3-B5); the rest held (5 pattern-holds, ambiguous holds,
++  and hierarchy holds).
+ - `review-evidence/11-slug-ancestor-descendant-rows-for-review.csv` — 10 held
+   ancestor/descendant governance rows (REL-01309 approved).
+ 
+@@ -213,10 +235,17 @@
+ 4. The 3 contradictions and the 10 ancestor/descendant governance rows.
+ 5. The Supply & Trading search (pattern-holds to backlog).
+ 6. G1 split (G1a merge / G1b hold), then G2, then G3.
+-7. The mapping doc itself (the 5 answers + canonical direction table).
++7. The mapping doc itself (the 5 answers + canonical direction table) —
++   **in progress now** (figures refreshed 2026-09-26; section-by-section
++   approval to follow).
+ 8. Nothing emits until every decision cell is resolved and the release
+    checklist (including fresh no-consumer attestation) is green.
+ 
++Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
++(5 approved, 3 held), constrained-by (10 approved, 1 held), triggers
++(18 approved), 3 contradictions resolved, 10 ancestor/descendant rows held
++(1 recorded exception), S&T sweep decided, G1a/G1b/G2/G3 decided.
++
+ Rule on the 3 remaining contradictions (all `dependsOnOutputOf` loops,
+ allowed where each direction is independently evidenced). The 2 mutual
+ `enabledBy` pairs are **held** (Hamid 2026-09-24: enablement is not
+@@ -429,11 +458,13 @@
+   survives only via the independent `uses-input` row REL-00447.)
+ - **PTC-002** (Refinery Planning and Optimization decides; Supply & Trading
+   advises) remains the standing recommendation-versus-enablement control.
+-- Approved 2026-09-26 (bounded): REL-00433, REL-00437, REL-00489 (reviewer-
+-  approved `core:enabledBy`, overriding the G1-redundant group proposal),
+-  REL-01124, REL-01172, REL-01174. Scope limits recorded per row: approval
+-  enables the stated process path, never asserts decision authority,
+-  binding plans, or trade approval.
++- Approved 2026-09-26 (bounded): REL-00433, REL-01172. Scope limits recorded
++  per row: approval enables the stated process path, never asserts decision
++  authority, binding plans, or trade approval. Four earlier S&T approvals
++  were superseded under the nearness-only identity rule: REL-00437 (G3-B3,
++  2026-09-26) and REL-00489, REL-01124, REL-01174 (G3-B5, 2026-09-26) —
++  each had judged the relationship plausible without evidence of which
++  target the source meant.
+ 
+ ## Duplicate-evidence merge (defined 2026-09-26, Hamid G1a verdict)
+ 
+@@ -451,9 +482,10 @@
+ - Precedents: REL-00152 and REL-00436 attach as duplicate provenance on
+   independently-evidenced `uses-input` facts (REL-00214, REL-00447); the
+   facts survive through the approved `uses-input` rows alone.
+-- G1a applies only to true duplicates. Rows with row-level
+-  `core:enabledBy` approvals (REL-00243, REL-00304, REL-01006) are
+-  independent facts, not duplicates, and are excluded from G1a.
++- G1a applies only to true duplicates. The former exclusion for rows with
++  row-level `core:enabledBy` approvals (REL-00243, REL-00304, REL-01006)
++  is moot: those approvals were superseded 2026-09-26 (G3-B5) under the
++  nearness-only identity rule, and the rows are now held with no fact.
+ 
+ ## Recommendation versus enablement (added 2026-09-25, Hamid)
+ 
+@@ -485,12 +517,14 @@
+ - **Precedent:** 29 G1b rows held (HOLD / D:hamid-verdict / G1bNoVerbChange);
+   28 stored `core:dependsOnOutputOf` facts removed after fact-provenance
+   uniqueness validation (all 28 were unique single-row facts); reverse
+-  informed-by facts preserved on their own records; REL-00489's approved
+-  `core:enabledBy` fact and REL-00469's hierarchy hold untouched.
++  informed-by facts preserved on their own records. REL-00489's "leave
++  unchanged" listing was superseded 2026-09-26 (G3-B5): its `core:enabledBy`
++  fact was removed (verified unique) and the row is a no-fact hold;
++  REL-00469's hierarchy hold untouched.
+ - **Gate assertions:** for each held G1b row — no `core:dependsOnOutputOf`
+   fact from its enables row; no fact emitted solely because reverse
+   informed-by exists; reverse informed-by fact present through its own
+-  row-level evidence. For REL-00489 — approved `core:enabledBy` fact
+-  present. For REL-00469 — no emitted fact. The gate stays red until every
+-  invalid fact emission is removed, then passes only if fact-provenance
+-  proves none is still supported solely by its `enables` source row.
++  row-level evidence. For REL-00489 — superseded; no emitted fact. For
++  REL-00469 — no emitted fact. The gate stays red until every invalid fact
++  emission is removed, then passes only if fact-provenance proves none is
++  still supported solely by its `enables` source row.

@@ -1,0 +1,162 @@
+[
+ {
+  "row_id": "REL-00129",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00133",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00243",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00428",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00728",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00936",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-01131",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-01192",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00059",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00304",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00758",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00770",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00939",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-01006",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-01016",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-01094",
+  "stratum": "enables-sample",
+  "reviewer": "assistant"
+ },
+ {
+  "row_id": "REL-00050",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00067",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00190",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00274",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00394",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00399",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00406",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00858",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00907",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-00937",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01005",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01143",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01228",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01256",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01286",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ },
+ {
+  "row_id": "REL-01313",
+  "stratum": "governed-by-full",
+  "reviewer": "Hamid"
+ }
+]
