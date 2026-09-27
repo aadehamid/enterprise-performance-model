@@ -1794,3 +1794,38 @@ The other 16 G1b reverse rows keep their facts: 6 STAND by rule 4
 (REL-00081, REL-00144, REL-00822, REL-01275, REL-00136, REL-01190) and
 10 PROMOTE (REL-00706, REL-00739, REL-00775, REL-00776, REL-00948,
 REL-01110, REL-01196, REL-01202, REL-01232, REL-01272).
+
+## Governed-by pass (2026-09-26, Hamid approved)
+
+38 emitting `governed-by` rows reviewed (predicate `core:governedBy`).
+
+**Verdicts:**
+- **5 STAND** (rule 4, stable-ID): REL-01309, REL-00359, REL-00577, REL-00902,
+  REL-00908.
+- **13 PROMOTE**:
+  - 4 non-hierarchy affirmative citations: REL-00397, REL-00876, REL-00952,
+    REL-01158. (REL-00876, REL-00952: short snippets verified against full
+    definition/scope text.)
+  - 6 hierarchy exceptions (Hamid 2026-09-26, each not a precedent):
+    REL-00531, REL-00542 (privacy-governance control at parent);
+    REL-00588, REL-00601, REL-00623 (PMPA legal constraint at cluster);
+    REL-00106 (decision rights, ancestor decides).
+  - 3 from strict re-test of 13 prior approvals: REL-00190, REL-00858,
+    REL-01313. (REL-00190: promotes on unique label "Market Risk Management";
+    target stays CM-1-2-2-3 per Rule 11. REL-01313: scope condition carries
+    forward — credit eligibility, limits, holds/releases, risk-control
+    constraints only.)
+- **20 HOLD** (all facts verified unique single-row; zero knock-on):
+  - 7 exclusion/boundary citations: REL-00185, REL-00215, REL-00250,
+    REL-00969, REL-01113, REL-01300, REL-01310.
+  - 3 hierarchy restatements (composition, not governance): REL-00620,
+    REL-00625, REL-00629.
+  - 10 no affirmative citation (2026-09-25 approvals superseded): REL-00050,
+    REL-00067, REL-00394, REL-00399, REL-00406, REL-00907, REL-00937,
+    REL-01005, REL-01228, REL-01256.
+
+**Rule 6 check:** PASSED. Hamid read all 13 promotions against citations and
+exception rationales; none reversed. Recorded as `D:hamid-verdict` 2026-09-26.
+
+**Totals:** 666 − 20 = **646** emitting; 637 + 20 = **657** held;
+508 − 20 = **488** facts. Conservation: 646 + 657 + 12 + 1 + 2 = 1,318.

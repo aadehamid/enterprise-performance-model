@@ -2,7 +2,7 @@
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(666 emitting / 637 held / 508 facts — 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
+(646 emitting / 657 held / 488 facts — 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
 **Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #126; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
@@ -166,7 +166,7 @@ mapping applies those mention-level holds separately),
 | `requires` (S, T) | `S core:requires T` | 5 rows approved 2026-09-25; REL-00208 held for workbook correction, no remap |
 | `precedes` (S, T) | `S core:precedes T` | no reciprocal two-cycles (rule, gate-checked) |
 | `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes` |
-| `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; REL-01309 is the one recorded exception (no precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh |
+| `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
 | `triggers` (S, T) | `T core:triggeredBy S` | 18 rows |
@@ -175,7 +175,7 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 620 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 653 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 666 emitting.
+**Reconciliation:** 600 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 633 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 646 emitting.
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -183,17 +183,17 @@ InformationObject instances (Q5).
 
 ## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
 
-- Emitting mentions: **666**.
+- Emitting mentions: **646**.
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **653** (620 map to their own predicate + 33 G1a duplicate evidence; 666 − 13 G2 no-triple).
-- Canonical facts (distinct stored subject/predicate/object): **508** (603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
+- Mentions attached to stored facts: **633** (600 map to their own predicate + 33 G1a duplicate evidence; 646 − 13 G2 no-triple).
+- Canonical facts (distinct stored subject/predicate/object): **488** (508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 637 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 657 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 666 + 637 + 12 + 1 + 2 = 1,318. ✓
+  values). Total: 646 + 657 + 12 + 1 + 2 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -205,7 +205,7 @@ InformationObject instances (Q5).
 | requires | core:requires (5 approved 2026-09-25; REL-00873 supersession reversed 2026-09-26, scope-note label citation) | 5 |
 | precedes | core:precedes | 150 |
 | follows | core:precedes (canonicalized) | 164 |
-| governed-by | core:governedBy | 38 |
+| governed-by | core:governedBy | 18 |
 | constrained-by | core:constrainedBy | 9 |
 | constrains | core:constrainedBy (inverse) | 1 |
 | triggers | core:triggeredBy | 18 |
@@ -215,7 +215,7 @@ InformationObject instances (Q5).
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 666 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 646 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 
@@ -525,6 +525,56 @@ marking such rows `PROMOTE`.
   precedent for automatic emission. Its match basis is included in the
   scope census; the recorded exception stands only if it passes all six
   exception conditions.
+- **Recorded exceptions (Hamid 2026-09-26, governed-by pass).** Each passes
+  all six exception conditions and is **not a precedent** for automatic
+  emission:
+  - **REL-00531** (`CM-1-3-1-3-1 core:governedBy CM-1-3-1-3`).
+    (1) Independent semantics: a privacy-governance control — the child
+    "operates under the shared personal-data governance statement recorded
+    at" the parent, which is governance of data handling, not containment.
+    (2) Identity: source CM-1-3-1-3-1, target CM-1-3-1-3 (stable-ID).
+    (3) Rationale: the citation names a specific governance instrument
+    (the shared personal-data governance statement), not the hierarchy path.
+    (4) Hierarchy path: CM-1-3-1-3-1 → CM-1-3-1-3 (child → parent).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+  - **REL-00542** (`CM-1-3-1-4-1 core:governedBy CM-1-3-1-4`).
+    (1) Independent semantics: same privacy-governance control as REL-00531.
+    (2) Identity: source CM-1-3-1-4-1, target CM-1-3-1-4 (stable-ID).
+    (3) Rationale: citation names the shared personal-data governance
+    statement, not the hierarchy path.
+    (4) Hierarchy path: CM-1-3-1-4-1 → CM-1-3-1-4 (child → parent).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+  - **REL-00588** (`CM-1-3-2-1-1 core:governedBy CM-1-3-2-1`).
+    (1) Independent semantics: a legal constraint — "franchise constraints…
+    (cluster PMPA statement at [parent])"; PMPA is the franchise law, an
+    external legal instrument recorded at the cluster level.
+    (2) Identity: source CM-1-3-2-1-1, target CM-1-3-2-1 (stable-ID).
+    (3) Rationale: the citation names an external legal constraint, not
+    the hierarchy path.
+    (4) Hierarchy path: CM-1-3-2-1-1 → CM-1-3-2-1 (child → parent).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+  - **REL-00601** (`CM-1-3-2-2-2 core:governedBy CM-1-3-2-2`).
+    (1) Independent semantics: same PMPA legal constraint as REL-00588.
+    (2) Identity: source CM-1-3-2-2-2, target CM-1-3-2-2 (stable-ID).
+    (3) Rationale: citation names the PMPA franchise-law constraint.
+    (4) Hierarchy path: CM-1-3-2-2-2 → CM-1-3-2-2 (child → parent).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+  - **REL-00623** (`CM-1-3-2-4-2 core:governedBy CM-1-3-2-4`).
+    (1) Independent semantics: same PMPA legal constraint as REL-00588.
+    (2) Identity: source CM-1-3-2-4-2, target CM-1-3-2-4 (stable-ID).
+    (3) Rationale: citation names the PMPA franchise-law constraint.
+    (4) Hierarchy path: CM-1-3-2-4-2 → CM-1-3-2-4 (child → parent).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+  - **REL-00106** (`CM-1-1-4-7-7 core:governedBy CM-1-1-4`).
+    (1) Independent semantics: decision rights — "the Refinery Planning and
+    Optimization (CM-1-1-4) decision this step records"; the ancestor
+    decides and this step records that decision.
+    (2) Identity: source CM-1-1-4-7-7, target CM-1-1-4 (stable-ID).
+    (3) Rationale: the citation names a decision right exercised by the
+    ancestor, not the hierarchy path.
+    (4) Hierarchy path: CM-1-1-4-7-7 → CM-1-1-4-7 → CM-1-1-4
+    (grandchild → ancestor).
+    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
 - Applies to every predicate, not only `governedBy`.
 - The 10 held rows are on the workbook backlog for source-author
   clarification.
@@ -600,7 +650,7 @@ marking such rows `PROMOTE`.
   resolution; the fact survives if the `enables` mention is removed; no G1a
   row is the sole evidence for its fact; no merge creates a fact.
 - Held mentions attached as duplicate provenance (REL-00152, REL-00436)
-  stay counted as held (in the 637), add no support, and are not
+  stay counted as held (in the 657), add no support, and are not
   emitting.
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
   REL-01006 superseded; REL-00936 source-classification hold). 77 → 33
