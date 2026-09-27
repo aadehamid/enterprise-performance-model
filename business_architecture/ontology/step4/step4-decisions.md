@@ -505,39 +505,40 @@ No citation:
 
 ## Precedes/follows pass (2026-09-26 approved, AMENDED 2026-09-27)
 
-38 STAND (rule 4, stable-ID). 257 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
-19 HOLD (D:hamid-verdict). **NOT basis-only** — 19 facts removed.
+38 STAND (rule 4, stable-ID). 256 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
+20 HOLD (D:hamid-verdict). **NOT basis-only** — 20 facts removed.
 
 ### Amendment 2026-09-27 (Hamid HOLD review)
 Evidence Discipline Rule 5 (lock): non-sibling precedes/follows needs an
 *affirmative* sequence citation (or two-way). Exclusion/boundary/owned-by is
 NOT a route (REL-00009 precedent applies to sequence verbs).
 
-**19 holds:**
+**20 holds:**
 - 6 ExclusionBoundaryCitation, no two-way (approval did not cover): REL-01223, REL-01227,
   REL-01241, REL-01289, REL-01291, REL-01294.
-- 13 exclusion/boundary/owned-by as sole route: REL-00008, REL-00068,
+- 14 exclusion/boundary/owned-by/reference-data as sole route: REL-00008, REL-00068,
   REL-00112, REL-00149 (owned-by); REL-00193, REL-00200, REL-00206,
   REL-00319, REL-00351, REL-00374, REL-00930 (excludes/out-of-scope);
-  REL-00184 ("may be handled by"), REL-00188 (boundary list).
+  REL-00184 ("may be handled by"), REL-00188 (boundary list);
+  REL-00307 (reference-data usage, not sequence).
 - REL-00426 KEPT: scope has affirmative handoff ("submitting a payment
   request... to the designated AP/Treasury process").
 
 Each hold: **HOLD / D:hamid-verdict / Supersedes2026-09-26Approval**.
-All 19 facts verified unique single-row; zero knock-on.
+All 20 facts verified unique single-row; zero knock-on.
 
-**Totals:** 635 − 19 = **616** emitting; 668 + 19 = **687** held;
-477 − 19 = **458** facts. Conservation: 616 + 687 + 12 + 1 + 2 = 1,318. ✓
-Precedes facts: 202 − 19 = **183**.
+**Totals:** 635 − 20 = **615** emitting; 668 + 20 = **688** held;
+477 − 20 = **457** facts. Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
+Precedes facts: 202 − 20 = **182**.
 
-Route breakdown (257 promotions): citation-only rows re-tested against full
+Route breakdown (256 promotions): citation-only rows re-tested against full
 scope text; affirmative sequence required (arrive from, route to, executes
 through, come from).
 
-Zero reciprocal core:precedes pairs (183 facts checked). Hard gate GREEN.
+Zero reciprocal core:precedes pairs (182 facts checked). Hard gate GREEN.
 
 **Totals (amended 2026-09-27):** 615 emitting / 688 held / 457 facts.
-Conservation: 616 + 687 + 12 + 1 + 2 = 1,318. ✓
+Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
 
 Raw `B follows A` retained in provenance; canonical fact remains `A core:precedes B`.
 
