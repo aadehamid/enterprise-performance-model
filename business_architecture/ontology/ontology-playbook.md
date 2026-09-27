@@ -839,7 +839,158 @@ the check failed and we fixed the premise instead of patching the row.
 - **Reviewer verdicts:** every evidence package gets the interrogate
   pass (Act On / Consider / Noted / Dismissed) before Hamid reviews it.
 
+
+### Verb review methodology — how to judge a predicate family
+
+Each verb gets its own review pass: one predicate, one batch, one set of
+verdicts. The pass has four phases.
+
+**Phase 1 — Lock the definition.** Write the predicate definition before
+looking at rows. The definition must be falsifiable: it should be possible
+to read a row and say "this fails the definition." A definition that every
+row passes is not a definition. Each definition below is shaped by a
+specific confusion it exists to prevent.
+
+**Phase 2 — Build the review batch.** Pull every row asserting the verb.
+For each row, record: source and target (by slug, never label alone),
+both definitions, the raw verb string, the evidence tier, and the
+pipeline's proposed disposition. The reviewer reads the definitions, not
+the pipeline's recommendation.
+
+**Phase 3 — Verdict each row.** For each row: direction first (is the
+arrow pointing the right way?), then the definition test (does the
+source-target pair satisfy the locked definition on the evidence in
+their definitions?), then the verdict: APPROVE, HOLD, or STAND.
+- **APPROVE** means the row satisfies the definition and the fact is
+  stored (or its basis is updated if already emitting).
+- **HOLD** means the row fails the definition or the evidence is
+  insufficient. The fact is not emitted. The row is routed for source
+  correction. A hold is never a remap: if the row seems better expressed
+  as a different predicate, that is a source-meaning question, not an
+  emission-time decision.
+- **STAND** means the row was already correctly emitting and the review
+  confirms it. Approving an already-emitting row changes only its basis;
+  counts move only when a row changes bucket.
+
+**Phase 4 — Sample and reconcile.** For large batches, sample per the
+evidence discipline (Rule 6). Reconcile counts: every row has a verdict,
+every verdict is recorded, the ledger balances.
+
+**Per-verb guidance.** Each entry: the locked definition, what counts as
+evidence, the common pitfall the definition guards against, and why the
+boundary is drawn where it is.
+
+- **`core:enabledBy` (source is enabled by target).** *The target supplies a
+  maintained operating base, required control, governed mechanism,
+  capability, resource, or prerequisite condition that makes the source
+  able to operate.* Stored: `enables (S, T)` → `T core:enabledBy S` —
+  the triple reads with the enabled thing as subject, the enabler as
+  object, the same stored-direction convention as `informedBy`,
+  `assuredBy`, and `triggeredBy`. Evidence: the target definition names
+  the capability or control the source depends on. Pitfall: confusing
+  enablement with sequence (the source happens after the target), with
+  information flow (the target informs the source), or with hierarchy
+  (the target is the parent). The test is capability: would the source
+  be unable to operate without what the target supplies? If the answer
+  is "it would just be less informed" or "it would happen later," that
+  is not enablement.
+  - **Disposition split (enables only).** Not every enables row becomes
+    an `enabledBy` triple. G1a: merge as duplicate evidence on the
+    existing `dependsOnOutputOf` fact — no new `enabledBy` triple.
+    G1b: HOLD, no verb change. G2: no triple. Only G3 emits
+    `core:enabledBy`.
+
+- **`core:informedBy` (source is informed by target).** *The target
+  provides context, planning input, or situational awareness the source
+  uses.* Evidence: the source definition names the information or the
+  target as an input. Pitfall: promoting every data flow to informedBy.
+  The definition requires that the information actually shapes the
+  source's behavior, not merely that data moves between them.
+
+- **`core:dependsOnOutputOf` (source consumes target's output).**
+  *The source consumes a specific, identifiable output the target
+  produces.* Evidence: the source definition names the output or the
+  target as its producer. Pitfall: confusing consumption with
+  enablement. If the source needs the target's output to function, that
+  is a dependency; if the source needs the target's capability to exist,
+  that is enablement. The distinction matters because the remediation
+  differs: a broken output is a data problem, a missing capability is an
+  operating-model problem.
+
+- **`core:requires` (source requires target).** *The source cannot
+  validly start, complete, proceed, or reach its controlled state
+  without the target, its completed control, or its required condition.*
+  Evidence: the source definition states the prerequisite as a gate —
+  "once required approvals are complete," "validating X before Y."
+  Pitfall: inferring a requirement because the target later consumes or
+  calculates related information. A downstream consumer does not create
+  an upstream requirement. The requirement must be stated as a
+  precondition in the source, not inferred from the target's behavior.
+
+- **`core:assuredBy` (source is assured by target).** *The target
+  performs defined governance, compliance, quality, review,
+  control-testing, or equivalent oversight over the source or its
+  outcome.* Evidence: the target definition describes the oversight
+  activity and names the source (or its domain) as the assured thing.
+  Pitfall: promoting support, documentation, or evidence-supply to
+  assurance. A process that produces the workpapers is not assuring the
+  process that uses them. Assurance requires an explicit oversight role,
+  not merely involvement in the control environment.
+
+- **`core:constrainedBy` (source is constrained by target).**
+  *The target is a binding constraint source for the bounded activity,
+  decision, or outcome.* Stored from the constrained thing to the
+  constraint. Evidence: the source definition names the constraint or
+  the target as imposing it. Pitfall: confusing constraints with advice,
+  ownership, sequencing, or broad association. A target that the source
+  "considers" or "coordinates with" is not a constraint. The constraint
+  must bind: the source cannot validly exceed, ignore, or waive it.
+
+- **`core:governedBy` (source is governed by target).** *The target
+  exercises governance authority over the source — policy-setting,
+  approval rights, or compliance enforcement.* Evidence: the target
+  definition states the governance relationship. Pitfall: structural
+  closeness. A process is not governed by its parent merely because the
+  parent exists in the hierarchy. Governance requires an explicit
+  authority relationship, not a position on the org chart.
+
+- **`core:triggeredBy` (source is triggered by target).** *The target
+  generates, detects, manages, or records the event, exception,
+  monitoring outcome, change, referral, or handoff that initiates the
+  source.* Evidence: the source definition names the triggering
+  condition and the target as its origin. Pitfall: "feeds," "informs,"
+  "supports," "uses," or "precedes" do not become triggers without an
+  invoking event. A trigger is a discrete initiating condition, not a
+  standing relationship.
+
+- **`core:precedes` (source precedes target).** *The source completes
+  before the target begins, as a sequence the business asserts.*
+  Evidence (Rule 5): for siblings, structural nearness alone is
+  sufficient — sibling sequence-pattern relations do not need an
+  additional citation; for non-siblings, an affirmative sequence
+  citation in the source definition ("arrives from," "routes to,"
+  "executes through," "comes from," an explicit handoff) or a strict
+  two-way mention. Pitfall: exclusion, boundary, or owned-by wording is
+  not a sequence route. "Excludes X" tells you where the boundary is,
+  not what happens first. A non-sibling row with only boundary wording
+  is held.
+
+**Why one verb per pass.** Verdicts require the reviewer to hold one
+definition in mind and apply it uniformly. Mixing verbs in a batch
+invites definition drift: the reviewer starts judging "requires" rows by
+"enables" instincts. The cost of separate passes is linear; the cost of
+a corrupted predicate is unbounded, because every downstream consumer
+inherits the misclassification.
+
+**Why holds are not remaps.** When a row fails its verb's definition but
+seems to satisfy another's, the temptation is to reclassify at emission
+time. This launders an authoring decision into the pipeline. The source
+author chose the verb; if the verb is wrong, the correction belongs in
+the source, reviewed as an authoring change. The pipeline emits, holds,
+or defers — it never authors.
+
 ---
+
 ## 4. Standards guide — why each standard earned its place
 
 Each entry: what the standard is, why it belongs in an ontology build, what
