@@ -658,3 +658,42 @@ necessity.
   emit no substitute.
 
 No count changes — all 5 approved facts already stored in canonical-facts.csv.
+
+## Constrained-by pass (approved; evidence package 2026-09-27)
+
+Definition: `core:constrainedBy` — stored from the bounded activity, decision,
+or outcome to its binding constraint source. Excludes advice, broad
+association, ownership, sequencing, and optional considerations.
+
+10 APPROVE (D:hamid-verdict). 1 HOLD (D:hamid-verdict).
+**NOT basis-only** — 1 fact not emitted.
+
+**10 approved:**
+- REL-00015: CM-1-1-2-10 (Allocate Crude and Feedstock) constrainedBy
+  CM-1-1-3-7 (Inventory Management).
+- REL-00018: CM-1-1-2-11 (Allocate Finished Products) constrainedBy
+  CM-1-1-3-7 (Inventory Management).
+- REL-00024: CM-1-1-2-13 (Plan Finished Goods Inventory) constrainedBy
+  CM-1-1-3-7 (Inventory Management).
+- REL-00087: CM-1-1-4-7-2 (Evaluate Crude & Feedstock) constrainedBy
+  CM-1-1-4-7-5 (Capture Refinery Level Constraints).
+- REL-00091: CM-1-1-4-7-3 (Capture Crude Availability) constrainedBy
+  CM-1-1-4-7-5 (Capture Refinery Level Constraints).
+- REL-00099: CM-1-1-4-7-5 (Capture Refinery Level Constraints) constrainedBy
+  CM-1-1-4-7-8 (Perform Scenario Analysis).
+- REL-00103: CM-1-1-4-7-6 (Capture Inventory) constrainedBy CM-1-1-3-7
+  (Inventory Management).
+- REL-00574: CM-1-3-10-2 (Process Customer Lifting Forecasts and Nominations)
+  constrainedBy CM-1-3-10-3 (Manage Terminal Lifting Allocation).
+- REL-00894: CM-1-3-6-6-5 (Handle Card Limits) constrainedBy CM-1-3-7-4-2
+  (Establish Credit Limit & Risk Code).
+- REL-01284: CM-1-1-4-7 (Refinery Optimization) constrainedBy CM-1-1-3-7
+  (Inventory Management).
+
+**1 held:**
+- REL-00097: **HOLD / D:hamid-verdict**. The broad Refining target has no
+  supplied definition and does not provide evidence that it is a constraint
+  source for Capture Refinery Level Constraints. Retain the context hold,
+  emit no triple.
+
+No count changes — all 10 approved facts already stored in canonical-facts.csv.
