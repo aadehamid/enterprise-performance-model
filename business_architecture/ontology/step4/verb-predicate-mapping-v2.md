@@ -199,10 +199,10 @@ InformationObject instances (Q5).
 
 | Raw verb | Stored predicate | Mentions |
 |---|---|---|
-| uses-input | core:dependsOnOutputOf | 215 |
+| uses-input | core:dependsOnOutputOf | 101 |
 | informed-by | core:informedBy | 139 |
 | informs | core:informedBy (inverse) | 1 |
-| requires | core:requires (5 approved 2026-09-25) | 5 |
+| requires | core:requires (6 approved; 5 on 2026-09-25 + REL-00873 restored 2026-09-26) | 6 |
 | precedes | core:precedes | 150 |
 | follows | core:precedes (canonicalized) | 164 |
 | governed-by | core:governedBy | 38 |
@@ -211,7 +211,7 @@ InformationObject instances (Q5).
 | triggers | core:triggeredBy | 18 |
 | assures | core:assuredBy (5 approved 2026-09-26) | 5 |
 | enables G3 | core:enabledBy (84 approved 2026-09-26) | 84 |
-| enables G1a | merge as evidence on existing dependsOnOutputOf fact | 75 |
+| enables G1a | merge as evidence on existing dependsOnOutputOf fact | 33 |
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
