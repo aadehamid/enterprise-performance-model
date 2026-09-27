@@ -973,14 +973,17 @@ boundary is drawn where it is.
   closeness. A process is not governed by its parent merely because the
   parent exists in the hierarchy. Governance requires an explicit
   authority relationship, not a position on the org chart. **Hierarchy
-  exception:** when source and target are in a parent-child hierarchy,
-  governedBy applies only if all six conditions hold: (1) the target
-  definition explicitly claims governance authority, (2) the authority
-  is over the source's domain (not merely the hierarchy), (3) the
-  citation is affirmative (not exclusion/boundary), (4) the source
-  definition acknowledges the governance, (5) no broader governance
-  source supersedes, (6) the relationship is recorded as an architecture
-  decision.
+  exception (approved text, verb-predicate-mapping-v2.md §5):** Permitted
+  only if all six hold: (1) documented relationship beyond containment;
+  (2) the definition identifies distinct governance, control,
+  decision-right, output-consumption, or externally reusable enablement
+  semantics; (3) the rationale identifies that independent semantic
+  evidence rather than the hierarchy path; (4) the evidence ledger
+  preserves the hierarchy path and the exception rationale; (5) a
+  reviewer approves the row explicitly — no automatic promotion; (6) the
+  target is identified by source-backed evidence under the identity rule
+  as finally scoped. Each exception is recorded as "not a precedent"
+  for automatic emission.
 
 - **`core:triggeredBy` (source is triggered by target).** *The target
   generates, detects, manages, or records the event, exception,
