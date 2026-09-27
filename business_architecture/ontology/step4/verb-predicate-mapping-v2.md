@@ -203,8 +203,8 @@ InformationObject instances (Q5).
 | informed-by | core:informedBy | 44 |
 | informs | core:informedBy (inverse) | 1 |
 | requires | core:requires (5 approved 2026-09-25; REL-00873 supersession reversed 2026-09-26, scope-note label citation) | 5 |
-| precedes | core:precedes | 136 |
-| follows | core:precedes (canonicalized) | 158 |
+| precedes | core:precedes | 137 |
+| follows | core:precedes (canonicalized) | 157 |
 | governed-by | core:governedBy | 18 |
 | constrained-by | core:constrainedBy | 9 |
 | constrains | core:constrainedBy (inverse) | 1 |
@@ -215,7 +215,7 @@ InformationObject instances (Q5).
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 616 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 615 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 

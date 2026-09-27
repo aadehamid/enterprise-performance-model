@@ -329,7 +329,7 @@ evidence and needs the source author to confirm (REL-00215 pattern).
 
 ## Precedes/follows holds routed for source correction (Hamid 2026-09-27)
 
-19 rows held — each needs an affirmative sequence citation from the source
+20 rows held — each needs an affirmative sequence citation from the source
 author (or confirmation the sequence does not exist).
 
 **6 ExclusionBoundaryCitation (approval did not cover):**
