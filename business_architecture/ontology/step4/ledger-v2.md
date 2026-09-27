@@ -1713,7 +1713,7 @@ Hamid re-reviews after the sync.
 ## uses-input pass applied (2026-09-26)
 
 Hamid approved the 33/31 citation split and the disposition at
-762 emitting / 541 held / 603 facts (PR #125, #126; fourth revision).
+761 emitting / 542 held / 603 facts (PR #125, #126; fourth revision; corrected 2026-09-26: 917 baseline was stale, true pre-pass 916/387).
 
 **Applied:**
 - 114 uses-input rows moved emitting → held (82 no-citation, 31
@@ -1730,8 +1730,8 @@ Hamid approved the 33/31 citation split and the disposition at
 - REL-00447 promoted on the scope-note range citation route; its fact
   retained with REL-00436 attached (held).
 
-**Totals:** 917 − 114 − 42 + 1 = 762 emitting; 386 + 114 + 42 − 1 = 541
-held; 716 − 114 + 1 = 603 facts. Conservation: 762 + 541 = 1303. ✓
+**Totals:** 916 − 114 − 42 + 1 = 761 emitting; 387 + 114 + 42 − 1 = 542
+held; 716 − 114 + 1 = 603 facts. Conservation: 761 + 542 = 1303. ✓
 
 **Gate:** updated for the new disposition (603 facts, 36 active G1a
 rows, REL-00873 stored, REL-01061 held, REL-00214 fact removed).
