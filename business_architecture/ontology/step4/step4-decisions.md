@@ -505,8 +505,8 @@ No citation:
 
 ## Precedes/follows pass (2026-09-26 approved, AMENDED 2026-09-27)
 
-38 STAND (rule 4, stable-ID). 257 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
-19 HOLD (D:hamid-verdict). **NOT basis-only** — 19 facts removed.
+38 STAND (rule 4, stable-ID). 256 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
+20 HOLD (D:hamid-verdict). **NOT basis-only** — 20 facts removed.
 
 ### Amendment 2026-09-27 (Hamid HOLD review)
 Evidence Discipline Rule 5 (lock): non-sibling precedes/follows needs an
@@ -527,17 +527,17 @@ Each hold: **HOLD / D:hamid-verdict / Supersedes2026-09-26Approval**.
 All 19 facts verified unique single-row; zero knock-on.
 
 **Totals:** 635 − 19 = **616** emitting; 668 + 19 = **687** held;
-477 − 19 = **458** facts. Conservation: 616 + 687 + 12 + 1 + 2 = 1,318. ✓
+477 − 19 = **458** facts. Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
 Precedes facts: 202 − 19 = **183**.
 
 Route breakdown (257 promotions): citation-only rows re-tested against full
 scope text; affirmative sequence required (arrive from, route to, executes
 through, come from).
 
-Zero reciprocal core:precedes pairs (183 facts checked). Hard gate GREEN.
+Zero reciprocal core:precedes pairs (182 facts checked). Hard gate GREEN.
 
 **Totals (amended 2026-09-27):** 615 emitting / 688 held / 457 facts.
-Conservation: 616 + 687 + 12 + 1 + 2 = 1,318. ✓
+Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
 
 Raw `B follows A` retained in provenance; canonical fact remains `A core:precedes B`.
 

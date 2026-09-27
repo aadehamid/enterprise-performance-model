@@ -1863,17 +1863,16 @@ correction (including target-side range check for the 4 compliance monitors).
 
 **Verdicts:**
 - **38 STAND** (rule 4, stable-ID mentions).
-- **257 PROMOTE** (D:hamid-verdict / Rule 5 sequence route).
-- **19 HOLD** (D:hamid-verdict / Supersedes2026-09-26Approval):
-  - 6 no citation, no two-way (REL-01223, 01227, 01241, 01289, 01291, 01294).
-  - 13 exclusion/boundary/owned-by as sole route (REL-00008, 00068, 00112,
-    00149, 00184, 00188, 00193, 00200, 00206, 00319, 00351, 00374, 00930).
+- **256 PROMOTE** (D:hamid-verdict / Rule 5 sequence route).
+- **20 HOLD** (D:hamid-verdict / Supersedes2026-09-26Approval):
+  - 6 ExclusionBoundaryCitation (REL-01223, 01227, 01241, 01289, 01291, 01294).
+  - 14 exclusion/boundary/owned-by/reference-data as sole route (REL-00008, 00068, 00112,
+    00149, 00184, 00188, 00193, 00200, 00206, 00307, 00319, 00351, 00374, 00930).
 
-**NOT basis-only:** 19 facts removed (all unique single-row, zero knock-on).
+**NOT basis-only:** 20 facts removed (all unique single-row, zero knock-on).
 Raw `B follows A` retained in provenance for emitting rows.
 
-**Rule 6:** method approved 2026-09-26 (seed 42). Samples NOT yet reviewed —
-all outcomes pending `D:hamid-verdict`. REL-01241 held. CM-1-1-4 label corrected.
+**Rule 6:** method approved 2026-09-26 (seed 42). All 18 samples `D:hamid-verdict` PASS 2026-09-27. REL-01241 held. CM-1-1-4 label corrected.
 Evidence in `review-evidence/precedes-follows-rule6-samples.md`.
 
 **Evidence Discipline Rule 5 (lock):** non-sibling precedes/follows needs an

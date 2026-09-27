@@ -1,6 +1,6 @@
 # Precedes/Follows — Rule 6 Samples
 
-Redrawn 2026-09-27 from 256 promotions using seed 42. All outcomes pending `D:hamid-verdict`.
+Redrawn 2026-09-27 from 256 promotions using seed 42. All 18 outcomes `D:hamid-verdict` PASS 2026-09-27.
 
 18 samples, including 4 citation-only rows (riskiest group).
 
