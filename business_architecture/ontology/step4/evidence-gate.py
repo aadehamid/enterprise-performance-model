@@ -173,16 +173,19 @@ check("control-case hold REL-00770", _emits_nothing("REL-00770"),
 # EN_ENABLEDBY_OVERRIDE 2026-09-26.
 check("control-case hold REL-00939", _emits_nothing("REL-00939"),
       "must stay held (G3-B4 supersession of 2026-09-25 approval): no stored triple")
-# 2d. governed-by control cases (Hamid verdicts 2026-09-25), checked against
-# the stored fact (source, core:governedBy, target) — never on structural
-# nearness. The 3 held rows must contribute to no stored triple.
-for rid in ("REL-00050", "REL-00067", "REL-00190", "REL-00394", "REL-00399",
-            "REL-00406", "REL-00858", "REL-00907", "REL-00937", "REL-01005",
-            "REL-01228", "REL-01256", "REL-01313"):
+# 2d. governed-by control cases (Hamid verdicts 2026-09-25, as amended
+# 2026-09-26). Checked against the stored fact (source, core:governedBy,
+# target) — never on structural nearness. 2026-09-26: 10 of the 13 prior
+# approvals superseded (NoAffirmativeCitation); only 3 retain stored facts.
+for rid in ("REL-00190", "REL-00858", "REL-01313"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:governedBy per Hamid 2026-09-25; expected stored fact {fact}")
+          f"approved as core:governedBy per Hamid 2026-09-25/26; expected stored fact {fact}")
+for rid in ("REL-00050", "REL-00067", "REL-00394", "REL-00399", "REL-00406",
+            "REL-00907", "REL-00937", "REL-01005", "REL-01228", "REL-01256"):
+    check(f"control-case hold {rid}", _emits_nothing(rid),
+          "superseded 2026-09-26 (NoAffirmativeCitation): no stored triple")
 for rid in ("REL-00274", "REL-01143", "REL-01286"):
     check(f"control-case hold {rid}", _emits_nothing(rid),
           "must stay held per Hamid 2026-09-25: no stored triple")
@@ -411,6 +414,21 @@ for rid in ("REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
 # REL-01309 exception stays emitting under its original evidence marker.
 check("REL-01309 remains emitting", not _emits_nothing("REL-01309"),
       "approved hierarchy exception; prior decision stands")
+# Governed-by hierarchy exceptions (Hamid 2026-09-26). Each is a recorded
+# exception, not a precedent; the gate treats each as approved.
+for rid in ("REL-00531", "REL-00542", "REL-00588", "REL-00601", "REL-00623",
+            "REL-00106"):
+    check(f"hierarchy exception {rid} remains emitting", not _emits_nothing(rid),
+          "approved hierarchy exception 2026-09-26; not a precedent")
+# Governed-by pass holds (Hamid 2026-09-26): exclusion/boundary citations
+# and hierarchy restatements. Each held row emits nothing. (The 10
+# superseded 2026-09-25 approvals are covered by the 2d hold checks above.)
+for rid in ("REL-00185", "REL-00215", "REL-00250", "REL-00969", "REL-01113",
+            "REL-01300", "REL-01310",  # exclusion/boundary citations
+            "REL-00620", "REL-00625", "REL-00629"):  # hierarchy restatements
+    check(f"governed-by hold {rid} emits nothing",
+          _emits_nothing(rid),
+          "HOLD / D:hamid-verdict 2026-09-26; fact removed")
 
 check("hard rule: zero reciprocal dependsOnOutputOf two-cycles",
       not any((o, s) in _dep for s, o in _dep),
@@ -451,8 +469,8 @@ for rid in ("REL-00049", "REL-00127", "REL-00163", "REL-00169", "REL-00170",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==603", len(cf) == 603, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 603)
+check("canonical-facts==488", len(cf) == 488, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 488)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
