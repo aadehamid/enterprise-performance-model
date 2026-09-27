@@ -604,7 +604,7 @@ marking such rows `PROMOTE`.
   emitting.
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
   REL-01006 superseded; REL-00936 source-classification hold). 77 → 33
-  emitting (REL-00152 and REL-00436 are held mentions). The G1a report was
+  emitting (2 property-rule holds [REL-00152, REL-00436] + 42 held in the 2026-09-26 uses-input pass). The G1a report was
   regenerated to replace the `<generator object …>` values with fixed,
   readable values.
 
