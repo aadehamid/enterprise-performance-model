@@ -860,7 +860,8 @@ the pipeline's recommendation.
 **Phase 3 — Verdict each row.** For each row: identity first (record the
 match type — stable ID or label only — and the rule 4/5 route; label-only
 rows need an affirmative citation, a strict two-way pair, or a recorded
-architecture decision), then direction (is the arrow pointing the right
+architecture decision; exception: for `core:precedes` siblings, structural
+nearness alone suffices per Rule 5), then direction (is the arrow pointing the right
 way?), then the definition test (does the source-target pair satisfy the
 locked definition on the evidence in their definitions?), then the
 verdict: APPROVE, HOLD, or STAND.
