@@ -261,8 +261,10 @@ for rid in ("REL-00433", "REL-01172"):
 # is authoritative. Prior decision retained in provenance as superseded.
 check("control-case hold REL-00437", _emits_nothing("REL-00437"),
       "must stay held (G3-B3 supersession of 2026-09-26 S&T approval): no stored triple")
-# Thirteen held rows emit nothing. Two facts survive via independent approved
-# evidence (REL-00214, REL-00447) with the disallowed evidence rows removed.
+# Thirteen held rows emit nothing. One fact survives via independent approved
+# evidence (REL-00447, via scope-note range citation) with the disallowed
+# evidence rows removed. REL-00214's fact was removed in the 2026-09-26
+# uses-input pass (no citation route).
 for rid in ("REL-00262", "REL-00458", "REL-01122", "REL-01129",
             "REL-00263", "REL-00440", "REL-00455", "REL-00712",
             "REL-00750", "REL-01064", "REL-01206",
