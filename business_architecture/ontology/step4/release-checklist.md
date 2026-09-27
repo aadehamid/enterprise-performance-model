@@ -16,8 +16,8 @@
 | assures | #155 | 5 APPROVE / 3 HOLD |
 | constrained-by | #156 | 10 APPROVE / 1 HOLD (REL-00097) |
 | precedes/follows | #152 | 38 STAND / 20 HOLD / 256 PROMOTE |
-| governed-by | — | 10 governed-by exceptions (exact §5 rule) |
-| triggers | — | 11 triggers |
+| governed-by | — | 7 recorded hierarchy exceptions (REL-01309, REL-00106, REL-00531, REL-00542, REL-00588, REL-00601, REL-00623), each not a precedent. Pass: 5 STAND / 13 PROMOTE / 20 HOLD → 18 emitting |
+| triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting |
 
 ### Conservation
 **615 emitting + 688 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318**
@@ -53,6 +53,4 @@
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).
 - PR #161 closed without merge (requires revision reverted; #154 package stands).
-- Assures Rule 6 samples: pending Hamid's review.
-- Constrained-by Rule 6: REL-00015, REL-00018 PASS; REL-00091 pending re-review.
-- Requires Rule 6: REL-00873 PASS (Hamid 2026-09-27).
+- Rule 6 on main: precedes/follows 18/18 PASS (`precedes-follows-rule6-samples.md`). Assures, constrained-by, and requires Rule 6 samples are not recorded on main.
