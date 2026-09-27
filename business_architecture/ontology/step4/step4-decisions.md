@@ -611,3 +611,50 @@ consumes/calculates/uses related information.
   and correction.
 
 No count changes — all 5 approved facts already stored in canonical-facts.csv.
+
+## Assures pass (approved; evidence package 2026-09-27)
+
+Definition: `core:assuredBy` — the assurance activity performs a defined
+governance, compliance, quality, review, control-testing, or equivalent
+oversight role over the assured thing or outcome. Not operational support,
+supply, documentation, evidence, balancing, fulfillment, feeding, or mere
+necessity.
+
+5 APPROVE (D:hamid-verdict). 3 HOLD (D:hamid-verdict).
+**NOT basis-only** — 3 facts not emitted.
+
+**5 approved:**
+- REL-00401: CM-1-2-4-2-11 (Manage Tax Compliance) assuredBy CM-1-2-4-3-5
+  (Manage Taxes). Manage Tax Compliance reviews registrations, licensing,
+  exemption certificates, filing-calendar compliance, tax-determination
+  controls, and gaps.
+- REL-00719: CM-1-3-4-2-2 (Conduct Research) assuredBy CM-1-3-4-2-3 (Manage
+  Research). Manage Research owns commissioning, standards, quality, and
+  completion of studies while Conduct Research performs them.
+- REL-00801: CM-1-3-5-3-4 (Develop / Update Campaigns) assuredBy CM-1-3-5-3-7
+  (Manage Use Of Brand). Manage Use Of Brand applies brand standards through
+  material review and escalation of deviations.
+- REL-01269: CM-1-2-1 (Trading Management) assuredBy CM-1-2-4-3 (Regulatory &
+  Compliance). Regulatory & Compliance maintains policies and procedures,
+  monitors regulatory and internal-policy adherence, oversees
+  compliance-supporting controls.
+- REL-01270: CM-1-2-4-1 (Settlements) assuredBy CM-1-2-4-3 (Regulatory &
+  Compliance). Same cross-cutting regulatory and compliance control function
+  assures the compliance condition of Settlements without conducting
+  settlement operations.
+
+**3 held:**
+- REL-00355: **HOLD / D:hamid-verdict**. Manage Settlement Documents controls
+  documents used to execute and evidence settlements — operational support
+  and evidence management, not sufficiently explicit independent assurance.
+  Emit no triple.
+- REL-00385: **HOLD / D:hamid-verdict**. Documentation, workpapers,
+  reconciliation evidence, and controlled reporting support or evidence
+  Accounting but do not establish that the source performs assurance over
+  Accounting. Emit no triple.
+- REL-01106: **HOLD / D:hamid-verdict**. Crude/Feed Supply Management manages
+  the feedstock supply position and associated risks; it does not assure
+  Crude/Feed Demand Management. The existing core:assuredBy fact is removed;
+  emit no substitute.
+
+No count changes — all 5 approved facts already stored in canonical-facts.csv.
