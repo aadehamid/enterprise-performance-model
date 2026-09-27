@@ -1714,6 +1714,10 @@ Two leftover defects found on review of `step4/working` at `3a1a413`:
 Current: 917 emitting / 386 held / 716 facts. PR stays DO NOT MERGE;
 Hamid re-reviews after the sync.
 
+*Superseded 2026-09-27: PR #124 was merged by aadehamid as `479c75f`
+(2026-09-27T00:37:59Z) as an intentional working-area drop. See "PR #124
+merge — resolved" entry below.*
+
 ## uses-input pass applied (2026-09-26)
 
 Hamid approved the 33/31 citation split and the disposition at
@@ -1887,10 +1891,12 @@ Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
 
 ## Commit message correction (2026-09-27)
 
-Four commits carry an identical APQC v7.2.2 body text that does not describe
+Six commits carry an identical APQC v7.2.2 body text that does not describe
 their changes. The APQC workbook was vendored by PR #25 (commit 6758b0f);
-these four commits did not touch it. Correct descriptions:
+these six commits did not touch it. Correct descriptions:
 
+- `157bd9e` — Step 4: Precedes/follows — final (PR #147). 8 files,
+  633 insertions. Precedes/follows review implementation.
 - `24e4339` — Step 4: Precedes/follows — all doc fixes consolidated
   (PR #152). Touched: `ledger-v2.md`, `step4-decisions.md`,
   `verb-predicate-mapping-v2.md`, `source-workbook-backlog.md`, Rule 6
@@ -1907,6 +1913,8 @@ these four commits did not touch it. Correct descriptions:
   (PR #156). Touched: `step4-decisions.md` (+39). 10 APPROVE documented,
   1 HOLD (REL-00097). No count changes — all 10 approved facts already
   stored.
+- `c8e13cc` — Docs: add verb review methodology to playbook (PR #157).
+  Touched: `ontology-playbook.md` (+151). No count changes.
 
 History on `main` is not rewritten; this entry is the correction.
 
@@ -1919,6 +1927,3 @@ onto `main`. This was intentional: the drop establishes the working area
 on main, with promotion to TTL still blocked by the step4 README. Not to be
 confused with PR #121 (the other DO NOT MERGE — Step 4 evidence-discipline
 playbook section, merged 2026-09-25, later marked Approved by #122).
-
-*Correction note: an earlier entry on this date recorded this as an open
-question based on incomplete review. The above is the correct record.*
