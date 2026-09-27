@@ -310,3 +310,19 @@ Each requires source-workbook correction to add an affirmative citation
 - REL-01005
 - REL-01228 (scope conditions lapsed)
 - REL-01256 (scope conditions lapsed)
+## Triggers pass: 11 held rows routed for source correction (Hamid 2026-09-26)
+
+Each held row needs an affirmative citation tying the source's event or result
+to the target (trigger, route to, refer, escalate, hand off), added by the
+source author. Supersession entries in `step4-decisions.md`.
+
+- REL-00049 (exclusion/boundary)
+- REL-00291 (boundary: states where work happens)
+- REL-00892 (exclusion/boundary)
+- REL-00163 (boundary: states where amendments are done; no finding-to-target link)
+- REL-00169, REL-00170, REL-00252 (no citation)
+- REL-00396, REL-00398, REL-00400, REL-00403 (compliance monitors; no citation)
+
+Target-side check for the four compliance monitors: does Manage Exceptions
+(CM-1-2-4-3-7) cite its sources as a range? If so, that is target-side
+evidence and needs the source author to confirm (REL-00215 pattern).

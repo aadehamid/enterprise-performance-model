@@ -2,7 +2,7 @@
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(646 emitting / 657 held / 488 facts — 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
+(635 emitting / 668 held / 477 facts — 646/657/488 before the 2026-09-26 triggers pass; 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
 **Baseline:** `579ed89b479529d179485f633828df89399ad3c5` (PR #126; was `a73d313ba922e323ccfeaad667efef42c194e4b8`/PR #123 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
@@ -169,13 +169,13 @@ mapping applies those mention-level holds separately),
 | `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
-| `triggers` (S, T) | `T core:triggeredBy S` | 18 rows |
+| `triggers` (S, T) | `T core:triggeredBy S` | 7 rows (18 reviewed: 2 stand, 5 promote, 11 held 2026-09-26) |
 | `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
 | `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 33 G1a evidence-only + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 600 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 633 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 646 emitting.
+**Reconciliation:** 589 mentions map to their own predicate; 33 G1a mentions attach as duplicate evidence to existing facts — 622 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 635 emitting.
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -183,17 +183,17 @@ InformationObject instances (Q5).
 
 ## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
 
-- Emitting mentions: **646**.
+- Emitting mentions: **635**.
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **633** (600 map to their own predicate + 33 G1a duplicate evidence; 646 − 13 G2 no-triple).
-- Canonical facts (distinct stored subject/predicate/object): **488** (508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
+- Mentions attached to stored facts: **622** (589 map to their own predicate + 33 G1a duplicate evidence; 635 − 13 G2 no-triple).
+- Canonical facts (distinct stored subject/predicate/object): **477** (488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 657 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 668 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 646 + 657 + 12 + 1 + 2 = 1,318. ✓
+  values). Total: 635 + 668 + 12 + 1 + 2 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -208,14 +208,14 @@ InformationObject instances (Q5).
 | governed-by | core:governedBy | 18 |
 | constrained-by | core:constrainedBy | 9 |
 | constrains | core:constrainedBy (inverse) | 1 |
-| triggers | core:triggeredBy | 18 |
+| triggers | core:triggeredBy | 7 |
 | assures | core:assuredBy (5 approved 2026-09-26) | 5 |
 | enables G3 | core:enabledBy (84 approved 2026-09-26) | 84 |
 | enables G1a | merge as evidence on existing dependsOnOutputOf fact | 33 |
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 646 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 635 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 
@@ -310,7 +310,7 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
 
 1. requires (6 rows).
 2. assures (7 rows).
-3. constrained-by (10) and triggers (18) batches (to be built).
+3. constrained-by (10) batch (to be built); triggers (7) batch complete 2026-09-26.
 4. The 3 contradictions and the 10 ancestor/descendant governance rows.
 5. The Supply & Trading search (pattern-holds to backlog).
 6. G1 split (G1a merge / G1b hold), then G2, then G3.
@@ -461,13 +461,18 @@ and no substitute emitted.
   condition. "Feeds", "informs", "supports", "uses", "precedes", and "is
   associated with" do not become `core:triggeredBy` without an event or
   condition that invokes the target.
-- Approved 2026-09-26 (18 rows, stored as `core:triggeredBy`): REL-00049,
-  REL-00127, REL-00163, REL-00169, REL-00170, REL-00235, REL-00236, REL-00246,
-  REL-00252, REL-00291, REL-00396, REL-00398, REL-00400, REL-00403, REL-00725,
-  REL-00892, REL-00897, REL-00901. Scope notes: card-process triggers
-  (REL-00892/00897/00901) are conditional workflow triggers within program
-  controls, not universal; compliance-monitoring rows follow the
-  monitoring-finding → exception-workflow pattern.
+- **Affirmative-citation definition (adopted 2026-09-26):** an affirmative
+  citation for `triggers` must tie the source's event or result to the target
+  (trigger, route to, refer, escalate, hand off). A statement of where work
+  is done does not count.
+- Reviewed 2026-09-26 (18 rows): 2 STAND (rule 4: REL-00725, REL-00897);
+  5 PROMOTE (`D:hamid-verdict`: REL-00127, REL-00235, REL-00236, REL-00246,
+  REL-00901 — each with an event-to-target citation); 11 HOLD
+  (`D:hamid-verdict` / `NoAffirmativeTriggerLink` / `Supersedes2026-09-26Approval`:
+  REL-00049, REL-00163, REL-00169, REL-00170, REL-00252, REL-00291, REL-00396,
+  REL-00398, REL-00400, REL-00403, REL-00892). 7 `core:triggeredBy` facts
+  emitting. Scope notes: card-process triggers (REL-00897/00901) are
+  conditional workflow triggers within program controls, not universal.
 
 ## No-two-cycle rule (hard gate, Hamid 2026-09-26)
 

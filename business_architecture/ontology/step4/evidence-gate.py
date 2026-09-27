@@ -455,22 +455,27 @@ _inverse_stored = [(r["subject"], r["predicate"], r["object"]) for r in cfacts
 check("hard rule: zero stored triples using an inverse predicate",
       not _inverse_stored,
       f"inverse predicates are query-only; found {_inverse_stored[:3]}" if _inverse_stored else "")
-# 2i. triggers control cases (Hamid verdicts 2026-09-26). Eighteen approved
-# rows must store (triggered-activity, core:triggeredBy, trigger-activity).
-# All were already emitting: basis changes only.
-for rid in ("REL-00049", "REL-00127", "REL-00163", "REL-00169", "REL-00170",
-            "REL-00235", "REL-00236", "REL-00246", "REL-00252", "REL-00291",
-            "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00725",
-            "REL-00892", "REL-00897", "REL-00901"):
+# 2i. triggers pass (Hamid 2026-09-26). 2 stand (rule 4) + 5 promote on
+# affirmative citation + event semantics must store
+# (triggered-activity, core:triggeredBy, trigger-activity). 11 held rows
+# emit nothing (supersession entries in step4-decisions.md).
+for rid in ("REL-00725", "REL-00897",
+            "REL-00127", "REL-00235", "REL-00236", "REL-00246", "REL-00901"):
     fact = _stored(rid)
-    check(f"control-case stored {rid} as {fact[1]}",
+    check(f"triggers emitting {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:triggeredBy per Hamid 2026-09-26; expected stored fact {fact}")
+          f"approved core:triggeredBy per Hamid 2026-09-26; expected stored fact {fact}")
+for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
+            "REL-00291", "REL-00396", "REL-00398", "REL-00400", "REL-00403",
+            "REL-00892"):
+    check(f"triggers held {rid} emits no triple",
+          _emits_nothing(rid),
+          "HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval")
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==488", len(cf) == 488, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 488)
+check("canonical-facts==477", len(cf) == 477, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 477)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
