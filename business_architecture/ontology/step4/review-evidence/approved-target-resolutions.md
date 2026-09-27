@@ -69,9 +69,8 @@ Match rows against the qualified forms above, not the bare phrases.
   label→slug target resolutions. Q11 (above) is the only target-resolution
   entry. Q10 (terminology-note migration) governs label/alias migration
   for concept names, not relationship target resolution.
-- `business_architecture/ontology/step4/step4-decisions.md` does not
-  exist on `main` (the step4 directory lives only on the unmerged
-  `step4/working` branch, PR #124).
+- `business_architecture/ontology/step4/step4-decisions.md` exists on
+  `main` (PR #124 merged the step4 directory; corrected 2026-09-26).
 - A scan of recently merged PRs with target/resolution/label themes
   found only #110, #119, and #120 (Q12 ambiguous-target rule — records
   no resolutions, only the AmbiguousDeferred mechanism).
