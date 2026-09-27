@@ -695,9 +695,11 @@ Decision basis: st-enables-21-review-batch.csv (21/21 decided; 0 deferred).
 | REL-00466, REL-00469 | held | held | Existing hierarchy holds; no change |
 
 **Uniqueness validation:** 11 of the 13 held facts were unique single-row facts
-and removed. One fact had independent approved evidence and is preserved (the other was removed with REL-00214):
-- `(CM-1-2-1-4 core:dependsOnOutputOf CM-1-2-1-1-4)` — REL-00152's evidence removed; fact removed with REL-00214 (held, no citation route) in the 2026-09-26 uses-input pass.
+and removed. Two facts had independent approved evidence and are preserved:
+- `(CM-1-2-1-4 core:dependsOnOutputOf CM-1-2-1-1-4)` — REL-00152's evidence removed; survives via REL-00214 (`uses-input`).
 - `(CM-1-2-5-2-3 core:dependsOnOutputOf CM-1-2-5-1-4)` — REL-00436's evidence removed; survives via REL-00447 (`uses-input`).
+
+*Update 2026-09-26 (uses-input pass): REL-00214 held (no citation route); its fact removed. REL-00152 held with it. Only REL-00447's fact survives.*
 
 **Bucket totals:** emitting 1,107 → **1,094** (−13); held 196 → **209** (+13);
 deferred 12; external-governance 1; structured-flow 2. Canonical facts
@@ -734,7 +736,9 @@ every row exposes its named independent supporter in `merged_with_rows`.
 **Special provenance handling:** REL-00152 and REL-00436 re-attached as
 duplicate provenance on their independently-evidenced `uses-input` facts
 (via REL-00447; REL-00214's fact removed in the 2026-09-26 uses-input pass). `raw_verbs` preserves `uses-input; enables`.
-The fact survives through the approved `uses-input` row alone.
+The facts survive through the approved `uses-input` rows alone.
+
+*Update 2026-09-26: Only REL-00447's fact survives; REL-00214's fact was removed (see above).*
 
 **Bucket totals:** emitting 1,094; held 209; deferred 12; external-governance 1;
 structured-flow 2. Canonical facts 894. Conservation:
