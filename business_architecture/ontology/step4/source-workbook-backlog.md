@@ -275,7 +275,7 @@ reverse fact present **if** its row has a route; otherwise held with no fact.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
-| REL-00873 | `requires` (Set Up Prospect CM-1-3-6-6-1 → candidate Establish Credit Limit & Risk Code CM-1-3-7-4-2). Target identity UNCONFIRMED: exact-unique-current label match only. No rule 5 route — no explicit citation (partial "Credit" mention in the source definition does not count), no strict-inverse two-way mention (the reverse, REL-00971 `enables`, is not `requires`' inverse), no same-branch structural nearness (CM-1-3-6 vs CM-1-3-7). Prior 2026-09-25 approval (with credit-controlled-onboarding scope note) superseded 2026-09-26 under the all-verbs identity-rule scope ruling. The stored `core:requires` fact was removed (verified unique); no substitute emitted. Source author must name the intended target in the workbook; the row returns with an identity override and a fresh verdict. | 2026-09-26 | awaiting source-author target clarification |
+| REL-00873 | `requires` (Set Up Prospect CM-1-3-6-6-1 → Establish Credit Limit & Risk Code CM-1-3-7-4-2). ~~Target identity UNCONFIRMED; fact removed 2026-09-26 under the identity-rule scope ruling; awaiting source-author target clarification.~~ **REVERSED 2026-09-26:** supersession reversed; fact restored on scope-note label citation basis. Emitting. | 2026-09-26 | reversed — restored 2026-09-26 |
 
 ## Governed-by pass backlog (Hamid 2026-09-26)
 

@@ -571,3 +571,43 @@ against the full scope text (Evidence Discipline Rule 5). Each is now:
 - **REL-00307**: "division-of-interest references maintained under Manage Lease Contract (CM-1-2-1-2-8)" is reference-data usage, not sequence; "Excludes lease contract administration" is boundary.
 
 All 20 routed to source workbooks for correction.
+
+## Requires pass (2026-09-25 approved; evidence package 2026-09-27)
+
+Definition: `core:requires` — the source cannot validly start, proceed, or
+reach its controlled state without the target, its completed control, or its
+required condition. Not merely inferred because the target later
+consumes/calculates/uses related information.
+
+5 APPROVE (D:hamid-verdict 2026-09-25). 1 HOLD (D:hamid-verdict 2026-09-25).
+**NOT basis-only** — 1 fact not emitted.
+
+**5 approved:**
+- REL-00158: CM-1-2-1-2-1 (Create New Counterparty) requires CM-1-2-2-1-1
+  (Perform Counterparty Credit Reviews). Genuine precondition: credit clearance
+  must precede creation of the authorized counterparty and settlement records.
+- REL-00168: CM-1-2-1-2-3 (Terminate/Novate Counterparty) requires CM-1-2-2-1-3
+  (Manage Collateral). Valid closure-control prerequisite: collateral and
+  related obligations must be closed, settled, transferred, or queued before
+  the counterparty record is deactivated or transitioned.
+- REL-00247: CM-1-2-2-2-3 (Manage Trade Modifications) requires CM-1-2-1-3
+  (Trade Capture). Clear lifecycle dependency: a post-execution amendment,
+  allocation, or termination can only update a trade record that exists in
+  controlled trade capture.
+- REL-00872: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-6 (Perform KYC
+  Due Diligence). Legitimate onboarding gate: KYC due diligence is initiated
+  before governed customer/member/card-account records are established.
+- REL-00873: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-2 (Establish
+  Credit Limit & Risk Code). Restored 2026-09-26; supersession reversed;
+  basis: scope-note label citation. Scope note: credit-controlled onboarding
+  prerequisite only.
+
+**1 held:**
+- REL-00208: CM-1-2-1-3-8 (Capture Structured Deals) requires CM-1-2-2-3-15
+  (Manage Commodity Valuations). **HOLD / D:hamid-verdict**. The asserted
+  requires relation is not sufficiently supported as a prerequisite gate, and
+  the proposed remap to core:dependsOnOutputOf would alter source meaning at
+  emission time. Emit no triple. Route for source-workbook relationship review
+  and correction.
+
+No count changes — all 5 approved facts already stored in canonical-facts.csv.
