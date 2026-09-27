@@ -1884,3 +1884,41 @@ not a route (REL-00009 precedent).
 **Totals:** 635 − 20 = **615** emitting; 668 + 20 = **688** held;
 477 − 20 = **457** facts.
 Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
+
+## Commit message correction (2026-09-27)
+
+Four commits carry an identical APQC v7.2.2 body text that does not describe
+their changes. The APQC workbook was vendored by PR #25 (commit 6758b0f);
+these four commits did not touch it. Correct descriptions:
+
+- `24e4339` — Step 4: Precedes/follows — all doc fixes consolidated
+  (PR #152). Touched: `ledger-v2.md`, `step4-decisions.md`,
+  `verb-predicate-mapping-v2.md`, `source-workbook-backlog.md`, Rule 6
+  samples. No count changes.
+- `1f9b63e` — Step 4: Requires — evidence package (PR #154). Touched:
+  `step4-decisions.md` (+40), `source-workbook-backlog.md` (REL-00873
+  reversal, 1 line). 5 APPROVE documented, 1 HOLD (REL-00208). No count
+  changes — all 5 approved facts already stored.
+- `414951d` — Step 4: Assures — lightweight evidence package (PR #155).
+  Touched: `step4-decisions.md` (+47). 5 APPROVE documented, 3 HOLD
+  (REL-00355, REL-00385, REL-01106). No count changes — all 5 approved
+  facts already stored.
+- `1428e8e` — Step 4: Constrained-by — lightweight evidence package
+  (PR #156). Touched: `step4-decisions.md` (+39). 10 APPROVE documented,
+  1 HOLD (REL-00097). No count changes — all 10 approved facts already
+  stored.
+
+History on `main` is not rewritten; this entry is the correction.
+
+## PR #124 merge — resolved (2026-09-27, corrected)
+
+PR #124 ("DO NOT MERGE — Step 4 verb-mapping working area") was merged
+2026-09-27 00:37:59Z by aadehamid (merge commit 479c75f), putting the
+Step 4 working area (103 files under `business_architecture/ontology/step4/`)
+onto `main`. This was intentional: the drop establishes the working area
+on main, with promotion to TTL still blocked by the step4 README. Not to be
+confused with PR #121 (the other DO NOT MERGE — Step 4 evidence-discipline
+playbook section, merged 2026-09-25, later marked Approved by #122).
+
+*Correction note: an earlier entry on this date recorded this as an open
+question based on incomplete review. The above is the correct record.*
