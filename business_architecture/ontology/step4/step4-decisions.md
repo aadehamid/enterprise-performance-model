@@ -572,7 +572,7 @@ against the full scope text (Evidence Discipline Rule 5). Each is now:
 
 All 20 routed to source workbooks for correction.
 
-## Requires pass (2026-09-25 approved; evidence package 2026-09-27)
+## Requires pass (2026-09-25 approved; revised 2026-09-27)
 
 Definition: `core:requires` — the source cannot validly start, proceed, or
 reach its controlled state without the target, its completed control, or its
@@ -581,6 +581,37 @@ consumes/calculates/uses related information.
 
 5 APPROVE (D:hamid-verdict 2026-09-25). 1 HOLD (D:hamid-verdict 2026-09-25).
 **NOT basis-only** — 1 fact not emitted.
+
+### Identity routes
+
+| Row | Match type | Route | Citation | Affirmative? | Verdict |
+|---|---|---|---|---|---|
+| REL-00158 | exact-unique-current (target label = prefLabel) | explicit-reference: source names target slug | "initiating and recording required... credit clearances through their accountable owners" | Yes — states prerequisite gate | APPROVE |
+| REL-00168 | exact-unique-current (target label = prefLabel) | explicit-reference: source names target slug | "Collateral release is owned by Manage Collateral (CM-1-2-2-1-3)" | Yes — states closure prerequisite | APPROVE |
+| REL-00247 | nearness-only (shared L3) | explicit-reference: source cites target | Trade modification scope excludes unilateral corrections, requires controlled trade capture record | Yes — lifecycle dependency stated | APPROVE |
+| REL-00872 | label citation (scope note) | scope-note label citation | KYC due diligence initiated before governed records established | Yes — onboarding gate stated | APPROVE |
+| REL-00873 | label citation (scope note) | scope-note label citation | "credit-controlled onboarding prerequisite only" | Yes — prerequisite stated | APPROVE |
+| REL-00208 | — | — | Insufficient prerequisite gate evidence | No | HOLD |
+
+### Rule 6 samples
+
+Drawn from 5 promotions, seed 42. Outcomes pending Hamid review.
+
+*Samples to be drawn and recorded.*
+
+### Knock-on effects
+
+None. All 5 approved facts are unique single-row; no other row stores
+identical facts.
+
+### Projected totals
+
+No change: 615 emitting / 688 held / 457 facts. All 5 approved facts
+already stored in canonical-facts.csv.
+
+### Supersessions
+
+None. REL-00873 supersession was reversed 2026-09-26 (restored).
 
 **5 approved:**
 - REL-00158: CM-1-2-1-2-1 (Create New Counterparty) requires CM-1-2-2-1-1
@@ -612,7 +643,7 @@ consumes/calculates/uses related information.
 
 No count changes — all 5 approved facts already stored in canonical-facts.csv.
 
-## Assures pass (approved; evidence package 2026-09-27)
+## Assures pass (approved; revised 2026-09-27)
 
 Definition: `core:assuredBy` — the assurance activity performs a defined
 governance, compliance, quality, review, control-testing, or equivalent
@@ -622,6 +653,42 @@ necessity.
 
 5 APPROVE (D:hamid-verdict). 3 HOLD (D:hamid-verdict).
 **NOT basis-only** — 3 facts not emitted.
+
+### Identity routes
+
+| Row | Match type | Route | Citation | Affirmative? | Verdict |
+|---|---|---|---|---|---|
+| REL-00401 | stable ID | explicit-reference: target defines oversight of source domain | "reviews registrations, licensing, exemption certificates, filing-calendar compliance" | Yes — oversight role stated | APPROVE |
+| REL-00719 | stable ID | explicit-reference: target owns quality/completion | "owns commissioning, standards, quality, and completion of studies" | Yes — oversight role stated | APPROVE |
+| REL-00801 | stable ID | explicit-reference: target applies standards via review | "applies brand standards through material review and escalation" | Yes — oversight role stated | APPROVE |
+| REL-01269 | stable ID | explicit-reference: target maintains policies, monitors adherence | "maintains policies and procedures, monitors regulatory and internal-policy adherence" | Yes — but see note below | APPROVE |
+| REL-01270 | stable ID | explicit-reference: target assures compliance condition | "assures the compliance condition of Settlements without conducting settlement operations" | Yes — but see note below | APPROVE |
+
+**Note on REL-01269/01270:** The governed-by pass held three Regulatory &
+Compliance rows because their citations were exclusions only. These two
+assures rows have affirmative oversight citations (not exclusions) and are
+distinguished on that basis.
+
+### REL-01106 reconciliation
+
+REL-01106's `core:assuredBy` fact was removed during the 2026-09-25 assures
+review (ledger: emitting → held, 919 → 918 facts), **before** the 414951d
+package. The "No count changes" in 414951d is correct; the removal is already
+reflected in the 615/688/457 totals.
+
+### Rule 6 samples
+
+Drawn from 5 promotions, seed 42. Outcomes pending Hamid review.
+
+*Samples to be drawn and recorded.*
+
+### Knock-on effects
+
+None. All 5 approved facts are unique single-row.
+
+### Projected totals
+
+No change: 615 emitting / 688 held / 457 facts.
 
 **5 approved:**
 - REL-00401: CM-1-2-4-2-11 (Manage Tax Compliance) assuredBy CM-1-2-4-3-5
@@ -659,7 +726,7 @@ necessity.
 
 No count changes — all 5 approved facts already stored in canonical-facts.csv.
 
-## Constrained-by pass (approved; evidence package 2026-09-27)
+## Constrained-by pass (approved; revised 2026-09-27)
 
 Definition: `core:constrainedBy` — stored from the bounded activity, decision,
 or outcome to its binding constraint source. Excludes advice, broad
@@ -667,6 +734,36 @@ association, ownership, sequencing, and optional considerations.
 
 10 APPROVE (D:hamid-verdict). 1 HOLD (D:hamid-verdict).
 **NOT basis-only** — 1 fact not emitted.
+
+### Identity routes
+
+| Row | Match type | Route | Citation | Affirmative? | Verdict |
+|---|---|---|---|---|---|
+| REL-00015 | stable ID | explicit-reference: source names constraint | Inventory Management constrains crude/feedstock allocation | Yes — binding constraint stated | APPROVE |
+| REL-00018 | stable ID | explicit-reference: source names constraint | Inventory Management constrains finished products allocation | Yes — binding constraint stated | APPROVE |
+| REL-00024 | stable ID | explicit-reference: source names constraint | Inventory Management constrains finished goods planning | Yes — binding constraint stated | APPROVE |
+| REL-00087 | stable ID | explicit-reference: source names constraint | Capture Refinery Level Constraints binds crude/feedstock evaluation | Yes — binding constraint stated | APPROVE |
+| REL-00091 | stable ID | explicit-reference: source names constraint | Capture Refinery Level Constraints binds crude availability capture | Yes — binding constraint stated | APPROVE |
+| REL-00099 | stable ID | explicit-reference: source names constraint | Perform Scenario Analysis binds refinery constraint capture | Yes — binding constraint stated | APPROVE |
+| REL-00103 | stable ID | explicit-reference: source names constraint | Inventory Management constrains inventory capture | Yes — binding constraint stated | APPROVE |
+| REL-00574 | stable ID | explicit-reference: source names constraint | Manage Terminal Lifting Allocation binds lifting forecasts | Yes — binding constraint stated | APPROVE |
+| REL-00894 | stable ID | explicit-reference: source names constraint | Establish Credit Limit & Risk Code binds card limits | Yes — binding constraint stated | APPROVE |
+| REL-01284 | stable ID | explicit-reference: source names constraint | Inventory Management constrains refinery optimization | Yes — binding constraint stated | APPROVE |
+| REL-00097 | — | — | Broad "Refining" target has no definition | No — identity fails | HOLD |
+
+### Rule 6 samples
+
+Drawn from 10 promotions, seed 42. Outcomes pending Hamid review.
+
+*Samples to be drawn and recorded.*
+
+### Knock-on effects
+
+None. All 10 approved facts are unique single-row.
+
+### Projected totals
+
+No change: 615 emitting / 688 held / 457 facts.
 
 **10 approved:**
 - REL-00015: CM-1-1-2-10 (Allocate Crude and Feedstock) constrainedBy
@@ -697,3 +794,18 @@ association, ownership, sequencing, and optional considerations.
   emit no triple.
 
 No count changes — all 10 approved facts already stored in canonical-facts.csv.
+
+## Precedes/follows Rule 6 verdicts (2026-09-27)
+
+**Method:** Rule 6 sampling per evidence discipline. 18 samples redrawn
+2026-09-27 from 256 promotions using seed 42, including 4 citation-only
+rows (riskiest group).
+
+**Outcome:** All 18 `D:hamid-verdict` PASS 2026-09-27.
+
+Evidence: `review-evidence/precedes-follows-rule6-samples.md`.
+
+Sample IDs: REL-00056, REL-00070, REL-00072, REL-00207, REL-00209,
+REL-00212, REL-00228, REL-00230, REL-00241, REL-00345, REL-00515,
+REL-00529, REL-00530, REL-00533, REL-00540, REL-00548, REL-00809,
+REL-00814.
