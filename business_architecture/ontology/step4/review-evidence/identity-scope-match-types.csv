@@ -1,0 +1,637 @@
+row_id,verb,raw_target,target_label,match_type,uniqueness_note
+REL-00001,precedes,Develop Statistical Baseline,Develop Statistical Baseline,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00003,follows,Prepare Master Data To Create Demand Forecast,Prepare Master Data To Create Demand Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00004,precedes,Adjust Forecast Incorporating Customer Input and Market Intelligence,Adjust Forecast Incorporating Customer Input and Market Intelligence,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00005,follows,Develop Statistical Baseline,Develop Statistical Baseline,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00006,precedes,Publish Forecast and Generate Component Level Forecast Plan,Publish Forecast and Generate Component Level Forecast Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00007,follows,Adjust Forecast Incorporating Customer Input and Market Intelligence,Adjust Forecast Incorporating Customer Input and Market Intelligence,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00008,precedes,Regional Optimization,Regional Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00010,enables,Receive Demand Forecast,Receive Demand Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00011,follows,Publish Forecast and Generate Component Level Forecast Plan,Publish Forecast and Generate Component Level Forecast Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00012,uses-input,Adjust Forecast Incorporating Customer Input and Market Intelligence,Adjust Forecast Incorporating Customer Input and Market Intelligence,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00029,informed-by,Regional Optimization,Regional Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00030,uses-input,Manage Inventory Replenishment,Manage Inventory Replenishment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00031,precedes,Plan & Execute Nominations,Plan & Execute Nominations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00033,follows,Develop Short-Term Network Plan,Develop Short-Term Network Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00035,follows,Plan & Execute Nominations,Plan & Execute Nominations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00036,precedes,Track Movements and Inventory Management,Track Movements and Inventory Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00039,precedes,Discharge & Reconcile Load,Discharge & Reconcile Load,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00040,follows,Track Movements and Inventory Management,Track Movements and Inventory Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00045,informed-by,Develop Finished Product Inventory Policy,Develop Finished Product Inventory Policy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00047,uses-input,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00048,uses-input,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00049,triggers,Manage Inventory Replenishment,Manage Inventory Replenishment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00050,governed-by,Develop Finished Product Inventory Policy,Develop Finished Product Inventory Policy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00051,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00056,precedes,Perform Inventory Reconciliation,Perform Inventory Reconciliation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00058,follows,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00062,informed-by,Develop Finished Product Inventory Policy,Develop Finished Product Inventory Policy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00064,uses-input,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00066,uses-input,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00067,governed-by,Develop Finished Product Inventory Policy,Develop Finished Product Inventory Policy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00068,precedes,Physical Distribution Scheduling,Physical Distribution Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00069,informed-by,Plan Finished Goods Inventory,Plan Finished Goods Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00070,precedes,Schedule Secondary Distribution,Schedule Secondary Distribution,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00072,follows,Generate Orders,Generate Orders,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00073,precedes,Monitor Secondary Distribution Performance,Monitor Secondary Distribution Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00076,follows,Schedule Secondary Distribution,Schedule Secondary Distribution,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00082,informed-by,Refined Product Demand Management,Refined Product Demand Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00083,precedes,Perform Scenario Analysis,Perform Scenario Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00085,uses-input,Capture Crude Availability,Capture Crude Availability,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00086,uses-input,Capture Product/Crude/Feedstock Price,Capture Product/Crude/Feedstock Price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00089,enables,Evaluate Crude & Feedstock,Evaluate Crude & Feedstock,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00090,informed-by,Supply And Trading,Supply And Trading,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00093,enables,Evaluate Crude & Feedstock,Evaluate Crude & Feedstock,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00101,uses-input,Plan Finished Goods Inventory,Plan Finished Goods Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00102,informed-by,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00105,informed-by,Perform Scenario Analysis,Perform Scenario Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00106,governed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00110,uses-input,Capture Product Demand Requirements,Capture Product Demand Requirements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00111,uses-input,Capture Refinery Level Constraints,Capture Refinery Level Constraints,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00112,precedes,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00114,informed-by,Manage Production Schedule Exceptions,Manage Production Schedule Exceptions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00116,informed-by,"Manage The Interface to Planning, Operations, Engineering & Maintenance","Manage The Interface to Planning, Operations, Engineering & Maintenance",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00117,uses-input,Measure Inventory,Measure Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00120,enables,Create Production Scheduling and Sequencing Plan,Create Production Scheduling and Sequencing Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00122,enables,Create Production Scheduling and Sequencing Plan,Create Production Scheduling and Sequencing Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00124,uses-input,Maintain Production Scheduling Master Data,Maintain Production Scheduling Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00125,follows,Review Production Wheel and Run Length,Review Production Wheel and Run Length,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00127,triggers,Create Production Scheduling and Sequencing Plan,Create Production Scheduling and Sequencing Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00128,informed-by,Daily Execution Planning,Daily Execution Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00130,uses-input,Perform Production Accounting,Perform Production Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00131,follows,Manage Production Schedule Exceptions,Manage Production Schedule Exceptions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00134,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00135,enables,Optimize Plant Energy Balance,Optimize Plant Energy Balance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00137,follows,Optimize Internal vs. External Energy Sources,Optimize Internal vs. External Energy Sources,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00139,informed-by,Production Scheduling,Production Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00141,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00143,enables,Perform Asset Optimization,Perform Asset Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00145,uses-input,Publish Forecast and Generate Component Level Forecast Plan,Publish Forecast and Generate Component Level Forecast Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00146,enables,Perform Asset Optimization,Perform Asset Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00147,uses-input,Receive Production Forecast,Receive Production Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00149,precedes,Perform RINs/REC Actualization,Perform RINs/REC Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00150,uses-input,Receive Production Forecast,Receive Production Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00151,uses-input,Receive Demand Forecast,Receive Demand Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00153,uses-input,Perform Asset Optimization,Perform Asset Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00154,enables,Trading Strategy Management,Trading Strategy Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00157,precedes,Create New Contract,Create New Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00158,requires,Perform Counterparty Credit Reviews,Perform Counterparty Credit Reviews,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00159,follows,Negotiate Storage / Throughput Agreements,Negotiate Storage / Throughput Agreements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00162,follows,Manage Existing Contract,Manage Existing Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00163,triggers,Manage Existing Contract,Manage Existing Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00165,follows,Create New Counterparty,Create New Counterparty,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00167,follows,Manage Existing Counterparty,Manage Existing Counterparty,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00168,requires,Manage Collateral,Manage Collateral,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00169,triggers,Terminate/Novate Counterparty,Terminate/Novate Counterparty,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00170,triggers,Terminate/Novate Contract,Terminate/Novate Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00171,follows,Create New Counterparty,Create New Counterparty,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00173,follows,Create New Contract,Create New Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00174,enables,Monitor Contracts,Monitor Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00175,follows,Manage Existing Contract,Manage Existing Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00181,uses-input,Perform Asset Optimization,Perform Asset Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00182,precedes,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00183,follows,Capture Financial (OTC) Trades,Capture Financial (OTC) Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00184,precedes,Report Confirmation To SDR,Report Confirmation To SDR,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00185,governed-by,Regulatory & Compliance,Regulatory & Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00186,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00187,informed-by,Receive Power Generation Forecast,Receive Power Generation Forecast,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00188,precedes,Settle Power,Settle Power,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00189,follows,Manage Pre-Trade Analysis,Manage Pre-Trade Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00191,precedes,Capture Physical Trades,Capture Physical Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00192,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00193,precedes,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00195,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00197,precedes,Settle Exchange Trades,Settle Exchange Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00198,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00200,precedes,Settle Terminal/Storage,Settle Terminal/Storage,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00201,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00202,informed-by,Forecast Renewables,Forecast Renewables,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00203,precedes,Perform RINs/REC Actualization,Perform RINs/REC Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00204,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00205,precedes,Report Trades to SDR,Report Trades to SDR,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00206,precedes,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00207,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00209,precedes,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00210,follows,Obtain Trade Approval,Obtain Trade Approval,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00212,precedes,Settle Pipelines,Settle Pipelines,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00213,uses-input,Forecast Revenue,Forecast Revenue,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00214,uses-input,Perform Asset Optimization,Perform Asset Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00215,governed-by,Market Risk Management,Market Risk Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00216,enables,Manage Credit Limits,Manage Credit Limits,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00218,informed-by,Monitor & Analyze Credit,Monitor & Analyze Credit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00219,follows,Perform Counterparty Credit Reviews,Perform Counterparty Credit Reviews,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00222,uses-input,Calculate Credit Exposure,Calculate Credit Exposure,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00224,informed-by,Contract Management,Contract Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00225,uses-input,Manage Commodity Valuations,Manage Commodity Valuations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00227,enables,Manage Collateral,Manage Collateral,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00228,follows,Capture Exchange Trades,Capture Exchange Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00229,uses-input,Calculate Credit Exposure,Calculate Credit Exposure,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00230,precedes,Settle Broker,Settle Broker,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00231,uses-input,Calculate Credit Exposure,Calculate Credit Exposure,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00233,enables,Manage Credit Risk Reporting,Manage Credit Risk Reporting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00234,uses-input,Calculate Credit Exposure,Calculate Credit Exposure,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00235,triggers,Perform Counterparty Credit Reviews,Perform Counterparty Credit Reviews,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00236,triggers,Manage Credit Limits,Manage Credit Limits,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00237,uses-input,Monitor & Analyze Credit,Monitor & Analyze Credit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00238,uses-input,Perform Advanced Credit Risk Analytics,Perform Advanced Credit Risk Analytics,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00240,follows,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00241,precedes,Manage Confirm Disputes,Manage Confirm Disputes,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00242,uses-input,Manage Confirmation Documentation,Manage Confirmation Documentation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00244,informed-by,Contract Management,Contract Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00245,follows,Generate Confirms,Generate Confirms,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00246,triggers,Report Confirmation To SDR,Report Confirmation To SDR,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00248,informed-by,Report Trades to SDR,Report Trades to SDR,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00249,informed-by,Manage Trade Modifications,Manage Trade Modifications,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00250,governed-by,Regulatory & Compliance,Regulatory & Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00251,follows,Generate Confirms,Generate Confirms,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00252,triggers,Manage Trade Modifications,Manage Trade Modifications,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00256,uses-input,Establish & Maintain Delegation Of Authority (DOA),Establish & Maintain Delegation Of Authority (DOA),exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00258,uses-input,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00261,uses-input,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00264,uses-input,Monitor Risk,Monitor Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00267,enables,Manage Commodity Valuations,Manage Commodity Valuations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00268,enables,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00269,uses-input,Setup And Manage Curves,Setup And Manage Curves,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00270,uses-input,Manage Volatilities And Correlations,Manage Volatilities And Correlations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00275,enables,Manage Commodity Valuations,Manage Commodity Valuations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00277,enables,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00278,uses-input,Setup And Manage Curves,Setup And Manage Curves,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00279,uses-input,Manage Commodity Valuations,Manage Commodity Valuations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00280,precedes,Perform End-of-Month (EOM) Process,Perform End-of-Month (EOM) Process,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00281,follows,Perform End-of-day (EOD) Process,Perform End-of-day (EOD) Process,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00286,informed-by,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00287,uses-input,Setup And Manage Curves,Setup And Manage Curves,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00288,uses-input,Manage Volatilities And Correlations,Manage Volatilities And Correlations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00289,enables,Monitor Risk,Monitor Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00290,uses-input,Measure Risk,Measure Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00291,triggers,Manage Risk Limits,Manage Risk Limits,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00292,enables,Manage Risk Reporting,Manage Risk Reporting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00293,uses-input,Manage Commodity Valuations,Manage Commodity Valuations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00295,enables,Manage Risk Reporting,Manage Risk Reporting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00296,precedes,Settle Pipelines,Settle Pipelines,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00298,precedes,Settle Trucks,Settle Trucks,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00300,precedes,Settle Rail,Settle Rail,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00302,precedes,Settle Vessels & Barge,Settle Vessels & Barge,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00305,precedes,Settle Terminal/Storage,Settle Terminal/Storage,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00306,follows,Capture Storage Deals,Capture Storage Deals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00307,follows,Manage Lease Contract,Manage Lease Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00308,precedes,Settle First Purchaser/Leases,Settle First Purchaser/Leases,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00309,follows,Capture Environmental/Renewable Deals,Capture Environmental/Renewable Deals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00310,informed-by,Forecast Renewables,Forecast Renewables,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00313,informed-by,Manage Confirm Disputes,Manage Confirm Disputes,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00319,follows,Capture Financial (OTC) Trades,Capture Financial (OTC) Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00320,informed-by,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00322,follows,Perform Pipeline Actualization,Perform Pipeline Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00324,follows,Perform Railcar Actualization,Perform Railcar Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00326,follows,Perform Terminal/Storage Actualization,Perform Terminal/Storage Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00330,follows,Settle Exchange Trades,Settle Exchange Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00331,informed-by,Perform Margining,Perform Margining,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00334,informed-by,Manage Actualization Disputes,Manage Actualization Disputes,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00335,informed-by,Manage Confirm Disputes,Manage Confirm Disputes,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00342,follows,Capture Exchange Trades,Capture Exchange Trades,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00343,informed-by,Perform Margining,Perform Margining,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00344,precedes,Settle Broker,Settle Broker,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00345,follows,Perform Truck Actualization,Perform Truck Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00347,follows,Perform Vessel & Barge Actualization,Perform Vessel & Barge Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00349,follows,Perform Lease Actualization,Perform Lease Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00350,precedes,Manage Marketing Interests & Royalty Payments,Manage Marketing Interests & Royalty Payments,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00351,follows,Capture Transmission Deals,Capture Transmission Deals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00353,follows,Perform RINs/REC Actualization,Perform RINs/REC Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00356,informed-by,Manage Confirmation Documentation,Manage Confirmation Documentation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00357,informed-by,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00358,enables,Manage Trading Sub-Ledger,Manage Trading Sub-Ledger,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00361,uses-input,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00368,informed-by,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00369,uses-input,Perform Production Accounting,Perform Production Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00370,uses-input,Perform Inventory Reconciliation,Perform Inventory Reconciliation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00372,follows,Settle First Purchaser/Leases,Settle First Purchaser/Leases,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00373,uses-input,Manage Lease Contract,Manage Lease Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00374,follows,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00375,enables,Manage Cash Application,Manage Cash Application,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00376,enables,Manage Trading Sub-Ledger,Manage Trading Sub-Ledger,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00377,uses-input,Manage AR/AP & Actuals,Manage AR/AP & Actuals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00378,uses-input,Manage Accounting Treatments,Manage Accounting Treatments,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00380,uses-input,Perform End-of-Month (EOM) Process,Perform End-of-Month (EOM) Process,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00381,uses-input,Manage Trading Sub-Ledger,Manage Trading Sub-Ledger,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00382,informed-by,Manage Accounting Treatments,Manage Accounting Treatments,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00384,uses-input,Manage Trading Sub-Ledger,Manage Trading Sub-Ledger,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00388,informed-by,Manage Trading Books & Strategies Structure,Establish And Maintain Book Structure,structural-or-contextual,no label match; nearness-only by elimination
+REL-00389,follows,Manage AR/AP & Actuals,Manage AR/AP & Actuals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00390,uses-input,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00394,governed-by,Develop Compliance Policies & Procedures,Develop Compliance Policies & Procedures,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00395,informed-by,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00397,governed-by,Develop Compliance Policies & Procedures,Develop Compliance Policies & Procedures,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00398,triggers,Manage Exceptions,Manage Exceptions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00399,governed-by,Develop Compliance Policies & Procedures,Develop Compliance Policies & Procedures,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00400,triggers,Manage Exceptions,Manage Exceptions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00402,informed-by,Develop Compliance Policies & Procedures,Develop Compliance Policies & Procedures,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00403,triggers,Manage Exceptions,Manage Exceptions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00404,uses-input,Perform RINs/REC Actualization,Perform RINs/REC Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00406,governed-by,Develop Compliance Policies & Procedures,Develop Compliance Policies & Procedures,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00407,follows,Monitor External Trading Compliance,Monitor External Trading Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00408,follows,Monitor Internal Trade Controls,Monitor Internal Trade Controls,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00410,uses-input,Perform Vessel & Barge Actualization,Perform Vessel & Barge Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00412,follows,Identify Potential Demurrage,Identify Potential Demurrage,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00415,uses-input,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00418,informed-by,Perform Vessel & Barge Actualization,Perform Vessel & Barge Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00424,precedes,Manage AR/AP & Actuals,Manage AR/AP & Actuals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00426,precedes,Manage AR/AP & Actuals,Manage AR/AP & Actuals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00427,enables,Review LP Model Integrity,Review LP Model Integrity,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00429,uses-input,Perform Vessel & Barge Actualization,Perform Vessel & Barge Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00432,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00434,informed-by,Evaluate Crude & Feedstock,Evaluate Crude & Feedstock,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00438,informed-by,Develop Term Slate,Develop Term Slate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00439,follows,Develop Feedstock Demand,Develop Feedstock Demand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00441,precedes,Manage Feedstock Transportation,Manage Feedstock Transportation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00442,uses-input,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00443,uses-input,Manage Feedstock Inventory,Manage Feedstock Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00444,precedes,Coordinate Feedstock Trading,Coordinate Feedstock Trading,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00446,uses-input,Develop Feedstock Demand,Develop Feedstock Demand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00447,uses-input,Develop Spot Slate,Develop Spot Slate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00448,follows,Coordinate Feedstock Trading,Coordinate Feedstock Trading,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00449,precedes,Schedule Feedstock Delivery,Schedule Feedstock Delivery,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00450,uses-input,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00451,follows,Manage Feedstock Transportation,Manage Feedstock Transportation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00452,precedes,Plan Feedstock Arrival,Plan Feedstock Arrival,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00453,informed-by,Production Scheduling,Production Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00454,follows,Schedule Feedstock Delivery,Schedule Feedstock Delivery,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00456,informed-by,Manage Feedstock Inventory,Manage Feedstock Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00457,uses-input,Manage Feedstock Inventory,Manage Feedstock Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00459,informed-by,Market Risk Management,Market Risk Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00460,enables,Develop Feedstock Demand,Develop Feedstock Demand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00461,enables,Assess & Manage Inventory Risk,Assess & Manage Inventory Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00462,informed-by,Crude/Feed Transportation Management,Crude/Feed Transportation Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00463,enables,Evaluate Market Attractiveness,Evaluate Market Attractiveness,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00464,enables,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00465,uses-input,Segment Customers,Segment Customers,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00467,informed-by,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00468,uses-input,Segment Customers,Segment Customers,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00470,uses-input,Accounting,Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00474,uses-input,Manage Refined Product Demand,Manage Refined Product Demand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00476,informed-by,Manage Product Exchange Agreements,Manage Product Exchange Agreements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00478,enables,Manage Refined Product Demand,Manage Refined Product Demand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00481,uses-input,Manage Refined Product Exchanges,Manage Refined Product Exchanges,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00483,uses-input,Manage Inventory Replenishment,Manage Inventory Replenishment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00487,uses-input,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00488,precedes,Physical Distribution Scheduling,Physical Distribution Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00491,precedes,Settle Products,Settle Products,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00492,informed-by,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00495,precedes,Manage Storage Contract,Manage Storage Contract,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00496,precedes,Capture Storage Deals,Capture Storage Deals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00497,informed-by,Supply Operations,Supply Operations,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00500,informed-by,Manage Fleet (Own/Third Party),Manage Fleet (Own/Third Party),exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00505,informed-by,"Manage Safety (Materials, Staff, Contractor)","Manage Safety (Materials, Staff, Contractor)",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00507,follows,Define Analysis Objectives & Scope,Define Analysis Objectives & Scope,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00508,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00510,precedes,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00511,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00512,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00514,follows,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00515,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00516,follows,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00518,follows,Define Analysis Objectives & Scope,Define Analysis Objectives & Scope,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00519,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00521,precedes,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00522,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00523,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00525,follows,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00526,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00527,follows,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00529,follows,Define Analysis Objectives & Scope,Define Analysis Objectives & Scope,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00530,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00531,governed-by,Consumer Analysis,Consumer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00532,precedes,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00533,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00534,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00536,follows,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00537,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00538,follows,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00540,follows,Define Analysis Objectives & Scope,Define Analysis Objectives & Scope,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00541,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00542,governed-by,Customer And Marketer Analysis,Customer And Marketer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00543,precedes,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00544,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00545,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00547,follows,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00548,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00549,uses-input,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00550,follows,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00552,follows,Define Analysis Objectives & Scope,Define Analysis Objectives & Scope,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00553,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00555,precedes,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00556,precedes,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00557,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00559,follows,Source & Collect Information,Source & Collect Information,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00560,precedes,Document Findings,Document Findings,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00561,follows,Analyze Data,Analyze Data,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00563,uses-input,Market Analysis,Market Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00564,uses-input,Competitor Analysis,Competitor Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00567,informed-by,Manage Credit & Risk,Manage Credit & Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00580,informed-by,Manage Credit & Risk,Manage Credit & Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00585,informed-by,Manage Credit & Risk,Manage Credit & Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00586,follows,Establish Brand Objectives and hypothesis,Establish Brand Objectives and hypothesis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00587,precedes,Develop & Test Brand Hypothesis,Develop & Test Brand Hypothesis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00588,governed-by,Brand Strategy,Brand Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00590,precedes,Develop & Test Brand Hypothesis,Develop & Test Brand Hypothesis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00593,precedes,Develop / update Brand,Develop / update Brand,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00594,follows,Develop & Test Brand Hypothesis,Develop & Test Brand Hypothesis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00597,follows,Formulate and Evaluate Strategic Operating Alternatives (CVP),Formulate and Evaluate Strategic Operating Alternatives (CVP),exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00598,precedes,Develop/Update Strategy (CVP),Develop/Update Strategy (CVP),exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00599,follows,Establish CVP principles and objectives,Establish CVP principles and objectives,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00600,precedes,Test Customer value proposition,Test Customer value proposition,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00602,precedes,Formulate and Evaluate Strategic Operating Alternatives (CVP),Formulate and Evaluate Strategic Operating Alternatives (CVP),exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00603,precedes,Test Customer value proposition,Test Customer value proposition,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00605,follows,Test Customer value proposition,Test Customer value proposition,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-00619,precedes,Establish operating Objectives and develop Channel Strategy Hypothesis,Establish operating Objectives and develop Channel Strategy Hypothesis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00620,governed-by,Sales & Distribution Channel Strategy,Sales & Distribution Channel Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00621,uses-input,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00622,follows,Conduct Channel of trade diagnostics,Conduct Channel of trade diagnostics,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00623,governed-by,Sales & Distribution Channel Strategy,Sales & Distribution Channel Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00624,precedes,Define Customer Experience Guiding Principles,Define Customer Experience Guiding Principles,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00625,governed-by,Customer Experience Strategy,Customer Experience Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00626,follows,Identify Customer Experience Aspiration,Identify Customer Experience Aspiration,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00627,precedes,Establish Customer Experience Strategic Pillars,Establish Customer Experience Strategic Pillars,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00628,follows,Define Customer Experience Guiding Principles,Define Customer Experience Guiding Principles,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00630,precedes,Define Customer Offer,Define Customer Offer,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00632,follows,Define Target Customer Groups,Define Target Customer Groups,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00633,precedes,Validate Customer Offer,Validate Customer Offer,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00634,follows,Define Customer Offer,Define Customer Offer,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00636,follows,Validate Customer Offer,Validate Customer Offer,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00638,precedes,Develop Integrated Pricing Strategy,Develop Integrated Pricing Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00640,follows,Define Strategic Pricing Approach,Define Strategic Pricing Approach,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00642,informed-by,Conduct Pricing Pilots,Conduct Pricing Pilots,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00643,informed-by,Analyze Pricing Performance,Analyze Pricing Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00646,informed-by,Sales Pricing Management,Sales Pricing Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00647,informed-by,Conduct Pricing Pilots,Conduct Pricing Pilots,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00649,follows,Develop Integrated Pricing Strategy,Develop Integrated Pricing Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00650,uses-input,Sales Pricing Management,Sales Pricing Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00651,follows,Develop Integrated Pricing Strategy,Develop Integrated Pricing Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00652,precedes,Analyze Pricing Performance,Analyze Pricing Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00654,follows,Define Channel Portfolio,Define Channel Portfolio,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00655,precedes,"Develop Channel Structure, Size & Engagement Model","Develop Channel Structure, Size & Engagement Model",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00657,follows,Segment Channels,Segment Channels,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00658,precedes,Create Channel Offering & Value Proposition,Create Channel Offering & Value Proposition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00660,precedes,Define Channel Portfolio,Define Channel Portfolio,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00662,uses-input,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00663,follows,Create Channel Offering & Value Proposition,Create Channel Offering & Value Proposition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00666,follows,"Develop Channel Structure, Size & Engagement Model","Develop Channel Structure, Size & Engagement Model",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00668,follows,Define Target Network Size,Define Target Network Size,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00671,precedes,Define Target Network Size,Define Target Network Size,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00673,follows,Formulate And Evaluate Strategic Operating Alternatives (network Strategy),Formulate And Evaluate Strategic Operating Alternatives (network Strategy),exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00674,precedes,Define Target Location,Define Target Location,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00676,follows,Define Target Location,Define Target Location,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00690,follows,Determine Channel Of Trade Mix,Determine Channel Of Trade Mix,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00691,precedes,Develop Organizational Blueprint,Develop Organizational Blueprint,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00693,follows,Develop Business Process Blueprint,Develop Business Process Blueprint,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00694,precedes,Define Procedural Framework & Guidelines,Define Procedural Framework & Guidelines,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00696,uses-input,Sales & Distribution Channel Strategy,Sales & Distribution Channel Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00697,uses-input,Sales & Distribution Channel Design,Sales & Distribution Channel Design,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00698,enables,Develop Business Process Blueprint,Develop Business Process Blueprint,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00701,follows,Develop Organizational Blueprint,Develop Organizational Blueprint,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00704,follows,Define Procedural Framework & Guidelines,Define Procedural Framework & Guidelines,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00706,informed-by,Market Sensing,Market Sensing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00707,precedes,Develop R&D Implementation Plans,Develop R&D Implementation Plans,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00711,follows,Identify Market Needs,Identify Market Needs,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00714,precedes,Conduct Research,Conduct Research,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00716,follows,Ideation,Ideation,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00720,precedes,Conduct Product Development,Conduct Product Development,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00722,follows,Manage Product/Service Development,Manage Product/Service Development,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00727,enables,Register Intellectual Property,Register Intellectual Property,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00729,follows,Set up Intellectual Asset Framework,Set up Intellectual Asset Framework,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00731,enables,Exploit Intellectual Assets,Exploit Intellectual Assets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00734,follows,Set up Intellectual Asset Framework,Set up Intellectual Asset Framework,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00736,follows,Value Intellectual Assets,Value Intellectual Assets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00738,informed-by,Brand Strategy,Brand Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00739,informed-by,Value Intellectual Assets,Value Intellectual Assets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00741,precedes,Value Projects/Portfolios,Value Projects/Portfolios,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00743,follows,Identify Technology Needs/Opportunities,Identify Technology Needs/Opportunities,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00744,precedes,Assess Portfolios,Assess Portfolios,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00746,follows,Value Projects/Portfolios,Value Projects/Portfolios,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00749,follows,Assess Portfolios,Assess Portfolios,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00759,uses-input,Identify Technology Needs/Opportunities,Identify Technology Needs/Opportunities,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00761,informed-by,Customer Offer Definition,Customer Offer Definition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00763,precedes,Perform Account Planning,Perform Account Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00769,follows,Determine & Allocate Sales Targets,Determine & Allocate Sales Targets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00771,enables,Channel & Partner Management,Channel & Partner Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00772,follows,Perform Account Planning,Perform Account Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00774,informed-by,Marketing Performance Analysis,Marketing Performance Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00775,informed-by,Define Media Strategy,Define Media Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00776,informed-by,Marketing Communications Planning,Marketing Communications Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00778,precedes,Identify Target Groups,Identify Target Groups,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00780,follows,Develop / Update Campaigns,Develop / Update Campaigns,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00783,follows,Identify Marketing Needs,Identify Marketing Needs,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00784,precedes,Develop / Update Marketing Mix Model,Develop / Update Marketing Mix Model,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00786,follows,Identify Target Groups,Identify Target Groups,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00787,precedes,Define Resource Allocation / Budgets,Define Resource Allocation / Budgets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00789,follows,Define Communications Plan,Define Communications Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00790,precedes,Implement Promotional Advertising,Implement Promotional Advertising,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00791,precedes,Implement Brand Advertising / Communications,Implement Brand Advertising / Communications,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00793,follows,Develop / Update Marketing Mix Model,Develop / Update Marketing Mix Model,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00794,precedes,Define Communications Plan,Define Communications Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00796,follows,Define Resource Allocation / Budgets,Define Resource Allocation / Budgets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00797,precedes,Develop / Update Campaigns,Develop / Update Campaigns,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00802,follows,Develop / Update Campaigns,Develop / Update Campaigns,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00805,follows,Develop / Update Campaigns,Develop / Update Campaigns,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00807,precedes,Create Promotional Event Calendar,Create Promotional Event Calendar,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00809,follows,Define Promotional Plan,Define Promotional Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00812,follows,Define Promotional Plan,Define Promotional Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00814,follows,Define Promotional Plan,Define Promotional Plan,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00824,uses-input,Report Franchise Performance,Report Franchise Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00826,informed-by,Exploit Intellectual Assets,Exploit Intellectual Assets,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00828,enables,Manage Relationship with Franchise agreement,Manage Relationship with Franchise agreement,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00832,precedes,Manage Opportunity,Manage Opportunity,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00836,uses-input,Perform Account Planning,Perform Account Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00838,follows,Manage Sales Pipeline,Manage Sales Pipeline,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00839,precedes,Develop Quote,Develop Quote,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00841,follows,Manage Opportunity,Manage Opportunity,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00842,precedes,Manage Contract & Order,Manage Contract & Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00844,follows,Develop Quote,Develop Quote,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00845,precedes,Serve to Customer (Non-Retail),Serve to Customer (Non-Retail),exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00847,follows,Manage Contract & Order,Manage Contract & Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00849,uses-input,Manage Customer Requests and Inquiries,Manage Customer Requests and Inquiries,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00853,precedes,Implement sales price,Implement sales price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00855,follows,Determine sales price,Determine sales price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00859,precedes,Implement Rebate,Implement Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00860,follows,Negotiate Rebate,Negotiate Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00861,precedes,Settle Rebate,Settle Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00863,follows,Implement Rebate,Implement Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00864,uses-input,"Manage Cash Application, A/R & Revenue Accounting","Manage Cash Application, A/R & Revenue Accounting",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00866,uses-input,Marketing Communications Planning,Marketing Communications Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00868,uses-input,Marketing Communications Planning,Marketing Communications Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00869,informed-by,Implement sales price,Implement sales price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00870,uses-input,Marketing Communications Planning,Marketing Communications Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00873,requires,Establish Credit Limit & Risk Code,Establish Credit Limit & Risk Code,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00875,follows,Manage Card Production & Monthly Reissue,Manage Card Production & Monthly Reissue,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00876,governed-by,Ensure Card Design Compliance,Ensure Card Design Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00878,uses-input,Manage Credit Card Transactions,Manage Credit Card Transactions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00879,uses-input,Manage Contract & Order,Manage Contract & Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00881,follows,Ensure Card Design Compliance,Ensure Card Design Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00883,precedes,Perform Physical Card Handling,Perform Physical Card Handling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00887,uses-input,Manage Direct Marketing,Manage Direct Marketing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00891,follows,Manage Credit Card Transactions,Manage Credit Card Transactions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00892,triggers,Manage Card Production & Monthly Reissue,Manage Card Production & Monthly Reissue,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00895,informed-by,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00896,informed-by,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00900,enables,Manage Reimbursement,Manage Reimbursement,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00901,triggers,Manage Fraudulent Transactions,Manage Fraudulent Transactions,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00903,precedes,Manage Card Production & Monthly Reissue,Manage Card Production & Monthly Reissue,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00904,enables,Manage Card Production & Monthly Reissue,Manage Card Production & Monthly Reissue,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00907,governed-by,Manage Licensing & IP,Manage Licensing & IP,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00911,informed-by,Report Franchise Performance,Report Franchise Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00916,uses-input,Implement sales price,Implement sales price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00918,enables,Manage Customer Invoicing and Billing,Manage Customer Invoicing and Billing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00922,enables,Reconcile And Report Indirect Tax,Reconcile And Report Indirect Tax,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00926,enables,Establish Commercial Terms & Contracts,Establish Commercial Terms & Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00930,follows,Develop Quote,Develop Quote,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00931,uses-input,Maintain Price & Discount Master Data,Maintain Price & Discount Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00933,informed-by,Manage Sales Pipeline,Manage Sales Pipeline,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00934,uses-input,Maintain Price & Discount Master Data,Maintain Price & Discount Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00935,uses-input,Perform Revenue Accounting,Perform Revenue Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00937,governed-by,Maintain Credit Policies,Maintain Credit Policies,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00941,uses-input,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00943,uses-input,Maintain Price & Discount Master Data,Maintain Price & Discount Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00944,enables,Capture & Validate Order,Capture & Validate Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00945,enables,Manage Customer Requests and Inquiries,Manage Customer Requests and Inquiries,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00946,uses-input,Manage Customer Portal,Manage Customer Portal,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00948,informed-by,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00949,precedes,Allocate & Release Order,Allocate & Release Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00950,follows,Capture & Validate Order,Capture & Validate Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00951,precedes,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00952,governed-by,Manage Credit & Risk,Manage Credit & Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00953,follows,Capture & Validate Order,Capture & Validate Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00954,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00956,follows,Allocate & Release Order,Allocate & Release Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00959,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00961,informed-by,Capture & Validate Order,Capture & Validate Order,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00963,enables,Create Credit Memo,Create Credit Memo,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00964,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00965,informed-by,Analyze Portfolio Credit Risk,Analyze Portfolio Credit Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00969,governed-by,Maintain Credit Policies,Maintain Credit Policies,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00970,enables,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00972,uses-input,Establish Credit Limit & Risk Code,Establish Credit Limit & Risk Code,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00975,informed-by,"Manage Cash Application, A/R & Revenue Accounting","Manage Cash Application, A/R & Revenue Accounting",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00976,uses-input,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00979,informed-by,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00983,enables,Establish Credit Limit & Risk Code,Establish Credit Limit & Risk Code,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00985,precedes,Process Inquiries and Requests,Process Inquiries and Requests,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00993,follows,Process Inquiries and Requests,Process Inquiries and Requests,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-00998,uses-input,Manage Customer Portal,Manage Customer Portal,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01001,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01002,uses-input,Determine Taxability,Determine Taxability,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-01004,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01005,governed-by,Establish Commercial Terms & Contracts,Establish Commercial Terms & Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01007,uses-input,Maintain Tax Master Data,Maintain Tax Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01010,uses-input,Settle Rebate,Settle Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01015,uses-input,Process Inquiries and Requests,Process Inquiries and Requests,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01018,precedes,Apply Receipts,Apply Receipts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01021,precedes,Apply Receipts,Apply Receipts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01022,uses-input,Manage Customer Portal,Manage Customer Portal,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01023,follows,Receive Remittance Advice,Receive Remittance Advice,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01026,follows,Apply Receipts,Apply Receipts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01027,uses-input,Process Inquiries and Requests,Process Inquiries and Requests,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01030,uses-input,Apply Receipts,Apply Receipts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01036,uses-input,Process Inquiries and Requests,Process Inquiries and Requests,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01037,enables,Create Credit Memo,Create Credit Memo,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01040,uses-input,Apply Receipts,Apply Receipts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01041,informed-by,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01044,uses-input,Analyze Portfolio Credit Risk,Analyze Portfolio Credit Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01050,uses-input,Perform Revenue Accounting,Perform Revenue Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01057,uses-input,Settle Rebate,Settle Rebate,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01058,uses-input,Manage Brand Loyalty Programs,Manage Brand Loyalty Programs,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01059,enables,Perform Revenue Accounting,Perform Revenue Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01062,uses-input,Maintain Tax Master Data,Maintain Tax Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01069,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01071,uses-input,Report Franchise Performance,Report Franchise Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01076,uses-input,Define Operating Model,Define Operating Model,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01077,uses-input,Manage Customer Requests and Inquiries,Manage Customer Requests and Inquiries,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01083,uses-input,Define Operating Model,Define Operating Model,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01101,informed-by,Report Franchise Performance,Report Franchise Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01105,informed-by,Crude/Feed Transportation Management,Crude/Feed Transportation Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01110,informed-by,Pricing Strategy Management,Pricing Strategy Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01111,enables,Sales Execution,Sales Execution,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01113,governed-by,Manage Licensing & IP,Manage Licensing & IP,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01114,uses-input,Manage Relationship with License Brand Providers,Manage Relationship with License Brand Providers,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01116,informed-by,Regional Optimization,Regional Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01117,precedes,Physical Distribution Scheduling,Physical Distribution Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01119,follows,Production Scheduling,Production Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01121,informed-by,Production Scheduling,Production Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01123,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-01125,uses-input,Crude/Feed Quality Management,Crude/Feed Quality Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01127,uses-input,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01130,informed-by,Assess Cost-to-Serve Performance,Assess Cost-to-Serve Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01135,uses-input,Refined Product Demand Management,Refined Product Demand Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01136,uses-input,Manage Inventory Replenishment,Manage Inventory Replenishment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01137,precedes,Physical Distribution Scheduling,Physical Distribution Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01140,informed-by,Contract Management,Contract Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01144,informed-by,Consumer Analysis,Consumer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01145,informed-by,Customer And Marketer Analysis,Customer And Marketer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01150,informed-by,Visioning And Implementation Planning,Visioning And Implementation Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01152,informed-by,Concept & Feasibility Study,Concept & Feasibility Study,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01158,governed-by,Pricing Strategy Management,Pricing Strategy Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01159,informed-by,Analyze Pricing Performance,Analyze Pricing Performance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01160,uses-input,Marketing Communications Planning,Marketing Communications Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01162,uses-input,Manage Customer Requests and Inquiries,Manage Customer Requests and Inquiries,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01164,uses-input,Service & Support Enablement,Service & Support Enablement,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01165,uses-input,Service & Support Delivery,Service & Support Delivery,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01168,follows,Product Scheduling,Product Scheduling,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01170,informed-by,Develop Finished Product Inventory Policy,Develop Finished Product Inventory Policy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01173,informed-by,Evaluate Crude & Feedstock,Evaluate Crude & Feedstock,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01180,uses-input,Accounting,Accounting,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01183,informed-by,Market Analysis,Market Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01186,informed-by,Market Analysis,Market Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01189,informed-by,Market Analysis,Market Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01193,informed-by,Customer And Marketer Analysis,Customer And Marketer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01196,informed-by,Consumer Analysis,Consumer Analysis,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01199,informed-by,Customer And Marketer Value Proposition,Customer And Marketer Value Proposition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01200,informed-by,Consumer Value Proposition,Consumer Value Proposition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01202,informed-by,Sales & Distribution Channel Design,Sales & Distribution Channel Design,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01203,informed-by,Consumer Value Proposition,Consumer Value Proposition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01205,informed-by,Product & Service Development,Product & Service Development,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01208,informed-by,Visioning And Implementation Planning,Visioning And Implementation Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01211,informed-by,Sales & Distribution Channel Strategy,Sales & Distribution Channel Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01214,informed-by,Customer Offer Definition,Customer Offer Definition,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01217,informed-by,Sales & Distribution Channel Design,Sales & Distribution Channel Design,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01218,uses-input,Perform Account Planning,Perform Account Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01220,uses-input,"Manage Cash Application, A/R & Revenue Accounting","Manage Cash Application, A/R & Revenue Accounting",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01221,uses-input,Monitor Credit Against Limit,Monitor Credit Against Limit,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01223,precedes,Regional Optimization,Regional Optimization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01226,follows,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01227,precedes,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01228,governed-by,Regulatory & Compliance,Regulatory & Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01232,informed-by,Sales & Distribution Channel Strategy,Sales & Distribution Channel Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01235,informed-by,Sales & Distribution Channel Design,Sales & Distribution Channel Design,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01238,uses-input,Manage Fulfillment,Manage Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01239,uses-input,Maintain Price & Discount Master Data,Maintain Price & Discount Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01240,enables,"Manage Cash Application, A/R & Revenue Accounting","Manage Cash Application, A/R & Revenue Accounting",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01241,follows,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-01242,precedes,Daily Execution Planning,Daily Execution Planning,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01244,informed-by,Refinery Planning and Optimization,Refinery Planning and Optimization,exact-unique-current,identical to current prefLabel but label reused elsewhere (flagged)
+REL-01246,uses-input,Product & Service Development,Product & Service Development,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01247,informed-by,Brand Strategy,Brand Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01249,enables,Capture And Manage Order Fulfillment,Capture And Manage Order Fulfillment,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01251,uses-input,Implement sales price,Implement sales price,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01252,uses-input,Maintain Price & Discount Master Data,Maintain Price & Discount Master Data,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01256,governed-by,Manage Credit & Risk,Manage Credit & Risk,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01261,uses-input,Manage Customer Portal,Manage Customer Portal,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01264,uses-input,Manage Customer Invoicing and Billing,Manage Customer Invoicing and Billing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01268,enables,Service & Support Delivery,Service & Support Delivery,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01272,informed-by,Brand Strategy,Brand Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01276,uses-input,Sales Pricing Management,Sales Pricing Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01278,uses-input,Manage Customer Invoicing and Billing,Manage Customer Invoicing and Billing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01279,uses-input,"Manage Cash Application, A/R & Revenue Accounting","Manage Cash Application, A/R & Revenue Accounting",exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01289,follows,Trade Capture,Trade Capture,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01290,informed-by,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01291,precedes,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01292,uses-input,Perform Vessel & Barge Actualization,Perform Vessel & Barge Actualization,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01293,uses-input,Manage Carrier Contracts,Manage Carrier Contracts,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01294,precedes,Manage AR/AP & Actuals,Manage AR/AP & Actuals,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01295,informed-by,Marketing Communications Strategy,Marketing Communications Strategy,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01300,governed-by,Credit Risk Management,Credit Risk Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01301,follows,Trading Strategy Management,Trading Strategy Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01302,precedes,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01306,informed-by,Plan Finished Goods Inventory,Plan Finished Goods Inventory,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01307,follows,Settlements,Settlements,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01308,uses-input,Perform End-of-Month (EOM) Process,Perform End-of-Month (EOM) Process,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01310,governed-by,Regulatory & Compliance,Regulatory & Compliance,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01314,uses-input,Manage Customer Invoicing and Billing,Manage Customer Invoicing and Billing,exact-unique-current,identical to current prefLabel; no other concept shares it
+REL-01317,informed-by,Confirmations Management,Confirmations Management,exact-unique-current,identical to current prefLabel; no other concept shares it

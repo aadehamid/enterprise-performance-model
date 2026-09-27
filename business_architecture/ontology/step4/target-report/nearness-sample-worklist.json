@@ -1,0 +1,222 @@
+[
+ {
+  "row_id": "REL-00044",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00120",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00257",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00275",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00405",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00709",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00929",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-01122",
+  "stratum": "en-same"
+ },
+ {
+  "row_id": "REL-00266",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-00924",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01013",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01037",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01139",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01204",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01237",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-01318",
+  "stratum": "en-diff"
+ },
+ {
+  "row_id": "REL-00239",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00253",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00259",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00260",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00262",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00263",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00277",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00283",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00285",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00292",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00295",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00387",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00392",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00458",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00494",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00926",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00963",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00977",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-01049",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-01115",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-01259",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-01287",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-01288",
+  "stratum": "hr-enables"
+ },
+ {
+  "row_id": "REL-00050",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00067",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00190",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00274",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00394",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00399",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00406",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00858",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00907",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-00937",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01005",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01143",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01228",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01256",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01286",
+  "stratum": "governed-by"
+ },
+ {
+  "row_id": "REL-01313",
+  "stratum": "governed-by"
+ }
+]
