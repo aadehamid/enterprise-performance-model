@@ -463,3 +463,42 @@ All ten are routed to the source workbooks for correction.
 - **REL-01256**: 2026-09-25 rationale (superseded): "SCOPE: credit-control
   gates within fulfillment (no-self-exception rule) — not all
   order/fulfillment decisions." Scope condition lapses.
+## Triggers pass: 2 stand, 5 promote, 11 hold (Hamid 2026-09-26)
+
+**STAND (rule 4, stable-ID):** REL-00725, REL-00897. Keep emitting; basis only.
+
+**PROMOTE (D:hamid-verdict):** REL-00127, REL-00235, REL-00236, REL-00246,
+REL-00901. Keep emitting; basis → D:hamid-verdict 2026-09-26.
+
+**HOLD (11):** The 2026-09-26 row-level "Trigger pattern" approvals are not
+approved decision evidence (recorded architecture decisions only: PR #110,
+PR #119). Each row was re-tested: an affirmative citation for `triggers`
+must tie the source's event or result to the target (trigger, route to,
+refer, escalate, hand off). A statement of where work is done does not
+count. None of the 11 carries such a citation. Each is now:
+
+**HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval**
+
+The 2026-09-26 "Trigger pattern" rationale is retained in provenance as
+superseded, not deleted. All eleven are routed to the source workbooks for
+correction.
+
+Exclusion/boundary citations (REL-00009 precedent):
+- **REL-00049**: scope excludes replenishment planning (CM-1-1-3-7-9); states
+  what the source does *not* do, not that its exceptions invoke the target.
+- **REL-00291**: "this process surfaces; limit actions are taken at
+  CM-1-2-2-3-6" — states where limit actions happen, not that monitoring
+  findings trigger them.
+- **REL-00892**: boundary-only citation; no event-to-target link.
+- **REL-00163**: scope says "excludes acting on the findings — amendments and
+  renewals run through Manage Existing Contract" — states where amendments
+  are done, not that monitoring findings start them (same wording class as
+  REL-00291).
+
+No citation:
+- **REL-00169**, **REL-00170**, **REL-00252**: no slug/label/range citation.
+- **REL-00396**, **REL-00398**, **REL-00400**, **REL-00403**: sibling
+  compliance-monitor rows with trigger-like semantics, but sibling nearness
+  alone is not a route for `triggers`.
+
+**Totals:** 646→635 emitting, 657→668 held, 488→477 facts. Conservation 1,318 ✓

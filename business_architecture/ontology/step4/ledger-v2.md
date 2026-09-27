@@ -1829,3 +1829,32 @@ exception rationales; none reversed. Recorded as `D:hamid-verdict` 2026-09-26.
 
 **Totals:** 666 − 20 = **646** emitting; 637 + 20 = **657** held;
 508 − 20 = **488** facts. Conservation: 646 + 657 + 12 + 1 + 2 = 1,318.
+
+## Triggers pass (2026-09-26, Hamid approved)
+
+18 emitting `triggers` rows reviewed (2 stable-ID, 16 label-only).
+
+- **2 STAND** (rule 4, stable-ID): REL-00725, REL-00897.
+- **5 PROMOTE** (affirmative citation + event semantics, `D:hamid-verdict`):
+  REL-00127 ("triggering rescheduling through…"),
+  REL-00235 ("deterioration signals that trigger event-driven reviews"),
+  REL-00236 ("trigger event-driven reviews or limit actions (CM-1-2-2-1-2)"),
+  REL-00246 ("triggering of continuation reporting through…"),
+  REL-00901 ("Anomalies suggesting fraud route to…" — anomaly handed off).
+- **11 HOLD**: 3 exclusion/boundary (REL-00049, REL-00291, REL-00892),
+  7 no citation (REL-00169, REL-00170, REL-00252, REL-00396, REL-00398,
+  REL-00400, REL-00403), 1 boundary (REL-00163 — states where amendments
+  are done, does not link finding to target).
+
+Rule 6 (seed 42): 5 passed, REL-00163 held after scope-sentence review.
+Recorded `D:hamid-verdict` 2026-09-26.
+
+**Definition adopted:** an affirmative citation for `triggers` must tie the
+source's event or result to the target (trigger, route to, refer, escalate,
+hand off). A statement of where work is done does not count.
+
+Totals: 646 − 11 = **635** emitting; 657 + 11 = **668** held;
+488 − 11 = **477** facts. Conservation: 635 + 668 + 12 + 1 + 2 = 1,318. ✓
+All 11 held facts verified unique single-row; zero knock-on effects.
+11 supersession entries in `step4-decisions.md`; 11 backlog items for source
+correction (including target-side range check for the 4 compliance monitors).
