@@ -1,517 +1,517 @@
 row_id,verb,source_slug,target_slug,target_label,basis_before,explicit_reference_found,evidence_snippet
-REL-00001,precedes,CM-1-1-1-1-1,CM-1-1-1-1-2,Develop Statistical Baseline,nearness-only,no,
+REL-00001,precedes,CM-1-1-1-1-1,CM-1-1-1-1-2,Develop Statistical Baseline,nearness-only,yes,"[slug] ance workstream) | statistical model development (Develop Statistical Baseline, CM-1-1-1-1-2)"
 REL-00003,follows,CM-1-1-1-1-2,CM-1-1-1-1-1,Prepare Master Data To Create Demand Forecast,nearness-only,no,
-REL-00004,precedes,CM-1-1-1-1-2,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,no,
-REL-00005,follows,CM-1-1-1-1-3,CM-1-1-1-1-2,Develop Statistical Baseline,nearness-only,no,
-REL-00006,precedes,CM-1-1-1-1-3,CM-1-1-1-1-4,Publish Forecast and Generate Component Level Forecast Plan,nearness-only,no,
-REL-00007,follows,CM-1-1-1-1-4,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,no,
-REL-00008,precedes,CM-1-1-1-1-4,CM-1-1-2,Regional Optimization,nearness-only,no,
-REL-00010,enables,CM-1-1-1-1-4,CM-1-2-1-1-2,Receive Demand Forecast,nearness-only,no,
+REL-00004,precedes,CM-1-1-1-1-2,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,yes,"[slug] owned by Adjust Forecast Incorporating Customer Input and Market Intelligence (CM-1-1-1-1-3); excludes publication and disaggregation, owned by Publish Forecast and Genera"
+REL-00005,follows,CM-1-1-1-1-3,CM-1-1-1-1-2,Develop Statistical Baseline,nearness-only,yes,[slug] attribute accuracy effects. Excludes producing the statistical baseline itself (CM-1-1-1-1-2); excludes gathering market and customer intelligence as an ongoing capability
+REL-00006,precedes,CM-1-1-1-1-3,CM-1-1-1-1-4,Publish Forecast and Generate Component Level Forecast Plan,nearness-only,yes,"[slug] r commitment (Order Management, CM-1-3-7) | publication of the agreed forecast (CM-1-1-1-1-4)"
+REL-00007,follows,CM-1-1-1-1-4,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,yes,"[slug] ing-side receipt (Receive Demand Forecast, CM-1-2-1-1-2) | forecast adjustment (CM-1-1-1-1-3)"
+REL-00008,precedes,CM-1-1-1-1-4,CM-1-1-2,Regional Optimization,nearness-only,yes,"[slug] uction, inventory, and allocation decisions are owned by Regional Optimization (CM-1-1-2) and Refinery Planning and Optimization (CM-1-1-4); excludes the consumers' own"
+REL-00010,enables,CM-1-1-1-1-4,CM-1-2-1-1-2,Receive Demand Forecast,nearness-only,yes,"[slug] nsumers' own receipt and case-assembly steps, owned by Receive Demand Forecast (CM-1-2-1-1-2) and Capture Product Demand Requirements (CM-1-1-4-7-1). In scope: Approve and"
 REL-00011,follows,CM-1-1-1-1-5,CM-1-1-1-1-4,Publish Forecast and Generate Component Level Forecast Plan,nearness-only,no,
-REL-00012,uses-input,CM-1-1-1-1-5,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,no,
-REL-00029,informed-by,CM-1-1-3-5-1,CM-1-1-2,Regional Optimization,nearness-only,no,
-REL-00030,uses-input,CM-1-1-3-5-1,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,no,
+REL-00012,uses-input,CM-1-1-1-1-5,CM-1-1-1-1-3,Adjust Forecast Incorporating Customer Input and Market Intelligence,nearness-only,yes,"[slug] orecasting Process, CM-1-3-5-1-2) | making the forecast adjustments themselves (CM-1-1-1-1-3)"
+REL-00029,informed-by,CM-1-1-3-5-1,CM-1-1-2,Regional Optimization,nearness-only,yes,"[slug] to planning. Excludes plan-period optimization, owned by Regional Optimization (CM-1-1-2); excludes issuing nominations and movement administration (CM-1-1-3-6); consum"
+REL-00030,uses-input,CM-1-1-3-5-1,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,yes,"[slug] -3-6); consumes replenishment requirements from Manage Inventory Replenishment (CM-1-1-3-7-9) rather than re-deciding them, per the batch 04 decision-right rule. In scope:"
 REL-00031,precedes,CM-1-1-3-5-1,CM-1-1-3-6-1,Plan & Execute Nominations,nearness-only,no,
 REL-00033,follows,CM-1-1-3-6-1,CM-1-1-3-5-1,Develop Short-Term Network Plan,nearness-only,no,
-REL-00035,follows,CM-1-1-3-6-2,CM-1-1-3-6-1,Plan & Execute Nominations,nearness-only,no,
-REL-00036,precedes,CM-1-1-3-6-2,CM-1-1-3-6-3,Track Movements and Inventory Management,nearness-only,no,
-REL-00039,precedes,CM-1-1-3-6-3,CM-1-1-3-6-4,Discharge & Reconcile Load,nearness-only,no,
+REL-00035,follows,CM-1-1-3-6-2,CM-1-1-3-6-1,Plan & Execute Nominations,nearness-only,yes,[slug] or third party) per the locked Midstream rule. Excludes nomination management (CM-1-1-3-6-1) and in-transit tracking (CM-1-1-3-6-3). In scope: Authorize and release schedu
+REL-00036,precedes,CM-1-1-3-6-2,CM-1-1-3-6-3,Track Movements and Inventory Management,nearness-only,yes,[slug] am rule. Excludes nomination management (CM-1-1-3-6-1) and in-transit tracking (CM-1-1-3-6-3). In scope: Authorize and release scheduled loads | confirm loaded quantities a
+REL-00039,precedes,CM-1-1-3-6-3,CM-1-1-3-6-4,Discharge & Reconcile Load,nearness-only,yes,"[slug] | carrier transport operation (Midstream, carriers) | discharge administration (CM-1-1-3-6-4)"
 REL-00040,follows,CM-1-1-3-6-4,CM-1-1-3-6-3,Track Movements and Inventory Management,nearness-only,no,
 REL-00045,informed-by,CM-1-1-3-7-10,CM-1-1-3-7-3,Develop Finished Product Inventory Policy,nearness-only,no,
 REL-00047,uses-input,CM-1-1-3-7-11,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
-REL-00048,uses-input,CM-1-1-3-7-12,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
-REL-00049,triggers,CM-1-1-3-7-12,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,no,
+REL-00048,uses-input,CM-1-1-3-7-12,CM-1-1-3-7-4,Measure Inventory,nearness-only,yes,"[slug] s inventory-policy design (CM-1-1-3-7-1/-2/-3), formal measurement methodology (CM-1-1-3-7-4), reconciliation and adjustment governance (CM-1-1-3-7-5), and replenishment pl"
+REL-00049,triggers,CM-1-1-3-7-12,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,yes,"[slug] ciliation and adjustment governance (CM-1-1-3-7-5), and replenishment planning (CM-1-1-3-7-9); excludes the specialized consignment, commingled, re-brand, lot/batch, and th"
 REL-00050,governed-by,CM-1-1-3-7-12,CM-1-1-3-7-3,Develop Finished Product Inventory Policy,nearness-only,no,
-REL-00051,informed-by,CM-1-1-3-7-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-00056,precedes,CM-1-1-3-7-4,CM-1-1-3-7-5,Perform Inventory Reconciliation,nearness-only,no,
-REL-00058,follows,CM-1-1-3-7-5,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
+REL-00051,informed-by,CM-1-1-3-7-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] sions that generate intermediates, owned by Refinery Planning and Optimization (CM-1-1-4) and Refining; excludes finished-product policy, owned by Develop Finished Prod"
+REL-00056,precedes,CM-1-1-3-7-4,CM-1-1-3-7-5,Perform Inventory Reconciliation,nearness-only,yes,"[slug] nciling measured against book stock, owned by Perform Inventory Reconciliation (CM-1-1-3-7-5); excludes custody-transfer measurement disputes, which follow the relevant com"
+REL-00058,follows,CM-1-1-3-7-5,CM-1-1-3-7-4,Measure Inventory,nearness-only,yes,"[slug] HM 32). Excludes taking the physical measurements, owned by Measure Inventory (CM-1-1-3-7-4); excludes financial write-off approval and valuation entries, owned by Finance"
 REL-00062,informed-by,CM-1-1-3-7-6,CM-1-1-3-7-3,Develop Finished Product Inventory Policy,nearness-only,no,
-REL-00064,uses-input,CM-1-1-3-7-7,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
+REL-00064,uses-input,CM-1-1-3-7-7,CM-1-1-3-7-4,Measure Inventory,nearness-only,yes,"[slug] Trading; excludes the physical measurement itself, owned by Measure Inventory (CM-1-1-3-7-4). In scope: Track ownership shares in commingled stock by facility | apply agre"
 REL-00066,uses-input,CM-1-1-3-7-8,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
 REL-00067,governed-by,CM-1-1-3-7-9,CM-1-1-3-7-3,Develop Finished Product Inventory Policy,nearness-only,no,
-REL-00068,precedes,CM-1-1-3-7-9,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,no,
-REL-00069,informed-by,CM-1-1-3-7-9,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,no,
-REL-00070,precedes,CM-1-1-3-8-1,CM-1-1-3-8-2,Schedule Secondary Distribution,nearness-only,no,
-REL-00072,follows,CM-1-1-3-8-2,CM-1-1-3-8-1,Generate Orders,nearness-only,no,
+REL-00068,precedes,CM-1-1-3-7-9,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,yes,"[slug] s scheduling the physical movements, owned by Physical Distribution Scheduling (CM-1-1-3-6) and Secondary Distribution Management (CM-1-1-3-8); excludes transport and ter"
+REL-00069,informed-by,CM-1-1-3-7-9,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,yes,"[slug] udes plan-period inventory positioning, owned by Plan Finished Goods Inventory (CM-1-1-2-13); excludes scheduling the physical movements, owned by Physical Distribution Sc"
+REL-00070,precedes,CM-1-1-3-8-1,CM-1-1-3-8-2,Schedule Secondary Distribution,nearness-only,yes,"[slug] ; excludes scheduling the deliveries, owned by Schedule Secondary Distribution (CM-1-1-3-8-2). In scope: Monitor site tank levels and consumption | compute run-out risk and"
+REL-00072,follows,CM-1-1-3-8-2,CM-1-1-3-8-1,Generate Orders,nearness-only,yes,"[slug] heduling on disruption. Excludes creating the orders, owned by Generate Orders (CM-1-1-3-8-1); excludes physical haulage execution, performed by the designated distribution"
 REL-00073,precedes,CM-1-1-3-8-2,CM-1-1-3-8-4,Monitor Secondary Distribution Performance,nearness-only,no,
 REL-00076,follows,CM-1-1-3-8-4,CM-1-1-3-8-2,Schedule Secondary Distribution,nearness-only,no,
-REL-00082,informed-by,CM-1-1-4-7-1,CM-1-2-6-2,Refined Product Demand Management,nearness-only,no,
+REL-00082,informed-by,CM-1-1-4-7-1,CM-1-2-6-2,Refined Product Demand Management,nearness-only,yes,"[slug] to Produce Demand Forecast (CM-1-1-1-1) and Refined Product Demand Management (CM-1-2-6-2). Excludes capturing or committing customer orders, owned by Order Management ("
 REL-00083,precedes,CM-1-1-4-7-1,CM-1-1-4-7-8,Perform Scenario Analysis,nearness-only,no,
 REL-00085,uses-input,CM-1-1-4-7-2,CM-1-1-4-7-3,Capture Crude Availability,nearness-only,no,
 REL-00086,uses-input,CM-1-1-4-7-2,CM-1-1-4-7-4,Capture Product/Crude/Feedstock Price,nearness-only,no,
-REL-00087,constrained-by,CM-1-1-4-7-2,CM-1-1-4-7-5,Capture Refinery Level Constraints,nearness-only,yes,"review-batch rationale: Capture Refinery Level Constraints establishes the unit-capacity, throughput, blending, specification, tankage, mo"
-REL-00089,enables,CM-1-1-4-7-3,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,no,
-REL-00090,informed-by,CM-1-1-4-7-3,CM-1-2,Supply And Trading,nearness-only,no,
-REL-00091,constrained-by,CM-1-1-4-7-3,CM-1-1-4-7-5,Capture Refinery Level Constraints,nearness-only,yes,review-batch rationale: ilability determination. Stored: (Capture Crude Availability core:constrainedBy Capture Refinery Level Constraints). Hamid 2026-09-26.
+REL-00087,constrained-by,CM-1-1-4-7-2,CM-1-1-4-7-5,Capture Refinery Level Constraints,nearness-only,no,
+REL-00089,enables,CM-1-1-4-7-3,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,yes,"[slug] | judging processing suitability or value, owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2) | managing feedstock inventory, owned by Manage Feedstock Inventory (CM-1-2-5-"
+REL-00090,informed-by,CM-1-1-4-7-3,CM-1-2,Supply And Trading,nearness-only,yes,"[slug] nt. Excludes securing supply and executing trades, owned by Supply And Trading (CM-1-2); excludes arrival and delivery scheduling, owned by Plan Feedstock Arrival (CM"
+REL-00091,constrained-by,CM-1-1-4-7-3,CM-1-1-4-7-5,Capture Refinery Level Constraints,nearness-only,no,
 REL-00093,enables,CM-1-1-4-7-4,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,no,
-REL-00099,constrains,CM-1-1-4-7-5,CM-1-1-4-7-8,Perform Scenario Analysis,nearness-only,yes,review-batch rationale:  remap): source verb 'constrains' explicitly supports the inversion; stored as (Perform Scenario Analysis core:constrainedBy Capture Refinery Level Constraints). Original assertion pres
-REL-00101,uses-input,CM-1-1-4-7-6,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,no,
-REL-00102,informed-by,CM-1-1-4-7-6,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
-REL-00105,informed-by,CM-1-1-4-7-7,CM-1-1-4-7-8,Perform Scenario Analysis,nearness-only,no,
-REL-00106,governed-by,CM-1-1-4-7-7,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
+REL-00099,constrains,CM-1-1-4-7-5,CM-1-1-4-7-8,Perform Scenario Analysis,nearness-only,no,
+REL-00101,uses-input,CM-1-1-4-7-6,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,yes,"[slug] the plan-period finished-goods target, owned by Plan Finished Goods Inventory (CM-1-1-2-13). In scope: Take the opening inventory position from the system of record | adj"
+REL-00102,informed-by,CM-1-1-4-7-6,CM-1-1-3-7-4,Measure Inventory,nearness-only,yes,"[slug] rget. Excludes measuring and reconciling inventory, owned by Measure Inventory (CM-1-1-3-7-4) and Perform Inventory Reconciliation (CM-1-1-3-7-5). Excludes inventory policy"
+REL-00105,informed-by,CM-1-1-4-7-7,CM-1-1-4-7-8,Perform Scenario Analysis,nearness-only,yes,"[slug] M-1-1-4) | running and comparing the cases, owned by Perform Scenario Analysis (CM-1-1-4-7-8) | detailed scheduling and execution against the plan, owned by Refining | comp"
+REL-00106,governed-by,CM-1-1-4-7-7,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] ecting and approving the plan, which is the Refinery Planning and Optimization (CM-1-1-4) decision this step records. Excludes detailed scheduling, line-ups, and blend"
 REL-00110,uses-input,CM-1-1-4-7-8,CM-1-1-4-7-1,Capture Product Demand Requirements,nearness-only,no,
 REL-00111,uses-input,CM-1-1-4-7-8,CM-1-1-4-7-5,Capture Refinery Level Constraints,nearness-only,no,
-REL-00112,precedes,CM-1-1-4-7-8,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-00114,informed-by,CM-1-1-7-1-1,CM-1-1-7-2-4,Manage Production Schedule Exceptions,nearness-only,no,
-REL-00116,informed-by,CM-1-1-7-1-2,CM-1-1-7-2-6,"Manage The Interface to Planning, Operations, Engineering & Maintenance",nearness-only,no,
-REL-00117,uses-input,CM-1-1-7-1-3,CM-1-1-3-7-4,Measure Inventory,nearness-only,no,
+REL-00112,precedes,CM-1-1-4-7-8,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] and approving the production plan, owned by Refinery Planning and Optimization (CM-1-1-4). Excludes trading and market risk scenarios, owned by Manage And Run Risk Scen"
+REL-00114,informed-by,CM-1-1-7-1-1,CM-1-1-7-2-4,Manage Production Schedule Exceptions,nearness-only,yes,[slug] aterial schedule deviations flow through Manage Production Schedule Exceptions (CM-1-1-7-2-4). In scope: Consolidate approved schedule decisions into the instruction set |
+REL-00116,informed-by,CM-1-1-7-1-2,CM-1-1-7-2-6,"Manage The Interface to Planning, Operations, Engineering & Maintenance",nearness-only,yes,"[slug] hrough Manage The Interface to Planning, Operations, Engineering & Maintenance (CM-1-1-7-2-6). In scope: Check and reserve schedule-level capacity | assign resources to the"
+REL-00117,uses-input,CM-1-1-7-1-3,CM-1-1-3-7-4,Measure Inventory,nearness-only,yes,"[slug] ludes owning the physical measurement basis, which sits with Measure Inventory (CM-1-1-3-7-4) with readings taken by asset operators; excludes periodic network book-to-phys"
 REL-00120,enables,CM-1-1-7-2-1,CM-1-1-7-2-3,Create Production Scheduling and Sequencing Plan,nearness-only,no,
-REL-00122,enables,CM-1-1-7-2-2,CM-1-1-7-2-3,Create Production Scheduling and Sequencing Plan,nearness-only,no,
+REL-00122,enables,CM-1-1-7-2-2,CM-1-1-7-2-3,Create Production Scheduling and Sequencing Plan,nearness-only,yes,"[slug] ted schedule itself, owned by Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3); excludes plan-period product mix decisions, owned by Refinery Planning and Op"
 REL-00124,uses-input,CM-1-1-7-2-3,CM-1-1-7-2-1,Maintain Production Scheduling Master Data,nearness-only,no,
 REL-00125,follows,CM-1-1-7-2-3,CM-1-1-7-2-2,Review Production Wheel and Run Length,nearness-only,no,
-REL-00127,triggers,CM-1-1-7-2-4,CM-1-1-7-2-3,Create Production Scheduling and Sequencing Plan,nearness-only,no,
+REL-00127,triggers,CM-1-1-7-2-4,CM-1-1-7-2-3,Create Production Scheduling and Sequencing Plan,nearness-only,yes,"[slug] iggering rescheduling through Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3), escalating plan-level breaks to Refinery Planning and Optimization (CM-1-1-4)"
 REL-00128,informed-by,CM-1-1-7-2-4,CM-1-1-7-1,Daily Execution Planning,nearness-only,no,
 REL-00130,uses-input,CM-1-1-7-2-5,CM-1-1-7-1-3,Perform Production Accounting,nearness-only,no,
 REL-00131,follows,CM-1-1-7-2-5,CM-1-1-7-2-4,Manage Production Schedule Exceptions,nearness-only,no,
-REL-00134,informed-by,CM-1-1-7-2-6,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-00135,enables,CM-1-1-7-3-1,CM-1-1-7-3-2,Optimize Plant Energy Balance,nearness-only,no,
-REL-00137,follows,CM-1-1-7-3-2,CM-1-1-7-3-1,Optimize Internal vs. External Energy Sources,nearness-only,no,
+REL-00134,informed-by,CM-1-1-7-2-6,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] the counterparties' own work: plan targets (Refinery Planning and Optimization, CM-1-1-4), maintenance planning and turnaround execution (Refining; refinery maintenance"
+REL-00135,enables,CM-1-1-7-3-1,CM-1-1-7-3-2,Optimize Plant Energy Balance,nearness-only,yes,"[slug] excludes the sitewide balance targets, owned by Optimize Plant Energy Balance (CM-1-1-7-3-2). In scope: Compare marginal costs of internal generation versus purchase | set"
+REL-00137,follows,CM-1-1-7-3-2,CM-1-1-7-3-1,Optimize Internal vs. External Energy Sources,nearness-only,yes,"[slug] sourcing mix decisions, owned by Optimize Internal vs. External Energy Sources (CM-1-1-7-3-1); excludes energy-efficiency capital projects, owned by Refining and engineerin"
 REL-00139,informed-by,CM-1-1-7-3-3,CM-1-1-7-2,Production Scheduling,nearness-only,no,
-REL-00141,informed-by,CM-1-2-1-1-1,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
+REL-00141,informed-by,CM-1-2-1-1-1,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] d production plan and current schedule from Refinery Planning and Optimization (CM-1-1-4) and Refinery Production Planning and Scheduling (CM-1-1-7), reconciling produc"
 REL-00143,enables,CM-1-2-1-1-1,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,no,
-REL-00145,uses-input,CM-1-2-1-1-2,CM-1-1-1-1-4,Publish Forecast and Generate Component Level Forecast Plan,nearness-only,no,
+REL-00145,uses-input,CM-1-2-1-1-2,CM-1-1-1-1-4,Publish Forecast and Generate Component Level Forecast Plan,nearness-only,yes,[slug] 1) and released by Publish Forecast and Generate Component Level Forecast Plan (CM-1-1-1-1-4) per the batch 03 decision — this node consumes the published version and must
 REL-00146,enables,CM-1-2-1-1-2,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,no,
 REL-00147,uses-input,CM-1-2-1-1-3,CM-1-2-1-1-1,Receive Production Forecast,nearness-only,no,
-REL-00149,precedes,CM-1-2-1-1-3,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,no,
+REL-00149,precedes,CM-1-2-1-1-3,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,yes,"[slug] sold, retired, or expired instruments, owned by Perform RINs/REC Actualization (CM-1-2-3-1-7). Program applicability is jurisdiction-specific. In scope: Forecast renewable-"
 REL-00150,uses-input,CM-1-2-1-1-4,CM-1-2-1-1-1,Receive Production Forecast,nearness-only,no,
 REL-00151,uses-input,CM-1-2-1-1-4,CM-1-2-1-1-2,Receive Demand Forecast,nearness-only,no,
 REL-00153,uses-input,CM-1-2-1-1-5,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,no,
 REL-00154,enables,CM-1-2-1-1-5,CM-1-2-1-4,Trading Strategy Management,nearness-only,no,
 REL-00157,precedes,CM-1-2-1-2-1,CM-1-2-1-2-5,Create New Contract,nearness-only,no,
-REL-00158,requires,CM-1-2-1-2-1,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,no,
-REL-00159,follows,CM-1-2-1-2-10,CM-1-2-7-1-3,Negotiate Storage / Throughput Agreements,nearness-only,no,
-REL-00162,follows,CM-1-2-1-2-11,CM-1-2-1-2-6,Manage Existing Contract,nearness-only,no,
-REL-00163,triggers,CM-1-2-1-2-11,CM-1-2-1-2-6,Manage Existing Contract,nearness-only,no,
+REL-00158,requires,CM-1-2-1-2-1,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,yes,[slug] te. Credit reviews and limits are owned by Perform Counterparty Credit Reviews (CM-1-2-2-1-1) and Manage Credit Limits (CM-1-2-2-1-2); compliance policy by Regulatory & Com
+REL-00159,follows,CM-1-2-1-2-10,CM-1-2-7-1-3,Negotiate Storage / Throughput Agreements,nearness-only,yes,"[slug] orage split: negotiation is owned by Negotiate Storage / Throughput Agreements (CM-1-2-7-1-3); where storage capacity is commercially traded, allocated, acquired, released,"
+REL-00162,follows,CM-1-2-1-2-11,CM-1-2-1-2-6,Manage Existing Contract,nearness-only,yes,"[slug] on the findings — amendments and renewals run through Manage Existing Contract (CM-1-2-1-2-6). In scope: Track obligations, commitments, and service levels against terms |"
+REL-00163,triggers,CM-1-2-1-2-11,CM-1-2-1-2-6,Manage Existing Contract,nearness-only,yes,"[slug] on the findings — amendments and renewals run through Manage Existing Contract (CM-1-2-1-2-6). In scope: Track obligations, commitments, and service levels against terms |"
 REL-00165,follows,CM-1-2-1-2-2,CM-1-2-1-2-1,Create New Counterparty,nearness-only,no,
 REL-00167,follows,CM-1-2-1-2-3,CM-1-2-1-2-2,Manage Existing Counterparty,nearness-only,no,
-REL-00168,requires,CM-1-2-1-2-3,CM-1-2-2-1-3,Manage Collateral,nearness-only,no,
+REL-00168,requires,CM-1-2-1-2-3,CM-1-2-2-1-3,Manage Collateral,nearness-only,yes,[slug] once that event is effective. Collateral release is owned by Manage Collateral (CM-1-2-2-1-3); settlement of remaining obligations by the Settlements cluster (CM-1-2-4-1).
 REL-00169,triggers,CM-1-2-1-2-4,CM-1-2-1-2-3,Terminate/Novate Counterparty,nearness-only,no,
 REL-00170,triggers,CM-1-2-1-2-4,CM-1-2-1-2-7,Terminate/Novate Contract,nearness-only,no,
 REL-00171,follows,CM-1-2-1-2-5,CM-1-2-1-2-1,Create New Counterparty,nearness-only,no,
 REL-00173,follows,CM-1-2-1-2-6,CM-1-2-1-2-5,Create New Contract,nearness-only,no,
-REL-00174,enables,CM-1-2-1-2-6,CM-1-2-1-2-11,Monitor Contracts,nearness-only,no,
+REL-00174,enables,CM-1-2-1-2-6,CM-1-2-1-2-11,Monitor Contracts,nearness-only,yes,"[slug] and novation (CM-1-2-1-2-7); excludes obligation monitoring (Monitor Contracts, CM-1-2-1-2-11). In scope: Process approved amendments, extensions, and renewals | control agr"
 REL-00175,follows,CM-1-2-1-2-7,CM-1-2-1-2-6,Manage Existing Contract,nearness-only,no,
-REL-00181,uses-input,CM-1-2-1-3-1,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,no,
-REL-00182,precedes,CM-1-2-1-3-1,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
+REL-00181,uses-input,CM-1-2-1-3-1,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,yes,"[slug] Market Risk Management (CM-1-2-2-3). Distinct from Perform Asset Optimization (CM-1-2-1-1-4), which identifies and values portfolio opportunities — this node analyzes the"
+REL-00182,precedes,CM-1-2-1-3-1,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,yes,[slug] ones arising from those recommendations. Excludes the approval decision itself (CM-1-2-1-3-2). In scope: Analyze deal economics and sensitivities | check strategy fit | pre
 REL-00183,follows,CM-1-2-1-3-10,CM-1-2-1-3-7,Capture Financial (OTC) Trades,nearness-only,no,
-REL-00184,precedes,CM-1-2-1-3-10,CM-1-2-2-2-4,Report Confirmation To SDR,nearness-only,no,
-REL-00185,governed-by,CM-1-2-1-3-10,CM-1-2-4-3,Regulatory & Compliance,nearness-only,no,
+REL-00184,precedes,CM-1-2-1-3-10,CM-1-2-2-2-4,Report Confirmation To SDR,nearness-only,yes,[slug] -event and continuation reporting may be handled by Report Confirmation To SDR (CM-1-2-2-2-4) where the reporting model and regulation require it. Excludes regulatory-polic
+REL-00185,governed-by,CM-1-2-1-3-10,CM-1-2-4-3,Regulatory & Compliance,nearness-only,yes,"[slug] atory-policy ownership and monitoring, which belong to Regulatory & Compliance (CM-1-2-4-3); excludes the legal determination of reporting responsibility where Legal/Comp"
 REL-00186,follows,CM-1-2-1-3-11,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00187,informed-by,CM-1-2-1-3-11,CM-1-2-1-1-6,Receive Power Generation Forecast,nearness-only,no,
-REL-00188,precedes,CM-1-2-1-3-11,CM-1-2-4-1-15,Settle Power,nearness-only,no,
+REL-00187,informed-by,CM-1-2-1-3-11,CM-1-2-1-1-6,Receive Power Generation Forecast,nearness-only,yes,"[slug] ith the power nodes elsewhere in the branch (Receive Power Generation Forecast, CM-1-2-1-1-6; Settle Power, CM-1-2-4-1-15; Settle ISO/Power Pools, CM-1-2-4-1-7). Excludes p"
+REL-00188,precedes,CM-1-2-1-3-11,CM-1-2-4-1-15,Settle Power,nearness-only,yes,"[slug] e in the branch (Receive Power Generation Forecast, CM-1-2-1-1-6; Settle Power, CM-1-2-4-1-15; Settle ISO/Power Pools, CM-1-2-4-1-7). Excludes physical transmission scheduli"
 REL-00189,follows,CM-1-2-1-3-2,CM-1-2-1-3-1,Manage Pre-Trade Analysis,nearness-only,no,
-REL-00190,governed-by,CM-1-2-1-3-2,CM-1-2-2-3,Market Risk Management,nearness-only,yes,"review-batch source_definition: ation-of-authority policy. The delegation of authority is set and maintained by Market Risk Management (Establish & Maintain Delegation Of Authority, CM-1-2-2-3-2); this process appl"
+REL-00190,governed-by,CM-1-2-1-3-2,CM-1-2-2-3,Market Risk Management,nearness-only,yes,"[label] ation-of-authority policy. The delegation of authority is set and maintained by Market Risk Management (Establish & Maintain Delegation Of Authority, CM-1-2-2-3-2); this process appl"
 REL-00191,precedes,CM-1-2-1-3-2,CM-1-2-1-3-3,Capture Physical Trades,nearness-only,no,
 REL-00192,follows,CM-1-2-1-3-3,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00193,precedes,CM-1-2-1-3-3,CM-1-2-2-2,Confirmations Management,nearness-only,no,
+REL-00193,precedes,CM-1-2-1-3-3,CM-1-2-2-2,Confirmations Management,nearness-only,yes,"[slug] nd the authorized execution role); excludes confirmation with the counterparty (CM-1-2-2-2); excludes movement actualization (CM-1-2-3-1) and settlement (CM-1-2-4-1-1, CM"
 REL-00195,follows,CM-1-2-1-3-4,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00197,precedes,CM-1-2-1-3-4,CM-1-2-4-1-3,Settle Exchange Trades,nearness-only,no,
+REL-00197,precedes,CM-1-2-1-3-4,CM-1-2-4-1-3,Settle Exchange Trades,nearness-only,yes,"[slug] broker settlement (Settle Broker, CM-1-2-4-1-16) and exchange-trade settlement (CM-1-2-4-1-3). In scope: Capture exchange-executed trades with contract and clearing detail"
 REL-00198,follows,CM-1-2-1-3-5,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00200,precedes,CM-1-2-1-3-5,CM-1-2-4-1-14,Settle Terminal/Storage,nearness-only,no,
+REL-00200,precedes,CM-1-2-1-3-5,CM-1-2-4-1-14,Settle Terminal/Storage,nearness-only,yes,"[slug] Storage, CM-1-1-3-7-11); excludes storage settlement (Settle Terminal/Storage, CM-1-2-4-1-14). In scope: Capture storage and throughput deal terms | represent capacity righ"
 REL-00201,follows,CM-1-2-1-3-6,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00202,informed-by,CM-1-2-1-3-6,CM-1-2-1-1-3,Forecast Renewables,nearness-only,no,
-REL-00203,precedes,CM-1-2-1-3-6,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,no,
+REL-00202,informed-by,CM-1-2-1-3-6,CM-1-2-1-1-3,Forecast Renewables,nearness-only,yes,"[slug] gside commercial terms. Excludes forecasting the position (Forecast Renewables, CM-1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1"
+REL-00203,precedes,CM-1-2-1-3-6,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,yes,"[slug] -1-2-1-1-3); excludes instrument actualization (Perform RINs/REC Actualization, CM-1-2-3-1-7); excludes emissions settlement (Settle Environmental Instruments, CM-1-2-4-1-8"
 REL-00204,follows,CM-1-2-1-3-7,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00205,precedes,CM-1-2-1-3-7,CM-1-2-1-3-10,Report Trades to SDR,nearness-only,no,
-REL-00206,precedes,CM-1-2-1-3-7,CM-1-2-2-2,Confirmations Management,nearness-only,no,
-REL-00207,follows,CM-1-2-1-3-8,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00209,precedes,CM-1-2-1-3-8,CM-1-2-2-2,Confirmations Management,nearness-only,no,
+REL-00205,precedes,CM-1-2-1-3-7,CM-1-2-1-3-10,Report Trades to SDR,nearness-only,yes,"[slug] ting regimes. Excludes trade reporting submission itself (Report Trades to SDR, CM-1-2-1-3-10); excludes confirmation (CM-1-2-2-2); excludes valuation and curves (Market Ris"
+REL-00206,precedes,CM-1-2-1-3-7,CM-1-2-2-2,Confirmations Management,nearness-only,yes,"[slug] submission itself (Report Trades to SDR, CM-1-2-1-3-10); excludes confirmation (CM-1-2-2-2); excludes valuation and curves (Market Risk Management: Setup And Manage Curve"
+REL-00207,follows,CM-1-2-1-3-8,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,yes,"[slug] ment. Structured deals route through escalated approval (Obtain Trade Approval, CM-1-2-1-3-2) before execution. Excludes structuring and negotiating the deal (strategy and"
+REL-00209,precedes,CM-1-2-1-3-8,CM-1-2-2-2,Confirmations Management,nearness-only,yes,"[slug] and settlement, which follow their instrument types (Confirmations Management, CM-1-2-2-2; Settlements, CM-1-2-4-1). In scope: Decompose structured deals into capturable"
 REL-00210,follows,CM-1-2-1-3-9,CM-1-2-1-3-2,Obtain Trade Approval,nearness-only,no,
-REL-00212,precedes,CM-1-2-1-3-9,CM-1-2-4-1-12,Settle Pipelines,nearness-only,no,
+REL-00212,precedes,CM-1-2-1-3-9,CM-1-2-4-1-12,Settle Pipelines,nearness-only,yes,[slug] CM-1-1-3-6-1); transport settlement follows the mode-specific settlement nodes (CM-1-2-4-1-12/-13/-4/-5); physical transport operation is owned by Midstream and carriers. In
 REL-00213,uses-input,CM-1-2-1-4,CM-1-2-1-1-5,Forecast Revenue,nearness-only,no,
 REL-00214,uses-input,CM-1-2-1-4,CM-1-2-1-1-4,Perform Asset Optimization,nearness-only,no,
-REL-00215,governed-by,CM-1-2-1-4,CM-1-2-2-3,Market Risk Management,nearness-only,no,
-REL-00216,enables,CM-1-2-2-1-1,CM-1-2-2-1-2,Manage Credit Limits,nearness-only,no,
-REL-00218,informed-by,CM-1-2-2-1-1,CM-1-2-2-1-7,Monitor & Analyze Credit,nearness-only,no,
-REL-00219,follows,CM-1-2-2-1-2,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,no,
+REL-00215,governed-by,CM-1-2-1-4,CM-1-2-2-3,Market Risk Management,nearness-only,yes,"[slug] governance, and risk-control challenge, which belong to Market Risk Management (CM-1-2-2-3); excludes trade execution and capture, owned by Trade Capture (CM-1-2-1-3); ex"
+REL-00216,enables,CM-1-2-2-1-1,CM-1-2-2-1-2,Manage Credit Limits,nearness-only,yes,[slug] The output is the internal credit assessment consumed by Manage Credit Limits (CM-1-2-2-1-2). Excludes setting the limits themselves (CM-1-2-2-1-2); excludes continuous su
+REL-00218,informed-by,CM-1-2-2-1-1,CM-1-2-2-1-7,Monitor & Analyze Credit,nearness-only,yes,"[slug] ves (CM-1-2-2-1-2); excludes continuous surveillance (Monitor & Analyze Credit, CM-1-2-2-1-7); excludes commercial customer credit assessment (CM-1-3-7-4). In scope: Perfor"
+REL-00219,follows,CM-1-2-2-1-2,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,yes,"[slug] ion controls — not through this process itself. Excludes the credit assessment (CM-1-2-2-1-1); excludes portfolio risk appetite, which is governance above this process; exc"
 REL-00222,uses-input,CM-1-2-2-1-3,CM-1-2-2-1-4,Calculate Credit Exposure,nearness-only,no,
-REL-00224,informed-by,CM-1-2-2-1-3,CM-1-2-1-2,Contract Management,nearness-only,no,
-REL-00225,uses-input,CM-1-2-2-1-4,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,no,
+REL-00224,informed-by,CM-1-2-2-1-3,CM-1-2-1-2,Contract Management,nearness-only,yes,[slug] es it. Credit-support documentation is established through Contract Management (CM-1-2-1-2) with Legal & Corporate Communications; the cash and securities movements thems
+REL-00225,uses-input,CM-1-2-2-1-4,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,yes,"[slug] ation inputs (curves, marks) are owned by Market Risk Management (CM-1-2-2-3-3, CM-1-2-2-3-15); netting enforceability is a legal determination (Legal & Corporate Communicat"
 REL-00227,enables,CM-1-2-2-1-4,CM-1-2-2-1-3,Manage Collateral,nearness-only,no,
-REL-00228,follows,CM-1-2-2-1-5,CM-1-2-1-3-4,Capture Exchange Trades,nearness-only,no,
+REL-00228,follows,CM-1-2-2-1-5,CM-1-2-1-3-4,Capture Exchange Trades,nearness-only,yes,[slug] or liquidity visibility. Cleared positions arrive from Capture Exchange Trades (CM-1-2-1-3-4); contractual credit support is administered at Manage Collateral (CM-1-2-2-1-3
 REL-00229,uses-input,CM-1-2-2-1-5,CM-1-2-2-1-4,Calculate Credit Exposure,nearness-only,no,
-REL-00230,precedes,CM-1-2-2-1-5,CM-1-2-4-1-16,Settle Broker,nearness-only,no,
+REL-00230,precedes,CM-1-2-2-1-5,CM-1-2-4-1-16,Settle Broker,nearness-only,yes,"[slug] cash movements execute through settlement and finance processes (Settle Broker, CM-1-2-4-1-16). In scope: Validate externally calculated margin requirements and run internal"
 REL-00231,uses-input,CM-1-2-2-1-6,CM-1-2-2-1-4,Calculate Credit Exposure,nearness-only,no,
-REL-00233,enables,CM-1-2-2-1-6,CM-1-2-2-1-8,Manage Credit Risk Reporting,nearness-only,no,
+REL-00233,enables,CM-1-2-2-1-6,CM-1-2-2-1-8,Manage Credit Risk Reporting,nearness-only,yes,[slug] ood move together. Findings feed limit structures (CM-1-2-2-1-2) and reporting (CM-1-2-2-1-8). Excludes decision-making on risk appetite and portfolio credit concentration
 REL-00234,uses-input,CM-1-2-2-1-7,CM-1-2-2-1-4,Calculate Credit Exposure,nearness-only,no,
-REL-00235,triggers,CM-1-2-2-1-7,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,no,
-REL-00236,triggers,CM-1-2-2-1-7,CM-1-2-2-1-2,Manage Credit Limits,nearness-only,no,
+REL-00235,triggers,CM-1-2-2-1-7,CM-1-2-2-1-1,Perform Counterparty Credit Reviews,nearness-only,yes,[slug] -warning monitoring of deterioration signals that trigger event-driven reviews (CM-1-2-2-1-1) or limit actions (CM-1-2-2-1-2). Excludes the periodic reassessment itself (CM
+REL-00236,triggers,CM-1-2-2-1-7,CM-1-2-2-1-2,Manage Credit Limits,nearness-only,yes,[slug] tion signals that trigger event-driven reviews (CM-1-2-2-1-1) or limit actions (CM-1-2-2-1-2). Excludes the periodic reassessment itself (CM-1-2-2-1-1); excludes limit deci
 REL-00237,uses-input,CM-1-2-2-1-8,CM-1-2-2-1-7,Monitor & Analyze Credit,nearness-only,no,
 REL-00238,uses-input,CM-1-2-2-1-8,CM-1-2-2-1-6,Perform Advanced Credit Risk Analytics,nearness-only,no,
-REL-00240,follows,CM-1-2-2-2-1,CM-1-2-1-3,Trade Capture,nearness-only,no,
-REL-00241,precedes,CM-1-2-2-2-1,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,no,
-REL-00242,uses-input,CM-1-2-2-2-1,CM-1-2-2-2-2,Manage Confirmation Documentation,nearness-only,no,
-REL-00244,informed-by,CM-1-2-2-2-2,CM-1-2-1-2,Contract Management,nearness-only,no,
+REL-00240,follows,CM-1-2-2-2-1,CM-1-2-1-3,Trade Capture,nearness-only,yes,"[slug] CM-1-2-2-2-5); capture errors surfaced by matching route back to Trade Capture (CM-1-2-1-3) for correction. Excludes confirmation template and documentation control, owne"
+REL-00241,precedes,CM-1-2-2-2-1,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,yes,[slug] tual notices are all accommodated. Mismatches route to Manage Confirm Disputes (CM-1-2-2-2-5); capture errors surfaced by matching route back to Trade Capture (CM-1-2-1-3)
+REL-00242,uses-input,CM-1-2-2-2-1,CM-1-2-2-2-2,Manage Confirmation Documentation,nearness-only,yes,"[slug] template and documentation control, owned by Manage Confirmation Documentation (CM-1-2-2-2-2). In scope: Assemble and dispatch confirmations from captured terms | match inc"
+REL-00244,informed-by,CM-1-2-2-2-2,CM-1-2-1-2,Contract Management,nearness-only,yes,[slug] e; the governing agreements themselves are administered by Contract Management (CM-1-2-1-2); regulatory record-retention policy is owned by Regulatory & Compliance (CM-1-
 REL-00245,follows,CM-1-2-2-2-3,CM-1-2-2-2-1,Generate Confirms,nearness-only,no,
-REL-00246,triggers,CM-1-2-2-2-3,CM-1-2-2-2-4,Report Confirmation To SDR,nearness-only,no,
-REL-00247,requires,CM-1-2-2-2-3,CM-1-2-1-3,Trade Capture,nearness-only,yes,"review-batch rationale: cation, or termination can only update a trade record that exists in controlled trade capture. Stored as core:requires. Hamid 2026-09-25."
-REL-00248,informed-by,CM-1-2-2-2-4,CM-1-2-1-3-10,Report Trades to SDR,nearness-only,no,
+REL-00246,triggers,CM-1-2-2-2-3,CM-1-2-2-2-4,Report Confirmation To SDR,nearness-only,yes,"[slug] s, and triggering of continuation reporting through Report Confirmation To SDR (CM-1-2-2-2-4) where required. The authorized trade-record owner performs the controlled capt"
+REL-00247,requires,CM-1-2-2-2-3,CM-1-2-1-3,Trade Capture,nearness-only,yes,"[slug] nagement (CM-1-2-1-2-3, CM-1-2-1-2-7); excludes unilateral capture corrections (CM-1-2-1-3). In scope: Intake and validate agreed modification requests | verify counterpa"
+REL-00248,informed-by,CM-1-2-2-2-4,CM-1-2-1-3-10,Report Trades to SDR,nearness-only,yes,[slug] ing (45.4); trade creation data is reported at capture by Report Trades to SDR (CM-1-2-1-3-10) — the boundary recorded in batch 08. Excludes regulatory-policy ownership and
 REL-00249,informed-by,CM-1-2-2-2-4,CM-1-2-2-2-3,Manage Trade Modifications,nearness-only,no,
-REL-00250,governed-by,CM-1-2-2-2-4,CM-1-2-4-3,Regulatory & Compliance,nearness-only,no,
+REL-00250,governed-by,CM-1-2-2-2-4,CM-1-2-4-3,Regulatory & Compliance,nearness-only,yes,"[slug] . Excludes regulatory-policy ownership and monitoring (Regulatory & Compliance, CM-1-2-4-3); excludes the legal determination of reporting responsibility (Legal/Complianc"
 REL-00251,follows,CM-1-2-2-2-5,CM-1-2-2-2-1,Generate Confirms,nearness-only,no,
 REL-00252,triggers,CM-1-2-2-2-5,CM-1-2-2-2-3,Manage Trade Modifications,nearness-only,no,
 REL-00256,uses-input,CM-1-2-2-3-10,CM-1-2-2-3-2,Establish & Maintain Delegation Of Authority (DOA),nearness-only,no,
 REL-00258,uses-input,CM-1-2-2-3-11,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
-REL-00261,uses-input,CM-1-2-2-3-12,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
+REL-00261,uses-input,CM-1-2-2-3-12,CM-1-2-2-3-7,Measure Risk,nearness-only,yes,"[slug] cludes credit analytics (CM-1-2-2-1-6); excludes running the standard measures (CM-1-2-2-3-7). In scope: Backtest risk measures against outcomes | analyze concentrations, c"
 REL-00264,uses-input,CM-1-2-2-3-13,CM-1-2-2-3-8,Monitor Risk,nearness-only,no,
-REL-00267,enables,CM-1-2-2-3-14,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,no,
-REL-00268,enables,CM-1-2-2-3-14,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
-REL-00269,uses-input,CM-1-2-2-3-15,CM-1-2-2-3-3,Setup And Manage Curves,nearness-only,no,
-REL-00270,uses-input,CM-1-2-2-3-15,CM-1-2-2-3-14,Manage Volatilities And Correlations,nearness-only,no,
+REL-00267,enables,CM-1-2-2-3-14,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,yes,"[slug] nd handling exceptions, and publishing the official parameter set to valuation (CM-1-2-2-3-15) and risk measurement (CM-1-2-2-3-7). Methodology approval and independent vali"
+REL-00268,enables,CM-1-2-2-3-14,CM-1-2-2-3-7,Measure Risk,nearness-only,yes,[slug] g the official parameter set to valuation (CM-1-2-2-3-15) and risk measurement (CM-1-2-2-3-7). Methodology approval and independent validation sit with the designated gover
+REL-00269,uses-input,CM-1-2-2-3-15,CM-1-2-2-3-3,Setup And Manage Curves,nearness-only,yes,"[slug] mark-to-market and approved mark-to-model valuations from the official curves (CM-1-2-2-3-3) and parameters (CM-1-2-2-3-14), applying approved valuation adjustments, indep"
+REL-00270,uses-input,CM-1-2-2-3-15,CM-1-2-2-3-14,Manage Volatilities And Correlations,nearness-only,yes,"[slug] ark-to-model valuations from the official curves (CM-1-2-2-3-3) and parameters (CM-1-2-2-3-14), applying approved valuation adjustments, independent price verification again"
 REL-00275,enables,CM-1-2-2-3-3,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,no,
 REL-00277,enables,CM-1-2-2-3-3,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
-REL-00278,uses-input,CM-1-2-2-3-4,CM-1-2-2-3-3,Setup And Manage Curves,nearness-only,no,
-REL-00279,uses-input,CM-1-2-2-3-4,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,no,
-REL-00280,precedes,CM-1-2-2-3-4,CM-1-2-2-3-5,Perform End-of-Month (EOM) Process,nearness-only,no,
+REL-00278,uses-input,CM-1-2-2-3-4,CM-1-2-2-3-3,Setup And Manage Curves,nearness-only,yes,"[slug] ity is asserted. Orchestrates outputs owned by the sibling processes (curves at CM-1-2-2-3-3, valuations at CM-1-2-2-3-15, measures at CM-1-2-2-3-7, position and P&L at CM-"
+REL-00279,uses-input,CM-1-2-2-3-4,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,yes,"[slug] s outputs owned by the sibling processes (curves at CM-1-2-2-3-3, valuations at CM-1-2-2-3-15, measures at CM-1-2-2-3-7, position and P&L at CM-1-2-2-3-9) without owning the"
+REL-00280,precedes,CM-1-2-2-3-4,CM-1-2-2-3-5,Perform End-of-Month (EOM) Process,nearness-only,yes,[slug] t CM-1-2-2-3-9) without owning their methodologies. Excludes the monthly cycle (CM-1-2-2-3-5); excludes accounting close (CM-1-2-4-2). In scope: Perform or obtain capture-c
 REL-00281,follows,CM-1-2-2-3-5,CM-1-2-2-3-4,Perform End-of-day (EOD) Process,nearness-only,no,
 REL-00286,informed-by,CM-1-2-2-3-6,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
 REL-00287,uses-input,CM-1-2-2-3-7,CM-1-2-2-3-3,Setup And Manage Curves,nearness-only,no,
 REL-00288,uses-input,CM-1-2-2-3-7,CM-1-2-2-3-14,Manage Volatilities And Correlations,nearness-only,no,
-REL-00289,enables,CM-1-2-2-3-7,CM-1-2-2-3-8,Monitor Risk,nearness-only,no,
+REL-00289,enables,CM-1-2-2-3-7,CM-1-2-2-3-8,Monitor Risk,nearness-only,yes,"[slug] checking and explaining day-on-day moves, and publishing results to monitoring (CM-1-2-2-3-8), limits (CM-1-2-2-3-6), and reporting (CM-1-2-2-3-13). Which measures apply is"
 REL-00290,uses-input,CM-1-2-2-3-8,CM-1-2-2-3-7,Measure Risk,nearness-only,no,
-REL-00291,triggers,CM-1-2-2-3-8,CM-1-2-2-3-6,Manage Risk Limits,nearness-only,no,
+REL-00291,triggers,CM-1-2-2-3-8,CM-1-2-2-3-6,Manage Risk Limits,nearness-only,yes,[slug] it holds: this process surfaces; limit actions are taken at Manage Risk Limits (CM-1-2-2-3-6) and appetite questions go to the risk-governance body. Excludes credit surveil
 REL-00292,enables,CM-1-2-2-3-8,CM-1-2-2-3-13,Manage Risk Reporting,nearness-only,no,
-REL-00293,uses-input,CM-1-2-2-3-9,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,no,
+REL-00293,uses-input,CM-1-2-2-3-9,CM-1-2-2-3-15,Manage Commodity Valuations,nearness-only,yes,"[slug] and postings, owned by Accounting (CM-1-2-4-2); excludes valuation methodology (CM-1-2-2-3-15). In scope: Produce the official controlled position and P&L | attribute P&L to"
 REL-00295,enables,CM-1-2-2-3-9,CM-1-2-2-3-13,Manage Risk Reporting,nearness-only,no,
-REL-00296,precedes,CM-1-2-3-1-1,CM-1-2-4-1-12,Settle Pipelines,nearness-only,no,
-REL-00298,precedes,CM-1-2-3-1-2,CM-1-2-4-1-4,Settle Trucks,nearness-only,no,
-REL-00300,precedes,CM-1-2-3-1-3,CM-1-2-4-1-13,Settle Rail,nearness-only,no,
-REL-00302,precedes,CM-1-2-3-1-4,CM-1-2-4-1-5,Settle Vessels & Barge,nearness-only,no,
-REL-00305,precedes,CM-1-2-3-1-5,CM-1-2-4-1-14,Settle Terminal/Storage,nearness-only,no,
-REL-00306,follows,CM-1-2-3-1-5,CM-1-2-1-3-5,Capture Storage Deals,nearness-only,no,
-REL-00307,follows,CM-1-2-3-1-6,CM-1-2-1-2-8,Manage Lease Contract,nearness-only,no,
-REL-00308,precedes,CM-1-2-3-1-6,CM-1-2-4-1-6,Settle First Purchaser/Leases,nearness-only,no,
-REL-00309,follows,CM-1-2-3-1-7,CM-1-2-1-3-6,Capture Environmental/Renewable Deals,nearness-only,no,
-REL-00310,informed-by,CM-1-2-3-1-7,CM-1-2-1-1-3,Forecast Renewables,nearness-only,no,
-REL-00313,informed-by,CM-1-2-3-1-8,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,no,
-REL-00319,follows,CM-1-2-4-1-11,CM-1-2-1-3-7,Capture Financial (OTC) Trades,nearness-only,no,
-REL-00320,informed-by,CM-1-2-4-1-11,CM-1-2-2-2,Confirmations Management,nearness-only,no,
-REL-00322,follows,CM-1-2-4-1-12,CM-1-2-3-1-1,Perform Pipeline Actualization,nearness-only,no,
-REL-00324,follows,CM-1-2-4-1-13,CM-1-2-3-1-3,Perform Railcar Actualization,nearness-only,no,
-REL-00326,follows,CM-1-2-4-1-14,CM-1-2-3-1-5,Perform Terminal/Storage Actualization,nearness-only,no,
-REL-00330,follows,CM-1-2-4-1-16,CM-1-2-4-1-3,Settle Exchange Trades,nearness-only,no,
-REL-00331,informed-by,CM-1-2-4-1-16,CM-1-2-2-1-5,Perform Margining,nearness-only,no,
-REL-00334,informed-by,CM-1-2-4-1-17,CM-1-2-3-1-8,Manage Actualization Disputes,nearness-only,no,
-REL-00335,informed-by,CM-1-2-4-1-17,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,no,
-REL-00342,follows,CM-1-2-4-1-3,CM-1-2-1-3-4,Capture Exchange Trades,nearness-only,no,
-REL-00343,informed-by,CM-1-2-4-1-3,CM-1-2-2-1-5,Perform Margining,nearness-only,no,
-REL-00344,precedes,CM-1-2-4-1-3,CM-1-2-4-1-16,Settle Broker,nearness-only,no,
-REL-00345,follows,CM-1-2-4-1-4,CM-1-2-3-1-2,Perform Truck Actualization,nearness-only,no,
-REL-00347,follows,CM-1-2-4-1-5,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,no,
-REL-00349,follows,CM-1-2-4-1-6,CM-1-2-3-1-6,Perform Lease Actualization,nearness-only,no,
-REL-00350,precedes,CM-1-2-4-1-6,CM-1-2-4-2-3,Manage Marketing Interests & Royalty Payments,nearness-only,no,
-REL-00351,follows,CM-1-2-4-1-7,CM-1-2-1-3-11,Capture Transmission Deals,nearness-only,no,
-REL-00353,follows,CM-1-2-4-1-8,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,no,
-REL-00356,informed-by,CM-1-2-4-1-9,CM-1-2-2-2-2,Manage Confirmation Documentation,nearness-only,no,
+REL-00296,precedes,CM-1-2-3-1-1,CM-1-2-4-1-12,Settle Pipelines,nearness-only,yes,"[slug] and scheduling processes); pipeline settlement and invoicing (Settle Pipelines, CM-1-2-4-1-12); transportation deal capture (CM-1-2-1-3-9); actualization disputes (Manage Ac"
+REL-00298,precedes,CM-1-2-3-1-2,CM-1-2-4-1-4,Settle Trucks,nearness-only,yes,"[slug] d scheduling (the owning logistics processes); truck settlement (Settle Trucks, CM-1-2-4-1-4); actualization disputes (CM-1-2-3-1-8). In scope: Match bills of lading and li"
+REL-00300,precedes,CM-1-2-3-1-3,CM-1-2-4-1-13,Settle Rail,nearness-only,yes,"[slug] tics scheduling (the owning logistics processes); rail settlement (Settle Rail, CM-1-2-4-1-13); actualization disputes (CM-1-2-3-1-8). In scope: Match rail shipping document"
+REL-00302,precedes,CM-1-2-3-1-4,CM-1-2-4-1-5,Settle Vessels & Barge,nearness-only,yes,"[slug] ing and marine logistics processes); marine settlement (Settle Vessels & Barge, CM-1-2-4-1-5); demurrage claim identification and management (CM-1-2-4-4); actualization dis"
+REL-00305,precedes,CM-1-2-3-1-5,CM-1-2-4-1-14,Settle Terminal/Storage,nearness-only,yes,"[slug] (terminal operator); terminal and storage settlement (Settle Terminal/Storage, CM-1-2-4-1-14); network book-to-physical stock reconciliation, owned by Perform Inventory Rec"
+REL-00306,follows,CM-1-2-3-1-5,CM-1-2-1-3-5,Capture Storage Deals,nearness-only,yes,"[slug] contractual bases. Storage-deal terms come from capture (Capture Storage Deals, CM-1-2-1-3-5). Excludes terminal operations and physical measurement (terminal operator); te"
+REL-00307,follows,CM-1-2-3-1-6,CM-1-2-1-2-8,Manage Lease Contract,nearness-only,yes,"[slug] ns, and division-of-interest references maintained under Manage Lease Contract (CM-1-2-1-2-8); and closing lease runs for settlement. Measurement procedures at the lease ta"
+REL-00308,precedes,CM-1-2-3-1-6,CM-1-2-4-1-6,Settle First Purchaser/Leases,nearness-only,yes,"[slug] tion (CM-1-2-1-2-8); first-purchaser settlement (Settle First Purchaser/Leases, CM-1-2-4-1-6); royalty and interest payment execution (Manage Marketing Interests & Royalty"
+REL-00309,follows,CM-1-2-3-1-7,CM-1-2-1-3-6,Capture Environmental/Renewable Deals,nearness-only,yes,"[slug] Renewables, CM-1-2-1-1-3); deal capture (Capture Environmental/Renewable Deals, CM-1-2-1-3-6); environmental instrument settlement (Settle Environmental Instruments, CM-1-2"
+REL-00310,informed-by,CM-1-2-3-1-7,CM-1-2-1-1-3,Forecast Renewables,nearness-only,yes,"[slug] ent Reporting under its locked rule; position forecasting (Forecast Renewables, CM-1-2-1-1-3); deal capture (Capture Environmental/Renewable Deals, CM-1-2-1-3-6); environme"
+REL-00313,informed-by,CM-1-2-3-1-8,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,yes,"[slug] one. Excludes confirmation disputes over agreed terms (Manage Confirm Disputes, CM-1-2-2-2-5); settlement disputes over amounts owed and paid (Manage Settlement Disputes, C"
+REL-00319,follows,CM-1-2-4-1-11,CM-1-2-1-3-7,Capture Financial (OTC) Trades,nearness-only,yes,[slug] under the master agreement with Legal and Credit Risk. Excludes trade capture (CM-1-2-1-3-7); confirmation (CM-1-2-2-2); settlement disputes (CM-1-2-4-1-17). In scope: Det
+REL-00320,informed-by,CM-1-2-4-1-11,CM-1-2-2-2,Confirmations Management,nearness-only,yes,[slug] ith Legal and Credit Risk. Excludes trade capture (CM-1-2-1-3-7); confirmation (CM-1-2-2-2); settlement disputes (CM-1-2-4-1-17). In scope: Determine settlement amounts f
+REL-00322,follows,CM-1-2-4-1-12,CM-1-2-3-1-1,Perform Pipeline Actualization,nearness-only,yes,"[slug] ine movements and the tariff and charge determinants recorded at actualization (CM-1-2-3-1-1), resolving rate and volume variances with carriers, and preparing and submitti"
+REL-00324,follows,CM-1-2-4-1-13,CM-1-2-3-1-3,Perform Railcar Actualization,nearness-only,yes,"[slug] ail agreement governs them) against actualized rail movements and determinants (CM-1-2-3-1-3), applying contracted and tariff rates, resolving variances, and preparing and"
+REL-00326,follows,CM-1-2-4-1-14,CM-1-2-3-1-5,Perform Terminal/Storage Actualization,nearness-only,yes,"[slug] ls and the charge determinants and contractual bases recorded at actualization (CM-1-2-3-1-5), applying agreement rates including minimum-throughput and capacity-reservatio"
+REL-00330,follows,CM-1-2-4-1-16,CM-1-2-4-1-3,Settle Exchange Trades,nearness-only,yes,[slug] M-1-2-2-1-5); trade-level exchange settlement values by Settle Exchange Trades (CM-1-2-4-1-3). Excludes broker relationship management and selection (commercial processes);
+REL-00331,informed-by,CM-1-2-4-1-16,CM-1-2-2-1-5,Perform Margining,nearness-only,yes,[slug] rokers. Margin requirement validation and calls are owned by Perform Margining (CM-1-2-2-1-5); trade-level exchange settlement values by Settle Exchange Trades (CM-1-2-4-1-
+REL-00334,informed-by,CM-1-2-4-1-17,CM-1-2-3-1-8,Manage Actualization Disputes,nearness-only,yes,[slug] cal or measurement disagreement is redirected to Manage Actualization Disputes (CM-1-2-3-1-8). Excludes confirmation disputes (CM-1-2-2-2-5); actualization disputes (CM-1-2
+REL-00335,informed-by,CM-1-2-4-1-17,CM-1-2-2-2-5,Manage Confirm Disputes,nearness-only,yes,[slug] o Manage Actualization Disputes (CM-1-2-3-1-8). Excludes confirmation disputes (CM-1-2-2-2-5); actualization disputes (CM-1-2-3-1-8); demurrage claims (CM-1-2-4-4); ISO sta
+REL-00342,follows,CM-1-2-4-1-3,CM-1-2-1-3-4,Capture Exchange Trades,nearness-only,yes,[slug] are owned by Perform Margining (CM-1-2-2-1-5). Excludes exchange trade capture (CM-1-2-1-3-4); settlement disputes (CM-1-2-4-1-17). In scope: Validate and allocate daily se
+REL-00343,informed-by,CM-1-2-4-1-3,CM-1-2-2-1-5,Perform Margining,nearness-only,yes,[slug] vement. Margin requirement validation and calls are owned by Perform Margining (CM-1-2-2-1-5). Excludes exchange trade capture (CM-1-2-1-3-4); settlement disputes (CM-1-2-4
+REL-00344,precedes,CM-1-2-4-1-3,CM-1-2-4-1-16,Settle Broker,nearness-only,yes,[slug] dates and allocates the exchange and clearing settlement values; Settle Broker (CM-1-2-4-1-16) reconciles the broker account and coordinates the associated cash movement. Ma
+REL-00345,follows,CM-1-2-4-1-4,CM-1-2-3-1-2,Perform Truck Actualization,nearness-only,yes,"[slug] truck movements and the freight-charge determinants recorded at actualization (CM-1-2-3-1-2), applying contracted rates, fuel surcharges, and accessorial charges, resolvin"
+REL-00347,follows,CM-1-2-4-1-5,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,yes,"[slug] rges against actualized voyages and the determinants recorded at actualization (CM-1-2-3-1-4), applying charter party and contract-of-affreightment terms, resolving varianc"
+REL-00349,follows,CM-1-2-4-1-6,CM-1-2-3-1-6,Perform Lease Actualization,nearness-only,yes,"[slug] aser settlement: assembling actualized lease runs (Perform Lease Actualization, CM-1-2-3-1-6), applying contract pricing, gravity and quality adjustments, and deductions ma"
+REL-00350,precedes,CM-1-2-4-1-6,CM-1-2-4-2-3,Manage Marketing Interests & Royalty Payments,nearness-only,yes,"[slug] execution to owners is owned by Manage Marketing Interests & Royalty Payments (CM-1-2-4-2-3). This process does not absorb upstream land and lease administration, producti"
+REL-00351,follows,CM-1-2-4-1-7,CM-1-2-1-3-11,Capture Transmission Deals,nearness-only,yes,[slug] ticipation strategy and bidding (trading processes); transmission deal capture (CM-1-2-1-3-11); settlement disputes outside ISO statement processes (CM-1-2-4-1-17). In scope
+REL-00353,follows,CM-1-2-4-1-8,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,yes,"[slug] ssembling actualized registry lifecycle events (Perform RINs/REC Actualization, CM-1-2-3-1-7), applying contract pricing, generating and validating invoices, preparing and"
+REL-00356,informed-by,CM-1-2-4-1-9,CM-1-2-2-2-2,Manage Confirmation Documentation,nearness-only,yes,"[slug] policy. Excludes confirmation documentation (Manage Confirmation Documentation, CM-1-2-2-2-2); contract and legal documents (Contract Management, CM-1-2-1-2; Legal & Corpor"
 REL-00357,informed-by,CM-1-2-4-2-1,CM-1-2-1-3,Trade Capture,nearness-only,no,
 REL-00358,enables,CM-1-2-4-2-1,CM-1-2-4-2-5,Manage Trading Sub-Ledger,nearness-only,no,
-REL-00361,uses-input,CM-1-2-4-2-10,CM-1-2-4-1,Settlements,nearness-only,no,
+REL-00361,uses-input,CM-1-2-4-2-10,CM-1-2-4-1,Settlements,nearness-only,yes,"[slug] em. Excludes accrual methodology and policy (Finance, locked rule); settlement (CM-1-2-4-1); actualization (CM-1-2-3-1); AR/AP booking of settled items (CM-1-2-4-2-4). In"
 REL-00368,informed-by,CM-1-2-4-2-12,CM-1-2-1-3,Trade Capture,nearness-only,no,
-REL-00369,uses-input,CM-1-2-4-2-2,CM-1-1-7-1-3,Perform Production Accounting,nearness-only,no,
-REL-00370,uses-input,CM-1-2-4-2-2,CM-1-1-3-7-5,Perform Inventory Reconciliation,nearness-only,no,
-REL-00372,follows,CM-1-2-4-2-3,CM-1-2-4-1-6,Settle First Purchaser/Leases,nearness-only,no,
-REL-00373,uses-input,CM-1-2-4-2-3,CM-1-2-1-2-8,Manage Lease Contract,nearness-only,no,
-REL-00374,follows,CM-1-2-4-2-4,CM-1-2-4-1,Settlements,nearness-only,no,
-REL-00375,enables,CM-1-2-4-2-4,CM-1-2-4-2-9,Manage Cash Application,nearness-only,no,
+REL-00369,uses-input,CM-1-2-4-2-2,CM-1-1-7-1-3,Perform Production Accounting,nearness-only,yes,"[slug] the refinery daily material balance is owned by Perform Production Accounting (CM-1-1-7-1-3, batch 06) and network book-to-physical reconciliation by Perform Inventory Rec"
+REL-00370,uses-input,CM-1-2-4-2-2,CM-1-1-3-7-5,Perform Inventory Reconciliation,nearness-only,yes,"[slug] nd network book-to-physical reconciliation by Perform Inventory Reconciliation (CM-1-1-3-7-5, batch 04) — this process values what those processes have verified; it does no"
+REL-00372,follows,CM-1-2-4-2-3,CM-1-2-4-1-6,Settle First Purchaser/Leases,nearness-only,yes,"[slug] 1-2-1-2-8), lease actualization (CM-1-2-3-1-6), and first-purchaser settlement (CM-1-2-4-1-6). This process is not in scope for ordinary downstream product marketing unless"
+REL-00373,uses-input,CM-1-2-4-2-3,CM-1-2-1-2-8,Manage Lease Contract,nearness-only,yes,"[slug] gements, per the batch 09 caveat carried through lease contract administration (CM-1-2-1-2-8), lease actualization (CM-1-2-3-1-6), and first-purchaser settlement (CM-1-2-4-"
+REL-00374,follows,CM-1-2-4-2-4,CM-1-2-4-1,Settlements,nearness-only,yes,[slug] the batch 11 boundary. Excludes settlement calculation and invoice validation (CM-1-2-4-1); cash application (CM-1-2-4-2-9); accruals (CM-1-2-4-2-10); credit decisions (
+REL-00375,enables,CM-1-2-4-2-4,CM-1-2-4-2-9,Manage Cash Application,nearness-only,yes,[slug] h the accountable owners. Cash receipts are applied by Manage Cash Application (CM-1-2-4-2-9); accrual of un-invoiced activity by Manage Accruals (CM-1-2-4-2-10); payment r
 REL-00376,enables,CM-1-2-4-2-4,CM-1-2-4-2-5,Manage Trading Sub-Ledger,nearness-only,no,
 REL-00377,uses-input,CM-1-2-4-2-5,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,no,
-REL-00378,uses-input,CM-1-2-4-2-5,CM-1-2-4-2-1,Manage Accounting Treatments,nearness-only,no,
-REL-00380,uses-input,CM-1-2-4-2-6,CM-1-2-2-3-5,Perform End-of-Month (EOM) Process,nearness-only,no,
+REL-00378,uses-input,CM-1-2-4-2-5,CM-1-2-4-2-1,Manage Accounting Treatments,nearness-only,yes,[slug] accounting sources; validating that postings follow the determined treatments (CM-1-2-4-2-1); reconciling sub-ledger balances to the general ledger and resolving breaks; e
+REL-00380,uses-input,CM-1-2-4-2-6,CM-1-2-2-3-5,Perform End-of-Month (EOM) Process,nearness-only,yes,"[slug] puts delivered by the end-of-month process (Perform End-of-Month (EOM) Process, CM-1-2-2-3-5, per the batch 12 binding) and the accounting P&L from the reconciled sub-ledge"
 REL-00381,uses-input,CM-1-2-4-2-6,CM-1-2-4-2-5,Manage Trading Sub-Ledger,nearness-only,no,
 REL-00382,informed-by,CM-1-2-4-2-6,CM-1-2-4-2-1,Manage Accounting Treatments,nearness-only,no,
 REL-00384,uses-input,CM-1-2-4-2-7,CM-1-2-4-2-5,Manage Trading Sub-Ledger,nearness-only,no,
-REL-00388,informed-by,CM-1-2-4-2-8,CM-1-2-2-3-1,Establish And Maintain Book Structure,nearness-only,no,
-REL-00389,follows,CM-1-2-4-2-9,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,no,
-REL-00390,uses-input,CM-1-2-4-2-9,CM-1-2-4-1,Settlements,nearness-only,no,
+REL-00388,informed-by,CM-1-2-4-2-8,CM-1-2-2-3-1,Establish And Maintain Book Structure,nearness-only,yes,"[slug] ; enterprise master-data governance (batch 05 exclusion); risk book structures (CM-1-2-2-3-1, batch 12); sub-ledger reconciliation control (CM-1-2-4-2-5). In scope: Maintai"
+REL-00389,follows,CM-1-2-4-2-9,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,yes,[slug] account operation and cash management (Treasury/banking); receivables booking (CM-1-2-4-2-4); settlement calculation (CM-1-2-4-1); credit decisions (CM-1-2-2-1). In scope:
+REL-00390,uses-input,CM-1-2-4-2-9,CM-1-2-4-1,Settlements,nearness-only,yes,[slug] (Treasury/banking); receivables booking (CM-1-2-4-2-4); settlement calculation (CM-1-2-4-1); credit decisions (CM-1-2-2-1). In scope: Match bank-reported receipts to open
 REL-00394,governed-by,CM-1-2-4-3-2,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,no,
 REL-00395,informed-by,CM-1-2-4-3-2,CM-1-2-1-3,Trade Capture,nearness-only,no,
-REL-00396,triggers,CM-1-2-4-3-2,CM-1-2-4-3-7,Manage Exceptions,nearness-only,yes,review-batch rationale: w pattern: the source detects/escalates potential external-regulatory breaches; Manage Exceptions logs and classifies violations and coordinates remediation/waiver and closure.
-REL-00397,governed-by,CM-1-2-4-3-3,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,no,
+REL-00396,triggers,CM-1-2-4-3-2,CM-1-2-4-3-7,Manage Exceptions,nearness-only,no,
+REL-00397,governed-by,CM-1-2-4-3-3,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,yes,"[slug] compliance policies maintained under Develop Compliance Policies & Procedures (CM-1-2-4-3-1) — conduct rules, information barriers and need-to-know restrictions, personal-"
 REL-00398,triggers,CM-1-2-4-3-3,CM-1-2-4-3-7,Manage Exceptions,nearness-only,no,
 REL-00399,governed-by,CM-1-2-4-3-4,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,no,
 REL-00400,triggers,CM-1-2-4-3-4,CM-1-2-4-3-7,Manage Exceptions,nearness-only,no,
-REL-00401,assures,CM-1-2-4-3-5,CM-1-2-4-2-11,Manage Taxes,nearness-only,yes,"review-batch rationale: etermination controls, and gaps affecting tax activity — control assurance over Manage Taxes. Stored: (Manage Taxes core:assuredBy Manage Tax Compliance). Hamid 2026-09-26."
+REL-00401,assures,CM-1-2-4-3-5,CM-1-2-4-2-11,Manage Taxes,nearness-only,yes,"[slug] three-way split: transaction-tax accounting execution is owned by Manage Taxes (CM-1-2-4-2-11); tax policy, legal positions, registrations, and return filing by the enterpri"
 REL-00402,informed-by,CM-1-2-4-3-5,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,no,
 REL-00403,triggers,CM-1-2-4-3-5,CM-1-2-4-3-7,Manage Exceptions,nearness-only,no,
-REL-00404,uses-input,CM-1-2-4-3-6,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,no,
+REL-00404,uses-input,CM-1-2-4-3-6,CM-1-2-3-1-7,Perform RINs/REC Actualization,nearness-only,yes,"[slug] position data from actualized registry records (Perform RINs/REC Actualization, CM-1-2-3-1-7) and trading systems; reconciling reportable data to EMTS; computing and qualit"
 REL-00406,governed-by,CM-1-2-4-3-6,CM-1-2-4-3-1,Develop Compliance Policies & Procedures,nearness-only,no,
-REL-00407,follows,CM-1-2-4-3-7,CM-1-2-4-3-2,Monitor External Trading Compliance,nearness-only,no,
+REL-00407,follows,CM-1-2-4-3-7,CM-1-2-4-3-2,Monitor External Trading Compliance,nearness-only,yes,[slug] e exception lifecycle across the cluster: intake from the monitoring processes (CM-1-2-4-3-2/-3/-4/-5) and self-reports; classification and severity assessment including re
 REL-00408,follows,CM-1-2-4-3-7,CM-1-2-4-3-4,Monitor Internal Trade Controls,nearness-only,no,
-REL-00410,uses-input,CM-1-2-4-4-1,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,no,
-REL-00412,follows,CM-1-2-4-4-2,CM-1-2-4-4-1,Identify Potential Demurrage,nearness-only,no,
+REL-00410,uses-input,CM-1-2-4-4-1,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,yes,"[slug] reening completed movements using the actualized time, notice, and event facts (CM-1-2-3-1-4); performing preliminary laytime calculations under the governing charter party"
+REL-00412,follows,CM-1-2-4-4-2,CM-1-2-4-4-1,Identify Potential Demurrage,nearness-only,yes,[slug] ot itself make legal conclusions about enforceability. Excludes identification (CM-1-2-4-4-1); negotiation of the issued claim (CM-1-2-4-4-5); claim invoicing (CM-1-2-4-4-7
 REL-00415,uses-input,CM-1-2-4-4-3,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-00418,informed-by,CM-1-2-4-4-4,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,no,
-REL-00424,precedes,CM-1-2-4-4-7,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,no,
-REL-00426,precedes,CM-1-2-4-4-8,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,no,
-REL-00427,enables,CM-1-2-5-1-1,CM-1-2-5-1-2,Review LP Model Integrity,nearness-only,no,
+REL-00418,informed-by,CM-1-2-4-4-4,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,yes,"[slug] me and quantum recalculation from the organization's own actualized time facts (CM-1-2-3-1-4) rather than the claimant's figures; application of contractual exceptions, int"
+REL-00424,precedes,CM-1-2-4-4-7,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,yes,"[slug] able into the designated finance processes for booking (Manage AR/AP & Actuals, CM-1-2-4-2-4) and receipt application (Manage Cash Application, CM-1-2-4-2-9) per the batch"
+REL-00426,precedes,CM-1-2-4-4-8,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,yes,"[slug] egotiation (CM-1-2-4-4-6); AP booking, payment approval, and payment execution (CM-1-2-4-2-4, Treasury/banking, designated payment authority); post-agreement disputes (CM-1"
+REL-00427,enables,CM-1-2-5-1-1,CM-1-2-5-1-2,Review LP Model Integrity,nearness-only,yes,"[slug] tion execution (independent inspectors, CM-1-2-3-1 evidence); model structures (CM-1-2-5-1-2 reviews, model owners own); enterprise master-data governance (batch 05 exclusi"
 REL-00429,uses-input,CM-1-2-5-1-1,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,no,
-REL-00432,informed-by,CM-1-2-5-1-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-00434,informed-by,CM-1-2-5-1-3,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,no,
-REL-00438,informed-by,CM-1-2-5-1-4,CM-1-2-5-1-3,Develop Term Slate,nearness-only,no,
+REL-00432,informed-by,CM-1-2-5-1-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,[slug] table owners: the refinery planning LP with Refinery Planning and Optimization (CM-1-1-4) and its tooling; model-methodology approval and independent validation with th
+REL-00434,informed-by,CM-1-2-5-1-3,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,yes,"[slug] quality capability using validated data (CM-1-2-5-1-1) and current evaluations (CM-1-1-4-7-2), assessing sustained economic attractiveness and supply reliability, and recom"
+REL-00438,informed-by,CM-1-2-5-1-4,CM-1-2-5-1-3,Develop Term Slate,nearness-only,yes,"[slug] (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); term slate (CM-1-2-5-1-3); arrival and logistics planning (CM-1-2-5-3). In scope: Quantify the spot requ"
 REL-00439,follows,CM-1-2-5-2-1,CM-1-2-5-2-2,Develop Feedstock Demand,nearness-only,no,
-REL-00441,precedes,CM-1-2-5-2-1,CM-1-2-5-3-1,Manage Feedstock Transportation,nearness-only,no,
-REL-00442,uses-input,CM-1-2-5-2-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-00443,uses-input,CM-1-2-5-2-2,CM-1-2-5-4-2,Manage Feedstock Inventory,nearness-only,no,
-REL-00444,precedes,CM-1-2-5-2-2,CM-1-2-5-2-1,Coordinate Feedstock Trading,nearness-only,no,
-REL-00446,uses-input,CM-1-2-5-2-3,CM-1-2-5-2-2,Develop Feedstock Demand,nearness-only,no,
-REL-00447,uses-input,CM-1-2-5-2-3,CM-1-2-5-1-4,Develop Spot Slate,nearness-only,no,
+REL-00441,precedes,CM-1-2-5-2-1,CM-1-2-5-3-1,Manage Feedstock Transportation,nearness-only,yes,[slug] M-1-2-1-3); the binding production plan (CM-1-1-4); transportation arrangement (CM-1-2-5-3-1); exchange agreement administration (CM-1-2-7-1-1). In scope: Specify feedstock
+REL-00442,uses-input,CM-1-2-5-2-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] quality envelope, quantity, and timing window from the binding production plan (CM-1-1-4) net of committed supply, in-transit volumes, and inventory positions (CM-1-2-5"
+REL-00443,uses-input,CM-1-2-5-2-2,CM-1-2-5-4-2,Manage Feedstock Inventory,nearness-only,yes,"[slug] CM-1-1-4) net of committed supply, in-transit volumes, and inventory positions (CM-1-2-5-4-2); maintaining the demand signal through plan revisions; and publishing it to sl"
+REL-00444,precedes,CM-1-2-5-2-2,CM-1-2-5-2-1,Coordinate Feedstock Trading,nearness-only,yes,"[slug] (CM-1-2-5-1-3/-4), the recommendation (CM-1-2-5-2-3), and trading coordination (CM-1-2-5-2-1). The demand derives from the plan; it does not set the plan (PTC-002). Exclude"
+REL-00446,uses-input,CM-1-2-5-2-3,CM-1-2-5-2-2,Develop Feedstock Demand,nearness-only,yes,"[slug] onomically attractive feedstock slate and run-rate case from the demand signal (CM-1-2-5-2-2), term and spot procurement slates (CM-1-2-5-1-3/-4), current market prices and"
+REL-00447,uses-input,CM-1-2-5-2-3,CM-1-2-5-1-4,Develop Spot Slate,nearness-only,yes,"[range] e case from the demand signal (CM-1-2-5-2-2), term and spot procurement slates (CM-1-2-5-1-3/-4), current market prices and differentials, and supply logistics; submitting the"
 REL-00448,follows,CM-1-2-5-3-1,CM-1-2-5-2-1,Coordinate Feedstock Trading,nearness-only,no,
-REL-00449,precedes,CM-1-2-5-3-1,CM-1-2-5-3-2,Schedule Feedstock Delivery,nearness-only,no,
-REL-00450,uses-input,CM-1-2-5-3-1,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-00451,follows,CM-1-2-5-3-2,CM-1-2-5-3-1,Manage Feedstock Transportation,nearness-only,no,
-REL-00452,precedes,CM-1-2-5-3-2,CM-1-2-5-3-3,Plan Feedstock Arrival,nearness-only,no,
-REL-00453,informed-by,CM-1-2-5-3-2,CM-1-1-7-2,Production Scheduling,nearness-only,no,
-REL-00454,follows,CM-1-2-5-3-3,CM-1-2-5-3-2,Schedule Feedstock Delivery,nearness-only,no,
+REL-00449,precedes,CM-1-2-5-3-1,CM-1-2-5-3-2,Schedule Feedstock Delivery,nearness-only,yes,"[slug] it issue resolution with carriers and operators, escalating schedule impacts to CM-1-2-5-3-2/-3. The process may request or coordinate nominations, fixtures, bookings, and"
+REL-00450,uses-input,CM-1-2-5-3-1,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,yes,"[slug] ations, fixtures, bookings, and carrier actions under contracts administered at CM-1-2-1-2-9 and deals captured at CM-1-2-1-3-9; movement status tracking; and in-transit is"
+REL-00451,follows,CM-1-2-5-3-2,CM-1-2-5-3-1,Manage Feedstock Transportation,nearness-only,yes,"[slug] onditions change. Covers delivery scheduling: sequencing coordinated movements (CM-1-2-5-3-1) into agreed refinery receipt windows against berth availability, pipeline rece"
+REL-00452,precedes,CM-1-2-5-3-2,CM-1-2-5-3-3,Plan Feedstock Arrival,nearness-only,yes,[slug] nal operations owners); movement coordination (CM-1-2-5-3-1); arrival planning (CM-1-2-5-3-3); discharge operations (terminal/refinery operators). In scope: Sequence confir
+REL-00453,informed-by,CM-1-2-5-3-2,CM-1-1-7-2,Production Scheduling,nearness-only,yes,"[slug] the refinery. Excludes refinery unit and tank operations scheduling (Refining, CM-1-1-7-2, batch 06 hierarchy); receipt-window operational approval (refinery/terminal op"
+REL-00454,follows,CM-1-2-5-3-3,CM-1-2-5-3-2,Schedule Feedstock Delivery,nearness-only,yes,[slug] tualization (CM-1-2-3-1-4); demurrage claims (CM-1-2-4-4); delivery scheduling (CM-1-2-5-3-2). In scope: Coordinate laycans and arrival timing per cargo | plan berth and di
 REL-00456,informed-by,CM-1-2-5-3-3,CM-1-2-5-4-2,Manage Feedstock Inventory,nearness-only,no,
 REL-00457,uses-input,CM-1-2-5-4-1,CM-1-2-5-4-2,Manage Feedstock Inventory,nearness-only,no,
-REL-00459,informed-by,CM-1-2-5-4-1,CM-1-2-2-3,Market Risk Management,nearness-only,no,
-REL-00460,enables,CM-1-2-5-4-2,CM-1-2-5-2-2,Develop Feedstock Demand,nearness-only,no,
-REL-00461,enables,CM-1-2-5-4-2,CM-1-2-5-4-1,Assess & Manage Inventory Risk,nearness-only,no,
+REL-00459,informed-by,CM-1-2-5-4-1,CM-1-2-2-3,Market Risk Management,nearness-only,yes,"[slug] rading book, its measurement, limits, and P&L belong to Market Risk Management (CM-1-2-2-3); non-trading inventory exposure is assessed here. Risk appetite, limit approva"
+REL-00460,enables,CM-1-2-5-4-2,CM-1-2-5-2-2,Develop Feedstock Demand,nearness-only,yes,"[slug] countable owners; and maintenance of the position view that demand development (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. E"
+REL-00461,enables,CM-1-2-5-4-2,CM-1-2-5-4-1,Assess & Manage Inventory Risk,nearness-only,yes,"[slug] evelopment (CM-1-2-5-2-2), arrival planning (CM-1-2-5-3-3), and inventory risk (CM-1-2-5-4-1) consume. Excludes inventory policy design (CM-1-1-3-7-1); measurement methodol"
 REL-00462,informed-by,CM-1-2-5-4-2,CM-1-2-5-3,Crude/Feed Transportation Management,nearness-only,no,
-REL-00463,enables,CM-1-2-6-1-1,CM-1-2-6-1-2,Evaluate Market Attractiveness,nearness-only,no,
-REL-00464,enables,CM-1-2-6-1-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
+REL-00463,enables,CM-1-2-6-1-1,CM-1-2-6-1-2,Evaluate Market Attractiveness,nearness-only,yes,"[slug] s the network and market change; and supplying it to attractiveness evaluation (CM-1-2-6-1-2) and cost-to-serve assessment (CM-1-2-6-1-3). Commercial, brand, and marketing"
+REL-00464,enables,CM-1-2-6-1-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] ng it to attractiveness evaluation (CM-1-2-6-1-2) and cost-to-serve assessment (CM-1-2-6-1-3). Commercial, brand, and marketing segmentation for customer strategy, pricing,"
 REL-00465,uses-input,CM-1-2-6-1-2,CM-1-2-6-1-1,Segment Customers,nearness-only,no,
 REL-00467,informed-by,CM-1-2-6-1-2,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
 REL-00468,uses-input,CM-1-2-6-1-3,CM-1-2-6-1-1,Segment Customers,nearness-only,no,
-REL-00470,uses-input,CM-1-2-6-1-3,CM-1-2-4-2,Accounting,nearness-only,no,
-REL-00474,uses-input,CM-1-2-6-2-2,CM-1-2-6-2-1,Manage Refined Product Demand,nearness-only,no,
-REL-00476,informed-by,CM-1-2-6-2-2,CM-1-2-7-1-1,Manage Product Exchange Agreements,nearness-only,no,
+REL-00470,uses-input,CM-1-2-6-1-3,CM-1-2-4-2,Accounting,nearness-only,yes,"[slug] om Accounting and the logistics processes; it does not produce cost accounting (CM-1-2-4-2), set prices (CM-1-3), or decide service changes (accountable owners). Excludes"
+REL-00474,uses-input,CM-1-2-6-2-2,CM-1-2-6-2-1,Manage Refined Product Demand,nearness-only,yes,[slug] d lifting and delivery utilization by location and period against demand needs (CM-1-2-6-2-1) and supply plans; communicating utilization requirements to the agreement owne
+REL-00476,informed-by,CM-1-2-6-2-2,CM-1-2-7-1-1,Manage Product Exchange Agreements,nearness-only,yes,"[slug] nd supply plans; communicating utilization requirements to the agreement owner (CM-1-2-7-1-1), trading coordination, supply operations (CM-1-2-6-3), and the scheduling proc"
 REL-00478,enables,CM-1-2-6-2-3,CM-1-2-6-2-1,Manage Refined Product Demand,nearness-only,no,
 REL-00481,uses-input,CM-1-2-6-3-1,CM-1-2-6-2-2,Manage Refined Product Exchanges,nearness-only,no,
-REL-00483,uses-input,CM-1-2-6-3-2,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,no,
-REL-00487,uses-input,CM-1-2-6-3-3,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-00488,precedes,CM-1-2-6-3-3,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,no,
-REL-00491,precedes,CM-1-2-7-1-1,CM-1-2-4-1-2,Settle Products,nearness-only,no,
-REL-00492,informed-by,CM-1-2-7-1-2,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-00495,precedes,CM-1-2-7-1-3,CM-1-2-1-2-10,Manage Storage Contract,nearness-only,no,
-REL-00496,precedes,CM-1-2-7-1-3,CM-1-2-1-3-5,Capture Storage Deals,nearness-only,no,
+REL-00483,uses-input,CM-1-2-6-3-2,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,yes,"[slug] receiving replenishment requirements decided by Manage Inventory Replenishment (CM-1-1-3-7-9, batch 04 — that process owns when and how much to resupply each stock point);"
+REL-00487,uses-input,CM-1-2-6-3-3,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,yes,"[slug] ed volumes — purchases, exchange liftings, transfers — under carrier contracts (CM-1-2-1-2-9), capacity rights, and transportation deals (CM-1-2-1-3-9); requesting or coord"
+REL-00488,precedes,CM-1-2-6-3-3,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,yes,"[slug] ming, and commercial-movement requirements to Physical Distribution Scheduling (CM-1-1-3-6), which owns primary movement nomination and shipper-side administration, and t"
+REL-00491,precedes,CM-1-2-7-1-1,CM-1-2-4-1-2,Settle Products,nearness-only,yes,"[slug] 3-4, batch 08). Exchange settlement executes per the agreements at Settlements (CM-1-2-4-1-2, batch 14). Excludes operational utilization planning (CM-1-2-6-2-2); futures-e"
+REL-00492,informed-by,CM-1-2-7-1-2,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,yes,"[slug] n it procures capacity or rates for supply movements (Manage Carrier Contracts, CM-1-2-1-2-9), or a customer-facing delivery agreement when it forms part of a product-sale"
+REL-00495,precedes,CM-1-2-7-1-3,CM-1-2-1-2-10,Manage Storage Contract,nearness-only,yes,[slug] ff per the split: the contract record is maintained by Manage Storage Contract (CM-1-2-1-2-10); commercially distinct capacity transactions are captured by Capture Storage D
+REL-00496,precedes,CM-1-2-7-1-3,CM-1-2-1-3-5,Capture Storage Deals,nearness-only,yes,"[slug] mercially distinct capacity transactions are captured by Capture Storage Deals (CM-1-2-1-3-5) — per the batch 09 caveat, not every storage agreement results in a separately"
 REL-00497,informed-by,CM-1-2-7-1-3,CM-1-2-6-3,Supply Operations,nearness-only,no,
-REL-00500,informed-by,CM-1-2-7-2-1,CM-1-2-7-2-2,Manage Fleet (Own/Third Party),nearness-only,no,
-REL-00505,informed-by,CM-1-2-7-2-3,CM-1-2-7-2-1,"Manage Safety (Materials, Staff, Contractor)",nearness-only,no,
+REL-00500,informed-by,CM-1-2-7-2-1,CM-1-2-7-2-2,Manage Fleet (Own/Third Party),nearness-only,yes,[slug] ite safety (their operators); fleet transport-safety compliance administration (CM-1-2-7-2-2). In scope: Operate hazardous-materials handling safety procedures | run staff
+REL-00505,informed-by,CM-1-2-7-2-3,CM-1-2-7-2-1,"Manage Safety (Materials, Staff, Contractor)",nearness-only,yes,[slug] s (locked rules); measurement methodology (CM-1-1-3-7-4); site safety programs (CM-1-2-7-2-1). In scope: Maintain asset registers and condition monitoring | coordinate insp
 REL-00507,follows,CM-1-3-1-1-1,CM-1-3-1-1-2,Define Analysis Objectives & Scope,nearness-only,no,
-REL-00508,precedes,CM-1-3-1-1-1,CM-1-3-1-1-3,Analyze Data,nearness-only,no,
-REL-00510,precedes,CM-1-3-1-1-2,CM-1-3-1-1-1,Source & Collect Information,nearness-only,no,
-REL-00511,precedes,CM-1-3-1-1-2,CM-1-3-1-1-3,Analyze Data,nearness-only,no,
+REL-00508,precedes,CM-1-3-1-1-1,CM-1-3-1-1-3,Analyze Data,nearness-only,yes,[slug] ; recording provenance and currency; and organizing data for the analysis step (CM-1-3-1-1-3). Data-vendor selection and licensing ownership follow the batch 12 follow-up o
+REL-00510,precedes,CM-1-3-1-1-2,CM-1-3-1-1-1,Source & Collect Information,nearness-only,yes,"[slug] ysis supports (consumers); the analysis itself (CM-1-3-1-1-3); data collection (CM-1-3-1-1-1). In scope: Agree decision-supporting questions with consumers | set market, pr"
+REL-00511,precedes,CM-1-3-1-1-2,CM-1-3-1-1-3,Analyze Data,nearness-only,yes,[slug] Excludes the decisions the analysis supports (consumers); the analysis itself (CM-1-3-1-1-3); data collection (CM-1-3-1-1-1). In scope: Agree decision-supporting questions
 REL-00512,precedes,CM-1-3-1-1-2,CM-1-3-1-1-4,Document Findings,nearness-only,no,
 REL-00514,follows,CM-1-3-1-1-3,CM-1-3-1-1-1,Source & Collect Information,nearness-only,no,
-REL-00515,precedes,CM-1-3-1-1-3,CM-1-3-1-1-4,Document Findings,nearness-only,no,
-REL-00516,follows,CM-1-3-1-1-4,CM-1-3-1-1-3,Analyze Data,nearness-only,no,
+REL-00515,precedes,CM-1-3-1-1-3,CM-1-3-1-1-4,Document Findings,nearness-only,yes,[slug] mers); demand forecast production (CM-1-1-1-1); documentation and distribution (CM-1-3-1-1-4). In scope: Apply defined methods to qualified data | size markets and analyze
+REL-00516,follows,CM-1-3-1-1-4,CM-1-3-1-1-3,Analyze Data,nearness-only,yes,"[slug] vacy, and competition-sensitivity classification. Excludes the analysis itself (CM-1-3-1-1-3); the consumers' decisions; enterprise records-retention policy (governance own"
 REL-00518,follows,CM-1-3-1-2-1,CM-1-3-1-2-2,Define Analysis Objectives & Scope,nearness-only,no,
-REL-00519,precedes,CM-1-3-1-2-1,CM-1-3-1-2-3,Analyze Data,nearness-only,no,
-REL-00521,precedes,CM-1-3-1-2-2,CM-1-3-1-2-1,Source & Collect Information,nearness-only,no,
-REL-00522,precedes,CM-1-3-1-2-2,CM-1-3-1-2-3,Analyze Data,nearness-only,no,
+REL-00519,precedes,CM-1-3-1-2-1,CM-1-3-1-2-3,Analyze Data,nearness-only,yes,[slug] licensing terms; provenance and currency recording; organization for analysis (CM-1-3-1-2-3). Excludes producing the internal data (its owners); the analysis (CM-1-3-1-2-3
+REL-00521,precedes,CM-1-3-1-2-2,CM-1-3-1-2-1,Source & Collect Information,nearness-only,yes,"[slug] rted decisions (consumers); analysis execution (CM-1-3-1-2-3); data collection (CM-1-3-1-2-1). In scope: Agree strategic questions with consumers | set business, market, ca"
+REL-00522,precedes,CM-1-3-1-2-2,CM-1-3-1-2-3,Analyze Data,nearness-only,yes,[slug] s and timing. Excludes the supported decisions (consumers); analysis execution (CM-1-3-1-2-3); data collection (CM-1-3-1-2-1). In scope: Agree strategic questions with cons
 REL-00523,precedes,CM-1-3-1-2-2,CM-1-3-1-2-4,Document Findings,nearness-only,no,
 REL-00525,follows,CM-1-3-1-2-3,CM-1-3-1-2-1,Source & Collect Information,nearness-only,no,
-REL-00526,precedes,CM-1-3-1-2-3,CM-1-3-1-2-4,Document Findings,nearness-only,no,
-REL-00527,follows,CM-1-3-1-2-4,CM-1-3-1-2-3,Analyze Data,nearness-only,no,
+REL-00526,precedes,CM-1-3-1-2-3,CM-1-3-1-2-4,Document Findings,nearness-only,yes,"[slug] (consumers); financial result production (CM-1-2-4-2, Finance); documentation (CM-1-3-1-2-4). In scope: Compute share and trends | assess portfolio and asset position | an"
+REL-00527,follows,CM-1-3-1-2-4,CM-1-3-1-2-3,Analyze Data,nearness-only,yes,"[slug] al, privacy, and competition-sensitivity classification. Excludes the analysis (CM-1-3-1-2-3); consumer decisions; records-retention policy (governance owner). In scope: Pr"
 REL-00529,follows,CM-1-3-1-3-1,CM-1-3-1-3-2,Define Analysis Objectives & Scope,nearness-only,no,
-REL-00530,precedes,CM-1-3-1-3-1,CM-1-3-1-3-3,Analyze Data,nearness-only,no,
-REL-00531,governed-by,CM-1-3-1-3-1,CM-1-3-1-3,Consumer Analysis,nearness-only,no,
+REL-00530,precedes,CM-1-3-1-3-1,CM-1-3-1-3-3,Analyze Data,nearness-only,yes,"[slug] ; provenance, consent-basis, and currency recording; organization for analysis (CM-1-3-1-3-3). Sourcing operates under the shared personal-data governance statement recorde"
+REL-00531,governed-by,CM-1-3-1-3-1,CM-1-3-1-3,Consumer Analysis,nearness-only,yes,"[slug] urcing operates under the shared personal-data governance statement recorded at CM-1-3-1-3: approved purposes, lawful basis, notice/consent status, retention, access, and"
 REL-00532,precedes,CM-1-3-1-3-2,CM-1-3-1-3-1,Source & Collect Information,nearness-only,no,
-REL-00533,precedes,CM-1-3-1-3-2,CM-1-3-1-3-3,Analyze Data,nearness-only,no,
+REL-00533,precedes,CM-1-3-1-3-2,CM-1-3-1-3-3,Analyze Data,nearness-only,yes,[slug] s and timing. Excludes the supported decisions (consumers); analysis execution (CM-1-3-1-3-3); research fieldwork procurement (per the operating model). In scope: Agree pro
 REL-00534,precedes,CM-1-3-1-3-2,CM-1-3-1-3-4,Document Findings,nearness-only,no,
 REL-00536,follows,CM-1-3-1-3-3,CM-1-3-1-3-1,Source & Collect Information,nearness-only,no,
-REL-00537,precedes,CM-1-3-1-3-3,CM-1-3-1-3-4,Document Findings,nearness-only,no,
-REL-00538,follows,CM-1-3-1-3-4,CM-1-3-1-3-3,Analyze Data,nearness-only,no,
+REL-00537,precedes,CM-1-3-1-3-3,CM-1-3-1-3-4,Document Findings,nearness-only,yes,"[slug] omics (CM-1-2-6-1-1), credit, or party hierarchy (their lenses); documentation (CM-1-3-1-3-4). In scope: Identify segments and dynamics | analyze needs, preferences, and pr"
+REL-00538,follows,CM-1-3-1-3-4,CM-1-3-1-3-3,Analyze Data,nearness-only,yes,"[slug] al, privacy, and competition-sensitivity classification. Excludes the analysis (CM-1-3-1-3-3); consumer decisions; privacy framework ownership (governance owners). In scope"
 REL-00540,follows,CM-1-3-1-4-1,CM-1-3-1-4-2,Define Analysis Objectives & Scope,nearness-only,no,
-REL-00541,precedes,CM-1-3-1-4-1,CM-1-3-1-4-3,Analyze Data,nearness-only,no,
-REL-00542,governed-by,CM-1-3-1-4-1,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,no,
-REL-00543,precedes,CM-1-3-1-4-2,CM-1-3-1-4-1,Source & Collect Information,nearness-only,no,
-REL-00544,precedes,CM-1-3-1-4-2,CM-1-3-1-4-3,Analyze Data,nearness-only,no,
+REL-00541,precedes,CM-1-3-1-4-1,CM-1-3-1-4-3,Analyze Data,nearness-only,yes,[slug] l market context; provenance and currency recording; organization for analysis (CM-1-3-1-4-3). Commercially sensitive counterparty data handled per its classification; pers
+REL-00542,governed-by,CM-1-3-1-4-1,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,yes,[slug] personal and behavioral data under the shared governance statement recorded at CM-1-3-1-4. Excludes internal data production (accountable owners); the analysis (CM-1-3-1
+REL-00543,precedes,CM-1-3-1-4-2,CM-1-3-1-4-1,Source & Collect Information,nearness-only,yes,[slug] rted decisions (consumers); analysis execution (CM-1-3-1-4-3); data collection (CM-1-3-1-4-1). In scope: Agree proposition and channel questions with consumers | set segmen
+REL-00544,precedes,CM-1-3-1-4-2,CM-1-3-1-4-3,Analyze Data,nearness-only,yes,[slug] s and timing. Excludes the supported decisions (consumers); analysis execution (CM-1-3-1-4-3); data collection (CM-1-3-1-4-1). In scope: Agree proposition and channel quest
 REL-00545,precedes,CM-1-3-1-4-2,CM-1-3-1-4-4,Document Findings,nearness-only,no,
 REL-00547,follows,CM-1-3-1-4-3,CM-1-3-1-4-1,Source & Collect Information,nearness-only,no,
-REL-00548,precedes,CM-1-3-1-4-3,CM-1-3-1-4-4,Document Findings,nearness-only,no,
-REL-00549,uses-input,CM-1-3-1-4-3,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
-REL-00550,follows,CM-1-3-1-4-4,CM-1-3-1-4-3,Analyze Data,nearness-only,no,
+REL-00548,precedes,CM-1-3-1-4-3,CM-1-3-1-4-4,Document Findings,nearness-only,yes,"[slug] 1 boundary); account interventions and sales actions (CM-1-3-6); documentation (CM-1-3-1-4-4). In scope: Analyze segments, needs, and counterparty economics | analyze perfo"
+REL-00549,uses-input,CM-1-3-1-4-3,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] les actions, or account-management execution. Cost-to-serve economics come from CM-1-2-6-1-3 (batch 19) as governed input; credit risk stays with the credit process (batch"
+REL-00550,follows,CM-1-3-1-4-4,CM-1-3-1-4-3,Analyze Data,nearness-only,yes,"[slug] al, privacy, and competition-sensitivity classification. Excludes the analysis (CM-1-3-1-4-3); consumer decisions; records-retention policy (governance owner). In scope: Pr"
 REL-00552,follows,CM-1-3-1-5-1,CM-1-3-1-5-2,Define Analysis Objectives & Scope,nearness-only,no,
-REL-00553,precedes,CM-1-3-1-5-1,CM-1-3-1-5-3,Analyze Data,nearness-only,no,
-REL-00555,precedes,CM-1-3-1-5-2,CM-1-3-1-5-1,Source & Collect Information,nearness-only,no,
-REL-00556,precedes,CM-1-3-1-5-2,CM-1-3-1-5-3,Analyze Data,nearness-only,no,
+REL-00553,precedes,CM-1-3-1-5-1,CM-1-3-1-5-3,Analyze Data,nearness-only,yes,"[slug] owned by Legal and the compliance framework (batch 16). Excludes the analysis (CM-1-3-1-5-3); competition-law ownership (Legal, compliance); any illegitimate or anti-compe"
+REL-00555,precedes,CM-1-3-1-5-2,CM-1-3-1-5-1,Source & Collect Information,nearness-only,yes,[slug] supported decisions (consumers); analysis execution (CM-1-3-1-5-3); collection (CM-1-3-1-5-1). In scope: Agree strategic and response questions with consumers | set competi
+REL-00556,precedes,CM-1-3-1-5-2,CM-1-3-1-5-3,Analyze Data,nearness-only,yes,[slug] s and timing. Excludes the supported decisions (consumers); analysis execution (CM-1-3-1-5-3); collection (CM-1-3-1-5-1). In scope: Agree strategic and response questions w
 REL-00557,precedes,CM-1-3-1-5-2,CM-1-3-1-5-4,Document Findings,nearness-only,no,
 REL-00559,follows,CM-1-3-1-5-3,CM-1-3-1-5-1,Source & Collect Information,nearness-only,no,
-REL-00560,precedes,CM-1-3-1-5-3,CM-1-3-1-5-4,Document Findings,nearness-only,no,
-REL-00561,follows,CM-1-3-1-5-4,CM-1-3-1-5-3,Analyze Data,nearness-only,no,
-REL-00563,uses-input,CM-1-3-1-6,CM-1-3-1-1,Market Analysis,nearness-only,no,
+REL-00560,precedes,CM-1-3-1-5-3,CM-1-3-1-5-4,Document Findings,nearness-only,yes,[slug] s decisions (consumers); market-structure analysis (CM-1-3-1-1); documentation (CM-1-3-1-5-4). In scope: Assess positions and shares from legitimate data | infer conduct an
+REL-00561,follows,CM-1-3-1-5-4,CM-1-3-1-5-3,Analyze Data,nearness-only,yes,"[slug] al, privacy, and competition-sensitivity classification. Excludes the analysis (CM-1-3-1-5-3); consumer decisions; records-retention policy (governance owner). In scope: Pr"
+REL-00563,uses-input,CM-1-3-1-6,CM-1-3-1-1,Market Analysis,nearness-only,yes,"[slug] ing capability: integrating governed findings from the five analysis processes (CM-1-3-1-1 through -5) into decision-ready insight and implications for strategy, planning"
 REL-00564,uses-input,CM-1-3-1-6,CM-1-3-1-5,Competitor Analysis,nearness-only,no,
-REL-00567,informed-by,CM-1-3-10-1,CM-1-3-7-4,Manage Credit & Risk,nearness-only,no,
-REL-00580,informed-by,CM-1-3-10-3,CM-1-3-7-4,Manage Credit & Risk,nearness-only,no,
+REL-00567,informed-by,CM-1-3-10-1,CM-1-3-7-4,Manage Credit & Risk,nearness-only,yes,"[label] nder the Governed Submission and Stewardship Rule, credit standing and holds by Manage Credit & Risk, due-diligence outcomes by Perform KYC Due Diligence, and the governed customer"
+REL-00580,informed-by,CM-1-3-10-3,CM-1-3-7-4,Manage Credit & Risk,nearness-only,yes,"[label] ation and release (Allocate & Release Order) | credit limit and hold decisions (Manage Credit & Risk) | title transfer, tax liability, custody, and product quality determinations ("
 REL-00585,informed-by,CM-1-3-10-4,CM-1-3-7-4,Manage Credit & Risk,nearness-only,no,
 REL-00586,follows,CM-1-3-2-1-1,CM-1-3-2-1-2,Establish Brand Objectives and hypothesis,nearness-only,no,
 REL-00587,precedes,CM-1-3-2-1-1,CM-1-3-2-1-3,Develop & Test Brand Hypothesis,nearness-only,no,
-REL-00588,governed-by,CM-1-3-2-1-1,CM-1-3-2-1,Brand Strategy,nearness-only,no,
-REL-00590,precedes,CM-1-3-2-1-2,CM-1-3-2-1-3,Develop & Test Brand Hypothesis,nearness-only,no,
-REL-00593,precedes,CM-1-3-2-1-3,CM-1-3-2-1-4,Develop / update Brand,nearness-only,no,
+REL-00588,governed-by,CM-1-3-2-1-1,CM-1-3-2-1,Brand Strategy,nearness-only,yes,[slug] anchise constraints on changing branded arrangements (cluster PMPA statement at CM-1-3-2-1); and recommending the preferred alternative with its evidence to the develop/u
+REL-00590,precedes,CM-1-3-2-1-2,CM-1-3-2-1-3,Develop & Test Brand Hypothesis,nearness-only,yes,[slug] bjectives and hypotheses frame the alternatives (CM-1-3-2-1-1) and the testing (CM-1-3-2-1-3). Excludes corporate strategy (its owner); the testing itself (CM-1-3-2-1-3); s
+REL-00593,precedes,CM-1-3-2-1-3,CM-1-3-2-1-4,Develop / update Brand,nearness-only,yes,"[slug] confirmed beliefs; and feeding validated hypotheses to the develop/update step (CM-1-3-2-1-4). Testing uses the batch 21 evidence base and inherits its controls (privacy, c"
 REL-00594,follows,CM-1-3-2-1-4,CM-1-3-2-1-3,Develop & Test Brand Hypothesis,nearness-only,no,
 REL-00597,follows,CM-1-3-2-2-1,CM-1-3-2-2-2,Formulate and Evaluate Strategic Operating Alternatives (CVP),nearness-only,no,
-REL-00598,precedes,CM-1-3-2-2-1,CM-1-3-2-2-4,Develop/Update Strategy (CVP),nearness-only,no,
+REL-00598,precedes,CM-1-3-2-2-1,CM-1-3-2-2-4,Develop/Update Strategy (CVP),nearness-only,yes,[slug] s only); recording results and confidence; and feeding the develop/update step (CM-1-3-2-2-4). Excludes the underlying analyses (CM-1-3-1-4/-5); account interventions from
 REL-00599,follows,CM-1-3-2-2-2,CM-1-3-2-2-3,Establish CVP principles and objectives,nearness-only,no,
 REL-00600,precedes,CM-1-3-2-2-2,CM-1-3-2-2-1,Test Customer value proposition,nearness-only,no,
-REL-00601,governed-by,CM-1-3-2-2-2,CM-1-3-2-2,Customer And Marketer Value Proposition,nearness-only,yes,"definitions.json: Formulate alternative strategic models for delivering the customer-and-marketer value proposition — supply-led, brand-and-program-led, service-led, and mixed models across the c"
-REL-00602,precedes,CM-1-3-2-2-3,CM-1-3-2-2-2,Formulate and Evaluate Strategic Operating Alternatives (CVP),nearness-only,no,
-REL-00603,precedes,CM-1-3-2-2-3,CM-1-3-2-2-1,Test Customer value proposition,nearness-only,no,
+REL-00601,governed-by,CM-1-3-2-2-2,CM-1-3-2-2,Customer And Marketer Value Proposition,nearness-only,yes,[slug] hise criteria — the applicable franchise constraints (cluster PMPA statement at CM-1-3-2-2); recommending the preferred alternative to the develop/update step (CM-1-3-2-2
+REL-00602,precedes,CM-1-3-2-2-3,CM-1-3-2-2-2,Formulate and Evaluate Strategic Operating Alternatives (CVP),nearness-only,yes,[slug] ecycle. Excludes commercial strategy (its owner); the alternatives and testing (CM-1-3-2-2-2/-1); proposition strategy development and approval (CM-1-3-2-2-4). In scope: Se
+REL-00603,precedes,CM-1-3-2-2-3,CM-1-3-2-2-1,Test Customer value proposition,nearness-only,yes,[range] ecycle. Excludes commercial strategy (its owner); the alternatives and testing (CM-1-3-2-2-2/-1); proposition strategy development and approval (CM-1-3-2-2-4). In scope: Set p
 REL-00605,follows,CM-1-3-2-2-4,CM-1-3-2-2-1,Test Customer value proposition,nearness-only,no,
-REL-00619,precedes,CM-1-3-2-4-1,CM-1-3-2-4-2,Establish operating Objectives and develop Channel Strategy Hypothesis,nearness-only,no,
-REL-00620,governed-by,CM-1-3-2-4-1,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,no,
-REL-00621,uses-input,CM-1-3-2-4-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
-REL-00622,follows,CM-1-3-2-4-2,CM-1-3-2-4-1,Conduct Channel of trade diagnostics,nearness-only,no,
-REL-00623,governed-by,CM-1-3-2-4-2,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,no,
-REL-00624,precedes,CM-1-3-2-5-1,CM-1-3-2-5-2,Define Customer Experience Guiding Principles,nearness-only,no,
-REL-00625,governed-by,CM-1-3-2-5-1,CM-1-3-2-5,Customer Experience Strategy,nearness-only,no,
-REL-00626,follows,CM-1-3-2-5-2,CM-1-3-2-5-1,Identify Customer Experience Aspiration,nearness-only,no,
-REL-00627,precedes,CM-1-3-2-5-2,CM-1-3-2-5-3,Establish Customer Experience Strategic Pillars,nearness-only,no,
+REL-00619,precedes,CM-1-3-2-4-1,CM-1-3-2-4-2,Establish operating Objectives and develop Channel Strategy Hypothesis,nearness-only,yes,[slug] e. Diagnostics inform; the strategy hypothesis and the approved strategy sit at CM-1-3-2-4-2 and the L4. Excludes cost-to-serve production (CM-1-2-6-1-3); the subject analy
+REL-00620,governed-by,CM-1-3-2-4-1,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,yes,"[slug] alyses (CM-1-3-1); the strategy hypothesis and approved strategy (CM-1-3-2-4-2, CM-1-3-2-4). In scope: Assemble channel-level performance and economics evidence | consume"
+REL-00621,uses-input,CM-1-3-2-4-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] el volume, margin, and share evidence; consuming cost-to-serve assessments from CM-1-2-6-1-3 (batch 19) and counterparty findings from CM-1-3-1-4 as governed inputs; assess"
+REL-00622,follows,CM-1-3-2-4-2,CM-1-3-2-4-1,Conduct Channel of trade diagnostics,nearness-only,yes,"[slug] ng objectives; developing the channel-strategy hypothesis from the diagnostics (CM-1-3-2-4-1); stating dependencies and risks, including — where arrangements meet the franc"
+REL-00623,governed-by,CM-1-3-2-4-2,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,yes,[slug] straints on changes to existing branded arrangements (cluster PMPA statement at CM-1-3-2-4); and submitting the hypothesis for development and approval of the strategy at
+REL-00624,precedes,CM-1-3-2-5-1,CM-1-3-2-5-2,Define Customer Experience Guiding Principles,nearness-only,yes,[slug] ve and category benchmarks; and framing the aspiration for the principles step (CM-1-3-2-5-2). First step of the experience-strategy lifecycle; the consolidated strategy is
+REL-00625,governed-by,CM-1-3-2-5-1,CM-1-3-2-5,Customer Experience Strategy,nearness-only,yes,[slug] ce-strategy lifecycle; the consolidated strategy is developed and maintained at CM-1-3-2-5. Excludes the analyses (CM-1-3-1-3/-4); the principles and pillars (CM-1-3-2-5-
+REL-00626,follows,CM-1-3-2-5-2,CM-1-3-2-5-1,Identify Customer Experience Aspiration,nearness-only,yes,"[slug] decision must satisfy. Covers principle definition: converting the aspiration (CM-1-3-2-5-1) into explicit, decision-usable principles; reconciling them with brand strateg"
+REL-00627,precedes,CM-1-3-2-5-2,CM-1-3-2-5-3,Establish Customer Experience Strategic Pillars,nearness-only,yes,"[slug] operational and regulatory constraints; and issuing them for the pillars step (CM-1-3-2-5-3) and for use by design, planning, and execution processes. Principles guide dec"
 REL-00628,follows,CM-1-3-2-5-3,CM-1-3-2-5-2,Define Customer Experience Guiding Principles,nearness-only,no,
-REL-00629,governed-by,CM-1-3-2-5-3,CM-1-3-2-5,Customer Experience Strategy,nearness-only,yes,definitions.json: Establish the strategic pillars of the customer-experience strategy — the small set of experience priorities the company will invest in and be know
-REL-00630,precedes,CM-1-3-3-1-1,CM-1-3-3-1-2,Define Customer Offer,nearness-only,no,
+REL-00629,governed-by,CM-1-3-2-5-3,CM-1-3-2-5,Customer Experience Strategy,nearness-only,yes,[slug] ssuing the completed pillar set for consolidation into the approved strategy at CM-1-3-2-5 and use by planning and execution. Pillars direct investment and design focus;
+REL-00630,precedes,CM-1-3-3-1-1,CM-1-3-3-1-2,Define Customer Offer,nearness-only,yes,[slug] 1-3-1-4-3); other segmentation lenses (their owners); offer content definition (CM-1-3-3-1-2); privacy and fairness framework ownership (accountable governance owners). In
 REL-00632,follows,CM-1-3-3-1-2,CM-1-3-3-1-1,Define Target Customer Groups,nearness-only,no,
-REL-00633,precedes,CM-1-3-3-1-2,CM-1-3-3-1-3,Validate Customer Offer,nearness-only,no,
+REL-00633,precedes,CM-1-3-3-1-2,CM-1-3-3-1-3,Validate Customer Offer,nearness-only,yes,"[slug] 3-2, CM-1-3-6-3); new product/service development (CM-1-3-4-3); the validation (CM-1-3-3-1-3); proposition strategy (CM-1-3-2-2/-3); approval of dependent designs (their ow"
 REL-00634,follows,CM-1-3-3-1-3,CM-1-3-3-1-2,Define Customer Offer,nearness-only,no,
 REL-00636,follows,CM-1-3-3-1-4,CM-1-3-3-1-3,Validate Customer Offer,nearness-only,no,
-REL-00638,precedes,CM-1-3-3-2-1,CM-1-3-3-2-2,Develop Integrated Pricing Strategy,nearness-only,no,
+REL-00638,precedes,CM-1-3-3-2-1,CM-1-3-3-2-2,Develop Integrated Pricing Strategy,nearness-only,yes,[slug] nd framing the pricing-strategy cycle. Excludes the integrated strategy itself (CM-1-3-3-2-2); price parameters and rules (CM-1-3-3-2-2); price levels (execution); legal as
 REL-00640,follows,CM-1-3-3-2-2,CM-1-3-3-2-1,Define Strategic Pricing Approach,nearness-only,no,
-REL-00642,informed-by,CM-1-3-3-2-2,CM-1-3-3-2-4,Conduct Pricing Pilots,nearness-only,no,
-REL-00643,informed-by,CM-1-3-3-2-2,CM-1-3-3-2-3,Analyze Pricing Performance,nearness-only,no,
-REL-00646,informed-by,CM-1-3-3-2-3,CM-1-3-6-3,Sales Pricing Management,nearness-only,no,
+REL-00642,informed-by,CM-1-3-3-2-2,CM-1-3-3-2-4,Conduct Pricing Pilots,nearness-only,yes,"[slug] -3-6-4); legal defense assessment (Legal); the pilots and performance analysis (CM-1-3-3-2-4/-3). In scope: Develop approved price architecture, differential logic, and ind"
+REL-00643,informed-by,CM-1-3-3-2-2,CM-1-3-3-2-3,Analyze Pricing Performance,nearness-only,yes,"[range] -3-6-4); legal defense assessment (Legal); the pilots and performance analysis (CM-1-3-3-2-4/-3). In scope: Develop approved price architecture, differential logic, and index-"
+REL-00646,informed-by,CM-1-3-3-2-3,CM-1-3-6-3,Sales Pricing Management,nearness-only,yes,[slug] rocess does not make legal determinations. Excludes price correction execution (CM-1-3-6-3); improper price intelligence (prohibited); legal determinations (Legal/Complia
 REL-00647,informed-by,CM-1-3-3-2-3,CM-1-3-3-2-4,Conduct Pricing Pilots,nearness-only,no,
-REL-00649,follows,CM-1-3-3-2-4,CM-1-3-3-2-2,Develop Integrated Pricing Strategy,nearness-only,no,
-REL-00650,uses-input,CM-1-3-3-2-4,CM-1-3-6-3,Sales Pricing Management,nearness-only,no,
+REL-00649,follows,CM-1-3-3-2-4,CM-1-3-3-2-2,Develop Integrated Pricing Strategy,nearness-only,yes,"[slug] d recommending adoption, adjustment, or abandonment to the integrated strategy (CM-1-3-3-2-2). A pricing pilot requires documented scope, eligible population/channel, time"
+REL-00650,uses-input,CM-1-3-3-2-4,CM-1-3-6-3,Sales Pricing Management,nearness-only,yes,[slug] changes; coordinating pilot execution through the pricing execution processes (CM-1-3-6-3 executes; this process designs and evaluates); measuring effects against the de
 REL-00651,follows,CM-1-3-3-2-5,CM-1-3-3-2-2,Develop Integrated Pricing Strategy,nearness-only,no,
-REL-00652,precedes,CM-1-3-3-2-5,CM-1-3-3-2-3,Analyze Pricing Performance,nearness-only,no,
+REL-00652,precedes,CM-1-3-3-2-5,CM-1-3-3-2-3,Analyze Pricing Performance,nearness-only,yes,"[slug] I definition and KPI Store governance (KPI workstream); the measurement itself (CM-1-3-3-2-3); metrics stewardship (CM-1-3-1-6). In scope: Define pricing measures, baseline"
 REL-00654,follows,CM-1-3-3-3-1,CM-1-3-3-3-2,Define Channel Portfolio,nearness-only,no,
 REL-00655,precedes,CM-1-3-3-3-1,CM-1-3-3-3-4,"Develop Channel Structure, Size & Engagement Model",nearness-only,no,
 REL-00657,follows,CM-1-3-3-3-2,CM-1-3-3-3-3,Segment Channels,nearness-only,no,
 REL-00658,precedes,CM-1-3-3-3-2,CM-1-3-3-3-1,Create Channel Offering & Value Proposition,nearness-only,no,
-REL-00660,precedes,CM-1-3-3-3-3,CM-1-3-3-3-2,Define Channel Portfolio,nearness-only,no,
-REL-00662,uses-input,CM-1-3-3-3-3,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
+REL-00660,precedes,CM-1-3-3-3-3,CM-1-3-3-3-2,Define Channel Portfolio,nearness-only,yes,"[slug] 4, CM-1-2-6-1); enterprise taxonomy ownership (its owner); portfolio decisions (CM-1-3-3-3-2). In scope: Group channels and participants by role, economics, capability, and"
+REL-00662,uses-input,CM-1-3-3-3-3,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] , using governed counterparty findings (CM-1-3-1-4) and cost-to-serve evidence (CM-1-2-6-1-3); maintaining segment definitions for design use. The design instance of the fo"
 REL-00663,follows,CM-1-3-3-3-4,CM-1-3-3-3-1,Create Channel Offering & Value Proposition,nearness-only,no,
 REL-00666,follows,CM-1-3-3-3-5,CM-1-3-3-3-4,"Develop Channel Structure, Size & Engagement Model",nearness-only,no,
-REL-00668,follows,CM-1-3-3-4-1,CM-1-3-3-4-3,Define Target Network Size,nearness-only,no,
+REL-00668,follows,CM-1-3-3-4-1,CM-1-3-3-4-3,Define Target Network Size,nearness-only,yes,[slug] . Location evidence feeds back into size and format assumptions (iterative with CM-1-3-3-4-3). Uses consumer and market findings under their batch 21 controls. Excludes sit
 REL-00671,precedes,CM-1-3-3-4-2,CM-1-3-3-4-3,Define Target Network Size,nearness-only,no,
 REL-00673,follows,CM-1-3-3-4-3,CM-1-3-3-4-2,Formulate And Evaluate Strategic Operating Alternatives (network Strategy),nearness-only,no,
-REL-00674,precedes,CM-1-3-3-4-3,CM-1-3-3-4-1,Define Target Location,nearness-only,no,
+REL-00674,precedes,CM-1-3-3-4-3,CM-1-3-3-4-1,Define Target Location,nearness-only,yes,[slug] than a single fixed outlet count. Size targets iterate with location evidence (CM-1-3-3-4-1) and are recommendations into the applicable investment approvals — never acqui
 REL-00676,follows,CM-1-3-3-4-4,CM-1-3-3-4-1,Define Target Location,nearness-only,no,
 REL-00690,follows,CM-1-3-3-6-1,CM-1-3-3-6-3,Determine Channel Of Trade Mix,nearness-only,no,
-REL-00691,precedes,CM-1-3-3-6-1,CM-1-3-3-6-2,Develop Organizational Blueprint,nearness-only,no,
-REL-00693,follows,CM-1-3-3-6-2,CM-1-3-3-6-1,Develop Business Process Blueprint,nearness-only,no,
+REL-00691,precedes,CM-1-3-3-6-1,CM-1-3-3-6-2,Develop Organizational Blueprint,nearness-only,yes,"[slug] as designs evolve. Co-developed iteratively with the organizational blueprint (CM-1-3-3-6-2) per review. Blueprint, not implementation: process implementation, technology"
+REL-00693,follows,CM-1-3-3-6-2,CM-1-3-3-6-1,Develop Business Process Blueprint,nearness-only,yes,"[slug] maintaining the blueprint, co-developed iteratively with the process blueprint (CM-1-3-3-6-1). The batch 23 boundary governs: the blueprint defines desired roles, coverage,"
 REL-00694,precedes,CM-1-3-3-6-2,CM-1-3-3-6-4,Define Procedural Framework & Guidelines,nearness-only,no,
-REL-00696,uses-input,CM-1-3-3-6-3,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,no,
-REL-00697,uses-input,CM-1-3-3-6-3,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,no,
-REL-00698,enables,CM-1-3-3-6-3,CM-1-3-3-6-1,Develop Business Process Blueprint,nearness-only,no,
+REL-00696,uses-input,CM-1-3-3-6-3,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,yes,[slug] channel mix. Covers mix translation: taking the approved channel-of-trade mix (CM-1-3-2-4) and channel-design outputs (CM-1-3-3-3) and determining what each channel requ
+REL-00697,uses-input,CM-1-3-3-6-3,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,yes,[slug] king the approved channel-of-trade mix (CM-1-3-2-4) and channel-design outputs (CM-1-3-3-3) and determining what each channel requires of the operating model — capabiliti
+REL-00698,enables,CM-1-3-3-6-3,CM-1-3-3-6-1,Develop Business Process Blueprint,nearness-only,yes,[slug] changes; and feeding requirements to the process and organizational blueprints (CM-1-3-3-6-1/-2). Determine Channel Of Trade Mix within Operating Model Design translates th
 REL-00701,follows,CM-1-3-3-6-4,CM-1-3-3-6-2,Develop Organizational Blueprint,nearness-only,no,
 REL-00704,follows,CM-1-3-3-6-5,CM-1-3-3-6-4,Define Procedural Framework & Guidelines,nearness-only,no,
-REL-00706,informed-by,CM-1-3-4-1-1,CM-1-3-4-1-2,Market Sensing,nearness-only,no,
-REL-00707,precedes,CM-1-3-4-1-1,CM-1-3-4-1-3,Develop R&D Implementation Plans,nearness-only,no,
+REL-00706,informed-by,CM-1-3-4-1-1,CM-1-3-4-1-2,Market Sensing,nearness-only,yes,[slug] entification: reading governed findings (CM-1-3-1-1/-3/-4) and sensing signals (CM-1-3-4-1-2) for unmet and emerging needs; framing and prioritizing needs as innovation opp
+REL-00707,precedes,CM-1-3-4-1-1,CM-1-3-4-1-3,Develop R&D Implementation Plans,nearness-only,yes,[slug] es with evidence and confidence; and feeding prioritized needs to R&D planning (CM-1-3-4-1-3) and ideation (CM-1-3-4-2-1). Prioritizes needs for exploration and concept gen
 REL-00711,follows,CM-1-3-4-1-3,CM-1-3-4-1-1,Identify Market Needs,nearness-only,no,
-REL-00714,precedes,CM-1-3-4-2-1,CM-1-3-4-2-2,Conduct Research,nearness-only,no,
+REL-00714,precedes,CM-1-3-4-2-1,CM-1-3-4-2-2,Conduct Research,nearness-only,yes,"[slug] ovation vision; and promoting screened ideas as candidate concepts to research (CM-1-3-4-2-2). Ideas from external parties, customers, suppliers, inventors, and partners mu"
 REL-00716,follows,CM-1-3-4-2-2,CM-1-3-4-2-1,Ideation,nearness-only,no,
-REL-00719,assures,CM-1-3-4-2-3,CM-1-3-4-2-2,Conduct Research,nearness-only,yes,"review-batch rationale: esearch owns commissioning, standards, quality, and completion of studies while Conduct Research performs them and produces feasibility evidence — valid management/quality-assu"
-REL-00720,precedes,CM-1-3-4-3-1,CM-1-3-4-3-2,Conduct Product Development,nearness-only,no,
-REL-00722,follows,CM-1-3-4-3-2,CM-1-3-4-3-1,Manage Product/Service Development,nearness-only,no,
+REL-00719,assures,CM-1-3-4-2-3,CM-1-3-4-2-2,Conduct Research,nearness-only,yes,[slug] &D portfolio management to CM-1-3-4-5 (batch 26). Excludes performing research (CM-1-3-4-2-2); the subject analyses (CM-1-3-1); R&D portfolio management (CM-1-3-4-5); procu
+REL-00720,precedes,CM-1-3-4-3-1,CM-1-3-4-3-2,Conduct Product Development,nearness-only,yes,"[slug] diness determined by the accountable functions. Excludes development execution (CM-1-3-4-3-2); investment, regulatory, launch, and commercial approval (their accountable au"
+REL-00722,follows,CM-1-3-4-3-2,CM-1-3-4-3-1,Manage Product/Service Development,nearness-only,yes,"[slug] accountable functions' determinations. Excludes gate coordination and outcomes (CM-1-3-4-3-1); registration submission and regulatory clearance (Regulatory, Legal, Product"
 REL-00727,enables,CM-1-3-4-4-1,CM-1-3-4-4-2,Register Intellectual Property,nearness-only,no,
 REL-00729,follows,CM-1-3-4-4-2,CM-1-3-4-4-1,Set up Intellectual Asset Framework,nearness-only,no,
-REL-00731,enables,CM-1-3-4-4-3,CM-1-3-4-4-5,Exploit Intellectual Assets,nearness-only,no,
+REL-00731,enables,CM-1-3-4-4-3,CM-1-3-4-4-5,Exploit Intellectual Assets,nearness-only,yes,"[slug] ntial and comparable evidence; and supplying value assessments to exploitation (CM-1-3-4-4-5) and portfolio stewardship (CM-1-3-4-4-6), stated with assumptions and confiden"
 REL-00734,follows,CM-1-3-4-4-4,CM-1-3-4-4-1,Set up Intellectual Asset Framework,nearness-only,no,
-REL-00736,follows,CM-1-3-4-4-5,CM-1-3-4-4-3,Value Intellectual Assets,nearness-only,no,
-REL-00738,informed-by,CM-1-3-4-4-5,CM-1-3-2-1,Brand Strategy,nearness-only,no,
-REL-00739,informed-by,CM-1-3-4-4-6,CM-1-3-4-4-3,Value Intellectual Assets,nearness-only,no,
-REL-00741,precedes,CM-1-3-4-5-1,CM-1-3-4-5-2,Value Projects/Portfolios,nearness-only,no,
+REL-00736,follows,CM-1-3-4-4-5,CM-1-3-4-4-3,Value Intellectual Assets,nearness-only,yes,[slug] al exploitation: identifying exploitation opportunities from value assessments (CM-1-3-4-4-3); shaping licensing and partnership structures (brand licensing consistent with
+REL-00738,informed-by,CM-1-3-4-4-5,CM-1-3-2-1,Brand Strategy,nearness-only,yes,[slug] sing and partnership structures (brand licensing consistent with Brand Strategy CM-1-3-2-1 and brand standards CM-1-3-6-7; technology licensing consistent with R&D collab
+REL-00739,informed-by,CM-1-3-4-4-6,CM-1-3-4-4-3,Value Intellectual Assets,nearness-only,yes,"[slug] y with status, markets, and renewal calendar; reviewing value-versus-cost using CM-1-3-4-4-3 assessments; recommending maintain/renew/license/abandon actions under the fram"
+REL-00741,precedes,CM-1-3-4-5-1,CM-1-3-4-5-2,Value Projects/Portfolios,nearness-only,yes,[slug] or technology gaps and opportunities; framing them with evidence for valuation (CM-1-3-4-5-2) and R&D planning (CM-1-3-4-1-3). Technology needs are expressed as business ca
 REL-00743,follows,CM-1-3-4-5-2,CM-1-3-4-5-1,Identify Technology Needs/Opportunities,nearness-only,no,
-REL-00744,precedes,CM-1-3-4-5-2,CM-1-3-4-5-3,Assess Portfolios,nearness-only,no,
+REL-00744,precedes,CM-1-3-4-5-2,CM-1-3-4-5-3,Assess Portfolios,nearness-only,yes,"[slug] ions (delegated authorities); portfolio assessment against composition targets (CM-1-3-4-5-3). In scope: Value projects and portfolio elements on commercial value, fit, ris"
 REL-00746,follows,CM-1-3-4-5-3,CM-1-3-4-5-2,Value Projects/Portfolios,nearness-only,no,
 REL-00749,follows,CM-1-3-4-5-4,CM-1-3-4-5-3,Assess Portfolios,nearness-only,no,
-REL-00759,uses-input,CM-1-3-4-6-3,CM-1-3-4-5-1,Identify Technology Needs/Opportunities,nearness-only,no,
-REL-00761,informed-by,CM-1-3-4-6-4,CM-1-3-3-1,Customer Offer Definition,nearness-only,no,
-REL-00763,precedes,CM-1-3-5-1-1,CM-1-3-5-1-3,Perform Account Planning,nearness-only,no,
+REL-00759,uses-input,CM-1-3-4-6-3,CM-1-3-4-5-1,Identify Technology Needs/Opportunities,nearness-only,yes,"[slug] artner channel: identifying and engaging partners against the technology needs (CM-1-3-4-5-1) and R&D plans (CM-1-3-4-1-3); shaping collaboration scope, contributions, and"
+REL-00761,informed-by,CM-1-3-4-6-4,CM-1-3-3-1,Customer Offer Definition,nearness-only,yes,"[slug] t; returning innovation results, constraints, and timing into offer definition (CM-1-3-3-1), communications strategy (CM-1-3-3-5), and planning (CM-1-3-5); and keeping in"
+REL-00763,precedes,CM-1-3-5-1-1,CM-1-3-5-1-3,Perform Account Planning,nearness-only,yes,"[slug] f trade, account group, and period; reconciling allocations with account plans (CM-1-3-5-1-3); and maintaining targets under the applicable delegation of authority. Target"
 REL-00769,follows,CM-1-3-5-1-3,CM-1-3-5-1-1,Determine & Allocate Sales Targets,nearness-only,no,
-REL-00771,enables,CM-1-3-5-1-3,CM-1-3-6-1,Channel & Partner Management,nearness-only,no,
+REL-00771,enables,CM-1-3-5-1-3,CM-1-3-6-1,Channel & Partner Management,nearness-only,yes,[slug] ationship execution belong to Channel & Partner Management and Sales Execution (CM-1-3-6-1/-2); credit decisions to the credit process (b11 boundary); individual account
 REL-00772,follows,CM-1-3-5-1-4,CM-1-3-5-1-3,Perform Account Planning,nearness-only,no,
-REL-00774,informed-by,CM-1-3-5-1-4,CM-1-3-5-5,Marketing Performance Analysis,nearness-only,no,
-REL-00775,informed-by,CM-1-3-5-2,CM-1-3-3-5-1,Define Media Strategy,nearness-only,no,
-REL-00776,informed-by,CM-1-3-5-2,CM-1-3-5-3,Marketing Communications Planning,nearness-only,no,
+REL-00774,informed-by,CM-1-3-5-1-4,CM-1-3-5-5,Marketing Performance Analysis,nearness-only,yes,"[slug] the next cycle, the forecast-input process, and Marketing Performance Analysis (CM-1-3-5-5). Terminology (review): the locked name compares objects of different kinds — t"
+REL-00775,informed-by,CM-1-3-5-2,CM-1-3-3-5-1,Define Media Strategy,nearness-only,yes,[slug] l/Compliance claim/disclosure approval. Implements the approved media strategy (CM-1-3-3-5-1) and advertising strategy (CM-1-3-3-5-3); claims and creative approvals follow
+REL-00776,informed-by,CM-1-3-5-2,CM-1-3-5-3,Marketing Communications Planning,nearness-only,yes,[slug] tising planning: consolidating campaign-level advertising and media needs (from CM-1-3-5-3) into one integrated plan; maintaining the integrated advertising calendar and
 REL-00778,precedes,CM-1-3-5-3-1,CM-1-3-5-3-2,Identify Target Groups,nearness-only,no,
-REL-00780,follows,CM-1-3-5-3-10,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,no,
+REL-00780,follows,CM-1-3-5-3-10,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,yes,"[slug] on: coordinating production of brand campaign materials from campaign packages (CM-1-3-5-3-4), consistent with the brand strategy (CM-1-3-2-1) and standards (via CM-1-3-5-3"
 REL-00783,follows,CM-1-3-5-3-2,CM-1-3-5-3-1,Identify Marketing Needs,nearness-only,no,
 REL-00784,precedes,CM-1-3-5-3-2,CM-1-3-5-3-3,Develop / Update Marketing Mix Model,nearness-only,no,
 REL-00786,follows,CM-1-3-5-3-3,CM-1-3-5-3-2,Identify Target Groups,nearness-only,no,
 REL-00787,precedes,CM-1-3-5-3-3,CM-1-3-5-3-5,Define Resource Allocation / Budgets,nearness-only,no,
 REL-00789,follows,CM-1-3-5-3-4,CM-1-3-5-3-6,Define Communications Plan,nearness-only,no,
-REL-00790,precedes,CM-1-3-5-3-4,CM-1-3-5-3-8,Implement Promotional Advertising,nearness-only,no,
+REL-00790,precedes,CM-1-3-5-3-4,CM-1-3-5-3-8,Implement Promotional Advertising,nearness-only,yes,"[slug] al, Compliance); brand standards (CM-1-3-6-7); release preparation and handoff (CM-1-3-5-3-8/-9/-10); in-channel execution (CM-1-3-6-5); media buying (Procurement, executio"
 REL-00791,precedes,CM-1-3-5-3-4,CM-1-3-5-3-10,Implement Brand Advertising / Communications,nearness-only,no,
 REL-00793,follows,CM-1-3-5-3-5,CM-1-3-5-3-3,Develop / Update Marketing Mix Model,nearness-only,no,
 REL-00794,precedes,CM-1-3-5-3-5,CM-1-3-5-3-6,Define Communications Plan,nearness-only,no,
 REL-00796,follows,CM-1-3-5-3-6,CM-1-3-5-3-5,Define Resource Allocation / Budgets,nearness-only,no,
-REL-00797,precedes,CM-1-3-5-3-6,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,no,
-REL-00801,assures,CM-1-3-5-3-7,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,yes,review-batch rationale: icitly performed within brand controls — bounded compliance assurance. Stored: (Develop / Update Campaigns core:assuredBy Manage Use Of Brand). Hamid 2026-09-26.
-REL-00802,follows,CM-1-3-5-3-8,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,no,
+REL-00797,precedes,CM-1-3-5-3-6,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,yes,[slug] ace); and maintaining the plan through the cycle. Excludes the campaign builds (CM-1-3-5-3-4); release preparation (CM-1-3-5-3-8/-9/-10); execution (CM-1-3-6-5); strategy (
+REL-00801,assures,CM-1-3-5-3-7,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,no,
+REL-00802,follows,CM-1-3-5-3-8,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,yes,[slug] ordinating production of promotional campaign materials from campaign packages (CM-1-3-5-3-4); confirming approval readiness across the control gates; coordinating placemen
 REL-00805,follows,CM-1-3-5-3-9,CM-1-3-5-3-4,Develop / Update Campaigns,nearness-only,no,
-REL-00807,precedes,CM-1-3-5-4-1,CM-1-3-5-4-2,Create Promotional Event Calendar,nearness-only,no,
-REL-00809,follows,CM-1-3-5-4-2,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,no,
-REL-00812,follows,CM-1-3-5-4-3,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,no,
-REL-00814,follows,CM-1-3-5-4-4,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,no,
-REL-00824,uses-input,CM-1-3-6-1-1,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,no,
-REL-00826,informed-by,CM-1-3-6-1-2,CM-1-3-4-4-5,Exploit Intellectual Assets,nearness-only,no,
-REL-00828,enables,CM-1-3-6-1-3,CM-1-3-6-1-1,Manage Relationship with Franchise agreement,nearness-only,no,
-REL-00832,precedes,CM-1-3-6-2-1,CM-1-3-6-2-3,Manage Opportunity,nearness-only,no,
-REL-00836,uses-input,CM-1-3-6-2-2,CM-1-3-5-1-3,Perform Account Planning,nearness-only,no,
+REL-00807,precedes,CM-1-3-5-4-1,CM-1-3-5-4-2,Create Promotional Event Calendar,nearness-only,yes,[slug] processes); rebate design (CM-1-3-6-4); claim approval (Legal); the calendars (CM-1-3-5-4-2/-3/-4); execution (CM-1-3-6-5). In scope: Select and schedule promotions with m
+REL-00809,follows,CM-1-3-5-4-2,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,yes,[slug] ion (CM-1-3-6-5); supply commitments (operating processes); the plan decisions (CM-1-3-5-4-1). In scope: Schedule readiness-confirmed promotional events | synchronize itera
+REL-00812,follows,CM-1-3-5-4-3,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,yes,[slug] 6-5/-7); price display and regulatory signage (b24 owners); the plan decisions (CM-1-3-5-4-1). In scope: Schedule POP promotional activity by site cluster and period | coor
+REL-00814,follows,CM-1-3-5-4-4,CM-1-3-5-4-1,Define Promotional Plan,nearness-only,yes,"[range] ting functions, CM-1-3-6-5); network design (CM-1-3-3-4); the underlying plans (CM-1-3-5-3/-4). In scope: Consolidate marketing activity into per-site calendars | deconflict"
+REL-00824,uses-input,CM-1-3-6-1-1,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,yes,[slug] ned at CM-1-3-6-7); conducting performance dialogue from the reported evidence (CM-1-3-6-1-3); resolving operational issues within the agreement's terms; and preparing busi
+REL-00826,informed-by,CM-1-3-6-1-2,CM-1-3-4-4-5,Exploit Intellectual Assets,nearness-only,yes,[slug] perating the commercial relationship under the licensing arrangements shaped at CM-1-3-4-4-5 and executed by Legal; coordinating brand-use obligations both ways (standards
+REL-00828,enables,CM-1-3-6-1-3,CM-1-3-6-1-1,Manage Relationship with Franchise agreement,nearness-only,yes,"[slug] ded metrics; producing per-partner and network views for relationship dialogue (CM-1-3-6-1-1), planning (CM-1-3-5), and performance analysis (CM-1-3-5-5); and maintaining r"
+REL-00832,precedes,CM-1-3-6-2-1,CM-1-3-6-2-3,Manage Opportunity,nearness-only,yes,"[slug] privacy controls (b27 account-data restriction). Excludes opportunity pursuit (CM-1-3-6-2-3); target setting (CM-1-3-5-1-1); the forecast (CM-1-1-1-1, locked); CRM platfor"
+REL-00836,uses-input,CM-1-3-6-2-2,CM-1-3-5-1-3,Perform Account Planning,nearness-only,yes,[slug] commercial frameworks. Covers key-account management: executing account plans (CM-1-3-5-1-3) for designated key accounts and marketer relationships; coordinating cross-fun
 REL-00838,follows,CM-1-3-6-2-3,CM-1-3-6-2-1,Manage Sales Pipeline,nearness-only,no,
-REL-00839,precedes,CM-1-3-6-2-3,CM-1-3-6-2-4,Develop Quote,nearness-only,no,
+REL-00839,precedes,CM-1-3-6-2-3,CM-1-3-6-2-4,Develop Quote,nearness-only,yes,"[slug] or handoff outcome, with proceeding opportunities handed to quote development (CM-1-3-6-2-4). Competitive intelligence in pursuit follows the b21 legitimate-sources prohib"
 REL-00841,follows,CM-1-3-6-2-4,CM-1-3-6-2-3,Manage Opportunity,nearness-only,no,
 REL-00842,precedes,CM-1-3-6-2-4,CM-1-3-6-2-5,Manage Contract & Order,nearness-only,no,
 REL-00844,follows,CM-1-3-6-2-5,CM-1-3-6-2-4,Develop Quote,nearness-only,no,
 REL-00845,precedes,CM-1-3-6-2-5,CM-1-3-6-2-6,Serve to Customer (Non-Retail),nearness-only,no,
 REL-00847,follows,CM-1-3-6-2-6,CM-1-3-6-2-5,Manage Contract & Order,nearness-only,no,
-REL-00849,uses-input,CM-1-3-6-2-6,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,no,
-REL-00853,precedes,CM-1-3-6-3-1,CM-1-3-6-3-2,Implement sales price,nearness-only,no,
-REL-00855,follows,CM-1-3-6-3-2,CM-1-3-6-3-1,Determine sales price,nearness-only,no,
-REL-00858,governed-by,CM-1-3-6-4-1,CM-1-3-3-2,Pricing Strategy Management,nearness-only,yes,review-batch source_definition: ation. Terms outside approved structures or thresholds require approval through Pricing Strategy Management governance and the applicable delegations before any commitment. Fact-dependent
+REL-00849,uses-input,CM-1-3-6-2-6,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,yes,"[slug] g per the terminal processes, service and support by CM-1-3-9, case handling by CM-1-3-7-5, invoicing by CM-1-3-8-1 — so the customer's experience matches the commitments"
+REL-00853,precedes,CM-1-3-6-3-1,CM-1-3-6-3-2,Implement sales price,nearness-only,yes,"[slug] s, and eligibility; and records determinations with effectivity for deployment (CM-1-3-6-3-2) and realization analysis (CM-1-3-3-2-3). Determinations outside approved autho"
+REL-00855,follows,CM-1-3-6-3-2,CM-1-3-6-3-1,Determine sales price,nearness-only,yes,"[slug] it trail for realization analysis (CM-1-3-3-2-3). Excludes price determination (CM-1-3-6-3-1); price master-data ownership and record changes (CM-1-3-7-1, the accountable p"
+REL-00858,governed-by,CM-1-3-6-4-1,CM-1-3-3-2,Pricing Strategy Management,nearness-only,yes,[label] ation. Terms outside approved structures or thresholds require approval through Pricing Strategy Management governance and the applicable delegations before any commitment. Fact-dependent
 REL-00859,precedes,CM-1-3-6-4-1,CM-1-3-6-4-2,Implement Rebate,nearness-only,no,
-REL-00860,follows,CM-1-3-6-4-2,CM-1-3-6-4-1,Negotiate Rebate,nearness-only,no,
+REL-00860,follows,CM-1-3-6-4-2,CM-1-3-6-4-1,Negotiate Rebate,nearness-only,yes,[label] s exactly as approved; discrepancies discovered during setup route back through Negotiate Rebate and its approvals rather than being resolved by configuration. Where rebate con
 REL-00861,precedes,CM-1-3-6-4-2,CM-1-3-6-4-3,Settle Rebate,nearness-only,no,
-REL-00862,uses-input,CM-1-3-6-4-2,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,yes,"review-batch rationale: ed, effective-dated price, discount, and rebate-condition records maintained by Maintain Price & Discount Master Data — the maintained master data is the upstream output consumed by rebate implemen"
+REL-00862,uses-input,CM-1-3-6-4-2,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,yes,"[label] pricing or discount master data, this process submits validated changes through Maintain Price & Discount Master Data and its controls — it never writes directly into governed master data. Accrual"
 REL-00863,follows,CM-1-3-6-4-3,CM-1-3-6-4-2,Implement Rebate,nearness-only,no,
 REL-00864,uses-input,CM-1-3-6-4-3,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,no,
 REL-00866,uses-input,CM-1-3-6-5-1,CM-1-3-5-3,Marketing Communications Planning,nearness-only,no,
 REL-00868,uses-input,CM-1-3-6-5-2,CM-1-3-5-3,Marketing Communications Planning,nearness-only,no,
 REL-00869,informed-by,CM-1-3-6-5-2,CM-1-3-6-3-2,Implement sales price,nearness-only,no,
 REL-00870,uses-input,CM-1-3-6-5-3,CM-1-3-5-3,Marketing Communications Planning,nearness-only,no,
-REL-00873,requires,CM-1-3-6-6-1,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,no,
-REL-00875,follows,CM-1-3-6-6-10,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,no,
-REL-00876,governed-by,CM-1-3-6-6-10,CM-1-3-6-6-8,Ensure Card Design Compliance,nearness-only,no,
+REL-00873,requires,CM-1-3-6-6-1,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,yes,"[label] ification and activation readiness through the owning controls — credit through Establish Credit Limit & Risk Code, identity through Perform KYC Due Diligence, customer records through Maintain"
+REL-00875,follows,CM-1-3-6-6-10,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,yes,[slug] ds Out of scope: Security control definition (Security) | card production runs (CM-1-3-6-6-13) | design compliance (CM-1-3-6-6-8) | vendor contracting (Procurement)
+REL-00876,governed-by,CM-1-3-6-6-10,CM-1-3-6-6-8,Ensure Card Design Compliance,nearness-only,yes,[slug] finition (Security) | card production runs (CM-1-3-6-6-13) | design compliance (CM-1-3-6-6-8) | vendor contracting (Procurement)
 REL-00878,uses-input,CM-1-3-6-6-11,CM-1-3-6-6-14,Manage Credit Card Transactions,nearness-only,no,
 REL-00879,uses-input,CM-1-3-6-6-12,CM-1-3-6-2-5,Manage Contract & Order,nearness-only,no,
-REL-00881,follows,CM-1-3-6-6-13,CM-1-3-6-6-8,Ensure Card Design Compliance,nearness-only,no,
-REL-00883,precedes,CM-1-3-6-6-13,CM-1-3-6-6-10,Perform Physical Card Handling,nearness-only,no,
+REL-00881,follows,CM-1-3-6-6-13,CM-1-3-6-6-8,Ensure Card Design Compliance,nearness-only,yes,[slug] ion records Out of scope: Vendor contracting (Procurement) | design compliance (CM-1-3-6-6-8) | physical distribution and custody (CM-1-3-6-6-10) | card-media purchasing
+REL-00883,precedes,CM-1-3-6-6-13,CM-1-3-6-6-10,Perform Physical Card Handling,nearness-only,yes,[slug] rement) | design compliance (CM-1-3-6-6-8) | physical distribution and custody (CM-1-3-6-6-10) | card-media purchasing
 REL-00887,uses-input,CM-1-3-6-6-15,CM-1-3-6-5-3,Manage Direct Marketing,nearness-only,no,
 REL-00891,follows,CM-1-3-6-6-3,CM-1-3-6-6-14,Manage Credit Card Transactions,nearness-only,no,
-REL-00892,triggers,CM-1-3-6-6-4,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,no,
-REL-00894,constrained-by,CM-1-3-6-6-5,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,yes,review-batch rationale: ly a reference-data association. Stored: (Handle Card Limits core:constrainedBy Establish Credit Limit & Risk Code). Hamid 2026-09-26.
-REL-00895,informed-by,CM-1-3-6-6-5,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
+REL-00892,triggers,CM-1-3-6-6-4,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,yes,[range] 3-7-4; Handle Card Limits within envelope) | physical production and logistics (CM-1-3-6-6-10/-13) | master-data writes outside governed submission | security control definition
+REL-00894,constrained-by,CM-1-3-6-6-5,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,yes,"[label] (b11 precedent): customer-level credit limits and risk codes are established by Establish Credit Limit & Risk Code and monitored by Monitor Credit Against Limit under Manage Credit & Risk. Card,"
+REL-00895,informed-by,CM-1-3-6-6-5,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,yes,"[label] sk codes are established by Establish Credit Limit & Risk Code and monitored by Monitor Credit Against Limit under Manage Credit & Risk. Card, driver, vehicle, product, transaction, mercha"
 REL-00896,informed-by,CM-1-3-6-6-6,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
 REL-00900,enables,CM-1-3-6-6-7,CM-1-3-6-6-3,Manage Reimbursement,nearness-only,no,
-REL-00901,triggers,CM-1-3-6-6-7,CM-1-3-6-6-11,Manage Fraudulent Transactions,nearness-only,no,
-REL-00903,precedes,CM-1-3-6-6-8,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,no,
-REL-00904,enables,CM-1-3-6-6-9,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,no,
+REL-00901,triggers,CM-1-3-6-6-7,CM-1-3-6-6-11,Manage Fraudulent Transactions,nearness-only,yes,[slug] porting | anomaly identification and routing Out of scope: Fraud investigation (CM-1-3-6-6-11; Security) | invoicing execution (CM-1-3-8-1) | KPI approval or publication (en
+REL-00903,precedes,CM-1-3-6-6-8,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,yes,"[slug] ims, customer communications, and price display approval | physical production (CM-1-3-6-6-13)"
+REL-00904,enables,CM-1-3-6-6-9,CM-1-3-6-6-13,Manage Card Production & Monthly Reissue,nearness-only,yes,[slug] scope: Purchasing and vendor contracting (Procurement) | production scheduling (CM-1-3-6-6-13) | security requirement setting (Security) | petroleum/product inventory manage
 REL-00907,governed-by,CM-1-3-6-7-1,CM-1-3-4-4,Manage Licensing & IP,nearness-only,no,
-REL-00911,informed-by,CM-1-3-6-8-1,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,no,
-REL-00916,uses-input,CM-1-3-7-1-2,CM-1-3-6-3-2,Implement sales price,nearness-only,no,
-REL-00918,enables,CM-1-3-7-1-2,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,no,
+REL-00911,informed-by,CM-1-3-6-8-1,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,yes,"[label] Marketing Practices Act, the determination is reserved to Legal. Distinct from Report Franchise Performance, which reports operational performance: this process validates the accuracy of"
+REL-00916,uses-input,CM-1-3-7-1-2,CM-1-3-6-3-2,Implement sales price,nearness-only,yes,"[label] ed by quoting, ordering, and billing. Receiving end of locked submission rules: Implement sales price and Implement Rebate submit validated, approved changes to this process — it va"
+REL-00918,enables,CM-1-3-7-1-2,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,yes,[slug] by any process | price deployment to displays (b24 POS exclusion) | invoicing (CM-1-3-8-1)
 REL-00922,enables,CM-1-3-7-1-4,CM-1-3-8-4-4,Reconcile And Report Indirect Tax,nearness-only,no,
 REL-00926,enables,CM-1-3-7-1-6,CM-1-3-7-2-1,Establish Commercial Terms & Contracts,nearness-only,no,
-REL-00930,follows,CM-1-3-7-2-2,CM-1-3-6-2-4,Develop Quote,nearness-only,no,
+REL-00930,follows,CM-1-3-7-2-2,CM-1-3-6-2-4,Develop Quote,nearness-only,yes,[slug] lifecycle records Out of scope: Quote content composition in the sales motion (CM-1-3-6-2-4) | price determination (CM-1-3-6-3) | terms changes (CM-1-3-7-2-1) | contract e
 REL-00931,uses-input,CM-1-3-7-2-2,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,no,
 REL-00933,informed-by,CM-1-3-7-2-3,CM-1-3-6-2-1,Manage Sales Pipeline,nearness-only,no,
 REL-00934,uses-input,CM-1-3-7-2-3,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,no,
-REL-00935,uses-input,CM-1-3-7-2-3,CM-1-3-8-2-6,Perform Revenue Accounting,nearness-only,no,
+REL-00935,uses-input,CM-1-3-7-2-3,CM-1-3-8-2-6,Perform Revenue Accounting,nearness-only,yes,"[slug] nancial budgeting, accounting revenue, and revenue-recognition policy (Finance; CM-1-3-8-2-6) | price, target, forecast, supply, and accounting corrections (their owners)"
 REL-00937,governed-by,CM-1-3-7-2-4,CM-1-3-7-4-1,Maintain Credit Policies,nearness-only,no,
-REL-00941,uses-input,CM-1-3-7-2-5,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
+REL-00941,uses-input,CM-1-3-7-2-5,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] costing method and allocation definition (Finance) | cost-to-serve calculation (CM-1-2-6-1-3) | financial reporting, transfer pricing, and tax valuation (Finance; Tax) | KP"
 REL-00943,uses-input,CM-1-3-7-2-6,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,no,
-REL-00944,enables,CM-1-3-7-2-6,CM-1-3-7-3-1,Capture & Validate Order,nearness-only,no,
-REL-00945,enables,CM-1-3-7-2-6,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,no,
+REL-00944,enables,CM-1-3-7-2-6,CM-1-3-7-3-1,Capture & Validate Order,nearness-only,yes,"[label] invoices and statements from Manage Customer Invoicing and Billing, orders into Capture & Validate Order, account changes through governed master-data submission — and is never an alte"
+REL-00945,enables,CM-1-3-7-2-6,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,yes,"[slug] t creation (consent/contactability framework) | request and dispute resolution (CM-1-3-7-5; billing, collections, credit, order, service owners)"
 REL-00946,uses-input,CM-1-3-7-3-1,CM-1-3-7-2-6,Manage Customer Portal,nearness-only,no,
-REL-00948,informed-by,CM-1-3-7-3-1,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
-REL-00949,precedes,CM-1-3-7-3-1,CM-1-3-7-3-2,Allocate & Release Order,nearness-only,no,
+REL-00948,informed-by,CM-1-3-7-3-1,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,yes,[label] ortal-transaction rule's receiving end). Credit checks apply Credit's rules via Monitor Credit Against Limit; a credit hold is Credit's rule firing and its release is Credit's decision. Pr
+REL-00949,precedes,CM-1-3-7-3-1,CM-1-3-7-3-2,Allocate & Release Order,nearness-only,yes,[slug] ion (their owners) | master data correction (governed submission) | allocation (CM-1-3-7-3-2) | customer-domain model definition (Data Governance)
 REL-00950,follows,CM-1-3-7-3-2,CM-1-3-7-3-1,Capture & Validate Order,nearness-only,no,
 REL-00951,precedes,CM-1-3-7-3-2,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
-REL-00952,governed-by,CM-1-3-7-3-2,CM-1-3-7-4,Manage Credit & Risk,nearness-only,no,
+REL-00952,governed-by,CM-1-3-7-3-2,CM-1-3-7-4,Manage Credit & Risk,nearness-only,yes,[slug] ply planning and inventory ownership (supply chain) | credit release decisions (CM-1-3-7-4)
 REL-00953,follows,CM-1-3-7-3-3,CM-1-3-7-3-1,Capture & Validate Order,nearness-only,no,
 REL-00954,uses-input,CM-1-3-7-3-3,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-00956,follows,CM-1-3-7-3-4,CM-1-3-7-3-2,Allocate & Release Order,nearness-only,no,
@@ -520,139 +520,139 @@ REL-00961,informed-by,CM-1-3-7-3-5,CM-1-3-7-3-1,Capture & Validate Order,nearnes
 REL-00963,enables,CM-1-3-7-3-6,CM-1-3-8-1-4,Create Credit Memo,nearness-only,no,
 REL-00964,uses-input,CM-1-3-7-3-6,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-00965,informed-by,CM-1-3-7-4-1,CM-1-3-7-4-4,Analyze Portfolio Credit Risk,nearness-only,no,
-REL-00969,governed-by,CM-1-3-7-4-2,CM-1-3-7-4-1,Maintain Credit Policies,nearness-only,no,
-REL-00970,enables,CM-1-3-7-4-2,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
-REL-00972,uses-input,CM-1-3-7-4-3,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,no,
-REL-00975,informed-by,CM-1-3-7-4-3,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,no,
+REL-00969,governed-by,CM-1-3-7-4-2,CM-1-3-7-4-1,Maintain Credit Policies,nearness-only,yes,[slug] fective dates | escalation of out-of-policy cases Out of scope: Policy setting (CM-1-3-7-4-1) | KYC execution (CM-1-3-7-4-6) | overriding Compliance/Legal restrictions | ex
+REL-00970,enables,CM-1-3-7-4-2,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,yes,[slug] CM-1-3-7-4-6) | overriding Compliance/Legal restrictions | exposure monitoring (CM-1-3-7-4-3) | legal determinations (Legal/Compliance) | master-data writes outside governe
+REL-00972,uses-input,CM-1-3-7-4-3,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,yes,[slug] ons | deterioration signal routing Out of scope: Limit and risk-code decisions (CM-1-3-7-4-2) | exposure policy definition (CM-1-3-7-4-1) | collections (CM-1-3-8-3) | order
+REL-00975,informed-by,CM-1-3-7-4-3,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,yes,[slug] ng these decisions) | sanctions hold adjudication (Compliance) | AR accounting (CM-1-3-8-2)
 REL-00976,uses-input,CM-1-3-7-4-4,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
 REL-00979,informed-by,CM-1-3-7-4-5,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
-REL-00983,enables,CM-1-3-7-4-6,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,no,
-REL-00985,precedes,CM-1-3-7-5-1,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,no,
+REL-00983,enables,CM-1-3-7-4-6,CM-1-3-7-4-2,Establish Credit Limit & Risk Code,nearness-only,yes,[slug] ationship-permissibility determinations (Compliance; Legal) | credit decisions (CM-1-3-7-4-2) | onboarding coordination (Set Up Prospect) | privacy framework setting
+REL-00985,precedes,CM-1-3-7-5-1,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,yes,[slug] incident ownership (Quality; EHS; Security; Operations) | resolution execution (CM-1-3-7-5-3) | commercial terms decisions
 REL-00993,follows,CM-1-3-7-5-4,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,no,
 REL-00998,uses-input,CM-1-3-7-5-6,CM-1-3-7-2-6,Manage Customer Portal,nearness-only,no,
 REL-01001,uses-input,CM-1-3-8-1-1,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-01002,uses-input,CM-1-3-8-1-1,CM-1-3-8-1-3,Determine Taxability,nearness-only,no,
 REL-01004,uses-input,CM-1-3-8-1-2,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-01005,governed-by,CM-1-3-8-1-2,CM-1-3-7-2-1,Establish Commercial Terms & Contracts,nearness-only,no,
-REL-01007,uses-input,CM-1-3-8-1-3,CM-1-3-7-1-4,Maintain Tax Master Data,nearness-only,no,
+REL-01007,uses-input,CM-1-3-8-1-3,CM-1-3-7-1-4,Maintain Tax Master Data,nearness-only,yes,"[slug] tations, and law-change responses (Tax function) | tax master data maintenance (CM-1-3-7-1-4) | certificate validation rules (Tax) | tax remittance, filing, and reporting ("
 REL-01010,uses-input,CM-1-3-8-1-4,CM-1-3-6-4-3,Settle Rebate,nearness-only,no,
 REL-01015,uses-input,CM-1-3-8-1-5,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,no,
-REL-01018,precedes,CM-1-3-8-2-1,CM-1-3-8-2-3,Apply Receipts,nearness-only,no,
-REL-01021,precedes,CM-1-3-8-2-2,CM-1-3-8-2-3,Apply Receipts,nearness-only,no,
+REL-01018,precedes,CM-1-3-8-2-1,CM-1-3-8-2-3,Apply Receipts,nearness-only,yes,[slug] ttlement finality determination (Treasury; payment method rules) | application (CM-1-3-8-2-3) | payment-method definition (CM-1-3-7-2-4) | refunds (Finance/Treasury; paymen
+REL-01021,precedes,CM-1-3-8-2-2,CM-1-3-8-2-3,Apply Receipts,nearness-only,yes,"[slug] g processes | staging of combined evidence Out of scope: Application decisions (CM-1-3-8-2-3) | deduction and dispute adjudication (CM-1-3-8-3) | bank, customer, invoice, o"
 REL-01022,uses-input,CM-1-3-8-2-2,CM-1-3-7-2-6,Manage Customer Portal,nearness-only,no,
 REL-01023,follows,CM-1-3-8-2-3,CM-1-3-8-2-2,Receive Remittance Advice,nearness-only,no,
 REL-01026,follows,CM-1-3-8-2-4,CM-1-3-8-2-3,Apply Receipts,nearness-only,no,
 REL-01027,uses-input,CM-1-3-8-2-4,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,no,
-REL-01029,uses-input,CM-1-3-8-2-5,CM-1-3-6-6-14,Manage Credit Card Transactions,nearness-only,yes,"review-batch rationale: on-operation records and exception outputs are a legitimate upstream input from Manage Credit Card Transactions. Retain (Perform Cash, Acquirer, and Receivables Reconciliations core:dependsOn"
+REL-01029,uses-input,CM-1-3-8-2-5,CM-1-3-6-6-14,Manage Credit Card Transactions,nearness-only,yes,"[label] movement. This row is the named receiving end of the card-program coordination (Manage Credit Card Transactions reconciles its daily cycles with this process, b29); acquirer fees and holdback"
 REL-01030,uses-input,CM-1-3-8-2-5,CM-1-3-8-2-3,Apply Receipts,nearness-only,no,
 REL-01036,uses-input,CM-1-3-8-3-1,CM-1-3-7-5-3,Process Inquiries and Requests,nearness-only,no,
 REL-01037,enables,CM-1-3-8-3-1,CM-1-3-8-1-4,Create Credit Memo,nearness-only,no,
 REL-01040,uses-input,CM-1-3-8-3-2,CM-1-3-8-2-3,Apply Receipts,nearness-only,no,
 REL-01041,informed-by,CM-1-3-8-3-2,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
-REL-01044,uses-input,CM-1-3-8-3-3,CM-1-3-7-4-4,Analyze Portfolio Credit Risk,nearness-only,no,
+REL-01044,uses-input,CM-1-3-8-3-3,CM-1-3-7-4-4,Analyze Portfolio Credit Risk,nearness-only,yes,[slug] nd debt forgiveness (their own authorized decisions) | portfolio risk analysis (CM-1-3-7-4-4) | financial statement disclosure (Finance)
 REL-01050,uses-input,CM-1-3-8-4-1,CM-1-3-8-2-6,Perform Revenue Accounting,nearness-only,no,
 REL-01057,uses-input,CM-1-3-8-4-3,CM-1-3-6-4-3,Settle Rebate,nearness-only,no,
 REL-01058,uses-input,CM-1-3-8-4-3,CM-1-3-6-6-15,Manage Brand Loyalty Programs,nearness-only,no,
-REL-01059,enables,CM-1-3-8-4-3,CM-1-3-8-2-6,Perform Revenue Accounting,nearness-only,no,
-REL-01061,uses-input,CM-1-3-8-4-4,CM-1-3-8-4-5,Determine Taxability,nearness-only,yes,review-batch rationale: proved taxability treatment and governed tax-data/procedure changes produced by Determine Taxability. ContextualInferredSibling (shared parent CM-1-3-8-4) is supplementary context
-REL-01062,uses-input,CM-1-3-8-4-4,CM-1-3-7-1-4,Maintain Tax Master Data,nearness-only,no,
+REL-01059,enables,CM-1-3-8-4-3,CM-1-3-8-2-6,Perform Revenue Accounting,nearness-only,yes,[slug] and revenue-recognition conclusions (Finance) | revenue recognition execution (CM-1-3-8-2-6) | rebate and program decisions (Their owners) | settlement execution (Their pr
+REL-01061,uses-input,CM-1-3-8-4-4,CM-1-3-8-4-5,Determine Taxability,nearness-only,no,
+REL-01062,uses-input,CM-1-3-8-4-4,CM-1-3-7-1-4,Maintain Tax Master Data,nearness-only,yes,[slug] ax determination (CM-1-3-8-1-3) | tax master data changes (Governed submission; CM-1-3-7-1-4)
 REL-01069,uses-input,CM-1-3-8-4-6,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-01071,uses-input,CM-1-3-8-4-7,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,no,
-REL-01076,uses-input,CM-1-3-9-1-2,CM-1-3-9-1-1,Define Operating Model,nearness-only,no,
+REL-01076,uses-input,CM-1-3-9-1-2,CM-1-3-9-1-1,Define Operating Model,nearness-only,yes,[slug] /continuity incidents to their protocols Out of scope: Operating-model changes (CM-1-3-9-1-1) | substantive incident resolution for escalated categories (Quality; EHS; Secu
 REL-01077,uses-input,CM-1-3-9-1-2,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,no,
 REL-01083,uses-input,CM-1-3-9-1-5,CM-1-3-9-1-1,Define Operating Model,nearness-only,no,
 REL-01101,informed-by,CM-1-3-6-8,CM-1-3-6-1-3,Report Franchise Performance,nearness-only,no,
 REL-01105,informed-by,CM-1-2-5-4,CM-1-2-5-3,Crude/Feed Transportation Management,nearness-only,no,
-REL-01110,informed-by,CM-1-3-6-3,CM-1-3-3-2,Pricing Strategy Management,nearness-only,no,
+REL-01110,informed-by,CM-1-3-6-3,CM-1-3-3-2,Pricing Strategy Management,nearness-only,yes,"[slug] gs, customer/channel eligibility, and delegated exception criteria developed at CM-1-3-3-2 under its commercial, Finance, Legal, Compliance, and delegation-of-authority a"
 REL-01111,enables,CM-1-3-6-3,CM-1-3-6-2,Sales Execution,nearness-only,no,
-REL-01113,governed-by,CM-1-3-6-7,CM-1-3-4-4,Manage Licensing & IP,nearness-only,no,
-REL-01114,uses-input,CM-1-3-6-7,CM-1-3-6-1-2,Manage Relationship with License Brand Providers,nearness-only,no,
-REL-01116,informed-by,CM-1-1-3-5,CM-1-1-2,Regional Optimization,nearness-only,no,
-REL-01117,precedes,CM-1-1-3-5,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,no,
-REL-01119,follows,CM-1-1-7-1,CM-1-1-7-2,Production Scheduling,nearness-only,no,
+REL-01113,governed-by,CM-1-3-6-7,CM-1-3-4-4,Manage Licensing & IP,nearness-only,yes,"[slug] of scope: IP ownership, registration, legal protection, and rights enforcement (CM-1-3-4-4; Legal) | licensed-brand provider standards setting (providers; CM-1-3-6-1-2) |"
+REL-01114,uses-input,CM-1-3-6-7,CM-1-3-6-1-2,Manage Relationship with License Brand Providers,nearness-only,yes,[slug] ent (CM-1-3-4-4; Legal) | licensed-brand provider standards setting (providers; CM-1-3-6-1-2) | enforcement remedies under agreements (relationship management; Legal) | saf
+REL-01116,informed-by,CM-1-1-3-5,CM-1-1-2,Regional Optimization,nearness-only,yes,"[slug] s plan-period supply and disposition decisions, owned by Regional Optimization (CM-1-1-2); excludes mode-level nomination, load, and movement administration, owned by P"
+REL-01117,precedes,CM-1-1-3-5,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,yes,"[slug] , load, and movement administration, owned by Physical Distribution Scheduling (CM-1-1-3-6); excludes secondary deliveries, owned by Secondary Distribution Management (CM"
+REL-01119,follows,CM-1-1-7-1,CM-1-1-7-2,Production Scheduling,nearness-only,yes,"[slug] g. Excludes building the dated schedule itself, owned by Production Scheduling (CM-1-1-7-2); excludes the monthly plan (Refinery Planning and Optimization, CM-1-1-4). In"
 REL-01121,informed-by,CM-1-1-7-3,CM-1-1-7-2,Production Scheduling,nearness-only,no,
-REL-01123,informed-by,CM-1-2-5-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
+REL-01123,informed-by,CM-1-2-5-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] sus-advise pattern). Excludes the binding production plan, slate, and run rate (CM-1-1-4, PTC-002); trade negotiation and execution (CM-1-2-1-3); crude evaluation (CM-1"
 REL-01125,uses-input,CM-1-2-5-2,CM-1-2-5-1,Crude/Feed Quality Management,nearness-only,no,
-REL-01127,uses-input,CM-1-2-5-3,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-01130,informed-by,CM-1-2-6-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,no,
-REL-01133,enables,CM-1-2-6-2,CM-1-2-6-3,Supply Operations,nearness-only,yes,"definitions.json: picture the supply chain runs on, forecasting location-level product demand for supply operations, and managing product-exchange volumes as a balancing lever — so supply operati"
+REL-01127,uses-input,CM-1-2-5-3,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,yes,[slug] Operates against carrier contracts administered under Manage Carrier Contracts (CM-1-2-1-2-9) and transportation deals captured under CM-1-2-1-3-9; movement actuals are rec
+REL-01130,informed-by,CM-1-2-6-1,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,nearness-only,yes,"[slug] market attractiveness evaluation (CM-1-2-6-1-2), and cost-to-serve assessment (CM-1-2-6-1-3), combined into recommendations on network participation, service levels, and s"
+REL-01133,enables,CM-1-2-6-2,CM-1-2-6-3,Supply Operations,nearness-only,no,
 REL-01135,uses-input,CM-1-2-6-3,CM-1-2-6-2,Refined Product Demand Management,nearness-only,no,
-REL-01136,uses-input,CM-1-2-6-3,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,no,
-REL-01137,precedes,CM-1-2-6-3,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,no,
-REL-01140,informed-by,CM-1-2-7-1,CM-1-2-1-2,Contract Management,nearness-only,no,
-REL-01144,informed-by,CM-1-3-2-5,CM-1-3-1-3,Consumer Analysis,nearness-only,no,
-REL-01145,informed-by,CM-1-3-2-5,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,no,
+REL-01136,uses-input,CM-1-2-6-3,CM-1-1-3-7-9,Manage Inventory Replenishment,nearness-only,yes,"[slug] consuming the replenishment decisions owned by Manage Inventory Replenishment (CM-1-1-3-7-9, batch 04) (CM-1-2-6-3-2); and coordinating transportation arrangements for S&T"
+REL-01137,precedes,CM-1-2-6-3,CM-1-1-3-6,Physical Distribution Scheduling,nearness-only,yes,"[slug] hysical operations. The complementarity rule: Physical Distribution Scheduling (CM-1-1-3-6, batch 05) owns primary-movement nominations and shipper-side administration; S"
+REL-01140,informed-by,CM-1-2-7-1,CM-1-2-1-2,Contract Management,nearness-only,yes,"[slug] ycle, and renewal/termination/novation administration with Contract Management (CM-1-2-1-2) where the agreement is within its trading-contract scope; deal capture with Tr"
+REL-01144,informed-by,CM-1-3-2-5,CM-1-3-1-3,Consumer Analysis,nearness-only,yes,"[slug] -3-6, CM-1-3-9); experience measurement (CM-1-3-9-3, CM-1-3-5-5); the analyses (CM-1-3-1-3/-4); loyalty operation (CM-1-3-6-6). In scope: Run the recurring experience-str"
+REL-01145,informed-by,CM-1-3-2-5,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,yes,"[range] -3-6, CM-1-3-9); experience measurement (CM-1-3-9-3, CM-1-3-5-5); the analyses (CM-1-3-1-3/-4); loyalty operation (CM-1-3-6-6). In scope: Run the recurring experience-strate"
 REL-01150,informed-by,CM-1-3-4-2,CM-1-3-4-1,Visioning And Implementation Planning,nearness-only,no,
 REL-01152,informed-by,CM-1-3-4-3,CM-1-3-4-2,Concept & Feasibility Study,nearness-only,no,
-REL-01158,governed-by,CM-1-3-6-4,CM-1-3-3-2,Pricing Strategy Management,nearness-only,no,
+REL-01158,governed-by,CM-1-3-6-4,CM-1-3-3-2,Pricing Strategy Management,nearness-only,yes,"[slug] y operate within — is developed and approved under Pricing Strategy Management (CM-1-3-3-2) and the applicable delegations of authority; Rebate Management negotiates, imp"
 REL-01159,informed-by,CM-1-3-6-4,CM-1-3-3-2-3,Analyze Pricing Performance,nearness-only,no,
-REL-01160,uses-input,CM-1-3-6-5,CM-1-3-5-3,Marketing Communications Planning,nearness-only,no,
-REL-01162,uses-input,CM-1-3-9-2,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,no,
-REL-01164,uses-input,CM-1-3-9-2,CM-1-3-9-1,Service & Support Enablement,nearness-only,no,
-REL-01165,uses-input,CM-1-3-9-3,CM-1-3-9-2,Service & Support Delivery,nearness-only,no,
-REL-01168,follows,CM-1-1-3-6,CM-1-1-3-5,Product Scheduling,nearness-only,no,
+REL-01160,uses-input,CM-1-3-6-5,CM-1-3-5-3,Marketing Communications Planning,nearness-only,yes,[label] easurement. This process is the receiving end of the marketing release handoff: Marketing Communications Planning and related planning processes prepare and release approved deliverables under
+REL-01162,uses-input,CM-1-3-9-2,CM-1-3-7-5,Manage Customer Requests and Inquiries,nearness-only,yes,"[slug] case and, where billable, to Billing Out of scope: The request/case experience (CM-1-3-7-5) | prices, credits, tax outcomes, and invoices (Their owning processes; CM-1-3-"
+REL-01164,uses-input,CM-1-3-9-2,CM-1-3-9-1,Service & Support Enablement,nearness-only,yes,[slug] 3-8-1) | master data (CM-1-3-7-1; governed submission) | the service machinery (CM-1-3-9-1) | outcome measurement (CM-1-3-9-3)
+REL-01165,uses-input,CM-1-3-9-3,CM-1-3-9-2,Service & Support Delivery,nearness-only,yes,[slug] publication (KPI Store governance) | case resolution and delivery (CM-1-3-7-5; CM-1-3-9-2)
+REL-01168,follows,CM-1-1-3-6,CM-1-1-3-5,Product Scheduling,nearness-only,yes,"[slug] tern. Excludes deciding what moves where and when, owned by Product Scheduling (CM-1-1-3-5); excludes secondary deliveries (CM-1-1-3-8). In scope: Nominate and confirm mo"
 REL-01170,informed-by,CM-1-1-3-8,CM-1-1-3-7-3,Develop Finished Product Inventory Policy,nearness-only,no,
-REL-01173,informed-by,CM-1-2-5-1,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,no,
-REL-01180,uses-input,CM-1-3-1-2,CM-1-2-4-2,Accounting,nearness-only,no,
+REL-01173,informed-by,CM-1-2-5-1,CM-1-1-4-7-2,Evaluate Crude & Feedstock,nearness-only,yes,"[slug] d economic value of individual crudes — is owned by Evaluate Crude & Feedstock (CM-1-1-4-7-2, batch 02). Excludes the binding production slate (CM-1-1-4, PTC-002); crude ev"
+REL-01180,uses-input,CM-1-3-1-2,CM-1-2-4-2,Accounting,nearness-only,yes,"[slug] ions. Excludes strategy decisions (CM-1-3-2/3); financial reporting production (CM-1-2-4-2, Finance); cost-to-serve analysis (CM-1-2-6-1-3, batch 19); competitor analysis"
 REL-01183,informed-by,CM-1-3-1-3,CM-1-3-1-1,Market Analysis,nearness-only,no,
 REL-01186,informed-by,CM-1-3-1-4,CM-1-3-1-1,Market Analysis,nearness-only,no,
-REL-01189,informed-by,CM-1-3-1-5,CM-1-3-1-1,Market Analysis,nearness-only,no,
-REL-01193,informed-by,CM-1-3-2-2,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,no,
-REL-01196,informed-by,CM-1-3-2-3,CM-1-3-1-3,Consumer Analysis,nearness-only,no,
-REL-01199,informed-by,CM-1-3-3-1,CM-1-3-2-2,Customer And Marketer Value Proposition,nearness-only,no,
-REL-01200,informed-by,CM-1-3-3-1,CM-1-3-2-3,Consumer Value Proposition,nearness-only,no,
-REL-01202,informed-by,CM-1-3-3-4,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,no,
+REL-01189,informed-by,CM-1-3-1-5,CM-1-3-1-1,Market Analysis,nearness-only,yes,"[slug] ommunications and the compliance framework. Excludes market-structure analysis (CM-1-3-1-1); competition-law compliance ownership (Legal, compliance per batch 16); strate"
+REL-01193,informed-by,CM-1-3-2-2,CM-1-3-1-4,Customer And Marketer Analysis,nearness-only,yes,[slug] account and partner management (CM-1-3-6-1/-2); customer and marketer analysis (CM-1-3-1-4). In scope: Run the recurring B2B/channel value-proposition cycle | develop and
+REL-01196,informed-by,CM-1-3-2-3,CM-1-3-1-3,Consumer Analysis,nearness-only,yes,[slug] sition strategy (CM-1-3-2-3-4). Consumer evidence comes from Consumer Analysis (CM-1-3-1-3) under its privacy and publication controls (batch 21 shared statement; aggrega
+REL-01199,informed-by,CM-1-3-3-1,CM-1-3-2-2,Customer And Marketer Value Proposition,nearness-only,yes,[slug] -3-3-1-4). Designs within approved strategic direction: the value propositions (CM-1-3-2-2/-3) and brand strategy (CM-1-3-2-1) set the promise; this cluster turns the pro
+REL-01200,informed-by,CM-1-3-3-1,CM-1-3-2-3,Consumer Value Proposition,nearness-only,yes,[range] -3-3-1-4). Designs within approved strategic direction: the value propositions (CM-1-3-2-2/-3) and brand strategy (CM-1-3-2-1) set the promise; this cluster turns the promis
+REL-01202,informed-by,CM-1-3-3-4,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,yes,[slug] . Designs within the approved channel strategy (CM-1-3-2-4) and channel design (CM-1-3-3-3); changes affecting existing branded dealer arrangements inherit the batch 22 f
 REL-01203,informed-by,CM-1-3-3-4,CM-1-3-2-3,Consumer Value Proposition,nearness-only,no,
-REL-01205,informed-by,CM-1-3-4-5,CM-1-3-4-3,Product & Service Development,nearness-only,no,
+REL-01205,informed-by,CM-1-3-4-5,CM-1-3-4-3,Product & Service Development,nearness-only,yes,"[slug] ge implementation (CM-1-3-4-3-3, accountable processes); development execution (CM-1-3-4-3); financial valuation policy (Finance); intellectual-asset portfolios (CM-1-3-4"
 REL-01208,informed-by,CM-1-3-4-6,CM-1-3-4-1,Visioning And Implementation Planning,nearness-only,no,
-REL-01211,informed-by,CM-1-3-5-1,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,no,
+REL-01211,informed-by,CM-1-3-5-1,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,yes,"[slug] n approved direction: sales strategy direction is owned by the strategy branch (CM-1-3-2-4, CM-1-3-2-2, batch 22) — this cluster is sales planning, not strategy; sales fo"
 REL-01214,informed-by,CM-1-3-5-4,CM-1-3-3-1,Customer Offer Definition,nearness-only,no,
-REL-01217,informed-by,CM-1-3-6-1,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,no,
+REL-01217,informed-by,CM-1-3-6-1,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,yes,"[slug] here); rebates at CM-1-3-6-4. Excludes channel strategy and design (CM-1-3-2-4, CM-1-3-3-3); franchise and licensing legal work (Legal, locked rule); credit decisions (b1"
 REL-01218,uses-input,CM-1-3-6-1,CM-1-3-5-1-3,Perform Account Planning,nearness-only,no,
-REL-01220,uses-input,CM-1-3-8-3,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,no,
+REL-01220,uses-input,CM-1-3-8-3,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,yes,"[slug] issuance (CM-1-3-8-1 controlled documents, on instruction) | cash application (CM-1-3-8-2) | credit limits and credit-driven closure (CM-1-3-7-4) | legal action conduct"
 REL-01221,uses-input,CM-1-3-8-3,CM-1-3-7-4-3,Monitor Credit Against Limit,nearness-only,no,
-REL-01223,precedes,CM-1-1-1-1,CM-1-1-2,Regional Optimization,nearness-only,no,
-REL-01226,follows,CM-1-2-2-2,CM-1-2-1-3,Trade Capture,nearness-only,no,
-REL-01227,precedes,CM-1-2-2-2,CM-1-2-4-1,Settlements,nearness-only,no,
+REL-01223,precedes,CM-1-1-1-1,CM-1-1-2,Regional Optimization,nearness-only,yes,"[slug] oduction, inventory, and allocation choices are owned by Regional Optimization (CM-1-1-2); excludes capturing or committing customer orders, owned by Order Management ("
+REL-01226,follows,CM-1-2-2-2,CM-1-2-1-3,Trade Capture,nearness-only,yes,"[slug] ivery model. Excludes deal capture and its corrections, owned by Trade Capture (CM-1-2-1-3); excludes master agreement establishment and administration, owned by Contract"
+REL-01227,precedes,CM-1-2-2-2,CM-1-2-4-1,Settlements,nearness-only,yes,"[slug] Contract Management (CM-1-2-1-2); excludes settlement and settlement disputes (CM-1-2-4-1, CM-1-2-4-1-17); excludes risk measurement (Market Risk Management, CM-1-2-2-3)"
 REL-01228,governed-by,CM-1-2-2-2,CM-1-2-4-3,Regulatory & Compliance,nearness-only,no,
-REL-01232,informed-by,CM-1-3-3-3,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,no,
-REL-01235,informed-by,CM-1-3-3-6,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,no,
+REL-01232,informed-by,CM-1-3-3-3,CM-1-3-2-4,Sales & Distribution Channel Strategy,nearness-only,yes,[slug] urement framework (CM-1-3-3-3-5). Designs within the approved channel strategy (CM-1-3-2-4) and value propositions (CM-1-3-2-2/-3); design changes affecting existing bran
+REL-01235,informed-by,CM-1-3-3-6,CM-1-3-3-3,Sales & Distribution Channel Design,nearness-only,yes,"[slug] ountable functions); channel mix decisions (CM-1-3-2-4); channel system design (CM-1-3-3-3); enterprise architecture, solution design, and implementation (technology owne"
 REL-01238,uses-input,CM-1-3-8-1,CM-1-3-7-3-4,Manage Fulfillment,nearness-only,no,
 REL-01239,uses-input,CM-1-3-8-1,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,no,
-REL-01240,enables,CM-1-3-8-1,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,no,
-REL-01241,follows,CM-1-1-7-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-01242,precedes,CM-1-1-7-2,CM-1-1-7-1,Daily Execution Planning,nearness-only,no,
-REL-01244,informed-by,CM-1-2-1-1,CM-1-1-4,Refinery Planning and Optimization,nearness-only,no,
-REL-01246,uses-input,CM-1-3-4-4,CM-1-3-4-3,Product & Service Development,nearness-only,no,
-REL-01247,informed-by,CM-1-3-4-4,CM-1-3-2-1,Brand Strategy,nearness-only,no,
+REL-01240,enables,CM-1-3-8-1,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,yes,"[slug] h application, collections, and revenue accounting are the adjacent processes' (CM-1-3-8-2/-3/-4); payment execution follows the payment-authority rule. In scope: Invoice"
+REL-01241,follows,CM-1-1-7-2,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] Excludes the monthly plan itself, owned by Refinery Planning and Optimization (CM-1-1-4); excludes the daily scheduling basis, owned by Daily Execution Planning (CM-1-"
+REL-01242,precedes,CM-1-1-7-2,CM-1-1-7-1,Daily Execution Planning,nearness-only,yes,"[slug] 1-1-4); excludes the daily scheduling basis, owned by Daily Execution Planning (CM-1-1-7-1). In scope: Maintain the scheduling basis and master data | maintain the produc"
+REL-01244,informed-by,CM-1-2-1-1,CM-1-1-4,Refinery Planning and Optimization,nearness-only,yes,"[slug] sion, and production plans and schedules by Refinery Planning and Optimization (CM-1-1-4) and Refinery Production Planning and Scheduling (CM-1-1-7). Excludes trade exe"
+REL-01246,uses-input,CM-1-3-4-4,CM-1-3-4-3,Product & Service Development,nearness-only,yes,[slug] nce lock); brand strategy (CM-1-3-2-1); development of the underlying products (CM-1-3-4-3); R&D portfolio management (CM-1-3-4-5). In scope: Maintain the intellectual-as
+REL-01247,informed-by,CM-1-3-4-4,CM-1-3-2-1,Brand Strategy,nearness-only,yes,"[slug] ial approval frameworks (batch 23); brand licensing aligns with Brand Strategy (CM-1-3-2-1) and, where franchise arrangements are affected, the batch 22 fact-dependent PM"
 REL-01249,enables,CM-1-3-7-1,CM-1-3-7-3,Capture And Manage Order Fulfillment,nearness-only,no,
 REL-01251,uses-input,CM-1-3-7-1,CM-1-3-6-3-2,Implement sales price,nearness-only,no,
 REL-01252,uses-input,CM-1-3-7-2,CM-1-3-7-1-2,Maintain Price & Discount Master Data,nearness-only,no,
 REL-01256,governed-by,CM-1-3-7-3,CM-1-3-7-4,Manage Credit & Risk,nearness-only,no,
 REL-01261,uses-input,CM-1-3-7-5,CM-1-3-7-2-6,Manage Customer Portal,nearness-only,no,
-REL-01264,uses-input,CM-1-3-8-2,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,no,
-REL-01268,enables,CM-1-3-9-1,CM-1-3-9-2,Service & Support Delivery,nearness-only,no,
-REL-01269,assures,CM-1-2-4-3,CM-1-2-1,Trading Management,nearness-only,yes,"review-batch rationale: gations, and drives exceptions to closure — assures the compliance condition of Trading Management without performing trading. Stored: (Trading Management core:assuredBy Regulato"
-REL-01270,assures,CM-1-2-4-3,CM-1-2-4-1,Settlements,nearness-only,yes,review-batch rationale:  regulatory and compliance control function assures the compliance condition of Settlements without conducting settlement operations. Stored: (Settlements core:assuredBy R
-REL-01272,informed-by,CM-1-3-3-5,CM-1-3-2-1,Brand Strategy,nearness-only,no,
-REL-01276,uses-input,CM-1-3-6-2,CM-1-3-6-3,Sales Pricing Management,nearness-only,no,
-REL-01278,uses-input,CM-1-3-8-4,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,no,
-REL-01279,uses-input,CM-1-3-8-4,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,no,
-REL-01289,follows,CM-1-2-3-1,CM-1-2-1-3,Trade Capture,nearness-only,no,
-REL-01290,informed-by,CM-1-2-3-1,CM-1-2-2-2,Confirmations Management,nearness-only,no,
-REL-01291,precedes,CM-1-2-3-1,CM-1-2-4-1,Settlements,nearness-only,no,
-REL-01292,uses-input,CM-1-2-4-4,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,no,
+REL-01264,uses-input,CM-1-3-8-2,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,yes,"[slug] ements, payment rails, and funds movement (Treasury) | billing and corrections (CM-1-3-8-1) | dispute adjudication and collections (CM-1-3-8-3) | write-offs and allowance"
+REL-01268,enables,CM-1-3-9-1,CM-1-3-9-2,Service & Support Delivery,nearness-only,yes,[slug] ate facilities) | safety requirements (EHS) | service delivery and measurement (CM-1-3-9-2/-3)
+REL-01269,assures,CM-1-2-4-3,CM-1-2-1,Trading Management,nearness-only,no,
+REL-01270,assures,CM-1-2-4-3,CM-1-2-4-1,Settlements,nearness-only,no,
+REL-01272,informed-by,CM-1-3-3-5,CM-1-3-2-1,Brand Strategy,nearness-only,yes,"[slug] ne integrated communications strategy implementing the approved brand strategy (CM-1-3-2-1). Marketing Communications Strategy may set strategic communication roles, audi"
+REL-01276,uses-input,CM-1-3-6-2,CM-1-3-6-3,Sales Pricing Management,nearness-only,yes,[slug] olled transaction completion. Prices are applied from Sales Pricing Management (CM-1-3-6-3) within the approved architecture; contract legal drafting and execution are Le
+REL-01278,uses-input,CM-1-3-8-4,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,yes,"[slug] (Accountable functions) | billing, cash application, and collections execution (CM-1-3-8-1/-2/-3) | funds movement (Finance/Treasury; payment-authority rule)"
+REL-01279,uses-input,CM-1-3-8-4,CM-1-3-8-2,"Manage Cash Application, A/R & Revenue Accounting",nearness-only,yes,"[range] (Accountable functions) | billing, cash application, and collections execution (CM-1-3-8-1/-2/-3) | funds movement (Finance/Treasury; payment-authority rule)"
+REL-01289,follows,CM-1-2-3-1,CM-1-2-1-3,Trade Capture,nearness-only,yes,[slug] under the applicable measurement standards (API MPMS). Excludes trade capture (CM-1-2-1-3); confirmation of agreed terms (CM-1-2-2-2); settlement and invoicing (CM-1-2-4
+REL-01290,informed-by,CM-1-2-3-1,CM-1-2-2-2,Confirmations Management,nearness-only,yes,[slug] (API MPMS). Excludes trade capture (CM-1-2-1-3); confirmation of agreed terms (CM-1-2-2-2); settlement and invoicing (CM-1-2-4-1); per-movement closure in distribution s
+REL-01291,precedes,CM-1-2-3-1,CM-1-2-4-1,Settlements,nearness-only,yes,[slug] -1-2-1-3); confirmation of agreed terms (CM-1-2-2-2); settlement and invoicing (CM-1-2-4-1); per-movement closure in distribution scheduling and inventory records and net
+REL-01292,uses-input,CM-1-2-4-4,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,nearness-only,yes,"[slug] actualized time, notice, and event facts (Perform Vessel & Barge Actualization, CM-1-2-3-1-4, per the batch 13 handoff); creating, documenting, and pursuing outbound claims"
 REL-01293,uses-input,CM-1-2-4-4,CM-1-2-1-2-9,Manage Carrier Contracts,nearness-only,no,
-REL-01294,precedes,CM-1-2-4-4,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,no,
-REL-01295,informed-by,CM-1-3-5-3,CM-1-3-3-5,Marketing Communications Strategy,nearness-only,no,
-REL-01297,enables,CM-1-3-5-3,CM-1-3-6-5,Marketing Plan Execution,nearness-only,yes,definitions.json: elease of communications deliverables — handing in-channel program execution to Marketing Plan Execution.
-REL-01300,governed-by,CM-1-2-1-2,CM-1-2-2-1,Credit Risk Management,nearness-only,no,
-REL-01301,follows,CM-1-2-1-3,CM-1-2-1-4,Trading Strategy Management,nearness-only,no,
-REL-01302,precedes,CM-1-2-1-3,CM-1-2-2-2,Confirmations Management,nearness-only,no,
-REL-01306,informed-by,CM-1-1-3-7,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,no,
-REL-01307,follows,CM-1-2-4-2,CM-1-2-4-1,Settlements,nearness-only,no,
+REL-01294,precedes,CM-1-2-4-4,CM-1-2-4-2-4,Manage AR/AP & Actuals,nearness-only,yes,"[slug] conduct (Legal & Corporate Communications); AR/AP booking and cash application (CM-1-2-4-2-4, CM-1-2-4-2-9); chartering and voyage operations (marine logistics processes)."
+REL-01295,informed-by,CM-1-3-5-3,CM-1-3-3-5,Marketing Communications Strategy,nearness-only,yes,[slug] 5) feed the next needs/mix/budget/plan cycle. Excludes communications strategy (CM-1-3-3-5); in-channel program execution and activation (CM-1-3-6-5); media buying/placem
+REL-01297,enables,CM-1-3-5-3,CM-1-3-6-5,Marketing Plan Execution,nearness-only,yes,"[slug] eadiness, approval routing, and release coordination; Marketing Plan Execution (CM-1-3-6-5) owns in-channel, in-site, and program activation; media buying and placement c"
+REL-01300,governed-by,CM-1-2-1-2,CM-1-2-2-1,Credit Risk Management,nearness-only,yes,"[slug] cludes credit reviews, limits, and collateral, owned by Credit Risk Management (CM-1-2-2-1); excludes commercial negotiation of agreements where a negotiating owner exist"
+REL-01301,follows,CM-1-2-1-3,CM-1-2-1-4,Trading Strategy Management,nearness-only,yes,"[slug] selling (authorized trader or delegated execution role) | strategy definition (CM-1-2-1-4, CM-1-2-1-1-4) | confirmation and matching (CM-1-2-2-2) | risk measurement and"
+REL-01302,precedes,CM-1-2-1-3,CM-1-2-2-2,Confirmations Management,nearness-only,yes,"[slug] nfirmation and matching with counterparties, owned by Confirmations Management (CM-1-2-2-2); excludes risk measurement and limits (Market Risk Management, CM-1-2-2-3); ex"
+REL-01306,informed-by,CM-1-1-3-7,CM-1-1-2-13,Plan Finished Goods Inventory,nearness-only,yes,"[slug] ntory targets inside the regional plan, owned by Plan Finished Goods Inventory (CM-1-1-2-13); excludes physical tank, terminal, and pipeline operation, owned by Midstream;"
+REL-01307,follows,CM-1-2-4-2,CM-1-2-4-1,Settlements,nearness-only,yes,[slug] anking processes; settlement calculation and invoice validation by Settlements (CM-1-2-4-1); the refinery operational material balance by Perform Production Accounting (C
 REL-01308,uses-input,CM-1-2-4-2,CM-1-2-2-3-5,Perform End-of-Month (EOM) Process,nearness-only,no,
-REL-01310,governed-by,CM-1-2-2-3,CM-1-2-4-3,Regulatory & Compliance,nearness-only,no,
-REL-01313,governed-by,CM-1-3-6-6,CM-1-3-7-4,Manage Credit & Risk,nearness-only,yes,"review-batch source_definition: ecute under Manage Customer Invoicing and Billing; customer credit limits under Manage Credit & Risk; collection, disputes, and bad-debt allowance under Manage Receivables Resoluti"
-REL-01314,uses-input,CM-1-3-6-6,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,no,
+REL-01310,governed-by,CM-1-2-2-3,CM-1-2-4-3,Regulatory & Compliance,nearness-only,yes,"[slug] -4); excludes credit risk (CM-1-2-2-1); excludes regulatory trading compliance (CM-1-2-4-3); excludes accounting P&L and its reconciliation ownership (Accounting, CM-1-2-"
+REL-01313,governed-by,CM-1-3-6-6,CM-1-3-7-4,Manage Credit & Risk,nearness-only,yes,"[label] ecute under Manage Customer Invoicing and Billing; customer credit limits under Manage Credit & Risk; collection, disputes, and bad-debt allowance under Manage Receivables Resoluti"
+REL-01314,uses-input,CM-1-3-6-6,CM-1-3-8-1,Manage Customer Invoicing and Billing,nearness-only,yes,"[label] each enterprise control retains its owner — invoicing and billing execute under Manage Customer Invoicing and Billing; customer credit limits under Manage Credit & Risk; collection, disputes, and b"
 REL-01317,informed-by,CM-1-2-4-1,CM-1-2-2-2,Confirmations Management,nearness-only,no,

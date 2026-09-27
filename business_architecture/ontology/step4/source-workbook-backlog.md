@@ -69,6 +69,32 @@ All 96 Section B rows were held under the nearness-only identity rule: a candida
 | REL-01286 | `governed-by` (Credit Risk Management → Regulatory & Compliance): Credit Risk Management is an independent risk-control function with its own assessment, limits, collateral, margining, exposure, monitoring, and reporting. Trading Regulatory & Compliance does not establish authority over credit-risk policy. Possible future `subjectToComplianceRequirements` relation — not `governedBy`. Held by Hamid 2026-09-25. | 2026-09-25 | awaiting workbook authoring change |
 | — | Sequence contradictions held under the property rule (both directions of a mutual `precedes`): none currently in the emitting set (verified 2026-09-24). Future ones land here. | — | watching |
 
+## G1b pairs held on both sides (Hamid 2026-09-26)
+
+15 pairs where the G1b `enables` row is held (G1bNoVerbChange) and the reverse
+`informed-by` row is also held (no route in the 2026-09-26 informed-by pass).
+Both sides held → the relationship disappears from the graph entirely.
+Same pattern as contradiction pair C. The G1b gate check is now conditional:
+reverse fact present **if** its row has a route; otherwise held with no fact.
+
+| G1b row | informed-by row | status |
+|---|---|---|
+| REL-00469 | REL-01130 | both held — relationship absent from graph |
+| REL-00489 | REL-00476 | both held — relationship absent from graph |
+| REL-00499 | REL-00505 | both held — relationship absent from graph |
+| REL-00648 | REL-00643 | both held — relationship absent from graph |
+| REL-00974 | REL-00896 | both held — relationship absent from graph |
+| REL-00977 | REL-00965 | both held — relationship absent from graph |
+| REL-01112 | REL-00646 | both held — relationship absent from graph |
+| REL-01148 | REL-01150 | both held — relationship absent from graph |
+| REL-01151 | REL-01152 | both held — relationship absent from graph |
+| REL-01154 | REL-01205 | both held — relationship absent from graph |
+| REL-01184 | REL-01193 | both held — relationship absent from graph |
+| REL-01194 | REL-01199 | both held — relationship absent from graph |
+| REL-01197 | REL-01200 | both held — relationship absent from graph |
+| REL-01233 | REL-01217 | both held — relationship absent from graph |
+| REL-01273 | REL-01295 | both held — relationship absent from graph |
+
 ## Definitions
 
 - **Restates-hierarchy relation:** a relationship mention whose only content
