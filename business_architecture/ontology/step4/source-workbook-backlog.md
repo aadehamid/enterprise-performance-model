@@ -326,3 +326,16 @@ source author. Supersession entries in `step4-decisions.md`.
 Target-side check for the four compliance monitors: does Manage Exceptions
 (CM-1-2-4-3-7) cite its sources as a range? If so, that is target-side
 evidence and needs the source author to confirm (REL-00215 pattern).
+
+## Precedes/follows holds routed for source correction (Hamid 2026-09-27)
+
+19 rows held — each needs an affirmative sequence citation from the source
+author (or confirmation the sequence does not exist).
+
+**6 no citation (approval did not cover):**
+REL-01223, REL-01227, REL-01241, REL-01289, REL-01291, REL-01294.
+
+**13 exclusion/boundary/owned-by as sole route:**
+REL-00008, REL-00068, REL-00112, REL-00149,
+REL-00184, REL-00188, REL-00193, REL-00200, REL-00206,
+REL-00319, REL-00351, REL-00374, REL-00930.
