@@ -579,55 +579,46 @@ reach its controlled state without the target, its completed control, or its
 required condition. Not merely inferred because the target later
 consumes/calculates/uses related information.
 
-5 APPROVE (D:hamid-verdict 2026-09-25). 1 HOLD (D:hamid-verdict 2026-09-25).
-**NOT basis-only** — 1 fact not emitted.
+2 APPROVE (D:hamid-verdict 2026-09-25). 4 HOLD (D:hamid-verdict 2026-09-25,
+3 pending strict citation).
+**NOT basis-only** — facts not emitted for held rows.
 
 ### Identity routes
 
 | Row | Match type | Route | Citation | Affirmative? | Verdict |
 |---|---|---|---|---|---|
-| REL-00158 | exact-unique-current (target label = prefLabel) | explicit-reference: source names target slug | "initiating and recording required... credit clearances through their accountable owners" | Yes — states prerequisite gate | APPROVE |
-| REL-00168 | exact-unique-current (target label = prefLabel) | explicit-reference: source names target slug | "Collateral release is owned by Manage Collateral (CM-1-2-2-1-3)" | Yes — states closure prerequisite | APPROVE |
-| REL-00247 | nearness-only (shared L3) | explicit-reference: source cites target | Trade modification scope excludes unilateral corrections, requires controlled trade capture record | Yes — lifecycle dependency stated | APPROVE |
-| REL-00872 | label citation (scope note) | scope-note label citation | KYC due diligence initiated before governed records established | Yes — onboarding gate stated | APPROVE |
+| REL-00158 | — | claimed "source names target slug" | Quote ("credit clearances through their accountable owners") has no slug or label for target | No | **HOLD** — needs strict citation |
+| REL-00168 | — | claimed explicit reference | "Collateral release is **owned by** Manage Collateral" — ownership wording is never a route per #159 | No | **HOLD** |
+| REL-00247 | — | claimed nearness + citation | No quote given; G3-B1 bans nearness-only identity | No | **HOLD** — needs strict citation |
+| REL-00872 | label citation (scope note) | scope-note label citation | Paraphrase given; exact wording needed | Pending | **PENDING** — quote exact wording |
 | REL-00873 | label citation (scope note) | scope-note label citation | "credit-controlled onboarding prerequisite only" | Yes — prerequisite stated | APPROVE |
 | REL-00208 | — | — | Insufficient prerequisite gate evidence | No | HOLD |
 
 ### Rule 6 samples
 
-Drawn from 5 promotions, seed 42. Outcomes pending Hamid review.
+Drawn from promotions, seed 42. Outcomes pending Hamid review.
 
 *Samples to be drawn and recorded.*
 
 ### Knock-on effects
 
-None. All 5 approved facts are unique single-row; no other row stores
-identical facts.
+REL-00158, REL-00168, REL-00247: each held row's fact was stored; removal
+requires supersession entries (below).
 
 ### Projected totals
 
-No change: 615 emitting / 688 held / 457 facts. All 5 approved facts
-already stored in canonical-facts.csv.
+With 3 requires facts removed: 612 emitting / 691 held / 454 facts.
+(615−3 / 688+3 / 457−3)
 
 ### Supersessions
 
-None. REL-00873 supersession was reversed 2026-09-26 (restored).
+- REL-00158: emitting → held (pending strict citation)
+- REL-00168: emitting → held (ownership wording, never a route)
+- REL-00247: emitting → held (pending strict citation)
 
-**5 approved:**
-- REL-00158: CM-1-2-1-2-1 (Create New Counterparty) requires CM-1-2-2-1-1
-  (Perform Counterparty Credit Reviews). Genuine precondition: credit clearance
-  must precede creation of the authorized counterparty and settlement records.
-- REL-00168: CM-1-2-1-2-3 (Terminate/Novate Counterparty) requires CM-1-2-2-1-3
-  (Manage Collateral). Valid closure-control prerequisite: collateral and
-  related obligations must be closed, settled, transferred, or queued before
-  the counterparty record is deactivated or transitioned.
-- REL-00247: CM-1-2-2-2-3 (Manage Trade Modifications) requires CM-1-2-1-3
-  (Trade Capture). Clear lifecycle dependency: a post-execution amendment,
-  allocation, or termination can only update a trade record that exists in
-  controlled trade capture.
+**2 approved:**
 - REL-00872: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-6 (Perform KYC
-  Due Diligence). Legitimate onboarding gate: KYC due diligence is initiated
-  before governed customer/member/card-account records are established.
+  Due Diligence). **PENDING** exact scope-note quote.
 - REL-00873: CM-1-3-6-6-1 (Set Up Prospect) requires CM-1-3-7-4-2 (Establish
   Credit Limit & Risk Code). Restored 2026-09-26; supersession reversed;
   basis: scope-note label citation. Scope note: credit-controlled onboarding
@@ -656,13 +647,21 @@ necessity.
 
 ### Identity routes
 
-| Row | Match type | Route | Citation | Affirmative? | Verdict |
-|---|---|---|---|---|---|
-| REL-00401 | stable ID | explicit-reference: target defines oversight of source domain | "reviews registrations, licensing, exemption certificates, filing-calendar compliance" | Yes — oversight role stated | APPROVE |
-| REL-00719 | stable ID | explicit-reference: target owns quality/completion | "owns commissioning, standards, quality, and completion of studies" | Yes — oversight role stated | APPROVE |
-| REL-00801 | stable ID | explicit-reference: target applies standards via review | "applies brand standards through material review and escalation" | Yes — oversight role stated | APPROVE |
-| REL-01269 | stable ID | explicit-reference: target maintains policies, monitors adherence | "maintains policies and procedures, monitors regulatory and internal-policy adherence" | Yes — but see note below | APPROVE |
-| REL-01270 | stable ID | explicit-reference: target assures compliance condition | "assures the compliance condition of Settlements without conducting settlement operations" | Yes — but see note below | APPROVE |
+**Basis:** All 5 approvals stand on stable IDs under rule 4. No additional
+route needed. The quoted target-side text below is supporting context, not
+the route.
+
+| Row | Match type | Supporting context | Verdict |
+|---|---|---|---|
+| REL-00401 | stable ID | Target defines oversight: "reviews registrations, licensing, exemption certificates, filing-calendar compliance" | APPROVE |
+| REL-00719 | stable ID | Target owns quality/completion: "owns commissioning, standards, quality, and completion of studies" | APPROVE |
+| REL-00801 | stable ID | Target applies standards via review: "applies brand standards through material review and escalation" | APPROVE |
+| REL-01269 | stable ID | Target maintains policies, monitors adherence (affirmative oversight citation, not exclusion) | APPROVE |
+| REL-01270 | stable ID | Target assures compliance condition without conducting operations (affirmative) | APPROVE |
+
+**REL-00401 label correction:** CM-1-2-4-2-11 is **Manage Taxes** (source);
+CM-1-2-4-3-5 is **Manage Tax Compliance** (target). The stored fact reads:
+*Manage Taxes assuredBy Manage Tax Compliance*.
 
 **Note on REL-01269/01270:** The governed-by pass held three Regulatory &
 Compliance rows because their citations were exclusions only. These two
@@ -678,9 +677,10 @@ reflected in the 615/688/457 totals.
 
 ### Rule 6 samples
 
-Drawn from 5 promotions, seed 42. Outcomes pending Hamid review.
+Drawn from 2 promotions, seed 42. Outcomes **pending** Hamid review.
 
-*Samples to be drawn and recorded.*
+- REL-00872: pending
+- REL-00873: pending
 
 ### Knock-on effects
 
@@ -737,25 +737,30 @@ association, ownership, sequencing, and optional considerations.
 
 ### Identity routes
 
-| Row | Match type | Route | Citation | Affirmative? | Verdict |
-|---|---|---|---|---|---|
-| REL-00015 | stable ID | explicit-reference: source names constraint | Inventory Management constrains crude/feedstock allocation | Yes — binding constraint stated | APPROVE |
-| REL-00018 | stable ID | explicit-reference: source names constraint | Inventory Management constrains finished products allocation | Yes — binding constraint stated | APPROVE |
-| REL-00024 | stable ID | explicit-reference: source names constraint | Inventory Management constrains finished goods planning | Yes — binding constraint stated | APPROVE |
-| REL-00087 | stable ID | explicit-reference: source names constraint | Capture Refinery Level Constraints binds crude/feedstock evaluation | Yes — binding constraint stated | APPROVE |
-| REL-00091 | stable ID | explicit-reference: source names constraint | Capture Refinery Level Constraints binds crude availability capture | Yes — binding constraint stated | APPROVE |
-| REL-00099 | stable ID | explicit-reference: source names constraint | Perform Scenario Analysis binds refinery constraint capture | Yes — binding constraint stated | APPROVE |
-| REL-00103 | stable ID | explicit-reference: source names constraint | Inventory Management constrains inventory capture | Yes — binding constraint stated | APPROVE |
-| REL-00574 | stable ID | explicit-reference: source names constraint | Manage Terminal Lifting Allocation binds lifting forecasts | Yes — binding constraint stated | APPROVE |
-| REL-00894 | stable ID | explicit-reference: source names constraint | Establish Credit Limit & Risk Code binds card limits | Yes — binding constraint stated | APPROVE |
-| REL-01284 | stable ID | explicit-reference: source names constraint | Inventory Management constrains refinery optimization | Yes — binding constraint stated | APPROVE |
-| REL-00097 | — | — | Broad "Refining" target has no definition | No — identity fails | HOLD |
+**Basis:** All 10 approvals stand on stable IDs under rule 4. No additional
+route needed. The descriptions below are supporting context, not the route.
+
+| Row | Match type | Supporting context | Verdict |
+|---|---|---|---|
+| REL-00015 | stable ID | Inventory Management constrains crude/feedstock allocation | APPROVE |
+| REL-00018 | stable ID | Inventory Management constrains finished products allocation | APPROVE |
+| REL-00024 | stable ID | Inventory Management constrains finished goods planning | APPROVE |
+| REL-00087 | stable ID | Capture Refinery Level Constraints binds crude/feedstock evaluation | APPROVE |
+| REL-00091 | stable ID | Capture Refinery Level Constraints binds crude availability capture | APPROVE |
+| REL-00099 | stable ID | Capture Refinery Level Constraints binds scenario analysis (CM-1-1-4-7-8 → CM-1-1-4-7-5: Scenario Analysis constrainedBy Capture Refinery Level Constraints) | APPROVE |
+| REL-00103 | stable ID | Inventory Management constrains inventory capture | APPROVE |
+| REL-00574 | stable ID | Manage Terminal Lifting Allocation binds lifting forecasts | APPROVE |
+| REL-00894 | stable ID | Establish Credit Limit & Risk Code binds card limits | APPROVE |
+| REL-01284 | stable ID | Inventory Management constrains refinery optimization | APPROVE |
+| REL-00097 | — | Broad "Refining" target has no definition | HOLD |
 
 ### Rule 6 samples
 
-Drawn from 10 promotions, seed 42. Outcomes pending Hamid review.
+Drawn from 10 promotions, seed 42. Outcomes **pending** Hamid review.
 
-*Samples to be drawn and recorded.*
+- REL-00018: pending
+- REL-00015: pending
+- REL-00091: pending
 
 ### Knock-on effects
 
