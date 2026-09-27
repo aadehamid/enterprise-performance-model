@@ -502,3 +502,28 @@ No citation:
   alone is not a route for `triggers`.
 
 **Totals:** 646→635 emitting, 657→668 held, 488→477 facts. Conservation 1,318 ✓
+
+## Precedes/follows pass applied (2026-09-26, Hamid approved)
+
+38 STAND (rule 4, stable-ID). 276 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
+0 HOLD. Basis-only: no bucket moves, no fact moves, no new triples.
+
+Route breakdown (276 promotions): 89 sibling+two-way+citation, 78 sibling+two-way,
+32 citation, 30 sibling-nearness, 24 two-way+citation, 20 sibling+citation, 3 two-way.
+All 59 non-sibling label-only rows carry an affirmative citation or two-way mirror route.
+
+**Citation evidence:** 26 of the 32 citation-only rows have the target slug
+recorded from the source definition/scope text in
+`review-evidence/precedes-follows-routes.csv`. 6 rows (REL-01223, REL-01227,
+REL-01241, REL-01289, REL-01291, REL-01294) have no standalone target-slug
+citation in the source artifacts — the text cites a child of the target or
+no slug at all. These 6 are flagged "citation not found in source artifacts"
+in the routes file; they were approved 2026-09-26 and the citation is to be
+confirmed by the source author.
+
+Zero reciprocal core:precedes pairs (202 facts checked). Hard gate GREEN.
+
+Totals unchanged (basis-only): 635 emitting / 668 held / 477 facts.
+Conservation: 635 + 668 + 12 + 1 + 2 = 1,318.
+
+Raw `B follows A` retained in provenance; canonical fact remains `A core:precedes B`.

@@ -1858,3 +1858,28 @@ Totals: 646 − 11 = **635** emitting; 657 + 11 = **668** held;
 All 11 held facts verified unique single-row; zero knock-on effects.
 11 supersession entries in `step4-decisions.md`; 11 backlog items for source
 correction (including target-side range check for the 4 compliance monitors).
+
+## Precedes/follows pass (Hamid 2026-09-26)
+
+**Verdicts:**
+- **38 STAND** (rule 4, stable-ID mentions).
+- **276 PROMOTE** (D:hamid-verdict / Rule 5 sequence route):
+  - 89 sibling+two-way+citation, 78 sibling+two-way, 32 citation,
+    30 sibling-nearness, 24 two-way+citation, 20 sibling+citation, 3 two-way.
+- **0 HOLD**.
+
+**Basis-only:** no bucket moves, no fact changes, no new triples.
+Raw `B follows A` retained in provenance; canonical fact is `A core:precedes B`.
+
+**Rule 6:** sampled rows from promotions only (seed 42), reviewed against
+source/target definitions plus recorded routes. Outcome: `D:hamid-verdict` — pass.
+Evidence in `review-evidence/precedes-follows-rule6-samples.md`.
+
+**Citation evidence:** 26 of 32 citation-only rows have recorded target-slug
+snippets in `review-evidence/precedes-follows-routes.csv`. 6 rows flagged
+(citation not found in source artifacts; approved 2026-09-26, to be confirmed).
+
+**Zero reciprocal `core:precedes` pairs** (202 facts checked). Hard gate GREEN.
+
+**Totals unchanged:** 635 emitting / 668 held / 477 facts.
+Conservation: 635 + 668 + 12 + 1 + 2 = 1,318. ✓
