@@ -272,8 +272,10 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
 ## Review instruments
 
 - `review-evidence/requires-6-review-batch.csv` — 6 rows decided 2026-09-25:
-  5 approved as `core:requires` (REL-00158, REL-00168, REL-00247, REL-00872,
-  REL-00873, the last with a credit-controlled-onboarding scope note);
+  1 approved as `core:requires` (REL-00873, with a credit-controlled-onboarding scope note);
+  4 held 2026-09-27 (REL-00158 NoStrictCitation, REL-00168 OwnershipWording,
+  REL-00247 NoStrictCitation, REL-00872 NoStrictCitation — each
+  Supersedes2026-09-25Approval);
   REL-00208 held for workbook correction (no remap at emission).
 - `assures-review.csv` — 8 rows decided 2026-09-26: 5 approved as
   `core:assuredBy` (REL-00401, REL-00719, REL-00801, REL-01269, REL-01270);
@@ -364,7 +366,10 @@ see `review-evidence/enabledby-mutual-review-batch.csv`.
   workbook correction — neither `core:requires` nor `core:dependsOnOutputOf`
   may be emitted from its present assertion.
 - Approved 2026-09-25 (5 rows, stored as `core:requires`): REL-00158,
-  REL-00168, REL-00247, REL-00872, REL-00873. Scope note on REL-00873: a
+  REL-00168, REL-00247, REL-00872, REL-00873. **Amended 2026-09-27:**
+  1 approved (REL-00873); 4 held (REL-00158 NoStrictCitation, REL-00168
+  OwnershipWording, REL-00247 NoStrictCitation, REL-00872 NoStrictCitation —
+  each Supersedes2026-09-25Approval). Scope note on REL-00873: a
   credit-controlled onboarding prerequisite — not every prospect/card-account
   setup requires a non-zero limit or full facility; the required credit/risk
   decision must be established under the applicable onboarding policy. The
