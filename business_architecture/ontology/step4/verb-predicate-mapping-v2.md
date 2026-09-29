@@ -182,7 +182,7 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance) — 605 mentions attached to stored facts, which with 13 G2 no-triple mentions gives 617 emitting.
+**Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 605 mentions total, of which **604 emitting** (569 + 35) and 1 held (REL-00436). Emitting: 604 emitting-attached + 13 G2 no-triple = **617**.
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified

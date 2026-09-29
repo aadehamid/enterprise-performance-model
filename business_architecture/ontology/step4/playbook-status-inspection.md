@@ -12,7 +12,7 @@ corrected for stale entries. Verified against repository artifacts.
 | 3b | Definition triangulation | Done 2026-09-18 |
 | 3c | Human definition authoring (498/503 approved) | Done 2026-09-21 |
 | 3d | Tree reconciliation | Completed with explicit open exceptions; R2 backlog still open |
-| 4 | The relationship layer | In progress: verb review on main (615/688/457); promotion blocked on Hamid-owned gates |
+| 4 | The relationship layer | In progress: verb review on main (617/686/457); promotion blocked on Hamid-owned gates |
 | 5 | ORG + RACI | Planned |
 | 6 | Interfaces and PROV-O | Planned |
 | 7 | Cross-model integration | Planned |
