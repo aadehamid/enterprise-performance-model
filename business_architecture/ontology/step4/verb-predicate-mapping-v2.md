@@ -408,6 +408,12 @@ REL-00719, REL-00801, REL-01269, REL-01270. Held: REL-00355 and REL-00385
 held for workbook correction with its existing `core:assuredBy` fact removed
 and no substitute emitted.
 
+> **Identity basis (2026-09-28):** match type on main is nearness-only for all
+> five, per `review-evidence/identity-scope-explicit-reference-test.csv`.
+> #155 verdicts (5 APPROVE / 3 HOLD, D:hamid-verdict) stand — this note
+> records basis only: no bucket change, no re-review, no Rule 6 gate on
+> approved rows.
+
 ## Constrained-by (added 2026-09-26, Hamid)
 
 - **`core:constrainedBy`** is stored from the activity, decision, process, or
