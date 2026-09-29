@@ -1927,3 +1927,43 @@ onto `main`. This was intentional: the drop establishes the working area
 on main, with promotion to TTL still blocked by the step4 README. Not to be
 confused with PR #121 (the other DO NOT MERGE — Step 4 evidence-discipline
 playbook section, merged 2026-09-25, later marked Approved by #122).
+
+## Figure correction — G1a attach count (2026-09-29, Hamid-authorized)
+
+**Error:** the 2026-09-26 uses-input pass entry records "42 enables mentions
+moved emitting → held (k=42; G1a 75 → 33)". The applied hold set
+`USES_INPUT_G1A_20260926_HOLDS` in `mapping_v2.py` has **41** rows, and
+REL-00152 among them was already held (property-rule hold) before the pass.
+True k=40 emitting → held; G1a 75 → **35** emitting (36 attached: 35 emitting
++ REL-00436 held, re-attached as duplicate provenance on the REL-00447 fact).
+The "77 − 2 property holds − 42 = 33" breakdown in
+`verb-predicate-mapping-v2.md` subtracted REL-00152 twice. This 2-row
+overcount cascaded into every totals line after the uses-input pass.
+
+**Evidence:** `canonical-facts.csv` (main `df8f89ba`) attaches 36 enables
+row IDs to `core:dependsOnOutputOf` facts; all 36 carry Hamid's
+APPROVE / D:hamid-verdict / MergeAsDuplicateEvidence. Evidence gate:
+"36 active G1a rows". Every per-pass hold set (uses-input 114, informed-by
+95, governed-by 20, triggers 11, precedes 20) has zero attached rows; the
+only attached-but-held mention is REL-00436 (documented). Per-verb attached
+counts all match the mapping doc except enables (120 vs 117). Independently
+verified by Cursor EPM, which reproduced 617 via the mapping_v2.py emission
+rule. No mention changes bucket; no fact changes; fact count stays 457.
+
+**Corrected chain (deltas unchanged; only the uses-input link moves):**
+- Uses-input pass: 916 − 114 − **40** + 1 = **763** emitting;
+  387 + 114 + **40** − 1 = **540** held; 603 facts.
+- Informed-by pass: 763 − 95 = **668** emitting; 540 + 95 = **635** held;
+  508 facts.
+- Governed-by pass: 668 − 20 = **648** emitting; 635 + 20 = **655** held;
+  488 facts.
+- Triggers pass: 648 − 11 = **637** emitting; 655 + 11 = **666** held;
+  477 facts.
+- Precedes/follows amendment: 637 − 20 = **617** emitting;
+  666 + 20 = **686** held; 457 facts.
+
+**Current totals:** **617 emitting / 686 held** / 457 facts.
+Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+
+The 2026-09-26/27 entries above keep their recorded-at-the-time figures;
+this entry is the correction. History on `main` is not rewritten.
