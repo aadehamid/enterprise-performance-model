@@ -12,9 +12,9 @@ a good ontology from scratch, step by step. The guidance is distilled from a
 real build — the downstream process-map ontology (the "worked example") — and
 that build is the proof the guidance works, not the subject of the document.
 
-**How to read it.** §0–§5 are the method: foundations, the end-to-end
+**How to read it.** §0–§6 are the method: foundations, the end-to-end
 sequence, the locked policies, the Step 4 evidence discipline, the
-standards guide, and the working agreements. Follow them in order. §6 is
+standards guide, soundness, and the working agreements. Follow them in order. §7 is
 the worked example — the
 instantiation of the playbook on a real build. It stays in this document
 by design: the example is how a reader checks that the guidance is real.
@@ -23,7 +23,7 @@ text.
 
 **How to maintain it.** When the method improves, update the guidance
 section a teammate would look in, dated, with the reason — never in chat
-history. When a build step completes, extend the worked example (§6) and
+history. When a build step completes, extend the worked example (§7) and
 move any new durable decision into §2 (Policies). Never rewrite history:
 correct with a dated amendment so the team can see what changed and why.
 
@@ -428,7 +428,7 @@ release.
 Prescriptive policies. Each states the rule and the reason it exists. They
 change only by dated amendment with the owner's explicit agreement — never
 by silent override. Project-specific applications live in the worked example
-(§5).
+(§7).
 
 ### Source of truth and scope
 - **Model your own business; use references as checks.** The local source
@@ -1119,7 +1119,213 @@ dataset, many serializations (Turtle, JSON-LD, SHACL shapes, HTML docs).
   the data-product catalog work demands it.
 
 ---
-## 5. Working agreements — how the team operates
+## 5. Soundness — how to build an ontology you can trust
+
+Soundness is not a standard you adopt; it is a set of checks you run on
+every change. Each check below is a practice this build actually follows,
+with the concrete action a newcomer takes. When a new failure teaches a new
+check, add it here, dated, with the reason — never in chat history.
+
+### 5.1 Identity — know what you are talking about before you relate it
+
+Identity is evaluated before direction and before predicate meaning. A
+relationship between two things you cannot identify is not a candidate; it
+is a guess.
+
+- **Slugs/IRIs are identity; labels are presentation.** A label suggests a
+  candidate; it never confirms one. Never use a label as a join key, lookup
+  key, RLS key, or API key.
+- **Stable IDs survive renames.** When a label changes, the slug stays. The
+  rename is recorded as overlay fields (`name`, `prior_name`,
+  `name_change_note`, `scoped_historical_alias`) on the identity map — and
+  after any regeneration of the identity map, those overlays are restored
+  from the pre-regen version before the TTL is rebuilt, or the TTL silently
+  reverts to stale labels.
+- **Label-only identity needs an affirmative basis.** A label match alone
+  identifies a target only with an affirmative citation, a strict two-way
+  pair, or a recorded architecture decision. Anything weaker is a candidate,
+  not an identification.
+- **Exclusion wording is never an identity route.** Exclusion, boundary,
+  "owned by," and "may be handled by" wording never identifies a target for
+  any verb. A row that reaches its target only through such wording is held.
+- **No emission-time remapping.** A row's meaning is fixed at review time.
+  Semantic plausibility discovered later never authorizes reclassification;
+  hold the row and send the meaning correction to the source-workbook
+  backlog.
+
+### 5.2 Taxonomy — keep the tree well-formed
+
+The taxonomy is a SKOS concept scheme: a controlled vocabulary of names,
+not a class hierarchy of types. Every structural claim below is checked
+mechanically (SHACL shapes, build scripts); the semantic ones need a human.
+
+- **One parent per concept** (except roots). No cycles. The build fails on
+  either.
+- **Every process sits at a level L0–L6 with its parent shown.** No
+  level-less nodes. Concepts without source IDs get minted slugs; they do
+  not float.
+- **One `skos:prefLabel` per language per concept; `@en` on every literal.**
+  Untagged and tagged literals are different RDF terms — an untagged label
+  is a data bug, not a stylistic choice.
+- **Aliases go in `skos:altLabel`.** Local process IDs are preserved as URI
+  slugs and recorded as `skos:notation`. External framework IDs attach via
+  `dcterms:references` only — they never replace local IDs.
+- **`skos:definition` is required on every concept**, plus a scope note on
+  every approved concept. A concept you cannot define is a concept you do
+  not understand; it stays parked.
+- **Siblings are disjoint.** No two siblings claim the same primary
+  activity. The parent test must hold: "this process is a way of carrying
+  out [parent process]."
+- **Never convert hierarchy levels into OWL classes mechanically.** That
+  asserts logical commitments (disjointness, inheritance of restrictions) a
+  naming hierarchy cannot support. Use OWL classes only where the business
+  actually guarantees the commitment.
+
+### 5.3 Definitions — say what each thing is, completely
+
+Every authored definition must meet all ten points of the quality bar
+(§6). In short: define the recurring activity and its intended outcome,
+name the primary purpose (the decision or responsibility served, not the
+department or data source), bound it with a scope note, keep one meaning
+per term across the scheme, park future concepts instead of smuggling them
+in, and record who wrote it, who approved it, and when. Human-authored text
+passes through the same human gate as machine-triangulated text: nothing
+merges on assumption.
+
+### 5.4 Predicates — use verbs honestly
+
+The four verbs are a promotion rule, not a thesaurus:
+
+- **enables** — the source supplies a maintained operating base, required
+  control, governed mechanism, capability, resource, or prerequisite
+  condition that makes the target able to operate.
+- **informs** — the source provides context the target uses.
+- **dependsOnOutputOf** — the target consumes a specific output of the
+  source.
+- **requires** — the source cannot validly start, complete, proceed, or
+  reach its controlled state without the target, its completed control, or
+  its required condition.
+
+Related verbs with adopted definitions: **assuredBy** (the assurance
+activity performs a defined governance, compliance, quality, review, or
+control-testing role over the assured thing — not merely supports,
+documents, or feeds it); **constrainedBy** (stored from the bounded
+activity/decision/outcome to the binding constraint source — not
+informed-by, sequencing, governance/ownership, broad association, or
+advice); **triggeredBy** (stored from the activity initiated by a defined
+event, exception, monitoring outcome, change, referral, detection, or
+handoff to the activity that generates the trigger condition — "feeds /
+informs / supports / precedes" never become triggers without an invoking
+event).
+
+- **Never silently translate a verb.** If the source means "informs" and the
+  pattern wants "requires," hold the row and send the meaning correction to
+  the workbook backlog. Ambiguity stays visible as deferred; it is never
+  resolved by rewording.
+- **Predicate integrity:** the relationship must stand as stated, without
+  silent conversion into another predicate. Test each candidate row against
+  the six-part verdict test (identity, capability effect, independence,
+  authority, predicate integrity, provenance) — a row failing any material
+  test is held, its fact removed if currently emitted, no substitute
+  emitted.
+- **A row-level verdict is not architecture-decision evidence.** Only
+  recorded architecture decisions qualify. The classifier column on review
+  rows is triage only — never a decision basis.
+
+### 5.5 Evidence — trace every claim to its ground
+
+- **Every verdict carries its basis.** Approvals cite the evidence test
+  (D:hamid-verdict): what was checked, what passed, who decided, when.
+- **Ground every match type in the actual evidence file.** Never copy a
+  match type from memory or from a sibling row's table. If the CSV says
+  `nearness-only`, the table says `nearness-only`.
+- **Approving an already-emitting row changes its evidence basis only.**
+  Counts move only when a row changes bucket.
+- **Held rows carry their disposition in the source itself** — the review
+  CSV, the mapping document — not in a write-only side file. A hold states
+  the row ID, the reason, and what would reopen it.
+- **Supersessions are explicit and non-destructive.** Format: `HOLD /
+  D:hamid-verdict / Reason / Supersedes<date>Approval`. The prior rationale
+  is preserved in provenance. Ledger history is never rewritten — restore
+  the original wording and append a dated note.
+- **No guessed relationships, targets, citations, or match types.** If the
+  evidence does not establish it, the cell stays empty and the row stays
+  held.
+
+### 5.6 Counts — make the arithmetic close, every time
+
+- **Conservation is an equation, not a narrative.** Emitting + held +
+  deferred + external-governance + structured-flow equals the total. Every
+  figure in every governed doc is recomputed from the CSVs and gates before
+  it is written. Never copy a number from memory, from a sibling doc, or
+  from a closed PR's branch — a closed PR's numbers stay dead.
+- **Every count change names four things:** the row ID, the old bucket, the
+  new bucket, and the reason. No exceptions.
+- **Held facts get knock-on checks:** holding a fact requires checking
+  uniqueness and shared-fact effects before the counts are restated.
+- **Figure-update discipline:** when a figure is wrong in one place, assume
+  it is wrong in others. Grep the whole file for the old number; recompute
+  every table total after every edit; ground every CSV-derived figure
+  against the actual CSV; if figures do not reconcile, report the
+  discrepancy and stop — never invent or adjust a number to make the
+  arithmetic work. When a figure changes, sweep all governed docs in the
+  package, not just the file being edited.
+- **Pre-push verification:** before pushing a figure update, extract all
+  figures from the doc and check each against its source.
+
+### 5.7 Changes — prove safety before pushing
+
+- **Every push gets a blast-radius proof.** Name the one safety fact the
+  push depends on, prove it by running code against the real artifacts, and
+  mark anything unproven as unproven — never write it up as settled.
+- **Regression fixes start with a failing check.** Write the check, watch
+  it fail, fix the cause, watch it pass. A fix without a failing check
+  first is a guess.
+- **Attack the premise, not the symptom.** When a gate fails twice on the
+  same premise — or the checker is twice found never to have asserted what
+  was assumed — stop writing one-off fixes. Census what the check does
+  *not* cover, fix the premise, and record the new check here.
+- **Re-pin evidence to the current `main` SHA before promotion.** A pin to
+  a superseded commit is a stale pin; it proves nothing about the current
+  tree. The re-pin is blocked on the promotion preconditions, not on
+  closed PRs.
+- **Migration PRs prove replacement, not deletion:** a per-predicate
+  conservation ledger (emitted == planned, computed from the source at
+  cutover time), a held-for-review report reconciled mention-by-mention,
+  and a dry-run census reviewed before emission is approved.
+
+### 5.8 Sampling — verify by spot-check, honestly
+
+- Rule 6 samples come **only from promotions**, drawn with **seed 42**.
+- Samples remain **pending until the owner reviews them**. A sample is not
+  evidence until a human confirms it.
+- **One wrong sample stops the pass.** A failed sample invalidates the
+  batch; it does not get averaged away.
+
+### 5.9 Review — let a human decide, and make it easy for them
+
+- **Evidence package first.** No ontology application, promotion, or
+  cleanup without the owner's verdict on the evidence. The owner is the
+  senior reviewer of machine output: every batch ships with definitions,
+  branch context, recommendations, and blank decision columns; verdicts are
+  recorded row-level, per-row tables over summary lines.
+- **Adversarial review before owner review.** Every implementation PR and
+  design proposal gets an independent pass first (correctness, structural
+  fit, evidence), with verdicts Act On / Consider / Noted / Dismissed.
+  Reviewers never auto-apply changes.
+- **One major update per PR.** One verb or the checklist — never stacked.
+  Base every PR on the exact merged `main`; never restack from a sibling
+  branch. Never open a fix, cleanup, or review-response PR without explicit
+  go-ahead.
+- **Present the status; let the owner decide.** Do not self-impose "DO NOT
+  MERGE." Report holds and blockers plainly, fix what you can, report what
+  you can't.
+- **Decisions land in the decision log first**, dated, with the reason.
+  The playbook learns the same week a practice is proven — in the section a
+  teammate would look in, not in chat history.
+
+---
+## 6. Working agreements — how the team operates
 
 ### Read the playbook before deciding
 Before making any modeling choice, check §2. If the decision is locked,
@@ -1198,10 +1404,10 @@ with the reason — not in chat history. Re-check this file's freshness
 whenever a step closes.
 
 ---
-## 6. Worked example — the downstream process-map ontology
+## 7. Worked example — the downstream process-map ontology
 
 How the method played out on a real build. Illustrative, not normative: the
-prescriptions are in §0–§4; this is what following them looked like.
+prescriptions are in §0–§5; this is what following them looked like.
 
 **The build.** Source of truth: `downstream_process_map.json` in the
 `aadehamid/enterprise-performance-model` repo — ~680 process nodes across
