@@ -7,6 +7,12 @@ import csv, json, os
 from collections import defaultdict, Counter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+# Proposal outputs go here — never overwrite the governed CSVs.
+# canonical-facts.csv, contradictions.csv, enables-review.csv at BASE are the
+# Step 4 source of truth (Hamid 2026-09-28: PR #167 HOLD). The script is a
+# proposal generator until its verdict logic is brought current.
+OUT = os.path.join(BASE, "proposal")
+os.makedirs(OUT, exist_ok=True)
 SHA = open(f"{BASE}/PINNED_SHA.txt").read().strip()
 imap = {r["slug"]: r for r in json.load(open(f"{BASE}/baseline/step2-identity-map.json"))}
 v2 = list(csv.DictReader(open(f"{BASE}/target-report/target-dispositions-v2.csv")))
@@ -1198,22 +1204,22 @@ for _rid, _key in DUPLICATE_PROVENANCE_ATTACH.items():
     facts[_key].append((_rid, "enables",
         "Hamid 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input"))
 
-# save
-with open(f"{BASE}/canonical-facts.csv", "w", newline="") as f:
+# save (proposal only — governed CSVs at BASE are the source of truth)
+with open(f"{OUT}/canonical-facts.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["subject", "predicate", "object", "mention_count", "row_ids", "raw_verbs", "notes"])
     for (s, p, o), ms in sorted(facts.items()):
         w.writerow([s, p, o, len(ms), ";".join(r for r, _, _ in ms),
                     ";".join(sorted(set(v for _, v, _ in ms))),
                     ";".join(sorted(set(n for _, _, n in ms if n)))])
-with open(f"{BASE}/contradictions.csv", "w", newline="") as f:
+with open(f"{OUT}/contradictions.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["fact_a", "fact_b", "rows_a", "rows_b"])
     for f1, f2 in contras:
         w.writerow([" ".join(f1), " ".join(f2),
                     ";".join(r for r, _, _ in facts[f1]),
                     ";".join(r for r, _, _ in facts[f2])])
-print("\nwrote canonical-facts.csv, contradictions.csv")
+print("\nwrote proposal/canonical-facts.csv, proposal/contradictions.csv")
 
 # ---- enables review table: built from the pipeline's own enables_group ----
 # Single source of truth: group comes from enables_group(); context from the
@@ -1250,10 +1256,10 @@ for r in v2:
                     "target_label": tgt_label, "disposition": r["disposition"],
                     "context": context, "group": EN_GROUP_LABEL.get(g, g),
                     "proposed": proposed, "decision": "", "reviewer_rationale": ""})
-with open(f"{BASE}/enables-review.csv", "w", newline="") as f:
+with open(f"{OUT}/enables-review.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=["row_id", "baseline_sha", "source", "source_label",
                                       "target", "target_label", "disposition", "context",
                                       "group", "proposed", "decision", "reviewer_rationale"])
     w.writeheader()
     w.writerows(en_rows)
-print(f"wrote enables-review.csv ({len(en_rows)} rows, from pipeline enables_group)")
+print(f"wrote proposal/enables-review.csv ({len(en_rows)} rows, from pipeline enables_group)")
