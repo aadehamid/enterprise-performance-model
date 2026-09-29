@@ -1,6 +1,6 @@
 # Step 4 Release Checklist — v0.4 Draft
 
-**Status:** Draft — re-pinned to `main` at `1ba2ab0` (2026-09-28)
+**Status:** Draft — re-pinned to `main` at `d7310c9` (2026-09-29)
 **Date:** 2026-09-27 (status); re-pin 2026-09-28
 
 ## Current State (main @ d7310c9)
@@ -23,7 +23,7 @@
 **615 emitting + 688 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318**
 
 ### Pinned Evidence
-- **PINNED_SHA:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28 from `579ed89b479529d179485f633828df89399ad3c5`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
+- **PINNED_SHA:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28 from `1ba2ab0b479529d179485f633828df89399ad3c5`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
 - Re-pin completed 2026-09-28; remaining promotion preconditions below still apply.
 
 ### PR #124 Proof
@@ -41,7 +41,7 @@
 
 ### Pending — Assistant
 - [x] Evidence gate passes on current main (GREEN 2026-09-28, pre re-pin)
-- [x] Re-pin evidence to current main SHA (2026-09-28 → `1ba2ab0`)
+- [x] Re-pin evidence to current main SHA (2026-09-29 → `d7310c9`)
 - [x] Regression tests pass (evidence-gate GREEN post re-pin; `test_context_pass.py` 17/17; `test_step3c_workbook_validate.py` 3/3)
 - [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: canonical-facts byte-identical, 7 CSVs differ only in `baseline_sha`, no verdict-column change)
 
