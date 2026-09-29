@@ -1,9 +1,9 @@
 # Step 4 Release Checklist — v0.4 Draft
 
-**Status:** Draft — re-pinned to `main` at `d7310c9` (2026-09-29)
-**Date:** 2026-09-27 (status); re-pin 2026-09-28
+**Status:** Draft — re-pinned to `main` at `6a155bc2` (2026-09-29)
+**Date:** 2026-09-27 (status); re-pin 2026-09-29
 
-## Current State (main @ d7310c9)
+## Current State (main @ 6a155bc2)
 
 ### Methodology
 - **PR #159** merged as `7b85121` — verb review methodology Approved
@@ -24,8 +24,8 @@
 *(corrected 2026-09-29 from 615/688; see ledger-v2.md figure-correction entry)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-29 from `1ba2ab0bd8ae1d98ebaeed5129bd190130936624`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
-- Re-pin completed 2026-09-28; remaining promotion preconditions below still apply.
+- **PINNED_SHA:** `6a155bc23ba3971ce430b774b4ddd6f4a933e380` (re-pinned 2026-09-29 from `d7310c9acd37c893d7d6926645c715f425eb9dc8`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
+- Re-pin completed 2026-09-29; remaining promotion preconditions below still apply.
 
 ### PR #124 Proof
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
@@ -41,10 +41,10 @@
 - [x] Methodology approved (PR #159)
 
 ### Pending — Assistant
-- [x] Evidence gate passes on current main (GREEN 2026-09-28, pre re-pin)
-- [x] Re-pin evidence to current main SHA (2026-09-29 → `d7310c9`)
-- [x] Regression tests pass (evidence-gate GREEN post re-pin; `test_context_pass.py` 17/17; `test_step3c_workbook_validate.py` 3/3)
-- [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: canonical-facts byte-identical, 7 CSVs differ only in `baseline_sha`, no verdict-column change)
+- [x] Evidence gate passes on current main (GREEN 2026-09-29, post re-pin to `6a155bc2`)
+- [x] Re-pin evidence to current main SHA (2026-09-29 → `6a155bc2`)
+- [x] Regression tests pass (`test_context_pass.py` 17/17; evidence-gate GREEN post re-pin)
+- [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: 7 CSVs differ only in `baseline_sha`, 2,898 rows, no verdict-column change)
 
 ### Pending — Hamid
 - [ ] Fresh no-consumer attestation (dated after re-pin)
