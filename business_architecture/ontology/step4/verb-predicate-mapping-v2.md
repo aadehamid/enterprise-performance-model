@@ -9,7 +9,7 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28; was `579ed89b479529d179485f633828df89399ad3c5`/PR #126 — repinned 2026-09-26 after the uses-input pass).
+**Baseline:** `6a155bc23ba3971ce430b774b4ddd6f4a933e380` (re-pinned 2026-09-29; was `d7310c9acd37c893d7d6926645c715f425eb9dc8`/PR #170 — repinned 2026-09-29 after PR #178).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 (849 promoted / 172 context-held — the earlier draft said 812 promoted: that
 figure had netted 37 mention-level property-rule/hierarchy holds out of the
