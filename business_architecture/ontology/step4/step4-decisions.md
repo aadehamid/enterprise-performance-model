@@ -697,3 +697,17 @@ association, ownership, sequencing, and optional considerations.
   emit no triple.
 
 No count changes — all 10 approved facts already stored in canonical-facts.csv.
+
+## Figure correction — G1a attach count (2026-09-29, Hamid-authorized)
+
+The totals recorded in the precedes/follows amendment above (615 emitting /
+688 held) inherit a 2-row overcount from the 2026-09-26 uses-input pass,
+which recorded k=42 ("G1a 75 → 33"). The applied 41-row hold set contains
+already-held REL-00152, so true k=40 and G1a 75 → 35 emitting (36 attached:
+35 emitting + REL-00436 held-attached). Corrected current totals:
+**617 emitting / 686 held** / 457 facts; conservation
+617 + 686 + 12 + 1 + 2 = 1,318. ✓
+Full evidence and corrected chain in `ledger-v2.md` ("Figure correction —
+G1a attach count"); independently verified by Cursor EPM. The amendment
+entry above keeps its recorded-at-the-time figures; this entry is the
+correction. No mention changes bucket; no fact changes.
