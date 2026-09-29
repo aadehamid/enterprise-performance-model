@@ -408,19 +408,11 @@ REL-00719, REL-00801, REL-01269, REL-01270. Held: REL-00355 and REL-00385
 held for workbook correction with its existing `core:assuredBy` fact removed
 and no substitute emitted.
 
-> **Identity-basis correction (2026-09-28):** the five approvals above were
-> presented as stable-ID matches. That was wrong. Per
-> `review-evidence/identity-scope-explicit-reference-test.csv`, all five are
-> **nearness-only** (the primary `identity-scope-match-types.csv` carries no
-> assures rows at all). Explicit-reference evidence exists for two rows
-> (REL-00401, REL-00719); the other three (REL-00801, REL-01269, REL-01270)
-> are nearness-only without explicit reference. REL-01269 and REL-01270
-> carry affirmative oversight citations, but identity is still to be
-> established. The approvals do **not** survive automatically on the
-> corrected basis — corrected evidence is in
-> `review-evidence/assures-nearness-correction.csv`, with Rule 6 samples
-> (seed 42: REL-00401, REL-01270, REL-00801) pending owner review. No bucket
-> changes in this correction; counts move only on owner verdict.
+> **Identity basis (2026-09-28):** match type on main is nearness-only for all
+> five, per `review-evidence/identity-scope-explicit-reference-test.csv`.
+> #155 verdicts (5 APPROVE / 3 HOLD, D:hamid-verdict) stand — this note
+> records basis only: no bucket change, no re-review, no Rule 6 gate on
+> approved rows.
 
 ## Constrained-by (added 2026-09-26, Hamid)
 
