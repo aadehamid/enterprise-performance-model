@@ -1,13 +1,13 @@
 # Step 4 Release Checklist — v0.4 Draft
 
-**Status:** Draft — status of `main` at `e9b80d3`
-**Date:** 2026-09-27
+**Status:** Draft — re-pinned to `main` at `1ba2ab0` (2026-09-28)
+**Date:** 2026-09-27 (status); re-pin 2026-09-28
 
-## Current State (main @ e9b80d3)
+## Current State (main @ 1ba2ab0)
 
 ### Methodology
 - **PR #159** merged as `7b85121` — verb review methodology Approved
-- **Phase 3 sibling fix** at `e9b80d3` (current tip) — `core:precedes` siblings may use structural nearness under Rule 5
+- **Phase 3 sibling fix** at `e9b80d3` — `core:precedes` siblings may use structural nearness under Rule 5
 
 ### Verb Packages (on main)
 | Verb | PR | Status |
@@ -23,8 +23,8 @@
 **615 emitting + 688 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318**
 
 ### Pinned Evidence
-- **PINNED_SHA:** `579ed89b479529d179485f633828df89399ad3c5`
-- Re-pin blocked on promotion preconditions (below), not on closed PRs #160/#161.
+- **PINNED_SHA:** `1ba2ab0bd8ae1d98ebaeed5129bd190130936624` (re-pinned 2026-09-28 from `579ed89b479529d179485f633828df89399ad3c5`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
+- Re-pin completed 2026-09-28; remaining promotion preconditions below still apply.
 
 ### PR #124 Proof
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
@@ -40,10 +40,10 @@
 - [x] Methodology approved (PR #159)
 
 ### Pending — Assistant
-- [ ] Evidence gate passes on current main
-- [ ] Re-pin evidence to current main SHA
-- [ ] Regression tests pass
-- [ ] Blast-radius proof against real artifacts
+- [x] Evidence gate passes on current main (GREEN 2026-09-28, pre re-pin)
+- [x] Re-pin evidence to current main SHA (2026-09-28 → `1ba2ab0`)
+- [x] Regression tests pass (evidence-gate GREEN post re-pin; `test_context_pass.py` 17/17; `test_step3c_workbook_validate.py` 3/3)
+- [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: canonical-facts byte-identical, 7 CSVs differ only in `baseline_sha`, no verdict-column change)
 
 ### Pending — Hamid
 - [ ] Fresh no-consumer attestation (dated after re-pin)
