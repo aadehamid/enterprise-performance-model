@@ -1144,10 +1144,14 @@ is a guess.
 - **Label-only identity needs an affirmative basis.** A label match alone
   identifies a target only with an affirmative citation, a strict two-way
   pair, or a recorded architecture decision. Anything weaker is a candidate,
-  not an identification.
+  not an identification. **Exception (Phase 3, Rule 5):** for `core:precedes`
+  siblings, structural nearness alone suffices — no added sequence assertion
+  required. A non-sibling row needs an affirmative sequence citation or a
+  two-way route.
 - **Exclusion wording is never an identity route.** Exclusion, boundary,
-  "owned by," and "may be handled by" wording never identifies a target for
-  any verb. A row that reaches its target only through such wording is held.
+  "owned by," and "may be handled by" wording is never a Rule 5 route. A slug
+  named in that wording still identifies the concept; the row stays held
+  because the wording is not a route.
 - **No emission-time remapping.** A row's meaning is fixed at review time.
   Semantic plausibility discovered later never authorizes reclassification;
   hold the row and send the meaning correction to the source-workbook
@@ -1198,7 +1202,10 @@ The four verbs are a promotion rule, not a thesaurus:
 
 - **enables** — the source supplies a maintained operating base, required
   control, governed mechanism, capability, resource, or prerequisite
-  condition that makes the target able to operate.
+  condition that makes the target able to operate. Stored direction:
+  `enables (S, T)` → `T core:enabledBy S` (the enabled thing is the
+  subject). APPROVE stores `core:enabledBy` only for G3; G1a merges as
+  duplicate evidence on `dependsOnOutputOf`; G1b is HOLD, no verdict.
 - **informs** — the source provides context the target uses.
 - **dependsOnOutputOf** — the target consumes a specific output of the
   source.
@@ -1218,16 +1225,21 @@ handoff to the activity that generates the trigger condition — "feeds /
 informs / supports / precedes" never become triggers without an invoking
 event).
 
+Locked verbs beyond the four: **precedes** / **follows** (sequence;
+`core:precedes` siblings promote on structural nearness alone per Rule 5)
+and **governedBy** (hierarchy; structural closeness alone never promotes —
+recorded hierarchy exceptions are not precedents).
+
 - **Never silently translate a verb.** If the source means "informs" and the
   pattern wants "requires," hold the row and send the meaning correction to
   the workbook backlog. Ambiguity stays visible as deferred; it is never
   resolved by rewording.
 - **Predicate integrity:** the relationship must stand as stated, without
-  silent conversion into another predicate. Test each candidate row against
-  the six-part verdict test (identity, capability effect, independence,
-  authority, predicate integrity, provenance) — a row failing any material
-  test is held, its fact removed if currently emitted, no substitute
-  emitted.
+  silent conversion into another predicate. Judge each candidate row in
+  Phase 3 order — identity first (including the Rule 5 sibling exception),
+  then direction, then the locked per-verb definition above. A row failing
+  its per-verb definition is held, its fact removed if currently emitted, no
+  substitute emitted.
 - **A row-level verdict is not architecture-decision evidence.** Only
   recorded architecture decisions qualify. The classifier column on review
   rows is triage only — never a decision basis.
@@ -1407,7 +1419,7 @@ whenever a step closes.
 ## 7. Worked example — the downstream process-map ontology
 
 How the method played out on a real build. Illustrative, not normative: the
-prescriptions are in §0–§5; this is what following them looked like.
+prescriptions are in §0–§6; this is what following them looked like.
 
 **The build.** Source of truth: `downstream_process_map.json` in the
 `aadehamid/enterprise-performance-model` repo — ~680 process nodes across
