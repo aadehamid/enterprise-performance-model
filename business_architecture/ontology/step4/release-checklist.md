@@ -31,7 +31,7 @@
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
 - At #124: `7b21bd2402721cfa1eef4103b8d460a92e996268a1c6495bfed4ea12ac2d3a58`
 - Current: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0`
-- `no-consumer-attestation.md` (from #124) is stale/superseded — needs fresh attestation dated after re-pin.
+- `no-consumer-attestation.md` re-attested 2026-09-29 (Hamid) against pin `6a155bc23ba3971ce430b774b4ddd6f4a933e380` — supersedes the stale #124 attestation.
 
 ## Promotion Preconditions
 
@@ -47,7 +47,7 @@
 - [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: 7 CSVs differ only in `baseline_sha`, 2,898 rows, no verdict-column change)
 
 ### Pending — Hamid
-- [ ] Fresh no-consumer attestation (dated after re-pin)
+- [x] Fresh no-consumer attestation (dated after re-pin) — attested 2026-09-29
 - [ ] Mapping document sign-off (section by section)
 - [ ] Explicit promotion approval
 
