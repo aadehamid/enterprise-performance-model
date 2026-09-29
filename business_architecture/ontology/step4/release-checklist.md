@@ -23,7 +23,7 @@
 **615 emitting + 688 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318**
 
 ### Pinned Evidence
-- **PINNED_SHA:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28 from `1ba2ab0b479529d179485f633828df89399ad3c5`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
+- **PINNED_SHA:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28 from `1ba2ab0bd8ae1d98ebaeed5129bd190130936624`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
 - Re-pin completed 2026-09-28; remaining promotion preconditions below still apply.
 
 ### PR #124 Proof
