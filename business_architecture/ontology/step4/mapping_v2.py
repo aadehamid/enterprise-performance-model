@@ -3,10 +3,10 @@
 mirror merges, contradiction report, and the requires/assures/enables
 review tables.
 """
-import csv, json
+import csv, json, os
 from collections import defaultdict, Counter
 
-BASE = "/home/hatch/workspace/ontology-step4"
+BASE = os.path.dirname(os.path.abspath(__file__))
 SHA = open(f"{BASE}/PINNED_SHA.txt").read().strip()
 imap = {r["slug"]: r for r in json.load(open(f"{BASE}/baseline/step2-identity-map.json"))}
 v2 = list(csv.DictReader(open(f"{BASE}/target-report/target-dispositions-v2.csv")))
