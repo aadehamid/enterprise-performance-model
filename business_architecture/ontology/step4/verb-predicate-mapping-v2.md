@@ -343,9 +343,10 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
 8. Emission gate (sequence step, superseded): the 2026-09-25 plan held that
    nothing emits until every decision cell is resolved and the release
    checklist is green. Emission proceeded per-verb under the evidence
-   discipline instead — 457 facts stored on `main`. The three Hamid
-   release-checklist boxes (fresh no-consumer attestation, mapping-document
-   sign-off, explicit promotion approval) remain unchecked.
+   discipline instead — 457 facts stored on `main`. The fresh no-consumer
+   attestation box was checked 2026-09-29; the two remaining Hamid
+   release-checklist boxes (mapping-document sign-off, explicit promotion
+   approval) remain unchecked.
 
 Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
 (5 approved, 3 held), constrained-by (10 approved, 1 held), triggers
