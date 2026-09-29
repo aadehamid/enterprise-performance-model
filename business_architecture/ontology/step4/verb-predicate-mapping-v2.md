@@ -4,7 +4,7 @@
 Figures refreshed 2026-09-26 to the reviewed evidence package
 (615 emitting / 688 held / 457 facts — 635/668/477 before the 2026-09-27 precedes/follows amendment; 646/657/488 before the 2026-09-26 triggers pass; 666/637/508 before the 2026-09-26 governed-by pass; 761/542/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `1ba2ab0bd8ae1d98ebaeed5129bd190130936624` (re-pinned 2026-09-28; was `579ed89b479529d179485f633828df89399ad3c5`/PR #126 — repinned 2026-09-26 after the uses-input pass).
+**Baseline:** `d7310c9acd37c893d7d6926645c715f425eb9dc8` (re-pinned 2026-09-28; was `579ed89b479529d179485f633828df89399ad3c5`/PR #126 — repinned 2026-09-26 after the uses-input pass).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 (849 promoted / 172 context-held — the earlier draft said 812 promoted: that
 figure had netted 37 mention-level property-rule/hierarchy holds out of the
