@@ -3,11 +3,11 @@
 **Status:** Draft — re-pinned to `main` at `1ba2ab0` (2026-09-28)
 **Date:** 2026-09-27 (status); re-pin 2026-09-28
 
-## Current State (main @ e9b80d3)
+## Current State (main @ 1ba2ab0)
 
 ### Methodology
 - **PR #159** merged as `7b85121` — verb review methodology Approved
-- **Phase 3 sibling fix** at `e9b80d3` (current tip) — `core:precedes` siblings may use structural nearness under Rule 5
+- **Phase 3 sibling fix** at `e9b80d3` — `core:precedes` siblings may use structural nearness under Rule 5
 
 ### Verb Packages (on main)
 | Verb | PR | Status |
