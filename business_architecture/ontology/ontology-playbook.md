@@ -1205,7 +1205,8 @@ The four verbs are a promotion rule, not a thesaurus:
   condition that makes the target able to operate. Stored direction:
   `enables (S, T)` → `T core:enabledBy S` (the enabled thing is the
   subject). APPROVE stores `core:enabledBy` only for G3; G1a merges as
-  duplicate evidence on `dependsOnOutputOf`; G1b is HOLD, no verdict.
+  duplicate evidence on `dependsOnOutputOf`; G1b is HOLD, no verb change;
+  G2 emits no triple.
 - **informs** — the source provides context the target uses.
 - **dependsOnOutputOf** — the target consumes a specific output of the
   source.
