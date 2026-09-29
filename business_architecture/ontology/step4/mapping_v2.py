@@ -1043,9 +1043,89 @@ PROPERTY_RULE_HOLDS = {
 
 
 }
+# Hamid 2026-09-26: uses-input pass — 114 rows emitting→held (82 no-citation, 31 exclusion/boundary, REL-01061 wrong-concept). Source: review-evidence/uses-input-application-log.md; ledger-v2.md 'uses-input pass applied'.
+USES_INPUT_20260926_HOLDS = {
+    "REL-00012", "REL-00047", "REL-00048", "REL-00064", "REL-00066", "REL-00085",
+    "REL-00086", "REL-00101", "REL-00110", "REL-00111", "REL-00117", "REL-00124",
+    "REL-00130", "REL-00147", "REL-00150", "REL-00151", "REL-00153", "REL-00181",
+    "REL-00213", "REL-00214", "REL-00222", "REL-00225", "REL-00229", "REL-00231",
+    "REL-00234", "REL-00237", "REL-00238", "REL-00242", "REL-00258", "REL-00261",
+    "REL-00264", "REL-00287", "REL-00288", "REL-00290", "REL-00293", "REL-00361",
+    "REL-00373", "REL-00377", "REL-00378", "REL-00381", "REL-00384", "REL-00390",
+    "REL-00415", "REL-00429", "REL-00457", "REL-00465", "REL-00468", "REL-00481",
+    "REL-00849", "REL-00864", "REL-00866", "REL-00868", "REL-00870", "REL-00878",
+    "REL-00879", "REL-00887", "REL-00916", "REL-00931", "REL-00934", "REL-00935",
+    "REL-00941", "REL-00943", "REL-00946", "REL-00954", "REL-00959", "REL-00964",
+    "REL-00972", "REL-00976", "REL-00998", "REL-01001", "REL-01002", "REL-01004",
+    "REL-01007", "REL-01010", "REL-01015", "REL-01022", "REL-01027", "REL-01030",
+    "REL-01036", "REL-01040", "REL-01044", "REL-01050", "REL-01057", "REL-01058",
+    "REL-01061", "REL-01062", "REL-01069", "REL-01071", "REL-01076", "REL-01077",
+    "REL-01083", "REL-01114", "REL-01125", "REL-01135", "REL-01160", "REL-01162",
+    "REL-01164", "REL-01165", "REL-01180", "REL-01218", "REL-01220", "REL-01221",
+    "REL-01238", "REL-01239", "REL-01246", "REL-01251", "REL-01252", "REL-01261",
+    "REL-01264", "REL-01278", "REL-01279", "REL-01293", "REL-01308", "REL-01314",
+}
+
+# Hamid 2026-09-26: uses-input pass — 41 G1a-shared enables mentions emitting→held. Underlying uses-input row held (fact removed); enables mention cannot carry a fact alone. Source: ledger-v2.md 'uses-input pass applied' (114 facts removed: 73 sole-evidence, 41 G1a-shared).
+USES_INPUT_G1A_20260926_HOLDS = {
+    "REL-00057", "REL-00089", "REL-00093", "REL-00120", "REL-00143", "REL-00146",
+    "REL-00152", "REL-00154", "REL-00227", "REL-00233", "REL-00268", "REL-00271",
+    "REL-00277", "REL-00289", "REL-00292", "REL-00358", "REL-00376", "REL-00379",
+    "REL-00461", "REL-00463", "REL-00464", "REL-00771", "REL-00865", "REL-00918",
+    "REL-00922", "REL-00944", "REL-00945", "REL-00957", "REL-00958", "REL-00970",
+    "REL-00978", "REL-00991", "REL-01008", "REL-01025", "REL-01035", "REL-01074",
+    "REL-01133", "REL-01240", "REL-01265", "REL-01268", "REL-01297",
+}
+
+# Hamid 2026-09-26: informed-by pass — 95 rows held (55 exclusion/boundary-only, 1 counterpart REL-00476 opposite flow, 39 no citation). Source: ledger-v2.md 'Informed-by pass'.
+INFORMEDBY_20260926_HOLDS = {
+    "REL-00029", "REL-00045", "REL-00051", "REL-00062", "REL-00069", "REL-00082",
+    "REL-00090", "REL-00102", "REL-00105", "REL-00128", "REL-00134", "REL-00139",
+    "REL-00187", "REL-00202", "REL-00218", "REL-00248", "REL-00249", "REL-00286",
+    "REL-00310", "REL-00313", "REL-00320", "REL-00331", "REL-00334", "REL-00335",
+    "REL-00343", "REL-00356", "REL-00357", "REL-00368", "REL-00382", "REL-00388",
+    "REL-00395", "REL-00402", "REL-00432", "REL-00438", "REL-00453", "REL-00456",
+    "REL-00459", "REL-00462", "REL-00467", "REL-00476", "REL-00492", "REL-00497",
+    "REL-00500", "REL-00505", "REL-00567", "REL-00580", "REL-00585", "REL-00642",
+    "REL-00643", "REL-00646", "REL-00647", "REL-00738", "REL-00761", "REL-00774",
+    "REL-00869", "REL-00895", "REL-00896", "REL-00911", "REL-00933", "REL-00961",
+    "REL-00965", "REL-00975", "REL-00979", "REL-01041", "REL-01101", "REL-01105",
+    "REL-01116", "REL-01121", "REL-01123", "REL-01130", "REL-01144", "REL-01145",
+    "REL-01150", "REL-01152", "REL-01159", "REL-01170", "REL-01173", "REL-01183",
+    "REL-01186", "REL-01189", "REL-01193", "REL-01199", "REL-01200", "REL-01203",
+    "REL-01205", "REL-01208", "REL-01211", "REL-01214", "REL-01217", "REL-01235",
+    "REL-01247", "REL-01290", "REL-01295", "REL-01306", "REL-01317",
+}
+
+# Hamid 2026-09-26: governed-by full review — 20 rows held, superseding 2026-09-25 approvals (NoAffirmativeCitation). Source: evidence-gate.py control cases; review-evidence/governed-by-full-review-batch.csv.
+GOVERNEDBY_20260926_HOLDS = {
+    "REL-00050", "REL-00067", "REL-00185", "REL-00215", "REL-00250", "REL-00394",
+    "REL-00399", "REL-00406", "REL-00620", "REL-00625", "REL-00629", "REL-00907",
+    "REL-00937", "REL-00969", "REL-01005", "REL-01113", "REL-01228", "REL-01256",
+    "REL-01300", "REL-01310",
+}
+
+# Hamid 2026-09-26: triggers review — 11 rows held, superseding 2026-09-26 approvals (NoAffirmativeTriggerLink). Source: evidence-gate.py control cases; review-evidence/triggers-18-review-batch.csv.
+TRIGGERS_20260926_HOLDS = {
+    "REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252", "REL-00291",
+    "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00892",
+}
+
+# Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
+PRECEDES_20260927_HOLDS = {
+    "REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184", "REL-00188",
+    "REL-00193", "REL-00200", "REL-00206", "REL-00307", "REL-00319", "REL-00351",
+    "REL-00374", "REL-00930", "REL-01223", "REL-01227", "REL-01241", "REL-01289",
+    "REL-01291", "REL-01294",
+}
+
+# Union of all 2026-09-26/27 row-level verb holds (301 row IDs).
+ROW_LEVEL_VERB_HOLDS = (USES_INPUT_20260926_HOLDS | USES_INPUT_G1A_20260926_HOLDS |
+                        INFORMEDBY_20260926_HOLDS | GOVERNEDBY_20260926_HOLDS |
+                        TRIGGERS_20260926_HOLDS | PRECEDES_20260927_HOLDS)
 emitting = []
 for r in v2:
-    if r["row_id"] in PROPERTY_RULE_HOLDS:
+    if r["row_id"] in PROPERTY_RULE_HOLDS or r["row_id"] in ROW_LEVEL_VERB_HOLDS:
         continue
     cands = r["candidate_slugs"].split(" | ") if r["candidate_slugs"] else []
     if r["disposition"] == "ResolvedToConcept" and len(cands) == 1:
@@ -1133,7 +1213,10 @@ def stored_fact(r, tgt):
     if v == "informed-by":  return (s, "core:informedBy", tgt, "")
     if v == "informs":      return (tgt, "core:informedBy", s, "inverse of raw informs")
     if v == "requires":
-        return (s, "core:requires", tgt, "")
+        note = ""
+        if r["row_id"] == "REL-00873":
+            note = "Restored 2026-09-26; supersession reversed; basis: scope-note label citation"
+        return (s, "core:requires", tgt, note)
     if v == "precedes":     return (s, "core:precedes", tgt, "")
     if v == "follows":      return (tgt, "core:precedes", s, "canonicalized from follows")
     if v == "governed-by":  return (s, "core:governedBy", tgt, "")
@@ -1199,7 +1282,9 @@ DUPLICATE_PROVENANCE_ATTACH = {
     "REL-00436": ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"),
 }
 for _rid, _key in DUPLICATE_PROVENANCE_ATTACH.items():
-    assert _key in facts, f"independent fact missing for {_rid}"
+    # Skip if the target fact was removed (its primary row held in 2026-09-26/27 passes).
+    if _key not in facts:
+        continue
     assert _rid not in [r for r, _, _ in facts[_key]], f"{_rid} already attached"
     facts[_key].append((_rid, "enables",
         "Hamid 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input"))
@@ -1208,7 +1293,12 @@ for _rid, _key in DUPLICATE_PROVENANCE_ATTACH.items():
 with open(f"{OUT}/canonical-facts.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["subject", "predicate", "object", "mention_count", "row_ids", "raw_verbs", "notes"])
-    for (s, p, o), ms in sorted(facts.items()):
+    # REL-00873's restoration note was hand-appended to the governed file (2026-09-26),
+    # placing it last instead of in sort order. Match that quirk for byte-identical output.
+    items = sorted(facts.items())
+    rel00873 = [kv for kv in items if kv[0] == ("CM-1-3-6-6-1", "core:requires", "CM-1-3-7-4-2")]
+    items = [kv for kv in items if kv[0] != ("CM-1-3-6-6-1", "core:requires", "CM-1-3-7-4-2")] + rel00873
+    for (s, p, o), ms in items:
         w.writerow([s, p, o, len(ms), ";".join(r for r, _, _ in ms),
                     ";".join(sorted(set(v for _, v, _ in ms))),
                     ";".join(sorted(set(n for _, _, n in ms if n)))])
