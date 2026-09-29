@@ -445,6 +445,12 @@ and no substitute emitted.
   Held: REL-00097 (context hold retained — broad Refining target undefined;
   source author must supply a defined, more specific target).
 
+> **Identity basis (2026-09-28):** per
+> `review-evidence/identity-scope-explicit-reference-test.csv`, REL-00087,
+> REL-00091, REL-00099, and REL-00894 are nearness-only. #156 verdicts
+> (10 APPROVE / 1 HOLD, D:hamid-verdict) stand — this note records basis
+> only: no bucket change, no re-review.
+
 ## Triggers (added 2026-09-26, Hamid)
 
 - **`core:triggeredBy`** is stored from an activity initiated or materially
