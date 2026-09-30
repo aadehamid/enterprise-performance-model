@@ -856,7 +856,7 @@ descriptions triangulated against public industry definitions.
   merged 2026-09-18, together with Step 3) — review CSV, adoptions,
   validation records, and both build scripts included.
 
-### Step 4 — verb-predicate mapping ✅ (2026-09-29, released)
+### Step 4 — verb-predicate mapping 🔄 (verb review on main 2026-09-29; promotion pending)
 
 Promoting the workbook's raw relationship verbs to canonical ontology
 predicates — with every row earning its verdict and every figure earning
@@ -917,12 +917,13 @@ batches, and the supersession register live under
 document (`verb-predicate-mapping-v2.md`) was reviewed section by
 section and corrected twice against the artifacts (PRs #178, #181).
 
-**Release.** Nine-item checklist, all green 2026-09-29: evidence gate
+**Status.** Seven of nine checklist items green 2026-09-29: evidence gate
 433 PASS, evidence pinned, regression tests 17/17, blast-radius proof
 CLEAN, fresh no-consumer attestation ("no downstream consumer is
 consuming the ontology yet… the very first build out"), every row
-verdict-recorded, ledger reconciled — plus Hamid's mapping-document
-sign-off and explicit promotion approval. The provisional `intake:`
+verdict-recorded, ledger reconciled. Two Hamid boxes stay open and block
+promotion: mapping-document sign-off (section by section) and explicit
+promotion approval (`release-checklist.md` L51–L52). The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
 properties and retires those predicates.
 
