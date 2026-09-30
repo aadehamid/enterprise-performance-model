@@ -1,5 +1,15 @@
 # Step 4 Q2 Conservation Ledger — DRAFT v1
 
+> **Superseded (note added 2026-09-30).** This draft is superseded by
+> `ledger-v2.md`, the current conservation ledger. It was built on the
+> **v1.1** target-disposition baseline (1,317 relationship mentions). The
+> current baseline is **v2** (`target-report/target-dispositions-v2.csv`,
+> 1,318 mentions). The one extra mention is REL-00028, the approved R1
+> interface (`CM-1-1-2-9-1` informs `CM-1-1-4`); see
+> `target-report/v1.1-v2-diff-summary.md`. The buckets below
+> (1,302 + 12 + 2 + 1) are v1.1 figures and don't match the current
+> 617 / 686 / 12 / 1 / 2 = 1,318. The text below is kept unchanged as history.
+
 **Rule:** `emitted + held = source total`, reconciled by source predicate/field.
 Zero `intake:` triples proves deletion only, not successful migration.
 

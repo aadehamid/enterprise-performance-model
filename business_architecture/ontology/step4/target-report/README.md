@@ -1,5 +1,12 @@
 # Relationship-target disposition report — v1.1 (APPROVED)
 
+> **Current version (note added 2026-09-30).** This report describes
+> **v1.1** (`target-dispositions-v1.1.csv`, 1,317 mentions). The current
+> governed dispositions are **v2** (`target-dispositions-v2.csv`, 1,318
+> mentions). The one added mention is REL-00028, the approved R1 interface
+> (`CM-1-1-2-9-1` informs `CM-1-1-4`). Nothing was lost; see
+> `v1.1-v2-diff-summary.md`. Current Step 4 totals are in `ledger-v2.md`.
+
 Source: committed `step3-taxonomy.ttl` (main) + `step2-identity-map.json`.
 **All 1,317 mentions have a governed disposition — zero undispositioned
 mentions.** Generator: `classify.py` (re-runnable).
