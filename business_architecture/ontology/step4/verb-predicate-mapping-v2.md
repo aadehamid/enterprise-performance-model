@@ -1,4 +1,4 @@
-# Verb → Predicate Mapping v2 — CANDIDATE FOR REVIEW (not approved)
+# Verb → Predicate Mapping v2 — APPROVED (Hamid 2026-09-29, 16/16 sections)
 
 **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
