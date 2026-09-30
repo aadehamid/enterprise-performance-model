@@ -137,6 +137,14 @@ agreement or eligibility record decides which schedule or formula applies.
    instruments, not prices. Options: (a) keep P10 in Pricing, or (b) own it in a
    Commercial Risk domain, with Pricing providing the exposures' price inputs.
 
+**Downstream evidence and recommendation.** See
+`../downstream-peers/pricing-market-data-risk-evidence.md`. MPC and seven U.S.
+refining peers (Phillips 66, Valero, PBF, HF Sinclair, Delek, CVR, Par Pacific)
+point to (1) a separate **Market Data** domain (P1 and the benchmark part of
+P11), (2) a **Commercial Risk** domain owning P10, and (3) P2 margin indicators
+as KPI Store measures built on Market Data. Pricing keeps P3–P9 and the
+price-list part of P11. Pending Hamid's decision.
+
 ## 6. What the repo already has
 
 - **Process map:** Sales Pricing Management, Pricing Strategy Management,
