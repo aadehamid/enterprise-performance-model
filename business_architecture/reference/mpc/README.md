@@ -33,4 +33,5 @@ instances, KPIs and definitions against.
 |---|---|
 | `source-register.md` | Every MPC / MPLX source used, with accession number, URL and retrieval date |
 | `mpc-fy2025-10k-fact-sheet.md` | Structured facts extracted from the FY2025 10-K (segments, sites, products, channels, KPI definitions) |
+| `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C7 + facets), each class cited to filings or MPC materials |
 | `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (Proposed — not applied) |
