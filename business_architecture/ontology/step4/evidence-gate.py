@@ -4,7 +4,7 @@
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
   2. Mention arithmetic reconciles from the actual files: 1066+237+12+1+2=1318.
-  3. canonical-facts.csv has exactly 866 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  3. canonical-facts.csv has exactly 457 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
