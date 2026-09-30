@@ -33,12 +33,16 @@ Generic frameworks never decide a boundary on their own.
 | Domain | Status | Owns | Classification / key concepts | Evidence |
 |---|---|---|---|---|
 | **Customer** | Classification adopted (2026-09-29). Domain model: Draft (`customer_domain_problem_statement_v0.1.md`) | Parties in a customer role, customer accounts, roles, channel classification | C1 Brand jobber · C2 Direct dealer · C3 Wholesale marketing customer · C4 Independent retailer · C5 Unbranded customer (C5.1–C5.4) · C6 Spot market buyer · C7 Export / international customer · C8 Crude oil customer; facets: brand status, contract type, product line, segment, geography, delivery tier | `../reference/mpc/customer-classification-evidence.md` |
-| **Commercial Pricing & Price Realization** | Proposed | The price MPC offers or contracts, how it is applied and adjusted, and what is realized | P3 realized price · P4 feedstock and purchased-product pricing · P5 regional / location differentials · P6 product and quality · P7 customer and contract · P8 logistics and tariff · P9 incentives, promotions and rebates · P11 (price-list governance) | `../reference/mpc/pricing-domain-evidence.md` |
-| **Market Data** | Proposed (dependency of Pricing) | External and constructed market observations: benchmarks, assessments, curves, differentials, and their methodology and licensing | P1 market benchmark pricing · P11 (benchmark methodology and publication) | `../reference/downstream-peers/pricing-market-data-risk-evidence.md` |
-| **Commercial Risk** | Proposed as owner of price risk. Not yet defined | Commodity price exposure, derivatives, limits, valuations (middle office) | P10 price risk and hedging; process map CM 1.2.2 Confirmations & Risk Management | `../reference/downstream-peers/pricing-market-data-risk-evidence.md` |
+| **Commercial Pricing & Price Realization** | Proposed (scope per D1–D4, proposed) | Proposed scope: the price MPC offers or contracts, how it is applied and adjusted, and what is realized | P3 realized price · P4 feedstock and purchased-product pricing · P5 regional / location differentials · P6 product and quality · P7 customer and contract · P8 logistics and tariff · P9 incentives, promotions and rebates · P11 (price-list governance) | `../reference/mpc/pricing-domain-evidence.md` |
+| **Market Data** | Proposed (D1, proposed) | Proposed scope: external and constructed market observations: benchmarks, assessments, curves, differentials, and their methodology and licensing | P1 market benchmark pricing · P11 (benchmark methodology and publication) | `../reference/downstream-peers/pricing-market-data-risk-evidence.md` |
+| **Commercial Risk** | Proposed (D2, proposed). Not yet defined | Proposed scope: commodity price exposure, derivatives, limits, valuations (middle office) | P10 price risk and hedging; process map CM 1.2.2 Confirmations & Risk Management | `../reference/downstream-peers/pricing-market-data-risk-evidence.md` |
 
-P2 (benchmark margin indicators, margin capture) isn't a domain. It becomes
-KPI Store measures built on Market Data.
+Proposed (D3): P2 (benchmark margin indicators, margin capture) isn't a
+domain. It becomes KPI Store measures built on Market Data.
+
+The pricing split above (D1–D4) is **proposed, not decided**. It follows
+`../reference/mpc/pricing-domain-evidence.md` §5 and stays proposed until
+Hamid records a decision. Boundary rules 2 and 3 below depend on it.
 
 ## Boundary rules
 
@@ -46,10 +50,10 @@ KPI Store measures built on Market Data.
    eligibility. The customer master holds stable classification (C1–C8). An
    agreement or eligibility record decides which price schedule or formula
    applies.
-2. **Pricing references Market Data and doesn't own it.** A contract formula
+2. **Pricing references Market Data and doesn't own it** (depends on D1, proposed). A contract formula
    points to a benchmark. The benchmark observation, its source, methodology
    version and licence live in Market Data.
-3. **Pricing creates exposure and Commercial Risk manages it.** Fixed-price sales
+3. **Pricing creates exposure and Commercial Risk manages it** (depends on D2, proposed). Fixed-price sales
    and purchases are Pricing records. The resulting exposure, hedges and limits
    are Commercial Risk records.
 4. **Exchange and matching buy/sell counterparties aren't customers** unless

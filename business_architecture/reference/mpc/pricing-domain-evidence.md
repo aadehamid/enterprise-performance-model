@@ -141,9 +141,9 @@ Based on it, this is proposed:
 | D3 Margin indicators (P2) | **KPI Store** measures built on Market Data. Refining economics owns the indicator method | P2 inside Pricing |
 | D4 Domain name | **Commercial Pricing & Price Realization**, owning P3–P9 and the price-list part of P11 (approvals, overrides, audit) | "Commercial Pricing, Market Data and Price Realization" |
 
-These become decisions when the PR introducing this section is merged. A
-HOLD keeps them open. The register of domains is
-`../../domain/data-domain-register.md`.
+D1–D4 stay **proposed** until Hamid records a decision on them. The domain
+register (`../../domain/data-domain-register.md`) shows the same proposed
+split and the same status.
 
 ## 6. What the repo already has
 
