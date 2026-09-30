@@ -1418,10 +1418,10 @@ without a dated amendment and Hamid's explicit agreement.
   governance, and domain outcomes stay with the accountable owner.
 
 ### Validation and process
-- **Worklog renamed (2026-09-30, requested by Hamid).** This file was renamed from
+- **Worklog renamed (2026-09-30).** This file was renamed from
   `step4/playbook/ontology-playbook.md` to `step4/playbook/ontology-worklog.md`,
   so only the method keeps the playbook name. The entry below refers to it
-  as "this working record". In the same change (requested by Hamid),
+  as "this working record". In the same change,
   `step4/playbook/manifest.json` was retired: it mapped this file onto the
   method's path, so a sync could have overwritten the method. The stale
   snapshot `step4/playbook/ontology-playbook.remote-main.md` was removed.
