@@ -856,6 +856,84 @@ descriptions triangulated against public industry definitions.
   merged 2026-09-18, together with Step 3) — review CSV, adoptions,
   validation records, and both build scripts included.
 
+### Step 4 — verb-predicate mapping 🔄 (verb review on main 2026-09-29; promotion pending)
+
+Promoting the workbook's raw relationship verbs to canonical ontology
+predicates — with every row earning its verdict and every figure earning
+its place.
+
+**The approach.** The workbook's `verb` column is a claim, not a fact.
+Step 4 treats each of the 1,318 relationship mentions as a candidate that
+must pass a semantic test before it becomes a canonical fact — or be
+held with a recorded reason. The approach, in five parts:
+
+1. **Predicates have definitions, not vibes.** Each canonical predicate
+   carries a precise semantic test, decided with Hamid before any row
+   was judged: `core:requires` = the source cannot validly proceed
+   without the target (not merely "the target later uses related
+   info"); `core:assuredBy` = a defined governance/compliance/quality/
+   review/control-testing oversight role (not "supports" or "is
+   necessary for"); `core:constrainedBy` = the bounded activity points
+   to its binding constraint source; `core:triggeredBy` = a defined
+   invoking event, exception, detection, or handoff (not "feeds" or
+   "precedes"); `core:enabledBy` = the source supplies a maintained,
+   governed, or operationally necessary base, passing a six-part test
+   (identity, capability effect, independence, authority, predicate
+   integrity, provenance). Precedes/follows Rule 5: siblings need only
+   structural nearness; non-siblings need an affirmative sequence
+   citation or a two-way route.
+2. **Buckets, not beliefs.** Every mention lands in exactly one bucket:
+   emitting (on a canonical fact), held (verdict-recorded, off the
+   fact), deferred, external governance, or structured flow. Counts move
+   only when a row changes bucket — approving an already-emitting row
+   changes its basis, never the totals. Every count change names the
+   row, the old bucket, the new bucket, and the reason.
+3. **No emission-time remapping.** Semantic plausibility never
+   authorizes reclassification. A row that reads like "requires" but
+   was proposed as "uses-input" stays where its evidence puts it; the
+   fix goes to the source workbook, not the mapping.
+4. **Figure discipline.** When a figure is wrong in one place, assume it
+   is wrong in others: sweep the file, recompute every total, ground
+   each CSV-derived number against the actual CSV, and report a
+   discrepancy instead of fudging it. Blank `match_type` is deliberate —
+   never invent a default.
+5. **Two-agent review.** Hamid reviews section by section ("one at a
+   time to make sure I get it"). Cursor EPM pre-reviews every section
+   against the repo; an independent verification re-checks every figure
+   against the actual artifacts. Nothing merges on assumption.
+
+**What we did.** Mapped 1,318 mentions to 457 canonical facts:
+617 emitting / 686 held / 12 deferred / 1 external governance /
+2 structured flow (conservation: 617+686+12+1+2 = 1,318). Per-predicate:
+uses-input 101, informed-by 44, informs 1, requires 5, precedes 137,
+follows 157, governed-by 18, constrained-by 10, triggers 7, assures 5,
+enabledBy 84. The G1a duplicate-evidence merge (36 attached, 35
+emitting), G1b workbook-correction holds (29), G2 no-separate-fact
+(13), and the G3 genuine-enablement review (84 approved, 96 held) each
+got row-level verdicts. `contradictions.csv` is header-only — zero
+reciprocal pairs across all predicates. Review instruments, per-verb
+batches, and the supersession register live under
+`business_architecture/ontology/step4/review-evidence/`; the mapping
+document (`verb-predicate-mapping-v2.md`) received two figure corrections
+against the artifacts (PRs #178, #181); the mapping-document sign-off
+itself (release-checklist.md L51) remains section-by-section pending.
+
+**Status.** Eight of ten checklist items green 2026-09-29: every row
+verdict-recorded, ledger reconciled, methodology approved (PR #159),
+evidence gate 433 PASS, evidence pinned, regression tests 17/17,
+blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
+consumer is consuming the ontology yet… the very first build out"). Two Hamid boxes stay open and block
+promotion: mapping-document sign-off (section by section) and explicit
+promotion approval (`release-checklist.md` L51–L52). The provisional `intake:`
+namespace stays until a future step promotes intake annotations to real
+properties and retires those predicates.
+
+**Standing principles established.**
+- A verb is a claim; a predicate is a verdict. Never promote on
+  structural closeness or semantic plausibility alone.
+- Held is a first-class outcome with a recorded reason — not a failure.
+- The reviewer merges; the agents verify. Router ≠ merge.
+
 ---
 
 ## 4. Decision log
