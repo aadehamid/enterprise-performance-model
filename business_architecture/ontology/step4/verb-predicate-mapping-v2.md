@@ -673,11 +673,8 @@ marking such rows `PROMOTE`.
 - **Enablement:** a maintained, governed, or operationally necessary
   capability/input base that makes the target able to perform its stated
   function (e.g., vetted term slate for recommendation production —
-  REL-00433, stored; quality-screened options for trading coordination,
-  entitlement rules and governed agreement terms for exchange utilization,
-  a validated feedstock-demand signal for trading action — the last three
-  from REL-00437, REL-00489, and REL-01124, illustrative of the definition
-  but superseded and not stored).
+  REL-00433, stored; governed crude/feed quality-management base for
+  feedstock slate recommendation — REL-01172, stored).
 - **Not enablement:** advisory recommendations, evaluations, optional
   analysis, decision proposals, approval submissions, ordinary sequence, a
   potential output dependency, or a broad parent-child relationship.
