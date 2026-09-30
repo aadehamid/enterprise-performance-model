@@ -341,8 +341,8 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
 5. The Supply & Trading search (pattern-holds to backlog).
 6. G1 split (G1a merge / G1b hold), then G2, then G3.
 7. The mapping doc itself (the 5 answers + canonical direction table) —
-   **in progress now** (figures refreshed 2026-09-26; section-by-section
-   approval to follow).
+   **completed 2026-09-29** (figures refreshed 2026-09-26; section-by-section
+   approval complete 2026-09-29, Hamid).
 8. Emission gate (sequence step, superseded): the 2026-09-25 plan held that
    nothing emits until every decision cell is resolved and the release
    checklist is green. Emission proceeded per-verb under the evidence
