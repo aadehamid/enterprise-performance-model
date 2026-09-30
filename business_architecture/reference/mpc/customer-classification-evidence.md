@@ -13,6 +13,12 @@ updated to the latest filing (FY2025 10-K).
 
 ## 1. Primary classes — sales channel
 
+**Customer boundary.** Counterparties to exchange contracts and matching
+buy/sell arrangements are **not customers** under any class, unless they also
+buy from MPC in a revenue-recognized sale. MPC records no revenue on exchanges
+and reports matching buy/sell receivables ($4.1B at 2025-12-31) as "non-customer
+balances" (MPC-S01, Notes: Revenue; Contract Balances).
+
 | Code | Class | Definition (MPC language) | Source | Disclosed scale (FY2025 10-K) |
 |---|---|---|---|---|
 | C1 | Brand jobber | "independent entrepreneurs who operate primarily Marathon® branded outlets" | MPC-S01/S05/S09 Item 1; MPC-S11 | 7,882 branded outlets in 40 states, DC and Mexico (7,217 at FY2023; 7,738 at FY2024) |
@@ -22,6 +28,7 @@ updated to the latest filing (FY2025 10-K).
 | C5 | Unbranded customer | "MPC markets gasoline and diesel fuel to independent marketers, commercial end-users, unbranded distributors and high-volume retailers" | MPC-S10 (MPC Unbranded Marketing page) | Not disclosed |
 | C6 | Spot market buyer | "buyers on the spot market" | MPC-S01/S05/S09 Item 1; MPC-S11 | Not disclosed |
 | C7 | Export / international customer | "we sell refined products for export to international customers" | MPC-S01/S05/S09 Item 1; MPC-S11 | 401 mbpd exported in 2025 (gasoline 114, distillates 195, asphalt/NGLs/other 92) |
+| C8 | Crude oil customer | External customers purchasing crude oil from the Refining & Marketing segment (added by Hamid 2026-09-29). MPC doesn't say who these buyers are | MPC-S01 Note 20 (R&M revenue from external customers, crude oil) | $5,817M revenue in 2025 ($7,298M in 2024; $7,423M in 2023) |
 
 C5 subclasses (MPC-S10):
 
@@ -104,9 +111,8 @@ and the two-way volume split in the delivery-tier facet.
    segment", and Midstream has external-customer revenue ($5,628M in 2025, Note
    20). The words "third-party shippers" haven't been found in MPC documents yet.
    Confirm from the MPLX 10-K (MPC-S08).
-7. **Possible gap: crude oil buyers.** R&M sold $5,817M of crude oil to external
-   customers in 2025 (Note 20). Decide whether crude buyers fall under C3, C6,
-   or need their own class.
+7. **Crude oil buyers — resolved.** Added as C8 (Hamid, 2026-09-29), with the
+   exchange / buy-sell counterparty exclusion stated in §1.
 8. **Restatements.** FY2022 direct-to-end-user volume is 2,355 mbpd in the FY2023
    10-K and 2,356 in the FY2024 10-K. Store each figure with its filing vintage.
 
@@ -115,7 +121,7 @@ and the two-way volume split in the delivery-tier facet.
 In line with `../../domain/customer_domain_problem_statement_v0.1.md`
 ("Customer" is a contextual role; Party → Customer Account → Party Role):
 
-- C1–C7 and C5.1–C5.4 become a SKOS concept scheme, *MPC Customer Channel*,
+- C1–C8 and C5.1–C5.4 become a SKOS concept scheme, *MPC Customer Channel*,
   with the codes as `skos:notation` and the MPC wording as `skos:definition`,
   cited with `dcterms:source`.
 - Each facet in §2 becomes its own concept scheme. The §3 groupings go in a
