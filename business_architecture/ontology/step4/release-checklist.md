@@ -1,6 +1,6 @@
-# Step 4 Release Checklist — v0.4 Draft
+# Step 4 Release Checklist — v1.0 PROMOTED
 
-**Status:** Draft — re-pinned to `main` at `6a155bc2` (2026-09-29)
+**Status:** PROMOTED 2026-09-30 — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190). All 10 checklist boxes complete.
 **Date:** 2026-09-27 (status); re-pin 2026-09-29
 
 ## Current State (main @ 6a155bc2)
@@ -25,7 +25,7 @@
 
 ### Pinned Evidence
 - **PINNED_SHA:** `6a155bc23ba3971ce430b774b4ddd6f4a933e380` (re-pinned 2026-09-29 from `d7310c9acd37c893d7d6926645c715f425eb9dc8`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
-- Re-pin completed 2026-09-29; remaining promotion preconditions below still apply.
+- Re-pin completed 2026-09-29; all promotion preconditions satisfied 2026-09-30.
 
 ### PR #124 Proof
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
@@ -55,7 +55,7 @@
   11. Unique-candidate triage-signal rule, 12. Hierarchy non-duplication rule, 13. Enablement definition,
   14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
-- [ ] Explicit promotion approval
+- [x] Explicit promotion approval — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).

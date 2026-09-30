@@ -12,7 +12,7 @@ corrected for stale entries. Verified against repository artifacts.
 | 3b | Definition triangulation | Done 2026-09-18 |
 | 3c | Human definition authoring (498/503 approved) | Done 2026-09-21 |
 | 3d | Tree reconciliation | Completed with explicit open exceptions; R2 backlog still open |
-| 4 | The relationship layer | In progress: verb review on main (617/686/457); promotion blocked on Hamid-owned gates |
+| 4 | The relationship layer | PROMOTED 2026-09-30: verb review on main (617/686/457); all 10 checklist boxes complete |
 | 5 | ORG + RACI | Planned |
 | 6 | Interfaces and PROV-O | Planned |
 | 7 | Cross-model integration | Planned |
@@ -23,12 +23,13 @@ corrected for stale entries. Verified against repository artifacts.
 
 ## Corrections to the playbook table
 
-The table in `step4/playbook/ontology-playbook.md` lists Step 4 as
-"Planned" with an older description ("Process-definition ontology").
-That is stale: the relationship-layer review is on main, and promotion
-is blocked on the one unchecked Hamid item in `release-checklist.md`:
-explicit promotion approval. (Mapping sign-off completed 2026-09-29,
-16/16 sections. Fresh no-consumer attestation checked 2026-09-29.)
+The table in `step4/playbook/ontology-playbook.md` listed Step 4 as
+"Planned"; this PR sets the status cell to PROMOTED 2026-09-30. The
+description column still uses the older "Process-definition ontology" wording.
+Step 4 was PROMOTED 2026-09-30 — all 10 checklist boxes complete (Hamid:
+"I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)).
+(Mapping sign-off completed 2026-09-29, 16/16 sections. Fresh no-consumer
+attestation checked 2026-09-29.)
 
 `ontology/README.md` still says 3c is 20 approved / 483 pending. That
 conflicts with the 2026-09-21 closeout (498/503 approved); the closeout
