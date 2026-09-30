@@ -35,7 +35,9 @@ decision is actually resolved.
 ## Writing new entries
 
 - **Glossary entry:** term, definition, "avoid" synonyms, source (cite the
-  evidence file or filing), status (Draft / Candidate / Approved Baseline).
+  evidence file or filing), status (Draft / Candidate / Approved Baseline). A
+  term says **Approved Baseline** only when Hamid has recorded that approval. A
+  PR merge alone doesn't approve it.
 - **Decision record:** one file per decision, `EPM-DEC-001-NNNN-<slug>.md`, with
   context, decision, alternatives considered, evidence, status (Proposed /
   Decided / Superseded) and date. A record says **Decided** only when Hamid has
@@ -55,4 +57,6 @@ real gap (note it for `/domain-modeling`).
 If output contradicts an existing decision, say so explicitly rather than
 overriding it silently:
 
-> _Contradicts EPM-DEC-001-0003 (Market Data is a separate domain), but worth reopening because…_
+> _Contradicts EPM-DEC-001-NNNN (<decision title>), but worth reopening because…_
+
+(Placeholder format only. No EPM-DEC-001 record exists yet.)
