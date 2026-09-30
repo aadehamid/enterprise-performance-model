@@ -20,6 +20,8 @@ Registrant: Marathon Petroleum Corp · SEC CIK `0001510295` · SIC 2911
 | MPC-S10 | MPC web page "Unbranded Marketing" | current | — | — | https://www.marathonpetroleum.com/Operations/Unbranded-Marketing/ | 2026-09-29 | C5 unbranded customer subclasses |
 | MPC-S11 | "The Business of MPC" (2026 edition, MPC company overview PDF) | FY2025 data | — | — | https://www.marathonpetroleum.com/content/documents/fact_sheets/Business_of_MPC_2026.pdf | 2026-09-29 | Channel wording; product-specific customer types; MPLX business lines |
 | MPC-S12 | MPC 2024 Sustainability Report | 2024 | — | — | https://www.marathonpetroleum.com/content/documents/Responsibility/Sustainability_Report/2024_SustainabilityReport.pdf | search excerpt only | "refined products sold to 5,900+ customers" (verify before citing) |
+| MPC-S13 | MPC web page "Consumer Products" | current (content partly dated) | — | — | https://www.marathonpetroleum.com/Operations/Consumer-Products/ | 2026-09-29 | Marathon lubricants line (customer classification, product line) |
+| MPC-S14 | U.S. EIA Petroleum Marketing Monthly glossary | current | — | — | https://www.eia.gov/petroleum/marketing/monthly/pdf/glossary.pdf | 2026-09-29 | Neutral definitions of rack, DTW and bulk sales (pricing domain). Not an MPC source |
 
 ## Rules
 

@@ -91,11 +91,15 @@ and the two-way volume split in the delivery-tier facet.
    example is a reasonable reading, but it isn't MPC's wording.
 4. **"Rack" isn't MPC filing wording.** Keep "wholesale/rack" as the contract
    value, noted as industry usage.
-5. **Lubricants and marine product lines** (in the originating draft) aren't in
-   the FY2023–FY2025 10-Ks or the 2026 "Business of MPC". The 2024 fact sheet
-   they came from is no longer online. "Marine" appears as MPLX's inland marine
-   logistics business and as a ship-bunkering use of heavy fuel oil. They're held
-   out of the product-line facet until a current source is found.
+5. **Lubricants: supported by MPC material. Marine: meaning to confirm.**
+   MPC's Consumer Products page (MPC-S13) describes a full Marathon lubricants
+   line (motor oils, transmission fluids, hydraulic oils, gear lubes, greases).
+   The page is partly dated, since it describes the Cincinnati site as a
+   biodiesel plant where the FY2025 10-K calls it an aggregation facility, so
+   re-check it before citing any figures. Lubricants don't appear in the
+   FY2023–FY2025 10-Ks. "Marine" appears only as MPLX's inland marine logistics
+   business and as a ship-bunkering use of heavy fuel oil. Confirm which of the
+   two the marine product line means.
 6. **Midstream shipper.** MPLX serves "principally … the Refining & Marketing
    segment", and Midstream has external-customer revenue ($5,628M in 2025, Note
    20). The words "third-party shippers" haven't been found in MPC documents yet.
