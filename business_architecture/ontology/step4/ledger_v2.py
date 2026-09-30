@@ -16,9 +16,24 @@ ttl = open(f"{BASE}/baseline/step3-taxonomy.ttl").read()
 imap = {r["slug"]: r for r in json.load(open(f"{BASE}/baseline/step2-identity-map.json"))}
 
 # ---- block parser: subject -> {predicate: [values]} ----
+def split_blocks(ttl_text):
+    # Split on blank lines, but never inside a triple-quoted literal: a blank
+    # line in a multi-paragraph scopeNote would otherwise cut the block and
+    # drop the triples after it.
+    blocks, cur = [], []
+    for frag in ttl_text.split("\n\n"):
+        cur.append(frag)
+        if "\n\n".join(cur).count('"""') % 2 == 0:
+            blocks.append("\n\n".join(cur))
+            cur = []
+    if cur:
+        blocks.append("\n\n".join(cur))
+    return blocks
+
+
 def parse_blocks(ttl_text):
     blocks = {}
-    for b in ttl_text.split("\n\n"):
+    for b in split_blocks(ttl_text):
         b = b.strip()
         if not b:
             continue
