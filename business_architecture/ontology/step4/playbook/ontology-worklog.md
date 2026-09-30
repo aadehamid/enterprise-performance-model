@@ -1421,7 +1421,11 @@ without a dated amendment and Hamid's explicit agreement.
 - **Worklog renamed (2026-09-30, requested by Hamid).** This file was renamed from
   `step4/playbook/ontology-playbook.md` to `step4/playbook/ontology-worklog.md`,
   so only the method keeps the playbook name. The entry below refers to it
-  as "this working record".
+  as "this working record". In the same change (requested by Hamid),
+  `step4/playbook/manifest.json` was retired: it mapped this file onto the
+  method's path, so a sync could have overwritten the method. The stale
+  snapshot `step4/playbook/ontology-playbook.remote-main.md` was removed.
+  Both remain in git history (added in PR #124).
 - **Playbook maintenance rule (proposed 2026-09-30; awaiting Hamid's
   recorded decision).** Two playbook copies
   with two roles: the method (`business_architecture/ontology/ontology-playbook.md`,
