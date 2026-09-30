@@ -14,8 +14,10 @@ Changes vs v1:
 import re, json, csv, os
 from collections import Counter, defaultdict
 
-BASE = "/home/hatch/workspace/ontology-step4"
-OUT = f"{BASE}/target-report"
+# Step 4 working directory: derived from this file; EPM_STEP4_DIR overrides.
+BASE = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Outputs are proposals only: governed files in target-report/ are never overwritten.
+OUT = os.path.join(BASE, "proposal", "target-report")
 TTL = f"{BASE}/baseline/step3-taxonomy.ttl"
 IDMAP = f"{BASE}/baseline/step2-identity-map.json"
 SHA = open(f"{BASE}/PINNED_SHA.txt").read().strip()
@@ -173,7 +175,7 @@ with open(f"{OUT}/target-dispositions-v2.csv", "w", newline="") as f:
                     branch_of(r["subject"]), r["verb"], r["target"], disp,
                     " | ".join(cands), clabels, ev, conf, emit,
                     reason, trigger, ref])
-print("wrote target-dispositions-v2.csv")
+print("wrote proposal/target-report/target-dispositions-v2.csv")
 
 nonres = Counter()
 for r in rows:

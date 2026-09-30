@@ -2,11 +2,14 @@
 """First-pass classifier for the Q11/Q12 row-level relationship-target
 disposition report. Mechanical matching only; judgment buckets are
 printed for manual review. Reads the committed TTL + identity map."""
-import re, json, csv
+import re, json, csv, os
 from collections import Counter, defaultdict
 
-REPO = "/home/hatch/workspace/enterprise-performance-model"
-OUT = "/home/hatch/workspace/ontology-step4/target-report"
+# Paths derived from this file; EPM_STEP4_DIR / EPM_REPO_ROOT override.
+STEP4 = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+REPO = os.environ.get("EPM_REPO_ROOT") or os.path.abspath(os.path.join(STEP4, "..", "..", ".."))
+# Outputs are proposals only: governed files in target-report/ are never overwritten.
+OUT = os.path.join(STEP4, "proposal", "target-report")
 TTL = f"{REPO}/business_architecture/ontology/build/output/step3-taxonomy.ttl"
 IDMAP = f"{REPO}/business_architecture/ontology/build/output/step2-identity-map.json"
 

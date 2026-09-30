@@ -6,10 +6,11 @@ Reads only the pinned baseline (baseline/step3-taxonomy.ttl,
 baseline/step2-identity-map.json) and the disposition artifacts.
 Writes q2-ledger-v2.md and supporting CSVs.
 """
-import re, json, csv
+import re, json, csv, os
 from collections import Counter, defaultdict
 
-BASE = "/home/hatch/workspace/ontology-step4"
+# Step 4 working directory: derived from this file; EPM_STEP4_DIR overrides.
+BASE = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.abspath(__file__))
 SHA = open(f"{BASE}/PINNED_SHA.txt").read().strip()
 ttl = open(f"{BASE}/baseline/step3-taxonomy.ttl").read()
 imap = {r["slug"]: r for r in json.load(open(f"{BASE}/baseline/step2-identity-map.json"))}
