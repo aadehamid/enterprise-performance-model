@@ -20,3 +20,12 @@ www.apqc.org/pcf.
 ©2025 APQC and IBM. The PCF is licensed perpetually, worldwide, royalty-free
 for use, copying, publication, modification, and derivative works, provided this
 notice and the attribution above travel with all copies.
+
+---
+
+# Reference: Marathon Petroleum Corporation (anchor company)
+
+`mpc/` holds public-filing evidence for Marathon Petroleum Corporation, the
+stand-in Downstream company used to anchor the ontology. Like APQC, it is a
+reference only — the repo's business processes remain the source of truth.
+Start at [`mpc/README.md`](mpc/README.md).
