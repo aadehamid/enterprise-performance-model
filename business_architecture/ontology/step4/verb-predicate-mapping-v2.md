@@ -1,8 +1,8 @@
-# Verb → Predicate Mapping v2 — CANDIDATE FOR REVIEW (not approved)
+# Verb → Predicate Mapping v2 — APPROVED (Hamid 2026-09-29, 16/16 sections)
 
-**Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
+**Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(617 emitting / 686 held / 457 facts — 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval pending.
+(617 emitting / 686 held / 457 facts — 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
@@ -347,9 +347,9 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
    nothing emits until every decision cell is resolved and the release
    checklist is green. Emission proceeded per-verb under the evidence
    discipline instead — 457 facts stored on `main`. The fresh no-consumer
-   attestation box was checked 2026-09-29; the two remaining Hamid
-   release-checklist boxes (mapping-document sign-off, explicit promotion
-   approval) remain unchecked.
+   attestation box was checked 2026-09-29; the mapping-document sign-off
+   box was checked 2026-09-29 (16/16 sections). One Hamid box remains
+   open and blocks promotion: explicit promotion approval.
 
 Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
 (5 approved, 3 held), constrained-by (10 approved, 1 held), triggers

@@ -26,9 +26,9 @@ corrected for stale entries. Verified against repository artifacts.
 The table in `step4/playbook/ontology-playbook.md` lists Step 4 as
 "Planned" with an older description ("Process-definition ontology").
 That is stale: the relationship-layer review is on main, and promotion
-is blocked on the two unchecked Hamid items in `release-checklist.md`:
-mapping sign-off, explicit promotion approval. (Fresh no-consumer
-attestation checked 2026-09-29.)
+is blocked on the one unchecked Hamid item in `release-checklist.md`:
+explicit promotion approval. (Mapping sign-off completed 2026-09-29,
+16/16 sections. Fresh no-consumer attestation checked 2026-09-29.)
 
 `ontology/README.md` still says 3c is 20 approved / 483 pending. That
 conflicts with the 2026-09-21 closeout (498/503 approved); the closeout
