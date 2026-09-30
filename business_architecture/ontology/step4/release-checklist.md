@@ -1,6 +1,6 @@
 # Step 4 Release Checklist — v0.4 Draft
 
-**Status:** Draft — re-pinned to `main` at `6a155bc2` (2026-09-29)
+**Status:** PROMOTED 2026-09-29 — Hamid approved 21:31 CDT after PR #185 merged (fa81892b). All 10 checklist boxes complete.
 **Date:** 2026-09-27 (status); re-pin 2026-09-29
 
 ## Current State (main @ 6a155bc2)
