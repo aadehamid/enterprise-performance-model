@@ -923,9 +923,9 @@ verdict-recorded, ledger reconciled, methodology approved (PR #159),
 evidence gate 433 PASS, evidence pinned, regression tests 17/17,
 blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
 consumer is consuming the ontology yet… the very first build out"),
-mapping-document sign-off (16/16 sections, Hamid). One Hamid box stays open and blocks
-promotion: explicit promotion approval (`release-checklist.md` L52).
-Mapping-document sign-off was completed 2026-09-29. The provisional `intake:`
+mapping-document sign-off (16/16 sections, Hamid). All ten checklist boxes complete 2026-09-29: mapping-document sign-off
+(16/16 sections) and explicit promotion approval.
+Step 4 PROMOTED 2026-09-29. The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
 properties and retires those predicates.
 
