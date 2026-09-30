@@ -305,7 +305,10 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
   proposed hold for workbook correction (verb change, not a duplicate).
 - `review-evidence/enables-g3-genuine-enablement-review-batch.csv` — G3
   (249 review rows: 143 explicit-reference, 106 nearness-only; 22
-  context-held rows outside the review population). Decided 2026-09-26:
+  context-held rows outside the review population — a different set from the
+  22 RECONCILED rows inside the 249, which are 12 of the 143 plus 10 of the
+  106, already held with no new verdict needed; the two 22-sets have zero
+  overlap). Decided 2026-09-26:
   Section A — 84 approvals emitting (explicit target identity); Section B —
   all 96 rows held (60 in B1–B4; 36 in B5), none emitting. (The B5 verdicts
   live in `review-evidence/enables-g3-section-b5-class-verdict.csv` — 42
