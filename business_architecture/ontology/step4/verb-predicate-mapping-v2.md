@@ -52,7 +52,7 @@ mapping applies those mention-level holds separately),
 
    An approval **never transfers authority** from the target to the source.
 
-   Current disposition of the 172 emitting `enables` mentions (refreshed 2026-09-26):
+   Current disposition of the 132 emitting `enables` mentions (refreshed 2026-09-26):
    - **G3 (84)** stored as `core:enabledBy` (approved by Hamid 2026-09-26 —
      the Section A explicit-reference approvals; Section B's 96 nearness-only
      rows are all held);
