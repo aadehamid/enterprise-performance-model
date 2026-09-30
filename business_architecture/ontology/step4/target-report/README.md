@@ -4,6 +4,17 @@ Source: committed `step3-taxonomy.ttl` (main) + `step2-identity-map.json`.
 **All 1,317 mentions have a governed disposition — zero undispositioned
 mentions.** Generator: `classify.py` (re-runnable).
 
+**Generated output is a proposal, never the governed file.** `classify.py`,
+`classify_v2.py` and `context_pass.py` write to
+`step4/proposal/target-report/` (gitignored), the same rule `mapping_v2.py`
+follows. The governed files in this folder carry reviewed decisions that a
+regeneration would revert (e.g. `target-dispositions-v2.csv` holds approvals
+from 2026-09-25). Downstream consumers (`context_pass.py`, `mapping_v2.py`,
+`evidence-gate.py`) read the governed files only, so a proposal changes
+nothing until it's reviewed and promoted into this folder by PR. Script paths
+derive from each script's location; `EPM_STEP4_DIR` and `EPM_REPO_ROOT`
+override them. `../test_script_portability.py` guards all of this.
+
 ## Confidence taxonomy (per 2026-09-22 review)
 
 | Confidence | Meaning | Emission rule |

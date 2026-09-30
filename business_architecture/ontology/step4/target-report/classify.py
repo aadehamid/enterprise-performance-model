@@ -2,12 +2,25 @@
 """First-pass classifier for the Q11/Q12 row-level relationship-target
 disposition report. Mechanical matching only; judgment buckets are
 printed for manual review. Reads the committed TTL + identity map."""
-import re, json, csv, os
+import re, json, csv, os, sys
 from collections import Counter, defaultdict
 
 # Paths derived from this file; EPM_STEP4_DIR / EPM_REPO_ROOT override.
 STEP4 = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPO = os.environ.get("EPM_REPO_ROOT") or os.path.abspath(os.path.join(STEP4, "..", "..", ".."))
+_TTL_REL = "business_architecture/ontology/build/output/step3-taxonomy.ttl"
+
+
+def _find_repo():
+    # In-repo layout (<repo>/business_architecture/ontology/step4), then the
+    # separate-workspace layout (<ws>/ontology-step4 beside <ws>/enterprise-performance-model).
+    for cand in (os.path.join(STEP4, "..", "..", ".."),
+                 os.path.join(os.path.dirname(os.path.abspath(STEP4)), "enterprise-performance-model")):
+        if os.path.isfile(os.path.join(cand, _TTL_REL)):
+            return os.path.abspath(cand)
+    sys.exit(f"classify.py: repo not found from {STEP4}; set EPM_REPO_ROOT")
+
+
+REPO = os.environ.get("EPM_REPO_ROOT") or _find_repo()
 # Outputs are proposals only: governed files in target-report/ are never overwritten.
 OUT = os.path.join(STEP4, "proposal", "target-report")
 TTL = f"{REPO}/business_architecture/ontology/build/output/step3-taxonomy.ttl"

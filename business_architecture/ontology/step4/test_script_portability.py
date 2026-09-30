@@ -25,6 +25,12 @@ def sha256(path):
         return hashlib.sha256(f.read()).hexdigest()
 
 
+def snapshot(directory):
+    """File name -> sha256 for every file directly in directory."""
+    return {f: sha256(os.path.join(directory, f)) for f in os.listdir(directory)
+            if os.path.isfile(os.path.join(directory, f))}
+
+
 HOME_PATH = re.compile(r"""["'](/home/|/Users/|~/)""")
 
 
@@ -51,28 +57,36 @@ def main():
     # 3. Writer scripts must never overwrite governed target-report files.
     #    Once runnable from any checkout, a rerun could revert reviewed
     #    decisions (e.g. target-dispositions-v2.csv carries Hamid's
-    #    2026-09-25 approvals). Run them in a throwaway copy, as the
-    #    mapping_v2.py regression test does for canonical facts.
-    governed = ["context-pass.csv", "context-sample.txt", "target-dispositions-v2.csv",
-                "target-dispositions-v1.1.csv"]
+    #    2026-09-25 approvals). Run them in a throwaway copy laid out like
+    #    the original separate workspace (<ws>/ontology-step4 beside
+    #    <ws>/enterprise-performance-model), with no path overrides, so
+    #    repository discovery is exercised too.
+    expected = ["context-pass.csv", "context-sample.txt",
+                "target-dispositions-v1.csv", "target-dispositions-v2.csv"]
     repo_root = os.path.abspath(os.path.join(BASE, "..", "..", ".."))
-    with tempfile.TemporaryDirectory() as tmp:
-        copy = os.path.join(tmp, "step4")
+    with tempfile.TemporaryDirectory() as ws:
+        copy = os.path.join(ws, "ontology-step4")
         shutil.copytree(BASE, copy, ignore=shutil.ignore_patterns("proposal", "__pycache__"))
-        before = {f: sha256(os.path.join(copy, "target-report", f)) for f in governed}
-        env = dict(os.environ, EPM_STEP4_DIR=copy, EPM_REPO_ROOT=repo_root)
+        os.symlink(repo_root, os.path.join(ws, "enterprise-performance-model"))
+        governed_dir = os.path.join(copy, "target-report")
+        before = snapshot(governed_dir)
+        env = {k: v for k, v in os.environ.items() if k not in ("EPM_STEP4_DIR", "EPM_REPO_ROOT")}
         for script in ["context_pass.py", "classify.py", "classify_v2.py"]:
-            r = subprocess.run([sys.executable, os.path.join(copy, "target-report", script)],
-                               cwd=tmp, env=env, capture_output=True, text=True)
+            r = subprocess.run([sys.executable, os.path.join(governed_dir, script)],
+                               cwd=ws, env=env, capture_output=True, text=True)
             if r.returncode != 0:
-                failures.append(f"{script} exited {r.returncode}")
-        for f in governed:
-            if sha256(os.path.join(copy, "target-report", f)) != before[f]:
-                failures.append(f"GOVERNED FILE OVERWRITTEN: target-report/{f}; writers must use proposal/")
-        prop = os.path.join(copy, "proposal", "target-report", "context-pass.csv")
-        if not os.path.exists(prop):
-            failures.append("proposal/target-report/context-pass.csv not generated")
-        elif sha256(prop) != before["context-pass.csv"]:
+                tail = (r.stdout + r.stderr).strip().splitlines()[-1:] or ["(no output)"]
+                failures.append(f"{script} (separate-workspace layout) exited {r.returncode}; {tail[0]}")
+        after = snapshot(governed_dir)
+        for f in sorted(set(before) | set(after)):
+            if before.get(f) != after.get(f):
+                failures.append(f"GOVERNED DIR CHANGED: target-report/{f}; writers must use proposal/")
+        prop_dir = os.path.join(copy, "proposal", "target-report")
+        for f in expected:
+            if not os.path.exists(os.path.join(prop_dir, f)):
+                failures.append(f"proposal/target-report/{f} not generated")
+        prop = os.path.join(prop_dir, "context-pass.csv")
+        if os.path.exists(prop) and sha256(prop) != before.get("context-pass.csv"):
             failures.append("proposal context-pass.csv differs from governed context-pass.csv")
 
     for f in failures:
