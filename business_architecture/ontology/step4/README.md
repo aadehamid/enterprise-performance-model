@@ -12,11 +12,13 @@ Hamid's review.
   per decision Q2) is still an open decision, and nothing retires until it
   is approved.
 - **Nothing here merges to `main`** without Hamid's explicit approval.
-- **Source of truth for counts:** the gate, `evidence-gate.py`, and
-  `ledger-v2.md`. Current: 617 emitting / 686 held / 12 deferred / 1
-  external governance / 2 structured flow = 1,318 mentions; 457 canonical
-  facts (verified 2026-09-30 on `main` 37ab0a0: gate 433 PASS / 0 FAIL,
-  `canonical-facts.csv` 457 rows).
+- **Counts** (verified 2026-09-30 on `main` 37ab0a0). Two cuts, both
+  conserving to 1,318 mentions:
+  - **Ledger** (`ledger-v2.md`, verb-bucket totals): 617 emitting / 686
+    held / 12 deferred / 1 external governance / 2 structured flow =
+    1,318; 457 canonical facts (`canonical-facts.csv`, 457 rows).
+  - **Evidence gate** (`evidence-gate.py`): promoted 1,066 / held 237,
+    plus the same 12 / 1 / 2 = 1,318; 433 PASS / 0 FAIL.
 - Key files: `verb-predicate-mapping-v2.md` (the signed-off mapping
   document, 16/16 sections), `canonical-facts.csv` (stored facts), `mapping_v2.py` (the
   pipeline), `evidence-gate.py` (the evidence gate), `ledger-v2.md`

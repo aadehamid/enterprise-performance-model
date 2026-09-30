@@ -13,10 +13,11 @@ copies with two roles:
 | `step4/playbook/ontology-playbook.md` | **Working record** | The plan table with current step statuses (§2), the per-step log (§3), and the dated decision journal (§4) |
 
 Check the method's §2 Policies before making any modeling choice, and the
-working record's plan table for where the build stands. **Maintenance
-rule** (2026-09-30): a decision change lands in the method's §2 first, and
-the working record's decision log carries the dated entry pointing at it.
-One place decides, one place narrates.
+working record's plan table for where the build stands. **Proposed
+maintenance rule** (2026-09-30, awaiting Hamid's recorded decision): a
+decision change would land in the method's §2 first, with the working
+record's decision log carrying the dated entry pointing at it. One place
+decides, one place narrates.
 
 ## Contents
 

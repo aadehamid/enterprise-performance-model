@@ -11,12 +11,12 @@ ontology. It captures the plan, the decision at every step, the answer each
 step produced, and — most importantly for handover — *why* each standard was
 chosen and what was deliberately rejected.
 
-**Normative rules live in the method copy**
-(`business_architecture/ontology/ontology-playbook.md` §2). This record
-journals decisions and points at them (see §4, 2026-09-30 entry).
-
 **How to maintain it:** when a plan step completes, append its entry to
 §3 (Step log) and move any new durable decision into §4 (Decision log).
+*Proposed 2026-09-30, not yet decided:* a durable decision would land in the
+method copy's §2 Policies first (`business_architecture/ontology/ontology-playbook.md`),
+with §4 here carrying only the dated pointer (see §4, "Playbook maintenance
+rule (proposed)").
 Never rewrite history — correct it with a dated amendment so the team can
 see what changed and why.
 
@@ -1413,13 +1413,15 @@ without a dated amendment and Hamid's explicit agreement.
   governance, and domain outcomes stay with the accountable owner.
 
 ### Validation and process
-- **Playbook maintenance rule (2026-09-30, Hamid).** Two playbook copies
+- **Playbook maintenance rule (proposed 2026-09-30; awaiting Hamid's
+  recorded decision).** Two playbook copies
   with two roles: the method (`business_architecture/ontology/ontology-playbook.md`,
   normative) and this working record. A decision change lands in the
   method's §2 Policies first; this log carries the dated entry pointing at
   it. The copies are never updated independently on the same decision.
   `business_architecture/ontology/README.md` is the single entry point.
-  Recorded in the method at §2 "Playbook maintenance".
+  Proposed in the method at §2 "Playbook maintenance". It becomes decided
+  only when Hamid records the decision.
 - **Competency-question coverage is the acceptance gate (2026-09-20).**
   First coverage check against the 44 baseline questions: 4 answerable,
   10 partial, 30 not answerable — the 30 map exactly to unbuilt plan
