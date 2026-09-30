@@ -1,7 +1,7 @@
 # Pricing Data Domain — Classification and Evidence
 
-**Status:** Candidate domain. Classification P1–P11 proposed by Hamid
-(2026-09-29). Two scope decisions are open (§5). · **Domain:** Pricing ·
+**Status:** Proposed domain. Classification P1–P11 proposed by Hamid
+(2026-09-29). Scope decisions D1–D4 are proposed in §5. · **Domain:** Pricing ·
 **Evidence checked:** 2026-09-29
 
 Pricing is a separate data domain, linked to Customer, Product, Contract,
@@ -125,25 +125,25 @@ Customer isn't the parent of Pricing. They connect through agreements and
 eligibility: the customer master holds stable classification (C1–C8), and an
 agreement or eligibility record decides which schedule or formula applies.
 
-## 5. Open scope decisions
+## 5. Scope decisions — proposed
 
-1. **Domain name and Market Data.** The source material both lists Market Data
-   as a *separate* adjacent domain (owning benchmark observations) and proposes
-   the name "Commercial Pricing, Market Data and Price Realization". Pick one:
-   (a) Market Data is its own domain and Pricing consumes it, or (b) Market Data
-   is a subdomain of Pricing (P1, P2, P11).
-2. **P10 Price risk and hedging.** The process map already has
-   CM 1.2.2 Confirmations & Risk Management, and derivatives are risk
-   instruments, not prices. Options: (a) keep P10 in Pricing, or (b) own it in a
-   Commercial Risk domain, with Pricing providing the exposures' price inputs.
+The source material lists Market Data as a separate adjacent domain, but also
+proposes the combined name "Commercial Pricing, Market Data and Price
+Realization". It also places P10 inside Pricing. Evidence from MPC and seven
+U.S. refining peers (Phillips 66, Valero, PBF, HF Sinclair, Delek, CVR, Par
+Pacific) is in `../downstream-peers/pricing-market-data-risk-evidence.md`.
+Based on it, this is proposed:
 
-**Downstream evidence and recommendation.** See
-`../downstream-peers/pricing-market-data-risk-evidence.md`. MPC and seven U.S.
-refining peers (Phillips 66, Valero, PBF, HF Sinclair, Delek, CVR, Par Pacific)
-point to (1) a separate **Market Data** domain (P1 and the benchmark part of
-P11), (2) a **Commercial Risk** domain owning P10, and (3) P2 margin indicators
-as KPI Store measures built on Market Data. Pricing keeps P3–P9 and the
-price-list part of P11. Pending Hamid's decision.
+| Decision | Proposed | Alternative not taken |
+|---|---|---|
+| D1 Market Data | A separate **Market Data** domain owns P1 and the benchmark-methodology part of P11. Pricing references it | Market Data as a subdomain of Pricing |
+| D2 Price risk (P10) | A **Commercial Risk** domain (middle office, process map CM 1.2.2.3) owns P10. Pricing passes fixed-price exposures to it | P10 inside Pricing |
+| D3 Margin indicators (P2) | **KPI Store** measures built on Market Data. Refining economics owns the indicator method | P2 inside Pricing |
+| D4 Domain name | **Commercial Pricing & Price Realization**, owning P3–P9 and the price-list part of P11 (approvals, overrides, audit) | "Commercial Pricing, Market Data and Price Realization" |
+
+These become decisions when the PR introducing this section is merged. A
+HOLD keeps them open. The register of domains is
+`../../domain/data-domain-register.md`.
 
 ## 6. What the repo already has
 
