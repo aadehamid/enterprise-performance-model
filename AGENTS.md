@@ -18,8 +18,8 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   then U.S. refining peers' SEC filings (`business_architecture/reference/downstream-peers/`),
   then downstream-specific industry sources. Generic frameworks are support
   only. Cite every fact.
-- **Don't mark anything Decided without Hamid's recorded decision.** A merge
-  alone doesn't decide it.
+- **Don't mark anything Decided or Approved without Hamid's recorded
+  decision.** A merge alone doesn't decide or approve it.
 - Before modeling the ontology, read `business_architecture/ontology/ontology-playbook.md`.
 
 ## Agent skills
