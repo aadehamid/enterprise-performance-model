@@ -914,10 +914,11 @@ got row-level verdicts. `contradictions.csv` is header-only — zero
 reciprocal pairs across all predicates. Review instruments, per-verb
 batches, and the supersession register live under
 `business_architecture/ontology/step4/review-evidence/`; the mapping
-document (`verb-predicate-mapping-v2.md`) was reviewed section by
-section and corrected twice against the artifacts (PRs #178, #181).
+document (`verb-predicate-mapping-v2.md`) received two figure corrections
+against the artifacts (PRs #178, #181); the mapping-document sign-off
+itself (release-checklist.md L51) remains section-by-section pending.
 
-**Status.** Seven of nine checklist items green 2026-09-29: evidence gate
+**Status.** Eight of ten checklist items green 2026-09-29: evidence gate
 433 PASS, evidence pinned, regression tests 17/17, blast-radius proof
 CLEAN, fresh no-consumer attestation ("no downstream consumer is
 consuming the ontology yet… the very first build out"), every row
