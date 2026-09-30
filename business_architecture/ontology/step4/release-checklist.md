@@ -55,7 +55,7 @@
   11. Unique-candidate triage-signal rule, 12. Hierarchy non-duplication rule, 13. Enablement definition,
   14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
-- [ ] Explicit promotion approval
+- [x] Explicit promotion approval — Hamid 2026-09-29 21:31 CDT: "merge first. and you have my approval to promote" (PR #185 merged first as fa81892b, then promotion approved)
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).
