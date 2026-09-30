@@ -31,8 +31,9 @@ Step 4 was PROMOTED 2026-09-30 — all 10 checklist boxes complete (Hamid:
 (Mapping sign-off completed 2026-09-29, 16/16 sections. Fresh no-consumer
 attestation checked 2026-09-29.)
 
-`ontology/README.md` still says 3c is 20 approved / 483 pending. That
-conflicts with the 2026-09-21 closeout (498/503 approved); the closeout
-figure is authoritative.
+`ontology/README.md` said 3c was 20 approved / 483 pending, which
+conflicted with the 2026-09-21 closeout (498/503 approved); the closeout
+figure is authoritative. *Amended 2026-09-30:* the README now states the
+closeout figure (PR #194).
 
 Pre-reviewed by Cursor EPM on Slack; its corrections applied.
