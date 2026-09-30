@@ -916,15 +916,16 @@ batches, and the supersession register live under
 `business_architecture/ontology/step4/review-evidence/`; the mapping
 document (`verb-predicate-mapping-v2.md`) received two figure corrections
 against the artifacts (PRs #178, #181); the mapping-document sign-off
-itself (release-checklist.md L51) remains section-by-section pending.
+itself (release-checklist.md L51) was completed 2026-09-29 (16/16 sections, Hamid).
 
-**Status.** Eight of ten checklist items green 2026-09-29: every row
+**Status.** Nine of ten checklist items green 2026-09-29: every row
 verdict-recorded, ledger reconciled, methodology approved (PR #159),
 evidence gate 433 PASS, evidence pinned, regression tests 17/17,
 blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
-consumer is consuming the ontology yet… the very first build out"). Two Hamid boxes stay open and block
-promotion: mapping-document sign-off (section by section) and explicit
-promotion approval (`release-checklist.md` L51–L52). The provisional `intake:`
+consumer is consuming the ontology yet… the very first build out"),
+mapping-document sign-off (16/16 sections, Hamid). One Hamid box stays open and blocks
+promotion: explicit promotion approval (`release-checklist.md` L52).
+Mapping-document sign-off was completed 2026-09-29. The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
 properties and retires those predicates.
 
