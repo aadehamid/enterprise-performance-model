@@ -25,10 +25,13 @@ Tests (strongest first):
 
 Sampling: per domain, max(10, ceil(5% of promoted)), capped by population.
 """
-import re, json, csv, math, random
+import re, json, csv, math, os, random
 from collections import defaultdict, Counter
 
-BASE = "/home/hatch/workspace/ontology-step4"
+# Step 4 working directory: derived from this file; EPM_STEP4_DIR overrides.
+BASE = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Outputs are proposals only: governed files in target-report/ are never overwritten.
+OUT = os.path.join(BASE, "proposal", "target-report")
 SHA = open(f"{BASE}/PINNED_SHA.txt").read().strip()
 imap = {r["slug"]: r for r in json.load(open(f"{BASE}/baseline/step2-identity-map.json"))}
 ttl = open(f"{BASE}/baseline/step3-taxonomy.ttl").read()
@@ -163,6 +166,7 @@ HAMID_APPROVED_GOVERNED_BY = {
 }
 
 def main():
+    os.makedirs(OUT, exist_ok=True)
     results = run_pass()
     promoted = [x for x in results if _real(x[0], x[2])]
     held = [x for x in results if x not in promoted]
@@ -193,10 +197,10 @@ def main():
                     "primary_test": primary.split("(")[0] if primary else "",
                     "outcome": "PROMOTE" if real else "HOLD",
                     "baseline_sha": SHA})
-    with open(f"{BASE}/target-report/context-pass.csv", "w", newline="") as f:
+    with open(f"{OUT}/context-pass.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(out[0].keys()))
         w.writeheader(); w.writerows(out)
-    print("wrote context-pass.csv")
+    print("wrote proposal/target-report/context-pass.csv")
 
     hc = Counter(x[0]["branch_domain"] for x in held)
     print("held by domain:", dict(hc))
@@ -207,7 +211,7 @@ def main():
     for o in out:
         if o["outcome"] == "PROMOTE":
             by_dom[o["branch_domain"]].append(o["row_id"])
-    with open(f"{BASE}/target-report/context-sample.txt", "w") as f:
+    with open(f"{OUT}/context-sample.txt", "w") as f:
         f.write(f"# context sample, seed 42, baseline {SHA}\n")
         for dom in sorted(by_dom):
             pop = by_dom[dom]
@@ -216,7 +220,7 @@ def main():
             f.write(f"\n## {dom} (pop {len(pop)}, sample {n})\n")
             f.write("\n".join(samp) + "\n")
             print(f"sample {dom}: {n}/{len(pop)}")
-    print("wrote context-sample.txt")
+    print("wrote proposal/target-report/context-sample.txt")
 
 if __name__ == "__main__":
     main()

@@ -12,9 +12,9 @@ Defects under test:
 
 Run: python3 test_context_pass.py
 """
-import math, re, sys
+import math, os, re, sys
 
-sys.path.insert(0, "/home/hatch/workspace/ontology-step4/target-report")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import context_pass as cp  # the module under test
 
 PASS, FAIL = "PASS", "FAIL"
