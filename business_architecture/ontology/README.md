@@ -1,30 +1,31 @@
 # Ontology — Downstream Process Map
 
 The published home of the downstream process-map ontology build: the
-playbook (method and working record), the acceptance test (competency
-questions), and the reproducible build scripts with their outputs.
+playbook (the method), the worklog (the build record), the acceptance
+test (competency questions), and the reproducible build scripts with their outputs.
 
-**Start here.** This README is the single entry point. The playbook has two
-copies with two roles:
+**Start here.** This README is the single entry point. Two documents, two
+roles:
 
-| Copy | Role | Read it for |
+| File | Role | Read it for |
 |------|------|-------------|
-| `ontology-playbook.md` | **Method** (normative) | Foundations, the end-to-end sequence, the locked policies (§2), Step 4 evidence discipline (§3), standards (§4), soundness (§5), working agreements (§6), worked example (§7) |
-| `step4/playbook/ontology-playbook.md` | **Working record** | The plan table with current step statuses (§2), the per-step log (§3), and the dated decision journal (§4) |
+| `ontology-playbook.md` | **Playbook**: the method (normative) | Foundations, the end-to-end sequence, the locked policies (§2), Step 4 evidence discipline (§3), standards (§4), soundness (§5), working agreements (§6), worked example (§7) |
+| `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), and the dated decision journal (§4) |
 
-Check the method's §2 Policies before making any modeling choice, and the
-working record's plan table for where the build stands. **Proposed
-maintenance rule** (2026-09-30, awaiting Hamid's recorded decision): a
-decision change would land in the method's §2 first, with the working
-record's decision log carrying the dated entry pointing at it. One place
+Check the playbook's §2 Policies before making any modeling choice, and the
+worklog's plan table for where the build stands. The worklog was named
+`ontology-playbook.md` until 2026-09-30. **Proposed maintenance rule**
+(2026-09-30, awaiting Hamid's recorded decision): a decision change would
+land in the playbook's §2 first, with the worklog's decision log carrying
+the dated entry pointing at it. One place
 decides, one place narrates.
 
 ## Contents
 
 | Path | What |
 |------|------|
-| `ontology-playbook.md` | Playbook, **method** copy (normative): policies, method, standards, soundness, working agreements, worked example |
-| `step4/playbook/ontology-playbook.md` | Playbook, **working record**: plan table and statuses, step log, decision journal |
+| `ontology-playbook.md` | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, worked example |
+| `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
 | `competency-questions.md` | The 44-question acceptance baseline — doubles as the Step 11 SPARQL regression tests |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
@@ -61,7 +62,7 @@ decides, one place narrates.
 
 ## Status
 
-The working record's plan table (`step4/playbook/ontology-playbook.md` §2)
+The worklog's plan table (`step4/playbook/ontology-worklog.md` §2)
 is authoritative for step status. As of 2026-09-30: Steps 0–3c and 8 are
 done; Step 3d is complete with explicit open exceptions; **Step 4 is
 PROMOTED** (2026-09-30), which approved the relationship-layer review,

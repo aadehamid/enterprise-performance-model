@@ -15,7 +15,7 @@ rather than the skills' default `CONTEXT.md` + `docs/adr/`.
   that touches your area:
   - `EPM-FOUND-000.md`: master index, decisions table (D-xx), conflicts and open issues
   - The ontology playbook, reached via `business_architecture/ontology/README.md`:
-    locked policies in the method copy's §2, and the dated journal in the working record
+    locked policies in the playbook's §2 (the method), and the dated journal in the worklog
   - `business_architecture/ontology/step4/step4-decisions.md`: Step 4 design decisions (Q1–Q12)
   - `business_architecture/domain/data-domain-register.md`: data domains and boundary rules
   - `EPM_Homelab/02-Tool-Selection-and-ADRs.md`: homelab ADRs (ADR-HL-xxx)

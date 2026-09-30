@@ -28,10 +28,9 @@ move any new durable decision into §2 (Policies). Never rewrite history:
 correct with a dated amendment so the team can see what changed and why.
 
 **Companion files:**
-- `step4/playbook/ontology-playbook.md` — the **working record** of the
-  build: plan table with current statuses, per-step log, and the dated
-  decision journal. This file (the method) decides; the working record
-  narrates (proposed; see §2, Playbook maintenance).
+- `step4/playbook/ontology-worklog.md` — the **worklog** of the build:
+  plan table with current statuses, per-step log, and the dated decision
+  journal. This file (the method) decides; the worklog narrates (proposed; see §2, Playbook maintenance).
 - `competency-questions.md` — the merged competency-question baseline (the
   acceptance test for the whole build)
 - `apqc-scope-decisions.md` — the per-candidate
@@ -546,22 +545,21 @@ by silent override. Project-specific applications live in the worked example
   beats a guessed owner every time.
 
 ### Playbook maintenance (proposed 2026-09-30 — awaiting Hamid's recorded decision)
-- **Two copies, two roles.** This file is the **method** (normative):
-  `business_architecture/ontology/ontology-playbook.md`. The **working
-  record** is `business_architecture/ontology/step4/playbook/ontology-playbook.md`:
-  the plan table, the step log and the decision journal. It's current on
-  build status.
+- **Two documents, two roles.** This file is the **playbook**, the method
+  (normative): `business_architecture/ontology/ontology-playbook.md`. The
+  **worklog** is `business_architecture/ontology/step4/playbook/ontology-worklog.md`
+  (renamed from `ontology-playbook.md` on 2026-09-30): the plan table, the
+  step log and the decision journal. It's current on build status.
 - **One place decides, one place narrates.** A decision change lands here in
-  §2 first. The working record's decision log carries the dated journal
-  entry pointing at it. The copies are never updated independently on the
-  same decision.
+  §2 first. The worklog's decision log carries the dated journal entry
+  pointing at it. The two are never updated independently on the same
+  decision.
 - **One entry point.** `business_architecture/ontology/README.md` is the
   single "Start here". Agent instructions defer to that README rather than
   naming a copy, so there's exactly one pointer to maintain.
 - **Status: proposed.** This rule comes from the 2026-09-30 handover brief.
   It becomes decided only when Hamid records the decision; a merge doesn't
-  decide it. Until then, the working record's existing how-to still
-  applies.
+  decide it. Until then, the worklog's existing how-to still applies.
 
 ### Step 4 design locks — Q1–Q12 (decided 2026-09-22)
 
