@@ -1,6 +1,6 @@
-# Step 4 Release Checklist — v1.0 PROMOTED
+# Step 4 Release Checklist — v0.4 Draft
 
-**Status:** PROMOTED 2026-09-29 — Hamid approved promotion 2026-09-29 21:58 CDT. All 10 checklist boxes complete.
+**Status:** Draft — re-pinned to `main` at `6a155bc2` (2026-09-29)
 **Date:** 2026-09-27 (status); re-pin 2026-09-29
 
 ## Current State (main @ 6a155bc2)
@@ -55,7 +55,7 @@
   11. Unique-candidate triage-signal rule, 12. Hierarchy non-duplication rule, 13. Enablement definition,
   14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
-- [x] Explicit promotion approval — Hamid 2026-09-29 21:58 CDT: "I approve promotion"
+- [ ] Explicit promotion approval
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).

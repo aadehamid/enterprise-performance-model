@@ -349,7 +349,7 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
    discipline instead — 457 facts stored on `main`. The fresh no-consumer
    attestation box was checked 2026-09-29; the mapping-document sign-off
    box was checked 2026-09-29 (16/16 sections). One Hamid box remains
-   Hamid approved promotion 2026-09-29 21:58 CDT. Step 4 PROMOTED.
+   open and blocks promotion: explicit promotion approval.
 
 Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
 (5 approved, 3 held), constrained-by (10 approved, 1 held), triggers
