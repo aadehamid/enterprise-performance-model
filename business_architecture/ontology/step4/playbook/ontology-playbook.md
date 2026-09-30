@@ -918,11 +918,11 @@ document (`verb-predicate-mapping-v2.md`) received two figure corrections
 against the artifacts (PRs #178, #181); the mapping-document sign-off
 itself (release-checklist.md L51) remains section-by-section pending.
 
-**Status.** Eight of ten checklist items green 2026-09-29: evidence gate
-433 PASS, evidence pinned, regression tests 17/17, blast-radius proof
-CLEAN, fresh no-consumer attestation ("no downstream consumer is
-consuming the ontology yet… the very first build out"), every row
-verdict-recorded, ledger reconciled. Two Hamid boxes stay open and block
+**Status.** Eight of ten checklist items green 2026-09-29: every row
+verdict-recorded, ledger reconciled, methodology approved (PR #159),
+evidence gate 433 PASS, evidence pinned, regression tests 17/17,
+blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
+consumer is consuming the ontology yet… the very first build out"). Two Hamid boxes stay open and block
 promotion: mapping-document sign-off (section by section) and explicit
 promotion approval (`release-checklist.md` L51–L52). The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
