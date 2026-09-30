@@ -592,7 +592,7 @@ marking such rows `PROMOTE`.
   REL-00013, REL-00466, REL-00469, REL-00764, REL-00768, REL-00773, REL-00912,
   REL-00923, REL-00925. The relationship is retained only as historical
   source evidence pending source-author clarification.
-- **Permitted exception (all five must hold):** (1) documented relationship
+- **Permitted exception (all six must hold):** (1) documented relationship
   beyond containment; (2) the definition identifies distinct governance,
   control, decision-right, output-consumption, or externally reusable
   enablement semantics; (3) the rationale identifies that independent
