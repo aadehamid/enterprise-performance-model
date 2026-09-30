@@ -48,14 +48,8 @@
 
 ### Pending — Hamid
 - [x] Fresh no-consumer attestation (dated after re-pin) — attested 2026-09-29
-- [x] Mapping document sign-off (section by section) — all 16 sections approved by Hamid 2026-09-29:
-  1. The 5 mapping answers, 2. Canonical direction table, 3. Mention → canonical fact → mirror accounting,
-  4. Per-verb proposed predicate counts, 5. Contradictions, 6. Review instruments, 7. How to review,
-  8. Basis change versus bucket change, 9. `core:assuredBy` scope boundary, 10. No-two-cycle rule,
-  11. Unique-candidate triage-signal rule, 12. Hierarchy non-duplication rule, 13. Enablement definition,
-  14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
-  (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
-- [x] Explicit promotion approval — Hamid 2026-09-29 21:31 CDT: "merge first. and you have my approval to promote" (PR #185 merged first as fa81892b, then promotion approved)
+- [ ] Mapping document sign-off (section by section)
+- [ ] Explicit promotion approval
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).
