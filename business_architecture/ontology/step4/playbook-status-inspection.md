@@ -1,5 +1,9 @@
 # 12-Step Playbook Status Inspection (2026-09-29)
 
+> *Note added 2026-09-30:* `step4/playbook/ontology-playbook.md`, cited below,
+> was renamed to `step4/playbook/ontology-worklog.md`. The text is kept as
+> written.
+
 Status from `step4/playbook/ontology-playbook.md` (main `0ca6f60`),
 corrected for stale entries. Verified against repository artifacts.
 

@@ -1,4 +1,9 @@
-# Ontology Playbook — Downstream Process Map
+# Ontology Worklog — Downstream Process Map
+
+> **Renamed 2026-09-30** from `ontology-playbook.md` to `ontology-worklog.md`,
+> so the name says what this file is: the running log of this build. The
+> method keeps the playbook name (`business_architecture/ontology/ontology-playbook.md`).
+> Earlier entries and PR bodies refer to this file by its old name.
 
 **Status:** Living document. Updated as each plan step completes.
 **Owner:** Hamid · **Built with:** Kailey
@@ -1413,6 +1418,10 @@ without a dated amendment and Hamid's explicit agreement.
   governance, and domain outcomes stay with the accountable owner.
 
 ### Validation and process
+- **Worklog renamed (2026-09-30, requested by Hamid).** This file was renamed from
+  `step4/playbook/ontology-playbook.md` to `step4/playbook/ontology-worklog.md`,
+  so only the method keeps the playbook name. The entry below refers to it
+  as "this working record".
 - **Playbook maintenance rule (proposed 2026-09-30; awaiting Hamid's
   recorded decision).** Two playbook copies
   with two roles: the method (`business_architecture/ontology/ontology-playbook.md`,

@@ -21,7 +21,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 - **Don't mark anything Decided or Approved without Hamid's recorded
   decision.** A merge alone doesn't decide or approve it.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
-  It points to the playbook's method and working-record copies.
+  It points to the playbook (the method) and the worklog (the build record).
 
 ## Agent skills
 
