@@ -70,7 +70,7 @@ ontology; everything else points at it.
 | 3d-b | PTC-001 Tree Remediation Log — PR #86 (Commercial Development tombstone + 2 reparented L3s + 2 Candidate L2s); PR #87 definition mini-batch; PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22). PTC-001 stays open until PTC-001-B closes. | ✅ Partially resolved; hold by design |
 | 3d-c | R1 Refining Structural Reclassification — decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed); implementation PR #108 merged 2026-09-22 (merge b75fd991). 42 concepts reparented with stable slugs/IRIs/notations; two promoted L2s (Refinery Planning and Optimization; Refinery Production Planning and Scheduling); new Candidate R&T L2; tombstone re-anchored under Planning & Scheduling; reviewed RO→Refining interface relation materialized. 683 concepts, 14,496 triples (+15), 681 broader links. | ✅ Candidate → Implemented 2026-09-22 |
 | 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. | ⏳ Open |
-| 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | Planned |
+| 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership) | Planned |
@@ -856,7 +856,7 @@ descriptions triangulated against public industry definitions.
   merged 2026-09-18, together with Step 3) — review CSV, adoptions,
   validation records, and both build scripts included.
 
-### Step 4 — verb-predicate mapping 🔄 (verb review on main 2026-09-29; promotion pending)
+### Step 4 — verb-predicate mapping ✅ (verb review on main 2026-09-29; PROMOTED 2026-09-30)
 
 Promoting the workbook's raw relationship verbs to canonical ontology
 predicates — with every row earning its verdict and every figure earning
@@ -918,13 +918,13 @@ document (`verb-predicate-mapping-v2.md`) received two figure corrections
 against the artifacts (PRs #178, #181); the mapping-document sign-off
 itself (release-checklist.md L51) was completed 2026-09-29 (16/16 sections, Hamid).
 
-**Status.** Nine of ten checklist items green 2026-09-29: every row
+**Status.** Ten of ten checklist items green 2026-09-30: every row
 verdict-recorded, ledger reconciled, methodology approved (PR #159),
 evidence gate 433 PASS, evidence pinned, regression tests 17/17,
 blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
 consumer is consuming the ontology yet… the very first build out"),
-mapping-document sign-off (16/16 sections, Hamid). One Hamid box stays open and blocks
-promotion: explicit promotion approval (`release-checklist.md` L52).
+mapping-document sign-off (16/16 sections, Hamid), explicit promotion
+approval (Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)). Step 4 PROMOTED.
 Mapping-document sign-off was completed 2026-09-29. The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
 properties and retires those predicates.

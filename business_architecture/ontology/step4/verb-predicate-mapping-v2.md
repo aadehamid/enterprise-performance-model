@@ -348,8 +348,8 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
    checklist is green. Emission proceeded per-verb under the evidence
    discipline instead — 457 facts stored on `main`. The fresh no-consumer
    attestation box was checked 2026-09-29; the mapping-document sign-off
-   box was checked 2026-09-29 (16/16 sections). One Hamid box remains
-   open and blocks promotion: explicit promotion approval.
+   box was checked 2026-09-29 (16/16 sections). Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190).
+   Step 4 PROMOTED 2026-09-30.
 
 Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
 (5 approved, 3 held), constrained-by (10 approved, 1 held), triggers
