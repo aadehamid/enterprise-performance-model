@@ -464,6 +464,170 @@ Industry bundles shipped with these tools (FIBO, FHIR, OMOP, Schema.org, Dublin 
 - A later Databricks workspace may run OntoBricks or dbxmetagen as optional assistants. Published meaning still leaves those apps as Turtle in git.
 - Databricks License tools stay off the “prefer genuinely open” core list (see license risk summary).
 
+## ADR-HL-023 — Distinguish educational runtime, governed reference candidates, and PPC proving-ground implementations
+
+**Status:** Proposed (2026-10-02). Pending approval of [EPM-ARCH-PPC-002](../architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md), itself Candidate. The Homelab remains not an EPM governed artifact.
+
+**Context.** PPC selected many of the execution tools the Homelab already runs: Dagster (ADR-HL-009), DuckDB (ADR-HL-010), Jena/Fuseki (ADR-HL-001), Neo4j with n10s (ADR-HL-006, ADR-HL-021), SHACL via pySHACL (ADR-HL-003), OpenLineage and Marquez (ADR-HL-012), LangGraph and Ollama (ADR-HL-007, ADR-HL-008), and synthetic O2C data. The decision is not to copy PPC technology into EPM. It is to decide which Homelab patterns deserve promotion into a governed EPM reference implementation.
+
+**Decision.** Classify every Homelab tool and pattern into one of three tiers:
+
+| Tier | Meaning | Examples today |
+|---|---|---|
+| Educational runtime | Learning aid, may take practical shortcuts, not governed | Fuseki (classroom only, ADR-HL-001), LangGraph and Ollama demos, synthetic O2C apps |
+| Governed EPM reference-implementation candidate | Implements an EPM architectural responsibility and may be promoted under the rule below | Dagster, DuckDB, Neo4j serve path (ADR-HL-021), pySHACL and HermiT validation, OpenLineage |
+| PPC integrated proving-ground implementation | Used by PPC at larger integration scale to test promoted patterns | Not tracked in the Homelab |
+
+A Homelab technology or pattern is **promoted** only when all five hold (EPM-ARCH-PPC-002 section 7):
+
+1. It implements an EPM architectural responsibility.
+2. It does not become a competing semantic authority.
+3. The responsibility is documented independent of the tool.
+4. A second implementation could replace the tool without changing EPM meaning.
+5. The promotion is recorded by ADR.
+
+PPC-only tools (Twenty, ERPNext, Debezium, Kafka, D1, Dash, and the forecasting, causal, and optimization stack) do not enter governed EPM merely because PPC uses them. ERPNext is already a Homelab educational component (ADR-HL-014); that does not change.
+
+**Already present, so not to be duplicated.** Before adding a tool named in EPM-ARCH-PPC-002, check this list:
+
+- OpenMetadata was already the lab stand-in for Purview (`stack_decisions.md`; metadata integration specification section 5.3). It now has ADR-HL-024.
+- Data-quality checks on Silver and Gold used dbt tests, with SHACL for meaning (`stack_decisions.md`). Great Expectations now has ADR-HL-025, with a rule-placement table to avoid duplicate rules.
+- AML with Azimutt, DuckLake, MLflow, and Grafana appeared nowhere in the Homelab documents. They now have ADR-HL-026 to ADR-HL-029.
+
+These six ADRs adopt the tools for the Homelab only. None of them promotes a tool; promotion still needs its own ADR under the rule above.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Move the Homelab into PPC | The Homelab is the educational runtime and a separate learning-transfer artifact |
+| Promote tools wholesale because PPC uses them | PPC use is not an EPM responsibility test; it creates competing authority risk |
+| Leave all Homelab tools untiered | Leaves promotion implicit and untraceable |
+
+**Consequences.**
+- Promotions each get their own ADR. This ADR promotes nothing.
+- PPC findings against promoted patterns create EPM issues or ADRs, not silent PPC forks.
+- [EPM-ARCH-REF-001 Governed EPM Reference Implementation](../architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md) (registered as Draft (Candidate) in EPM-FOUND-000) is the place to record which patterns are promoted.
+
+## ADR-HL-024 — Use OpenMetadata as the lab catalog and governance reference
+
+**Status:** Accepted (for a personal homelab, 2026-10-02). Not promoted; see ADR-HL-023.
+
+**Context.** OpenMetadata was already the lab stand-in for Purview (`stack_decisions.md`; metadata integration specification section 5.3) but had no ADR. EPM-ARCH-PPC-002 proposes it as an open reference for glossary, domain, data-product, lineage, and quality synchronization. License is Apache-2.0 ([OpenMetadata repository](https://github.com/open-metadata/OpenMetadata)); recheck at installation.
+
+**Decision.** Use **OpenMetadata** as the homelab catalog and governance reference. It demonstrates responsibilities that Purview holds in the enterprise. It does not hold any metadata authority: the KPI Store row, Turtle in git, and process authority are unchanged. Lineage stays captured by OpenLineage and Marquez (ADR-HL-012); OpenMetadata contextualizes it.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Marquez alone | Covers lineage only, not glossary, domain, data-product, or quality context |
+| DataHub | Comparable open catalog, but OpenMetadata is already the documented stand-in; switching adds no responsibility coverage |
+| No catalog in the lab | Leaves the Purview responsibilities undemonstrated |
+
+**Consequences.**
+- A catalog service is added to the Compose skeleton as an optional profile, not a core dependency.
+- Enterprise mappings to Purview and Unity Catalog stay as specified in the metadata integration specification.
+
+## ADR-HL-025 — Use Great Expectations for structured data-quality contracts
+
+**Status:** Accepted (for a personal homelab, 2026-10-02). Not promoted; see ADR-HL-023.
+
+**Context.** Silver and Gold quality checks use dbt tests today, with SHACL for meaning (`stack_decisions.md`). EPM-ARCH-PPC-002 splits quality: SHACL for RDF constraints, a data-quality tool for record and table rules. GX Core is Apache-2.0 ([Great Expectations repository](https://github.com/great-expectations/great_expectations)); recheck at installation.
+
+**Decision.** Use **Great Expectations (GX Core)** for data-product contract expectations on tables and records, run as Dagster assets (ADR-HL-009). Keep dbt tests for model-level checks and pySHACL (ADR-HL-003) for RDF. Do not duplicate a rule across tools: each rule has one home.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| dbt tests only | Fine for model checks, but data-product contract expectations and profiling are a separate responsibility |
+| Soda Core | Comparable scope; GX is the one named in EPM-ARCH-PPC-002 |
+| Pandera | Python dataframe validation only; not a contract suite |
+
+**Consequences.**
+- Bigeye remains the enterprise quality seat. GX demonstrates the responsibility in the lab and is not a stand-in for Bigeye.
+- A short rule-placement table (dbt, GX, SHACL) is needed in `warehouse/contracts/` to avoid duplicates.
+
+## ADR-HL-026 — Use AML with Azimutt as a model-as-code companion
+
+**Status:** Accepted (for a personal homelab, 2026-10-02). Not promoted; see ADR-HL-023.
+
+**Context.** There is a gap between EPM semantic and business models and conceptual or logical data models. AML (Azimutt Markup Language) is a text DSL for database schemas, and Azimutt is a tool to design, explore, and document them. Both are MIT-licensed ([Azimutt repository](https://github.com/azimuttapp/azimutt), [AML on npm](https://www.npmjs.com/package/@azimutt/aml)). Azimutt can be self-hosted with Docker.
+
+**Decision.** Use **AML files in git** as the lab's conceptual and logical data-model source, with **self-hosted Azimutt** for visual exploration. Each AML entity carries a property mapping it to an EPM semantic ID. AML is never the ontology SoT and never the process SoT.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| DBML / dbdiagram | Comparable DSL; AML adds properties that can carry EPM identifiers and ships a self-hostable explorer |
+| Mermaid ER only | Diagram syntax without properties, namespaces, or an explorer |
+| ER/Studio | The enterprise modeling seat; not available in the lab |
+
+**Consequences.**
+- A folder such as `models/aml/` is added to the repository structure.
+- The AML-to-semantic-ID mapping is a convention to define before use. Until then AML files are illustrative.
+- Azimutt's hosted SaaS is not used. Self-hosted only, so no schema leaves the machine.
+
+## ADR-HL-027 — Adopt DuckLake as an optional open table format for lab history
+
+**Status:** Accepted as an optional experiment (for a personal homelab, 2026-10-02). Stays in the educational tier until the evaluation below passes; see ADR-HL-023.
+
+**Context.** EPM-ARCH-PPC-002 lists DuckLake as an optional open reference for Silver, Gold, and KPI Store history, to evaluate before adoption. DuckLake v1.0 was released in April 2026 as a production-ready specification with backward-compatibility guarantees. The specification and the `ducklake` DuckDB extension are MIT-licensed. It keeps catalog metadata in a SQL database (PostgreSQL, SQLite, or DuckDB) and data in Parquet ([DuckLake](https://ducklake.select/)).
+
+**Decision.** Use **DuckLake** as an optional alternative store for Silver and Gold history and KPI Store snapshots, with PostgreSQL as the catalog database (already in the stack, ADR-HL-011) and Parquet on local disk. The Phase 3 KPI Store tables in PostgreSQL stay the default path. DuckLake is evaluated beside them, not instead of them.
+
+**Evaluation criteria before leaving the educational tier.** Time travel reproduces a restated KPI value. Snapshot expiry and file cleanup are understood. The KPI Store restatement standard (EPM-KPI-016, "To be located") can be met. A reader can rebuild the store from versioned inputs with one command.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Plain DuckDB files | No multi-reader catalog or snapshot history |
+| Apache Iceberg / Delta Lake | Heavier catalog and tooling for a single-machine lab; DuckLake data is Iceberg-compatible if needed later |
+
+**Consequences.**
+- DuckDB version must support the `ducklake` extension for the spec version in use.
+- No change to the KPI Store seat. `dim_kpi_metadata` remains the identity, approval, and formula-pointer row.
+
+## ADR-HL-028 — Use MLflow only when a demo needs an analytical model
+
+**Status:** Accepted, conditional (for a personal homelab, 2026-10-02). Not promoted; see ADR-HL-023.
+
+**Context.** EPM-ARCH-PPC-002 lists MLflow as optional analytical-model lifecycle tooling when EPM demos require models. No current homelab phase builds a trained model. MLflow is Apache-2.0 ([MLflow repository](https://github.com/mlflow/mlflow)); recheck at installation.
+
+**Decision.** Adopt **MLflow** for experiment tracking and model registry, but only for a demo that trains or serves an analytical model. Do not add it to the core stack, and do not add a build phase for it now.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Track runs as Dagster assets only | Adequate until a model needs versions, parameters, and metrics compared |
+| Install now | No consumer exists. Adds a service with no use |
+
+**Consequences.**
+- A model is never a source of KPI meaning. A model output reaches a KPI only through the governed path.
+
+## ADR-HL-029 — Use Grafana for technical observability of the reference environment
+
+**Status:** Accepted, optional (for a personal homelab, 2026-10-02). Not promoted; see ADR-HL-023.
+
+**Context.** EPM-ARCH-PPC-002 lists Grafana as optional technical observability. Grafana is licensed under AGPL-3.0 ([Grafana licensing](https://grafana.com/licensing/)); recheck at installation. That is copyleft, unlike the Apache and MIT tools in this stack.
+
+**Decision.** Use **Grafana** to watch container health and pipeline runs in the lab, run unmodified as a separate service. Do not embed it in a redistributed bundle. Dagster and Marquez keep their own UIs for orchestration and lineage.
+
+**Alternatives considered.**
+
+| Alternative | Why not selected |
+|---|---|
+| Dagster and Marquez UIs only | Sufficient for pipelines and lineage; no view of container and host health |
+| Docker logs only | Works, but gives no history |
+
+**Consequences.**
+- Added to the license risk summary below as an AGPL-3.0 exception.
+- Grafana shows technical health only. It is not a source of KPI results.
+
 ## License risk summary
 
 The baseline favors genuinely open-source software and open W3C standards. The following tools or specifications require an explicit exception, a future recheck, or avoidance because their free availability does not make them open source, or because they are abandoned.
@@ -480,6 +644,7 @@ The baseline favors genuinely open-source software and open W3C standards. The f
 | Google Open Knowledge Format | Public specification with no stated open-source license and no standards-body ratification. ([Google Cloud OKF overview](https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing)) | Watch; do not build on it |
 | Blazegraph | GPLv2 open source, but formally archived and abandoned. ([Blazegraph releases](https://github.com/blazegraph/database/releases)) | Avoid for new builds |
 | D2RQ | Apache-2.0 open source, but archived and effectively abandoned. ([D2RQ repository](https://github.com/d2rq/d2rq)) | Avoid for new builds |
+| Grafana | AGPL-3.0 copyleft. ([Grafana licensing](https://grafana.com/licensing/)) | Allowed as an unmodified, separately run optional service (ADR-HL-029). Do not embed in a redistributed bundle |
 | Databricks Labs OntoBricks | Databricks License; use only with Databricks Services. Labs AS-IS, no SLA. ([OntoBricks](https://github.com/databrickslabs/ontobricks)) | Optional enterprise draft factory (ADR-HL-022). Not a homelab core dependency |
 | dbxmetagen | Databricks License; use only with Databricks Services. ([dbxmetagen](https://github.com/databricks-industry-solutions/dbxmetagen)) | Optional enterprise catalog assistant (ADR-HL-022). Not a homelab core dependency |
 

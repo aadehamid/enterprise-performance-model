@@ -19,12 +19,16 @@ main{padding:36px}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
 h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
 .subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
 h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
 h3{color:#204a75;margin-top:26px}
 p,li{font-size:16px}
 blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
 pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
 code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
 table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
 th{background:#17365d;color:#fff;text-align:left;padding:10px}
 td{border:1px solid var(--line);padding:10px;vertical-align:top}
@@ -36,7 +40,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h2>EPM Foundation v2</h2><p>EPM-FOUND-003</p>
 <a href="index.html">Foundation home</a>
 <hr style="border-color:#31516e">
-<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<a href="../EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
 <hr style="border-color:#31516e">
 <a href="#definition">Definition</a>
 <a href="#semantic-model-versus-implementation">Semantic model versus implementation</a>
@@ -45,11 +49,14 @@ tr:nth-child(even) td{background:#f8fafc}
 <a href="#rules-and-constraints">Rules and constraints</a>
 <a href="#example-semantic-chain">Example semantic chain</a>
 <a href="#governance-of-meaning">Governance of meaning</a>
+<a href="#consumer-semantics-proposed">Consumer semantics (proposed)</a>
 </aside><main><article class="article">
-<div class="eyebrow">EPM-FOUND-003 · Version 2.0 Draft</div>
+<div class="eyebrow">EPM-FOUND-003 · Version 2.1 Draft</div>
 <h1>Enterprise Performance Semantic Model</h1>
-<div class="subtitle">Human-readable authoritative description of business meaning</div>
-<section id="definition"><h2>Definition</h2><p>The <strong>Enterprise Performance Semantic Model</strong> is the governed system of meaning for the Enterprise Performance Model.</p>
+<div class="subtitle">Human-readable semantic model of business meaning. Not the machine ontology SoT.</div>
+<div class="meta">Status: Working baseline · Last updated: October 2, 2026</div>
+<section id="definition"><h2>Definition</h2>
+<p>The <strong>Enterprise Performance Semantic Model</strong> is the human-readable semantic model for the Enterprise Performance Model. It is not the machine ontology SoT.</p>
 <p>It defines:</p>
 <ul>
 <li>the concepts the enterprise uses;</li>
@@ -59,16 +66,23 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>which rules and constraints apply;</li>
 <li>how concepts should be interpreted consistently by people and systems.</li>
 </ul>
-<p>The written specification is the human-readable expression of the semantic model. Ontologies, knowledge graphs, metadata structures, SQL views, Power BI models, and AI context layers are formal or technical representations, implementations, or consumers of that meaning.</p></section><section id="semantic-model-versus-implementation"><h2>Semantic model versus implementation</h2><table><thead><tr><th>Item</th><th>What it is</th></tr></thead><tbody>
+<p>The written specification is the human-readable expression of the semantic model. Ontologies, knowledge graphs, metadata structures, SQL views, Power BI models, and AI context layers are formal or technical representations, implementations, or consumers of that meaning.</p>
+<p>Machine ontology SoT is Turtle in git (<a href="../ontology/stage2_enterprise_kpi_ontology.ttl"><code>ontology/stage2_enterprise_kpi_ontology.ttl</code></a>). Demo <code>o2c-meaning.ttl</code> is demo Turtle, not that SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle, not SoT. Turtle defines formal semantic and mapping assertions only, not all meaning. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI classes. Process authority is not this file.</p>
+</section>
+<section id="semantic-model-versus-implementation"><h2>Semantic model versus implementation</h2>
+<table><thead><tr><th>Item</th><th>What it is</th></tr></thead><tbody>
 <tr><td>Semantic model</td><td>The organized system of concepts, definitions, relationships, rules, constraints, and classifications</td></tr>
-<tr><td>Human-readable specification</td><td>The authoritative written expression used for business review and governance</td></tr>
-<tr><td>Ontology</td><td>Formal machine-readable representation of the semantic model</td></tr>
+<tr><td>Human-readable specification</td><td>The written expression used for business review and governance. Not the machine SoT.</td></tr>
+<tr><td>Ontology</td><td>Formal machine-readable representation. Machine SoT is Turtle in git, not this file.</td></tr>
 <tr><td>Knowledge graph</td><td>Instances of concepts and relationships, usually governed by an ontology</td></tr>
 <tr><td>SQL semantic view</td><td>A consumer-facing data interface implementing selected semantics</td></tr>
 <tr><td>Power BI semantic model</td><td>An analytical implementation containing tables, relationships, measures, hierarchies, and security</td></tr>
 <tr><td>Purview glossary</td><td>A governance implementation for terms, definitions, owners, and lineage</td></tr>
 <tr><td>YAML/JSON metadata</td><td>A portable implementation format for automation and configuration</td></tr>
-</tbody></table></section><section id="core-concept-taxonomy"><h2>Core concept taxonomy</h2><h3>Business context</h3>
+</tbody></table>
+</section>
+<section id="core-concept-taxonomy"><h2>Core concept taxonomy</h2>
+<h3>Business context</h3>
 <ul>
 <li>Enterprise</li>
 <li>Business Domain</li>
@@ -120,7 +134,11 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>Analytical Model</li>
 <li>AI Application</li>
 <li>Automation Workflow</li>
-</ul></section><section id="core-relationship-taxonomy"><h2>Core relationship taxonomy</h2><table><thead><tr><th>Relationship</th><th>Domain and range</th><th>Meaning</th></tr></thead><tbody>
+</ul>
+<blockquote><p><strong>Clarifying note: "Candidate KPI" and "Approved Enterprise KPI" (added 2026-10-02).</strong> The terms in the taxonomy above, including Candidate KPI, Enterprise KPI, Performance Indicator, and the Measurement and Metric subtypes, are human-readable governance vocabulary. They are not ontology classes. The Master Index rule applies: do not create ontology classes merely from this narrative taxonomy. In the machine model a named KPI is one individual, 1:1 with its KPI Store catalog row, and whether it is a candidate or approved is recorded as the Store row status (<code>proposed | approved | drifted | archived</code> on <code>dim_kpi_metadata</code>), not as a class. <code>ontology/stage2_enterprise_kpi_ontology.ttl</code> contains no CandidateKPI or ApprovedKPI class, and none should be added. Governance lifecycle is defined in <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> and the Master Index.</p></blockquote>
+</section>
+<section id="core-relationship-taxonomy"><h2>Core relationship taxonomy</h2>
+<table><thead><tr><th>Relationship</th><th>Domain and range</th><th>Meaning</th></tr></thead><tbody>
 <tr><td>contains</td><td>Domain → Capability; Process → Activity</td><td>Parent concept includes child concept</td></tr>
 <tr><td>decomposes into</td><td>Capability → Sub-capability</td><td>Broader ability is divided into component abilities</td></tr>
 <tr><td>uses</td><td>Value-Stream Stage → Capability</td><td>Stage requires the capability</td></tr>
@@ -139,7 +157,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <tr><td>consumes</td><td>Report/API/AI → Semantic View/Model</td><td>Uses an approved interface</td></tr>
 <tr><td>owned by</td><td>Governed Concept → Role/Organization</td><td>Assigns accountability</td></tr>
 <tr><td>governed by</td><td>Concept → Policy/Standard/Decision</td><td>Identifies governing authority</td></tr>
-</tbody></table></section><section id="rules-and-constraints"><h2>Rules and constraints</h2><ul>
+</tbody></table>
+</section>
+<section id="rules-and-constraints"><h2>Rules and constraints</h2>
+<ul>
 <li>Every enterprise KPI must evaluate at least one objective or critical outcome.</li>
 <li>Every approved KPI must have an accountable business owner.</li>
 <li>Every approved KPI must have a governed definition, calculation, grain, unit, dimensional scope, target or expected condition, and review cadence.</li>
@@ -152,7 +173,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>An activity must belong to at least one process.</li>
 <li>A semantic view must have an identified source data product and consumer contract.</li>
 <li>The ontology must not introduce meanings that have not been defined or approved in the semantic specification.</li>
-</ul></section><section id="example-semantic-chain"><h2>Example semantic chain</h2><pre><code>Commercial Margin Optimization
+</ul>
+</section>
+<section id="example-semantic-chain"><h2>Example semantic chain</h2>
+<pre><code>Commercial Margin Optimization
     is a Strategic Objective
 
 Gasoline Netback CPG
@@ -173,7 +197,10 @@ Commercial Performance Power BI Semantic Model
     consumes CONSUMPTION.v_kpi_values
 
 Executive Commercial Scorecard
-    consumes Commercial Performance Power BI Semantic Model</code></pre></section><section id="governance-of-meaning"><h2>Governance of meaning</h2><p>The semantic model is authoritative only when:</p>
+    consumes Commercial Performance Power BI Semantic Model</code></pre>
+</section>
+<section id="governance-of-meaning"><h2>Governance of meaning</h2>
+<p>This human-readable semantic model is ready for business review only when:</p>
 <ul>
 <li>definitions are structured and internally consistent;</li>
 <li>relationships are explicit;</li>
@@ -182,6 +209,15 @@ Executive Commercial Scorecard
 <li>changes are versioned;</li>
 <li>conflicts are surfaced rather than silently resolved;</li>
 <li>implementations can be traced back to the governing concept and definition.</li>
-</ul></section>
-<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</ul>
+</section>
+<section id="consumer-semantics-proposed"><h2>Consumer semantics (proposed)</h2>
+<p><em>Added 2026-10-02 from the EPM–PPC update plan. <strong>Proposed</strong>: these items need approval before any ontology change. This section creates no ontology classes. Machine definitions, if approved, belong in the Turtle SoT.</em></p>
+<ul>
+<li><strong><code>conforms to designed process</code>.</strong> Relates a consumer-owned process instance to an EPM Business Process. Process instances are consumer concepts. See <a href="../architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md">EPM-ARCH-PPC-003</a>.</li>
+<li><strong>Consumer-extension namespace pattern.</strong> A consumer defines local extensions in its own namespace. A reusable concept is proposed to EPM, reviewed, and included in a later EPM release. See <a href="../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a> section 7.</li>
+<li><strong>Release and deprecation semantics for external consumers.</strong> Each released artifact carries an identifiable version and an authority/lifecycle status. A deprecated term names its replacement and a migration note, so consumers do not infer approval or currency from file presence.</li>
+</ul>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated October 2, 2026</div>
 </article></main></div></body></html>

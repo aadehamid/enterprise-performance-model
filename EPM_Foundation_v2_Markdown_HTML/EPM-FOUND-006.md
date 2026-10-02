@@ -1,8 +1,8 @@
 # Enterprise Data Product and Consumption Model
 **Artifact ID:** EPM-FOUND-006  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Foundational and derived products, medallion alignment, semantic views, and Power BI*
 
@@ -207,6 +207,13 @@ Each data product should define:
 - known limitations;
 - lifecycle status;
 - adoption and value measures.
+
+## Consumer-facing portfolio and implementation mapping
+*Added 2026-10-02 from the EPM–PPC update plan. See [EPM-ARCH-PPC-001](../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) and [EPM-ARCH-PPC-002](../architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md) (both Candidate).*
+
+- **Versioned data-product portfolio contract.** The data-product portfolio (`business_architecture/business_process/data_product_portfolio.json` and its schema) is published to consumers as part of a versioned EPM release. The release states each product's version and lifecycle status.
+- **EPM product concept vs consumer implementation.** EPM defines the data-product concept: purpose, grain and keys, contract, ownership, lifecycle. A consumer implements it in its own runtime and may vary the technology. It maps its implementation to the EPM product identifier, and it does not redefine the concept.
+- **Optional OpenMetadata reference implementation.** OpenMetadata may be used as an open reference implementation to demonstrate glossary, domain, data-product, lineage, and quality synchronization. It is not enterprise authority. Enterprise mappings to Purview and Unity Catalog stay architecture concerns. OpenMetadata is already the lab stand-in for Purview in the metadata integration specification.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

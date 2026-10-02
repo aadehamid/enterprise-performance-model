@@ -1,8 +1,8 @@
 # Enterprise Performance Ontology Design
 **Artifact ID:** EPM-FOUND-004  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Formalization plan for machine-readable business context*
 
@@ -106,6 +106,8 @@ DataConcept
 - SemanticView **must expose at least one** DataProduct or KPI.
 - Candidate KPI may omit target and thresholds; Approved Enterprise KPI may not.
 
+> **Note (added 2026-10-02).** The last example is a governance rule expressed in narrative terms. It is not a pair of OWL classes. In machine form it would be expressed as a SHACL constraint (step 4 of the implementation path) conditioned on the Store row status of a named KPI individual. No such shape exists yet. See the clarifying note in [EPM-FOUND-003](EPM-FOUND-003.md).
+
 ## Ontology versus knowledge graph
 The ontology defines what kinds of things and relationships are allowed.
 
@@ -135,6 +137,14 @@ Gasoline Netback CPG explainedBy RIN Cost Variance
    - Which data products supply those metrics?
    - Which Power BI reports consume the KPI?
    - Which processes and decisions can change the KPI?
+
+## Release packaging for external consumers
+*Added 2026-10-02 from the EPM–PPC update plan. Turtle in git remains the machine ontology SoT. This section describes how a release of it is packaged. See [EPM-ARCH-PPC-001](../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) (Candidate) and [ontology/PROPOSED-release-packaging.md](../ontology/PROPOSED-release-packaging.md).*
+
+- **Publishable release.** A versioned Turtle file plus SHACL shapes, a release manifest (version, checksums or commit, authority and lifecycle status), and change/deprecation notes.
+- **Semantic versioning, deprecation, and migration.** Breaking changes (removed or re-meant terms) bump the major version. A deprecated term names its replacement and a migration note.
+- **Competency-question bundle.** Machine-testable competency questions and fixtures ship with each release, for example the questions listed above and process-relationship questions from EPM-ARCH-PPC-003.
+- **External consumer extension pattern.** Consumers extend in their own namespace. They do not edit the EPM Turtle. Reusable extensions are proposed back and reviewed before a later release includes them.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

@@ -19,12 +19,16 @@ main{padding:36px}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
 h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
 .subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
 h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
 h3{color:#204a75;margin-top:26px}
 p,li{font-size:16px}
 blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
 pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
 code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
 table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
 th{background:#17365d;color:#fff;text-align:left;padding:10px}
 td{border:1px solid var(--line);padding:10px;vertical-align:top}
@@ -36,7 +40,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h2>EPM Foundation v2</h2><p>EPM-FOUND-005</p>
 <a href="index.html">Foundation home</a>
 <hr style="border-color:#31516e">
-<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<a href="../EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
 <hr style="border-color:#31516e">
 <a href="#purpose">Purpose</a>
 <a href="#core-distinctions">Core distinctions</a>
@@ -47,11 +51,17 @@ tr:nth-child(even) td{background:#f8fafc}
 <a href="#tableau-xml-classification-pipeline">Tableau XML classification pipeline</a>
 <a href="#required-inventory-fields">Required inventory fields</a>
 <a href="#kpi-store-boundary">KPI Store boundary</a>
+<a href="#external-implementations-and-consumers">External implementations and consumers</a>
 </aside><main><article class="article">
-<div class="eyebrow">EPM-FOUND-005 · Version 2.0 Draft</div>
+<div class="eyebrow">EPM-FOUND-005 · Version 2.1 Draft</div>
 <h1>Enterprise Measurement and KPI Model</h1>
 <div class="subtitle">Classification, governance, promotion, and Tableau extraction rules</div>
-<section id="purpose"><h2>Purpose</h2><p>This artifact creates a precise measurement taxonomy so that extracted report calculations can be classified consistently and only a small, governed subset becomes enterprise KPIs.</p></section><section id="core-distinctions"><h2>Core distinctions</h2><h3>Measurement</h3>
+<div class="meta">Status: Working baseline · Last updated: October 2, 2026</div>
+<section id="purpose"><h2>Purpose</h2>
+<p>This artifact creates a precise measurement taxonomy so that extracted report calculations can be classified consistently and only a small, governed subset becomes enterprise KPIs.</p>
+</section>
+<section id="core-distinctions"><h2>Core distinctions</h2>
+<h3>Measurement</h3>
 <p>An observed or calculated value describing a business object, event, condition, or result.</p>
 <p>Examples:</p>
 <ul>
@@ -80,7 +90,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>OTIF Delivery</li>
 <li>Three-Month-Out Forecast Accuracy</li>
 <li>Unplanned Refinery Downtime</li>
-</ul></section><section id="taxonomy"><h2>Taxonomy</h2><table><thead><tr><th>Class</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
+</ul>
+</section>
+<section id="taxonomy"><h2>Taxonomy</h2>
+<table><thead><tr><th>Class</th><th>Purpose</th><th>Example</th></tr></thead><tbody>
 <tr><td>Raw Measurement</td><td>Directly observed from an event or system</td><td>Gallons delivered</td></tr>
 <tr><td>Derived Measurement</td><td>Calculated from other measurements</td><td>Delivery delay minutes</td></tr>
 <tr><td>Operational Metric</td><td>Monitors routine operation</td><td>Terminal throughput</td></tr>
@@ -93,20 +106,27 @@ tr:nth-child(even) td{background:#f8fafc}
 <tr><td>Presentation Calculation</td><td>Visual-only helper</td><td>Dynamic chart label</td></tr>
 <tr><td>Duplicate</td><td>Equivalent to an existing governed item</td><td>Alternate Netback calculation</td></tr>
 <tr><td>Obsolete or Retired</td><td>No longer valid or used</td><td>Legacy Tableau-only calculation</td></tr>
-</tbody></table></section><section id="promotion-test"><h2>Promotion test</h2><p>A candidate normally becomes an approved KPI only when most or all of the following are true:</p>
+</tbody></table>
+<blockquote><p><strong>Note (added 2026-10-02).</strong> This is a classification taxonomy for governance and for the Tableau inventory. It is not an ontology class list. A named KPI's candidate or approved state is the KPI Store row status, not a class. See the clarifying note in <a href="EPM-FOUND-003.html">EPM-FOUND-003</a>.</p></blockquote>
+</section>
+<section id="promotion-test"><h2>Promotion test</h2>
+<p>A candidate normally becomes an approved KPI only when most or all of the following are true:</p>
 <ol>
-<li>1. It measures progress toward a defined objective or critical outcome.</li>
-<li>2. It has an accountable business owner.</li>
-<li>3. It has an agreed business definition.</li>
-<li>4. It has an approved calculation and dimensional behavior.</li>
-<li>5. It has a target, expected range, or explicit evaluation rule.</li>
-<li>6. It has warning and critical thresholds where appropriate.</li>
-<li>7. It is reviewed through an established management cadence.</li>
-<li>8. A material change causes a decision, intervention, or escalation.</li>
-<li>9. It is sufficiently important or reusable to govern centrally.</li>
-<li>10. Required data can be supplied with acceptable quality and timeliness.</li>
+<li>It measures progress toward a defined objective or critical outcome.</li>
+<li>It has an accountable business owner.</li>
+<li>It has an agreed business definition.</li>
+<li>It has an approved calculation and dimensional behavior.</li>
+<li>It has a target, expected range, or explicit evaluation rule.</li>
+<li>It has warning and critical thresholds where appropriate.</li>
+<li>It is reviewed through an established management cadence.</li>
+<li>A material change causes a decision, intervention, or escalation.</li>
+<li>It is sufficiently important or reusable to govern centrally.</li>
+<li>Required data can be supplied with acceptable quality and timeliness.</li>
 </ol>
-<p>Failure to qualify as a KPI does not imply low value. The item may remain an important governed metric.</p></section><section id="worked-example-delivery-performance"><h2>Worked example: delivery performance</h2><h3>Measurements</h3>
+<p>Failure to qualify as a KPI does not imply low value. The item may remain an important governed metric.</p>
+</section>
+<section id="worked-example-delivery-performance"><h2>Worked example: delivery performance</h2>
+<h3>Measurements</h3>
 <ul>
 <li>Planned delivery timestamp</li>
 <li>Actual delivery timestamp</li>
@@ -131,7 +151,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>Failed delivery count</li>
 </ul>
 <h3>KPI</h3>
-<p><strong>OTIF Delivery Performance</strong>, when it is formally used to evaluate the objective of reliably fulfilling customer commitments and has an owner, target, threshold, cadence, and corrective response.</p></section><section id="worked-example-forecasting"><h2>Worked example: forecasting</h2><h3>Measurements</h3>
+<p><strong>OTIF Delivery Performance</strong>, when it is formally used to evaluate the objective of reliably fulfilling customer commitments and has an owner, target, threshold, cadence, and corrective response.</p>
+</section>
+<section id="worked-example-forecasting"><h2>Worked example: forecasting</h2>
+<h3>Measurements</h3>
 <ul>
 <li>Forecast quantity</li>
 <li>Actual quantity</li>
@@ -156,7 +179,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>Three-Month-Out Forecast Accuracy</li>
 <li>Forecast Bias</li>
 </ul>
-<p>These become KPIs only through governance and management use—not because they are mathematically sophisticated.</p></section><section id="tableau-xml-classification-pipeline"><h2>Tableau XML classification pipeline</h2><pre><code>Legacy Tableau calculation
+<p>These become KPIs only through governance and management use—not because they are mathematically sophisticated.</p>
+</section>
+<section id="tableau-xml-classification-pipeline"><h2>Tableau XML classification pipeline</h2>
+<pre><code>Legacy Tableau calculation
         ↓
 Technical extraction and parsing
         ↓
@@ -178,7 +204,10 @@ Approved metric, approved KPI, local measure,
 technical calculation, duplicate, or retired item
         ↓
 Implementation in data product, KPI Store,
-semantic view, Power BI model, or report</code></pre></section><section id="required-inventory-fields"><h2>Required inventory fields</h2><p>Each extracted item should capture:</p>
+semantic view, Power BI model, or report</code></pre>
+</section>
+<section id="required-inventory-fields"><h2>Required inventory fields</h2>
+<p>Each extracted item should capture:</p>
 <ul>
 <li>workbook, dashboard, worksheet, and field name;</li>
 <li>original formula and normalized formula;</li>
@@ -193,9 +222,28 @@ semantic view, Power BI model, or report</code></pre></section><section id="requ
 <li>candidate KPI relationship;</li>
 <li>business owner and steward;</li>
 <li>validation status and disposition.</li>
-</ul></section><section id="kpi-store-boundary"><h2>KPI Store boundary</h2><p>The KPI Store receives only approved KPI values and governance metadata.</p>
+</ul>
+</section>
+<section id="kpi-store-boundary"><h2>KPI Store boundary</h2>
+<p>The KPI Store receives only approved KPI values and governance metadata.</p>
 <p>The Measurement Catalog receives normalized reusable measurements and metrics.</p>
 <p>The semantic layer exposes approved consumer contracts.</p>
-<p>Power BI reports should not recreate governed KPI logic locally.</p></section>
-<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+<p>Power BI reports should not recreate governed KPI logic locally.</p>
+</section>
+<section id="external-implementations-and-consumers"><h2>External implementations and consumers</h2>
+<p><em>Added 2026-10-02 from the EPM–PPC update plan. See <a href="../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a> (Candidate).</em></p>
+<h3>Promotion and validation contract for external implementations</h3>
+<p>An external implementation (a consumer) may present a KPI only against an identified EPM release. Machine-checkable conditions:</p>
+<ul>
+<li>The KPI resolves to a governed semantic IRI in the released ontology.</li>
+<li>It has a KPI Store row carrying identity, approval status, and the formula pointer.</li>
+<li>Its compute runs against the governed Metric View that pointer names.</li>
+<li>Approval is read from the Store row and the release's authority metadata. Consumers do not infer approval from file presence, and a consumer cannot promote a KPI locally.</li>
+</ul>
+<h3>KPI dependency manifest fields expected by consumers</h3>
+<p>Per KPI: ontology IRI; KPI Store identifier and approval status; formula pointer and Metric View name; supplying data products (portfolio identifiers and versions); grain, unit, and time behavior; owning role; and the EPM release version the manifest was built against.</p>
+<h3>Process-conformance and diagnostic metric classification</h3>
+<p>Metrics computed from conformance analysis (for example deviation rate, rework count, handoff delay) are classified as <strong>Diagnostic Metric</strong> or <strong>Operational Metric</strong> by default. Promotion to Candidate KPI or Approved Enterprise KPI follows the promotion test above. A conformance metric does not become a KPI because it is available, and correlation with a KPI does not establish causality.</p>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated October 2, 2026</div>
 </article></main></div></body></html>

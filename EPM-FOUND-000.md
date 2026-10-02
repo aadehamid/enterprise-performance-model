@@ -1,10 +1,10 @@
 # Enterprise Performance Model Master Index
 **Artifact ID:** EPM-FOUND-000
-**Version:** 2.4 Draft
+**Version:** 2.5 Draft
 **Status:** Draft (functioning as working baseline)
 **Owner:** Enterprise Performance Model Lead
 **Steward / maintainer:** To be confirmed
-**Last updated:** 2026-09-13
+**Last updated:** 2026-10-02
 **Canonical path:** `EPM-FOUND-000.md`
 
 *Repository home, architecture map, artifact register, decisions, issues, and delivery control*
@@ -21,7 +21,7 @@ This Master Index does two jobs at once. As an **architecture map** it orients y
 
 The architecture content was adopted from the EPM Foundation v2 set. The control content was carried forward from the project's governance baseline so that adopting v2 did not quietly drop the machinery that makes this a *governed* effort.
 
-> This Markdown file is the **maintenance source**. The self-contained HTML file is the reading copy. Edit here, then regenerate the HTML.
+> This Markdown file is the **maintenance source**. The self-contained HTML file ([EPM-FOUND-000.html](EPM-FOUND-000.html)) is the reading copy. Edit here, then regenerate the HTML with `python3 scripts/build_reading_copies.py`. The same script rebuilds the FOUND-001 to 006 reading copies.
 
 ---
 
@@ -98,6 +98,18 @@ Meaning (Turtle in git) does not compute. Compute prepares Silver ingredients, c
 
 Artifact note: [architecture/README.md](architecture/README.md). Enterprise serve path (no client triple store; Neo4j expose; Fuseki is lab-only): ADR-HL-021 in [EPM_Homelab/02-Tool-Selection-and-ADRs.md](EPM_Homelab/02-Tool-Selection-and-ADRs.md).
 
+### Downstream consumers and the PPC proving ground (Candidate, proposed 2026-10-02)
+
+EPM is not only documentation. It is intended to publish governed business, performance, semantic, and process contracts that executable downstream implementations can validate against. **PPC** is the first large integrated proving-ground consumer of those contracts. It is not an EPM authority and its instances are not part of EPM business architecture.
+
+- **EPM release authority vs consumer instances.** EPM owns the designed meaning (principles, process authority, Turtle, SHACL, KPI model, data-product portfolio, KPI Store contract). A consumer owns its own instances, runtimes, and local extensions. Consumers do not infer approval from file presence; each artifact in a release carries its authority and lifecycle status.
+- **Consumer-contract / release concept (planned).** A versioned EPM release bundle with immutable versions, checksums, or commits and a dependency manifest. Defined in [EPM-ARCH-PPC-001](architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md). Not yet a released or approved artifact.
+- **Process conformance as a use case of process authority.** The files under `business_architecture/business_process/` and `business_architecture/schema/` remain the process SoT. They can be consumed as a *designed-process contract* that a consumer's executed instances are compared against. Defined in [EPM-ARCH-PPC-003](architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md). Conformance results are diagnostic inputs to performance analysis. They do not assert causality.
+- **Shared execution technology.** Which Homelab patterns may be promoted into a governed EPM reference implementation, and the promotion rule, is in [EPM-ARCH-PPC-002](architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md). Meaning-vs-Compute is unchanged: a consumer must preserve **ontology IRI → KPI Store row → Metric View → `MEASURE()`**.
+- **Feedback path.** Gaps found by PPC return as EPM issues or ADRs, not as silent PPC forks.
+
+This section does not change the source-precedence hierarchy, the artifact lifecycle, or any SoT assignment in this index.
+
 ---
 
 ## Workstreams and current sequence
@@ -144,6 +156,18 @@ Artifact note: [architecture/README.md](architecture/README.md). Enterprise serv
 | EPM-SRC-001 | Source and Traceability Register | Where every conclusion originated | Not started | Planned — no file yet |
 | EPM-DEC-001 | Architecture Decision Log | Material decisions and their rationale | Not started | Planned — no file yet |
 | EPM-ISS-001 | Open Issues and Assumptions Log | Open uncertainty and conflicts | Not started | Planned — no file yet |
+
+### Architecture extensions for downstream consumers (Candidate, proposed 2026-10-02)
+
+These artifacts are **Proposed** in their own headers, which maps to **Candidate** in this index's lifecycle. They are not Approved Baseline and do not fill precedence levels 1 to 4. The change plan that produced them is [ARCHIVE/EPM-PPC-UPDATE-PLAN_Existing_Artifacts.md](ARCHIVE/EPM-PPC-UPDATE-PLAN_Existing_Artifacts.md); it is an archived working plan kept as provenance, not a canonical artifact.
+
+| ID | Title | Role | Status | Location |
+|---|---|---|---|---|
+| EPM-ARCH-PPC-001 | Publishable EPM Consumer Contract | Versioned release bundle, authority metadata, extension process for executable consumers | Candidate (proposed) | [architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md](architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) |
+| EPM-ARCH-PPC-002 | Shared Execution Technology and Homelab Promotion Model | Which Homelab patterns may be promoted to a governed reference implementation; promotion rule | Candidate (proposed) | [architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md](architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md) |
+| EPM-ARCH-PPC-003 | Process Conformance and Executable Semantics Extension | Process authority as a designed-process contract; conformance and competency tests | Candidate (proposed) | [architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md](architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md) |
+| EPM-ARCH-REL-001 | EPM Consumer Release Contract | Release identity, manifest, and release and consumer obligations; derived from EPM-ARCH-PPC-001 | Draft (Candidate) | [architecture/EPM-ARCH-REL-001_EPM_Consumer_Release_Contract.md](architecture/EPM-ARCH-REL-001_EPM_Consumer_Release_Contract.md) |
+| EPM-ARCH-REF-001 | Governed EPM Reference Implementation | Names which Homelab patterns are promotion candidates and which remain educational experiments; derived from EPM-ARCH-PPC-002 | Draft (Candidate) | [architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md](architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md) |
 
 ### Superseded artifacts (retained for reference, not yet deleted)
 
@@ -364,6 +388,7 @@ Seeding list for **EPM-DEC-001**, which does not yet exist. No item is Approved 
 | **D-15** | **The old Charter and old Register are Superseded (retained for reference); the Register's migration method is preserved in the new PROJ-006** | **Working baseline (2026-08-05)** | **This session; see C-10, C-11** |
 | **D-16** | **One canonical artifact lifecycle and one decision-status set are adopted; earlier "Working Baseline / Proposed / Approved" wording maps onto them** | **Working baseline (2026-08-05)** | **This session; resolves C-09** |
 | D-17 | No client triple store. Machine ontology SoT is Turtle in git. Enterprise expose path is Neo4j (Cypher, not SPARQL). Fuseki remains a homelab SPARQL classroom only. KPI Store owns identity, approval, status, and formula pointer. Purview/UC are not the Store door. OntoBricks drafts Turtle; dbxmetagen drafts UC comments/tags; neither is SoT or compiler | Working baseline (2026-08-29) | [MEANING vs COMPUTE](architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg); ADR-HL-021 / ADR-HL-022 |
+| D-18 | PPC is a downstream proving-ground consumer, not an EPM authority. EPM release authority is distinct from consumer instances. Consumers preserve Meaning vs Compute. Reusable consumer concepts return through EPM governance | Candidate (2026-10-02) | [EPM-ARCH-PPC-001](architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) to [003](architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md) |
 
 > **On D-13.** The v2 material was a level-7 source (outside-project chat) and could not, by itself, override the project baseline. It became baseline because the EPM Lead ratified it. That ratification is the governance act that makes the adoption legitimate rather than a silent override.
 
@@ -452,6 +477,7 @@ This page is a switchboard, not a specification. If it disagrees with a canonica
 |---|---|
 | Understand the rules that govern everything | EPM-FOUND-000A |
 | Understand the whole architecture | "Architecture families" and the FOUND-001 to 006 set |
+| Understand how executable consumers (such as PPC) depend on EPM | "Downstream consumers and the PPC proving ground"; EPM-ARCH-PPC-001 to 003 |
 | Understand how the project operates | EPM-PROJ-001, PROJ-002 |
 | Route a chat conclusion to the right artifact | EPM-PROJ-006 (routing matrix) |
 | Migrate a prior/outside chat | EPM-PROJ-006 (migration procedure), PROJ-003, PROJ-005 |
@@ -497,6 +523,10 @@ Declared this file (`EPM-FOUND-000.md` at repo root) the sole live Master Index.
 PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on `dim_kpi_metadata`. Fuseki is not SoT and is lab-only. Neo4j is the enterprise expose path (D-17). OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.
 
 Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this register before those two.
+
+### v2.5 PPC consumer alignment (2026-10-02)
+
+Added the section "Downstream consumers and the PPC proving ground", registered EPM-ARCH-PPC-001 to 003 as Candidate (proposed), recorded D-18 as Candidate, and added a routing row. Source-precedence hierarchy, artifact lifecycle, process-authority and Turtle SoT assignments, and the catalog status enum are unchanged. The two artifacts recommended by the update plan were drafted as EPM-ARCH-REL-001 (EPM Consumer Release Contract) and EPM-ARCH-REF-001 (Governed EPM Reference Implementation), both Draft (Candidate). A clarifying note on "Candidate KPI" wording was added to FOUND-003, 004, and 005 (no ontology change). The HTML reading copies for this index and FOUND-001 to 006 were regenerated with `scripts/build_reading_copies.py`. The stale FOUND-000 HTML copies in `EPM_Foundation_v2_Markdown_HTML/` and `EPM_Project_Enablement_Pack_Markdown_HTML/` were removed. The root `EPM-FOUND-000.html` is the only HTML reading copy of this index.
 
 ---
 

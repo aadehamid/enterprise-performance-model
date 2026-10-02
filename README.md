@@ -35,7 +35,7 @@ The Downstream O&G Enterprise Performance Model. Charter, operating model, found
 | [Project Enablement Pack](EPM_Project_Enablement_Pack_Markdown_HTML/README.md) | Instructions, operating model, onboarding, chat migration |
 | [business_architecture/](business_architecture/) | Customer-domain problem statement, value-stream and data-product JSON |
 | [ontology/](ontology/) | Enterprise KPI ontology (Turtle) and class-hierarchy notes |
-| [ARCHIVE/](ARCHIVE/) | Superseded Charter and Register (old FOUND-001 / FOUND-002) |
+| [ARCHIVE/](ARCHIVE/) | Superseded Charter and Register (old FOUND-001 / FOUND-002); executed EPM–PPC update plan (provenance only) |
 | [best-practices/](best-practices/) | Teammate practice guides (not governed EPM artifacts) |
 
 Reading copy of the visual handbook: [EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html](EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html) (V1 is superseded).

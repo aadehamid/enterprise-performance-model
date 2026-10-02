@@ -1,8 +1,8 @@
 # Enterprise Business Architecture
 **Artifact ID:** EPM-FOUND-001  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Domains, value streams, capabilities, processes, activities, and decisions*
 
@@ -213,6 +213,20 @@ This is a many-to-many model:
 - Do not treat organization units as capabilities unless the name genuinely describes an enduring ability.
 - Do not treat applications as capabilities.
 - A KPI may measure a value stream, stage, capability, process, or outcome; it is not a structural child of the activity hierarchy.
+
+## Process authority as a designed-process contract
+*Added 2026-10-02 from the EPM–PPC update plan. See [EPM-ARCH-PPC-003](../architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md) (Candidate).*
+
+Machine-readable process authority (`business_architecture/business_process/` and `business_architecture/schema/`) can be consumed as a **designed-process contract**. An executable consumer can generate or observe process instances and compare them with the EPM design.
+
+```text
+EPM designed process  →  consumer process instance / event log  →  conformance analysis  →  performance relationship
+```
+
+- **Ownership.** EPM owns the designed process. A consumer owns its executed instances.
+- **Process-instance and conformance relationship.** A process instance *conforms to* a designed process, or deviates from it. Conformance is an observation about an instance. It is not a change to the design.
+- **Optional transition and exception semantics.** Where the process schemas support them, stable activity or event IDs, allowed transitions or precedence, trigger and end conditions, decisions, and governed alternate or exception paths can be expressed. These are optional and reusable. Schema extensions are tracked as proposed in [PROPOSED-process-contract-extensions.md](../business_architecture/schema/PROPOSED-process-contract-extensions.md).
+- **Boundary.** PPC or other consumer instances are not part of EPM business architecture. This document remains the pattern document, not the process instance SoT.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

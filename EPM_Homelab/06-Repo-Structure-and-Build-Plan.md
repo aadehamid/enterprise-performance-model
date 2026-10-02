@@ -577,6 +577,25 @@ EIA_API_KEY=replace-with-your-eia-api-key
 - A new reader can reproduce the vertical slice, inspect its lineage, rerun SHACL checks, and follow the evidence from objective to API response.
 - The repository clearly distinguishes personal educational artifacts from the enterprise EPM program.
 
+## Implementation tiers (ADR-HL-023, Proposed)
+
+Each build phase above produces artifacts in one of three tiers. The tiers are defined in ADR-HL-023 and [EPM-ARCH-PPC-002](../architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md).
+
+- **Educational runtime.** Fuseki (Phase 3), the agent and MCP server (Phase 5), and the synthetic O2C applications (Phase 1A).
+- **Governed EPM reference-implementation candidates.** Dagster orchestration, the DuckDB KPI Store pattern (Phase 3), the Neo4j serving graph (Phase 4), pySHACL and HermiT validation, and OpenLineage emission (Phase 6). A candidate is promoted only through its own ADR.
+- **PPC proving-ground implementations.** Not built in this repository. A failure found by PPC against a promoted pattern becomes an EPM issue or ADR.
+
+OpenMetadata, Great Expectations, AML/Azimutt, DuckLake, MLflow, and Grafana are adopted for the Homelab by ADR-HL-024 to ADR-HL-029. None is promoted. They are optional and sit outside the numbered phases above, so the core path is unchanged.
+
+**Optional backlog (ADR-HL-024 to ADR-HL-029).** Do these only after Phase 4, and each as its own small change:
+
+- [ ] OpenMetadata as an optional Compose profile, wired to the catalog responsibilities in ADR-HL-024 (ADR-HL-024).
+- [ ] Great Expectations suites for data-product contracts as Dagster assets, plus a dbt / GX / SHACL rule-placement table in `warehouse/contracts/` (ADR-HL-025).
+- [ ] `models/aml/` with a documented AML-to-semantic-ID property convention, and self-hosted Azimutt (ADR-HL-026).
+- [ ] DuckLake evaluation beside the PostgreSQL KPI Store, against the criteria in ADR-HL-027.
+- [ ] MLflow, only when a demo trains a model (ADR-HL-028).
+- [ ] Grafana for container and pipeline health, unmodified and separate (ADR-HL-029).
+
 ## Local development tips
 
 - Use `dagster dev` for rapid asset iteration before containerizing a change. Dagster Core is designed around Python-defined assets, which fits the raw-to-RDF-to-graph flow ([Dagster](https://github.com/dagster-io/dagster)).

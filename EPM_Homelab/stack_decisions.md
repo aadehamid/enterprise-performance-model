@@ -62,8 +62,8 @@ Target picture: [MEANING vs COMPUTE](../architecture/EPM-ARCH-MEANING-vs-COMPUTE
 | Ops facts | PostgreSQL 18 | Lakebase (Databricks Postgres) |
 | Compile | DuckDB + MetricFlow in Track A; Metric Views in Track B | Databricks Metric Views only |
 | KPI Store row (identity, approval, status, formula pointer, ontology IRI) | `dim_kpi_metadata` (`proposed \| approved \| drifted \| archived`) | Same Store seat. The Store owns this row. |
-| Asset discovery / technical catalog | OpenMetadata (lab stand-in) | Purview (discovery/stewardship). Unity Catalog (tables, Metric Views, access). Not the Store door. |
-| Data quality on Silver/Gold | dbt tests / SHACL on meaning | BigEye (SHACL is not BigEye) |
+| Asset discovery / technical catalog | OpenMetadata (lab stand-in, ADR-HL-024) | Purview (discovery/stewardship). Unity Catalog (tables, Metric Views, access). Not the Store door. |
+| Data quality on Silver/Gold | dbt tests / SHACL on meaning; Great Expectations for data-product contracts (ADR-HL-025) | BigEye (SHACL is not BigEye) |
 | Bootstrap Turtle from existing tables | Optional later; Protégé is the lab author | OntoBricks **draft** → review/rewrite → git Turtle → Neo4j |
 | Bootstrap UC comments/tags | Not required in the lab | dbxmetagen **draft**; never auto-apply Metric Views |
 

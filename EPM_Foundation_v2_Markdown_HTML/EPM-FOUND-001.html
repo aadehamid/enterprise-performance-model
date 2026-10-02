@@ -19,12 +19,16 @@ main{padding:36px}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
 h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
 .subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
 h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
 h3{color:#204a75;margin-top:26px}
 p,li{font-size:16px}
 blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
 pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
 code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
 table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
 th{background:#17365d;color:#fff;text-align:left;padding:10px}
 td{border:1px solid var(--line);padding:10px;vertical-align:top}
@@ -36,7 +40,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h2>EPM Foundation v2</h2><p>EPM-FOUND-001</p>
 <a href="index.html">Foundation home</a>
 <hr style="border-color:#31516e">
-<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<a href="../EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
 <hr style="border-color:#31516e">
 <a href="#purpose">Purpose</a>
 <a href="#core-concepts">Core concepts</a>
@@ -45,12 +49,18 @@ tr:nth-child(even) td{background:#f8fafc}
 <a href="#commercial-example">Commercial example</a>
 <a href="#relationship-rules">Relationship rules</a>
 <a href="#modeling-guidance">Modeling guidance</a>
+<a href="#process-authority-as-a-designed-process-contract">Process authority as a designed-process contract</a>
 </aside><main><article class="article">
-<div class="eyebrow">EPM-FOUND-001 · Version 2.0 Draft</div>
+<div class="eyebrow">EPM-FOUND-001 · Version 2.1 Draft</div>
 <h1>Enterprise Business Architecture</h1>
 <div class="subtitle">Domains, value streams, capabilities, processes, activities, and decisions</div>
-<section id="purpose"><h2>Purpose</h2><p>This artifact defines the business context required to interpret downstream measurements and KPIs. It deliberately separates <strong>value flow</strong> from <strong>organizational ability</strong>.</p>
-<p>A value stream is not a sequence of capabilities. A value stream consists of outcome-oriented stages. Each stage uses one or more capabilities, and each capability can support multiple stages.</p></section><section id="core-concepts"><h2>Core concepts</h2><h3>Enterprise</h3>
+<div class="meta">Status: Working baseline · Last updated: October 2, 2026</div>
+<section id="purpose"><h2>Purpose</h2>
+<p>This artifact defines the business context required to interpret downstream measurements and KPIs. It deliberately separates <strong>value flow</strong> from <strong>organizational ability</strong>.</p>
+<p>A value stream is not a sequence of capabilities. A value stream consists of outcome-oriented stages. Each stage uses one or more capabilities, and each capability can support multiple stages.</p>
+</section>
+<section id="core-concepts"><h2>Core concepts</h2>
+<h3>Enterprise</h3>
 <p>The whole organization and its strategic direction.</p>
 <h3>Business domain</h3>
 <p>A major area of business responsibility, expertise, language, data, and decision-making.</p>
@@ -68,7 +78,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h3>Value stream</h3>
 <p>An end-to-end flow that begins with a trigger or need and ends with value delivered to a stakeholder.</p>
 <p>A value stream asks:</p>
-<blockquote>How does value move from an initial opportunity or need to a realized outcome?</blockquote>
+<blockquote><p>How does value move from an initial opportunity or need to a realized outcome?</p></blockquote>
 <p>Illustrative Commercial value stream:</p>
 <pre><code>Sense Market and Customer Demand
         ↓
@@ -86,7 +96,7 @@ Evaluate and Optimize Performance</code></pre>
 <h3>Capability</h3>
 <p>An enduring ability the enterprise must possess.</p>
 <p>A capability asks:</p>
-<blockquote>What must the organization be able to do?</blockquote>
+<blockquote><p>What must the organization be able to do?</p></blockquote>
 <p>Examples:</p>
 <ul>
 <li>Market Intelligence</li>
@@ -113,7 +123,7 @@ Evaluate and Optimize Performance</code></pre>
 <h3>Business process</h3>
 <p>An ordered flow of work with a trigger, inputs, activities, outputs, owner, and end condition.</p>
 <p>A process asks:</p>
-<blockquote>How is the capability performed in a defined context?</blockquote>
+<blockquote><p>How is the capability performed in a defined context?</p></blockquote>
 <p>Example:</p>
 <pre><code>Calculate and Publish Rack Prices
 1. Acquire market prices
@@ -144,7 +154,10 @@ Evaluate and Optimize Performance</code></pre>
 <li>Reroute a shipment</li>
 <li>Reprice a rack market</li>
 <li>Hedge a regional basis exposure</li>
-</ul></section><section id="capability-versus-process"><h2>Capability versus process</h2><table><thead><tr><th>Test</th><th>Capability</th><th>Process</th></tr></thead><tbody>
+</ul>
+</section>
+<section id="capability-versus-process"><h2>Capability versus process</h2>
+<table><thead><tr><th>Test</th><th>Capability</th><th>Process</th></tr></thead><tbody>
 <tr><td>Core question</td><td>What must we be able to do?</td><td>How do we do it?</td></tr>
 <tr><td>Typical wording</td><td>Noun or noun phrase</td><td>Verb-led flow</td></tr>
 <tr><td>Stability</td><td>Relatively stable</td><td>Changes with policy, technology, and operating design</td></tr>
@@ -152,7 +165,10 @@ Evaluate and Optimize Performance</code></pre>
 <tr><td>Example</td><td>Transportation Management</td><td>Plan and Execute Product Movement</td></tr>
 <tr><td>Technology relationship</td><td>Enabled by systems</td><td>Executed through steps using systems</td></tr>
 </tbody></table>
-<p>A practical stopping rule for capability decomposition: stop when the capability is distinct, meaningful to an owner, measurable, supported by identifiable processes and technology, and still larger than an individual task.</p></section><section id="value-stream-versus-capability"><h2>Value stream versus capability</h2><pre><code>Value Stream
+<p>A practical stopping rule for capability decomposition: stop when the capability is distinct, meaningful to an owner, measurable, supported by identifiable processes and technology, and still larger than an individual task.</p>
+</section>
+<section id="value-stream-versus-capability"><h2>Value stream versus capability</h2>
+<pre><code>Value Stream
     ↓ contains
 Value-Stream Stages
     ↕ use
@@ -168,7 +184,10 @@ Decisions</code></pre>
 <li>One value-stream stage uses many capabilities.</li>
 <li>One capability supports many value streams or stages.</li>
 <li>Capabilities should not be arranged as though they were process steps.</li>
-</ul></section><section id="commercial-example"><h2>Commercial example</h2><table><thead><tr><th>Business architecture element</th><th>Example</th></tr></thead><tbody>
+</ul>
+</section>
+<section id="commercial-example"><h2>Commercial example</h2>
+<table><thead><tr><th>Business architecture element</th><th>Example</th></tr></thead><tbody>
 <tr><td>Domain</td><td>Commercial</td></tr>
 <tr><td>Value stream</td><td>Convert Market Opportunity into Realized Commercial Value</td></tr>
 <tr><td>Stage</td><td>Fulfill Product Commitment</td></tr>
@@ -178,7 +197,10 @@ Decisions</code></pre>
 <tr><td>Decisions</td><td>Reroute product, expedite delivery, substitute supply location, prioritize customer</td></tr>
 <tr><td>Potential KPIs</td><td>OTIF, Supply Reliability, Logistics Cost per Gallon, Demurrage Cost</td></tr>
 <tr><td>Supporting metrics</td><td>Transit time, late-load count, freight cost, terminal inventory, capacity utilization</td></tr>
-</tbody></table></section><section id="relationship-rules"><h2>Relationship rules</h2><table><thead><tr><th>Relationship</th><th>Meaning</th></tr></thead><tbody>
+</tbody></table>
+</section>
+<section id="relationship-rules"><h2>Relationship rules</h2>
+<table><thead><tr><th>Relationship</th><th>Meaning</th></tr></thead><tbody>
 <tr><td>domain contains capability</td><td>A capability is primarily governed within a domain</td></tr>
 <tr><td>value stream contains stage</td><td>A stage contributes to the end-to-end flow of value</td></tr>
 <tr><td>stage uses capability</td><td>A stage depends on an enduring organizational ability</td></tr>
@@ -187,7 +209,10 @@ Decisions</code></pre>
 <tr><td>process contains activity</td><td>The process is executed through discrete work steps</td></tr>
 <tr><td>activity supports decision</td><td>The activity provides information or action needed for a choice</td></tr>
 <tr><td>decision affects outcome</td><td>The choice influences operational, financial, customer, risk, or strategic results</td></tr>
-</tbody></table></section><section id="modeling-guidance"><h2>Modeling guidance</h2><ul>
+</tbody></table>
+</section>
+<section id="modeling-guidance"><h2>Modeling guidance</h2>
+<ul>
 <li>Do not use the same label at multiple levels without qualification.</li>
 <li>Prefer outcome language for value-stream stages.</li>
 <li>Prefer noun phrases for capabilities.</li>
@@ -195,6 +220,18 @@ Decisions</code></pre>
 <li>Do not treat organization units as capabilities unless the name genuinely describes an enduring ability.</li>
 <li>Do not treat applications as capabilities.</li>
 <li>A KPI may measure a value stream, stage, capability, process, or outcome; it is not a structural child of the activity hierarchy.</li>
-</ul></section>
-<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</ul>
+</section>
+<section id="process-authority-as-a-designed-process-contract"><h2>Process authority as a designed-process contract</h2>
+<p><em>Added 2026-10-02 from the EPM–PPC update plan. See <a href="../architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md">EPM-ARCH-PPC-003</a> (Candidate).</em></p>
+<p>Machine-readable process authority (<code>business_architecture/business_process/</code> and <code>business_architecture/schema/</code>) can be consumed as a <strong>designed-process contract</strong>. An executable consumer can generate or observe process instances and compare them with the EPM design.</p>
+<pre><code>EPM designed process  →  consumer process instance / event log  →  conformance analysis  →  performance relationship</code></pre>
+<ul>
+<li><strong>Ownership.</strong> EPM owns the designed process. A consumer owns its executed instances.</li>
+<li><strong>Process-instance and conformance relationship.</strong> A process instance <em>conforms to</em> a designed process, or deviates from it. Conformance is an observation about an instance. It is not a change to the design.</li>
+<li><strong>Optional transition and exception semantics.</strong> Where the process schemas support them, stable activity or event IDs, allowed transitions or precedence, trigger and end conditions, decisions, and governed alternate or exception paths can be expressed. These are optional and reusable. Schema extensions are tracked as proposed in <a href="../business_architecture/schema/PROPOSED-process-contract-extensions.md">PROPOSED-process-contract-extensions.md</a>.</li>
+<li><strong>Boundary.</strong> PPC or other consumer instances are not part of EPM business architecture. This document remains the pattern document, not the process instance SoT.</li>
+</ul>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated October 2, 2026</div>
 </article></main></div></body></html>
