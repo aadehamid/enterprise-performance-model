@@ -138,7 +138,7 @@ Power BI executive scorecard and diagnostic analysis
 
 - **Process-conformance metrics as diagnostic inputs.** Metrics derived from comparing executed process instances with the designed process (for example cycle time, rework, handoff delay, deviation rate) can serve as diagnostic metrics that help explain KPIs such as OTIF, DSO, demurrage, or margin. They explain variance. They do not by themselves assert causality, and they are not KPIs unless promoted through the FOUND-005 test.
 - **Consumer-release mapping.** KPI and data-product contracts are published to consumers as versioned EPM releases. Each KPI and data product a consumer implements maps to an identified EPM release and version.
-- **Implementations can vary; semantic identity stays governed.** A downstream implementation may use a different runtime, store, or toolchain. The KPI's semantic identity (ontology IRI, KPI Store row, governed definition) remains defined and approved in EPM. A consumer must preserve **ontology IRI → KPI Store row → Metric View → `MEASURE()`**.
+- **Implementations can vary; semantic identity stays governed.** A downstream implementation may use a different runtime, store, or toolchain. The KPI's semantic identity (ontology IRI, KPI Store row, governed definition) stays defined in EPM. Approval, when it exists, is the KPI Store row status. A consumer must preserve **ontology IRI → KPI Store row → Metric View → `MEASURE()`**.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

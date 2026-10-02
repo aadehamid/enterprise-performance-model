@@ -507,7 +507,7 @@ These six ADRs adopt the tools for the Homelab only. None of them promotes a too
 **Consequences.**
 - Promotions each get their own ADR. This ADR promotes nothing.
 - PPC findings against promoted patterns create EPM issues or ADRs, not silent PPC forks.
-- A short Governed EPM Reference Implementation document (listed as Not started in EPM-FOUND-000) is the place to record which patterns are promoted.
+- [EPM-ARCH-REF-001 Governed EPM Reference Implementation](../architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md) (registered as Draft (Candidate) in EPM-FOUND-000) is the place to record which patterns are promoted.
 
 ## ADR-HL-024 — Use OpenMetadata as the lab catalog and governance reference
 
