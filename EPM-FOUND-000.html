@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EPM-FOUND-000 — Enterprise Performance Model Master Index</title><style>
+:root{
+  --bg:#f4f7fb; --paper:#ffffff; --ink:#182230; --muted:#5f6b7a;
+  --navy:#17365d; --blue:#2368a2; --line:#dfe6ee; --soft:#eef4fa;
+  --accent:#0f766e; --warn:#fff8e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:100vh}
+aside{background:#102a43;color:#e8f1f8;padding:28px 22px;position:sticky;top:0;height:100vh;overflow:auto}
+aside h2{font-size:18px;margin:0 0 6px}
+aside p{color:#b9c9d8;font-size:13px}
+aside a{display:block;color:#dbeafe;text-decoration:none;padding:8px 10px;border-radius:7px;margin:3px 0;font-size:14px}
+aside a:hover{background:#1f4568}
+main{padding:36px}
+.article{max-width:1060px;margin:0 auto;background:var(--paper);padding:48px 58px;border-radius:16px;box-shadow:0 12px 35px rgba(16,42,67,.08)}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
+.subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
+h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
+h3{color:#204a75;margin-top:26px}
+p,li{font-size:16px}
+blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
+pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
+code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+th{background:#17365d;color:#fff;text-align:left;padding:10px}
+td{border:1px solid var(--line);padding:10px;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.shell{display:block}aside{position:relative;height:auto}.article{padding:28px 22px;border-radius:0}main{padding:0}h1{font-size:31px}}
+</style></head>
+<body><div class="shell"><aside>
+<h2>EPM Master Index</h2><p>EPM-FOUND-000</p>
+<a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.html">EPM-FOUND-006</a>
+<hr style="border-color:#31516e">
+<a href="#what-this-document-is">What this document is</a>
+<a href="#executive-orientation">Executive orientation</a>
+<a href="#primary-architecture-chain">Primary architecture chain</a>
+<a href="#architecture-families">Architecture families</a>
+<a href="#workstreams-and-current-sequence">Workstreams and current sequence</a>
+<a href="#canonical-foundation-and-project-set">Canonical foundation and project set</a>
+<a href="#canonical-artifact-register-status-view">Canonical artifact register (status view)</a>
+<a href="#artifact-lifecycle-and-status-vocabulary">Artifact lifecycle and status vocabulary</a>
+<a href="#authoritative-baseline">Authoritative baseline</a>
+<a href="#major-decisions">Major decisions</a>
+<a href="#open-issues-assumptions-and-conflicts">Open issues, assumptions, and conflicts</a>
+<a href="#source-precedence-hierarchy">Source precedence hierarchy</a>
+<a href="#governance-and-ownership-overview">Governance and ownership overview</a>
+<a href="#how-to-use-this-index">How to use this index</a>
+<a href="#immediate-next-actions">Immediate next actions</a>
+<a href="#appendix-reconciliation-build-record-v2-2">Appendix — reconciliation build record (v2.2)</a>
+<a href="#artifact-update-block">Artifact Update Block</a>
+</aside><main><article class="article">
+<div class="eyebrow">EPM-FOUND-000 · Version 2.5 Draft</div>
+<h1>Enterprise Performance Model Master Index</h1>
+<div class="subtitle">Repository home, architecture map, artifact register, decisions, issues, and delivery control</div>
+<div class="meta">Status: Draft (functioning as working baseline) · Owner: Enterprise Performance Model Lead · Steward / maintainer: To be confirmed · Last updated: 2026-10-02 · Canonical path: EPM-FOUND-000.md</div>
+<blockquote><p><strong>This is the canonical Master Index.</strong> Other files that reuse ID EPM-FOUND-000 are stubs, pack-local maps, or superseded reading copies. See <a href="README.md">README.md</a>.</p></blockquote>
+<section id="what-this-document-is"><h2>What this document is</h2>
+<p>This Master Index does two jobs at once. As an <strong>architecture map</strong> it orients you to the whole Enterprise Performance Model and points to the foundation artifacts that define it. As a <strong>control panel</strong> it holds the project's live governance state — the artifact register, decisions, conflicts, open issues, the source-precedence rules, roles, and what happens next. The first job answers <em>"how does this all fit together?"</em>; the second answers <em>"where does the project actually stand?"</em></p>
+<p>The architecture content was adopted from the EPM Foundation v2 set. The control content was carried forward from the project's governance baseline so that adopting v2 did not quietly drop the machinery that makes this a <em>governed</em> effort.</p>
+<blockquote><p>This Markdown file is the <strong>maintenance source</strong>. The self-contained HTML file (<a href="EPM-FOUND-000.html">EPM-FOUND-000.html</a>) is the reading copy. Edit here, then regenerate the HTML with <code>python3 scripts/build_reading_copies.py</code>. The same script rebuilds the FOUND-001 to 006 reading copies.</p></blockquote>
+</section>
+<section id="executive-orientation"><h2>Executive orientation</h2>
+<p>The <strong>Enterprise Performance Model (EPM)</strong> is the shared architecture that connects:</p>
+<ul>
+<li>how the downstream enterprise creates and delivers value;</li>
+<li>how business performance is observed, explained, and governed;</li>
+<li>how trusted data is organized into reusable products;</li>
+<li>how KPIs are defined, calculated, stored, and consumed; and</li>
+<li>how Power BI, APIs, automation, analytics, AI, and future agents use consistent business context.</li>
+</ul>
+<p>The EPM is the conceptual umbrella. The KPI Store, ontology, knowledge graph, SQL consumption views, Power BI semantic models, reports, APIs, and AI agents are implementations or consumers of parts of that architecture.</p>
+<p><strong>In plain language.</strong> The Tableau-to-Power BI migration moved the pictures but not the meaning. Every report was rebuilt, but nobody recorded what each number means, who owns it, what good looks like, or where it comes from. This initiative builds the missing card catalogue — starting with the KPI Store.</p>
+<blockquote><p><strong>Current program context.</strong> Most in-scope Tableau reports have already been migrated to Power BI. During migration, KPI definitions, ownership, targets, thresholds, lineage, and standardization were not systematically captured. Tableau XML is now being parsed retrospectively to inventory calculations. Extracted calculations are historical evidence — not approved KPIs.</p></blockquote>
+</section>
+<section id="primary-architecture-chain"><h2>Primary architecture chain</h2>
+<pre><code>Enterprise strategy and objectives
+        ↓
+Business domains
+        ↓
+Value streams and value-stream stages
+        ↕ use
+Capabilities and sub-capabilities
+        ↓ realized through
+Business processes
+        ↓ decomposed into
+Business activities
+        ↓ support or produce
+Business decisions
+        ↓ observed through
+Measurements and metrics
+        ↓ governed as
+KPIs and performance outcomes
+        ↓ supplied by
+Foundational and derived data products
+        ↓ exposed through
+KPI Store, semantic views, Power BI semantic models, APIs
+        ↓ consumed by
+Reports, analytics, automation, AI, and management processes</code></pre>
+<p>Read left to right it is a design sequence. Read right to left it is the audit question: take a number on a dashboard and trace it back until you reach a business goal someone owns. Wherever the trace breaks is the gap this project closes.</p>
+<p><strong>One caution:</strong> this is a set of <em>connected structures with a performance overlay</em>, not one strict parent-child hierarchy. KPIs are a governed overlay that can measure a value stream, stage, capability, process, or outcome — not a structural level beneath activities. Value streams and capabilities are modelled separately: a stage <em>uses</em> capabilities; it is not a list of them.</p>
+</section>
+<section id="architecture-families"><h2>Architecture families</h2>
+<table><thead><tr><th>Architecture</th><th>Primary question</th><th>Core concepts</th><th>Canonical artifact</th></tr></thead><tbody>
+<tr><td>Principles (constitutional)</td><td>What rules govern every design choice?</td><td>The 16 architectural principles and exception process</td><td>EPM-FOUND-000A</td></tr>
+<tr><td>Business architecture</td><td>How does the enterprise create and deliver value?</td><td>Domain, value stream, stage, capability, process, activity, decision</td><td>EPM-FOUND-001</td></tr>
+<tr><td>Performance architecture</td><td>How is performance observed, explained, and governed?</td><td>Measurement, metric, indicator, KPI, objective, target, threshold</td><td>EPM-FOUND-002 and EPM-FOUND-005</td></tr>
+<tr><td>Semantic architecture</td><td>What do the concepts mean and how are they related?</td><td>Definitions, relationships, rules, constraints, classifications</td><td>EPM-FOUND-003</td></tr>
+<tr><td>Ontology architecture</td><td>How is the semantic model formalized for machines?</td><td>Classes, properties, cardinality, inheritance, axioms</td><td>EPM-FOUND-004</td></tr>
+<tr><td>Data-product architecture</td><td>How is trusted data packaged and delivered?</td><td>Foundational product, derived product, KPI Store, semantic view</td><td>EPM-FOUND-006</td></tr>
+<tr><td>Consumption architecture</td><td>How do people and systems use governed meaning and data?</td><td>SQL views, Power BI models, APIs, reports, agents</td><td>EPM-FOUND-006</td></tr>
+<tr><td>Governance and project operation</td><td>Who owns meaning, and how is change controlled?</td><td>Ownership, precedence, lifecycle, migration, cadence</td><td>EPM-PROJ-001 to 006 and this index</td></tr>
+</tbody></table>
+<h3>Meaning vs compute (target band split)</h3>
+<p><img alt="MEANING vs COMPUTE" src="architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg"></p>
+<p>Meaning (Turtle in git) does not compute. Compute prepares Silver ingredients, compiles once via <code>MEASURE()</code> on a Metric View, and publishes Gold. The only legal join is <strong>one ontology IRI → one KPI Store row → one Metric View</strong>. The Store owns identity, approval, status (<code>proposed | approved | drifted | archived</code> on <code>dim_kpi_metadata</code>), and the formula pointer. Purview and Unity Catalog discover and govern pointed-at assets; they are not the Store door. Process authority stays <code>business_architecture/business_process/</code> and <code>business_architecture/schema/</code> — the picture’s Process Architecture box is not Turtle SoT. Agents ask the graph of meaning which KPI, look up the Store row, and submit <code>MEASURE()</code> on the Metric View the formula pointer names.</p>
+<p>Artifact note: <a href="architecture/README.md">architecture/README.md</a>. Enterprise serve path (no client triple store; Neo4j expose; Fuseki is lab-only): ADR-HL-021 in <a href="EPM_Homelab/02-Tool-Selection-and-ADRs.md">EPM_Homelab/02-Tool-Selection-and-ADRs.md</a>.</p>
+<h3>Downstream consumers and the PPC proving ground (Candidate, proposed 2026-10-02)</h3>
+<p>EPM is not only documentation. It is intended to publish governed business, performance, semantic, and process contracts that executable downstream implementations can validate against. <strong>PPC</strong> is the first large integrated proving-ground consumer of those contracts. It is not an EPM authority and its instances are not part of EPM business architecture.</p>
+<ul>
+<li><strong>EPM release authority vs consumer instances.</strong> EPM owns the designed meaning (principles, process authority, Turtle, SHACL, KPI model, data-product portfolio, KPI Store contract). A consumer owns its own instances, runtimes, and local extensions. Consumers do not infer approval from file presence; each artifact in a release carries its authority and lifecycle status.</li>
+<li><strong>Consumer-contract / release concept (planned).</strong> A versioned EPM release bundle with immutable versions, checksums, or commits and a dependency manifest. Defined in <a href="architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a>. Not yet a released or approved artifact.</li>
+<li><strong>Process conformance as a use case of process authority.</strong> The files under <code>business_architecture/business_process/</code> and <code>business_architecture/schema/</code> remain the process SoT. They can be consumed as a <em>designed-process contract</em> that a consumer's executed instances are compared against. Defined in <a href="architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md">EPM-ARCH-PPC-003</a>. Conformance results are diagnostic inputs to performance analysis. They do not assert causality.</li>
+<li><strong>Shared execution technology.</strong> Which Homelab patterns may be promoted into a governed EPM reference implementation, and the promotion rule, is in <a href="architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md">EPM-ARCH-PPC-002</a>. Meaning-vs-Compute is unchanged: a consumer must preserve <strong>ontology IRI → KPI Store row → Metric View → <code>MEASURE()</code></strong>.</li>
+<li><strong>Feedback path.</strong> Gaps found by PPC return as EPM issues or ADRs, not as silent PPC forks.</li>
+</ul>
+<p>This section does not change the source-precedence hierarchy, the artifact lifecycle, or any SoT assignment in this index.</p>
+</section>
+<section id="workstreams-and-current-sequence"><h2>Workstreams and current sequence</h2>
+<table><thead><tr><th>Workstream</th><th>Purpose</th><th>Priority</th><th>Current emphasis</th></tr></thead><tbody>
+<tr><td>KPI Store and Enterprise Performance Management</td><td>Govern metrics and KPIs; persist approved values, targets, status, versions, and lineage</td><td>Immediate</td><td>Measurement classification, pilot KPIs, tall fact, threshold model</td></tr>
+<tr><td>Domain Modeling</td><td>Formalize business concepts and conceptual/logical models</td><td>Follow-on and iterative</td><td>Reconnect KPIs and data products to domains, concepts, entities, and fields</td></tr>
+<tr><td>System Integration</td><td>Connect metadata, models, catalog, quality, and consumption tooling</td><td>Follow-on</td><td>Targeted proofs of value and tool-responsibility boundaries</td></tr>
+<tr><td>Cross-cutting Data Governance</td><td>Govern definitions, ownership, quality, lineage, security, certification, and lifecycle</td><td>Continuous</td><td>Promotion rules, stewardship, certification, issue resolution</td></tr>
+</tbody></table>
+<p><strong>Approved working sequence:</strong></p>
+<ol>
+<li>Define the KPI Store and measurement architecture.</li>
+<li>Inventory and classify Tableau calculations.</li>
+<li>Establish KPI governance and implement pilot KPIs.</li>
+<li>Formalize domain modeling and reconnect models to the KPI Store.</li>
+<li>Define and prove system-integration patterns.</li>
+<li>Scale, automate, and operationalize.</li>
+</ol>
+<blockquote><p><strong>Note on scope (resolves C-07).</strong> An earlier handoff proposed ten workstreams. The adopted build expresses the extra concerns — semantic model, ontology, and so on — as <strong>architecture families and foundation artifacts</strong>, while keeping <strong>delivery workstreams at four</strong>. Broaden the architecture; keep the delivery aperture narrow so the KPI Store is not delayed.</p></blockquote>
+</section>
+<section id="canonical-foundation-and-project-set"><h2>Canonical foundation and project set</h2>
+<table><thead><tr><th>ID</th><th>Title</th><th>Role</th><th>Status</th><th>Location</th></tr></thead><tbody>
+<tr><td>EPM-FOUND-000</td><td>Enterprise Performance Model Master Index</td><td>Architecture map + control panel (this document)</td><td>Draft (2.4)</td><td>This file (canonical)</td></tr>
+<tr><td>EPM-FOUND-000A</td><td>Architectural Principles</td><td>The 16 constitutional principles governing all design</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-FOUND-000A_Architectural_Principles.md</a></td></tr>
+<tr><td>EPM-FOUND-001</td><td>Enterprise Business Architecture</td><td>Pattern document for domains, value streams, capabilities, processes, activities, decisions. Not the process instance SoT.</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-001.md</a></td></tr>
+<tr><td>EPM-FOUND-002</td><td>Enterprise Performance and Data Architecture</td><td>Objectives → measurements → metrics → KPIs → data products → KPI Store → consumption</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-002.md</a></td></tr>
+<tr><td>EPM-FOUND-003</td><td>Enterprise Performance Semantic Model</td><td>Human-readable semantic model. Not the machine SoT.</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-003.md</a></td></tr>
+<tr><td>EPM-FOUND-004</td><td>Enterprise Performance Ontology Design</td><td>Ontology design. Not the machine SoT. Machine expression is Turtle in git.</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-004.md</a></td></tr>
+<tr><td>EPM-FOUND-005</td><td>Enterprise Measurement and KPI Model</td><td>Classification and promotion model; Tableau extraction rules</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-005.md</a></td></tr>
+<tr><td>EPM-FOUND-006</td><td>Enterprise Data Product and Consumption Model</td><td>Foundational/derived products, medallion alignment, consumption</td><td>Draft (working baseline)</td><td><a href="EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.html">EPM_Foundation_v2_Markdown_HTML/EPM-FOUND-006.md</a></td></tr>
+<tr><td>EPM-PROJ-001</td><td>Project Instructions</td><td>Concise operating rules for the project</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-001_Project_Instructions.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-001_Project_Instructions.md</a></td></tr>
+<tr><td>EPM-PROJ-002</td><td>Project Operating Model</td><td>How chats, artifacts, decisions, reviews, and implementation work together</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-002_Project_Operating_Model.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-002_Project_Operating_Model.md</a></td></tr>
+<tr><td>EPM-PROJ-003</td><td>Project Onboarding Guide</td><td>How to establish the project and preserve prior work</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-003_Project_Onboarding_Guide.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-003_Project_Onboarding_Guide.md</a></td></tr>
+<tr><td>EPM-PROJ-004</td><td>Artifact and Chat Map</td><td>Question → artifact and question → chat routing</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-004_Artifact_and_Chat_Map.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-004_Artifact_and_Chat_Map.md</a></td></tr>
+<tr><td>EPM-PROJ-005</td><td>Migration Checklist</td><td>Controlled checklist for moving work into the project</td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-005_Migration_Checklist.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-005_Migration_Checklist.md</a></td></tr>
+<tr><td>EPM-PROJ-006</td><td>Chat Migration Playbook and Templates</td><td>Routing matrix, closeout, migration procedure, control-log templates <em>(salvaged from the superseded Register)</em></td><td>Draft (working baseline)</td><td><a href="EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.html">EPM_Project_Enablement_Pack_Markdown_HTML/EPM-PROJ-006_Chat_Migration_Playbook_and_Templates.md</a></td></tr>
+<tr><td>EPM-GLOS-001</td><td>Business Glossary</td><td>Shared business meaning for terms</td><td>To be located</td><td>No reviewed source in repo</td></tr>
+<tr><td>EPM-SRC-001</td><td>Source and Traceability Register</td><td>Where every conclusion originated</td><td>Not started</td><td>Planned — no file yet</td></tr>
+<tr><td>EPM-DEC-001</td><td>Architecture Decision Log</td><td>Material decisions and their rationale</td><td>Not started</td><td>Planned — no file yet</td></tr>
+<tr><td>EPM-ISS-001</td><td>Open Issues and Assumptions Log</td><td>Open uncertainty and conflicts</td><td>Not started</td><td>Planned — no file yet</td></tr>
+</tbody></table>
+<h3>Architecture extensions for downstream consumers (Candidate, proposed 2026-10-02)</h3>
+<p>These artifacts are <strong>Proposed</strong> in their own headers, which maps to <strong>Candidate</strong> in this index's lifecycle. They are not Approved Baseline and do not fill precedence levels 1 to 4. The change plan that produced them is <a href="ARCHIVE/EPM-PPC-UPDATE-PLAN_Existing_Artifacts.md">ARCHIVE/EPM-PPC-UPDATE-PLAN_Existing_Artifacts.md</a>; it is an archived working plan kept as provenance, not a canonical artifact.</p>
+<table><thead><tr><th>ID</th><th>Title</th><th>Role</th><th>Status</th><th>Location</th></tr></thead><tbody>
+<tr><td>EPM-ARCH-PPC-001</td><td>Publishable EPM Consumer Contract</td><td>Versioned release bundle, authority metadata, extension process for executable consumers</td><td>Candidate (proposed)</td><td><a href="architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md</a></td></tr>
+<tr><td>EPM-ARCH-PPC-002</td><td>Shared Execution Technology and Homelab Promotion Model</td><td>Which Homelab patterns may be promoted to a governed reference implementation; promotion rule</td><td>Candidate (proposed)</td><td><a href="architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md">architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md</a></td></tr>
+<tr><td>EPM-ARCH-PPC-003</td><td>Process Conformance and Executable Semantics Extension</td><td>Process authority as a designed-process contract; conformance and competency tests</td><td>Candidate (proposed)</td><td><a href="architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md">architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md</a></td></tr>
+<tr><td>EPM-ARCH-REL-001</td><td>EPM Consumer Release Contract</td><td>Release identity, manifest, and release and consumer obligations; derived from EPM-ARCH-PPC-001</td><td>Draft (Candidate)</td><td><a href="architecture/EPM-ARCH-REL-001_EPM_Consumer_Release_Contract.md">architecture/EPM-ARCH-REL-001_EPM_Consumer_Release_Contract.md</a></td></tr>
+<tr><td>EPM-ARCH-REF-001</td><td>Governed EPM Reference Implementation</td><td>Names which Homelab patterns are promotion candidates and which remain educational experiments; derived from EPM-ARCH-PPC-002</td><td>Draft (Candidate)</td><td><a href="architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md">architecture/EPM-ARCH-REF-001_Governed_EPM_Reference_Implementation.md</a></td></tr>
+</tbody></table>
+<h3>Superseded artifacts (retained for reference, not yet deleted)</h3>
+<table><thead><tr><th>Former ID / file</th><th>Title</th><th>Location</th><th>Superseded by</th><th>Residual content to migrate before hard-retire</th></tr></thead><tbody>
+<tr><td>EPM-FOUND-001 (old) / <code>02_Project_Charter...</code></td><td>Project Charter and Operating Model</td><td><a href="ARCHIVE/02_Project_Charter_and_Operating_Model.md">ARCHIVE/02_Project_Charter_and_Operating_Model.md</a></td><td>PROJ-001, PROJ-002, FOUND-000A (principles), FOUND-000 (roles, sequence)</td><td>§3 Strategic Objectives; §4 detailed workstream scope/exclusions; §5.1–5.10 detailed role responsibilities; §8 eight-stage delivery lifecycle; §15 Definition of Success — logged as <strong>C-11</strong></td></tr>
+<tr><td>EPM-FOUND-002 (old) / <code>03_Canonical_Artifact_Register...</code></td><td>Canonical Artifact Register and Chat Migration Playbook</td><td><a href="ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md">ARCHIVE/03_Canonical_Artifact_Register_and_Chat_Migration_Playbook.md</a></td><td>FOUND-000 (inventory), PROJ-004 (routing), PROJ-005 (checklist), <strong>PROJ-006 (playbook + templates)</strong></td><td>None outstanding — unique method preserved in PROJ-006; safe to move to Retired once PROJ-006 is confirmed</td></tr>
+</tbody></table>
+<blockquote><p><strong>Supersession is not deletion.</strong> A <em>Superseded</em> artifact has been replaced as the authority but is kept for reference until its unique content is fully carried by its successors. Only then does it move to <em>Retired</em> (safe to delete). The Register is effectively there already (via PROJ-006); the Charter is not yet, pending the C-11 fold-in.</p></blockquote>
+</section>
+<section id="canonical-artifact-register-status-view"><h2>Canonical artifact register (status view)</h2>
+<p>Navigable status view. The <strong>detailed inventory</strong> — every artifact with full purpose and update-trigger — was carried by the superseded Register; its routing content now lives in PROJ-004 and PROJ-006. Family A is covered above. Families B–H below are the planned build artifacts.</p>
+<p><strong>Status meanings.</strong> These four are not interchangeable:</p>
+<table><thead><tr><th>Status</th><th>Means</th><th>File present?</th></tr></thead><tbody>
+<tr><td>Draft / Candidate</td><td>Reviewed or working document at that status</td><td>Yes — see Location in Family A</td></tr>
+<tr><td>Existing-unlinked</td><td>File is in the repo; it is <strong>not</strong> yet accepted as the reviewed source for this ID</td><td>Yes — listed under "Present in repo, not yet the reviewed source"</td></tr>
+<tr><td>Process authority (instance files)</td><td>The files under <code>business_architecture/business_process/</code> and <code>business_architecture/schema/</code> are the process SoT for this ID. FOUND-001 remains the pattern document and is not the instance SoT. Not Existing-unlinked. Not Approved Baseline. Not catalog status.</td><td>Yes - listed under "Process authority (instance files)"</td></tr>
+<tr><td>To be located</td><td>Named as if it already exists somewhere; no reviewed file found yet</td><td>No (or not identified)</td></tr>
+<tr><td>Not started</td><td>Planned in the minimum controlled set; no document yet</td><td>No</td></tr>
+</tbody></table>
+<blockquote><p>Appearance in this register still means <em>planned in the minimum controlled set</em>. It does not, by itself, prove a file exists or that an existing file is the reviewed source.</p></blockquote>
+<p>Catalog status <code>proposed | approved | drifted | archived</code> lives on <code>dim_kpi_metadata</code> only. It is not an artifact-lifecycle value and it is not used on this register.</p>
+<h3>Process authority (instance files)</h3>
+<p>PRs #6 and #7. The files under <code>business_architecture/business_process/</code> and <code>business_architecture/schema/</code> are the Downstream oil and gas process set, including order-to-cash (O2C). Those two folders are process authority. Files under <code>business_architecture/domain/</code> are draft context, not process authority.</p>
+<p>FOUND-001 stays the pattern document. It is not the instance SoT.</p>
+<p>Current process-authority files on <code>main</code>:</p>
+<ul>
+<li><code>business_architecture/business_process/downstream_process_map.json</code></li>
+<li><code>business_architecture/business_process/value_stream_order_to_cash.json</code></li>
+<li><code>business_architecture/business_process/value_stream_commercial_lifecycle.json</code></li>
+<li><code>business_architecture/business_process/data_product_portfolio.json</code></li>
+<li><code>business_architecture/business_process/office_lanes.json</code></li>
+<li><code>business_architecture/schema/data_product_portfolio.schema.json</code></li>
+<li><code>business_architecture/schema/value_stream.schema.json</code></li>
+</ul>
+<table><thead><tr><th>ID</th><th>Title</th><th>Files</th></tr></thead><tbody>
+<tr><td>EPM-BUS-001</td><td>Downstream Value Stream Model</td><td><code>business_architecture/business_process/value_stream_order_to_cash.json</code>, <code>business_architecture/business_process/value_stream_commercial_lifecycle.json</code>, <code>business_architecture/schema/value_stream.schema.json</code></td></tr>
+<tr><td>EPM-BUS-003</td><td>Business Process and Activity Model</td><td><code>business_architecture/business_process/downstream_process_map.json</code>, <code>business_architecture/business_process/office_lanes.json</code></td></tr>
+<tr><td>EPM-DP-001</td><td>Data Product Portfolio</td><td><code>business_architecture/business_process/data_product_portfolio.json</code>, <code>business_architecture/schema/data_product_portfolio.schema.json</code></td></tr>
+</tbody></table>
+<p>office_lanes.json is a front/middle/back/operations overlay on BUS-003. Those four keys are not process or activity IDs.</p>
+<h3>Machine ontology SoT</h3>
+<p>Turtle in git is the machine ontology SoT. Current enterprise Turtle: <a href="ontology/stage2_enterprise_kpi_ontology.ttl"><code>ontology/stage2_enterprise_kpi_ontology.ttl</code></a>. Demo <code>o2c-meaning.ttl</code> is demo Turtle, not this enterprise SoT.</p>
+<p>FOUND-003 stays the human-readable semantic model. FOUND-004 stays the ontology design. Neither is the machine SoT. Fuseki is not. Fuseki is a <strong>homelab SPARQL classroom</strong> loaded from git Turtle so SPARQL can be learned. It is not a client seat. The enterprise client has no triple store. Published Turtle is loaded into <strong>Neo4j</strong> and exposed there (ADR-HL-021). OntoBricks may draft OWL from existing Unity Catalog tables; a steward reviews, rewrites, and commits Turtle to git before Neo4j serves it. dbxmetagen may draft UC comments and tags; it must not compile Metric Views (ADR-HL-022).</p>
+<h3>Present in repo, not yet the reviewed source</h3>
+<p>Working files that match a registered subject but have <strong>not</strong> been accepted as the canonical artifact for that ID. Do not invent a silent promotion to Approved Baseline.</p>
+<table><thead><tr><th>Related ID</th><th>What is on disk</th><th>Why it is not the reviewed source</th></tr></thead><tbody>
+<tr><td>EPM-MOD-001 / domain problem</td><td><a href="business_architecture/domain/customer_domain_problem_statement_v0.1.md"><code>business_architecture/domain/customer_domain_problem_statement_v0.1.md</code></a></td><td>Draft Customer-domain context. Not process authority. Not the Domain Modeling Playbook.</td></tr>
+<tr><td>EPM-FOUND-003 / 004 (notes only)</td><td><a href="ontology/kpi_ontology_class_hierarchy.md"><code>ontology/kpi_ontology_class_hierarchy.md</code></a></td><td>Supporting notes. Not Turtle. Not machine SoT.</td></tr>
+<tr><td>n/a (homelab / demos)</td><td><a href="EPM_Homelab/"><code>EPM_Homelab/</code></a>, <a href="demos/README.md"><code>demos/</code></a></td><td>Explicitly not governed EPM artifacts.</td></tr>
+<tr><td>n/a (working visual)</td><td><a href="architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg"><code>architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg</code></a></td><td>Target MEANING vs COMPUTE band split. Working visual, not a numbered FOUND artifact.</td></tr>
+</tbody></table>
+<h3>Family B — Business architecture (populated downstream)</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-BUS-001</td><td>Downstream Value Stream Model</td><td>Process authority (instance files)</td></tr>
+<tr><td>EPM-BUS-002</td><td>Business Capability Map</td><td>To be located</td></tr>
+<tr><td>EPM-BUS-003</td><td>Business Process and Activity Model</td><td>Process authority (instance files)</td></tr>
+<tr><td>EPM-BUS-004</td><td>Business Objective and Decision Model</td><td>To be located</td></tr>
+</tbody></table>
+<h3>Family C — Measurement and KPI</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-XML-001</td><td>Tableau Calculation Inventory</td><td>To be located</td></tr>
+<tr><td>EPM-MEAS-002</td><td>Enterprise Measurement Catalog</td><td>Not started</td></tr>
+<tr><td>EPM-KPI-001</td><td>Candidate KPI Register</td><td>Not started</td></tr>
+<tr><td>EPM-KPI-002</td><td>Enterprise KPI Catalog</td><td>Not started</td></tr>
+<tr><td>EPM-KPI-003</td><td>KPI Dependency and Driver Model</td><td>Not started</td></tr>
+<tr><td>EPM-KPI-004</td><td>KPI Governance and Approval Standard</td><td>Not started</td></tr>
+</tbody></table>
+<h3>Family D — KPI Store technical</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-KPI-010</td><td>KPI Store Conceptual Architecture</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-011</td><td>KPI Store Logical Data Model</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-012</td><td>KPI Store Physical Design</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-013</td><td>KPI Metadata Schema</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-014</td><td>KPI Calculation and Load Framework</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-015</td><td>Target, Threshold, and Status Standard</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-016</td><td>Versioning and Restatement Standard</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-017</td><td>KPI Data-Quality Framework</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-018</td><td>KPI Security and Consumption Standard</td><td>To be located</td></tr>
+<tr><td>EPM-KPI-019</td><td>KPI Pilot Specification Package</td><td>Not started</td></tr>
+</tbody></table>
+<h3>Family E — Data products and semantics</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-DP-001</td><td>Data Product Portfolio</td><td>Process authority (instance files)</td></tr>
+<tr><td>EPM-DP-002</td><td>Data Product Standard and Contract Template</td><td>Not started</td></tr>
+<tr><td>EPM-SEM-001</td><td>Semantic Model Standards</td><td>Not started</td></tr>
+<tr><td>EPM-SEM-002</td><td>Power BI Consumption and Certification Standard</td><td>Not started</td></tr>
+</tbody></table>
+<h3>Family F — Domain modeling</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-MOD-001</td><td>Domain Modeling Playbook</td><td>Not started</td></tr>
+<tr><td>EPM-MOD-002</td><td>Domain Modeling Reference Architecture</td><td>Not started</td></tr>
+<tr><td>EPM-MOD-003</td><td>Modeling Standards and Conventions</td><td>Not started</td></tr>
+<tr><td>EPM-MOD-004</td><td>Domain Model Repository</td><td>Not started</td></tr>
+<tr><td>EPM-MOD-005</td><td>KPI-to-Domain Traceability Model</td><td>Not started</td></tr>
+</tbody></table>
+<h3>Family G — System integration</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-INT-001</td><td>System Integration Reference Architecture</td><td>Not started</td></tr>
+<tr><td>EPM-INT-002</td><td>Tool Responsibility Matrix</td><td>Not started</td></tr>
+<tr><td>EPM-INT-003</td><td>Integration Pattern Catalog</td><td>Not started</td></tr>
+<tr><td>EPM-INT-004</td><td>Metadata Flow and Sequence Diagrams</td><td>Not started</td></tr>
+<tr><td>EPM-INT-005</td><td>Payload and Contract Specifications</td><td>Not started</td></tr>
+<tr><td>EPM-INT-006</td><td>Tool Constraints and Risk Register</td><td>Not started</td></tr>
+</tbody></table>
+<h3>Family H — Delivery and adoption</h3>
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody>
+<tr><td>EPM-DEL-001</td><td>Delivery Backlog and Roadmap</td><td>Not started</td></tr>
+<tr><td>EPM-VAL-001</td><td>Validation and Reconciliation Register</td><td>Not started</td></tr>
+<tr><td>EPM-CHG-001</td><td>Training and Change Plan</td><td>Not started</td></tr>
+<tr><td>EPM-VALUE-001</td><td>Adoption and Value Scorecard</td><td>Not started</td></tr>
+</tbody></table>
+<blockquote><p><strong>Relationship to reconcile (C-08).</strong> FOUND-001 is the pattern document. The process and schema files listed under Process authority are the instance SoT for process meaning (PRs #6 and #7). BUS-001, BUS-003, and DP-001 name those instance files; they are not Existing-unlinked. FOUND-005 still defines the measurement taxonomy that MEAS/KPI artifacts apply; FOUND-006 still defines the data-product model that remaining DP/SEM artifacts instantiate. Remaining C-08 is Family C and the rest of Family E, not the process JSON.</p></blockquote>
+</section>
+<section id="artifact-lifecycle-and-status-vocabulary"><h2>Artifact lifecycle and status vocabulary</h2>
+<p>The project previously carried two different lifecycle vocabularies. They are reconciled here (<strong>resolves C-09</strong>). One canonical set governs artifacts; a separate set governs decisions; the older wording maps onto them.</p>
+<h3>Canonical artifact lifecycle</h3>
+<p><code>Exploratory → Draft → Candidate → Approved Baseline → Implemented → Superseded → Retired</code></p>
+<ul>
+<li><strong>Exploratory</strong> — early, not authoritative.</li>
+<li><strong>Draft</strong> — under development; may be used provisionally as a <em>working baseline</em>.</li>
+<li><strong>Candidate</strong> — submitted for formal review.</li>
+<li><strong>Approved Baseline</strong> — authoritative within its stated scope.</li>
+<li><strong>Implemented</strong> — realized in platforms and operating.</li>
+<li><strong>Superseded</strong> — replaced as the authority; retained for reference.</li>
+<li><strong>Retired</strong> — no longer needed; safe to delete.</li>
+</ul>
+<h3>Mapping from the earlier vocabulary</h3>
+<table><thead><tr><th>Earlier term (Operating Model)</th><th>Canonical equivalent</th></tr></thead><tbody>
+<tr><td>Working Baseline</td><td>Draft, in active use as a working baseline</td></tr>
+<tr><td>Proposed</td><td>Candidate</td></tr>
+<tr><td>Approved</td><td>Approved Baseline</td></tr>
+</tbody></table>
+<h3>Decision statuses (distinct from the artifact lifecycle)</h3>
+<p><code>Proposed → Candidate → Approved → Implemented → Superseded → Rejected</code></p>
+<p>Every artifact carries: ID, title, version, status, owner, date, scope, and dependencies. The pack's foundation files currently label their status "Working Baseline"; under the mapping above that reads as <strong>Draft (working baseline)</strong>. A cosmetic status-line pass across those files is a cleanup item.</p>
+</section>
+<section id="authoritative-baseline"><h2>Authoritative baseline</h2>
+<p><strong>There is currently no Approved Baseline in this project.</strong> The foundation and project sets are Draft, adopted as a working baseline.</p>
+<p><strong>Working baseline (proceeding as if these hold; reversible by deliberate decision):</strong></p>
+<ul>
+<li>The EPM is the conceptual umbrella; the KPI Store is the first implementation priority.</li>
+<li>Extracted Tableau calculations are candidate measurements, not approved KPIs.</li>
+<li>Power BI is the current validation and consumption environment; redevelopment out of scope unless authorised.</li>
+<li>Reusable business logic is implemented at the lowest sensible governed layer.</li>
+<li>Consumers access only the semantic / consumption layer.</li>
+<li>FOUND-003 is the human-readable semantic model. Machine ontology SoT is Turtle in git. FOUND-004 is the ontology design, not the machine SoT. Fuseki is a homelab SPARQL classroom loaded from that Turtle. Enterprise expose is Neo4j (D-17).</li>
+<li>Data Governance is cross-cutting and embedded in delivery.</li>
+<li>The 16 principles in FOUND-000A govern all design choices; exceptions follow its exception process.</li>
+</ul>
+<p><strong>Items requiring confirmation:</strong></p>
+<ul>
+<li>Final canonical downstream domain and value-stream map; capability decomposition and ownership.</li>
+<li>KPI promotion and approval decision rights (quorum, escalation, cadence).</li>
+<li>Where measurement metadata is mastered across Purview, YAML, database metadata, and project artifacts.</li>
+<li>Whether an existing KPI Store technical design exists — still determines Phase 2 vs Phase 3 for Workstream 1.</li>
+<li>The first end-to-end ontology and knowledge-graph pilot.</li>
+<li>Named holders for every governance role except the EPM Lead.</li>
+</ul>
+</section>
+<section id="major-decisions"><h2>Major decisions</h2>
+<p>Seeding list for <strong>EPM-DEC-001</strong>, which does not yet exist. No item is Approved because no approval evidence exists.</p>
+<table><thead><tr><th>Ref</th><th>Decision</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
+<tr><td>D-01</td><td>EPM is the conceptual umbrella; the KPI Store sits inside it</td><td>Working baseline</td><td>FOUND-000; FOUND-000A P1–P4</td></tr>
+<tr><td>D-02</td><td>The KPI Store is the first delivery priority and must not wait</td><td>Working baseline</td><td>FOUND-000 sequence</td></tr>
+<tr><td>D-03</td><td>The Tableau-to-Power BI migration is complete and out of scope</td><td>Fact asserted — to be confirmed</td><td>FOUND-000 orientation</td></tr>
+<tr><td>D-04</td><td>Tableau XML is parsed retrospectively as evidence, not rebuild input</td><td>Working baseline</td><td>FOUND-005; FOUND-000A P14</td></tr>
+<tr><td>D-05</td><td>Extracted calculations are not automatically KPIs</td><td>Candidate</td><td>FOUND-005; FOUND-000A P3</td></tr>
+<tr><td>D-06</td><td>Power BI is the validation and consumption environment; redevelopment out of scope unless authorised</td><td>Working baseline</td><td>FOUND-002; FOUND-006</td></tr>
+<tr><td>D-07</td><td>Domain Modeling later enriches KPI traceability; the store must support progressive enrichment</td><td>Candidate</td><td>PROJ-002</td></tr>
+<tr><td>D-08</td><td>System Integration focuses on targeted proofs of value</td><td>Candidate</td><td>PROJ-002</td></tr>
+<tr><td>D-09</td><td>Data Governance is cross-cutting and embedded in delivery</td><td>Working baseline</td><td>FOUND-000A P12</td></tr>
+<tr><td>D-10</td><td>Chats are working spaces; conclusions are real only once promoted</td><td>Candidate</td><td>PROJ-002; PROJ-006</td></tr>
+<tr><td>D-11</td><td>Core stack is ER/Studio, Purview, Unity Catalog, BigEye; methods stay tool-agnostic</td><td>Candidate</td><td>Project instructions</td></tr>
+<tr><td>D-12</td><td>Nine-level source precedence governs conflicts</td><td>Candidate</td><td>Project instructions; below</td></tr>
+<tr><td>D-13</td><td>The EPM Foundation v2 set (FOUND-000A, FOUND-000 to 006) and Project Pack (PROJ-001 to 005) are adopted as the baseline, ratified by the EPM Lead</td><td>Working baseline (2026-08-05)</td><td>This session</td></tr>
+<tr><td><strong>D-14</strong></td><td><strong>A prior interim re-homing of the Charter/Register to PROJ-001/PROJ-002 is void; those IDs belong to the pack's Project Instructions and Operating Model</strong></td><td><strong>Working baseline (2026-08-05)</strong></td><td><strong>This session; corrects C-06</strong></td></tr>
+<tr><td><strong>D-15</strong></td><td><strong>The old Charter and old Register are Superseded (retained for reference); the Register's migration method is preserved in the new PROJ-006</strong></td><td><strong>Working baseline (2026-08-05)</strong></td><td><strong>This session; see C-10, C-11</strong></td></tr>
+<tr><td><strong>D-16</strong></td><td><strong>One canonical artifact lifecycle and one decision-status set are adopted; earlier "Working Baseline / Proposed / Approved" wording maps onto them</strong></td><td><strong>Working baseline (2026-08-05)</strong></td><td><strong>This session; resolves C-09</strong></td></tr>
+<tr><td>D-17</td><td>No client triple store. Machine ontology SoT is Turtle in git. Enterprise expose path is Neo4j (Cypher, not SPARQL). Fuseki remains a homelab SPARQL classroom only. KPI Store owns identity, approval, status, and formula pointer. Purview/UC are not the Store door. OntoBricks drafts Turtle; dbxmetagen drafts UC comments/tags; neither is SoT or compiler</td><td>Working baseline (2026-08-29)</td><td><a href="architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg">MEANING vs COMPUTE</a>; ADR-HL-021 / ADR-HL-022</td></tr>
+<tr><td>D-18</td><td>PPC is a downstream proving-ground consumer, not an EPM authority. EPM release authority is distinct from consumer instances. Consumers preserve Meaning vs Compute. Reusable consumer concepts return through EPM governance</td><td>Candidate (2026-10-02)</td><td><a href="architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a> to <a href="architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md">003</a></td></tr>
+</tbody></table>
+<blockquote><p><strong>On D-13.</strong> The v2 material was a level-7 source (outside-project chat) and could not, by itself, override the project baseline. It became baseline because the EPM Lead ratified it. That ratification is the governance act that makes the adoption legitimate rather than a silent override.</p></blockquote>
+</section>
+<section id="open-issues-assumptions-and-conflicts"><h2>Open issues, assumptions, and conflicts</h2>
+<p>Seeding list for <strong>EPM-ISS-001</strong>, which does not yet exist.</p>
+<h3>Conflicts</h3>
+<ul>
+<li><strong>C-01</strong> EPM-KPI-015 title varies across sources ("Target and Threshold" vs "Target, Threshold, and Status"). <em>Open — minor.</em></li>
+<li><strong>C-02</strong> Several artifacts named in a family list have no register entry. <em>Open — assign IDs or remove.</em></li>
+<li><strong>C-03</strong> Glossary and Measurement Taxonomy referred to sometimes as one artifact, sometimes two. <em>Open.</em></li>
+<li><strong>C-04</strong> Minor title variances across sources for a few artifacts. <em>Open — minor.</em></li>
+<li><strong>C-05</strong> Pack documents assume ChatGPT (PROJ-001 subtitle; PROJ-003 setup). The project runs on Claude. <em>Open — sweep platform assumptions in the pack.</em></li>
+<li><strong>C-06</strong> FOUND-001/002 ID collision. <strong>Resolved 2026-08-05</strong>: FOUND-001/002 are the architecture docs; the interim re-homing to PROJ-001/002 is void (those are Project Instructions and Operating Model); the Charter and Register are superseded (D-15), not re-homed.</li>
+<li><strong>C-07</strong> Handoff proposed ten workstreams vs. four. <strong>Resolved 2026-08-05</strong>: extra concerns are architecture families/foundation artifacts; delivery stays at four.</li>
+<li><strong>C-08</strong> Subsumption of v2 foundation docs vs. planned Family B/C/E artifacts. <strong>Partial 2026-08-23 (PRs #6 and #7):</strong> process and schema instance files are process authority; FOUND-001 remains the pattern. Remaining open: Family C and the rest of Family E vs FOUND-005/006.</li>
+<li><strong>C-09</strong> Two lifecycle vocabularies. <strong>Resolved 2026-08-05</strong> by the reconciliation above (D-16).</li>
+<li><strong>C-10</strong> Retiring the Register risked losing its migration method. <strong>Resolved 2026-08-05</strong>: preserved in PROJ-006.</li>
+<li><strong>C-11</strong> Retiring the Charter would lose unique depth (§3, §4-detail, §5.1–5.10, §8, §15) not yet carried by the pack. <em>Open — fold into PROJ-001/002 and FOUND-000 before the Charter moves from Superseded to Retired.</em></li>
+</ul>
+<h3>Open issues</h3>
+<ul>
+<li><strong>I-01</strong> Every governance role is defined but unassigned except the EPM Lead.</li>
+<li><strong>I-02</strong> Most directory artifacts carry a status inferred from the register, not confirmed from a document.</li>
+<li><strong>I-03</strong> Several items named as existing in the required source package are absent.</li>
+<li><strong>I-04</strong> No chat migration has been run; no Source and Traceability Register entries exist.</li>
+<li><strong>I-05</strong> No formula from any source has been validated in this project.</li>
+<li><strong>I-06</strong> No conflicting KPI definitions identified yet — reflecting absence of inventory, not absence of conflict.</li>
+<li><strong>I-07</strong> Progressive enrichment is required but no metadata schema demonstrating it has been confirmed.</li>
+<li><strong>I-08</strong> Tool access, licensing, and existing Purview / Unity Catalog content are unknown.</li>
+<li><strong>I-09</strong> Approval authority, quorum, escalation path, and KPI review cadence are operationally undefined.</li>
+<li><strong>I-10</strong> The size of the Power BI estate in scope is unrecorded, so the classification workload is unknown.</li>
+<li><strong>I-11</strong> Reconcile <code>examples/scratch/</code> files against the foundation. Two files are tracked: <code>examples/scratch/initial-draft-ontology-structure.md</code> (PR #17) and <code>examples/scratch/master-use-case-kpi-store-semantic-governance.md</code>. Both represent working drafts that may grow into authoritative sources, but neither overrides the foundation files (<code>EPM-FOUND-003</code>, <code>EPM-FOUND-004</code>, <code>EPM-FOUND-000</code>, <code>EPM-FOUND-002</code>, <code>EPM-FOUND-005</code>, <code>EPM-FOUND-006</code>, ADR-HL-021) or the Turtle SoT (<code>ontology/stage2_enterprise_kpi_ontology.ttl</code>) until reconciliation completes. Tracking issue: GitHub #18 (labeled <code>reconciliation</code>). Related thread: C-08 (subsumption of v2 foundation docs vs. planned Family B/C/E artifacts).</li>
+</ul>
+</section>
+<section id="source-precedence-hierarchy"><h2>Source precedence hierarchy</h2>
+<p>When sources conflict, the higher-precedence source wins. A lower source may never silently override a higher one.</p>
+<ol>
+<li>Approved canonical artifact</li>
+<li>Approved decision-log entry</li>
+<li>Approved business or technical specification</li>
+<li>Current validated implementation</li>
+<li>Candidate artifact under formal review</li>
+<li>Working project chat</li>
+<li>Prior or outside-project chat</li>
+<li>Unvalidated Tableau XML or report logic</li>
+<li>General industry assumption</li>
+</ol>
+<p><strong>The highest-precedence sources available in this project are at level 5.</strong> Levels 1 to 4 are empty — which is why nothing here is marked Approved. The adopted foundation set functions as a ratified working baseline but has not passed formal approval to become an Approved Baseline.</p>
+<p>Process authority (the two folders) and Turtle in git are concern SoTs from PRs #6 and #7. They do not fill precedence levels 1–4. They are not Approved Baseline. Catalog status stays on <code>dim_kpi_metadata</code> only.</p>
+</section>
+<section id="governance-and-ownership-overview"><h2>Governance and ownership overview</h2>
+<p>Authoritative summary below. Detailed per-role responsibilities currently live in the superseded Charter §5.1–5.10 and must be folded into a permanent home (PROJ-002 or a dedicated roles artifact) before that Charter is retired — logged under C-11. No role has a named holder other than the EPM Lead.</p>
+<table><thead><tr><th>Role</th><th>Accountable for</th><th>Holder</th></tr></thead><tbody>
+<tr><td>Executive leadership</td><td>Direction, priorities, resources, escalations, adoption sponsorship</td><td>To be confirmed</td></tr>
+<tr><td>Global process owners</td><td>End-to-end process standards, outcomes, process KPI validation</td><td>To be confirmed</td></tr>
+<tr><td>Enterprise Data Governance</td><td>Policies, standards, forums, cross-domain semantics, maturity</td><td>To be confirmed</td></tr>
+<tr><td>Enterprise Performance Model Lead</td><td>Project direction, architectural coherence, artifact acceptance, index and decision log</td><td>EPM Lead</td></tr>
+<tr><td>Domain Data Owner</td><td>Domain strategy, semantics, domain KPI approval, quality expectations</td><td>To be confirmed</td></tr>
+<tr><td>Business KPI Owner</td><td>The objective behind the KPI, definition and targets, the action it triggers</td><td>To be confirmed</td></tr>
+<tr><td>Data Product Owner</td><td>Product purpose, consumers, contracts, lifecycle, fitness for purpose</td><td>To be confirmed</td></tr>
+<tr><td>Data Steward</td><td>Glossary terms, metadata, quality monitoring, lineage, naming</td><td>To be confirmed</td></tr>
+<tr><td>Semantic Model Owner</td><td>Shared dimensions and measures, certification, compatibility, change</td><td>To be confirmed</td></tr>
+<tr><td>Digital and engineering</td><td>Architecture, platforms, pipelines, monitoring, controls, lineage support</td><td>To be confirmed</td></tr>
+</tbody></table>
+<p><strong>The distinction that matters most.</strong> The Business KPI Owner owns the <em>meaning and the consequence</em>. The Data Product Owner and Semantic Model Owner own the <em>supply</em>. A KPI without the first kind of owner cannot be approved, however well engineered.</p>
+</section>
+<section id="how-to-use-this-index"><h2>How to use this index</h2>
+<p>This page is a switchboard, not a specification. If it disagrees with a canonical artifact, the artifact wins and this index is wrong.</p>
+<table><thead><tr><th>If you need to…</th><th>Go to</th></tr></thead><tbody>
+<tr><td>Understand the rules that govern everything</td><td>EPM-FOUND-000A</td></tr>
+<tr><td>Understand the whole architecture</td><td>"Architecture families" and the FOUND-001 to 006 set</td></tr>
+<tr><td>Understand how executable consumers (such as PPC) depend on EPM</td><td>"Downstream consumers and the PPC proving ground"; EPM-ARCH-PPC-001 to 003</td></tr>
+<tr><td>Understand how the project operates</td><td>EPM-PROJ-001, PROJ-002</td></tr>
+<tr><td>Route a chat conclusion to the right artifact</td><td>EPM-PROJ-006 (routing matrix)</td></tr>
+<tr><td>Migrate a prior/outside chat</td><td>EPM-PROJ-006 (migration procedure), PROJ-003, PROJ-005</td></tr>
+<tr><td>Find what has been decided</td><td>"Major decisions"; EPM-DEC-001 once it exists</td></tr>
+<tr><td>Find what is unresolved</td><td>"Open issues, assumptions, and conflicts"; EPM-ISS-001 once it exists</td></tr>
+<tr><td>See what happens next</td><td>"Immediate next actions"</td></tr>
+</tbody></table>
+</section>
+<section id="immediate-next-actions"><h2>Immediate next actions</h2>
+<table><thead><tr><th>#</th><th>Action</th><th>Why it matters</th><th>Owner</th></tr></thead><tbody>
+<tr><td>01</td><td>Treat FOUND-000 v2.4 (this file) as the only live Master Index; keep FOUND-000A, FOUND-001 to 006, PROJ-001 to 006 as the working baseline; keep the old Charter/Register in ARCHIVE/ as Superseded</td><td>Establishes a clean, collision-free baseline</td><td>EPM Lead</td></tr>
+<tr><td>02</td><td>Fold the Charter's residual depth (C-11: §3, §4-detail, §5-detail, §8, §15) into PROJ-001/PROJ-002 and FOUND-000, then retire the Charter</td><td>Prevents loss of scope, roles, and lifecycle detail</td><td>EPM Lead</td></tr>
+<tr><td>03</td><td>Confirm whether an existing KPI Store technical design exists</td><td>Determines Phase 2 vs Phase 3 for Workstream 1</td><td>EPM Lead</td></tr>
+<tr><td>04</td><td>Create and seed EPM-DEC-001 from "Major decisions" (D-01 to D-16)</td><td>Without it, no status claim is defensible</td><td>To be confirmed</td></tr>
+<tr><td>05</td><td>Create and seed EPM-SRC-001 and EPM-ISS-001 using the PROJ-006 templates</td><td>Provenance and open-issue tracking must exist</td><td>To be confirmed</td></tr>
+<tr><td>06</td><td>Run the remaining C-08 pass (FOUND-005/006 vs Family C and the rest of Family E). Process JSON is not in that pass.</td><td>Prevents duplicate measurement or data-product artifacts. Process authority is already the two folders.</td><td>EPM Lead</td></tr>
+<tr><td>07</td><td>Sweep the pack for ChatGPT assumptions (C-05) and align to Claude</td><td>PROJ-001/003 currently misdirect setup steps</td><td>Steward</td></tr>
+<tr><td>08</td><td>Align the "Working Baseline" status wording across the pack with the canonical lifecycle</td><td>Small consistency fix</td><td>Steward</td></tr>
+<tr><td>09</td><td>Confirm artifact owners and stewards</td><td>Most artifacts read "To be confirmed"</td><td>Enterprise Data Governance</td></tr>
+<tr><td>10</td><td>Select the first pilot KPI family — Commercial Margin / Gasoline Netback CPG is the mature candidate (FOUND-000A P16)</td><td>Gives Workstream 1 a concrete end-to-end deliverable</td><td>EPM Lead</td></tr>
+</tbody></table>
+</section>
+<section id="appendix-reconciliation-build-record-v2-2"><h2>Appendix — reconciliation build record (v2.2)</h2>
+<p><strong>What this version did.</strong> Corrected v2.1: replaced the erroneous interim re-homing of the Charter/Register (which had collided with the pack's PROJ-001/002) with the real Project Pack; added FOUND-000A as the constitutional layer; reconciled two lifecycle vocabularies into one canonical lifecycle plus a decision-status set (D-16); recorded the supersession of the old Charter and Register (D-15); and preserved the Register's unique migration method in the new PROJ-006 (C-10).</p>
+<p><strong>Sources reviewed.</strong> EPM Foundation v2 set (FOUND-000A, FOUND-000 to 006); Project Pack (PROJ-001 to 005); the superseded Charter and Register (read in full for the salvage check); prior FOUND-000 v2.1; active project instructions.</p>
+<p><strong>Salvage findings.</strong> Register migration playbook (routing matrix, closeout template, seven-step procedure, log templates) is unique method → preserved in PROJ-006. Charter depth (§3, §4-detail, §5.1–5.10, §8, §15) is not yet carried by the pack → logged as C-11 fold-in backlog; Charter kept Superseded (not Retired) until folded.</p>
+<p><strong>Still absent even after adoption.</strong> The KPI Store technical design, the Tableau calculation inventory, and the measurement/KPI catalogs. The v2 set is the architecture spine, not the technical build.</p>
+<h3>v2.3 repository hygiene (2026-08-23)</h3>
+<p>Declared this file (<code>EPM-FOUND-000.md</code> at repo root) the sole live Master Index. Pack copies are pointers. Linked ARCHIVE/ for the superseded Charter and Register. Split register presence into <em>Draft/Candidate</em>, <em>Existing-unlinked</em>, <em>To be located</em>, and <em>Not started</em>.</p>
+<h3>v2.4 PRs #5 / #6 / #7 supersede (2026-08-23)</h3>
+<p>PRs #5, #6, and #7 supersede this register where they conflict. Process and schema files are process authority, not Existing-unlinked. Turtle in git is machine ontology SoT; FOUND-003/004 stay human-readable model and ontology design. Domain folder stays draft context. Catalog enum stays on <code>dim_kpi_metadata</code>. Fuseki is not SoT and is lab-only. Neo4j is the enterprise expose path (D-17). OpenMetadata remains the Purview stand-in. Bigeye stays the production quality seat with no OSS stand-in in this update.</p>
+<p>Merge order: merge PR #6, then the fixed PR #7, then this PR. Do not merge this register before those two.</p>
+<h3>v2.5 PPC consumer alignment (2026-10-02)</h3>
+<p>Added the section "Downstream consumers and the PPC proving ground", registered EPM-ARCH-PPC-001 to 003 as Candidate (proposed), recorded D-18 as Candidate, and added a routing row. Source-precedence hierarchy, artifact lifecycle, process-authority and Turtle SoT assignments, and the catalog status enum are unchanged. The two artifacts recommended by the update plan were drafted as EPM-ARCH-REL-001 (EPM Consumer Release Contract) and EPM-ARCH-REF-001 (Governed EPM Reference Implementation), both Draft (Candidate). A clarifying note on "Candidate KPI" wording was added to FOUND-003, 004, and 005 (no ontology change). The HTML reading copies for this index and FOUND-001 to 006 were regenerated with <code>scripts/build_reading_copies.py</code>. The stale FOUND-000 HTML copies in <code>EPM_Foundation_v2_Markdown_HTML/</code> and <code>EPM_Project_Enablement_Pack_Markdown_HTML/</code> were removed. The root <code>EPM-FOUND-000.html</code> is the only HTML reading copy of this index.</p>
+</section>
+<section id="artifact-update-block"><h2>Artifact Update Block</h2>
+<ul>
+<li><strong>Conclusions:</strong> One live FOUND-000; old Charter/Register are in ARCHIVE/ and remain Superseded, not the current FOUND-001/002.</li>
+<li><strong>Decisions and status:</strong> Process and schema files are process authority (PRs #6 and #7). Turtle in git is machine ontology SoT. D-17: no client triple store; Neo4j expose; Fuseki lab-only. No new Approved Baseline. Catalog enum unchanged.</li>
+<li><strong>Definitions added or changed:</strong> <em>Process authority (instance files)</em> = the two process/schema folders. <em>Machine ontology SoT</em> = Turtle in git. <em>Enterprise expose path</em> = Neo4j loaded from published Turtle. Existing-unlinked no longer applies to those files or to <code>ontology/stage2_enterprise_kpi_ontology.ttl</code>.</li>
+<li><strong>Assumptions:</strong> Foundation v2 FOUND-001–006 remain the architecture sources; this file remains the control panel. Homelab Fuseki remains the SPARQL classroom (ADR-HL-001).</li>
+<li><strong>Open questions and conflicts:</strong> C-11 unchanged. C-08 narrowed (process JSON closed; Family C/E remains).</li>
+<li><strong>Source evidence:</strong> Repository file inventory 2026-08-23; ARCHIVE/ headers; Foundation v2 pack; 2026-08-29 meaning-path working session.</li>
+<li><strong>Artifacts created or requiring updates:</strong> This index to 2.4 at repo root; <a href="architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg"><code>architecture/EPM-ARCH-MEANING-vs-COMPUTE.jpg</code></a>; ADR-HL-021 / ADR-HL-022.</li>
+<li><strong>Suggested version and status:</strong> 2.4 Draft.</li>
+<li><strong>Next validation or implementation action:</strong> Fold C-11 Charter depth. Do not reopen process JSON as Existing-unlinked. Do not start Stage B from this index.</li>
+</ul>
+<p><em>The Master Index summarises and points to canonical artifacts; it does not replace them. Detailed definitions, formulas, models, standards, and decisions remain in the linked canonical artifacts, which are authoritative in every case of disagreement.</em></p>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Draft (functioning as working baseline) · Updated 2026-10-02</div>
+</article></main></div></body></html>

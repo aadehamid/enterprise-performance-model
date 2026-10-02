@@ -19,12 +19,16 @@ main{padding:36px}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
 h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
 .subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
 h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
 h3{color:#204a75;margin-top:26px}
 p,li{font-size:16px}
 blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
 pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
 code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
 table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
 th{background:#17365d;color:#fff;text-align:left;padding:10px}
 td{border:1px solid var(--line);padding:10px;vertical-align:top}
@@ -36,7 +40,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h2>EPM Foundation v2</h2><p>EPM-FOUND-004</p>
 <a href="index.html">Foundation home</a>
 <hr style="border-color:#31516e">
-<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<a href="../EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
 <hr style="border-color:#31516e">
 <a href="#purpose">Purpose</a>
 <a href="#ontology-layers">Ontology layers</a>
@@ -46,19 +50,29 @@ tr:nth-child(even) td{background:#f8fafc}
 <a href="#cardinality-and-validation-examples">Cardinality and validation examples</a>
 <a href="#ontology-versus-knowledge-graph">Ontology versus knowledge graph</a>
 <a href="#recommended-implementation-path">Recommended implementation path</a>
+<a href="#release-packaging-for-external-consumers">Release packaging for external consumers</a>
 </aside><main><article class="article">
-<div class="eyebrow">EPM-FOUND-004 · Version 2.0 Draft</div>
+<div class="eyebrow">EPM-FOUND-004 · Version 2.1 Draft</div>
 <h1>Enterprise Performance Ontology Design</h1>
 <div class="subtitle">Formalization plan for machine-readable business context</div>
-<section id="purpose"><h2>Purpose</h2><p>The Enterprise Performance Ontology is the formal machine-readable implementation of the Enterprise Performance Semantic Model.</p>
-<p>The semantic model defines meaning. The ontology expresses that meaning using classes, properties, inheritance, constraints, and identifiers so that machines can validate, connect, query, and reason over enterprise context.</p></section><section id="ontology-layers"><h2>Ontology layers</h2><table><thead><tr><th>Layer</th><th>Examples</th></tr></thead><tbody>
+<div class="meta">Status: Working baseline · Last updated: October 2, 2026</div>
+<section id="purpose"><h2>Purpose</h2>
+<p>This file is the ontology design for the Enterprise Performance Semantic Model. It is not the machine ontology SoT.</p>
+<p>FOUND-003 is the human-readable semantic model. Turtle in git defines formal semantic and mapping assertions only, not all meaning. This design uses conceptual names. Exact current IRIs, axioms, constraints, and individuals belong to the Turtle SoT.</p>
+<p>Machine ontology SoT is Turtle in git (<a href="../ontology/stage2_enterprise_kpi_ontology.ttl"><code>ontology/stage2_enterprise_kpi_ontology.ttl</code></a>). Demo <code>o2c-meaning.ttl</code> is demo Turtle, not that SoT. Fuseki is a demo SPARQL/SHACL runtime loaded from git Turtle, not SoT. A named KPI is one individual, 1:1 with its catalog row. Do not add CandidateKPI or ApprovedKPI OWL classes. Process authority is not this file.</p>
+</section>
+<section id="ontology-layers"><h2>Ontology layers</h2>
+<table><thead><tr><th>Layer</th><th>Examples</th></tr></thead><tbody>
 <tr><td>Upper enterprise concepts</td><td>Enterprise, Domain, Objective, Outcome, Role</td></tr>
 <tr><td>Business architecture</td><td>ValueStream, ValueStreamStage, Capability, Process, Activity, Decision</td></tr>
 <tr><td>Performance architecture</td><td>Measurement, Metric, PerformanceIndicator, EnterpriseKPI, Target, Threshold</td></tr>
 <tr><td>Data architecture</td><td>DataAsset, FoundationalDataProduct, DerivedDataProduct, KPIStore, SemanticView</td></tr>
 <tr><td>Consumption architecture</td><td>PowerBISemanticModel, Report, API, AIApplication, Workflow</td></tr>
 <tr><td>Governance</td><td>Owner, Steward, Policy, Standard, Approval, Version</td></tr>
-</tbody></table></section><section id="illustrative-class-hierarchy"><h2>Illustrative class hierarchy</h2><pre><code>BusinessConcept
+</tbody></table>
+</section>
+<section id="illustrative-class-hierarchy"><h2>Illustrative class hierarchy</h2>
+<pre><code>BusinessConcept
 ├── BusinessDomain
 ├── StrategicObjective
 ├── ValueStream
@@ -87,7 +101,10 @@ DataConcept
 │   └── DerivedDataProduct
 ├── KPIStore
 ├── SemanticView
-└── PowerBISemanticModel</code></pre></section><section id="illustrative-object-properties"><h2>Illustrative object properties</h2><table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>
+└── PowerBISemanticModel</code></pre>
+</section>
+<section id="illustrative-object-properties"><h2>Illustrative object properties</h2>
+<table><thead><tr><th>Property</th><th>Domain</th><th>Range</th></tr></thead><tbody>
 <tr><td>hasStage</td><td>ValueStream</td><td>ValueStreamStage</td></tr>
 <tr><td>usesCapability</td><td>ValueStreamStage</td><td>Capability</td></tr>
 <tr><td>hasSubCapability</td><td>Capability</td><td>Capability</td></tr>
@@ -102,7 +119,10 @@ DataConcept
 <tr><td>exposedThrough</td><td>DataProduct or KPI</td><td>SemanticView</td></tr>
 <tr><td>consumedBy</td><td>SemanticView or SemanticModel</td><td>Report, API, AIApplication</td></tr>
 <tr><td>ownedBy</td><td>GovernedConcept</td><td>Role or Organization</td></tr>
-</tbody></table></section><section id="illustrative-data-properties"><h2>Illustrative data properties</h2><ul>
+</tbody></table>
+</section>
+<section id="illustrative-data-properties"><h2>Illustrative data properties</h2>
+<ul>
 <li>preferredLabel</li>
 <li>definition</li>
 <li>identifier</li>
@@ -121,7 +141,10 @@ DataConcept
 <li>refreshFrequency</li>
 <li>confidenceScore</li>
 <li>causalLag</li>
-</ul></section><section id="cardinality-and-validation-examples"><h2>Cardinality and validation examples</h2><ul>
+</ul>
+</section>
+<section id="cardinality-and-validation-examples"><h2>Cardinality and validation examples</h2>
+<ul>
 <li>EnterpriseKPI <strong>must have exactly one</strong> accountable owner at a given effective date.</li>
 <li>EnterpriseKPI <strong>must evaluate at least one</strong> StrategicObjective or BusinessOutcome.</li>
 <li>EnterpriseKPI <strong>must have at least one</strong> source DataProduct.</li>
@@ -129,7 +152,11 @@ DataConcept
 <li>ValueStreamStage <strong>must use at least one</strong> Capability.</li>
 <li>SemanticView <strong>must expose at least one</strong> DataProduct or KPI.</li>
 <li>Candidate KPI may omit target and thresholds; Approved Enterprise KPI may not.</li>
-</ul></section><section id="ontology-versus-knowledge-graph"><h2>Ontology versus knowledge graph</h2><p>The ontology defines what kinds of things and relationships are allowed.</p>
+</ul>
+<blockquote><p><strong>Note (added 2026-10-02).</strong> The last example is a governance rule expressed in narrative terms. It is not a pair of OWL classes. In machine form it would be expressed as a SHACL constraint (step 4 of the implementation path) conditioned on the Store row status of a named KPI individual. No such shape exists yet. See the clarifying note in <a href="EPM-FOUND-003.html">EPM-FOUND-003</a>.</p></blockquote>
+</section>
+<section id="ontology-versus-knowledge-graph"><h2>Ontology versus knowledge graph</h2>
+<p>The ontology defines what kinds of things and relationships are allowed.</p>
 <p>The knowledge graph contains actual instances.</p>
 <p>Example:</p>
 <pre><code>Ontology statement:
@@ -137,19 +164,34 @@ EnterpriseKPI explainedBy Metric
 
 Knowledge graph instances:
 Gasoline Netback CPG explainedBy Transportation Cost per Gallon
-Gasoline Netback CPG explainedBy RIN Cost Variance</code></pre></section><section id="recommended-implementation-path"><h2>Recommended implementation path</h2><ol>
-<li>1. Approve the human-readable semantic model.</li>
-<li>2. Define stable identifiers and namespaces.</li>
-<li>3. Formalize core classes and properties in RDF/OWL.</li>
-<li>4. Add SHACL validation shapes for governance constraints.</li>
-<li>5. Load a small Commercial pilot knowledge graph.</li>
-<li>6. Connect ontology identifiers to Purview terms, KPI metadata, data products, SQL views, and Power BI models.</li>
-<li>7. Validate competency questions such as:</li>
+Gasoline Netback CPG explainedBy RIN Cost Variance</code></pre>
+</section>
+<section id="recommended-implementation-path"><h2>Recommended implementation path</h2>
+<ol>
+<li>Approve the human-readable semantic model.</li>
+<li>Define stable identifiers and namespaces.</li>
+<li>Formalize core classes and properties as Turtle in git (<code>ontology/stage2_enterprise_kpi_ontology.ttl</code>). This file is the design, not that SoT. Fuseki is a demo runtime, not SoT.</li>
+<li>Add SHACL validation shapes for governance constraints.</li>
+<li>Load a small Commercial pilot knowledge graph.</li>
+<li>Connect ontology identifiers to Purview terms, KPI metadata, data products, SQL views, and Power BI models.</li>
+<li>Validate competency questions such as:
+<ul>
+<li>Which KPIs measure Logistics Execution?</li>
+<li>Which metrics explain Gasoline Netback CPG?</li>
+<li>Which data products supply those metrics?</li>
+<li>Which Power BI reports consume the KPI?</li>
+<li>Which processes and decisions can change the KPI?</li>
+</ul></li>
 </ol>
-<p>   - Which KPIs measure Logistics Execution?</p>
-<p>   - Which metrics explain Gasoline Netback CPG?</p>
-<p>   - Which data products supply those metrics?</p>
-<p>   - Which Power BI reports consume the KPI?</p>
-<p>   - Which processes and decisions can change the KPI?</p></section>
-<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</section>
+<section id="release-packaging-for-external-consumers"><h2>Release packaging for external consumers</h2>
+<p><em>Added 2026-10-02 from the EPM–PPC update plan. Turtle in git remains the machine ontology SoT. This section describes how a release of it is packaged. See <a href="../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a> (Candidate) and <a href="../ontology/PROPOSED-release-packaging.md">ontology/PROPOSED-release-packaging.md</a>.</em></p>
+<ul>
+<li><strong>Publishable release.</strong> A versioned Turtle file plus SHACL shapes, a release manifest (version, checksums or commit, authority and lifecycle status), and change/deprecation notes.</li>
+<li><strong>Semantic versioning, deprecation, and migration.</strong> Breaking changes (removed or re-meant terms) bump the major version. A deprecated term names its replacement and a migration note.</li>
+<li><strong>Competency-question bundle.</strong> Machine-testable competency questions and fixtures ship with each release, for example the questions listed above and process-relationship questions from EPM-ARCH-PPC-003.</li>
+<li><strong>External consumer extension pattern.</strong> Consumers extend in their own namespace. They do not edit the EPM Turtle. Reusable extensions are proposed back and reviewed before a later release includes them.</li>
+</ul>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated October 2, 2026</div>
 </article></main></div></body></html>

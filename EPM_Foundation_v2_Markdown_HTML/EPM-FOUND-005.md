@@ -1,8 +1,8 @@
 # Enterprise Measurement and KPI Model
 **Artifact ID:** EPM-FOUND-005  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Classification, governance, promotion, and Tableau extraction rules*
 
@@ -64,6 +64,8 @@ Examples:
 | Presentation Calculation | Visual-only helper | Dynamic chart label |
 | Duplicate | Equivalent to an existing governed item | Alternate Netback calculation |
 | Obsolete or Retired | No longer valid or used | Legacy Tableau-only calculation |
+
+> **Note (added 2026-10-02).** This is a classification taxonomy for governance and for the Tableau inventory. It is not an ontology class list. A named KPI's candidate or approved state is the KPI Store row status, not a class. See the clarifying note in [EPM-FOUND-003](EPM-FOUND-003.md).
 
 ## Promotion test
 A candidate normally becomes an approved KPI only when most or all of the following are true:
@@ -190,6 +192,23 @@ The Measurement Catalog receives normalized reusable measurements and metrics.
 The semantic layer exposes approved consumer contracts.
 
 Power BI reports should not recreate governed KPI logic locally.
+
+## External implementations and consumers
+*Added 2026-10-02 from the EPM–PPC update plan. See [EPM-ARCH-PPC-001](../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) (Candidate).*
+
+### Promotion and validation contract for external implementations
+An external implementation (a consumer) may present a KPI only against an identified EPM release. Machine-checkable conditions:
+
+- The KPI resolves to a governed semantic IRI in the released ontology.
+- It has a KPI Store row carrying identity, approval status, and the formula pointer.
+- Its compute runs against the governed Metric View that pointer names.
+- Approval is read from the Store row and the release's authority metadata. Consumers do not infer approval from file presence, and a consumer cannot promote a KPI locally.
+
+### KPI dependency manifest fields expected by consumers
+Per KPI: ontology IRI; KPI Store identifier and approval status; formula pointer and Metric View name; supplying data products (portfolio identifiers and versions); grain, unit, and time behavior; owning role; and the EPM release version the manifest was built against.
+
+### Process-conformance and diagnostic metric classification
+Metrics computed from conformance analysis (for example deviation rate, rework count, handoff delay) are classified as **Diagnostic Metric** or **Operational Metric** by default. Promotion to Candidate KPI or Approved Enterprise KPI follows the promotion test above. A conformance metric does not become a KPI because it is available, and correlation with a KPI does not establish causality.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

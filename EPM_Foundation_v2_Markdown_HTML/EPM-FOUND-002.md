@@ -1,8 +1,8 @@
 # Enterprise Performance and Data Architecture
 **Artifact ID:** EPM-FOUND-002  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Objectives, measurements, metrics, KPIs, data products, KPI Store, and consumption*
 
@@ -132,6 +132,13 @@ CONSUMPTION.v_kpi_values and Commercial Margin semantic views
         ↓ consumed by
 Power BI executive scorecard and diagnostic analysis
 ```
+
+## Downstream consumers and process-conformance diagnostics
+*Added 2026-10-02 from the EPM–PPC update plan. See [EPM-ARCH-PPC-001](../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) and [003](../architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md) (both Candidate).*
+
+- **Process-conformance metrics as diagnostic inputs.** Metrics derived from comparing executed process instances with the designed process (for example cycle time, rework, handoff delay, deviation rate) can serve as diagnostic metrics that help explain KPIs such as OTIF, DSO, demurrage, or margin. They explain variance. They do not by themselves assert causality, and they are not KPIs unless promoted through the FOUND-005 test.
+- **Consumer-release mapping.** KPI and data-product contracts are published to consumers as versioned EPM releases. Each KPI and data product a consumer implements maps to an identified EPM release and version.
+- **Implementations can vary; semantic identity stays governed.** A downstream implementation may use a different runtime, store, or toolchain. The KPI's semantic identity (ontology IRI, KPI Store row, governed definition) remains defined and approved in EPM. A consumer must preserve **ontology IRI → KPI Store row → Metric View → `MEASURE()`**.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

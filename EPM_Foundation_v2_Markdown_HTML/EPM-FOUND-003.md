@@ -1,8 +1,8 @@
 # Enterprise Performance Semantic Model
 **Artifact ID:** EPM-FOUND-003  
-**Version:** 2.0 Draft  
+**Version:** 2.1 Draft  
 **Status:** Working baseline  
-**Last updated:** August 4, 2026  
+**Last updated:** October 2, 2026  
 
 *Human-readable semantic model of business meaning. Not the machine ontology SoT.*
 
@@ -90,6 +90,8 @@ Machine ontology SoT is Turtle in git ([`ontology/stage2_enterprise_kpi_ontology
 - AI Application
 - Automation Workflow
 
+> **Clarifying note: "Candidate KPI" and "Approved Enterprise KPI" (added 2026-10-02).** The terms in the taxonomy above, including Candidate KPI, Enterprise KPI, Performance Indicator, and the Measurement and Metric subtypes, are human-readable governance vocabulary. They are not ontology classes. The Master Index rule applies: do not create ontology classes merely from this narrative taxonomy. In the machine model a named KPI is one individual, 1:1 with its KPI Store catalog row, and whether it is a candidate or approved is recorded as the Store row status (`proposed | approved | drifted | archived` on `dim_kpi_metadata`), not as a class. `ontology/stage2_enterprise_kpi_ontology.ttl` contains no CandidateKPI or ApprovedKPI class, and none should be added. Governance lifecycle is defined in [EPM-FOUND-005](EPM-FOUND-005.md) and the Master Index.
+
 ## Core relationship taxonomy
 | Relationship | Domain and range | Meaning |
 |---|---|---|
@@ -162,6 +164,13 @@ This human-readable semantic model is ready for business review only when:
 - changes are versioned;
 - conflicts are surfaced rather than silently resolved;
 - implementations can be traced back to the governing concept and definition.
+
+## Consumer semantics (proposed)
+*Added 2026-10-02 from the EPM–PPC update plan. **Proposed**: these items need approval before any ontology change. This section creates no ontology classes. Machine definitions, if approved, belong in the Turtle SoT.*
+
+- **`conforms to designed process`.** Relates a consumer-owned process instance to an EPM Business Process. Process instances are consumer concepts. See [EPM-ARCH-PPC-003](../architecture/EPM-ARCH-PPC-003_Process_Conformance_and_Executable_Semantics_Extension.md).
+- **Consumer-extension namespace pattern.** A consumer defines local extensions in its own namespace. A reusable concept is proposed to EPM, reviewed, and included in a later EPM release. See [EPM-ARCH-PPC-001](../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md) section 7.
+- **Release and deprecation semantics for external consumers.** Each released artifact carries an identifiable version and an authority/lifecycle status. A deprecated term names its replacement and a migration note, so consumers do not infer approval or currency from file presence.
 
 ---
 Part of the Enterprise Performance Model Foundation Version 2.

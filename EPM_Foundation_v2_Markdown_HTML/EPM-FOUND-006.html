@@ -19,12 +19,16 @@ main{padding:36px}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
 h1{color:var(--navy);font-size:38px;line-height:1.15;margin:8px 0}
 .subtitle{font-size:18px;color:var(--muted);margin-bottom:28px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 6px}
 h2{color:var(--navy);margin-top:38px;border-bottom:2px solid var(--soft);padding-bottom:8px}
 h3{color:#204a75;margin-top:26px}
 p,li{font-size:16px}
 blockquote{margin:22px 0;padding:18px 22px;background:var(--soft);border-left:5px solid var(--blue);border-radius:8px}
+blockquote p{margin:0 0 10px}
 pre{background:#0f2233;color:#e8f1f8;padding:20px;border-radius:10px;overflow:auto;line-height:1.45}
 code{font-family:SFMono-Regular,Consolas,monospace}
+p code,li code,td code,blockquote code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:.92em}
+img{max-width:100%;height:auto}
 table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
 th{background:#17365d;color:#fff;text-align:left;padding:10px}
 td{border:1px solid var(--line);padding:10px;vertical-align:top}
@@ -36,7 +40,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <h2>EPM Foundation v2</h2><p>EPM-FOUND-006</p>
 <a href="index.html">Foundation home</a>
 <hr style="border-color:#31516e">
-<a href="EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
+<a href="../EPM-FOUND-000.html">EPM-FOUND-000</a> <a href="EPM-FOUND-001.html">EPM-FOUND-001</a> <a href="EPM-FOUND-002.html">EPM-FOUND-002</a> <a href="EPM-FOUND-003.html">EPM-FOUND-003</a> <a href="EPM-FOUND-004.html">EPM-FOUND-004</a> <a href="EPM-FOUND-005.html">EPM-FOUND-005</a> <a href="EPM-FOUND-006.html">EPM-FOUND-006</a>
 <hr style="border-color:#31516e">
 <a href="#purpose">Purpose</a>
 <a href="#foundational-data-product">Foundational data product</a>
@@ -48,13 +52,19 @@ tr:nth-child(even) td{background:#f8fafc}
 <a href="#where-logic-belongs">Where logic belongs</a>
 <a href="#worked-example-gasoline-netback-cpg">Worked example: Gasoline Netback CPG</a>
 <a href="#data-product-minimum-contract">Data-product minimum contract</a>
+<a href="#consumer-facing-portfolio-and-implementation-mapping">Consumer-facing portfolio and implementation mapping</a>
 </aside><main><article class="article">
-<div class="eyebrow">EPM-FOUND-006 · Version 2.0 Draft</div>
+<div class="eyebrow">EPM-FOUND-006 · Version 2.1 Draft</div>
 <h1>Enterprise Data Product and Consumption Model</h1>
 <div class="subtitle">Foundational and derived products, medallion alignment, semantic views, and Power BI</div>
-<section id="purpose"><h2>Purpose</h2><p>This artifact distinguishes data-product purpose from physical medallion processing layers and defines how trusted data reaches consumers.</p></section><section id="foundational-data-product"><h2>Foundational data product</h2><p>A <strong>foundational data product</strong> provides a trusted, reusable representation of core business entities, events, or transactions.</p>
+<div class="meta">Status: Working baseline · Last updated: October 2, 2026</div>
+<section id="purpose"><h2>Purpose</h2>
+<p>This artifact distinguishes data-product purpose from physical medallion processing layers and defines how trusted data reaches consumers.</p>
+</section>
+<section id="foundational-data-product"><h2>Foundational data product</h2>
+<p>A <strong>foundational data product</strong> provides a trusted, reusable representation of core business entities, events, or transactions.</p>
 <p>It answers:</p>
-<blockquote>What happened, to which business object, when, where, and under what conditions?</blockquote>
+<blockquote><p>What happened, to which business object, when, where, and under what conditions?</p></blockquote>
 <p>Examples:</p>
 <ul>
 <li>Trade and Position</li>
@@ -68,9 +78,12 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>Asset and Unit Availability</li>
 <li>Product and Location Master</li>
 </ul>
-<p>Foundational does not mean raw. A foundational product is cleaned, standardized, conformed, governed, discoverable, and reusable.</p></section><section id="derived-data-product"><h2>Derived data product</h2><p>A <strong>derived data product</strong> combines foundational products and applies higher-order business logic to support decisions, analysis, or performance management.</p>
+<p>Foundational does not mean raw. A foundational product is cleaned, standardized, conformed, governed, discoverable, and reusable.</p>
+</section>
+<section id="derived-data-product"><h2>Derived data product</h2>
+<p>A <strong>derived data product</strong> combines foundational products and applies higher-order business logic to support decisions, analysis, or performance management.</p>
 <p>It answers:</p>
-<blockquote>What decision-ready insight or performance view can be produced from trusted business facts?</blockquote>
+<blockquote><p>What decision-ready insight or performance view can be produced from trusted business facts?</p></blockquote>
 <p>Examples:</p>
 <ul>
 <li>Commercial Margin</li>
@@ -81,7 +94,10 @@ tr:nth-child(even) td{background:#f8fafc}
 <li>Pricing Performance</li>
 <li>Logistics Performance</li>
 <li>Customer Profitability</li>
-</ul></section><section id="relationship-to-kpis"><h2>Relationship to KPIs</h2><pre><code>Foundational Data Products
+</ul>
+</section>
+<section id="relationship-to-kpis"><h2>Relationship to KPIs</h2>
+<pre><code>Foundational Data Products
         ↓ supply trusted events and entities
 Derived Data Products
         ↓ calculate reusable measures and diagnostics
@@ -92,7 +108,10 @@ Semantic / Consumption Views
 Power BI Semantic Models
         ↓ add analytical relationships, measures, hierarchies, formatting, and security
 Reports, APIs, AI, Automation</code></pre>
-<p>One data product may support multiple KPIs. One KPI may depend on multiple data products.</p></section><section id="medallion-alignment"><h2>Medallion alignment</h2><p>Medallion architecture describes <strong>processing maturity and physical organization</strong>.</p>
+<p>One data product may support multiple KPIs. One KPI may depend on multiple data products.</p>
+</section>
+<section id="medallion-alignment"><h2>Medallion alignment</h2>
+<p>Medallion architecture describes <strong>processing maturity and physical organization</strong>.</p>
 <p>Data-product categories describe <strong>business purpose and reuse</strong>.</p>
 <p>They are related but not equivalent.</p>
 <table><thead><tr><th>Layer</th><th>Primary purpose</th><th>Typical product relationship</th></tr></thead><tbody>
@@ -100,7 +119,10 @@ Reports, APIs, AI, Automation</code></pre>
 <tr><td>Silver</td><td>Clean, standardize, conform, and quality-check entities and events</td><td>Primary implementation area for many foundational products</td></tr>
 <tr><td>Gold</td><td>Integrate domains, apply business rules, and create decision-ready structures</td><td>Primary implementation area for derived products and some integrated foundational products</td></tr>
 <tr><td>Semantic / Consumption</td><td>Expose approved views and stable consumer contracts</td><td>Consumer interfaces for products and KPI results</td></tr>
-</tbody></table></section><section id="your-semantic-layer"><h2>Your semantic layer</h2><p>Your architecture is:</p>
+</tbody></table>
+</section>
+<section id="your-semantic-layer"><h2>Your semantic layer</h2>
+<p>Your architecture is:</p>
 <pre><code>Raw
   ↓
 Silver
@@ -121,13 +143,19 @@ Consumers</code></pre>
 <li>approved row-level calculations;</li>
 <li>KPI value, target, threshold, and status exposure;</li>
 <li>stable interfaces insulated from Gold implementation changes.</li>
-</ul></section><section id="semantic-model-in-this-context"><h2>Semantic model in this context</h2><p>The term must be used carefully.</p>
+</ul>
+</section>
+<section id="semantic-model-in-this-context"><h2>Semantic model in this context</h2>
+<p>The term must be used carefully.</p>
 <ul>
 <li>The <strong>Enterprise Performance Semantic Model</strong> is the authoritative system of business meaning.</li>
 <li>The <strong>SQL semantic layer</strong> is the physical consumption boundary implementing selected semantics through views.</li>
 <li>A <strong>Power BI semantic model</strong> is an analytical implementation on top of those views.</li>
 </ul>
-<p>A view is not, by itself, the entire semantic model. It is one implementation artifact.</p></section><section id="where-logic-belongs"><h2>Where logic belongs</h2><table><thead><tr><th>Logic</th><th>Preferred home</th></tr></thead><tbody>
+<p>A view is not, by itself, the entire semantic model. It is one implementation artifact.</p>
+</section>
+<section id="where-logic-belongs"><h2>Where logic belongs</h2>
+<table><thead><tr><th>Logic</th><th>Preferred home</th></tr></thead><tbody>
 <tr><td>Source cleansing and code normalization</td><td>Silver</td></tr>
 <tr><td>Entity conformance and reusable detailed business facts</td><td>Silver foundational product</td></tr>
 <tr><td>Cross-source integration and reusable row-level business calculations</td><td>Gold data product</td></tr>
@@ -135,7 +163,10 @@ Consumers</code></pre>
 <tr><td>Stable consumer-facing contract and security filter</td><td>Semantic SQL view</td></tr>
 <tr><td>Dynamic time intelligence, analytical measures, hierarchies, formatting</td><td>Power BI semantic model</td></tr>
 <tr><td>Visual-only labels and interactions</td><td>Power BI report</td></tr>
-</tbody></table></section><section id="worked-example-gasoline-netback-cpg"><h2>Worked example: Gasoline Netback CPG</h2><h3>Raw</h3>
+</tbody></table>
+</section>
+<section id="worked-example-gasoline-netback-cpg"><h2>Worked example: Gasoline Netback CPG</h2>
+<h3>Raw</h3>
 <ul>
 <li>RightAngle sales transactions</li>
 <li>MPR pricing details</li>
@@ -190,7 +221,10 @@ Consumers</code></pre>
 <li>Commercial Performance semantic model</li>
 <li>executive scorecard</li>
 <li>diagnostic drill-through report</li>
-</ul></section><section id="data-product-minimum-contract"><h2>Data-product minimum contract</h2><p>Each data product should define:</p>
+</ul>
+</section>
+<section id="data-product-minimum-contract"><h2>Data-product minimum contract</h2>
+<p>Each data product should define:</p>
 <ul>
 <li>purpose and scope;</li>
 <li>business owner and product owner;</li>
@@ -205,6 +239,15 @@ Consumers</code></pre>
 <li>known limitations;</li>
 <li>lifecycle status;</li>
 <li>adoption and value measures.</li>
-</ul></section>
-<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated August 4, 2026</div>
+</ul>
+</section>
+<section id="consumer-facing-portfolio-and-implementation-mapping"><h2>Consumer-facing portfolio and implementation mapping</h2>
+<p><em>Added 2026-10-02 from the EPM–PPC update plan. See <a href="../architecture/EPM-ARCH-PPC-001_Publishable_EPM_Consumer_Contract.md">EPM-ARCH-PPC-001</a> and <a href="../architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md">EPM-ARCH-PPC-002</a> (both Candidate).</em></p>
+<ul>
+<li><strong>Versioned data-product portfolio contract.</strong> The data-product portfolio (<code>business_architecture/business_process/data_product_portfolio.json</code> and its schema) is published to consumers as part of a versioned EPM release. The release states each product's version and lifecycle status.</li>
+<li><strong>EPM product concept vs consumer implementation.</strong> EPM defines the data-product concept: purpose, grain and keys, contract, ownership, lifecycle. A consumer implements it in its own runtime and may vary the technology. It maps its implementation to the EPM product identifier, and it does not redefine the concept.</li>
+<li><strong>Optional OpenMetadata reference implementation.</strong> OpenMetadata may be used as an open reference implementation to demonstrate glossary, domain, data-product, lineage, and quality synchronization. It is not enterprise authority. Enterprise mappings to Purview and Unity Catalog stay architecture concerns. OpenMetadata is already the lab stand-in for Purview in the metadata integration specification.</li>
+</ul>
+</section>
+<div class="footer">Enterprise Performance Model Foundation · Working baseline · Updated October 2, 2026</div>
 </article></main></div></body></html>

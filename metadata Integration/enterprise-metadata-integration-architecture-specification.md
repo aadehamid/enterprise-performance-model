@@ -191,6 +191,16 @@ Optional Databricks assistants (not systems of authority):
 
 See ADR-HL-021 and ADR-HL-022 in `EPM_Homelab/02-Tool-Selection-and-ADRs.md`.
 
+### 5.4 OpenMetadata reference path (Homelab adopted, 2026-10-02)
+
+OpenMetadata is already the demo stand-in for Purview in the table in section 5.3. [EPM-ARCH-PPC-002](../architecture/EPM-ARCH-PPC-002_Shared_Execution_Technology_and_Homelab_Promotion_Model.md) (Candidate) proposes using it as an open reference implementation alongside the Purview, Unity Catalog, and Bigeye architecture in this specification.
+
+- **Goal.** Demonstrate responsibilities: glossary, domain, data-product, lineage, and quality synchronization. Do not replace enterprise platform choices.
+- **Enterprise mappings are unchanged.** Purview owns enterprise discovery and stewardship, Unity Catalog owns Databricks assets and access, and Bigeye remains the production quality seat. Sections 5.1, 5.2, and 9 apply as written.
+- **Quality split.** SHACL for semantic graph constraints, a data-quality tool for structured checks, OpenLineage for execution lineage. OpenMetadata can contextualize the results.
+- **Authority.** The demo tool is not a second system of authority (section 5.3). The KPI Store row, Turtle in git, and process authority are unaffected.
+- **Status.** Adopted for the Homelab as the lab catalog and governance reference (ADR-HL-024). Not promoted. Not an enterprise decision.
+
 ---
 
 ## 6. Vocabulary and Information Model
