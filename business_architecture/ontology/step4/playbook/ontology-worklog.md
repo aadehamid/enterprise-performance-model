@@ -18,10 +18,12 @@ chosen and what was deliberately rejected.
 
 **How to maintain it:** when a plan step completes, append its entry to
 §3 (Step log) and move any new durable decision into §4 (Decision log).
-*Proposed 2026-09-30, not yet decided:* a durable decision would land in the
-method copy's §2 Policies first (`business_architecture/ontology/ontology-playbook.md`),
-with §4 here carrying only the dated pointer (see §4, "Playbook maintenance
-rule (proposed)").
+*Decided 2026-10-05 (EPM-DEC-001-0002), with an amendment proposed the same
+day (EPM-DEC-001-0024):* the playbook (`business_architecture/ontology/ontology-playbook.md`)
+is now a company-neutral method. Under the proposed amendment, a project
+decision gets an EPM-DEC-001 record (`business_architecture/domain/decisions/`)
+and a dated pointer in §4 here; the playbook changes only when the method
+changes.
 Never rewrite history — correct it with a dated amendment so the team can
 see what changed and why.
 
@@ -80,13 +82,16 @@ ontology; everything else points at it.
 | 3d-c | R1 Refining Structural Reclassification — decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed); implementation PR #108 merged 2026-09-22 (merge b75fd991). 42 concepts reparented with stable slugs/IRIs/notations; two promoted L2s (Refinery Planning and Optimization; Refinery Production Planning and Scheduling); new Candidate R&T L2; tombstone re-anchored under Planning & Scheduling; reviewed RO→Refining interface relation materialized. 683 concepts, 14,496 triples (+15), 681 broader links. | ✅ Candidate → Implemented 2026-09-22 |
 | 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. | ⏳ Open |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment) | Planned |
-| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences) | Planned |
-| 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership) | Planned |
+| P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | Planned (next) |
+| R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | Planned |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Planned |
+| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Planned |
+| 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Planned |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership) | Planned |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Planned |
+| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Planned |
 
 Note: Step 8 was completed early (it was originally sequenced after
 integration) because the scope decisions shape the foundations. The plan
@@ -950,6 +955,32 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Grilling session on the handover plan (2026-10-05)
+Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
+record in `business_architecture/domain/decisions/` (index in its README):
+- PPC is planned, not active; build as if no consumer (EPM-DEC-001-0001).
+- Playbook maintenance rule decided (0002); amendment proposed: the
+  playbook is a company-neutral method and project decisions live in
+  EPM-DEC-001 (0024, Proposed). The playbook was rewritten on this basis;
+  the approved Step 4 evidence text moved word for word to
+  `step4/evidence-discipline.md`.
+- Phase 1 tracking and batches (0003); Customer work waits (0004).
+- Data scope: concepts, definitions, relationships and cited public
+  reference facts; no event records, no observed measure values (0005).
+- Pricing D1 to D4 decided (0006 to 0009); Market Data and Commercial Risk
+  defined at Step 7 (0010).
+- MPC-P02 now, the rest at Step 7 (0011, 0012).
+- `core` 1.0.0 after Phase 1 (0013); SHACL release slice and Step 9 order
+  (0014).
+- Step 5 reference instances in `ref-mpc`, MPLX modeling (0015); Step 6
+  P-Plan (0016); Step 7 order and KPI seed (0017); Step 10 (0018); Step 11
+  (0019).
+- LPG projection guideline adopted as Step 12, Rules 1, 2, 3 and 5 from
+  `core` 1.0.0, qualified-relation nodes instead of reifiers (0020);
+  guideline snapshot in `lpg-projection/` (0021); ontology skill in
+  personal-agent-skills (0022); public ontologies mapped, not imported
+  (0023).
 
 ### Scope and source-of-truth
 - **Repo processes are the source of truth.** We model the business
