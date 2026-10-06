@@ -18,9 +18,9 @@ chosen and what was deliberately rejected.
 
 **How to maintain it:** when a plan step completes, append its entry to
 §3 (Step log) and move any new durable decision into §4 (Decision log).
-*Decided 2026-10-05 (EPM-DEC-001-0002), with an amendment proposed the same
-day (EPM-DEC-001-0024):* the playbook (`business_architecture/ontology/ontology-playbook.md`)
-is now a company-neutral method. Under the proposed amendment, a project
+*Decided 2026-10-05 (EPM-DEC-001-0002), amended 2026-10-06
+(EPM-DEC-001-0024, decided):* the playbook (`business_architecture/ontology/ontology-playbook.md`)
+is now a company-neutral method. A project
 decision gets an EPM-DEC-001 record (`business_architecture/domain/decisions/`)
 and a dated pointer in §4 here; the playbook changes only when the method
 changes.
@@ -962,7 +962,8 @@ record in `business_architecture/domain/decisions/` (index in its README):
 - PPC is planned, not active; build as if no consumer (EPM-DEC-001-0001).
 - Playbook maintenance rule decided (0002); amendment proposed: the
   playbook is a company-neutral method and project decisions live in
-  EPM-DEC-001 (0024, Proposed). The playbook was rewritten on this basis;
+  EPM-DEC-001 (0024, decided 2026-10-06: "Playbook holds the method, yes.").
+  The playbook was rewritten on this basis;
   the approved Step 4 evidence text moved word for word to
   `step4/evidence-discipline.md`.
 - Phase 1 tracking and batches (0003); Customer work waits (0004).
@@ -1464,8 +1465,9 @@ record in `business_architecture/domain/decisions/` (index in its README):
   method's §2 Policies first; this log carries the dated entry pointing at
   it. The copies are never updated independently on the same decision.
   `business_architecture/ontology/README.md` is the single entry point.
-  Proposed in the method at §2 "Playbook maintenance". It becomes decided
-  only when Hamid records the decision.
+  Proposed in the method at §2 "Playbook maintenance". *Superseded:*
+  decided 2026-10-05 as EPM-DEC-001-0002 and amended 2026-10-06 by
+  EPM-DEC-001-0024 (project decisions live in EPM-DEC-001).
 - **Competency-question coverage is the acceptance gate (2026-09-20).**
   First coverage check against the 44 baseline questions: 4 answerable,
   10 partial, 30 not answerable — the 30 map exactly to unbuilt plan

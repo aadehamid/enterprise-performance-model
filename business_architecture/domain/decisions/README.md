@@ -11,7 +11,7 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | Record | Decision | Status | Questions |
 |---|---|---|---|
 | [EPM-DEC-001-0001](EPM-DEC-001-0001-ppc-consumer-status.md) | PPC is a planned consumer, not an active one | Decided | Q1 |
-| [EPM-DEC-001-0002](EPM-DEC-001-0002-playbook-maintenance-rule.md) | Playbook maintenance rule | Decided (an amendment is proposed in EPM-DEC-001-0024) | Q2 |
+| [EPM-DEC-001-0002](EPM-DEC-001-0002-playbook-maintenance-rule.md) | Playbook maintenance rule | Decided; amended by EPM-DEC-001-0024 | Q2 |
 | [EPM-DEC-001-0003](EPM-DEC-001-0003-phase1-tracking-and-batches.md) | Phase 1 tracking and batch format | Decided | Q3, Q4 |
 | [EPM-DEC-001-0004](EPM-DEC-001-0004-customer-work-deferred.md) | Customer domain work waits for Hamid's additional details | Decided | Q5, Q6 |
 | [EPM-DEC-001-0005](EPM-DEC-001-0005-ontology-data-scope.md) | What the ontology holds: concepts and public reference facts, no records of what happened | Decided | Q6, Q11, Q19, Q26 |
@@ -33,4 +33,4 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | [EPM-DEC-001-0021](EPM-DEC-001-0021-lpg-guideline-snapshot.md) | Where the LPG guideline lives in this repo | Decided | Q31 |
 | [EPM-DEC-001-0022](EPM-DEC-001-0022-ontology-skill.md) | A company-neutral ontology skill in personal-agent-skills | Decided | Q32 |
 | [EPM-DEC-001-0023](EPM-DEC-001-0023-external-ontologies-map-not-import.md) | Public ontologies: map to them, do not import them | Decided | Q34 |
-| [EPM-DEC-001-0024](EPM-DEC-001-0024-playbook-is-a-method.md) | The playbook is a method; project decisions live in EPM-DEC-001 | Proposed | Follow-up to Q2 |
+| [EPM-DEC-001-0024](EPM-DEC-001-0024-playbook-is-a-method.md) | The playbook is a method; project decisions live in EPM-DEC-001 | Decided (2026-10-06) | Follow-up to Q2 |

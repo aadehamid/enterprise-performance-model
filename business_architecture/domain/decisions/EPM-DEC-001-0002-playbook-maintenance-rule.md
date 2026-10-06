@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (an amendment is proposed in EPM-DEC-001-0024) |
+| Status | Decided; amended by EPM-DEC-001-0024 (2026-10-06) |
 | Date | 2026-10-05 |
 | Questions | Q2 |
 | Source | Grilling session on the handover plan |
