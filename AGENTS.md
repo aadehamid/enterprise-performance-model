@@ -25,26 +25,15 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 
 ## Before every push
 
-Run these four checks before you open a pull request, and again before you push a fix for review feedback. Many misses in this repo came from review-fix pushes, so a fix gets the same checks as the first push.
+Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes.
 
-`scripts/check.sh` runs the automated part (the Step 4 evidence gate, every test, `epm_facts.py counts` and `epm_facts.py decisions`) in about 3 seconds. CI runs it on every pull request, and the pre-push hook runs it locally once you enable it with `git config core.hooksPath scripts/hooks`.
+1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts` and the decision-record check. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
+2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
+3. **External facts cite a primary source**: release notes, a changelog, a specification or a filing, with version and date. A version claim names the first release with full support, not a preview.
+4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change; it also finds text split across lines. When you change a rule, walk every section that depends on it.
+5. **Codex reviews the diff, and every finding is fixed or answered.** Claude Code: `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`. Codex CLI: `codex review --base main` (it rejects a prompt combined with `--base`). Record any disagreement on a judgement call in the PR body.
 
-1. **Figures come from the source file.** Recompute every count, total and ID list with a script that reads the source file (a CSV, the ledger, the workbook). A figure from memory, a summary or an earlier message does not count. For Step 4 and Phase 1 figures, use the shared tool rather than a script of your own: `python3 scripts/epm_facts.py counts` (ledger, gate, facts, Phase 1 rows, review holds, taxonomy), `row REL-xxxxx` (one row's status) and `section <issue>` (one issue's rows). Each prints the files it read and the commit; quote that line in the PR body. Add `--json` for machine-readable output. When a helper script classifies review rows, count a hold only from the `Hamid_decision` column, and count every non-blank cell there that records a hold, whatever its wording ("HOLD …", "Held for source correction", "Carry forward (remains held)"). Ignore other columns, such as `review_section` ("RECONCILED — already held"), and treat a blank `Hamid_decision` as no new verdict.
-2. **External facts come from a primary source.** Cite release notes, a changelog, a specification or a filing, with its version and date. An open issue tracker, a search snippet or a third-party summary is a lead, not a source. A version claim names the first release that fully supports the feature, not the first preview.
-3. **A change reaches every place it applies.** When you change a status, a rule, a term or a figure, search the whole repo for every mention of it, including text split across lines (`python3 scripts/epm_facts.py find "<text>"` reports both), and update each one. When you change a rule, walk every section that depends on it (later pipeline steps, checklists, examples, companion docs) before you push.
-4. **An independent review runs on the diff.** Run a Codex review and fix what it finds before you push:
-   - Claude Code (Codex plugin), with focus text: `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<what to check>"` (or `--scope working-tree` before a commit). In the focus text, name the claims to verify and the documents that must stay consistent.
-   - Codex CLI, without focus text: `codex review --base main`, or `codex review --uncommitted` before a commit. The CLI rejects a prompt combined with `--base` or `--uncommitted`.
-   Fix clear defects. Record any disagreement on a judgment call in the PR body for the reviewer, with your reasoning.
-
-Done when all four hold, each as its check defines it:
-
-- Every figure in the diff was recomputed by a script from its source file, reading the column check 1 names.
-- Every external fact cites a primary source, and a version claim names the first release the source says fully supports the feature, not a preview.
-- The repo-wide search, including text split across lines, finds no stale mention of anything you changed.
-- The Codex review has no unaddressed finding.
-
-Say in the PR body that the checks ran and what the review found.
+Say in the PR body that these ran and what the review found.
 
 ## Agent skills
 
