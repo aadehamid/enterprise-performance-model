@@ -15,7 +15,7 @@ verdict, fact or count in the ledger changed.
 | Section | Issue | Rows in this file |
 |---|---|---|
 | G3 Section B: target clarification (B1 to B5) | #201 | 102 |
-| G1b rows held for a verb correction | #202 | 29 (15 of them form the both-sides-held pairs) |
+| G1b rows held for a verb correction | #202 | 29 (13 of them also appear in the both-sides-held pairs table) |
 | Supply & Trading recommend/advise rows | #203 | 15 |
 | Triggers | #204 | 11 |
 | Precedes/follows | #205 | 20 |
@@ -166,7 +166,7 @@ reverse fact present **if** its row has a route; otherwise held with no fact.
 
 ## G1b rows held for a verb correction (#202)
 
-Every G1b `enables` row held with G1bNoVerbChange. The pairs table above lists the 15 whose reverse row is also held.
+Every G1b `enables` row held with G1bNoVerbChange. The pairs table above lists 15 pairs whose reverse row is also held. 13 of those pairs' G1b rows are in this table. The other two are filed by their later HOLD: REL-00469 under Supply & Trading (#203) and REL-00489 under G3 Section B (#201).
 
 | row_id | issue | parked | status |
 |---|---|---|---|

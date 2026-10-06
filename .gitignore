@@ -27,3 +27,7 @@ PMO/
 
 # Step 4 script proposal outputs (mapping_v2.py) — never committed
 business_architecture/ontology/step4/proposal/
+
+# Python bytecode
+__pycache__/
+*.pyc
