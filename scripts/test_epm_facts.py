@@ -116,3 +116,53 @@ def test_gate_figures_survive_a_failing_gate(tmp_path):
     ns, ok, out = epm_facts.run_keeping_globals(str(fake))
     assert ok is False and "GATE FAILED" in out
     assert (ns["promoted"], ns["held_ctx"]) == (1066, 237)
+
+
+def _decisions_copy(tmp_path):
+    import shutil
+    folder = tmp_path / "decisions"
+    shutil.copytree(epm_facts.DECISIONS, folder)
+    return folder
+
+
+def test_decision_records_are_consistent_today():
+    assert epm_facts.decision_problems() == []
+
+
+def test_decisions_check_catches_status_mismatch(tmp_path):
+    folder = _decisions_copy(tmp_path)
+    rec = next(folder.glob("EPM-DEC-001-0024-*.md"))
+    rec.write_text(rec.read_text().replace("| Status | Decided |", "| Status | Proposed |", 1))
+    assert any(p.startswith("0024: index status") for p in epm_facts.decision_problems(str(folder)))
+
+
+def test_decisions_check_requires_a_quote_for_decided(tmp_path):
+    folder = _decisions_copy(tmp_path)
+    rec = next(folder.glob("EPM-DEC-001-0009-*.md"))
+    text = rec.read_text()
+    start = text.index("## Hamid's recorded words")
+    end = text.index("## Evidence")
+    rec.write_text(text[:start] + "## Hamid's recorded words\n\nAgreed in the session.\n\n" + text[end:])
+    assert any(p.startswith("0009: Decided, but no quote") for p in epm_facts.decision_problems(str(folder)))
+
+
+def test_decisions_check_catches_unindexed_record_and_bad_amendment(tmp_path):
+    folder = _decisions_copy(tmp_path)
+    (folder / "EPM-DEC-001-0099-new.md").write_text("# EPM-DEC-001-0099: new\n\n| Status | Decided; amended by EPM-DEC-001-0098 |\n")
+    problems = epm_facts.decision_problems(str(folder))
+    assert "0099: record not listed in the index" in problems
+    assert "0099: amended by 0098, which does not exist" in problems
+
+
+def test_status_parts_reads_every_amendment():
+    assert epm_facts._status_parts("Decided; amended by 0024, 0098") == ("Decided", {"0024", "0098"})
+    assert epm_facts._status_parts("Decided; amended by EPM-DEC-001-0024 and EPM-DEC-001-0025 (2026-10-06)") == ("Decided", {"0024", "0025"})
+
+
+def test_decisions_check_catches_a_second_amendment_target(tmp_path):
+    folder = _decisions_copy(tmp_path)
+    rec = next(folder.glob("EPM-DEC-001-0013-*.md"))
+    rec.write_text(rec.read_text().replace("amended by EPM-DEC-001-0025", "amended by EPM-DEC-001-0025, EPM-DEC-001-0098", 1))
+    problems = epm_facts.decision_problems(str(folder))
+    assert "0013: amended by 0098, which does not exist" in problems
+    assert any(p.startswith("0013: index status") for p in problems)

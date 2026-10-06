@@ -10,6 +10,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
+    python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -51,6 +52,7 @@ BACKLOG = os.path.join(STEP4, "source-workbook-backlog.md")
 REVIEWS = os.path.join(STEP4, "review-evidence")
 FACTS = os.path.join(STEP4, "canonical-facts.csv")
 TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "output", "step3-taxonomy.ttl")
+DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -415,6 +417,79 @@ def cmd_find(args):
     return 0
 
 
+
+# ---------- decision records ----------
+
+STATUS_WORDS = {"Proposed", "Decided", "Superseded"}
+QUOTE = re.compile(r'"[^"]{3,}"')
+
+
+def _status_parts(status):
+    """Return (lead word, set of record numbers named after 'amended by')."""
+    lead = re.match(r"\s*(\w+)", status)
+    amended = set()
+    for clause in re.findall(r"amended by ([^;()]*)", status):
+        amended.update(re.findall(r"(?:EPM-DEC-001-)?(\d{4})", clause))
+    return (lead.group(1) if lead else ""), amended
+
+
+def decision_problems(folder=DECISIONS):
+    """Return a list of problems in the EPM-DEC-001 records and their index."""
+    problems = []
+    records = {}
+    for path in sorted(glob.glob(os.path.join(folder, "EPM-DEC-001-*.md"))):
+        number = re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(path)).group(1)
+        with open(path) as f:
+            text = f.read()
+        m = re.search(r"^\| Status \| (.+?) \|\s*$", text, re.M)
+        if not m:
+            problems.append(f"{number}: no Status row")
+            continue
+        records[number] = (path, text, m.group(1).strip())
+    index_path = os.path.join(folder, "README.md")
+    with open(index_path) as f:
+        index = {}
+        for line in f:
+            m = re.match(r"\| \[EPM-DEC-001-(\d{4})\]\(([^)]+)\) \|[^|]*\| ([^|]+) \|", line)
+            if m:
+                if m.group(1) in index:
+                    problems.append(f"{m.group(1)}: listed twice in the index")
+                index[m.group(1)] = (m.group(2), m.group(3).strip())
+    for number in sorted(set(records) - set(index)):
+        problems.append(f"{number}: record not listed in the index")
+    for number in sorted(set(index) - set(records)):
+        problems.append(f"{number}: index lists a record that does not exist")
+    for number, (path, text, status) in sorted(records.items()):
+        lead, amended = _status_parts(status)
+        if lead not in STATUS_WORDS:
+            problems.append(f"{number}: status {status!r} does not start with Proposed, Decided or Superseded")
+        for other in sorted(amended):
+            if other not in records:
+                problems.append(f"{number}: amended by {other}, which does not exist")
+        if number in index:
+            link, index_status = index[number]
+            if link != os.path.basename(path):
+                problems.append(f"{number}: index links {link}, file is {os.path.basename(path)}")
+            if _status_parts(index_status) != (lead, amended):
+                problems.append(f"{number}: index status {index_status!r} differs from record status {status!r}")
+        if lead == "Decided":
+            words = re.search(r"^## Hamid's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+            if not words or not QUOTE.search(words.group(1)):
+                problems.append(f"{number}: Decided, but no quote under \"Hamid's recorded words\"")
+    return problems
+
+
+def cmd_decisions(args):
+    problems = decision_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} problem(s) in {rel(DECISIONS)}")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
@@ -426,8 +501,9 @@ def main(argv=None):
     p.add_argument("issue", type=int)
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
+    sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     args = parser.parse_args(argv)
-    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find}[args.cmd](args)
+    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions}[args.cmd](args)
 
 
 if __name__ == "__main__":
