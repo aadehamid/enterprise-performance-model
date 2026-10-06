@@ -14,9 +14,9 @@ commit below (EPM-DEC-001-0021).
 | Field | Value |
 |---|---|
 | Source | https://github.com/aadehamid/enterprise-people-graph/tree/main/guideline_to_map_ontology_to_LPG |
-| Pinned commit | `cd63e12` |
-| Guideline version | v2 (RDF 1.2 edition), October 2026 |
-| Copied | 2026-10-05 |
+| Pinned commit | `e7b09e8` (v2.1; earlier pin `cd63e12`, v2) |
+| Guideline version | v2.1, October 2026 |
+| Copied | 2026-10-06 (v2 first copied 2026-10-05) |
 
 ## How this build uses it
 
@@ -25,26 +25,21 @@ authority for how this build applies the guideline. In short
 (EPM-DEC-001-0020):
 
 - Rules 1, 2, 3 and 5 apply from the `core` 1.0.0 release on.
-- Rule 4 (RDF 1.2 reifiers) is not adopted. When a relationship needs its
-  own properties, the build models it as a qualified-relation node with its
-  own IRI. That node loads into Neo4j as an ordinary node, so the pipeline's
-  flatten step is not needed.
+- For Rule 4, the build uses option 4a, qualified-relation nodes, which v2.1
+  makes the default. When a relationship needs its own properties, the build
+  models it as a node with its own IRI that points at both ends. Option 4b
+  (RDF 1.2 reifiers) is not used, because the build's Python tools (rdflib,
+  pySHACL) cannot read RDF 1.2. With 4a, Step 3 of the pipeline only
+  serialises the files; the flatten queries are not needed.
 - The pipeline runs once the ontology is built (Step 12). Turtle stays the
   master copy.
 
-## Points checked on 2026-10-05
+## Points checked on 2026-10-05 (resolved in v2.1)
 
-An external check found that two statements in this snapshot need care:
-
-- The guideline calls RDF 1.2 reifiers "now the standard pattern". The W3C
-  RDF 1.2 Concepts document is a Candidate Recommendation Snapshot dated
-  7 April 2026, not yet a Recommendation (https://www.w3.org/TR/rdf12-concepts/).
-- The guideline lists rdflib as "in progress" for RDF 1.2. In rdflib's
-  tracking issue every stage is still open, and no release supports it
-  (https://github.com/RDFLib/rdflib/issues/3524). pySHACL depends on rdflib.
-  Apache Jena supports RDF 1.2 from 6.1.0 (after an experimental preview
-  from 5.4.0), and RDF4J from 6.0.0 (corrected 2026-10-06; an earlier note
-  called Jena's support unconfirmed because its tracking issue is still
-  open).
-
-These notes are for the master copy's next revision.
+The external check of v2 found two statements that needed care: v2 called
+RDF 1.2 reifiers "now the standard pattern", and it listed rdflib as "in
+progress" for RDF 1.2. Guideline v2.1 (enterprise-people-graph PR #1) fixed
+both. It states that RDF 1.2 is a W3C Candidate Recommendation (Snapshot of
+7 April 2026), that Apache Jena 6.1.0+ and Eclipse RDF4J 6.0.0+ support it,
+and that rdflib and pySHACL do not. Three older pipeline defects that v2.1
+did not change are tracked in enterprise-people-graph issue #2.

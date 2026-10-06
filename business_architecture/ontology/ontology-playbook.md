@@ -267,9 +267,9 @@ later is expensive.
    active, you can retire provisional data in one release.
 10. **Target formats.** If the ontology will be projected into a labelled
     property graph (Step 12), adopt that projection's design rules now:
-    Rules 1, 2, 3 and 5 of the guideline in `lpg-projection/`, with
-    qualified-relation nodes in place of its Rule 4. Rules adopted late force
-    you to remodel.
+    Rules 1, 2, 3 and 5 of the guideline in `lpg-projection/`, and for its
+    Rule 4 the qualified-relation option (4a), unless every tool in your
+    pipeline reads RDF 1.2. Rules adopted late force you to remodel.
 
 **Done when:** all ten policies are recorded with their reasons; the
 business owner has approved and locked the competency questions.
@@ -501,22 +501,31 @@ as Neo4j, for applications that query in Cypher. The Turtle files stay the
 master copy.
 
 **Procedure.** Follow the conversion guideline in `lpg-projection/`, with
-one change. Apply its design Rules 1, 2, 3 and 5 from the first release
-(Step 1, item 10). Do not apply its Rule 4 (RDF 1.2 reifiers). Give a
-relationship its own properties with a qualified-relation node instead (§2,
-Modeling discipline). Such a node loads as an ordinary node, so the
-guideline's flatten step is not needed. Its pipeline runs here:
+its Rule 4 set to option 4a. Apply its design Rules 1, 2, 3 and 5 from the
+first release (Step 1, item 10). For Rule 4, give a relationship its own
+properties with a qualified-relation node (option 4a, the guideline's
+default; §2, Modeling discipline), not an RDF 1.2 reifier (4b), unless every
+tool in the pipeline reads RDF 1.2. A qualified-relation node loads as an
+ordinary node, so the guideline's flatten queries are not needed. Its pipeline runs here:
 
 1. **Check.** Run the meta-shapes and the data shapes. Any violation stops
    the build.
-2. **Reason.** Run an OWL 2 EL reasoner once, upstream. Load the inferred
-   types into a separate named graph. A property graph cannot reason.
-3. **Load.** Load the schema, the shapes and the data in a fixed order, with
-   names and multi-valued properties generated from the ontology, never
-   written by hand.
-4. **Verify.** Run SHACL validation inside the graph with zero violations,
-   a round-trip diff back to RDF with zero differences, and a determinism
-   test: two loads in different orders produce the same graph hash.
+2. **Reason.** Run an OWL 2 EL reasoner once, upstream. A property graph
+   cannot reason.
+3. **Serialise.** Write two sorted N-Triples files: `loadable.nt`, the
+   asserted data, and `inferred.nt`, the inferred `rdf:type` and
+   `rdfs:subClassOf` triples, built as the difference between the
+   reasoner's output and its input. Keeping them in two files keeps
+   assertions and inferences apart.
+4. **Load.** Load the schema, the shapes, `loadable.nt` and `inferred.nt`
+   in a fixed order, with names and multi-valued properties generated from
+   the ontology, never written by hand. Inside Neo4j the asserted and
+   inferred triples are merged, because the loader keeps no graph names. If
+   the graph itself must tell them apart, use the guideline's Add-on F.
+5. **Verify.** Run SHACL validation inside the graph with zero violations,
+   a round-trip diff back to RDF (against the two files together) with zero
+   differences, and a determinism test: two loads in different orders
+   produce the same graph hash.
 
 Materialize inverse relations before the load if consumers need them. OWL 2
 EL has no inverse properties, and a property graph does not infer them.
@@ -1141,8 +1150,9 @@ date and source sit on a qualified-relation node, and the Midstream segment
 is a separate concept (EPM-DEC-001-0015).
 
 **Step 12 plan.** The projection follows the guideline in `lpg-projection/`,
-with design Rules 1, 2, 3 and 5 applied from `core` 1.0.0. Rule 4, RDF 1.2
-reifiers, is replaced by qualified-relation nodes (EPM-DEC-001-0020).
+with design Rules 1, 2, 3 and 5 applied from `core` 1.0.0 and Rule 4 set to
+option 4a, qualified-relation nodes, because the build's Python tools cannot
+read RDF 1.2 (EPM-DEC-001-0020; guideline v2.1).
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared
