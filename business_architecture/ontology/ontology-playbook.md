@@ -311,8 +311,9 @@ Use SKOS first, not OWL.
    asserts logical commitments, such as disjointness and inherited
    restrictions, that a naming hierarchy does not support.
 
-**Done when:** every concept has a definition, a label and a parent; the
-mechanical checks (labels present, hierarchy integrity, no label
+**Done when:** every concept has a definition and a label; every concept
+except the scheme's top concepts (`skos:topConceptOf`) has exactly one
+parent; the mechanical checks (labels present, hierarchy integrity, no label
 collisions) pass.
 
 ### Step 4. The relationship layer
@@ -336,12 +337,16 @@ the predicates of your triples.
 
 Section 3 is the full discipline for this step.
 
-**Done when:** every row has a recorded verdict; the ledger reconciles; the
-evidence gate passes; the promotion preconditions (re-pin, attestation,
-regression run, blast-radius proof) are met.
+**Done when:** every row has a recorded verdict (APPROVE, STAND or HOLD);
+the ledger reconciles; the evidence gate passes; the promotion preconditions
+(re-pin, attestation, regression run, blast-radius proof) are met. A HOLD
+completes the row for this step: it emits no fact and goes to the
+source-correction backlog.
 
-**Then release the first module.** Once held rows have had their source
-corrections and fresh verdicts, release the core module: serialize the
+**Then release the first module.** Release the core module only when every
+held row has gone back to the source author and has a fresh verdict after
+the correction. A row may stay held at release only with a recorded reason
+it is left out of this release. Then release the core module: serialize the
 governed facts, retire the provisional layer in one release, and add the
 first version header. Release only after the held rows are settled. If you
 release first, the held rows lose their provisional form and need a second
@@ -909,7 +914,8 @@ teaches a new check, add it here with the reason.
 
 ### 5.2 Taxonomy
 
-- One parent per concept, except roots. No cycles. The build fails on
+- Exactly one parent per concept, except the scheme's top concepts
+  (`skos:topConceptOf`), which have none. No cycles. The build fails on
   either.
 - Every concept sits at a level, with its parent shown.
 - One `skos:prefLabel` per language per concept, and a language tag on every
@@ -1251,7 +1257,8 @@ that pointed at it.
 
 Before a release:
 
-- Every held item has a verdict, and the ledger reconciles.
+- Every held row has a fresh verdict after source correction, or a recorded
+  reason it is left out of this release, and the ledger reconciles.
 - The build, the evidence and the consumer-impact scan cite one commit.
 - The consumer attestation is fresh.
 - The SHACL slice passes.
