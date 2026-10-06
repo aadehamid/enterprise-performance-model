@@ -275,7 +275,8 @@ def taxonomy():
 # ---------- commands ----------
 
 def cmd_counts(args):
-    mapping, gate, gate_green, _ = run_pipeline()
+    mapping, gate, gate_green, gate_text = run_pipeline()
+    gate_lines = gate_text.splitlines()
     led, held, emitting = ledger(mapping)
     facts = stored_facts()
     p1 = phase1_rows()
@@ -292,6 +293,8 @@ def cmd_counts(args):
             "green": gate_green,
             "promoted": gate.get("promoted"),
             "held": gate.get("held_ctx"),
+            "pass_checks": sum(1 for line in gate_lines if line.startswith("PASS")),
+            "fail_checks": sum(1 for line in gate_lines if line.startswith("FAIL")),
         },
         "phase1": {
             "rows": len(p1_ids),
@@ -316,7 +319,8 @@ def cmd_counts(args):
           f"= {out['conservation']} (of {led['mentions']} mentions)")
     print(f"canonical facts: {out['canonical_facts_file']} in canonical-facts.csv; pipeline builds {led['canonical_facts_pipeline']}")
     eg = out["evidence_gate"]
-    print(f"evidence gate: {'GREEN' if eg['green'] else 'NOT GREEN'}; promoted {eg['promoted']} / held {eg['held']}")
+    print(f"evidence gate: {'GREEN' if eg['green'] else 'NOT GREEN'}; promoted {eg['promoted']} / held {eg['held']}; "
+          f"{eg['pass_checks']} PASS / {eg['fail_checks']} FAIL")
     ph = out["phase1"]
     print(f"Phase 1 (EPM-DEC-001-0025): {ph['rows']} rows, {ph['held']} held; not held: {', '.join(ph['not_held']) or 'none'}")
     print("  by issue: " + ", ".join(f"#{k} {v}" for k, v in ph["by_issue"].items()))

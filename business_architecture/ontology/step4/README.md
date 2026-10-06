@@ -12,6 +12,9 @@ Hamid's review.
   per decision Q2) is still an open decision, and nothing retires until it
   is approved.
 - **Nothing here merges to `main`** without Hamid's explicit approval.
+- **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
+  `section <issue>` from the repo root. It computes them from the files below;
+  `scripts/test_published_figures.py` fails if the counts here drift from it.
 - **Counts** (verified 2026-09-30 on `main` 37ab0a0). Two cuts, both
   conserving to 1,318 mentions:
   - **Ledger** (`ledger-v2.md`, verb-bucket totals): 617 emitting / 686
