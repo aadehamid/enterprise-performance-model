@@ -14,7 +14,7 @@ with_deps() { uv run -q --with pytest --with rdflib --with openpyxl "$@"; }
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
 snapshot() {
-  { git status --porcelain --untracked-files=all
+  { git status --porcelain --untracked-files=all &&
     git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
       if [ -e "$f" ]; then sha256sum -- "$f"; else echo "deleted $f"; fi
     done
@@ -33,7 +33,8 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py counts >/dev/null
 
-if [ "$before" != "$(snapshot)" ]; then
+after="$(snapshot)"  # a standalone assignment, so a failing snapshot stops the script
+if [ "$before" != "$after" ]; then
   echo "the checks changed the working tree; they must only read it:" >&2
   git status --short >&2
   exit 1
