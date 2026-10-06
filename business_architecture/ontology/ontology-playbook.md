@@ -345,8 +345,9 @@ source-correction backlog.
 
 **Then release the first module.** Release the core module only when every
 held row has gone back to the source author and has a fresh verdict after
-the correction. A row may stay held at release only with a recorded reason
-it is left out of this release. Then release the core module: serialize the
+the correction. The fresh verdict may be HOLD again; the row then stays out
+of the release with its reason recorded. No held row is released without a
+fresh verdict. Then release the core module: serialize the
 governed facts, retire the provisional layer in one release, and add the
 first version header. Release only after the held rows are settled. If you
 release first, the held rows lose their provisional form and need a second
@@ -1257,8 +1258,9 @@ that pointed at it.
 
 Before a release:
 
-- Every held row has a fresh verdict after source correction, or a recorded
-  reason it is left out of this release, and the ledger reconciles.
+- Every held row has a fresh verdict after source correction (a fresh HOLD
+  keeps it out of the release, with its reason recorded), and the ledger
+  reconciles.
 - The build, the evidence and the consumer-impact scan cite one commit.
 - The consumer attestation is fresh.
 - The SHACL slice passes.
