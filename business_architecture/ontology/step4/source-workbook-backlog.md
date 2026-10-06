@@ -289,7 +289,7 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue
 
 ## Governed-by rows held in the verb reviews (#206)
 
-3 `governed-by` rows held in the verb reviews: 2 in the nearness sample review (`nearness-sample-review-batch.csv`) and 1 in the full governed-by review (`governed-by-full-review-batch.csv`). The governed-by sections further down hold the other #206 rows.
+3 `governed-by` rows, all held in the full governed-by review (`governed-by-full-review-batch.csv`): REL-00274 and REL-01286 (held for source review) and REL-01143 (held, known classifier error). The governed-by sections further down hold the other #206 rows.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
@@ -299,7 +299,18 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue
 
 ## Other verb-review holds
 
-22 rows held in other review batches under `review-evidence/`: 6 in the G3 genuine-enablement review, 5 in the 32-row enables review, 5 in the ancestor/descendant review, 3 in the dependsOnOutputOf contradictions batch, and 1 each in the assures, requires and constrained-by reviews. Issue to be opened.
+22 rows, each held in one of these review batches under `review-evidence/` (by the `Hamid_decision` column):
+
+- `ancestor-descendant-10-review-batch.csv` (8): REL-00002, REL-00013, REL-00764, REL-00768, REL-00773, REL-00912, REL-00923, REL-00925
+- `review32-enables-batch.csv` (5): REL-00758, REL-00936, REL-01094, REL-01131, REL-01192
+- `dependsOnOutputOf-3-contradictions-batch.csv` (3): REL-00884, REL-00917, REL-01065
+- `enabledby-mutual-review-batch.csv` (2): REL-01053, REL-01312
+- `changed-label-18-review-batch.csv` (1): REL-00445
+- `assures-8-review-batch.csv` (1): REL-01106
+- `requires-6-review-batch.csv` (1): REL-00208
+- `constrained-by-11-review-batch.csv` (1): REL-00097
+
+Issue to be opened.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
