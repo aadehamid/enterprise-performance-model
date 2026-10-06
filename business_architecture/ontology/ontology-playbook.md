@@ -329,8 +329,10 @@ the predicates of your triples.
 2. Review one predicate family at a time, one row at a time. For each row,
    settle identity first, then direction, then the definition test, then
    the verdict.
-3. Hold a row whose meaning is unclear and send it back to the source
-   author. Never change its meaning when you emit it.
+3. Hold a row whose meaning is unclear. It emits no fact and keeps its
+   reason, and it reaches the source author only if the release gate puts it
+   on the source-correction backlog (below). Never change its meaning when
+   you emit it.
 4. Keep a conservation ledger: emitted plus held plus deferred equals the
    total, reconciled row by row.
 5. Run the promotion script last, after every verdict is recorded.
@@ -340,18 +342,21 @@ Section 3 is the full discipline for this step.
 **Done when:** every row has a recorded verdict (APPROVE, STAND or HOLD);
 the ledger reconciles; the evidence gate passes; the promotion preconditions
 (re-pin, attestation, regression run, blast-radius proof) are met. A HOLD
-completes the row for this step: it emits no fact and goes to the
-source-correction backlog.
+completes the row for this step: it emits no fact, and its reason is
+recorded. Whether it goes on the source-correction backlog is a separate
+decision (below).
 
-**Then release the first module.** Release the core module only when every
-held row has gone back to the source author and has a fresh verdict after
-the correction. The fresh verdict may be HOLD again; the row then stays out
-of the release with its reason recorded. No held row is released without a
-fresh verdict. Then release the core module: serialize the
-governed facts, retire the provisional layer in one release, and add the
-first version header. Release only after the held rows are settled. If you
-release first, the held rows lose their provisional form and need a second
-release. Build a small SHACL slice first (Step 9) so the release is checked
+**Then release the first module.** First decide which held rows go back to
+the source author for correction, and record that list: the
+source-correction backlog. Release the core module only when every row on
+that list has a fresh verdict after its correction. The fresh verdict may be
+HOLD again; the row then stays out of the release with its reason recorded.
+Held rows that are not on the list stay held with their recorded reason.
+They emit nothing, and they wait in a backlog for a later release. Then
+release the core module: serialize the governed facts, retire the
+provisional layer in one release, and add the first version header. If you
+release before the backlog rows are settled, they lose their provisional
+form and need a second release. Build a small SHACL slice first (Step 9) so the release is checked
 by shapes, not only by scripts. Appendix B covers release mechanics.
 
 ### Step 5. Organizations, roles and responsibilities
@@ -622,7 +627,11 @@ the method improves, by a dated amendment with the owner's agreement.
   relations. Reason: plain RDF, plain SHACL and every common tool handle the
   pattern today, and it loads into a property graph as an ordinary node.
   RDF 1.2 reifiers do the same job but need tooling that is not yet
-  widespread (§4).
+  widespread (§4). A link the business tracks as a thing in its own right
+  (its own lifecycle or identity, referred to by other records) is a domain
+  class instead, such as a `Transfer`. The arcs that define a qualified
+  relation, including an inverse such as `prov:qualifiedAssociation`, do not
+  make it one.
 - **Give every property one kind and a concrete range.** It is an object,
   datatype or annotation property, never a bare `rdf:Property`, with a
   concrete `xsd` type for literals.
@@ -784,8 +793,11 @@ Review one predicate at a time, in four phases.
    test. Then record one verdict:
    - **APPROVE**: the row meets the definition, and the fact is stored.
    - **HOLD**: the row fails the definition or the evidence is too weak. No
-     fact is emitted, and the row goes back to the source author. A hold is
-     never a remap to another predicate.
+     fact is emitted, and the reason is recorded. The row joins the
+     source-correction backlog only by a recorded decision (Step 4, "Then
+     release the first module"); a hold left off that list keeps its reason
+     and waits for a later release. A hold is never a remap to another
+     predicate.
    - **STAND**: the row was already emitting correctly, and the review
      confirms it. Counts change only when a row changes bucket.
 4. **Sample and reconcile.** Sample per rule 6. Reconcile: every row has a
@@ -920,7 +932,8 @@ teaches a new check, add it here with the reason.
   sequence case in rule 5 is the one exception.
 - Boundary wording is never an identity route.
 - A row's meaning is fixed at review time. If a better reading appears
-  later, hold the row and send the correction to the source.
+  later, hold the row and record the better reading as its reason. A
+  source correction goes through the source-correction backlog (Step 4).
 
 ### 5.2 Taxonomy
 
@@ -948,7 +961,8 @@ Nothing merges on assumption.
 - Judge each row against its predicate's written definition (Appendix C has
   examples).
 - Never translate a verb silently. If the source says "informs" and the
-  pattern wants "requires", hold the row and send it back.
+  pattern wants "requires", hold the row with that reason. A source
+  correction goes through the source-correction backlog (Step 4).
 - A row that fails its definition is held. If it was emitting, its fact is
   removed. No substitute fact is emitted.
 
@@ -1268,8 +1282,9 @@ that pointed at it.
 
 Before a release:
 
-- Every held row has a fresh verdict after source correction (a fresh HOLD
-  keeps it out of the release, with its reason recorded), and the ledger
+- Every row on the source-correction backlog has a fresh verdict after its
+  correction (a fresh HOLD keeps it out of the release, with its reason
+  recorded). Every other held row keeps its recorded hold reason. The ledger
   reconciles.
 - The build, the evidence and the consumer-impact scan cite one commit.
 - The consumer attestation is fresh.

@@ -956,6 +956,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Phase 1 scope (2026-10-06)
+- EPM-DEC-001-0025: Phase 1 is the source-correction backlog (eight issues,
+  parent #207; 276 rows, 275 held). The 411 held mentions outside it stay held with
+  their recorded reasons and wait for a later release. Amends 0013; the
+  playbook's release gate now names the source-correction backlog.
+
 ### LPG guideline v2.1 (2026-10-06)
 - The `lpg-projection/` snapshot is re-pinned to enterprise-people-graph
   `e7b09e8` (guideline v2.1). v2.1 makes qualified-relation nodes Rule 4
