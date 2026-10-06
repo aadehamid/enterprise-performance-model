@@ -6,17 +6,22 @@ Mechanical rules live in `scripts/check.sh` (the Step 4 gate, tests, published f
 
 Each rule says what to block on and where it came from. A rule earns its place by catching a real defect; delete a rule when the decision behind it changes.
 
-## Blocking rules
+## Blocking: AGENTS.md requirements, checked on the diff
 
-1. **Decided or Approved needs Hamid's recorded words.** Any text that marks something Decided or Approved, or attributes a decision or request to Hamid, quotes his words or links the record that does. A merge is not a decision. *Source: on-the-record attribution rule; AGENTS.md.*
+AGENTS.md owns these requirements; this file does not restate them. Block when the diff breaks one:
+
+- **Working rules:** nothing is marked Decided or Approved without Hamid's recorded decision.
+- **Before every push**, items 3 and 4: external facts cite a primary source with the full-support version, and a change (including a rule change) reaches every place and every dependent section it applies to.
+
+## Blocking: reviewer judgements
+
+1. **Quotes match the record.** Where text attributes a decision or a request to Hamid, the quoted words exist in the cited record or session, and the text claims no more than they say. *Source: on-the-record attribution rule.*
 2. **Claim only what has landed.** A record or document states as done only changes that are merged. A change still in an open PR, in this repo or another, is described as pending, with its PR number. *Source: PR #216 (EPM-DEC-001-0025 claimed a skill change still open in personal-agent-skills #5).*
-3. **One rule, one wording, everywhere.** When a PR changes a status, a rule, a term or a figure, every document that states it agrees after the PR. Check the playbook, the decision records, the worklog, AGENTS.md, READMEs and the backlog, including text split across lines (`python3 scripts/epm_facts.py find "<text>"`). *Source: PRs #200, #212, #216 (a release gate and a decision status stated differently in different places).*
-4. **Figures outside CI's coverage trace to the source, over the right population.** CI already checks the published Step 4 figures (`scripts/test_published_figures.py`). For any other figure in the diff, such as one in a new document, an issue body or the PR body, check it against `python3 scripts/epm_facts.py`. For every count, check that it counts the population the sentence claims: rows, not mentions; listed rows, not IDs cited in rationale text. *Source: PRs #208, #216 (counts written from summaries; IDs cited in rationale counted as rows).*
-5. **External facts cite a primary source with a version.** Release notes, a changelog, a specification or a filing, with version and date. A version claim names the first release with full support, not a preview. An open issue tracker is a lead, not a source. *Source: enterprise-people-graph PR #1 (Jena's RDF 1.2 support, first misread from an open issue, then dated to a preview release).*
-6. **A rule change is applied to everything that depends on it.** When a PR changes a method rule (a pipeline step, a release gate, a modeling rule), the later steps, checklists, examples and companion documents that rely on it change in the same PR. *Source: enterprise-people-graph PR #1 (Rule 4 changed, but the load step, checklist and learning guide still assumed the old rule); PR #216 (every HOLD still routed to the backlog after the gate changed).*
-7. **Moved text keeps its approved wording.** When approved text moves between files, it moves word for word, with a note naming where it came from. Rewording approved text needs Hamid's recorded decision. *Source: PR #199 (the Step 4 evidence discipline moved to `step4/evidence-discipline.md`).*
-8. **The playbook stays a method.** `business_architecture/ontology/ontology-playbook.md` holds company-neutral method. A project decision (an EPM IRI, an MPC choice, a ruling on one row) goes in an EPM-DEC-001 record and the worklog, and the playbook may cite it as an example in §7. *Source: EPM-DEC-001-0024.*
-9. **Held rows reach the source author only through the recorded backlog.** Text that sends a held row to the source author outside the source-correction backlog contradicts EPM-DEC-001-0025. *Source: PR #216.*
+3. **Figures outside CI's coverage trace to the source, over the right population.** CI checks the published Step 4 figures (`scripts/test_published_figures.py`). For any other figure in the diff, such as one in a new document, an issue body or the PR body, check it against `python3 scripts/epm_facts.py`. For every count, check that it counts the population the sentence claims: rows, not mentions; listed rows, not IDs cited in rationale text. *Source: PRs #208, #216 (counts written from summaries; IDs cited in rationale counted as rows).*
+4. **An issue tracker or a preview is not evidence of support.** An open issue, a roadmap or a search snippet is a lead; the release notes or changelog decide. *Source: enterprise-people-graph PR #1 (Jena's RDF 1.2 support, first misread from an open issue, then dated to a preview release).*
+5. **Moved text keeps its approved wording.** When approved text moves between files, it moves word for word, with a note naming where it came from. Rewording approved text needs Hamid's recorded decision. *Source: PR #199 (the Step 4 evidence discipline moved to `step4/evidence-discipline.md`).*
+6. **The playbook stays a method.** `business_architecture/ontology/ontology-playbook.md` holds company-neutral method. A project decision (an EPM IRI, an MPC choice, a ruling on one row) goes in an EPM-DEC-001 record and the worklog, and the playbook may cite it as an example in §7. *Source: EPM-DEC-001-0024.*
+7. **Held rows reach the source author only through the recorded backlog.** Text that sends a held row to the source author outside the source-correction backlog contradicts EPM-DEC-001-0025. *Source: PR #216.*
 
 ## Not blocking
 
