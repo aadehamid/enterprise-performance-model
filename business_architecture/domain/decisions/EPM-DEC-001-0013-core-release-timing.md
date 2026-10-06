@@ -27,7 +27,7 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Ham
 
 ## Amendment (2026-10-06)
 
-EPM-DEC-001-0025 defines Phase 1 as the source-correction backlog. The release needs fresh verdicts for the rows on that backlog. The 409 held mentions outside it stay held with their recorded reasons and wait for a later release.
+EPM-DEC-001-0025 defines Phase 1 as the source-correction backlog. The release needs fresh verdicts for the rows on that backlog. The 411 held mentions outside it stay held with their recorded reasons and wait for a later release.
 
 ## Evidence
 

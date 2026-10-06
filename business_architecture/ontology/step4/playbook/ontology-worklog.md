@@ -958,7 +958,7 @@ without a dated amendment and Hamid's explicit agreement.
 
 ### Phase 1 scope (2026-10-06)
 - EPM-DEC-001-0025: Phase 1 is the source-correction backlog (eight issues,
-  parent #207). The 409 held mentions outside the backlog stay held with
+  parent #207; 276 rows, 275 held). The 411 held mentions outside it stay held with
   their recorded reasons and wait for a later release. Amends 0013; the
   playbook's release gate now names the source-correction backlog.
 
