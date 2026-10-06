@@ -44,16 +44,21 @@ def num(s):
 def test_step4_readme_ledger_and_gate(facts):
     text = flat(STEP4_README)
     m = re.search(r"([\d,]+) emitting / ([\d,]+) held / ([\d,]+) deferred / ([\d,]+) external governance / "
-                  r"([\d,]+) structured flow = ([\d,]+); ([\d,]+) canonical facts", text)
+                  r"([\d,]+) structured flow = ([\d,]+); ([\d,]+) canonical facts \(`canonical-facts.csv`, ([\d,]+) rows\)", text)
     assert m, "ledger sentence not found in step4/README.md"
     led = facts["ledger"]
     assert tuple(num(g) for g in m.groups()) == (
         led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        facts["conservation"], facts["canonical_facts_file"])
-    m = re.search(r"promoted ([\d,]+) / held ([\d,]+), plus the same .*?; ([\d,]+) PASS / ([\d,]+) FAIL", text)
+        facts["conservation"], facts["canonical_facts_file"], facts["canonical_facts_file"])
+    m = re.search(r"promoted ([\d,]+) / held ([\d,]+), plus the same ([\d,]+) / ([\d,]+) / ([\d,]+) = ([\d,]+); "
+                  r"([\d,]+) PASS / ([\d,]+) FAIL", text)
     assert m, "gate sentence not found in step4/README.md"
     gate = facts["evidence_gate"]
-    assert tuple(num(g) for g in m.groups()) == (gate["promoted"], gate["held"], gate["pass_checks"], gate["fail_checks"])
+    total = gate["promoted"] + gate["held"] + led["deferred"] + led["external_governance"] + led["structured_flow"]
+    assert tuple(num(g) for g in m.groups()) == (
+        gate["promoted"], gate["held"], led["deferred"], led["external_governance"], led["structured_flow"],
+        total, gate["pass_checks"], gate["fail_checks"])
+    assert total == led["mentions"]
 
 
 def test_ontology_readme_taxonomy(facts):
@@ -67,15 +72,16 @@ def test_ontology_readme_taxonomy(facts):
         tax["triples"], tax["concepts"], tax["broader_links"], tax["concepts_with_definition"])
 
 
-# Backlog index row label -> heading prefix of the section it counts.
+# Backlog index row label -> (issue, heading prefix of the section it counts).
 INDEX_SECTIONS = {
-    "G3 Section B": "G3 Section B",
-    "G1b rows held for a verb correction": "G1b rows held for a verb correction",
-    "Supply & Trading": "Supply & Trading recommend/advise rows",
-    "Triggers": "Triggers pass",
-    "Precedes/follows": "Precedes/follows holds",
-    "G3 Section A": "G3 Section A",
-    "Other verb-review holds": "Other verb-review holds",
+    "G3 Section B": ("#201", "G3 Section B"),
+    "G1b rows held for a verb correction": ("#202", "G1b rows held for a verb correction"),
+    "Supply & Trading": ("#203", "Supply & Trading recommend/advise rows"),
+    "Triggers": ("#204", "Triggers pass"),
+    "Precedes/follows": ("#205", "Precedes/follows holds"),
+    "Governed-by": ("#206", None),
+    "G3 Section A": ("#209", "G3 Section A"),
+    "Other verb-review holds": ("#210", "Other verb-review holds"),
 }
 
 
@@ -86,25 +92,27 @@ def test_backlog_index_matches_sections():
         by_section[section] = by_section.get(section, 0) + 1
     with open(epm_facts.BACKLOG) as f:
         text = f.read()
-    checked = 0
+    seen = []
     for line in text.splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if len(cells) != 3 or not cells[1].startswith("#"):
             continue
-        label, _, stated = cells
-        if label.startswith("Governed-by"):
+        label, issue, stated = cells
+        key = next((k for k in INDEX_SECTIONS if label.startswith(k)), None)
+        assert key, f"unknown backlog index row: {label!r}"
+        seen.append(key)
+        assert issue == INDEX_SECTIONS[key][0], f"{label}: index says {issue}, expected {INDEX_SECTIONS[key][0]}"
+        if key == "Governed-by":
             m = re.match(r"(\d+) superseded approvals, (\d+) pass-backlog rows, (\d+) rows from the verb reviews", stated)
             assert m, f"governed-by index row unreadable: {stated!r}"
             expected = [sum(n for s, n in by_section.items() if s.startswith(p)) for p in (
                 "Governed-by superseded approvals", "Governed-by pass backlog", "Governed-by rows held in the verb reviews")]
             assert [int(g) for g in m.groups()] == expected
-            checked += 1
             continue
-        prefix = next(v for k, v in INDEX_SECTIONS.items() if label.startswith(k))
+        prefix = INDEX_SECTIONS[key][1]
         actual = sum(n for s, n in by_section.items() if s.startswith(prefix))
         assert int(re.match(r"\d+", stated).group()) == actual, f"{label}: index says {stated}, section has {actual}"
-        checked += 1
-    assert checked == 8
+    assert sorted(seen) == sorted(INDEX_SECTIONS), f"index rows {seen} must list each section exactly once"
 
 
 def test_decision_0025_figures(facts):
