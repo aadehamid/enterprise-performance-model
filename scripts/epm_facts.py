@@ -427,7 +427,9 @@ QUOTE = re.compile(r'"[^"]{3,}"')
 def _status_parts(status):
     """Return (lead word, set of record numbers named after 'amended by')."""
     lead = re.match(r"\s*(\w+)", status)
-    amended = set(re.findall(r"amended by (?:EPM-DEC-001-)?(\d{4})", status))
+    amended = set()
+    for clause in re.findall(r"amended by ([^;()]*)", status):
+        amended.update(re.findall(r"(?:EPM-DEC-001-)?(\d{4})", clause))
     return (lead.group(1) if lead else ""), amended
 
 
