@@ -27,7 +27,7 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Ham
 
 ## Correction (2026-10-06)
 
-The context above says Jena's RDF 1.2 support was unconfirmed because its tracking issue (#2805) is open. That was wrong. Apache Jena has full RDF 1.2 syntax input and output, and SPARQL 1.2, from 6.1.0 (May 2026); 5.4.0 to 6.0.x was an experimental preview, and 6.2.0 is current (https://github.com/apache/jena/blob/main/CHANGES.txt). Eclipse RDF4J has RDF 1.2 from 6.0.0 (July 2026). The reviewer of enterprise-people-graph PR #1 found the error. The decision stands: this build's Python toolchain (rdflib, pySHACL) has no RDF 1.2 support, which is why Rule 4 uses qualified-relation nodes.
+The context above says Jena's RDF 1.2 support was unconfirmed because its tracking issue (#2805) is open. That was wrong. Apache Jena has full RDF 1.2 syntax input and output, and SPARQL 1.2, from 6.1.0 (May 2026); 5.4.0 to 6.0.x was an experimental preview, and 6.2.0 is current (https://github.com/apache/jena/blob/main/CHANGES.txt). Eclipse RDF4J has RDF 1.2 from 6.0.0 (July 2026). The reviewer of enterprise-people-graph PR #1 found the error. The decision stands: this build's Python toolchain (rdflib, pySHACL) has no RDF 1.2 support, which is why this build does not adopt Rule 4 (RDF 1.2 reifiers) and uses qualified-relation nodes instead.
 
 ## Evidence
 
