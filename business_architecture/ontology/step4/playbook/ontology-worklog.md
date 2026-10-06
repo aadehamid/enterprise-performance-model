@@ -962,6 +962,13 @@ without a dated amendment and Hamid's explicit agreement.
   their recorded reasons and wait for a later release. Amends 0013; the
   playbook's release gate now names the source-correction backlog.
 
+### LPG guideline v2.1 (2026-10-06)
+- The `lpg-projection/` snapshot is re-pinned to enterprise-people-graph
+  `e7b09e8` (guideline v2.1). v2.1 makes qualified-relation nodes Rule 4
+  option 4a, the default, which is what EPM-DEC-001-0020 chose. Notes added
+  to 0020 and 0021; three older pipeline defects are tracked in
+  enterprise-people-graph issue #2.
+
 ### Grilling session on the handover plan (2026-10-05)
 Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
 record in `business_architecture/domain/decisions/` (index in its README):
