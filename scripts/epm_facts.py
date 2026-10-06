@@ -26,7 +26,7 @@ How it gets the numbers:
   rationale ("Precedent: REL-00366") is not a row. See EPM-DEC-001-0025.
 - A review hold is a non-blank `Hamid_decision` cell that records a hold, in
   any wording ("HOLD ...", "Held for source correction", "Carry forward
-  (remains held)"). Other columns are ignored (AGENTS.md, check 1).
+  (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
 is installed (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
