@@ -26,7 +26,7 @@ verdict, fact or count in the ledger changed.
 Notes on the reconciliation (checked 2026-10-06, both consistent with the ledger):
 
 - **Section B is 96 rows plus 6.** `ledger-v2.md` (G3 Section B5 record) counts the Section B population as 96: 60 in B1 to B4 and 36 in B5 (the 33-row class verdict and 3 superseded approvals). The B5 review file also holds 6 rows from outside that population (REL-00129, REL-00243, REL-00304, REL-00489, REL-00728, REL-01006): earlier approvals superseded for the same target-identity reason. So the #201 section holds 96 + 6 = 102 rows.
-- **REL-00436 is held and attached as provenance by design.** It was held on 2026-09-26 (its row below records that), then re-attached the same day as identity-unconfirmed duplicate provenance on the REL-00447 `uses-input` fact. It stays counted as held, adds no support to the fact, and `evidence-gate.py` checks this (`verb-predicate-mapping-v2.md`, G1a section; `ledger-v2.md`, G1a record).
+- **REL-00436 is held and attached as provenance by design.** Its target is confirmed by a stable ID (`CM-1-2-5-2-3`). It is held because its verb is ambiguous (`enables` against a separate `uses-input` record), as its row below records. On 2026-09-26 the G1a decision re-attached it as duplicate provenance on the REL-00447 `uses-input` fact. It stays counted as held, adds no support to the fact, and `evidence-gate.py` checks this (`ledger-v2.md`, G1a record; `verb-predicate-mapping-v2.md`, G1a section).
 - **REL-00873** (identity-rule scope ruling) is emitting: its hold was reversed on 2026-09-26. It is not Phase 1 work.
 
 ## G3 Section B — target-clarification requests (Hamid 2026-09-26) (#201)
