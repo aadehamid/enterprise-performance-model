@@ -960,7 +960,7 @@ without a dated amendment and Hamid's explicit agreement.
 Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
 record in `business_architecture/domain/decisions/` (index in its README):
 - PPC is planned, not active; build as if no consumer (EPM-DEC-001-0001).
-- Playbook maintenance rule decided (0002); amendment proposed: the
+- Playbook maintenance rule decided (0002), then amended (0024): the
   playbook is a company-neutral method and project decisions live in
   EPM-DEC-001 (0024, decided 2026-10-06: "Playbook holds the method, yes.").
   The playbook was rewritten on this basis;
@@ -1458,8 +1458,8 @@ record in `business_architecture/domain/decisions/` (index in its README):
   method's path, so a sync could have overwritten the method. The stale
   snapshot `step4/playbook/ontology-playbook.remote-main.md` was removed.
   Both remain in git history (added in PR #124).
-- **Playbook maintenance rule (proposed 2026-09-30; awaiting Hamid's
-  recorded decision).** Two playbook copies
+- **Playbook maintenance rule (proposed 2026-09-30; decided 2026-10-05
+  and amended 2026-10-06, see the note at the end of this entry).** Two playbook copies
   with two roles: the method (`business_architecture/ontology/ontology-playbook.md`,
   normative) and this working record. A decision change lands in the
   method's §2 Policies first; this log carries the dated entry pointing at
