@@ -340,8 +340,9 @@ Section 3 is the full discipline for this step.
 **Done when:** every row has a recorded verdict (APPROVE, STAND or HOLD);
 the ledger reconciles; the evidence gate passes; the promotion preconditions
 (re-pin, attestation, regression run, blast-radius proof) are met. A HOLD
-completes the row for this step: it emits no fact and goes to the
-source-correction backlog.
+completes the row for this step: it emits no fact, and its reason is
+recorded. Whether it goes on the source-correction backlog is a separate
+decision (below).
 
 **Then release the first module.** First decide which held rows go back to
 the source author for correction, and record that list: the
@@ -777,8 +778,11 @@ Review one predicate at a time, in four phases.
    test. Then record one verdict:
    - **APPROVE**: the row meets the definition, and the fact is stored.
    - **HOLD**: the row fails the definition or the evidence is too weak. No
-     fact is emitted, and the row goes back to the source author. A hold is
-     never a remap to another predicate.
+     fact is emitted, and the reason is recorded. The row joins the
+     source-correction backlog only by a recorded decision (Step 4, "Then
+     release the first module"); a hold left off that list keeps its reason
+     and waits for a later release. A hold is never a remap to another
+     predicate.
    - **STAND**: the row was already emitting correctly, and the review
      confirms it. Counts change only when a row changes bucket.
 4. **Sample and reconcile.** Sample per rule 6. Reconcile: every row has a
