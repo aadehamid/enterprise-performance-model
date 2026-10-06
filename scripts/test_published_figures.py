@@ -209,3 +209,6 @@ def test_decision_0025_every_figure(facts):
         m = re.search(pattern, text)
         assert m, f"0025 sentence not found: {pattern}"
         assert int(m.group(1)) == expected, f"{pattern}: states {m.group(1)}, actual {expected}"
+    m = re.search(r"Roughly ([\d.]+) times the Phase 1 work", text)
+    assert m, "0025 workload multiplier not found"
+    assert float(m.group(1)) == round(led["held"] / p1["rows"], 1), f"multiplier {m.group(1)} vs {led['held']}/{p1['rows']}"
