@@ -93,3 +93,10 @@ def test_parser_ignores_indentation_and_bullet_style():
         for line in text.split("\n")
     )
     assert epm_facts.phase1_rows(reformatted) == epm_facts.phase1_rows(text)
+
+
+def test_sentences_starting_with_an_id_are_not_rows():
+    text = _backlog() + "\n\nREL-00366 is a precedent, not a row requiring source correction.\n- REL-00214 explains why REL-00152 is held (citation).\n"
+    rows = epm_facts.phase1_rows(text)
+    assert "REL-00366" not in rows and "REL-00214" not in rows
+    assert rows == epm_facts.phase1_rows()

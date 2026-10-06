@@ -55,6 +55,8 @@ TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "out
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
 REL = re.compile(r"REL-\d{5}")
+# A list line: IDs separated by commas, semicolons or "and", with optional end punctuation.
+ID_LIST = re.compile(r"REL-\d{5}(?:\s*(?:,|;|and|,\s*and)\s*REL-\d{5})*\s*[,.;:]?")
 
 # Backlog section heading prefix -> Phase 1 issue. Sections not listed here
 # (the index, Definitions, the identity-rule ruling) hold no Phase 1 rows.
@@ -191,10 +193,11 @@ def phase1_rows(text=None):
                 home.setdefault(cells[0], (issue, section))
             continue
         # A list line: "- REL-1 (note)", "- **REL-1** (...)", "REL-1, REL-2,", "* REL-1".
-        item = re.sub(r"^([-*+]\s+)", "", line).lstrip("*").strip()
-        if not item.startswith("REL-"):
-            continue
-        for row_id in REL.findall(item.split("(")[0]):
+        item = re.sub(r"^([-*+]\s+)", "", line)
+        prefix = item.split("(")[0].replace("*", "").replace("`", "").strip()
+        if not ID_LIST.fullmatch(prefix):
+            continue  # a sentence, not a list of row IDs
+        for row_id in REL.findall(prefix):
             home.setdefault(row_id, (issue, section))
     rows = dict(paired)
     rows.update(home)
