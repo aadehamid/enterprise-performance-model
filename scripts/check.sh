@@ -13,12 +13,23 @@ with_deps() { uv run -q --with pytest --with rdflib --with openpyxl "$@"; }
 
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
+# Python, so that any git or read error raises and stops this script.
 snapshot() {
-  { git status --porcelain --untracked-files=all &&
-    git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
-      if [ -e "$f" ]; then sha256sum -- "$f"; else echo "deleted $f"; fi
-    done
-  } | sha256sum
+  python3 - <<'PY'
+import hashlib, os, subprocess
+h = hashlib.sha256()
+h.update(subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=all"]))
+names = subprocess.check_output(["git", "ls-files", "-z", "-m", "-o", "--exclude-standard"]).split(b"\0")
+for name in sorted(n for n in names if n):
+    h.update(name + b"\0")
+    path = os.fsdecode(name)
+    if os.path.lexists(path):
+        with open(path, "rb") as f:
+            h.update(hashlib.sha256(f.read()).digest())
+    else:
+        h.update(b"deleted")
+print(h.hexdigest())
+PY
 }
 before="$(snapshot)"
 
