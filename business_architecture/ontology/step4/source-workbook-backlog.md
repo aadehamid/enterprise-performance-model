@@ -289,7 +289,7 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue
 
 ## Governed-by rows held in the verb reviews (#206)
 
-`governed-by` rows held in the verb review passes, alongside the governed-by sections below.
+3 `governed-by` rows held in the verb reviews: 2 in the nearness sample review (`nearness-sample-review-batch.csv`) and 1 in the full governed-by review (`governed-by-full-review-batch.csv`). The governed-by sections further down hold the other #206 rows.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
@@ -299,7 +299,7 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue
 
 ## Other verb-review holds
 
-Rows held in the other verb review passes (enables samples, assures, requires, constrained-by, dependsOnOutputOf contradictions, ancestor/descendant). Issue to be opened.
+22 rows held in other review batches under `review-evidence/`: 6 in the G3 genuine-enablement review, 5 in the 32-row enables review, 5 in the ancestor/descendant review, 3 in the dependsOnOutputOf contradictions batch, and 1 each in the assures, requires and constrained-by reviews. Issue to be opened.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
