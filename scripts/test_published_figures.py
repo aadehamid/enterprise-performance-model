@@ -6,6 +6,10 @@ document has drifted: update the document (or, if the source changed on
 purpose, both the document and the pinned values in test_epm_facts.py).
 
 Run: uv run --with pytest --with rdflib python -m pytest -q scripts/test_published_figures.py
+
+Every count these documents state about Step 4 data is checked, with one
+deliberate exception: step4/README.md's "16/16 sections" counts signed-off
+sections of the mapping document, which is a review fact, not a data figure.
 """
 import json
 import os
@@ -41,8 +45,18 @@ def num(s):
     return int(s.replace(",", ""))
 
 
+def pairs_table():
+    """(G1b row, reverse row) pairs from the backlog's "G1b pairs held on both sides" table."""
+    with open(epm_facts.BACKLOG) as f:
+        text = f.read()
+    section = text.split("## G1b pairs held on both sides", 1)[1].split("\n## ", 1)[0]
+    return re.findall(r"^\|\s*(REL-\d{5})\s*\|\s*(REL-\d{5})\s*\|", section, re.M)
+
+
 def test_step4_readme_ledger_and_gate(facts):
     text = flat(STEP4_README)
+    m = re.search(r"both conserving to ([\d,]+) mentions", text)
+    assert m and num(m.group(1)) == facts["ledger"]["mentions"]
     m = re.search(r"([\d,]+) emitting / ([\d,]+) held / ([\d,]+) deferred / ([\d,]+) external governance / "
                   r"([\d,]+) structured flow = ([\d,]+); ([\d,]+) canonical facts \(`canonical-facts.csv`, ([\d,]+) rows\)", text)
     assert m, "ledger sentence not found in step4/README.md"
@@ -112,15 +126,26 @@ def test_backlog_index_matches_sections():
         prefix = INDEX_SECTIONS[key][1]
         actual = sum(n for s, n in by_section.items() if s.startswith(prefix))
         assert int(re.match(r"\d+", stated).group()) == actual, f"{label}: index says {stated}, section has {actual}"
+        if key == "G1b rows held for a verb correction":
+            g1b = {r for r, (_, s) in rows.items() if s.startswith(prefix)}
+            overlap = sum(1 for left, _ in pairs_table() if left in g1b)
+            m = re.search(r"\((\d+) of them also appear in the both-sides-held pairs table\)", stated)
+            assert m and int(m.group(1)) == overlap, f"G1b overlap: index says {stated!r}, actual {overlap}"
     assert sorted(seen) == sorted(INDEX_SECTIONS), f"index rows {seen} must list each section exactly once"
 
 
 def test_decision_0025_figures(facts):
     text = flat(DEC_0025)
     p1 = facts["phase1"]
-    m = re.search(r"list (\d+) rows.*?(\d+) of the (\d+) are held.*?(\d+) held mentions are not Phase 1 rows", text)
-    assert m, "0025 summary sentence not found"
-    assert tuple(int(g) for g in m.groups()) == (p1["rows"], p1["held"], p1["rows"], p1["held_outside"])
+    reverse = len(pairs_table())
+    m = re.search(r"the pipeline holds (\d+) mentions.*?list (\d+) rows.*?They are the (\d+) rows in the eight issues' lists.*?"
+                  r"plus the (\d+) reverse `informed-by` rows.*?(\d+) of the (\d+) are held.*?(\d+) held mentions are not Phase 1 rows",
+                  text)
+    assert m, "0025 summary sentences not found"
+    assert tuple(int(g) for g in m.groups()) == (
+        facts["ledger"]["held"], p1["rows"], p1["rows"] - reverse, reverse, p1["held"], p1["rows"], p1["held_outside"])
+    m = re.search(r"Phase 1 covers all (\d+) held mentions", text)
+    assert m and int(m.group(1)) == facts["ledger"]["held"]
     table = dict(re.findall(r"\| ([^|]+?) \| (\d+) \|", text))
     reason = p1["held_outside_by_reason"]
     pairs = {
