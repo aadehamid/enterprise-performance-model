@@ -1,10 +1,10 @@
 # Data Domain Register
 
 **ID:** EPM-BA-DOM-001
-**Version:** 0.1
+**Version:** 0.2
 **Status:** Draft
 **Owner:** Enterprise Performance Model initiative
-**Last updated:** 2026-09-29
+**Last updated:** 2026-10-05
 **Scope:** Downstream Oil & Gas data domains, anchored on Marathon Petroleum Corporation (MPC) public filings
 **Review trigger:** Each new domain proposal; Step 5 (party / organization modules) design
 

@@ -39,6 +39,11 @@ decision about one project (an IRI, a scope call, a ruling on one row) does
 not belong here. Record it in the project's decision log and worklog. A
 project example can go in §7.
 
+**Status of this rule in this repository: proposed.** The rule above is
+EPM-DEC-001-0024, which is Proposed and amends Decided EPM-DEC-001-0002.
+Until Hamid records 0024, EPM-DEC-001-0002 applies here: a decision change
+lands in §2 first, and the same pull request adds the dated worklog pointer.
+
 **Companion files in this repository.** These hold the worked example's
 project record. You do not need them to follow the method.
 
@@ -261,8 +266,10 @@ later is expensive.
    consumer is active yet. Release rules depend on it: while no consumer is
    active, you can retire provisional data in one release.
 10. **Target formats.** If the ontology will be projected into a labelled
-    property graph (Step 12), adopt that projection's design rules now. Rules
-    adopted late force you to remodel.
+    property graph (Step 12), adopt that projection's design rules now:
+    Rules 1, 2, 3 and 5 of the guideline in `lpg-projection/`, with
+    qualified-relation nodes in place of its Rule 4. Rules adopted late force
+    you to remodel.
 
 **Done when:** all ten policies are recorded with their reasons; the
 business owner has approved and locked the competency questions.
@@ -487,9 +494,12 @@ or is parked by a recorded decision.
 as Neo4j, for applications that query in Cypher. The Turtle files stay the
 master copy.
 
-**Procedure.** Follow the conversion guideline in `lpg-projection/`. Its
-design rules apply from the first release (Step 1, item 10). Its pipeline
-runs here:
+**Procedure.** Follow the conversion guideline in `lpg-projection/`, with
+one change. Apply its design Rules 1, 2, 3 and 5 from the first release
+(Step 1, item 10). Do not apply its Rule 4 (RDF 1.2 reifiers). Give a
+relationship its own properties with a qualified-relation node instead (§2,
+Modeling discipline). Such a node loads as an ordinary node, so the
+guideline's flatten step is not needed. Its pipeline runs here:
 
 1. **Check.** Run the meta-shapes and the data shapes. Any violation stops
    the build.
@@ -646,7 +656,9 @@ the method improves, by a dated amendment with the owner's agreement.
 - **The playbook holds the method. The decision log holds the project's
   decisions.** A project decision gets a decision record and a dated worklog
   entry. When a decision also improves the method, add the improvement here,
-  in the same change.
+  in the same change. In this repository this is proposed
+  (EPM-DEC-001-0024); until it is decided, EPM-DEC-001-0002 applies (see
+  "How to maintain it" above).
 
 ---
 
