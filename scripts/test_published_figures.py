@@ -7,9 +7,14 @@ purpose, both the document and the pinned values in test_epm_facts.py).
 
 Run: uv run --with pytest --with rdflib python -m pytest -q scripts/test_published_figures.py
 
-Every count these documents state about Step 4 data is checked, with one
-deliberate exception: step4/README.md's "16/16 sections" counts signed-off
-sections of the mapping document, which is a review fact, not a data figure.
+Checked: every total and summary figure these documents state about Step 4
+data. Deliberately not checked, because they are not data totals this tool
+computes:
+- step4/README.md's "16/16 sections": signed-off sections of the mapping document.
+- The backlog's "All 96 Section B rows": the historic Section B population,
+  explained by the index note "Section B is 96 rows plus 6".
+- Subgroup breakdowns inside backlog section intros (for example "5 rows of the
+  REL-00445 pattern"): they split rows whose section totals are checked here.
 """
 import json
 import os
@@ -159,3 +164,48 @@ def test_decision_0025_figures(facts):
     for label, key in pairs.items():
         row = next(int(v) for k, v in table.items() if k.startswith(label))
         assert row == reason[key], f"0025 table {label!r}: {row} vs {reason[key]}"
+
+
+def section_count(prefix):
+    return sum(1 for _, (_, s) in epm_facts.phase1_rows().items() if s.startswith(prefix))
+
+
+def test_backlog_section_totals():
+    text = flat(epm_facts.BACKLOG)
+    pairs = pairs_table()
+    g1b = {r for r, (_, s) in epm_facts.phase1_rows().items() if s.startswith("G1b rows held for a verb correction")}
+    checks = [
+        (r"(\d+) pairs where the G1b `enables` row is held", len(pairs)),
+        (r"The pairs table above lists (\d+) pairs", len(pairs)),
+        (r"(\d+) of those pairs' G1b rows are in this table", sum(1 for left, _ in pairs if left in g1b)),
+        (r"The (\d+) rows held in the Supply & Trading enables review", section_count("Supply & Trading")),
+        (r"(\d+) `governed-by` rows, all held in the full governed-by review", section_count("Governed-by rows held in the verb reviews")),
+        (r"(\d+) rows, each held in one of these review batches", section_count("Other verb-review holds")),
+        (r"The following (\d+) RELs had 2026-09-25 row-level approvals", section_count("Governed-by superseded approvals")),
+        (r"Triggers pass: (\d+) held rows", section_count("Triggers pass")),
+        (r"(\d+) rows held — each needs an affirmative sequence citation", section_count("Precedes/follows holds")),
+    ]
+    for pattern, expected in checks:
+        m = re.search(pattern, text)
+        assert m, f"backlog sentence not found: {pattern}"
+        assert int(m.group(1)) == expected, f"{pattern}: states {m.group(1)}, actual {expected}"
+
+
+def test_decision_0025_every_figure(facts):
+    text = flat(DEC_0025)
+    led, p1 = facts["ledger"], facts["phase1"]
+    reason = p1["held_outside_by_reason"]
+    corrections = reason["USES_INPUT_20260926_HOLDS"] + reason["INFORMEDBY_20260926_HOLDS"] + reason["USES_INPUT_G1A_20260926_HOLDS"]
+    checks = [
+        (r"block the release until all (\d+) were corrected", led["held"]),
+        (r"The (\d+) held mentions outside it stay held", p1["held_outside"]),
+        (r"new issues for the (\d+) context-pass holds", reason["context-pass HOLD"]),
+        (r"and the (\d+) `uses-input`, `informed-by` and dependent holds", corrections),
+        (r"run on commit `[0-9a-f]+`: (\d+) held mentions", led["held"]),
+        (r"held mentions, (\d+) emitting", led["emitting"]),
+        (r"emitting, (\d+) facts", facts["canonical_facts_file"]),
+    ]
+    for pattern, expected in checks:
+        m = re.search(pattern, text)
+        assert m, f"0025 sentence not found: {pattern}"
+        assert int(m.group(1)) == expected, f"{pattern}: states {m.group(1)}, actual {expected}"
