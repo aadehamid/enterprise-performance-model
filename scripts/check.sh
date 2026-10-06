@@ -15,7 +15,9 @@ with_deps() { uv run -q --with pytest --with rdflib --with openpyxl "$@"; }
 # file, so a check that rewrites a file that was already modified is caught too.
 snapshot() {
   { git status --porcelain --untracked-files=all
-    git ls-files -z -m -o --exclude-standard | xargs -0 -r sha256sum
+    git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
+      if [ -e "$f" ]; then sha256sum -- "$f"; else echo "deleted $f"; fi
+    done
   } | sha256sum
 }
 before="$(snapshot)"
