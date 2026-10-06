@@ -24,7 +24,7 @@ Read literally, the gate would block the release until all 686 were corrected, w
 
 ## Decision
 
-Option (a). Phase 1 is the source-correction backlog: the rows worked through the eight Phase 1 issues. The `core` 1.0.0 release requires a fresh verdict, after source correction, for every row on that backlog. The 409 held mentions outside it stay held with their recorded reasons, emit no fact, and move to a backlog for a later release. Their evidence stays in the Step 4 CSVs (playbook evidence rule 9). This amends EPM-DEC-001-0013. The release gate in the playbook (Step 4 and Appendix B) and in the ontology skill now says "every row on the source-correction backlog".
+Option (a). Phase 1 is the source-correction backlog: the rows worked through the eight Phase 1 issues. The `core` 1.0.0 release requires a fresh verdict, after source correction, for every row on that backlog. The 409 held mentions outside it stay held with their recorded reasons, emit no fact, and move to a backlog for a later release. Their evidence stays in the Step 4 CSVs (playbook evidence rule 9). This amends EPM-DEC-001-0013. The release gate in the playbook (Step 4 and Appendix B) now says "every row on the source-correction backlog". The ontology skill in personal-agent-skills gets the same change through its own pull request (personal-agent-skills #5).
 
 ## Alternatives considered
 
