@@ -140,11 +140,18 @@ All 96 Section B rows were held under the nearness-only identity rule: a candida
 
 ## G1b pairs held on both sides (Hamid 2026-09-26) (#202)
 
-15 pairs where the G1b `enables` row is held (G1bNoVerbChange) and the reverse
-`informed-by` row is also held (no route in the 2026-09-26 informed-by pass).
+15 pairs where the G1b `enables` row is held and the reverse `informed-by`
+row is also held (no route in the 2026-09-26 informed-by pass). 13 of the G1b
+rows are held as G1bNoVerbChange.
 Both sides held → the relationship disappears from the graph entirely.
 Same pattern as contradiction pair C. The G1b gate check is now conditional:
 reverse fact present **if** its row has a route; otherwise held with no fact.
+
+*Corrected 2026-10-06 (PR #208).* This paragraph first said all 15 G1b rows
+were held as G1bNoVerbChange. Two are held under other verdicts and are worked
+in other issues: REL-00469 (Supply & Trading hierarchy hold, #203) and
+REL-00489 (G3 Section B target-identity hold, #201). Their pairs stay listed
+here because their reverse rows are still held.
 
 | G1b row | informed-by row | status |
 |---|---|---|
