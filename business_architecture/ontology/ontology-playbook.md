@@ -329,8 +329,10 @@ the predicates of your triples.
 2. Review one predicate family at a time, one row at a time. For each row,
    settle identity first, then direction, then the definition test, then
    the verdict.
-3. Hold a row whose meaning is unclear and send it back to the source
-   author. Never change its meaning when you emit it.
+3. Hold a row whose meaning is unclear. It emits no fact and keeps its
+   reason, and it reaches the source author only if the release gate puts it
+   on the source-correction backlog (below). Never change its meaning when
+   you emit it.
 4. Keep a conservation ledger: emitted plus held plus deferred equals the
    total, reconciled row by row.
 5. Run the promotion script last, after every verdict is recorded.
@@ -625,7 +627,11 @@ the method improves, by a dated amendment with the owner's agreement.
   relations. Reason: plain RDF, plain SHACL and every common tool handle the
   pattern today, and it loads into a property graph as an ordinary node.
   RDF 1.2 reifiers do the same job but need tooling that is not yet
-  widespread (§4).
+  widespread (§4). A link the business tracks as a thing in its own right
+  (its own lifecycle or identity, referred to by other records) is a domain
+  class instead, such as a `Transfer`. The arcs that define a qualified
+  relation, including an inverse such as `prov:qualifiedAssociation`, do not
+  make it one.
 - **Give every property one kind and a concrete range.** It is an object,
   datatype or annotation property, never a bare `rdf:Property`, with a
   concrete `xsd` type for literals.
@@ -926,7 +932,8 @@ teaches a new check, add it here with the reason.
   sequence case in rule 5 is the one exception.
 - Boundary wording is never an identity route.
 - A row's meaning is fixed at review time. If a better reading appears
-  later, hold the row and send the correction to the source.
+  later, hold the row and record the better reading as its reason. A
+  source correction goes through the source-correction backlog (Step 4).
 
 ### 5.2 Taxonomy
 
@@ -954,7 +961,8 @@ Nothing merges on assumption.
 - Judge each row against its predicate's written definition (Appendix C has
   examples).
 - Never translate a verb silently. If the source says "informs" and the
-  pattern wants "requires", hold the row and send it back.
+  pattern wants "requires", hold the row with that reason. A source
+  correction goes through the source-correction backlog (Step 4).
 - A row that fails its definition is held. If it was emitting, its fact is
   removed. No substitute fact is emitted.
 
