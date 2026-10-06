@@ -209,7 +209,11 @@ Every G1b `enables` row held with G1bNoVerbChange. The pairs table above lists 1
 
 ## Supply & Trading recommend/advise rows (#203)
 
-`enables` rows where the source recommends or advises and the target decides (the REL-00445 pattern).
+The 15 rows held in the Supply & Trading enables review (`review-evidence/st-enables-21-review-batch.csv`), in three groups:
+
+- 5 rows of the REL-00445 pattern, where the source recommends or advises and the target decides: REL-00152, REL-00262, REL-00458, REL-01122, REL-01129. The correction is `enables` or `informs`.
+- 8 ambiguous rows that need Hamid's decision: REL-00263, REL-00440, REL-00455, REL-00712, REL-00750, REL-01064, REL-01206 (group "Hamid decides"), and REL-00436 (held in the enables review).
+- 2 existing hierarchy holds, a different correction from the pattern above: REL-00466 and REL-00469.
 
 | row_id | issue | parked | status |
 |---|---|---|---|
