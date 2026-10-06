@@ -42,3 +42,6 @@ uv sync
 
 echo "==> Install complete. Run the Track A demo with:"
 echo "    cd demos/o2c-unbilled-semantic-layer && source .venv/bin/activate && ./scripts/demo.sh"
+
+# Run scripts/check.sh before every push (see AGENTS.md, "Before every push").
+git -C "$REPO_ROOT" config core.hooksPath scripts/hooks

@@ -1,0 +1,22 @@
+name: Checks
+
+# Runs scripts/check.sh: the Step 4 evidence gate, every test script,
+# epm-facts counts and the decision-record check. The pre-push hook in
+# scripts/hooks runs the same script locally.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v10
+      - name: Run scripts/check.sh
+        run: ./scripts/check.sh
