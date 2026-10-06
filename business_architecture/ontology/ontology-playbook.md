@@ -343,15 +343,17 @@ the ledger reconciles; the evidence gate passes; the promotion preconditions
 completes the row for this step: it emits no fact and goes to the
 source-correction backlog.
 
-**Then release the first module.** Release the core module only when every
-held row has gone back to the source author and has a fresh verdict after
-the correction. The fresh verdict may be HOLD again; the row then stays out
-of the release with its reason recorded. No held row is released without a
-fresh verdict. Then release the core module: serialize the
-governed facts, retire the provisional layer in one release, and add the
-first version header. Release only after the held rows are settled. If you
-release first, the held rows lose their provisional form and need a second
-release. Build a small SHACL slice first (Step 9) so the release is checked
+**Then release the first module.** First decide which held rows go back to
+the source author for correction, and record that list: the
+source-correction backlog. Release the core module only when every row on
+that list has a fresh verdict after its correction. The fresh verdict may be
+HOLD again; the row then stays out of the release with its reason recorded.
+Held rows that are not on the list stay held with their recorded reason.
+They emit nothing, and they wait in a backlog for a later release. Then
+release the core module: serialize the governed facts, retire the
+provisional layer in one release, and add the first version header. If you
+release before the backlog rows are settled, they lose their provisional
+form and need a second release. Build a small SHACL slice first (Step 9) so the release is checked
 by shapes, not only by scripts. Appendix B covers release mechanics.
 
 ### Step 5. Organizations, roles and responsibilities
@@ -1258,8 +1260,9 @@ that pointed at it.
 
 Before a release:
 
-- Every held row has a fresh verdict after source correction (a fresh HOLD
-  keeps it out of the release, with its reason recorded), and the ledger
+- Every row on the source-correction backlog has a fresh verdict after its
+  correction (a fresh HOLD keeps it out of the release, with its reason
+  recorded). Every other held row keeps its recorded hold reason. The ledger
   reconciles.
 - The build, the evidence and the consumer-impact scan cite one commit.
 - The consumer attestation is fresh.

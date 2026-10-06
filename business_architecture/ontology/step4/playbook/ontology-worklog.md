@@ -956,6 +956,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Phase 1 scope (2026-10-06)
+- EPM-DEC-001-0025: Phase 1 is the source-correction backlog (eight issues,
+  parent #207). The 409 held mentions outside the backlog stay held with
+  their recorded reasons and wait for a later release. Amends 0013; the
+  playbook's release gate now names the source-correction backlog.
+
 ### Grilling session on the handover plan (2026-10-05)
 Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
 record in `business_architecture/domain/decisions/` (index in its README):

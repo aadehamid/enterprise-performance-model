@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided |
+| Status | Decided; amended by EPM-DEC-001-0025 (2026-10-06) |
 | Date | 2026-10-05 |
 | Questions | Q12, and Q3 of the handover plan |
 | Source | Grilling session on the handover plan |
@@ -24,6 +24,10 @@ Release before Phase 1; release after Step 5.
 Q12: "I agree ."
 
 Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+
+## Amendment (2026-10-06)
+
+EPM-DEC-001-0025 defines Phase 1 as the source-correction backlog. The release needs fresh verdicts for the rows on that backlog. The 409 held mentions outside it stay held with their recorded reasons and wait for a later release.
 
 ## Evidence
 

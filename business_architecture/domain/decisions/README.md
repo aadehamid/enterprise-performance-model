@@ -6,7 +6,7 @@ alternatives, Hamid's recorded words, evidence, status and date. A record says
 not decide it. See `docs/agents/domain.md` for the format.
 
 Records 0001 to 0024 come from the grilling session on the handover plan
-(2026-10-05).
+(2026-10-05). Later records come from follow-up decisions in Claude Code sessions.
 
 | Record | Decision | Status | Questions |
 |---|---|---|---|
@@ -22,7 +22,7 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | [EPM-DEC-001-0010](EPM-DEC-001-0010-market-data-risk-definition-timing.md) | Define Market Data and Commercial Risk at Step 7 | Decided | Q17 |
 | [EPM-DEC-001-0011](EPM-DEC-001-0011-mpc-gap-proposals-triage.md) | MPC-P01 to P09: rule on P02 now, the rest at Step 7 | Decided | Q10, Q14, Q18 |
 | [EPM-DEC-001-0012](EPM-DEC-001-0012-mpc-p02-scope.md) | MPC-P02: propose IDs now, turnaround lifecycle later | Decided | Q15 |
-| [EPM-DEC-001-0013](EPM-DEC-001-0013-core-release-timing.md) | Release `core` 1.0.0 after Phase 1 | Decided | Q12, and Q3 of the handover plan |
+| [EPM-DEC-001-0013](EPM-DEC-001-0013-core-release-timing.md) | Release `core` 1.0.0 after Phase 1 | Decided; amended by 0025 | Q12, and Q3 of the handover plan |
 | [EPM-DEC-001-0014](EPM-DEC-001-0014-shacl-release-slice.md) | Build a small SHACL slice before the release; Step 9 order | Decided | Q13, Q23 |
 | [EPM-DEC-001-0015](EPM-DEC-001-0015-step5-scope-reference-instances.md) | Step 5: classes plus public reference instances in a separate module; MPLX | Decided | Q19, Q27, Q28 (and Q21 of the handover plan) |
 | [EPM-DEC-001-0016](EPM-DEC-001-0016-step6-p-plan.md) | Step 6: adopt P-Plan; occurrences belong to consumers | Decided | Q20 |
@@ -34,3 +34,4 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | [EPM-DEC-001-0022](EPM-DEC-001-0022-ontology-skill.md) | A company-neutral ontology skill in personal-agent-skills | Decided | Q32 |
 | [EPM-DEC-001-0023](EPM-DEC-001-0023-external-ontologies-map-not-import.md) | Public ontologies: map to them, do not import them | Decided | Q34 |
 | [EPM-DEC-001-0024](EPM-DEC-001-0024-playbook-is-a-method.md) | The playbook is a method; project decisions live in EPM-DEC-001 | Decided (2026-10-06) | Follow-up to Q2 |
+| [EPM-DEC-001-0025](EPM-DEC-001-0025-phase1-scope.md) | Phase 1 covers the source-correction backlog; other held rows wait | Decided | Follow-up to Q12 |
