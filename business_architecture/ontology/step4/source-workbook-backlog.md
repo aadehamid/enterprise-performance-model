@@ -23,11 +23,11 @@ verdict, fact or count in the ledger changed.
 | G3 Section A: held after the explicit-reference review (A1 to A6) | to be opened | 47 |
 | Other verb-review holds | to be opened | 22 |
 
-Open points found by the reconciliation:
+Notes on the reconciliation (checked 2026-10-06, both consistent with the ledger):
 
-- The Section B intro and `ledger-v2.md` say 96 undecided Section B rows (plus 10 already held). The review files B1 to B5 hold 102 rows (B1 to B4: 60; B5: 42, of which 9 supersede earlier approvals). This PR does not change either figure; the difference needs a ledger check.
-- REL-00436 is listed here as held, and its row says its evidence was removed, but `canonical-facts.csv` still lists it as duplicate provenance on the REL-00447 fact.
-- REL-00873 (identity-rule scope ruling) is emitting: its hold was reversed on 2026-09-26. It is not Phase 1 work.
+- **Section B is 96 rows plus 6.** `ledger-v2.md` (G3 Section B5 record) counts the Section B population as 96: 60 in B1 to B4 and 36 in B5 (the 33-row class verdict and 3 superseded approvals). The B5 review file also holds 6 rows from outside that population (REL-00129, REL-00243, REL-00304, REL-00489, REL-00728, REL-01006): earlier approvals superseded for the same target-identity reason. So the #201 section holds 96 + 6 = 102 rows.
+- **REL-00436 is held and attached as provenance by design.** Its target is confirmed by a stable ID (`CM-1-2-5-2-3`). It is held because its verb is ambiguous (`enables` against a separate `uses-input` record), as its row below records. On 2026-09-26 the G1a decision re-attached it as duplicate provenance on the REL-00447 `uses-input` fact. It stays counted as held, adds no support to the fact, and `evidence-gate.py` checks this (`ledger-v2.md`, G1a record; `verb-predicate-mapping-v2.md`, G1a section).
+- **REL-00873** (identity-rule scope ruling) is emitting: its hold was reversed on 2026-09-26. It is not Phase 1 work.
 
 ## G3 Section B — target-clarification requests (Hamid 2026-09-26) (#201)
 
