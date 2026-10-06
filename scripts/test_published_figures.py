@@ -184,6 +184,7 @@ def test_backlog_section_totals():
         (r"The following (\d+) RELs had 2026-09-25 row-level approvals", section_count("Governed-by superseded approvals")),
         (r"Triggers pass: (\d+) held rows", section_count("Triggers pass")),
         (r"(\d+) rows held — each needs an affirmative sequence citation", section_count("Precedes/follows holds")),
+        (r"holds 96 \+ 6 = (\d+) rows", section_count("G3 Section B")),
     ]
     for pattern, expected in checks:
         m = re.search(pattern, text)
