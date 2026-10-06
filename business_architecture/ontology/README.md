@@ -9,16 +9,17 @@ roles:
 
 | File | Role | Read it for |
 |------|------|-------------|
-| `ontology-playbook.md` | **Playbook**: the method (normative) | Foundations, the end-to-end sequence, the locked policies (§2), Step 4 evidence discipline (§3), standards (§4), soundness (§5), working agreements (§6), worked example (§7) |
+| `ontology-playbook.md` | **Playbook**: a company-neutral method for building an ontology from scratch | Foundations, Steps 0 to 12, policies (§2), promoting provisional data (§3), standards (§4), soundness checks (§5), working agreements (§6), worked example (§7) |
 | `step4/playbook/ontology-worklog.md` | **Worklog**: the build record | The plan table with current step statuses (§2), the per-step log (§3), and the dated decision journal (§4) |
 
-Check the playbook's §2 Policies before making any modeling choice, and the
-worklog's plan table for where the build stands. The worklog was named
-`ontology-playbook.md` until 2026-09-30. **Proposed maintenance rule**
-(2026-09-30, awaiting Hamid's recorded decision): a decision change would
-land in the playbook's §2 first, with the worklog's decision log carrying
-the dated entry pointing at it. One place
-decides, one place narrates.
+Check the playbook's §2 Policies and this project's decision records
+(`../domain/decisions/`, EPM-DEC-001) before making any modeling choice, and
+the worklog's plan table for where the build stands. The worklog was named
+`ontology-playbook.md` until 2026-09-30. The maintenance rule was decided on
+2026-10-05 (EPM-DEC-001-0002). The playbook was then rewritten as a
+company-neutral method, and an amendment is proposed (EPM-DEC-001-0024):
+project decisions get an EPM-DEC-001 record and a dated worklog entry, and
+the playbook changes only when the method changes.
 
 ## Contents
 
@@ -27,6 +28,9 @@ decides, one place narrates.
 | `ontology-playbook.md` | **Playbook** (the method, normative): policies, method, standards, soundness, working agreements, worked example |
 | `step4/playbook/ontology-worklog.md` | **Worklog** (the build record): plan table and statuses, step log, decision journal |
 | `step4/` | Step 4 working area: verb-predicate mapping, evidence gate, canonical facts, correction backlog (see `step4/README.md`) |
+| `step4/evidence-discipline.md` | The approved Step 4 evidence discipline text, moved word for word from the playbook on 2026-10-05 |
+| `lpg-projection/` | Pinned snapshot of the ontology-to-LPG projection guideline used in Step 12 (EPM-DEC-001-0020, 0021) |
+| `../domain/decisions/` | Project decision records (EPM-DEC-001) |
 | `competency-questions.md` | The 44-question acceptance baseline — doubles as the Step 11 SPARQL regression tests |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |
@@ -66,6 +70,6 @@ The worklog's plan table (`step4/playbook/ontology-worklog.md` §2)
 is authoritative for step status. As of 2026-09-30: Steps 0–3c and 8 are
 done; Step 3d is complete with explicit open exceptions; **Step 4 is
 PROMOTED** (2026-09-30), which approved the relationship-layer review,
-not a release. The `core` 1.0.0 release (canonical facts serialized to
-Turtle, `intake:` retired) is an open decision. Steps 5–7 and 9–11 are
+not a release. Next is Phase 1 (source-workbook corrections), then the
+`core` 1.0.0 release (EPM-DEC-001-0013). Steps 5 to 7 and 9 to 12 are
 planned.

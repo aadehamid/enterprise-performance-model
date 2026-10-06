@@ -60,4 +60,4 @@ overriding it silently:
 
 > _Contradicts EPM-DEC-001-NNNN (<decision title>), but worth reopening because…_
 
-(Placeholder format only. No EPM-DEC-001 record exists yet.)
+(Placeholder format. Records 0001 to 0024 exist; see `business_architecture/domain/decisions/README.md`.)
