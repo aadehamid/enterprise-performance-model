@@ -55,8 +55,9 @@ TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "out
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
 REL = re.compile(r"REL-\d{5}")
-# A list line: IDs separated by commas, semicolons or "and", with optional end punctuation.
-ID_LIST = re.compile(r"REL-\d{5}(?:\s*(?:,|;|and|,\s*and)\s*REL-\d{5})*\s*[,.;:]?")
+# A list line: IDs separated by commas, semicolons or "and", ending with optional
+# punctuation or with a separator when the list wraps onto the next line.
+ID_LIST = re.compile(r"REL-\d{5}(?:\s*(?:,|;|and|,\s*and)\s*REL-\d{5})*\s*(?:,\s*and|and|[,.;:])?")
 
 # Backlog section heading prefix -> Phase 1 issue. Sections not listed here
 # (the index, Definitions, the identity-rule ruling) hold no Phase 1 rows.

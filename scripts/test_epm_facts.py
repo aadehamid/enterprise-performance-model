@@ -100,3 +100,11 @@ def test_sentences_starting_with_an_id_are_not_rows():
     rows = epm_facts.phase1_rows(text)
     assert "REL-00366" not in rows and "REL-00214" not in rows
     assert rows == epm_facts.phase1_rows()
+
+
+def test_wrapped_lists_keep_every_row():
+    text = _backlog()
+    wrapped = text.replace("REL-01223, REL-01227, REL-01241, REL-01289, REL-01291, REL-01294.",
+                           "REL-01223, REL-01227, REL-01241, REL-01289, REL-01291 and\nREL-01294.")
+    assert wrapped != text
+    assert epm_facts.phase1_rows(wrapped) == epm_facts.phase1_rows(text)
