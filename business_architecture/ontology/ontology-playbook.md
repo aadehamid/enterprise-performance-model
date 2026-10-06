@@ -880,9 +880,10 @@ status and any upper ontology before you rely on one.
 
 ### What to evaluate and set aside
 - **RDF 1.2 reifiers.** They attach properties to a single triple. As of
-  October 2026, the W3C specification is a Candidate Recommendation, rdflib
-  and pySHACL do not support it, and Jena's support is still being tracked.
-  Use qualified-relation nodes (§2) until the tools you use support it.
+  October 2026, the W3C specification is a Candidate Recommendation. Apache
+  Jena 6.1.0+ and RDF4J 6.0.0+ read and write it; rdflib and pySHACL do not.
+  Use qualified-relation nodes (§2) unless every tool in your pipeline
+  supports it.
 - **W3C SIOC.** An online-community vocabulary. It does not apply to a
   process ontology.
 - **The Open Data Product Specification family.** The W3C stack covers the

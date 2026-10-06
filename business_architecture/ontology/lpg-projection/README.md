@@ -42,6 +42,9 @@ An external check found that two statements in this snapshot need care:
 - The guideline lists rdflib as "in progress" for RDF 1.2. In rdflib's
   tracking issue every stage is still open, and no release supports it
   (https://github.com/RDFLib/rdflib/issues/3524). pySHACL depends on rdflib.
-  RDF4J documents full support. Jena's tracking issue is still open.
+  Apache Jena supports RDF 1.2 from 6.1.0 (after an experimental preview
+  from 5.4.0), and RDF4J from 6.0.0 (corrected 2026-10-06; an earlier note
+  called Jena's support unconfirmed because its tracking issue is still
+  open).
 
 These notes are for the master copy's next revision.

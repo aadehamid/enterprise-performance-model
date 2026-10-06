@@ -25,6 +25,10 @@ Q24: "can we adopt the guideline to project ontology to label property graph at 
 
 Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
 
+## Correction (2026-10-06)
+
+The context above says Jena's RDF 1.2 support was unconfirmed because its tracking issue (#2805) is open. That was wrong. Apache Jena has full RDF 1.2 syntax input and output, and SPARQL 1.2, from 6.1.0 (May 2026); 5.4.0 to 6.0.x was an experimental preview, and 6.2.0 is current (https://github.com/apache/jena/blob/main/CHANGES.txt). Eclipse RDF4J has RDF 1.2 from 6.0.0 (July 2026). The reviewer of enterprise-people-graph PR #1 found the error. The decision stands: this build's Python toolchain (rdflib, pySHACL) has no RDF 1.2 support, which is why this build does not adopt Rule 4 (RDF 1.2 reifiers) and uses qualified-relation nodes instead.
+
 ## Evidence
 
 https://www.w3.org/TR/rdf12-concepts/ ; https://github.com/RDFLib/rdflib/issues/3524 ; https://rdf4j.org/documentation/programming/rdf12/ ; https://github.com/apache/jena/issues/2805 ; https://github.com/neo4j-labs/neosemantics ; `business_architecture/ontology/lpg-projection/`.
