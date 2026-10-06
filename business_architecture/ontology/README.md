@@ -21,6 +21,10 @@ company-neutral method, and the amendment EPM-DEC-001-0024 was decided on
 2026-10-06: project decisions get an EPM-DEC-001 record and a dated worklog
 entry, and the playbook changes only when the method changes.
 
+For current figures (ledger, gate, taxonomy size, Phase 1 rows) and one row's
+status, run `python3 scripts/epm_facts.py counts` or `row REL-xxxxx` from the repo
+root.
+
 ## Contents
 
 | Path | What |

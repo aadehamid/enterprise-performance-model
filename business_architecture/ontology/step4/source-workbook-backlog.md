@@ -20,8 +20,8 @@ verdict, fact or count in the ledger changed.
 | Triggers | #204 | 11 |
 | Precedes/follows | #205 | 20 |
 | Governed-by | #206 | 10 superseded approvals, 2 pass-backlog rows, 3 rows from the verb reviews |
-| G3 Section A: held after the explicit-reference review (A1 to A6) | to be opened | 47 |
-| Other verb-review holds | to be opened | 22 |
+| G3 Section A: held after the explicit-reference review (A1 to A6) | #209 | 47 |
+| Other verb-review holds | #210 | 22 |
 
 Notes on the reconciliation (checked 2026-10-06, both consistent with the ledger):
 
@@ -235,7 +235,7 @@ The 15 rows held in the Supply & Trading enables review (`review-evidence/st-ena
 
 ## G3 Section A: held after the explicit-reference review
 
-Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue to be opened.
+Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change (#209).
 
 | row_id | issue | parked | status |
 |---|---|---|---|
@@ -310,7 +310,7 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change. Issue
 - `requires-6-review-batch.csv` (1): REL-00208
 - `constrained-by-11-review-batch.csv` (1): REL-00097
 
-Issue to be opened.
+Worked in #210.
 
 | row_id | issue | parked | status |
 |---|---|---|---|

@@ -40,7 +40,7 @@ for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py
          "business_architecture/ontology/build/scripts/test_step3c_workbook_validate.py"; do
   (cd "$(dirname "$t")" && echo "--- $t" && with_deps python "$(basename "$t")" >/dev/null)
 done
-run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py
+run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py counts >/dev/null
 
