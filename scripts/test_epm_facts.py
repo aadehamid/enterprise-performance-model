@@ -69,3 +69,27 @@ def test_row_reports_held_provenance():
 def test_find_catches_text_split_across_lines():
     hits = run("find", "EPM-DEC-001-0024, decided")["hits"]
     assert any(h["kind"] == "split" for h in hits)
+
+
+def _backlog():
+    with open(epm_facts.BACKLOG) as f:
+        return f.read()
+
+
+def test_parser_ignores_table_padding():
+    text = _backlog()
+    squeezed = "\n".join(
+        "|" + "|".join(c.strip() for c in line.strip().strip("|").split("|")) + "|"
+        if line.strip().startswith("|") else line
+        for line in text.split("\n")
+    )
+    assert epm_facts.phase1_rows(squeezed) == epm_facts.phase1_rows(text)
+
+
+def test_parser_ignores_indentation_and_bullet_style():
+    text = _backlog()
+    reformatted = "\n".join(
+        ("    " + line) if line.startswith("REL-") else line.replace("- REL", "* REL", 1)
+        for line in text.split("\n")
+    )
+    assert epm_facts.phase1_rows(reformatted) == epm_facts.phase1_rows(text)

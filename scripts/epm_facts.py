@@ -157,37 +157,45 @@ def issue_for(heading):
     return None
 
 
-def phase1_rows():
+def phase1_rows(text=None):
     """Map each Phase 1 row ID to (issue, section heading), from the backlog's structure.
 
-    A row's own section wins over the #202 pairs table, which repeats some rows
-    held in other sections (REL-00469 in #203, REL-00489 in #201).
+    Formatting does not matter: table cells are read with their padding
+    stripped, and list lines are read after stripping indentation, bullets and
+    bold. A row's own section wins over the #202 pairs table, which repeats
+    some rows held in other sections (REL-00469 in #203, REL-00489 in #201).
+    An ID that is only cited inside a sentence or a parenthesis is not a row.
     """
+    if text is None:
+        with open(BACKLOG) as f:
+            text = f.read()
     home, paired = {}, {}
     section = None
-    with open(BACKLOG) as f:
-        for line in f:
-            line = line.rstrip("\n")
-            if line.startswith("## "):
-                section = line[3:]
+    for raw in text.split("\n"):
+        line = raw.strip()
+        if line.startswith("## "):
+            section = line[3:].strip()
+            continue
+        issue = issue_for(section or "")
+        if issue is None or not line:
+            continue
+        if line.startswith("|"):
+            cells = [c.strip().strip("*`").strip() for c in line.strip("|").split("|")]
+            if not cells or not re.fullmatch(r"REL-\d{5}", cells[0]):
                 continue
-            issue = issue_for(section or "")
-            if issue is None:
-                continue
-            pair = re.match(r"\| (REL-\d{5}) \| (REL-\d{5}) \|", line)
-            table = re.match(r"\| (REL-\d{5}) \|", line)
-            if pair:
-                for row_id in (pair.group(1), pair.group(2)):
-                    paired.setdefault(row_id, (issue, section))
-                continue
-            if table:
-                ids = [table.group(1)]
-            elif line.startswith("- REL") or line.startswith("- **REL") or re.match(r"^REL-\d{5}", line):
-                ids = REL.findall(line.split("(")[0])
+            if section.startswith("G1b pairs held on both sides"):
+                for cell in cells[:2]:
+                    if re.fullmatch(r"REL-\d{5}", cell):
+                        paired.setdefault(cell, (issue, section))
             else:
-                ids = []
-            for row_id in ids:
-                home.setdefault(row_id, (issue, section))
+                home.setdefault(cells[0], (issue, section))
+            continue
+        # A list line: "- REL-1 (note)", "- **REL-1** (...)", "REL-1, REL-2,", "* REL-1".
+        item = re.sub(r"^([-*+]\s+)", "", line).lstrip("*").strip()
+        if not item.startswith("REL-"):
+            continue
+        for row_id in REL.findall(item.split("(")[0]):
+            home.setdefault(row_id, (issue, section))
     rows = dict(paired)
     rows.update(home)
     return rows
