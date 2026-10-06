@@ -18,9 +18,9 @@ chosen and what was deliberately rejected.
 
 **How to maintain it:** when a plan step completes, append its entry to
 §3 (Step log) and move any new durable decision into §4 (Decision log).
-*Decided 2026-10-05 (EPM-DEC-001-0002), with an amendment proposed the same
-day (EPM-DEC-001-0024):* the playbook (`business_architecture/ontology/ontology-playbook.md`)
-is now a company-neutral method. Under the proposed amendment, a project
+*Decided 2026-10-05 (EPM-DEC-001-0002), amended 2026-10-06
+(EPM-DEC-001-0024, decided):* the playbook (`business_architecture/ontology/ontology-playbook.md`)
+is now a company-neutral method. A project
 decision gets an EPM-DEC-001 record (`business_architecture/domain/decisions/`)
 and a dated pointer in §4 here; the playbook changes only when the method
 changes.
@@ -960,9 +960,10 @@ without a dated amendment and Hamid's explicit agreement.
 Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
 record in `business_architecture/domain/decisions/` (index in its README):
 - PPC is planned, not active; build as if no consumer (EPM-DEC-001-0001).
-- Playbook maintenance rule decided (0002); amendment proposed: the
+- Playbook maintenance rule decided (0002), then amended (0024): the
   playbook is a company-neutral method and project decisions live in
-  EPM-DEC-001 (0024, Proposed). The playbook was rewritten on this basis;
+  EPM-DEC-001 (0024, decided 2026-10-06: "Playbook holds the method, yes.").
+  The playbook was rewritten on this basis;
   the approved Step 4 evidence text moved word for word to
   `step4/evidence-discipline.md`.
 - Phase 1 tracking and batches (0003); Customer work waits (0004).
@@ -1457,15 +1458,16 @@ record in `business_architecture/domain/decisions/` (index in its README):
   method's path, so a sync could have overwritten the method. The stale
   snapshot `step4/playbook/ontology-playbook.remote-main.md` was removed.
   Both remain in git history (added in PR #124).
-- **Playbook maintenance rule (proposed 2026-09-30; awaiting Hamid's
-  recorded decision).** Two playbook copies
+- **Playbook maintenance rule (proposed 2026-09-30; decided 2026-10-05
+  and amended 2026-10-06, see the note at the end of this entry).** Two playbook copies
   with two roles: the method (`business_architecture/ontology/ontology-playbook.md`,
   normative) and this working record. A decision change lands in the
   method's §2 Policies first; this log carries the dated entry pointing at
   it. The copies are never updated independently on the same decision.
   `business_architecture/ontology/README.md` is the single entry point.
-  Proposed in the method at §2 "Playbook maintenance". It becomes decided
-  only when Hamid records the decision.
+  Proposed in the method at §2 "Playbook maintenance". *Superseded:*
+  decided 2026-10-05 as EPM-DEC-001-0002 and amended 2026-10-06 by
+  EPM-DEC-001-0024 (project decisions live in EPM-DEC-001).
 - **Competency-question coverage is the acceptance gate (2026-09-20).**
   First coverage check against the 44 baseline questions: 4 answerable,
   10 partial, 30 not answerable — the 30 map exactly to unbuilt plan

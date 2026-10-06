@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (an amendment is proposed in EPM-DEC-001-0024) |
+| Status | Decided; amended by EPM-DEC-001-0024 (2026-10-06) |
 | Date | 2026-10-05 |
 | Questions | Q2 |
 | Source | Grilling session on the handover plan |
@@ -21,7 +21,7 @@ Adopt without the same-diff addition; reject the rule.
 
 ## Hamid's recorded words
 
-Round 1: "Agree with the rest." Later the same day Hamid stated: "Remember the Playbook is not a worklog but a playbook that someone can follow to create their own ontology." EPM-DEC-001-0024 proposes how that changes where project decisions land.
+Round 1: "Agree with the rest." Later the same day Hamid stated: "Remember the Playbook is not a worklog but a playbook that someone can follow to create their own ontology." EPM-DEC-001-0024 records how that changes where project decisions land; Hamid decided it on 2026-10-06 ("Playbook holds the method, yes.").
 
 Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
 

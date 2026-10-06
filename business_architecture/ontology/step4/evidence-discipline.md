@@ -3,7 +3,7 @@
 This is the approved text of the Step 4 evidence discipline (approved
 2026-09-24), moved word for word from §3 of the ontology playbook on
 2026-10-05, when the playbook was rewritten as a company-neutral method
-(EPM-DEC-001-0024, proposed). The playbook's §3 now states the same rules in
+(EPM-DEC-001-0024, decided 2026-10-06). The playbook's §3 now states the same rules in
 general terms. This file keeps the project's exact wording, counts and
 precedents. If the two ever differ for this project, this file applies.
 

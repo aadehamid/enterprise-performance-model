@@ -17,9 +17,9 @@ Check the playbook's §2 Policies and this project's decision records
 the worklog's plan table for where the build stands. The worklog was named
 `ontology-playbook.md` until 2026-09-30. The maintenance rule was decided on
 2026-10-05 (EPM-DEC-001-0002). The playbook was then rewritten as a
-company-neutral method, and an amendment is proposed (EPM-DEC-001-0024):
-project decisions get an EPM-DEC-001 record and a dated worklog entry, and
-the playbook changes only when the method changes.
+company-neutral method, and the amendment EPM-DEC-001-0024 was decided on
+2026-10-06: project decisions get an EPM-DEC-001 record and a dated worklog
+entry, and the playbook changes only when the method changes.
 
 ## Contents
 
