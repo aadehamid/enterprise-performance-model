@@ -108,20 +108,32 @@ def run_pipeline():
         try:
             with contextlib.redirect_stdout(io.StringIO()):
                 mapping = runpy.run_path(os.path.join(work, "mapping_v2.py"), run_name="__main__")
-            gate_out = io.StringIO()
-            gate_ok = True
-            try:
-                with contextlib.redirect_stdout(gate_out):
-                    gate = runpy.run_path(os.path.join(work, "evidence-gate.py"), run_name="__main__")
-            except SystemExit as e:
-                gate_ok = e.code in (0, None)
-                gate = {}
-            gate_text = gate_out.getvalue()
+            gate, gate_ok, gate_text = run_keeping_globals(os.path.join(work, "evidence-gate.py"))
         finally:
             os.chdir(cwd)
         return mapping, gate, gate_ok and "GATE GREEN" in gate_text, gate_text
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+
+
+def run_keeping_globals(path):
+    """Run a script as __main__ and keep its globals even if it calls sys.exit.
+
+    The evidence gate exits non-zero when a check fails; the counts it computed
+    before exiting are exactly what a caller needs to see in that case.
+    Returns (globals, exited_cleanly, captured stdout).
+    """
+    namespace = {"__name__": "__main__", "__file__": path}
+    out = io.StringIO()
+    ok = True
+    with open(path) as f:
+        code = compile(f.read(), path, "exec")
+    try:
+        with contextlib.redirect_stdout(out):
+            exec(code, namespace)
+    except SystemExit as e:
+        ok = e.code in (0, None)
+    return namespace, ok, out.getvalue()
 
 
 def ledger(mapping):

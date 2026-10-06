@@ -108,3 +108,11 @@ def test_wrapped_lists_keep_every_row():
                            "REL-01223, REL-01227, REL-01241, REL-01289, REL-01291 and\nREL-01294.")
     assert wrapped != text
     assert epm_facts.phase1_rows(wrapped) == epm_facts.phase1_rows(text)
+
+
+def test_gate_figures_survive_a_failing_gate(tmp_path):
+    fake = tmp_path / "evidence-gate.py"
+    fake.write_text("import sys\npromoted = 1066\nheld_ctx = 237\nprint('GATE FAILED: 1 check(s)')\nsys.exit(1)\n")
+    ns, ok, out = epm_facts.run_keeping_globals(str(fake))
+    assert ok is False and "GATE FAILED" in out
+    assert (ns["promoted"], ns["held_ctx"]) == (1066, 237)
