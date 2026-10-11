@@ -79,6 +79,16 @@ class ScopeNoteAppend(unittest.TestCase):
         )
         self.assertIn("0 added, 1 already present", _run(wb, review).stdout)
 
+    def test_sentence_after_extra_whitespace_counts_as_present(self):
+        for note in ("First.  Settles trades.", "First.\n\n  Settles trades. Last."):
+            wb, review = _fixture(
+                [{"slug": "A-1", "scope_note": note, "status": "approved"}],
+                [("A-1", "Settles trades.")],
+            )
+            before = wb.read_bytes()
+            self.assertIn("0 added, 1 already present", _run(wb, review).stdout, note)
+            self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_row_not_approved_and_writes_nothing(self):
         wb, review = _fixture(
             [{"slug": "A-1", "scope_note": "Note.", "status": "approved"},

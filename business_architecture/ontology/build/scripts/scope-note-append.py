@@ -48,8 +48,8 @@ def corrections(path):
 
 def has_sentence(note, sentence):
     """True when `sentence` stands in `note` as a whole sentence: at the start or
-    after sentence-ending punctuation, and at the end or before a space."""
-    return re.search(r"(?:^|(?<=[.!?])\s)" + re.escape(sentence) + r"(?=\s|$)", note) is not None
+    after sentence-ending punctuation and any whitespace, and at the end or before a space."""
+    return re.search(r"(?:^|(?<=[.!?])\s+)" + re.escape(sentence) + r"(?=\s|$)", note) is not None
 
 
 def main():
