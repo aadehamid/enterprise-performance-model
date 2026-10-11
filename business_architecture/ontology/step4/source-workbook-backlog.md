@@ -407,8 +407,10 @@ evidence and needs the source author to confirm (REL-00215 pattern).
 
 ## Precedes/follows holds routed for source correction (Hamid 2026-09-27)
 
-20 rows held — each needs an affirmative sequence citation from the source
-author (or confirmation the sequence does not exist).
+20 rows were held. Each needed an affirmative sequence citation from the
+source author, or confirmation that the sequence does not exist. Batch 1 (13
+rows) has fresh verdicts in "Batch 1 fresh verdicts" below and needs nothing
+more. The other 7 still need a citation and are batch 2.
 
 **6 ExclusionBoundaryCitation (approval did not cover):**
 REL-01223, REL-01227, REL-01241, REL-01289, REL-01291, REL-01294.
