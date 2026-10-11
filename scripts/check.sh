@@ -37,7 +37,8 @@ step4="business_architecture/ontology/step4"
 (cd "$step4" && run python3 evidence-gate.py | tail -1)
 for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py" \
          "$step4/test_script_portability.py" "$step4/target-report/test_context_pass.py" \
-         "business_architecture/ontology/build/scripts/test_step3c_workbook_validate.py"; do
+         "business_architecture/ontology/build/scripts/test_step3c_workbook_validate.py" \
+         "business_architecture/ontology/build/scripts/test_scope_note_append.py"; do
   (cd "$(dirname "$t")" && echo "--- $t" && with_deps python "$(basename "$t")" >/dev/null)
 done
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py
