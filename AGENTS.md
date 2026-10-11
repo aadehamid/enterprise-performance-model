@@ -4,6 +4,15 @@ Shared instructions for coding agents working in this repo (Claude Code reads
 this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 `README.md` for orientation and `EPM-FOUND-000.md` for the master index.
 
+## Skills every agent loads
+
+- **Writing for a person:** load the `clear-writing` skill first and follow it.
+  That covers every reply, status update, doc, README, commit message, PR
+  description and issue body, and any text the user asks you to edit. Subagents
+  load it too.
+- **Changing the repo:** load the `way-of-working` skill first and follow it.
+  Where this file or `REVIEW_STANDARDS.md` sets its own rule, that rule wins.
+
 ## Working rules
 
 - **Every change goes through a pull request.** A reviewer merges or HOLDs.
