@@ -42,7 +42,15 @@ Run these before you open a pull request, and again before you push a review fix
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
 3. **External facts cite a primary source**: release notes, a changelog, a specification or a filing, with version and date. A version claim names the first release with full support, not a preview.
 4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change; it also finds text split across lines. When you change a rule, walk every section that depends on it.
-5. **Codex reviews the diff, and every finding is fixed or answered.** Claude Code: `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`. Codex CLI: `codex review --base main` (it rejects a prompt combined with `--base`). Record any disagreement on a judgement call in the PR body.
+5. **A different model reviews the diff, and every finding is fixed or answered.**
+   Commit first; the review reads committed work only.
+   - **Inside Herdr** (`HERDR_ENV=1`): run the Herdr review in the `way-of-working`
+     skill (`references/before-push.md`). A reviewer agent of a different kind runs
+     `ce-code-review` in this repo's `review-<repo>` tab.
+   - **Outside Herdr**: Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`.
+     Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
+
+   Record any disagreement on a judgement call in the PR body.
 
 Say in the PR body that these ran and what the review found.
 
