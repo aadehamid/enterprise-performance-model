@@ -52,7 +52,11 @@ def facts_0025(tmp_path_factory):
     """
     sha = re.search(r"run on commit `([0-9a-f]+)`", flat(DEC_0025)).group(1)
     tree = tmp_path_factory.mktemp("dec0025")
-    archive = subprocess.run(["git", "-C", ROOT, "archive", sha], check=True, capture_output=True).stdout
+    archive = subprocess.run(["git", "-C", ROOT, "archive", sha], capture_output=True)
+    assert archive.returncode == 0, (
+        f"commit {sha} is not in this clone; a shallow clone needs `git fetch --unshallow` "
+        f"(CI checks out full history): {archive.stderr.decode().strip()}")
+    archive = archive.stdout
     subprocess.run(["tar", "-x", "-C", str(tree)], input=archive, check=True)
     os.makedirs(tree / "scripts", exist_ok=True)
     shutil.copy(os.path.join(HERE, "epm_facts.py"), tree / "scripts" / "epm_facts.py")
