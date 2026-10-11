@@ -16,6 +16,7 @@ computes:
 - Subgroup breakdowns inside backlog section intros (for example "5 rows of the
   REL-00445 pattern"): they split rows whose section totals are checked here.
 """
+import csv
 import json
 import os
 import re
@@ -194,6 +195,13 @@ def test_decision_0025_figures(facts_0025):
         assert row == reason[key], f"0025 table {label!r}: {row} vs {reason[key]}"
 
 
+def batch1_rows():
+    """Rows in the #205 batch 1 review file."""
+    path = os.path.join(epm_facts.REVIEWS, "precedes-follows-batch1-review.csv")
+    with open(path, newline="") as f:
+        return sum(1 for r in csv.DictReader(f) if r["row_id"].startswith("REL-"))
+
+
 def section_count(prefix):
     return sum(1 for _, (_, s) in epm_facts.phase1_rows().items() if s.startswith(prefix))
 
@@ -211,7 +219,9 @@ def test_backlog_section_totals():
         (r"(\d+) rows, each held in one of these review batches", section_count("Other verb-review holds")),
         (r"The following (\d+) RELs had 2026-09-25 row-level approvals", section_count("Governed-by superseded approvals")),
         (r"Triggers pass: (\d+) held rows", section_count("Triggers pass")),
-        (r"(\d+) rows held — each needs an affirmative sequence citation", section_count("Precedes/follows holds")),
+        (r"(\d+) rows were held\. Each needed an affirmative sequence citation", section_count("Precedes/follows holds")),
+        (r"Batch 1 \((\d+) rows\) has fresh verdicts", batch1_rows()),
+        (r"The other (\d+) still need a citation", section_count("Precedes/follows holds") - batch1_rows()),
         (r"holds 96 \+ 6 = (\d+) rows", section_count("G3 Section B")),
     ]
     for pattern, expected in checks:
