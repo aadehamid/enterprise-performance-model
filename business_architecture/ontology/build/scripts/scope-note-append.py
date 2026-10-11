@@ -4,8 +4,9 @@
 Phase 1 source corrections (EPM-DEC-001-0025) add one sentence per answered
 question to the scope note of a process on the "Review & authoring" sheet. The
 input is a review CSV with `scope_note_slug` and `scope_note_sentence` columns;
-rows with a blank slug add nothing. Hamid approved this as the one reusable
-script for every Phase 1 batch (#205, 2026-10-11).
+rows with a blank slug add nothing. It is the one reusable script for every
+Phase 1 batch: choice 3(a) of the #205 process proposal (2026-10-07), agreed
+under EPM-DEC-001-0001's no-comment rule.
 
 Rules:
 - Only `approved` rows are edited, because only they reach the taxonomy.

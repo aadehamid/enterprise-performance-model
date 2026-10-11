@@ -957,13 +957,15 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
 ### Phase 1 batch mechanics (2026-10-11)
-- Hamid approved the five process choices proposed on #205 (2026-10-07) in
-  the Claude Code session of 2026-10-11: "I explicitly approve the five
-  recommended process choices: one PR per batch using the required
-  merge-commit approach; re-pin each workbook-changing batch; use a reusable
-  tested workbook-edit script; retain b-relationships in the workbook with
-  their non-emission rationale; and record row verdicts in the batch review
-  file and backlog without a separate decision record for every row."
+- The five batch process choices proposed on #205 (2026-10-07) are read as
+  agreed with the recommendation (a): one PR per batch with a merge commit,
+  a re-pin in every batch that edits the workbook, one reusable tested
+  workbook-edit script, (b) answers leave the workbook relationship in place,
+  and row verdicts go in the batch review file and the backlog with no
+  decision record per row. Hamid did not comment on them, and his recorded
+  rule is "If i dont comment on a question, it means I am aligned"
+  (EPM-DEC-001-0001). He then authorized batch 1 on #205 (comment
+  6115309253, 2026-10-11: "Take this as my authorization").
   The script is `build/scripts/scope-note-append.py`. First used for #205
   batch 1 (`step4/source-workbook-backlog.md`, "Batch 1 fresh verdicts").
 

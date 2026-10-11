@@ -423,23 +423,13 @@ REL-00307 (reference-data usage + boundary).
 
 ### Batch 1 fresh verdicts (Hamid 2026-10-11)
 
-Hamid answered the 13 batch 1 questions on #205 (comment of 2026-10-11) and authorized the batch in the Claude Code session of 2026-10-11:
+Hamid answered the 13 batch 1 questions on #205 and posted the answers again as his authorization on 2026-10-11 ([comment 6115309253](https://github.com/aadehamid/enterprise-performance-model/issues/205#issuecomment-6115309253)), headed "Take this as my authorization". The answers say:
 
-> Go ahead with the Batch 1 PR. My intent is to close all 13 source-author questions using the MPC public-evidence baseline and the industry-informed reference-model positions already provided—not to leave them pending for further evidence.
+> Apply the source corrections and perform the fresh reviews; do not silently broaden conditional or activity-specific statements into unconditional process-wide relationships.
 >
-> Keep the locked `precedes` definition unchanged. Review each corrected row individually against that definition; do not assume all scoped sequences fail, and do not broaden my wording merely to make a relationship emit.
->
-> Where the corrected sequence satisfies the locked definition, emit it. Where it describes only a narrower prerequisite, data dependency, or overlapping workflow that does not satisfy the definition, record the final outcome as “Reviewed—Not emitted,” with the specific semantic reason. If the implementation must retain the row in a hold list, distinguish that technical disposition from its source-correction status: the question is answered and done, not awaiting another response or more evidence.
->
-> For Questions 6 and 10, retain the conditional transmission-related sequence as an adopted reference-model assumption. Record explicitly that MPC’s disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. Do not reopen an evidence request for this batch.
->
-> For Question 4, add the clarification to the Confirmations Management scope note and close the row as reviewed—not emitted, with “mandatory process-level sequence not established” as the reason. Apply the corresponding final disposition to Question 3.
->
-> I explicitly approve the five recommended process choices: one PR per batch using the required merge-commit approach; re-pin each workbook-changing batch; use a reusable tested workbook-edit script; retain b-relationships in the workbook with their non-emission rationale; and record row verdicts in the batch review file and backlog without a separate decision record for every row.
->
-> Apply the 12 scope-note corrections, record all 13 final review outcomes, and complete the prescribed validation, regression, count, traceability, and review checks. Close all 13 rows as done for Phase 1. Do not mark the PR merged or the changes implemented until they have actually landed.
->
-> No change to the predicate definition is authorized by this response.
+> For Questions 6 and 10, record the sequence as an industry-informed reference-model assumption, not a publicly verified MPC procedure. Close the source-author questions without opening another evidence question. If the existing predicate cannot preserve the stated scope, close the row as not emitted with the semantic reason recorded.
+
+Batch 1's questions said an (a) answer means the sentence is added "and the row is emitted". Each (a) row was therefore reviewed against the locked `core:precedes` definition: rows that meet it emit, and rows that don't are closed as not emitted with the reason recorded.
 
 All 13 questions are closed and the rows are done for Phase 1. Five rows emit; eight are reviewed, not emitted, and stay in `PRECEDES_20260927_HOLDS` as a technical disposition only. Hamid's sentences, his full answers and each row's reasoning are in `review-evidence/precedes-follows-batch1-review.csv`.
 

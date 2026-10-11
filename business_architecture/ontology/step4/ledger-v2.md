@@ -1970,9 +1970,10 @@ this entry is the correction. History on `main` is not rewritten.
 
 ## #205 batch 1: precedes/follows source corrections (Hamid 2026-10-11)
 
-Hamid answered batch 1's 13 questions on #205 and authorized the batch in
-the Claude Code session of 2026-10-11 (quoted in `source-workbook-backlog.md`,
-section "Precedes/follows holds routed for source correction"). Twelve of his
+Hamid answered batch 1's 13 questions on #205 and posted them as his
+authorization on 2026-10-11 (#205 comment 6115309253, "Take this as my
+authorization"; quoted in `source-workbook-backlog.md`, "Batch 1 fresh
+verdicts"). Twelve of his
 sentences went into eleven approved scope notes, and Step 4 was re-pinned to
 `532eeee`. Each corrected row was then reviewed against the locked
 `core:precedes` definition (`evidence-discipline.md`): "The source completes
