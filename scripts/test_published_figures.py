@@ -19,6 +19,7 @@ computes:
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -40,6 +41,28 @@ def facts():
     return json.loads(out)
 
 
+@pytest.fixture(scope="module")
+def facts_0025(tmp_path_factory):
+    """Counts on the commit EPM-DEC-001-0025 cites, not today's.
+
+    A decision record states its figures as of the commit it names ("run on
+    commit `1179405`"), so its figures are history and stay as recorded while
+    later batches move the live counts. Today's epm_facts.py runs on that
+    commit's tree, so the counting logic is the same one checked everywhere else.
+    """
+    sha = re.search(r"run on commit `([0-9a-f]+)`", flat(DEC_0025)).group(1)
+    tree = tmp_path_factory.mktemp("dec0025")
+    archive = subprocess.run(["git", "-C", ROOT, "archive", sha], check=True, capture_output=True).stdout
+    subprocess.run(["tar", "-x", "-C", str(tree)], input=archive, check=True)
+    os.makedirs(tree / "scripts", exist_ok=True)
+    shutil.copy(os.path.join(HERE, "epm_facts.py"), tree / "scripts" / "epm_facts.py")
+    out = subprocess.check_output([sys.executable, str(tree / "scripts" / "epm_facts.py"), "--json", "counts"],
+                                  text=True, stderr=subprocess.DEVNULL)
+    result = json.loads(out)
+    result["backlog"] = str(tree / os.path.relpath(epm_facts.BACKLOG, ROOT))
+    return result
+
+
 def flat(path):
     """The document's text with all whitespace runs collapsed, so wrapped sentences match."""
     with open(path) as f:
@@ -50,9 +73,9 @@ def num(s):
     return int(s.replace(",", ""))
 
 
-def pairs_table():
+def pairs_table(backlog=None):
     """(G1b row, reverse row) pairs from the backlog's "G1b pairs held on both sides" table."""
-    with open(epm_facts.BACKLOG) as f:
+    with open(backlog or epm_facts.BACKLOG) as f:
         text = f.read()
     section = text.split("## G1b pairs held on both sides", 1)[1].split("\n## ", 1)[0]
     return re.findall(r"^\|\s*(REL-\d{5})\s*\|\s*(REL-\d{5})\s*\|", section, re.M)
@@ -139,10 +162,11 @@ def test_backlog_index_matches_sections():
     assert sorted(seen) == sorted(INDEX_SECTIONS), f"index rows {seen} must list each section exactly once"
 
 
-def test_decision_0025_figures(facts):
+def test_decision_0025_figures(facts_0025):
+    facts = facts_0025
     text = flat(DEC_0025)
     p1 = facts["phase1"]
-    reverse = len(pairs_table())
+    reverse = len(pairs_table(facts["backlog"]))
     m = re.search(r"the pipeline holds (\d+) mentions.*?list (\d+) rows.*?They are the (\d+) rows in the eight issues' lists.*?"
                   r"plus the (\d+) reverse `informed-by` rows.*?(\d+) of the (\d+) are held.*?(\d+) held mentions are not Phase 1 rows",
                   text)
@@ -192,7 +216,8 @@ def test_backlog_section_totals():
         assert int(m.group(1)) == expected, f"{pattern}: states {m.group(1)}, actual {expected}"
 
 
-def test_decision_0025_every_figure(facts):
+def test_decision_0025_every_figure(facts_0025):
+    facts = facts_0025
     text = flat(DEC_0025)
     led, p1 = facts["ledger"], facts["phase1"]
     reason = p1["held_outside_by_reason"]

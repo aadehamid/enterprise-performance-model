@@ -14,7 +14,7 @@ import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 GOVERNED = ["canonical-facts.csv", "contradictions.csv", "enables-review.csv"]
-EXPECTED_FACTS = 457
+EXPECTED_FACTS = 462
 
 
 def sha256(path):

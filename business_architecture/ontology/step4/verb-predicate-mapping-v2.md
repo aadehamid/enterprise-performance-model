@@ -2,7 +2,7 @@
 
 **Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(617 emitting / 686 held / 457 facts — 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
+(622 emitting / 681 held / 462 facts after the 2026-10-11 #205 batch 1 release of five `precedes`/`follows` rows — 617/686/457 before it; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
@@ -182,7 +182,7 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 605 mentions total, of which **604 emitting** (569 + 35) and 1 held (REL-00436). Emitting: 604 emitting-attached + 13 G2 no-triple = **617**.
+**Reconciliation:** 574 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 610 mentions total, of which **609 emitting** (574 + 35) and 1 held (REL-00436). Emitting: 609 emitting-attached + 13 G2 no-triple = **622**. (605/604/569/617 before the 2026-10-11 #205 batch 1 release.)
 
 *Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -190,17 +190,17 @@ InformationObject instances (Q5).
 
 ## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
 
-- Emitting mentions: **617**.
+- Emitting mentions: **622** (617 before the 2026-10-11 #205 batch 1 release).
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **605** (569 map to their own predicate + 36 G1a duplicate evidence, of which 35 emitting and REL-00436 held-attached; 617 − 13 G2 no-triple = 604 emitting-attached).
-- Canonical facts (distinct stored subject/predicate/object): **457** (477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
+- Mentions attached to stored facts: **610** (574 map to their own predicate + 36 G1a duplicate evidence, of which 35 emitting and REL-00436 held-attached; 622 − 13 G2 no-triple = 609 emitting-attached).
+- Canonical facts (distinct stored subject/predicate/object): **462** (457 before the 2026-10-11 #205 batch 1 release; 477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 686 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 681 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+  values). Total: 622 + 681 + 12 + 1 + 2 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -210,8 +210,8 @@ InformationObject instances (Q5).
 | informed-by | core:informedBy | 44 |
 | informs | core:informedBy (inverse) | 1 |
 | requires | core:requires (5 approved 2026-09-25; REL-00873 supersession reversed 2026-09-26, scope-note label citation) | 5 |
-| precedes | core:precedes | 137 |
-| follows | core:precedes (canonicalized) | 157 |
+| precedes | core:precedes | 140 |
+| follows | core:precedes (canonicalized) | 159 |
 | governed-by | core:governedBy | 18 |
 | constrained-by | core:constrainedBy | 9 |
 | constrains | core:constrainedBy (inverse) | 1 |
@@ -222,7 +222,7 @@ InformationObject instances (Q5).
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 617 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 622 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 

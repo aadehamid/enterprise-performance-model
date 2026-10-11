@@ -1967,3 +1967,32 @@ Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
 
 The 2026-09-26/27 entries above keep their recorded-at-the-time figures;
 this entry is the correction. History on `main` is not rewritten.
+
+## #205 batch 1: precedes/follows source corrections (Hamid 2026-10-11)
+
+Hamid answered batch 1's 13 questions on #205 and authorized the batch in
+the Claude Code session of 2026-10-11 (quoted in `source-workbook-backlog.md`,
+section "Precedes/follows holds routed for source correction"). Twelve of his
+sentences went into eleven approved scope notes, and Step 4 was re-pinned to
+`532eeee`. Each corrected row was then reviewed against the locked
+`core:precedes` definition (`evidence-discipline.md`): "The source completes
+before the target begins, as a sequence the business asserts."
+Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
+
+- **APPROVE, emitted (5):** REL-00193, REL-00200, REL-00206, REL-00319,
+  REL-01289. Each is a trade-level sequence: capture of a trade completes
+  before confirmation, settlement or actualization of that trade begins.
+  Five new `core:precedes` facts, none duplicating a stored fact; 0
+  contradictions.
+- **HOLD, reviewed, not emitted (8):** REL-00184, REL-00188, REL-00307,
+  REL-00351, REL-00374, REL-01227, REL-01291, REL-01294. Each answer
+  describes a narrower prerequisite, a conditional sequence or overlapping
+  work, so the target can begin before the source completes. The rows stay
+  in `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
+  done for Phase 1.
+
+Precedes/follows batch 1 release: 617 + 5 = **622** emitting;
+686 − 5 = **681** held; 457 + 5 = **462** facts.
+
+**Current totals:** **622 emitting / 681 held** / 462 facts.
+Conservation: 622 + 681 + 12 + 1 + 2 = 1,318. ✓
