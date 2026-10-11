@@ -11,7 +11,9 @@ Rules:
 - Only `approved` rows are edited, because only they reach the taxonomy.
 - An unknown slug, or a row that is not `approved`, stops the run before any
   write.
-- A sentence already in the scope note is skipped, so a re-run changes nothing.
+- A sentence already in the scope note as a whole sentence is skipped, so a
+  re-run changes nothing. Text that only contains it, inside a longer
+  sentence, does not count.
 
 Usage:
   scope-note-append.py --corrections <review.csv> [--workbook <xlsx>] [--check]
@@ -19,6 +21,7 @@ Usage:
 """
 import argparse
 import csv
+import re
 import sys
 from pathlib import Path
 
@@ -41,6 +44,12 @@ def corrections(path):
             sys.exit(f"{path}: {slug} has a slug but no sentence")
         out.append((slug, sentence))
     return out
+
+
+def has_sentence(note, sentence):
+    """True when `sentence` stands in `note` as a whole sentence: at the start or
+    after sentence-ending punctuation, and at the end or before a space."""
+    return re.search(r"(?:^|(?<=[.!?])\s)" + re.escape(sentence) + r"(?=\s|$)", note) is not None
 
 
 def main():
@@ -71,7 +80,7 @@ def main():
     for slug, sentence in edits:
         cell = by_slug[slug][idx["scope_note"]]
         note = (cell.value or "").strip()
-        if sentence in note:
+        if has_sentence(note, sentence):
             skipped += 1
             print(f"skip {slug}: sentence already present")
             continue

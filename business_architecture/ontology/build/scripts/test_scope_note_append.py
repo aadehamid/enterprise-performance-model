@@ -64,6 +64,21 @@ class ScopeNoteAppend(unittest.TestCase):
         self.assertIn("0 added, 1 already present", result.stdout)
         self.assertEqual(wb.read_bytes(), before)
 
+    def test_sentence_inside_a_longer_sentence_is_still_added(self):
+        wb, review = _fixture(
+            [{"slug": "A-1", "scope_note": "Desk B Settles trades.", "status": "approved"}],
+            [("A-1", "Settles trades.")],
+        )
+        self.assertEqual(_run(wb, review).returncode, 0)
+        self.assertEqual(_notes(wb)["A-1"], "Desk B Settles trades. Settles trades.")
+
+    def test_whole_sentence_mid_note_counts_as_present(self):
+        wb, review = _fixture(
+            [{"slug": "A-1", "scope_note": "First. New sentence. Last.", "status": "approved"}],
+            [("A-1", "New sentence.")],
+        )
+        self.assertIn("0 added, 1 already present", _run(wb, review).stdout)
+
     def test_refuses_row_not_approved_and_writes_nothing(self):
         wb, review = _fixture(
             [{"slug": "A-1", "scope_note": "Note.", "status": "approved"},
