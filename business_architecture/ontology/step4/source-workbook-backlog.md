@@ -418,3 +418,43 @@ REL-00008, REL-00068, REL-00112, REL-00149,
 REL-00184, REL-00188, REL-00193, REL-00200, REL-00206,
 REL-00319, REL-00351, REL-00374, REL-00930,
 REL-00307 (reference-data usage + boundary).
+
+### Batch 1 fresh verdicts (Hamid 2026-10-11)
+
+Hamid answered the 13 batch 1 questions on #205 (comment of 2026-10-11) and authorized the batch in the Claude Code session of 2026-10-11:
+
+> Go ahead with the Batch 1 PR. My intent is to close all 13 source-author questions using the MPC public-evidence baseline and the industry-informed reference-model positions already provided—not to leave them pending for further evidence.
+>
+> Keep the locked `precedes` definition unchanged. Review each corrected row individually against that definition; do not assume all scoped sequences fail, and do not broaden my wording merely to make a relationship emit.
+>
+> Where the corrected sequence satisfies the locked definition, emit it. Where it describes only a narrower prerequisite, data dependency, or overlapping workflow that does not satisfy the definition, record the final outcome as “Reviewed—Not emitted,” with the specific semantic reason. If the implementation must retain the row in a hold list, distinguish that technical disposition from its source-correction status: the question is answered and done, not awaiting another response or more evidence.
+>
+> For Questions 6 and 10, retain the conditional transmission-related sequence as an adopted reference-model assumption. Record explicitly that MPC’s disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. Do not reopen an evidence request for this batch.
+>
+> For Question 4, add the clarification to the Confirmations Management scope note and close the row as reviewed—not emitted, with “mandatory process-level sequence not established” as the reason. Apply the corresponding final disposition to Question 3.
+>
+> I explicitly approve the five recommended process choices: one PR per batch using the required merge-commit approach; re-pin each workbook-changing batch; use a reusable tested workbook-edit script; retain b-relationships in the workbook with their non-emission rationale; and record row verdicts in the batch review file and backlog without a separate decision record for every row.
+>
+> Apply the 12 scope-note corrections, record all 13 final review outcomes, and complete the prescribed validation, regression, count, traceability, and review checks. Close all 13 rows as done for Phase 1. Do not mark the PR merged or the changes implemented until they have actually landed.
+>
+> No change to the predicate definition is authorized by this response.
+
+All 13 questions are closed and the rows are done for Phase 1. Five rows emit; eight are reviewed, not emitted, and stay in `PRECEDES_20260927_HOLDS` as a technical disposition only. Hamid's sentences, his full answers and each row's reasoning are in `review-evidence/precedes-follows-batch1-review.csv`.
+
+| Row | Question | Fresh verdict | Outcome | Reason |
+|---|---|---|---|---|
+| REL-00193 | 1 | APPROVE | Emitted | Per trade, initial capture completes (terms recorded, trade data made available) before confirmation of that trade begins. A later correction is a separate controlled correction. Meets the locked definition at the trade level, as the existing Trade Capture precedes Confirmations Management fact (CM-1-2-1-3 -> CM-1-2-2-2) already does. |
+| REL-00206 | 2 | APPROVE | Emitted | Same as question 1 for OTC trades: per trade, initial capture completes before confirmation of that trade begins; amendments run through controlled correction. |
+| REL-00184 | 3 | HOLD | Reviewed—Not emitted | Mandatory sequence not established (Hamid). Creation reporting is triggered by execution and later reporting by reportable events; the scope note states a responsibility boundary, not a handoff. No scope-note sentence added. |
+| REL-01227 | 4 | HOLD | Reviewed—Not emitted | Mandatory process-level sequence not established (Hamid). The added sentence says settlement preparation may proceed in parallel with confirmation, so the source need not complete before the target begins. |
+| REL-00200 | 5 | APPROVE | Emitted | Per deal, capture of the storage-service terms completes before Settle Terminal/Storage uses them to calculate charges. Periodic or advance billing happens after capture, during the contract, so it does not overlap capture. |
+| REL-00188 | 6 | HOLD | Reviewed—Not emitted | Conditional prerequisite for one part of the target: only transmission-related charges wait for capture, and other Settle Power activity proceeds independently. The target can begin before the source completes, so the locked definition is not met. Adopted as an industry-informed reference-model assumption: MPC's disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. |
+| REL-01291 | 7 | HOLD | Reviewed—Not emitted | Data dependency with overlap: settlement preparation and provisional billing may proceed before every actualized input is final, with later true-ups. The target can begin before the source completes. |
+| REL-01289 | 8 | APPROVE | Emitted | Per trade-linked movement, actualization begins after initial Trade Capture of that trade completes. Movements with no commercial trade are simply not part of this relationship; they do not begin a linked actualization early. Stored canonically as Trade Capture precedes Actualizations. |
+| REL-00307 | 9 | HOLD | Reviewed—Not emitted | The prerequisite is establishment of effective lease terms inside Manage Lease Contract, which stays ongoing. The source process does not complete before the target begins; this is a narrower prerequisite. |
+| REL-00351 | 10 | HOLD | Reviewed—Not emitted | Same as question 6: only items from a captured transmission arrangement wait for capture, and other ISO/power-pool settlement proceeds independently. Adopted as an industry-informed reference-model assumption: MPC's disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. |
+| REL-00319 | 11 | APPROVE | Emitted | Per trade, settlement follows initial capture of that trade's terms; periodic settlement during the trade's life happens after capture. Meets the locked definition at the trade level. Stored canonically as Capture Financial (OTC) Trades precedes Settle Financial OTC Trades. |
+| REL-00374 | 12 | HOLD | Reviewed—Not emitted | The prerequisite is settlement calculation and invoice validation, not completion of Settlements, and only the corresponding posting waits; accruals and other actuals activity proceed independently. Narrower prerequisite with overlap. |
+| REL-01294 | 13 | HOLD | Reviewed—Not emitted | Only claim-specific posting waits for the authorized demurrage amount; the demurrage lifecycle need not close and other AR/AP activity proceeds independently. Narrower prerequisite with overlap. |
+
+The other seven rows (REL-00008, REL-00068, REL-00112, REL-00149, REL-00930, REL-01223, REL-01241) wait for batch 2.

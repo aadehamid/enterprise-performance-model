@@ -956,6 +956,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Phase 1 batch mechanics (2026-10-11)
+- Hamid approved the five process choices proposed on #205 (2026-10-07) in
+  the Claude Code session of 2026-10-11: "I explicitly approve the five
+  recommended process choices: one PR per batch using the required
+  merge-commit approach; re-pin each workbook-changing batch; use a reusable
+  tested workbook-edit script; retain b-relationships in the workbook with
+  their non-emission rationale; and record row verdicts in the batch review
+  file and backlog without a separate decision record for every row."
+  The script is `build/scripts/scope-note-append.py`. First used for #205
+  batch 1 (`step4/source-workbook-backlog.md`, "Batch 1 fresh verdicts").
+
 ### Phase 1 scope (2026-10-06)
 - EPM-DEC-001-0025: Phase 1 is the source-correction backlog (eight issues,
   parent #207; 276 rows, 275 held). The 411 held mentions outside it stay held with
