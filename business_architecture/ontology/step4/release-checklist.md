@@ -24,7 +24,7 @@
 *(686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `d8b482751e418338203e976e5741dcfe538b4800` (re-pinned 2026-10-12 for the #205 batch 2 scope-note corrections, from `3a54b46978ad4d2ba6e491e116713bebc1bedeaf`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows, content identical except the SHA column). Promotion was approved against `6a155bc2`.
+- **PINNED_SHA:** `51a32aa2eea43a819a7fff23b624ff8bd291bfad` (re-pinned 2026-10-12 for the #204 batch 1 trigger sentences, from `d8b482751e418338203e976e5741dcfe538b4800`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows, content identical except the SHA column). Promotion was approved against `6a155bc2`.
 - Re-pin completed 2026-09-29; all promotion preconditions satisfied 2026-09-30.
 
 ### PR #124 Proof
