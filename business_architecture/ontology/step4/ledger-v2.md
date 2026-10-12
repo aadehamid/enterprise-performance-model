@@ -1997,3 +1997,14 @@ No mention changes bucket and no fact changes.
 
 **Current totals:** **617 emitting / 686 held** / 457 facts.
 Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+
+## Re-pin to PR #225's merge commit (2026-10-12)
+
+PR #225 pinned Step 4 to its branch commit `532eeee`. The PR was merged
+with a squash, so that commit is not in `main`'s history. Step 4 is
+re-pinned to the squash commit `3a54b46`, whose workbook and taxonomy are
+byte-identical to `532eeee`. Seven SHA-stamped CSVs change `baseline_sha`
+only (2,898 rows). No mention changes bucket; no fact changes.
+
+**Current totals:** **617 emitting / 686 held** / 457 facts.
+Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
