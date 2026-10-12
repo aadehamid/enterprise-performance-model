@@ -4,7 +4,7 @@
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
   2. Mention arithmetic reconciles from the actual files: 1066+237+12+1+2=1318.
-  3. canonical-facts.csv has exactly 462 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  3. canonical-facts.csv has exactly 457 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -472,33 +472,26 @@ for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval")
 
-# 2j. precedes/follows amendment (Hamid 2026-09-27). 20 rows were held.
+# 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batch 1 (Hamid 2026-10-11, review-evidence/precedes-follows-batch1-review.csv):
-# five rows pass the locked core:precedes definition after their scope-note
-# corrections and emit; eight are reviewed, not emitted; seven await batch 2.
+# 13 rows reviewed, not emitted (scoped sequences core:precedes cannot carry);
+# seven await batch 2.
 for rid in ("REL-01223", "REL-01241", "REL-00008", "REL-00068", "REL-00112",
             "REL-00149", "REL-00930"):
     check(f"precedes/follows held {rid} emits no triple",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation / Supersedes2026-09-26Approval")
-for rid in ("REL-00184", "REL-00188", "REL-00307", "REL-00351", "REL-00374",
-            "REL-01227", "REL-01291", "REL-01294"):
+for rid in ("REL-00184", "REL-00188", "REL-00193", "REL-00200", "REL-00206",
+            "REL-00307", "REL-00319", "REL-00351", "REL-00374", "REL-01227",
+            "REL-01289", "REL-01291", "REL-01294"):
     check(f"precedes/follows reviewed-not-emitted {rid} emits no triple",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict 2026-10-11 / reviewed, not emitted (#205 batch 1)")
-for rid, fact in (("REL-00193", ("CM-1-2-1-3-3", "core:precedes", "CM-1-2-2-2")),
-                  ("REL-00206", ("CM-1-2-1-3-7", "core:precedes", "CM-1-2-2-2")),
-                  ("REL-00200", ("CM-1-2-1-3-5", "core:precedes", "CM-1-2-4-1-14")),
-                  ("REL-01289", ("CM-1-2-1-3", "core:precedes", "CM-1-2-3-1")),
-                  ("REL-00319", ("CM-1-2-1-3-7", "core:precedes", "CM-1-2-4-1-11"))):
-    check(f"precedes/follows released {rid} stored as {fact[0]}->{fact[2]}",
-          fact in _fact_rowids and rid in _fact_rowids[fact],
-          "APPROVE / D:hamid-verdict 2026-10-11 / #205 batch 1 scope-note correction")
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==462", len(cf) == 462, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 462)
+check("canonical-facts==457", len(cf) == 457, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 457)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,

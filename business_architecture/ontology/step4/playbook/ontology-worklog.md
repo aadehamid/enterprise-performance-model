@@ -956,6 +956,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Scoped sequence relation before core 1.0.0 (2026-10-12)
+- #205 batch 1 answers describe sequences per trade, delivery, settlement
+  period, claim or posting, "not completion of an entire organizational
+  process", so `core:precedes` (process-level finish-to-start) cannot carry
+  them and all 13 rows closed as not emitted. Hamid on PR #225 (comment
+  6115615577): "Option 1: close all 13 batch 1 rows as not emitted. Keep
+  core:precedes locked as a process-level finish-to-start. Define a scoped
+  sequence relation for these answers before the core 1.0.0 release,
+  tracked in its own issue under #207." Tracked in #226; its decision
+  record will amend EPM-DEC-001-0013 and 0025.
+
 ### Phase 1 batch mechanics (2026-10-11)
 - The five batch process choices proposed on #205 (2026-10-07) are read as
   agreed with the recommendation (a): one PR per batch with a merge commit,

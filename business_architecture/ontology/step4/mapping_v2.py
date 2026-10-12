@@ -1112,19 +1112,18 @@ TRIGGERS_20260926_HOLDS = {
 }
 
 # Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
-# #205 batch 1 (Hamid 2026-10-11): REL-00193, REL-00200, REL-00206, REL-00319
-# and REL-01289 released after scope-note corrections passed the locked
-# core:precedes definition (review-evidence/precedes-follows-batch1-review.csv).
-# REL-00184, REL-00188, REL-00307, REL-00351, REL-00374, REL-01227, REL-01291
-# and REL-01294 stay here as reviewed, not emitted: their questions are closed.
+# #205 batch 1 (Hamid 2026-10-11): all 13 rows reviewed, not emitted; their
+# questions are closed (review-evidence/precedes-follows-batch1-review.csv).
+# Each answer is a scoped sequence that core:precedes cannot carry; a scoped
+# sequence relation is scheduled before core 1.0.0 (#226).
 PRECEDES_20260927_HOLDS = {
     "REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184", "REL-00188",
-    "REL-00307", "REL-00351",
-    "REL-00374", "REL-00930", "REL-01223", "REL-01227", "REL-01241",
+    "REL-00193", "REL-00200", "REL-00206", "REL-00307", "REL-00319", "REL-00351",
+    "REL-00374", "REL-00930", "REL-01223", "REL-01227", "REL-01241", "REL-01289",
     "REL-01291", "REL-01294",
 }
 
-# Union of all 2026-09-26/27 row-level verb holds (296 row IDs after #205 batch 1).
+# Union of all 2026-09-26/27 row-level verb holds (301 row IDs).
 ROW_LEVEL_VERB_HOLDS = (USES_INPUT_20260926_HOLDS | USES_INPUT_G1A_20260926_HOLDS |
                         INFORMEDBY_20260926_HOLDS | GOVERNEDBY_20260926_HOLDS |
                         TRIGGERS_20260926_HOLDS | PRECEDES_20260927_HOLDS)

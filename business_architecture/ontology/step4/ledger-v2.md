@@ -1973,27 +1973,25 @@ this entry is the correction. History on `main` is not rewritten.
 Hamid answered batch 1's 13 questions on #205 and posted them as his
 authorization on 2026-10-11 (#205 comment 6115309253, "Take this as my
 authorization"; quoted in `source-workbook-backlog.md`, "Batch 1 fresh
-verdicts"). Twelve of his
-sentences went into eleven approved scope notes, and Step 4 was re-pinned to
-`532eeee`. Each corrected row was then reviewed against the locked
-`core:precedes` definition (`evidence-discipline.md`): "The source completes
-before the target begins, as a sequence the business asserts."
-Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
+verdicts"). Twelve of his sentences went into eleven approved scope notes,
+and Step 4 was re-pinned to `532eeee`. Each corrected row was then reviewed
+against the locked `core:precedes` definition (`evidence-discipline.md`):
+"The source completes before the target begins, as a sequence the business
+asserts." Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
 
-- **APPROVE, emitted (5):** REL-00193, REL-00200, REL-00206, REL-00319,
-  REL-01289. Each is a trade-level sequence: capture of a trade completes
-  before confirmation, settlement or actualization of that trade begins.
-  Five new `core:precedes` facts, none duplicating a stored fact; 0
-  contradictions.
-- **HOLD, reviewed, not emitted (8):** REL-00184, REL-00188, REL-00307,
-  REL-00351, REL-00374, REL-01227, REL-01291, REL-01294. Each answer
-  describes a narrower prerequisite, a conditional sequence or overlapping
-  work, so the target can begin before the source completes. The rows stay
-  in `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
+- **HOLD, reviewed, not emitted (13):** REL-00184, REL-00188, REL-00193,
+  REL-00200, REL-00206, REL-00307, REL-00319, REL-00351, REL-00374,
+  REL-01227, REL-01289, REL-01291, REL-01294. Every answer is a scoped
+  sequence: per trade, delivery, period, claim or posting, and sometimes
+  conditional. His answers say these are "not completion of an entire
+  organizational process", so none meets the definition. The rows stay in
+  `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
   done for Phase 1.
+- Hamid decided on PR #225 (comment 6115615577): "Define a scoped sequence
+  relation for these answers before the core 1.0.0 release, tracked in its
+  own issue under #207." That issue is #226.
 
-Precedes/follows batch 1 release: 617 + 5 = **622** emitting;
-686 − 5 = **681** held; 457 + 5 = **462** facts.
+No mention changes bucket and no fact changes.
 
-**Current totals:** **622 emitting / 681 held** / 462 facts.
-Conservation: 622 + 681 + 12 + 1 + 2 = 1,318. ✓
+**Current totals:** **617 emitting / 686 held** / 457 facts.
+Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓

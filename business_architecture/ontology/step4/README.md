@@ -15,11 +15,11 @@ Hamid's review.
 - **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
   `section <issue>` from the repo root. It computes them from the files below;
   `scripts/test_published_figures.py` fails if the counts here drift from it.
-- **Counts** (verified 2026-10-11 after the #205 batch 1 release). Two cuts, both
+- **Counts** (verified 2026-09-30 on `main` 37ab0a0). Two cuts, both
   conserving to 1,318 mentions:
-  - **Ledger** (`ledger-v2.md`, verb-bucket totals): 622 emitting / 681
+  - **Ledger** (`ledger-v2.md`, verb-bucket totals): 617 emitting / 686
     held / 12 deferred / 1 external governance / 2 structured flow =
-    1,318; 462 canonical facts (`canonical-facts.csv`, 462 rows).
+    1,318; 457 canonical facts (`canonical-facts.csv`, 457 rows).
   - **Evidence gate** (`evidence-gate.py`): promoted 1,066 / held 237,
     plus the same 12 / 1 / 2 = 1,318; 433 PASS / 0 FAIL.
 - Key files: `verb-predicate-mapping-v2.md` (the signed-off mapping

@@ -23,19 +23,17 @@ def run(*args):
 def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
-    assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"]) == (622, 681, 12, 1, 2)
+    assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"]) == (617, 686, 12, 1, 2)
     assert c["conservation"] == led["mentions"] == 1318
-    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 462
+    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 457
     assert c["evidence_gate"]["green"] is True
     assert (c["evidence_gate"]["promoted"], c["evidence_gate"]["held"]) == (1066, 237)
 
 
 def test_phase1_scope_matches_decision_0025():
-    # Scope (rows, issues, held outside) is EPM-DEC-001-0025's; held and not_held
-    # move as batches release rows (#205 batch 1 released five, 2026-10-11).
     p = run("counts")["phase1"]
-    assert p["rows"] == 276 and p["held"] == 270
-    assert p["not_held"] == ["REL-00190", "REL-00193", "REL-00200", "REL-00206", "REL-00319", "REL-01289"]
+    assert p["rows"] == 276 and p["held"] == 275
+    assert p["not_held"] == ["REL-00190"]
     assert p["by_issue"] == {"201": 102, "202": 44, "203": 15, "204": 11, "205": 20, "206": 15, "209": 47, "210": 22}
     assert p["held_outside"] == 411
 
