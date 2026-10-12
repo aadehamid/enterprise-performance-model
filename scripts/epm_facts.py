@@ -676,6 +676,22 @@ def rendered_answer_corpus(folder=ANSWERS):
     return "\n".join(lines)
 
 
+def displayed_status_rows(text):
+    """The value cell of every displayed table row whose first cell reads "Status"."""
+    from markdown_it import MarkdownIt
+    tokens = MarkdownIt("commonmark").enable("table").parse(text)
+    rows, current = [], None
+    for tok in tokens:
+        if tok.type == "tr_open":
+            current = []
+            rows.append(current)
+        elif tok.type == "tr_close":
+            current = None
+        elif tok.type == "inline" and current is not None:
+            current.append(_flat(displayed_text(tok)))
+    return [row[1] for row in rows if len(row) >= 2 and row[0].lower() == "status"]
+
+
 def recorded_words(text):
     """Each "Hamid's recorded words" section of a decision record: (displayed text, contains raw HTML).
 
@@ -773,12 +789,10 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         with open(path) as f:
             record = f.read()
         name = f"EPM-DEC-001-{number:04d}"
-        # Exactly one Status row, counted in the raw file: a second one, even inside an
-        # HTML comment, could decide which status this check reads.
-        statuses = [cells[1] for cells in (
-            [c.strip() for c in line.strip().strip("|").split("|")]
-            for line in record.splitlines() if line.strip().startswith("|"))
-            if len(cells) >= 2 and cells[0].lower() == "status"]
+        # The status a reader sees: the Status row of the record's displayed tables.
+        # A row inside an HTML comment or code block is not a table row, and any
+        # pipe-table spelling is. Exactly one is required.
+        statuses = displayed_status_rows(record)
         if len(statuses) != 1:
             problems.append(f"{name}: has {len(statuses)} Status rows; a record needs exactly one")
             continue

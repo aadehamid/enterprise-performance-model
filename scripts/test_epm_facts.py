@@ -343,7 +343,7 @@ def test_recorded_words_section_follows_markdown_headings(tmp_path):
     folder = tmp_path / "b" / "decisions"
     folder.mkdir(parents=True)
     (folder / "EPM-DEC-001-0026-test.md").write_text(
-        "# t\n\n| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed.\n\n##\tEvidence\n\n"
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed.\n\n##\tEvidence\n\n"
         '"Approved: Q1–Q18 as recommended in the comment above"\n')
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("no quote" in p for p in problems)
@@ -384,7 +384,7 @@ def test_recorded_words_recognise_a_formatted_heading(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
     (folder / "EPM-DEC-001-0026-test.md").write_text(
-        "# t\n\n| Status | Proposed |\n\n## **Hamid's recorded words**\n\nHe said \"yes to all seven\"\n")
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Proposed |\n\n## **Hamid's recorded words**\n\nHe said \"yes to all seven\"\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("yes to all seven" in p for p in problems)
 
@@ -435,7 +435,7 @@ def test_recorded_words_heading_html_is_reported(tmp_path):
     folder = tmp_path / "decisions"
     folder.mkdir()
     (folder / "EPM-DEC-001-0026-test.md").write_text(
-        "# t\n\n| Status | Decided |\n\n## Hamid's recorded words <!-- hidden -->\n\n" + SAVED + "\n")
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words <!-- hidden -->\n\n" + SAVED + "\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("raw HTML" in p for p in problems)
 
@@ -445,7 +445,7 @@ def _decision_with_answers(tmp_path, answer_text, words):
     folder = tmp_path / "decisions"
     folder.mkdir()
     (folder / "EPM-DEC-001-0026-test.md").write_text(
-        f"# t\n\n| Status | Decided |\n\n## Hamid's recorded words\n\n{words}\n")
+        f"# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\n{words}\n")
     return [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, answers, str(folder))
             if "EPM-DEC-001-0026" in p]
 
@@ -505,7 +505,8 @@ def test_a_hidden_second_status_row_is_reported(tmp_path):
         "<!-- previous metadata\n| Status | Proposed |\n-->\n# EPM-DEC-001-0026: test\n\n| Field | Value |\n|---|---|\n"
         "| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
-    assert any("Status" in p and "exactly one" in p for p in problems)
+    # The hidden row is not a displayed table row, so the visible Decided status is enforced.
+    assert any("no quote" in p for p in problems)
 
 
 def test_status_rows_are_counted_with_any_spacing(tmp_path):
@@ -515,8 +516,29 @@ def test_status_rows_are_counted_with_any_spacing(tmp_path):
         "<!-- previous metadata\n| Status | Proposed |\n-->\n# t\n\n| Field | Value |\n|---|---|\n"
         "|Status|Decided|\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
-    assert any("exactly one" in p for p in problems)
+    assert any("no quote" in p for p in problems)
     (folder / "EPM-DEC-001-0026-test.md").write_text(
         "# t\n\n| Field | Value |\n|---|---|\n  |  status  |  Decided  |  \n\n## Hamid's recorded words\n\nHamid agreed.\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("no quote" in p for p in problems)
+
+
+def test_status_comes_from_the_displayed_table(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    for row in ("Status | Decided", "|Status|Decided|", "| **Status** | Decided |", "| Status | Decided"):
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            "<!-- previous metadata\n| Status | Proposed |\n-->\n# t\n\n| Field | Value |\n|---|---|\n"
+            f"{row}\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("no quote" in p for p in problems), row
+
+
+def test_two_displayed_status_rows_are_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Proposed |\n| Status | Decided |\n\n"
+        "## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("exactly one" in p for p in problems)
