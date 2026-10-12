@@ -24,7 +24,8 @@
 *(617 emitting / 669 held before #204 batch 1 emitted 11 triggers rows on 2026-10-12; 686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `51a32aa2eea43a819a7fff23b624ff8bd291bfad` (re-pinned 2026-10-12 for the #204 batch 1 trigger sentences, from `d8b482751e418338203e976e5741dcfe538b4800`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows; the re-pin itself changed only the SHA column, and the batch commit then updated `context-pass.csv` for eight #204 rows (REL-00169, REL-00170, REL-00252, REL-00396, REL-00398, REL-00400, REL-00403, REL-00892), whose new scope-note sentences give an explicit reference in place of structural nearness). Promotion was approved against `6a155bc2`.
+- **PINNED_SHA:** `7b670ad58c095e0f2d907afcfa938964bb4e8138` (re-pinned 2026-10-12 for the #206 answers from the Phase 1 register, from `51a32aa2eea43a819a7fff23b624ff8bd291bfad`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows; the re-pin itself changes only the SHA column). Promotion was approved against `6a155bc2`.
+  - Previous pin: `51a32aa2eea43a819a7fff23b624ff8bd291bfad` (re-pinned 2026-10-12 for the #204 batch 1 trigger sentences, from `d8b482751e418338203e976e5741dcfe538b4800`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows; the re-pin itself changed only the SHA column, and the batch commit then updated `context-pass.csv` for eight #204 rows (REL-00169, REL-00170, REL-00252, REL-00396, REL-00398, REL-00400, REL-00403, REL-00892), whose new scope-note sentences give an explicit reference in place of structural nearness). Promotion was approved against `6a155bc2`.
 - Re-pin completed 2026-09-29; all promotion preconditions satisfied 2026-09-30.
 
 ### PR #124 Proof
