@@ -577,7 +577,8 @@ def test_an_unrecognised_status_is_reported(tmp_path):
         (folder / "EPM-DEC-001-0026-test.md").write_text(
             f"# t\n\n| Field | Value |\n|---|---|\n| Status | {status} |\n\n## Hamid's recorded words\n\nHamid agreed.\n")
         problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
-        assert any("status" in p.lower() and "recognised" in p for p in problems), repr(status)
+        # Zero-width characters are caught earlier, by the invisible-character rule.
+        assert any(("status" in p.lower() and "recognised" in p) or "invisible" in p for p in problems), repr(status)
 
 
 def test_images_are_refused_on_both_sides(tmp_path):
@@ -585,3 +586,14 @@ def test_images_are_refused_on_both_sides(tmp_path):
     assert any("image" in p for p in _decision_fixture(tmp_path / "a", 26, words))
     corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "b", "approve ![not](x.png) every risky change\n"))
     assert "approve every risky change" not in corpus
+
+
+def test_invisible_format_characters_are_refused(tmp_path):
+    for i, body in enumerate((
+            "## Hamid's recorded words\n\n" + SAVED + "\n\n## ​Hamid's recorded words\n\n\"yes to all seven\"\n",
+            "## Hamid's recorded words\n\n" + SAVED + "⁠\n")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text("# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n" + body)
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("invisible" in p for p in problems), i

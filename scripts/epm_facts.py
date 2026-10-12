@@ -800,6 +800,12 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if any(has_html(t) for t in MarkdownIt("commonmark").enable("table").parse(record)):
             problems.append(f"{name}: raw HTML or an image in a checked decision record; write it in plain Markdown")
             continue
+        # Invisible format characters (zero-width spaces, joiners, a BOM) can make two
+        # headings or statuses look alike while comparing differently.
+        import unicodedata
+        if any(unicodedata.category(ch) == "Cf" for ch in record):
+            problems.append(f"{name}: invisible format characters in a checked decision record; remove them")
+            continue
         # The status a reader sees: the Status row of the record's displayed tables.
         # A row inside an HTML comment or code block is not a table row, and any
         # pipe-table spelling is. Exactly one is required.
