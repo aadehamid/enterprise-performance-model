@@ -957,6 +957,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
+- Hamid: "yes, add both verbs and record the decision." `provides-input-to`
+  (S, T) is stored as T core:dependsOnOutputOf S and `governs` (S, T) as T
+  core:governedBy S, so a Phase 1 correction that reverses a row's direction
+  rewrites the segment in place and keeps its REL ID. Each follows the rules
+  of the verb it mirrors. Record:
+  `business_architecture/domain/decisions/EPM-DEC-001-0027-mirror-raw-verbs.md`.
+
 ### #204 triggers batch 1 (2026-10-12)
 - Hamid answered all 11 held `triggers` rows on #204 (comment 6130380041):
   seven conditional triggers, four unconditional. He agreed that "a

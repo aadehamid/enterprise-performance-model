@@ -149,9 +149,9 @@ def run_pass():
 
 def _real(r, tests):
     """Tests that count toward promotion. B never counts for governed-by
-    (Hamid 2026-09-24)."""
+    (Hamid 2026-09-24), nor for its mirror governs (EPM-DEC-001-0027)."""
     real = [t for t in tests if not t.startswith("C:two-way-absent")]
-    if r["verb"] == "governed-by":
+    if r["verb"] in ("governed-by", "governs"):
         real = [t for t in real if t != "B:structural-nearness"]
     return real
 
@@ -181,11 +181,11 @@ def main():
     out = []
     for r, tgt, tests in results:
         real = _real(r, tests)
-        b_only_gov = (r["verb"] == "governed-by"
+        b_only_gov = (r["verb"] in ("governed-by", "governs")
                       and "B:structural-nearness" in tests
                       and not real)
         tests_shown = (list(real) if not b_only_gov
-                       else ["B:structural-nearness (not evidence for governed-by)"])
+                       else [f"B:structural-nearness (not evidence for {r['verb']})"])
         primary = min(real, key=lambda t: ORDER[t[0]]) if real else ""
         back_note = next((t for t in tests if t.startswith("C:two-way-absent")), "")
         out.append({"row_id": r["row_id"], "source_slug": r["source_slug"],

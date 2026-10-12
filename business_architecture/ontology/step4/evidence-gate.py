@@ -101,6 +101,8 @@ def _stored(rid):
     if v == "follows": return (t, "core:precedes", s)
     if v == "informs": return (t, "core:informedBy", s)
     if v == "constrains": return (t, "core:constrainedBy", s)
+    if v == "provides-input-to": return (t, "core:dependsOnOutputOf", s)  # EPM-DEC-001-0027
+    if v == "governs": return (t, "core:governedBy", s)  # EPM-DEC-001-0027
     if v == "triggers": return (t, "core:triggeredBy", s)
     if v == "assures": return (t, "core:assuredBy", s)
     if v == "governed-by": return (s, "core:governedBy", t)
@@ -596,6 +598,17 @@ for _r in v2:
     if len(_c) == 1 and _r["disposition"] in ("ResolvedToConcept", "SoleCandidate"):
         _graph[(_r["source_slug"], _c[0])].add(_r["verb"])
 _v2d = {r["row_id"]: r for r in v2}
+
+
+def _informed_by_only(rev, fwd):
+    """True when the only output-dependency evidence for an enables S->T row is T informed-by S.
+
+    An independent dependency counts whichever side states it: T uses-input S, or
+    its mirror S provides-input-to T (EPM-DEC-001-0027). rev: verbs T->S; fwd: verbs S->T.
+    """
+    return "informed-by" in rev and "uses-input" not in rev and "provides-input-to" not in fwd
+
+
 _viol = []
 for _fr in cf:
     if _fr["predicate"] != "core:dependsOnOutputOf":
@@ -607,8 +620,8 @@ for _fr in cf:
         _c = [c.strip() for c in _r["candidate_slugs"].split(" | ") if c.strip()]
         if len(_c) != 1:
             continue
-        _rev = _graph.get((_c[0], _r["source_slug"]), set())
-        if "informed-by" in _rev and "uses-input" not in _rev:
+        if _informed_by_only(_graph.get((_c[0], _r["source_slug"]), set()),
+                             _graph.get((_r["source_slug"], _c[0]), set())):
             _viol.append(_rid)
 check("g1b-no-verb-change", not _viol,
       f"{len(_viol)} enables rows stored as dependsOnOutputOf on informed-by-only reverse evidence: {sorted(_viol)[:5]}...")

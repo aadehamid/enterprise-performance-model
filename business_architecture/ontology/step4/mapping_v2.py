@@ -1154,7 +1154,9 @@ def enables_group(r, tgt):
     sibs = imap.get(src, {}).get("parent_slug") == imap.get(tgt, {}).get("parent_slug") \
         and imap.get(src, {}).get("parent_slug")
     seq = bool((graph.get((src, tgt), set()) | graph.get((tgt, src), set())) & {"precedes", "follows"})
-    dep = bool(graph.get((tgt, src), set()) & {"uses-input", "informed-by"})
+    # An output dependency of tgt on src, written from either side (EPM-DEC-001-0027 mirror).
+    dep = bool(graph.get((tgt, src), set()) & {"uses-input", "informed-by"}
+               or graph.get((src, tgt), set()) & {"provides-input-to"})
     if sibs and seq: return "G2-disguised-sequence"
     if dep: return "G1-redundant-output-dep"
     return "G3-genuine-enablement"
@@ -1230,6 +1232,9 @@ def stored_fact(r, tgt):
     if v == "governed-by":  return (s, "core:governedBy", tgt, "")
     if v == "constrained-by": return (s, "core:constrainedBy", tgt, "")
     if v == "constrains":   return (tgt, "core:constrainedBy", s, "inverse of raw constrains")
+    # EPM-DEC-001-0027: mirror verbs, stored in the canonical direction.
+    if v == "provides-input-to": return (tgt, "core:dependsOnOutputOf", s, "inverse of raw provides-input-to")
+    if v == "governs":      return (tgt, "core:governedBy", s, "inverse of raw governs")
     if v == "triggers":     return (tgt, "core:triggeredBy", s, "inverse of raw triggers")
     if v == "assures":      return (tgt, "core:assuredBy", s, "inverse of raw assures")
     if v == "enables":

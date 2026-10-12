@@ -125,7 +125,8 @@ mapping applies those mention-level holds separately),
    `core:governedBy`, `core:assuredBy`. Inverse properties may be declared for
    query and navigation. Materialized inverse triples are never written to
    the canonical facts store. Source verbs `follows`, `informs`,
-   `constrains`, `triggers`, and `enables` are always stored in the canonical
+   `constrains`, `triggers`, `enables`, `provides-input-to` and `governs`
+   (EPM-DEC-001-0027) are always stored in the canonical
    direction, with the raw verb kept in provenance. Mirror mentions (for
    example `A precedes B` + `B follows A`) merge into one canonical fact. No
    transitivity asserted without a separate semantic decision.
@@ -161,7 +162,7 @@ mapping applies those mention-level holds separately),
 
 ## Canonical direction table (raw verb → stored triple) — Approved Baseline (Hamid 2026-09-26)
 
-> **Status:** Rows 1–12 approved. Two-cycle rules for `precedes` and
+> **Status:** Rows 1–12 approved; `provides-input-to` and `governs` added by EPM-DEC-001-0027 (Hamid 2026-10-12). Two-cycle rules for `precedes` and
 > `governedBy` approved and gate-enforced. Zero-inverse-predicate check
 > gate-enforced. Later changes need a decision-log entry.
 
@@ -176,6 +177,8 @@ mapping applies those mention-level holds separately),
 | `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
+| `provides-input-to` (S, T) | `T core:dependsOnOutputOf S` | mirror of `uses-input` (EPM-DEC-001-0027) |
+| `governs` (S, T) | `T core:governedBy S` | mirror of `governed-by`; the emission guard reads T as governed, S as owner (EPM-DEC-001-0027) |
 | `triggers` (S, T) | `T core:triggeredBy S` | 18 rows (18 reviewed 2026-09-26: 2 stand, 5 promote, 11 held; the 11 emit since #204 batch 1, 2026-10-12, 7 of them as conditional triggers) |
 | `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
 | `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 36 G1a evidence-only (35 emitting; REL-00436 held-attached) + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
