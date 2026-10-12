@@ -101,6 +101,8 @@ def _stored(rid):
     if v == "follows": return (t, "core:precedes", s)
     if v == "informs": return (t, "core:informedBy", s)
     if v == "constrains": return (t, "core:constrainedBy", s)
+    if v == "provides-input-to": return (t, "core:dependsOnOutputOf", s)  # EPM-DEC-001-0027
+    if v == "governs": return (t, "core:governedBy", s)  # EPM-DEC-001-0027
     if v == "triggers": return (t, "core:triggeredBy", s)
     if v == "assures": return (t, "core:assuredBy", s)
     if v == "governed-by": return (s, "core:governedBy", t)

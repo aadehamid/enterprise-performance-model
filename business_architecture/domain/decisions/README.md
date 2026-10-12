@@ -36,3 +36,4 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | [EPM-DEC-001-0024](EPM-DEC-001-0024-playbook-is-a-method.md) | The playbook is a method; project decisions live in EPM-DEC-001 | Decided (2026-10-06) | Follow-up to Q2 |
 | [EPM-DEC-001-0025](EPM-DEC-001-0025-phase1-scope.md) | Phase 1 covers the source-correction backlog; other held rows wait | Decided; amended by 0026 | Follow-up to Q12 |
 | [EPM-DEC-001-0026](EPM-DEC-001-0026-scoped-sequence-relation.md) | A scoped sequence relation in `core`, before 1.0.0 | Decided | Q1 to Q18 of the #226 design round |
+| [EPM-DEC-001-0027](EPM-DEC-001-0027-mirror-raw-verbs.md) | Two mirror raw verbs, `provides-input-to` and `governs` | Decided | One question, 2026-10-12 |

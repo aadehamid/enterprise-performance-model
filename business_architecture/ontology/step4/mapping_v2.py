@@ -1230,6 +1230,9 @@ def stored_fact(r, tgt):
     if v == "governed-by":  return (s, "core:governedBy", tgt, "")
     if v == "constrained-by": return (s, "core:constrainedBy", tgt, "")
     if v == "constrains":   return (tgt, "core:constrainedBy", s, "inverse of raw constrains")
+    # EPM-DEC-001-0027: mirror verbs, stored in the canonical direction.
+    if v == "provides-input-to": return (tgt, "core:dependsOnOutputOf", s, "inverse of raw provides-input-to")
+    if v == "governs":      return (tgt, "core:governedBy", s, "inverse of raw governs")
     if v == "triggers":     return (tgt, "core:triggeredBy", s, "inverse of raw triggers")
     if v == "assures":      return (tgt, "core:assuredBy", s, "inverse of raw assures")
     if v == "enables":
