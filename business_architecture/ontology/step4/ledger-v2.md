@@ -2079,3 +2079,27 @@ reference for the eight rows that relied on structural nearness.
 
 **Current totals:** **628 emitting / 658 held / 17 scoped sequence** / 468 facts.
 Conservation: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #206: governed-by source corrections (Hamid 2026-10-12)
+
+Hamid approved the Phase 1 answer register on 2026-10-12 (#207 comment
+6133390674, saved in `review-evidence/hamid-answers/phase1-sweep.md`). The
+#206 rows are the first batch built from it. Step 4 was re-pinned to
+`7b670ad`. Row verdicts: `review-evidence/phase1-sweep/206-review.csv`.
+
+- **APPROVE, emitting `core:governedBy` (10):** REL-00050, REL-00067,
+  REL-00215, REL-00394, REL-00399, REL-00406, REL-00937, REL-01005,
+  REL-01228, REL-01256. Each has a governed-by sentence in its source's
+  scope note. REL-01228 and REL-01256 hold under the condition their
+  sentences state.
+- **Retargeted (1):** REL-00190 now stores CM-1-2-1-3-2 core:governedBy
+  CM-1-2-2-3-2 (the delegation-of-authority child) in place of its parent;
+  it was already emitting.
+- **HOLD, no relationship (4):** REL-00274, REL-00907, REL-01143,
+  REL-01286. Their questions are closed.
+
+10 mentions move from held to emitting; 11 facts added and 1 removed, none
+merged, no contradiction.
+
+**Current totals:** **638 emitting / 648 held / 17 scoped sequence** / 478 facts.
+Conservation: 638 + 648 + 12 + 1 + 2 + 17 = 1,318. ✓

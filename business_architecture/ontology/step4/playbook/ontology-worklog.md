@@ -957,6 +957,20 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Phase 1 sweep register approved; #206 built (2026-10-12)
+- Hamid delegated drafting of all 245 remaining Phase 1 answers: Claude and
+  Codex drafted from MPC and industry research briefs, each model reviewed
+  the other's half, and Hamid approved the register as a whole: "approve
+  register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all." (#207 comment
+  6133390674). The register and its evidence are in
+  `review-evidence/phase1-sweep/`, not in the ontology.
+- Corrections go into the workbook in place (`relation-correct.py`), so REL
+  IDs stay stable. EPM-DEC-001-0027 adds two mirror raw verbs for the 101
+  rows stored opposite to their workbook direction (#238).
+- #206 is the first batch: 10 governed-by rows emit, REL-00190 names its
+  DOA child, 4 rows close with no relationship. Pending merge of the batch
+  PR.
+
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`
   (S, T) is stored as T core:dependsOnOutputOf S and `governs` (S, T) as T

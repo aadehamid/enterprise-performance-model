@@ -62,3 +62,15 @@ gate was run against, not the pin. Do not retitle the checklist's
   batch 1 review rows match Hamid's saved answer row by row and emit their
   `core:triggeredBy` facts (`batch_checks.py`), replacing eleven per-row
   checks: 436 → 426 PASS.
+
+## 2026-10-12 — branch `phase1/sweep-register`, pin `7b670ad`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `7b670ad58c095e0f2d907afcfa938964bb4e8138`
+- **Gate:** `evidence-gate.py` — 417 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==478,
+  contradictions==0. A new check runs `batch_checks.sweep_batch_problems`
+  over every `review-evidence/phase1-sweep/*-review.csv`: each row matches
+  the approved register, emitting rows carry their fact and no-relationship
+  rows carry none. It replaces ten per-row hold checks for the #206 rows
+  that now emit: 426 → 417 PASS.
+
