@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided |
+| Status | Decided; amended by EPM-DEC-001-0026 (2026-10-12) |
 | Date | 2026-10-06 |
 | Questions | Follow-up to Q12 (EPM-DEC-001-0013) |
 | Source | Claude Code session, 2026-10-06 |
@@ -33,6 +33,10 @@ Option (a). Phase 1 is the source-correction backlog: the rows worked through th
 ## Hamid's recorded words
 
 Asked to choose between (a) and (b), with (a) recommended, Hamid replied on 2026-10-06: "i agree with your recommendation"
+
+## Amendment (2026-10-12)
+
+EPM-DEC-001-0026 gives the 17 scoped rows of #205 their fresh verdict as scoped sequences. They are Phase 1 rows with a fresh verdict, no longer held. The figures above stay as of commit `1179405`.
 
 ## Evidence
 

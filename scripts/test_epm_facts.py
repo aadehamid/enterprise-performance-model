@@ -24,7 +24,10 @@ def run(*args):
 def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
-    assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"]) == (617, 686, 12, 1, 2)
+    assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
+            led["scoped_sequence"]) == (617, 669, 12, 1, 2, 17)
+    ss = c["scoped_sequences"]
+    assert (ss["nodes"], ss["handoffs"], ss["problems"]) == (17, 16, [])
     assert c["conservation"] == led["mentions"] == 1318
     assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 457
     assert c["evidence_gate"]["green"] is True
@@ -33,8 +36,9 @@ def test_ledger_conserves_and_matches_governed_figures():
 
 def test_phase1_scope_matches_decision_0025():
     p = run("counts")["phase1"]
-    assert p["rows"] == 276 and p["held"] == 275
-    assert p["not_held"] == ["REL-00190"]
+    assert p["rows"] == 276 and p["held"] == 258
+    # REL-00190 emits a core fact; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
+    assert p["not_held"] == sorted(["REL-00190"] + epm_facts.scoped_sequences()["rows"])
     assert p["by_issue"] == {"201": 102, "202": 44, "203": 15, "204": 11, "205": 20, "206": 15, "209": 47, "210": 22}
     assert p["held_outside"] == 411
 
@@ -158,6 +162,9 @@ def test_decisions_check_catches_unindexed_record_and_bad_amendment(tmp_path):
 def test_status_parts_reads_every_amendment():
     assert epm_facts._status_parts("Decided; amended by 0024, 0098") == ("Decided", {"0024", "0098"})
     assert epm_facts._status_parts("Decided; amended by EPM-DEC-001-0024 and EPM-DEC-001-0025 (2026-10-06)") == ("Decided", {"0024", "0025"})
+    # A date in parentheses neither ends the list nor counts as a record number.
+    assert epm_facts._status_parts(
+        "Decided; amended by EPM-DEC-001-0025 (2026-10-06) and EPM-DEC-001-0026 (2026-10-12)") == ("Decided", {"0025", "0026"})
 
 
 def test_decisions_check_catches_a_second_amendment_target(tmp_path):

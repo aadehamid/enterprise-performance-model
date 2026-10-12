@@ -2,7 +2,7 @@
 
 **Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(617 emitting / 686 held / 457 facts — 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
+(617 emitting / 669 held / 17 scoped sequence / 457 facts — 617/686/457 before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
@@ -198,9 +198,10 @@ InformationObject instances (Q5).
 - Canonical facts (distinct stored subject/predicate/object): **457** (477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 686 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 669 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+  values) + 17 scoped sequence (emitted as scoped-sequence nodes, not canonical
+  facts; EPM-DEC-001-0026). Total: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 

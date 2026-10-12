@@ -475,8 +475,8 @@ for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/
 # precedes-follows-batch1-review.csv and -batch2-review.csv): all 20 reviewed,
-# not emitted. 3 answered (b)/(c) as no sequence; 17 are scoped sequences that
-# core:precedes cannot carry, routed to #226.
+# none emits a core:precedes fact. 3 answered (b)/(c) as no sequence; 17 are
+# scoped sequences that core:precedes cannot carry (2k).
 for rid in ("REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184",
             "REL-00188", "REL-00193", "REL-00200", "REL-00206", "REL-00307",
             "REL-00319", "REL-00351", "REL-00374", "REL-00930", "REL-01223",
@@ -484,6 +484,27 @@ for rid in ("REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184",
     check(f"precedes/follows reviewed-not-emitted {rid} emits no triple",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict 2026-10-11/12 / reviewed, not emitted (#205)")
+
+# 2k. Scoped sequences (EPM-DEC-001-0026, Hamid 2026-10-12, #226). The 17
+# scoped rows emit scoped-sequence nodes, built from scoped-sequence/
+# scoped-sequences.csv; they never emit a core fact (checked in 2j). The three
+# no-sequence rows stay out. build.py --verify adds SHACL in check.sh.
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("gate_scoped_sequence_build", "scoped-sequence/build.py")
+_scoped = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_scoped)
+_scoped_rows = set(_scoped.counts()["rows"])
+_scoped_problems = _scoped.check()
+check("scoped-sequence source table passes build.check", not _scoped_problems,
+      "; ".join(_scoped_problems[:5]))
+check("scoped-sequence rows are the 17 #205 scoped rows",
+      _scoped_rows == {"REL-00008", "REL-00068", "REL-00112", "REL-00188", "REL-00193",
+                       "REL-00200", "REL-00206", "REL-00307", "REL-00319", "REL-00351",
+                       "REL-00374", "REL-00930", "REL-01223", "REL-01241", "REL-01289",
+                       "REL-01291", "REL-01294"},
+      str(sorted(_scoped_rows)))
+check("scoped-sequence 17 nodes / 16 handoffs",
+      (_scoped.counts()["nodes"], _scoped.counts()["handoffs"]) == (17, 16), str(_scoped.counts()))
 
 # 3. canonical facts + contradictions
 cf = cfacts

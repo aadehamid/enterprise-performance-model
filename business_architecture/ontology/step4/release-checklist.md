@@ -20,8 +20,8 @@
 | triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting |
 
 ### Conservation
-**617 emitting + 686 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318**
-*(corrected 2026-09-29 from 615/688; see ledger-v2.md figure-correction entry)*
+**617 emitting + 669 held + 12 deferred + 1 external-governance + 2 structured-flow + 17 scoped-sequence = 1,318**
+*(686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
 
 ### Pinned Evidence
 - **PINNED_SHA:** `d8b482751e418338203e976e5741dcfe538b4800` (re-pinned 2026-10-12 for the #205 batch 2 scope-note corrections, from `3a54b46978ad4d2ba6e491e116713bebc1bedeaf`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows, content identical except the SHA column). Promotion was approved against `6a155bc2`.

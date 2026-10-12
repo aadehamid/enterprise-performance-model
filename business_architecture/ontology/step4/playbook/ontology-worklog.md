@@ -956,6 +956,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Scoped sequence relation built (2026-10-12)
+- EPM-DEC-001-0026: Hamid approved the #226 design (comment 6123946413:
+  "Approved: Q1–Q18 as recommended in the comment above"). A scoped sequence
+  is a qualified-relation node in `core` (`core:ScopedSequence`) from an
+  earlier to a later process, with a scope unit from a 10-value list, an
+  optional condition, an evidence basis and the approved scope-note sentence
+  as its definition. The 17 scoped #205 rows emit 17 nodes (16 handoffs);
+  the ledger gives them their own bucket. `core` 1.0.0 also needs the
+  relation's SHACL shapes to pass. Amends 0013 and 0025. Built in
+  `step4/scoped-sequence/`.
+
 ### Scoped sequence relation before core 1.0.0 (2026-10-12)
 - #205 batch 1 answers describe sequences per trade, delivery, settlement
   period, claim or posting, "not completion of an entire organizational

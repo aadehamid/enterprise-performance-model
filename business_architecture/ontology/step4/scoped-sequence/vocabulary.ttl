@@ -1,0 +1,132 @@
+# Scoped sequence: the class, its properties and its two code lists (core module).
+# Decided in EPM-DEC-001-0026 (#226). Every term here is in the core namespace.
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix scope: <https://w3id.org/lsc/ontology/modules/core/scope-unit/> .
+@prefix evb: <https://w3id.org/lsc/ontology/modules/core/evidence-basis/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+core:ScopedSequence a owl:Class ;
+    rdfs:label "Scoped sequence"@en ;
+    skos:definition "A scoped sequence states that, for each instance of a named scope unit, a stated part of an earlier process happens before a stated part of a later process. Neither process needs to complete."@en ;
+    skos:scopeNote "A qualified-relation node. It is separate from core:precedes, which means the whole earlier process completes before the later process begins; neither relation implies the other. Its skos:definition is the source author's approved scope-note sentence, which names the parts of each process."@en .
+
+core:earlierProcess a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "earlier process"@en ;
+    rdfs:domain core:ScopedSequence ;
+    skos:definition "The process whose stated part happens first in the scoped sequence."@en .
+
+core:laterProcess a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "later process"@en ;
+    rdfs:domain core:ScopedSequence ;
+    skos:definition "The process whose stated part happens after the earlier process's stated part."@en .
+
+core:sequenceScope a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "sequence scope"@en ;
+    rdfs:domain core:ScopedSequence ;
+    rdfs:range skos:Concept ;
+    skos:definition "The scope unit the sequence repeats for, taken from the scope-unit list."@en .
+
+core:sequenceCondition a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "sequence condition"@en ;
+    rdfs:domain core:ScopedSequence ;
+    rdfs:range rdf:langString ;
+    skos:definition "The condition under which the sequence holds, in the words of the definition sentence. Absent when the sequence holds for every instance of the scope unit."@en .
+
+core:refinesSequence a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "refines sequence"@en ;
+    rdfs:domain core:ScopedSequence ;
+    rdfs:range core:ScopedSequence ;
+    skos:definition "Points from a scoped sequence stated at a lower hierarchy level to the scoped sequence it details. The two describe one handoff, and a count of handoffs leaves out the refining node."@en .
+
+core:linksToAncestor a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:label "links to ancestor"@en ;
+    rdfs:domain core:ScopedSequence ;
+    rdfs:range xsd:boolean ;
+    skos:definition "True when one endpoint is an ancestor of the other in the process taxonomy. Allowed only where a source-author answer states that sequence explicitly."@en .
+
+core:evidenceBasis a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:label "evidence basis"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "How firm the evidence for a relationship is, taken from the evidence-basis list."@en .
+
+core:sourceRow a owl:DatatypeProperty ;
+    rdfs:label "source row"@en ;
+    rdfs:domain core:ScopedSequence ;
+    rdfs:range xsd:string ;
+    skos:definition "The relationship-workbook row (REL-nnnnn) the node was reviewed from."@en .
+
+# ---- scope units ----
+
+core:ScopeUnits a skos:ConceptScheme ;
+    skos:prefLabel "Scope units"@en ;
+    skos:definition "The kinds of business object a scoped sequence repeats for. A value names a kind of object, never a particular trade or claim (EPM-DEC-001-0005). A new value is added only when no existing value fits."@en .
+
+scope:transaction a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Transaction"@en ;
+    skos:definition "One trade or deal: a commercial agreement recorded with its own terms, such as a physical trade, an OTC trade, a storage deal or a transmission arrangement."@en .
+
+scope:physical-movement a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Physical movement"@en ;
+    skos:definition "One physical movement of product, recorded with its actual quantities and movement facts."@en .
+
+scope:delivery-period a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Delivery period"@en ;
+    skos:definition "One delivery, production or settlement period for which actual quantities are measured and charges are calculated."@en .
+
+scope:posting a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Posting"@en ;
+    skos:definition "One accounting posting of a receivable, a payable or an adjustment."@en .
+
+scope:demurrage-claim a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Demurrage claim"@en ;
+    skos:definition "One demurrage claim, from calculation of the amount through its authorization."@en .
+
+scope:forecast-version a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Forecast version"@en ;
+    skos:definition "One approved and released version of a forecast, within its forecast or planning cycle."@en .
+
+scope:replenishment-requirement a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Replenishment requirement"@en ;
+    skos:definition "One inventory replenishment requirement, or an approved revision of it, stating product, quantity, destination and timing."@en .
+
+scope:plan-selection-decision a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Plan-selection decision"@en ;
+    skos:definition "One decision that selects and approves a production plan."@en .
+
+scope:quote-version a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Quote version"@en ;
+    skos:definition "One version of a customer quote or renewal."@en .
+
+scope:scheduling-horizon a skos:Concept ;
+    skos:inScheme core:ScopeUnits ;
+    skos:prefLabel "Scheduling horizon"@en ;
+    skos:definition "One scheduling horizon: the period for which an approved plan applies and an executable schedule is released."@en .
+
+# ---- evidence basis ----
+
+core:EvidenceBases a skos:ConceptScheme ;
+    skos:prefLabel "Evidence bases"@en ;
+    skos:definition "How firm the evidence for a relationship is."@en .
+
+evb:source-confirmed a skos:Concept ;
+    skos:inScheme core:EvidenceBases ;
+    skos:prefLabel "Source-confirmed"@en ;
+    skos:definition "The source author confirmed the relationship for the process model without marking it as an assumption."@en .
+
+evb:reference-model-assumption a skos:Concept ;
+    skos:inScheme core:EvidenceBases ;
+    skos:prefLabel "Reference-model assumption"@en ;
+    skos:definition "The source author adopted the relationship as a reference-model position informed by downstream business context and industry practice. No verified MPC procedure supports it."@en .

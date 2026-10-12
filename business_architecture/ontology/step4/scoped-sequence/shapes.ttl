@@ -1,0 +1,105 @@
+# SHACL shapes for scoped sequences (EPM-DEC-001-0026, #226).
+# Validate scoped-sequences.ttl with vocabulary.ttl and the process taxonomy
+# loaded in the data graph: build.py does this.
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shape: <https://w3id.org/lsc/ontology/modules/core/shape/> .
+@prefix evb: <https://w3id.org/lsc/ontology/modules/core/evidence-basis/> .
+
+shape:ScopedSequence a sh:NodeShape ;
+    sh:targetClass core:ScopedSequence ;
+    sh:nodeKind sh:IRI ;
+    sh:property shape:earlierProcess, shape:laterProcess, shape:sequenceScope,
+        shape:sequenceCondition, shape:refinesSequence, shape:linksToAncestor,
+        shape:evidenceBasis, shape:definition, shape:prefLabel, shape:sourceRow,
+        shape:source ;
+    sh:sparql shape:undeclaredAncestorLink .
+
+shape:ProcessEndpoint a sh:NodeShape ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://w3id\\.org/lsc/ontology/process/" ;
+    sh:class skos:Concept .
+
+shape:earlierProcess a sh:PropertyShape ;
+    sh:path core:earlierProcess ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node shape:ProcessEndpoint ;
+    sh:disjoint core:laterProcess .
+
+shape:laterProcess a sh:PropertyShape ;
+    sh:path core:laterProcess ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:node shape:ProcessEndpoint .
+
+shape:sequenceScope a sh:PropertyShape ;
+    sh:path core:sequenceScope ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+    sh:node shape:ScopeUnit .
+
+shape:ScopeUnit a sh:NodeShape ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ScopeUnits ] .
+
+shape:sequenceCondition a sh:PropertyShape ;
+    sh:path core:sequenceCondition ;
+    sh:maxCount 1 ;
+    sh:datatype rdf:langString ;
+    sh:minLength 1 .
+
+shape:refinesSequence a sh:PropertyShape ;
+    sh:path core:refinesSequence ;
+    sh:maxCount 1 ;
+    sh:class core:ScopedSequence .
+
+shape:linksToAncestor a sh:PropertyShape ;
+    sh:path core:linksToAncestor ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:boolean .
+
+shape:evidenceBasis a sh:PropertyShape ;
+    sh:path core:evidenceBasis ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:in ( evb:source-confirmed evb:reference-model-assumption ) .
+
+shape:definition a sh:PropertyShape ;
+    sh:path skos:definition ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype rdf:langString .
+
+shape:prefLabel a sh:PropertyShape ;
+    sh:path skos:prefLabel ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype rdf:langString .
+
+shape:sourceRow a sh:PropertyShape ;
+    sh:path core:sourceRow ;
+    sh:minCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^REL-[0-9]{5}$" .
+
+shape:source a sh:PropertyShape ;
+    sh:path dcterms:source ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI .
+
+# Q6: a link between a process and its own ancestor is allowed only when the
+# node declares it (core:linksToAncestor true), so a reviewer sees each one.
+shape:undeclaredAncestorLink a sh:SPARQLConstraint ;
+    sh:severity sh:Warning ;
+    sh:message "One endpoint is an ancestor of the other, but the node does not declare core:linksToAncestor true." ;
+    sh:prefixes shape:prefixes ;
+    sh:select """
+        SELECT $this WHERE {
+            $this core:earlierProcess ?a ; core:laterProcess ?b .
+            { ?a skos:broader+ ?b } UNION { ?b skos:broader+ ?a }
+            FILTER NOT EXISTS { $this core:linksToAncestor true }
+        }""" .
+
+shape:prefixes a owl:Ontology ;
+    sh:declare [ sh:prefix "core" ; sh:namespace "https://w3id.org/lsc/ontology/modules/core/"^^xsd:anyURI ] ,
+               [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] .
