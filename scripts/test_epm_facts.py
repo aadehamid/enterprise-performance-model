@@ -542,3 +542,13 @@ def test_two_displayed_status_rows_are_reported(tmp_path):
         "## Hamid's recorded words\n\nHamid agreed.\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("exactly one" in p for p in problems)
+
+
+def test_raw_html_in_the_status_row_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | <span hidden>Proposed </span>Decided |\n\n"
+        "## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("raw HTML" in p and "Status" in p for p in problems)

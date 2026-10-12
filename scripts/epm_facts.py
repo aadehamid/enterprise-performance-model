@@ -677,7 +677,7 @@ def rendered_answer_corpus(folder=ANSWERS):
 
 
 def displayed_status_rows(text):
-    """The value cell of every displayed table row whose first cell reads "Status"."""
+    """(value, contains raw HTML) for every displayed table row whose first cell reads "Status"."""
     from markdown_it import MarkdownIt
     tokens = MarkdownIt("commonmark").enable("table").parse(text)
     rows, current = [], None
@@ -688,8 +688,9 @@ def displayed_status_rows(text):
         elif tok.type == "tr_close":
             current = None
         elif tok.type == "inline" and current is not None:
-            current.append(_flat(displayed_text(tok)))
-    return [row[1] for row in rows if len(row) >= 2 and row[0].lower() == "status"]
+            current.append((_flat(displayed_text(tok)), has_html(tok)))
+    return [(row[1][0], any(html for _, html in row)) for row in rows
+            if len(row) >= 2 and row[0][0].lower() == "status"]
 
 
 def recorded_words(text):
@@ -796,7 +797,10 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if len(statuses) != 1:
             problems.append(f"{name}: has {len(statuses)} Status rows; a record needs exactly one")
             continue
-        decided = _status_parts(statuses[0])[0] == "Decided"
+        if statuses[0][1]:
+            problems.append(f"{name}: raw HTML in the Status row; write it in plain Markdown")
+            continue
+        decided = _status_parts(statuses[0][0])[0] == "Decided"
         sections = recorded_words(record)
         if len(sections) > 1:
             problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
