@@ -14,10 +14,10 @@ Hamid's review.
 - **Nothing here merges to `main`** without Hamid's explicit approval.
 - **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
   `section <issue>` from the repo root. It computes them from the files below;
-  `scripts/test_published_figures.py` fails if the counts here drift from it.
+  `scripts/test_published_figures.py` fails if this file states a figure.
 - **Counts.** This file states no live figures, so no batch has to edit
   it. `python3 scripts/epm_facts.py counts` prints both cuts, each
-  conserving to all 1,318 mentions: the ledger (emitting / held / deferred
+  conserving to the total of all mentions: the ledger (emitting / held / deferred
   / external governance / structured flow / scoped sequence, with the
   canonical-fact count and the per-verb breakdown) and the evidence gate
   (promoted / held from the context pass, with PASS and FAIL counts).

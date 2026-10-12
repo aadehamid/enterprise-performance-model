@@ -91,7 +91,6 @@ def pairs_table(backlog=None):
 # else numeric is a figure, however it is worded or emphasised.
 README_NON_FIGURES = [
     # Fixed figures, each matched only in its own sentence; removed before the file-name rule splits them.
-    r"conserving to all 1,318 mentions: the ledger",
     r"All 10 boxes in release-checklist\.md are complete",
     r"document, 16/16 sections\)",
     r"in one flag-day release",
