@@ -473,21 +473,17 @@ for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
           "HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval")
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
-# #205 batch 1 (Hamid 2026-10-11, review-evidence/precedes-follows-batch1-review.csv):
-# 13 rows reviewed, not emitted (2 answered (b); 11 scoped sequences that
-# core:precedes cannot carry);
-# seven await batch 2.
-for rid in ("REL-01223", "REL-01241", "REL-00008", "REL-00068", "REL-00112",
-            "REL-00149", "REL-00930"):
-    check(f"precedes/follows held {rid} emits no triple",
-          _emits_nothing(rid),
-          "HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation / Supersedes2026-09-26Approval")
-for rid in ("REL-00184", "REL-00188", "REL-00193", "REL-00200", "REL-00206",
-            "REL-00307", "REL-00319", "REL-00351", "REL-00374", "REL-01227",
-            "REL-01289", "REL-01291", "REL-01294"):
+# #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/
+# precedes-follows-batch1-review.csv and -batch2-review.csv): all 20 reviewed,
+# not emitted. 3 answered (b)/(c) as no sequence; 17 are scoped sequences that
+# core:precedes cannot carry, routed to #226.
+for rid in ("REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184",
+            "REL-00188", "REL-00193", "REL-00200", "REL-00206", "REL-00307",
+            "REL-00319", "REL-00351", "REL-00374", "REL-00930", "REL-01223",
+            "REL-01227", "REL-01241", "REL-01289", "REL-01291", "REL-01294"):
     check(f"precedes/follows reviewed-not-emitted {rid} emits no triple",
           _emits_nothing(rid),
-          "HOLD / D:hamid-verdict 2026-10-11 / reviewed, not emitted (#205 batch 1)")
+          "HOLD / D:hamid-verdict 2026-10-11/12 / reviewed, not emitted (#205)")
 
 # 3. canonical facts + contradictions
 cf = cfacts

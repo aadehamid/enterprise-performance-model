@@ -2008,3 +2008,29 @@ only (2,898 rows). No mention changes bucket; no fact changes.
 
 **Current totals:** **617 emitting / 686 held** / 457 facts.
 Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+
+## #205 batch 2: precedes/follows source corrections (Hamid 2026-10-12)
+
+Hamid answered batch 2's 7 questions in the Claude Code session of
+2026-10-12 (#205 comment 6116668059, posted verbatim by Claude because his
+own comment did not save; quoted in `source-workbook-backlog.md`, "Batch 2
+fresh verdicts"). Six (b) sentences went into six approved scope notes, and
+Step 4 was re-pinned to `d8b4827`. Row verdicts:
+`review-evidence/precedes-follows-batch2-review.csv`.
+
+- **HOLD, reviewed, not emitted (7):** REL-00008, REL-00068, REL-00112,
+  REL-00149, REL-00930, REL-01223, REL-01241. REL-00149 has no sequence
+  (c). The six (b) rows are scoped sequences (per forecast cycle, planning
+  cycle, replenishment requirement, plan-selection decision, quote version
+  or scheduling horizon), routed to the scoped sequence relation in #226.
+  REL-00008 and REL-01223 are the same forecast handoff at two hierarchy
+  levels. REL-00112 is a step-level sequence ending at plan selection and
+  approval within CM-1-1-4, an ancestor of its source (parent CM-1-1-4-7).
+  Hamid gave all seven answers as "adopted reference-model positions …,
+  not verified MPC internal procedures".
+
+All 20 #205 rows now have fresh verdicts. No mention changes bucket and no
+fact changes.
+
+**Current totals:** **617 emitting / 686 held** / 457 facts.
+Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
