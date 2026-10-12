@@ -96,7 +96,7 @@ README_NON_FIGURES = [
     r"\d{4}-\d{2}-\d{2}",                           # dates
     r"#\d+\b",                                       # PR and issue numbers
     r"\b\d+\.\d+\.\d+\b",                           # release versions
-    r"\b[A-Z][A-Z]*(?:-[A-Z0-9]+)*-\d+\b",            # IDs: REL-00190, EPM-DEC-001-0026, CM-1-2-1
+    r"\b(?:REL-\d{5}|EPM-[A-Z]+-\d{3}(?:-\d{4})?|CM(?:-\d+)+|MPC-S\d+)\b",  # the project's ID namespaces
     r"[\w./-]+\.(?:md|py|csv|ttl|json|jsonl|sh|txt|html)\b",  # file names
     r"\b(?=[0-9a-f]*[a-f])[0-9a-f]{7,40}\b",          # commit SHAs
     r"\bstep\d\b|\bStep \d+\b|\bQ\d+\b|\bpython3\b",   # step names, decision numbers, the command
@@ -133,6 +133,10 @@ def test_step4_readme_states_no_live_figures():
     "The current emitting population is a 628-row subset of the ledger.",
     "The evidence gate has a 237-row held population.",
     "All 10 boxes are 999 facts.",
+    "Current gate: PASS-999 / FAIL-9.",
+    "Current ledger: EMITTING-999 / HELD-888.",
+    "Current canonical facts: FACTS-999.",
+    "Current gate: **PASS-999** / **FAIL-9**.",
 ])
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
