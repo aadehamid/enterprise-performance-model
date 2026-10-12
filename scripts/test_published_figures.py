@@ -94,6 +94,7 @@ README_NON_FIGURES = [
     r"conserving to all 1,318 mentions: the ledger",
     r"All 10 boxes in release-checklist\.md are complete",
     r"document, 16/16 sections\)",
+    r"in one flag-day release",
     r"\d{4}-\d{2}-\d{2}",                           # dates
     r"(?<![&\w])#\d+\b",                               # PR and issue numbers
     r"\b\d+\.\d+\.\d+\b",                           # release versions
@@ -104,12 +105,12 @@ README_NON_FIGURES = [
 ]
 
 
-# A count written as a word next to what it counts is a figure too ("one FAIL check").
-NUMBER_WORDS = (r"zero|no|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
-                r"(?:twen|thir|for|fif|six|seven|eigh|nine)ty|hundred|thousand")
-COUNTED = r"emitting|held|deferred|facts?|rows?|mentions?|PASS|FAIL|failures?|checks?|promoted"
-WORD_COUNT = re.compile(rf"\b(?:{NUMBER_WORDS})\b(?:[\s-]+\w+){{0,2}}?[\s-]+(?:{COUNTED})\b"
-                        rf"|\b(?:{COUNTED})\s*[:=]\s*(?:{NUMBER_WORDS})\b", re.I)
+# Any number word is a figure too: the README states counts nowhere, so it needs none
+# beyond the allowlisted phrases. Matching words near nouns missed "FAIL count is one".
+NUMBER_WORD = re.compile(
+    r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"(?:thir|four|fif|six|seven|eigh|nine)teen|(?:twen|thir|for|fif|six|seven|eigh|nine)ty|"
+    r"hundred|thousand|million|dozen)\b", re.I)
 
 
 def readme_figures(text):
@@ -117,7 +118,7 @@ def readme_figures(text):
     text = re.sub(r"[*_`]", "", html.unescape(text))
     for pattern in README_NON_FIGURES:
         text = re.sub(pattern, " ", text)
-    return re.findall(r"\d[\d,]*", text) + [m.group(0) for m in WORD_COUNT.finditer(text)]
+    return re.findall(r"\d[\d,]*", text) + NUMBER_WORD.findall(text)
 
 
 def test_step4_readme_states_no_live_figures():
@@ -151,6 +152,11 @@ def test_step4_readme_states_no_live_figures():
     "Current gate: &#57;&#57;&#57; PASS / &#57; FAIL.",
     "The evidence gate has zero failures.",
     "Current canonical facts: four hundred sixty-eight.",
+    "The evidence gate FAIL count is one.",
+    "The evidence gate failures are zero.",
+    "The current number of canonical facts is four hundred sixty-eight.",
+    "| Evidence gate metric | Current count |\n|---|---|\n| FAIL checks | one |",
+    "There are fourteen FAIL checks.",
 ])
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
