@@ -459,3 +459,18 @@ def test_recorded_words_match_whole_words_only(tmp_path):
 def test_saved_answer_blocks_with_html_are_not_used(tmp_path):
     answer = "Hamid said <span hidden>authorize deployment now</span>.\n"
     assert _decision_with_answers(tmp_path, answer, '"authorize deployment now"')
+
+
+def test_word_match_treats_dashes_as_part_of_a_word():
+    match = epm_facts.in_corpus_as_words
+    assert not match("author responses to Batch", "source-author responses to Batch 2")
+    assert not match("Q18 as recommended in the comment above", "Approved: Q1–Q18 as recommended in the comment above")
+    assert not match("not payment completion or the end", "validation—not payment completion or the end")
+    assert not match("approve every risky", "approve every risky-change rule")
+    assert match("approve every risky change", "Yes, approve every risky change.")
+
+
+def test_word_match_allows_a_quote_that_starts_or_ends_with_punctuation():
+    match = epm_facts.in_corpus_as_words
+    assert match("(approve unusual widgets)", "Q1(approve unusual widgets)")
+    assert match("approve unusual widgets.", "approve unusual widgets.Then")

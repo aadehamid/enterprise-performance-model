@@ -609,9 +609,18 @@ def rendered_blocks(text):
     return [line for line in lines if line]
 
 
+WORD_CHAR = r"[\w\-\u2010-\u2015]"   # letters, digits and dashes: "source-author" and "Q1–Q18" are one word each
+
+
 def in_corpus_as_words(span, corpus):
-    """True when the span occurs in the corpus with a word boundary at both ends."""
-    return re.search(rf"(?<!\w){re.escape(span)}(?!\w)", corpus) is not None
+    """True when the span occurs in the corpus without starting or ending inside a word.
+
+    The boundary applies only where the span's own edge is a word character:
+    "(approve …)" may follow "Q1", but "author" may not follow "source-".
+    """
+    before = rf"(?<!{WORD_CHAR})" if re.match(WORD_CHAR, span[:1]) else ""
+    after = rf"(?!{WORD_CHAR})" if re.match(WORD_CHAR, span[-1:]) else ""
+    return re.search(before + re.escape(span) + after, corpus) is not None
 
 
 def rendered_answer_corpus(folder=ANSWERS):
