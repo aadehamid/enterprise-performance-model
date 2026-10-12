@@ -736,7 +736,7 @@ marking such rows `PROMOTE`.
   resolution; the fact survives if the `enables` mention is removed; no G1a
   row is the sole evidence for its fact; no merge creates a fact.
 - Held mention attached as duplicate provenance: REL-00436 stays counted as
-  held (in the 686), adds no support, and is not emitting. REL-00152 is held
+  held (in the held total), adds no support, and is not emitting. REL-00152 is held
   with no fact (in the 41-row uses-input-pass hold set; not attached).
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
   REL-01006 superseded; REL-00936 source-classification hold). 77 → 36
