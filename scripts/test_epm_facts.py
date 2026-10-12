@@ -293,3 +293,42 @@ def test_quotes_reject_a_header_only_review_file(tmp_path):
     backlog = tmp_path / "backlog.md"
     backlog.write_text("")
     assert any("no rows" in p for p in epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS))
+
+
+def _decision_fixture(tmp_path, number, words, status="Decided"):
+    """A decisions folder holding one record with the given 'Hamid's recorded words' section."""
+    folder = tmp_path / "decisions"
+    folder.mkdir(parents=True)
+    (folder / f"EPM-DEC-001-{number:04d}-test.md").write_text(
+        f"# EPM-DEC-001-{number:04d}: test\n\n| Field | Value |\n|---|---|\n| Status | {status} |\n\n"
+        f"## Decision\n\nThe definition \"The source completes before the target begins\" stays.\n\n"
+        f"## Hamid's recorded words\n\n{words}\n\n## Evidence\n\nNone.\n")
+    reviews = os.path.dirname(epm_facts.REVIEWS + "/")
+    return epm_facts.quote_problems(reviews, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+
+
+def test_quotes_catch_unsaved_words_in_a_decision_record(tmp_path):
+    # The PR #231 defect: chat answers quoted in EPM-DEC-001-0026, never saved.
+    problems = _decision_fixture(tmp_path, 26, 'Hamid answered "yes to all seven" in the session.')
+    assert any("EPM-DEC-001-0026" in p and "yes to all seven" in p for p in problems)
+
+
+def test_quotes_accept_saved_words_in_a_decision_record(tmp_path):
+    words = 'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"'
+    assert _decision_fixture(tmp_path, 26, words) == []
+
+
+def test_quotes_check_only_the_recorded_words_section(tmp_path):
+    # The Decision section quotes the predicate's definition, which is not Hamid's answer.
+    assert _decision_fixture(tmp_path, 27, 'He said "Approved: Q1–Q18 as recommended in the comment above"') == []
+
+
+def test_quotes_skip_records_before_0026(tmp_path):
+    # Records 0001-0025 quote sessions that were never saved as answers.
+    assert _decision_fixture(tmp_path, 25, 'Q12: "I agree with this."') == []
+
+
+def test_quotes_require_a_checked_quote_in_a_decided_record(tmp_path):
+    problems = _decision_fixture(tmp_path, 26, "Hamid agreed in the session.")
+    assert any("EPM-DEC-001-0026" in p and "no quote" in p for p in problems)
+    assert _decision_fixture(tmp_path / "p", 26, "Not yet decided.", status="Proposed") == []

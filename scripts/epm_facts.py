@@ -570,13 +570,26 @@ def block_quotes(text):
     return [p for p in paras if p.strip()]
 
 
-def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
+# Decision records from this number on quote only saved answers. Records 0001 to
+# 0025 quote sessions that were never saved (PR #231 added this check).
+FIRST_QUOTE_CHECKED_DECISION = 26
+
+
+def recorded_words(text):
+    """The "Hamid's recorded words" section of a decision record, or None."""
+    m = re.search(r"^## Hamid's recorded words\s*$(.*?)(?=^## |\Z)", text, re.M | re.S)
+    return m.group(1) if m else None
+
+
+def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
     """Text attributed to Hamid that is not word for word in a saved answer.
 
     Checked: in every review file with a `hamid_words` column, that column, the
     `scope_note_sentence`, and each quoted span of three or more words in
-    `semantic_reason` and `Hamid_decision`; and every block quote in the
-    source-correction backlog. An ellipsis (…) splits a quoted span, and each
+    `semantic_reason` and `Hamid_decision`; every block quote in the
+    source-correction backlog; and each quoted span of three or more words in
+    the "Hamid's recorded words" section of EPM-DEC-001 records from 0026 on,
+    where a Decided record must have at least one. An ellipsis (…) splits a quoted span, and each
     part of three or more words is checked. Each text is searched across all
     saved answers, not only the comment its row cites. Paraphrases are not
     checked. Needs markdown-it-py (check.sh supplies it).
@@ -622,6 +635,20 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
         text = f.read()
     for para in block_quotes(text):
         check(f"{os.path.basename(backlog)} block quote", para)
+    for path in sorted(glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))):
+        number = int(re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(path)).group(1))
+        if number < FIRST_QUOTE_CHECKED_DECISION:
+            continue
+        with open(path) as f:
+            record = f.read()
+        name = f"EPM-DEC-001-{number:04d}"
+        status = re.search(r"^\| Status \| (.+?) \|\s*$", record, re.M)
+        decided = bool(status) and _status_parts(status.group(1))[0] == "Decided"
+        spans = list(_spans(recorded_words(record) or ""))
+        if decided and not spans:
+            problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
+        for span in spans:
+            check(f"{name} recorded words", span)
     return problems
 
 
