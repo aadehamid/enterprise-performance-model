@@ -10,6 +10,8 @@
 - **Phase 3 sibling fix** at `e9b80d3` — `core:precedes` siblings may use structural nearness under Rule 5
 
 ### Verb packages
+Snapshot as of #204 batch 1 (2026-10-12). Current per-verb figures: `python3 scripts/epm_facts.py counts`.
+
 | Verb | PR | Status |
 |------|-----|--------|
 | requires | #154 | 5 APPROVE / 1 HOLD (REL-00208) |

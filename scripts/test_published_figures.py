@@ -86,13 +86,46 @@ def pairs_table(backlog=None):
     return re.findall(r"^\|\s*(REL-\d{5})\s*\|\s*(REL-\d{5})\s*\|", section, re.M)
 
 
+# Numbers step4/README.md may state because they are not live figures. Anything
+# else numeric is a figure, however it is worded or emphasised.
+README_NON_FIGURES = [
+    r"\d{4}-\d{2}-\d{2}",                # dates
+    r"#\d+",                             # PR and issue numbers
+    r"\b\d+\.\d+\.\d+\b",                # release versions
+    r"[\w./-]*[A-Za-z][\w./-]*\d[\w./-]*|[\w./-]*\d[\w./-]*[A-Za-z][\w./-]*",  # IDs, file names, SHAs
+    r"\b1,318 mentions\b",               # the conservation total every bucket sums to
+    r"\b10 boxes\b",                     # the release checklist's box count
+    r"\b16/16 sections\b",               # the mapping document's sign-off
+    r"\bStep \d+\b",                     # step names
+]
+
+
+def readme_figures(text):
+    """Numbers left in the text once markup and the allowed non-figures are removed."""
+    text = re.sub(r"[*_`]", "", text)
+    for pattern in README_NON_FIGURES:
+        text = re.sub(pattern, " ", text)
+    return re.findall(r"\d[\d,]*", text)
+
+
 def test_step4_readme_states_no_live_figures():
     # Live figures live in epm_facts.py counts only, so no batch edits figure prose
     # (retro on #235: restated figures were the most frequent review finding).
     text = flat(STEP4_README)
     assert "python3 scripts/epm_facts.py counts" in text
-    assert not re.search(r"[\d,]+ emitting / [\d,]+ held", text), "step4/README.md restates the ledger"
-    assert not re.search(r"[\d,]+ PASS / [\d,]+ FAIL", text), "step4/README.md restates the gate"
+    assert readme_figures(text) == [], "step4/README.md states a figure; point to epm_facts.py counts instead"
+
+
+@pytest.mark.parametrize("line", [
+    "Current ledger: 999 emitting, 999 held.",
+    "Canonical facts: 999.",
+    "Evidence gate: promoted 999 / held 999.",
+    "Evidence gate: **999 PASS** / **999 FAIL**.",
+    "Ledger: **999 emitting** / **999 held**.",
+    "`999` facts",
+])
+def test_readme_guard_catches_restated_figures(line):
+    assert readme_figures(flat(STEP4_README) + " " + line)
 
 
 def test_ontology_readme_taxonomy(facts):
