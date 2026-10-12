@@ -30,7 +30,8 @@
 ### PR #124 Proof
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
 - At #124: `7b21bd2402721cfa1eef4103b8d460a92e996268a1c6495bfed4ea12ac2d3a58`
-- Current: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0`
+- At promotion (`6a155bc2`) and unchanged through #205: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0` (457 facts)
+- After #204 batch 1 (468 facts, 11 `core:triggeredBy` added): `8726f8057b048f21dc19152a65c145465d27360fa46cd64d17fc4bf49091ec13`
 - `no-consumer-attestation.md` re-attested 2026-09-29 (Hamid) against pin `6a155bc23ba3971ce430b774b4ddd6f4a933e380` — supersedes the stale #124 attestation.
 
 ## Promotion Preconditions
