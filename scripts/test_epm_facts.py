@@ -597,3 +597,16 @@ def test_invisible_format_characters_are_refused(tmp_path):
         (folder / "EPM-DEC-001-0026-test.md").write_text("# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n" + body)
         problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
         assert any("invisible" in p for p in problems), i
+
+
+def test_look_alike_recorded_words_headings_are_still_sections(tmp_path):
+    for i, heading in enumerate(("## &#8203;Hamid's recorded words", "## &#x200B;Hamid's recorded words",
+                                 "## &ZeroWidthSpace;Hamid's recorded words", "## Hamid's recorded words️",
+                                 "## *Hamid’s* Recorded Words")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\n" + SAVED +
+            f"\n\n{heading}\n\n\"yes to all seven\"\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert problems, heading

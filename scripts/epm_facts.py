@@ -697,6 +697,22 @@ def displayed_status_rows(text):
             if len(row) >= 2 and row[0][0].lower() == "status"]
 
 
+RECORDED_WORDS_KEY = "hamidsrecordedwords"
+INVISIBLE_MARKS = re.compile("[\ufe00-\ufe0f\U000e0100-\U000e01ef]")   # variation selectors
+
+
+def section_key(heading):
+    """A heading's letters only, normalised and lower-cased, so look-alikes compare equal."""
+    import unicodedata
+    return "".join(ch for ch in unicodedata.normalize("NFKC", heading).casefold() if ch.isalpha())
+
+
+def has_invisible(text):
+    """True when text holds an invisible format character (Unicode Cf) or a variation selector."""
+    import unicodedata
+    return bool(INVISIBLE_MARKS.search(text)) or any(unicodedata.category(ch) == "Cf" for ch in text)
+
+
 def recorded_words(text):
     """Each "Hamid's recorded words" section of a decision record: (displayed text, contains raw HTML).
 
@@ -714,7 +730,7 @@ def recorded_words(text):
         tok = tokens[i]
         if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
             current = None
-            if _flat(displayed_text(tokens[i + 1])) == "Hamid's recorded words":
+            if section_key(displayed_text(tokens[i + 1])) == RECORDED_WORDS_KEY:
                 current = {"parts": [], "html": has_html(tokens[i + 1])}
                 sections.append(current)
             i += 3  # heading_open, inline, heading_close
@@ -802,8 +818,8 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
             continue
         # Invisible format characters (zero-width spaces, joiners, a BOM) can make two
         # headings or statuses look alike while comparing differently.
-        import unicodedata
-        if any(unicodedata.category(ch) == "Cf" for ch in record):
+        # Checked in the raw file and in the displayed text, where entities are decoded.
+        if has_invisible(record) or has_invisible("\n".join(rendered_blocks(record))):
             problems.append(f"{name}: invisible format characters in a checked decision record; remove them")
             continue
         # The status a reader sees: the Status row of the record's displayed tables.
