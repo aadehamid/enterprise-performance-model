@@ -106,5 +106,50 @@ class TriggersBatch1(unittest.TestCase):
         self.assertTrue(self.problems(answer=answer))
 
 
+SWEEP = os.path.join(HERE, "review-evidence", "phase1-sweep")
+
+
+class SweepBatch206(unittest.TestCase):
+    def setUp(self):
+        with open(os.path.join(SWEEP, "206-review.csv"), newline="") as f:
+            self.rows = list(csv.DictReader(f))
+        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
+            self.register = {r["row_id"]: r for r in csv.DictReader(f)}
+        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+            self.approval = f.read()
+        self.facts, self.v2 = facts(), v2()
+
+    def problems(self, rows=None, approval=None, fact_rows=None):
+        return batch_checks.sweep_batch_problems(
+            rows if rows is not None else self.rows, self.register,
+            approval if approval is not None else self.approval, self.v2,
+            fact_rows if fact_rows is not None else self.facts)
+
+    def test_the_batch_matches_the_register(self):
+        self.assertEqual(self.problems(), [])
+
+    def test_a_changed_sentence_or_fact_is_caught(self):
+        for field in ("scope_note_sentence", "stored_fact", "verdict"):
+            rows = copy.deepcopy(self.rows)
+            rows[0][field] += " (edited)"
+            self.assertTrue(any(field in p for p in self.problems(rows=rows)), field)
+
+    def test_a_no_relationship_row_must_stay_off_every_fact(self):
+        held = next(r for r in self.rows if r["verdict"] == "no-relationship")
+        fact_rows = copy.deepcopy(self.facts)
+        fact_rows[("CM-0", "core:governedBy", "CM-1")] = [held["row_id"]]
+        self.assertTrue(any(held["row_id"] in p for p in self.problems(fact_rows=fact_rows)))
+
+    def test_an_emitting_row_must_be_on_its_fact(self):
+        emit = next(r for r in self.rows if r["verdict"] != "no-relationship")
+        fact = tuple(emit["stored_fact"].split())
+        fact_rows = copy.deepcopy(self.facts)
+        fact_rows[fact] = [x for x in fact_rows[fact] if x != emit["row_id"]]
+        self.assertTrue(any(emit["row_id"] in p for p in self.problems(fact_rows=fact_rows)))
+
+    def test_the_approval_words_must_be_saved(self):
+        self.assertTrue(self.problems(approval="approved"))
+
+
 if __name__ == "__main__":
     unittest.main()
