@@ -2,6 +2,7 @@
 
 Run: python3 test_phase1_batch.py
 """
+import ast
 import contextlib
 import csv
 import io
@@ -72,6 +73,28 @@ class Repin(Step4Copy):
         self.assertIn(f"**Baseline:** `{NEW}` (re-pinned 2026-10-12 for test batch; was `{self.old}`).",
                       self.read("verb-predicate-mapping-v2.md"))
 
+    def test_write_keeps_the_previous_pin_statements_word_for_word(self):
+        checklist_pin = phase1_batch.CHECKLIST_PIN.search(self.read("release-checklist.md")).group(0)
+        mapping_pin = phase1_batch.MAPPING_PIN.search(self.read("verb-predicate-mapping-v2.md")).group(0)
+        quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+        self.assertIn("  - Previous pin: " + checklist_pin.replace("- **PINNED_SHA:** ", "", 1),
+                      self.read("release-checklist.md"))
+        self.assertIn("*Previous baseline:* " + mapping_pin.replace("**Baseline:** ", "", 1),
+                      self.read("verb-predicate-mapping-v2.md"))
+
+    def test_missing_build_output_stops_before_any_write(self):
+        os.remove(os.path.join(self.output, "step2-identity-map.json"))
+        before = {n: self.read(n) for n in phase1_batch.SHA_FILES + ["PINNED_SHA.txt"]}
+        with self.assertRaises(FileNotFoundError):
+            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+        self.assertEqual(before, {n: self.read(n) for n in before})
+
+    def test_sha_files_match_the_evidence_gate(self):
+        tree = ast.parse(self.read("evidence-gate.py"))
+        gate = next(ast.literal_eval(n.value) for n in ast.walk(tree)
+                    if isinstance(n, ast.Assign) and getattr(n.targets[0], "id", "") == "sha_files")
+        self.assertEqual(gate, phase1_batch.SHA_FILES)
+
     def test_refuses_a_row_stamped_with_another_pin(self):
         path = os.path.join(self.step4, phase1_batch.SHA_FILES[0])
         with open(path) as f:
@@ -119,10 +142,69 @@ class Adopt(Step4Copy):
         with open(os.path.join(self.step4, "canonical-facts.csv"), newline="") as f:
             return next(csv.DictReader(f))["row_ids"].split(";")[0]
 
-    def test_the_pipeline_reproduces_the_governed_files(self):
+    def set_contributors(self, row_ids_before, row_ids_after):
+        """Rewrite the governed fact carrying exactly row_ids_before so it carries row_ids_after."""
+        path = os.path.join(self.step4, "canonical-facts.csv")
+        with open(path, newline="") as f:
+            reader = csv.DictReader(f)
+            fields, rows = reader.fieldnames, list(reader)
+        target = next(r for r in rows if r["row_ids"] == row_ids_before)
+        target["row_ids"] = row_ids_after
+        with open(path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def shared_fact(self):
+        with open(os.path.join(self.step4, "canonical-facts.csv"), newline="") as f:
+            return next(r["row_ids"] for r in csv.DictReader(f) if r["row_ids"].count(";") >= 1)
+
+    def test_the_pipeline_reproduces_the_governed_files_byte_for_byte(self):
+        tmp = tempfile.mkdtemp(dir=self.tmp)
+        new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        for new, governed in ((new_ctx, "target-report/context-pass.csv"), (new_facts, "canonical-facts.csv")):
+            with open(new, "rb") as a, open(os.path.join(self.step4, governed), "rb") as b:
+                self.assertEqual(a.read(), b.read(), governed)
         status, out = quiet(phase1_batch.adopt, self.step4, set(), write=False)
         self.assertEqual(status, 0, out)
         self.assertIn("facts added: 0, removed: 0, changed: 0", out)
+
+    def test_stops_when_a_shared_fact_gains_a_row_outside_the_batch(self):
+        ids = self.shared_fact()
+        first, rest = ids.split(";", 1)
+        self.set_contributors(ids, first)  # the re-run restores `rest`, which is not in the batch
+        status, out = quiet(phase1_batch.adopt, self.step4, {first}, write=True)
+        self.assertEqual(status, 1, out)
+        self.assertIn("rows outside the batch gained or lost", out)
+
+    def test_stops_when_a_shared_fact_loses_a_row_outside_the_batch(self):
+        ids = self.shared_fact()
+        self.set_contributors(ids, ids + ";REL-99999")  # the re-run drops REL-99999
+        status, out = quiet(phase1_batch.adopt, self.step4, {ids.split(";")[0]}, write=False)
+        self.assertEqual(status, 1, out)
+        self.assertIn("REL-99999", out)
+
+    def test_accepts_a_shared_fact_whose_changed_rows_are_all_in_the_batch(self):
+        ids = self.shared_fact()
+        first, rest = ids.split(";", 1)
+        self.set_contributors(ids, first)
+        status, out = quiet(phase1_batch.adopt, self.step4, set(rest.split(";")), write=False)
+        self.assertEqual(status, 0, out)
+
+    def test_an_inherited_step4_override_cannot_redirect_the_context_pass(self):
+        other = os.path.join(self.tmp, "other-step4")
+        shutil.copytree(self.step4, other, ignore=shutil.ignore_patterns("__pycache__", "proposal"))
+        saved = os.environ.get("EPM_STEP4_DIR")
+        os.environ["EPM_STEP4_DIR"] = other
+        try:
+            status, out = quiet(phase1_batch.adopt, self.step4, set(), write=False)
+        finally:
+            if saved is None:
+                del os.environ["EPM_STEP4_DIR"]
+            else:
+                os.environ["EPM_STEP4_DIR"] = saved
+        self.assertEqual(status, 0, out)
+        self.assertFalse(os.path.exists(os.path.join(other, "proposal")))
 
     def test_stops_on_a_fact_outside_the_batch(self):
         self.edit_governed_fact(self.first_fact_row())
@@ -133,9 +215,8 @@ class Adopt(Step4Copy):
         self.assertEqual(self.read("canonical-facts.csv"), before)
 
     def test_writes_when_every_change_is_in_the_batch(self):
-        row = self.first_fact_row()
-        self.edit_governed_fact(row)
-        status, out = quiet(phase1_batch.adopt, self.step4, {row}, write=True)
+        removed = self.edit_governed_fact(self.first_fact_row())
+        status, out = quiet(phase1_batch.adopt, self.step4, set(removed["row_ids"].split(";")), write=True)
         self.assertEqual(status, 0, out)
         self.assertIn("facts added: 1", out)
         status, out = quiet(phase1_batch.adopt, self.step4, set(), write=False)
