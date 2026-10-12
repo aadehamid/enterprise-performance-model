@@ -1114,7 +1114,8 @@ TRIGGERS_20260926_HOLDS = {
 # Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
 # #205 batch 1 (Hamid 2026-10-11): all 13 rows reviewed, not emitted; their
 # questions are closed (review-evidence/precedes-follows-batch1-review.csv).
-# Each answer is a scoped sequence that core:precedes cannot carry; a scoped
+# Questions 3 and 4 were answered (b); the eleven (a) answers are scoped
+# sequences that core:precedes cannot carry; a scoped
 # sequence relation is scheduled before core 1.0.0 (#226).
 PRECEDES_20260927_HOLDS = {
     "REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184", "REL-00188",

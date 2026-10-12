@@ -474,7 +474,8 @@ for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batch 1 (Hamid 2026-10-11, review-evidence/precedes-follows-batch1-review.csv):
-# 13 rows reviewed, not emitted (scoped sequences core:precedes cannot carry);
+# 13 rows reviewed, not emitted (2 answered (b); 11 scoped sequences that
+# core:precedes cannot carry);
 # seven await batch 2.
 for rid in ("REL-01223", "REL-01241", "REL-00008", "REL-00068", "REL-00112",
             "REL-00149", "REL-00930"):

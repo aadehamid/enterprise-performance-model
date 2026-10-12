@@ -1981,10 +1981,12 @@ asserts." Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
 
 - **HOLD, reviewed, not emitted (13):** REL-00184, REL-00188, REL-00193,
   REL-00200, REL-00206, REL-00307, REL-00319, REL-00351, REL-00374,
-  REL-01227, REL-01289, REL-01291, REL-01294. Every answer is a scoped
-  sequence: per trade, delivery, period, claim or posting, and sometimes
-  conditional. His answers say these are "not completion of an entire
-  organizational process", so none meets the definition. The rows stay in
+  REL-01227, REL-01289, REL-01291, REL-01294. Hamid answered (b) to
+  questions 3 and 4 (REL-00184, REL-01227): the mandatory sequence is not
+  established. His eleven (a) answers each describe a scoped sequence (per
+  trade, delivery, period, claim or posting, sometimes conditional), "not
+  completion of an entire organizational process", so none meets the
+  definition. The rows stay in
   `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
   done for Phase 1.
 - Hamid decided on PR #225 (comment 6115615577): "Define a scoped sequence
