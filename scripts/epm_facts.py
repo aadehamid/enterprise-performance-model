@@ -29,7 +29,7 @@ How it gets the numbers:
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
-is installed (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
+is installed, and the quotes command, which needs markdown-it-py (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
 """
 import argparse
 import collections
@@ -53,6 +53,7 @@ REVIEWS = os.path.join(STEP4, "review-evidence")
 FACTS = os.path.join(STEP4, "canonical-facts.csv")
 TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "output", "step3-taxonomy.ttl")
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
+ANSWERS = os.path.join(REVIEWS, "hamid-answers")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -483,6 +484,121 @@ def decision_problems(folder=DECISIONS):
     return problems
 
 
+# ---------- quotes ----------
+
+# A quoted span of three or more words, in straight or curly double quotes.
+QUOTED = re.compile(r'"([^"]+)"|“([^”]+)”')
+
+
+def _flat(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def answer_corpus(folder=ANSWERS):
+    """Hamid's saved answers, whitespace-collapsed, without each file's HTML header comment."""
+    parts = []
+    for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
+        with open(path) as f:
+            parts.append(_flat(re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)))
+    return "\n".join(parts)
+
+
+def _spans(text):
+    """Quoted spans of three or more words; an ellipsis splits a span into parts."""
+    for m in QUOTED.finditer(text):
+        for part in (m.group(1) or m.group(2)).split("…"):
+            part = _flat(part)   # punctuation inside the quote marks is kept and must match
+            if len(part.split()) >= 3:
+                yield part
+
+
+def block_quotes(text):
+    """The paragraphs of every Markdown block quote, found by a CommonMark parser.
+
+    A parser, not a regex: quotes nested in lists, lazy continuation lines and
+    blocks that interrupt a quote all follow CommonMark (markdown-it-py). Code
+    and HTML inside a quote are checked too, so no quoted text goes unread.
+    """
+    from markdown_it import MarkdownIt
+    paras, depth = [], 0
+    for tok in MarkdownIt("commonmark").parse(text):
+        if tok.type == "blockquote_open":
+            depth += 1
+        elif tok.type == "blockquote_close":
+            depth -= 1
+        elif depth > 0 and tok.type in ("inline", "fence", "code_block"):
+            paras.append(tok.content)
+        elif depth > 0 and tok.type == "html_block":
+            paras.append(re.sub(r"<[^>]+>", " ", tok.content))   # the visible text
+    return [p for p in paras if p.strip()]
+
+
+def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
+    """Text attributed to Hamid that is not word for word in a saved answer.
+
+    Checked: in every review file with a `hamid_words` column, that column, the
+    `scope_note_sentence`, and each quoted span of three or more words in
+    `semantic_reason` and `Hamid_decision`; and every block quote in the
+    source-correction backlog. An ellipsis (…) splits a quoted span, and each
+    part of three or more words is checked. Each text is searched across all
+    saved answers, not only the comment its row cites. Paraphrases are not
+    checked. Needs markdown-it-py (check.sh supplies it).
+    """
+    corpus = answer_corpus(answers)
+    problems = []
+    if not corpus.strip():
+        problems.append(f"no saved answer text in {answers}: nothing to check quotes against")
+
+    def check(where, text):
+        if text and _flat(text) not in corpus:
+            problems.append(f"{where}: not in a saved answer: {_flat(text)[:90]!r}")
+
+    checked_files = 0
+    for path in sorted(glob.glob(os.path.join(reviews, "*.csv"))):
+        with open(path, newline="") as f:
+            header = next(csv.reader(f), [])
+            f.seek(0)
+            rows = list(csv.DictReader(f))
+        if "hamid_words" not in header:
+            continue
+        repeated = sorted({h for h in header if header.count(h) > 1})
+        if repeated:
+            problems.append(f"{os.path.basename(path)}: repeated column {repeated}; cannot check it unambiguously")
+            continue
+        if not rows:
+            problems.append(f"{os.path.basename(path)}: has a hamid_words column but no rows")
+            continue
+        checked_files += 1
+        name = os.path.basename(path)
+        for r in rows:
+            where = f"{name} {r.get('row_id', '?')}"
+            if not (r["hamid_words"] or "").strip():
+                problems.append(f"{where}: hamid_words is blank")
+            check(f"{where} hamid_words", r["hamid_words"])
+            check(f"{where} scope_note_sentence", r.get("scope_note_sentence", ""))
+            for col in ("semantic_reason", "Hamid_decision"):
+                for span in _spans(r.get(col, "")):
+                    check(f"{where} {col}", span)
+    if not checked_files:
+        problems.append(f"no review file with a hamid_words column in {reviews}: nothing checked")
+    with open(backlog) as f:
+        text = f.read()
+    for para in block_quotes(text):
+        check(f"{os.path.basename(backlog)} block quote", para)
+    return problems
+
+
+def cmd_quotes(args):
+    problems = quote_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} quote problem(s) against {rel(ANSWERS)}")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def cmd_decisions(args):
     problems = decision_problems()
     if args.json:
@@ -506,8 +622,10 @@ def main(argv=None):
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
+    sub.add_parser("quotes", help="check text attributed to Hamid against his saved answers (exit 1 on problems)")
     args = parser.parse_args(argv)
-    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions}[args.cmd](args)
+    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
+            "quotes": cmd_quotes}[args.cmd](args)
 
 
 if __name__ == "__main__":
