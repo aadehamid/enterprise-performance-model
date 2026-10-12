@@ -9,7 +9,7 @@ evidence-gate.py can call it.
 import re
 
 ANSWER_LINE = re.compile(r"(\d+): ([abc]) — “(.+)”")
-NUMBERED_LINE = re.compile(r"^\s*\d+\s*[:.)]", re.M)
+NUMBERED_LINE = re.compile(r"^\s*\d")   # any line whose first non-space character is a digit
 
 # #204 batch 1: question number -> row ID, as posted on #204 (comment 6130189084).
 TRIGGERS_BATCH1_QUESTIONS = {
