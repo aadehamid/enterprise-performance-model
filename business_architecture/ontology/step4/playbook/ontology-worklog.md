@@ -898,7 +898,8 @@ held with a recorded reason. The approach, in five parts:
    citation or a two-way route.
 2. **Buckets, not beliefs.** Every mention lands in exactly one bucket:
    emitting (on a canonical fact), held (verdict-recorded, off the
-   fact), deferred, external governance, or structured flow. Counts move
+   fact), deferred, external governance, structured flow, or scoped
+   sequence (a scoped-sequence node, EPM-DEC-001-0026). Counts move
    only when a row changes bucket — approving an already-emitting row
    changes its basis, never the totals. Every count change names the
    row, the old bucket, the new bucket, and the reason.

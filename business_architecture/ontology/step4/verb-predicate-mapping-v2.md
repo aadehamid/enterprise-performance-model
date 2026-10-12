@@ -171,8 +171,8 @@ mapping applies those mention-level holds separately),
 | `informed-by` (S, T) | `S core:informedBy T` | — |
 | `informs` (S, T) | `T core:informedBy S` | R1: `CM-1-1-4 informedBy CM-1-1-2-9-1` |
 | `requires` (S, T) | `S core:requires T` | 5 rows approved 2026-09-25; REL-00208 held for workbook correction, no remap |
-| `precedes` (S, T) | `S core:precedes T` | no reciprocal two-cycles (rule, gate-checked) |
-| `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes` |
+| `precedes` (S, T) | `S core:precedes T` | no reciprocal two-cycles (rule, gate-checked); a row approved as a scoped sequence emits a scoped-sequence node instead (EPM-DEC-001-0026; 17 rows) |
+| `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes`; scoped-sequence rows as for `precedes` |
 | `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
@@ -184,7 +184,7 @@ The raw verb is retained in migration/provenance evidence on every emitted tripl
 
 **Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 605 mentions total, of which **604 emitting** (569 + 35) and 1 held (REL-00436). Emitting: 604 emitting-attached + 13 G2 no-triple = **617**.
 
-*Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
+*Footnote — mentions that are neither emitting nor held: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred, 17 scoped sequences (emitted as scoped-sequence nodes, not canonical facts; EPM-DEC-001-0026).*
 `core:consumes` / `core:produces` stay reserved for future identified
 InformationObject instances (Q5).
 
@@ -436,8 +436,9 @@ see `review-evidence/enabledby-mutual-review-batch.csv`.
 - Counts change only when a row moves between buckets: emitting ↔ held ↔
   deferred (12 AmbiguousDeferred) ↔ external governance (1
   ExternalGovernanceReference, REL-00022) ↔ structured flow (2
-  StructuredFlowValue, REL-00095, REL-00104). Every expected ledger effect
-  is stated in bucket terms from now on.
+  StructuredFlowValue, REL-00095, REL-00104) ↔ scoped sequence (17 rows
+  emitted as scoped-sequence nodes; added by EPM-DEC-001-0026, 2026-10-12).
+  Every expected ledger effect is stated in bucket terms from now on.
 
 ## Assures (added 2026-09-25, Hamid)
 

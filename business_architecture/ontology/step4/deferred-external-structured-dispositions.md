@@ -1,11 +1,12 @@
 # Step 4 Deferred, External-Governance, and Structured-Flow Dispositions (2026-09-29)
 
-The 15 rows outside both the emitting and held buckets, reconciled from
+The 15 deferred, external-governance and structured-flow rows, reconciled from
 `target-report/target-dispositions-v2.csv` on main `dcf95ab4`
 (pin `d7310c9a`).
 
 Conservation: 617 emitting + 686 held + 12 deferred + 1 external-governance
-+ 2 structured-flow = 1,318.
++ 2 structured-flow = 1,318. (Since EPM-DEC-001-0026, 2026-10-12: 669 held
+and 17 scoped sequence. These 15 rows are unchanged.)
 
 ## 12 deferred (AmbiguousDeferred)
 
