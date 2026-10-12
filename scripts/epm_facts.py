@@ -596,20 +596,25 @@ def has_html(tok):
     return tok.type == "html_block" or any(c.type == "html_inline" for c in (tok.children or []))
 
 
-def rendered(text):
-    """A Markdown document's displayed text, whitespace-collapsed (HTML comments dropped first)."""
+def rendered_blocks(text):
+    """A Markdown document's displayed text, one whitespace-collapsed line per block.
+
+    Each paragraph, heading, list item and code block is its own line, so a
+    quote can match only inside one block. HTML blocks (such as a saved
+    answer's header comment) display nothing here and still end a block.
+    """
     from markdown_it import MarkdownIt
-    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
-    return _flat(" ".join(displayed_text(t) for t in MarkdownIt("commonmark").parse(text)))
+    lines = (_flat(displayed_text(t)) for t in MarkdownIt("commonmark").parse(text))
+    return [line for line in lines if line]
 
 
 def rendered_answer_corpus(folder=ANSWERS):
-    """Hamid's saved answers as displayed text, one line per file, to compare with displayed quotes."""
-    parts = []
+    """Hamid's saved answers as displayed text, one line per block, to compare with displayed quotes."""
+    lines = []
     for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
         with open(path) as f:
-            parts.append(rendered(f.read()))
-    return "\n".join(parts)
+            lines.extend(rendered_blocks(f.read()))
+    return "\n".join(lines)
 
 
 def recorded_words(text):
@@ -630,7 +635,7 @@ def recorded_words(text):
         if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
             current = None
             if _flat(displayed_text(tokens[i + 1])) == "Hamid's recorded words":
-                current = {"parts": [], "html": False}
+                current = {"parts": [], "html": has_html(tokens[i + 1])}
                 sections.append(current)
             i += 3  # heading_open, inline, heading_close
             continue

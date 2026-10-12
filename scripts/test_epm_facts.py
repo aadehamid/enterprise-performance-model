@@ -404,3 +404,37 @@ def test_recorded_words_continue_past_a_heading_nested_in_a_quote(tmp_path):
 def test_recorded_words_match_a_saved_answer_with_formatting(tmp_path):
     # 205-batch1.md says "For each **a** response, ..."; both sides are compared as displayed text.
     assert _decision_fixture(tmp_path, 26, '"For each **a** response, use the revised wording below"') == []
+
+
+def _answers(tmp_path, text):
+    folder = tmp_path / "answers"
+    folder.mkdir(parents=True)
+    (folder / "a.md").write_text("<!-- header -->\n\n" + text)
+    return str(folder)
+
+
+def test_rendered_answers_keep_block_boundaries(tmp_path):
+    for name, text in {"paragraphs": "yes to all\n\nseven\n", "heading": "yes to all\n\n## seven\n",
+                       "list": "- yes to all\n- seven\n", "html": "yes to all\n\n<div>not</div>\n\nseven\n"}.items():
+        corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / name, text))
+        assert "yes to all seven" not in corpus, name
+    # Line breaks inside one paragraph still read as spaces.
+    assert "yes to all seven" in epm_facts.rendered_answer_corpus(_answers(tmp_path / "soft", "yes to all\nseven\n"))
+
+
+def test_rendered_answers_keep_comment_syntax_in_code(tmp_path):
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "a", "```text\nApprove <!-- do not --> every risky change\n```\n"))
+    assert "Approve every risky change" not in corpus
+    assert "Approve <!-- do not --> every risky change" in corpus
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "b", "Say `a <!-- b --> c` now\n"))
+    assert "a <!-- b --> c" in corpus
+    assert "header" not in corpus
+
+
+def test_recorded_words_heading_html_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Status | Decided |\n\n## Hamid's recorded words <!-- hidden -->\n\n" + SAVED + "\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("raw HTML" in p for p in problems)
