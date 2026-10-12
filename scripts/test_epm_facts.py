@@ -293,3 +293,340 @@ def test_quotes_reject_a_header_only_review_file(tmp_path):
     backlog = tmp_path / "backlog.md"
     backlog.write_text("")
     assert any("no rows" in p for p in epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS))
+
+
+def _decision_fixture(tmp_path, number, words, status="Decided"):
+    """A decisions folder holding one record with the given 'Hamid's recorded words' section."""
+    folder = tmp_path / "decisions"
+    folder.mkdir(parents=True)
+    (folder / f"EPM-DEC-001-{number:04d}-test.md").write_text(
+        f"# EPM-DEC-001-{number:04d}: test\n\n| Field | Value |\n|---|---|\n| Status | {status} |\n\n"
+        f"## Decision\n\nThe definition \"The source completes before the target begins\" stays.\n\n"
+        f"## Hamid's recorded words\n\n{words}\n\n## Evidence\n\nNone.\n")
+    reviews = os.path.dirname(epm_facts.REVIEWS + "/")
+    return epm_facts.quote_problems(reviews, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+
+
+def test_quotes_catch_unsaved_words_in_a_decision_record(tmp_path):
+    # The PR #231 defect: chat answers quoted in EPM-DEC-001-0026, never saved.
+    problems = _decision_fixture(tmp_path, 26, 'Hamid answered "yes to all seven" in the session.')
+    assert any("EPM-DEC-001-0026" in p and "yes to all seven" in p for p in problems)
+
+
+def test_quotes_accept_saved_words_in_a_decision_record(tmp_path):
+    words = 'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"'
+    assert _decision_fixture(tmp_path, 26, words) == []
+
+
+def test_quotes_check_only_the_recorded_words_section(tmp_path):
+    # The Decision section quotes the predicate's definition, which is not Hamid's answer.
+    assert _decision_fixture(tmp_path, 27, 'He said "Approved: Q1–Q18 as recommended in the comment above"') == []
+
+
+def test_quotes_skip_records_before_0026(tmp_path):
+    # Records 0001-0025 quote sessions that were never saved as answers.
+    assert _decision_fixture(tmp_path, 25, 'Q12: "I agree with this."') == []
+
+
+def test_quotes_require_a_checked_quote_in_a_decided_record(tmp_path):
+    problems = _decision_fixture(tmp_path, 26, "Hamid agreed in the session.")
+    assert any("EPM-DEC-001-0026" in p and "no quote" in p for p in problems)
+    assert _decision_fixture(tmp_path / "p", 26, "Not yet decided.", status="Proposed") == []
+
+
+def test_recorded_words_section_follows_markdown_headings(tmp_path):
+    # A "## " line inside a code fence is not a heading: the quote after the fence is still checked.
+    words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n```text\n## Example\n```\n\n'
+             'Hamid also said "yes to all seven"')
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, words))
+    # A heading written with a tab ends the section, so the next section's quote does not count.
+    folder = tmp_path / "b" / "decisions"
+    folder.mkdir(parents=True)
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed.\n\n##\tEvidence\n\n"
+        '"Approved: Q1–Q18 as recommended in the comment above"\n')
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("no quote" in p for p in problems)
+
+
+def test_recorded_words_refuse_raw_html(tmp_path):
+    # Raw HTML can hide a quote (a comment, an attribute) or show one the text reading misses
+    # (an entity in an HTML block, words joined by <br>), so it is reported, not interpreted.
+    cases = {
+        "block_comment": 'Hamid agreed.\n\n<!-- "Approved: Q1–Q18 as recommended in the comment above" -->',
+        "inline_comment": SAVED + ' <!-- "yes to all seven" -->',
+        "attribute": "<div title='> \"Approved: Q1–Q18 as recommended in the comment above\"'>No quote</div>",
+        "block_entity": SAVED + "\n\n<div>&quot;yes to all seven&quot;</div>",
+        "inline_break": 'He said "Approved: Q1–Q18 as recommended<br>in the comment above"',
+    }
+    for name, words in cases.items():
+        assert any("raw HTML" in p for p in _decision_fixture(tmp_path / name, 26, words)), name
+
+
+def test_recorded_words_reject_a_repeated_section(tmp_path):
+    words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n'
+             "## Hamid's recorded words\n\nHamid also said \"yes to all seven\"")
+    assert any("more than one" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
+SAVED = '"Approved: Q1–Q18 as recommended in the comment above"'
+
+
+def test_recorded_words_read_displayed_text_not_raw_markdown(tmp_path):
+    # Entity-encoded quote marks display as quote marks, so the unsaved words are checked.
+    entity = SAVED + "\n\nHamid also said &quot;yes to all seven&quot;."
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, entity))
+    # Emphasis inside a quote displays the saved words.
+    assert _decision_fixture(tmp_path / "c", 26, '"**Approved: Q1–Q18 as recommended in the comment above**"') == []
+
+
+def test_recorded_words_recognise_a_formatted_heading(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Proposed |\n\n## **Hamid's recorded words**\n\nHe said \"yes to all seven\"\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("yes to all seven" in p for p in problems)
+
+
+def test_recorded_words_keep_comment_syntax_inside_code(tmp_path):
+    fenced = SAVED + '\n\n```text\n<!-- "yes to all seven" -->\n```'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, fenced))
+    inline = SAVED + '\n\nSee `<!-- "yes to all seven" -->`.'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, inline))
+
+
+def test_recorded_words_continue_past_a_heading_nested_in_a_quote(tmp_path):
+    words = SAVED + '\n\n> ## Example\n\nHamid also said "yes to all seven"'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
+def test_recorded_words_match_a_saved_answer_with_formatting(tmp_path):
+    # 205-batch1.md says "For each **a** response, ..."; both sides are compared as displayed text.
+    assert _decision_fixture(tmp_path, 26, '"For each **a** response, use the revised wording below"') == []
+
+
+def _answers(tmp_path, text):
+    folder = tmp_path / "answers"
+    folder.mkdir(parents=True)
+    (folder / "a.md").write_text("<!-- header -->\n\n" + text)
+    return str(folder)
+
+
+def test_rendered_answers_keep_block_boundaries(tmp_path):
+    for name, text in {"paragraphs": "yes to all\n\nseven\n", "heading": "yes to all\n\n## seven\n",
+                       "list": "- yes to all\n- seven\n", "html": "yes to all\n\n<div>not</div>\n\nseven\n"}.items():
+        corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / name, text))
+        assert "yes to all seven" not in corpus, name
+    # Line breaks inside one paragraph still read as spaces.
+    assert "yes to all seven" in epm_facts.rendered_answer_corpus(_answers(tmp_path / "soft", "yes to all\nseven\n"))
+
+
+def test_rendered_answers_keep_comment_syntax_in_code(tmp_path):
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "a", "```text\nApprove <!-- do not --> every risky change\n```\n"))
+    assert "Approve every risky change" not in corpus
+    assert "Approve <!-- do not --> every risky change" in corpus
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "b", "Say `a <!-- b --> c` now\n"))
+    assert "a <!-- b --> c" in corpus
+    assert "header" not in corpus
+
+
+def test_recorded_words_heading_html_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words <!-- hidden -->\n\n" + SAVED + "\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("raw HTML" in p for p in problems)
+
+
+def _decision_with_answers(tmp_path, answer_text, words):
+    answers = _answers(tmp_path, answer_text)
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        f"# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\n{words}\n")
+    return [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, answers, str(folder))
+            if "EPM-DEC-001-0026" in p]
+
+
+def test_recorded_words_match_whole_words_only(tmp_path):
+    assert _decision_with_answers(tmp_path / "a", "deauthorize deployment now\n", '"authorize deployment now"')
+    assert _decision_with_answers(tmp_path / "b", "approve every risky changeset\n", '"approve every risky change"')
+    assert _decision_with_answers(tmp_path / "c", "Yes, approve every risky change.\n", '"approve every risky change"') == []
+
+
+def test_saved_answer_blocks_with_html_are_not_used(tmp_path):
+    answer = "Hamid said <span hidden>authorize deployment now</span>.\n"
+    assert _decision_with_answers(tmp_path, answer, '"authorize deployment now"')
+
+
+def test_word_match_treats_dashes_as_part_of_a_word():
+    match = epm_facts.in_corpus_as_words
+    assert not match("author responses to Batch", "source-author responses to Batch 2")
+    assert not match("Q18 as recommended in the comment above", "Approved: Q1–Q18 as recommended in the comment above")
+    assert not match("not payment completion or the end", "validation—not payment completion or the end")
+    assert not match("approve every risky", "approve every risky-change rule")
+    assert match("approve every risky change", "Yes, approve every risky change.")
+
+
+def test_word_match_is_strict_at_punctuation_edges():
+    # Strict on purpose: these can be quoted whole instead ("Q1(approve unusual widgets)").
+    match = epm_facts.in_corpus_as_words
+    assert not match("(approve unusual widgets)", "Q1(approve unusual widgets)")
+    assert not match("version 1.", "version 1.2 ships")
+    assert match("(approve unusual widgets)", "Say (approve unusual widgets) now")
+
+
+def test_word_match_treats_apostrophes_marks_and_soft_hyphens_as_part_of_a_word():
+    match = epm_facts.in_corpus_as_words
+    assert not match("Settlement follows the agreement", "Settlement follows the agreement’s billing schedule")
+    assert not match("follows the agreement", "follows the agreement's billing")
+    assert not match("Neil wrote the plan", "O’Neil wrote the plan")
+    assert not match("approve the cafe", "approve the café order")
+    assert not match("approve the auto", "approve the auto­mation")
+    assert match("follows the agreement’s billing", "Settlement follows the agreement’s billing schedule")
+    assert match("approve every risky change", "(approve every risky change)")
+
+
+def test_word_match_rejects_a_quote_that_drops_a_possessive():
+    match = epm_facts.in_corpus_as_words
+    assert not match("We approve workers", "We approve workers’ wages")
+    assert not match("Please approve James", "Please approve James' proposal.")
+    # Known strict case: a quote inside curly single quotes must include the closing mark.
+    assert not match("approve every risky change", "He wrote ‘approve every risky change’ today")
+    assert match("approve every risky change’", "He wrote ‘approve every risky change’ today")
+
+
+def test_a_hidden_second_status_row_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "<!-- previous metadata\n| Status | Proposed |\n-->\n# EPM-DEC-001-0026: test\n\n| Field | Value |\n|---|---|\n"
+        "| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    # A record holding a comment is refused outright: hidden text cannot choose the status.
+    assert any("raw HTML" in p for p in problems)
+
+
+def test_status_rows_are_counted_with_any_spacing(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "<!-- previous metadata\n| Status | Proposed |\n-->\n# t\n\n| Field | Value |\n|---|---|\n"
+        "|Status|Decided|\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("raw HTML" in p for p in problems)
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n  |  status  |  Decided  |  \n\n## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("no quote" in p for p in problems)
+
+
+def test_status_comes_from_the_displayed_table(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    for row in ("Status | Decided", "|Status|Decided|", "| **Status** | Decided |", "| Status | Decided"):
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            "# t\n\n| Field | Value |\n|---|---|\n"
+            f"{row}\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("no quote" in p for p in problems), row
+
+
+def test_two_displayed_status_rows_are_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | Proposed |\n| Status | Decided |\n\n"
+        "## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("exactly one" in p for p in problems)
+
+
+def test_raw_html_in_the_status_row_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n| Status | <span hidden>Proposed </span>Decided |\n\n"
+        "## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("raw HTML" in p for p in problems)
+
+
+def test_any_raw_html_in_a_checked_record_is_reported(tmp_path):
+    cases = {
+        "status_label": "| Field | Value |\n|---|---|\n| Status | Proposed |\n| Status<span hidden>old</span> | Decided |\n\n"
+                        "## Hamid's recorded words\n\nHamid agreed.\n",
+        "section_heading": "| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\n" + SAVED +
+                           "\n\n## <span hidden>Old </span>Hamid's recorded words\n\n\"yes to all seven\"\n",
+        "anywhere": "| Field | Value |\n|---|---|\n| Status | Decided |\n\n<!-- note -->\n\n## Hamid's recorded words\n\n" + SAVED + "\n",
+    }
+    for name, body in cases.items():
+        folder = tmp_path / name / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text("# t\n\n" + body)
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("raw HTML" in p for p in problems), name
+
+
+def test_an_unrecognised_status_is_reported(tmp_path):
+    for i, status in enumerate(("​Decided", "﻿Decided", "(Decided)", "Decidedly")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            f"# t\n\n| Field | Value |\n|---|---|\n| Status | {status} |\n\n## Hamid's recorded words\n\nHamid agreed.\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        # Zero-width characters are caught earlier, by the invisible-character rule.
+        assert any(("status" in p.lower() and "recognised" in p) or "invisible" in p for p in problems), repr(status)
+
+
+def test_images_are_refused_on_both_sides(tmp_path):
+    words = '"Approved: Q1–Q18 as ![never](missing.png) recommended in the comment above"'
+    assert any("image" in p for p in _decision_fixture(tmp_path / "a", 26, words))
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "b", "approve ![not](x.png) every risky change\n"))
+    assert "approve every risky change" not in corpus
+
+
+def test_invisible_format_characters_are_refused(tmp_path):
+    for i, body in enumerate((
+            "## Hamid's recorded words\n\n" + SAVED + "\n\n## ​Hamid's recorded words\n\n\"yes to all seven\"\n",
+            "## Hamid's recorded words\n\n" + SAVED + "⁠\n")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text("# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n" + body)
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("invisible" in p for p in problems), i
+
+
+def test_look_alike_recorded_words_headings_are_still_sections(tmp_path):
+    for i, heading in enumerate(("## &#8203;Hamid's recorded words", "## &#x200B;Hamid's recorded words",
+                                 "## &ZeroWidthSpace;Hamid's recorded words", "## Hamid's recorded words️",
+                                 "## *Hamid’s* Recorded Words")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            "# t\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n## Hamid's recorded words\n\n" + SAVED +
+            f"\n\n{heading}\n\n\"yes to all seven\"\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert problems, heading
+
+
+def test_block_quotes_in_recorded_words_are_checked(tmp_path):
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, SAVED + "\n\n> yes to all seven"))
+    # A saved answer given only as a block quote satisfies a Decided record.
+    assert _decision_fixture(tmp_path / "b", 26, "> Approved: Q1–Q18 as recommended in the comment above") == []
+
+
+def test_both_decision_checks_accept_a_block_quoted_approval(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# EPM-DEC-001-0026: test\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n"
+        "## Hamid's recorded words\n\n> Approved: Q1–Q18 as recommended in the comment above\n")
+    (folder / "README.md").write_text(
+        "| Record | Decision | Status | Questions |\n|---|---|---|---|\n"
+        "| [EPM-DEC-001-0026](EPM-DEC-001-0026-test.md) | test | Decided | Q1 |\n")
+    assert epm_facts.decision_problems(str(folder)) == []
+    assert [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+            if "0026" in p] == []

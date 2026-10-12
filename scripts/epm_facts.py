@@ -514,7 +514,10 @@ def decision_problems(folder=DECISIONS):
                 problems.append(f"{number}: index links {link}, file is {os.path.basename(path)}")
             if _status_parts(index_status) != (lead, amended):
                 problems.append(f"{number}: index status {index_status!r} differs from record status {status!r}")
-        if lead == "Decided":
+        # From 0026 on, quote_problems() checks the recorded words more strictly (block
+        # quotes and curly quotes included, against the saved answers); this simpler
+        # presence rule covers the earlier records it skips.
+        if lead == "Decided" and int(number) < FIRST_QUOTE_CHECKED_DECISION:
             words = re.search(r"^## Hamid's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
             if not words or not QUOTE.search(words.group(1)):
                 problems.append(f"{number}: Decided, but no quote under \"Hamid's recorded words\"")
@@ -570,13 +573,200 @@ def block_quotes(text):
     return [p for p in paras if p.strip()]
 
 
-def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
+def displayed_text(tok):
+    """The words a reader sees for one block token, as the CommonMark parser renders them.
+
+    Inline text comes from the parsed children: text (entities decoded) and
+    inline code, with emphasis markers dropped. Code blocks are shown verbatim.
+    Raw HTML is not rendered here; callers that must not miss text refuse it
+    (see has_html).
+    """
+    if tok.type == "inline":
+        out = []
+        for child in tok.children or []:
+            if child.type in ("text", "code_inline"):
+                out.append(child.content)
+            elif child.type in ("softbreak", "hardbreak"):
+                out.append(" ")
+        return "".join(out)
+    if tok.type in ("fence", "code_block"):
+        return tok.content
+    return ""
+
+
+def has_html(tok):
+    """True when a block token is, or contains, raw HTML (including comments) or an image.
+
+    Both can hide words or show words the text reading misses (an image shows its
+    alt text when it fails to load), so checked text refuses them.
+    """
+    return tok.type == "html_block" or any(c.type in ("html_inline", "image") for c in (tok.children or []))
+
+
+def rendered_blocks(text):
+    """A Markdown document's displayed text, one whitespace-collapsed line per block.
+
+    Each paragraph, heading, list item and code block is its own line, so a
+    quote can match only inside one block. A block that holds raw HTML (such
+    as a saved answer's header comment) is left out: its displayed words
+    cannot be read reliably, so nothing may be quoted from it.
+    """
+    from markdown_it import MarkdownIt
+    lines = (_flat(displayed_text(t)) for t in MarkdownIt("commonmark").parse(text) if not has_html(t))
+    return [line for line in lines if line]
+
+
+APOSTROPHES = "'\u2019\u02bc"   # U+2018 only opens a quotation; it is never an apostrophe
+
+
+def _is_delimiter(ch):
+    """Punctuation or a symbol that ends a word. Apostrophes, dashes and soft
+    hyphens join a word ("agreement’s", "source-author", "Q1–Q18"), so they do not."""
+    import unicodedata
+    cat = unicodedata.category(ch)
+    return cat[0] in "PS" and cat != "Pd" and ch not in APOSTROPHES
+
+
+def in_corpus_as_words(span, corpus):
+    """True when the span's words appear, in order, as whole words of one corpus line.
+
+    Words are whitespace-separated tokens. Inner words must match exactly. The
+    first and last words may differ from their source tokens only by delimiter
+    punctuation outside them ("approve" in "(approve", "change" in "change.").
+    So "agreement" does not match "agreement’s", "workers" does not match
+    "workers’", and "author" does not match "source-author". The rule is strict
+    on purpose: a quote that fails it can always quote the whole token instead.
+    """
+    words = span.split()
+    if not words:
+        return False
+    n = len(words)
+    for line in corpus.split("\n"):
+        tokens = line.split()
+        for i in range(len(tokens) - n + 1):
+            window = tokens[i:i + n]
+            if n > 1 and window[1:-1] != words[1:-1]:
+                continue
+            first, last = words[0], words[-1]
+            if n == 1:
+                if _edge_ok(window[0], first, start=True) and _edge_ok(window[0], first, start=False):
+                    return True
+                continue
+            if _edge_ok(window[0], first, start=True) and _edge_ok(window[-1], last, start=False):
+                return True
+    return False
+
+
+def _edge_ok(token, word, start):
+    """The quoted edge word sits in the source token without cutting a word.
+
+    start=True: word must be a suffix of token; any extra text before it must be
+    delimiters. start=False: the mirror image at the end.
+    """
+    if start:
+        if not token.endswith(word):
+            return False
+        extra = token[:len(token) - len(word)]
+    else:
+        if not token.startswith(word):
+            return False
+        extra = token[len(word):]
+    return all(_is_delimiter(c) for c in extra)
+
+
+def rendered_answer_corpus(folder=ANSWERS):
+    """Hamid's saved answers as displayed text, one line per block, to compare with displayed quotes."""
+    lines = []
+    for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
+        with open(path) as f:
+            lines.extend(rendered_blocks(f.read()))
+    return "\n".join(lines)
+
+
+def displayed_status_rows(text):
+    """(value, contains raw HTML) for every displayed table row whose first cell reads "Status"."""
+    from markdown_it import MarkdownIt
+    tokens = MarkdownIt("commonmark").enable("table").parse(text)
+    rows, current = [], None
+    for tok in tokens:
+        if tok.type == "tr_open":
+            current = []
+            rows.append(current)
+        elif tok.type == "tr_close":
+            current = None
+        elif tok.type == "inline" and current is not None:
+            current.append((_flat(displayed_text(tok)), has_html(tok)))
+    return [(row[1][0], any(html for _, html in row)) for row in rows
+            if len(row) >= 2 and row[0][0].lower() == "status"]
+
+
+RECORDED_WORDS_KEY = "hamidsrecordedwords"
+INVISIBLE_MARKS = re.compile("[\ufe00-\ufe0f\U000e0100-\U000e01ef]")   # variation selectors
+
+
+def section_key(heading):
+    """A heading's letters only, normalised and lower-cased, so look-alikes compare equal."""
+    import unicodedata
+    return "".join(ch for ch in unicodedata.normalize("NFKC", heading).casefold() if ch.isalpha())
+
+
+def has_invisible(text):
+    """True when text holds an invisible format character (Unicode Cf) or a variation selector."""
+    import unicodedata
+    return bool(INVISIBLE_MARKS.search(text)) or any(unicodedata.category(ch) == "Cf" for ch in text)
+
+
+def recorded_words(text):
+    """Each "Hamid's recorded words" section: (displayed text, contains raw HTML, block-quote paragraphs).
+
+    A block-quote paragraph is a quotation in its own right, so it is returned
+    whole, to be checked like a quoted span.
+
+    Sections are bounded by the document's own level-two headings (parser level
+    0), so a "## " line in a code fence or a heading nested in a block quote is
+    not a boundary, and a heading written with a tab or with emphasis is one.
+    Raw HTML is reported rather than interpreted: it can hide words or show
+    words the text extraction misses.
+    """
+    from markdown_it import MarkdownIt
+    tokens = MarkdownIt("commonmark").parse(text)
+    sections, current, depth = [], None, 0
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
+            current = None
+            if section_key(displayed_text(tokens[i + 1])) == RECORDED_WORDS_KEY:
+                current = {"parts": [], "html": has_html(tokens[i + 1]), "quoted": []}
+                sections.append(current)
+            i += 3  # heading_open, inline, heading_close
+            continue
+        depth += {"blockquote_open": 1, "blockquote_close": -1}.get(tok.type, 0)
+        if current is not None:
+            current["parts"].append(displayed_text(tok))
+            current["html"] = current["html"] or has_html(tok)
+            if depth > 0 and tok.type in ("inline", "fence", "code_block"):
+                current["quoted"].append(_flat(displayed_text(tok)))
+        i += 1
+    return [("\n".join(p for p in sec["parts"] if p), sec["html"], [q for q in sec["quoted"] if q])
+            for sec in sections]
+
+
+# Decision records from this number on quote only saved answers. Records 0001 to
+# 0025 quote sessions that were never saved (PR #231 added this check).
+FIRST_QUOTE_CHECKED_DECISION = 26
+
+
+def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
     """Text attributed to Hamid that is not word for word in a saved answer.
 
     Checked: in every review file with a `hamid_words` column, that column, the
     `scope_note_sentence`, and each quoted span of three or more words in
-    `semantic_reason` and `Hamid_decision`; and every block quote in the
-    source-correction backlog. An ellipsis (…) splits a quoted span, and each
+    `semantic_reason` and `Hamid_decision`; every block quote in the
+    source-correction backlog; and each quoted span of three or more words in
+    the displayed text of the "Hamid's recorded words" section of EPM-DEC-001
+    records from 0026 on, compared with the saved answers' displayed text; a
+    Decided record must have at least one, and raw HTML there is reported. An ellipsis (…) splits a quoted span, and each
     part of three or more words is checked. Each text is searched across all
     saved answers, not only the comment its row cites. Paraphrases are not
     checked. Needs markdown-it-py (check.sh supplies it).
@@ -622,6 +812,54 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
         text = f.read()
     for para in block_quotes(text):
         check(f"{os.path.basename(backlog)} block quote", para)
+    rendered_corpus = rendered_answer_corpus(answers)
+    for path in sorted(glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))):
+        number = int(re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(path)).group(1))
+        if number < FIRST_QUOTE_CHECKED_DECISION:
+            continue
+        with open(path) as f:
+            record = f.read()
+        name = f"EPM-DEC-001-{number:04d}"
+        # Raw HTML can hide or relabel any part of a record (a status, a heading, a
+        # quote), so a checked record must be plain Markdown throughout.
+        from markdown_it import MarkdownIt
+        if any(has_html(t) for t in MarkdownIt("commonmark").enable("table").parse(record)):
+            problems.append(f"{name}: raw HTML or an image in a checked decision record; write it in plain Markdown")
+            continue
+        # Invisible format characters (zero-width spaces, joiners, a BOM) can make two
+        # headings or statuses look alike while comparing differently.
+        # Checked in the raw file and in the displayed text, where entities are decoded.
+        if has_invisible(record) or has_invisible("\n".join(rendered_blocks(record))):
+            problems.append(f"{name}: invisible format characters in a checked decision record; remove them")
+            continue
+        # The status a reader sees: the Status row of the record's displayed tables.
+        # A row inside an HTML comment or code block is not a table row, and any
+        # pipe-table spelling is. Exactly one is required.
+        statuses = displayed_status_rows(record)
+        if len(statuses) != 1:
+            problems.append(f"{name}: has {len(statuses)} Status rows; a record needs exactly one")
+            continue
+        if statuses[0][1]:
+            problems.append(f"{name}: raw HTML in the Status row; write it in plain Markdown")
+            continue
+        if not re.fullmatch(r"(Proposed|Decided|Superseded)\b[^\u200b-\u200f\ufeff]*", statuses[0][0]):
+            problems.append(f"{name}: Status {statuses[0][0]!r} is not a recognised status (Proposed, Decided or Superseded)")
+            continue
+        decided = _status_parts(statuses[0][0])[0] == "Decided"
+        sections = recorded_words(record)
+        if len(sections) > 1:
+            problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
+            continue
+        words, html, quoted = sections[0] if sections else ("", False, [])
+        if html:
+            problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
+            continue
+        spans = list(_spans(words)) + [q for q in quoted if len(q.split()) >= 3]
+        if decided and not spans:
+            problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
+        for span in spans:
+            if not in_corpus_as_words(span, rendered_corpus):
+                problems.append(f"{name} recorded words: not in a saved answer: {span[:90]!r}")
     return problems
 
 
