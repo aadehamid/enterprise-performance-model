@@ -9,7 +9,7 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `3a54b46978ad4d2ba6e491e116713bebc1bedeaf` (re-pinned 2026-10-12 to PR #225's merge on `main`, which carries the #205 batch 1 scope-note corrections; PR #225 had pinned its branch commit `532eeee`, which the squash merge left off `main`; was `6a155bc23ba3971ce430b774b4ddd6f4a933e380`, re-pinned 2026-09-29 after PR #178).
+**Baseline:** `d8b482751e418338203e976e5741dcfe538b4800` (re-pinned 2026-10-12 for the #205 batch 2 scope-note corrections; was `3a54b46978ad4d2ba6e491e116713bebc1bedeaf`, PR #225's merge on `main`, re-pinned in PR #227).
 **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 (849 promoted / 172 context-held — the earlier draft said 812 promoted: that
 figure had netted 37 mention-level property-rule/hierarchy holds out of the
