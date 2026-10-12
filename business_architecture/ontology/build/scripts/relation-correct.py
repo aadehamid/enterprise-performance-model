@@ -33,7 +33,8 @@ WB = Path(__file__).resolve().parents[1] / "output" / "step3c-definition-authori
 SHEET = "Review & authoring"
 # Raw verbs in verb-predicate-mapping-v2.md's canonical direction table.
 VERBS = {"enables", "informs", "informed-by", "uses-input", "governed-by", "requires", "constrained-by",
-         "constrains", "triggers", "assures", "precedes", "follows"}
+         "constrains", "triggers", "assures", "precedes", "follows",
+         "provides-input-to", "governs"}  # the two mirror verbs: EPM-DEC-001-0027
 COLUMNS = ["row_id", "source_slug", "old_verb", "old_target", "new_verb", "new_target"]
 
 

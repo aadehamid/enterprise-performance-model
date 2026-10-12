@@ -88,6 +88,15 @@ class RelationCorrect(unittest.TestCase):
         self.assertIn("not 'approved'", _run(wb, c).stderr)
         self.assertEqual(_cell(wb), CELL)
 
+    def test_accepts_the_mirror_verbs(self):
+        wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
+                                 "provides-input-to", "Trade Capture (CM-1-2-1-3)"],
+                                ["REL-2", "A-1", "governed-by", "Market Risk Management (CM-1-2-2-3)",
+                                 "governs", "Market Risk Management (CM-1-2-2-3)"]])
+        self.assertEqual(_run(wb, c).returncode, 0)
+        self.assertIn("provides-input-to: Trade Capture", _cell(wb))
+        self.assertIn("governs: Market Risk Management", _cell(wb))
+
     def test_check_writes_nothing(self):
         wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
                                  "informs", "Trade Capture (CM-1-2-1-3)"]])
