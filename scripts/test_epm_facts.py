@@ -260,3 +260,29 @@ def test_quotes_reject_empty_answers_and_blank_rows(tmp_path):
     problems = epm_facts.quote_problems(str(reviews), str(backlog), str(answers))
     assert any("no saved answer text" in p for p in problems)
     assert any("hamid_words is blank" in p for p in problems)
+
+
+def test_quotes_check_code_and_html_inside_block_quotes(tmp_path):
+    fake = "Hamid approved all held relationships for immediate emission."
+    for i, block in enumerate([f"```text\n> {fake}\n> ```", f"    {fake}", f"<p>{fake}</p>"]):
+        assert any("block quote" in p for p in _quote_fixture(tmp_path / str(i), block=block)), block
+
+
+def test_quotes_reject_a_repeated_column(tmp_path):
+    reviews = tmp_path / "reviews"
+    reviews.mkdir()
+    (reviews / "batch.csv").write_text(
+        "row_id,hamid_words,hamid_words\nREL-00193,Hamid authorized immediate emission of every held row.,Take this as my authorization\n")
+    backlog = tmp_path / "backlog.md"
+    backlog.write_text("")
+    problems = epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS)
+    assert any("repeated column" in p for p in problems)
+
+
+def test_quotes_reject_a_header_only_review_file(tmp_path):
+    reviews = tmp_path / "reviews"
+    reviews.mkdir()
+    (reviews / "batch.csv").write_text("row_id,hamid_words\n")
+    backlog = tmp_path / "backlog.md"
+    backlog.write_text("")
+    assert any("no rows" in p for p in epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS))

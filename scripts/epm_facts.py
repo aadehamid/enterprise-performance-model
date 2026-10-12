@@ -516,7 +516,8 @@ def block_quotes(text):
     """The paragraphs of every Markdown block quote, found by a CommonMark parser.
 
     A parser, not a regex: quotes nested in lists, lazy continuation lines and
-    blocks that interrupt a quote all follow CommonMark (markdown-it-py).
+    blocks that interrupt a quote all follow CommonMark (markdown-it-py). Code
+    and HTML inside a quote are checked too, so no quoted text goes unread.
     """
     from markdown_it import MarkdownIt
     paras, depth = [], 0
@@ -525,9 +526,11 @@ def block_quotes(text):
             depth += 1
         elif tok.type == "blockquote_close":
             depth -= 1
-        elif tok.type == "inline" and depth > 0:
+        elif depth > 0 and tok.type in ("inline", "fence", "code_block"):
             paras.append(tok.content)
-    return paras
+        elif depth > 0 and tok.type == "html_block":
+            paras.append(re.sub(r"<[^>]+>", " ", tok.content))   # the visible text
+    return [p for p in paras if p.strip()]
 
 
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
@@ -553,8 +556,17 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
     checked_files = 0
     for path in sorted(glob.glob(os.path.join(reviews, "*.csv"))):
         with open(path, newline="") as f:
+            header = next(csv.reader(f), [])
+            f.seek(0)
             rows = list(csv.DictReader(f))
-        if not rows or "hamid_words" not in rows[0]:
+        if "hamid_words" not in header:
+            continue
+        repeated = sorted({h for h in header if header.count(h) > 1})
+        if repeated:
+            problems.append(f"{os.path.basename(path)}: repeated column {repeated}; cannot check it unambiguously")
+            continue
+        if not rows:
+            problems.append(f"{os.path.basename(path)}: has a hamid_words column but no rows")
             continue
         checked_files += 1
         name = os.path.basename(path)
