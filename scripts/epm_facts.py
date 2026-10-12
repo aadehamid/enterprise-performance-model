@@ -714,7 +714,10 @@ def has_invisible(text):
 
 
 def recorded_words(text):
-    """Each "Hamid's recorded words" section of a decision record: (displayed text, contains raw HTML).
+    """Each "Hamid's recorded words" section: (displayed text, contains raw HTML, block-quote paragraphs).
+
+    A block-quote paragraph is a quotation in its own right, so it is returned
+    whole, to be checked like a quoted span.
 
     Sections are bounded by the document's own level-two headings (parser level
     0), so a "## " line in a code fence or a heading nested in a block quote is
@@ -724,22 +727,26 @@ def recorded_words(text):
     """
     from markdown_it import MarkdownIt
     tokens = MarkdownIt("commonmark").parse(text)
-    sections, current = [], None
+    sections, current, depth = [], None, 0
     i = 0
     while i < len(tokens):
         tok = tokens[i]
         if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
             current = None
             if section_key(displayed_text(tokens[i + 1])) == RECORDED_WORDS_KEY:
-                current = {"parts": [], "html": has_html(tokens[i + 1])}
+                current = {"parts": [], "html": has_html(tokens[i + 1]), "quoted": []}
                 sections.append(current)
             i += 3  # heading_open, inline, heading_close
             continue
+        depth += {"blockquote_open": 1, "blockquote_close": -1}.get(tok.type, 0)
         if current is not None:
             current["parts"].append(displayed_text(tok))
             current["html"] = current["html"] or has_html(tok)
+            if depth > 0 and tok.type in ("inline", "fence", "code_block"):
+                current["quoted"].append(_flat(displayed_text(tok)))
         i += 1
-    return [("\n".join(p for p in sec["parts"] if p), sec["html"]) for sec in sections]
+    return [("\n".join(p for p in sec["parts"] if p), sec["html"], [q for q in sec["quoted"] if q])
+            for sec in sections]
 
 
 # Decision records from this number on quote only saved answers. Records 0001 to
@@ -840,11 +847,11 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if len(sections) > 1:
             problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
             continue
-        words, html = sections[0] if sections else ("", False)
+        words, html, quoted = sections[0] if sections else ("", False, [])
         if html:
             problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
             continue
-        spans = list(_spans(words))
+        spans = list(_spans(words)) + [q for q in quoted if len(q.split()) >= 3]
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
         for span in spans:

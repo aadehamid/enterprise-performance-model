@@ -610,3 +610,9 @@ def test_look_alike_recorded_words_headings_are_still_sections(tmp_path):
             f"\n\n{heading}\n\n\"yes to all seven\"\n")
         problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
         assert problems, heading
+
+
+def test_block_quotes_in_recorded_words_are_checked(tmp_path):
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, SAVED + "\n\n> yes to all seven"))
+    # A saved answer given only as a block quote satisfies a Decided record.
+    assert _decision_fixture(tmp_path / "b", 26, "> Approved: Q1–Q18 as recommended in the comment above") == []
