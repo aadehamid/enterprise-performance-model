@@ -570,16 +570,13 @@ def block_quotes(text):
     return [p for p in paras if p.strip()]
 
 
-COMMENT = re.compile(r"<!--.*?-->", re.S)
-
-
 def displayed_text(tok):
     """The words a reader sees for one block token, as the CommonMark parser renders them.
 
     Inline text comes from the parsed children: text (entities decoded) and
-    inline code, with emphasis markers, HTML tags, their attributes and HTML
-    comments dropped. Code blocks are shown verbatim, comment syntax included.
-    An HTML block shows its text without tags or comments.
+    inline code, with emphasis markers dropped. Code blocks are shown verbatim.
+    Raw HTML is not rendered here; callers that must not miss text refuse it
+    (see has_html).
     """
     if tok.type == "inline":
         out = []
@@ -591,18 +588,38 @@ def displayed_text(tok):
         return "".join(out)
     if tok.type in ("fence", "code_block"):
         return tok.content
-    if tok.type == "html_block":
-        return re.sub(r"<[^>]+>", " ", COMMENT.sub(" ", tok.content))
     return ""
 
 
+def has_html(tok):
+    """True when a block token is, or contains, raw HTML (including comments)."""
+    return tok.type == "html_block" or any(c.type == "html_inline" for c in (tok.children or []))
+
+
+def rendered(text):
+    """A Markdown document's displayed text, whitespace-collapsed (HTML comments dropped first)."""
+    from markdown_it import MarkdownIt
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+    return _flat(" ".join(displayed_text(t) for t in MarkdownIt("commonmark").parse(text)))
+
+
+def rendered_answer_corpus(folder=ANSWERS):
+    """Hamid's saved answers as displayed text, one line per file, to compare with displayed quotes."""
+    parts = []
+    for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
+        with open(path) as f:
+            parts.append(rendered(f.read()))
+    return "\n".join(parts)
+
+
 def recorded_words(text):
-    """The displayed text of each "Hamid's recorded words" section in a decision record.
+    """Each "Hamid's recorded words" section of a decision record: (displayed text, contains raw HTML).
 
     Sections are bounded by the document's own level-two headings (parser level
     0), so a "## " line in a code fence or a heading nested in a block quote is
     not a boundary, and a heading written with a tab or with emphasis is one.
-    Returns one string per section; more than one is the caller's to report.
+    Raw HTML is reported rather than interpreted: it can hide words or show
+    words the text extraction misses.
     """
     from markdown_it import MarkdownIt
     tokens = MarkdownIt("commonmark").parse(text)
@@ -613,14 +630,15 @@ def recorded_words(text):
         if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
             current = None
             if _flat(displayed_text(tokens[i + 1])) == "Hamid's recorded words":
-                current = []
+                current = {"parts": [], "html": False}
                 sections.append(current)
             i += 3  # heading_open, inline, heading_close
             continue
         if current is not None:
-            current.append(displayed_text(tok))
+            current["parts"].append(displayed_text(tok))
+            current["html"] = current["html"] or has_html(tok)
         i += 1
-    return ["\n".join(part for part in parts if part) for parts in sections]
+    return [("\n".join(p for p in sec["parts"] if p), sec["html"]) for sec in sections]
 
 
 # Decision records from this number on quote only saved answers. Records 0001 to
@@ -635,8 +653,9 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
     `scope_note_sentence`, and each quoted span of three or more words in
     `semantic_reason` and `Hamid_decision`; every block quote in the
     source-correction backlog; and each quoted span of three or more words in
-    the "Hamid's recorded words" section of EPM-DEC-001 records from 0026 on,
-    where a Decided record must have at least one. An ellipsis (…) splits a quoted span, and each
+    the displayed text of the "Hamid's recorded words" section of EPM-DEC-001
+    records from 0026 on, compared with the saved answers' displayed text; a
+    Decided record must have at least one, and raw HTML there is reported. An ellipsis (…) splits a quoted span, and each
     part of three or more words is checked. Each text is searched across all
     saved answers, not only the comment its row cites. Paraphrases are not
     checked. Needs markdown-it-py (check.sh supplies it).
@@ -682,6 +701,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         text = f.read()
     for para in block_quotes(text):
         check(f"{os.path.basename(backlog)} block quote", para)
+    rendered_corpus = rendered_answer_corpus(answers)
     for path in sorted(glob.glob(os.path.join(decisions, "EPM-DEC-001-*.md"))):
         number = int(re.search(r"EPM-DEC-001-(\d{4})", os.path.basename(path)).group(1))
         if number < FIRST_QUOTE_CHECKED_DECISION:
@@ -695,11 +715,16 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if len(sections) > 1:
             problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
             continue
-        spans = list(_spans(sections[0] if sections else ""))
+        words, html = sections[0] if sections else ("", False)
+        if html:
+            problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
+            continue
+        spans = list(_spans(words))
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
         for span in spans:
-            check(f"{name} recorded words", span)
+            if span not in rendered_corpus:
+                problems.append(f"{name} recorded words: not in a saved answer: {span[:90]!r}")
     return problems
 
 

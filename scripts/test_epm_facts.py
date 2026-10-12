@@ -349,9 +349,18 @@ def test_recorded_words_section_follows_markdown_headings(tmp_path):
     assert any("no quote" in p for p in problems)
 
 
-def test_recorded_words_ignore_html_comments(tmp_path):
-    words = 'Hamid agreed.\n\n<!-- "Approved: Q1–Q18 as recommended in the comment above" -->'
-    assert any("no quote" in p for p in _decision_fixture(tmp_path, 26, words))
+def test_recorded_words_refuse_raw_html(tmp_path):
+    # Raw HTML can hide a quote (a comment, an attribute) or show one the text reading misses
+    # (an entity in an HTML block, words joined by <br>), so it is reported, not interpreted.
+    cases = {
+        "block_comment": 'Hamid agreed.\n\n<!-- "Approved: Q1–Q18 as recommended in the comment above" -->',
+        "inline_comment": SAVED + ' <!-- "yes to all seven" -->',
+        "attribute": "<div title='> \"Approved: Q1–Q18 as recommended in the comment above\"'>No quote</div>",
+        "block_entity": SAVED + "\n\n<div>&quot;yes to all seven&quot;</div>",
+        "inline_break": 'He said "Approved: Q1–Q18 as recommended<br>in the comment above"',
+    }
+    for name, words in cases.items():
+        assert any("raw HTML" in p for p in _decision_fixture(tmp_path / name, 26, words)), name
 
 
 def test_recorded_words_reject_a_repeated_section(tmp_path):
@@ -364,9 +373,6 @@ SAVED = '"Approved: Q1–Q18 as recommended in the comment above"'
 
 
 def test_recorded_words_read_displayed_text_not_raw_markdown(tmp_path):
-    # A quote in an HTML attribute is not displayed, so it cannot be the required quote.
-    hidden = 'Hamid agreed. <span title="Approved: Q1–Q18 as recommended in the comment above">No quote</span>'
-    assert any("no quote" in p for p in _decision_fixture(tmp_path / "a", 26, hidden))
     # Entity-encoded quote marks display as quote marks, so the unsaved words are checked.
     entity = SAVED + "\n\nHamid also said &quot;yes to all seven&quot;."
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, entity))
@@ -393,3 +399,8 @@ def test_recorded_words_keep_comment_syntax_inside_code(tmp_path):
 def test_recorded_words_continue_past_a_heading_nested_in_a_quote(tmp_path):
     words = SAVED + '\n\n> ## Example\n\nHamid also said "yes to all seven"'
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
+def test_recorded_words_match_a_saved_answer_with_formatting(tmp_path):
+    # 205-batch1.md says "For each **a** response, ..."; both sides are compared as displayed text.
+    assert _decision_fixture(tmp_path, 26, '"For each **a** response, use the revised wording below"') == []
