@@ -17,6 +17,7 @@ computes:
   REL-00445 pattern"): they split rows whose section totals are checked here.
 """
 import csv
+import html
 import json
 import os
 import re
@@ -94,7 +95,7 @@ README_NON_FIGURES = [
     r"All 10 boxes in release-checklist\.md are complete",
     r"document, 16/16 sections\)",
     r"\d{4}-\d{2}-\d{2}",                           # dates
-    r"#\d+\b",                                       # PR and issue numbers
+    r"(?<![&\w])#\d+\b",                               # PR and issue numbers
     r"\b\d+\.\d+\.\d+\b",                           # release versions
     r"\b(?:REL-\d{5}|EPM-[A-Z]+-\d{3}(?:-\d{4})?|CM(?:-\d+)+|MPC-S\d+)\b",  # the project's ID namespaces
     r"[\w./-]+\.(?:md|py|csv|ttl|json|jsonl|sh|txt|html)\b",  # file names
@@ -103,12 +104,20 @@ README_NON_FIGURES = [
 ]
 
 
+# A count written as a word next to what it counts is a figure too ("one FAIL check").
+NUMBER_WORDS = (r"zero|no|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+                r"(?:twen|thir|for|fif|six|seven|eigh|nine)ty|hundred|thousand")
+COUNTED = r"emitting|held|deferred|facts?|rows?|mentions?|PASS|FAIL|failures?|checks?|promoted"
+WORD_COUNT = re.compile(rf"\b(?:{NUMBER_WORDS})\b(?:[\s-]+\w+){{0,2}}?[\s-]+(?:{COUNTED})\b"
+                        rf"|\b(?:{COUNTED})\s*[:=]\s*(?:{NUMBER_WORDS})\b", re.I)
+
+
 def readme_figures(text):
-    """Numbers left in the text once markup and the allowed non-figures are removed."""
-    text = re.sub(r"[*_`]", "", text)
+    """Figures left in the text once markup, character references and the allowed non-figures are removed."""
+    text = re.sub(r"[*_`]", "", html.unescape(text))
     for pattern in README_NON_FIGURES:
         text = re.sub(pattern, " ", text)
-    return re.findall(r"\d[\d,]*", text)
+    return re.findall(r"\d[\d,]*", text) + [m.group(0) for m in WORD_COUNT.finditer(text)]
 
 
 def test_step4_readme_states_no_live_figures():
@@ -137,6 +146,11 @@ def test_step4_readme_states_no_live_figures():
     "Current ledger: EMITTING-999 / HELD-888.",
     "Current canonical facts: FACTS-999.",
     "Current gate: **PASS-999** / **FAIL-9**.",
+    "The evidence gate currently has one FAIL check.",
+    "The evidence gate currently has zero FAIL checks.",
+    "Current gate: &#57;&#57;&#57; PASS / &#57; FAIL.",
+    "The evidence gate has zero failures.",
+    "Current canonical facts: four hundred sixty-eight.",
 ])
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
