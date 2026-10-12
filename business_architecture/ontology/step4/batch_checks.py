@@ -8,7 +8,8 @@ evidence-gate.py can call it.
 """
 import re
 
-ANSWER_LINE = re.compile(r"^(\d+): ([abc]) — “(.+)”$", re.M)
+ANSWER_LINE = re.compile(r"(\d+): ([abc]) — “(.+)”")
+NUMBERED_LINE = re.compile(r"^\s*\d+\s*[:.)]", re.M)
 
 # #204 batch 1: question number -> row ID, as posted on #204 (comment 6130189084).
 TRIGGERS_BATCH1_QUESTIONS = {
@@ -18,8 +19,25 @@ TRIGGERS_BATCH1_QUESTIONS = {
 
 
 def answers(text):
-    """Question number -> (answer letter, quoted sentence), from a saved answer file."""
-    return {int(n): (letter, sentence) for n, letter, sentence in ANSWER_LINE.findall(text)}
+    """(question number -> (answer letter, quoted sentence), problems) from a saved answer file.
+
+    Every line that starts with a number is an answer and must parse; a number
+    answered twice is reported rather than letting the later line win.
+    """
+    found, problems = {}, []
+    for line in text.splitlines():
+        if not NUMBERED_LINE.match(line):
+            continue
+        m = ANSWER_LINE.fullmatch(line.strip())
+        if not m:
+            problems.append(f"numbered answer line cannot be read: {line.strip()[:60]!r}")
+            continue
+        number = int(m.group(1))
+        if number in found:
+            problems.append(f"question {number} is answered more than once")
+            continue
+        found[number] = (m.group(2), m.group(3))
+    return found, problems
 
 
 def triggers_batch_problems(rows, answer_text, questions, v2, facts):
@@ -29,8 +47,7 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
     v2: row ID -> target-dispositions-v2 row. facts: (s, p, o) -> list of row IDs.
     Every answer here is (a) or (b); both emit target core:triggeredBy source.
     """
-    problems = []
-    saved = answers(answer_text)
+    saved, problems = answers(answer_text)
     if sorted(saved) != sorted(questions):
         problems.append(f"saved answer has questions {sorted(saved)}, expected {sorted(questions)}")
     by_id = {r["row_id"]: r for r in rows}
@@ -59,9 +76,10 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
             continue
         if r["fresh_verdict"] != "APPROVE" or r["outcome"] != "Emitted as core:triggeredBy":
             problems.append(f"{where}: fresh_verdict/outcome must be APPROVE / Emitted as core:triggeredBy")
-        # A (b) answer is a conditional trigger: its condition is a clause of the answer itself.
-        if letter == "b" and not (r["condition"] and r["condition"] in sentence):
-            problems.append(f"{where}: a conditional trigger needs a condition quoted from the answer's sentence")
+        # A (b) answer is a conditional trigger. Its condition is Hamid's whole sentence,
+        # which states both what invokes the target and what does not.
+        if letter == "b" and r["condition"] != sentence:
+            problems.append(f"{where}: a conditional trigger's condition must be the answer's full sentence")
         if letter == "a" and r["condition"]:
             problems.append(f"{where}: an unconditional trigger has no condition")
         if row_id not in facts.get((target, "core:triggeredBy", source), []):

@@ -56,6 +56,22 @@ class TriggersBatch1(unittest.TestCase):
         rows = self.changed("REL-00169", condition="A corporate event alone is sufficient; no authorized instruction is required.")
         self.assertTrue(any("condition" in p for p in self.problems(rows)))
 
+    def test_a_partial_condition_is_caught(self):
+        # Exclusion-only or event-only fragments drop half of what Hamid decided.
+        for fragment in ("a corporate event",
+                         "A corporate event alone does not trigger termination or novation; applicable legal, "
+                         "credit, and consent requirements remain in force."):
+            self.assertTrue(any("condition" in p for p in self.problems(self.changed("REL-00169", condition=fragment))),
+                            fragment)
+
+    def test_a_duplicate_answer_number_is_caught(self):
+        answer = self.answer.replace("1: b — ", "1: c — “This is not a trigger.”\n\n1: b — ", 1)
+        self.assertTrue(any("more than once" in p for p in self.problems(answer=answer)))
+
+    def test_a_malformed_numbered_answer_is_caught(self):
+        answer = self.answer + "\n1: c - This is not a trigger.\n"
+        self.assertTrue(any("cannot be read" in p for p in self.problems(answer=answer)))
+
     def test_a_missing_condition_on_a_conditional_row_is_caught(self):
         self.assertTrue(any("condition" in p for p in self.problems(self.changed("REL-00049", condition=""))))
 
