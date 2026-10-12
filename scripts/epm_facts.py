@@ -624,10 +624,11 @@ def in_corpus_as_words(span, corpus):
     """True when the span's words appear, in order, as whole words of one corpus line.
 
     Words are whitespace-separated tokens. Inner words must match exactly. The
-    first word may be the end of a longer token only when what precedes it is
-    delimiter punctuation ("(approve" in "Q1(approve" is fine because the quote
-    itself starts with "("), and likewise for the last word. So "agreement" does
-    not match "agreement’s", and "author" does not match "source-author".
+    first and last words may differ from their source tokens only by delimiter
+    punctuation outside them ("approve" in "(approve", "change" in "change.").
+    So "agreement" does not match "agreement’s", "workers" does not match
+    "workers’", and "author" does not match "source-author". The rule is strict
+    on purpose: a quote that fails it can always quote the whole token instead.
     """
     words = span.split()
     if not words:
@@ -653,22 +654,17 @@ def _edge_ok(token, word, start):
     """The quoted edge word sits in the source token without cutting a word.
 
     start=True: word must be a suffix of token; any extra text before it must be
-    delimiters, unless the word itself begins with a delimiter. start=False: the
-    mirror image at the end.
+    delimiters. start=False: the mirror image at the end.
     """
     if start:
         if not token.endswith(word):
             return False
         extra = token[:len(token) - len(word)]
-        return not extra or _is_delimiter(word[0]) or all(_is_delimiter(c) for c in extra)
-    if not token.startswith(word):
-        return False
-    extra = token[len(word):]
-    # A closing ’ with nothing but punctuation after it ends a quotation ("change’."),
-    # while one followed by letters belongs to the word ("agreement’s").
-    if extra[:1] in APOSTROPHES and extra[:1]:
-        extra = extra[1:] or "."
-    return not extra or _is_delimiter(word[-1]) or all(_is_delimiter(c) for c in extra)
+    else:
+        if not token.startswith(word):
+            return False
+        extra = token[len(word):]
+    return all(_is_delimiter(c) for c in extra)
 
 
 def rendered_answer_corpus(folder=ANSWERS):

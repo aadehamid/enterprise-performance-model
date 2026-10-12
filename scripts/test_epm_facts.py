@@ -470,10 +470,12 @@ def test_word_match_treats_dashes_as_part_of_a_word():
     assert match("approve every risky change", "Yes, approve every risky change.")
 
 
-def test_word_match_allows_a_quote_that_starts_or_ends_with_punctuation():
+def test_word_match_is_strict_at_punctuation_edges():
+    # Strict on purpose: these can be quoted whole instead ("Q1(approve unusual widgets)").
     match = epm_facts.in_corpus_as_words
-    assert match("(approve unusual widgets)", "Q1(approve unusual widgets)")
-    assert match("approve unusual widgets.", "approve unusual widgets.Then")
+    assert not match("(approve unusual widgets)", "Q1(approve unusual widgets)")
+    assert not match("version 1.", "version 1.2 ships")
+    assert match("(approve unusual widgets)", "Say (approve unusual widgets) now")
 
 
 def test_word_match_treats_apostrophes_marks_and_soft_hyphens_as_part_of_a_word():
@@ -487,5 +489,10 @@ def test_word_match_treats_apostrophes_marks_and_soft_hyphens_as_part_of_a_word(
     assert match("approve every risky change", "(approve every risky change)")
 
 
-def test_word_match_accepts_a_quote_after_an_opening_single_quote():
-    assert epm_facts.in_corpus_as_words("approve every risky change", "He wrote ‘approve every risky change’ today")
+def test_word_match_rejects_a_quote_that_drops_a_possessive():
+    match = epm_facts.in_corpus_as_words
+    assert not match("We approve workers", "We approve workers’ wages")
+    assert not match("Please approve James", "Please approve James' proposal.")
+    # Known strict case: a quote inside curly single quotes must include the closing mark.
+    assert not match("approve every risky change", "He wrote ‘approve every risky change’ today")
+    assert match("approve every risky change’", "He wrote ‘approve every risky change’ today")
