@@ -89,14 +89,17 @@ def pairs_table(backlog=None):
 # Numbers step4/README.md may state because they are not live figures. Anything
 # else numeric is a figure, however it is worded or emphasised.
 README_NON_FIGURES = [
-    r"\d{4}-\d{2}-\d{2}",                # dates
-    r"#\d+",                             # PR and issue numbers
-    r"\b\d+\.\d+\.\d+\b",                # release versions
-    r"[\w./-]*[A-Za-z][\w./-]*\d[\w./-]*|[\w./-]*\d[\w./-]*[A-Za-z][\w./-]*",  # IDs, file names, SHAs
-    r"\b1,318 mentions\b",               # the conservation total every bucket sums to
-    r"\b10 boxes\b",                     # the release checklist's box count
-    r"\b16/16 sections\b",               # the mapping document's sign-off
-    r"\bStep \d+\b",                     # step names
+    # Fixed figures, each matched only in its own sentence; removed before the file-name rule splits them.
+    r"conserving to all 1,318 mentions: the ledger",
+    r"All 10 boxes in release-checklist\.md are complete",
+    r"document, 16/16 sections\)",
+    r"\d{4}-\d{2}-\d{2}",                           # dates
+    r"#\d+\b",                                       # PR and issue numbers
+    r"\b\d+\.\d+\.\d+\b",                           # release versions
+    r"\b[A-Z][A-Z]*(?:-[A-Z0-9]+)*-\d+\b",            # IDs: REL-00190, EPM-DEC-001-0026, CM-1-2-1
+    r"[\w./-]+\.(?:md|py|csv|ttl|json|jsonl|sh|txt|html)\b",  # file names
+    r"\b(?=[0-9a-f]*[a-f])[0-9a-f]{7,40}\b",          # commit SHAs
+    r"\bstep\d\b|\bStep \d+\b|\bQ\d+\b|\bpython3\b",   # step names, decision numbers, the command
 ]
 
 
@@ -123,6 +126,13 @@ def test_step4_readme_states_no_live_figures():
     "Evidence gate: **999 PASS** / **999 FAIL**.",
     "Ledger: **999 emitting** / **999 held**.",
     "`999` facts",
+    "Current gate: 999-PASS / 9-FAIL.",
+    "The canonical store is a 999-fact store.",
+    "Live ledger: emitting/999 held/888.",
+    "Current ledger: 1,318 mentions held.",
+    "The current emitting population is a 628-row subset of the ledger.",
+    "The evidence gate has a 237-row held population.",
+    "All 10 boxes are 999 facts.",
 ])
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
