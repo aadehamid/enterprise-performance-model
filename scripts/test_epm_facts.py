@@ -358,3 +358,38 @@ def test_recorded_words_reject_a_repeated_section(tmp_path):
     words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n'
              "## Hamid's recorded words\n\nHamid also said \"yes to all seven\"")
     assert any("more than one" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
+SAVED = '"Approved: Q1–Q18 as recommended in the comment above"'
+
+
+def test_recorded_words_read_displayed_text_not_raw_markdown(tmp_path):
+    # A quote in an HTML attribute is not displayed, so it cannot be the required quote.
+    hidden = 'Hamid agreed. <span title="Approved: Q1–Q18 as recommended in the comment above">No quote</span>'
+    assert any("no quote" in p for p in _decision_fixture(tmp_path / "a", 26, hidden))
+    # Entity-encoded quote marks display as quote marks, so the unsaved words are checked.
+    entity = SAVED + "\n\nHamid also said &quot;yes to all seven&quot;."
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, entity))
+    # Emphasis inside a quote displays the saved words.
+    assert _decision_fixture(tmp_path / "c", 26, '"**Approved: Q1–Q18 as recommended in the comment above**"') == []
+
+
+def test_recorded_words_recognise_a_formatted_heading(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Status | Proposed |\n\n## **Hamid's recorded words**\n\nHe said \"yes to all seven\"\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("yes to all seven" in p for p in problems)
+
+
+def test_recorded_words_keep_comment_syntax_inside_code(tmp_path):
+    fenced = SAVED + '\n\n```text\n<!-- "yes to all seven" -->\n```'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, fenced))
+    inline = SAVED + '\n\nSee `<!-- "yes to all seven" -->`.'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "b", 26, inline))
+
+
+def test_recorded_words_continue_past_a_heading_nested_in_a_quote(tmp_path):
+    words = SAVED + '\n\n> ## Example\n\nHamid also said "yes to all seven"'
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path, 26, words))

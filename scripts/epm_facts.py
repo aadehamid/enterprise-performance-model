@@ -570,39 +570,62 @@ def block_quotes(text):
     return [p for p in paras if p.strip()]
 
 
-# Decision records from this number on quote only saved answers. Records 0001 to
-# 0025 quote sessions that were never saved (PR #231 added this check).
-FIRST_QUOTE_CHECKED_DECISION = 26
-
-
 COMMENT = re.compile(r"<!--.*?-->", re.S)
 
 
-def recorded_words(text):
-    """The visible text of each "Hamid's recorded words" section in a decision record.
+def displayed_text(tok):
+    """The words a reader sees for one block token, as the CommonMark parser renders them.
 
-    A CommonMark parser finds the level-two headings, so a "## " line inside a
-    code fence is not a boundary and a heading written with a tab is. HTML
-    comments are dropped: a reader never sees them. Returns one string per
-    section; more than one section is the caller's problem to report.
+    Inline text comes from the parsed children: text (entities decoded) and
+    inline code, with emphasis markers, HTML tags, their attributes and HTML
+    comments dropped. Code blocks are shown verbatim, comment syntax included.
+    An HTML block shows its text without tags or comments.
+    """
+    if tok.type == "inline":
+        out = []
+        for child in tok.children or []:
+            if child.type in ("text", "code_inline"):
+                out.append(child.content)
+            elif child.type in ("softbreak", "hardbreak"):
+                out.append(" ")
+        return "".join(out)
+    if tok.type in ("fence", "code_block"):
+        return tok.content
+    if tok.type == "html_block":
+        return re.sub(r"<[^>]+>", " ", COMMENT.sub(" ", tok.content))
+    return ""
+
+
+def recorded_words(text):
+    """The displayed text of each "Hamid's recorded words" section in a decision record.
+
+    Sections are bounded by the document's own level-two headings (parser level
+    0), so a "## " line in a code fence or a heading nested in a block quote is
+    not a boundary, and a heading written with a tab or with emphasis is one.
+    Returns one string per section; more than one is the caller's to report.
     """
     from markdown_it import MarkdownIt
     tokens = MarkdownIt("commonmark").parse(text)
     sections, current = [], None
-    for i, tok in enumerate(tokens):
-        if tok.type == "heading_open" and tok.tag == "h2":
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        if tok.type == "heading_open" and tok.tag == "h2" and tok.level == 0:
             current = None
-            if _flat(tokens[i + 1].content) == "Hamid's recorded words":
+            if _flat(displayed_text(tokens[i + 1])) == "Hamid's recorded words":
                 current = []
                 sections.append(current)
+            i += 3  # heading_open, inline, heading_close
             continue
-        if current is None or (i and tokens[i - 1].type == "heading_open"):
-            continue
-        if tok.type in ("inline", "fence", "code_block"):
-            current.append(COMMENT.sub(" ", tok.content))
-        elif tok.type == "html_block":
-            current.append(re.sub(r"<[^>]+>", " ", COMMENT.sub(" ", tok.content)))
-    return ["\n".join(parts) for parts in sections]
+        if current is not None:
+            current.append(displayed_text(tok))
+        i += 1
+    return ["\n".join(part for part in parts if part) for parts in sections]
+
+
+# Decision records from this number on quote only saved answers. Records 0001 to
+# 0025 quote sessions that were never saved (PR #231 added this check).
+FIRST_QUOTE_CHECKED_DECISION = 26
 
 
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
