@@ -507,30 +507,59 @@ def _spans(text):
     """Quoted spans of three or more words; an ellipsis splits a span into parts."""
     for m in QUOTED.finditer(text):
         for part in (m.group(1) or m.group(2)).split("…"):
-            part = _flat(part).strip(" ,")
+            part = _flat(part)   # punctuation inside the quote marks is kept and must match
             if len(part.split()) >= 3:
                 yield part
+
+
+def block_quotes(text):
+    """Paragraphs of every Markdown block quote: a '>' marker after up to three
+    spaces, plus lazy continuation lines (non-blank lines with no marker)."""
+    paras, current, inside = [], [], False
+    for line in text.split("\n"):
+        m = re.match(r"^ {0,3}>\s?(.*)$", line)
+        if m:
+            inside = True
+            if m.group(1).strip():
+                current.append(m.group(1))
+            elif current:
+                paras.append(" ".join(current)); current = []
+        elif inside and line.strip():
+            current.append(line)          # lazy continuation of the quoted paragraph
+        else:
+            if current:
+                paras.append(" ".join(current)); current = []
+            inside = False
+    if current:
+        paras.append(" ".join(current))
+    return paras
 
 
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
     """Text attributed to Hamid that is not word for word in a saved answer.
 
     Checked: in every review file with a `hamid_words` column, that column, the
-    `scope_note_sentence`, and each quoted span in `semantic_reason` and
-    `Hamid_decision`; and every block quote in the source-correction backlog.
+    `scope_note_sentence`, and each quoted span of three or more words in
+    `semantic_reason` and `Hamid_decision`; and every block quote in the
+    source-correction backlog. Each text is searched across all saved answers,
+    not only the comment its row cites. Paraphrases are not checked.
     """
     corpus = answer_corpus(answers)
     problems = []
+    if not glob.glob(os.path.join(answers, "*.md")):
+        problems.append(f"no saved answers in {answers}: nothing to check quotes against")
 
     def check(where, text):
         if text and _flat(text) not in corpus:
             problems.append(f"{where}: not in a saved answer: {_flat(text)[:90]!r}")
 
+    checked_files = 0
     for path in sorted(glob.glob(os.path.join(reviews, "*.csv"))):
         with open(path, newline="") as f:
             rows = list(csv.DictReader(f))
         if not rows or "hamid_words" not in rows[0]:
             continue
+        checked_files += 1
         name = os.path.basename(path)
         for r in rows:
             where = f"{name} {r.get('row_id', '?')}"
@@ -539,11 +568,12 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
             for col in ("semantic_reason", "Hamid_decision"):
                 for span in _spans(r.get(col, "")):
                     check(f"{where} {col}", span)
+    if not checked_files:
+        problems.append(f"no review file with a hamid_words column in {reviews}: nothing checked")
     with open(backlog) as f:
         text = f.read()
-    for block in re.findall(r"(?:^>.*\n?)+", text, re.M):
-        for para in re.split(r"^>\s*$", block, flags=re.M):
-            check(f"{os.path.basename(backlog)} block quote", re.sub(r"^>\s?", "", para, flags=re.M))
+    for para in block_quotes(text):
+        check(f"{os.path.basename(backlog)} block quote", para)
     return problems
 
 

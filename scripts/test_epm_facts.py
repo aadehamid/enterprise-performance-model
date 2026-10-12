@@ -215,3 +215,25 @@ def test_quotes_catch_altered_answer_text_and_block_quotes(tmp_path):
 def test_quotes_split_an_ellipsis_and_skip_short_terms(tmp_path):
     ok = 'He said "adopted reference-model positions … not verified MPC internal procedures" and "owned by".'
     assert _quote_fixture(tmp_path, reason=ok) == []
+
+
+def test_quotes_catch_an_inserted_comma(tmp_path):
+    bad = 'it "does not require completion of all trade-capture activity," more'
+    assert any("semantic_reason" in p for p in _quote_fixture(tmp_path, reason=bad))
+
+
+def test_quotes_read_indented_and_lazy_block_quotes(tmp_path):
+    assert any("block quote" in p for p in _quote_fixture(
+        tmp_path / "a", block="x\n\n  > Hamid approved all held relationships for immediate emission."))
+    assert any("block quote" in p for p in _quote_fixture(
+        tmp_path / "b", block="Take this as my authorization\nand emit all held rows now."))
+
+
+def test_quotes_report_when_nothing_was_checked(tmp_path):
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    backlog = tmp_path / "backlog.md"
+    backlog.write_text("no quotes\n")
+    problems = epm_facts.quote_problems(str(empty), str(backlog), str(empty))
+    assert any("no saved answers" in p for p in problems)
+    assert any("no review file" in p for p in problems)
