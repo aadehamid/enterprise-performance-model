@@ -600,12 +600,18 @@ def rendered_blocks(text):
     """A Markdown document's displayed text, one whitespace-collapsed line per block.
 
     Each paragraph, heading, list item and code block is its own line, so a
-    quote can match only inside one block. HTML blocks (such as a saved
-    answer's header comment) display nothing here and still end a block.
+    quote can match only inside one block. A block that holds raw HTML (such
+    as a saved answer's header comment) is left out: its displayed words
+    cannot be read reliably, so nothing may be quoted from it.
     """
     from markdown_it import MarkdownIt
-    lines = (_flat(displayed_text(t)) for t in MarkdownIt("commonmark").parse(text))
+    lines = (_flat(displayed_text(t)) for t in MarkdownIt("commonmark").parse(text) if not has_html(t))
     return [line for line in lines if line]
+
+
+def in_corpus_as_words(span, corpus):
+    """True when the span occurs in the corpus with a word boundary at both ends."""
+    return re.search(rf"(?<!\w){re.escape(span)}(?!\w)", corpus) is not None
 
 
 def rendered_answer_corpus(folder=ANSWERS):
@@ -728,7 +734,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
         for span in spans:
-            if span not in rendered_corpus:
+            if not in_corpus_as_words(span, rendered_corpus):
                 problems.append(f"{name} recorded words: not in a saved answer: {span[:90]!r}")
     return problems
 

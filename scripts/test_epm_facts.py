@@ -438,3 +438,24 @@ def test_recorded_words_heading_html_is_reported(tmp_path):
         "# t\n\n| Status | Decided |\n\n## Hamid's recorded words <!-- hidden -->\n\n" + SAVED + "\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("raw HTML" in p for p in problems)
+
+
+def _decision_with_answers(tmp_path, answer_text, words):
+    answers = _answers(tmp_path, answer_text)
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        f"# t\n\n| Status | Decided |\n\n## Hamid's recorded words\n\n{words}\n")
+    return [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, answers, str(folder))
+            if "EPM-DEC-001-0026" in p]
+
+
+def test_recorded_words_match_whole_words_only(tmp_path):
+    assert _decision_with_answers(tmp_path / "a", "deauthorize deployment now\n", '"authorize deployment now"')
+    assert _decision_with_answers(tmp_path / "b", "approve every risky changeset\n", '"approve every risky change"')
+    assert _decision_with_answers(tmp_path / "c", "Yes, approve every risky change.\n", '"approve every risky change"') == []
+
+
+def test_saved_answer_blocks_with_html_are_not_used(tmp_path):
+    answer = "Hamid said <span hidden>authorize deployment now</span>.\n"
+    assert _decision_with_answers(tmp_path, answer, '"authorize deployment now"')
