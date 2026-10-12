@@ -22,7 +22,7 @@ Snapshot as of #204 batch 1 (2026-10-12). Current per-verb figures: `python3 scr
 | triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting (2026-09-26); the 11 held rows were answered in #204 batch 1 (2026-10-12) and emit → 18 emitting |
 
 ### Conservation
-Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves to 1,318 mentions.
+Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves to the total of all mentions.
 *(At promotion, 2026-09-30: 617 emitting + 686 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318, corrected 2026-09-29 from 615/688. Each later change is a dated entry in ledger-v2.md.)*
 
 ### Pinned Evidence
