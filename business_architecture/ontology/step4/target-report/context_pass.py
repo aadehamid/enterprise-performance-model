@@ -149,9 +149,9 @@ def run_pass():
 
 def _real(r, tests):
     """Tests that count toward promotion. B never counts for governed-by
-    (Hamid 2026-09-24)."""
+    (Hamid 2026-09-24), nor for its mirror governs (EPM-DEC-001-0027)."""
     real = [t for t in tests if not t.startswith("C:two-way-absent")]
-    if r["verb"] == "governed-by":
+    if r["verb"] in ("governed-by", "governs"):
         real = [t for t in real if t != "B:structural-nearness"]
     return real
 

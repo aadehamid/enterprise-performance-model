@@ -36,5 +36,8 @@ Hamid answered the question in the Claude Code session on 2026-10-12 ([#207](htt
 ## Consequences
 
 - `mapping_v2.py` `stored_fact` and `evidence-gate.py` `_stored` map both verbs.
+- Structural nearness never counts toward promoting `governs`, as for `governed-by` (`context_pass.py` `_real`).
+- Enables grouping treats "S provides-input-to T" like "T uses-input S" when it looks for an existing output dependency (`mapping_v2.py` `enables_group`).
+- The context pass's two-way test is unchanged: the mirror verbs add no new inverse pair there.
 - The direction table in `verb-predicate-mapping-v2.md` lists both.
 - `core:providesInputTo` and `core:governs` remain query-only inverse predicates; no fact is stored with them.

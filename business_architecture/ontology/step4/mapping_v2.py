@@ -1154,7 +1154,9 @@ def enables_group(r, tgt):
     sibs = imap.get(src, {}).get("parent_slug") == imap.get(tgt, {}).get("parent_slug") \
         and imap.get(src, {}).get("parent_slug")
     seq = bool((graph.get((src, tgt), set()) | graph.get((tgt, src), set())) & {"precedes", "follows"})
-    dep = bool(graph.get((tgt, src), set()) & {"uses-input", "informed-by"})
+    # An output dependency of tgt on src, written from either side (EPM-DEC-001-0027 mirror).
+    dep = bool(graph.get((tgt, src), set()) & {"uses-input", "informed-by"}
+               or graph.get((src, tgt), set()) & {"provides-input-to"})
     if sibs and seq: return "G2-disguised-sequence"
     if dep: return "G1-redundant-output-dep"
     return "G3-genuine-enablement"
