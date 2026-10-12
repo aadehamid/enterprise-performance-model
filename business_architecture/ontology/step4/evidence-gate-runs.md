@@ -34,3 +34,11 @@ gate was run against, not the pin. Do not retitle the checklist's
 - **Gate:** `evidence-gate.py` — 433 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** unchanged: promoted==1066, held==237,
   canonical-facts==457, contradictions==0.
+
+## 2026-10-12 — branch `phase1/205-batch2`, pin `d8b4827`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `d8b482751e418338203e976e5741dcfe538b4800`
+- **Gate:** `evidence-gate.py` — 433 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** unchanged: promoted==1066, held==237,
+  canonical-facts==457, contradictions==0. Section 2j now checks all 20
+  precedes/follows rows as reviewed and not emitted (#205 batches 1 and 2).

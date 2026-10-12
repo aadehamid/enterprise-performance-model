@@ -195,9 +195,9 @@ def test_decision_0025_figures(facts_0025):
         assert row == reason[key], f"0025 table {label!r}: {row} vs {reason[key]}"
 
 
-def batch1_rows():
-    """Rows in the #205 batch 1 review file."""
-    path = os.path.join(epm_facts.REVIEWS, "precedes-follows-batch1-review.csv")
+def batch_rows(n):
+    """Rows in the #205 batch n review file."""
+    path = os.path.join(epm_facts.REVIEWS, f"precedes-follows-batch{n}-review.csv")
     with open(path, newline="") as f:
         return sum(1 for r in csv.DictReader(f) if r["row_id"].startswith("REL-"))
 
@@ -220,8 +220,8 @@ def test_backlog_section_totals():
         (r"The following (\d+) RELs had 2026-09-25 row-level approvals", section_count("Governed-by superseded approvals")),
         (r"Triggers pass: (\d+) held rows", section_count("Triggers pass")),
         (r"(\d+) rows were held\. Each needed an affirmative sequence citation", section_count("Precedes/follows holds")),
-        (r"Batch 1 \((\d+) rows\) has fresh verdicts", batch1_rows()),
-        (r"The other (\d+) still need a citation", section_count("Precedes/follows holds") - batch1_rows()),
+        (r"Batch 1 \((\d+) rows\) and batch 2", batch_rows(1)),
+        (r"batch 2 \((\d+) rows\) have fresh verdicts", batch_rows(2)),
         (r"holds 96 \+ 6 = (\d+) rows", section_count("G3 Section B")),
     ]
     for pattern, expected in checks:
