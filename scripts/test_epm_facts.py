@@ -616,3 +616,17 @@ def test_block_quotes_in_recorded_words_are_checked(tmp_path):
     assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, SAVED + "\n\n> yes to all seven"))
     # A saved answer given only as a block quote satisfies a Decided record.
     assert _decision_fixture(tmp_path / "b", 26, "> Approved: Q1–Q18 as recommended in the comment above") == []
+
+
+def test_both_decision_checks_accept_a_block_quoted_approval(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# EPM-DEC-001-0026: test\n\n| Field | Value |\n|---|---|\n| Status | Decided |\n\n"
+        "## Hamid's recorded words\n\n> Approved: Q1–Q18 as recommended in the comment above\n")
+    (folder / "README.md").write_text(
+        "| Record | Decision | Status | Questions |\n|---|---|---|---|\n"
+        "| [EPM-DEC-001-0026](EPM-DEC-001-0026-test.md) | test | Decided | Q1 |\n")
+    assert epm_facts.decision_problems(str(folder)) == []
+    assert [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+            if "0026" in p] == []

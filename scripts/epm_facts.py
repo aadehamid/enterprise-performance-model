@@ -514,7 +514,10 @@ def decision_problems(folder=DECISIONS):
                 problems.append(f"{number}: index links {link}, file is {os.path.basename(path)}")
             if _status_parts(index_status) != (lead, amended):
                 problems.append(f"{number}: index status {index_status!r} differs from record status {status!r}")
-        if lead == "Decided":
+        # From 0026 on, quote_problems() checks the recorded words more strictly (block
+        # quotes and curly quotes included, against the saved answers); this simpler
+        # presence rule covers the earlier records it skips.
+        if lead == "Decided" and int(number) < FIRST_QUOTE_CHECKED_DECISION:
             words = re.search(r"^## Hamid's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
             if not words or not QUOTE.search(words.group(1)):
                 problems.append(f"{number}: Decided, but no quote under \"Hamid's recorded words\"")
