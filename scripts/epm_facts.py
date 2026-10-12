@@ -775,7 +775,10 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         name = f"EPM-DEC-001-{number:04d}"
         # Exactly one Status row, counted in the raw file: a second one, even inside an
         # HTML comment, could decide which status this check reads.
-        statuses = re.findall(r"^\| Status \| (.+?) \|\s*$", record, re.M)
+        statuses = [cells[1] for cells in (
+            [c.strip() for c in line.strip().strip("|").split("|")]
+            for line in record.splitlines() if line.strip().startswith("|"))
+            if len(cells) >= 2 and cells[0].lower() == "status"]
         if len(statuses) != 1:
             problems.append(f"{name}: has {len(statuses)} Status rows; a record needs exactly one")
             continue

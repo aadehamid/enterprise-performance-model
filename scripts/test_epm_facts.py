@@ -506,3 +506,17 @@ def test_a_hidden_second_status_row_is_reported(tmp_path):
         "| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
     problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
     assert any("Status" in p and "exactly one" in p for p in problems)
+
+
+def test_status_rows_are_counted_with_any_spacing(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "<!-- previous metadata\n| Status | Proposed |\n-->\n# t\n\n| Field | Value |\n|---|---|\n"
+        "|Status|Decided|\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("exactly one" in p for p in problems)
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Field | Value |\n|---|---|\n  |  status  |  Decided  |  \n\n## Hamid's recorded words\n\nHamid agreed.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("no quote" in p for p in problems)
