@@ -24,7 +24,7 @@
 *(corrected 2026-09-29 from 615/688; see ledger-v2.md figure-correction entry)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `6a155bc23ba3971ce430b774b4ddd6f4a933e380` (re-pinned 2026-09-29 from `d7310c9acd37c893d7d6926645c715f425eb9dc8`; all 7 SHA-stamped CSVs re-stamped, content verified identical except the SHA column)
+- **PINNED_SHA:** `532eeeeff7988d2304cc5b876dacca39f745a855` (re-pinned 2026-10-11 from `6a155bc23ba3971ce430b774b4ddd6f4a933e380` for the #205 batch 1 scope-note corrections; all 7 SHA-stamped CSVs re-stamped, 2,898 rows, content identical except the SHA column). Promotion was approved against `6a155bc2`.
 - Re-pin completed 2026-09-29; all promotion preconditions satisfied 2026-09-30.
 
 ### PR #124 Proof

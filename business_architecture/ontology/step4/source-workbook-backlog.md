@@ -407,8 +407,10 @@ evidence and needs the source author to confirm (REL-00215 pattern).
 
 ## Precedes/follows holds routed for source correction (Hamid 2026-09-27)
 
-20 rows held — each needs an affirmative sequence citation from the source
-author (or confirmation the sequence does not exist).
+20 rows were held. Each needed an affirmative sequence citation from the
+source author, or confirmation that the sequence does not exist. Batch 1 (13
+rows) has fresh verdicts in "Batch 1 fresh verdicts" below and needs nothing
+more. The other 7 still need a citation and are batch 2.
 
 **6 ExclusionBoundaryCitation (approval did not cover):**
 REL-01223, REL-01227, REL-01241, REL-01289, REL-01291, REL-01294.
@@ -418,3 +420,33 @@ REL-00008, REL-00068, REL-00112, REL-00149,
 REL-00184, REL-00188, REL-00193, REL-00200, REL-00206,
 REL-00319, REL-00351, REL-00374, REL-00930,
 REL-00307 (reference-data usage + boundary).
+
+### Batch 1 fresh verdicts (Hamid 2026-10-11)
+
+Hamid answered the 13 batch 1 questions on #205 and posted the answers again as his authorization on 2026-10-11 ([comment 6115309253](https://github.com/aadehamid/enterprise-performance-model/issues/205#issuecomment-6115309253)), headed "Take this as my authorization". The answers say:
+
+> Apply the source corrections and perform the fresh reviews; do not silently broaden conditional or activity-specific statements into unconditional process-wide relationships.
+>
+> For Questions 6 and 10, record the sequence as an industry-informed reference-model assumption, not a publicly verified MPC procedure. Close the source-author questions without opening another evidence question. If the existing predicate cannot preserve the stated scope, close the row as not emitted with the semantic reason recorded.
+
+Batch 1's questions said an (a) answer means the sentence is added "and the row is emitted". Each (a) row was therefore reviewed against the locked `core:precedes` definition. None meets it: every answer is a scoped sequence (per trade, delivery, period, claim or posting, sometimes conditional), and the definition needs the source process to complete before the target begins. All 13 are closed as not emitted with the reason recorded. Hamid decided on PR #225 ([comment 6115615577](https://github.com/aadehamid/enterprise-performance-model/pull/225#issuecomment-6115615577)) to keep `core:precedes` locked and to "Define a scoped sequence relation for these answers before the core 1.0.0 release", tracked in #226.
+
+All 13 questions are closed and the rows are done for Phase 1. None emits. The rows stay in `PRECEDES_20260927_HOLDS` as a technical disposition only. Hamid's sentences, his full answers and each row's reasoning are in `review-evidence/precedes-follows-batch1-review.csv`.
+
+| Row | Question | Fresh verdict | Outcome | Reason |
+|---|---|---|---|---|
+| REL-00193 | 1 | HOLD | Reviewed—Not emitted | Hamid's answer: an initial trade-level sequence, "not permanent completion of all capture activity." core:precedes needs the source process to complete before the target begins, so this scoped sequence is not emitted; a scoped sequence relation is scheduled before core 1.0.0 (#226). |
+| REL-00206 | 2 | HOLD | Reviewed—Not emitted | Hamid's answer: an initial trade-level sequence, "not permanent completion of all capture activity." core:precedes needs the source process to complete before the target begins, so this scoped sequence is not emitted; a scoped sequence relation is scheduled before core 1.0.0 (#226). |
+| REL-00184 | 3 | HOLD | Reviewed—Not emitted | Mandatory sequence not established (Hamid). Creation reporting is triggered by execution and later reporting by reportable events; the scope note states a responsibility boundary, not a handoff. No scope-note sentence added. |
+| REL-01227 | 4 | HOLD | Reviewed—Not emitted | Mandatory process-level sequence not established (Hamid). The added sentence says settlement preparation may proceed in parallel with confirmation, so the source need not complete before the target begins. |
+| REL-00200 | 5 | HOLD | Reviewed—Not emitted | Hamid's answer: the sequence "concerns initial availability of the required terms, not completion of the storage contract or all physical activity." core:precedes needs the source process to complete before the target begins, so this scoped sequence is not emitted; a scoped sequence relation is scheduled before core 1.0.0 (#226). |
+| REL-00188 | 6 | HOLD | Reviewed—Not emitted | Conditional prerequisite for one part of the target: only transmission-related charges wait for capture, and other Settle Power activity proceeds independently. The target can begin before the source completes, so the locked definition is not met. Adopted as an industry-informed reference-model assumption: MPC's disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. |
+| REL-01291 | 7 | HOLD | Reviewed—Not emitted | Data dependency with overlap: settlement preparation and provisional billing may proceed before every actualized input is final, with later true-ups. The target can begin before the source completes. |
+| REL-01289 | 8 | HOLD | Reviewed—Not emitted | Hamid's answer: for trade-linked movements only; it "does not require completion of all trade-capture activity". core:precedes needs the source process to complete before the target begins, so this scoped sequence is not emitted; a scoped sequence relation is scheduled before core 1.0.0 (#226). |
+| REL-00307 | 9 | HOLD | Reviewed—Not emitted | The prerequisite is establishment of effective lease terms inside Manage Lease Contract, which stays ongoing. The source process does not complete before the target begins; this is a narrower prerequisite. |
+| REL-00351 | 10 | HOLD | Reviewed—Not emitted | Same as question 6: only items from a captured transmission arrangement wait for capture, and other ISO/power-pool settlement proceeds independently. Adopted as an industry-informed reference-model assumption: MPC's disclosed power activity supports the business context, but its transmission-deal workflow is not publicly verified. |
+| REL-00319 | 11 | HOLD | Reviewed—Not emitted | Hamid's answer: settlement follows initial capture of a trade and "may occur periodically while the trade remains active." core:precedes needs the source process to complete before the target begins, so this scoped sequence is not emitted; a scoped sequence relation is scheduled before core 1.0.0 (#226). |
+| REL-00374 | 12 | HOLD | Reviewed—Not emitted | The prerequisite is settlement calculation and invoice validation, not completion of Settlements, and only the corresponding posting waits; accruals and other actuals activity proceed independently. Narrower prerequisite with overlap. |
+| REL-01294 | 13 | HOLD | Reviewed—Not emitted | Only claim-specific posting waits for the authorized demurrage amount; the demurrage lifecycle need not close and other AR/AP activity proceeds independently. Narrower prerequisite with overlap. |
+
+The other seven rows (REL-00008, REL-00068, REL-00112, REL-00149, REL-00930, REL-01223, REL-01241) wait for batch 2.

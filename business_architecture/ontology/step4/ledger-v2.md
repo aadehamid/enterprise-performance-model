@@ -1967,3 +1967,33 @@ Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
 
 The 2026-09-26/27 entries above keep their recorded-at-the-time figures;
 this entry is the correction. History on `main` is not rewritten.
+
+## #205 batch 1: precedes/follows source corrections (Hamid 2026-10-11)
+
+Hamid answered batch 1's 13 questions on #205 and posted them as his
+authorization on 2026-10-11 (#205 comment 6115309253, "Take this as my
+authorization"; quoted in `source-workbook-backlog.md`, "Batch 1 fresh
+verdicts"). Twelve of his sentences went into eleven approved scope notes,
+and Step 4 was re-pinned to `532eeee`. Each corrected row was then reviewed
+against the locked `core:precedes` definition (`evidence-discipline.md`):
+"The source completes before the target begins, as a sequence the business
+asserts." Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
+
+- **HOLD, reviewed, not emitted (13):** REL-00184, REL-00188, REL-00193,
+  REL-00200, REL-00206, REL-00307, REL-00319, REL-00351, REL-00374,
+  REL-01227, REL-01289, REL-01291, REL-01294. Hamid answered (b) to
+  questions 3 and 4 (REL-00184, REL-01227): the mandatory sequence is not
+  established. His eleven (a) answers each describe a scoped sequence (per
+  trade, delivery, period, claim or posting, sometimes conditional), "not
+  completion of an entire organizational process", so none meets the
+  definition. The rows stay in
+  `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
+  done for Phase 1.
+- Hamid decided on PR #225 (comment 6115615577): "Define a scoped sequence
+  relation for these answers before the core 1.0.0 release, tracked in its
+  own issue under #207." That issue is #226.
+
+No mention changes bucket and no fact changes.
+
+**Current totals:** **617 emitting / 686 held** / 457 facts.
+Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓

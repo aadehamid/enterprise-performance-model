@@ -17,3 +17,11 @@
 Note: the pin is `d7310c9a` (PR #170). `bdd5026f` is the main commit the
 gate was run against, not the pin. Do not retitle the checklist's
 "main @ d7310c9" line to a run SHA.
+
+## 2026-10-11 — branch `phase1/205-batch1`, pin `532eeee`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `532eeeeff7988d2304cc5b876dacca39f745a855`
+- **Gate:** `evidence-gate.py` — 433 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==457,
+  contradictions==0. Section 2j now checks 7 precedes/follows rows still
+  held and 13 reviewed and not emitted (#205 batch 1).
