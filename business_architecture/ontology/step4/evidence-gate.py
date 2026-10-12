@@ -4,7 +4,7 @@
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
   2. Mention arithmetic reconciles from the actual files: 1066+237+12+1+2=1318.
-  3. canonical-facts.csv has exactly 457 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  3. canonical-facts.csv has exactly 468 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -457,8 +457,10 @@ check("hard rule: zero stored triples using an inverse predicate",
       f"inverse predicates are query-only; found {_inverse_stored[:3]}" if _inverse_stored else "")
 # 2i. triggers pass (Hamid 2026-09-26). 2 stand (rule 4) + 5 promote on
 # affirmative citation + event semantics must store
-# (triggered-activity, core:triggeredBy, trigger-activity). 11 held rows
-# emit nothing (supersession entries in step4-decisions.md).
+# (triggered-activity, core:triggeredBy, trigger-activity). The 11 rows held
+# that day (supersession entries in step4-decisions.md) were answered in #204
+# batch 1 (Hamid 2026-10-12, comment 6130380041) with a trigger sentence in each
+# source scope note, and emit (review-evidence/triggers-batch1-review.csv).
 for rid in ("REL-00725", "REL-00897",
             "REL-00127", "REL-00235", "REL-00236", "REL-00246", "REL-00901"):
     fact = _stored(rid)
@@ -468,9 +470,10 @@ for rid in ("REL-00725", "REL-00897",
 for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
             "REL-00291", "REL-00396", "REL-00398", "REL-00400", "REL-00403",
             "REL-00892"):
-    check(f"triggers held {rid} emits no triple",
-          _emits_nothing(rid),
-          "HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval")
+    fact = _stored(rid)
+    check(f"triggers #204 batch 1 {rid} emits {fact[1]}",
+          fact in _fact_rowids and rid in _fact_rowids[fact],
+          f"APPROVE per Hamid #204 comment 6130380041; expected stored fact {fact}")
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/
@@ -509,8 +512,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==457", len(cf) == 457, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 457)
+check("canonical-facts==468", len(cf) == 468, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 468)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,

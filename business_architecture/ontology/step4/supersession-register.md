@@ -47,7 +47,11 @@ Verdict: HOLD / D:hamid-verdict / NoAffirmativeTriggerLink
 | REL-00400 | Sibling nearness alone is not a route for `triggers`. |
 | REL-00403 | Sibling nearness alone is not a route for `triggers`. |
 
-All eleven routed to source workbooks for correction.
+All eleven routed to source workbooks for correction. #204 batch 1 (Hamid
+2026-10-12, comment 6130380041) answered all eleven; each now has a fresh
+APPROVE verdict on its corrected source and emits
+(`review-evidence/triggers-batch1-review.csv`). The supersessions above stay
+as the record of why the 2026-09-26 approvals did not stand.
 
 ## Precedes/follows: 20 supersessions (Hamid 2026-09-27, amending 2026-09-26)
 

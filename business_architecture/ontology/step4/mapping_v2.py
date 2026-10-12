@@ -1106,10 +1106,11 @@ GOVERNEDBY_20260926_HOLDS = {
 }
 
 # Hamid 2026-09-26: triggers review — 11 rows held, superseding 2026-09-26 approvals (NoAffirmativeTriggerLink). Source: evidence-gate.py control cases; review-evidence/triggers-18-review-batch.csv.
-TRIGGERS_20260926_HOLDS = {
-    "REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252", "REL-00291",
-    "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00892",
-}
+# #204 batch 1 (Hamid 2026-10-12, comment 6130380041): all 11 answered with a
+# trigger sentence in the source scope note (7 conditional, 4 unconditional) and
+# now emit; review-evidence/triggers-batch1-review.csv. The set stays, empty,
+# as the place a later triggers hold would go.
+TRIGGERS_20260926_HOLDS = set()
 
 # Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
 # #205 (Hamid 2026-10-11/12): all 20 rows reviewed, not emitted; their
@@ -1124,7 +1125,7 @@ PRECEDES_20260927_HOLDS = {"REL-00149", "REL-00184", "REL-01227"}
 with open(f"{BASE}/scoped-sequence/scoped-sequences.csv", newline="") as _f:
     SCOPED_SEQUENCE_ROWS = {r["row_id"] for r in csv.DictReader(_f)}
 
-# Union of all 2026-09-26/27 row-level verb holds (284 row IDs).
+# Union of all 2026-09-26/27 row-level verb holds (273 row IDs).
 ROW_LEVEL_VERB_HOLDS = (USES_INPUT_20260926_HOLDS | USES_INPUT_G1A_20260926_HOLDS |
                         INFORMEDBY_20260926_HOLDS | GOVERNEDBY_20260926_HOLDS |
                         TRIGGERS_20260926_HOLDS | PRECEDES_20260927_HOLDS)

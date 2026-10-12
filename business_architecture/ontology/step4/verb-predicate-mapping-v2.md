@@ -2,7 +2,7 @@
 
 **Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(617 emitting / 669 held / 17 scoped sequence / 457 facts — 617/686/457 before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
+(628 emitting / 658 held / 17 scoped sequence / 468 facts — 617/669/457 before #204 batch 1 emitted the 11 held triggers rows on 2026-10-12; 617/686/457 before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
@@ -176,13 +176,13 @@ mapping applies those mention-level holds separately),
 | `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
-| `triggers` (S, T) | `T core:triggeredBy S` | 7 rows (18 reviewed: 2 stand, 5 promote, 11 held 2026-09-26) |
+| `triggers` (S, T) | `T core:triggeredBy S` | 18 rows (18 reviewed 2026-09-26: 2 stand, 5 promote, 11 held; the 11 emit since #204 batch 1, 2026-10-12, 7 of them as conditional triggers) |
 | `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
 | `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 36 G1a evidence-only (35 emitting; REL-00436 held-attached) + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 605 mentions total, of which **604 emitting** (569 + 35) and 1 held (REL-00436). Emitting: 604 emitting-attached + 13 G2 no-triple = **617**.
+**Reconciliation:** 580 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 616 mentions total, of which **615 emitting** (580 + 35) and 1 held (REL-00436). Emitting: 615 emitting-attached + 13 G2 no-triple = **628**.
 
 *Footnote — mentions that are neither emitting nor held: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred, 17 scoped sequences (emitted as scoped-sequence nodes, not canonical facts; EPM-DEC-001-0026).*
 `core:consumes` / `core:produces` stay reserved for future identified
@@ -190,18 +190,18 @@ InformationObject instances (Q5).
 
 ## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
 
-- Emitting mentions: **617**.
+- Emitting mentions: **628**.
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
   row-level exceptions superseded the same day — all 15 G2 rows now emit no
   `core:enabledBy` fact).
-- Mentions attached to stored facts: **605** (569 map to their own predicate + 36 G1a duplicate evidence, of which 35 emitting and REL-00436 held-attached; 617 − 13 G2 no-triple = 604 emitting-attached).
-- Canonical facts (distinct stored subject/predicate/object): **457** (477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
+- Mentions attached to stored facts: **616** (580 map to their own predicate + 36 G1a duplicate evidence, of which 35 emitting and REL-00436 held-attached; 628 − 13 G2 no-triple = 615 emitting-attached).
+- Canonical facts (distinct stored subject/predicate/object): **468** (457 before #204 batch 1; 477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 669 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 658 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
   values) + 17 scoped sequence (emitted as scoped-sequence nodes, not canonical
-  facts; EPM-DEC-001-0026). Total: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓
+  facts; EPM-DEC-001-0026). Total: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -216,14 +216,14 @@ InformationObject instances (Q5).
 | governed-by | core:governedBy | 18 |
 | constrained-by | core:constrainedBy | 9 |
 | constrains | core:constrainedBy (inverse) | 1 |
-| triggers | core:triggeredBy | 7 |
+| triggers | core:triggeredBy | 18 |
 | assures | core:assuredBy (5 approved 2026-09-26) | 5 |
 | enables G3 | core:enabledBy (84 approved 2026-09-26) | 84 |
 | enables G1a | merge as evidence on existing dependsOnOutputOf fact (36 attached; 35 emitting, REL-00436 held) | 35 |
 | enables G1b | HOLD for workbook correction (approved 2026-09-26; non-emitting) | 29 |
 | enables G2 | no triple (approved 2026-09-26) | 13 |
 
-Emitting mentions in this table: 617 (the G1b row is non-emitting and shown
+Emitting mentions in this table: 628 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 
@@ -551,6 +551,15 @@ and no substitute emitted.
   controls, not universal — REL-00897 is a formal delinquency referral, not
   every delinquency; REL-00901 is analysis that detects suspected fraud, not
   every analyzed transaction.
+- #204 batch 1 (Hamid 2026-10-12, comment 6130380041): all 11 held rows
+  answered with a trigger sentence added to the source scope note, and all
+  11 now emit (18 `core:triggeredBy` facts). Seven are conditional triggers
+  (REL-00049, REL-00291, REL-00892, REL-00163, REL-00169, REL-00170,
+  REL-00252): the condition in each sentence defines the trigger event, and
+  invoking the target for assessment does not approve its eventual action.
+  Four are unconditional for the findings their sentences name (REL-00396,
+  REL-00398, REL-00400, REL-00403). Hamid adopted them as reference-model
+  operating rules. Row conditions: `review-evidence/triggers-batch1-review.csv`.
 
 ## No-two-cycle rule (hard gate, Hamid 2026-09-26)
 

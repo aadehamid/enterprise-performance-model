@@ -2057,3 +2057,25 @@ No emitting mention changes and no fact changes.
 
 **Current totals:** **617 emitting / 669 held / 17 scoped sequence** / 457 facts.
 Conservation: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## #204 batch 1: triggers source corrections (Hamid 2026-10-12)
+
+Hamid answered all 11 held `triggers` questions on #204 (comment 6130380041,
+saved in `review-evidence/hamid-answers/204-batch1.md`). Each answer added a
+sentence to the source's scope note tying the source's event or result to
+the target, which is the affirmative citation the triggers rule requires.
+Step 4 was re-pinned to `51a32aa`. Row verdicts:
+`review-evidence/triggers-batch1-review.csv`.
+
+- **APPROVE, emitting `core:triggeredBy` (11):** REL-00049, REL-00163,
+  REL-00169, REL-00170, REL-00252, REL-00291, REL-00396, REL-00398,
+  REL-00400, REL-00403, REL-00892. Seven are conditional triggers (b); four
+  are unconditional for the findings their sentences name (a). Hamid gave
+  them as adopted reference-model operating rules.
+
+11 mentions move from held to emitting; 11 new facts, none merged with an
+existing fact, no contradiction. The context pass now finds an explicit
+reference for the eight rows that relied on structural nearness.
+
+**Current totals:** **628 emitting / 658 held / 17 scoped sequence** / 468 facts.
+Conservation: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓

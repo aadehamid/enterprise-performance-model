@@ -25,20 +25,23 @@ def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
     assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-            led["scoped_sequence"]) == (617, 669, 12, 1, 2, 17)
+            led["scoped_sequence"]) == (628, 658, 12, 1, 2, 17)
     ss = c["scoped_sequences"]
     assert (ss["nodes"], ss["handoffs"], ss["problems"]) == (17, 16, [])
     assert c["conservation"] == led["mentions"] == 1318
-    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 457
+    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 468
     assert c["evidence_gate"]["green"] is True
     assert (c["evidence_gate"]["promoted"], c["evidence_gate"]["held"]) == (1066, 237)
 
 
 def test_phase1_scope_matches_decision_0025():
     p = run("counts")["phase1"]
-    assert p["rows"] == 276 and p["held"] == 258
-    # REL-00190 emits a core fact; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
-    assert p["not_held"] == sorted(["REL-00190"] + epm_facts.scoped_sequences()["rows"])
+    assert p["rows"] == 276 and p["held"] == 247
+    # REL-00190 and the 11 #204 batch 1 trigger rows emit core facts; the 17 #205 scoped rows
+    # emit scoped-sequence nodes (EPM-DEC-001-0026).
+    triggers_204 = ["REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252", "REL-00291",
+                    "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00892"]
+    assert p["not_held"] == sorted(["REL-00190"] + triggers_204 + epm_facts.scoped_sequences()["rows"])
     assert p["by_issue"] == {"201": 102, "202": 44, "203": 15, "204": 11, "205": 20, "206": 15, "209": 47, "210": 22}
     assert p["held_outside"] == 411
 

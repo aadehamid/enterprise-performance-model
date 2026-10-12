@@ -14,7 +14,7 @@ import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 GOVERNED = ["canonical-facts.csv", "contradictions.csv", "enables-review.csv"]
-EXPECTED_FACTS = 457
+EXPECTED_FACTS = 468  # 457 until #204 batch 1 added 11 core:triggeredBy facts
 
 
 def sha256(path):
