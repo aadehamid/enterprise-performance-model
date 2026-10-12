@@ -1114,23 +1114,25 @@ TRIGGERS_20260926_HOLDS = {
 # Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
 # #205 (Hamid 2026-10-11/12): all 20 rows reviewed, not emitted; their
 # questions are closed (review-evidence/precedes-follows-batch1-review.csv,
-# -batch2-review.csv). REL-00149, REL-00184 and REL-01227 have no sequence;
-# the other 17 are scoped sequences that core:precedes cannot carry, routed to
-# the scoped sequence relation scheduled before core 1.0.0 (#226).
-PRECEDES_20260927_HOLDS = {
-    "REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184", "REL-00188",
-    "REL-00193", "REL-00200", "REL-00206", "REL-00307", "REL-00319", "REL-00351",
-    "REL-00374", "REL-00930", "REL-01223", "REL-01227", "REL-01241", "REL-01289",
-    "REL-01291", "REL-01294",
-}
+# -batch2-review.csv). REL-00149, REL-00184 and REL-01227 have no sequence and
+# stay held here. The other 17 are scoped sequences that core:precedes cannot
+# carry; EPM-DEC-001-0026 (#226) emits them as scoped-sequence nodes instead.
+PRECEDES_20260927_HOLDS = {"REL-00149", "REL-00184", "REL-01227"}
 
-# Union of all 2026-09-26/27 row-level verb holds (301 row IDs).
+# EPM-DEC-001-0026 (Hamid 2026-10-12, #226): rows emitted as scoped-sequence
+# nodes, not as core facts. The governed list is scoped-sequence/scoped-sequences.csv.
+with open(f"{BASE}/scoped-sequence/scoped-sequences.csv", newline="") as _f:
+    SCOPED_SEQUENCE_ROWS = {r["row_id"] for r in csv.DictReader(_f)}
+
+# Union of all 2026-09-26/27 row-level verb holds (284 row IDs).
 ROW_LEVEL_VERB_HOLDS = (USES_INPUT_20260926_HOLDS | USES_INPUT_G1A_20260926_HOLDS |
                         INFORMEDBY_20260926_HOLDS | GOVERNEDBY_20260926_HOLDS |
                         TRIGGERS_20260926_HOLDS | PRECEDES_20260927_HOLDS)
+assert not SCOPED_SEQUENCE_ROWS & ROW_LEVEL_VERB_HOLDS, "a scoped-sequence row is also held"
 emitting = []
 for r in v2:
-    if r["row_id"] in PROPERTY_RULE_HOLDS or r["row_id"] in ROW_LEVEL_VERB_HOLDS:
+    if (r["row_id"] in PROPERTY_RULE_HOLDS or r["row_id"] in ROW_LEVEL_VERB_HOLDS
+            or r["row_id"] in SCOPED_SEQUENCE_ROWS):
         continue
     cands = r["candidate_slugs"].split(" | ") if r["candidate_slugs"] else []
     if r["disposition"] == "ResolvedToConcept" and len(cands) == 1:

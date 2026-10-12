@@ -13,7 +13,7 @@ How to ask Hamid, as source author, about a batch of held rows, so that each ans
 Phrase each question as the predicate's locked definition, then offer every answer the ontology can store. For `core:precedes`:
 
 - **(a) Whole-process order.** The earlier process finishes before the later one starts. Show the sentence you would add. The row emits.
-- **(b) Scoped order.** The order holds per trade, cycle, period, item or version, or only under a condition. Hamid gives the wording. The sentence goes into the scope note and the row waits for the scoped sequence relation (#226).
+- **(b) Scoped order.** The order holds per trade, cycle, period, item or version, or only under a condition. Hamid gives the wording. The sentence goes into the scope note, and the row gets an APPROVE verdict as a scoped sequence: add it to `scoped-sequence/scoped-sequences.csv` with a scope unit from the existing list (EPM-DEC-001-0026, Q17). `build.py` ties every row to an approved source and today reads only the #226 summary and the #205 batches, so extend its `approvals()` to read the new batch's review file and saved answer in the same PR. If no scope unit fits, or the answer does not fit the scoped-sequence definition, ask Hamid for a design round instead.
 - **(c) No sequence.** The row stays held with that reason and counts as done.
 
 Ask for one line per question (`1: a`, `2: b — <wording>`, `3: c`).

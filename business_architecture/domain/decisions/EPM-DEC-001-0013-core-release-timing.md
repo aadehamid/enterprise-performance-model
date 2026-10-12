@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided; amended by EPM-DEC-001-0025 (2026-10-06) |
+| Status | Decided; amended by EPM-DEC-001-0025 (2026-10-06) and EPM-DEC-001-0026 (2026-10-12) |
 | Date | 2026-10-05 |
 | Questions | Q12, and Q3 of the handover plan |
 | Source | Grilling session on the handover plan |
@@ -28,6 +28,10 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Ham
 ## Amendment (2026-10-06)
 
 EPM-DEC-001-0025 defines Phase 1 as the source-correction backlog. The release needs fresh verdicts for the rows on that backlog. The 411 held mentions outside it stay held with their recorded reasons and wait for a later release.
+
+## Amendment (2026-10-12)
+
+EPM-DEC-001-0026 adds the scoped sequence relation to `core`. The release also needs that relation and its SHACL shapes to pass.
 
 ## Evidence
 

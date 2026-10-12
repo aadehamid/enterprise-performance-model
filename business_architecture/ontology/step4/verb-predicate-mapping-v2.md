@@ -2,7 +2,7 @@
 
 **Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Figures refreshed 2026-09-26 to the reviewed evidence package
-(617 emitting / 686 held / 457 facts — 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
+(617 emitting / 669 held / 17 scoped sequence / 457 facts — 617/686/457 before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
@@ -171,8 +171,8 @@ mapping applies those mention-level holds separately),
 | `informed-by` (S, T) | `S core:informedBy T` | — |
 | `informs` (S, T) | `T core:informedBy S` | R1: `CM-1-1-4 informedBy CM-1-1-2-9-1` |
 | `requires` (S, T) | `S core:requires T` | 5 rows approved 2026-09-25; REL-00208 held for workbook correction, no remap |
-| `precedes` (S, T) | `S core:precedes T` | no reciprocal two-cycles (rule, gate-checked) |
-| `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes` |
+| `precedes` (S, T) | `S core:precedes T` | no reciprocal two-cycles (rule, gate-checked); a row approved as a scoped sequence emits a scoped-sequence node instead (EPM-DEC-001-0026; 17 rows) |
+| `follows` (S, T) | `T core:precedes S` | mirror-merged with `precedes`; scoped-sequence rows as for `precedes` |
 | `governed-by` (S, T) | `S core:governedBy T` | governed-by emission guard; ancestor/descendant restatements held; 7 recorded exceptions (REL-01309 + 6 from the 2026-09-26 pass: REL-00106, 00531, 00542, 00588, 00601, 00623; each not a precedent); no reciprocal two-cycles (rule, gate-checked); 43 → 38 emitting in the 2026-09-26 refresh; 38 → 18 in the 2026-09-26 governed-by pass |
 | `constrained-by` (S, T) | `S core:constrainedBy T` | REL-00097 held (Refining target undefined and too broad) |
 | `constrains` (S, T) | `T core:constrainedBy S` | 1 row |
@@ -184,7 +184,7 @@ The raw verb is retained in migration/provenance evidence on every emitted tripl
 
 **Reconciliation:** 569 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 605 mentions total, of which **604 emitting** (569 + 35) and 1 held (REL-00436). Emitting: 604 emitting-attached + 13 G2 no-triple = **617**.
 
-*Footnote — non-emitting, non-held mentions: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred.*
+*Footnote — mentions that are neither emitting nor held: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred, 17 scoped sequences (emitted as scoped-sequence nodes, not canonical facts; EPM-DEC-001-0026).*
 `core:consumes` / `core:produces` stay reserved for future identified
 InformationObject instances (Q5).
 
@@ -198,9 +198,10 @@ InformationObject instances (Q5).
 - Canonical facts (distinct stored subject/predicate/object): **457** (477 before the 2026-09-27 precedes/follows amendment; 488 before the 2026-09-26 triggers pass; 508 before the 2026-09-26 governed-by pass; 603 before the 2026-09-26 informed-by pass; 716 before the uses-input pass; 717 before the REL-00873 supersession).
 - Facts absorbing >1 mention (mirror/duplicate merges): **148**, covering 296 mentions.
   Typical case: `A precedes B` + `B follows A` → one `A core:precedes B` fact.
-- Non-emitting mentions: 686 held + 12 deferred + 1 ExternalGovernanceReference
+- Non-emitting mentions: 669 held + 12 deferred + 1 ExternalGovernanceReference
   (held pending property design) + 2 StructuredFlowValue (redirected to Q5 flow
-  values). Total: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+  values) + 17 scoped sequence (emitted as scoped-sequence nodes, not canonical
+  facts; EPM-DEC-001-0026). Total: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓
 
 ## Per-verb proposed predicate counts (emitting mentions)
 
@@ -435,8 +436,9 @@ see `review-evidence/enabledby-mutual-review-batch.csv`.
 - Counts change only when a row moves between buckets: emitting ↔ held ↔
   deferred (12 AmbiguousDeferred) ↔ external governance (1
   ExternalGovernanceReference, REL-00022) ↔ structured flow (2
-  StructuredFlowValue, REL-00095, REL-00104). Every expected ledger effect
-  is stated in bucket terms from now on.
+  StructuredFlowValue, REL-00095, REL-00104) ↔ scoped sequence (17 rows
+  emitted as scoped-sequence nodes; added by EPM-DEC-001-0026, 2026-10-12).
+  Every expected ledger effect is stated in bucket terms from now on.
 
 ## Assures (added 2026-09-25, Hamid)
 
@@ -734,7 +736,7 @@ marking such rows `PROMOTE`.
   resolution; the fact survives if the `enables` mention is removed; no G1a
   row is the sole evidence for its fact; no merge creates a fact.
 - Held mention attached as duplicate provenance: REL-00436 stays counted as
-  held (in the 686), adds no support, and is not emitting. REL-00152 is held
+  held (in the held total), adds no support, and is not emitting. REL-00152 is held
   with no fact (in the 41-row uses-input-pass hold set; not attached).
 - **Counts:** 81 split → 77 approved (4 excluded: REL-00243, REL-00304,
   REL-01006 superseded; REL-00936 source-classification hold). 77 → 36

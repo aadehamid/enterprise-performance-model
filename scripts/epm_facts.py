@@ -6,7 +6,7 @@ Every answer names the files it read and the commit it read them at.
 
 Usage (from anywhere in the repo):
 
-    python3 scripts/epm_facts.py counts            # ledger, gate, facts, Phase 1, reviews, taxonomy
+    python3 scripts/epm_facts.py counts            # ledger, scoped sequences, gate, facts, Phase 1, reviews, taxonomy
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
@@ -54,6 +54,7 @@ FACTS = os.path.join(STEP4, "canonical-facts.csv")
 TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "output", "step3-taxonomy.ttl")
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
 ANSWERS = os.path.join(REVIEWS, "hamid-answers")
+SCOPED = os.path.join(STEP4, "scoped-sequence")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -139,11 +140,19 @@ def run_keeping_globals(path):
     return namespace, ok, out.getvalue()
 
 
+def scoped_rows(mapping):
+    """Rows emitted as scoped sequences; empty on trees before EPM-DEC-001-0026."""
+    return set(mapping.get("SCOPED_SEQUENCE_ROWS", ()))
+
+
 def ledger(mapping):
+    """Ledger categories. A scoped-sequence row (EPM-DEC-001-0026) emits a node, not a core fact."""
     v2 = mapping["v2"]
     emitting = set(mapping["emitting_ids"])
+    scoped = scoped_rows(mapping)
     disp = collections.Counter(r["disposition"] for r in v2)
-    held = {r["row_id"] for r in v2 if r["row_id"] not in emitting and r["disposition"] not in NOT_HELD}
+    held = {r["row_id"] for r in v2
+            if r["row_id"] not in emitting and r["row_id"] not in scoped and r["disposition"] not in NOT_HELD}
     return {
         "mentions": len(v2),
         "emitting": len(emitting),
@@ -151,6 +160,7 @@ def ledger(mapping):
         "deferred": disp["AmbiguousDeferred"],
         "external_governance": disp["ExternalGovernanceReference"],
         "structured_flow": disp["StructuredFlowValue"],
+        "scoped_sequence": len(scoped),
         "canonical_facts_pipeline": len(mapping["facts"]),
     }, held, emitting
 
@@ -253,6 +263,24 @@ def stored_facts():
         return list(csv.DictReader(f))
 
 
+# ---------- scoped sequences ----------
+
+def scoped_sequences():
+    """Nodes and handoffs from scoped-sequence/scoped-sequences.csv, with its check results."""
+    # Load by path under its own name: the evidence gate loads a temporary copy of
+    # the same file, and a cached plain "build" module would point at that copy.
+    if not os.path.exists(os.path.join(SCOPED, "build.py")):
+        return {"nodes": 0, "handoffs": 0, "rows": [], "problems": []}  # a tree before EPM-DEC-001-0026
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("epm_scoped_sequence_build", os.path.join(SCOPED, "build.py"))
+    build = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(build)
+    columns, rows = build.load()
+    out = build.counts(rows)
+    out["problems"] = build.check(columns, rows)
+    return out
+
+
 # ---------- taxonomy ----------
 
 def taxonomy():
@@ -288,7 +316,8 @@ def cmd_counts(args):
     out = {
         "commit": commit(),
         "ledger": led,
-        "conservation": led["emitting"] + led["held"] + led["deferred"] + led["external_governance"] + led["structured_flow"],
+        "conservation": (led["emitting"] + led["held"] + led["deferred"] + led["external_governance"]
+                         + led["structured_flow"] + led["scoped_sequence"]),
         "canonical_facts_file": len(facts),
         "evidence_gate": {
             "green": gate_green,
@@ -306,9 +335,11 @@ def cmd_counts(args):
             "held_outside_by_reason": dict(collections.Counter(hold_reason(mapping, i) for i in outside).most_common()),
         },
         "review_holds_by_file": per_file,
+        "scoped_sequences": scoped_sequences(),
         "taxonomy": taxonomy(),
         "sources": [rel(os.path.join(STEP4, "mapping_v2.py")), rel(os.path.join(STEP4, "evidence-gate.py")),
-                    rel(FACTS), rel(BACKLOG), rel(REVIEWS) + "/*.csv", rel(TAXONOMY)],
+                    rel(FACTS), rel(BACKLOG), rel(REVIEWS) + "/*.csv",
+                    rel(os.path.join(SCOPED, "scoped-sequences.csv")), rel(TAXONOMY)],
     }
     if args.json:
         print(json.dumps(out, indent=2))
@@ -316,8 +347,11 @@ def cmd_counts(args):
     led = out["ledger"]
     print(f"commit {out['commit']}")
     print(f"ledger: {led['emitting']} emitting / {led['held']} held / {led['deferred']} deferred / "
-          f"{led['external_governance']} external governance / {led['structured_flow']} structured flow "
-          f"= {out['conservation']} (of {led['mentions']} mentions)")
+          f"{led['external_governance']} external governance / {led['structured_flow']} structured flow / "
+          f"{led['scoped_sequence']} scoped sequence = {out['conservation']} (of {led['mentions']} mentions)")
+    ss = out["scoped_sequences"]
+    print(f"scoped sequences (EPM-DEC-001-0026): {ss['nodes']} nodes, {ss['handoffs']} handoffs; "
+          f"source table: {len(ss['problems'])} problem(s)")
     print(f"canonical facts: {out['canonical_facts_file']} in canonical-facts.csv; pipeline builds {led['canonical_facts_pipeline']}")
     eg = out["evidence_gate"]
     print(f"evidence gate: {'GREEN' if eg['green'] else 'NOT GREEN'}; promoted {eg['promoted']} / held {eg['held']}; "
@@ -339,6 +373,7 @@ def cmd_row(args):
     row_id = args.row_id.upper()
     mapping, _, _, _ = run_pipeline()
     _, held, emitting = ledger(mapping)
+    scoped = scoped_rows(mapping)
     rec = next((r for r in mapping["v2"] if r["row_id"] == row_id), None)
     if rec is None:
         print(f"{row_id}: not in target-dispositions-v2.csv", file=sys.stderr)
@@ -346,7 +381,8 @@ def cmd_row(args):
     facts = [f for f in stored_facts() if row_id in f["row_ids"].split(";")]
     p1 = phase1_rows()
     _, per_row = review_holds()
-    status = "emitting" if row_id in emitting else ("held" if row_id in held else rec["disposition"])
+    status = ("emitting" if row_id in emitting else "scoped sequence" if row_id in scoped
+              else "held" if row_id in held else rec["disposition"])
     out = {
         "commit": commit(),
         "row_id": row_id,
@@ -433,8 +469,9 @@ def _status_parts(status):
     """Return (lead word, set of record numbers named after 'amended by')."""
     lead = re.match(r"\s*(\w+)", status)
     amended = set()
-    for clause in re.findall(r"amended by ([^;()]*)", status):
-        amended.update(re.findall(r"(?:EPM-DEC-001-)?(\d{4})", clause))
+    for clause in re.findall(r"amended by ([^;]*)", status):
+        clause = re.sub(r"\([^)]*\)", "", clause)  # drop dates such as "(2026-10-06)"
+        amended.update(re.findall(r"(?:EPM-DEC-001-)?\b(\d{4})\b", clause))
     return (lead.group(1) if lead else ""), amended
 
 
@@ -614,7 +651,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
     sub = parser.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("counts", help="ledger, gate, facts, Phase 1, review holds, taxonomy")
+    sub.add_parser("counts", help="ledger, scoped sequences, gate, facts, Phase 1, review holds, taxonomy")
     p = sub.add_parser("row", help="where one row stands")
     p.add_argument("row_id")
     p = sub.add_parser("section", help="row IDs for one Phase 1 issue")

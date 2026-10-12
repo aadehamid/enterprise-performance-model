@@ -2034,3 +2034,26 @@ fact changes.
 
 **Current totals:** **617 emitting / 686 held** / 457 facts.
 Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
+
+## #226: scoped sequences emitted (EPM-DEC-001-0026, Hamid 2026-10-12)
+
+Hamid approved the scoped sequence design on #226 (comment 6123946413:
+"Approved: Q1–Q18 as recommended in the comment above"). The 17 #205 rows
+whose answers give a sequence per scope unit get a fresh APPROVE and emit one
+scoped-sequence node each, not a `core:precedes` fact. They leave the held
+bucket for a new scoped-sequence bucket, the way the 2 structured-flow
+mentions have their own bucket. Nodes: `scoped-sequence/scoped-sequences.ttl`,
+built from `scoped-sequence/scoped-sequences.csv`.
+
+- **APPROVE, emitted as scoped sequences (17):** REL-00008, REL-00068,
+  REL-00112, REL-00188, REL-00193, REL-00200, REL-00206, REL-00307,
+  REL-00319, REL-00351, REL-00374, REL-00930, REL-01223, REL-01241,
+  REL-01289, REL-01291, REL-01294. REL-00008 refines REL-01223, so the
+  17 nodes are 16 handoffs.
+- **Still held, no sequence (3):** REL-00149, REL-00184, REL-01227, in
+  `PRECEDES_20260927_HOLDS`.
+
+No emitting mention changes and no fact changes.
+
+**Current totals:** **617 emitting / 669 held / 17 scoped sequence** / 457 facts.
+Conservation: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓

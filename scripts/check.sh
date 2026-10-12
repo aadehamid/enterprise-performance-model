@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Run the repo's automated checks: the Step 4 evidence gate, every test script,
-# epm-facts counts, the decision-record and quote checks, and the Step 4 pin
-# check. CI and the pre-push hook run this file; run it yourself before opening
-# a pull request.
+# Run the repo's automated checks: the Step 4 evidence gate, the scoped-sequence
+# build and SHACL check, every test script, epm-facts counts, the decision-record
+# and quote checks, and the Step 4 pin check. CI and the pre-push hook run this
+# file; run it yourself before opening a pull request.
 #
 # Needs python3 and uv (https://docs.astral.sh/uv/) for the test dependencies.
 set -euo pipefail
@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 export PYTHONDONTWRITEBYTECODE=1
 run() { echo "--- $*"; "$@"; }
-with_deps() { uv run -q --with pytest --with rdflib --with openpyxl --with "markdown-it-py>=4,<5" "$@"; }
+with_deps() { uv run -q --with pytest --with rdflib --with pyshacl --with openpyxl --with "markdown-it-py>=4,<5" "$@"; }
 
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
@@ -42,7 +42,9 @@ for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py
          "business_architecture/ontology/build/scripts/test_scope_note_append.py"; do
   (cd "$(dirname "$t")" && echo "--- $t" && with_deps python "$(basename "$t")" >/dev/null)
 done
-run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py
+(cd "$step4/scoped-sequence" && run with_deps python build.py --verify)
+run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
+  "$step4/scoped-sequence/test_scoped_sequences.py"
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase

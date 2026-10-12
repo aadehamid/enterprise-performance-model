@@ -91,12 +91,15 @@ def test_step4_readme_ledger_and_gate(facts):
     m = re.search(r"both conserving to ([\d,]+) mentions", text)
     assert m and num(m.group(1)) == facts["ledger"]["mentions"]
     m = re.search(r"([\d,]+) emitting / ([\d,]+) held / ([\d,]+) deferred / ([\d,]+) external governance / "
-                  r"([\d,]+) structured flow = ([\d,]+); ([\d,]+) canonical facts \(`canonical-facts.csv`, ([\d,]+) rows\)", text)
+                  r"([\d,]+) structured flow / ([\d,]+) scoped sequence = ([\d,]+); ([\d,]+) canonical facts "
+                  r"\(`canonical-facts.csv`, ([\d,]+) rows\)\. The ([\d,]+) scoped-sequence rows emit ([\d,]+) nodes "
+                  r"\(([\d,]+) handoffs\)", text)
     assert m, "ledger sentence not found in step4/README.md"
-    led = facts["ledger"]
+    led, ss = facts["ledger"], facts["scoped_sequences"]
     assert tuple(num(g) for g in m.groups()) == (
         led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        facts["conservation"], facts["canonical_facts_file"], facts["canonical_facts_file"])
+        led["scoped_sequence"], facts["conservation"], facts["canonical_facts_file"], facts["canonical_facts_file"],
+        led["scoped_sequence"], ss["nodes"], ss["handoffs"])
     m = re.search(r"promoted ([\d,]+) / held ([\d,]+), plus the same ([\d,]+) / ([\d,]+) / ([\d,]+) = ([\d,]+); "
                   r"([\d,]+) PASS / ([\d,]+) FAIL", text)
     assert m, "gate sentence not found in step4/README.md"

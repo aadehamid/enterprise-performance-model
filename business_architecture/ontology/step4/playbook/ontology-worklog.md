@@ -898,7 +898,8 @@ held with a recorded reason. The approach, in five parts:
    citation or a two-way route.
 2. **Buckets, not beliefs.** Every mention lands in exactly one bucket:
    emitting (on a canonical fact), held (verdict-recorded, off the
-   fact), deferred, external governance, or structured flow. Counts move
+   fact), deferred, external governance, structured flow, or scoped
+   sequence (a scoped-sequence node, EPM-DEC-001-0026). Counts move
    only when a row changes bucket — approving an already-emitting row
    changes its basis, never the totals. Every count change names the
    row, the old bucket, the new bucket, and the reason.
@@ -955,6 +956,17 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Scoped sequence relation built (2026-10-12)
+- EPM-DEC-001-0026: Hamid approved the #226 design (comment 6123946413:
+  "Approved: Q1–Q18 as recommended in the comment above"). A scoped sequence
+  is a qualified-relation node in `core` (`core:ScopedSequence`) from an
+  earlier to a later process, with a scope unit from a 10-value list, an
+  optional condition, an evidence basis and the approved scope-note sentence
+  as its definition. The 17 scoped #205 rows emit 17 nodes (16 handoffs);
+  the ledger gives them their own bucket. `core` 1.0.0 also needs the
+  relation's SHACL shapes to pass. Amends 0013 and 0025. Built in
+  `step4/scoped-sequence/`.
 
 ### Scoped sequence relation before core 1.0.0 (2026-10-12)
 - #205 batch 1 answers describe sequences per trade, delivery, settlement
