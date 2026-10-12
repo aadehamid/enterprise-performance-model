@@ -23,7 +23,7 @@ Hamid's review.
     468 rows). The 17 scoped-sequence rows emit 17 nodes (16 handoffs) in
     `scoped-sequence/`, not canonical facts.
   - **Evidence gate** (`evidence-gate.py`): promoted 1,066 / held 237,
-    plus the same 12 / 1 / 2 = 1,318; 436 PASS / 0 FAIL. The gate's cut
+    plus the same 12 / 1 / 2 = 1,318; 426 PASS / 0 FAIL. The gate's cut
     is the context pass, so the scoped-sequence rows are inside its 1,066.
 - Key files: `verb-predicate-mapping-v2.md` (the signed-off mapping
   document, 16/16 sections), `canonical-facts.csv` (stored facts), `mapping_v2.py` (the

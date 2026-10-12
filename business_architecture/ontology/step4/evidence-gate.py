@@ -467,13 +467,19 @@ for rid in ("REL-00725", "REL-00897",
     check(f"triggers emitting {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
           f"approved core:triggeredBy per Hamid 2026-09-26; expected stored fact {fact}")
-for rid in ("REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252",
-            "REL-00291", "REL-00396", "REL-00398", "REL-00400", "REL-00403",
-            "REL-00892"):
-    fact = _stored(rid)
-    check(f"triggers #204 batch 1 {rid} emits {fact[1]}",
-          fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"APPROVE per Hamid #204 comment 6130380041; expected stored fact {fact}")
+# Each row's review record must match Hamid's saved answer (REVIEW_STANDARDS rule 8):
+# question, answer letter, exact sentence, slugs, verdict, condition and stored fact.
+import importlib.util as _ilu_b
+_bspec = _ilu_b.spec_from_file_location("gate_batch_checks", "batch_checks.py")
+_batch = _ilu_b.module_from_spec(_bspec)
+_bspec.loader.exec_module(_batch)
+with open("review-evidence/hamid-answers/204-batch1.md") as _f:
+    _answer_204 = _f.read()
+_batch_problems = _batch.triggers_batch_problems(
+    rows("review-evidence/triggers-batch1-review.csv"), _answer_204, _batch.TRIGGERS_BATCH1_QUESTIONS,
+    {r["row_id"]: r for r in v2}, _fact_rowids)
+check("triggers #204 batch 1: 11 review rows match Hamid's saved answer and emit",
+      not _batch_problems, "; ".join(_batch_problems[:5]))
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/

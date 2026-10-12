@@ -962,9 +962,9 @@ without a dated amendment and Hamid's explicit agreement.
   seven conditional triggers, four unconditional. He agreed that "a
   conditional trigger fits the locked core:triggeredBy definition where the
   condition identifies a specific event, finding, or authorized handoff that
-  invokes the target", with no design round needed. The sentences went into
-  ten source scope notes; all 11 rows emit (628 emitting / 658 held / 468
-  facts). #204 is complete.
+  invokes the target", with no design round needed. Pending merge of the
+  batch PR: the sentences go into ten source scope notes and all 11 rows
+  emit (628 emitting / 658 held / 468 facts); #204 closes when it merges.
 
 ### Scoped sequence relation built (2026-10-12)
 - EPM-DEC-001-0026: Hamid approved the #226 design (comment 6123946413:
