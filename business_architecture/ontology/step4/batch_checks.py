@@ -77,7 +77,7 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
         if r["fresh_verdict"] != "APPROVE" or r["outcome"] != "Emitted as core:triggeredBy":
             problems.append(f"{where}: fresh_verdict/outcome must be APPROVE / Emitted as core:triggeredBy")
         # A (b) answer is a conditional trigger. Its condition is Hamid's whole sentence,
-        # which states both what invokes the target and what does not.
+        # recorded verbatim so no paraphrase can narrow or widen it.
         if letter == "b" and r["condition"] != sentence:
             problems.append(f"{where}: a conditional trigger's condition must be the answer's full sentence")
         if letter == "a" and r["condition"]:

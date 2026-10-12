@@ -962,7 +962,8 @@ without a dated amendment and Hamid's explicit agreement.
   seven conditional triggers, four unconditional. He agreed that "a
   conditional trigger fits the locked core:triggeredBy definition where the
   condition identifies a specific event, finding, or authorized handoff that
-  invokes the target", with no design round needed. Pending merge of the
+  invokes the target", and that "No new relation or design round is needed
+  merely because a trigger has a condition." Pending merge of the
   batch PR: the sentences go into ten source scope notes and all 11 rows
   emit (628 emitting / 658 held / 468 facts); #204 closes when it merges.
 

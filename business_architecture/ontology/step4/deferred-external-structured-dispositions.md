@@ -5,8 +5,8 @@ The 15 deferred, external-governance and structured-flow rows, reconciled from
 (pin `d7310c9a`).
 
 Conservation: 617 emitting + 686 held + 12 deferred + 1 external-governance
-+ 2 structured-flow = 1,318. (Since EPM-DEC-001-0026, 2026-10-12: 669 held
-and 17 scoped sequence. These 15 rows are unchanged.)
++ 2 structured-flow = 1,318. (Since #204 batch 1, 2026-10-12: 628 emitting,
+658 held and 17 scoped sequence. These 15 rows are unchanged.)
 
 ## 12 deferred (AmbiguousDeferred)
 
