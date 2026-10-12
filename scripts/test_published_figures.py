@@ -110,7 +110,9 @@ README_NON_FIGURES = [
 NUMBER_WORD = re.compile(
     r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
     r"(?:thir|four|fif|six|seven|eigh|nine)teen|(?:twen|thir|for|fif|six|seven|eigh|nine)ty|"
-    r"hundred|thousand|million|dozen)\b", re.I)
+    r"hundred|thousand|million|dozen|single|none)\b"
+    r"|\bno\s+(?:[\w-]+\s+){0,2}?(?:emitting|held|deferred|facts?|rows?|mentions?|PASS|FAIL|failures?|checks?)\b",
+    re.I)
 
 
 def readme_figures(text):
@@ -157,6 +159,9 @@ def test_step4_readme_states_no_live_figures():
     "The current number of canonical facts is four hundred sixty-eight.",
     "| Evidence gate metric | Current count |\n|---|---|\n| FAIL checks | one |",
     "There are fourteen FAIL checks.",
+    "The gate currently has a single FAIL check.",
+    "The gate currently has no FAIL checks.",
+    "Current evidence-gate FAIL checks: none.",
 ])
 def test_readme_guard_catches_restated_figures(line):
     assert readme_figures(flat(STEP4_README) + " " + line)
