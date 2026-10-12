@@ -462,7 +462,7 @@ All 7 questions are closed and the rows are done for Phase 1. None emits. Six (b
 
 | Row | Question | Answer | Outcome | Reason |
 |---|---|---|---|---|
-| REL-00008 | 1 | (b) | Reviewed—Not emitted | Hamid (b): per forecast cycle and version; other optimization work may proceed independently, so the whole source process does not complete before the target begins. Same forecast handoff as question 2 at a lower hierarchy level; not a separate operational handoff. Routed to #226. |
+| REL-00008 | 1 | (b) | Reviewed—Not emitted | Hamid (b): per forecast cycle and version; other optimization work may proceed independently, so completion of the whole source process is not required before the target begins. Same forecast handoff as question 2 at a lower hierarchy level; not a separate operational handoff. Routed to #226. |
 | REL-01223 | 2 | (b) | Reviewed—Not emitted | Hamid (b): per planning cycle and forecast version; forecasting and optimization stay iterative. Same forecast handoff as question 1 at a higher hierarchy level; not a separate operational handoff. Routed to #226. |
 | REL-00068 | 3 | (b) | Reviewed—Not emitted | Hamid (b): per replenishment requirement or approved revision, and scheduling constraints may feed back into a revised requirement. Routed to #226. |
 | REL-00112 | 4 | (b) | Reviewed—Not emitted | Hamid (b): an internal step-level sequence ending at plan selection and approval within Refinery Planning and Optimization (CM-1-1-4), the source's own parent; not a sequence before the parent starts. No new target identity inferred. Routed to #226 with the plan-selection/approval endpoint. |
