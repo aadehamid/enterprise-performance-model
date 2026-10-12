@@ -10,6 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix shape: <https://w3id.org/lsc/ontology/modules/core/shape/> .
 @prefix evb: <https://w3id.org/lsc/ontology/modules/core/evidence-basis/> .
+@prefix seq: <https://w3id.org/lsc/ontology/sequence/> .
 
 shape:ScopedSequence a sh:NodeShape ;
     sh:targetClass core:ScopedSequence ;
@@ -17,8 +18,7 @@ shape:ScopedSequence a sh:NodeShape ;
     sh:property shape:earlierProcess, shape:laterProcess, shape:sequenceScope,
         shape:sequenceCondition, shape:refinesSequence, shape:linksToAncestor,
         shape:evidenceBasis, shape:definition, shape:prefLabel, shape:sourceRow,
-        shape:source ;
-    sh:sparql shape:undeclaredAncestorLink .
+        shape:source .
 
 shape:ProcessEndpoint a sh:NodeShape ;
     sh:nodeKind sh:IRI ;
@@ -87,10 +87,21 @@ shape:source a sh:PropertyShape ;
     sh:minCount 1 ;
     sh:nodeKind sh:IRI .
 
-# Q6: a link between a process and its own ancestor is allowed only when the
-# node declares it (core:linksToAncestor true), so a reviewer sees each one.
-shape:undeclaredAncestorLink a sh:SPARQLConstraint ;
+# Q6: a link between a process and its own ancestor is allowed only where a
+# source-author answer states it. Only the nodes listed here may declare
+# core:linksToAncestor; build.py checks this list against the approved rows.
+shape:ApprovedAncestorLink a sh:NodeShape ;
+    sh:targetSubjectsOf core:linksToAncestor ;
+    sh:in ( seq:CM-1-1-4-7-8--CM-1-1-4--plan-selection-decision ) ;
+    sh:message "Only an approved node may declare core:linksToAncestor." .
+
+# Q6: any other link to an ancestor is reported as a warning for review.
+shape:AncestorLinkWarning a sh:NodeShape ;
+    sh:targetClass core:ScopedSequence ;
     sh:severity sh:Warning ;
+    sh:sparql shape:undeclaredAncestorLink .
+
+shape:undeclaredAncestorLink a sh:SPARQLConstraint ;
     sh:message "One endpoint is an ancestor of the other, but the node does not declare core:linksToAncestor true." ;
     sh:prefixes shape:prefixes ;
     sh:select """

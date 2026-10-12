@@ -22,7 +22,7 @@ The 18 decisions, as posted on #226 ([summary](https://github.com/aadehamid/ente
 3. The scope comes from a controlled SKOS list of scope units, each with a definition.
 4. Every node runs from the earlier process to the later process, whatever the direction of its source row, and cites its row ID.
 5. A scoped sequence and `core:precedes` are fully separate; neither implies the other.
-6. A scoped sequence may link a process to one of its own ancestors only when a source-author answer says so explicitly (REL-00112). SHACL warns on any other ancestor link.
+6. A scoped sequence may link a process to one of its own ancestors only when a source-author answer says so explicitly (REL-00112). SHACL warns on any other ancestor link, and only the approved node may declare one.
 7. P-Plan `p:isPrecededBy` is not mapped now; Step 6 looks at it again (EPM-DEC-001-0016).
 
 **Definition and properties**
@@ -52,7 +52,7 @@ The 18 decisions, as posted on #226 ([summary](https://github.com/aadehamid/ente
 
 ## Hamid's recorded words
 
-Hamid answered the three rounds in the session with "yes to all seven", "yes to all six" and "yes to all five". He then approved the posted summary on #226 ([comment](https://github.com/aadehamid/enterprise-performance-model/issues/226#issuecomment-6123946413), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/226-design.md`): "Approved: Q1–Q18 as recommended in the comment above"
+Hamid accepted the recommendations in three rounds of the session; those answers are not saved, so this record does not quote them. He then approved the posted summary on #226 ([comment](https://github.com/aadehamid/enterprise-performance-model/issues/226#issuecomment-6123946413), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/226-design.md`): "Approved: Q1–Q18 as recommended in the comment above"
 
 ## Amendments to earlier records
 
