@@ -1,7 +1,7 @@
 """EPM-DEC-001-0027: the mirror raw verbs behave like the verbs they mirror.
 
 They map to the same stored form, structural nearness never promotes governs,
-and enables grouping sees a provides-input-to dependency. mapping_v2.py,
+and enables grouping and the G1b gate see a provides-input-to dependency. mapping_v2.py,
 evidence-gate.py and context_pass.py run as scripts, so this test lifts each
 function out of its source and calls it on stub data.
 
@@ -60,6 +60,14 @@ class MirrorVerbs(unittest.TestCase):
         graph.clear()
         graph[("S", "T")] = {"provides-input-to"}
         self.assertEqual(group(row, "T"), "G1-redundant-output-dep")
+
+
+    def test_g1b_gate_accepts_either_spelling_of_the_dependency(self):
+        only = function("evidence-gate.py", "_informed_by_only", {})
+        self.assertTrue(only({"informed-by"}, set()))
+        self.assertFalse(only({"informed-by", "uses-input"}, set()))
+        self.assertFalse(only({"informed-by"}, {"provides-input-to"}))
+        self.assertFalse(only(set(), set()))
 
 
 if __name__ == "__main__":

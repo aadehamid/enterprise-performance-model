@@ -181,11 +181,11 @@ def main():
     out = []
     for r, tgt, tests in results:
         real = _real(r, tests)
-        b_only_gov = (r["verb"] == "governed-by"
+        b_only_gov = (r["verb"] in ("governed-by", "governs")
                       and "B:structural-nearness" in tests
                       and not real)
         tests_shown = (list(real) if not b_only_gov
-                       else ["B:structural-nearness (not evidence for governed-by)"])
+                       else [f"B:structural-nearness (not evidence for {r['verb']})"])
         primary = min(real, key=lambda t: ORDER[t[0]]) if real else ""
         back_note = next((t for t in tests if t.startswith("C:two-way-absent")), "")
         out.append({"row_id": r["row_id"], "source_slug": r["source_slug"],
