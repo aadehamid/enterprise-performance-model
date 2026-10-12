@@ -609,18 +609,66 @@ def rendered_blocks(text):
     return [line for line in lines if line]
 
 
-WORD_CHAR = r"[\w\-\u2010-\u2015]"   # letters, digits and dashes: "source-author" and "Q1–Q18" are one word each
+APOSTROPHES = "'\u2019\u02bc"   # U+2018 only opens a quotation; it is never an apostrophe
+
+
+def _is_delimiter(ch):
+    """Punctuation or a symbol that ends a word. Apostrophes, dashes and soft
+    hyphens join a word ("agreement’s", "source-author", "Q1–Q18"), so they do not."""
+    import unicodedata
+    cat = unicodedata.category(ch)
+    return cat[0] in "PS" and cat != "Pd" and ch not in APOSTROPHES
 
 
 def in_corpus_as_words(span, corpus):
-    """True when the span occurs in the corpus without starting or ending inside a word.
+    """True when the span's words appear, in order, as whole words of one corpus line.
 
-    The boundary applies only where the span's own edge is a word character:
-    "(approve …)" may follow "Q1", but "author" may not follow "source-".
+    Words are whitespace-separated tokens. Inner words must match exactly. The
+    first word may be the end of a longer token only when what precedes it is
+    delimiter punctuation ("(approve" in "Q1(approve" is fine because the quote
+    itself starts with "("), and likewise for the last word. So "agreement" does
+    not match "agreement’s", and "author" does not match "source-author".
     """
-    before = rf"(?<!{WORD_CHAR})" if re.match(WORD_CHAR, span[:1]) else ""
-    after = rf"(?!{WORD_CHAR})" if re.match(WORD_CHAR, span[-1:]) else ""
-    return re.search(before + re.escape(span) + after, corpus) is not None
+    words = span.split()
+    if not words:
+        return False
+    n = len(words)
+    for line in corpus.split("\n"):
+        tokens = line.split()
+        for i in range(len(tokens) - n + 1):
+            window = tokens[i:i + n]
+            if n > 1 and window[1:-1] != words[1:-1]:
+                continue
+            first, last = words[0], words[-1]
+            if n == 1:
+                if _edge_ok(window[0], first, start=True) and _edge_ok(window[0], first, start=False):
+                    return True
+                continue
+            if _edge_ok(window[0], first, start=True) and _edge_ok(window[-1], last, start=False):
+                return True
+    return False
+
+
+def _edge_ok(token, word, start):
+    """The quoted edge word sits in the source token without cutting a word.
+
+    start=True: word must be a suffix of token; any extra text before it must be
+    delimiters, unless the word itself begins with a delimiter. start=False: the
+    mirror image at the end.
+    """
+    if start:
+        if not token.endswith(word):
+            return False
+        extra = token[:len(token) - len(word)]
+        return not extra or _is_delimiter(word[0]) or all(_is_delimiter(c) for c in extra)
+    if not token.startswith(word):
+        return False
+    extra = token[len(word):]
+    # A closing ’ with nothing but punctuation after it ends a quotation ("change’."),
+    # while one followed by letters belongs to the word ("agreement’s").
+    if extra[:1] in APOSTROPHES and extra[:1]:
+        extra = extra[1:] or "."
+    return not extra or _is_delimiter(word[-1]) or all(_is_delimiter(c) for c in extra)
 
 
 def rendered_answer_corpus(folder=ANSWERS):

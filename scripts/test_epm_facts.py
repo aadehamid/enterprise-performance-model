@@ -474,3 +474,18 @@ def test_word_match_allows_a_quote_that_starts_or_ends_with_punctuation():
     match = epm_facts.in_corpus_as_words
     assert match("(approve unusual widgets)", "Q1(approve unusual widgets)")
     assert match("approve unusual widgets.", "approve unusual widgets.Then")
+
+
+def test_word_match_treats_apostrophes_marks_and_soft_hyphens_as_part_of_a_word():
+    match = epm_facts.in_corpus_as_words
+    assert not match("Settlement follows the agreement", "Settlement follows the agreement’s billing schedule")
+    assert not match("follows the agreement", "follows the agreement's billing")
+    assert not match("Neil wrote the plan", "O’Neil wrote the plan")
+    assert not match("approve the cafe", "approve the café order")
+    assert not match("approve the auto", "approve the auto­mation")
+    assert match("follows the agreement’s billing", "Settlement follows the agreement’s billing schedule")
+    assert match("approve every risky change", "(approve every risky change)")
+
+
+def test_word_match_accepts_a_quote_after_an_opening_single_quote():
+    assert epm_facts.in_corpus_as_words("approve every risky change", "He wrote ‘approve every risky change’ today")
