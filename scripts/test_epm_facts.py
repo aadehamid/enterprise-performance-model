@@ -496,3 +496,13 @@ def test_word_match_rejects_a_quote_that_drops_a_possessive():
     # Known strict case: a quote inside curly single quotes must include the closing mark.
     assert not match("approve every risky change", "He wrote ‘approve every risky change’ today")
     assert match("approve every risky change’", "He wrote ‘approve every risky change’ today")
+
+
+def test_a_hidden_second_status_row_is_reported(tmp_path):
+    folder = tmp_path / "decisions"
+    folder.mkdir()
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "<!-- previous metadata\n| Status | Proposed |\n-->\n# EPM-DEC-001-0026: test\n\n| Field | Value |\n|---|---|\n"
+        "| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed in the session.\n")
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("Status" in p and "exactly one" in p for p in problems)

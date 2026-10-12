@@ -773,8 +773,13 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         with open(path) as f:
             record = f.read()
         name = f"EPM-DEC-001-{number:04d}"
-        status = re.search(r"^\| Status \| (.+?) \|\s*$", record, re.M)
-        decided = bool(status) and _status_parts(status.group(1))[0] == "Decided"
+        # Exactly one Status row, counted in the raw file: a second one, even inside an
+        # HTML comment, could decide which status this check reads.
+        statuses = re.findall(r"^\| Status \| (.+?) \|\s*$", record, re.M)
+        if len(statuses) != 1:
+            problems.append(f"{name}: has {len(statuses)} Status rows; a record needs exactly one")
+            continue
+        decided = _status_parts(statuses[0])[0] == "Decided"
         sections = recorded_words(record)
         if len(sections) > 1:
             problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
