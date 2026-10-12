@@ -1124,8 +1124,7 @@ PRECEDES_20260927_HOLDS = {"REL-00149", "REL-00184", "REL-01227"}
 with open(f"{BASE}/scoped-sequence/scoped-sequences.csv", newline="") as _f:
     SCOPED_SEQUENCE_ROWS = {r["row_id"] for r in csv.DictReader(_f)}
 
-# Union of all 2026-09-26/27 row-level verb holds (284 row IDs; 301 before
-# EPM-DEC-001-0026 moved 17 to SCOPED_SEQUENCE_ROWS).
+# Union of all 2026-09-26/27 row-level verb holds (284 row IDs).
 ROW_LEVEL_VERB_HOLDS = (USES_INPUT_20260926_HOLDS | USES_INPUT_G1A_20260926_HOLDS |
                         INFORMEDBY_20260926_HOLDS | GOVERNEDBY_20260926_HOLDS |
                         TRIGGERS_20260926_HOLDS | PRECEDES_20260927_HOLDS)

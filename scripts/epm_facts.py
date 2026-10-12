@@ -140,11 +140,16 @@ def run_keeping_globals(path):
     return namespace, ok, out.getvalue()
 
 
+def scoped_rows(mapping):
+    """Rows emitted as scoped sequences; empty on trees before EPM-DEC-001-0026."""
+    return set(mapping.get("SCOPED_SEQUENCE_ROWS", ()))
+
+
 def ledger(mapping):
     """Ledger categories. A scoped-sequence row (EPM-DEC-001-0026) emits a node, not a core fact."""
     v2 = mapping["v2"]
     emitting = set(mapping["emitting_ids"])
-    scoped = set(mapping.get("SCOPED_SEQUENCE_ROWS", ()))  # absent on trees before EPM-DEC-001-0026
+    scoped = scoped_rows(mapping)
     disp = collections.Counter(r["disposition"] for r in v2)
     held = {r["row_id"] for r in v2
             if r["row_id"] not in emitting and r["row_id"] not in scoped and r["disposition"] not in NOT_HELD}
@@ -270,8 +275,9 @@ def scoped_sequences():
     spec = importlib.util.spec_from_file_location("epm_scoped_sequence_build", os.path.join(SCOPED, "build.py"))
     build = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(build)
-    out = build.counts()
-    out["problems"] = build.check()
+    columns, rows = build.load()
+    out = build.counts(rows)
+    out["problems"] = build.check(columns, rows)
     return out
 
 
@@ -367,7 +373,7 @@ def cmd_row(args):
     row_id = args.row_id.upper()
     mapping, _, _, _ = run_pipeline()
     _, held, emitting = ledger(mapping)
-    scoped = set(mapping.get("SCOPED_SEQUENCE_ROWS", ()))
+    scoped = scoped_rows(mapping)
     rec = next((r for r in mapping["v2"] if r["row_id"] == row_id), None)
     if rec is None:
         print(f"{row_id}: not in target-dispositions-v2.csv", file=sys.stderr)

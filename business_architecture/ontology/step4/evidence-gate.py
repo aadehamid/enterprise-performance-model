@@ -493,7 +493,8 @@ import importlib.util as _ilu
 _spec = _ilu.spec_from_file_location("gate_scoped_sequence_build", "scoped-sequence/build.py")
 _scoped = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(_scoped)
-_scoped_rows = set(_scoped.counts()["rows"])
+_scoped_counts = _scoped.counts()
+_scoped_rows = set(_scoped_counts["rows"])
 _scoped_problems = _scoped.check()
 check("scoped-sequence source table passes build.check", not _scoped_problems,
       "; ".join(_scoped_problems[:5]))
@@ -504,7 +505,7 @@ check("scoped-sequence rows are the 17 #205 scoped rows",
                        "REL-01291", "REL-01294"},
       str(sorted(_scoped_rows)))
 check("scoped-sequence 17 nodes / 16 handoffs",
-      (_scoped.counts()["nodes"], _scoped.counts()["handoffs"]) == (17, 16), str(_scoped.counts()))
+      (_scoped_counts["nodes"], _scoped_counts["handoffs"]) == (17, 16), str(_scoped_counts))
 
 # 3. canonical facts + contradictions
 cf = cfacts

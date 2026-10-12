@@ -225,6 +225,9 @@ def shacl(g, tax):
 
 
 def main(argv):
+    if "--write" in argv and "--verify" in argv:
+        print("use --write or --verify, not both")
+        return 2
     problems = check()
     for p in problems:
         print("FAIL", p)
