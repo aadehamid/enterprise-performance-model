@@ -29,7 +29,7 @@ How it gets the numbers:
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
 Standard library only, except taxonomy triple counts, which use rdflib when it
-is installed (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
+is installed, and the quotes command, which needs markdown-it-py (`uv run --with rdflib python3 scripts/epm_facts.py counts`).
 """
 import argparse
 import collections
@@ -513,25 +513,20 @@ def _spans(text):
 
 
 def block_quotes(text):
-    """Paragraphs of every Markdown block quote: a '>' marker after up to three
-    spaces, plus lazy continuation lines (non-blank lines with no marker)."""
-    paras, current, inside = [], [], False
-    for line in text.split("\n"):
-        m = re.match(r"^ {0,3}>\s?(.*)$", line)
-        if m:
-            inside = True
-            if m.group(1).strip():
-                current.append(m.group(1))
-            elif current:
-                paras.append(" ".join(current)); current = []
-        elif inside and line.strip():
-            current.append(line)          # lazy continuation of the quoted paragraph
-        else:
-            if current:
-                paras.append(" ".join(current)); current = []
-            inside = False
-    if current:
-        paras.append(" ".join(current))
+    """The paragraphs of every Markdown block quote, found by a CommonMark parser.
+
+    A parser, not a regex: quotes nested in lists, lazy continuation lines and
+    blocks that interrupt a quote all follow CommonMark (markdown-it-py).
+    """
+    from markdown_it import MarkdownIt
+    paras, depth = [], 0
+    for tok in MarkdownIt("commonmark").parse(text):
+        if tok.type == "blockquote_open":
+            depth += 1
+        elif tok.type == "blockquote_close":
+            depth -= 1
+        elif tok.type == "inline" and depth > 0:
+            paras.append(tok.content)
     return paras
 
 
@@ -541,13 +536,15 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
     Checked: in every review file with a `hamid_words` column, that column, the
     `scope_note_sentence`, and each quoted span of three or more words in
     `semantic_reason` and `Hamid_decision`; and every block quote in the
-    source-correction backlog. Each text is searched across all saved answers,
-    not only the comment its row cites. Paraphrases are not checked.
+    source-correction backlog. An ellipsis (…) splits a quoted span, and each
+    part of three or more words is checked. Each text is searched across all
+    saved answers, not only the comment its row cites. Paraphrases are not
+    checked. Needs markdown-it-py (check.sh supplies it).
     """
     corpus = answer_corpus(answers)
     problems = []
-    if not glob.glob(os.path.join(answers, "*.md")):
-        problems.append(f"no saved answers in {answers}: nothing to check quotes against")
+    if not corpus.strip():
+        problems.append(f"no saved answer text in {answers}: nothing to check quotes against")
 
     def check(where, text):
         if text and _flat(text) not in corpus:
@@ -563,6 +560,8 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
         name = os.path.basename(path)
         for r in rows:
             where = f"{name} {r.get('row_id', '?')}"
+            if not (r["hamid_words"] or "").strip():
+                problems.append(f"{where}: hamid_words is blank")
             check(f"{where} hamid_words", r["hamid_words"])
             check(f"{where} scope_note_sentence", r.get("scope_note_sentence", ""))
             for col in ("semantic_reason", "Hamid_decision"):

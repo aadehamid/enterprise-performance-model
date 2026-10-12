@@ -235,5 +235,28 @@ def test_quotes_report_when_nothing_was_checked(tmp_path):
     backlog = tmp_path / "backlog.md"
     backlog.write_text("no quotes\n")
     problems = epm_facts.quote_problems(str(empty), str(backlog), str(empty))
-    assert any("no saved answers" in p for p in problems)
+    assert any("no saved answer text" in p for p in problems)
     assert any("no review file" in p for p in problems)
+
+
+def test_quotes_follow_commonmark_block_structure(tmp_path):
+    nested = "- Decision record\n\n    > Hamid approved all held relationships for immediate emission."
+    assert any("block quote" in p for p in _quote_fixture(tmp_path / "a", block="x\n\n" + nested))
+    heading = "Take this as my authorization\n## Unquoted heading"
+    assert _quote_fixture(tmp_path / "b", block=heading) == []
+    blank = "Take this as my authorization\n>\nUnquoted paragraph"
+    assert _quote_fixture(tmp_path / "c", block=blank) == []
+
+
+def test_quotes_reject_empty_answers_and_blank_rows(tmp_path):
+    answers = tmp_path / "answers"
+    answers.mkdir()
+    (answers / "empty.md").write_text("<!-- source header only -->\n")
+    reviews = tmp_path / "reviews"
+    reviews.mkdir()
+    (reviews / "batch.csv").write_text("row_id,hamid_words,scope_note_sentence,semantic_reason,Hamid_decision\nREL-00193,,,,\n")
+    backlog = tmp_path / "backlog.md"
+    backlog.write_text("")
+    problems = epm_facts.quote_problems(str(reviews), str(backlog), str(answers))
+    assert any("no saved answer text" in p for p in problems)
+    assert any("hamid_words is blank" in p for p in problems)

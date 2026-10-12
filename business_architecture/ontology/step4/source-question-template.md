@@ -23,7 +23,7 @@ Ask for one line per question (`1: a`, `2: b — <wording>`, `3: c`).
 - **Label every comment you post through Hamid's account.** Open it with "Posted by Claude:" so he can tell your questions from his answers.
 - **Save his answer verbatim** in `review-evidence/hamid-answers/<issue>-<batch>.md`, with the source URL in the header comment. If his comment did not save and he gives the answer in a session, post it word for word with an attribution line, and leave that line out of the saved file.
 - **Quote only what the saved file says.** `scripts/epm_facts.py quotes` (run by `check.sh`) checks, word for word and with punctuation, against all saved answers together:
-  - in each review file with a `hamid_words` column: that column, `scope_note_sentence`, and each quoted span of three or more words in `semantic_reason` and `Hamid_decision`;
-  - every block quote in `source-workbook-backlog.md`.
+  - in each review file with a `hamid_words` column: that column (blank fails), `scope_note_sentence`, and each quoted span in `semantic_reason` and `Hamid_decision`. An ellipsis (…) splits a span, and only parts of three or more words are checked;
+  - every block quote in `source-workbook-backlog.md`, as a CommonMark parser reads it (including quotes nested in lists).
 
-  So give each batch's review file a `hamid_words` column, or nothing in it is checked. It does not check paraphrases, quotes of one or two words, the ledger or the worklog, or that a quote comes from the comment its row cites: state no more than his answer says, and cite the right comment.
+  So give each batch's review file a `hamid_words` column, or nothing in it is checked. It does not check paraphrases, quoted parts of one or two words, the ledger or the worklog, or that a quote comes from the comment its row cites: state no more than his answer says, and cite the right comment.

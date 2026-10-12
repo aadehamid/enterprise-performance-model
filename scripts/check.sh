@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 export PYTHONDONTWRITEBYTECODE=1
 run() { echo "--- $*"; "$@"; }
-with_deps() { uv run -q --with pytest --with rdflib --with openpyxl "$@"; }
+with_deps() { uv run -q --with pytest --with rdflib --with openpyxl --with "markdown-it-py>=4,<5" "$@"; }
 
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
@@ -44,7 +44,7 @@ for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py
 done
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py
 run python3 scripts/epm_facts.py decisions
-run python3 scripts/epm_facts.py quotes
+run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase
 # merge of the pinning PR leaves it off main (PR #225, re-pinned in #227).
 pin="$(cat "$step4/PINNED_SHA.txt")"
