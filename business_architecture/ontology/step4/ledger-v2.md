@@ -2024,8 +2024,10 @@ Step 4 was re-pinned to `d8b4827`. Row verdicts:
   cycle, replenishment requirement, plan-selection decision, quote version
   or scheduling horizon), routed to the scoped sequence relation in #226.
   REL-00008 and REL-01223 are the same forecast handoff at two hierarchy
-  levels. REL-00112 is a step-level sequence inside its own parent, ending
-  at plan selection and approval.
+  levels. REL-00112 is a step-level sequence ending at plan selection and
+  approval within CM-1-1-4, an ancestor of its source (parent CM-1-1-4-7).
+  Hamid gave all seven answers as "adopted reference-model positions …,
+  not verified MPC internal procedures".
 
 All 20 #205 rows now have fresh verdicts. No mention changes bucket and no
 fact changes.

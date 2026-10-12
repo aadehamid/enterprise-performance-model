@@ -454,6 +454,8 @@ All 13 questions are closed and the rows are done for Phase 1. None emits. The r
 
 Hamid answered the 7 batch 2 questions in the Claude Code session of 2026-10-12. His comment on #205 did not save, so Claude posted his words verbatim as [comment 6116668059](https://github.com/aadehamid/enterprise-performance-model/issues/205#issuecomment-6116668059). They say:
 
+> These are adopted reference-model positions informed by the downstream business context and industry practice, not verified MPC internal procedures.
+>
 > For each b-row, add the stated source clarification, mark the source-author question answered, and route the relationship to the scoped-sequence work in #226. Do not emit it as whole-process core:precedes or leave it awaiting another source-author answer. For the c-row, record the final “no sequence” disposition and mark the question done.
 
 > Questions 1 and 2 describe the same forecast handoff at different hierarchy levels. Preserve that distinction; do not count them as two separate operational handoffs.
@@ -462,10 +464,10 @@ All 7 questions are closed and the rows are done for Phase 1. None emits. Six (b
 
 | Row | Question | Answer | Outcome | Reason |
 |---|---|---|---|---|
-| REL-00008 | 1 | (b) | Reviewed—Not emitted | Hamid (b): per forecast cycle and version; other optimization work may proceed independently, so completion of the whole source process is not required before the target begins. Same forecast handoff as question 2 at a lower hierarchy level; not a separate operational handoff. Routed to #226. |
-| REL-01223 | 2 | (b) | Reviewed—Not emitted | Hamid (b): per planning cycle and forecast version; forecasting and optimization stay iterative. Same forecast handoff as question 1 at a higher hierarchy level; not a separate operational handoff. Routed to #226. |
-| REL-00068 | 3 | (b) | Reviewed—Not emitted | Hamid (b): per replenishment requirement or approved revision, and scheduling constraints may feed back into a revised requirement. Routed to #226. |
-| REL-00112 | 4 | (b) | Reviewed—Not emitted | Hamid (b): an internal step-level sequence ending at plan selection and approval within Refinery Planning and Optimization (CM-1-1-4), the source's own parent; not a sequence before the parent starts. No new target identity inferred. Routed to #226 with the plan-selection/approval endpoint. |
-| REL-00149 | 5 | (c) | Reviewed—Not emitted | Hamid (c): no sequence—forecast completion is not a prerequisite for recording actual instrument events. No scope-note sentence added. |
-| REL-00930 | 6 | (b) | Reviewed—Not emitted | Hamid (b): per quote or renewal version, after development and authorization; preparatory issuance may proceed in parallel. Routed to #226. |
-| REL-01241 | 7 | (b) | Reviewed—Not emitted | Hamid (b): per scheduling horizon; scheduling preparation may overlap planning, and feasibility feedback may trigger plan revisions. Routed to #226. |
+| REL-00008 | 1 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): per forecast cycle and version; other optimization work may proceed independently, so completion of the whole source process is not required before the target begins. Same forecast handoff as question 2 at a lower hierarchy level; not a separate operational handoff. Routed to #226. |
+| REL-01223 | 2 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): per planning cycle and forecast version; forecasting and optimization stay iterative. Same forecast handoff as question 1 at a higher hierarchy level; not a separate operational handoff. Routed to #226. |
+| REL-00068 | 3 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): per replenishment requirement or approved revision, and scheduling constraints may feed back into a revised requirement. Routed to #226. |
+| REL-00112 | 4 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): an internal step-level sequence ending at plan selection and approval within Refinery Planning and Optimization (CM-1-1-4), "not a sequence preceding the start of the parent process." In the taxonomy, CM-1-1-4 is an ancestor of the source: its parent is Refinery Optimization (CM-1-1-4-7). No new target identity inferred. Routed to #226 with the plan-selection/approval endpoint. |
+| REL-00149 | 5 | (c) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (c): no sequence—forecast completion is not a prerequisite for recording actual instrument events. No scope-note sentence added. |
+| REL-00930 | 6 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): per quote or renewal version, after development and authorization; preparatory issuance may proceed in parallel. Routed to #226. |
+| REL-01241 | 7 | (b) | Reviewed—Not emitted | Reference-model position, not a verified MPC procedure (Hamid). Hamid (b): per scheduling horizon; scheduling preparation may overlap planning, and feasibility feedback may trigger plan revisions. Routed to #226. |
