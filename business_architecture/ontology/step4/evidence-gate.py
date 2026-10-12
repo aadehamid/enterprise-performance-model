@@ -4,7 +4,7 @@
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
   2. Mention arithmetic reconciles from the actual files: 1066+237+12+1+2=1318.
-  3. canonical-facts.csv has exactly 468 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  3. canonical-facts.csv has exactly 478 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -184,10 +184,12 @@ for rid in ("REL-00190", "REL-00858", "REL-01313"):
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
           f"approved as core:governedBy per Hamid 2026-09-25/26; expected stored fact {fact}")
-for rid in ("REL-00050", "REL-00067", "REL-00394", "REL-00399", "REL-00406",
-            "REL-00907", "REL-00937", "REL-01005", "REL-01228", "REL-01256"):
+# Phase 1 sweep, #206 (Hamid 2026-10-12): 9 of these 10 rows now emit with an
+# approved governed-by sentence; the sweep check below covers them. REL-00907
+# stays held (no relationship). REL-00190 now resolves to its DOA child.
+for rid in ("REL-00907",):
     check(f"control-case hold {rid}", _emits_nothing(rid),
-          "superseded 2026-09-26 (NoAffirmativeCitation): no stored triple")
+          "superseded 2026-09-26 (NoAffirmativeCitation); no relationship in the Phase 1 sweep")
 for rid in ("REL-00274", "REL-01143", "REL-01286"):
     check(f"control-case hold {rid}", _emits_nothing(rid),
           "must stay held per Hamid 2026-09-25: no stored triple")
@@ -425,7 +427,7 @@ for rid in ("REL-00531", "REL-00542", "REL-00588", "REL-00601", "REL-00623",
 # Governed-by pass holds (Hamid 2026-09-26): exclusion/boundary citations
 # and hierarchy restatements. Each held row emits nothing. (The 10
 # superseded 2026-09-25 approvals are covered by the 2d hold checks above.)
-for rid in ("REL-00185", "REL-00215", "REL-00250", "REL-00969", "REL-01113",
+for rid in ("REL-00185", "REL-00250", "REL-00969", "REL-01113",  # REL-00215 emits since #206
             "REL-01300", "REL-01310",  # exclusion/boundary citations
             "REL-00620", "REL-00625", "REL-00629"):  # hierarchy restatements
     check(f"governed-by hold {rid} emits nothing",
@@ -482,6 +484,17 @@ _batch_problems = _batch.triggers_batch_problems(
     {r["row_id"]: r for r in v2}, _fact_rowids)
 check("triggers #204 batch 1: 11 review rows match Hamid's saved answer and emit",
       not _batch_problems, "; ".join(_batch_problems[:5]))
+# Phase 1 sweep (Hamid 2026-10-12, #207 comment 6133390674): each issue's review rows
+# match the approved register; emitting rows carry their fact, the rest carry none.
+import glob as _glob
+_register = {r["row_id"]: r for r in rows("review-evidence/phase1-sweep/register.csv")}
+with open("review-evidence/hamid-answers/phase1-sweep.md") as _f:
+    _approval = _f.read()
+for _path in sorted(_glob.glob("review-evidence/phase1-sweep/*-review.csv")):
+    _sweep_problems = _batch.sweep_batch_problems(rows(_path), _register, _approval,
+                                                  {r["row_id"]: r for r in v2}, _fact_rowids)
+    check(f"Phase 1 sweep {_path.rsplit('/', 1)[1]}: rows match the approved register",
+          not _sweep_problems, "; ".join(_sweep_problems[:5]))
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
 # #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/
@@ -520,8 +533,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==468", len(cf) == 468, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 468)
+check("canonical-facts==478", len(cf) == 478, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 478)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
