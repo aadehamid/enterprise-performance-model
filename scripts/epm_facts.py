@@ -575,10 +575,34 @@ def block_quotes(text):
 FIRST_QUOTE_CHECKED_DECISION = 26
 
 
+COMMENT = re.compile(r"<!--.*?-->", re.S)
+
+
 def recorded_words(text):
-    """The "Hamid's recorded words" section of a decision record, or None."""
-    m = re.search(r"^## Hamid's recorded words\s*$(.*?)(?=^## |\Z)", text, re.M | re.S)
-    return m.group(1) if m else None
+    """The visible text of each "Hamid's recorded words" section in a decision record.
+
+    A CommonMark parser finds the level-two headings, so a "## " line inside a
+    code fence is not a boundary and a heading written with a tab is. HTML
+    comments are dropped: a reader never sees them. Returns one string per
+    section; more than one section is the caller's problem to report.
+    """
+    from markdown_it import MarkdownIt
+    tokens = MarkdownIt("commonmark").parse(text)
+    sections, current = [], None
+    for i, tok in enumerate(tokens):
+        if tok.type == "heading_open" and tok.tag == "h2":
+            current = None
+            if _flat(tokens[i + 1].content) == "Hamid's recorded words":
+                current = []
+                sections.append(current)
+            continue
+        if current is None or (i and tokens[i - 1].type == "heading_open"):
+            continue
+        if tok.type in ("inline", "fence", "code_block"):
+            current.append(COMMENT.sub(" ", tok.content))
+        elif tok.type == "html_block":
+            current.append(re.sub(r"<[^>]+>", " ", COMMENT.sub(" ", tok.content)))
+    return ["\n".join(parts) for parts in sections]
 
 
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
@@ -644,7 +668,11 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         name = f"EPM-DEC-001-{number:04d}"
         status = re.search(r"^\| Status \| (.+?) \|\s*$", record, re.M)
         decided = bool(status) and _status_parts(status.group(1))[0] == "Decided"
-        spans = list(_spans(recorded_words(record) or ""))
+        sections = recorded_words(record)
+        if len(sections) > 1:
+            problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
+            continue
+        spans = list(_spans(sections[0] if sections else ""))
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
         for span in spans:

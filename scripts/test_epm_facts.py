@@ -332,3 +332,29 @@ def test_quotes_require_a_checked_quote_in_a_decided_record(tmp_path):
     problems = _decision_fixture(tmp_path, 26, "Hamid agreed in the session.")
     assert any("EPM-DEC-001-0026" in p and "no quote" in p for p in problems)
     assert _decision_fixture(tmp_path / "p", 26, "Not yet decided.", status="Proposed") == []
+
+
+def test_recorded_words_section_follows_markdown_headings(tmp_path):
+    # A "## " line inside a code fence is not a heading: the quote after the fence is still checked.
+    words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n```text\n## Example\n```\n\n'
+             'Hamid also said "yes to all seven"')
+    assert any("yes to all seven" in p for p in _decision_fixture(tmp_path / "a", 26, words))
+    # A heading written with a tab ends the section, so the next section's quote does not count.
+    folder = tmp_path / "b" / "decisions"
+    folder.mkdir(parents=True)
+    (folder / "EPM-DEC-001-0026-test.md").write_text(
+        "# t\n\n| Status | Decided |\n\n## Hamid's recorded words\n\nHamid agreed.\n\n##\tEvidence\n\n"
+        '"Approved: Q1–Q18 as recommended in the comment above"\n')
+    problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+    assert any("no quote" in p for p in problems)
+
+
+def test_recorded_words_ignore_html_comments(tmp_path):
+    words = 'Hamid agreed.\n\n<!-- "Approved: Q1–Q18 as recommended in the comment above" -->'
+    assert any("no quote" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
+def test_recorded_words_reject_a_repeated_section(tmp_path):
+    words = ('"Approved: Q1–Q18 as recommended in the comment above"\n\n'
+             "## Hamid's recorded words\n\nHamid also said \"yes to all seven\"")
+    assert any("more than one" in p for p in _decision_fixture(tmp_path, 26, words))

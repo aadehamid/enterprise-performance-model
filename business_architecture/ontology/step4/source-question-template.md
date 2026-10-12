@@ -25,6 +25,6 @@ Ask for one line per question (`1: a`, `2: b — <wording>`, `3: c`).
 - **Quote only what the saved file says.** `scripts/epm_facts.py quotes` (run by `check.sh`) checks, word for word and with punctuation, against all saved answers together:
   - in each review file with a `hamid_words` column: that column (blank fails), `scope_note_sentence`, and each quoted span in `semantic_reason` and `Hamid_decision`. An ellipsis (…) splits a span, and only parts of three or more words are checked;
   - every block quote in `source-workbook-backlog.md`, as a CommonMark parser reads it (including quotes nested in lists);
-  - each quoted span in the "Hamid's recorded words" section of EPM-DEC-001 records from 0026 on. A Decided record there must quote at least one span of three or more words. Records 0001 to 0025 quote sessions that were never saved and are not checked.
+  - each quoted span in the "Hamid's recorded words" section of EPM-DEC-001 records from 0026 on. A Decided record there must quote at least one span of three or more words in visible text (HTML comments are not read), and may have only one such section. Records 0001 to 0025 quote sessions that were never saved and are not checked.
 
   So give each batch's review file a `hamid_words` column, or nothing in it is checked. It does not check paraphrases, quoted parts of one or two words, quotes outside a decision record's recorded-words section, the ledger or the worklog, or that a quote comes from the comment its row cites: state no more than his answer says, and cite the right comment.
