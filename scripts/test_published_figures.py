@@ -8,7 +8,7 @@ purpose, both the document and the pinned values in test_epm_facts.py).
 Run: uv run --with pytest --with rdflib python -m pytest -q scripts/test_published_figures.py
 
 Checked: every total and summary figure these documents state about Step 4
-data. Deliberately not checked, because they are not data totals this tool
+data, and that step4/README.md states no live ledger or gate figures at all. Deliberately not checked, because they are not data totals this tool
 computes:
 - step4/README.md's "16/16 sections": signed-off sections of the mapping document.
 - The backlog's "All 96 Section B rows": the historic Section B population,
@@ -86,29 +86,13 @@ def pairs_table(backlog=None):
     return re.findall(r"^\|\s*(REL-\d{5})\s*\|\s*(REL-\d{5})\s*\|", section, re.M)
 
 
-def test_step4_readme_ledger_and_gate(facts):
+def test_step4_readme_states_no_live_figures():
+    # Live figures live in epm_facts.py counts only, so no batch edits figure prose
+    # (retro on #235: restated figures were the most frequent review finding).
     text = flat(STEP4_README)
-    m = re.search(r"both conserving to ([\d,]+) mentions", text)
-    assert m and num(m.group(1)) == facts["ledger"]["mentions"]
-    m = re.search(r"([\d,]+) emitting / ([\d,]+) held / ([\d,]+) deferred / ([\d,]+) external governance / "
-                  r"([\d,]+) structured flow / ([\d,]+) scoped sequence = ([\d,]+); ([\d,]+) canonical facts "
-                  r"\(`canonical-facts.csv`, ([\d,]+) rows\)\. The ([\d,]+) scoped-sequence rows emit ([\d,]+) nodes "
-                  r"\(([\d,]+) handoffs\)", text)
-    assert m, "ledger sentence not found in step4/README.md"
-    led, ss = facts["ledger"], facts["scoped_sequences"]
-    assert tuple(num(g) for g in m.groups()) == (
-        led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        led["scoped_sequence"], facts["conservation"], facts["canonical_facts_file"], facts["canonical_facts_file"],
-        led["scoped_sequence"], ss["nodes"], ss["handoffs"])
-    m = re.search(r"promoted ([\d,]+) / held ([\d,]+), plus the same ([\d,]+) / ([\d,]+) / ([\d,]+) = ([\d,]+); "
-                  r"([\d,]+) PASS / ([\d,]+) FAIL", text)
-    assert m, "gate sentence not found in step4/README.md"
-    gate = facts["evidence_gate"]
-    total = gate["promoted"] + gate["held"] + led["deferred"] + led["external_governance"] + led["structured_flow"]
-    assert tuple(num(g) for g in m.groups()) == (
-        gate["promoted"], gate["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        total, gate["pass_checks"], gate["fail_checks"])
-    assert total == led["mentions"]
+    assert "python3 scripts/epm_facts.py counts" in text
+    assert not re.search(r"[\d,]+ emitting / [\d,]+ held", text), "step4/README.md restates the ledger"
+    assert not re.search(r"[\d,]+ PASS / [\d,]+ FAIL", text), "step4/README.md restates the gate"
 
 
 def test_ontology_readme_taxonomy(facts):

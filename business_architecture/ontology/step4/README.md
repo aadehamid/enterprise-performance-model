@@ -15,16 +15,13 @@ Hamid's review.
 - **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
   `section <issue>` from the repo root. It computes them from the files below;
   `scripts/test_published_figures.py` fails if the counts here drift from it.
-- **Counts** (verified 2026-10-12 after #204 batch 1). Two cuts, both
-  conserving to 1,318 mentions:
-  - **Ledger** (`ledger-v2.md`, verb-bucket totals): 628 emitting / 658
-    held / 12 deferred / 1 external governance / 2 structured flow / 17
-    scoped sequence = 1,318; 468 canonical facts (`canonical-facts.csv`,
-    468 rows). The 17 scoped-sequence rows emit 17 nodes (16 handoffs) in
-    `scoped-sequence/`, not canonical facts.
-  - **Evidence gate** (`evidence-gate.py`): promoted 1,066 / held 237,
-    plus the same 12 / 1 / 2 = 1,318; 426 PASS / 0 FAIL. The gate's cut
-    is the context pass, so the scoped-sequence rows are inside its 1,066.
+- **Counts.** This file states no live figures, so no batch has to edit
+  it. `python3 scripts/epm_facts.py counts` prints both cuts, each
+  conserving to all 1,318 mentions: the ledger (emitting / held / deferred
+  / external governance / structured flow / scoped sequence, with the
+  canonical-fact count and the per-verb breakdown) and the evidence gate
+  (promoted / held from the context pass, with PASS and FAIL counts).
+  `ledger-v2.md` records each dated change.
 - Key files: `verb-predicate-mapping-v2.md` (the signed-off mapping
   document, 16/16 sections), `canonical-facts.csv` (stored facts), `mapping_v2.py` (the
   pipeline), `evidence-gate.py` (the evidence gate), `ledger-v2.md`
