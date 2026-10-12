@@ -52,3 +52,13 @@ gate was run against, not the pin. Do not retitle the checklist's
   scoped-sequence source table (`scoped-sequence/build.py`), that its rows
   are the 17 #205 scoped rows, and 17 nodes / 16 handoffs. Section 2j still
   checks that none of the 20 #205 rows emits a core fact.
+
+## 2026-10-12 — branch `phase1/204-batch1`, pin `51a32aa`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `51a32aa2eea43a819a7fff23b624ff8bd291bfad`
+- **Gate:** `evidence-gate.py` — 426 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==468,
+  contradictions==0. Section 2i now checks, in one check, that the 11 #204
+  batch 1 review rows match Hamid's saved answer row by row and emit their
+  `core:triggeredBy` facts (`batch_checks.py`), replacing eleven per-row
+  checks: 436 → 426 PASS.

@@ -3,13 +3,13 @@
 **Status:** PROMOTED 2026-09-30 — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190). All 10 checklist boxes complete.
 **Date:** 2026-09-27 (status); re-pin 2026-09-29
 
-## Current State (main @ 6a155bc2)
+## Current state (as of the commit containing this file; promotion was approved at 6a155bc2)
 
 ### Methodology
 - **PR #159** merged as `7b85121` — verb review methodology Approved
 - **Phase 3 sibling fix** at `e9b80d3` — `core:precedes` siblings may use structural nearness under Rule 5
 
-### Verb Packages (on main)
+### Verb packages
 | Verb | PR | Status |
 |------|-----|--------|
 | requires | #154 | 5 APPROVE / 1 HOLD (REL-00208) |
@@ -17,20 +17,21 @@
 | constrained-by | #156 | 10 APPROVE / 1 HOLD (REL-00097) |
 | precedes/follows | #152 | 38 STAND / 20 HOLD / 256 PROMOTE |
 | governed-by | — | 7 recorded hierarchy exceptions (REL-01309, REL-00106, REL-00531, REL-00542, REL-00588, REL-00601, REL-00623), each not a precedent. Pass: 5 STAND / 13 PROMOTE / 20 HOLD → 18 emitting |
-| triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting |
+| triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting (2026-09-26); the 11 held rows were answered in #204 batch 1 (2026-10-12) and emit → 18 emitting |
 
 ### Conservation
-**617 emitting + 669 held + 12 deferred + 1 external-governance + 2 structured-flow + 17 scoped-sequence = 1,318**
-*(686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
+**628 emitting + 658 held + 12 deferred + 1 external-governance + 2 structured-flow + 17 scoped-sequence = 1,318**
+*(617 emitting / 669 held before #204 batch 1 emitted 11 triggers rows on 2026-10-12; 686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `d8b482751e418338203e976e5741dcfe538b4800` (re-pinned 2026-10-12 for the #205 batch 2 scope-note corrections, from `3a54b46978ad4d2ba6e491e116713bebc1bedeaf`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows, content identical except the SHA column). Promotion was approved against `6a155bc2`.
+- **PINNED_SHA:** `51a32aa2eea43a819a7fff23b624ff8bd291bfad` (re-pinned 2026-10-12 for the #204 batch 1 trigger sentences, from `d8b482751e418338203e976e5741dcfe538b4800`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows; the re-pin itself changed only the SHA column, and the batch commit then updated `context-pass.csv` for eight #204 rows (REL-00169, REL-00170, REL-00252, REL-00396, REL-00398, REL-00400, REL-00403, REL-00892), whose new scope-note sentences give an explicit reference in place of structural nearness). Promotion was approved against `6a155bc2`.
 - Re-pin completed 2026-09-29; all promotion preconditions satisfied 2026-09-30.
 
 ### PR #124 Proof
 - Canonical file SHA-256 before #124: `e50d1b6f00085521979a3ee825e765c494c0b3aa5e1374f8573bcea96869f091`
 - At #124: `7b21bd2402721cfa1eef4103b8d460a92e996268a1c6495bfed4ea12ac2d3a58`
-- Current: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0`
+- At promotion (`6a155bc2`) and unchanged through #205: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0` (457 facts)
+- After #204 batch 1 (468 facts, 11 `core:triggeredBy` added): `8726f8057b048f21dc19152a65c145465d27360fa46cd64d17fc4bf49091ec13`
 - `no-consumer-attestation.md` re-attested 2026-09-29 (Hamid) against pin `6a155bc23ba3971ce430b774b4ddd6f4a933e380` — supersedes the stale #124 attestation.
 
 ## Promotion Preconditions

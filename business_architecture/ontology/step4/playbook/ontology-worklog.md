@@ -957,6 +957,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### #204 triggers batch 1 (2026-10-12)
+- Hamid answered all 11 held `triggers` rows on #204 (comment 6130380041):
+  seven conditional triggers, four unconditional. He agreed that "a
+  conditional trigger fits the locked core:triggeredBy definition where the
+  condition identifies a specific event, finding, or authorized handoff that
+  invokes the target", and that "No new relation or design round is needed
+  merely because a trigger has a condition." Pending merge of the
+  batch PR: the sentences go into ten source scope notes and all 11 rows
+  emit (628 emitting / 658 held / 468 facts); #204 closes when it merges.
+
 ### Scoped sequence relation built (2026-10-12)
 - EPM-DEC-001-0026: Hamid approved the #226 design (comment 6123946413:
   "Approved: Q1–Q18 as recommended in the comment above"). A scoped sequence

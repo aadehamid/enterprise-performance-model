@@ -407,6 +407,30 @@ Target-side check for the four compliance monitors: does Manage Exceptions
 (CM-1-2-4-3-7) cite its sources as a range? If so, that is target-side
 evidence and needs the source author to confirm (REL-00215 pattern).
 
+### Batch 1 fresh verdicts (Hamid 2026-10-12)
+
+Hamid answered all 11 questions on #204 ([comment 6130380041](https://github.com/aadehamid/enterprise-performance-model/issues/204#issuecomment-6130380041)). Manage Exceptions' scope note does name the four compliance monitors as its intake, and his (a) answers to questions 8 to 11 confirm it. His answer says:
+
+> I agree that a conditional trigger fits the locked core:triggeredBy definition where the condition identifies a specific event, finding, or authorized handoff that invokes the target. No new relation or design round is needed merely because a trigger has a condition.
+>
+> Preserve the distinction between invoking the target for assessment or processing and automatically approving its eventual business action.
+
+Each sentence went into the source's scope note, so each row now carries the affirmative citation the triggers rule needs. All 11 get a fresh APPROVE and emit; seven are conditional triggers, with the condition recorded in the review file. His sentences, the conditions and each row's reason are in `review-evidence/triggers-batch1-review.csv`.
+
+| Row | Question | Answer | Fresh verdict | Stored fact |
+|---|---|---|---|---|
+| REL-00049 | 1 | (b) | APPROVE | CM-1-1-3-7-9 core:triggeredBy CM-1-1-3-7-12 |
+| REL-00291 | 2 | (b) | APPROVE | CM-1-2-2-3-6 core:triggeredBy CM-1-2-2-3-8 |
+| REL-00892 | 3 | (b) | APPROVE | CM-1-3-6-6-13 core:triggeredBy CM-1-3-6-6-4 |
+| REL-00163 | 4 | (b) | APPROVE | CM-1-2-1-2-6 core:triggeredBy CM-1-2-1-2-11 |
+| REL-00169 | 5 | (b) | APPROVE | CM-1-2-1-2-3 core:triggeredBy CM-1-2-1-2-4 |
+| REL-00170 | 6 | (b) | APPROVE | CM-1-2-1-2-7 core:triggeredBy CM-1-2-1-2-4 |
+| REL-00252 | 7 | (b) | APPROVE | CM-1-2-2-2-3 core:triggeredBy CM-1-2-2-2-5 |
+| REL-00396 | 8 | (a) | APPROVE | CM-1-2-4-3-7 core:triggeredBy CM-1-2-4-3-2 |
+| REL-00398 | 9 | (a) | APPROVE | CM-1-2-4-3-7 core:triggeredBy CM-1-2-4-3-3 |
+| REL-00400 | 10 | (a) | APPROVE | CM-1-2-4-3-7 core:triggeredBy CM-1-2-4-3-4 |
+| REL-00403 | 11 | (a) | APPROVE | CM-1-2-4-3-7 core:triggeredBy CM-1-2-4-3-5 |
+
 ## Precedes/follows holds routed for source correction (Hamid 2026-09-27)
 
 20 rows were held. Each needed an affirmative sequence citation from the
