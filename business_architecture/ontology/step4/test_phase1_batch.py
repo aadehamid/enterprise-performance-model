@@ -161,7 +161,13 @@ class Adopt(Step4Copy):
 
     def test_the_pipeline_reproduces_the_governed_files_byte_for_byte(self):
         tmp = tempfile.mkdtemp(dir=self.tmp)
-        new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        new_disp, new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        # The governed dispositions add review notes classify does not write; its own columns must match.
+        governed = phase1_batch._rows(os.path.join(self.step4, "target-report", "target-dispositions-v2.csv"),
+                                      lambda r: r["row_id"])
+        regenerated = phase1_batch._rows(new_disp, lambda r: r["row_id"])
+        self.assertEqual({k: [r[c] for c in phase1_batch.CLASSIFIED] for k, r in governed.items()},
+                         {k: [r[c] for c in phase1_batch.CLASSIFIED] for k, r in regenerated.items()})
         for new, governed in ((new_ctx, "target-report/context-pass.csv"), (new_facts, "canonical-facts.csv")):
             with open(new, "rb") as a, open(os.path.join(self.step4, governed), "rb") as b:
                 self.assertEqual(a.read(), b.read(), governed)
@@ -190,6 +196,30 @@ class Adopt(Step4Copy):
         self.set_contributors(ids, first)
         status, out = quiet(phase1_batch.adopt, self.step4, set(rest.split(";")), write=False)
         self.assertEqual(status, 0, out)
+
+    def edit_disposition(self, row_id):
+        """Change a classified column of one governed disposition row, so the re-run differs only there."""
+        path = os.path.join(self.step4, "target-report", "target-dispositions-v2.csv")
+        with open(path, newline="") as f:
+            reader = csv.DictReader(f)
+            fields, rows = reader.fieldnames, list(reader)
+        next(r for r in rows if r["row_id"] == row_id)["evidence"] += " (edited)"
+        with open(path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def test_stops_on_a_disposition_row_outside_the_batch(self):
+        self.edit_disposition("REL-00002")
+        status, out = quiet(phase1_batch.adopt, self.step4, {"REL-00001"}, write=False)
+        self.assertEqual(status, 1, out)
+        self.assertIn("disposition row REL-00002 changed but is not in the batch", out)
+
+    def test_accepts_a_disposition_row_in_the_batch(self):
+        self.edit_disposition("REL-00002")
+        status, out = quiet(phase1_batch.adopt, self.step4, {"REL-00002"}, write=False)
+        self.assertEqual(status, 0, out)
+        self.assertIn("disposition rows changed: 1", out)
 
     def test_an_inherited_step4_override_cannot_redirect_the_context_pass(self):
         other = os.path.join(self.tmp, "other-step4")

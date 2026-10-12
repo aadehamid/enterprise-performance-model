@@ -12,9 +12,10 @@ document, keeping the old one word for word. It reads every input before it
 writes, and stops if any CSV row is not stamped with the old pin, so only the
 SHA column changes.
 
-adopt: after the hold sets change, re-run the context pass and the mapping
-pipeline in a temporary copy and compare their outputs with the governed
-context-pass.csv and canonical-facts.csv. Every changed context row, and every
+adopt: after the workbook or the hold sets change, re-run classify, the context
+pass and the mapping pipeline in a temporary copy and compare their outputs with the governed
+target-dispositions-v2.csv, context-pass.csv and canonical-facts.csv. The REL
+rows must stay the same rows. Every changed disposition or context row, and every
 row a fact gains or loses, must be a batch row; anything else stops the run.
 With --write, the governed files take the new outputs.
 
@@ -42,6 +43,11 @@ SHA_FILES = ["target-report/target-dispositions-v2.csv", "target-report/context-
 CHECKLIST_PIN = re.compile(r"^- \*\*PINNED_SHA:\*\* .*$", re.M)
 MAPPING_PIN = re.compile(r"^\*\*Baseline:\*\* .*$", re.M)
 BASELINE_FILES = ["step3-taxonomy.ttl", "step2-identity-map.json"]
+# Columns classify_v2.py computes. The governed dispositions also carry review notes
+# (emission_decision, reason, review_trigger, decision_reference) that classify does not
+# reproduce, so adopt takes classify's values for these columns of batch rows only.
+CLASSIFIED = ["row_id", "baseline_sha", "source_slug", "source_label", "branch_domain", "verb", "raw_target",
+              "disposition", "candidate_slugs", "candidate_labels", "evidence", "confidence"]
 
 
 def read(path):
@@ -115,13 +121,18 @@ def repin(step4, output, new, reason, write, today=None):
 
 
 def _proposals(step4, tmp):
-    """Run the context pass and mapping pipeline in a copy under tmp; return their proposal file paths."""
+    """Run classify, the context pass and the mapping pipeline in a copy under tmp; return their proposal paths."""
     work = os.path.join(tmp, "step4")
     shutil.copytree(step4, work, ignore=shutil.ignore_patterns("__pycache__", "proposal"))
-    # context_pass.py honours EPM_STEP4_DIR, so pin it to the copy: an inherited value would write elsewhere.
+    # Both scripts honour EPM_STEP4_DIR, so pin it to the copy: an inherited value would write elsewhere.
     env = dict(os.environ, EPM_STEP4_DIR=work)
-    subprocess.run([sys.executable, "context_pass.py"], cwd=os.path.join(work, "target-report"),
-                   env=env, check=True, capture_output=True)
+    report = os.path.join(work, "target-report")
+    # classify_v2 turns a corrected verb or target in the baseline taxonomy into the dispositions;
+    # the context pass and the mapping read the new dispositions.
+    subprocess.run([sys.executable, "classify_v2.py"], cwd=report, env=env, check=True, capture_output=True)
+    shutil.copyfile(os.path.join(work, "proposal", "target-report", "target-dispositions-v2.csv"),
+                    os.path.join(report, "target-dispositions-v2.csv"))
+    subprocess.run([sys.executable, "context_pass.py"], cwd=report, env=env, check=True, capture_output=True)
     # mapping_v2 reads the governed context-pass.csv, so give it the new one first.
     shutil.copyfile(os.path.join(work, "proposal", "target-report", "context-pass.csv"),
                     os.path.join(work, "target-report", "context-pass.csv"))
@@ -132,12 +143,27 @@ def _proposals(step4, tmp):
             runpy.run_path(os.path.join(work, "mapping_v2.py"), run_name="__main__")
     finally:
         os.chdir(cwd)
-    return os.path.join(work, "target-report", "context-pass.csv"), os.path.join(work, "proposal", "canonical-facts.csv")
+    return (os.path.join(report, "target-dispositions-v2.csv"), os.path.join(report, "context-pass.csv"),
+            os.path.join(work, "proposal", "canonical-facts.csv"))
 
 
 def _rows(path, key):
     with open(path, newline="") as f:
         return {key(r): r for r in csv.DictReader(f)}
+
+
+def _merge_dispositions(path, new_d, batch):
+    """Rewrite the governed dispositions with classify's columns for batch rows; keep every review note."""
+    with open(path, newline="") as f:
+        reader = csv.DictReader(f)
+        fields, rows = reader.fieldnames, list(reader)
+    for r in rows:
+        if r["row_id"] in batch:
+            r.update({c: new_d[r["row_id"]][c] for c in CLASSIFIED})
+    with open(path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)  # csv default CRLF, as classify_v2 writes
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def _contributors(fact):
@@ -148,17 +174,27 @@ def adopt(step4, batch, write):
     """Compare re-run outputs with the governed files; every change must belong to the batch rows."""
     tmp = tempfile.mkdtemp(prefix="phase1-batch-")
     try:
-        new_ctx, new_facts = _proposals(step4, tmp)
+        new_disp, new_ctx, new_facts = _proposals(step4, tmp)
+        old_d = _rows(os.path.join(step4, "target-report", "target-dispositions-v2.csv"), lambda r: r["row_id"])
+        new_d = _rows(new_disp, lambda r: r["row_id"])
         old_c = _rows(os.path.join(step4, "target-report", "context-pass.csv"), lambda r: r["row_id"])
         new_c = _rows(new_ctx, lambda r: r["row_id"])
         fact_key = lambda r: (r["subject"], r["predicate"], r["object"])  # noqa: E731
         old_f = _rows(os.path.join(step4, "canonical-facts.csv"), fact_key)
         new_f = _rows(new_facts, fact_key)
         problems = []
-        if set(old_c) != set(new_c):
-            problems.append("context pass gained or lost rows")
+        # A corrected segment keeps its place, so the REL rows must be the same rows.
+        if set(old_d) != set(new_d):
+            problems.append("dispositions gained or lost rows: a correction moved or removed a segment")
+        disp_changed = sorted(k for k in old_d if k in new_d and any(old_d[k][c] != new_d[k][c] for c in CLASSIFIED))
+        problems += [f"disposition row {r} changed but is not in the batch" for r in disp_changed if r not in batch]
+        # A row that now resolves by slug leaves the context pass; only batch rows may come or go.
+        problems += [f"context row {r} gained or lost but is not in the batch"
+                     for r in sorted(set(old_c) ^ set(new_c)) if r not in batch]
         ctx_changed = sorted(k for k in old_c if k in new_c and old_c[k] != new_c[k])
-        problems += [f"context row {r} changed but is not in the batch" for r in ctx_changed if r not in batch]
+        # Outside the batch a context row may gain a note (a new back-link, say) but never change its outcome.
+        problems += [f"context row {r} changed its outcome but is not in the batch"
+                     for r in ctx_changed if r not in batch and old_c[r]["outcome"] != new_c[r]["outcome"]]
         added, removed = sorted(set(new_f) - set(old_f)), sorted(set(old_f) - set(new_f))
         changed = sorted(k for k in set(old_f) & set(new_f) if old_f[k] != new_f[k])
         for label, keys in (("added", added), ("removed", removed), ("changed", changed)):
@@ -170,6 +206,7 @@ def adopt(step4, batch, write):
                     problems.append(f"fact {' '.join(k)} {label}: rows outside the batch gained or lost {outside}")
                 elif before == after and not (after & batch):
                     problems.append(f"fact {' '.join(k)} {label} but carries no batch row")
+        print(f"disposition rows changed: {len(disp_changed)} {disp_changed}")
         print(f"context rows changed: {len(ctx_changed)} {ctx_changed}")
         print(f"facts added: {len(added)}, removed: {len(removed)}, changed: {len(changed)}")
         for p in problems:
@@ -177,9 +214,10 @@ def adopt(step4, batch, write):
         if problems:
             return 1
         if write:
+            _merge_dispositions(os.path.join(step4, "target-report", "target-dispositions-v2.csv"), new_d, batch)
             shutil.copyfile(new_ctx, os.path.join(step4, "target-report", "context-pass.csv"))
             shutil.copyfile(new_facts, os.path.join(step4, "canonical-facts.csv"))
-            print("wrote target-report/context-pass.csv and canonical-facts.csv")
+            print("wrote target-report/target-dispositions-v2.csv, target-report/context-pass.csv and canonical-facts.csv")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
