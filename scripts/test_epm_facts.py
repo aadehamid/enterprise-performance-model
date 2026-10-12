@@ -5,6 +5,7 @@ Run: uv run --with pytest python -m pytest -q scripts/test_epm_facts.py
 When a figure changes on purpose (a Phase 1 batch merges, a release lands),
 update the pinned value in the same pull request and say why in its body.
 """
+import csv
 import json
 import os
 import subprocess
@@ -166,3 +167,51 @@ def test_decisions_check_catches_a_second_amendment_target(tmp_path):
     problems = epm_facts.decision_problems(str(folder))
     assert "0013: amended by 0098, which does not exist" in problems
     assert any(p.startswith("0013: index status") for p in problems)
+
+
+# ---------- quotes ----------
+
+def _quote_fixture(tmp_path, reason="", hamid_words=None, block=None):
+    """A copy of the batch 1 review file and the backlog, with one field changed."""
+    reviews = tmp_path / "reviews"
+    reviews.mkdir(parents=True)
+    src = os.path.join(epm_facts.REVIEWS, "precedes-follows-batch1-review.csv")
+    with open(src, newline="") as f:
+        rows = list(csv.DictReader(f))
+    if reason:
+        rows[7]["semantic_reason"] = reason
+    if hamid_words:
+        rows[0]["hamid_words"] = hamid_words
+    with open(reviews / "batch.csv", "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
+    backlog = tmp_path / "backlog.md"
+    with open(epm_facts.BACKLOG) as f:
+        text = f.read()
+    if block:
+        text += f"\n\n> {block}\n"
+    backlog.write_text(text)
+    return epm_facts.quote_problems(str(reviews), str(backlog), epm_facts.ANSWERS)
+
+
+def test_quotes_pass_on_the_repo():
+    assert epm_facts.quote_problems() == []
+
+
+def test_quotes_catch_a_period_moved_inside_a_shortened_quote(tmp_path):
+    # The #225 defect: Hamid's sentence continues after "activity".
+    bad = 'it "does not require completion of all trade-capture activity." more'
+    good = 'it "does not require completion of all trade-capture activity". more'
+    assert any("semantic_reason" in p for p in _quote_fixture(tmp_path / "bad", reason=bad))
+    assert _quote_fixture(tmp_path / "good", reason=good) == []
+
+
+def test_quotes_catch_altered_answer_text_and_block_quotes(tmp_path):
+    assert any("hamid_words" in p for p in _quote_fixture(tmp_path / "a", hamid_words="a, with my own wording."))
+    assert any("block quote" in p for p in _quote_fixture(tmp_path / "b", block="Go ahead with the Batch 1 PR."))
+
+
+def test_quotes_split_an_ellipsis_and_skip_short_terms(tmp_path):
+    ok = 'He said "adopted reference-model positions … not verified MPC internal procedures" and "owned by".'
+    assert _quote_fixture(tmp_path, reason=ok) == []

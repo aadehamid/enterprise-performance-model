@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Run the repo's automated checks: the Step 4 evidence gate, every test script,
-# epm-facts counts, and the decision-record check. CI and the pre-push hook run
-# this file; run it yourself before opening a pull request.
+# epm-facts counts, the decision-record and quote checks, and the Step 4 pin
+# check. CI and the pre-push hook run this file; run it yourself before opening
+# a pull request.
 #
 # Needs python3 and uv (https://docs.astral.sh/uv/) for the test dependencies.
 set -euo pipefail
@@ -43,6 +44,12 @@ for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py
 done
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py
 run python3 scripts/epm_facts.py decisions
+run python3 scripts/epm_facts.py quotes
+# The Step 4 pin must name a commit in this branch's history. A squash or rebase
+# merge of the pinning PR leaves it off main (PR #225, re-pinned in #227).
+pin="$(cat "$step4/PINNED_SHA.txt")"
+echo "--- Step 4 pin $pin is in HEAD's history"
+git merge-base --is-ancestor "$pin" HEAD || { echo "PINNED_SHA $pin is not an ancestor of HEAD; re-pin Step 4" >&2; exit 1; }
 run with_deps python scripts/epm_facts.py counts >/dev/null
 
 after="$(snapshot)"  # a standalone assignment, so a failing snapshot stops the script

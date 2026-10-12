@@ -26,4 +26,6 @@ Hamid's review.
   document, 16/16 sections), `canonical-facts.csv` (stored facts), `mapping_v2.py` (the
   pipeline), `evidence-gate.py` (the evidence gate), `ledger-v2.md`
   (decision log), `source-workbook-backlog.md` (workbook corrections),
-  `review-evidence/` (row-level review batches).
+  `source-question-template.md` (how to ask the source author about a batch),
+  `review-evidence/` (row-level review batches; `hamid-answers/` holds his
+  answers verbatim, which `epm_facts.py quotes` checks quotes against).

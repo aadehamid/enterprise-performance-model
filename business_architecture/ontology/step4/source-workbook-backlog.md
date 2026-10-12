@@ -12,6 +12,8 @@ matching each row to the review batch in `review-evidence/` that last recorded i
 checking each row against `canonical-facts.csv`. The rows themselves were moved verbatim; no
 verdict, fact or count in the ledger changed.
 
+Before posting a batch's questions to the source author, read `source-question-template.md`.
+
 | Section | Issue | Rows in this file |
 |---|---|---|
 | G3 Section B: target clarification (B1 to B5) | #201 | 102 |

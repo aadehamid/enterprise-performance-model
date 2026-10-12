@@ -53,6 +53,7 @@ REVIEWS = os.path.join(STEP4, "review-evidence")
 FACTS = os.path.join(STEP4, "canonical-facts.csv")
 TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "output", "step3-taxonomy.ttl")
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
+ANSWERS = os.path.join(REVIEWS, "hamid-answers")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
 HOLD_WORD = re.compile(r"(?i)\bhold\b|\bheld\b")
@@ -483,6 +484,80 @@ def decision_problems(folder=DECISIONS):
     return problems
 
 
+# ---------- quotes ----------
+
+# A quoted span of three or more words, in straight or curly double quotes.
+QUOTED = re.compile(r'"([^"]+)"|“([^”]+)”')
+
+
+def _flat(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def answer_corpus(folder=ANSWERS):
+    """Hamid's saved answers, whitespace-collapsed, without each file's HTML header comment."""
+    parts = []
+    for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
+        with open(path) as f:
+            parts.append(_flat(re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)))
+    return "\n".join(parts)
+
+
+def _spans(text):
+    """Quoted spans of three or more words; an ellipsis splits a span into parts."""
+    for m in QUOTED.finditer(text):
+        for part in (m.group(1) or m.group(2)).split("…"):
+            part = _flat(part).strip(" ,")
+            if len(part.split()) >= 3:
+                yield part
+
+
+def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS):
+    """Text attributed to Hamid that is not word for word in a saved answer.
+
+    Checked: in every review file with a `hamid_words` column, that column, the
+    `scope_note_sentence`, and each quoted span in `semantic_reason` and
+    `Hamid_decision`; and every block quote in the source-correction backlog.
+    """
+    corpus = answer_corpus(answers)
+    problems = []
+
+    def check(where, text):
+        if text and _flat(text) not in corpus:
+            problems.append(f"{where}: not in a saved answer: {_flat(text)[:90]!r}")
+
+    for path in sorted(glob.glob(os.path.join(reviews, "*.csv"))):
+        with open(path, newline="") as f:
+            rows = list(csv.DictReader(f))
+        if not rows or "hamid_words" not in rows[0]:
+            continue
+        name = os.path.basename(path)
+        for r in rows:
+            where = f"{name} {r.get('row_id', '?')}"
+            check(f"{where} hamid_words", r["hamid_words"])
+            check(f"{where} scope_note_sentence", r.get("scope_note_sentence", ""))
+            for col in ("semantic_reason", "Hamid_decision"):
+                for span in _spans(r.get(col, "")):
+                    check(f"{where} {col}", span)
+    with open(backlog) as f:
+        text = f.read()
+    for block in re.findall(r"(?:^>.*\n?)+", text, re.M):
+        for para in re.split(r"^>\s*$", block, flags=re.M):
+            check(f"{os.path.basename(backlog)} block quote", re.sub(r"^>\s?", "", para, flags=re.M))
+    return problems
+
+
+def cmd_quotes(args):
+    problems = quote_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} quote problem(s) against {rel(ANSWERS)}")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def cmd_decisions(args):
     problems = decision_problems()
     if args.json:
@@ -506,8 +581,10 @@ def main(argv=None):
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
+    sub.add_parser("quotes", help="check text attributed to Hamid against his saved answers (exit 1 on problems)")
     args = parser.parse_args(argv)
-    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions}[args.cmd](args)
+    return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
+            "quotes": cmd_quotes}[args.cmd](args)
 
 
 if __name__ == "__main__":
