@@ -80,7 +80,7 @@ class ScopeNoteAppend(unittest.TestCase):
         self.assertIn("0 added, 1 already present", _run(wb, review).stdout)
 
     def test_sentence_after_extra_whitespace_counts_as_present(self):
-        for note in ("First.  Settles trades.", "First.\n\n  Settles trades. Last."):
+        for note in ("First.  Settles trades.", "First.\n\n  Settles trades. Last.", "Says “stop.” Settles trades."):
             wb, review = _fixture(
                 [{"slug": "A-1", "scope_note": note, "status": "approved"}],
                 [("A-1", "Settles trades.")],
@@ -99,6 +99,21 @@ class ScopeNoteAppend(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("B-1: status is 'blocked'", result.stderr)
         self.assertEqual(_notes(wb)["A-1"], "Note.")
+
+    def test_refuses_note_or_sentence_without_end_punctuation(self):
+        for note, sentence, error in (
+            ("Covers X; excludes Y", "Settles trades.", "A-1: scope note does not end"),
+            ("Covers X.", "Settles trades", "A-1: sentence does not end"),
+        ):
+            wb, review = _fixture(
+                [{"slug": "A-1", "scope_note": note, "status": "approved"}],
+                [("A-1", sentence)],
+            )
+            before = wb.read_bytes()
+            result = _run(wb, review)
+            self.assertNotEqual(result.returncode, 0, note)
+            self.assertIn(error, result.stderr)
+            self.assertEqual(wb.read_bytes(), before)
 
     def test_refuses_unknown_slug(self):
         wb, review = _fixture(

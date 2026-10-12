@@ -11,7 +11,9 @@ under EPM-DEC-001-0001's no-comment rule.
 Rules:
 - Only `approved` rows are edited, because only they reach the taxonomy.
 - An unknown slug, or a row that is not `approved`, stops the run before any
-  write.
+  write. So does a scope note or a sentence that does not end with sentence
+  punctuation: every appended sentence then follows a sentence end, which is
+  what lets a re-run recognise it.
 - A sentence already in the scope note as a whole sentence is skipped, so a
   re-run changes nothing. Text that only contains it, inside a longer
   sentence, does not count.
@@ -47,10 +49,15 @@ def corrections(path):
     return out
 
 
+ENDS_SENTENCE = re.compile(r"[.!?][\"'”’)\]]*$")
+
+
 def has_sentence(note, sentence):
     """True when `sentence` stands in `note` as a whole sentence: at the start or
-    after sentence-ending punctuation and any whitespace, and at the end or before a space."""
-    return re.search(r"(?:^|(?<=[.!?])\s+)" + re.escape(sentence) + r"(?=\s|$)", note) is not None
+    after sentence-ending punctuation (with an optional closing quote or
+    bracket) and any whitespace, and at the end or before a space."""
+    ends = r"(?:^|(?<=[.!?])\s+|(?<=[.!?][\"'”’)\]])\s+)"
+    return re.search(ends + re.escape(sentence) + r"(?=\s|$)", note) is not None
 
 
 def main():
@@ -69,11 +76,17 @@ def main():
 
     edits = corrections(args.corrections)
     errors = []
-    for slug, _ in edits:
+    for slug, sentence in edits:
         if slug not in by_slug:
             errors.append(f"{slug}: not in the workbook")
         elif (by_slug[slug][idx["status"]].value or "").strip() != "approved":
             errors.append(f"{slug}: status is {by_slug[slug][idx['status']].value!r}, not 'approved'")
+        else:
+            note = (by_slug[slug][idx["scope_note"]].value or "").strip()
+            if note and not ENDS_SENTENCE.search(note):
+                errors.append(f"{slug}: scope note does not end with sentence punctuation; fix it first")
+        if not ENDS_SENTENCE.search(sentence):
+            errors.append(f"{slug}: sentence does not end with sentence punctuation")
     if errors:
         sys.exit("refused, nothing written:\n  " + "\n  ".join(errors))
 
