@@ -568,3 +568,20 @@ def test_any_raw_html_in_a_checked_record_is_reported(tmp_path):
         (folder / "EPM-DEC-001-0026-test.md").write_text("# t\n\n" + body)
         problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
         assert any("raw HTML" in p for p in problems), name
+
+
+def test_an_unrecognised_status_is_reported(tmp_path):
+    for i, status in enumerate(("​Decided", "﻿Decided", "(Decided)", "Decidedly")):
+        folder = tmp_path / str(i) / "decisions"
+        folder.mkdir(parents=True)
+        (folder / "EPM-DEC-001-0026-test.md").write_text(
+            f"# t\n\n| Field | Value |\n|---|---|\n| Status | {status} |\n\n## Hamid's recorded words\n\nHamid agreed.\n")
+        problems = epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
+        assert any("status" in p.lower() and "recognised" in p for p in problems), repr(status)
+
+
+def test_images_are_refused_on_both_sides(tmp_path):
+    words = '"Approved: Q1–Q18 as ![never](missing.png) recommended in the comment above"'
+    assert any("image" in p for p in _decision_fixture(tmp_path / "a", 26, words))
+    corpus = epm_facts.rendered_answer_corpus(_answers(tmp_path / "b", "approve ![not](x.png) every risky change\n"))
+    assert "approve every risky change" not in corpus

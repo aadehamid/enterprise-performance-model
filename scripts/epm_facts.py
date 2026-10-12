@@ -592,8 +592,12 @@ def displayed_text(tok):
 
 
 def has_html(tok):
-    """True when a block token is, or contains, raw HTML (including comments)."""
-    return tok.type == "html_block" or any(c.type == "html_inline" for c in (tok.children or []))
+    """True when a block token is, or contains, raw HTML (including comments) or an image.
+
+    Both can hide words or show words the text reading misses (an image shows its
+    alt text when it fails to load), so checked text refuses them.
+    """
+    return tok.type == "html_block" or any(c.type in ("html_inline", "image") for c in (tok.children or []))
 
 
 def rendered_blocks(text):
@@ -794,7 +798,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         # quote), so a checked record must be plain Markdown throughout.
         from markdown_it import MarkdownIt
         if any(has_html(t) for t in MarkdownIt("commonmark").enable("table").parse(record)):
-            problems.append(f"{name}: raw HTML in a checked decision record; write it in plain Markdown")
+            problems.append(f"{name}: raw HTML or an image in a checked decision record; write it in plain Markdown")
             continue
         # The status a reader sees: the Status row of the record's displayed tables.
         # A row inside an HTML comment or code block is not a table row, and any
@@ -805,6 +809,9 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
             continue
         if statuses[0][1]:
             problems.append(f"{name}: raw HTML in the Status row; write it in plain Markdown")
+            continue
+        if not re.fullmatch(r"(Proposed|Decided|Superseded)\b[^\u200b-\u200f\ufeff]*", statuses[0][0]):
+            problems.append(f"{name}: Status {statuses[0][0]!r} is not a recognised status (Proposed, Decided or Superseded)")
             continue
         decided = _status_parts(statuses[0][0])[0] == "Decided"
         sections = recorded_words(record)
