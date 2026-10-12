@@ -790,6 +790,12 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         with open(path) as f:
             record = f.read()
         name = f"EPM-DEC-001-{number:04d}"
+        # Raw HTML can hide or relabel any part of a record (a status, a heading, a
+        # quote), so a checked record must be plain Markdown throughout.
+        from markdown_it import MarkdownIt
+        if any(has_html(t) for t in MarkdownIt("commonmark").enable("table").parse(record)):
+            problems.append(f"{name}: raw HTML in a checked decision record; write it in plain Markdown")
+            continue
         # The status a reader sees: the Status row of the record's displayed tables.
         # A row inside an HTML comment or code block is not a table row, and any
         # pipe-table spelling is. Exactly one is required.
