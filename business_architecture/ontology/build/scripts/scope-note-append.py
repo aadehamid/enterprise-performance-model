@@ -53,11 +53,18 @@ ENDS_SENTENCE = re.compile(r"[.!?][\"'”’)\]]*$")
 
 
 def has_sentence(note, sentence):
-    """True when `sentence` stands in `note` as a whole sentence: at the start or
-    after sentence-ending punctuation (with an optional closing quote or
-    bracket) and any whitespace, and at the end or before a space."""
-    ends = r"(?:^|(?<=[.!?])\s+|(?<=[.!?][\"'”’)\]])\s+)"
-    return re.search(ends + re.escape(sentence) + r"(?=\s|$)", note) is not None
+    """True when `sentence` stands in `note` as a whole sentence: the text before
+    it is empty or ends a sentence (ENDS_SENTENCE) followed by whitespace, and
+    the text after it is empty or starts with whitespace. One rule, shared with
+    the refusal above, decides where a sentence ends."""
+    at = note.find(sentence)
+    while at != -1:
+        before, after = note[:at], note[at + len(sentence):]
+        starts_clean = not before.strip() or (before != before.rstrip() and ENDS_SENTENCE.search(before.rstrip()))
+        if starts_clean and (not after or after[0].isspace()):
+            return True
+        at = note.find(sentence, at + 1)
+    return False
 
 
 def main():

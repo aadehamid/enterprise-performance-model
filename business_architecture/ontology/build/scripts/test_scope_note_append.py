@@ -89,6 +89,17 @@ class ScopeNoteAppend(unittest.TestCase):
             self.assertIn("0 added, 1 already present", _run(wb, review).stdout, note)
             self.assertEqual(wb.read_bytes(), before)
 
+    def test_rerun_after_nested_closing_marks_changes_nothing(self):
+        for note, edits in (
+            ("Says (“stop.”)", [("A-1", "Settles trades.")]),
+            ("Existing.", [("A-1", "Records (“terms.”)"), ("A-1", "Settles trades.")]),
+        ):
+            wb, review = _fixture([{"slug": "A-1", "scope_note": note, "status": "approved"}], edits)
+            self.assertEqual(_run(wb, review).returncode, 0, note)
+            before = wb.read_bytes()
+            self.assertIn(f"0 added, {len(edits)} already present", _run(wb, review).stdout, note)
+            self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_row_not_approved_and_writes_nothing(self):
         wb, review = _fixture(
             [{"slug": "A-1", "scope_note": "Note.", "status": "approved"},
