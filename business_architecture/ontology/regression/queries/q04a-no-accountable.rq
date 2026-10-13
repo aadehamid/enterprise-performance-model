@@ -1,0 +1,11 @@
+# Q4. Which processes have no accountable owner? (live processes of the core scheme with no accountable assignment)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX orgm: <https://w3id.org/lsc/ontology/modules/organization/>
+PREFIX raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/>
+
+SELECT ?process WHERE {
+  ?process skos:inScheme mod:core .
+  FILTER NOT EXISTS { ?process owl:deprecated true }
+  FILTER NOT EXISTS { ?a orgm:forProcess ?process ; orgm:raciLevel raci:accountable } }

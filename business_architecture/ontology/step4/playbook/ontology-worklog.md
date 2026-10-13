@@ -90,7 +90,7 @@ ontology; everything else points at it.
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Planned |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0, 5 answerable, 5 partial, 34 waiting |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Planned |
 
 Note: Step 8 was completed early (it was originally sequenced after
@@ -956,6 +956,16 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 5 RACI assignments (2026-10-13)
+- `organization/build_assignments.py` emits one
+  `orgm:ResponsibilityAssignment` per RACI entry in the process map and per
+  role the entry names, keeping the entry's text. Nothing is inferred from
+  the hierarchy. `raci-conservation.csv` reconciles entries in with
+  assignments out. Competency questions 3 to 5 are answerable. Q4 lists
+  the live processes with no RACI in the source; whether they need RACI is
+  a scope question for Hamid, recorded in EPM-DEC-001-0032, which is
+  decided under EPM-DEC-001-0028.
 
 ### Step 5 role register (2026-10-13)
 - `organization/role-register.csv` maps each RACI role string in the

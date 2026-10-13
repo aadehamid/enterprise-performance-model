@@ -1,0 +1,87 @@
+"""Tests for the RACI assignments (Step 5, slice 3; EPM-DEC-001-0032): one assignment per
+source entry and role, nothing inferred from the hierarchy, a ledger that reconciles, and
+SHACL that holds.
+
+Run: python3 -m pytest test_assignments.py (needs rdflib, pyshacl).
+"""
+import json
+import unittest
+from collections import Counter
+from unittest import mock
+
+from rdflib import Graph
+from rdflib.namespace import RDF
+
+import build_assignments as ba
+import build_roles as br
+
+ENTRIES, REGISTER, GRAPH = ba.build()
+ROLES_OF = {r["source_text"]: r["roles"].split(";") for r in REGISTER}
+IRIS = ba.process_iris()
+O = br.ORGM
+
+
+def emitted():
+    """(process IRI, level, role slug, source text) for every assignment in the graph."""
+    out = Counter()
+    for a in GRAPH.subjects(RDF.type, O.ResponsibilityAssignment):
+        out[(GRAPH.value(a, O.forProcess), str(GRAPH.value(a, O.raciLevel)).rsplit("/", 1)[1],
+             str(GRAPH.value(a, O.assignedRole)).rsplit("/", 1)[1], str(GRAPH.value(a, O.sourceRoleText)))] += 1
+    return out
+
+
+class Assignments(unittest.TestCase):
+    def test_each_source_entry_and_role_gives_exactly_one_assignment(self):
+        expected = Counter((IRIS[p], lvl, role, t) for p, lvl, t in ENTRIES for role in ROLES_OF[t])
+        self.assertEqual(emitted(), expected)
+
+    def test_only_processes_with_raci_in_the_source_get_assignments(self):
+        # Nothing is inferred from the hierarchy: a parent's RACI does not reach its children.
+        self.assertEqual(set(GRAPH.objects(None, O.forProcess)), {IRIS[p] for p, _, _ in ENTRIES})
+
+    def test_the_ledger_reconciles(self):
+        rows = dict(ba.ledger(ENTRIES, REGISTER, GRAPH))
+        self.assertEqual(rows["RACI entries in the source"] + rows["extra roles from compound strings"],
+                         rows["assignments emitted"])
+        self.assertEqual(sum(rows[f"assignments at level {lvl}"] for lvl in br.LEVELS), rows["assignments emitted"])
+        self.assertEqual(sum(rows[f"entries at level {lvl}"] for lvl in br.LEVELS), rows["RACI entries in the source"])
+
+    def test_the_written_files_are_current(self):
+        for path, text in ba.render(ENTRIES, REGISTER, GRAPH).items():
+            with open(path) as f:
+                self.assertEqual(f.read(), text, path)
+
+    def test_the_assignments_conform(self):
+        ba.shacl(GRAPH)  # exits on a violation
+
+    def test_an_assignment_without_a_role_fails_shacl(self):
+        g = Graph()
+        g += GRAPH
+        a = next(g.subjects(RDF.type, O.ResponsibilityAssignment))
+        g.remove((a, O.assignedRole, None))
+        with self.assertRaises(SystemExit):
+            ba.shacl(g)
+
+    def test_a_process_missing_from_the_identity_map_fails(self):
+        with mock.patch.object(ba, "process_iris", lambda: {}):
+            with self.assertRaises(SystemExit):
+                ba.build()
+
+    def test_a_ledger_that_does_not_reconcile_fails(self):
+        g = Graph()
+        g += GRAPH
+        a = next(g.subjects(RDF.type, O.ResponsibilityAssignment))
+        g.remove((a, None, None))
+        with self.assertRaises(SystemExit):
+            ba.ledger(ENTRIES, REGISTER, g)
+
+    def test_iris_do_not_depend_on_list_order(self):
+        p = next(iter(IRIS.values()))
+        self.assertEqual(ba.assignment_iri(p, "accountable", "trader", "Traders"),
+                         ba.assignment_iri(p, "accountable", "trader", "Traders"))
+        self.assertNotEqual(ba.assignment_iri(p, "accountable", "trader", "Traders"),
+                            ba.assignment_iri(p, "accountable", "trader", "Supply Coordinators/Traders"))
+
+
+if __name__ == "__main__":
+    unittest.main()

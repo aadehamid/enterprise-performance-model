@@ -1,0 +1,10 @@
+# Q3. Every assignment points at a process of the core scheme and a named role (must be none)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX orgm: <https://w3id.org/lsc/ontology/modules/organization/>
+PREFIX raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/>
+
+SELECT ?a WHERE {
+  ?a a orgm:ResponsibilityAssignment ; orgm:forProcess ?process ; orgm:assignedRole ?role .
+  FILTER (NOT EXISTS { ?process skos:inScheme mod:core } || NOT EXISTS { ?role skos:prefLabel ?name }) }
