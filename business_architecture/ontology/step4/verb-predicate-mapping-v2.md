@@ -11,7 +11,9 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `37fed949fbd2e7b333663e170717262e26ca73ac` (re-pinned 2026-10-12 for the #202 answers from the Phase 1 register; was `efc47150504face11bee5fdb2d57d737cfb170ca`).
+**Baseline:** `883bd57a1a1f98267489c875887462e11ed99027` (re-pinned 2026-10-13 for the #209 answers from the Phase 1 register; was `37fed949fbd2e7b333663e170717262e26ca73ac`).
+
+*Previous baseline:* `37fed949fbd2e7b333663e170717262e26ca73ac` (re-pinned 2026-10-12 for the #202 answers from the Phase 1 register; was `efc47150504face11bee5fdb2d57d737cfb170ca`).
 
 *Previous baseline:* `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register; was `adc7483522a7f3845dceca90c95187b6253372a4`).
 
@@ -799,7 +801,10 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   credit analytics → credit limits, A2); REL-00818 and REL-00820 (spend and
   ROI analysis → budget and mix decisions, A3); REL-00750 and REL-01206
   (portfolio and lifecycle recommendations → product/service change, S&T
-  sweep) — all held.
+  sweep) — all held. *Phase 1 sweep (2026-10-12): each was then corrected in
+  the source to `informs` and emits `core:informedBy` — REL-00750 and
+  REL-01206 in #203, REL-00445 in #210, REL-00232, REL-00818 and REL-00820
+  in #209. The rule is unchanged: the correction was made in the source.*
 - **S&T sweep, 2026-09-26 (21 rows):**
   - **6 approved** as bounded `core:enabledBy`. 2 still emit (REL-00433,
     REL-01172). 4 were superseded under the identity rule: REL-00437 (B3),

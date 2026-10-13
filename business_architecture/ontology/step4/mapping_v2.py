@@ -163,6 +163,10 @@ PROPERTY_RULE_HOLDS = {
                   "uses-input evidence exists. Stored core:dependsOnOutputOf "
                   "fact removed (Rule 11: no silent verb change); retain the "
                   "enables assertion as non-emitting evidence."),
+    # Phase 1 sweep, #209 (Hamid 2026-10-12, #207 comment 6133390674): the 41 G3
+    # Section A rows held in the A1-A6 blocks below were corrected in the source and
+    # now emit; the row counts in those dated comments are history, and the six
+    # no-relationship rows that stay are listed in review-evidence/phase1-sweep/209-review.csv.
     # Hamid 2026-09-26: G3 Section A1 verdicts (D:hamid-verdict). Explicit
     # target reference is not enablement proof. These 6 rows fail the
     # capability-effect test: exclusion references, informational/evidence
@@ -170,34 +174,6 @@ PROPERTY_RULE_HOLDS = {
     # core:enabledBy fact (each verified unique, single-row, no independent
     # supporter); emit no substitute predicate; retain the enables assertion
     # as non-emitting evidence; route for source-workbook correction.
-    "REL-00009": ("Hamid 2026-09-26: HOLD (G3-A1). Exclusion reference: the "
-                  "source scope note expressly excludes the target's receipt "
-                  "and case-assembly work. Boundary statement, not affirmative "
-                  "enablement evidence. Stored core:enabledBy fact removed; "
-                  "no remap to dependsOnOutputOf without a distinct "
-                  "uses-input assertion."),
-    "REL-00041": ("Hamid 2026-09-26: HOLD (G3-A1). Informational feed: "
-                  "per-movement outturn reconciliation feeds periodic "
-                  "book-to-physical reconciliation, but 'feeds' is an "
-                  "information/evidence contribution, not demonstrated "
-                  "capability enablement. Stored core:enabledBy fact removed."),
-    "REL-00054": ("Hamid 2026-09-26: HOLD (G3-A1). The source explicitly "
-                  "excludes replenishment management, independently owned by "
-                  "the target. Policy evidence does not establish that policy "
-                  "development makes replenishment operationally capable. No "
-                  "inferred governedBy/constrainedBy at emission. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00077": ("Hamid 2026-09-26: HOLD (G3-A1). Exclusion reference: the "
-                  "source expressly excludes plan-vs-actual variance analysis "
-                  "owned by the target. Performance monitoring may feed "
-                  "improvement work; neither independent enablement nor basis "
-                  "for an alternate predicate. Stored core:enabledBy fact "
-                  "removed."),
-    "REL-00118": ("Hamid 2026-09-26: HOLD (G3-A1). Input/evidence relationship: "
-                  "the source's daily production balance feeds the target's "
-                  "periodic reconciliation while explicitly excluding ownership "
-                  "of that reconciliation. Not proven enablement. Stored "
-                  "core:enabledBy fact removed."),
     "REL-00176": ("Hamid 2026-09-26: HOLD (G3-A1). Lifecycle relation: contract "
                   "termination/novation requires obligations settled or queued, "
                   "but this does not evidence that termination enables the "
@@ -212,13 +188,6 @@ PROPERTY_RULE_HOLDS = {
     # (each verified unique, single-row, no independent supporter); emit no
     # substitute predicate; retain the enables assertion as non-emitting
     # evidence; route for source-workbook correction.
-    "REL-00232": ("Hamid 2026-09-26: HOLD (G3-A2). Analytical advice: "
-                  "portfolio-level analytics findings feed limit structures "
-                  "but do not establish that credit-limit management cannot "
-                  "operate without the analytics capability. Analysis/advice "
-                  "to a decision authority, not demonstrated enablement. "
-                  "Stored core:enabledBy fact removed; no remap to informedBy "
-                  "or dependsOnOutputOf at emission."),
     "REL-00294": ("Hamid 2026-09-26: HOLD (G3-A2). Output contribution: "
                   "position and P&L analysis delivers the official economic "
                   "P&L that accounting reconciliation uses. Strong output/data "
@@ -226,31 +195,12 @@ PROPERTY_RULE_HOLDS = {
                   "not be silently converted to dependsOnOutputOf. Stored "
                   "core:enabledBy fact removed; retained as non-emitting "
                   "evidence pending workbook correction."),
-    "REL-00409": ("Hamid 2026-09-26: HOLD (G3-A2). Operational feedback: "
-                  "exception patterns may feed policy improvement, but "
-                  "exception management does not make the policy-development "
-                  "capability able to operate. Feedback/learning, not a "
-                  "maintained enabling foundation. Stored core:enabledBy fact "
-                  "removed."),
     "REL-00479": ("Hamid 2026-09-26: HOLD (G3-A2). Informational feed: an "
                   "operational demand forecast informs replenishment "
                   "fulfillment, but the target receives quantities and timing "
                   "from the accountable replenishment decision owner. "
                   "Forecasting supplies neither authorization, supply source, "
                   "nor executable fulfillment capability. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00493": ("Hamid 2026-09-26: HOLD (G3-A2). Excluded scope: the source "
-                  "explicitly excludes secondary delivery scheduling, owned by "
-                  "the target. Customer-facing delivery terms may constrain "
-                  "or inform delivery operations but do not prove enablement "
-                  "of the target capability. Stored core:enabledBy fact "
-                  "removed."),
-    "REL-00517": ("Hamid 2026-09-26: HOLD (G3-A2). Documentation contribution: "
-                  "documenting governed findings supplies reusable evidence to "
-                  "insight stewardship; an information/documentation "
-                  "contribution, not independently demonstrated enablement. "
-                  "No change to dependsOnOutputOf without a separately "
-                  "asserted and approved source relationship. Stored "
                   "core:enabledBy fact removed."),
     # Hamid 2026-09-26: G3 Section A3 verdicts (D:hamid-verdict). Reconciled
     # count: 12 approved / 13 held (row-level table authoritative; the
@@ -262,68 +212,11 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); emit no substitute predicate; retain the
     # enables assertion as non-emitting evidence; route for source-workbook
     # correction.
-    "REL-00528": ("Hamid 2026-09-26: HOLD (G3-A3). Documentation feed: source "
-                  "documents and distributes governed company findings and "
-                  "maintains a reusable findings library — evidence management "
-                  "and information distribution, not a separately demonstrated "
-                  "enabling capability. Stored core:enabledBy fact removed; "
-                  "no silent conversion to output dependency."),
-    "REL-00539": ("Hamid 2026-09-26: HOLD (G3-A3). Documentation feed: source "
-                  "documents consumer findings and maintains the findings "
-                  "library — information distribution, not enablement of "
-                  "insight stewardship. Stored core:enabledBy fact removed."),
-    "REL-00551": ("Hamid 2026-09-26: HOLD (G3-A3). Documentation feed: source "
-                  "documents customer/marketer findings — evidence management, "
-                  "not a separately demonstrated enabling capability. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00562": ("Hamid 2026-09-26: HOLD (G3-A3). Documentation feed: source "
-                  "documents competitor findings — information distribution, "
-                  "not enablement. Stored core:enabledBy fact removed."),
-    "REL-00665": ("Hamid 2026-09-26: HOLD (G3-A3). Partitioned ownership: the "
-                  "source develops channel design and engagement-model "
-                  "structure but explicitly excludes partner-management "
-                  "execution, which the target performs. Approved design "
-                  "direction may inform the target but does not establish a "
-                  "maintained capability base or prerequisite enabling the "
-                  "target process. Stored core:enabledBy fact removed."),
-    "REL-00811": ("Hamid 2026-09-26: HOLD (G3-A3). Forecast input, not "
-                  "enablement: the promotional event calendar is a forecast "
-                  "input to the demand-forecasting process, not a capability "
-                  "that makes the target able to operate. Stored "
-                  "core:enabledBy fact removed; no change to dependsOnOutputOf "
-                  "or informedBy at promotion."),
-    "REL-00818": ("Hamid 2026-09-26: HOLD (G3-A3). Analytical feedback: "
-                  "marketing spend analysis informs future resource "
-                  "allocation; the target operates on approved strategy and "
-                  "delegated authority. Analysis is feedback, not independent "
-                  "enablement. Stored core:enabledBy fact removed."),
-    "REL-00820": ("Hamid 2026-09-26: HOLD (G3-A3). Analytical feedback: "
-                  "campaign ROI analysis informs mix-model decisions; not an "
-                  "enabling prerequisite. Stored core:enabledBy fact removed."),
-    "REL-00834": ("Hamid 2026-09-26: HOLD (G3-A3). Forecast input, not "
-                  "enablement: sales pipeline evidence is explicitly an input "
-                  "to the forecast-input process; it does not enable the "
-                  "process as a maintained operating capability. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00843": ("Hamid 2026-09-26: HOLD (G3-A3). Hierarchy-adjacent: Develop "
-                  "Quote is part of the target capability's stated scope; the "
-                  "supplied definitions do not establish that the source "
-                  "enables the broader target capability. Stored "
-                  "core:enabledBy fact removed."),
     "REL-00846": ("Hamid 2026-09-26: HOLD (G3-A3). Partitioned ownership: the "
                   "source definition partitions commercial stewardship from "
                   "target-owned transactional order and fulfillment records; "
                   "definitions do not establish enablement. Stored "
                   "core:enabledBy fact removed."),
-    "REL-00851": ("Hamid 2026-09-26: HOLD (G3-A3). Informational contribution: "
-                  "sales-execution reporting provides evidence to planning "
-                  "feedback loops — an informational contribution, not "
-                  "enablement of gap analysis. Stored core:enabledBy fact "
-                  "removed."),
-    "REL-00852": ("Hamid 2026-09-26: HOLD (G3-A3). Informational contribution: "
-                  "sales-execution reporting feeds marketing-performance "
-                  "feedback — an informational contribution, not enablement. "
-                  "Stored core:enabledBy fact removed."),
     # Hamid 2026-09-26: G3 Section A4 verdicts (D:hamid-verdict). Reconciled
     # count: 16 approved / 9 held (row-level table authoritative; the
     # "13/12" summary text was a counting error — the table's verdict rows
@@ -340,50 +233,12 @@ PROPERTY_RULE_HOLDS = {
                   "and lists invoicing as a downstream consumer — not evidence "
                   "that price implementation makes the billing capability able "
                   "to operate. Stored core:enabledBy fact removed; no remap."),
-    "REL-00886": ("Hamid 2026-09-26: HOLD (G3-A4). Operational-data feed: "
-                  "loyalty-program operation produces records that analysis "
-                  "consumes, but the target explicitly performs performance "
-                  "analysis 'never as program operation'. Not enablement. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00889": ("Hamid 2026-09-26: HOLD (G3-A4). Boundary statement: card "
-                  "billing coordination supplies validated data and statement "
-                  "requirements while invoice creation, correction, reversal, "
-                  "and distribution stay under the target's own controls — an "
-                  "informational/billing-readiness contribution, not "
-                  "enablement. Stored core:enabledBy fact removed."),
-    "REL-00898": ("Hamid 2026-09-26: HOLD (G3-A4). Input/data relationship: "
-                  "delinquency and collections-referral activity supplies "
-                  "portfolio and collection-status data for bad-debt "
-                  "assessment; Finance-controlled expected-credit-loss "
-                  "estimation and write-off are distinct decision/accounting "
-                  "processes. Stored core:enabledBy fact removed."),
-    "REL-01038": ("Hamid 2026-09-26: HOLD (G3-A4). Exception/lifecycle "
-                  "handoff: receivables disputes release invalid disputes to "
-                  "collection but do not provide the maintained operational "
-                  "base making collections capable of operating. Stored "
-                  "core:enabledBy fact removed; no remap at promotion."),
-    "REL-01072": ("Hamid 2026-09-26: HOLD (G3-A4). Output/input relationship: "
-                  "royalty/fee/contribution administration creates specialized "
-                  "financial outcomes or source data, but does not enable the "
-                  "general billing capability. Stored core:enabledBy fact "
-                  "removed; remains non-emitting until source correction."),
-    "REL-01073": ("Hamid 2026-09-26: HOLD (G3-A4). Output/input relationship: "
-                  "royalty/fee/contribution administration supplies outcomes "
-                  "to close, but does not enable the period-end-close "
-                  "capability. Stored core:enabledBy fact removed; remains "
-                  "non-emitting until source correction."),
     "REL-01082": ("Hamid 2026-09-26: HOLD (G3-A4). Coordination/support: the "
                   "source coordinates workplace needs, upkeep, moves, and "
                   "compliance with corporate owners; it does not own "
                   "facilities capability or establish a maintained operating "
                   "base for service operations. Stored core:enabledBy fact "
                   "removed."),
-    "REL-01092": ("Hamid 2026-09-26: HOLD (G3-A4). Evidence/output "
-                  "relationship: service-event completion supplies confirmed "
-                  "fulfilment evidence and billable event data — evidence for "
-                  "billing, not an independent enabling capability. Stored "
-                  "core:enabledBy fact removed; no silent conversion to "
-                  "dependsOnOutputOf."),
     # Hamid 2026-09-26: G3 Section A5 verdicts (D:hamid-verdict). Reconciled
     # count: 14 approved / 11 held (row-level table authoritative; the
     # "13/12" summary text was a counting error). These 11 rows fail the
@@ -394,56 +249,6 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); emit no substitute predicate; retain the
     # enables assertion as non-emitting evidence; route for source-workbook
     # correction.
-    "REL-01157": ("Hamid 2026-09-26: HOLD (G3-A5). Analysis/evidence feed: "
-                  "marketing performance analysis produces evidence that "
-                  "sales planning may use, but does not establish a maintained "
-                  "enabling foundation. Stored core:enabledBy fact removed; "
-                  "no conversion to output dependency without an independently "
-                  "asserted and approved source relationship."),
-    "REL-01163": ("Hamid 2026-09-26: HOLD (G3-A5). Output/evidence feed: "
-                  "service delivery supplies billable fulfilment evidence to "
-                  "invoicing — an output/evidence feed, not an enabling "
-                  "capability. Stored core:enabledBy fact removed."),
-    "REL-01171": ("Hamid 2026-09-26: HOLD (G3-A5). Output/lifecycle "
-                  "relation: secondary distribution management supplies "
-                  "delivery outcomes for Distribution Backcasting, which owns "
-                  "plan-variance analysis. Stored core:enabledBy fact removed."),
-    "REL-01178": ("Hamid 2026-09-26: HOLD (G3-A5). Analysis feed: company "
-                  "analysis produces evidence that insight stewardship may "
-                  "synthesize — information/analytical-feed relationship, not "
-                  "enablement. Stored core:enabledBy fact removed."),
-    "REL-01182": ("Hamid 2026-09-26: HOLD (G3-A5). Analysis feed: consumer "
-                  "analysis produces evidence for insight stewardship, not a "
-                  "maintained enabling foundation. Stored core:enabledBy fact "
-                  "removed."),
-    "REL-01185": ("Hamid 2026-09-26: HOLD (G3-A5). Analysis feed: customer and "
-                  "marketer analysis produces evidence for insight "
-                  "stewardship — analytical feed, not enablement. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-01210": ("Hamid 2026-09-26: HOLD (G3-A5). Partitioned coordination: "
-                  "R&D Collaboration coordinates governed channels, "
-                  "confidentiality, and intake but explicitly excludes "
-                  "development work — supports collaboration without becoming "
-                  "the capability that enables development. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-01216": ("Hamid 2026-09-26: HOLD (G3-A5). Forecast input: "
-                  "promotional calendars feed the demand-forecast-input "
-                  "process — a forecast input, not enablement. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-01254": ("Hamid 2026-09-26: HOLD (G3-A5). Cross-capability "
-                  "partition: commercial terms/quoting are adjacent O2C "
-                  "controls; the source explicitly excludes order capture "
-                  "and fulfilment, which the target owns. Not independent "
-                  "enablement. Stored core:enabledBy fact removed."),
-    "REL-01257": ("Hamid 2026-09-26: HOLD (G3-A5). Output/lifecycle "
-                  "relation: order/fulfilment management supplies completion "
-                  "evidence to billing; it does not enable billing as a "
-                  "capability. Stored core:enabledBy fact removed."),
-    "REL-01262": ("Hamid 2026-09-26: HOLD (G3-A5). Non-enabling "
-                  "coordination: customer requests/inquiries can route or "
-                  "communicate disputes, but receivables-dispute adjudication "
-                  "is independently owned and not enabled by customer-service "
-                  "capability. Stored core:enabledBy fact removed."),
     # Hamid 2026-09-26: G3 Section A6 verdicts (D:hamid-verdict). Final
     # explicit-reference section: 4 approvals / 2 holds (table is
     # authoritative; no count conflict). These 2 rows fail the
@@ -452,22 +257,6 @@ PROPERTY_RULE_HOLDS = {
     # verified unique, single-row, no independent supporter); emit no
     # substitute predicate; retain the enables assertion as non-emitting
     # evidence; route for source-workbook correction.
-    "REL-01277": ("Hamid 2026-09-26: HOLD (G3-A6). Adjacent execution: "
-                  "Sales Execution produces pipeline, opportunities, "
-                  "key-account activity, quotes, contracts, and qualified "
-                  "outcomes that hand into controlled transaction processes — "
-                  "it is a consumer or participant in the broader O2C "
-                  "commercial-control capability, not a maintained enabling "
-                  "base for it. Stored core:enabledBy fact removed."),
-    "REL-01299": ("Hamid 2026-09-26: HOLD (G3-A6). Independent-function "
-                  "exclusion: Confirmations Management independently "
-                  "confirms, matches, documents, modifies, reports, and "
-                  "resolves discrepancies in executed trade confirmations; "
-                  "the reference excerpt explicitly excludes deal-level "
-                  "confirmation from Contract Management's scope. Contract "
-                  "terms may be a relevant input, but the evidence does not "
-                  "establish a distinct enablement relation. Stored "
-                  "core:enabledBy fact removed; no remap at promotion."),
     # Hamid 2026-09-26: G3 Section B1 verdicts (D:hamid-verdict). The first
     # nearness-only chunk: all 15 rows HELD. Each candidate target was
     # selected solely by classifier nearness (unique label matching), with
