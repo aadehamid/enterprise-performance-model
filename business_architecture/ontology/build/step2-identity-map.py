@@ -38,7 +38,7 @@ ID_RE = re.compile(r"^[A-Z]+ \d+(\.\d+)*$")
 
 # Slugs are identity. A node first published under a minted slug keeps it when the
 # process map later gives it an ID; the ID becomes its skos:notation only. MPC-P02
-# proposes these IDs (business_process/proposals/MPC-P02-refining-ids.md).
+# proposes these IDs (business_architecture/business_process/proposals/MPC-P02-refining-ids.md).
 SLUG_PINS = {
     "RF 1": "L1-refining",
     "RF 1.1": "L2-refinery-performance-and-risk-coordination",
