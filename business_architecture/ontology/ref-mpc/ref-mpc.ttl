@@ -25,13 +25,13 @@ src:mpc-s01 a dcterms:BibliographicResource ;
     dcterms:title "Marathon Petroleum Corporation, Form 10-K for the fiscal year ended 2025-12-31"@en ;
     dcterms:identifier "0001510295-26-000009" ;
     dcterms:issued "2026-02-26"^^xsd:date ;
-    dcterms:source <https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm> .
+    dcterms:bibliographicCitation "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm"@en .
 
 src:gleif-lei a dcterms:BibliographicResource ;
     dcterms:title "GLEIF LEI records (Level 1 and Level 2), golden copy published 2026-10-13"@en ;
     dcterms:identifier "GLEIF API v1, lei-records" ;
     dcterms:issued "2026-10-13"^^xsd:date ;
-    dcterms:source <https://api.gleif.org/api/v1/lei-records> .
+    dcterms:bibliographicCitation "https://api.gleif.org/api/v1/lei-records"@en .
 
 # ---- Legal entities ----
 
