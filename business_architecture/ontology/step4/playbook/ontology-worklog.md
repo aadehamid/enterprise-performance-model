@@ -88,7 +88,7 @@ ontology; everything else points at it.
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs wait for Hamid to confirm the `sioc` field's meaning |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
-| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Planned |
+| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Planned |
@@ -956,6 +956,17 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 9 controlled values (2026-10-13)
+- `validation/controlled-values.ttl` requires every code-list property of
+  `core` to take its values from its own list (the 1.0.0 release shapes
+  checked at most `sh:class skos:Concept`, except `sh:in` on the concept
+  kind), and the same of the RACI level. `core`
+  1.0.0 conforms. A test fails when a code-list property has no shape; it
+  found `evidenceBasis` and `sequenceScope`. The evidence-link shape waits
+  for the next `core` release, which must carry each fact's evidence in
+  the graph. The design is EPM-DEC-001-0035, decided under
+  EPM-DEC-001-0028.
 
 ### Step 6 definition-to-run pattern (2026-10-13)
 - `provenance/run-shapes.ttl` defines how a consumer's run links to its
