@@ -152,12 +152,28 @@ class RoundTripRules(unittest.TestCase):
 
 
 class Report(unittest.TestCase):
+    def test_a_shape_change_makes_the_report_stale(self):
+        from unittest import mock
+        real_open = open
+        def edited(path, *a, **k):
+            f = real_open(path, *a, **k)
+            if str(path).endswith("organization/shapes.ttl"):
+                import io
+                return io.StringIO(f.read() + "\n# edited\n")
+            return f
+        with mock.patch("builtins.open", edited):
+            changed = pl.shapes_fingerprint()
+        with real_open(pl.REPORT) as f:
+            self.assertNotEqual(json.load(f)["shapes_fingerprint"], changed)
+
     def test_the_step_5_report_describes_the_current_inputs_and_passed(self):
         with open(pl.REPORT) as f:
             report = json.load(f)
         loadable, inferred, _ = pl.build()
         self.assertEqual(report["input_fingerprint"], pl.sha(loadable, inferred),
                          "projection-report.json is stale: rerun pipeline.py load-verify")
+        self.assertEqual(report["shapes_fingerprint"], pl.shapes_fingerprint(),
+                         "a shape file changed since the last Step 5 run: rerun pipeline.py load-verify")
         self.assertEqual(report["shacl_violations_in_graph"], 0)
         self.assertGreater(report["in_graph_mutant_violations"], 0)
         self.assertEqual((report["roundtrip_lost"], report["roundtrip_added"]), (0, 0))

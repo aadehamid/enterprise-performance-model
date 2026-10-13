@@ -19,7 +19,7 @@ EPM-DEC-001-0020 adds Step 12: follow the guideline's pipeline (check, reason, l
 2. **Reason.** ELK through ROBOT 1.9.10, once. The OWL API writes declarations into the reasoner's output (`owl:NamedIndividual` on 2,086 instances, plus `owl:Class`, `owl:AnnotationProperty`, `owl:Thing`, `rdfs:Datatype`). They are not inferences about the domain, so `inferred.nt` drops any triple whose object is an OWL or RDFS built-in. Today that leaves no inferred triples: the ontology is SKOS-first and has almost no class axioms.
 3. **Serialise.** Sorted, de-duplicated N-Triples and an input fingerprint (SHA-256 of `loadable.nt` and `inferred.nt`), recorded in `projection-manifest.json`.
 4. **Load.** Neo4j 2025.06.2 with n10s 2025.06.1 and APOC, `n10s.rdf.import` of both files, with generated configuration and the fixed prefixes.
-5. **Verify.** n10s SHACL in the graph, a round-trip diff, and two loads (sorted, and shuffled) whose hashes must match. The result is `projection-report.json`.
+5. **Verify.** n10s SHACL in the graph, a round-trip diff, and two loads (sorted, and shuffled) whose hashes must match. The result is `projection-report.json`, which records the input fingerprint and a fingerprint of every shape file, so a change to either makes the committed report stale.
 
 Choices where the guideline leaves room or does not fit the tools:
 
@@ -48,7 +48,7 @@ Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in
 
 ## Evidence
 
-EPM-DEC-001-0020, 0021, 0033; `lpg-projection/Ontology_to_LPG_Conversion_Playbook.md` (v2.1), sections 3, 5, 7 and 8; ROBOT v1.9.10 (https://github.com/ontodev/robot/releases/tag/v1.9.10, 2026-02-18); n10s 2025.06.1 (https://github.com/neo4j-labs/neosemantics/releases/tag/2025.06.1, 2026-06-16); Neo4j 2025.06.2; `projection-report.json`.
+EPM-DEC-001-0020, 0021, 0033; `lpg-projection/Ontology_to_LPG_Conversion_Playbook.md` (v2.1), sections 3, 5, 7 and 8; ROBOT v1.9.10 (https://github.com/ontodev/robot/releases/tag/v1.9.10, 2026-02-18); n10s 2025.06.1 (https://github.com/neo4j-labs/neosemantics/releases/tag/2025.06.1, 2026-06-16); Neo4j 2025.06.2 (tag 2025.06.2, "Release 2025.06.2", 2025-07-11, https://github.com/neo4j/neo4j/releases/tag/2025.06.2); `projection-report.json`.
 
 ## Consequences
 

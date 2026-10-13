@@ -88,6 +88,12 @@ def lpg_name(iri):
     return None
 
 
+def shapes_fingerprint():
+    """SHA-256 over every shape file, in order. The Step 5 report records it, so a shape change makes
+    the committed report stale even when the loaded triples do not change."""
+    return sha(*(open(os.path.join(ONTOLOGY, p)).read() for p in SHAPES))
+
+
 # ---------- Step 1: check the rules, then validate the data ----------
 
 def check_rules(data, shapes):
@@ -250,7 +256,7 @@ def cypher_setup(data, shapes):
 
 def load(session, nt_name, setup):
     session.run("MATCH (n) DETACH DELETE n").consume()
-    for drop in ("CALL n10s.graphconfig.drop()", "CALL n10s.nsprefixes.removeAll()", "CALL n10s.mapping.dropAll"):
+    for drop in ("CALL n10s.graphconfig.drop()", "CALL n10s.nsprefixes.removeAll()", "CALL n10s.mapping.dropAll()"):
         try:
             session.run(drop).consume()
         except Exception:
@@ -372,6 +378,7 @@ def load_verify(bolt, password, import_dir):
     both, lost, added = graph_diff(to_isomorphic(canonical_graph(src)), to_isomorphic(canonical_graph(out)))
     report = {
         "input_fingerprint": sha(loadable, inferred),
+        "shapes_fingerprint": shapes_fingerprint(),
         "shacl_violations_in_graph": len(violations),
         "in_graph_shape_constraints": shapes_loaded,
         "in_graph_mutant_violations": caught,
