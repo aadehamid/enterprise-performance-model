@@ -16,7 +16,7 @@ The core 1.0.0 process concepts are `skos:Concept`s, and none is a `prov:Activit
 ## Decision
 
 1. **A run is a `prov:Activity` held by the consumer.** It has exactly one `prov:qualifiedAssociation`, whose `prov:hadPlan` names exactly one core process concept: the definition the run followed. It states `prov:startedAtTime`, and may state `prov:endedAtTime` and `prov:agent`.
-2. **The definition must be live.** It is in the core scheme, not retired, and not a structural anchor (the worklog's `conceptKind` decision of 2026-09-22).
+2. **The definition must be a live process.** It is in the core scheme, not retired, not a structural anchor, and not a capability. The worklog's `conceptKind` decision of 2026-09-22 calls structural anchors not work anyone performs, and defines a capability as "an ability the organization has, realized by processes". The capability exclusion is Claude's conclusion from that definition, added on 2026-10-13 after #258 merged; see the amendment below.
 3. **No new terms.** The pattern uses PROV-O as published. P-Plan's steps and variables are not used now. The process taxonomy is a naming hierarchy, not a plan's step structure (playbook: SKOS first), and the 2026-09-22 flow decision keeps inputs and outputs as governed values, not nodes.
 4. **The ontology publishes the shapes.** `business_architecture/ontology/provenance/run-shapes.ttl` holds the shapes a consumer's run must meet, plus one that fails any core concept typed as a `prov:Activity`. `example-run.ttl` illustrates a run; it is not data.
 
@@ -25,6 +25,10 @@ Step 6's first procedure, planned inputs and outputs on the definitions, is not 
 ### For Hamid: the `sioc` field
 
 Does `sioc` in the process map mean SIPOC (suppliers, inputs, process, outputs, customers), with the process being the node itself? Recommendation: yes. All 153 objects hold exactly those four lists. If confirmed, the inputs and outputs become planned input and output values on those 153 processes, as governed literals under the 2026-09-22 flow decision. Suppliers and customers stay parked.
+
+## Amendment, 2026-10-13
+
+#258 merged with a shape that let a run follow a concept of kind capability. `core` 1.0.0 holds 23 of them. The worklog defines a capability as "an ability the organization has, realized by processes". Claude concluded that a run follows one of the processes that realize a capability, not the capability itself. The live-process shape now rejects a capability, decided under the same delegation; the worklog itself does not say this. Concepts with no kind stay allowed: the shape rejects only the two kinds it names.
 
 ## Alternatives considered
 
