@@ -84,7 +84,7 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes in `organization/` (EPM-DEC-001-0030, decided under EPM-DEC-001-0028); roles, assignments and `ref-mpc` to follow |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes in `organization/` (EPM-DEC-001-0030, decided under EPM-DEC-001-0028); the role register in `organization/` (EPM-DEC-001-0031); assignments and `ref-mpc` to follow |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Planned |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
@@ -956,6 +956,16 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 5 role register (2026-10-13)
+- `organization/role-register.csv` maps each RACI role string in the
+  process map to one or more of the roles in `organization/roles.csv`;
+  `build_roles.py` checks it against the source and writes `roles.ttl`.
+  Strings merge only on case, plural, punctuation or "&"; a qualifier stays
+  with the entry; a compound string splits; a team becomes a role with a
+  scope note. The design is EPM-DEC-001-0031, decided under
+  EPM-DEC-001-0028. Its open questions for Hamid (likely misspellings and
+  the acronyms) are listed there. Run `build_roles.py` for the figures.
 
 ### Step 5 organization vocabulary (2026-10-13)
 - `organization/` holds the module's vocabulary and shapes:
