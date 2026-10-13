@@ -29,60 +29,26 @@ ctx = {r["row_id"]: r["outcome"] for r in csv.DictReader(open(f"{BASE}/target-re
 # REL-01312 and REL-01053 held for source-workbook correction — the reverse
 # direction means control/constraint or close-feed consumption, not capability
 # enablement. See source-workbook-backlog.md.
+# Phase 1 sweep, #210 (Hamid 2026-10-12, #207 comment 6133390674): REL-00445,
+# REL-00758, REL-00936, REL-01053, REL-01094, REL-01131, REL-01192 and REL-01312,
+# held here until then, were corrected in the source and now emit; the comments
+# above that name them are history. review-evidence/phase1-sweep/210-review.csv.
 PROPERTY_RULE_HOLDS = {
     "REL-00503": ("mutual-informedBy with REL-00500: this direction B-only "
                   "(structural nearness); held per property rule — REL-00500 (A+B) emits"),
-    "REL-01312": ("Hamid 2026-09-24: HOLD for source correction. Market Risk "
-                  "Management establishes risk limits and delegated authority within "
-                  "which trade capture operates — governance/constraint, not "
-                  "reciprocal enablement. No core:enables triple; correct the "
-                  "source relationship through reviewed workbook authoring."),
-    "REL-01053": ("Hamid 2026-09-24: HOLD for source correction. Period-End "
-                  "Processing verifies and consumes AR reconciliation evidence; it "
-                  "does not enable the reconciliation capability. No reciprocal "
-                  "core:enables triple; correct the source relationship through "
-                  "reviewed workbook authoring."),
     # Hamid 2026-09-25: enables sample review verdicts. These B-only rows are
     # held because "enables" flattens "informs"/"supports" — not genuine
     # capability enablement. The promotion layer must not silently translate
     # enables into informs; rows are held for workbook correction.
-    "REL-00758": ("Hamid 2026-09-25: HOLD for source correction. External "
-                  "research collaboration may support but is not required for "
-                  "internal research. Correct to informs or a future supports "
-                  "relation via reviewed workbook authoring."),
-    "REL-01094": ("Hamid 2026-09-25: HOLD for source correction. Infrastructure "
-                  "performance evidence informs the technology roadmap; it does "
-                  "not enable technology management. Correct to informs via "
-                  "reviewed workbook authoring."),
-    "REL-01131": ("Hamid 2026-09-25: HOLD for source correction. Participation "
-                  "analysis informs commercial/supply scoping; operational demand "
-                  "management runs without it. Correct to informs via reviewed "
-                  "workbook authoring."),
-    "REL-01192": ("Hamid 2026-09-25: HOLD for source correction. Brand "
-                  "positioning may influence channel direction but is not a "
-                  "prerequisite for channel strategy. Correct to informs via "
-                  "reviewed workbook authoring."),
     # Hamid 2026-09-25: held for source classification review — the business
     # must confirm whether customer-profitability analysis is plan-based
     # (dependsOnOutputOf) or actual-data-based (informs). Not rewritten in Step 4.
-    "REL-00936": ("Hamid 2026-09-25: HOLD for source classification review. The "
-                  "revenue plan is not demonstrated as necessary for customer "
-                  "profitability analysis (which consumes actual revenue, "
-                  "cost-to-serve, terms, rebates, credit data). Likely informs; "
-                  "dependsOnOutputOf only if the business confirms plan-based "
-                  "analysis."),
     # Hamid 2026-09-25: HOLD for source correction ("enables" flattening
     # "informed-by"). A trading-side feedstock slate/run-rate recommendation
     # feeds the binding plan without setting it — informational, not
     # enablement. Per the PTC-002 principle (Refinery Planning and Optimization
     # decides; Supply & Trading advises), the workbook verb must be corrected
     # through reviewed authoring, not reinterpreted in promotion.
-    "REL-00445": ("Hamid 2026-09-25: HOLD for source correction. Recommend "
-                  "Feedstock Slate and Run Rate provides a trading-side "
-                  "recommendation that informs Refinery Planning and "
-                  "Optimization; it does not make the planning capability able "
-                  "to operate and does not set, approve, or revise the binding "
-                  "plan. Correct enables to informed-by in the workbook."),
     # Hamid 2026-09-26: HOLD for workbook correction. Crude/Feed Supply
     # Management manages the feedstock supply position and associated risks; it
     # does not assure Crude/Feed Demand Management. The relationship may

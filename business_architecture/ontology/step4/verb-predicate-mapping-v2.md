@@ -11,7 +11,9 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `adc7483522a7f3845dceca90c95187b6253372a4` (re-pinned 2026-10-12 for the #203 answers from the Phase 1 register; was `2bc25cb899943d29fa486565e447b50d7ca80782`).
+**Baseline:** `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register; was `adc7483522a7f3845dceca90c95187b6253372a4`).
+
+*Previous baseline:* `adc7483522a7f3845dceca90c95187b6253372a4` (re-pinned 2026-10-12 for the #203 answers from the Phase 1 register; was `2bc25cb899943d29fa486565e447b50d7ca80782`).
 
 *Previous baseline:* `2bc25cb899943d29fa486565e447b50d7ca80782` (re-pinned 2026-10-12 for the #206 answers from the Phase 1 register; was `51a32aa2eea43a819a7fff23b624ff8bd291bfad`).
 
@@ -74,7 +76,7 @@ mapping applies those mention-level holds separately),
      REL-00304, REL-01006 (excluded as independent row-level `core:enabledBy`
      approvals — all three superseded 2026-09-26 in G3-B5, now held with no
      fact) and REL-00936 (held for source-classification review, no stored
-     fact). Of the 77 approved, 35 mentions emit and attach as provenance (41-row
+     fact; corrected to `informs` in the #210 Phase 1 sweep and now emitting). Of the 77 approved, 35 mentions emit and attach as provenance (41-row
      hold set applied in the 2026-09-26 uses-input pass: 40 emitting → held;
      REL-00152 was already held and is not attached); REL-00436 is a
      mention-level property-rule hold re-attached as duplicate provenance on
@@ -148,7 +150,10 @@ mapping applies those mention-level holds separately),
    reconciliation evidence — neither is capability enablement. Such rows are
    held for source-workbook correction, never reinterpreted at promotion.
    Precedent: REL-01303/REL-01056 approved; REL-01312/REL-01053 held
-   (see `source-workbook-backlog.md`).
+   (see `source-workbook-backlog.md`). *Phase 1 sweep, #210 (2026-10-12):
+   both reverses were corrected in the source and now emit: REL-01312 as
+   `governs` (stored CM-1-2-1-3 core:governedBy CM-1-2-2-3) and REL-01053 as
+   `uses-input` (stored CM-1-3-8-4-1 core:dependsOnOutputOf CM-1-3-8-4-2).*
 
    **The four dependency meanings** (Hamid 2026-09-25) — the promotion layer
    must not silently translate between them:
@@ -380,7 +385,11 @@ direction is independently evidenced" reading. The 2 mutual `enabledBy`
 pairs were decided by row-level Hamid verdict overriding the 2026-09-24
 group hold: one direction each is stored on `core:enabledBy` (REL-01303,
 REL-01056); the reverses (REL-01312, REL-01053) remain held —
-see `review-evidence/enabledby-mutual-review-batch.csv`.
+see `review-evidence/enabledby-mutual-review-batch.csv`. *Phase 1 sweep,
+#210 (2026-10-12): the reverses were corrected in the source and now emit
+as `core:governedBy` (REL-01312, raw verb `governs`) and
+`core:dependsOnOutputOf` (REL-01053, raw verb `uses-input`);
+`review-evidence/phase1-sweep/210-review.csv`.*
 
 ## Governed-by (added 2026-09-25, Hamid)
 

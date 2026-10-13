@@ -971,8 +971,9 @@ without a dated amendment and Hamid's explicit agreement.
   DOA child, 4 rows close with no relationship. Merged in #239.
 - #203 is the second batch: 10 S&T advisory rows emit `informedBy`, 2 emit
   `dependsOnOutputOf` through `provides-input-to`, REL-01122 names
-  Production Scheduling, and 3 rows close with no relationship. Pending
-  merge of the batch PR.
+  Production Scheduling, and 3 rows close with no relationship. Merged in
+  #241.
+- #210 is the third batch: 6 rows emit `informedBy`, REL-01053 `dependsOnOutputOf`, REL-01312 `governedBy` through `governs`, and 14 rows close with no relationship. Pending its PR.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

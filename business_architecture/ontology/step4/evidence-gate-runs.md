@@ -100,3 +100,9 @@ gate was run against, not the pin. Do not retitle the checklist's
   so a corrected verb cannot leave a stale review row: 398 → 401 PASS. The
   12 #203 rows that left `enables` were removed from `enables-review.csv`.
 
+## 2026-10-13 — branch `phase1/sweep-210`, pin `efc4715`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `efc47150504face11bee5fdb2d57d737cfb170ca`
+- **Gate:** `evidence-gate.py` — 394 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1086, held==217, canonical-facts==498,
+  contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #210, so the sweep check covers its 22 rows (+1); the 8 rows that now emit leave the gate's property-hold set and its control-case hold loop (−8): 401 → 394 PASS.

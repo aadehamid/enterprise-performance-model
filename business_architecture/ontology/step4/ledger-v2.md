@@ -2128,3 +2128,17 @@ merged, no contradiction.
 
 **Current totals:** **650 emitting / 636 held / 17 scoped sequence** / 490 facts.
 Conservation: 650 + 636 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #210: Other verb-review holds (Hamid 2026-10-12)
+
+A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `efc4715`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/210-review.csv`.
+
+- **APPROVE, emitting `core:dependsOnOutputOf` (1):** REL-01053.
+- **APPROVE, emitting `core:governedBy` (1):** REL-01312.
+- **APPROVE, emitting `core:informedBy` (6):** REL-00445, REL-00758, REL-00936, REL-01094, REL-01131, REL-01192.
+- **HOLD, no relationship (14):** REL-00002, REL-00013, REL-00097, REL-00208, REL-00764, REL-00768, REL-00773, REL-00884, REL-00912, REL-00917, REL-00923, REL-00925, REL-01065, REL-01106.
+
+8 mentions move from held to emitting; 8 facts added. No contradiction.
+
+**Current totals:** **658 emitting / 628 held / 17 scoped sequence** / 498 facts.
+Conservation: 658 + 628 + 12 + 1 + 2 + 17 = 1,318. ✓
