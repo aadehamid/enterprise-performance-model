@@ -1,0 +1,42 @@
+row_id,source_slug,old_verb,old_target,new_verb,new_target
+REL-00140,CM-1-1-7-3-3,enables,Optimize Internal vs. External Energy Sources,informs,Optimize Internal vs. External Energy Sources
+REL-00476,CM-1-2-6-2-2,informed-by,Manage Product Exchange Agreements,governed-by,Manage Product Exchange Agreements
+REL-00565,CM-1-3-1-6,enables,Brand Strategy,informs,Brand Strategy
+REL-00643,CM-1-3-3-2-2,informed-by,Analyze Pricing Performance,informed-by,Analyze Pricing Performance
+REL-00646,CM-1-3-3-2-3,informed-by,Sales Pricing Management,uses-input,Sales Pricing Management
+REL-00648,CM-1-3-3-2-3,enables,Develop Integrated Pricing Strategy,informs,Develop Integrated Pricing Strategy
+REL-00679,CM-1-3-3-5-1,enables,Integrated Marketing Planning (Advertising),provides-input-to,Integrated Marketing Planning (Advertising)
+REL-00709,CM-1-3-4-1-2,enables,Identify Market Needs,informs,Identify Market Needs
+REL-00732,CM-1-3-4-4-3,enables,Manage Intellectual Asset Portfolios,informs,Manage Intellectual Asset Portfolios
+REL-00896,CM-1-3-6-6-6,informed-by,Monitor Credit Against Limit,informed-by,Monitor Credit Against Limit
+REL-00965,CM-1-3-7-4-1,informed-by,Analyze Portfolio Credit Risk,informed-by,Analyze Portfolio Credit Risk
+REL-00973,CM-1-3-7-4-3,enables,Capture & Validate Order,provides-input-to,Capture & Validate Order
+REL-00974,CM-1-3-7-4-3,enables,Manage Card Delinquency and Collections Referral (CM-1-3-6-6-6),informs,Manage Card Delinquency and Collections Referral (CM-1-3-6-6-6)
+REL-00977,CM-1-3-7-4-4,enables,Maintain Credit Policies,informs,Maintain Credit Policies
+REL-01108,CM-1-3-2-4,enables,Sales & Distribution Channel Design,provides-input-to,Sales & Distribution Channel Design
+REL-01112,CM-1-3-6-3,enables,Analyze Pricing Performance,provides-input-to,Analyze Pricing Performance
+REL-01148,CM-1-3-4-1,enables,Concept & Feasibility Study,informs,Concept & Feasibility Study
+REL-01150,CM-1-3-4-2,informed-by,Visioning And Implementation Planning,informed-by,Visioning And Implementation Planning
+REL-01151,CM-1-3-4-2,enables,Product & Service Development,provides-input-to,Product & Service Development
+REL-01152,CM-1-3-4-3,informed-by,Concept & Feasibility Study,uses-input,Concept & Feasibility Study
+REL-01154,CM-1-3-4-3,enables,Lifecycle Management,informs,Lifecycle Management
+REL-01181,CM-1-3-1-3,enables,Consumer Value Proposition,informs,Consumer Value Proposition
+REL-01184,CM-1-3-1-4,enables,Customer And Marketer Value Proposition,informs,Customer And Marketer Value Proposition
+REL-01191,CM-1-3-2-1,enables,Marketing Communications Strategy,provides-input-to,Marketing Communications Strategy
+REL-01193,CM-1-3-2-2,informed-by,Customer And Marketer Analysis,informed-by,Customer And Marketer Analysis
+REL-01194,CM-1-3-2-2,enables,Customer Offer Definition,provides-input-to,Customer Offer Definition
+REL-01197,CM-1-3-2-3,enables,Customer Offer Definition,provides-input-to,Customer Offer Definition
+REL-01199,CM-1-3-3-1,informed-by,Customer And Marketer Value Proposition,uses-input,Customer And Marketer Value Proposition
+REL-01200,CM-1-3-3-1,informed-by,Consumer Value Proposition,uses-input,Consumer Value Proposition
+REL-01205,CM-1-3-4-5,informed-by,Product & Service Development,informed-by,Product & Service Development
+REL-01213,CM-1-3-5-1,enables,Sales Execution,provides-input-to,Sales Execution
+REL-01217,CM-1-3-6-1,informed-by,Sales & Distribution Channel Design,uses-input,Sales & Distribution Channel Design
+REL-01224,CM-1-1-1-1,enables,Capture Product Demand Requirements,provides-input-to,Capture Product Demand Requirements
+REL-01225,CM-1-1-1-1,enables,Receive Demand Forecast,provides-input-to,Receive Demand Forecast
+REL-01230,CM-1-3-3-2,enables,Sales Pricing Management,governs,Sales Pricing Management
+REL-01233,CM-1-3-3-3,enables,Channel & Partner Management,provides-input-to,Channel & Partner Management
+REL-01234,CM-1-3-3-3,enables,Network Design (Retail),provides-input-to,Network Design (Retail)
+REL-01273,CM-1-3-3-5,enables,Marketing Communications Planning,provides-input-to,Marketing Communications Planning
+REL-01295,CM-1-3-5-3,informed-by,Marketing Communications Strategy,uses-input,Marketing Communications Strategy
+REL-01296,CM-1-3-5-3,enables,Integrated Marketing Planning (Advertising),provides-input-to,Integrated Marketing Planning (Advertising)
+REL-01315,CM-1-3-6-6,enables,Customer Program Analysis,provides-input-to,Customer Program Analysis
