@@ -282,25 +282,51 @@ class SweepBatch203(unittest.TestCase):
 
 
 class SweepBatchesAfter203(unittest.TestCase):
-    """#210 and later batches: the review matches the register and the published taxonomy."""
+    """#210 and later batches: each matches the register and the published taxonomy, and a
+    row on the wrong fact, or a no-relationship row on any fact, is caught."""
+
+    def setUp(self):
+        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
+            self.register = {r["row_id"]: r for r in csv.DictReader(f)}
+        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+            self.approval = f.read()
+        with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
+            self.taxonomy = f.read()
+        self.facts, self.v2 = facts(), v2()
+        self.issues = [i for i in batch_checks.SWEEP_ADOPTED if i not in ("206", "203")]
+
+    def rows(self, issue):
+        with open(os.path.join(SWEEP, f"{issue}-review.csv"), newline="") as f:
+            return list(csv.DictReader(f))
+
+    def problems(self, issue, fact_rows):
+        return batch_checks.sweep_batch_problems(issue, self.rows(issue), self.register, self.approval, self.v2,
+                                                 fact_rows, taxonomy=self.taxonomy)
 
     def test_each_batch_matches_the_register_and_the_published_taxonomy(self):
-        for issue in [i for i in batch_checks.SWEEP_ADOPTED if i not in ("206", "203")]:
+        for issue in self.issues:
             with self.subTest(issue=issue):
-                self.check(issue)
+                self.assertEqual(self.problems(issue, self.facts), [])
 
-    def check(self, issue):
-        with open(os.path.join(SWEEP, f"{issue}-review.csv"), newline="") as f:
-            rows = list(csv.DictReader(f))
-        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
-            register = {r["row_id"]: r for r in csv.DictReader(f)}
-        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
-            approval = f.read()
-        with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
-            taxonomy = f.read()
-        self.assertEqual(batch_checks.sweep_batch_problems(issue, rows, register, approval, v2(), facts(),
-                                                           taxonomy=taxonomy), [])
+    def test_an_emitting_row_on_another_rows_fact_is_caught(self):
+        for issue in self.issues:
+            emit = [r for r in self.rows(issue) if r["verdict"] != "no-relationship"]
+            moved_row, other = emit[0], next(r for r in emit if r["stored_fact"] != emit[0]["stored_fact"])
+            fact_rows = copy.deepcopy(self.facts)
+            own, wrong = tuple(moved_row["stored_fact"].split()), tuple(other["stored_fact"].split())
+            fact_rows[own] = [x for x in fact_rows[own] if x != moved_row["row_id"]]
+            fact_rows[wrong] = fact_rows[wrong] + [moved_row["row_id"]]
+            with self.subTest(issue=issue, row=moved_row["row_id"]):
+                self.assertTrue(any(moved_row["row_id"] in p for p in self.problems(issue, fact_rows)))
 
+    def test_a_no_relationship_row_on_a_fact_is_caught(self):
+        for issue in self.issues:
+            held = next(r for r in self.rows(issue) if r["verdict"] == "no-relationship")
+            fact_rows = copy.deepcopy(self.facts)
+            some = next(iter(fact_rows))
+            fact_rows[some] = fact_rows[some] + [held["row_id"]]
+            with self.subTest(issue=issue, row=held["row_id"]):
+                self.assertTrue(any(held["row_id"] in p for p in self.problems(issue, fact_rows)))
 
 if __name__ == "__main__":
     unittest.main()
