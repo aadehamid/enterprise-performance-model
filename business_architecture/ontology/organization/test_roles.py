@@ -41,6 +41,13 @@ class RegisterReconciles(unittest.TestCase):
         extra = sum(len(r["roles"].split(";")) - 1 for r in register for _, _, t in entries if t == r["source_text"])
         self.assertEqual(f["role references after splitting"], f["RACI entries"] + extra)
 
+    def test_the_figures_match_the_decision_record(self):
+        # EPM-DEC-001-0031 states these; a register change that moves them must amend the record too.
+        f = br.figures(*br.load())
+        self.assertEqual((f["processes with RACI"], f["RACI entries"], f["distinct source strings"], f["roles"],
+                          f["positions"], f["teams"], f["compound strings"], f["role references after splitting"]),
+                         (153, 913, 91, 60, 54, 6, 11, 940))
+
     def test_roles_ttl_is_current(self):
         with open(br.OUTPUT) as f:
             written = f.read()
@@ -100,6 +107,17 @@ class BrokenRegisterFails(unittest.TestCase):
 
     def test_a_qualifier_rule_without_its_qualifier_fails(self):
         self.run_mutant(register_edit=lambda d: [dict(r, qualifier="") for r in d])
+
+    def test_an_exact_rule_that_differs_from_the_label_fails(self):
+        self.run_mutant(roles_edit=lambda d: [dict(r, label="GFVC Manager") if r["slug"] == "gfvc-manager" else r for r in d])
+
+    def test_a_case_rule_that_changes_more_than_case_fails(self):
+        self.run_mutant(roles_edit=lambda d: [dict(r, label="Black Oils Manager") if r["slug"] == "black-oil-manager" else r for r in d])
+
+    def test_an_unknown_raci_key_fails(self):
+        with mock.patch.object(br, "LEVELS", ("responsible", "accountable", "consulted")):
+            with self.assertRaises(SystemExit):
+                br.load()
 
     def test_a_team_rule_mapped_to_a_position_fails(self):
         self.run_mutant(roles_edit=lambda d: [dict(r, kind="position") for r in d])

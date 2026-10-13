@@ -13,7 +13,7 @@ The process map, `business_architecture/business_process/downstream_process_map.
 
 EPM-DEC-001-0030 makes each RACI entry an `orgm:ResponsibilityAssignment` that names one `org:Role`. The roles must exist before the assignments do (slice 3).
 
-The repository does not expand the acronyms in the role strings (CCI, CP, CPVC, GFVC, PSM, RCVO, RVCO, BP&A, RFC, RO). No MPC or peer filing in `business_architecture/reference/` names these roles.
+The repository does not expand the acronyms in the role strings (CCI, CP, CPVC, E&P, GFVC, PSM, RCVO, RVCO, BP&A, RFC, RO). No MPC or peer filing in `business_architecture/reference/` names these roles.
 
 ## Decision
 
@@ -36,7 +36,7 @@ These do not block the build. Each would merge two roles, or define one, if Hami
 - **Forecaster** and **Refinery Technical Service Representative** appear only inside two compound strings. Are they the Local Refinery Forecaster and the Refinery Technical Representative?
 - **The two VP strings** differ only in RVCO. Are they one VP?
 - **Crude RFC**: is it the crude Refinery Feedstock Coordinator?
-- **The acronyms** (CCI, CP, CPVC, GFVC, PSM, RVCO, BP&A, RO): what does each stand for? The answers become role definitions.
+- **The acronyms** (CCI, CP, CPVC, E&P, GFVC, PSM, RVCO, BP&A, RO): what does each stand for? The answers become role definitions.
 
 ## Alternatives considered
 

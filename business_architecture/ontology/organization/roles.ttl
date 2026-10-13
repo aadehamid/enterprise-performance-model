@@ -111,8 +111,7 @@ role:gasoline-blend-optimizer a org:Role ;
 
 role:gfvc-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
-    skos:altLabel "Manager: GFVC"@en ;
-    skos:prefLabel "GFVC Manager"@en .
+    skos:prefLabel "Manager: GFVC"@en .
 
 role:global-feedstocks-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
