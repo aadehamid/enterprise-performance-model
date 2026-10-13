@@ -265,6 +265,10 @@ def adopt(step4, batch, write):
             moves[name] = (listed - now, now - listed)
             problems += [f"{name} row {r} left or joined but is not in the batch"
                          for r in sorted((listed - now) | (now - listed)) if r not in batch]
+            # The mapping writes only proposal/enables-review.csv, so a row joining another
+            # verb has no proposal line to copy: stop before any write.
+            if now - listed and not os.path.exists(os.path.join(proposal_dir, name)):
+                problems.append(f"{name}: rows {sorted(now - listed)} join it but the re-run writes no {name}")
         added, removed = sorted(set(new_f) - set(old_f)), sorted(set(old_f) - set(new_f))
         changed = sorted(k for k in set(old_f) & set(new_f) if old_f[k] != new_f[k])
         for label, keys in (("added", added), ("removed", removed), ("changed", changed)):

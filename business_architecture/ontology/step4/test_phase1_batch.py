@@ -316,5 +316,21 @@ class Adopt(Step4Copy):
             self.assertEqual(f.read(), before)
 
 
+    def test_a_row_joining_a_verb_without_a_proposal_file_stops_before_writing(self):
+        # Drop a requires row from its governed review file: the re-run then sees it "join",
+        # but the mapping writes no proposal requires-review.csv to copy it from.
+        path = os.path.join(self.step4, "requires-review.csv")
+        with open(path, newline="") as f:
+            lines = f.read().splitlines(keepends=True)
+        rid = lines[1].split(",", 1)[0]
+        with open(path, "w", newline="") as f:
+            f.writelines([lines[0]] + lines[2:])
+        facts_before = self.read("canonical-facts.csv")
+        status, out = quiet(phase1_batch.adopt, self.step4, {rid}, write=True)
+        self.assertEqual(status, 1)
+        self.assertIn("the re-run writes no requires-review.csv", out)
+        self.assertEqual(self.read("canonical-facts.csv"), facts_before)
+
+
 if __name__ == "__main__":
     unittest.main()

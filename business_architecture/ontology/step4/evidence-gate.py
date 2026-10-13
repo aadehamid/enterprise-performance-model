@@ -279,7 +279,8 @@ for rid in ("REL-00129", "REL-00243", "REL-00304", "REL-00489",
 # uses-input pass). REL-00436 is held as enables but attached as duplicate
 # provenance on the independently-evidenced uses-input fact (REL-00447,
 # via scope-note range citation). REL-00152's fact (via REL-00214) was
-# removed in the uses-input pass (no citation route); both are held.
+# removed in the uses-input pass (no citation route). REL-00436 stays held;
+# REL-00152 now emits core:informedBy after its #203 source correction.
 for rid, fact, indep in (("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"), "REL-00447"),):
     rids = _fact_rowids.get(fact, [])
     check(f"control-case provenance {rid}",
@@ -287,7 +288,7 @@ for rid, fact, indep in (("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf"
           "G1a duplicate-provenance attach 2026-09-26; independent uses-input fact retained")
 check("control-case provenance REL-00152 removed",
       ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4") not in _fact_rowids,
-      "REL-00214 held 2026-09-26 (no route); fact removed; REL-00152 held with it")
+      "REL-00214 held 2026-09-26 (no route); its dependsOnOutputOf fact must stay removed")
 for rid, fact in (("REL-00447", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4")),):
     check(f"control-case fact preserved via {rid}",
           rid in _fact_rowids.get(fact, []),
