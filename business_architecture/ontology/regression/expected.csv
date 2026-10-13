@@ -6,7 +6,7 @@ question,status,queries,waits_for
 5,answerable,q05-roles.rq,
 6,waits:step-7,,systems (Step 7)
 7,waits:step-7,,data products (Step 7)
-8,waits:step-6,,planned inputs and outputs (Step 6): wait for Hamid to confirm the meaning of the process map's sioc field (EPM-DEC-001-0034)
+8,waits:step-6,,planned inputs and outputs (Step 6): in the core 2.0.0 candidate (EPM-DEC-001-0038); answerable once Hamid approves 2.0.0 and the regression moves to it
 9,waits:step-7,,lanes (Step 7)
 10,waits:step-7,,capabilities and value streams (Step 7)
 11,partial,q11-apqc-references.rq,APQC elements with no local counterpart need the full APQC PCF 7.2.2 element list in the graph; the release carries only the referenced elements

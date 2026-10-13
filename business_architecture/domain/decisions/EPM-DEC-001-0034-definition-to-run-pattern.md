@@ -22,13 +22,9 @@ The core 1.0.0 process concepts are `skos:Concept`s, and none is a `prov:Activit
 
 Step 6's first procedure, planned inputs and outputs on the definitions, is not done here. The only source for them is the process map's `sioc` field, which holds suppliers, inputs, outputs and customers on 153 processes. The playbook says to confirm that field's business meaning before naming a term after it. That question goes to Hamid. Competency question 8 waits for the answer.
 
-### For Hamid: the `sioc` field
+### The `sioc` field: answered by Hamid, 2026-10-13
 
-Does `sioc` in the process map mean SIPOC (suppliers, inputs, process, outputs, customers), with the process being the node itself? Recommendation: yes. All 153 objects hold exactly those four lists. If confirmed, the inputs and outputs become planned input and output values on those 153 processes, as governed literals under the 2026-09-22 flow decision. Suppliers and customers stay parked.
-
-## Amendment, 2026-10-13
-
-#258 merged with a shape that let a run follow a concept of kind capability. `core` 1.0.0 holds 23 of them. The worklog defines a capability as "an ability the organization has, realized by processes". Claude concluded that a run follows one of the processes that realize a capability, not the capability itself. The live-process shape now rejects a capability, decided under the same delegation; the worklog itself does not say this. Concepts with no kind stay allowed: the shape rejects only the two kinds it names.
+Hamid confirmed that `sioc` is SIPOC. EPM-DEC-001-0038 records his words and carries the inputs and outputs into the `core` 2.0.0 candidate as planned inputs and outputs.
 
 ## Alternatives considered
 

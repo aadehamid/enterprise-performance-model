@@ -1,0 +1,22 @@
+{
+  "module": "core",
+  "version": "2.0.0-rc.1",
+  "release_candidate": true,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/core/2.0.0-rc.1",
+  "built_from": {
+    "core 1.0.0 manifest": "06393bcfb56e7d51cb23a07575fdd6d2fbe06750168bf492488d3985bb28aca0",
+    "process map": "a727129925ec96a232d654ba233f9f29a7c4aba22cea4cc74e712cdf4b03a2d2"
+  },
+  "decisions": [
+    "EPM-DEC-001-0038"
+  ],
+  "files": {
+    "CHANGELOG.md": "11e71e780310b08baa26191e38c78e5eaaa77ca455bbd70e4a71330390366785",
+    "catalog.ttl": "cba244f11fd901258358e0b0b6c97f73b7b272dbd17a675be0e495dace5faff0",
+    "core.jsonld": "289132cf2a2db42d22bc8925088bd85fb3ebf550f7aaf47bd4ab3840e30f3289",
+    "core.ttl": "f63ce252fd163ffa0bfc17165a15308e060a7e1b3e2281b084177648073473f8",
+    "counts.json": "d7f90cc44c002d7eed33cbbfef1bd59a8ab2e645914a720ac273337464a7f80e",
+    "shapes.ttl": "8ed0310141839a97f88ffa751e64e1dc7da8579dcc7017a97abd20dcda074c3b"
+  }
+}
