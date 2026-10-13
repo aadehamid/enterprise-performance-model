@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed (Claude's delegated choice). #252, which amends EPM-DEC-001-0028's scope to Steps 5 to 12, is pending. This record becomes Decided only when its Status is changed to "Decided (delegated under EPM-DEC-001-0028)" after that amendment lands; a merge alone decides nothing |
+| Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 1: the classes and properties the organization module needs before roles and assignments are emitted |
-| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (pending in #252) |
+| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028 amended in #252, merged) |
 
 ## Context
 
@@ -40,7 +40,7 @@ Left to later slices: the roles themselves and their normalization from the sour
 
 ## Hamid's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`; also added in #252): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`; also added in #252, merged): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
 
 ## Evidence
 

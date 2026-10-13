@@ -962,8 +962,8 @@ without a dated amendment and Hamid's explicit agreement.
   `orgm:ResponsibilityAssignment` (one process, role and RACI level, with
   the source's role text and a source), the RACI level list and
   `orgm:ControlRelationship` (share, as-of date, source). The design is
-  EPM-DEC-001-0030, Proposed; the EPM-DEC-001-0028 scope amendment for
-  Steps 5 to 12 is pending in #252. The process map holds RACI on 153 processes, with 91 role
+  EPM-DEC-001-0030, decided under EPM-DEC-001-0028, whose scope
+  amendment for Steps 5 to 12 merged in #252. The process map holds RACI on 153 processes, with 91 role
   strings to normalize in the next slice.
 
 ### Step 11 competency regression started (2026-10-13)
@@ -973,7 +973,7 @@ without a dated amendment and Hamid's explicit agreement.
   Q16, Q18), 5 partial (Q11, Q39, Q40, Q43, Q44), 34 waiting for Steps 5, 6
   and 7 or for EPM-DEC-001-0004 (Customer). Each module PR moves its questions to
   answerable. The status assignments are delegated under EPM-DEC-001-0028,
-  whose Steps 5 to 12 amendment is pending in #252.
+  whose Steps 5 to 12 amendment merged in #252.
 
 ### core 1.0.0 released (EPM-DEC-001-0029, 2026-10-13)
 - After the six Phase 1 sweep batches, `release/build_core.py` builds
