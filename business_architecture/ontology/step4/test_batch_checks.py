@@ -280,5 +280,20 @@ class SweepBatch203(unittest.TestCase):
         dropped[fact] = [x for x in dropped[fact] if x != "REL-00436"]
         self.assertTrue(any("REL-00436" in p for p in self.problems(dropped)))
 
+
+class SweepBatch210(unittest.TestCase):
+    def test_the_batch_matches_the_register_and_the_published_taxonomy(self):
+        with open(os.path.join(SWEEP, "210-review.csv"), newline="") as f:
+            rows = list(csv.DictReader(f))
+        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
+            register = {r["row_id"]: r for r in csv.DictReader(f)}
+        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+            approval = f.read()
+        with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
+            taxonomy = f.read()
+        self.assertEqual(batch_checks.sweep_batch_problems("210", rows, register, approval, v2(), facts(),
+                                                           taxonomy=taxonomy), [])
+
+
 if __name__ == "__main__":
     unittest.main()

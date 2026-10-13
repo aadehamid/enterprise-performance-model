@@ -3,8 +3,8 @@
 
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
-  2. Mention arithmetic reconciles from the actual files: 1078+225+12+1+2=1318.
-  3. canonical-facts.csv has exactly 490 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  2. Mention arithmetic reconciles from the actual files: 1086+217+12+1+2=1318.
+  3. canonical-facts.csv has exactly 498 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -48,9 +48,8 @@ ctx = {r["row_id"]: r["outcome"] for r in rows("target-report/context-pass.csv")
 # 2026-09-26: 28 G1b rows held under G1bNoVerbChange (enables with only
 # reverse informed-by evidence; stored core:dependsOnOutputOf facts removed,
 # Rule 11). REL-01224 is context-held and needs no property hold.
-prop_holds = {"REL-00503", "REL-01312", "REL-01053",
-              "REL-00758", "REL-01094", "REL-01131", "REL-01192", "REL-00936",
-              "REL-00445", "REL-00208",
+# Phase 1 sweep, #210: 8 rows released (210-review.csv).
+prop_holds = {"REL-00503", "REL-00208",
               "REL-01106", "REL-00917", "REL-00884", "REL-01065",
               "REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
               "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
@@ -70,8 +69,8 @@ ext = sum(1 for r in v2 if r["disposition"] == "ExternalGovernanceReference")
 flow = sum(1 for r in v2 if r["disposition"] == "StructuredFlowValue")
 check("mention-arithmetic", promoted + held_ctx + ambig + ext + flow == 1318 == len(v2),
       f"{promoted}+{held_ctx}+{ambig}+{ext}+{flow}={promoted+held_ctx+ambig+ext+flow} vs {len(v2)}")
-check("promoted==1078", promoted == 1078, str(promoted))
-check("held==225", held_ctx == 225, str(held_ctx))
+check("promoted==1086", promoted == 1086, str(promoted))
+check("held==217", held_ctx == 217, str(held_ctx))
 
 # 2b. enabledBy control cases (Hamid verdicts 2026-09-24/25), checked against the
 # STORED canonical fact — not the verb string. "Approved as core:enables"
@@ -123,8 +122,7 @@ for rid in ("REL-01303", "REL-01056"):
 # hold list below).
 def _emits_nothing(rid):
     return all(rid not in rids for rids in _fact_rowids.values())
-for rid in ("REL-01312", "REL-01053", "REL-00758", "REL-01094", "REL-01131",
-            "REL-01192", "REL-00936", "REL-00445", "REL-00208", "REL-01106",
+for rid in ("REL-00208", "REL-01106",
             "REL-00917", "REL-00884", "REL-01065",
             "REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
             "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
@@ -541,8 +539,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==490", len(cf) == 490, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 490)
+check("canonical-facts==498", len(cf) == 498, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 498)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
