@@ -59,8 +59,10 @@ Run these before you open a pull request, and again before you push a review fix
      branch. Round 2 runs only if round 1 found something, and reviews the fix
      commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
      no third review.
-   - **Outside Herdr**: Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`.
-     Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
+   - **Outside Herdr**: run the reviewer EPM-DEC-001-0028 names, the Cursor agent on
+     Grok 4.6: `agent -p --model cursor-grok-4.6-medium "<review prompt>"`. If it is
+     unavailable, Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`,
+     and Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
 
    Record any disagreement on a judgement call in the PR body.
 

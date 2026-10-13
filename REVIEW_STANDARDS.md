@@ -10,7 +10,7 @@ Each rule says what to block on and where it came from. A rule earns its place b
 
 AGENTS.md owns these requirements; this file does not restate them. Block when the diff breaks one:
 
-- **Working rules:** nothing is marked Decided or Approved without Hamid's recorded decision. A decision recorded as "delegated under EPM-DEC-001-0028" is one.
+- **Working rules:** nothing is marked Decided or Approved without Hamid's recorded decision. A decision recorded as "delegated under EPM-DEC-001-0028" counts for Decided; glossary Approved Baseline stays Hamid's.
 - **Before every push**, items 3 and 4: external facts cite a primary source with the full-support version, and a change (including a rule change) reaches every place and every dependent section it applies to.
 
 ## Blocking: reviewer judgements
