@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed (Claude's delegated choice; it becomes Decided, delegated under EPM-DEC-001-0028, when the Steps 5 to 12 amendment in #252 merges) |
+| Status | Proposed (Claude's delegated choice). #252, which amends EPM-DEC-001-0028's scope to Steps 5 to 12, is pending. This record becomes Decided only when its Status is changed to "Decided (delegated under EPM-DEC-001-0028)" after that amendment lands; a merge alone decides nothing |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 1: the classes and properties the organization module needs before roles and assignments are emitted |
 | Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (pending in #252) |

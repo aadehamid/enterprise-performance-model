@@ -962,8 +962,8 @@ without a dated amendment and Hamid's explicit agreement.
   `orgm:ResponsibilityAssignment` (one process, role and RACI level, with
   the source's role text and a source), the RACI level list and
   `orgm:ControlRelationship` (share, as-of date, source). The design is
-  EPM-DEC-001-0030, Proposed until the Steps 5 to 12 amendment (#252)
-  merges. The process map holds RACI on 153 processes, with 91 role
+  EPM-DEC-001-0030, Proposed; the EPM-DEC-001-0028 scope amendment for
+  Steps 5 to 12 is pending in #252. The process map holds RACI on 153 processes, with 91 role
   strings to normalize in the next slice.
 
 ### Step 11 competency regression started (2026-10-13)

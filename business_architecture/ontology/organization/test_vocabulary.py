@@ -8,7 +8,8 @@ import os
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib import Graph, Literal, Namespace
+from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -17,11 +18,19 @@ RACI = Namespace("https://w3id.org/lsc/ontology/modules/organization/raci-level/
 ORG = Namespace("http://www.w3.org/ns/org#")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 EX = Namespace("https://example.org/")
+SHP = Namespace("https://w3id.org/lsc/ontology/modules/organization/shapes/")
 
 VOCAB = Graph().parse(os.path.join(HERE, "vocabulary.ttl"))
 SHAPES = Graph().parse(os.path.join(HERE, "shapes.ttl"))
 KINDS = (OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty)
-PROPS = {p for k in KINDS for p in VOCAB.subjects(RDF.type, k)}
+TYPED = {p for k in KINDS for p in VOCAB.subjects(RDF.type, k)}
+# A property is anything typed as one, or anything with a declared domain or range, so an
+# untyped predicate cannot slip past the kind and cardinality checks.
+PROPS = TYPED | set(VOCAB.subjects(RDFS.domain, None)) | set(VOCAB.subjects(RDFS.range, None))
+EXACTLY_ONE = {  # EPM-DEC-001-0030: these paths carry exactly one value on their shape
+    ORGM.forProcess, ORGM.assignedRole, ORGM.raciLevel, ORGM.sourceRoleText,
+    ORGM.controllingEntity, ORGM.controlledEntity, ORGM.asOf, SKOS.prefLabel}
+LEVELS = {RACI.responsible, RACI.accountable, RACI.consulted, RACI.informed}
 
 
 def valid_graph():
@@ -63,13 +72,42 @@ class Vocabulary(unittest.TestCase):
                 self.assertIsNotNone(VOCAB.value(p, RDFS.label))
                 self.assertIsNotNone(VOCAB.value(p, SKOS.definition))
 
+    def test_an_untyped_property_is_caught(self):
+        g = Graph()
+        g += VOCAB
+        g.remove((ORGM.forProcess, RDF.type, OWL.ObjectProperty))
+        props = {p for k in KINDS for p in g.subjects(RDF.type, k)} | set(g.subjects(RDFS.range, None))
+        self.assertIn(ORGM.forProcess, props)
+        self.assertEqual(len([k for k in KINDS if (ORGM.forProcess, RDF.type, k) in g]), 0)
+
     def test_each_property_states_a_cardinality(self):
         stated = {SHAPES.value(n, SH.path) for n in SHAPES.subjects(SH.path, None)
                   if (n, SH.minCount, None) in SHAPES or (n, SH.maxCount, None) in SHAPES}
         self.assertEqual(sorted(map(str, PROPS - stated)), [])
 
-    def test_the_raci_list_has_four_levels(self):
-        self.assertEqual(sorted(str(n) for n in VOCAB.objects(None, SKOS.notation)), ["A", "C", "I", "R"])
+    def test_exactly_one_paths_have_both_bounds(self):
+        for n in SHAPES.subjects(SH.path, None):
+            path = SHAPES.value(n, SH.path)
+            if path in EXACTLY_ONE:
+                with self.subTest(path=str(path)):
+                    self.assertEqual(int(SHAPES.value(n, SH.minCount)), 1)
+                    self.assertEqual(int(SHAPES.value(n, SH.maxCount)), 1)
+
+    def test_both_shapes_require_a_source(self):
+        for shape in (SHP.Assignment, SHP.Control):
+            mins = [SHAPES.value(n, SH.minCount) for n in SHAPES.objects(shape, SH.property)
+                    if SHAPES.value(n, SH.path) == DCTERMS.source]
+            self.assertEqual([int(m) for m in mins], [1], str(shape))
+
+    def test_the_raci_list_has_exactly_four_levels(self):
+        members = set(VOCAB.subjects(SKOS.inScheme, ORGM.RaciLevel))
+        self.assertEqual(members, LEVELS)
+        self.assertEqual(sorted(str(VOCAB.value(m, SKOS.notation)) for m in members), ["A", "C", "I", "R"])
+
+    def test_the_shape_allows_exactly_the_four_levels(self):
+        node = [n for n in SHAPES.objects(SHP.Assignment, SH.property)
+                if SHAPES.value(n, SH.path) == ORGM.raciLevel][0]
+        self.assertEqual(set(Collection(SHAPES, SHAPES.value(node, SH["in"]))), LEVELS)
 
 
 class Shapes(unittest.TestCase):
@@ -95,6 +133,24 @@ class Shapes(unittest.TestCase):
 
     def test_a_role_with_two_names_fails(self):
         self.assertFalse(self.broken(lambda g: g.add((EX.role, SKOS.prefLabel, Literal("Scheduler", lang="en")))))
+
+    def test_two_processes_fail(self):
+        self.assertFalse(self.broken(lambda g: (g.add((EX.other, RDF.type, SKOS.Concept)),
+                                                g.add((EX.assignment, ORGM.forProcess, EX.other)))))
+
+    def test_two_roles_fail(self):
+        def change(g):
+            g.add((EX.role2, RDF.type, ORG.Role))
+            g.add((EX.role2, SKOS.prefLabel, Literal("Planner", lang="en")))
+            g.add((EX.assignment, ORGM.assignedRole, EX.role2))
+        self.assertFalse(self.broken(change))
+
+    def test_two_source_texts_fail(self):
+        self.assertFalse(self.broken(lambda g: g.add((EX.assignment, ORGM.sourceRoleText,
+                                                      Literal("Scheduler", datatype=XSD.string)))))
+
+    def test_a_control_relationship_without_a_source_fails(self):
+        self.assertFalse(self.broken(lambda g: g.remove((EX.control, DCTERMS.source, None))))
 
     def test_a_control_relationship_without_a_date_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((EX.control, ORGM.asOf, None))))
