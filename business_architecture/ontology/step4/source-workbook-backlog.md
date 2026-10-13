@@ -157,7 +157,7 @@ here because their reverse rows are still held.
 
 | G1b row | informed-by row | status |
 |---|---|---|
-| REL-00469 | REL-01130 | answered in the Phase 1 sweep (2026-10-12): no relationship; question closed |
+| REL-00469 | REL-01130 | answered in the Phase 1 sweep (2026-10-12): REL-01130 (#202) no relationship, question closed; REL-00469 (#203) is answered in its own section |
 | REL-00489 | REL-00476 | answered in the Phase 1 sweep (2026-10-12): corrected to `governed-by`; emits |
 | REL-00499 | REL-00505 | REL-00499: no relationship; question closed; REL-00505: no relationship; question closed (answered in the Phase 1 sweep, 2026-10-12) |
 | REL-00648 | REL-00643 | REL-00648: corrected to `informs`; emits; REL-00643: corrected to `informed-by`; emits (answered in the Phase 1 sweep, 2026-10-12) |
