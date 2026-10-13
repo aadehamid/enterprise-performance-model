@@ -20,17 +20,21 @@ The core 1.0.0 process concepts are `skos:Concept`s, and none is a `prov:Activit
 3. **No new terms.** The pattern uses PROV-O as published. P-Plan's steps and variables are not used now. The process taxonomy is a naming hierarchy, not a plan's step structure (playbook: SKOS first), and the 2026-09-22 flow decision keeps inputs and outputs as governed values, not nodes.
 4. **The ontology publishes the shapes.** `business_architecture/ontology/provenance/run-shapes.ttl` holds the shapes a consumer's run must meet, plus one that fails any core concept typed as a `prov:Activity`. `example-run.ttl` illustrates a run; it is not data.
 
-Step 6's first procedure, planned inputs and outputs on the definitions, is not done here. The only source for them is the process map's `sioc` field, which holds suppliers, inputs, outputs and customers on 153 processes. The playbook says to confirm that field's business meaning before naming a term after it. That question goes to Hamid. Competency question 8 waits for the answer.
+Step 6's first procedure, planned inputs and outputs on the definitions, is not done here. The only source for them is the process map's `sioc` field, which holds suppliers, inputs, outputs and customers on 153 processes. The playbook says to confirm that field's business meaning before naming a term after it. That question went to Hamid, who answered it on 2026-10-13 (below); competency question 8 waits for the `core` release that carries the answer.
 
 ### The `sioc` field: answered by Hamid, 2026-10-13
 
 Hamid confirmed that `sioc` is SIPOC. EPM-DEC-001-0038 records his words and carries the inputs and outputs into the `core` 2.0.0 candidate as planned inputs and outputs.
 
+## Amendment, 2026-10-13
+
+#258 merged with a shape that let a run follow a concept of kind capability. `core` 1.0.0 holds 23 of them. The worklog defines a capability as "an ability the organization has, realized by processes". Claude concluded that a run follows one of the processes that realize a capability, not the capability itself. The live-process shape now rejects a capability, decided under the same delegation; the worklog itself does not say this. Concepts with no kind stay allowed: the shape rejects only the two kinds it names.
+
 ## Alternatives considered
 
 - **Type each process concept as a `p:Plan` and its children as `p:Step`s.** Rejected: it changes the released core 1.0.0, and it reads the naming hierarchy as an execution structure.
 - **A direct property from the run to the definition** (for example `core:runOf`). Rejected: PROV-O's `prov:hadPlan` already says it, and consumers that speak PROV-O read it without a mapping.
-- **Mint planned input and output nodes from `sioc` now.** Rejected: the field's meaning is unconfirmed, and the 2026-09-22 decision defers flow nodes.
+- **Mint planned input and output nodes from `sioc` now.** Rejected: the field's meaning was unconfirmed when this was decided (Hamid confirmed it on 2026-10-13), and the 2026-09-22 decision defers flow nodes.
 
 ## Hamid's recorded words
 
