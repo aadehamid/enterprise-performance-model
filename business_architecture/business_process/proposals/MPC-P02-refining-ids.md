@@ -6,7 +6,7 @@
 | Date | 2026-10-13 |
 | Decision | EPM-DEC-001-0012: "Raise a process-map proposal (not a direct edit) to assign IDs to the three nodes." |
 | Source suggestion | `reference/mpc/process-map-suggestions.md`, MPC-P02 |
-| Recommendation | Delegated under EPM-DEC-001-0028 (pending in #242) |
+| Recommendation | Delegated under EPM-DEC-001-0028 (pending in #242): keep the minted slugs; the IDs become notation only |
 
 ## The nodes
 
@@ -30,7 +30,12 @@ Refining's two other L2 children keep their IDs, `CM 1.1.4` (Refinery Planning a
 
 ## Effect on the ontology
 
-None on identity. Slugs are identity and labels are presentation (ontology skill, Step 2), and the three slugs above are already stable IRIs. When the map takes these IDs, the next taxonomy build adds `skos:notation` `"RF 1"`, `"RF 1.1"` and `"RF 1.2"`; nothing else changes. So `core` 1.0.0 does not wait for this proposal to land in the map.
+Identity must not move. The three nodes were published under minted slugs, and slugs are identity (ontology skill, Step 2). But `build/step2-identity-map.py` derives a slug from a node's ID, so a plain re-run after the map takes these IDs would mint `RF-1`, `RF-1-1` and `RF-1-2` and change three IRIs. Two things prevent that:
+
+1. When the map takes the IDs, the curated identity map (`build/output/step2-identity-map.json`) records each one as `skos_notation` on the node's existing entry; the slug stays. The next taxonomy build then adds `skos:notation` `"RF 1"`, `"RF 1.1"` and `"RF 1.2"` and nothing else.
+2. `step2-identity-map.py` pins the three slugs to these IDs (`SLUG_PINS`, in this change), so a re-run cannot remint them.
+
+The script is not the regeneration path today: the committed identity map carries overlays added after Step 2 (the naming pass's prior names and rename notes), which a re-run would drop. With the pins in place, `core` 1.0.0 can ship the three minted IRIs, and they stay stable after the IDs land.
 
 ## Not in this proposal
 

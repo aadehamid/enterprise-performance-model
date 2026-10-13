@@ -36,6 +36,15 @@ BASE = "https://w3id.org/lsc/ontology/process/"
 
 ID_RE = re.compile(r"^[A-Z]+ \d+(\.\d+)*$")
 
+# Slugs are identity. A node first published under a minted slug keeps it when the
+# process map later gives it an ID; the ID becomes its skos:notation only. MPC-P02
+# proposes these IDs (business_process/proposals/MPC-P02-refining-ids.md).
+SLUG_PINS = {
+    "RF 1": "L1-refining",
+    "RF 1.1": "L2-refinery-performance-and-risk-coordination",
+    "RF 1.2": "L2-refinery-asset-reliability-and-turnaround-coordination",
+}
+
 
 def slugify(text: str) -> str:
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
@@ -59,7 +68,7 @@ def main() -> None:
         name = node["name"]
         level = node["level"]
         if pid:
-            slug = id_to_slug(pid)
+            slug = SLUG_PINS.get(pid) or id_to_slug(pid)
             minted = False
             notation = pid
             proposed_repo_id = pid
