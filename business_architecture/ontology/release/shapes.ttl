@@ -1,6 +1,7 @@
 # The SHACL release slice for core 1.0.0 (EPM-DEC-001-0014): labels, IDs and resolving
-# references on every process concept, and a cardinality on every core property
-# (EPM-DEC-001-0020, rule 2). "No intake: namespace" and "no blank nodes" are checked
+# references on every process concept, and a stated cardinality on every core property
+# (EPM-DEC-001-0020, rule 2): sh:maxCount 1 on a single-valued property, and sh:minCount 0
+# with no maximum on a multi-valued one. test_build_core.py checks each property has one. "No intake: namespace" and "no blank nodes" are checked
 # by build_core.py over the whole graph before these shapes run.
 @prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
 @prefix mod: <https://w3id.org/lsc/ontology/modules/> .
@@ -27,7 +28,9 @@ shp:ProcessConcept a sh:NodeShape ;
     sh:property [ sh:path core:primaryPurpose ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path core:responsibleDomain ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path core:primaryOutputFlow ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
-    sh:property [ sh:path core:keyInputFlow ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:keyInputFlow ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:plannedChildNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:priorPreferredLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path core:operatingMode ; sh:maxCount 1 ; sh:class skos:Concept ] ;
     sh:property [ sh:path core:cadence ; sh:maxCount 1 ; sh:class skos:Concept ] ;
     sh:property [ sh:path core:planningLevel ; sh:maxCount 1 ; sh:class skos:Concept ] ;
@@ -49,15 +52,15 @@ shp:RelationshipEnds a sh:NodeShape ;
     sh:targetSubjectsOf core:precedes, core:dependsOnOutputOf, core:informedBy, core:enabledBy,
         core:governedBy, core:triggeredBy, core:constrainedBy, core:requires, core:assuredBy ;
     sh:class skos:Concept ;
-    sh:property [ sh:path core:precedes ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:dependsOnOutputOf ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:informedBy ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:enabledBy ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:governedBy ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:triggeredBy ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:constrainedBy ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:requires ; sh:class skos:Concept ] ;
-    sh:property [ sh:path core:assuredBy ; sh:class skos:Concept ] .
+    sh:property [ sh:path core:precedes ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:dependsOnOutputOf ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:informedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:enabledBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:governedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:triggeredBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:constrainedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:requires ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:assuredBy ; sh:minCount 0 ; sh:class skos:Concept ] .
 
 # Cited sources resolve to a described resource.
 shp:CitedSource a sh:NodeShape ;

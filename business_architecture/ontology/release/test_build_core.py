@@ -222,6 +222,22 @@ class Vocabulary(unittest.TestCase):
                 self.assertIsNotNone(vocab.value(p, SKOS.definition))
                 self.assertIsNotNone(vocab.value(p, RDFS.label))
 
+    def test_each_core_property_states_a_cardinality_in_the_slice(self):
+        # EPM-DEC-001-0020 rule 2. Code-list and ontology-header properties describe
+        # vocabulary terms, not concepts, so the concept slice does not cover them.
+        vocab, shapes = Graph(), Graph()
+        vocab.parse(b.VOCABULARY)
+        shapes.parse(b.SHAPES)
+        SH = URIRef("http://www.w3.org/ns/shacl#")
+        stated = {shapes.value(n, URIRef(SH + "path")) for n in shapes.subjects(URIRef(SH + "path"), None)
+                  if shapes.value(n, URIRef(SH + "maxCount")) is not None
+                  or shapes.value(n, URIRef(SH + "minCount")) is not None}
+        concept_props = {p for k in (OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty)
+                         for p in vocab.subjects(RDF.type, k) if (None, p, None) in BUILT[0]
+                         and any(str(s).startswith(str(b.PROC)) for s in BUILT[0].subjects(p, None))}
+        self.assertTrue(concept_props)
+        self.assertEqual(sorted(map(str, concept_props - stated)), [])
+
 
 if __name__ == "__main__":
     unittest.main()

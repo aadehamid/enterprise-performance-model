@@ -13,31 +13,31 @@ EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at tha
 
 ## Decision
 
-**Precedence.** Where the draft ledger and an approved decision disagree, the approved decision wins: `core:taxonomyLevel` is kept as derived metadata (`step4-decisions.md:35-37`), not retired (ledger:35); Q8 and Q9 are approved (`step4-decisions.md:151`, `:219`), not pending (ledger:40, :47); cross-functional domains are normalized with the detail in a note (Q7, `step4-decisions.md:118-128`), not kept verbatim (ledger:102-104).
+**Precedence.** Where the draft ledger and an approved decision disagree, the approved decision wins: `core:taxonomyLevel` is kept as derived metadata (`step4-decisions.md:35-37`), not retired (ledger, master conservation table, `level` row); Q8 and Q9 are approved (`step4-decisions.md:151`, `:219`), not pending (ledger, master conservation table, `conceptTypeCheck` and `status` rows); cross-functional domains are normalized with the detail in a note (Q7, `step4-decisions.md:118-128`), not kept verbatim (ledger, responsibleDomain section).
 
-**Targets for each `intake:` predicate** (counts from the census, ledger:33-48):
+**Targets for each `intake:` predicate** (counts from the census, ledger, master conservation table):
 
 | intake: predicate | Target in `core` 1.0.0 | Basis |
 |---|---|---|
 | `level` | `core:taxonomyLevel`, `xsd:integer` 0–6, derived from the L-level | `step4-decisions.md:35-37` |
-| `apqcDecision` | `core:apqcMappingDecision` → code list `core:ApqcMappingDecision` (review-link, no-source, no-candidate, rejected, adopted) | ledger:106-108; one kind and range per property (EPM-DEC-001-0020) |
-| `terminologyNotes` | the ledger's deterministic rule: migration events, and dual-aspect notes, → `dcterms:provenance`; authoring history and decision-record pointers → `skos:editorialNote`, pointer text kept | Q10 (`step4-decisions.md:236-257`); ledger:61-76 |
+| `apqcDecision` | `core:apqcMappingDecision` → code list `core:ApqcMappingDecision` (review-link, no-source, no-candidate, rejected, adopted) | ledger, apqcDecision section; one kind and range per property (EPM-DEC-001-0020) |
+| `terminologyNotes` | the ledger's deterministic rule: migration events, and dual-aspect notes, → `dcterms:provenance`; authoring history and decision-record pointers → `skos:editorialNote`, pointer text kept | Q10 (`step4-decisions.md:236-257`); ledger, terminologyNotes section |
 | former names | the approved label report (`label-report/label-dispositions-v1.2.csv`): `AddAsAltLabel` and `RetainAsAltLabel` → `skos:altLabel`; `MigrationOnly` and `RetireAsAmbiguous`, and scoped aliases, → `core:priorPreferredLabel` (annotation, not searchable) | Q10; label report v1.1 approved |
-| `referenceSources` | one `dcterms:source` link per cited source ID to `src:<id in lower case>`, a `dcterms:BibliographicResource` carrying the registry's title, publisher and permitted use; the 9 annotation suffixes → `skos:editorialNote` on the concept, prefixed with the source ID | ledger:78-83 |
-| `primaryPurpose` | `core:primaryPurpose`, `rdf:langString` | ledger:39 |
+| `referenceSources` | one `dcterms:source` link per cited source ID to `src:<id in lower case>`, a `dcterms:BibliographicResource` carrying the registry's title, publisher and permitted use; the 9 annotation suffixes → `skos:editorialNote` on the concept, prefixed with the source ID | ledger, referenceSources section |
+| `primaryPurpose` | `core:primaryPurpose`, `rdf:langString` | ledger, master conservation table |
 | `conceptTypeCheck` | `core:conceptKind` → code list `core:ConceptKind` (process, capability, structural-anchor); "not-process" marks the two L0 roots, which Q8 names as structural anchors | Q8 (`step4-decisions.md:151-161`) |
 | `relatedConcepts` | removed. The canonical facts (`step4/canonical-facts.csv`) and the scoped sequences replace it. Held, deferred, external-governance and structured-flow mentions emit nothing and stay recorded in the Step 4 evidence | mapping v2 (approved 2026-09-29); EPM-DEC-001-0025, -0026 |
-| `responsibleDomain` | `core:responsibleDomain`, `rdf:langString`; the 12 cross-functional values → "Cross-functional", the original text in `skos:note` | Q7 |
-| `processHorizon` | `core:operatingMode`, `core:cadence`, `core:planningLevel`, each to its own code list; daily, weekly and monthly also set operating mode periodic; "periodic" alone sets no cadence | Q6; ledger:85-95 |
+| `responsibleDomain` | `core:responsibleDomain`, `rdf:langString`; the 12 cross-functional rows (6 distinct values) → "Cross-functional", the original text in `skos:note` | Q7 |
+| `processHorizon` | `core:operatingMode`, `core:cadence`, `core:planningLevel`, each to its own code list; daily, weekly and monthly also set operating mode periodic; "periodic" alone sets no cadence | Q6; ledger, processHorizon section |
 | `primaryOutput`, `keyInputs` | `core:primaryOutputFlow` and `core:keyInputFlow`, `rdf:langString`, one triple per flow name (inputs split on `\|`), whitespace normalized; no nodes | Q5 (`step4-decisions.md:93-103`) |
-| `parkedChildren` | `core:plannedChildNote`, annotation, `rdf:langString` | ledger:46 |
+| `parkedChildren` | `core:plannedChildNote`, annotation, `rdf:langString` | ledger, master conservation table |
 | `intake:status` | "retired" (CM-1-1-4-6) → `core:lifecycleStatus` retired, with its existing `owl:deprecated true`; "blocked" (CM-1-1-4-6-1, parked by PTC-001 until its destination exists) → `core:holdStatus` implementation-hold, with its note as `core:holdReason`. All three Q9 code lists are defined in full | Q9 revision (`step4-decisions.md:219-234`) |
 
 **Facts carry no reifiers.** Each canonical fact is one direct triple, `proc:S core:P proc:O`. Its provenance (row IDs, raw verbs, notes) ships beside the ontology as `canonical-facts.csv`, which satisfies "the raw verb is retained in migration/provenance evidence on every emitted triple" (`verb-predicate-mapping-v2.md`, direction table) without reification, which EPM-DEC-001-0020 rules out.
 
 **No blank nodes.** The 500 APQC `dcterms:references` nodes become `src:apqc-pcf-7.2.2/element/<id>` resources with the same identifier, title and `dcterms:isPartOf`. The 503 workbook `dcterms:source` nodes, which all carry the same title, become one resource, `src:step3c-definition-workbook`. (Playbook: "No blank nodes in released data"; EPM-DEC-001-0020 rule 3.)
 
-**The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`. The header follows the playbook's worked example (`ontology-playbook.md:1309-1318`). Until Hamid approves the release, the package is built as release candidate `1.0.0-rc.1`, with no `dcterms:issued`; at the cut, `build_core.py` sets the release date as `dcterms:issued` and drops the candidate label. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
+**The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `counts.json` (the build's measured figures), `label-dispositions.csv` (the label report the former names follow), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`; `core.jsonld`, `shapes.ttl` and the DCAT record `catalog.ttl` ship beside them. The header follows the playbook's worked example (`ontology-playbook.md`, "Ontology IRI and version IRI"). Until Hamid approves the release, the package is built as release candidate `1.0.0-rc.1`, with no `dcterms:issued`; at the cut, `build_core.py` sets the release date as `dcterms:issued` and drops the candidate label. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
 
 **Approvals stay with Hamid.** This record proposes the release design under EPM-DEC-001-0028; it becomes Decided only with Hamid's recorded words. Three things wait for Hamid: the fresh no-consumer attestation, a fact about who uses the ontology (`step4/no-consumer-attestation.md:3`); the conservation ledger's approval (`step4/ledger-v2.md`), now backed by a reconciled before/after run; and the release itself, because a major release needs his approval ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). The release PR waits for all three.
 
@@ -57,6 +57,6 @@ The approved decisions cited above; the census and measured splits in `step4/led
 
 ## Consequences
 
-- New `core` terms: the predicates above, `core:priorPreferredLabel`, `core:holdReason`, and seven code lists. Each gets a label, a definition, one kind and one range.
+- New `core` terms: the predicates above, `core:priorPreferredLabel`, `core:holdReason`, and eight code lists. Each gets a label, a definition, one kind and one range.
 - `ledger-v2.md` gets its after half and is ready for Hamid's approval.
 - Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says.
