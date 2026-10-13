@@ -127,6 +127,12 @@ cross-functional ×6). The 6 free-text cross-functional entries are
 normalized to a governed "Cross-functional" value with detail preserved
 in a note. Controlled list makes the Step 5 migration mechanical.
 
+*Superseded 2026-10-13:* Hamid decided the values are business domains,
+not org units, and split Commercial & Marketing into Commercial and
+Marketing; the core 2.0.0 candidate links the concepts that carry these
+values (processes and capabilities) to a business domain list
+(EPM-DEC-001-0038).
+
 ## Standing rule (2026-09-22, per Hamid)
 
 Every Step 4 design decision that comes out of the Q&A goes in the
@@ -171,7 +177,8 @@ playbook PR:
 - Q7 wording refined: Step 5 maps interim values to governed
   organization/role/ResponsibilityAssignment references *where the
   operating model evidences the relationship* (some labels are business
-  domains, not org units).
+  domains, not org units). *Superseded 2026-10-13 by EPM-DEC-001-0038:
+  all of them are business domains.*
 - CapabilityKind vs BusinessCapability split: `core:CapabilityKind` is a
   classification value; actual capabilities are a future
   `core:BusinessCapability` class with `core:realizedBy` links.

@@ -84,8 +84,8 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` links to follow |
-| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs wait for Hamid to confirm the `sioc` field's meaning |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by the core 2.0.0 candidate (EPM-DEC-001-0038) |
+| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in the core 2.0.0 candidate (EPM-DEC-001-0038) |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
@@ -957,6 +957,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### core 2.0.0 candidate: business domains and SIPOC (2026-10-13)
+- Hamid confirmed the process map's `sioc` field is SIPOC, and decided the
+  `responsibleDomain` values are business domains: Commercial & Marketing
+  splits into Marketing (CM 1.3) and Commercial (CM 1.1, CM 1.2), with
+  CM 1.4 IT Services its own domain. `release/build_core_next.py` builds
+  core 2.0.0-rc.1 from the released 1.0.0: a business domain code list and
+  `core:businessDomain` (205 Commercial, 251 Marketing), `responsibleDomain`
+  deprecated, planned inputs and outputs (362 and 219 on 153 processes),
+  and ranges for `earlierProcess` and `laterProcess`. A deprecation makes
+  it a major, so it waits for Hamid's approval. EPM-DEC-001-0038.
+
 ### organization 1.0.0 and ref-mpc 1.0.0 released (2026-10-13)
 - Hamid approved both modules as 1.0.0. The releases are the 1.0.0-rc.1
   candidates with the issued date set and the stage removed; ref-mpc
@@ -1009,8 +1020,9 @@ without a dated amendment and Hamid's explicit agreement.
   definition: a `prov:Activity` whose single qualified association has
   `prov:hadPlan` pointing at a live core process concept (P-Plan's
   whole-plan link). No new terms. A shape fails any core concept typed as
-  a `prov:Activity`; core 1.0.0 passes. Planned inputs and outputs wait
-  for Hamid to confirm what the process map's `sioc` field means. The
+  a `prov:Activity`; core 1.0.0 passes. Planned inputs and outputs waited
+  for Hamid to confirm what the process map's `sioc` field means; he
+  confirmed it is SIPOC on 2026-10-13 (EPM-DEC-001-0038). The
   design is EPM-DEC-001-0034, decided under EPM-DEC-001-0028.
 
 ### Step 5 ref-mpc module (2026-10-13)
@@ -1315,6 +1327,11 @@ record in `business_architecture/domain/decisions/` (index in its README):
   exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
   6 cross-functional combos, normalized to a governed
   "Cross-functional" value with detail preserved in a note).
+  *Amendment 2026-10-13:* Hamid decided the values are business domains,
+  not org units, and split Commercial & Marketing into Commercial and
+  Marketing; the core 2.0.0 candidate links the concepts that carry these
+  values (processes and capabilities) to a business domain list instead
+  (EPM-DEC-001-0038).
 - **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
   `core:conceptKind` is an object property to a controlled SKOS scheme,
   not a string. Kinds: Process (real business process — inputs,
@@ -1718,7 +1735,8 @@ record in `business_architecture/domain/decisions/` (index in its README):
   workbook, TTL, identity map, and cross-references.
 - **Confirm the `sioc` JSON field's meaning** (SIPOC/SIOC?) before
   naming ontology terms; do not confuse it with the W3C SIOC vocabulary
-  (2026-09-17).
+  (2026-09-17). *Resolved 2026-10-13:* Hamid confirmed it is SIPOC
+  (EPM-DEC-001-0038).
 
 ---
 
@@ -1990,8 +2008,8 @@ URI.
 
 ### What we evaluated and set aside
 - **W3C SIOC** (social/online-community vocabulary): not applicable;
-  the repo JSON's `sioc` field is still unconfirmed and must not be
-  confused with it.
+  the repo JSON's `sioc` field is SIPOC (Hamid, 2026-10-13;
+  EPM-DEC-001-0038) and must not be confused with it.
 - **ODPS family** (Open Data Product Specification / ODPC / ODPV / ODPG):
   mapped for awareness (ODPC→DCAT, ODPV→SKOS, ODPG→RDF) but not adopted —
   the W3C stack covers our needs without adding a second modeling
@@ -2013,8 +2031,9 @@ Facts about the source material that are easy to get wrong:
   and not globally unique outside this map.
 - **`officeLane` values:** `front_office`, `middle_office`,
   `back_office`, `operations`. Not declared disjoint.
-- **The `sioc` JSON field is unconfirmed.** Verify whether it means
-  SIPOC/SIOC in the business sense before minting any ontology term.
+- **The `sioc` JSON field is SIPOC** (suppliers, inputs, outputs,
+  customers; the process is the node). Hamid confirmed it on 2026-10-13
+  (EPM-DEC-001-0038).
 - **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
   processes have empty `produces` arrays; no AR credit/receivables/
   collections portfolio exists (do not reuse `dp-commercial-risk`);

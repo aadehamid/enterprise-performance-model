@@ -1212,7 +1212,7 @@ read RDF 1.2 (EPM-DEC-001-0020; guideline v2.1).
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared
-disjoint. A JSON field named `sioc` has an unconfirmed meaning. Several
+disjoint. A JSON field named `sioc` had an unconfirmed meaning until it was confirmed as SIPOC (see the worklog). Several
 Order-to-Cash processes have empty output sets, to be resolved in Step 7 as
 explicit decisions.
 

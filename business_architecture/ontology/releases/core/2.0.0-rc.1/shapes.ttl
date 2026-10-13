@@ -1,0 +1,102 @@
+# The SHACL release slice for core 1.0.0 (EPM-DEC-001-0014): labels, IDs and resolving
+# references on every process concept, and a stated cardinality on every core property
+# (EPM-DEC-001-0020, rule 2): sh:maxCount 1 on a single-valued property, and sh:minCount 0
+# with no maximum on a multi-valued one. test_build_core.py checks each property has one. "No intake: namespace" and "no blank nodes" are checked
+# by build_core.py over the whole graph before these shapes run.
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix mod: <https://w3id.org/lsc/ontology/modules/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/shapes/> .
+
+# Every concept of the process scheme.
+shp:ProcessConcept a sh:NodeShape ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """
+        SELECT ?this WHERE { ?this <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/lsc/ontology/modules/core> }""" ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A process concept has exactly one English prefLabel." ] ;
+    sh:property [ sh:path core:taxonomyLevel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ;
+                  sh:minInclusive 0 ; sh:maxInclusive 6 ] ;
+    sh:property [ sh:path skos:broader ; sh:maxCount 1 ; sh:class skos:Concept ;
+                  sh:message "At most one parent, and it resolves to a concept." ] ;
+    sh:property [ sh:path core:conceptKind ; sh:maxCount 1 ; sh:in ( kind:process kind:capability kind:structural-anchor ) ] ;
+    sh:property [ sh:path core:apqcMappingDecision ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:primaryPurpose ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:responsibleDomain ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:primaryOutputFlow ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:keyInputFlow ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:plannedChildNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:priorPreferredLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:operatingMode ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:cadence ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:planningLevel ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:lifecycleStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:governanceStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:holdStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:holdReason ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:nodeKind sh:IRI ;
+                  sh:message "A cited source is an IRI, never a blank node." ] ;
+    sh:property [ sh:path dcterms:references ; sh:nodeKind sh:IRI ] .
+
+# A concept with an ID carries it as one notation.
+shp:NotatedConcept a sh:NodeShape ;
+    sh:targetSubjectsOf skos:notation ;
+    sh:property [ sh:path skos:notation ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+# Relationship facts resolve: subject and object are process concepts.
+shp:RelationshipEnds a sh:NodeShape ;
+    sh:targetSubjectsOf core:precedes, core:dependsOnOutputOf, core:informedBy, core:enabledBy,
+        core:governedBy, core:triggeredBy, core:constrainedBy, core:requires, core:assuredBy ;
+    sh:class skos:Concept ;
+    sh:property [ sh:path core:precedes ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:dependsOnOutputOf ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:informedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:enabledBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:governedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:triggeredBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:constrainedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:requires ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:assuredBy ; sh:minCount 0 ; sh:class skos:Concept ] .
+
+# Cited sources resolve to a described resource.
+shp:CitedSource a sh:NodeShape ;
+    sh:targetObjectsOf dcterms:source, dcterms:references ;
+    sh:class dcterms:BibliographicResource ;
+    sh:property [ sh:path dcterms:title ; sh:minCount 1 ] .
+
+# ---- Added in 2.0.0 (EPM-DEC-001-0038) ----
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:BusinessDomainValue a sh:NodeShape ;
+    sh:property shp:BusinessDomainValue-inScheme ;
+    sh:targetObjectsOf core:businessDomain .
+
+shp:ProcessConcept sh:property shp:ProcessConcept-businessDomain,
+        shp:ProcessConcept-plannedInput,
+        shp:ProcessConcept-plannedOutput .
+
+shp:BusinessDomainValue-inScheme sh:hasValue core:BusinessDomain ;
+    sh:message "A business domain comes from the business domain list."@en ;
+    sh:path skos:inScheme .
+
+shp:ProcessConcept-businessDomain sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:path core:businessDomain .
+
+shp:ProcessConcept-plannedInput sh:datatype rdf:langString ;
+    sh:minCount 0 ;
+    sh:path core:plannedInput .
+
+shp:ProcessConcept-plannedOutput sh:datatype rdf:langString ;
+    sh:minCount 0 ;
+    sh:path core:plannedOutput .
+

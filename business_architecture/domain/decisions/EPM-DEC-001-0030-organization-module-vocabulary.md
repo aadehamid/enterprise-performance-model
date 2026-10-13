@@ -30,7 +30,7 @@ The organization module's namespace is `https://w3id.org/lsc/ontology/modules/or
 - **Role:** exactly one English name. A definition is optional until the role register supplies definitions.
 - **Control relationship:** exactly one of each entity, at most one share, exactly one as-of date, and at least one source.
 
-Left to later slices: the roles themselves and their normalization from the source's 91 role strings; the assignments; the `ref-mpc` instances; the links from `core:responsibleDomain` to org units; and the relation for who owns a meaning (competency question 17).
+Left to later slices: the roles themselves and their normalization from the source's 91 role strings; the assignments; the `ref-mpc` instances; the links from `core:responsibleDomain` to org units; and the relation for who owns a meaning (competency question 17). (Superseded 2026-10-13 for the `core:responsibleDomain` links: Hamid decided the values are business domains, not org units, EPM-DEC-001-0038.)
 
 ## Alternatives considered
 
