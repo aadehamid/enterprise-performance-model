@@ -4,7 +4,7 @@
 **Version:** 0.2
 **Status:** Draft
 **Owner:** Enterprise Performance Model initiative
-**Last updated:** 2026-10-05
+**Last updated:** 2026-10-13
 **Scope:** Downstream Oil & Gas data domains, anchored on Marathon Petroleum Corporation (MPC) public filings
 **Review trigger:** Each new domain proposal; Step 5 (party / organization modules) design
 
@@ -79,7 +79,7 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
 
 ## Open items
 
-- Define the Market Data and Commercial Risk domains (scope, owners, entities) at Step 7 (EPM-DEC-001-0010).
+- Define the Market Data and Commercial Risk domains (scope, owners, entities) at Step 7 (EPM-DEC-001-0010). Draft definitions for Hamid's decision: `market-data-and-commercial-risk-draft.md` (2026-10-13).
 - Customer: Step 5 use of C1 to C8, and the lubricants and marine product-line evidence, wait for Hamid's additional customer details (EPM-DEC-001-0004).
 - Reconcile the proposed pricing data products with the existing Master
   Pricing and Rack Pricing data products.
@@ -92,3 +92,4 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
 |---|---|
 | 2026-09-29 | v0.1 created: Customer (classification adopted), Commercial Pricing & Price Realization, Market Data and Commercial Risk (proposed) |
 | 2026-10-05 | v0.2: D1 to D4 decided (EPM-DEC-001-0006 to 0009); Market Data and Commercial Risk definitions set for Step 7; Customer work waits for Hamid's details |
+| 2026-10-13 | Open item points to the draft Market Data and Commercial Risk definitions (`market-data-and-commercial-risk-draft.md`) for Hamid's decision |
