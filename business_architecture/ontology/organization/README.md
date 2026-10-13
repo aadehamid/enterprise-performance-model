@@ -9,4 +9,4 @@ Roles, RACI assignments, and control between legal entities. The module depends 
 
 The `ref-mpc` reference module (`../ref-mpc/`) uses this module's control relationship. Later Step 5 slices add, in order:
 1. The assignments for the 153 processes with RACI.
-2. The links from `core:responsibleDomain` to org units, which wait for Hamid: the source does not show which of its values are org units.
+2. The links from `core:responsibleDomain` to org units, made only where the operating model evidences the relationship; some of its values are business domains, not org units (Step 4 Q7, `../step4/step4-decisions.md`).
