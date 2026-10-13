@@ -16,6 +16,8 @@ Rules:
 - The old segment must appear exactly once in the source's cell, verb and
   target text matching; otherwise the run stops before any write.
 - The new verb must be a raw verb the Step 4 direction table knows.
+- The new target must not contain '|', and every corrected cell keeps its
+  number of segments.
 - Only `approved` rows are edited, because only they reach the taxonomy.
 - A cell already holding the new values once, and the old values nowhere, is
   skipped, so a re-run changes nothing. Any other mix of old and new
@@ -80,6 +82,8 @@ def main():
         rid, slug = e["row_id"], e["source_slug"]
         if e["new_verb"] not in VERBS:
             errors.append(f"{rid}: new verb {e['new_verb']!r} is not in the direction table")
+        if "|" in e["new_target"]:
+            errors.append(f"{rid}: new target contains '|', which would add a segment")
         if slug not in by_slug:
             errors.append(f"{rid}: {slug} not in the workbook")
             continue
@@ -115,6 +119,10 @@ def main():
         parts[at] = f"{lead}{e['new_verb']}: {e['new_target']}{trail}"
         changed += 1
         print(f"set  {e['row_id']}: {e['old_verb']}: {e['old_target']} -> {e['new_verb']}: {e['new_target']}")
+    for slug, parts in final.items():
+        before = len(segments(by_slug[slug][idx["related_concepts"]].value))
+        if len(segments("|".join(parts))) != before:
+            errors.append(f"{slug}: the corrected cell would have a different number of segments")
     for e, _ in plan:
         n = sum(parse(p) == (e["new_verb"], e["new_target"]) for p in final[e["source_slug"]])
         if n != 1:
