@@ -232,9 +232,13 @@ class Vocabulary(unittest.TestCase):
         stated = {shapes.value(n, URIRef(SH + "path")) for n in shapes.subjects(URIRef(SH + "path"), None)
                   if shapes.value(n, URIRef(SH + "maxCount")) is not None
                   or shapes.value(n, URIRef(SH + "minCount")) is not None}
+        # A concept property is one the build uses on a process concept, or one whose
+        # declared domain is skos:Concept (so an unused one, like governanceStatus, counts).
         concept_props = {p for k in (OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty)
-                         for p in vocab.subjects(RDF.type, k) if (None, p, None) in BUILT[0]
-                         and any(str(s).startswith(str(b.PROC)) for s in BUILT[0].subjects(p, None))}
+                         for p in vocab.subjects(RDF.type, k)
+                         if (p, RDFS.domain, SKOS.Concept) in vocab
+                         or any(str(s).startswith(str(b.PROC)) for s in BUILT[0].subjects(p, None))}
+        self.assertIn(b.CORE.governanceStatus, concept_props)
         self.assertTrue(concept_props)
         self.assertEqual(sorted(map(str, concept_props - stated)), [])
 
