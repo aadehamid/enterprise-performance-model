@@ -24,19 +24,19 @@ EPM-DEC-001-0011 asks for this read before ruling on MPC-P01 (the empty Midstrea
 - "In 2025, MPC accounted for 48 percent of our total revenues and other income, primarily within our Crude Oil and Products Logistics segment." Excluding significant non-cash items, the share was 48, 49 and 50 percent for 2025, 2024 and 2023.
 - MPLX has "fee-based agreements with minimum volume commitments with MPC which provide us with a stable and predictable revenue stream". Under them, "we provide transportation, terminal and storage services to MPC and most of these agreements include minimum committed volumes from MPC."
 
-## 4. Assets named (Item 2)
+## 4. Assets named (Item 1 and Item 2)
 
-| Asset | Value (quoted or tabled) |
-|---|---|
-| Crude pipeline systems | 5,259 miles (includes "approximately 16 miles of pipeline leased from third parties and 1,168 miles of inactive pipeline") |
-| Refined product pipeline systems | 3,787 miles |
-| Gathering, processing, fractionation | "As of December 31, 2025, gathering and processing assets available to MPLX included approximately 9.4 Bcf/d of gas gathering capacity, 11.2 Bcf/d of natural gas processing capacity and 819 mbpd of fractionation and de-ethanization capacity." |
+| Asset | Value (quoted or tabled) | Location |
+|---|---|---|
+| Crude pipeline systems | 5,259 miles (includes "approximately 16 miles of pipeline leased from third parties and 1,168 miles of inactive pipeline") | Item 2 |
+| Refined product pipeline systems | 3,787 miles | Item 2 |
+| Gathering, processing, fractionation | "As of December 31, 2025, gathering and processing assets available to MPLX included approximately 9.4 Bcf/d of gas gathering capacity, 11.2 Bcf/d of natural gas processing capacity and 819 mbpd of fractionation and de-ethanization capacity." | Item 1 (Natural Gas and NGL Services) |
 
 ## 5. What this means for MPC-P01
 
 MPC-P01 recommends modeling the fuels-logistics work that serves Refining & Marketing (pipeline transport, terminal operations, marine, storage) and leaving gas gathering, processing and NGL fractionation out unless a KPI needs them. The filing supports that line:
 
-- The work that serves MPC sits in **Crude Oil and Products Logistics**: transport, terminals and storage under fee-based agreements with minimum volumes, where most of MPC's 48 percent of MPLX revenue falls.
+- The work that serves MPC sits in **Crude Oil and Products Logistics**: transport, terminals and storage under fee-based agreements with minimum volumes, where most of MPC's 48 percent of MPLX's total revenues and other income falls.
 - **Natural Gas and NGL Services** is wellhead-to-market gas and NGL work that does not serve the downstream refining and marketing processes in the map.
 
 The ruling on P01 is Hamid's (EPM-DEC-001-0011): it adds children to the process map's Midstream L1, which is the source author's.

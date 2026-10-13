@@ -961,7 +961,7 @@ without a dated amendment and Hamid's explicit agreement.
 - EPM-DEC-001-0011 asks for the MPLX 10-K read before the ruling on
   MPC-P01 (the empty Midstream L1). `reference/mpc/mplx-fy2025-10k-fact-sheet.md`
   records it: MPLX's two segments, Crude Oil and Products Logistics and
-  Natural Gas and NGL Services; MPC is 48 percent of MPLX's 2025 revenue,
+  Natural Gas and NGL Services; MPC is 48 percent of MPLX's 2025 total revenues and other income,
   mostly in the first, under fee-based agreements with minimum volumes.
   It supports P01's recommended scope (the fuels logistics that serves
   Refining & Marketing). The ruling is Hamid's.
