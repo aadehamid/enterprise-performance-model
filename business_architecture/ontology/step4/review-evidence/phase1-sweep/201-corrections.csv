@@ -1,0 +1,85 @@
+row_id,source_slug,old_verb,old_target,new_verb,new_target
+REL-00044,CM-1-1-3-7-10,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00046,CM-1-1-3-7-11,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00059,CM-1-1-3-7-5,enables,Distribution Backcasting,provides-input-to,Distribution Backcasting
+REL-00061,CM-1-1-3-7-6,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00063,CM-1-1-3-7-7,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00075,CM-1-1-3-8-3,enables,Generate Orders,enables,Generate Orders
+REL-00129,CM-1-1-7-2-4,enables,Measure Production Scheduling Performance,provides-input-to,Measure Production Scheduling Performance
+REL-00133,CM-1-1-7-2-6,enables,Create Production Scheduling and Sequencing Plan,provides-input-to,Create Production Scheduling and Sequencing Plan
+REL-00138,CM-1-1-7-3-2,enables,Daily Execution Planning,informs,Production Scheduling (CM-1-1-7-2)
+REL-00148,CM-1-2-1-1-3,enables,Perform Asset Optimization,informs,Perform Asset Optimization
+REL-00156,CM-1-2-1-1-6,enables,Perform Asset Optimization,provides-input-to,Perform Asset Optimization
+REL-00166,CM-1-2-1-2-2,enables,Trade Capture,enables,Trade Capture
+REL-00239,CM-1-2-2-1-8,enables,Trading Strategy Management,informs,Trading Strategy Management
+REL-00243,CM-1-2-2-2-2,enables,Generate Confirms,enables,Generate Confirms
+REL-00257,CM-1-2-2-3-10,enables,Manage Risk Reporting,provides-input-to,Manage Risk Reporting
+REL-00259,CM-1-2-2-3-11,enables,Manage Risk Limits,informs,Manage Risk Limits
+REL-00260,CM-1-2-2-3-11,enables,Manage Risk Reporting,provides-input-to,Manage Risk Reporting
+REL-00266,CM-1-2-2-3-13,enables,Trading Strategy Management,informs,Trading Strategy Management
+REL-00283,CM-1-2-2-3-5,enables,Manage Risk Reporting,provides-input-to,Manage Risk Reporting
+REL-00285,CM-1-2-2-3-6,enables,Trading Strategy Management,constrains,Trading Strategy Management
+REL-00304,CM-1-2-3-1-4,enables,Identify Potential Demurrage,provides-input-to,Identify Potential Demurrage
+REL-00362,CM-1-2-4-2-10,enables,Manage Trading Sub-Ledger,provides-input-to,Manage Trading Sub-Ledger
+REL-00364,CM-1-2-4-2-11,enables,Manage Trading Sub-Ledger,provides-input-to,Manage Trading Sub-Ledger
+REL-00371,CM-1-2-4-2-2,enables,Manage Trading Sub-Ledger,provides-input-to,Manage Trading Sub-Ledger
+REL-00387,CM-1-2-4-2-8,enables,Manage AR/AP & Actuals,enables,Manage AR/AP & Actuals
+REL-00392,CM-1-2-4-3-1,enables,Monitor Internal Trading Compliance,governs,Monitor Internal Trading Compliance
+REL-00405,CM-1-2-4-3-6,enables,Monitor External Trading Compliance,provides-input-to,Monitor External Trading Compliance
+REL-00428,CM-1-2-5-1-1,enables,Develop Term Slate,enables,Develop Term Slate
+REL-00437,CM-1-2-5-1-4,enables,Coordinate Feedstock Trading,informs,Coordinate Feedstock Trading
+REL-00489,CM-1-2-7-1-1,enables,Manage Refined Product Exchanges,governs,Manage Refined Product Exchanges
+REL-00494,CM-1-2-7-1-2,enables,Settlements,provides-input-to,Settlements
+REL-00681,CM-1-3-3-5-2,enables,Marketing Communications Planning,provides-input-to,Marketing Communications Planning
+REL-00683,CM-1-3-3-5-3,enables,Integrated Marketing Planning (Advertising),provides-input-to,Integrated Marketing Planning (Advertising)
+REL-00687,CM-1-3-3-5-5,enables,Marketing Communications Planning,provides-input-to,Marketing Communications Planning
+REL-00699,CM-1-3-3-6-3,enables,Develop Organizational Blueprint,provides-input-to,Develop Organizational Blueprint
+REL-00728,CM-1-3-4-4-1,enables,Protect Intellectual Assets,governs,Protect Intellectual Assets
+REL-00753,CM-1-3-4-6-1,enables,Conduct Product Development,informs,Conduct Product Development
+REL-00755,CM-1-3-4-6-2,enables,Conduct Research,informs,Conduct Research
+REL-00756,CM-1-3-4-6-2,enables,Conduct Product Development,informs,Conduct Product Development
+REL-00762,CM-1-3-4-6-4,enables,Marketing Communications Planning,informs,Marketing Communications Planning
+REL-00770,CM-1-3-5-1-3,enables,Sales Execution,provides-input-to,Sales Execution
+REL-00867,CM-1-3-6-5-1,enables,Campaign ROI Analysis,provides-input-to,Campaign ROI Analysis
+REL-00871,CM-1-3-6-5-3,enables,Customer Program Analysis,provides-input-to,Customer Program Analysis
+REL-00906,CM-1-3-6-7-1,enables,Report Franchise Performance,provides-input-to,Report Franchise Performance
+REL-00914,CM-1-3-7-1-1,enables,Manage Customer Invoicing and Billing,enables,Manage Customer Invoicing and Billing
+REL-00919,CM-1-3-7-1-3,enables,Capture & Validate Order,enables,Capture & Validate Order
+REL-00929,CM-1-3-7-2-1,enables,Issue Quotes & Renewals,provides-input-to,Issue Quotes & Renewals
+REL-00938,CM-1-3-7-2-4,enables,Establish Commercial Terms & Contracts,provides-input-to,Establish Commercial Terms & Contracts
+REL-00942,CM-1-3-7-2-5,enables,Analyze Pricing Performance,informs,Analyze Pricing Performance
+REL-00960,CM-1-3-7-3-5,enables,Manage Customer Portal,provides-input-to,Manage Customer Portal
+REL-00996,CM-1-3-7-5-5,enables,Manage Key Accounts,informs,Manage Key Accounts
+REL-01006,CM-1-3-8-1-2,enables,Perform Revenue Accounting,provides-input-to,Perform Revenue Accounting
+REL-01009,CM-1-3-8-1-3,enables,Reconcile And Report Indirect Tax,provides-input-to,Reconcile And Report Indirect Tax
+REL-01013,CM-1-3-8-1-4,enables,"Manage Cash Application, A/R & Revenue Accounting",provides-input-to,"Manage Cash Application, A/R & Revenue Accounting"
+REL-01016,CM-1-3-8-1-5,enables,"Manage Cash Application, A/R & Revenue Accounting",provides-input-to,"Manage Cash Application, A/R & Revenue Accounting"
+REL-01049,CM-1-3-8-3-4,enables,Maintain Credit Policies,informs,Maintain Credit Policies
+REL-01085,CM-1-3-9-1-6,enables,Process Inquiries and Requests,enables,Process Inquiries and Requests
+REL-01093,CM-1-3-9-2-3,enables,Process Inquiries and Requests,provides-input-to,Process Inquiries and Requests
+REL-01095,CM-1-3-9-3-1,enables,Manage Contact Center,informs,Manage Contact Center
+REL-01096,CM-1-3-9-3-2,enables,Manage Service Employees,informs,Manage Service Employees
+REL-01099,CM-1-3-9-3-3,enables,Define Operating Model,informs,Define Operating Model
+REL-01104,CM-1-2-5-4,enables,Develop Feedstock Demand,provides-input-to,Develop Feedstock Demand
+REL-01115,CM-1-3-6-7,enables,Ensure Card Design Compliance,governs,Ensure Card Design Compliance
+REL-01124,CM-1-2-5-2,enables,Trading Management,informs,Trading Management
+REL-01139,CM-1-2-7-1,enables,Supply Operations,provides-input-to,Supply Operations
+REL-01146,CM-1-3-2-5,enables,Service & Support Enablement,informs,Service & Support Enablement
+REL-01156,CM-1-3-5-5,enables,Marketing Communications Planning,informs,Marketing Communications Planning
+REL-01161,CM-1-3-6-5,enables,Marketing Performance Analysis,provides-input-to,Marketing Performance Analysis
+REL-01167,CM-1-3-9-3,enables,Define Operating Model,informs,Define Operating Model
+REL-01169,CM-1-1-3-6,enables,Distribution Backcasting,provides-input-to,Distribution Backcasting
+REL-01174,CM-1-2-5-1,enables,Coordinate Feedstock Trading,informs,Coordinate Feedstock Trading
+REL-01176,CM-1-3-1-1,enables,Brand Strategy,informs,Brand Strategy
+REL-01179,CM-1-3-1-2,enables,Brand Strategy,informs,Brand Strategy
+REL-01187,CM-1-3-1-5,enables,Brand Strategy,informs,Brand Strategy
+REL-01201,CM-1-3-3-1,enables,Sales Execution,provides-input-to,Sales Execution
+REL-01209,CM-1-3-4-6,enables,Concept & Feasibility Study,informs,Concept & Feasibility Study
+REL-01231,CM-1-3-3-2,enables,Customer Offer Definition,governs,Customer Offer Definition
+REL-01245,CM-1-2-1-1,enables,Trading Strategy Management,informs,Trading Strategy Management
+REL-01248,CM-1-3-4-4,enables,R&D Collaboration,governs,R&D Collaboration
+REL-01250,CM-1-3-7-1,enables,Manage Customer Invoicing and Billing,enables,Manage Customer Invoicing and Billing
+REL-01259,CM-1-3-7-4,enables,Capture And Manage Order Fulfillment,governs,Capture And Manage Order Fulfillment
+REL-01287,CM-1-2-2-1,enables,Trade Capture,governs,Trade Capture
+REL-01304,CM-1-1-3-7,enables,Regional Optimization,provides-input-to,Regional Optimization
+REL-01318,CM-1-2-4-1,enables,Manage AR/AP & Actuals,provides-input-to,Manage AR/AP & Actuals

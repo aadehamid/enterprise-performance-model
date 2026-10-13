@@ -141,7 +141,8 @@ def related_segments(taxonomy, slug):
 
 
 # Raw verbs a reversed register row is written with (EPM-DEC-001-0027).
-MIRROR_VERBS = {"uses-input": "provides-input-to", "governed-by": "governs"}
+MIRROR_VERBS = {"uses-input": "provides-input-to", "governed-by": "governs",
+                "constrained-by": "constrains"}  # constrains predates 0027; same stored form
 
 
 def literals(taxonomy, slug, predicate):
