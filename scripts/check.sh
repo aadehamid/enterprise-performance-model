@@ -58,7 +58,8 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
   business_architecture/ontology/organization/test_roles.py \
   business_architecture/ontology/organization/test_assignments.py \
-  business_architecture/ontology/ref-mpc/test_ref_mpc.py
+  business_architecture/ontology/ref-mpc/test_ref_mpc.py \
+  business_architecture/ontology/provenance/test_run_shapes.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase

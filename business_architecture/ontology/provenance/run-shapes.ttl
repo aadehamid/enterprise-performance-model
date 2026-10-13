@@ -1,0 +1,42 @@
+# The definition-to-run pattern (Step 6; EPM-DEC-001-0016, EPM-DEC-001-0034). The ontology
+# holds process definitions, never runs. A consumer that records a run of a process (a
+# prov:Activity) links it to the definition it followed through a qualified association whose
+# prov:hadPlan is the core process concept. These shapes are what such a run must satisfy.
+# PROV-O: W3C Recommendation, 30 April 2013 (https://www.w3.org/TR/2013/REC-prov-o-20130430/).
+# P-Plan: release 17 September 2013, revision 1.1 (http://purl.org/net/p-plan#), which links a
+# run to its whole plan with prov:hadPlan.
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/run-shapes/> .
+
+shp:Run a sh:NodeShape ;
+    sh:targetClass prov:Activity ;
+    sh:property [ sh:path prov:qualifiedAssociation ; sh:minCount 1 ; sh:maxCount 1 ; sh:node shp:FollowedDefinition ;
+                  sh:message "A run names exactly one association, and through it the process definition it followed." ] ;
+    sh:property [ sh:path prov:startedAtTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ;
+                  sh:message "A run states when it started." ] ;
+    sh:property [ sh:path prov:endedAtTime ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] .
+
+shp:FollowedDefinition a sh:NodeShape ;
+    sh:property [ sh:path prov:hadPlan ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ; sh:nodeKind sh:IRI ;
+                  sh:node shp:LiveProcess ;
+                  sh:message "The association names exactly one process definition: a live concept of the core process scheme." ] ;
+    sh:property [ sh:path prov:agent ; sh:minCount 0 ; sh:nodeKind sh:IRI ] .
+
+# A process definition is never itself a run (playbook Step 6: the recipe is not the meal).
+shp:DefinitionIsNotARun a sh:NodeShape ;
+    sh:targetClass skos:Concept ;
+    sh:not [ sh:class prov:Activity ] ;
+    sh:message "A process definition is typed as a prov:Activity; runs belong to the consuming systems." .
+
+# The definition a run follows is a live process: in the core scheme, not retired, and not a
+# structural anchor, which no one performs (worklog, conceptKind decision of 2026-09-22).
+shp:LiveProcess a sh:NodeShape ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue <https://w3id.org/lsc/ontology/modules/core> ] ;
+    sh:not [ sh:path owl:deprecated ; sh:hasValue true ] ;
+    sh:not [ sh:path core:conceptKind ; sh:hasValue kind:structural-anchor ] .
