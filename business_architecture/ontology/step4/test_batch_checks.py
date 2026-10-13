@@ -216,6 +216,30 @@ class SweepBatch203(unittest.TestCase):
         self.assertTrue(any("REL-00263" in p and "published scope note" in p
                             for p in self.problems(self.facts, taxonomy=mutated)))
 
+    def test_a_sentence_in_another_concept_or_a_comment_does_not_count(self):
+        row = next(r for r in self.rows if r["row_id"] == "REL-00263")
+        sentence = row["scope_note_sentence"]
+        own = "proc:CM-1-2-2-3-12 a skos:Concept ;\n"
+        self.assertIn(own, self.taxonomy)
+        stripped = self.taxonomy.replace(sentence, "")
+        # Moved into the next concept's statement, whose header is indented.
+        moved = stripped.replace("proc:CM-1-2-2-3-13 a skos:Concept ;\n",
+                                 f'  proc:CM-1-2-2-3-13 a skos:Concept ;\n    skos:scopeNote """{sentence}"""@en ;\n', 1)
+        # Kept only as a comment inside its own statement.
+        commented = stripped.replace(own, own + f"    # {sentence}\n", 1)
+        for mutated in (moved, commented):
+            self.assertNotEqual(mutated, stripped)
+            self.assertTrue(any("REL-00263" in p and "published scope note" in p
+                                for p in self.problems(self.facts, taxonomy=mutated)))
+
+    def test_scope_notes_reads_only_the_named_subject(self):
+        ttl = ('proc:A a skos:Concept ;\n  # skos:scopeNote "in a comment"\n  skos:prefLabel "A"@en ;\n'
+               '  skos:scopeNote """one. two"""@en , "three"@en .\n'
+               '  proc:B a skos:Concept ;\n  skos:scopeNote "B note"@en .\n')
+        self.assertEqual(batch_checks.scope_notes(ttl, "A"), ["one. two", "three"])
+        self.assertEqual(batch_checks.scope_notes(ttl, "B"), ["B note"])
+        self.assertEqual(batch_checks.scope_notes(ttl, "C"), [])
+
     def test_recorded_provenance_is_allowed_only_on_its_fact(self):
         fact = batch_checks.SWEEP_PROVENANCE["REL-00436"]
         self.assertIn("REL-00436", self.facts[fact])

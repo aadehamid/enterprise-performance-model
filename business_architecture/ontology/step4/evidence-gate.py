@@ -487,6 +487,11 @@ with open("review-evidence/hamid-answers/phase1-sweep.md") as _f:
 _sweep_found = {p.rsplit("/", 1)[1] for p in _glob.glob("review-evidence/phase1-sweep/*-review.csv")}
 with open("baseline/step3-taxonomy.ttl") as _f:
     _sweep_taxonomy = _f.read()
+# The sentences are checked in the pinned baseline, so the published taxonomy must be
+# that same file: an edit to build/output alone would otherwise go unchecked.
+with open("../build/output/step3-taxonomy.ttl") as _f:
+    check("Phase 1 sweep: the published taxonomy equals the pinned baseline",
+          _f.read() == _sweep_taxonomy, "build/output/step3-taxonomy.ttl differs from baseline/; rebuild and re-pin")
 _sweep_problems = _batch.sweep_files_problems(_sweep_found)
 check("Phase 1 sweep: one review file per adopted issue (batch_checks.SWEEP_ADOPTED)",
       not _sweep_problems, "; ".join(_sweep_problems[:5]))

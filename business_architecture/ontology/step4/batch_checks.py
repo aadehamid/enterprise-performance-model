@@ -113,18 +113,47 @@ def sweep_files_problems(found):
     return problems
 
 
-def concept_block(taxonomy, slug):
-    """The Turtle block for proc:<slug> in the taxonomy text, whitespace-collapsed ("" if absent)."""
-    lines, block = taxonomy.split("\n"), []
-    for i, line in enumerate(lines):
-        if line.startswith(f"proc:{slug} a "):
-            block = [line]
-            for nxt in lines[i + 1:]:
-                if nxt.startswith("proc:"):
-                    break
-                block.append(nxt)
+def scope_notes(taxonomy, slug):
+    """The skos:scopeNote literals of proc:<slug> in Turtle text, whitespace-collapsed.
+
+    Reads only that subject's statement: it starts at "proc:<slug> a" (at any
+    indentation), skips comments outside strings, and ends at the statement's
+    closing "." outside strings. So a sentence in a comment or in another
+    concept's statement does not count.
+    """
+    start = re.search(r"(?m)^[ \t]*proc:" + re.escape(slug) + r"[ \t]+a[ \t]", taxonomy)
+    if not start:
+        return []
+    i, n, out = start.start(), len(taxonomy), []
+    while i < n:
+        if taxonomy.startswith('"""', i):
+            j = taxonomy.index('"""', i + 3)
+            out.append(("lit", taxonomy[i + 3:j])); i = j + 3
+        elif taxonomy[i] == '"':
+            j = i + 1
+            while taxonomy[j] != '"':
+                j += 2 if taxonomy[j] == "\\" else 1
+            out.append(("lit", taxonomy[i + 1:j])); i = j + 1
+        elif taxonomy[i] == "#":
+            i = taxonomy.find("\n", i)
+            i = n if i < 0 else i
+        elif taxonomy[i] == "." and (i + 1 == n or taxonomy[i + 1].isspace()) and taxonomy[i - 1].isspace():
             break
-    return " ".join(" ".join(block).split())
+        else:
+            j = i
+            while j < n and not taxonomy[j].isspace() and taxonomy[j] not in '"#':
+                j += 1
+            if j > i:
+                out.append(("tok", taxonomy[i:j])); i = j
+            else:
+                i += 1
+    notes, pred = [], None
+    for kind, text in out:
+        if kind == "tok" and text not in (",", "@en") and not text.startswith("@") and not text.startswith("^^"):
+            pred = None if text == ";" else (text if pred is None else pred)
+        elif kind == "lit" and pred == "skos:scopeNote":
+            notes.append(" ".join(text.split()))
+    return notes
 
 
 def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxonomy=None):
@@ -180,8 +209,8 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxono
             problems.append(f"{rid}: fresh_verdict must be APPROVE")
         if r["scope_note_slug"] != r["source_slug"]:
             problems.append(f"{rid}: the sentence goes in the source's scope note")
-        if taxonomy is not None and " ".join(r["scope_note_sentence"].split()) not in concept_block(
-                taxonomy, r["scope_note_slug"]):
+        sentence = " ".join(r["scope_note_sentence"].split())
+        if taxonomy is not None and not any(sentence in note for note in scope_notes(taxonomy, r["scope_note_slug"])):
             problems.append(f"{rid}: the approved sentence is not in {r['scope_note_slug']}'s published scope note")
         fact = tuple(reg["stored_fact"].split())
         if carried != [fact]:

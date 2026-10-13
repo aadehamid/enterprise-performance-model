@@ -80,7 +80,7 @@ gate was run against, not the pin. Do not retitle the checklist's
 ## 2026-10-12 — branch `phase1/sweep-203`, pin `adc7483`
 
 - **Evidence pin (`PINNED_SHA.txt`):** `adc7483522a7f3845dceca90c95187b6253372a4`
-- **Gate:** `evidence-gate.py` — 397 PASS, 0 FAIL — **GATE GREEN**
+- **Gate:** `evidence-gate.py` — 398 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1078, held==225, canonical-facts==490,
   contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #203, so the sweep
   check covers its 15 rows (+1). The 12 rows that now emit leave the
@@ -90,5 +90,7 @@ gate was run against, not the pin. Do not retitle the checklist's
   fact and no other.
   The sweep check now also compares each row's `direction` and `reason`
   with the register, and requires each emitting row's approved sentence in
-  its source's scope note in the pinned baseline taxonomy (no count change).
+  a `skos:scopeNote` literal of its source in the pinned baseline taxonomy.
+  A new check requires the published `build/output/step3-taxonomy.ttl` to
+  equal that baseline: 397 → 398 PASS.
 
