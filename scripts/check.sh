@@ -44,8 +44,10 @@ for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py
   (cd "$(dirname "$t")" && echo "--- $t" && with_deps python "$(basename "$t")" >/dev/null)
 done
 (cd "$step4/scoped-sequence" && run with_deps python build.py --verify)
+# The core release package (EPM-DEC-001-0029) must equal a fresh build from the pinned evidence.
+(cd business_architecture/ontology/release && run with_deps python build_core.py --verify)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
-  "$step4/scoped-sequence/test_scoped_sequences.py"
+  "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase

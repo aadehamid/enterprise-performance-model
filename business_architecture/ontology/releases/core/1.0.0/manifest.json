@@ -1,0 +1,15 @@
+{
+  "module": "core",
+  "version": "1.0.0",
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/core/1.0.0",
+  "built_from_pin": "388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9",
+  "files": {
+    "CHANGELOG.md": "6daf07ab0e546c97fab72bcc61b4f9560e739b8ec36d9439d9f7ced067e17db2",
+    "canonical-facts.csv": "7ed7c7ae9eb40cded17b314d9ab262c845602585c112ac309cf93e8290e81e53",
+    "conservation.csv": "f30667104b421a2428c9e84786b3bb26d1390ab250ff0006312d13014a6397cb",
+    "core.ttl": "2cbd7c462413f204ed96a3b3babf0e8c8c94d6b8e3d274eee45261f112705f15",
+    "counts.json": "e8662c08a68182025e0b811de9ec9cbeca190befed242559f8af2b471d47aafc",
+    "label-dispositions.csv": "756d1ffb693cbe4faef97cb9cc314124dc37b13a276dd69d8a63b9411c2789ad"
+  }
+}
