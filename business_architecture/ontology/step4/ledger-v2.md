@@ -2103,3 +2103,28 @@ merged, no contradiction.
 
 **Current totals:** **638 emitting / 648 held / 17 scoped sequence** / 478 facts.
 Conservation: 638 + 648 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #203: Supply & Trading recommend/advise rows (Hamid 2026-10-12)
+
+The second batch from the approved Phase 1 register (#207 comment
+6133390674). The source corrections are in `adc7483`, and Step 4 was
+re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/203-review.csv`.
+
+- **APPROVE, emitting `core:informedBy` (10):** REL-00152, REL-00262,
+  REL-00440, REL-00455, REL-00458, REL-00712, REL-00750, REL-01122,
+  REL-01129, REL-01206. Each `enables` segment now reads `informs`.
+  REL-01122 is also retargeted from Daily Execution Planning to Production
+  Scheduling (CM-1-1-7-2). REL-00712 holds under the condition its sentence
+  states.
+- **APPROVE, emitting `core:dependsOnOutputOf` (2):** REL-00263 and
+  REL-01064 now read `provides-input-to` (EPM-DEC-001-0027), stored target
+  dependsOnOutputOf source. REL-00263 holds under the condition its
+  sentence states.
+- **HOLD, no relationship (3):** REL-00436, REL-00466, REL-00469. REL-00436
+  stays attached as duplicate provenance on the REL-00447 fact, as before.
+
+12 mentions move from held to emitting; 12 facts added, none removed or
+merged, no contradiction.
+
+**Current totals:** **650 emitting / 636 held / 17 scoped sequence** / 490 facts.
+Conservation: 650 + 636 + 12 + 1 + 2 + 17 = 1,318. ✓

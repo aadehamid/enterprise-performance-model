@@ -77,3 +77,15 @@ gate was run against, not the pin. Do not retitle the checklist's
   file per adopted issue (`batch_checks.SWEEP_ADOPTED`), and the per-issue
   check requires every register row of that issue: 417 → 418 PASS.
 
+## 2026-10-12 — branch `phase1/sweep-203`, pin `adc7483`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `adc7483522a7f3845dceca90c95187b6253372a4`
+- **Gate:** `evidence-gate.py` — 397 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1078, held==225, canonical-facts==490,
+  contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #203, so the sweep
+  check covers its 15 rows (+1). The 12 rows that now emit leave the
+  property-hold set, and their 22 per-row control-case hold checks go (−22):
+  418 → 397 PASS. `batch_checks.SWEEP_PROVENANCE` lets REL-00436, answered
+  no relationship, keep its recorded duplicate provenance on the REL-00447
+  fact and no other.
+
