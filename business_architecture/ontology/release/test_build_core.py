@@ -80,6 +80,11 @@ class Destinations(unittest.TestCase):
             for flow in str(v).split("|"):
                 if flow.strip():
                     self.assertIn((s, b.CORE.keyInputFlow, self.norm(flow)), self.g)
+        for s, v in self.values("parkedChildren"):
+            for child in str(v).split("|"):
+                if child.strip():
+                    self.assertIn((s, b.CORE.plannedChildNote, self.norm(child)), self.g)
+                    self.assertNotIn((s, b.CORE.keyInputFlow, self.norm(child)), self.g)
 
     def test_level_kind_apqc_horizon_and_status(self):
         kinds = {"process": "process", "capability": "capability", "not-process": "structural-anchor"}
@@ -90,24 +95,41 @@ class Destinations(unittest.TestCase):
         for s, v in self.values("apqcDecision"):
             member = self.g.value(s, b.CORE.apqcMappingDecision)
             self.assertEqual(str(self.g.value(member, SKOS.notation)), str(v))
-        horizon = {"daily": ("cadence", "daily"), "weekly": ("cadence", "weekly"), "monthly": ("cadence", "monthly"),
-                   "tactical": ("planning-level", "tactical"), "strategic": ("planning-level", "strategic"),
-                   "event-driven": ("operating-mode", "event-driven"), "continuous": ("operating-mode", "continuous"),
-                   "periodic": ("operating-mode", "periodic")}
+        # Q6, written out here rather than read from build_core: each value's full set of facets.
+        mode, cadence, level = b.CORE.operatingMode, b.CORE.cadence, b.CORE.planningLevel
+        periodic = (mode, b.CODE["operating-mode"]["periodic"])
+        horizon = {"daily": {periodic, (cadence, b.CODE["cadence"]["daily"])},
+                   "weekly": {periodic, (cadence, b.CODE["cadence"]["weekly"])},
+                   "monthly": {periodic, (cadence, b.CODE["cadence"]["monthly"])},
+                   "periodic": {periodic},
+                   "event-driven": {(mode, b.CODE["operating-mode"]["event-driven"])},
+                   "continuous": {(mode, b.CODE["operating-mode"]["continuous"])},
+                   "tactical": {(level, b.CODE["planning-level"]["tactical"])},
+                   "strategic": {(level, b.CODE["planning-level"]["strategic"])}}
+        by_concept = {}
         for s, v in self.values("processHorizon"):
-            code, member = horizon[str(v)]
-            self.assertIn((s, b.HORIZON_PROPERTY[code], b.CODE[code][member]), self.g)
+            by_concept.setdefault(s, set()).update(horizon[str(v)])
+        for s, expected in by_concept.items():
+            with self.subTest(concept=str(s)):
+                actual = {(p, o) for p in (mode, cadence, level) for o in self.g.objects(s, p)}
+                self.assertEqual(actual, expected)
         status = dict((str(v), s) for s, v in self.values("status"))
         self.assertIn((status["retired"], b.CORE.lifecycleStatus, b.CODE["lifecycle-status"]["retired"]), self.g)
         self.assertIn((status["blocked"], b.CORE.holdStatus, b.CODE["hold-status"]["implementation-hold"]), self.g)
 
     def test_notes_and_sources(self):
+        # Q10 split, measured on the baseline (ledger-v2.md status; counts.json): 97 provenance
+        # and 3 dual-aspect notes are provenance; 385 editorial and 6 decision-pointer notes
+        # are editorial notes. Routing every note one way fails the counts.
+        prov = edit = 0
         for s, v in self.values("terminologyNotes"):
             text = self.norm(v)
             on_prov, on_edit = (s, DCTERMS.provenance, text) in self.g, (s, SKOS.editorialNote, text) in self.g
             self.assertTrue(on_prov != on_edit, str(s))
+            prov, edit = prov + on_prov, edit + on_edit
             if re.search(r"renam", str(v), re.I):
                 self.assertTrue(on_prov, f"{s}: a rename note is provenance")
+        self.assertEqual((prov, edit), (100, 391))
         for s, v in self.values("referenceSources"):
             for ident in re.findall(r"SRC-[A-Z0-9-]+", str(v)):
                 self.assertIn((s, DCTERMS.source, b.SRC[ident.lower()]), self.g)
@@ -134,9 +156,9 @@ class Destinations(unittest.TestCase):
 
     def test_the_package_is_a_release_candidate_until_approved(self):
         g = self.g
-        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, OWL.versionInfo)), b.LABEL)
-        if b.STAGE is not None:
-            self.assertIsNone(g.value(b.ONTOLOGY_IRI, DCTERMS.issued))
+        # Literal on purpose: at the cut, Hamid's approval changes this test with build_core.py.
+        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, OWL.versionInfo)), "1.0.0-rc.1")
+        self.assertIsNone(g.value(b.ONTOLOGY_IRI, DCTERMS.issued))
         self.assertEqual(len(list(g.objects(b.ONTOLOGY_IRI, DCTERMS.title))), 1)
 
 

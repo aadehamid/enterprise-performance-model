@@ -77,7 +77,7 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012): #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
 - [ ] **Fresh no-consumer attestation: Hamid.** It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
 - [ ] **Release approval: Hamid.** A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
-- [ ] At the cut: in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, rebuild, tag the merge commit `core-v1.0.0`.
+- [ ] At the cut: in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, rebuild, tag the merge commit `core-v1.0.0`.
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).
