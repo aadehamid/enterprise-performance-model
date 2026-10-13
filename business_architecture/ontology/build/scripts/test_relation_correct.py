@@ -113,6 +113,14 @@ class RelationCorrect(unittest.TestCase):
         self.assertIn("would add a segment", result.stderr)
         self.assertEqual(wb.read_bytes(), before)
 
+    def test_refuses_a_quote_or_backslash_in_the_target(self):
+        for target in ('Trade "Capture" (CM-1-2-1-3)', "Trade \\ Capture (CM-1-2-1-3)"):
+            wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)", "informs", target]])
+            before = wb.read_bytes()
+            result = _run(wb, c)
+            self.assertIn("quote or backslash", result.stderr, target)
+            self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_unknown_verb_and_unapproved_row(self):
         wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
                                  "feeds", "Trade Capture (CM-1-2-1-3)"]])
