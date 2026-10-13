@@ -8,7 +8,12 @@ Where this ledger and an approved Step 4 decision disagree (`level`, Q8 and Q9
 status, cross-functional domains), the decision wins (as EPM-DEC-001-0029 proposes). Two measured
 splits differ from this census, taken 2026-09-25 on an older baseline: terminology
 notes 385 editorial / 97 provenance / 6 decision-pointer / 3 dual-aspect, and 736
-source links with 8 annotations (`releases/core/1.0.0/counts.json`).
+source links with 8 annotations (`releases/core/1.0.0/counts.json`). The source-link
+difference has one cause: the annotation on
+`L2-refinery-asset-reliability-and-turnaround-coordination` (SRC-OSHA-PSM-001)
+contains a ";", and the census split it there, counting its second half as a
+ninth annotated token. The release tokenizer keeps an annotation whole:
+728 plain + 8 annotated = 736 links.
 *Original status (2026-09-25): draft for review. No predicate retires until Hamid
 approves this ledger AND the promotion script proves the migration in a
 before/after reconciliation run.*
