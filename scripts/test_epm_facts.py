@@ -32,6 +32,8 @@ def test_ledger_conserves_and_matches_governed_figures():
     assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 522
     assert c["evidence_gate"]["green"] is True
     assert (c["evidence_gate"]["promoted"], c["evidence_gate"]["held"]) == (1114, 189)
+    # 394 until #202 dropped 28 per-row G1b "emits no triple" checks and added its sweep check.
+    assert (c["evidence_gate"]["pass_checks"], c["evidence_gate"]["fail_checks"]) == (367, 0)
 
 
 def test_phase1_scope_matches_decision_0025():
