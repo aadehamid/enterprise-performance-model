@@ -1,6 +1,7 @@
 # Reference instances for Marathon Petroleum Corporation (Step 5, slice 4; EPM-DEC-001-0015,
-# EPM-DEC-001-0033). Public facts from MPC's FY2025 Form 10-K only (MPC-S01 in
-# business_architecture/reference/mpc/source-register.md). Each instance cites its source,
+# EPM-DEC-001-0033). Public facts from MPC's FY2025 Form 10-K (MPC-S01 in
+# business_architecture/reference/mpc/source-register.md), plus the two LEIs from GLEIF
+# (EPM-DEC-001-0023: GLEIF is mapped at Step 5, not imported). Each instance cites its source,
 # and each holds as of the date in dcterms:date. The core and organization modules stay
 # company-neutral: this module refers to their terms by IRI.
 @prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
@@ -10,6 +11,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://w3id.org/lsc/ontology/modules/ref-mpc> a owl:Ontology ;
@@ -24,18 +26,29 @@ src:mpc-s01 a dcterms:BibliographicResource ;
     dcterms:issued "2026-02-26"^^xsd:date ;
     dcterms:source <https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm> .
 
+src:gleif-lei a dcterms:BibliographicResource ;
+    dcterms:title "GLEIF LEI records (Level 1 and Level 2), golden copy published 2026-10-13"@en ;
+    dcterms:identifier "GLEIF API v1, lei-records" ;
+    dcterms:issued "2026-10-13"^^xsd:date ;
+    dcterms:source <https://api.gleif.org/api/v1/lei-records> .
+
 # ---- Legal entities ----
 
 refmpc:mpc a org:FormalOrganization ;
     skos:prefLabel "Marathon Petroleum Corporation"@en ;
     skos:altLabel "MPC"@en ;
-    dcterms:source src:mpc-s01 ; dcterms:date "2025-12-31"^^xsd:date .
+    org:identifier "3BNYRYQHD39K4LCKQF12" ;
+    rdfs:seeAlso <https://api.gleif.org/api/v1/lei-records/3BNYRYQHD39K4LCKQF12> ;
+    dcterms:source src:mpc-s01, src:gleif-lei ; dcterms:date "2025-12-31"^^xsd:date .
 
 refmpc:mplx a org:FormalOrganization ;
     skos:prefLabel "MPLX LP"@en ;
     skos:altLabel "MPLX"@en ;
+    org:identifier "5493000CZJ19CK4P3G36" ;
+    rdfs:seeAlso <https://api.gleif.org/api/v1/lei-records/5493000CZJ19CK4P3G36> ;
     skos:scopeNote "A master limited partnership that MPC sponsors. A separate legal entity, not a unit of MPC: MPC's control of it is the control relationship below, not org:subOrganizationOf."@en ;
-    dcterms:source src:mpc-s01 ; dcterms:date "2025-12-31"^^xsd:date .
+    skos:note "GLEIF lists this LEI's registration as LAPSED (last updated 2023-08-04) and records no accounting-consolidation parent (reporting exception NO_KNOWN_PERSON), so the control relationship below has no GLEIF Level 2 counterpart."@en ;
+    dcterms:source src:mpc-s01, src:gleif-lei ; dcterms:date "2025-12-31"^^xsd:date .
 
 refmpc:mpc-controls-mplx a orgm:ControlRelationship ;
     orgm:controllingEntity refmpc:mpc ;

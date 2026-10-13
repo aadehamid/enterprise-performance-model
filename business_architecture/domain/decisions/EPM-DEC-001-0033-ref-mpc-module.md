@@ -27,7 +27,8 @@ The step plan named two segments. The filing names three, so the module follows 
 3. **The three reportable segments** as `org:OrganizationalUnit`, each `org:unitOf` MPC. Midstream's scope note says MPLX's operations roll up into it.
 4. **The 13 refineries** as `org:Site`, each `org:siteOf` MPC, with its location and region in a note.
 5. **Source and date on every instance.** Each instance cites `src:mpc-s01` (`dcterms:source`) and states `dcterms:date` 2025-12-31, the date its facts held. The source node carries its title, accession number and filing date.
-6. **No terms of its own.** The module uses the organization module and W3C ORG by IRI.
+6. **GLEIF by identifier (EPM-DEC-001-0023).** MPC's LEI is 3BNYRYQHD39K4LCKQF12 and MPLX's is 5493000CZJ19CK4P3G36, each as `org:identifier` with an `rdfs:seeAlso` link to its GLEIF API record. GLEIF lists MPLX's registration as lapsed, and records no accounting-consolidation parent for it (reporting exception NO_KNOWN_PERSON). So the control relationship has no GLEIF Level 2 relationship to map to. MPLX's note says so.
+7. **No terms of its own.** The module uses the organization module and W3C ORG by IRI.
 
 Left out for now:
 - **Refinery capacity.** It is a dated quantity with a unit, which waits for the measure pattern of Step 7.
@@ -45,7 +46,7 @@ Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in
 
 ## Evidence
 
-MPC-S01, the FY2025 Form 10-K (https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm), checked for the MPLX and segment sentences on 2026-10-13; `business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md` for the refinery list; EPM-DEC-001-0015, 0020, 0030.
+MPC-S01, the FY2025 Form 10-K (https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm), checked for the MPLX and segment sentences on 2026-10-13; the GLEIF API (`https://api.gleif.org/api/v1/lei-records`), queried on 2026-10-13 for both legal names and for MPLX's parent relationships; `business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md` for the refinery list; EPM-DEC-001-0015, 0020, 0030.
 
 ## Consequences
 

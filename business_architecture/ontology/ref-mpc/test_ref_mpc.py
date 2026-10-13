@@ -57,6 +57,13 @@ class Facts(unittest.TestCase):
         self.assertEqual(MODULE.value(c, DCTERMS.source), SRC["mpc-s01"])
         self.assertIn("approximately 64 percent", str(MODULE.value(c, SKOS.note)))
 
+    def test_mpc_and_mplx_carry_their_gleif_leis(self):
+        # GLEIF API, queried 2026-10-13 (EPM-DEC-001-0023: GLEIF is mapped at Step 5).
+        self.assertEqual(str(MODULE.value(REF.mpc, ORG.identifier)), "3BNYRYQHD39K4LCKQF12")
+        self.assertEqual(str(MODULE.value(REF.mplx, ORG.identifier)), "5493000CZJ19CK4P3G36")
+        for s in (REF.mpc, REF.mplx):
+            self.assertIn((s, DCTERMS.source, SRC["gleif-lei"]), MODULE)
+
     def test_mplx_is_not_a_unit_of_mpc(self):
         self.assertNotIn((REF.mplx, ORG.subOrganizationOf, REF.mpc), MODULE)
         self.assertNotIn((REF.mplx, ORG.unitOf, REF.mpc), MODULE)
