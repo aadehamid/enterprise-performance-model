@@ -26,7 +26,7 @@ The repository does not expand the acronyms in the role strings (CCI, CP, CPVC, 
 5. **Each role gets one English name** (`skos:prefLabel`). A different spelling of the whole role, with no qualifier, is kept as `skos:altLabel`.
 6. **Role IRIs** are `https://w3id.org/lsc/ontology/modules/organization/role/{slug}`, the `…/modules/{module}` pattern of the URI policy.
 
-The result: 60 roles, 54 positions and 6 teams. `build_roles.py` prints the figures.
+The result: 60 roles, 54 positions and 6 teams. Splitting the 11 compound strings turns the 913 entries into 940 role references. `build_roles.py` prints the figures.
 
 ### Questions for Hamid
 
