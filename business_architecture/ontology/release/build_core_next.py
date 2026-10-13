@@ -7,8 +7,9 @@
 core 1.0.0 stays as it was built from its pinned evidence (build_core.py). This builder starts from
 that released graph and applies the changes Hamid decided on 2026-10-13:
 
-1. Business domains as a code list. A new object property core:businessDomain links each process
-   to a concept of the core:BusinessDomain list. "Commercial & Marketing" splits by branch:
+1. Business domains as a code list. A new object property core:businessDomain links each concept
+   that carries a 1.0.0 core:responsibleDomain value (processes and capabilities) to a concept of
+   the core:BusinessDomain list. "Commercial & Marketing" splits by branch:
    CM 1.3 is Marketing, CM 1.1 and CM 1.2 are Commercial, CM 1.4 is IT Services. The other values
    keep their own domain. core:responsibleDomain is deprecated (owl:deprecated true); its values stay.
 2. Planned inputs and outputs from the process map's SIPOC field (`sioc`): core:plannedInput and
