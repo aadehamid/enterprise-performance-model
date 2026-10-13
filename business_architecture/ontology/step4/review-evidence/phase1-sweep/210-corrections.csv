@@ -1,0 +1,9 @@
+row_id,source_slug,old_verb,old_target,new_verb,new_target
+REL-00445,CM-1-2-5-2-3,enables,Refinery Planning and Optimization,informs,Refinery Planning and Optimization
+REL-00758,CM-1-3-4-6-3,enables,Conduct Research,informs,Conduct Research
+REL-00936,CM-1-3-7-2-3,enables,Analyze Customer Profitability,informs,Analyze Customer Profitability
+REL-01053,CM-1-3-8-4-1,enables,Perform AR Reconciliation and Compliance (CM-1-3-8-4-2),uses-input,Perform AR Reconciliation and Compliance (CM-1-3-8-4-2)
+REL-01094,CM-1-3-9-3-1,enables,Manage Technology,informs,Manage Technology
+REL-01131,CM-1-2-6-1,enables,Refined Product Demand Management,informs,Refined Product Demand Management
+REL-01192,CM-1-3-2-1,enables,Sales & Distribution Channel Strategy,informs,Sales & Distribution Channel Strategy
+REL-01312,CM-1-2-2-3,enables,Trade Capture,governs,Trade Capture
