@@ -178,5 +178,107 @@ class SweepBatch206(unittest.TestCase):
             self.assertTrue(any(extra in p for p in batch_checks.sweep_files_problems(names | {extra})), extra)
 
 
+
+class SweepBatch203(unittest.TestCase):
+    def setUp(self):
+        with open(os.path.join(SWEEP, "203-review.csv"), newline="") as f:
+            self.rows = list(csv.DictReader(f))
+        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
+            self.register = {r["row_id"]: r for r in csv.DictReader(f)}
+        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+            self.approval = f.read()
+        self.facts, self.v2 = facts(), v2()
+        with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
+            self.taxonomy = f.read()
+
+    def problems(self, fact_rows, rows=None, taxonomy=None):
+        return batch_checks.sweep_batch_problems("203", rows if rows is not None else self.rows, self.register,
+                                                 self.approval, self.v2, fact_rows,
+                                                 taxonomy=taxonomy if taxonomy is not None else self.taxonomy)
+
+    def test_the_batch_matches_the_register(self):
+        self.assertEqual(self.problems(self.facts), [])
+
+    def test_a_changed_direction_or_reason_is_caught(self):
+        for field, value in (("direction", "as-asserted"), ("reason", "edited")):
+            rows = copy.deepcopy(self.rows)
+            i = next(i for i, r in enumerate(rows) if r["direction"] == "reversed")
+            rows[i][field] = value
+            self.assertTrue(any(field in p for p in self.problems(self.facts, rows=rows)), field)
+
+    def test_a_sentence_missing_from_the_published_scope_note_is_caught(self):
+        row = next(r for r in self.rows if r["row_id"] == "REL-00263")
+        sentence = " ".join(row["scope_note_sentence"].split())
+        flat = " ".join(self.taxonomy.split())
+        self.assertIn(sentence, flat)
+        mutated = self.taxonomy.replace(row["scope_note_sentence"].split(",")[0], "Manage Risk Reporting always consumes", 1)
+        self.assertNotEqual(mutated, self.taxonomy)
+        self.assertTrue(any("REL-00263" in p and "published scope note" in p
+                            for p in self.problems(self.facts, taxonomy=mutated)))
+
+    def test_a_sentence_in_another_concept_or_a_comment_does_not_count(self):
+        row = next(r for r in self.rows if r["row_id"] == "REL-00263")
+        sentence = row["scope_note_sentence"]
+        own = "proc:CM-1-2-2-3-12 a skos:Concept ;\n"
+        self.assertIn(own, self.taxonomy)
+        stripped = self.taxonomy.replace(sentence, "")
+        # Moved into the next concept's statement, whose header is indented.
+        moved = stripped.replace("proc:CM-1-2-2-3-13 a skos:Concept ;\n",
+                                 f'  proc:CM-1-2-2-3-13 a skos:Concept ;\n    skos:scopeNote """{sentence}"""@en ;\n', 1)
+        # Kept only as a comment inside its own statement.
+        commented = stripped.replace(own, own + f"    # {sentence}\n", 1)
+        for mutated in (moved, commented):
+            self.assertNotEqual(mutated, stripped)
+            self.assertTrue(any("REL-00263" in p and "published scope note" in p
+                                for p in self.problems(self.facts, taxonomy=mutated)))
+
+    def test_scope_notes_reads_only_the_named_subject(self):
+        ttl = ('proc:A a skos:Concept ;\n  # skos:scopeNote "in a comment"\n  skos:prefLabel "A"@en ;\n'
+               '  skos:scopeNote """one. two"""@en , "three"@en .\n'
+               '  proc:B a skos:Concept ;\n  skos:scopeNote "B note"@en .\n')
+        self.assertEqual(batch_checks.scope_notes(ttl, "A"), ["one. two", "three"])
+        self.assertEqual(batch_checks.scope_notes(ttl, "B"), ["B note"])
+        self.assertEqual(batch_checks.scope_notes(ttl, "C"), [])
+
+    def test_a_reverted_relationship_in_the_published_taxonomy_is_caught(self):
+        # REL-00263's corrected segment back to enables, with its sentence left in the scope note.
+        reverted = self.taxonomy.replace("provides-input-to: Manage Risk Reporting", "enables: Manage Risk Reporting", 1)
+        # The uncorrected segment appended beside the corrected one.
+        appended = self.taxonomy.replace("provides-input-to: Manage Risk Reporting",
+                                         "provides-input-to: Manage Risk Reporting | enables: Manage Risk Reporting", 1)
+        for mutated in (reverted, appended):
+            self.assertNotEqual(mutated, self.taxonomy)
+            self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
+                                for p in self.problems(self.facts, taxonomy=mutated)))
+
+    def test_a_relationship_classify_cannot_read_does_not_count(self):
+        # Moved into a triple-quoted literal: valid Turtle, but classify_v2 reads only one-line literals.
+        line = next(l for l in self.taxonomy.splitlines()
+                    if "provides-input-to: Manage Risk Reporting" in l)
+        hidden = self.taxonomy.replace(line, line.replace('"', '"""', 1).replace('"@', '"""@', 1), 1)
+        self.assertNotEqual(hidden, self.taxonomy)
+        self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
+                            for p in self.problems(self.facts, taxonomy=hidden)))
+
+    def test_sweep_provenance_matches_the_mapping_attachments(self):
+        import ast
+        with open(os.path.join(HERE, "mapping_v2.py")) as f:
+            tree = ast.parse(f.read())
+        attach = next(ast.literal_eval(n.value) for n in ast.walk(tree) if isinstance(n, ast.Assign)
+                      and getattr(n.targets[0], "id", "") == "DUPLICATE_PROVENANCE_ATTACH")
+        for rid, fact in batch_checks.SWEEP_PROVENANCE.items():
+            self.assertEqual(attach.get(rid), fact, rid)
+
+    def test_recorded_provenance_is_allowed_only_on_its_fact(self):
+        fact = batch_checks.SWEEP_PROVENANCE["REL-00436"]
+        self.assertIn("REL-00436", self.facts[fact])
+        moved = copy.deepcopy(self.facts)
+        moved[fact] = [x for x in moved[fact] if x != "REL-00436"]
+        moved[("CM-0", "core:dependsOnOutputOf", "CM-1")] = ["REL-00436"]
+        self.assertTrue(any("REL-00436" in p for p in self.problems(moved)))
+        dropped = copy.deepcopy(self.facts)
+        dropped[fact] = [x for x in dropped[fact] if x != "REL-00436"]
+        self.assertTrue(any("REL-00436" in p for p in self.problems(dropped)))
+
 if __name__ == "__main__":
     unittest.main()

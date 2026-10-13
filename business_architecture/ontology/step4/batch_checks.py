@@ -91,12 +91,18 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
 # the approved register, review-evidence/phase1-sweep/register.csv, approved as a
 # whole in review-evidence/hamid-answers/phase1-sweep.md.
 SWEEP_APPROVAL = "approve register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all."
-SWEEP_FIELDS = ("verdict", "verb", "target_slug", "stored_fact", "condition", "scope_note_sentence")
+SWEEP_FIELDS = ("verdict", "verb", "target_slug", "direction", "stored_fact", "condition", "scope_note_sentence",
+                "reason")
 SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #207 comment 6133390674)"
 SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
 # Issues whose register rows are adopted into Step 4. Each has
 # review-evidence/phase1-sweep/<issue>-review.csv covering exactly its register rows.
-SWEEP_ADOPTED = ("206",)
+SWEEP_ADOPTED = ("206", "203")
+# No-relationship rows the approved register keeps as duplicate provenance on a fact
+# another row carries (mapping_v2.DUPLICATE_PROVENANCE_ATTACH). Each may sit on that
+# fact only. REL-00436: "REL-00436 stays attached to that fact as duplicate provenance"
+# (register reason); the fact stands through REL-00447.
+SWEEP_PROVENANCE = {"REL-00436": ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4")}
 
 
 def sweep_files_problems(found):
@@ -107,12 +113,87 @@ def sweep_files_problems(found):
     return problems
 
 
-def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
+def scope_notes(taxonomy, slug):
+    """The skos:scopeNote literals of proc:<slug> in Turtle text, whitespace-collapsed."""
+    return [" ".join(t.split()) for t in literals(taxonomy, slug, "skos:scopeNote")]
+
+
+def related_segments(taxonomy, slug):
+    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, read exactly as classify_v2.py reads them.
+
+    The same per-line regexes and the same split: a relationship classify_v2 cannot
+    see is not seen here either.
+    """
+    pairs, current = [], None
+    for line in taxonomy.splitlines():
+        m = re.match(r"proc:([A-Za-z]+-\d[\d-]*)\s+a\s+skos:Concept", line)
+        if m:
+            current = m.group(1)
+            continue
+        m = re.search(r'intake:relatedConcepts\s+"([^"]*)"', line)
+        if m and current == slug:
+            for part in m.group(1).split("|"):
+                part = part.strip()
+                if part and ":" in part:
+                    verb, target = part.split(":", 1)
+                    pairs.append((verb.strip(), target.strip()))
+    return pairs
+
+
+# Raw verbs a reversed register row is written with (EPM-DEC-001-0027).
+MIRROR_VERBS = {"uses-input": "provides-input-to", "governed-by": "governs"}
+
+
+def literals(taxonomy, slug, predicate):
+    """The literals of one predicate of proc:<slug> in Turtle text.
+
+    Reads only that subject's statement: it starts at "proc:<slug> a" (at any
+    indentation), skips comments outside strings, and ends at the statement's
+    closing "." outside strings. So a sentence in a comment or in another
+    concept's statement does not count.
+    """
+    start = re.search(r"(?m)^[ \t]*proc:" + re.escape(slug) + r"[ \t]+a[ \t]", taxonomy)
+    if not start:
+        return []
+    i, n, out = start.start(), len(taxonomy), []
+    while i < n:
+        if taxonomy.startswith('"""', i):
+            j = taxonomy.index('"""', i + 3)
+            out.append(("lit", taxonomy[i + 3:j])); i = j + 3
+        elif taxonomy[i] == '"':
+            j = i + 1
+            while taxonomy[j] != '"':
+                j += 2 if taxonomy[j] == "\\" else 1
+            out.append(("lit", taxonomy[i + 1:j])); i = j + 1
+        elif taxonomy[i] == "#":
+            i = taxonomy.find("\n", i)
+            i = n if i < 0 else i
+        elif taxonomy[i] == "." and (i + 1 == n or taxonomy[i + 1].isspace()) and taxonomy[i - 1].isspace():
+            break
+        else:
+            j = i
+            while j < n and not taxonomy[j].isspace() and taxonomy[j] not in '"#':
+                j += 1
+            if j > i:
+                out.append(("tok", taxonomy[i:j])); i = j
+            else:
+                i += 1
+    found, pred = [], None
+    for kind, text in out:
+        if kind == "tok" and text not in (",", "@en") and not text.startswith("@") and not text.startswith("^^"):
+            pred = None if text == ";" else (text if pred is None else pred)
+        elif kind == "lit" and pred == predicate:
+            found.append(text)
+    return found
+
+
+def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxonomy=None):
     """Problems with one issue's sweep review rows, checked against the approved register.
 
     issue: the issue number as a string. rows: the batch review CSV as dicts.
     register: row ID -> register.csv row. v2: row ID -> target-dispositions-v2 row.
-    facts: (s, p, o) -> list of row IDs.
+    facts: (s, p, o) -> list of row IDs. taxonomy: the pinned baseline taxonomy text; when
+    given, each emitting row's sentence must appear in its scope-note concept's block.
     The review covers exactly the issue's register rows. Each row repeats its
     register row's decided values, Hamid's approval and the outcome they imply;
     an emitting row is on its stored fact, and a no-relationship row is on no fact.
@@ -150,13 +231,32 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
             problems.append(f"{rid}: source_slug must be {v2[rid]['source_slug']}")
         carried = [k for k, ids in facts.items() if rid in ids]
         if reg["verdict"] == "no-relationship":
-            if r["fresh_verdict"] != "HOLD" or carried:
-                problems.append(f"{rid}: a no-relationship row stays HOLD and carries no fact")
+            allowed = [SWEEP_PROVENANCE[rid]] if rid in SWEEP_PROVENANCE else []
+            if r["fresh_verdict"] != "HOLD" or carried != allowed:
+                problems.append(f"{rid}: a no-relationship row stays HOLD and carries no fact"
+                                + (f" except its provenance on {' '.join(allowed[0])}" if allowed else ""))
             continue
         if r["fresh_verdict"] != "APPROVE":
             problems.append(f"{rid}: fresh_verdict must be APPROVE")
         if r["scope_note_slug"] != r["source_slug"]:
             problems.append(f"{rid}: the sentence goes in the source's scope note")
+        if taxonomy is not None:
+            # The published relationship itself, as classify_v2 will read it.
+            verb = MIRROR_VERBS.get(reg["verb"], reg["verb"]) if reg["direction"] == "reversed" else reg["verb"]
+            segment = (verb, v2[rid]["raw_target"])
+            if v2[rid]["verb"] != verb:
+                problems.append(f"{rid}: the dispositions carry verb {v2[rid]['verb']!r}, not {verb!r}")
+            pairs = related_segments(taxonomy, r["source_slug"])
+            if pairs.count(segment) != 1:
+                problems.append(f"{rid}: '{verb}: {segment[1]}' is not exactly once in "
+                                f"{r['source_slug']}'s published relatedConcepts")
+            # Another verb to the same target, such as the uncorrected enables left beside it.
+            others = [v for v, t in pairs if t == segment[1] and v != verb]
+            if others:
+                problems.append(f"{rid}: {r['source_slug']}'s relatedConcepts also has {others} to {segment[1]}")
+        sentence = " ".join(r["scope_note_sentence"].split())
+        if taxonomy is not None and not any(sentence in note for note in scope_notes(taxonomy, r["scope_note_slug"])):
+            problems.append(f"{rid}: the approved sentence is not in {r['scope_note_slug']}'s published scope note")
         fact = tuple(reg["stored_fact"].split())
         if carried != [fact]:
             problems.append(f"{rid}: carried by {carried}, expected only {' '.join(fact)}")

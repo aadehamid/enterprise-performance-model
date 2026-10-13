@@ -154,56 +154,16 @@ PROPERTY_RULE_HOLDS = {
                   "Maintain Commercial Workflow Configuration <-> Manage "
                   "Commercial Master Data Stewardship governedBy adds no "
                   "separate relationship evidence. Fact removed."),
-    "REL-00152": ("Hamid 2026-09-26: HOLD. Advisory/recommendation pattern "
-                  "(REL-00445 family): asset optimization recommends to strategy "
-                  "management; strategy management retains decision authority. "
-                  "Remove this row's evidence from the fact; the fact is "
-                  "preserved via the independent approved row REL-00214."),
-    "REL-00262": ("Hamid 2026-09-26: HOLD. Advisory pattern: advanced "
-                  "analytics recommends methodology/limit/control changes; "
-                  "risk-limit management decides and administers. Fact removed."),
-    "REL-00458": ("Hamid 2026-09-26: HOLD. Advisory pattern: source "
-                  "recommends mitigations to accountable owners and submits "
-                  "approved hedging requirements; does not enable Trading "
-                  "Management as a capability. Fact removed."),
-    "REL-01122": ("Hamid 2026-09-26: HOLD. Advisory pattern: the source "
-                  "definition says its economic targets and allowance "
-                  "recommendations inform the production schedule. Fact removed."),
-    "REL-01129": ("Hamid 2026-09-26: HOLD. Advisory pattern: supply-network "
-                  "participation analysis recommends where and whom to serve; "
-                  "Regional Optimization is the plan-making decision process. "
-                  "Fact removed."),
-    "REL-00263": ("Hamid 2026-09-26: HOLD. Ambiguous enables: analytics "
-                  "recommends methodology/limit/control changes, not an "
-                  "operational prerequisite for governed risk reporting. Fact "
-                  "removed; no emission-time remap."),
+    # Phase 1 sweep, #203 (Hamid 2026-10-12, #207 comment 6133390674): the 12
+    # S&T advisory and ambiguous-enables rows held here were corrected in the
+    # source (enables -> informs or provides-input-to) and now emit. REL-00436,
+    # REL-00466 and REL-00469 were answered no relationship and stay held.
+    # review-evidence/phase1-sweep/203-review.csv.
     "REL-00436": ("Hamid 2026-09-26: HOLD. Ambiguous enables: source "
                   "assertion is enables but stored as dependsOnOutputOf; a "
                   "plausible output dependency is not authorized at emission. "
                   "Remove this row's evidence; the fact is preserved via the "
                   "independent approved row REL-00447."),
-    "REL-00440": ("Hamid 2026-09-26: HOLD. Ambiguous enables: coordination "
-                  "may request a trade but trade capture is a controlled "
-                  "authorization/recording process; likely lifecycle/input/ "
-                  "handoff semantics need author confirmation. Fact removed."),
-    "REL-00455": ("Hamid 2026-09-26: HOLD. Ambiguous enables: arrival "
-                  "planning may inform actualization but does not clearly "
-                  "make actualization capable of being performed. Fact removed."),
-    "REL-00712": ("Hamid 2026-09-26: HOLD. Ambiguous enables: "
-                  "approval-ready implementation recommendations do not "
-                  "establish a required capability base for concept/"
-                  "feasibility work. Fact removed."),
-    "REL-00750": ("Hamid 2026-09-26: HOLD. Ambiguous enables: "
-                  "recommendations go to delegated authorities; target "
-                  "implements approved decisions; exact relationship needs "
-                  "explicit correction. Fact removed."),
-    "REL-01064": ("Hamid 2026-09-26: HOLD. Ambiguous enables: source "
-                  "proposes treatment for Tax approval; approved changes may "
-                  "feed master-data maintenance but not source-supported "
-                  "enablement. Fact removed."),
-    "REL-01206": ("Hamid 2026-09-26: HOLD. Ambiguous enables: lifecycle "
-                  "recommendations inform delegated decisions; target governs "
-                  "and implements approved changes. Fact removed."),
     "REL-00925": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
                   "Maintain Commercial Policy Content and Approved Parameters "
                   "<-> Manage Commercial Master Data Stewardship governedBy "
@@ -1067,9 +1027,11 @@ USES_INPUT_20260926_HOLDS = {
 }
 
 # Hamid 2026-09-26: uses-input pass — 41 G1a-shared enables mentions emitting→held. Underlying uses-input row held (fact removed); enables mention cannot carry a fact alone. Source: ledger-v2.md 'uses-input pass applied' (114 facts removed: 73 sole-evidence, 41 G1a-shared).
+# Phase 1 sweep, #203: REL-00152 left this set when its source verb was corrected
+# to informs; 40 remain.
 USES_INPUT_G1A_20260926_HOLDS = {
     "REL-00057", "REL-00089", "REL-00093", "REL-00120", "REL-00143", "REL-00146",
-    "REL-00152", "REL-00154", "REL-00227", "REL-00233", "REL-00268", "REL-00271",
+    "REL-00154", "REL-00227", "REL-00233", "REL-00268", "REL-00271",
     "REL-00277", "REL-00289", "REL-00292", "REL-00358", "REL-00376", "REL-00379",
     "REL-00461", "REL-00463", "REL-00464", "REL-00771", "REL-00865", "REL-00918",
     "REL-00922", "REL-00944", "REL-00945", "REL-00957", "REL-00958", "REL-00970",
@@ -1292,7 +1254,6 @@ for (v, p), n in sorted(perverb.items()):
 # survives through its approved uses-input row; the enables rows add provenance
 # only — no new fact, no predicate change, no direction change.
 DUPLICATE_PROVENANCE_ATTACH = {
-    "REL-00152": ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4"),
     "REL-00436": ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"),
 }
 for _rid, _key in DUPLICATE_PROVENANCE_ATTACH.items():

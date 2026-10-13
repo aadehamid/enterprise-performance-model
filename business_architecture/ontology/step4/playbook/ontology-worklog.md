@@ -968,8 +968,11 @@ without a dated amendment and Hamid's explicit agreement.
   IDs stay stable. EPM-DEC-001-0027 adds two mirror raw verbs for the 101
   rows stored opposite to their workbook direction (#238).
 - #206 is the first batch: 10 governed-by rows emit, REL-00190 names its
-  DOA child, 4 rows close with no relationship. Pending merge of the batch
-  PR.
+  DOA child, 4 rows close with no relationship. Merged in #239.
+- #203 is the second batch: 10 S&T advisory rows emit `informedBy`, 2 emit
+  `dependsOnOutputOf` through `provides-input-to`, REL-01122 names
+  Production Scheduling, and 3 rows close with no relationship. Pending
+  merge of the batch PR.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

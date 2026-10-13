@@ -107,6 +107,10 @@ def run_pipeline():
     try:
         work = os.path.join(tmp, "step4")
         shutil.copytree(STEP4, work, ignore=shutil.ignore_patterns("__pycache__", "proposal"))
+        # The gate compares the published taxonomy with the pinned baseline, at ../build/output.
+        published = os.path.join(os.path.dirname(STEP4), "build", "output", "step3-taxonomy.ttl")
+        os.makedirs(os.path.join(tmp, "build", "output"))
+        shutil.copyfile(published, os.path.join(tmp, "build", "output", "step3-taxonomy.ttl"))
         cwd = os.getcwd()
         os.chdir(work)
         try:

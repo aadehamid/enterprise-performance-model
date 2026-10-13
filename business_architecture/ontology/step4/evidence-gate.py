@@ -3,8 +3,8 @@
 
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
-  2. Mention arithmetic reconciles from the actual files: 1066+237+12+1+2=1318.
-  3. canonical-facts.csv has exactly 478 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  2. Mention arithmetic reconciles from the actual files: 1078+225+12+1+2=1318.
+  3. canonical-facts.csv has exactly 490 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -54,9 +54,8 @@ prop_holds = {"REL-00503", "REL-01312", "REL-01053",
               "REL-01106", "REL-00917", "REL-00884", "REL-01065",
               "REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
               "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
-              "REL-00152", "REL-00262", "REL-00458", "REL-01122", "REL-01129",
-              "REL-00263", "REL-00436", "REL-00440", "REL-00455", "REL-00712",
-              "REL-00750", "REL-01064", "REL-01206",
+              # Phase 1 sweep, #203: 12 S&T rows released (203-review.csv); REL-00436 stays.
+              "REL-00436",
               "REL-00140", "REL-00499", "REL-00565", "REL-00648", "REL-00679",
               "REL-00709", "REL-00732", "REL-00973", "REL-00974", "REL-00977",
               "REL-01108", "REL-01112", "REL-01148", "REL-01151", "REL-01154",
@@ -71,8 +70,8 @@ ext = sum(1 for r in v2 if r["disposition"] == "ExternalGovernanceReference")
 flow = sum(1 for r in v2 if r["disposition"] == "StructuredFlowValue")
 check("mention-arithmetic", promoted + held_ctx + ambig + ext + flow == 1318 == len(v2),
       f"{promoted}+{held_ctx}+{ambig}+{ext}+{flow}={promoted+held_ctx+ambig+ext+flow} vs {len(v2)}")
-check("promoted==1066", promoted == 1066, str(promoted))
-check("held==237", held_ctx == 237, str(held_ctx))
+check("promoted==1078", promoted == 1078, str(promoted))
+check("held==225", held_ctx == 225, str(held_ctx))
 
 # 2b. enabledBy control cases (Hamid verdicts 2026-09-24/25), checked against the
 # STORED canonical fact — not the verb string. "Approved as core:enables"
@@ -129,9 +128,6 @@ for rid in ("REL-01312", "REL-01053", "REL-00758", "REL-01094", "REL-01131",
             "REL-00917", "REL-00884", "REL-01065",
             "REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
             "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
-            "REL-00262", "REL-00458", "REL-01122", "REL-01129",
-            "REL-00263", "REL-00440", "REL-00455", "REL-00712",
-            "REL-00750", "REL-01064", "REL-01206",
             "REL-00129", "REL-00243", "REL-00304", "REL-00489",
             "REL-00728", "REL-01006", "REL-01016", "REL-01124",
             "REL-01174"):
@@ -268,14 +264,12 @@ for rid in ("REL-00433", "REL-01172"):
 # is authoritative. Prior decision retained in provenance as superseded.
 check("control-case hold REL-00437", _emits_nothing("REL-00437"),
       "must stay held (G3-B3 supersession of 2026-09-26 S&T approval): no stored triple")
-# Thirteen held rows emit nothing. One fact survives via independent approved
+# Nine held rows emit nothing. One fact survives via independent approved
 # evidence (REL-00447, via scope-note range citation) with the disallowed
 # evidence rows removed. REL-00214's fact was removed in the 2026-09-26
-# uses-input pass (no citation route).
-for rid in ("REL-00262", "REL-00458", "REL-01122", "REL-01129",
-            "REL-00263", "REL-00440", "REL-00455", "REL-00712",
-            "REL-00750", "REL-01064", "REL-01206",
-            "REL-00129", "REL-00243", "REL-00304", "REL-00489",
+# uses-input pass (no citation route). The 11 S&T rows also held here until
+# the Phase 1 sweep (#203) now emit; the sweep check covers them.
+for rid in ("REL-00129", "REL-00243", "REL-00304", "REL-00489",
             "REL-00728", "REL-01006", "REL-01016", "REL-01124",
             "REL-01174"):
     check(f"control-case hold {rid}",
@@ -285,7 +279,8 @@ for rid in ("REL-00262", "REL-00458", "REL-01122", "REL-01129",
 # uses-input pass). REL-00436 is held as enables but attached as duplicate
 # provenance on the independently-evidenced uses-input fact (REL-00447,
 # via scope-note range citation). REL-00152's fact (via REL-00214) was
-# removed in the uses-input pass (no citation route); both are held.
+# removed in the uses-input pass (no citation route). REL-00436 stays held;
+# REL-00152 now emits core:informedBy after its #203 source correction.
 for rid, fact, indep in (("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4"), "REL-00447"),):
     rids = _fact_rowids.get(fact, [])
     check(f"control-case provenance {rid}",
@@ -293,7 +288,7 @@ for rid, fact, indep in (("REL-00436", ("CM-1-2-5-2-3", "core:dependsOnOutputOf"
           "G1a duplicate-provenance attach 2026-09-26; independent uses-input fact retained")
 check("control-case provenance REL-00152 removed",
       ("CM-1-2-1-4", "core:dependsOnOutputOf", "CM-1-2-1-1-4") not in _fact_rowids,
-      "REL-00214 held 2026-09-26 (no route); fact removed; REL-00152 held with it")
+      "REL-00214 held 2026-09-26 (no route); its dependsOnOutputOf fact must stay removed")
 for rid, fact in (("REL-00447", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4")),):
     check(f"control-case fact preserved via {rid}",
           rid in _fact_rowids.get(fact, []),
@@ -491,6 +486,13 @@ _register = {r["row_id"]: r for r in rows("review-evidence/phase1-sweep/register
 with open("review-evidence/hamid-answers/phase1-sweep.md") as _f:
     _approval = _f.read()
 _sweep_found = {p.rsplit("/", 1)[1] for p in _glob.glob("review-evidence/phase1-sweep/*-review.csv")}
+with open("baseline/step3-taxonomy.ttl") as _f:
+    _sweep_taxonomy = _f.read()
+# The sentences are checked in the pinned baseline, so the published taxonomy must be
+# that same file: an edit to build/output alone would otherwise go unchecked.
+with open("../build/output/step3-taxonomy.ttl") as _f:
+    check("Phase 1 sweep: the published taxonomy equals the pinned baseline",
+          _f.read() == _sweep_taxonomy, "build/output/step3-taxonomy.ttl differs from baseline/; rebuild and re-pin")
 _sweep_problems = _batch.sweep_files_problems(_sweep_found)
 check("Phase 1 sweep: one review file per adopted issue (batch_checks.SWEEP_ADOPTED)",
       not _sweep_problems, "; ".join(_sweep_problems[:5]))
@@ -498,7 +500,7 @@ for _issue in _batch.SWEEP_ADOPTED:
     _path = f"review-evidence/phase1-sweep/{_issue}-review.csv"
     _sweep_problems = _batch.sweep_batch_problems(_issue, rows(_path) if f"{_issue}-review.csv" in _sweep_found else [],
                                                   _register, _approval, {r["row_id"]: r for r in v2},
-                                                  _fact_rowids)
+                                                  _fact_rowids, taxonomy=_sweep_taxonomy)
     check(f"Phase 1 sweep #{_issue}: review rows are exactly the approved register's rows and match it",
           not _sweep_problems, "; ".join(_sweep_problems[:5]))
 
@@ -539,8 +541,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==478", len(cf) == 478, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 478)
+check("canonical-facts==490", len(cf) == 490, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 490)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
@@ -581,6 +583,13 @@ for fn in ["target-report/context-pass.csv", "requires-review.csv",
     rs = rows(fn)
     orphans = [r["row_id"] for r in rs if r["row_id"] not in v2ids]
     check(f"no-orphans {fn}", not orphans, str(orphans[:3]))
+# Each verb-review file lists exactly the dispositions' rows of its verb, so a
+# corrected verb cannot leave a stale review row behind (Phase 1 #203).
+for fn, verb in (("enables-review.csv", "enables"), ("requires-review.csv", "requires"),
+                 ("assures-review.csv", "assures")):
+    listed, expected = {r["row_id"] for r in rows(fn)}, {r["row_id"] for r in v2 if r["verb"] == verb}
+    check(f"{fn} lists exactly the {verb} rows", listed == expected,
+          f"stale {sorted(listed - expected)[:3]}, missing {sorted(expected - listed)[:3]}")
 cf_orphans = []
 for r in cf:
     for rid in r["row_ids"].split(";"):

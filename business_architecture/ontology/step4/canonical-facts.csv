@@ -3,6 +3,7 @@ CM-1-1-1-1-1,core:precedes,CM-1-1-1-1-2,2,REL-00001;REL-00003,follows;precedes,c
 CM-1-1-1-1-2,core:precedes,CM-1-1-1-1-3,2,REL-00004;REL-00005,follows;precedes,canonicalized from follows
 CM-1-1-1-1-3,core:precedes,CM-1-1-1-1-4,2,REL-00006;REL-00007,follows;precedes,canonicalized from follows
 CM-1-1-1-1-4,core:precedes,CM-1-1-1-1-5,1,REL-00011,follows,canonicalized from follows
+CM-1-1-2,core:informedBy,CM-1-2-6-1,1,REL-01129,informs,inverse of raw informs
 CM-1-1-2-10,core:constrainedBy,CM-1-1-3-7,1,REL-00015,constrained-by,
 CM-1-1-2-11,core:constrainedBy,CM-1-1-3-7,1,REL-00018,constrained-by,
 CM-1-1-2-11,core:enabledBy,CM-1-1-2-13,1,REL-00027,enables,inverse of raw enables
@@ -52,6 +53,7 @@ CM-1-1-4-7-8,core:constrainedBy,CM-1-1-4-7-5,1,REL-00099,constrains,inverse of r
 CM-1-1-5,core:enabledBy,CM-1-1-4-7-7,1,REL-00108,enables,inverse of raw enables
 CM-1-1-7-1-1,core:informedBy,CM-1-1-7-2-4,1,REL-00114,informed-by,
 CM-1-1-7-1-2,core:informedBy,CM-1-1-7-2-6,1,REL-00116,informed-by,
+CM-1-1-7-2,core:informedBy,CM-1-1-7-3,1,REL-01122,informs,inverse of raw informs
 CM-1-1-7-2,core:precedes,CM-1-1-7-1,2,REL-01119;REL-01242,follows;precedes,canonicalized from follows
 CM-1-1-7-2-2,core:informedBy,CM-1-1-1-1,1,REL-00123,informed-by,
 CM-1-1-7-2-2,core:precedes,CM-1-1-7-2-3,1,REL-00125,follows,canonicalized from follows
@@ -60,6 +62,7 @@ CM-1-1-7-2-4,core:precedes,CM-1-1-7-2-5,1,REL-00131,follows,canonicalized from f
 CM-1-1-7-3-1,core:informedBy,CM-1-1-7-3-3,1,REL-00136,informed-by,
 CM-1-1-7-3-1,core:precedes,CM-1-1-7-3-2,1,REL-00137,follows,canonicalized from follows
 CM-1-2-1,core:assuredBy,CM-1-2-4-3,1,REL-01269,assures,inverse of raw assures
+CM-1-2-1,core:informedBy,CM-1-2-5-4-1,1,REL-00458,informs,inverse of raw informs
 CM-1-2-1-1,core:informedBy,CM-1-1-1-1,1,REL-01243,informed-by,
 CM-1-2-1-1,core:informedBy,CM-1-1-4,1,REL-01244,informed-by,
 CM-1-2-1-1-1,core:informedBy,CM-1-1-4,1,REL-00141,informed-by,
@@ -81,6 +84,7 @@ CM-1-2-1-2-7,core:triggeredBy,CM-1-2-1-2-4,1,REL-00170,triggers,inverse of raw t
 CM-1-2-1-3,core:enabledBy,CM-1-2-1-2,1,REL-01298,enables,inverse of raw enables
 CM-1-2-1-3,core:enabledBy,CM-1-2-1-2-5,1,REL-00172,enables,inverse of raw enables
 CM-1-2-1-3,core:enabledBy,CM-1-2-2-3-1,1,REL-00254,enables,inverse of raw enables
+CM-1-2-1-3,core:informedBy,CM-1-2-5-2-1,1,REL-00440,informs,inverse of raw informs
 CM-1-2-1-3,core:precedes,CM-1-2-2-2,2,REL-01226;REL-01302,follows;precedes,canonicalized from follows
 CM-1-2-1-3,core:precedes,CM-1-2-2-2-1,1,REL-00240,follows,canonicalized from follows
 CM-1-2-1-3-1,core:enabledBy,CM-1-2-2-1-2,1,REL-00220,enables,inverse of raw enables
@@ -107,6 +111,7 @@ CM-1-2-1-3-9,core:precedes,CM-1-2-4-1-12,1,REL-00212,precedes,
 CM-1-2-1-4,core:enabledBy,CM-1-2-2-3,1,REL-01311,enables,inverse of raw enables
 CM-1-2-1-4,core:enabledBy,CM-1-2-2-3-2,1,REL-00273,enables,inverse of raw enables
 CM-1-2-1-4,core:governedBy,CM-1-2-2-3,1,REL-00215,governed-by,
+CM-1-2-1-4,core:informedBy,CM-1-2-1-1-4,1,REL-00152,informs,inverse of raw informs
 CM-1-2-1-4,core:precedes,CM-1-2-1-3,1,REL-01301,follows,canonicalized from follows
 CM-1-2-2-1-1,core:precedes,CM-1-2-2-1-2,1,REL-00219,follows,canonicalized from follows
 CM-1-2-2-1-1,core:triggeredBy,CM-1-2-2-1-7,1,REL-00235,triggers,inverse of raw triggers
@@ -126,18 +131,21 @@ CM-1-2-2-2-3,core:triggeredBy,CM-1-2-2-2-5,1,REL-00252,triggers,inverse of raw t
 CM-1-2-2-2-4,core:triggeredBy,CM-1-2-2-2-3,1,REL-00246,triggers,inverse of raw triggers
 CM-1-2-2-3,core:enabledBy,CM-1-2-1-3,1,REL-01303,enables,"Hamid verdict: approved as core:enables (row-level, overrides group)"
 CM-1-2-2-3-10,core:dependsOnOutputOf,CM-1-2-2-3-2,1,REL-00256,uses-input,
+CM-1-2-2-3-13,core:dependsOnOutputOf,CM-1-2-2-3-12,1,REL-00263,provides-input-to,inverse of raw provides-input-to
 CM-1-2-2-3-13,core:dependsOnOutputOf,CM-1-2-2-3-9,2,REL-00265;REL-00295,enables;uses-input,proposed merge into existing output-dependency fact
 CM-1-2-2-3-15,core:dependsOnOutputOf,CM-1-2-2-3-14,2,REL-00267;REL-00270,enables;uses-input,proposed merge into existing output-dependency fact
 CM-1-2-2-3-15,core:dependsOnOutputOf,CM-1-2-2-3-3,2,REL-00269;REL-00275,enables;uses-input,proposed merge into existing output-dependency fact
 CM-1-2-2-3-4,core:dependsOnOutputOf,CM-1-2-2-3-15,1,REL-00279,uses-input,
 CM-1-2-2-3-4,core:dependsOnOutputOf,CM-1-2-2-3-3,1,REL-00278,uses-input,
 CM-1-2-2-3-4,core:precedes,CM-1-2-2-3-5,2,REL-00280;REL-00281,follows;precedes,canonicalized from follows
+CM-1-2-2-3-6,core:informedBy,CM-1-2-2-3-12,1,REL-00262,informs,inverse of raw informs
 CM-1-2-2-3-6,core:triggeredBy,CM-1-2-2-3-8,1,REL-00291,triggers,inverse of raw triggers
 CM-1-2-2-3-8,core:enabledBy,CM-1-2-2-3-6,1,REL-00284,enables,inverse of raw enables
 CM-1-2-2-3-9,core:enabledBy,CM-1-2-2-3-1,1,REL-00255,enables,inverse of raw enables
 CM-1-2-3-1-1,core:precedes,CM-1-2-4-1-12,2,REL-00296;REL-00322,follows;precedes,canonicalized from follows
 CM-1-2-3-1-2,core:precedes,CM-1-2-4-1-4,2,REL-00298;REL-00345,follows;precedes,canonicalized from follows
 CM-1-2-3-1-3,core:precedes,CM-1-2-4-1-13,2,REL-00300;REL-00324,follows;precedes,canonicalized from follows
+CM-1-2-3-1-4,core:informedBy,CM-1-2-5-3-3,1,REL-00455,informs,inverse of raw informs
 CM-1-2-3-1-4,core:precedes,CM-1-2-4-1-5,2,REL-00302;REL-00347,follows;precedes,canonicalized from follows
 CM-1-2-3-1-5,core:precedes,CM-1-2-4-1-14,2,REL-00305;REL-00326,follows;precedes,canonicalized from follows
 CM-1-2-3-1-6,core:enabledBy,CM-1-2-1-2-8,1,REL-00177,enables,inverse of raw enables
@@ -320,10 +328,13 @@ CM-1-3-3-6-5,core:dependsOnOutputOf,CM-1-3-1-6,1,REL-00705,uses-input,
 CM-1-3-4-1,core:informedBy,CM-1-3-1-6,1,REL-01147,informed-by,
 CM-1-3-4-1-1,core:informedBy,CM-1-3-4-1-2,1,REL-00706,informed-by,
 CM-1-3-4-1-1,core:precedes,CM-1-3-4-1-3,2,REL-00707;REL-00711,follows;precedes,canonicalized from follows
+CM-1-3-4-2,core:informedBy,CM-1-3-4-1-3,1,REL-00712,informs,inverse of raw informs
 CM-1-3-4-2-1,core:precedes,CM-1-3-4-2-2,2,REL-00714;REL-00716,follows;precedes,canonicalized from follows
 CM-1-3-4-2-2,core:assuredBy,CM-1-3-4-2-3,1,REL-00719,assures,inverse of raw assures
 CM-1-3-4-3,core:enabledBy,CM-1-3-4-1,1,REL-01149,enables,inverse of raw enables
 CM-1-3-4-3-1,core:precedes,CM-1-3-4-3-2,2,REL-00720;REL-00722,follows;precedes,canonicalized from follows
+CM-1-3-4-3-3,core:informedBy,CM-1-3-4-5,1,REL-01206,informs,inverse of raw informs
+CM-1-3-4-3-3,core:informedBy,CM-1-3-4-5-4,1,REL-00750,informs,inverse of raw informs
 CM-1-3-4-4-1,core:precedes,CM-1-3-4-4-2,1,REL-00729,follows,canonicalized from follows
 CM-1-3-4-4-1,core:precedes,CM-1-3-4-4-4,1,REL-00734,follows,canonicalized from follows
 CM-1-3-4-4-3,core:precedes,CM-1-3-4-4-5,1,REL-00736,follows,canonicalized from follows
@@ -410,6 +421,7 @@ CM-1-3-6-7-2,core:governedBy,CM-1-3-6-7-1,1,REL-00908,governed-by,
 CM-1-3-7-1,core:triggeredBy,CM-1-3-4-3-3,1,REL-00725,triggers,inverse of raw triggers
 CM-1-3-7-1-1,core:enabledBy,CM-1-3-7-4-5,1,REL-00980,enables,inverse of raw enables
 CM-1-3-7-1-1,core:informedBy,CM-1-3-7-4-6,1,REL-00915,informed-by,
+CM-1-3-7-1-4,core:dependsOnOutputOf,CM-1-3-8-4-5,1,REL-01064,provides-input-to,inverse of raw provides-input-to
 CM-1-3-7-2,core:dependsOnOutputOf,CM-1-3-7-1-6,1,REL-01253,uses-input,
 CM-1-3-7-2-1,core:dependsOnOutputOf,CM-1-3-7-1-6,2,REL-00926;REL-00927,enables;uses-input,proposed merge into existing output-dependency fact
 CM-1-3-7-2-4,core:governedBy,CM-1-3-7-4-1,1,REL-00937,governed-by,
