@@ -121,6 +121,14 @@ class RelationCorrect(unittest.TestCase):
             self.assertIn("quote or backslash", result.stderr, target)
             self.assertEqual(wb.read_bytes(), before)
 
+    def test_refuses_a_non_printable_target(self):
+        for ch in ("\ufffe", "\uffff", "\x07"):
+            wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
+                                     "informs", f"Trade{ch}Capture (CM-1-2-1-3)"]])
+            before = wb.read_bytes()
+            self.assertIn("non-printable", _run(wb, c).stderr, repr(ch))
+            self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_unknown_verb_and_unapproved_row(self):
         wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
                                  "feeds", "Trade Capture (CM-1-2-1-3)"]])

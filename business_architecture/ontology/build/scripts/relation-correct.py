@@ -16,8 +16,8 @@ Rules:
 - The old segment must appear exactly once in the source's cell, verb and
   target text matching; otherwise the run stops before any write.
 - The new verb must be a raw verb the Step 4 direction table knows.
-- The new target must not contain '|', '"' or '\\', and every corrected cell
-  keeps its number of segments.
+- The new target must be printable text without '|', '"' or '\\', and every
+  corrected cell keeps its number of segments.
 - Only `approved` rows are edited, because only they reach the taxonomy.
 - A cell already holding the new values once, and the old values nowhere, is
   skipped, so a re-run changes nothing. Any other mix of old and new
@@ -88,6 +88,9 @@ def main():
         # escaping backslash would cut the cell short and shift the REL IDs after it.
         if set(e["new_target"]) & {'"', "\\"}:
             errors.append(f"{rid}: new target contains a quote or backslash, which the classifier misreads")
+        # Non-printable characters (controls, U+FFFE, U+FFFF) cannot be saved as worksheet XML.
+        if not e["new_target"].isprintable():
+            errors.append(f"{rid}: new target contains a non-printable character")
         if slug not in by_slug:
             errors.append(f"{rid}: {slug} not in the workbook")
             continue
