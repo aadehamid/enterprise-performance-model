@@ -33,6 +33,7 @@ instances, KPIs and definitions against.
 |---|---|
 | `source-register.md` | Every MPC / MPLX source used, with accession number, URL and retrieval date |
 | `mpc-fy2025-10k-fact-sheet.md` | Structured facts extracted from the FY2025 10-K (segments, sites, products, channels, KPI definitions) |
+| `mplx-fy2025-10k-fact-sheet.md` | MPLX's FY2025 10-K: its two segments, how it serves MPC (48 percent of its total revenues and other income, fee-based minimum volumes), assets; read for MPC-P01 (EPM-DEC-001-0011) |
 | `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C8 + facets), each class cited to filings or MPC materials |
 | `pricing-domain-evidence.md` | Evidence for Pricing as a candidate data domain (MPC filings + EIA definitions) |
 | `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (Proposed — not applied) |
