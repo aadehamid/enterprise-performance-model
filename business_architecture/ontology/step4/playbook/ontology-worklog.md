@@ -976,6 +976,7 @@ without a dated amendment and Hamid's explicit agreement.
 - #210 is the third batch: 6 rows emit `informedBy`, REL-01053 `dependsOnOutputOf`, REL-01312 `governedBy` through `governs`, and 14 rows close with no relationship. Merged in #243.
 - #202 is the fourth batch: 41 G1b and informed-by rows emit (24 new facts, 5 existing facts gain a contributor) after their verbs were corrected in the source, and 3 rows close with no relationship. Pending its PR.
 - #209 is the fifth batch: 41 G3 Section A rows emit (40 new facts, 1 existing fact gains a contributor; 33 through `provides-input-to` or `governs`, 2 as `triggers`) and 6 close with no relationship. Pending its PR.
+- #201 is the sixth and last batch: 84 G3 Section B rows emit (78 new facts, 6 existing facts gain a contributor; 49 through `provides-input-to`, `governs` or `constrains`; 9 confirm `enables`, REL-00243 through the row-level override) and 18 close with no relationship. Pending its PR.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

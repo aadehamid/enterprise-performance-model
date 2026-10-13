@@ -2171,3 +2171,19 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 
 **Current totals:** **740 emitting / 546 held / 17 scoped sequence** / 562 facts.
 Conservation: 740 + 546 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #201: G3 Section B — target-clarification requests (Hamid 2026-10-12)
+
+A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `388d8a0`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/201-review.csv`.
+
+- **APPROVE, emitting `core:constrainedBy` (1):** REL-00285.
+- **APPROVE, emitting `core:dependsOnOutputOf` (40):** REL-00044, REL-00046, REL-00059, REL-00061, REL-00063, REL-00129, REL-00133, REL-00156, REL-00257, REL-00260, REL-00283, REL-00304, REL-00362, REL-00364, REL-00371, REL-00405, REL-00494, REL-00681, REL-00683, REL-00687, REL-00699, REL-00770, REL-00867, REL-00871, REL-00906, REL-00929, REL-00938, REL-00960, REL-01006, REL-01009, REL-01013, REL-01016, REL-01093, REL-01104, REL-01139, REL-01161, REL-01169, REL-01201, REL-01304, REL-01318.
+- **APPROVE, emitting `core:enabledBy` (9):** REL-00075, REL-00166, REL-00243, REL-00387, REL-00428, REL-00914, REL-00919, REL-01085, REL-01250.
+- **APPROVE, emitting `core:governedBy` (8):** REL-00392, REL-00489, REL-00728, REL-01115, REL-01231, REL-01248, REL-01259, REL-01287.
+- **APPROVE, emitting `core:informedBy` (26):** REL-00138, REL-00148, REL-00239, REL-00259, REL-00266, REL-00437, REL-00753, REL-00755, REL-00756, REL-00762, REL-00942, REL-00996, REL-01049, REL-01095, REL-01096, REL-01099, REL-01124, REL-01146, REL-01156, REL-01167, REL-01174, REL-01176, REL-01179, REL-01187, REL-01209, REL-01245.
+- **HOLD, no relationship (18):** REL-00032, REL-00121, REL-00164, REL-00253, REL-00431, REL-00506, REL-00766, REL-00767, REL-00837, REL-00924, REL-00939, REL-00999, REL-01142, REL-01195, REL-01204, REL-01219, REL-01237, REL-01288.
+
+84 mentions move from held to emitting; 84 facts added. No contradiction.
+
+**Current totals:** **824 emitting / 462 held / 17 scoped sequence** / 640 facts.
+Conservation: 824 + 462 + 12 + 1 + 2 + 17 = 1,318. ✓

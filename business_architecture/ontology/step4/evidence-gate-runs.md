@@ -120,3 +120,10 @@ gate was run against, not the pin. Do not retitle the checklist's
 - **Gate:** `evidence-gate.py` — 368 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1114, held==189, canonical-facts==562,
   contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #209, so the sweep check covers its 47 rows (+1). The 41 rows that now emit were mapping-level holds with no per-row gate check (no other change): 367 → 368 PASS.
+
+## 2026-10-13 — branch `phase1/sweep-201`, pin `388d8a0`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9`
+- **Gate:** `evidence-gate.py` — 347 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1114, held==189, canonical-facts==640,
+  contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #201, so the sweep check covers its 102 rows (+1); 22 per-row control-case hold checks go with the rows that now emit (−22). A new helper, `_held_or_swept`, lets a register-released row emit only its approved fact; the three single control-case checks and the G3-B nearness-identity rule use it: 368 → 347 PASS.
