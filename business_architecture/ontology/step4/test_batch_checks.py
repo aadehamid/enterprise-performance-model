@@ -281,9 +281,16 @@ class SweepBatch203(unittest.TestCase):
         self.assertTrue(any("REL-00436" in p for p in self.problems(dropped)))
 
 
-class SweepBatch210(unittest.TestCase):
-    def test_the_batch_matches_the_register_and_the_published_taxonomy(self):
-        with open(os.path.join(SWEEP, "210-review.csv"), newline="") as f:
+class SweepBatchesAfter203(unittest.TestCase):
+    """#210 and later batches: the review matches the register and the published taxonomy."""
+
+    def test_each_batch_matches_the_register_and_the_published_taxonomy(self):
+        for issue in [i for i in batch_checks.SWEEP_ADOPTED if i not in ("206", "203")]:
+            with self.subTest(issue=issue):
+                self.check(issue)
+
+    def check(self, issue):
+        with open(os.path.join(SWEEP, f"{issue}-review.csv"), newline="") as f:
             rows = list(csv.DictReader(f))
         with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
             register = {r["row_id"]: r for r in csv.DictReader(f)}
@@ -291,7 +298,7 @@ class SweepBatch210(unittest.TestCase):
             approval = f.read()
         with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
             taxonomy = f.read()
-        self.assertEqual(batch_checks.sweep_batch_problems("210", rows, register, approval, v2(), facts(),
+        self.assertEqual(batch_checks.sweep_batch_problems(issue, rows, register, approval, v2(), facts(),
                                                            taxonomy=taxonomy), [])
 
 

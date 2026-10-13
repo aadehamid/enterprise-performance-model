@@ -14,7 +14,7 @@ import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 GOVERNED = ["canonical-facts.csv", "contradictions.csv", "enables-review.csv"]
-EXPECTED_FACTS = 498  # 490 until the #210 sweep batch (8 facts: 6 informedBy, 1 dependsOnOutputOf, 1 governedBy); 478 until the #203 sweep batch (12 facts: 10 informedBy, 2 dependsOnOutputOf); 468 until the #206 sweep batch (10 governed-by facts, REL-00190 retargeted); 457 before #204 batch 1
+EXPECTED_FACTS = 522  # 498 until the #202 sweep batch (41 rows: 24 facts added, 5 gain a contributor); 490 until the #210 sweep batch (8 facts: 6 informedBy, 1 dependsOnOutputOf, 1 governedBy); 478 until the #203 sweep batch (12 facts: 10 informedBy, 2 dependsOnOutputOf); 468 until the #206 sweep batch (10 governed-by facts, REL-00190 retargeted); 457 before #204 batch 1
 
 
 def sha256(path):

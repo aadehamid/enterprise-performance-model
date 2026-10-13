@@ -153,169 +153,11 @@ PROPERTY_RULE_HOLDS = {
     # its own source record. A corrected source assertion requires a fresh
     # verdict. REL-01224 (already held by the context-confirmation pass) is
     # governed by the same verdict but needs no code change.
-    "REL-00140": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
+    # Phase 1 sweep, #202 (Hamid 2026-10-12, #207 comment 6133390674): 27 of the
+    # 28 G1b rows held here, and REL-01224, were corrected in the source and now
+    # emit; REL-00499 stays. 13 #202 rows also left INFORMEDBY_20260926_HOLDS.
+    # review-evidence/phase1-sweep/202-review.csv.
     "REL-00499": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00565": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00648": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00679": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00709": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00732": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00973": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00974": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-00977": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01108": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01112": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01148": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01151": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01154": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01181": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01184": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01191": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01194": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01197": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01213": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01225": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01230": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01233": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01234": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01273": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01296": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
-                  "Source assertion uses enables; only paired evidence "
-                  "is the reverse informed-by assertion; no independent "
-                  "uses-input evidence exists. Stored core:dependsOnOutputOf "
-                  "fact removed (Rule 11: no silent verb change); retain the "
-                  "enables assertion as non-emitting evidence."),
-    "REL-01315": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
                   "Source assertion uses enables; only paired evidence "
                   "is the reverse informed-by assertion; no independent "
                   "uses-input evidence exists. Stored core:dependsOnOutputOf "
@@ -1013,16 +855,16 @@ INFORMEDBY_20260926_HOLDS = {
     "REL-00310", "REL-00313", "REL-00320", "REL-00331", "REL-00334", "REL-00335",
     "REL-00343", "REL-00356", "REL-00357", "REL-00368", "REL-00382", "REL-00388",
     "REL-00395", "REL-00402", "REL-00432", "REL-00438", "REL-00453", "REL-00456",
-    "REL-00459", "REL-00462", "REL-00467", "REL-00476", "REL-00492", "REL-00497",
+    "REL-00459", "REL-00462", "REL-00467", "REL-00492", "REL-00497",
     "REL-00500", "REL-00505", "REL-00567", "REL-00580", "REL-00585", "REL-00642",
-    "REL-00643", "REL-00646", "REL-00647", "REL-00738", "REL-00761", "REL-00774",
-    "REL-00869", "REL-00895", "REL-00896", "REL-00911", "REL-00933", "REL-00961",
-    "REL-00965", "REL-00975", "REL-00979", "REL-01041", "REL-01101", "REL-01105",
+    "REL-00647", "REL-00738", "REL-00761", "REL-00774",
+    "REL-00869", "REL-00895", "REL-00911", "REL-00933", "REL-00961",
+    "REL-00975", "REL-00979", "REL-01041", "REL-01101", "REL-01105",
     "REL-01116", "REL-01121", "REL-01123", "REL-01130", "REL-01144", "REL-01145",
-    "REL-01150", "REL-01152", "REL-01159", "REL-01170", "REL-01173", "REL-01183",
-    "REL-01186", "REL-01189", "REL-01193", "REL-01199", "REL-01200", "REL-01203",
-    "REL-01205", "REL-01208", "REL-01211", "REL-01214", "REL-01217", "REL-01235",
-    "REL-01247", "REL-01290", "REL-01295", "REL-01306", "REL-01317",
+    "REL-01159", "REL-01170", "REL-01173", "REL-01183",
+    "REL-01186", "REL-01189", "REL-01203",
+    "REL-01208", "REL-01211", "REL-01214", "REL-01235",
+    "REL-01247", "REL-01290", "REL-01306", "REL-01317",
 }
 
 # Hamid 2026-09-26: governed-by full review — 20 rows held, superseding 2026-09-25 approvals (NoAffirmativeCitation). Source: evidence-gate.py control cases; review-evidence/governed-by-full-review-batch.csv.
