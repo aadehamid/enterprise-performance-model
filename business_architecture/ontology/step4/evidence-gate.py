@@ -33,7 +33,11 @@ for fn in sha_files:
 # 2. mention arithmetic from the files
 v2 = rows("target-report/target-dispositions-v2.csv")
 ctx = {r["row_id"]: r["outcome"] for r in rows("target-report/context-pass.csv")}
-# property-rule holds (Hamid 2026-09-24; enabledBy verdicts same day):
+# property-rule holds (Hamid 2026-09-24; enabledBy verdicts same day). The dated
+# notes below are history: the Phase 1 sweep corrected REL-01312, REL-01053,
+# REL-00758, REL-01094, REL-01131, REL-01192, REL-00936 and REL-00445 in the
+# source (#210) and the G1b rows (#202); those rows now emit and have left
+# prop_holds.
 # REL-00503 held (mutual informedBy, this direction B-only).
 # REL-01312 and REL-01053 held for source-workbook correction (reverse
 # enablement means control/constraint or close-feed consumption, not capability
