@@ -52,7 +52,9 @@ CARRIERS = next(r["row_ids"].split(";") for r in ROWS if (r["subject"], r["predi
 
 
 class RemovedFactRule(unittest.TestCase):
-    def gate(self, carriers):
+    def gate(self, carriers, approve=None):
+        """Run the gate with these carriers on the restored fact. approve: a register row
+        whose stored_fact the copy sets to the restored fact first."""
         tmp = tempfile.mkdtemp(prefix="g1b-")
         try:
             step4 = os.path.join(tmp, "step4")
@@ -60,6 +62,18 @@ class RemovedFactRule(unittest.TestCase):
             os.makedirs(os.path.join(tmp, "build", "output"))
             shutil.copyfile(os.path.join(OUTPUT, "step3-taxonomy.ttl"),
                             os.path.join(tmp, "build", "output", "step3-taxonomy.ttl"))
+            if approve:
+                path = os.path.join(step4, "review-evidence", "phase1-sweep", "register.csv")
+                with open(path, newline="") as f:
+                    reader = csv.DictReader(f)
+                    rfields, rrows = reader.fieldnames, list(reader)
+                for r in rrows:
+                    if r["row_id"] == approve:
+                        r["stored_fact"] = " ".join(RESTORED)
+                with open(path, "w", newline="") as f:
+                    w = csv.DictWriter(f, fieldnames=rfields)
+                    w.writeheader()
+                    w.writerows(rrows)
             fields, rows = facts()
             for r in rows:
                 if (r["subject"], r["predicate"], r["object"]) == RESTORED:
@@ -87,6 +101,14 @@ class RemovedFactRule(unittest.TestCase):
                      if r["stored_fact"] and r["stored_fact"].split() != list(RESTORED))
         self.assertEqual(self.gate([other]), ["FAIL"])
         self.assertEqual(self.gate(CARRIERS + [other]), ["FAIL"])
+
+    def test_a_row_of_an_issue_not_yet_adopted_fails_even_with_the_right_fact(self):
+        with open(os.path.join(HERE, "review-evidence", "phase1-sweep", "register.csv"), newline="") as f:
+            pending = [r["row_id"] for r in csv.DictReader(f) if r["row_id"] not in REGISTER]
+        if not pending:
+            self.skipTest("every register issue is adopted")
+        self.assertEqual(self.gate([pending[0]], approve=pending[0]), ["FAIL"])
+
 
 
 if __name__ == "__main__":
