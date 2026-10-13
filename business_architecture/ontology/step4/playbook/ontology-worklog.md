@@ -957,6 +957,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Playbook method update (2026-10-13)
+- Three practices are now in the playbook. Working a source-correction
+  backlog as one approved answer register built in batches (Step 4), proved
+  by the Phase 1 sweep. Building a release with a checked, deterministic
+  builder (Appendix B, "Releasing a module"), from the core 1.0.0 build,
+  which is built and checked but pending its own PR. Delegated decisions,
+  with what stays with the owner (Section 6), from Hamid's delegation of
+  2026-10-12. Project records: EPM-DEC-001-0025 and -0027 (merged); -0028
+  (pending in #242).
+
 ### Phase 1 sweep register approved; #206 built (2026-10-12)
 - Hamid delegated drafting of all 245 remaining Phase 1 answers: Claude and
   Codex drafted from MPC and industry research briefs, each model reviewed
