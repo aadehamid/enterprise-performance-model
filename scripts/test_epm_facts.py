@@ -25,20 +25,20 @@ def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
     assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-            led["scoped_sequence"]) == (699, 587, 12, 1, 2, 17)
+            led["scoped_sequence"]) == (740, 546, 12, 1, 2, 17)
     ss = c["scoped_sequences"]
     assert (ss["nodes"], ss["handoffs"], ss["problems"]) == (17, 16, [])
     assert c["conservation"] == led["mentions"] == 1318
-    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 522
+    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 562
     assert c["evidence_gate"]["green"] is True
     assert (c["evidence_gate"]["promoted"], c["evidence_gate"]["held"]) == (1114, 189)
 
 
 def test_phase1_scope_matches_decision_0025():
     p = run("counts")["phase1"]
-    assert p["rows"] == 276 and p["held"] == 176
+    assert p["rows"] == 276 and p["held"] == 135
     # REL-00190, the 11 #204 batch 1 trigger rows, the 10 newly emitting #206 sweep rows and the
-    # 12 #203, 8 #210 and 41 #202 sweep rows emit core facts; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
+    # 12 #203, 8 #210, 41 #202 and 41 #209 sweep rows emit core facts; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
     triggers_204 = ["REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252", "REL-00291",
                     "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00892"]
     sweep_206 = ["REL-00050", "REL-00067", "REL-00215", "REL-00394", "REL-00399", "REL-00406", "REL-00937",
@@ -53,9 +53,17 @@ def test_phase1_scope_matches_decision_0025():
         "REL-01200", "REL-01205", "REL-01213", "REL-01217", "REL-01224", "REL-01225", "REL-01230",
         "REL-01233", "REL-01234", "REL-01273", "REL-01295", "REL-01296", "REL-01315",
     ]
+    sweep_209 = [
+        "REL-00009", "REL-00041", "REL-00054", "REL-00077", "REL-00118", "REL-00232", "REL-00409",
+        "REL-00493", "REL-00517", "REL-00528", "REL-00539", "REL-00551", "REL-00562", "REL-00665",
+        "REL-00811", "REL-00818", "REL-00820", "REL-00834", "REL-00843", "REL-00851", "REL-00852",
+        "REL-00886", "REL-00889", "REL-00898", "REL-01038", "REL-01072", "REL-01073", "REL-01092",
+        "REL-01157", "REL-01163", "REL-01171", "REL-01178", "REL-01182", "REL-01185", "REL-01210",
+        "REL-01216", "REL-01254", "REL-01257", "REL-01262", "REL-01277", "REL-01299",
+    ]
     sweep_210 = ["REL-00445", "REL-00758", "REL-00936", "REL-01053", "REL-01094", "REL-01131", "REL-01192",
                  "REL-01312"]
-    assert p["not_held"] == sorted(["REL-00190"] + triggers_204 + sweep_206 + sweep_203 + sweep_210 + sweep_202 + epm_facts.scoped_sequences()["rows"])
+    assert p["not_held"] == sorted(["REL-00190"] + triggers_204 + sweep_206 + sweep_203 + sweep_210 + sweep_202 + sweep_209 + epm_facts.scoped_sequences()["rows"])
     assert p["by_issue"] == {"201": 102, "202": 44, "203": 15, "204": 11, "205": 20, "206": 15, "209": 47, "210": 22}
     assert p["held_outside"] == 411
 
@@ -653,5 +661,5 @@ def test_counts_break_emitting_down_by_verb_and_predicate():
     c = run("counts")
     by = c["emitting_by_verb"]
     assert sum(by.values()) == c["ledger"]["emitting"]
-    assert by["triggers -> core:triggeredBy"] == 18
+    assert by["triggers -> core:triggeredBy"] == 20  # 18 until the #209 sweep corrected 2 enables rows to triggers
     assert by["enables -> HELD-no-triple"] == 13  # G2: approved, emits no triple
