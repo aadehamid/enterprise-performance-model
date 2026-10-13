@@ -1343,8 +1343,10 @@ deterministic, so the check script can confirm that the committed package
 equals a fresh build. Where a draft ledger and an approved decision
 disagree about a target, settle it before the build: record the approved
 target in a decision record, update the ledger to match, and let the
-builder follow that record. The builder never chooses between sources at
-write time; it fails if a staging predicate has no recorded target.
+builder follow that record. The builder takes each target from that record
+only and never chooses between sources at write time. It fails if a staging
+predicate has no recorded target, or if the ledger still names a different
+target than the record.
 
 Every release ships:
 
