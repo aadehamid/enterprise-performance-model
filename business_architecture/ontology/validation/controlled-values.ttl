@@ -1,0 +1,55 @@
+# Step 9, controlled values (EPM-DEC-001-0014, EPM-DEC-001-0035): each code-list property of
+# core takes its values from its own code list, not from any SKOS concept. The core 1.0.0
+# shapes check only sh:class skos:Concept on these properties (sh:in on conceptKind alone).
+# These shapes run against the released core without changing it.
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/step9-shapes/> .
+
+shp:ApqcMappingDecision a sh:NodeShape ; sh:targetObjectsOf core:apqcMappingDecision ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ApqcMappingDecision ;
+                  sh:message "An APQC mapping decision comes from the APQC mapping decision list." ] .
+
+shp:OperatingMode a sh:NodeShape ; sh:targetObjectsOf core:operatingMode ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:OperatingMode ;
+                  sh:message "An operating mode comes from the operating mode list." ] .
+
+shp:Cadence a sh:NodeShape ; sh:targetObjectsOf core:cadence ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:Cadence ;
+                  sh:message "A cadence comes from the cadence list." ] .
+
+shp:PlanningLevel a sh:NodeShape ; sh:targetObjectsOf core:planningLevel ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:PlanningLevel ;
+                  sh:message "A planning level comes from the planning level list." ] .
+
+shp:LifecycleStatus a sh:NodeShape ; sh:targetObjectsOf core:lifecycleStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:LifecycleStatus ;
+                  sh:message "A lifecycle status comes from the lifecycle status list." ] .
+
+shp:GovernanceStatus a sh:NodeShape ; sh:targetObjectsOf core:governanceStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:GovernanceStatus ;
+                  sh:message "A governance status comes from the governance status list." ] .
+
+shp:HoldStatus a sh:NodeShape ; sh:targetObjectsOf core:holdStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:HoldStatus ;
+                  sh:message "A hold status comes from the hold status list." ] .
+
+shp:ConceptKind a sh:NodeShape ; sh:targetObjectsOf core:conceptKind ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ConceptKind ;
+                  sh:message "A concept kind comes from the concept kind list." ] .
+
+# The organization module's RACI level (EPM-DEC-001-0030) is checked the same way.
+shp:RaciLevel a sh:NodeShape ; sh:targetObjectsOf orgm:raciLevel ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue orgm:RaciLevel ;
+                  sh:message "A RACI level comes from the RACI level list." ] .
+
+# The scoped-sequence code lists (EPM-DEC-001-0026).
+shp:EvidenceBasis a sh:NodeShape ; sh:targetObjectsOf core:evidenceBasis ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:EvidenceBases ;
+                  sh:message "An evidence basis comes from the evidence basis list." ] .
+
+shp:SequenceScope a sh:NodeShape ; sh:targetObjectsOf core:sequenceScope ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ScopeUnits ;
+                  sh:message "A sequence scope comes from the scope unit list." ] .

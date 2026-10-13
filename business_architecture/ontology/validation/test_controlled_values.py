@@ -1,0 +1,73 @@
+"""Tests for the Step 9 controlled-value shapes (EPM-DEC-001-0014, EPM-DEC-001-0035): the core
+release and the organization module conform, and a value from the wrong list fails.
+
+Run: python3 -m pytest test_controlled_values.py (needs rdflib, pyshacl).
+"""
+import os
+import unittest
+
+from pyshacl import validate
+from rdflib import Graph, Namespace, URIRef
+from rdflib.namespace import RDF, SKOS
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ONTOLOGY = os.path.join(HERE, "..")
+SHAPES = Graph().parse(os.path.join(HERE, "controlled-values.ttl"))
+CORE = Namespace("https://w3id.org/lsc/ontology/modules/core/")
+ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
+SH = Namespace("http://www.w3.org/ns/shacl#")
+
+DATA = Graph()
+DATA.parse(os.path.join(ONTOLOGY, "releases", "core", "1.0.0", "core.ttl"))
+DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
+CODED = [SHAPES.value(s, SH.targetObjectsOf) for s in SHAPES.subjects(RDF.type, SH.NodeShape)]
+
+
+def conforms(g):
+    return validate(g, shacl_graph=SHAPES)
+
+
+def wrong_list(prop):
+    """Point one use of prop at a concept from a different code list; return the mutated graph."""
+    g = Graph()
+    g += DATA
+    s, o = next(iter(g.subject_objects(prop)), (URIRef("https://example.org/p"), None))
+    scheme = DATA.value(o, SKOS.inScheme) if o is not None else None
+    other = next(c for c, sch in DATA.subject_objects(SKOS.inScheme)
+                 if sch != scheme and sch in {DATA.value(v, SKOS.inScheme) for v in DATA.objects(None, CORE.conceptKind)})
+    if o is not None:
+        g.remove((s, prop, o))
+    g.add((s, prop, other))
+    return g
+
+
+class ControlledValues(unittest.TestCase):
+    def test_the_core_release_conforms(self):
+        ok, _, text = conforms(DATA)
+        self.assertTrue(ok, text)
+
+    def test_every_code_list_property_of_core_has_a_shape(self):
+        # Every core property whose values sit in a core code list is covered. The process
+        # scheme itself is not a code list: process-to-process relations are not coded values.
+        schemes = set(DATA.subjects(RDF.type, SKOS.ConceptScheme)) - {URIRef("https://w3id.org/lsc/ontology/modules/core")}
+        used = {p for s, p, o in DATA if str(p).startswith(str(CORE)) and DATA.value(o, SKOS.inScheme) in schemes}
+        self.assertEqual(sorted(map(str, used - set(CODED))), [])
+
+    def test_a_value_from_the_wrong_list_fails(self):
+        for prop in CODED:
+            if prop == CORE.conceptKind:
+                continue
+            with self.subTest(property=str(prop)):
+                self.assertFalse(conforms(wrong_list(prop))[0])
+
+    def test_a_concept_kind_from_the_wrong_list_fails(self):
+        g = Graph()
+        g += DATA
+        s, o = next(iter(g.subject_objects(CORE.conceptKind)))
+        g.remove((s, CORE.conceptKind, o))
+        g.add((s, CORE.conceptKind, next(DATA.subjects(SKOS.inScheme, CORE.Cadence))))
+        self.assertFalse(conforms(g)[0])
+
+
+if __name__ == "__main__":
+    unittest.main()
