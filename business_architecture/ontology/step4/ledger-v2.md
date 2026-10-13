@@ -2142,3 +2142,17 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 
 **Current totals:** **658 emitting / 628 held / 17 scoped sequence** / 498 facts.
 Conservation: 658 + 628 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #202: G1b pairs held on both sides||G1b rows held for a verb correction (Hamid 2026-10-12)
+
+A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `37fed94`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/202-review.csv`.
+
+- **APPROVE, emitting `core:dependsOnOutputOf` (22):** REL-00646, REL-00679, REL-00973, REL-01108, REL-01112, REL-01151, REL-01152, REL-01191, REL-01194, REL-01197, REL-01199, REL-01200, REL-01213, REL-01217, REL-01224, REL-01225, REL-01233, REL-01234, REL-01273, REL-01295, REL-01296, REL-01315.
+- **APPROVE, emitting `core:governedBy` (2):** REL-00476, REL-01230.
+- **APPROVE, emitting `core:informedBy` (17):** REL-00140, REL-00565, REL-00643, REL-00648, REL-00709, REL-00732, REL-00896, REL-00965, REL-00974, REL-00977, REL-01148, REL-01150, REL-01154, REL-01181, REL-01184, REL-01193, REL-01205.
+- **HOLD, no relationship (3):** REL-00499, REL-00505, REL-01130.
+
+41 mentions move from held to emitting; 41 facts added. No contradiction.
+
+**Current totals:** **699 emitting / 587 held / 17 scoped sequence** / 522 facts.
+Conservation: 699 + 587 + 12 + 1 + 2 + 17 = 1,318. ✓
