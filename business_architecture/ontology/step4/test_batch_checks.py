@@ -121,7 +121,7 @@ class SweepBatch206(unittest.TestCase):
 
     def problems(self, rows=None, approval=None, fact_rows=None):
         return batch_checks.sweep_batch_problems(
-            rows if rows is not None else self.rows, self.register,
+            "206", rows if rows is not None else self.rows, self.register,
             approval if approval is not None else self.approval, self.v2,
             fact_rows if fact_rows is not None else self.facts)
 
@@ -149,6 +149,31 @@ class SweepBatch206(unittest.TestCase):
 
     def test_the_approval_words_must_be_saved(self):
         self.assertTrue(self.problems(approval="approved"))
+
+    def test_a_missing_row_or_an_empty_file_is_caught(self):
+        dropped = self.rows[0]["row_id"]
+        self.assertTrue(any(dropped in p and "no review row" in p for p in self.problems(rows=self.rows[1:])))
+        self.assertEqual(sum("no review row" in p for p in self.problems(rows=[])), len(self.rows))
+
+    def test_a_row_from_another_issue_is_caught(self):
+        other = next(r for r in self.register.values() if r["issue"] != "206")
+        row = dict(self.rows[0], row_id=other["row_id"], issue="206")
+        self.assertTrue(any("not #206" in p for p in self.problems(rows=self.rows + [row])))
+
+    def test_a_contradictory_outcome_or_decision_is_caught(self):
+        emit = next(i for i, r in enumerate(self.rows) if r["verdict"] != "no-relationship")
+        held = next(i for i, r in enumerate(self.rows) if r["verdict"] == "no-relationship")
+        for i, field, value in ((emit, "outcome", batch_checks.SWEEP_HELD_OUTCOME),
+                                (held, "outcome", "Emitted as core:governedBy"),
+                                (emit, "Hamid_decision", "Hamid refused this relationship")):
+            rows = copy.deepcopy(self.rows)
+            rows[i][field] = value
+            self.assertTrue(any(field in p for p in self.problems(rows=rows)), (field, value))
+
+    def test_review_files_match_the_adopted_issues(self):
+        self.assertEqual(batch_checks.sweep_files_problems(set(batch_checks.SWEEP_ADOPTED)), [])
+        self.assertTrue(batch_checks.sweep_files_problems(set()))
+        self.assertTrue(batch_checks.sweep_files_problems(set(batch_checks.SWEEP_ADOPTED) | {"999"}))
 
 
 if __name__ == "__main__":

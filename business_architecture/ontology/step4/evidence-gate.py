@@ -490,10 +490,16 @@ import glob as _glob
 _register = {r["row_id"]: r for r in rows("review-evidence/phase1-sweep/register.csv")}
 with open("review-evidence/hamid-answers/phase1-sweep.md") as _f:
     _approval = _f.read()
-for _path in sorted(_glob.glob("review-evidence/phase1-sweep/*-review.csv")):
-    _sweep_problems = _batch.sweep_batch_problems(rows(_path), _register, _approval,
-                                                  {r["row_id"]: r for r in v2}, _fact_rowids)
-    check(f"Phase 1 sweep {_path.rsplit('/', 1)[1]}: rows match the approved register",
+_sweep_found = {p.rsplit("/", 1)[1].split("-")[0] for p in _glob.glob("review-evidence/phase1-sweep/*-review.csv")}
+_sweep_problems = _batch.sweep_files_problems(_sweep_found)
+check("Phase 1 sweep: one review file per adopted issue (batch_checks.SWEEP_ADOPTED)",
+      not _sweep_problems, "; ".join(_sweep_problems[:5]))
+for _issue in _batch.SWEEP_ADOPTED:
+    _path = f"review-evidence/phase1-sweep/{_issue}-review.csv"
+    _sweep_problems = _batch.sweep_batch_problems(_issue, rows(_path) if _issue in _sweep_found else [],
+                                                  _register, _approval, {r["row_id"]: r for r in v2},
+                                                  _fact_rowids)
+    check(f"Phase 1 sweep #{_issue}: review rows are exactly the approved register's rows and match it",
           not _sweep_problems, "; ".join(_sweep_problems[:5]))
 
 # 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.

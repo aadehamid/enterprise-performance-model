@@ -66,11 +66,14 @@ gate was run against, not the pin. Do not retitle the checklist's
 ## 2026-10-12 — branch `phase1/sweep-register`, pin `2bc25cb`
 
 - **Evidence pin (`PINNED_SHA.txt`):** `2bc25cb899943d29fa486565e447b50d7ca80782`
-- **Gate:** `evidence-gate.py` — 417 PASS, 0 FAIL — **GATE GREEN**
+- **Gate:** `evidence-gate.py` — 418 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==478,
   contradictions==0. A new check runs `batch_checks.sweep_batch_problems`
-  over every `review-evidence/phase1-sweep/*-review.csv`: each row matches
-  the approved register, emitting rows carry their fact and no-relationship
-  rows carry none. It replaces ten per-row hold checks for the #206 rows
-  that now emit: 426 → 417 PASS.
+  over each adopted issue's `review-evidence/phase1-sweep/<issue>-review.csv`:
+  the file holds exactly that issue's register rows, each row matches the
+  approved register, its outcome and Hamid_decision follow from it, emitting
+  rows carry their fact and no-relationship rows carry none. It replaces ten per-row hold checks for the #206 rows
+  that now emit: 426 → 417 PASS. A second check requires exactly one review
+  file per adopted issue (`batch_checks.SWEEP_ADOPTED`), and the per-issue
+  check requires every register row of that issue: 417 → 418 PASS.
 

@@ -17,8 +17,9 @@ Rules:
   target text matching; otherwise the run stops before any write.
 - The new verb must be a raw verb the Step 4 direction table knows.
 - Only `approved` rows are edited, because only they reach the taxonomy.
-- A segment already holding the new values is skipped, so a re-run changes
-  nothing.
+- A cell already holding the new values once, and the old values nowhere, is
+  skipped, so a re-run changes nothing. Any other mix of old and new
+  segments stops the run.
 
 Usage:
   relation-correct.py --corrections <csv> [--workbook <xlsx>] [--check]
@@ -88,8 +89,10 @@ def main():
         parts = segments(by_slug[slug][idx["related_concepts"]].value)
         new = [i for i, p in enumerate(parts) if parse(p) == (e["new_verb"], e["new_target"])]
         old = [i for i, p in enumerate(parts) if parse(p) == (e["old_verb"], e["old_target"])]
-        if new and not old:
+        if len(new) == 1 and not old:
             plan.append((e, None))
+        elif new:
+            errors.append(f"{rid}: '{e['new_verb']}: {e['new_target']}' already appears {len(new)} times in {slug}'s cell")
         elif len(old) != 1:
             errors.append(f"{rid}: '{e['old_verb']}: {e['old_target']}' appears {len(old)} times in {slug}'s cell")
         else:

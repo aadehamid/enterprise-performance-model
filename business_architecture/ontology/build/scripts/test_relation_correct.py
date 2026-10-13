@@ -79,6 +79,19 @@ class RelationCorrect(unittest.TestCase):
             self.assertIn("refused", result.stderr)
             self.assertEqual(_cell(wb), cell)
 
+    def test_refuses_duplicate_or_mixed_corrected_segments_before_any_write(self):
+        good = ["REL-2", "A-1", "informs", "Plan (CM-9)", "enables", "Plan (CM-9)"]
+        dup = CELL.replace("enables: Trade Capture", "informs: Trade Capture") + " | informs: Trade Capture (CM-1-2-1-3)"
+        both = CELL + " | informs: Trade Capture (CM-1-2-1-3)"
+        for cell in (dup, both):
+            wb, c = _fixture(cell, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
+                                     "informs", "Trade Capture (CM-1-2-1-3)"], good])
+            before = wb.read_bytes()
+            result = _run(wb, c)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("already appears", result.stderr)
+            self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_unknown_verb_and_unapproved_row(self):
         wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
                                  "feeds", "Trade Capture (CM-1-2-1-3)"]])

@@ -10,7 +10,9 @@ PINNED_SHA.txt, re-stamps baseline_sha in the seven SHA-stamped CSVs, and puts
 a new pin statement above the old one in the release checklist and the mapping
 document, keeping the old one word for word. It reads every input before it
 writes, and stops if any CSV row is not stamped with the old pin, so only the
-SHA column changes.
+SHA column changes. It stops unless the taxonomy, identity map and workbook in
+build/output equal their versions in the --to commit. All files are replaced
+together: if one replace fails, the others are restored, so a retry starts clean.
 
 adopt: after the workbook or the hold sets change, re-run classify, the context
 pass and the mapping pipeline in a temporary copy and compare their outputs with the governed
@@ -43,6 +45,9 @@ SHA_FILES = ["target-report/target-dispositions-v2.csv", "target-report/context-
 CHECKLIST_PIN = re.compile(r"^- \*\*PINNED_SHA:\*\* .*$", re.M)
 MAPPING_PIN = re.compile(r"^\*\*Baseline:\*\* .*$", re.M)
 BASELINE_FILES = ["step3-taxonomy.ttl", "step2-identity-map.json"]
+# build/output files that must equal their versions in the --to commit, so the pin
+# names the commit that produced what baseline/ receives.
+PROVENANCE_FILES = BASELINE_FILES + ["step3c-definition-authoring-workbook.xlsx"]
 # Columns classify_v2.py computes. The governed dispositions also carry review notes
 # (emission_decision, reason, review_trigger, decision_reference) that classify does not
 # reproduce, so adopt takes classify's values for these columns of batch rows only.
@@ -75,12 +80,55 @@ def restamp(step4, old, new):
     return plans, total
 
 
-def repin(step4, output, new, reason, write, today=None):
+def git_committed(output, sha):
+    """Return name -> the bytes of build/output/<name> in commit sha, or None if git has no such file."""
+    def committed(name):
+        rel = subprocess.run(["git", "-C", output, "ls-files", "--full-name", "--error-unmatch", name],
+                             capture_output=True, text=True)
+        if rel.returncode:
+            return None
+        shown = subprocess.run(["git", "-C", output, "show", f"{sha}:{rel.stdout.strip()}"], capture_output=True)
+        return None if shown.returncode else shown.stdout
+    return committed
+
+
+def write_all(files):
+    """Replace every (path, text) in files, or none: each is staged first, and a failed replace restores the rest."""
+    originals, staged, done = {}, [], []
+    try:
+        for path, text in files:
+            with open(path, "rb") as f:
+                originals[path] = f.read()
+            tmp = path + ".repin-tmp"
+            with open(tmp, "w", newline="") as f:
+                f.write(text)
+            staged.append(tmp)
+        for path, _ in files:
+            os.replace(path + ".repin-tmp", path)
+            done.append(path)
+    except BaseException:
+        for path in done:
+            with open(path, "wb") as f:
+                f.write(originals[path])
+        raise
+    finally:
+        for tmp in staged:
+            if os.path.isfile(tmp):
+                os.remove(tmp)
+
+
+def repin(step4, output, new, reason, write, today=None, committed=None):
     old = read(os.path.join(step4, "PINNED_SHA.txt")).strip()
     if new == old:
         raise SystemExit(f"already pinned to {new}")
     if not re.fullmatch(r"[0-9a-f]{40}", new):
         raise SystemExit(f"--to must be a full 40-character commit SHA, got {new!r}")
+    committed = committed or git_committed(output, new)
+    for name in PROVENANCE_FILES:
+        with open(os.path.join(output, name), "rb") as f:
+            if f.read() != committed(name):
+                raise SystemExit(f"build/output/{name} differs from its version in {new[:7]}; "
+                                 "commit the rebuild and pin that commit")
     # Read every input before any write, so a missing file stops the run with nothing changed.
     baseline = {name: read(os.path.join(output, name)) for name in BASELINE_FILES}
     plans, total = restamp(step4, old, new)
@@ -105,18 +153,8 @@ def repin(step4, output, new, reason, write, today=None):
     print(f"re-pin {old[:7]} -> {new[:7]}: {total:,} rows in {len(plans)} CSVs; taxonomy and identity map from build/output")
     if not write:
         return total
-    for path, raw in plans:
-        with open(path, "w", newline="") as f:
-            f.write(raw)
-    for name, text in baseline.items():
-        with open(os.path.join(step4, "baseline", name), "w") as f:
-            f.write(text)
-    with open(os.path.join(step4, "PINNED_SHA.txt"), "w") as f:
-        f.write(new + "\n")
-    with open(checklist, "w") as f:
-        f.write(text_c)
-    with open(mapping, "w") as f:
-        f.write(text_m)
+    write_all(plans + [(os.path.join(step4, "baseline", name), text) for name, text in baseline.items()]
+              + [(os.path.join(step4, "PINNED_SHA.txt"), new + "\n"), (checklist, text_c), (mapping, text_m)])
     return total
 
 
