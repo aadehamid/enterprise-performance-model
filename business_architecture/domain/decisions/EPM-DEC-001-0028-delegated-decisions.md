@@ -32,7 +32,7 @@ After `core` 1.0.0 was released (#249) and the playbook updated (#250), the orig
 
 The amendment changes only the scope. Everything else in this record applies unchanged to Steps 5 to 12: the evidence order, the recording rule, the one or two review rounds per PR, the reviewers and the merge conditions. A major release still needs Hamid ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). APPROVAL_POLICY.md still routes some PRs to a human.
 
-In the message Hamid answered, Claude proposed bringing three kinds of business facts to him in batches for approval, the way the Phase 1 register worked: the RACI assignments (Step 5), the KPI and Market Data and Commercial Risk definitions (Step 7), and the hosting and license choices (Step 10). Claude follows that practice for those facts.
+Not part of the decision: in the message Hamid answered, Claude proposed bringing three kinds of business facts to him in batches for approval, the way the Phase 1 register worked: the RACI assignments (Step 5), the KPI and Market Data and Commercial Risk definitions (Step 7), and the hosting and license choices (Step 10). Hamid's words extend the scope only; they neither adopt nor reject that proposal. Those questions are delegated like any other in scope, and Claude may still choose to put them to Hamid.
 
 ## Alternatives considered
 
