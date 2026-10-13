@@ -9,7 +9,7 @@
 
 **Attester's statement:** "No one uses the ontology yet." (`review-evidence/hamid-answers/core-1-0-0-release.md`)
 
-Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
+Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
 
 # No-Consumer Attestation — 2026-09-29 (superseded by the attestation above)
 

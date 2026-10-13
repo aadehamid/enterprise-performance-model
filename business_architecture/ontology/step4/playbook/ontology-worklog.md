@@ -999,7 +999,7 @@ without a dated amendment and Hamid's explicit agreement.
 - Released 2026-10-13. Hamid approved the design, the ledger and the release,
   and attested: "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
   The builder dropped the `-rc.1` stage and set the issue date; the merge
-  commit is tagged `core-v1.0.0`.
+  commit of #249 gets the tag `core-v1.0.0` at merge.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

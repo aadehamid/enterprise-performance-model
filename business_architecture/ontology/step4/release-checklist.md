@@ -75,9 +75,9 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - [x] LPG rules 1, 2, 3 and 5 (EPM-DEC-001-0020): one kind and one range per property (tested), a stated cardinality on every core property (shapes; tested), no blank nodes, fixed prefixes.
 - [x] **Conservation ledger approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
 - [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012) and merged in #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
-- [x] **Fresh no-consumer attestation: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
+- [x] **Fresh no-consumer attestation: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
 - [x] **Release approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
-- [x] At the cut (2026-10-13): in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild, tag the merge commit `core-v1.0.0`.
+- [x] At the cut (2026-10-13): in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild. The merge commit of #249 gets the tag `core-v1.0.0` when it merges.
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).
