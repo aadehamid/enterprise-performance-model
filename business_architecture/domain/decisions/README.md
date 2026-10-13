@@ -37,6 +37,6 @@ Records 0001 to 0024 come from the grilling session on the handover plan
 | [EPM-DEC-001-0025](EPM-DEC-001-0025-phase1-scope.md) | Phase 1 covers the source-correction backlog; other held rows wait | Decided; amended by 0026 | Follow-up to Q12 |
 | [EPM-DEC-001-0026](EPM-DEC-001-0026-scoped-sequence-relation.md) | A scoped sequence relation in `core`, before 1.0.0 | Decided | Q1 to Q18 of the #226 design round |
 | [EPM-DEC-001-0027](EPM-DEC-001-0027-mirror-raw-verbs.md) | Two mirror raw verbs, `provides-input-to` and `governs` | Decided | One question, 2026-10-12 |
-| [EPM-DEC-001-0028](EPM-DEC-001-0028-delegated-decisions.md) | Claude decides the open questions of emitting the ontology on Hamid's behalf, from evidence | Decided | One instruction, 2026-10-12 |
+| [EPM-DEC-001-0028](EPM-DEC-001-0028-delegated-decisions.md) | Claude decides the open questions of emitting the ontology on Hamid's behalf, from evidence; amended to Steps 5 to 12 | Decided | One instruction, 2026-10-12; amended 2026-10-13 |
 | [EPM-DEC-001-0029](EPM-DEC-001-0029-core-1-0-0-release-design.md) | How `core` 1.0.0 is built: intake: targets, provenance, IRIs and the release package | Decided | Release implementation questions, 2026-10-13 |
 | [EPM-DEC-001-0030](EPM-DEC-001-0030-organization-module-vocabulary.md) | The organization module's vocabulary: RACI assignments, control between legal entities, RACI levels | Proposed (delegated choice; the 0028 scope amendment is pending in #252) | Step 5, slice 1, 2026-10-13 |

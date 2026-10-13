@@ -32,7 +32,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 - **Don't mark anything Decided or Approved without Hamid's recorded
   decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
   EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
-  updating its playbook to Claude: a decision in that scope made from the
+  updating its playbook to Claude, and since 2026-10-13 those of Steps 5 to 12: a decision in that scope made from the
   evidence order above and recorded as "delegated under EPM-DEC-001-0028"
   counts as Decided. It also sets the independent review at one or two rounds
   per PR, and names the reviewers.
