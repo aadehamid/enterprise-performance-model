@@ -84,7 +84,7 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` links to follow |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` links to follow |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs wait for Hamid to confirm the `sioc` field's meaning |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
@@ -957,6 +957,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Step 5 RACI scope decided by Hamid (2026-10-13)
+- Hamid chose the 153 processes with RACI in the source as this release's
+  RACI scope; the other live concepts that Q4 lists are the source
+  author's backlog. All 153 have RACI and an accountable role, so the
+  Step 5 gate's RACI condition holds. Recorded in EPM-DEC-001-0032, with
+  his words in `review-evidence/hamid-answers/raci-scope.md`.
+
 ### Step 10 module release candidates (2026-10-13)
 - `release/build_module.py` packages the organization and ref-mpc modules
   in the shape of the core 1.0.0 package: Turtle, JSON-LD, shapes, a DCAT
@@ -1013,9 +1020,10 @@ without a dated amendment and Hamid's explicit agreement.
   the hierarchy. `raci-conservation.csv` reconciles entries in with
   assignments out. Competency questions 3 to 5 are answerable. Q4 lists
   the live, non-anchor concepts (processes, capabilities and concepts with
-  no kind) with no RACI in the source; whether they need RACI is
+  no kind) with no RACI in the source; whether they need RACI was
   a scope question for Hamid, recorded in EPM-DEC-001-0032, which is
-  decided under EPM-DEC-001-0028.
+  decided under EPM-DEC-001-0028 (Hamid answered it the same day; see
+  the RACI scope entry).
 
 ### Step 5 role register (2026-10-13)
 - `organization/role-register.csv` maps each RACI role string in the

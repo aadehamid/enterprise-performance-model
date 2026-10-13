@@ -23,7 +23,7 @@ The organization and `ref-mpc` modules exist on `main` but have no release.
 ## For Hamid
 
 Step 10 is done when the catalog resolves and the release can be retrieved. Three things are his:
-1. **Approve organization 1.0.0 and `ref-mpc` 1.0.0** (each a major). Recommendation: approve both, after the RACI-scope answer in EPM-DEC-001-0032, since the organization release fixes its assignments.
+1. **Approve organization 1.0.0 and `ref-mpc` 1.0.0** (each a major). Recommendation: approve both. Hamid settled the RACI scope the organization release depends on (EPM-DEC-001-0032, 2026-10-13).
 2. **Register `w3id.org/lsc`.** The IRIs resolve only after a redirect is registered with w3id, a public, outside action.
 3. **Choose where the files are hosted and under which license.** The ontology README says the folder is proprietary, all rights reserved; a public catalog needs a decision on what is published.
 
