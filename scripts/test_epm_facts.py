@@ -635,3 +635,11 @@ def test_both_decision_checks_accept_a_block_quoted_approval(tmp_path):
     assert epm_facts.decision_problems(str(folder)) == []
     assert [p for p in epm_facts.quote_problems(epm_facts.REVIEWS, epm_facts.BACKLOG, epm_facts.ANSWERS, str(folder))
             if "0026" in p] == []
+
+
+def test_counts_break_emitting_down_by_verb_and_predicate():
+    c = run("counts")
+    by = c["emitting_by_verb"]
+    assert sum(by.values()) == c["ledger"]["emitting"]
+    assert by["triggers -> core:triggeredBy"] == 18
+    assert by["enables -> HELD-no-triple"] == 13  # G2: approved, emits no triple

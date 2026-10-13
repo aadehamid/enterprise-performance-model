@@ -1,7 +1,9 @@
 # Verb → Predicate Mapping v2 — APPROVED (Hamid 2026-09-29, 16/16 sections)
 
 **Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
-Figures refreshed 2026-09-26 to the reviewed evidence package
+Current figures: `python3 scripts/epm_facts.py counts` (ledger, facts and the
+per-verb breakdown). The figure sections below are a snapshot as of #204 batch 1
+(2026-10-12), kept for the reconciliation they show; history of each figure:
 (628 emitting / 658 held / 17 scoped sequence / 468 facts — 617/669/457 before #204 batch 1 emitted the 11 held triggers rows on 2026-10-12; 617/686/457 before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; 637/666/477 before the 2026-09-27 precedes/follows amendment; 648/655/488 before the 2026-09-26 triggers pass; 668/635/508 before the 2026-09-26 governed-by pass; 763/540/603 before the 2026-09-26 informed-by pass; 716 facts before the uses-input pass; 717 before the REL-00873 supersession); section-by-section approval complete 2026-09-29.
 *Figure correction 2026-09-29: the 2026-09-26 uses-input pass recorded k=42
 ("G1a 75 → 33"); the applied 41-row hold set contains already-held REL-00152,
@@ -187,13 +189,13 @@ mapping applies those mention-level holds separately),
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
-**Reconciliation:** 580 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 616 mentions total, of which **615 emitting** (580 + 35) and 1 held (REL-00436). Emitting: 615 emitting-attached + 13 G2 no-triple = **628**.
+**Reconciliation (snapshot as of #204 batch 1, 2026-10-12):** 580 mentions map to their own predicate; 36 G1a mentions attach as duplicate evidence to existing facts (35 emitting; REL-00436 held, retained as duplicate provenance). Attached to stored facts: 616 mentions total, of which **615 emitting** (580 + 35) and 1 held (REL-00436). Emitting: 615 emitting-attached + 13 G2 no-triple = **628**.
 
 *Footnote — mentions that are neither emitting nor held: 2 Q5 structured-flow values, 1 ExternalGovernanceReference, 12 deferred, 17 scoped sequences (emitted as scoped-sequence nodes, not canonical facts; EPM-DEC-001-0026).*
 `core:consumes` / `core:produces` stay reserved for future identified
 InformationObject instances (Q5).
 
-## Mention → canonical fact → mirror accounting (refreshed 2026-09-26)
+## Mention → canonical fact → mirror accounting (snapshot as of #204 batch 1, 2026-10-12; current: `epm_facts.py counts`)
 
 - Emitting mentions: **628**.
 - G2 enables emitting no triple: 13 (approved 2026-09-26; the 2 former
@@ -208,7 +210,7 @@ InformationObject instances (Q5).
   values) + 17 scoped sequence (emitted as scoped-sequence nodes, not canonical
   facts; EPM-DEC-001-0026). Total: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Per-verb proposed predicate counts (emitting mentions)
+## Per-verb proposed predicate counts (emitting mentions; snapshot as of #204 batch 1, 2026-10-12; current: `epm_facts.py counts`)
 
 | Raw verb | Stored predicate | Mentions |
 |---|---|---|

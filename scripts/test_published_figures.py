@@ -8,7 +8,7 @@ purpose, both the document and the pinned values in test_epm_facts.py).
 Run: uv run --with pytest --with rdflib python -m pytest -q scripts/test_published_figures.py
 
 Checked: every total and summary figure these documents state about Step 4
-data. Deliberately not checked, because they are not data totals this tool
+data, and that step4/README.md states no live ledger or gate figures at all. Deliberately not checked, because they are not data totals this tool
 computes:
 - step4/README.md's "16/16 sections": signed-off sections of the mapping document.
 - The backlog's "All 96 Section B rows": the historic Section B population,
@@ -17,6 +17,7 @@ computes:
   REL-00445 pattern"): they split rows whose section totals are checked here.
 """
 import csv
+import html
 import json
 import os
 import re
@@ -86,29 +87,83 @@ def pairs_table(backlog=None):
     return re.findall(r"^\|\s*(REL-\d{5})\s*\|\s*(REL-\d{5})\s*\|", section, re.M)
 
 
-def test_step4_readme_ledger_and_gate(facts):
+# Numbers step4/README.md may state because they are not live figures. Anything
+# else numeric is a figure, however it is worded or emphasised.
+README_NON_FIGURES = [
+    # Fixed figures, each matched only in its own sentence; removed before the file-name rule splits them.
+    r"All 10 boxes in release-checklist\.md are complete",
+    r"document, 16/16 sections\)",
+    r"in one flag-day release",
+    r"\d{4}-\d{2}-\d{2}",                           # dates
+    r"(?<![&\w])#\d+\b",                               # PR and issue numbers
+    r"\b\d+\.\d+\.\d+\b",                           # release versions
+    r"\b(?:REL-\d{5}|EPM-[A-Z]+-\d{3}(?:-\d{4})?|CM(?:-\d+)+|MPC-S\d+)\b",  # the project's ID namespaces
+    r"[\w./-]+\.(?:md|py|csv|ttl|json|jsonl|sh|txt|html)\b",  # file names
+    r"\b(?=[0-9a-f]*[a-f])[0-9a-f]{7,40}\b",          # commit SHAs
+    r"\bstep\d\b|\bStep \d+\b|\bQ\d+\b|\bpython3\b",   # step names, decision numbers, the command
+]
+
+
+# Any number word is a figure too: the README states counts nowhere, so it needs none
+# beyond the allowlisted phrases. Matching words near nouns missed "FAIL count is one".
+NUMBER_WORD = re.compile(
+    r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"(?:thir|four|fif|six|seven|eigh|nine)teen|(?:twen|thir|for|fif|six|seven|eigh|nine)ty|"
+    r"hundred|thousand|million|dozen|single|none)\b"
+    r"|\bno\s+(?:[\w-]+\s+){0,2}?(?:emitting|held|deferred|facts?|rows?|mentions?|PASS|FAIL|failures?|checks?)\b",
+    re.I)
+
+
+def readme_figures(text):
+    """Figures left in the text once markup, character references and the allowed non-figures are removed."""
+    text = re.sub(r"[*_`]", "", html.unescape(text))
+    for pattern in README_NON_FIGURES:
+        text = re.sub(pattern, " ", text)
+    return re.findall(r"\d[\d,]*", text) + NUMBER_WORD.findall(text)
+
+
+def test_step4_readme_states_no_live_figures():
+    # Live figures live in epm_facts.py counts only, so no batch edits figure prose
+    # (retro on #235: restated figures were the most frequent review finding).
     text = flat(STEP4_README)
-    m = re.search(r"both conserving to ([\d,]+) mentions", text)
-    assert m and num(m.group(1)) == facts["ledger"]["mentions"]
-    m = re.search(r"([\d,]+) emitting / ([\d,]+) held / ([\d,]+) deferred / ([\d,]+) external governance / "
-                  r"([\d,]+) structured flow / ([\d,]+) scoped sequence = ([\d,]+); ([\d,]+) canonical facts "
-                  r"\(`canonical-facts.csv`, ([\d,]+) rows\)\. The ([\d,]+) scoped-sequence rows emit ([\d,]+) nodes "
-                  r"\(([\d,]+) handoffs\)", text)
-    assert m, "ledger sentence not found in step4/README.md"
-    led, ss = facts["ledger"], facts["scoped_sequences"]
-    assert tuple(num(g) for g in m.groups()) == (
-        led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        led["scoped_sequence"], facts["conservation"], facts["canonical_facts_file"], facts["canonical_facts_file"],
-        led["scoped_sequence"], ss["nodes"], ss["handoffs"])
-    m = re.search(r"promoted ([\d,]+) / held ([\d,]+), plus the same ([\d,]+) / ([\d,]+) / ([\d,]+) = ([\d,]+); "
-                  r"([\d,]+) PASS / ([\d,]+) FAIL", text)
-    assert m, "gate sentence not found in step4/README.md"
-    gate = facts["evidence_gate"]
-    total = gate["promoted"] + gate["held"] + led["deferred"] + led["external_governance"] + led["structured_flow"]
-    assert tuple(num(g) for g in m.groups()) == (
-        gate["promoted"], gate["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-        total, gate["pass_checks"], gate["fail_checks"])
-    assert total == led["mentions"]
+    assert "python3 scripts/epm_facts.py counts" in text
+    assert readme_figures(text) == [], "step4/README.md states a figure; point to epm_facts.py counts instead"
+
+
+@pytest.mark.parametrize("line", [
+    "Current ledger: 999 emitting, 999 held.",
+    "Canonical facts: 999.",
+    "Evidence gate: promoted 999 / held 999.",
+    "Evidence gate: **999 PASS** / **999 FAIL**.",
+    "Ledger: **999 emitting** / **999 held**.",
+    "`999` facts",
+    "Current gate: 999-PASS / 9-FAIL.",
+    "The canonical store is a 999-fact store.",
+    "Live ledger: emitting/999 held/888.",
+    "Current ledger: 1,318 mentions held.",
+    "The current emitting population is a 628-row subset of the ledger.",
+    "The evidence gate has a 237-row held population.",
+    "All 10 boxes are 999 facts.",
+    "Current gate: PASS-999 / FAIL-9.",
+    "Current ledger: EMITTING-999 / HELD-888.",
+    "Current canonical facts: FACTS-999.",
+    "Current gate: **PASS-999** / **FAIL-9**.",
+    "The evidence gate currently has one FAIL check.",
+    "The evidence gate currently has zero FAIL checks.",
+    "Current gate: &#57;&#57;&#57; PASS / &#57; FAIL.",
+    "The evidence gate has zero failures.",
+    "Current canonical facts: four hundred sixty-eight.",
+    "The evidence gate FAIL count is one.",
+    "The evidence gate failures are zero.",
+    "The current number of canonical facts is four hundred sixty-eight.",
+    "| Evidence gate metric | Current count |\n|---|---|\n| FAIL checks | one |",
+    "There are fourteen FAIL checks.",
+    "The gate currently has a single FAIL check.",
+    "The gate currently has no FAIL checks.",
+    "Current evidence-gate FAIL checks: none.",
+])
+def test_readme_guard_catches_restated_figures(line):
+    assert readme_figures(flat(STEP4_README) + " " + line)
 
 
 def test_ontology_readme_taxonomy(facts):

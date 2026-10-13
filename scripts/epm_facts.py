@@ -335,6 +335,7 @@ def cmd_counts(args):
             "held_outside_by_reason": dict(collections.Counter(hold_reason(mapping, i) for i in outside).most_common()),
         },
         "review_holds_by_file": per_file,
+        "emitting_by_verb": {f"{v} -> {p}": n for (v, p), n in sorted(mapping["perverb"].items())},
         "scoped_sequences": scoped_sequences(),
         "taxonomy": taxonomy(),
         "sources": [rel(os.path.join(STEP4, "mapping_v2.py")), rel(os.path.join(STEP4, "evidence-gate.py")),
@@ -353,6 +354,7 @@ def cmd_counts(args):
     print(f"scoped sequences (EPM-DEC-001-0026): {ss['nodes']} nodes, {ss['handoffs']} handoffs; "
           f"source table: {len(ss['problems'])} problem(s)")
     print(f"canonical facts: {out['canonical_facts_file']} in canonical-facts.csv; pipeline builds {led['canonical_facts_pipeline']}")
+    print("emitting by raw verb -> stored predicate: " + ", ".join(f"{k} {n}" for k, n in out["emitting_by_verb"].items()))
     eg = out["evidence_gate"]
     print(f"evidence gate: {'GREEN' if eg['green'] else 'NOT GREEN'}; promoted {eg['promoted']} / held {eg['held']}; "
           f"{eg['pass_checks']} PASS / {eg['fail_checks']} FAIL")

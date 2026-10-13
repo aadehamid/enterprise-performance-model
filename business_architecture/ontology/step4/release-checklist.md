@@ -10,6 +10,8 @@
 - **Phase 3 sibling fix** at `e9b80d3` — `core:precedes` siblings may use structural nearness under Rule 5
 
 ### Verb packages
+Snapshot as of #204 batch 1 (2026-10-12). Current per-verb figures: `python3 scripts/epm_facts.py counts`.
+
 | Verb | PR | Status |
 |------|-----|--------|
 | requires | #154 | 5 APPROVE / 1 HOLD (REL-00208) |
@@ -20,8 +22,8 @@
 | triggers | — | 2 STAND / 5 PROMOTE / 11 HOLD → 7 emitting (2026-09-26); the 11 held rows were answered in #204 batch 1 (2026-10-12) and emit → 18 emitting |
 
 ### Conservation
-**628 emitting + 658 held + 12 deferred + 1 external-governance + 2 structured-flow + 17 scoped-sequence = 1,318**
-*(617 emitting / 669 held before #204 batch 1 emitted 11 triggers rows on 2026-10-12; 686 held before EPM-DEC-001-0026 moved 17 held rows to scoped sequences on 2026-10-12; corrected 2026-09-29 from 615/688; see ledger-v2.md)*
+Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves to the total of all mentions.
+*(At promotion, 2026-09-30: 617 emitting + 686 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318, corrected 2026-09-29 from 615/688. Each later change is a dated entry in ledger-v2.md.)*
 
 ### Pinned Evidence
 - **PINNED_SHA:** `7b670ad58c095e0f2d907afcfa938964bb4e8138` (re-pinned 2026-10-12 for the #206 answers from the Phase 1 register, from `51a32aa2eea43a819a7fff23b624ff8bd291bfad`; all 7 SHA-stamped CSVs re-stamped, 2,898 rows; the re-pin itself changes only the SHA column). Promotion was approved against `6a155bc2`.
