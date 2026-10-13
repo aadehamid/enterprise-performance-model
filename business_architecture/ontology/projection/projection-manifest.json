@@ -1,0 +1,33 @@
+{
+  "inferred_triples": 0,
+  "input_fingerprint": "e513606c2b9bbe5466e2eef8c7d3fa4860f58a54b8bef66a9aff591ea1742134",
+  "inputs": {
+    "organization/assignments.ttl": "f8ca14be4373fc40e73920ab4b3030f34694c01882cd2a07061a790c685cedf9",
+    "organization/roles.ttl": "cd16aa6c1e48192879289ed39bb1a895ba8c7f0fcc61bba51e6dac374dac00ba",
+    "organization/vocabulary.ttl": "23bb7d1d65d879a38c1cb06fd26af853a4371bf9ead8ce6e23b31177f0e18e73",
+    "ref-mpc/ref-mpc.ttl": "172b8f70ab96682f7f559855f370237c48ba6ab96c1e8f2c8d3751f656f508ef",
+    "releases/core/1.0.0/core.ttl": "69e7646d4b0587feb2cf2f1e1fa1c4150c4ed56cb888549df83f24ac4990a9f3"
+  },
+  "loadable_triples": 21152,
+  "release_exceptions": {
+    "Rule 1: https://w3id.org/lsc/ontology/modules/core/earlierProcess has no single concrete range": "core 1.0.0 declares no rdfs:range; the next core release adds rdfs:range skos:Concept",
+    "Rule 1: https://w3id.org/lsc/ontology/modules/core/laterProcess has no single concrete range": "core 1.0.0 declares no rdfs:range; the next core release adds rdfs:range skos:Concept"
+  },
+  "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
+  "shapes": {
+    "organization/shapes.ttl": "57b672b8be82ba1dbbec24bcf1c7e143815a7d5db37e3cd71a69050ecef8ec49",
+    "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
+    "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
+    "releases/core/1.0.0/shapes.ttl": "2acb3c1f5ef6867daae0f9028e5e226df3afddf6e583df7cb32b6630ebd5228a",
+    "step4/scoped-sequence/shapes.ttl": "6d9acb78ae3a464aad7d76b694d16e8f43122ba9bbff97d41a5eff99072d51e3",
+    "validation/controlled-values.ttl": "ffd564d419c2ef6bf940832d70ce48ecb5811f74daa263ee8429ba5bf389b084"
+  },
+  "versions": {
+    "apoc": "bundled with neo4j:2025.06.2",
+    "guideline": "v2.1 (lpg-projection/, pin e7b09e8)",
+    "n10s": "2025.06.1",
+    "neo4j": "2025.06.2",
+    "reasoner": "ELK (through ROBOT)",
+    "robot": "1.9.10"
+  }
+}
