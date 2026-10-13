@@ -240,6 +240,22 @@ class SweepBatch203(unittest.TestCase):
         self.assertEqual(batch_checks.scope_notes(ttl, "B"), ["B note"])
         self.assertEqual(batch_checks.scope_notes(ttl, "C"), [])
 
+    def test_a_reverted_relationship_in_the_published_taxonomy_is_caught(self):
+        # REL-00263's corrected segment back to enables, with its sentence left in the scope note.
+        reverted = self.taxonomy.replace("provides-input-to: Manage Risk Reporting", "enables: Manage Risk Reporting", 1)
+        self.assertNotEqual(reverted, self.taxonomy)
+        self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
+                            for p in self.problems(self.facts, taxonomy=reverted)))
+
+    def test_sweep_provenance_matches_the_mapping_attachments(self):
+        import ast
+        with open(os.path.join(HERE, "mapping_v2.py")) as f:
+            tree = ast.parse(f.read())
+        attach = next(ast.literal_eval(n.value) for n in ast.walk(tree) if isinstance(n, ast.Assign)
+                      and getattr(n.targets[0], "id", "") == "DUPLICATE_PROVENANCE_ATTACH")
+        for rid, fact in batch_checks.SWEEP_PROVENANCE.items():
+            self.assertEqual(attach.get(rid), fact, rid)
+
     def test_recorded_provenance_is_allowed_only_on_its_fact(self):
         fact = batch_checks.SWEEP_PROVENANCE["REL-00436"]
         self.assertIn("REL-00436", self.facts[fact])

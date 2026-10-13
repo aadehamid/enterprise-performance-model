@@ -114,7 +114,28 @@ def sweep_files_problems(found):
 
 
 def scope_notes(taxonomy, slug):
-    """The skos:scopeNote literals of proc:<slug> in Turtle text, whitespace-collapsed.
+    """The skos:scopeNote literals of proc:<slug> in Turtle text, whitespace-collapsed."""
+    return [" ".join(t.split()) for t in literals(taxonomy, slug, "skos:scopeNote")]
+
+
+def related_segments(taxonomy, slug):
+    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, split as classify_v2.py splits them."""
+    pairs = []
+    for text in literals(taxonomy, slug, "intake:relatedConcepts"):
+        for part in text.split("|"):
+            part = part.strip()
+            if part and ":" in part:
+                verb, target = part.split(":", 1)
+                pairs.append((verb.strip(), target.strip()))
+    return pairs
+
+
+# Raw verbs a reversed register row is written with (EPM-DEC-001-0027).
+MIRROR_VERBS = {"uses-input": "provides-input-to", "governed-by": "governs"}
+
+
+def literals(taxonomy, slug, predicate):
+    """The literals of one predicate of proc:<slug> in Turtle text.
 
     Reads only that subject's statement: it starts at "proc:<slug> a" (at any
     indentation), skips comments outside strings, and ends at the statement's
@@ -147,13 +168,13 @@ def scope_notes(taxonomy, slug):
                 out.append(("tok", taxonomy[i:j])); i = j
             else:
                 i += 1
-    notes, pred = [], None
+    found, pred = [], None
     for kind, text in out:
         if kind == "tok" and text not in (",", "@en") and not text.startswith("@") and not text.startswith("^^"):
             pred = None if text == ";" else (text if pred is None else pred)
-        elif kind == "lit" and pred == "skos:scopeNote":
-            notes.append(" ".join(text.split()))
-    return notes
+        elif kind == "lit" and pred == predicate:
+            found.append(text)
+    return found
 
 
 def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxonomy=None):
@@ -209,6 +230,15 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxono
             problems.append(f"{rid}: fresh_verdict must be APPROVE")
         if r["scope_note_slug"] != r["source_slug"]:
             problems.append(f"{rid}: the sentence goes in the source's scope note")
+        if taxonomy is not None:
+            # The published relationship itself, as classify_v2 will read it.
+            verb = MIRROR_VERBS.get(reg["verb"], reg["verb"]) if reg["direction"] == "reversed" else reg["verb"]
+            segment = (verb, v2[rid]["raw_target"])
+            if v2[rid]["verb"] != verb:
+                problems.append(f"{rid}: the dispositions carry verb {v2[rid]['verb']!r}, not {verb!r}")
+            if related_segments(taxonomy, r["source_slug"]).count(segment) != 1:
+                problems.append(f"{rid}: '{verb}: {segment[1]}' is not exactly once in "
+                                f"{r['source_slug']}'s published relatedConcepts")
         sentence = " ".join(r["scope_note_sentence"].split())
         if taxonomy is not None and not any(sentence in note for note in scope_notes(taxonomy, r["scope_note_slug"])):
             problems.append(f"{rid}: the approved sentence is not in {r['scope_note_slug']}'s published scope note")

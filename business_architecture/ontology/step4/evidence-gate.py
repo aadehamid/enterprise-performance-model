@@ -582,6 +582,13 @@ for fn in ["target-report/context-pass.csv", "requires-review.csv",
     rs = rows(fn)
     orphans = [r["row_id"] for r in rs if r["row_id"] not in v2ids]
     check(f"no-orphans {fn}", not orphans, str(orphans[:3]))
+# Each verb-review file lists exactly the dispositions' rows of its verb, so a
+# corrected verb cannot leave a stale review row behind (Phase 1 #203).
+for fn, verb in (("enables-review.csv", "enables"), ("requires-review.csv", "requires"),
+                 ("assures-review.csv", "assures")):
+    listed, expected = {r["row_id"] for r in rows(fn)}, {r["row_id"] for r in v2 if r["verb"] == verb}
+    check(f"{fn} lists exactly the {verb} rows", listed == expected,
+          f"stale {sorted(listed - expected)[:3]}, missing {sorted(expected - listed)[:3]}")
 cf_orphans = []
 for r in cf:
     for rid in r["row_ids"].split(";"):

@@ -198,7 +198,7 @@ class Adopt(Step4Copy):
 
     def test_the_pipeline_reproduces_the_governed_files_byte_for_byte(self):
         tmp = tempfile.mkdtemp(dir=self.tmp)
-        new_disp, new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        new_disp, new_ctx, new_facts, _ = phase1_batch._proposals(self.step4, tmp)
         # The governed dispositions add review notes classify does not write; its own columns must match.
         governed = phase1_batch._rows(os.path.join(self.step4, "target-report", "target-dispositions-v2.csv"),
                                       lambda r: r["row_id"])
@@ -288,6 +288,32 @@ class Adopt(Step4Copy):
         self.assertIn("facts added: 1", out)
         status, out = quiet(phase1_batch.adopt, self.step4, set(), write=False)
         self.assertIn("facts added: 0, removed: 0, changed: 0", out)
+
+
+    def add_stale_enables_row(self):
+        """Append a governed enables-review row for a mention whose verb is not enables."""
+        with open(os.path.join(self.step4, "target-report", "target-dispositions-v2.csv"), newline="") as f:
+            other = next(r for r in csv.DictReader(f) if r["verb"] != "enables")
+        path = os.path.join(self.step4, "enables-review.csv")
+        with open(path, newline="") as f:
+            before = f.read()
+        with open(path, "a", newline="") as f:
+            f.write(f"{other['row_id']},{self.old},stale\r\n")
+        return other["row_id"], before
+
+    def test_a_stale_verb_review_row_outside_the_batch_stops(self):
+        rid, _ = self.add_stale_enables_row()
+        status, out = quiet(phase1_batch.adopt, self.step4, set(), write=True)
+        self.assertEqual(status, 1)
+        self.assertIn(f"enables-review.csv row {rid} left or joined but is not in the batch", out)
+
+    def test_a_batch_row_leaving_enables_leaves_enables_review_and_nothing_else_changes(self):
+        rid, before = self.add_stale_enables_row()
+        status, out = quiet(phase1_batch.adopt, self.step4, {rid}, write=True)
+        self.assertEqual(status, 0, out)
+        self.assertIn("enables-review.csv", out)
+        with open(os.path.join(self.step4, "enables-review.csv"), newline="") as f:
+            self.assertEqual(f.read(), before)
 
 
 if __name__ == "__main__":

@@ -16,7 +16,9 @@ together: if one replace fails, the others are restored, so a retry starts clean
 
 adopt: after the workbook or the hold sets change, re-run classify, the context
 pass and the mapping pipeline in a temporary copy and compare their outputs with the governed
-target-dispositions-v2.csv, context-pass.csv and canonical-facts.csv. The REL
+target-dispositions-v2.csv, context-pass.csv and canonical-facts.csv. A row whose corrected
+verb leaves or joins `enables`, `requires` or `assures` leaves or joins that verb's review
+file (enables-review.csv and so on); the other rows keep their review notes. The REL
 rows must stay the same rows. Every changed disposition or context row, and every
 row a fact gains or loses, must be a batch row; anything else stops the run.
 With --write, the governed files take the new outputs.
@@ -182,7 +184,7 @@ def _proposals(step4, tmp):
     finally:
         os.chdir(cwd)
     return (os.path.join(report, "target-dispositions-v2.csv"), os.path.join(report, "context-pass.csv"),
-            os.path.join(work, "proposal", "canonical-facts.csv"))
+            os.path.join(work, "proposal", "canonical-facts.csv"), os.path.join(work, "proposal"))
 
 
 def _rows(path, key):
@@ -204,6 +206,28 @@ def _merge_dispositions(path, new_d, batch):
         writer.writerows(rows)
 
 
+# The verb-review files the gate checks against the dispositions, each with its verb.
+VERB_REVIEWS = [("enables-review.csv", "enables"), ("requires-review.csv", "requires"),
+                ("assures-review.csv", "assures")]
+
+
+def _sync_verb_review(path, leaving, entering, proposal):
+    """Drop the rows that left the verb's population and append those that joined it.
+
+    Every other line stays byte for byte: the governed file carries review notes the
+    mapping does not reproduce.
+    """
+    with open(path, newline="") as f:
+        lines = f.read().splitlines(keepends=True)
+    kept = [ln for ln in lines if ln.split(",", 1)[0] not in leaving]
+    with open(proposal, newline="") as f:
+        joined = [ln for ln in f.read().splitlines(keepends=True) if ln.split(",", 1)[0] in entering]
+    if kept and joined and not kept[-1].endswith(("\n", "\r")):
+        kept[-1] += "\n"
+    with open(path, "w", newline="") as f:
+        f.writelines(kept + joined)
+
+
 def _contributors(fact):
     return set(fact["row_ids"].split(";")) - {""} if fact else set()
 
@@ -212,7 +236,7 @@ def adopt(step4, batch, write):
     """Compare re-run outputs with the governed files; every change must belong to the batch rows."""
     tmp = tempfile.mkdtemp(prefix="phase1-batch-")
     try:
-        new_disp, new_ctx, new_facts = _proposals(step4, tmp)
+        new_disp, new_ctx, new_facts, proposal_dir = _proposals(step4, tmp)
         old_d = _rows(os.path.join(step4, "target-report", "target-dispositions-v2.csv"), lambda r: r["row_id"])
         new_d = _rows(new_disp, lambda r: r["row_id"])
         old_c = _rows(os.path.join(step4, "target-report", "context-pass.csv"), lambda r: r["row_id"])
@@ -233,6 +257,14 @@ def adopt(step4, batch, write):
         # Outside the batch a context row may gain a note (a new back-link, say) but never change its outcome.
         problems += [f"context row {r} changed its outcome but is not in the batch"
                      for r in ctx_changed if r not in batch and old_c[r]["outcome"] != new_c[r]["outcome"]]
+        # Each verb-review file lists its verb's mentions; a corrected verb moves a row in or out.
+        moves = {}
+        for name, verb in VERB_REVIEWS:
+            listed = set(_rows(os.path.join(step4, name), lambda r: r["row_id"]))
+            now = {k for k, r in new_d.items() if r["verb"] == verb}
+            moves[name] = (listed - now, now - listed)
+            problems += [f"{name} row {r} left or joined but is not in the batch"
+                         for r in sorted((listed - now) | (now - listed)) if r not in batch]
         added, removed = sorted(set(new_f) - set(old_f)), sorted(set(old_f) - set(new_f))
         changed = sorted(k for k in set(old_f) & set(new_f) if old_f[k] != new_f[k])
         for label, keys in (("added", added), ("removed", removed), ("changed", changed)):
@@ -247,6 +279,9 @@ def adopt(step4, batch, write):
         print(f"disposition rows changed: {len(disp_changed)} {disp_changed}")
         print(f"context rows changed: {len(ctx_changed)} {ctx_changed}")
         print(f"facts added: {len(added)}, removed: {len(removed)}, changed: {len(changed)}")
+        for name, (leaving, entering) in moves.items():
+            if leaving or entering:
+                print(f"{name} rows leaving: {sorted(leaving)}, joining: {sorted(entering)}")
         for p in problems:
             print("STOP", p)
         if problems:
@@ -255,7 +290,11 @@ def adopt(step4, batch, write):
             _merge_dispositions(os.path.join(step4, "target-report", "target-dispositions-v2.csv"), new_d, batch)
             shutil.copyfile(new_ctx, os.path.join(step4, "target-report", "context-pass.csv"))
             shutil.copyfile(new_facts, os.path.join(step4, "canonical-facts.csv"))
-            print("wrote target-report/target-dispositions-v2.csv, target-report/context-pass.csv and canonical-facts.csv")
+            synced = [name for name, (leaving, entering) in moves.items() if leaving or entering]
+            for name in synced:
+                _sync_verb_review(os.path.join(step4, name), *moves[name], os.path.join(proposal_dir, name))
+            print("wrote target-report/target-dispositions-v2.csv, target-report/context-pass.csv, canonical-facts.csv"
+                  + "".join(f", {name}" for name in synced))
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

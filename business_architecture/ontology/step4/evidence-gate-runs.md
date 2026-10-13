@@ -80,7 +80,7 @@ gate was run against, not the pin. Do not retitle the checklist's
 ## 2026-10-12 — branch `phase1/sweep-203`, pin `adc7483`
 
 - **Evidence pin (`PINNED_SHA.txt`):** `adc7483522a7f3845dceca90c95187b6253372a4`
-- **Gate:** `evidence-gate.py` — 398 PASS, 0 FAIL — **GATE GREEN**
+- **Gate:** `evidence-gate.py` — 401 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1078, held==225, canonical-facts==490,
   contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #203, so the sweep
   check covers its 15 rows (+1). The 12 rows that now emit leave the
@@ -92,5 +92,11 @@ gate was run against, not the pin. Do not retitle the checklist's
   with the register, and requires each emitting row's approved sentence in
   a `skos:scopeNote` literal of its source in the pinned baseline taxonomy.
   A new check requires the published `build/output/step3-taxonomy.ttl` to
-  equal that baseline: 397 → 398 PASS.
+  equal that baseline: 397 → 398 PASS. The sweep check also requires each
+  emitting row's corrected verb and target exactly once in its source's
+  published `intake:relatedConcepts`, and the same verb in the dispositions.
+  Three new checks require `enables-review.csv`, `requires-review.csv` and
+  `assures-review.csv` to list exactly the dispositions' rows of their verb,
+  so a corrected verb cannot leave a stale review row: 398 → 401 PASS. The
+  12 #203 rows that left `enables` were removed from `enables-review.csv`.
 
