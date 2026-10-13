@@ -1,0 +1,37 @@
+# SHACL shapes for the ref-mpc module (Step 5, slice 4; EPM-DEC-001-0033). Every reference
+# instance has one English name, cites a described source, and states the date its facts held
+# (EPM-DEC-001-0015; playbook Step 5: cite a source and an as-of date for each fact). The
+# control relationship is checked by the organization module's own shapes.
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/ref-mpc/shapes/> .
+
+shp:ReferenceInstance a sh:NodeShape ;
+    sh:targetClass org:FormalOrganization, org:OrganizationalUnit, org:Site ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A reference instance has exactly one English name." ] ;
+    sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:note ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:node shp:Source ;
+                  sh:message "A reference instance cites a described source." ] ;
+    sh:property [ sh:path dcterms:date ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
+                  sh:message "A reference instance states the date its facts held." ] .
+
+shp:Unit a sh:NodeShape ;
+    sh:targetClass org:OrganizationalUnit ;
+    sh:property [ sh:path org:unitOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:class org:FormalOrganization ] .
+
+shp:Site a sh:NodeShape ;
+    sh:targetClass org:Site ;
+    sh:property [ sh:path org:siteOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:class org:FormalOrganization ] .
+
+shp:Source a sh:NodeShape ;
+    sh:property [ sh:path dcterms:title ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:issued ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path dcterms:identifier ; sh:minCount 1 ; sh:maxCount 1 ] .

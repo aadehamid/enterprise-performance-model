@@ -6,7 +6,8 @@ waits_for names the rest), or waits:<step or decision> (no query yet). A query
 whose first comment line says "(must be none)" must return zero rows; every other
 query must return at least one row. Prints a coverage summary; exits 1 on a failure.
 
-Run: python3 run.py [path/to/core.ttl]   (default: the current core release)
+Run: python3 run.py [path/to/core.ttl]   (default: the current core release; the module graphs in
+MODULES are always loaded with it)
 """
 import csv
 import os
@@ -17,6 +18,8 @@ from rdflib import Graph
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RELEASE = os.path.join(HERE, "..", "releases", "core", "1.0.0", "core.ttl")
+# The module graphs loaded with the release (Step 5: roles and RACI assignments).
+MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")]
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 
@@ -48,10 +51,17 @@ def check(graph, rows):
     return failures, statuses
 
 
+def load(path):
+    """The release at path, plus the module graphs."""
+    graph = Graph()
+    for part in [path] + MODULES:
+        graph.parse(part)
+    return graph
+
+
 def main(path):
     rows = load_expected()
-    graph = Graph()
-    graph.parse(path)
+    graph = load(path)
     failures, statuses = check(graph, rows)
     print(f"competency coverage on {os.path.relpath(path, HERE)}: {len(rows)} questions; "
           f"answerable {statuses['answerable']}, partial {statuses['partial']}, waiting {statuses['waits']}")

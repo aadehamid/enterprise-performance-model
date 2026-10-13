@@ -1,9 +1,9 @@
 question,status,queries,waits_for
 1,answerable,q01a-children.rq;q01b-path-to-root.rq,
 2,answerable,q02a-no-parent.rq;q02b-children-expected.rq,
-3,waits:step-5,,RACI assignments (Step 5)
-4,waits:step-5,,accountable owner (Step 5)
-5,waits:step-5,,roles (Step 5)
+3,answerable,q03a-raci.rq;q03b-assignments-resolve.rq,
+4,answerable,q04a-no-accountable.rq;q04b-raci-has-accountable.rq,
+5,answerable,q05-roles.rq,
 6,waits:step-7,,systems (Step 7)
 7,waits:step-7,,data products (Step 7)
 8,waits:step-6,,planned inputs and outputs (Step 6): wait for Hamid to confirm the meaning of the process map's sioc field (EPM-DEC-001-0034)
