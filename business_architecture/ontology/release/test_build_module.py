@@ -54,6 +54,8 @@ class Packages(unittest.TestCase):
                     path, _ = m["approval"]
                     self.assertTrue(approval_holds(name, m))
                     self.assertTrue(issued)
+                    iri = URIRef(bm.MODULES_NS + name)
+                    self.assertEqual(g.value(iri, DCTERMS.modified), g.value(iri, DCTERMS.issued))
                     self.assertFalse(manifest["release_candidate"])
                     self.assertEqual(manifest["approved_by"]["recorded_in"], path)
                 else:

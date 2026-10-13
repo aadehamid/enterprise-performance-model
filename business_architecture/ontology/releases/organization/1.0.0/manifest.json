@@ -12,16 +12,16 @@
     "EPM-DEC-001-0031",
     "EPM-DEC-001-0032"
   ],
-  "triples": 5943,
+  "triples": 5944,
   "approved_by": {
     "who": "Hamid",
     "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
   },
   "files": {
-    "CHANGELOG.md": "bfa55ed8c19d006bbafe079a346e9fa0dc15e732c0994ebf140a9ce67fbf520b",
+    "CHANGELOG.md": "881be467fbe8d0b8c3729f950a6988694df68d5a2d9444424cc03d1fcb2171c5",
     "catalog.ttl": "92d92830c2fda3c7c0887d8db97b8c6e05001216e5e191bf224f9ad784d14816",
-    "organization.jsonld": "ee1a30277947733a2acd8c920861e919eeb85318908118026e91a37728d2d4df",
-    "organization.ttl": "129865f85776a86dbfca1ef38fd75fffa383518e65b07f8182df3a607b2784dc",
+    "organization.jsonld": "135e73a9bd5d1f85a913a68a4a37ca099e18212ff086adb05e41e7612e9451d4",
+    "organization.ttl": "6059f36de8cfc5ebeedf145a1e9aa4032533356ac0cc2f40d2f698ca976021d4",
     "shapes.ttl": "6d0b41f0dadc418364a66a8de553f2cf6a8cdd4da91028bf6084b20f1587c10a"
   }
 }

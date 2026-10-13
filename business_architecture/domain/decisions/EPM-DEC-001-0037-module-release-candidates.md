@@ -22,7 +22,7 @@ When this was decided, the organization and `ref-mpc` modules existed on `main` 
 
 ## Hamid's approval, 2026-10-13
 
-Hamid approved both modules as 1.0.0 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`): "aprove now". Organization 1.0.0 and ref-mpc 1.0.0 are the candidates with the issued date 2026-10-13 and the stage removed; ref-mpc now requires organization 1.0.0. The packages are in `releases/organization/1.0.0/` and `releases/ref-mpc/1.0.0/`, and each manifest names where his approval is recorded. When this merges, the merge commit gets the tags `organization-v1.0.0` and `ref-mpc-v1.0.0`.
+Hamid approved both modules as 1.0.0 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`): "aprove now". Organization 1.0.0 and ref-mpc 1.0.0 are the candidates with the issued and modified dates set to 2026-10-13 and the stage removed; ref-mpc now requires organization 1.0.0. The packages are in `releases/organization/1.0.0/` and `releases/ref-mpc/1.0.0/`, and each manifest names where his approval is recorded. When this merges, the merge commit gets the tags `organization-v1.0.0` and `ref-mpc-v1.0.0`.
 
 ## For Hamid
 
