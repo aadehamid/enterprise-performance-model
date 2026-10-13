@@ -21,13 +21,13 @@ The process map holds RACI on 153 processes. Two cases need a rule:
 2. **Nothing is inferred.** A process without a `raci` object in the source gets no assignment, even when its parent or child has one.
 3. **The IRI** is `…/organization/assignment/{process slug}--{level}--{role slug}--{hash}`, where the hash is the first eight hex digits of the SHA-256 of the source string. Reordering a source list does not change any IRI.
 4. **A ledger reconciles the counts.** `raci-conservation.csv` records the RACI entries in, the extra roles from compound strings, and the assignments out, by level. The build fails if entries plus extra roles differ from assignments.
-5. **Competency questions 3 to 5 become answerable.** The regression runner loads the organization module with the core release. Two queries must return nothing: an assignment that points outside the core scheme or at an unnamed role (Q3), and a process that has RACI but no accountable role (Q4).
+5. **Competency questions 3 to 5 become answerable.** The regression runner loads the organization module with the core release. Two queries must return nothing: an assignment that points outside the core scheme, at a structural anchor or at an unnamed role (Q3), and a process that has RACI but no accountable role (Q4). Structural anchors carry no RACI (the `conceptKind` decision of 2026-09-22 in the worklog), so Q4 leaves them out.
 
 `build_assignments.py` prints the figures.
 
 ### For Hamid: which processes need RACI
 
-Q4 lists the live processes of the core scheme with no accountable role. Today that means every live process without RACI in the source. The Step 5 gate asks for RACI on every **in-scope** process, and no recorded decision says which processes are in scope for RACI.
+Q4 lists the live processes of the core scheme, other than structural anchors, with no accountable role. Today that means every live process without RACI in the source. The Step 5 gate asks for RACI on every **in-scope** process, and no recorded decision says which processes are in scope for RACI.
 
 Recommendation: count the processes that have RACI in the source as the RACI scope for this release. Treat the rest as the source author's backlog, not as a gap for the ontology to fill. The Step 5 gate stays open until Hamid confirms or changes that.
 

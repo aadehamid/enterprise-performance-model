@@ -98,6 +98,14 @@ class Release(unittest.TestCase):
         failures = self.mutated(lambda g: g.set((a, URIRef(orgm + "forProcess"), URIRef("https://example.org/nowhere"))))
         self.assertTrue(any(f.startswith("Q3 q03b") for f in failures), failures)
 
+    def test_an_assignment_on_a_structural_anchor_fails_q3(self):
+        orgm = "https://w3id.org/lsc/ontology/modules/organization/"
+        kind = URIRef("https://w3id.org/lsc/ontology/modules/core/conceptKind")
+        anchor = next(GRAPH.subjects(kind, URIRef("https://w3id.org/lsc/ontology/modules/core/concept-kind/structural-anchor")))
+        a = next(GRAPH.subjects(URIRef(orgm + "forProcess"), None))
+        failures = self.mutated(lambda g: g.set((a, URIRef(orgm + "forProcess"), anchor)))
+        self.assertTrue(any(f.startswith("Q3 q03b") for f in failures), failures)
+
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
         rows[5] = dict(rows[5], queries="q01a-children.rq")
