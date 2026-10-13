@@ -960,8 +960,8 @@ without a dated amendment and Hamid's explicit agreement.
 ### organization 1.0.0 and ref-mpc 1.0.0 released (2026-10-13)
 - Hamid approved both modules as 1.0.0. The releases are the 1.0.0-rc.1
   candidates with the issued date set and the stage removed; ref-mpc
-  requires organization 1.0.0. Tags `organization-v1.0.0` and
-  `ref-mpc-v1.0.0`. EPM-DEC-001-0037, with his words in
+  requires organization 1.0.0. The merge commit gets the tags
+  `organization-v1.0.0` and `ref-mpc-v1.0.0`. EPM-DEC-001-0037, with his words in
   `review-evidence/hamid-answers/answers-2026-10-13-session2.md`.
 
 ### Step 5 RACI scope decided by Hamid (2026-10-13)

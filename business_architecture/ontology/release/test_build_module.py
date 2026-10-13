@@ -5,6 +5,7 @@ the DCAT record and manifest describe the files.
 Run: python3 -m pytest test_build_module.py (needs rdflib, pyshacl).
 """
 import hashlib
+import re
 import json
 import os
 import unittest
@@ -37,7 +38,9 @@ class Packages(unittest.TestCase):
                 if m["stage"] is None:
                     path, words = m["approval"]
                     with open(os.path.join(bm.ONTOLOGY, path)) as f:
-                        self.assertIn(words, f.read())
+                        # Hamid's words sit in the body; Claude's context sits in HTML comments.
+                        body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
+                    self.assertIn(words, body)
                     self.assertTrue(issued)
                     self.assertFalse(manifest["release_candidate"])
                     self.assertEqual(manifest["approved_by"]["recorded_in"], path)
