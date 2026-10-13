@@ -3,7 +3,7 @@
 One file per decision: `EPM-DEC-001-NNNN-<slug>.md`, with context, decision,
 alternatives, Hamid's recorded words, evidence, status and date. A record says
 **Decided** only when Hamid has recorded the decision. A PR merge alone does
-not decide it. See `docs/agents/domain.md` for the format.
+not decide it. A decision recorded as "delegated under EPM-DEC-001-0028" counts as Hamid's recorded decision, within that record's scope. See `docs/agents/domain.md` for the format.
 
 Records 0001 to 0024 come from the grilling session on the handover plan
 (2026-10-05). Later records come from follow-up decisions in Claude Code sessions.

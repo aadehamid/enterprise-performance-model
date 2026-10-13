@@ -16,6 +16,8 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 ## Working rules
 
 - **Every change goes through a pull request.** A reviewer merges or HOLDs.
+  Under EPM-DEC-001-0028 the PR reviewer posts MERGE or HOLD, and Claude merges
+  on a MERGE for the current head.
   Address review feedback on the same branch. Don't start unrelated work while
   a PR is open.
 - **`business_architecture/` takes precedence** over other folders. The process
@@ -29,8 +31,9 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   only. Cite every fact.
 - **Don't mark anything Decided or Approved without Hamid's recorded
   decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
-  EPM-DEC-001-0028 delegates open questions to Claude: a decision made from
-  the evidence order below and recorded as "delegated under EPM-DEC-001-0028"
+  EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
+  updating its playbook to Claude: a decision in that scope made from the
+  evidence order above and recorded as "delegated under EPM-DEC-001-0028"
   counts as Decided. It also sets the independent review at one or two rounds
   per PR, and names the reviewers.
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
@@ -50,7 +53,12 @@ Run these before you open a pull request, and again before you push a review fix
    Commit first; the review reads committed work only.
    - **Inside Herdr** (`HERDR_ENV=1`): run the Herdr review in the `way-of-working`
      skill (`references/before-push.md`). A reviewer agent of a different kind runs
-     `ce-code-review` in this repo's `review-<repo>` tab.
+     `ce-code-review` in its own review tab. EPM-DEC-001-0028 names the reviewer:
+     the Cursor agent on Grok 4.6 (`herdr-review.sh --kind cursor`).
+   - **Rounds:** at most two per PR (EPM-DEC-001-0028). Round 1 reviews the whole
+     branch. Round 2 runs only if round 1 found something, and reviews the fix
+     commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
+     no third review.
    - **Outside Herdr**: Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`.
      Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
 
