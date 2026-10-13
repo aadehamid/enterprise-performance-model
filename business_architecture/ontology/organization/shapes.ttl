@@ -1,0 +1,42 @@
+# SHACL shapes for the organization module (Step 5; EPM-DEC-001-0030). A stated
+# cardinality on every property (EPM-DEC-001-0020, rule 2; playbook Appendix B).
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/organization/shapes/> .
+
+shp:Assignment a sh:NodeShape ;
+    sh:targetClass orgm:ResponsibilityAssignment ;
+    sh:property [ sh:path orgm:forProcess ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ;
+                  sh:message "An assignment is for exactly one process concept." ] ;
+    sh:property [ sh:path orgm:assignedRole ; sh:minCount 1 ; sh:maxCount 1 ; sh:class org:Role ;
+                  sh:message "An assignment names exactly one role." ] ;
+    sh:property [ sh:path orgm:raciLevel ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( raci:responsible raci:accountable raci:consulted raci:informed ) ;
+                  sh:message "An assignment has exactly one RACI level." ] ;
+    sh:property [ sh:path orgm:sourceRoleText ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "An assignment cites its source." ] .
+
+shp:Role a sh:NodeShape ;
+    sh:targetClass org:Role ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A role has exactly one English name." ] ;
+    sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] .
+
+shp:Control a sh:NodeShape ;
+    sh:targetClass orgm:ControlRelationship ;
+    sh:property [ sh:path orgm:controllingEntity ; sh:minCount 1 ; sh:maxCount 1 ; sh:class org:FormalOrganization ] ;
+    sh:property [ sh:path orgm:controlledEntity ; sh:minCount 1 ; sh:maxCount 1 ; sh:class org:FormalOrganization ] ;
+    sh:property [ sh:path orgm:ownershipShare ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+                  sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
+    sh:property [ sh:path orgm:asOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ;
+                  sh:message "A control relationship states the date it held." ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A control relationship cites its source." ] .

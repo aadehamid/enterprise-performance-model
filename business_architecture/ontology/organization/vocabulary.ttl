@@ -1,0 +1,90 @@
+# The organization module's vocabulary (Step 5): the RACI assignment pattern, the
+# control relation between legal entities, and the RACI level code list. EPM-DEC-001-0030
+# records the design. Roles, organizations and units are W3C ORG terms, referred to by
+# IRI and not imported (EPM-DEC-001-0023). The module depends on core only (module
+# policy, 2026-09-18); its instances (roles, assignments) come in later Step 5 slices.
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- The RACI assignment (playbook Step 5, procedure 1) ----
+
+orgm:ResponsibilityAssignment a owl:Class ;
+    rdfs:label "responsibility assignment"@en ;
+    skos:definition "One role's RACI level on one process, as designed: who is responsible, accountable, consulted or informed. A node of its own, because a single property cannot bind a role, a process and a level together. Design-time responsibility, not a record of who did the work."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 5; EPM-DEC-001-0030"@en .
+
+orgm:forProcess a owl:ObjectProperty ;
+    rdfs:label "for process"@en ;
+    rdfs:domain orgm:ResponsibilityAssignment ; rdfs:range skos:Concept ;
+    skos:definition "The process the assignment is for: a concept of the core process scheme."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+orgm:assignedRole a owl:ObjectProperty ;
+    rdfs:label "assigned role"@en ;
+    rdfs:domain orgm:ResponsibilityAssignment ; rdfs:range org:Role ;
+    skos:definition "The role that holds the RACI level. A role is a position people hold, not a person."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 5; EPM-DEC-001-0030"@en .
+
+orgm:raciLevel a owl:ObjectProperty ;
+    rdfs:label "RACI level"@en ;
+    rdfs:domain orgm:ResponsibilityAssignment ; rdfs:range skos:Concept ;
+    skos:definition "The kind of responsibility the role has on the process, taken from the RACI level list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+orgm:sourceRoleText a owl:DatatypeProperty ;
+    rdfs:label "source role text"@en ;
+    rdfs:domain orgm:ResponsibilityAssignment ; rdfs:range xsd:string ;
+    skos:definition "The role as the source wrote it, before normalization, kept so every assignment traces to its source entry."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+# ---- Control between legal entities (playbook Step 5, procedure 5; EPM-DEC-001-0015) ----
+
+orgm:ControlRelationship a owl:Class ;
+    rdfs:label "control relationship"@en ;
+    skos:definition "One legal entity's control of another, with the ownership share, the date it held and its source. A node of its own because it carries a share and a date. Separate from org:subOrganizationOf, which means a unit inside one organization."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 5; EPM-DEC-001-0015, EPM-DEC-001-0020, EPM-DEC-001-0030"@en .
+
+orgm:controllingEntity a owl:ObjectProperty ;
+    rdfs:label "controlling entity"@en ;
+    rdfs:domain orgm:ControlRelationship ; rdfs:range org:FormalOrganization ;
+    skos:definition "The legal entity that holds control."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+orgm:controlledEntity a owl:ObjectProperty ;
+    rdfs:label "controlled entity"@en ;
+    rdfs:domain orgm:ControlRelationship ; rdfs:range org:FormalOrganization ;
+    skos:definition "The legal entity that is controlled."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+orgm:ownershipShare a owl:DatatypeProperty ;
+    rdfs:label "ownership share"@en ;
+    rdfs:domain orgm:ControlRelationship ; rdfs:range xsd:decimal ;
+    skos:definition "The fraction of the controlled entity the controlling entity owns, from 0 to 1, as the source states it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0030"@en .
+
+orgm:asOf a owl:DatatypeProperty ;
+    rdfs:label "as of"@en ;
+    rdfs:domain orgm:ControlRelationship ; rdfs:range xsd:date ;
+    skos:definition "The date the source states the relationship held."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 5 (cite a source and an as-of date for each fact); EPM-DEC-001-0030"@en .
+
+# ---- Code list ----
+
+orgm:RaciLevel a skos:ConceptScheme ; rdfs:label "RACI level"@en ;
+    skos:definition "The four kinds of design-time responsibility a role can have on a process."@en ;
+    dcterms:bibliographicCitation "The four levels as the process authority uses them: business_architecture/business_process/downstream_process_map.json, raci (responsible, accountable, consulted, informed). Generic support only: PMI, Roles, responsibilities, and resources (https://www.pmi.org/learning/library/best-practices-managing-people-quality-management-7012), which names the RACI chart."@en .
+raci:responsible a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Responsible"@en ; skos:notation "R" ;
+    skos:definition "Does the work of the process."@en .
+raci:accountable a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Accountable"@en ; skos:notation "A" ;
+    skos:definition "Answers for the outcome of the process and signs it off."@en .
+raci:consulted a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Consulted"@en ; skos:notation "C" ;
+    skos:definition "Gives input before or during the work, in two-way communication."@en .
+raci:informed a skos:Concept ; skos:inScheme orgm:RaciLevel ; skos:prefLabel "Informed"@en ; skos:notation "I" ;
+    skos:definition "Is told of progress or the result, in one-way communication."@en .
