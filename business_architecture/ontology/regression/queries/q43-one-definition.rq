@@ -1,0 +1,10 @@
+# Q43 (graph part). Assistants get the same definition, not a second copy: rows are concepts with more than one definition (must be none).
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX src: <https://w3id.org/lsc/ontology/source/>
+PREFIX proc: <https://w3id.org/lsc/ontology/process/>
+
+SELECT ?c WHERE { ?c skos:inScheme mod:core ; skos:definition ?a, ?b . FILTER (?a != ?b) }

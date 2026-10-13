@@ -1,0 +1,9 @@
+# Q16. What is the official name, what are the aliases, and what is explicitly out? (prefLabel; altLabel; priorPreferredLabel, not searchable)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?c ?official ?alias ?out WHERE { ?c skos:inScheme mod:core ; skos:prefLabel ?official . OPTIONAL { ?c skos:altLabel ?alias } OPTIONAL { ?c core:priorPreferredLabel ?out } }

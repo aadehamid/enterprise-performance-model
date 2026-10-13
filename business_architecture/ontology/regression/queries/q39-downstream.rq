@@ -1,0 +1,9 @@
+# Q39 (graph part). What breaks downstream if a process changes? (processes that depend on its output, are triggered by it, or are informed by it)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?changed ?p ?affected WHERE { VALUES ?p { core:dependsOnOutputOf core:triggeredBy core:informedBy } ?affected ?p ?changed . }

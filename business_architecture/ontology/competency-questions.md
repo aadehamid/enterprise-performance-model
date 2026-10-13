@@ -3,7 +3,7 @@
 **Status:** Locked 2026-09-18.
 **Purpose:** the acceptance test for the ontology. If the model cannot
 answer a question here, the model is incomplete — not the question.
-These double as the Step 11 SPARQL regression tests.
+The Step 11 SPARQL regression in `regression/` tests them.
 
 **Sources merged:** the process-map question set (Kailey, 2026-09-17)
 and Hamid's domain question set A–F (2026-09-18), minus the constraints
