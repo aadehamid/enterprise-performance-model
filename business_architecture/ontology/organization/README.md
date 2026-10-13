@@ -6,8 +6,7 @@ Roles, RACI assignments, and control between legal entities. The module depends 
 - `shapes.ttl`: the SHACL shapes, with a stated cardinality on every property.
 - `test_vocabulary.py`: checks one kind and one range per property, and a cardinality on each. It also checks that SHACL accepts a valid assignment and control relationship and rejects broken ones. `scripts/check.sh` runs it.
 
-Later Step 5 slices add, in order:
+The `ref-mpc` reference module (`../ref-mpc/`) uses this module's control relationship. Later Step 5 slices add, in order:
 1. The role register, normalized from the 91 role strings in the process map.
 2. The assignments for the 153 processes with RACI.
-3. The `ref-mpc` reference module.
-4. The links from `core:responsibleDomain` to org units.
+3. The links from `core:responsibleDomain` to org units.
