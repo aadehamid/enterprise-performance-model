@@ -28,7 +28,10 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   then downstream-specific industry sources. Generic frameworks are support
   only. Cite every fact.
 - **Don't mark anything Decided or Approved without Hamid's recorded
-  decision.** A merge alone doesn't decide or approve it.
+  decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
+  EPM-DEC-001-0028 delegates open questions to Claude: a decision made from
+  the evidence order below and recorded as "delegated under EPM-DEC-001-0028"
+  counts as Decided.
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
   `APPROVAL_POLICY.md` (when a human must review). Authors can read it before pushing.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
