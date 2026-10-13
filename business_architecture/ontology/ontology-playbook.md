@@ -367,15 +367,18 @@ goes fastest as one answer register, built and checked in batches:
    the source author would put in the source's scope note. Flag the rows
    that need the owner's judgement. The owner approves the register as a
    whole and answers the flagged rows.
-2. Correct the source in place. Change a row's verb or target where it
+2. When an approved fact runs opposite to its row's direction, first add a
+   mirror raw verb ("provides input to" for "uses input") to the direction
+   table and to the correction tool's known verbs, with a decision record.
+   Do not move the assertion to the other process's row: moving it
+   renumbers every later row.
+3. Correct the source in place. Change a row's verb or target where it
    stands; never add, remove or move a relationship, because row IDs
    usually follow position. A correction tool should refuse, before it
-   writes anything, a missing, duplicated or converging segment, an unknown
-   verb, or a target containing the cell's delimiter.
-3. When the approved fact runs opposite to the row's direction, add a
-   mirror raw verb ("provides input to" for "uses input") rather than moving
-   the assertion to the other process's row. Moving it renumbers every
-   later row.
+   writes anything, a missing, duplicated or converging segment, a verb the
+   direction table does not know, or a target containing the cell's
+   delimiter. A "no relationship" answer is a fresh HOLD: leave the row as
+   it is, keep it held with the answer as its reason, and emit nothing.
 4. Add each answer's sentence to the source's scope note. It becomes the
    affirmative citation that rule 5 of Section 3 asks for.
 5. Rebuild, re-pin, then re-run the whole pipeline in a copy. Adopt its
@@ -1338,8 +1341,10 @@ migrated counts. It runs the SHACL slice before it writes, and records
 each file's checksum and the evidence commit in a manifest. Its output is
 deterministic, so the check script can confirm that the committed package
 equals a fresh build. Where a draft ledger and an approved decision
-disagree about a target, the approved decision wins; say so in the release
-record.
+disagree about a target, settle it before the build: record the approved
+target in a decision record, update the ledger to match, and let the
+builder follow that record. The builder never chooses between sources at
+write time; it fails if a staging predicate has no recorded target.
 
 Every release ships:
 
