@@ -1,0 +1,13 @@
+measure,value
+processes with RACI in the source,153
+RACI entries in the source,913
+extra roles from compound strings,27
+assignments emitted,940
+assignments at level responsible,157
+assignments at level accountable,156
+assignments at level consulted,404
+assignments at level informed,223
+entries at level responsible,157
+entries at level accountable,156
+entries at level consulted,377
+entries at level informed,223
