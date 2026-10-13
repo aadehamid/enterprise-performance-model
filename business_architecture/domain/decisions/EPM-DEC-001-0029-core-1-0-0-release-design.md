@@ -39,7 +39,7 @@ EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at tha
 
 **The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`. The header follows the playbook's worked example (`ontology-playbook.md:1309-1318`) with the release date as `dcterms:issued`. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
 
-**Approvals.** Under EPM-DEC-001-0028, Claude approves the conservation ledger once the before/after run reconciles, and the release design above. **The fresh no-consumer attestation stays with Hamid**: it states a fact about who uses the ontology, not a design choice (`step4/no-consumer-attestation.md:3`). The release PR waits for it.
+**Approvals stay with Hamid.** This record decides the release design under EPM-DEC-001-0028. Three things wait for Hamid: the fresh no-consumer attestation, a fact about who uses the ontology (`step4/no-consumer-attestation.md:3`); the conservation ledger's approval (`step4/ledger-v2.md`), now backed by a reconciled before/after run; and the release itself, because a major release needs his approval ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). The release PR waits for all three.
 
 ## Hamid's recorded words
 
@@ -58,5 +58,5 @@ The approved decisions cited above; the census and measured splits in `step4/led
 ## Consequences
 
 - New `core` terms: the predicates above, `core:priorPreferredLabel`, `core:holdReason`, and seven code lists. Each gets a label, a definition, one kind and one range.
-- `ledger-v2.md` gets its after half and its approval, with this record cited.
+- `ledger-v2.md` gets its after half and is ready for Hamid's approval.
 - Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says.

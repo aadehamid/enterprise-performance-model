@@ -978,6 +978,16 @@ without a dated amendment and Hamid's explicit agreement.
 - #209 is the fifth batch: 41 G3 Section A rows emit (40 new facts, 1 existing fact gains a contributor; 33 through `provides-input-to` or `governs`, 2 as `triggers`) and 6 close with no relationship. Pending its PR.
 - #201 is the sixth and last batch: 84 G3 Section B rows emit (78 new facts, 6 existing facts gain a contributor; 49 through `provides-input-to`, `governs` or `constrains`; 9 confirm `enables`, REL-00243 through the row-level override) and 18 close with no relationship. Pending its PR.
 
+### core 1.0.0 release built (EPM-DEC-001-0029, 2026-10-13)
+- After the six Phase 1 sweep batches, `release/build_core.py` builds
+  `releases/core/1.0.0/` from the pinned evidence: the taxonomy with every
+  `intake:` field migrated (5,571 of 5,571), the 640 canonical facts as direct
+  triples, the scoped sequences, seven code lists, IRIs for the 1,003 former
+  blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
+  manifest. The design choices are delegated under EPM-DEC-001-0028 and
+  recorded in EPM-DEC-001-0029. The release waits for Hamid's fresh
+  attestation and approval.
+
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`
   (S, T) is stored as T core:dependsOnOutputOf S and `governs` (S, T) as T

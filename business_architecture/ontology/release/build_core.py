@@ -37,6 +37,8 @@ SHAPES = os.path.join(HERE, "shapes.ttl")
 CHANGELOG = os.path.join(HERE, "CHANGELOG.md")
 PINNED = os.path.join(STEP4, "PINNED_SHA.txt")
 VERSION = "1.0.0"
+# The release date. Set when the release is cut; a later cut updates it and rebuilds.
+ISSUED = "2026-10-13"
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", VERSION)
 
 CORE = Namespace("https://w3id.org/lsc/ontology/modules/core/")
@@ -269,6 +271,8 @@ def build():
     out.add((ONTOLOGY_IRI, OWL.versionIRI, URIRef(f"{ONTOLOGY_IRI}/{VERSION}")))
     out.add((ONTOLOGY_IRI, OWL.versionInfo, Literal(VERSION)))
     out.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("Hamid")))
+    out.add((ONTOLOGY_IRI, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
+    out.add((ONTOLOGY_IRI, DCTERMS.modified, Literal(ISSUED, datatype=XSD.date)))
     out.add((ONTOLOGY_IRI, DCTERMS.license, URIRef(f"{ONTOLOGY_IRI}/license")))
 
     # 7. Nothing intake:, no blank nodes.
@@ -307,12 +311,52 @@ def shacl_report(graph):
     return conforms, text
 
 
+def jsonld(graph):
+    """JSON-LD with nodes, keys and values in a fixed order, so a rebuild is byte-identical."""
+    data = json.loads(graph.serialize(format="json-ld"))
+    nodes = data if isinstance(data, list) else data.get("@graph", [data])
+    for node in nodes:
+        for key, value in node.items():
+            if isinstance(value, list):
+                node[key] = sorted(value, key=lambda v: json.dumps(v, sort_keys=True))
+    nodes.sort(key=lambda n: n.get("@id", ""))
+    return json.dumps(nodes, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
+
+
 def serialize(graph):
     return graph.serialize(format="turtle")
 
 
+def catalog():
+    """The DCAT record of this release: one dataset version with its distributions."""
+    dcat = Namespace("http://www.w3.org/ns/dcat#")
+    base = f"{ONTOLOGY_IRI}/releases/{VERSION}"
+    g = Graph()
+    g.bind("dcat", dcat)
+    g.bind("dcterms", DCTERMS)
+    catalog_iri, dataset = URIRef("https://w3id.org/lsc/ontology/catalog"), URIRef(f"{ONTOLOGY_IRI}/{VERSION}")
+    g.add((catalog_iri, RDF.type, dcat.Catalog))
+    g.add((catalog_iri, dcat.dataset, dataset))
+    g.add((dataset, RDF.type, dcat.Dataset))
+    g.add((dataset, DCTERMS.title, en(f"LSC Core Process Ontology {VERSION}")))
+    g.add((dataset, DCTERMS.isVersionOf, ONTOLOGY_IRI))
+    g.add((dataset, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
+    g.add((dataset, OWL.versionInfo, Literal(VERSION)))
+    for name, media in (("core.ttl", "text/turtle"), ("core.jsonld", "application/ld+json"),
+                        ("shapes.ttl", "text/turtle"), ("canonical-facts.csv", "text/csv")):
+        dist = URIRef(f"{base}/{name}")
+        g.add((dataset, dcat.distribution, dist))
+        g.add((dist, RDF.type, dcat.Distribution))
+        g.add((dist, dcat.downloadURL, dist))
+        g.add((dist, dcat.mediaType, Literal(media)))
+    return g.serialize(format="turtle")
+
+
 def package(graph, counts, rows):
-    files = {"core.ttl": serialize(graph)}
+    files = {"core.ttl": serialize(graph), "core.jsonld": jsonld(graph)}
+    with open(SHAPES) as f:
+        files["shapes.ttl"] = f.read()
+    files["catalog.ttl"] = catalog()
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=list(rows[0]), lineterminator="\n")
     w.writeheader()

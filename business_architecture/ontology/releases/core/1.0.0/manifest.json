@@ -7,9 +7,12 @@
   "files": {
     "CHANGELOG.md": "6daf07ab0e546c97fab72bcc61b4f9560e739b8ec36d9439d9f7ced067e17db2",
     "canonical-facts.csv": "7ed7c7ae9eb40cded17b314d9ab262c845602585c112ac309cf93e8290e81e53",
+    "catalog.ttl": "8b320bdcd2bc7bc01f0653f0994616c5bcc395f248a3e418e534d04136edb781",
     "conservation.csv": "f30667104b421a2428c9e84786b3bb26d1390ab250ff0006312d13014a6397cb",
-    "core.ttl": "2cbd7c462413f204ed96a3b3babf0e8c8c94d6b8e3d274eee45261f112705f15",
+    "core.jsonld": "c4f40a83e02616b03bd5d8847fa50ea2fa66b71620c6caa055fbf9ebce0bfb2a",
+    "core.ttl": "8f6585b6784086dc91f72b8a7b202b3b0b12183cfb47c59e9afb4e076a045478",
     "counts.json": "e8662c08a68182025e0b811de9ec9cbeca190befed242559f8af2b471d47aafc",
-    "label-dispositions.csv": "756d1ffb693cbe4faef97cb9cc314124dc37b13a276dd69d8a63b9411c2789ad"
+    "label-dispositions.csv": "756d1ffb693cbe4faef97cb9cc314124dc37b13a276dd69d8a63b9411c2789ad",
+    "shapes.ttl": "04a51061dc7bd594620fb6648c2565fba391353da16cb3829c3f0f9ce5fc6ab1"
   }
 }
