@@ -113,3 +113,10 @@ gate was run against, not the pin. Do not retitle the checklist's
 - **Gate:** `evidence-gate.py` — 367 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1114, held==189, canonical-facts==522,
   contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #202, so the sweep check covers its 44 rows (+1); 28 per-row G1b "emits no triple" checks go with the rows that now emit (−28). The 28 G1b removed-fact checks now let a fact return only through an adopted register row whose approved stored fact it is (no count change): 394 → 367 PASS.
+
+## 2026-10-13 — branch `phase1/sweep-209`, pin `883bd57`
+
+- **Evidence pin (`PINNED_SHA.txt`):** `883bd57a1a1f98267489c875887462e11ed99027`
+- **Gate:** `evidence-gate.py` — 368 PASS, 0 FAIL — **GATE GREEN**
+- **Gate-asserted figures:** promoted==1114, held==189, canonical-facts==562,
+  contradictions==0. `batch_checks.SWEEP_ADOPTED` adds #209, so the sweep check covers its 47 rows (+1). The 41 rows that now emit were mapping-level holds with no per-row gate check (no other change): 367 → 368 PASS.

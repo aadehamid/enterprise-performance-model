@@ -2156,3 +2156,18 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 
 **Current totals:** **699 emitting / 587 held / 17 scoped sequence** / 522 facts.
 Conservation: 699 + 587 + 12 + 1 + 2 + 17 = 1,318. ✓
+
+## Phase 1 sweep, #209: G3 Section A: held after the explicit-reference review (Hamid 2026-10-12)
+
+A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `883bd57`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/209-review.csv`.
+
+- **APPROVE, emitting `core:dependsOnOutputOf` (32):** REL-00009, REL-00041, REL-00077, REL-00118, REL-00493, REL-00517, REL-00528, REL-00539, REL-00551, REL-00562, REL-00665, REL-00811, REL-00834, REL-00843, REL-00851, REL-00852, REL-00886, REL-00889, REL-00898, REL-01072, REL-01073, REL-01092, REL-01163, REL-01171, REL-01178, REL-01182, REL-01185, REL-01216, REL-01254, REL-01257, REL-01277, REL-01299.
+- **APPROVE, emitting `core:governedBy` (1):** REL-00054.
+- **APPROVE, emitting `core:informedBy` (6):** REL-00232, REL-00409, REL-00818, REL-00820, REL-01157, REL-01210.
+- **APPROVE, emitting `core:triggeredBy` (2):** REL-01038, REL-01262.
+- **HOLD, no relationship (6):** REL-00176, REL-00294, REL-00479, REL-00846, REL-00857, REL-01082.
+
+41 mentions move from held to emitting; 41 facts added. No contradiction.
+
+**Current totals:** **740 emitting / 546 held / 17 scoped sequence** / 562 facts.
+Conservation: 740 + 546 + 12 + 1 + 2 + 17 = 1,318. ✓

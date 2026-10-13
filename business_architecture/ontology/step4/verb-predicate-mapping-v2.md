@@ -801,7 +801,10 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   credit analytics → credit limits, A2); REL-00818 and REL-00820 (spend and
   ROI analysis → budget and mix decisions, A3); REL-00750 and REL-01206
   (portfolio and lifecycle recommendations → product/service change, S&T
-  sweep) — all held.
+  sweep) — all held. *Phase 1 sweep (2026-10-12): each was then corrected in
+  the source to `informs` and emits `core:informedBy` — REL-00750 and
+  REL-01206 in #203, REL-00445 in #210, REL-00232, REL-00818 and REL-00820
+  in #209. The rule is unchanged: the correction was made in the source.*
 - **S&T sweep, 2026-09-26 (21 rows):**
   - **6 approved** as bounded `core:enabledBy`. 2 still emit (REL-00433,
     REL-01172). 4 were superseded under the identity rule: REL-00437 (B3),
