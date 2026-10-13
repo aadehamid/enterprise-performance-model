@@ -85,6 +85,12 @@ class Vocabulary(unittest.TestCase):
                   if (n, SH.minCount, None) in SHAPES or (n, SH.maxCount, None) in SHAPES}
         self.assertEqual(sorted(map(str, PROPS - stated)), [])
 
+    def test_every_shape_path_is_a_declared_property(self):
+        # A path only the shapes name would escape the one-kind and one-range check above.
+        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition}
+        paths = set(SHAPES.objects(None, SH.path))
+        self.assertEqual(sorted(map(str, paths - PROPS - external)), [])
+
     def test_exactly_one_paths_have_both_bounds(self):
         for n in SHAPES.subjects(SH.path, None):
             path = SHAPES.value(n, SH.path)
