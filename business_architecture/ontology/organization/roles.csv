@@ -1,0 +1,61 @@
+slug,label,kind,question
+action-owner,Action Owner,position,"The source writes ""Action Owners"": the owner of each action, not one fixed position. Kept as a role."
+asphalt-manager,Asphalt Manager,position,
+black-oil-manager,Black Oil Manager,position,
+bpa,BP&A,team,The acronym is not expanded in the repository.
+business-analyst,Business Analyst,position,
+cci-director,CCI Director,position,The acronym is not expanded in the repository.
+commercial-scheduler,Commercial Scheduler,position,
+cp-manager,CP Manager,position,The acronym is not expanded in the repository.
+cpvc-scheduler,CPVC Scheduler,position,The acronym is not expanded in the repository.
+crude-coordinator,Crude Coordinator,position,
+crude-feedstock-trading-lead,Crude/Feedstock Trading Lead,position,
+crude-oil-trader,Crude Oil Trader,position,"Kept apart from Trader: the source names the commodity."
+crude-planning-and-optimization-director,Crude Planning and Optimization Director,position,
+crude-representative,Crude Representative,position,
+crude-rfc,Crude RFC,position,"The acronym is not expanded in the repository. It may be the crude Refinery Feedstock Coordinator; kept apart until confirmed."
+crude-scheduler,Crude Scheduler,position,
+distribution-backcaster,Distribution Backcaster,position,
+distribution-planner,Distribution Planner,position,
+e-and-p-manager,E&P Manager,position,
+e-and-p-supervisor,E&P Supervisor,position,
+forecaster,Forecaster,position,"Appears only inside two compound entries. It may be the Local Refinery Forecaster; kept apart until confirmed."
+gasoline-blend-optimizer,Gasoline Blend Optimizer,position,
+gfvc-manager,GFVC Manager,position,"The source writes ""Manager: GFVC"". The acronym is not expanded in the repository."
+global-feedstocks-manager,Global Feedstocks Manager,position,
+inventory-representative,Inventory Representative,position,
+it-data-custodian,IT Data Custodian,position,
+it-data-owner,IT Data Owner,position,
+it-data-steward,IT Data Steward,position,
+local-refinery-forecaster,Local Refinery Forecaster,position,
+marine-dock-scheduler,Marine Dock Scheduler,position,
+operations,Operations,team,
+pricing-representative,Pricing Representative,position,
+product-representative,Product Representative,position,
+psm,PSM,position,The acronym is not expanded in the repository.
+rcvo-advisor,RCVO Advisor,position,"Written once; RVCO Advisor is written 32 times. Likely the same role misspelt; kept apart until confirmed."
+refinery-backcaster,Refinery Backcaster,position,
+refinery-econ-and-planning-supervisor,Refinery Econ & Planning Supervisor,position,
+refinery-feedstock-coordinator,Refinery Feedstock Coordinator,position,
+refinery-planner,Refinery Planner,position,
+refinery-planning-engineer,Refinery Planning Engineer,position,
+refinery-scheduler,Refinery Scheduler,position,
+refinery-technical-representative,Refinery Technical Representative,position,
+refinery-technical-service-representative,Refinery Technical Service Representative,position,"Appears only inside one compound entry. It may be the Refinery Technical Representative; kept apart until confirmed."
+regional-backcaster,Regional Backcaster,position,
+regional-business-director,Regional Business Director,position,
+regional-planning-director,Regional Planning Director,position,
+regional-planning-manager,Regional Planning Manager,position,
+regional-planning-team,Regional Planning Team,team,
+regional-production-planner,Regional Production Planner,position,
+risk-group,Risk Group,team,
+rvco-advisor,RVCO Advisor,position,The acronym is not expanded in the repository.
+site-tactical-team,Site Tactical Team,team,
+supply-coordinator,Supply Coordinator,position,
+supply-operations-director,Supply Operations Director,position,
+supply-operations-manager,Supply Operations Manager,position,
+tech-services,Tech Services,team,
+trader,Trader,position,
+vp-clean-products-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)",position,"Two VP entries differ only in RVCO. They may be one VP; kept apart until confirmed."
+vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, RVCO, Crude Trading, NGLs, Asphalt, Petchem)",position,"See the VP entry without RVCO."
+vp-rvco,VP RVCO,position,

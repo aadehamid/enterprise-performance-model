@@ -957,6 +957,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Step 5 role register (2026-10-13)
+- `organization/role-register.csv` maps each RACI role string in the
+  process map to one or more of the roles in `organization/roles.csv`;
+  `build_roles.py` checks it against the source and writes `roles.ttl`.
+  Strings merge only on case, plural, punctuation or "&"; a qualifier stays
+  with the entry; a compound string splits; a team becomes a role with a
+  scope note. The design is EPM-DEC-001-0031, decided under
+  EPM-DEC-001-0028. Its open questions for Hamid (likely misspellings and
+  the acronyms) are listed there. Run `build_roles.py` for the figures.
+
 ### Step 5 organization vocabulary (2026-10-13)
 - `organization/` holds the module's vocabulary and shapes:
   `orgm:ResponsibilityAssignment` (one process, role and RACI level, with
