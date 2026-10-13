@@ -63,6 +63,11 @@ class Rules(unittest.TestCase):
         problems = rule_problems(lambda g: g.add((a, URIRef(pl.OWN[1] + "forProcess"), URIRef(CORE + "other"))))
         self.assertTrue(any(x.startswith("Rule 4a") for x in problems), problems)
 
+    def test_a_scoped_sequence_with_two_earlier_processes_fails_rule_4a(self):
+        seq = next(DATA.subjects(RDF.type, URIRef(CORE + "ScopedSequence")))
+        problems = rule_problems(lambda g: g.add((seq, URIRef(CORE + "earlierProcess"), URIRef(CORE + "other"))))
+        self.assertTrue(any(x.startswith("Rule 4a") and str(seq) in x for x in problems), problems)
+
     def test_lpg_names_carry_their_prefix_for_rule_5(self):
         # In SHORTEN mode the prefix keeps org:identifier and dcterms:identifier apart; a term whose
         # local part has a slash gets no name, and check_rules reports it.

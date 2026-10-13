@@ -115,13 +115,15 @@ def check_rules(data, shapes):
     for p in preds:
         if not any(str(p).startswith(ns) for ns in PREFIXES.values()):
             problems.append(f"Rule 3: no fixed prefix for {p}")
-    # Rule 4a: every qualified-relation node has an IRI and one value for each end. These are the two
-    # qualified-relation classes the modules define today; a new one must be added here.
-    for cls, ends in ((URIRef(OWN[1] + "ResponsibilityAssignment"), ("forProcess", "assignedRole")),
-                      (URIRef(OWN[1] + "ControlRelationship"), ("controllingEntity", "controlledEntity"))):
+    # Rule 4a: every qualified-relation node has an IRI and one value for each end. These are the
+    # three qualified-relation classes the modules define (core's scoped sequence, EPM-DEC-001-0026;
+    # the organization module's assignment and control relationship); a new one must be added here.
+    for cls, ends in ((URIRef(OWN[0] + "ScopedSequence"), (OWN[0] + "earlierProcess", OWN[0] + "laterProcess")),
+                      (URIRef(OWN[1] + "ResponsibilityAssignment"), (OWN[1] + "forProcess", OWN[1] + "assignedRole")),
+                      (URIRef(OWN[1] + "ControlRelationship"), (OWN[1] + "controllingEntity", OWN[1] + "controlledEntity"))):
         for node in data.subjects(RDF.type, cls):
             for end in ends:
-                if len(list(data.objects(node, URIRef(OWN[1] + end)))) != 1:
+                if len(list(data.objects(node, URIRef(end)))) != 1:
                     problems.append(f"Rule 4a: {node} has not exactly one {end}")
     # Rule 5: every predicate and class gets a name in the graph, and no two share one. In n10s's
     # SHORTEN mode the name is the fixed prefix plus the local name (EPM-DEC-001-0036).
