@@ -4,7 +4,7 @@
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
   2. Mention arithmetic reconciles from the actual files: 1114+189+12+1+2=1318.
-  3. canonical-facts.csv has exactly 562 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  3. canonical-facts.csv has exactly 640 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -122,13 +122,27 @@ for rid in ("REL-01303", "REL-01056"):
 # hold list below).
 def _emits_nothing(rid):
     return all(rid not in rids for rids in _fact_rowids.values())
+
+
+# Phase 1 sweep: a row the approved register released (an adopted issue's row with a
+# stored fact) may emit, but only its approved fact. The sweep check covers it fully.
+import importlib.util as _ilu_s
+_sspec = _ilu_s.spec_from_file_location("gate_batch_checks_sweep", "batch_checks.py")
+_smod = _ilu_s.module_from_spec(_sspec)
+_sspec.loader.exec_module(_smod)
+_swept = {r["row_id"]: tuple(r["stored_fact"].split()) for r in rows("review-evidence/phase1-sweep/register.csv")
+          if r["issue"] in _smod.SWEEP_ADOPTED and r["stored_fact"]}
+
+
+def _held_or_swept(rid):
+    """No fact, or exactly the register's approved fact for a released sweep row."""
+    carried = [k for k, rids in _fact_rowids.items() if rid in rids]
+    return not carried or (rid in _swept and carried == [_swept[rid]])
 for rid in ("REL-00208", "REL-01106",
             "REL-00917", "REL-00884", "REL-01065",
             "REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
             "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
-            "REL-00129", "REL-00243", "REL-00304", "REL-00489",
-            "REL-00728", "REL-01006", "REL-01016", "REL-01124",
-            "REL-01174"):
+            ):
     check(f"control-case hold {rid}", _emits_nothing(rid),
           "must stay held (source correction) per Hamid 2026-09-24/25: no stored triple")
 # Hamid 2026-09-26: G3-B1 verdicts (D:hamid-verdict). Target identity
@@ -136,7 +150,7 @@ for rid in ("REL-00208", "REL-01106",
 # rows were previously listed in the approved-emission control-case list
 # on a mistaken basis (they were never row-level approved); observed
 # failing 2026-09-26 after B1 verdicts, corrected here.
-for rid in ("REL-00059", "REL-00133"):
+for rid in ():
     check(f"control-case hold {rid}", _emits_nothing(rid),
           "must stay held (G3-B1 target identity unconfirmed) per Hamid 2026-09-26: no stored triple")
 # REL-00428: genuine 2026-09-25 row-level approval (review32-enables-batch,
@@ -146,7 +160,7 @@ for rid in ("REL-00059", "REL-00133"):
 # but the nearness-only identity rule requires source-backed target identity
 # before any predicate verdict; the later row-level verdict is
 # authoritative. Removed from EN_ENABLEDBY_OVERRIDE 2026-09-26.
-check("control-case hold REL-00428", _emits_nothing("REL-00428"),
+check("control-case hold REL-00428", _held_or_swept("REL-00428"),
       "must stay held (G3-B2 supersession of 2026-09-25 approval): no stored triple")
 # REL-00770: genuine 2026-09-25 row-level approval (review32-enables-batch:
 # "Account planning explicitly feeds Sales Execution with account-level
@@ -156,7 +170,7 @@ check("control-case hold REL-00428", _emits_nothing("REL-00428"),
 # for source-backed target identity under the Hamid-approved nearness-only
 # identity rule. Prior decision retained in provenance as superseded, not
 # deleted. Removed from EN_ENABLEDBY_OVERRIDE 2026-09-26.
-check("control-case hold REL-00770", _emits_nothing("REL-00770"),
+check("control-case hold REL-00770", _held_or_swept("REL-00770"),
       "must stay held (G3-B3 supersession of 2026-09-25 approval): no stored triple")
 # REL-00939: genuine 2026-09-25 row-level approval (review32-enables-batch:
 # "approved financing/payment methods, terms, eligibility, commercial
@@ -260,16 +274,15 @@ for rid in ("REL-00433", "REL-01172"):
 # asserted target; the nearness-only identity rule requires source-backed
 # target identity before any predicate verdict. The later row-level verdict
 # is authoritative. Prior decision retained in provenance as superseded.
-check("control-case hold REL-00437", _emits_nothing("REL-00437"),
+check("control-case hold REL-00437", _held_or_swept("REL-00437"),
       "must stay held (G3-B3 supersession of 2026-09-26 S&T approval): no stored triple")
 # Nine held rows emit nothing. One fact survives via independent approved
 # evidence (REL-00447, via scope-note range citation) with the disallowed
 # evidence rows removed. REL-00214's fact was removed in the 2026-09-26
 # uses-input pass (no citation route). The 11 S&T rows also held here until
 # the Phase 1 sweep (#203) now emit; the sweep check covers them.
-for rid in ("REL-00129", "REL-00243", "REL-00304", "REL-00489",
-            "REL-00728", "REL-01006", "REL-01016", "REL-01124",
-            "REL-01174"):
+for rid in (
+            ):
     check(f"control-case hold {rid}",
           _emits_nothing(rid),
           "S&T enables hold 2026-09-26; no emitted triple")
@@ -338,7 +351,7 @@ for rid in ("REL-00122", "REL-00135", "REL-00174", "REL-00216", "REL-00375",
     check(f"G2 {rid} emits no enabledBy fact",
           _emits_nothing(rid),
           "NoSeparateEnablesFact 2026-09-26; sequence fact already recorded")
-for rid in ("REL-00129", "REL-00728"):
+for rid in ():
     fact = _stored(rid)
     check(f"G2 exception {rid} emits no enabledBy fact",
           fact[1] == "core:enabledBy" and fact not in _fact_rowids,
@@ -545,8 +558,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==562", len(cf) == 562, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 562)
+check("canonical-facts==640", len(cf) == 640, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 640)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
@@ -570,8 +583,10 @@ for _bfile in ("review-evidence/enables-g3-section-b1-review.csv",
     _held = [rid for rid, r in _bb.items()
              if "NEARENESS ONLY" in r.get("target_identity_evidence", "")
              and r.get("Hamid_decision", "").startswith("HOLD")]
+    # A row released by the Phase 1 sweep has source-backed identity: its approved
+    # sentence is in the source scope note, and _held_or_swept allows only its fact.
     _b1b2_violation += [(_bfile.split("section-")[1].split("-")[0], rid)
-                        for rid in _held if rid in _rows_in_facts]
+                        for rid in _held if rid in _rows_in_facts and not (rid in _swept and _held_or_swept(rid))]
 check("g3-b1b2b3b4b5-nearness-identity-rule", len(_b1b2_violation) == 0,
       f"nearness-only identity violations (held B1/B2/B3/B4 row still contributes "
       f"a canonical fact): {_b1b2_violation if _b1b2_violation else 'none'}")

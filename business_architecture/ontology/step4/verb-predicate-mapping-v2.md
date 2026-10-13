@@ -11,7 +11,9 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `883bd57a1a1f98267489c875887462e11ed99027` (re-pinned 2026-10-13 for the #209 answers from the Phase 1 register; was `37fed949fbd2e7b333663e170717262e26ca73ac`).
+**Baseline:** `388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9` (re-pinned 2026-10-13 for the #201 answers from the Phase 1 register; was `883bd57a1a1f98267489c875887462e11ed99027`).
+
+*Previous baseline:* `883bd57a1a1f98267489c875887462e11ed99027` (re-pinned 2026-10-13 for the #209 answers from the Phase 1 register; was `37fed949fbd2e7b333663e170717262e26ca73ac`).
 
 *Previous baseline:* `37fed949fbd2e7b333663e170717262e26ca73ac` (re-pinned 2026-10-12 for the #202 answers from the Phase 1 register; was `efc47150504face11bee5fdb2d57d737cfb170ca`).
 
@@ -79,7 +81,8 @@ mapping applies those mention-level holds separately),
      4 of the 81 split rows did not enter the review batch: REL-00243,
      REL-00304, REL-01006 (excluded as independent row-level `core:enabledBy`
      approvals — all three superseded 2026-09-26 in G3-B5, now held with no
-     fact) and REL-00936 (held for source-classification review, no stored
+     fact; all three corrected in the source in the #201 Phase 1 sweep and now
+     emitting) and REL-00936 (held for source-classification review, no stored
      fact; corrected to `informs` in the #210 Phase 1 sweep and now emitting). Of the 77 approved, 35 mentions emit and attach as provenance (41-row
      hold set applied in the 2026-09-26 uses-input pass: 40 emitting → held;
      REL-00152 was already held and is not attached); REL-00436 is a
@@ -329,7 +332,11 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
   106, already held with no new verdict needed; the two 22-sets have zero
   overlap). Decided 2026-09-26:
   Section A — 84 approvals emitting (explicit target identity); Section B —
-  all 96 rows held (60 in B1–B4; 36 in B5), none emitting. (The B5 verdicts
+  all 96 rows held (60 in B1–B4; 36 in B5), none emitting. *Phase 1 sweep,
+  #201 (2026-10-12): the register answered each Section B row; the rows it
+  confirmed or corrected now emit, because their sources' scope notes name
+  the target explicitly. The nearness rule is unchanged
+  (`review-evidence/phase1-sweep/201-review.csv`).* (The B5 verdicts
   live in `review-evidence/enables-g3-section-b5-class-verdict.csv` — 42
   rows: the 36 B5 plus six outside-B supersessions; the G3 batch's 36 B5
   `Hamid_decision` cells are blank.) Six further supersessions (REL-00129,
@@ -609,7 +616,9 @@ and no substitute emitted.
 
 Section B is the proof: 96 nearness-only rows reviewed, 96 held — a unique
 label match was never enough, 96 times out of 96. The classifier should stop
-marking such rows `PROMOTE`.
+marking such rows `PROMOTE`. *(Phase 1 sweep, #201, 2026-10-12: Section B
+rows emit only after the source states their target, which is the rule
+working, not an exception to it.)*
 - Resolved 2026-09-26: pair A retained REL-00862 / held REL-00917; pair B
   retained REL-01029 / held REL-00884; pair C (REL-01061 / REL-01065) has
   neither direction stored. The retained directions' reverse facts were
@@ -762,6 +771,10 @@ marking such rows `PROMOTE`.
   row-level `core:enabledBy` approvals (REL-00243, REL-00304, REL-01006)
   is moot: those approvals were superseded 2026-09-26 (G3-B5) under the
   nearness-only identity rule, and the rows are now held with no fact.
+  *Phase 1 sweep, #201 (2026-10-12): REL-00243 is confirmed as `enables`
+  (stored `core:enabledBy` through the row-level override); REL-00304 and
+  REL-01006 are corrected to `provides-input-to` and emit
+  `core:dependsOnOutputOf`.*
 - **Gate:** every G1a row names at least one independent `uses-input`
   supporter in `merged_with_rows`; source and target match after slug
   resolution; the fact survives if the `enables` mention is removed; no G1a

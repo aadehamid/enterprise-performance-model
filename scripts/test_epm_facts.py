@@ -25,23 +25,23 @@ def test_ledger_conserves_and_matches_governed_figures():
     c = run("counts")
     led = c["ledger"]
     assert (led["emitting"], led["held"], led["deferred"], led["external_governance"], led["structured_flow"],
-            led["scoped_sequence"]) == (740, 546, 12, 1, 2, 17)
+            led["scoped_sequence"]) == (824, 462, 12, 1, 2, 17)
     ss = c["scoped_sequences"]
     assert (ss["nodes"], ss["handoffs"], ss["problems"]) == (17, 16, [])
     assert c["conservation"] == led["mentions"] == 1318
-    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 562
+    assert c["canonical_facts_file"] == led["canonical_facts_pipeline"] == 640
     assert c["evidence_gate"]["green"] is True
     assert (c["evidence_gate"]["promoted"], c["evidence_gate"]["held"]) == (1114, 189)
     # 394 until #202 dropped 28 per-row G1b "emits no triple" checks and added its sweep check (367);
-    # #209 added its sweep check (368).
-    assert (c["evidence_gate"]["pass_checks"], c["evidence_gate"]["fail_checks"]) == (368, 0)
+    # #209 added its sweep check (368); #201 dropped 22 per-row hold checks and added its sweep check (347).
+    assert (c["evidence_gate"]["pass_checks"], c["evidence_gate"]["fail_checks"]) == (347, 0)
 
 
 def test_phase1_scope_matches_decision_0025():
     p = run("counts")["phase1"]
-    assert p["rows"] == 276 and p["held"] == 135
+    assert p["rows"] == 276 and p["held"] == 51
     # REL-00190, the 11 #204 batch 1 trigger rows, the 10 newly emitting #206 sweep rows and the
-    # 12 #203, 8 #210, 41 #202 and 41 #209 sweep rows emit core facts; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
+    # 12 #203, 8 #210, 41 #202, 41 #209 and 84 #201 sweep rows emit core facts; the 17 #205 scoped rows emit scoped-sequence nodes (EPM-DEC-001-0026).
     triggers_204 = ["REL-00049", "REL-00163", "REL-00169", "REL-00170", "REL-00252", "REL-00291",
                     "REL-00396", "REL-00398", "REL-00400", "REL-00403", "REL-00892"]
     sweep_206 = ["REL-00050", "REL-00067", "REL-00215", "REL-00394", "REL-00399", "REL-00406", "REL-00937",
@@ -64,9 +64,23 @@ def test_phase1_scope_matches_decision_0025():
         "REL-01157", "REL-01163", "REL-01171", "REL-01178", "REL-01182", "REL-01185", "REL-01210",
         "REL-01216", "REL-01254", "REL-01257", "REL-01262", "REL-01277", "REL-01299",
     ]
+    sweep_201 = [
+        "REL-00044", "REL-00046", "REL-00059", "REL-00061", "REL-00063", "REL-00075", "REL-00129",
+        "REL-00133", "REL-00138", "REL-00148", "REL-00156", "REL-00166", "REL-00239", "REL-00243",
+        "REL-00257", "REL-00259", "REL-00260", "REL-00266", "REL-00283", "REL-00285", "REL-00304",
+        "REL-00362", "REL-00364", "REL-00371", "REL-00387", "REL-00392", "REL-00405", "REL-00428",
+        "REL-00437", "REL-00489", "REL-00494", "REL-00681", "REL-00683", "REL-00687", "REL-00699",
+        "REL-00728", "REL-00753", "REL-00755", "REL-00756", "REL-00762", "REL-00770", "REL-00867",
+        "REL-00871", "REL-00906", "REL-00914", "REL-00919", "REL-00929", "REL-00938", "REL-00942",
+        "REL-00960", "REL-00996", "REL-01006", "REL-01009", "REL-01013", "REL-01016", "REL-01049",
+        "REL-01085", "REL-01093", "REL-01095", "REL-01096", "REL-01099", "REL-01104", "REL-01115",
+        "REL-01124", "REL-01139", "REL-01146", "REL-01156", "REL-01161", "REL-01167", "REL-01169",
+        "REL-01174", "REL-01176", "REL-01179", "REL-01187", "REL-01201", "REL-01209", "REL-01231",
+        "REL-01245", "REL-01248", "REL-01250", "REL-01259", "REL-01287", "REL-01304", "REL-01318",
+    ]
     sweep_210 = ["REL-00445", "REL-00758", "REL-00936", "REL-01053", "REL-01094", "REL-01131", "REL-01192",
                  "REL-01312"]
-    assert p["not_held"] == sorted(["REL-00190"] + triggers_204 + sweep_206 + sweep_203 + sweep_210 + sweep_202 + sweep_209 + epm_facts.scoped_sequences()["rows"])
+    assert p["not_held"] == sorted(["REL-00190"] + triggers_204 + sweep_206 + sweep_203 + sweep_210 + sweep_202 + sweep_209 + sweep_201 + epm_facts.scoped_sequences()["rows"])
     assert p["by_issue"] == {"201": 102, "202": 44, "203": 15, "204": 11, "205": 20, "206": 15, "209": 47, "210": 22}
     assert p["held_outside"] == 411
 
