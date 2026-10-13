@@ -27,15 +27,23 @@ class Packages(unittest.TestCase):
                     with open(os.path.join(bm.release_dir(name), fname)) as f:
                         self.assertEqual(f.read(), text, fname)
 
-    def test_a_candidate_has_no_issued_date_and_says_it_is_a_candidate(self):
+    def test_an_issued_release_carries_hamids_recorded_approval_and_a_candidate_no_date(self):
+        # A module's first release is a major, which needs Hamid's approval (module policy).
         for name, m in bm.MODULES.items():
             with self.subTest(module=name):
-                self.assertIsNotNone(m["stage"], "a first release (a major) needs Hamid's approval")
                 g = bm.build(name)
-                self.assertNotIn((URIRef(bm.MODULES_NS + name), DCTERMS.issued, None), g)
                 manifest = json.loads(bm.package(name, g)["manifest.json"])
-                self.assertTrue(manifest["release_candidate"])
-                self.assertNotIn("issued", Graph().parse(data=bm.catalog(name), format="turtle").serialize())
+                issued = (URIRef(bm.MODULES_NS + name), DCTERMS.issued, None) in g
+                if m["stage"] is None:
+                    path, words = m["approval"]
+                    with open(os.path.join(bm.ONTOLOGY, path)) as f:
+                        self.assertIn(words, f.read())
+                    self.assertTrue(issued)
+                    self.assertFalse(manifest["release_candidate"])
+                    self.assertEqual(manifest["approved_by"]["recorded_in"], path)
+                else:
+                    self.assertFalse(issued)
+                    self.assertTrue(manifest["release_candidate"])
 
     def test_dependencies_name_versions_that_exist(self):
         for name in bm.MODULES:

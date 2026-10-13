@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Status | Decided (delegated under EPM-DEC-001-0028); Hamid approved the 1.0.0 releases, 2026-10-13 |
 | Date | 2026-10-13 |
 | Questions | Step 10: how the modules after `core` are packaged for publication, and what waits for Hamid |
 | Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
@@ -20,10 +20,14 @@ The organization and `ref-mpc` modules exist on `main` but have no release.
 3. **Dependencies name versions that exist.** The organization candidate requires `core` 1.0.0. The `ref-mpc` candidate requires the organization candidate, `1.0.0-rc.1`, because organization 1.0.0 does not exist yet. Each requirement is a `dcterms:requires` link on the ontology header and an entry in the manifest; no module imports another.
 4. **The packages stay current.** `scripts/check.sh` runs the builder with `--verify` for both modules, and `test_build_module.py` checks the packages.
 
+## Hamid's approval, 2026-10-13
+
+Hamid approved both modules as 1.0.0 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`): "aprove now". Organization 1.0.0 and ref-mpc 1.0.0 are the candidates with the issued date 2026-10-13 and the stage removed; ref-mpc now requires organization 1.0.0. The packages are in `releases/organization/1.0.0/` and `releases/ref-mpc/1.0.0/`, and each manifest names where his approval is recorded. The tags `organization-v1.0.0` and `ref-mpc-v1.0.0` mark the merge commit.
+
 ## For Hamid
 
 Step 10 is done when the catalog resolves and the release can be retrieved. Three things are his:
-1. **Approve organization 1.0.0 and `ref-mpc` 1.0.0** (each a major). Recommendation: approve both. Hamid settled the RACI scope the organization release depends on (EPM-DEC-001-0032, 2026-10-13).
+1. **Approve organization 1.0.0 and `ref-mpc` 1.0.0** (each a major). Done: approved on 2026-10-13 (above).
 2. **Register `w3id.org/lsc`.** The IRIs resolve only after a redirect is registered with w3id, a public, outside action.
 3. **Choose where the files are hosted and under which license.** The ontology README says the folder is proprietary, all rights reserved; a public catalog needs a decision on what is published.
 
@@ -43,5 +47,5 @@ EPM-DEC-001-0018, 0029, 0030 to 0033; the module policy of 2026-09-18 in `step4/
 
 ## Consequences
 
-- `releases/organization/1.0.0-rc.1/` and `releases/ref-mpc/1.0.0-rc.1/` hold the candidates.
+- `releases/organization/1.0.0/` and `releases/ref-mpc/1.0.0/` hold the releases; git history keeps the 1.0.0-rc.1 candidates.
 - A change to either module fails `scripts/check.sh` until its package is rebuilt.
