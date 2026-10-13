@@ -2167,7 +2167,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 - **APPROVE, emitting `core:triggeredBy` (2):** REL-01038, REL-01262.
 - **HOLD, no relationship (6):** REL-00176, REL-00294, REL-00479, REL-00846, REL-00857, REL-01082.
 
-41 mentions move from held to emitting; 41 facts added. No contradiction.
+41 mentions move from held to emitting; 40 facts added, and 1 existing fact gains a contributor (REL-00054). No contradiction.
 
 **Current totals:** **740 emitting / 546 held / 17 scoped sequence** / 562 facts.
 Conservation: 740 + 546 + 12 + 1 + 2 + 17 = 1,318. ✓
