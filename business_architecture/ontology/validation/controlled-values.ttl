@@ -1,7 +1,8 @@
 # Step 9, controlled values (EPM-DEC-001-0014, EPM-DEC-001-0035): each code-list property of
 # core takes its values from its own code list, not from any SKOS concept. The core 1.0.0
-# shapes check only sh:class skos:Concept on these properties (sh:in on conceptKind alone).
-# These shapes run against the released core without changing it.
+# release shapes check sh:in on conceptKind, only sh:class skos:Concept on seven others, and
+# nothing on evidenceBasis and sequenceScope (their build-time shapes are in
+# step4/scoped-sequence/). These shapes run against the released core without changing it.
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix core: <https://w3id.org/lsc/ontology/modules/core/> .

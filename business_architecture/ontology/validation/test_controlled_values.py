@@ -8,7 +8,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Namespace, URIRef
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
@@ -52,6 +52,24 @@ class ControlledValues(unittest.TestCase):
         schemes = set(DATA.subjects(RDF.type, SKOS.ConceptScheme)) - {URIRef("https://w3id.org/lsc/ontology/modules/core")}
         used = {p for s, p, o in DATA if str(p).startswith(str(CORE)) and DATA.value(o, SKOS.inScheme) in schemes}
         self.assertEqual(sorted(map(str, used - set(CODED))), [])
+
+    def test_each_shape_names_the_list_its_property_uses(self):
+        # Where the property has values, they sit in the scheme the shape names. Where it has none
+        # yet (governance status, RACI level), the property and the scheme carry the same label in
+        # their vocabularies.
+        vocab = Graph()
+        vocab.parse(os.path.join(ONTOLOGY, "release", "core-vocabulary.ttl"))
+        vocab.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
+        for shape in SHAPES.subjects(RDF.type, SH.NodeShape):
+            prop = SHAPES.value(shape, SH.targetObjectsOf)
+            named = SHAPES.value(SHAPES.value(shape, SH.property), SH.hasValue)
+            with self.subTest(property=str(prop)):
+                self.assertIn((named, RDF.type, SKOS.ConceptScheme), DATA)
+                used = set(DATA.objects(None, prop))
+                if used:
+                    self.assertEqual({DATA.value(v, SKOS.inScheme) for v in used}, {named})
+                else:
+                    self.assertEqual(str(vocab.value(prop, RDFS.label)).lower(), str(vocab.value(named, RDFS.label)).lower())
 
     def test_a_value_from_the_wrong_list_fails(self):
         for prop in CODED:

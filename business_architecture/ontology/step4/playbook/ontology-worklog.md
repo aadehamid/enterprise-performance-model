@@ -969,8 +969,9 @@ without a dated amendment and Hamid's explicit agreement.
 
 ### Step 9 controlled values (2026-10-13)
 - `validation/controlled-values.ttl` requires every code-list property of
-  `core` to take its values from its own list (the 1.0.0 shapes checked
-  only `sh:class skos:Concept`), and the same of the RACI level. `core`
+  `core` to take its values from its own list (the 1.0.0 release shapes
+  checked at most `sh:class skos:Concept`, except `sh:in` on the concept
+  kind), and the same of the RACI level. `core`
   1.0.0 conforms. A test fails when a code-list property has no shape; it
   found `evidenceBasis` and `sequenceScope`. The evidence-link shape waits
   for the next `core` release, which must carry each fact's evidence in

@@ -9,18 +9,18 @@
 
 ## Context
 
-EPM-DEC-001-0014 orders the Step 9 shapes after the release slice: every relationship fact links to its source evidence; controlled values come from their allowed lists; no definition is typed as an occurrence. The third is in EPM-DEC-001-0034.
+EPM-DEC-001-0014 orders the Step 9 shapes after the release slice: every relationship fact links to its source evidence; controlled values come from their allowed lists; no definition is typed as an occurrence. The third comes with the Step 6 definition-to-run work.
 
-The `core` 1.0.0 shapes check `sh:in` on `core:conceptKind` only. The other nine code-list properties check `sh:class skos:Concept`, so a value from the wrong list passes: for example, a cadence used as an operating mode.
+The `core` 1.0.0 release shapes check `sh:in` on `core:conceptKind` only. Seven other code-list properties are checked only with `sh:class skos:Concept`. `core:evidenceBasis` and `core:sequenceScope` have no release shape; their build-time shapes in `step4/scoped-sequence/` check them. Either way, a value from the wrong list passes release validation: for example, a cadence used as an operating mode.
 
-The 640 canonical facts in `core` 1.0.0 are direct triples. Their evidence (the REL row IDs) is in the release's `canonical-facts.csv`, not in the graph.
+The 640 canonical facts in `core` 1.0.0 are direct triples. (The 17 scoped-sequence nodes do carry their source rows.) Their evidence (the REL row IDs) is in the release's `canonical-facts.csv`, not in the graph.
 
 ## Decision
 
 1. **A controlled-value shape for every code-list property.** `business_architecture/ontology/validation/controlled-values.ttl` requires each value of the ten coded properties of `core` (APQC mapping decision, operating mode, cadence, planning level, lifecycle status, governance status, hold status, concept kind, evidence basis, sequence scope) to be in its own code list. It applies the same rule to the organization module's RACI level. `core` 1.0.0 conforms.
 2. **The shapes run against the released core without changing it.** `scripts/check.sh` runs them. They join the release shapes at the next `core` release.
 3. **A test keeps the list complete.** It fails when a core property takes values from a core code list and no shape covers it. That test found `evidenceBasis` and `sequenceScope` while this slice was built.
-4. **The evidence-link shape waits for the next `core` release.** Today every fact would fail it, because no fact carries its evidence in the graph. Adding that is a change to the released module.
+4. **The evidence-link shape waits for the next `core` release.** EPM-DEC-001-0014 orders it first; this slice takes the second item first because today every canonical fact would fail it: no canonical fact carries its evidence in the graph. Adding that is a change to the released module.
 
 ### For Hamid: evidence on the facts
 
@@ -39,7 +39,7 @@ Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in
 
 ## Evidence
 
-EPM-DEC-001-0014, 0020, 0026, 0029, 0030, 0034; `releases/core/1.0.0/shapes.ttl`, `core.ttl` and `canonical-facts.csv`; `release/core-vocabulary.ttl`.
+EPM-DEC-001-0014, 0020, 0026, 0029, 0030; `releases/core/1.0.0/shapes.ttl`, `core.ttl` and `canonical-facts.csv`; `release/core-vocabulary.ttl`.
 
 ## Consequences
 
