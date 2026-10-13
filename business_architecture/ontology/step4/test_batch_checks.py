@@ -240,12 +240,21 @@ class SweepBatch203(unittest.TestCase):
         self.assertEqual(batch_checks.scope_notes(ttl, "B"), ["B note"])
         self.assertEqual(batch_checks.scope_notes(ttl, "C"), [])
 
+    def edit_source_line(self, change):
+        """Apply change to REL-00263's source (CM-1-2-2-3-12) relatedConcepts line, by position:
+        another concept can carry an identical line."""
+        lines = self.taxonomy.split("\n")
+        start = next(i for i, l in enumerate(lines) if l.startswith("proc:CM-1-2-2-3-12 a "))
+        at = next(i for i in range(start, len(lines)) if "intake:relatedConcepts" in lines[i])
+        lines[at] = change(lines[at])
+        return "\n".join(lines)
+
     def test_a_reverted_relationship_in_the_published_taxonomy_is_caught(self):
+        seg = "provides-input-to: Manage Risk Reporting"
         # REL-00263's corrected segment back to enables, with its sentence left in the scope note.
-        reverted = self.taxonomy.replace("provides-input-to: Manage Risk Reporting", "enables: Manage Risk Reporting", 1)
+        reverted = self.edit_source_line(lambda l: l.replace(seg, "enables: Manage Risk Reporting"))
         # The uncorrected segment appended beside the corrected one.
-        appended = self.taxonomy.replace("provides-input-to: Manage Risk Reporting",
-                                         "provides-input-to: Manage Risk Reporting | enables: Manage Risk Reporting", 1)
+        appended = self.edit_source_line(lambda l: l.replace(seg, seg + " | enables: Manage Risk Reporting"))
         for mutated in (reverted, appended):
             self.assertNotEqual(mutated, self.taxonomy)
             self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
@@ -253,9 +262,7 @@ class SweepBatch203(unittest.TestCase):
 
     def test_a_relationship_classify_cannot_read_does_not_count(self):
         # Moved into a triple-quoted literal: valid Turtle, but classify_v2 reads only one-line literals.
-        line = next(l for l in self.taxonomy.splitlines()
-                    if "provides-input-to: Manage Risk Reporting" in l)
-        hidden = self.taxonomy.replace(line, line.replace('"', '"""', 1).replace('"@', '"""@', 1), 1)
+        hidden = self.edit_source_line(lambda l: l.replace('"', '"""', 1).replace('"@', '"""@', 1))
         self.assertNotEqual(hidden, self.taxonomy)
         self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
                             for p in self.problems(self.facts, taxonomy=hidden)))

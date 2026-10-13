@@ -271,55 +271,10 @@ PROPERTY_RULE_HOLDS = {
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed; no emission without workbook-author target "
                   "confirmation and fresh verdict."),
-    "REL-00044": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: lot/batch records may relate to inventory "
-                  "reconciliation, but the source definition does not name "
-                  "periodic book-to-physical reconciliation as the target. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00046": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: third-party storage positions may relate to "
-                  "inventory reconciliation, but the source does not name it. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00059": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: likely output/evidence semantics for "
-                  "distribution backcasting (which owns plan-vs-actual "
-                  "distribution analysis), not source-named enablement. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00061": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: consignment ownership may relate to "
-                  "inventory reconciliation, but the source definition does "
-                  "not establish it as the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00063": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: commingled allocation records may relate to "
-                  "inventory reconciliation, but the source does not name it. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00075": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: scheduling master data proximity to order "
-                  "generation; likely input/constraint/coordination, not "
-                  "confirmed enablement. Stored core:enabledBy fact removed."),
     "REL-00121": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
                   "unconfirmed: scheduling master data proximity to "
                   "production-wheel review; predicate not confirmed. "
                   "Stored core:enabledBy fact removed."),
-    "REL-00133": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: interface management proximity to sequencing "
-                  "plan creation; no source-level target evidence. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00138": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: energy-balance targets proximity to daily "
-                  "execution planning; no source-level target evidence. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00148": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: renewable forecasts could inform asset "
-                  "optimization, but the target is not evidenced; likely "
-                  "informational input rather than enablement. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00156": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: generation forecasts could inform asset "
-                  "optimization, but the target is not evidenced; likely "
-                  "output dependency rather than enablement. Stored "
-                  "core:enabledBy fact removed."),
     "REL-00164": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity REJECTED: "
                   "monitoring contracts surfaces obligations/expiries/breaches "
                   "— it does not provide the governed strategy-definition, "
@@ -327,18 +282,6 @@ PROPERTY_RULE_HOLDS = {
                   "trading strategies. Candidate selection rests only on "
                   "nearness/label matching. No retargeting or inference of "
                   "an alternative. Stored core:enabledBy fact removed."),
-    "REL-00166": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
-                  "unconfirmed: counterparty records may be necessary for "
-                  "trade capture, but the source does not identify Trade "
-                  "Capture — could relate to onboarding, credit, compliance, "
-                  "settlement, or master-data controls. Stored "
-                  "core:enabledBy fact removed."),
-    "REL-00239": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity REJECTED: "
-                  "credit-risk reporting may inform strategy review but does "
-                  "not enable the strategy-management capability. Candidate "
-                  "selection rests only on nearness/label matching. No "
-                  "retargeting or inference of an alternative. Stored "
-                  "core:enabledBy fact removed."),
     # Hamid 2026-09-26: G3 Section B2 verdicts (D:hamid-verdict). Second
     # nearness-only chunk: all 15 rows HELD at the target-identity gate —
     # no predicate review reached. 13 rows have plausible but unconfirmed
@@ -353,70 +296,6 @@ PROPERTY_RULE_HOLDS = {
                   "disputes may affect settlement readiness but the target "
                   "is not source-evidenced. Stored core:enabledBy fact "
                   "removed."),
-    "REL-00257": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: risk-policy compliance may contribute to "
-                  "risk reporting but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00259": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: scenarios/risk controls may relate to risk "
-                  "limit management but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00260": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: month-end risk controls may relate to risk "
-                  "reporting but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00266": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity REJECTED: "
-                  "risk reporting provides controlled information to "
-                  "management and committees — it does not provide an "
-                  "operating basis that enables Trading Strategy "
-                  "Management's define/approve/steward/review/retire "
-                  "function. Candidate selection rests only on "
-                  "nearness/label matching. No retargeting or inference. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00283": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: risk-policy compliance may relate to risk "
-                  "reporting but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00285": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity REJECTED: "
-                  "risk limits constrain strategy management and inform "
-                  "compliance boundaries, but Trading Strategy Management "
-                  "is not shown as the target of a valid enablement "
-                  "relation; likely semantics are governance/constraint or "
-                  "information, not enablement. Candidate selection rests "
-                  "only on nearness/label matching. No retargeting or "
-                  "inference. Stored core:enabledBy fact removed."),
-    "REL-00362": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: accruals may relate to trading sub-ledger "
-                  "operations but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00364": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: taxes may relate to trading sub-ledger "
-                  "operations but the target is not source-evidenced. "
-                  "Stored core:enabledBy fact removed."),
-    "REL-00371": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: production/inventory accounting may relate "
-                  "to trading sub-ledger but the target is not "
-                  "source-evidenced. Stored core:enabledBy fact removed."),
-    "REL-00387": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: financial-system configuration may relate "
-                  "to AR/AP operations but the target is not "
-                  "source-evidenced. Stored core:enabledBy fact removed."),
-    "REL-00392": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: compliance policies may shape internal "
-                  "compliance monitoring but the target is not "
-                  "source-evidenced. Stored core:enabledBy fact removed."),
-    "REL-00405": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: RIN reporting may relate to external "
-                  "compliance monitoring but the target is not "
-                  "source-evidenced. Stored core:enabledBy fact removed."),
-    "REL-00428": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
-                  "unconfirmed: feedstock-data quality plausibly underpins "
-                  "term-slate quality screening, but the target was "
-                  "selected solely by classifier nearness with no "
-                  "source-backed target identification; the 2026-09-25 "
-                  "plausibility-based approval is superseded. No retarget "
-                  "or remap at promotion. Stored core:enabledBy fact "
-                  "removed; removed from EN_ENABLEDBY_OVERRIDE."),
     "REL-00431": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
                   "unconfirmed: LP-model integrity may support development "
                   "of a term procurement slate but the target is not "
@@ -431,47 +310,7 @@ PROPERTY_RULE_HOLDS = {
     # single-row, no independent supporter); no retarget or remap at
     # promotion; retain the enables assertion as non-emitting evidence;
     # route for source-workbook target clarification.
-    "REL-00437": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00494": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
     "REL-00506": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00681": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00683": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00687": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00699": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00753": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00755": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00756": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
-                  "unconfirmed: nearness-only candidate; no source-backed "
-                  "evidence identifies the target. Stored core:enabledBy "
-                  "fact removed."),
-    "REL-00762": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
@@ -483,21 +322,6 @@ PROPERTY_RULE_HOLDS = {
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
-    "REL-00770": ("Hamid 2026-09-26: HOLD (G3-B3) / TargetIdentityUnconfirmed "
-                  "/ Supersedes2026-09-25Approval. The 2026-09-25 approval "
-                  "recognized a plausible semantic relationship (account "
-                  "planning provides account-level objectives, opportunity "
-                  "maps, action plans, and resource assumptions that Sales "
-                  "Execution may use), but the original source assertion "
-                  "does not identify Sales Execution as its target. Under "
-                  "the subsequently approved nearness-only identity rule, "
-                  "predicate plausibility cannot substitute for "
-                  "source-backed target identity. Supersede the prior "
-                  "row-level approval (retained in provenance as "
-                  "superseded, not deleted); remove the current "
-                  "core:enabledBy fact; emit no substitute or retargeted "
-                  "fact; require source-workbook target clarification and "
-                  "a fresh verdict."),
     "REL-00837": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
@@ -514,36 +338,15 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); no retarget or remap at promotion; retain
     # the enables assertion as non-emitting evidence; route for
     # source-workbook target clarification.
-    "REL-00867": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00871": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00906": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00914": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00919": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
     "REL-00924": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00929": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00938": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00942": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00996": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
     "REL-00999": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-01009": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-01013": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
     "REL-00939": ("Hamid 2026-09-26: HOLD (G3-B4) / TargetIdentityUnconfirmed / Supersedes2026-09-25Approval. The 2026-09-25 approval found that approved financing/payment methods, terms, eligibility, and commercial rules are governed prerequisites for billing — which may well be true — but the source row never names Manage Customer Invoicing and Billing as its target. Under the nearness-only identity rule, a plausible relationship cannot stand in for a named target. Supersede the prior approval (retained in provenance as superseded, not deleted); remove the current core:enabledBy fact; emit no substitute or retargeted fact; require source-workbook target clarification and a fresh verdict."),
-    "REL-00960": ("Hamid 2026-09-26: HOLD (G3-B4) / TargetIdentityRejected. Tracking the order book and forecasting order volumes gives scheduling and supply their planning basis; it has nothing to do with running the customer self-service portal. The label match reads the source order-tracking work as operating the portal, and neither definition supports that. Candidate selection rests only on nearness/label matching. No retargeting or inference. Stored core:enabledBy fact removed."),
     # Hamid 2026-09-26: G3 Section B5 — prior-approval sweep supersessions
     # (D:hamid-verdict). Nine earlier approvals whose targets were matched
     # by nearness only. Each approval judged relationship plausibility, not
     # target identity; no source row evidences which target was meant.
     # All nine superseded under the nearness-only identity rule; prior
     # decisions retained in provenance as superseded, not deleted.
-    "REL-00129": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: schedule exceptions produce exception records/causes that performance measurement explicitly analyzes) + G2 ExistingRowLevelApproval exception. Target: Measure Production Scheduling Performance.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. The G2 disguised-sequence exception also goes: the enables fact is absent; the independently recorded precedes/follows facts stay. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-00243": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: confirmation templates and controlled wording are direct prerequisites for confirmation generation). Target: Generate Confirms.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. G1a merged_with_rows blank; no merge and no other approved supporter confirmed before removal. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-00304": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: vessel/barge actualization produces actualized movement evidence used to identify demurrage/despatch/detention). Target: Identify Potential Demurrage.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. G1a merged_with_rows blank; no merge and no other approved supporter confirmed before removal. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-00489": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-26STApproval. Prior approval: st-enables 2026-09-26 (reviewer-approved predicate change overriding the G1-redundant proposal: exchange utilization operates against the entitlement rules, differentials, contractual imbalance calculations, and governed agreement terms). Target: Manage Refined Product Exchanges.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. Quick-confirmation candidate: the target's own scope description names the source process (REL-00475 communicates utilization requirements to the agreement owner CM-1-2-7-1-1) — placed at the top of the workbook backlog with that evidence attached; if the source author confirms, it returns with a proper identity override and a fresh verdict. Also resolves this row's G1b 'leave unchanged' listing — that decision is now superseded. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-00728": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: IP framework defines the classification/handling basis under which protection operates) + G2 ExistingRowLevelApproval exception. Target: Protect Intellectual Assets.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. The G2 disguised-sequence exception also goes: the enables fact is absent; the independently recorded precedes/follows facts stay. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01006": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: validated self-billing records are necessary inputs to revenue recognition, cutoff, accounting). Target: Perform Revenue Accounting.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. G1a merged_with_rows blank; no merge and no other approved supporter confirmed before removal. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01016": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-25Review32Approval. Prior approval: review32 2026-09-25 (Approved as core:enables: corrected billing documents are necessary to accurate receivables, cash application, revenue accounting); member of EN_ENABLEDBY_OVERRIDE. Target: Manage Cash Application, A/R & Revenue Accounting.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. Removed from EN_ENABLEDBY_OVERRIDE. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01124": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-26STApproval. Prior approval: st-enables 2026-09-26 (APPROVE: the validated feedstock-demand signal and coordinated requirements make relevant feedstock-trading action executable within the supply plan); S&T stored control. Target: Trading Management.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. S&T stored control removed. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01174": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / Supersedes2026-09-26STApproval. Prior approval: st-enables 2026-09-26 (APPROVE: quality-screened slates and validated quality information make execution of feedstock trading requirements feasible); S&T stored control. Target: Coordinate Feedstock Trading.. approval judged the relationship plausible; the source row gives no evidence of which target was meant; superseded under the nearness-only identity rule. S&T stored control removed. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
 
     # Hamid 2026-09-26: G3 Section B5 — 33-row class verdict (D:hamid-verdict).
     # Every row confirmed nearness-only (SoleCandidate) with no source-backed
@@ -551,39 +354,12 @@ PROPERTY_RULE_HOLDS = {
     # / ClassVerdict-B-2026-09-26. Stored core:enabledBy facts removed
     # (each verified unique, single-row); no substitutes; assertions retained
     # as non-emitting evidence; routed for source-workbook target clarification.
-    "REL-01049": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01085": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01093": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01095": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01096": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01099": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01104": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01115": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01139": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01142": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01146": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01156": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01161": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01167": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01169": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01176": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01179": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01187": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01195": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01201": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01204": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01209": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01219": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01231": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01237": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01245": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01248": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01250": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01259": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01287": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
     "REL-01288": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01304": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01318": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
 
 
 
@@ -724,7 +500,12 @@ def enables_group(r, tgt):
 # G1/G2/G3 group proposal for these rows. Stored as (target, core:enabledBy,
 # source); core:enables is available as its inverse. If Hamid later revisits
 # any of these in the G1-split/G2 review, update this set.
-EN_ENABLEDBY_OVERRIDE = {"REL-01303", "REL-01056"}
+# Phase 1 sweep, #201 (Hamid 2026-10-12, #207 comment 6133390674): the register
+# confirms REL-00243 as enables (target identity now evidenced in the source scope
+# note), a row-level verdict. Without the override, the held reverse uses-input row
+# REL-00242 would group it as an output dependency and store dependsOnOutputOf on
+# REL-00243 alone: a silent verb change (Rule 11).
+EN_ENABLEDBY_OVERRIDE = {"REL-01303", "REL-01056", "REL-00243"}
 # 2026-09-26: sweep supersessions (G3-B5). Seven prior approvals on
 # nearness-only targets removed from the override set:
 # REL-00129, REL-00243, REL-00304, REL-00728, REL-01006, REL-01016
