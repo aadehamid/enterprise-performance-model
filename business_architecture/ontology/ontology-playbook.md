@@ -359,6 +359,39 @@ release before the backlog rows are settled, they lose their provisional
 form and need a second release. Build a small SHACL slice first (Step 9) so the release is checked
 by shapes, not only by scripts. Appendix B covers release mechanics.
 
+**Working the source-correction backlog.** A backlog of a few hundred rows
+goes fastest as one answer register, built and checked in batches:
+
+1. Draft an answer for every backlog row in one register: the corrected
+   verb or target, or "no relationship", the stored fact, and one sentence
+   the source author would put in the source's scope note. Flag the rows
+   that need the owner's judgement. The owner approves the register as a
+   whole and answers the flagged rows.
+2. Correct the source in place. Change a row's verb or target where it
+   stands; never add, remove or move a relationship, because row IDs
+   usually follow position. A correction tool should refuse, before it
+   writes anything, a missing, duplicated or converging segment, an unknown
+   verb, or a target containing the cell's delimiter.
+3. When the approved fact runs opposite to the row's direction, add a
+   mirror raw verb ("provides input to" for "uses input") rather than moving
+   the assertion to the other process's row. Moving it renumbers every
+   later row.
+4. Add each answer's sentence to the source's scope note. It becomes the
+   affirmative citation that rule 5 of Section 3 asks for.
+5. Rebuild, re-pin, then re-run the whole pipeline in a copy. Adopt its
+   output only if every changed row belongs to the batch, and keep the
+   review notes the pipeline does not reproduce. Files that list the rows
+   of one verb must move with a corrected verb.
+6. Check each batch against the approved register in the evidence gate:
+   exactly the batch's rows, each decided field, the stored fact, the
+   sentence in the published scope note, and the corrected relationship as
+   the classifier will read it. Require the published taxonomy to equal
+   the pinned copy. One such check can replace many per-row hold checks.
+7. Watch the grouping heuristics. When a corrected row's reverse is still
+   held, a heuristic that merges "enables" into an output dependency can
+   turn the corrected verb into another predicate. Use a row-level verdict
+   to keep the approved predicate (rule 11).
+
 ### Step 5. Organizations, roles and responsibilities
 
 **Purpose.** Say who is responsible, and describe the real organizations the
@@ -1061,6 +1094,12 @@ Nothing is decided or approved until the owner has recorded it. A merge
 alone does not decide anything. Quote the owner's words in the decision
 record.
 
+The owner can delegate open questions in recorded words. A delegated
+decision names the delegation and its evidence, so the owner can audit or
+reverse it. Some things stay with the owner even then: a statement of fact
+only the owner can make (who consumes the ontology), and the approvals the
+versioning policy reserves for the owner (a major release).
+
 ### The playbook learns the same week
 When a practice is proven, add it to the section a reader would look in,
 with the reason. Re-check this document whenever a step closes.
@@ -1290,6 +1329,17 @@ Before a release:
 - The consumer attestation is fresh.
 - The SHACL slice passes.
 - The owner has approved the release in writing.
+
+Build the release with a script, never by hand. The builder reads only the
+pinned evidence. It stops if any staging triple or blank node is left, or
+if a staging predicate has no target. It writes the after half of the
+conservation ledger, one row per staging predicate with its source and
+migrated counts. It runs the SHACL slice before it writes, and records
+each file's checksum and the evidence commit in a manifest. Its output is
+deterministic, so the check script can confirm that the committed package
+equals a fresh build. Where a draft ledger and an approved decision
+disagree about a target, the approved decision wins; say so in the release
+record.
 
 Every release ships:
 

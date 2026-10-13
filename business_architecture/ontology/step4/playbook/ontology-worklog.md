@@ -975,6 +975,14 @@ without a dated amendment and Hamid's explicit agreement.
   #241.
 - #210 is the third batch: 6 rows emit `informedBy`, REL-01053 `dependsOnOutputOf`, REL-01312 `governedBy` through `governs`, and 14 rows close with no relationship. Pending its PR.
 
+### Playbook method update (2026-10-13)
+- The Phase 1 sweep and the core 1.0.0 release build proved three practices,
+  now in the playbook: working a source-correction backlog as one approved
+  answer register built in batches (Step 4), building a release with a
+  checked, deterministic builder (Appendix B, "Releasing a module"), and
+  delegated decisions, with what stays with the owner (Section 6). Project
+  records: EPM-DEC-001-0025, -0027, -0028 (pending in #242), -0029.
+
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`
   (S, T) is stored as T core:dependsOnOutputOf S and `governs` (S, T) as T
