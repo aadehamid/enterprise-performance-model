@@ -1,0 +1,42 @@
+row_id,source_slug,old_verb,old_target,new_verb,new_target
+REL-00009,CM-1-1-1-1-4,enables,Capture Product Demand Requirements,provides-input-to,Capture Product Demand Requirements
+REL-00041,CM-1-1-3-6-4,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00054,CM-1-1-3-7-3,enables,Manage Inventory Replenishment,governs,Manage Inventory Replenishment
+REL-00077,CM-1-1-3-8-4,enables,Distribution Backcasting,provides-input-to,Distribution Backcasting
+REL-00118,CM-1-1-7-1-3,enables,Perform Inventory Reconciliation,provides-input-to,Perform Inventory Reconciliation
+REL-00232,CM-1-2-2-1-6,enables,Manage Credit Limits,informs,Manage Credit Limits
+REL-00409,CM-1-2-4-3-7,enables,Develop Compliance Policies & Procedures,informs,Develop Compliance Policies & Procedures
+REL-00493,CM-1-2-7-1-2,enables,Secondary Distribution Management,provides-input-to,Secondary Distribution Management
+REL-00517,CM-1-3-1-1-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-00528,CM-1-3-1-2-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-00539,CM-1-3-1-3-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-00551,CM-1-3-1-4-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-00562,CM-1-3-1-5-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-00665,CM-1-3-3-3-4,enables,Channel & Partner Management,provides-input-to,Channel & Partner Management
+REL-00811,CM-1-3-5-4-2,enables,Develop & Agree Demand Forecasting Process,provides-input-to,Develop & Agree Demand Forecasting Process
+REL-00818,CM-1-3-5-5-1,enables,Define Resource Allocation / Budgets,informs,Define Resource Allocation / Budgets
+REL-00820,CM-1-3-5-5-2,enables,Develop / Update Marketing Mix Model,informs,Develop / Update Marketing Mix Model
+REL-00834,CM-1-3-6-2-1,enables,Develop & Agree Demand Forecasting Process,provides-input-to,Develop & Agree Demand Forecasting Process
+REL-00843,CM-1-3-6-2-4,enables,"Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)",provides-input-to,"Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)"
+REL-00851,CM-1-3-6-2-7,enables,Analyze Gaps Between Forecast & Actual Margins,provides-input-to,Analyze Gaps Between Forecast & Actual Margins
+REL-00852,CM-1-3-6-2-7,enables,Marketing Performance Analysis,provides-input-to,Marketing Performance Analysis
+REL-00886,CM-1-3-6-6-15,enables,Customer Program Analysis,provides-input-to,Customer Program Analysis
+REL-00889,CM-1-3-6-6-2,enables,Manage Customer Invoicing and Billing,provides-input-to,Manage Customer Invoicing and Billing
+REL-00898,CM-1-3-6-6-6,enables,Determine Bad Debt Allowance (CM-1-3-8-3-3),provides-input-to,Determine Bad Debt Allowance (CM-1-3-8-3-3)
+REL-01038,CM-1-3-8-3-1,enables,Manage Receivables Collections (CM-1-3-8-3-2),triggers,Manage Receivables Collections (CM-1-3-8-3-2)
+REL-01072,CM-1-3-8-4-7,enables,Create and Distribute Bill (CM-1-3-8-1-1),provides-input-to,Create and Distribute Bill (CM-1-3-8-1-1)
+REL-01073,CM-1-3-8-4-7,enables,Perform Period-End Processing (CM-1-3-8-4-1),provides-input-to,Perform Period-End Processing (CM-1-3-8-4-1)
+REL-01092,CM-1-3-9-2-3,enables,Create and Distribute Bill (CM-1-3-8-1-1),provides-input-to,Create and Distribute Bill (CM-1-3-8-1-1)
+REL-01157,CM-1-3-5-5,enables,Sales Planning (CM-1-3-5-1),informs,Sales Planning (CM-1-3-5-1)
+REL-01163,CM-1-3-9-2,enables,Create and Distribute Bill (CM-1-3-8-1-1),provides-input-to,Create and Distribute Bill (CM-1-3-8-1-1)
+REL-01171,CM-1-1-3-8,enables,Distribution Backcasting,provides-input-to,Distribution Backcasting
+REL-01178,CM-1-3-1-2,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-01182,CM-1-3-1-3,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-01185,CM-1-3-1-4,enables,Marketing Insight and Metrics Stewardship (CM-1-3-1-6),provides-input-to,Marketing Insight and Metrics Stewardship (CM-1-3-1-6)
+REL-01210,CM-1-3-4-6,enables,Product & Service Development,informs,Product & Service Development
+REL-01216,CM-1-3-5-4,enables,Develop & Agree Demand Forecasting Process,provides-input-to,Develop & Agree Demand Forecasting Process
+REL-01254,CM-1-3-7-2,enables,Capture And Manage Order Fulfillment,provides-input-to,Capture And Manage Order Fulfillment
+REL-01257,CM-1-3-7-3,enables,Manage Customer Invoicing and Billing,provides-input-to,Manage Customer Invoicing and Billing
+REL-01262,CM-1-3-7-5,enables,Manage Receivables Disputes (CM-1-3-8-3-1),triggers,Manage Receivables Disputes (CM-1-3-8-3-1)
+REL-01277,CM-1-3-6-2,enables,"Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)",provides-input-to,"Manage Commercial Terms, Quoting, and Customer Commercial Services (CM-1-3-7-2)"
+REL-01299,CM-1-2-1-2,enables,Confirmations Management,provides-input-to,Confirmations Management
