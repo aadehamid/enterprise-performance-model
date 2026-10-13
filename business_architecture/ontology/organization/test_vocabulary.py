@@ -27,9 +27,15 @@ TYPED = {p for k in KINDS for p in VOCAB.subjects(RDF.type, k)}
 # A property is anything typed as one, or anything with a declared domain or range, so an
 # untyped predicate cannot slip past the kind and cardinality checks.
 PROPS = TYPED | set(VOCAB.subjects(RDFS.domain, None)) | set(VOCAB.subjects(RDFS.range, None))
+# Every module term with a label is a class, a code list, a code or a property; a labelled
+# term that is none of the first three must be a property, typed like the others.
+NOT_PROPS = set(VOCAB.subjects(RDF.type, OWL.Class)) | set(VOCAB.subjects(RDF.type, SKOS.ConceptScheme)) \
+    | set(VOCAB.subjects(RDF.type, SKOS.Concept))
+PROPS |= {s for s in VOCAB.subjects(RDFS.label, None) if str(s).startswith(str(ORGM)) and s not in NOT_PROPS}
 EXACTLY_ONE = {  # EPM-DEC-001-0030: these paths carry exactly one value on their shape
     ORGM.forProcess, ORGM.assignedRole, ORGM.raciLevel, ORGM.sourceRoleText,
     ORGM.controllingEntity, ORGM.controlledEntity, ORGM.asOf, SKOS.prefLabel}
+AT_MOST_ONE = {ORGM.ownershipShare, SKOS.definition}  # optional, but never two
 LEVELS = {RACI.responsible, RACI.accountable, RACI.consulted, RACI.informed}
 
 
@@ -85,12 +91,25 @@ class Vocabulary(unittest.TestCase):
                   if (n, SH.minCount, None) in SHAPES or (n, SH.maxCount, None) in SHAPES}
         self.assertEqual(sorted(map(str, PROPS - stated)), [])
 
+    def test_every_shape_path_is_a_declared_property(self):
+        # A path only the shapes name would escape the one-kind and one-range check above.
+        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition}
+        paths = set(SHAPES.objects(None, SH.path))
+        self.assertEqual(sorted(map(str, paths - PROPS - external)), [])
+
     def test_exactly_one_paths_have_both_bounds(self):
         for n in SHAPES.subjects(SH.path, None):
             path = SHAPES.value(n, SH.path)
             if path in EXACTLY_ONE:
                 with self.subTest(path=str(path)):
                     self.assertEqual(int(SHAPES.value(n, SH.minCount)), 1)
+                    self.assertEqual(int(SHAPES.value(n, SH.maxCount)), 1)
+
+    def test_at_most_one_paths_have_a_maximum_of_one(self):
+        for n in SHAPES.subjects(SH.path, None):
+            path = SHAPES.value(n, SH.path)
+            if path in AT_MOST_ONE:
+                with self.subTest(path=str(path)):
                     self.assertEqual(int(SHAPES.value(n, SH.maxCount)), 1)
 
     def test_both_shapes_require_a_source(self):
@@ -100,7 +119,8 @@ class Vocabulary(unittest.TestCase):
             self.assertEqual([int(m) for m in mins], [1], str(shape))
 
     def test_the_raci_list_has_exactly_four_levels(self):
-        members = set(VOCAB.subjects(SKOS.inScheme, ORGM.RaciLevel))
+        members = set(VOCAB.subjects(SKOS.inScheme, ORGM.RaciLevel)) | set(VOCAB.objects(ORGM.RaciLevel, SKOS.hasTopConcept)) \
+            | set(VOCAB.subjects(SKOS.topConceptOf, ORGM.RaciLevel))
         self.assertEqual(members, LEVELS)
         self.assertEqual(sorted(str(VOCAB.value(m, SKOS.notation)) for m in members), ["A", "C", "I", "R"])
 

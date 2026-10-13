@@ -42,6 +42,9 @@ def raci_entries(node, out):
     if isinstance(node, dict):
         raci = node.get("raci")
         if isinstance(raci, dict):
+            unknown = set(raci) - set(LEVELS)
+            if unknown:
+                sys.exit(f"process {node.get('id')} has RACI keys outside the four levels: {sorted(unknown)}")
             for level in LEVELS:
                 for text in raci.get(level, []):
                     out.append((node.get("id"), level, text))
@@ -88,6 +91,13 @@ def load():
             problems.append(f"{row['source_text']!r}: rule 'compound' must go with two or more roles")
         if ("qualifier" in steps) != bool(row["qualifier"]):
             problems.append(f"{row['source_text']!r}: rule 'qualifier' must go with a qualifier")
+        # The cheap half of the surface-only rule: an exact row is spelt like its role's label, and a
+        # case row differs from it in case alone.
+        label = {r["slug"]: r["label"] for r in roles}.get(names[0], "")
+        if steps == {"exact"} and row["source_text"] != label:
+            problems.append(f"{row['source_text']!r}: rule 'exact' but the label is {label!r}")
+        if steps == {"case"} and row["source_text"].lower() != label.lower():
+            problems.append(f"{row['source_text']!r}: rule 'case' but the label is {label!r}")
         if "team" in steps and any(r["kind"] != "team" for r in roles if r["slug"] in names):
             problems.append(f"{row['source_text']!r}: rule 'team' must map to a team")
     problems += [f"role {s!r} is not used by the register" for s in slugs if s not in used]

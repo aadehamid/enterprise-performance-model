@@ -38,7 +38,7 @@ IT Data Owner,it-data-owner,exact,
 IT Data Steward,it-data-steward,exact,
 Local Refinery Forecaster,local-refinery-forecaster,exact,
 Local Refinery Forecaster (Prompt),local-refinery-forecaster,qualifier,Prompt
-Manager: GFVC,gfvc-manager,punctuation,
+Manager: GFVC,gfvc-manager,exact,
 Marine Dock Scheduler,marine-dock-scheduler,exact,
 Marine Dock Schedulers,marine-dock-scheduler,plural,
 Operations,operations,team,

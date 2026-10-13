@@ -3,7 +3,7 @@ action-owner,Action Owner,position,"The source writes ""Action Owners"": the own
 asphalt-manager,Asphalt Manager,position,
 black-oil-manager,Black Oil Manager,position,
 bpa,BP&A,team,The acronym is not expanded in the repository.
-business-analyst,Business Analyst,position,
+business-analyst,Business Analyst,position,"One string adds the qualifier RO, which is not expanded in the repository."
 cci-director,CCI Director,position,The acronym is not expanded in the repository.
 commercial-scheduler,Commercial Scheduler,position,
 cp-manager,CP Manager,position,The acronym is not expanded in the repository.
@@ -17,11 +17,11 @@ crude-rfc,Crude RFC,position,"The acronym is not expanded in the repository. It 
 crude-scheduler,Crude Scheduler,position,
 distribution-backcaster,Distribution Backcaster,position,
 distribution-planner,Distribution Planner,position,
-e-and-p-manager,E&P Manager,position,
-e-and-p-supervisor,E&P Supervisor,position,
+e-and-p-manager,E&P Manager,position,The acronym E&P is not expanded in the repository.
+e-and-p-supervisor,E&P Supervisor,position,The acronym E&P is not expanded in the repository.
 forecaster,Forecaster,position,"Appears only inside two compound entries. It may be the Local Refinery Forecaster; kept apart until confirmed."
 gasoline-blend-optimizer,Gasoline Blend Optimizer,position,
-gfvc-manager,GFVC Manager,position,"The source writes ""Manager: GFVC"". The acronym is not expanded in the repository."
+gfvc-manager,Manager: GFVC,position,The acronym is not expanded in the repository.
 global-feedstocks-manager,Global Feedstocks Manager,position,
 inventory-representative,Inventory Representative,position,
 it-data-custodian,IT Data Custodian,position,
