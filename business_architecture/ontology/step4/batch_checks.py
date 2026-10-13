@@ -96,7 +96,12 @@ SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #
 SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
 # Issues whose register rows are adopted into Step 4. Each has
 # review-evidence/phase1-sweep/<issue>-review.csv covering exactly its register rows.
-SWEEP_ADOPTED = ("206",)
+SWEEP_ADOPTED = ("206", "203")
+# No-relationship rows the approved register keeps as duplicate provenance on a fact
+# another row carries (mapping_v2.DUPLICATE_PROVENANCE_ATTACH). Each may sit on that
+# fact only. REL-00436: "REL-00436 stays attached to that fact as duplicate provenance"
+# (register reason); the fact stands through REL-00447.
+SWEEP_PROVENANCE = {"REL-00436": ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1-2-5-1-4")}
 
 
 def sweep_files_problems(found):
@@ -150,8 +155,10 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
             problems.append(f"{rid}: source_slug must be {v2[rid]['source_slug']}")
         carried = [k for k, ids in facts.items() if rid in ids]
         if reg["verdict"] == "no-relationship":
-            if r["fresh_verdict"] != "HOLD" or carried:
-                problems.append(f"{rid}: a no-relationship row stays HOLD and carries no fact")
+            allowed = [SWEEP_PROVENANCE[rid]] if rid in SWEEP_PROVENANCE else []
+            if r["fresh_verdict"] != "HOLD" or carried != allowed:
+                problems.append(f"{rid}: a no-relationship row stays HOLD and carries no fact"
+                                + (f" except its provenance on {' '.join(allowed[0])}" if allowed else ""))
             continue
         if r["fresh_verdict"] != "APPROVE":
             problems.append(f"{rid}: fresh_verdict must be APPROVE")

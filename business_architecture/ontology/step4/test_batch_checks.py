@@ -178,5 +178,33 @@ class SweepBatch206(unittest.TestCase):
             self.assertTrue(any(extra in p for p in batch_checks.sweep_files_problems(names | {extra})), extra)
 
 
+
+class SweepBatch203(unittest.TestCase):
+    def setUp(self):
+        with open(os.path.join(SWEEP, "203-review.csv"), newline="") as f:
+            self.rows = list(csv.DictReader(f))
+        with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
+            self.register = {r["row_id"]: r for r in csv.DictReader(f)}
+        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+            self.approval = f.read()
+        self.facts, self.v2 = facts(), v2()
+
+    def problems(self, fact_rows):
+        return batch_checks.sweep_batch_problems("203", self.rows, self.register, self.approval, self.v2, fact_rows)
+
+    def test_the_batch_matches_the_register(self):
+        self.assertEqual(self.problems(self.facts), [])
+
+    def test_recorded_provenance_is_allowed_only_on_its_fact(self):
+        fact = batch_checks.SWEEP_PROVENANCE["REL-00436"]
+        self.assertIn("REL-00436", self.facts[fact])
+        moved = copy.deepcopy(self.facts)
+        moved[fact] = [x for x in moved[fact] if x != "REL-00436"]
+        moved[("CM-0", "core:dependsOnOutputOf", "CM-1")] = ["REL-00436"]
+        self.assertTrue(any("REL-00436" in p for p in self.problems(moved)))
+        dropped = copy.deepcopy(self.facts)
+        dropped[fact] = [x for x in dropped[fact] if x != "REL-00436"]
+        self.assertTrue(any("REL-00436" in p for p in self.problems(dropped)))
+
 if __name__ == "__main__":
     unittest.main()

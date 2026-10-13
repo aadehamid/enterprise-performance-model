@@ -123,7 +123,7 @@ REL-00148,CM-1-2-1-1-3,enables,CM-1-2-1-1-4,Perform Asset Optimization,Commercia
 REL-00149,CM-1-2-1-1-3,precedes,CM-1-2-3-1-7,Perform RINs/REC Actualization,Commercial & Marketing,A:explicit-reference,C:two-way-absent(back-verbs=informed-by),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00150,CM-1-2-1-1-4,uses-input,CM-1-2-1-1-1,Receive Production Forecast,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00151,CM-1-2-1-1-4,uses-input,CM-1-2-1-1-2,Receive Demand Forecast,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00152,CM-1-2-1-1-4,enables,CM-1-2-1-4,Trading Strategy Management,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00152,CM-1-2-1-1-4,informs,CM-1-2-1-4,Trading Strategy Management,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00153,CM-1-2-1-1-5,uses-input,CM-1-2-1-1-4,Perform Asset Optimization,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00154,CM-1-2-1-1-5,enables,CM-1-2-1-4,Trading Strategy Management,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=uses-input),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00155,CM-1-2-1-1-6,informed-by,CM-1-1-7-3,Energy & Utility Management,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
@@ -183,7 +183,7 @@ REL-00210,CM-1-2-1-3-9,follows,CM-1-2-1-3-2,Obtain Trade Approval,Commercial & M
 REL-00211,CM-1-2-1-3-9,enables,CM-1-1-3-6-1,Plan & Execute Nominations,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00212,CM-1-2-1-3-9,precedes,CM-1-2-4-1-12,Settle Pipelines,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00213,CM-1-2-1-4,uses-input,CM-1-2-1-1-5,Forecast Revenue,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00214,CM-1-2-1-4,uses-input,CM-1-2-1-1-4,Perform Asset Optimization,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00214,CM-1-2-1-4,uses-input,CM-1-2-1-1-4,Perform Asset Optimization,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=informs),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00215,CM-1-2-1-4,governed-by,CM-1-2-2-3,Market Risk Management,Commercial & Marketing,A:explicit-reference,C:two-way-absent(back-verbs=enables),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00216,CM-1-2-2-1-1,enables,CM-1-2-2-1-2,Manage Credit Limits,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=follows),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00217,CM-1-2-2-1-1,enables,CM-1-2-1-2-1,Create New Counterparty,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=requires),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -230,8 +230,8 @@ REL-00258,CM-1-2-2-3-11,uses-input,CM-1-2-2-3-7,Measure Risk,Commercial & Market
 REL-00259,CM-1-2-2-3-11,enables,CM-1-2-2-3-6,Manage Risk Limits,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00260,CM-1-2-2-3-11,enables,CM-1-2-2-3-13,Manage Risk Reporting,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00261,CM-1-2-2-3-12,uses-input,CM-1-2-2-3-7,Measure Risk,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00262,CM-1-2-2-3-12,enables,CM-1-2-2-3-6,Manage Risk Limits,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00263,CM-1-2-2-3-12,enables,CM-1-2-2-3-13,Manage Risk Reporting,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00262,CM-1-2-2-3-12,informs,CM-1-2-2-3-6,Manage Risk Limits,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00263,CM-1-2-2-3-12,provides-input-to,CM-1-2-2-3-13,Manage Risk Reporting,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00264,CM-1-2-2-3-13,uses-input,CM-1-2-2-3-8,Monitor Risk,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00266,CM-1-2-2-3-13,enables,CM-1-2-1-4,Trading Strategy Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00267,CM-1-2-2-3-14,enables,CM-1-2-2-3-15,Manage Commodity Valuations,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -378,7 +378,7 @@ REL-00435,CM-1-2-5-1-3,precedes,CM-1-2-1-2-5,Create New Contract,Commercial & Ma
 REL-00437,CM-1-2-5-1-4,enables,CM-1-2-5-2-1,Coordinate Feedstock Trading,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00438,CM-1-2-5-1-4,informed-by,CM-1-2-5-1-3,Develop Term Slate,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00439,CM-1-2-5-2-1,follows,CM-1-2-5-2-2,Develop Feedstock Demand,Commercial & Marketing,C:two-way(back=precedes) | B:structural-nearness,,C:two-way,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00440,CM-1-2-5-2-1,enables,CM-1-2-1-3,Trade Capture,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00440,CM-1-2-5-2-1,informs,CM-1-2-1-3,Trade Capture,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00441,CM-1-2-5-2-1,precedes,CM-1-2-5-3-1,Manage Feedstock Transportation,Commercial & Marketing,A:explicit-reference | C:two-way(back=follows),,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00442,CM-1-2-5-2-2,uses-input,CM-1-1-4,Refinery Planning and Optimization,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00443,CM-1-2-5-2-2,uses-input,CM-1-2-5-4-2,Manage Feedstock Inventory,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=enables),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -393,10 +393,10 @@ REL-00451,CM-1-2-5-3-2,follows,CM-1-2-5-3-1,Manage Feedstock Transportation,Comm
 REL-00452,CM-1-2-5-3-2,precedes,CM-1-2-5-3-3,Plan Feedstock Arrival,Commercial & Marketing,A:explicit-reference | C:two-way(back=follows) | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00453,CM-1-2-5-3-2,informed-by,CM-1-1-7-2,Production Scheduling,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00454,CM-1-2-5-3-3,follows,CM-1-2-5-3-2,Schedule Feedstock Delivery,Commercial & Marketing,A:explicit-reference | C:two-way(back=precedes) | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00455,CM-1-2-5-3-3,enables,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00455,CM-1-2-5-3-3,informs,CM-1-2-3-1-4,Perform Vessel & Barge Actualization,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00456,CM-1-2-5-3-3,informed-by,CM-1-2-5-4-2,Manage Feedstock Inventory,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00457,CM-1-2-5-4-1,uses-input,CM-1-2-5-4-2,Manage Feedstock Inventory,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=enables),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00458,CM-1-2-5-4-1,enables,CM-1-2-1,Trading Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00458,CM-1-2-5-4-1,informs,CM-1-2-1,Trading Management,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00459,CM-1-2-5-4-1,informed-by,CM-1-2-2-3,Market Risk Management,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00460,CM-1-2-5-4-2,enables,CM-1-2-5-2-2,Develop Feedstock Demand,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00461,CM-1-2-5-4-2,enables,CM-1-2-5-4-1,Assess & Manage Inventory Risk,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -558,7 +558,7 @@ REL-00708,CM-1-3-4-1-1,governed-by,CM-1-3-4-1,Visioning And Implementation Plann
 REL-00709,CM-1-3-4-1-2,enables,CM-1-3-4-1-1,Identify Market Needs,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=informed-by),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00710,CM-1-3-4-1-2,governed-by,CM-1-3-4-1,Visioning And Implementation Planning,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00711,CM-1-3-4-1-3,follows,CM-1-3-4-1-1,Identify Market Needs,Commercial & Marketing,C:two-way(back=precedes) | B:structural-nearness,,C:two-way,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00712,CM-1-3-4-1-3,enables,CM-1-3-4-2,Concept & Feasibility Study,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00712,CM-1-3-4-1-3,informs,CM-1-3-4-2,Concept & Feasibility Study,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00713,CM-1-3-4-1-3,governed-by,CM-1-3-4-1,Visioning And Implementation Planning,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00714,CM-1-3-4-2-1,precedes,CM-1-3-4-2-2,Conduct Research,Commercial & Marketing,A:explicit-reference | C:two-way(back=follows) | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00715,CM-1-3-4-2-1,governed-by,CM-1-3-4-2,Concept & Feasibility Study,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
@@ -594,7 +594,7 @@ REL-00745,CM-1-3-4-5-2,governed-by,CM-1-3-4-5,Lifecycle Management,Commercial & 
 REL-00746,CM-1-3-4-5-3,follows,CM-1-3-4-5-2,Value Projects/Portfolios,Commercial & Marketing,C:two-way(back=precedes) | B:structural-nearness,,C:two-way,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00748,CM-1-3-4-5-3,governed-by,CM-1-3-4-5,Lifecycle Management,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00749,CM-1-3-4-5-4,follows,CM-1-3-4-5-3,Assess Portfolios,Commercial & Marketing,C:two-way(back=precedes) | B:structural-nearness,,C:two-way,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-00750,CM-1-3-4-5-4,enables,CM-1-3-4-3-3,Manage Product/Service Change,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-00750,CM-1-3-4-5-4,informs,CM-1-3-4-3-3,Manage Product/Service Change,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00751,CM-1-3-4-5-4,governed-by,CM-1-3-4-5,Lifecycle Management,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00752,CM-1-3-4-6-1,governed-by,CM-1-3-4-6,R&D Collaboration,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-00753,CM-1-3-4-6-1,enables,CM-1-3-4-3-2,Conduct Product Development,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -819,7 +819,7 @@ REL-01057,CM-1-3-8-4-3,uses-input,CM-1-3-6-4-3,Settle Rebate,Commercial & Market
 REL-01058,CM-1-3-8-4-3,uses-input,CM-1-3-6-6-15,Manage Brand Loyalty Programs,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01059,CM-1-3-8-4-3,enables,CM-1-3-8-2-6,Perform Revenue Accounting,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=uses-input),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01062,CM-1-3-8-4-4,uses-input,CM-1-3-7-1-4,Maintain Tax Master Data,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=enables),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-01064,CM-1-3-8-4-5,enables,CM-1-3-7-1-4,Maintain Tax Master Data,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-01064,CM-1-3-8-4-5,provides-input-to,CM-1-3-7-1-4,Maintain Tax Master Data,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01065,CM-1-3-8-4-5,uses-input,CM-1-3-8-4-4,Reconcile And Report Indirect Tax,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=uses-input),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01066,CM-1-3-8-4-5,governed-by,CM-1-3-8-4,"Manage Accounting, Regulatory Reporting and Compliance",Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01067,CM-1-3-8-4-6,governed-by,CM-1-3-8-4,"Manage Accounting, Regulatory Reporting and Compliance",Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
@@ -857,14 +857,13 @@ REL-01116,CM-1-1-3-5,informed-by,CM-1-1-2,Regional Optimization,Commercial & Mar
 REL-01117,CM-1-1-3-5,precedes,CM-1-1-3-6,Physical Distribution Scheduling,Commercial & Marketing,A:explicit-reference | C:two-way(back=follows) | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01119,CM-1-1-7-1,follows,CM-1-1-7-2,Production Scheduling,Refining,A:explicit-reference | C:two-way(back=precedes) | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01120,CM-1-1-7-1,enables,CM-1-1-5,Regional Backcasting,Refining,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
-REL-01121,CM-1-1-7-3,informed-by,CM-1-1-7-2,Production Scheduling,Refining,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-01122,CM-1-1-7-3,enables,CM-1-1-7-1,Daily Execution Planning,Refining,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-01121,CM-1-1-7-3,informed-by,CM-1-1-7-2,Production Scheduling,Refining,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01123,CM-1-2-5-2,informed-by,CM-1-1-4,Refinery Planning and Optimization,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01124,CM-1-2-5-2,enables,CM-1-2-1,Trading Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01125,CM-1-2-5-2,uses-input,CM-1-2-5-1,Crude/Feed Quality Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01126,CM-1-2-5-3,follows,CM-1-2-5-2-1,Coordinate Feedstock Trading,Commercial & Marketing,,,,HOLD,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01127,CM-1-2-5-3,uses-input,CM-1-2-1-2-9,Manage Carrier Contracts,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-01129,CM-1-2-6-1,enables,CM-1-1-2,Regional Optimization,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-01129,CM-1-2-6-1,informs,CM-1-1-2,Regional Optimization,Commercial & Marketing,A:explicit-reference,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01130,CM-1-2-6-1,informed-by,CM-1-2-6-1-3,Assess Cost-to-Serve Performance,Commercial & Marketing,A:explicit-reference,C:two-way-absent(back-verbs=enables),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01131,CM-1-2-6-1,enables,CM-1-2-6-2,Refined Product Demand Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01133,CM-1-2-6-2,enables,CM-1-2-6-3,Supply Operations,Commercial & Marketing,B:structural-nearness,C:two-way-absent(back-verbs=uses-input),B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
@@ -927,7 +926,7 @@ REL-01202,CM-1-3-3-4,informed-by,CM-1-3-3-3,Sales & Distribution Channel Design,
 REL-01203,CM-1-3-3-4,informed-by,CM-1-3-2-3,Consumer Value Proposition,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01204,CM-1-3-3-4,enables,CM-1-3-6-1,Channel & Partner Management,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01205,CM-1-3-4-5,informed-by,CM-1-3-4-3,Product & Service Development,Commercial & Marketing,A:explicit-reference | B:structural-nearness,C:two-way-absent(back-verbs=enables),A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
-REL-01206,CM-1-3-4-5,enables,CM-1-3-4-3-3,Manage Product/Service Change,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
+REL-01206,CM-1-3-4-5,informs,CM-1-3-4-3-3,Manage Product/Service Change,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01208,CM-1-3-4-6,informed-by,CM-1-3-4-1,Visioning And Implementation Planning,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01209,CM-1-3-4-6,enables,CM-1-3-4-2,Concept & Feasibility Study,Commercial & Marketing,B:structural-nearness,,B:structural-nearness,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
 REL-01210,CM-1-3-4-6,enables,CM-1-3-4-3,Product & Service Development,Commercial & Marketing,A:explicit-reference | B:structural-nearness,,A:explicit-reference,PROMOTE,adc7483522a7f3845dceca90c95187b6253372a4
