@@ -1,0 +1,9 @@
+# Q5. Which roles participate in process P?
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX orgm: <https://w3id.org/lsc/ontology/modules/organization/>
+PREFIX raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/>
+
+SELECT DISTINCT ?process ?role ?roleName WHERE {
+  ?a orgm:forProcess ?process ; orgm:assignedRole ?role . ?role skos:prefLabel ?roleName }

@@ -1,0 +1,10 @@
+# Q4. A process that has RACI has an accountable role (must be none)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX orgm: <https://w3id.org/lsc/ontology/modules/organization/>
+PREFIX raci: <https://w3id.org/lsc/ontology/modules/organization/raci-level/>
+
+SELECT DISTINCT ?process WHERE {
+  ?any orgm:forProcess ?process .
+  FILTER NOT EXISTS { ?a orgm:forProcess ?process ; orgm:raciLevel raci:accountable } }

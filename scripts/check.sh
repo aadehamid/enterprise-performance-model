@@ -51,10 +51,13 @@ done
 (cd business_architecture/ontology/regression && run with_deps python run.py)
 # Step 5: the role register must reconcile with the process map's RACI strings (EPM-DEC-001-0031).
 (cd business_architecture/ontology/organization && run with_deps python build_roles.py --verify)
+# Step 5: the RACI assignments must equal a fresh build, with a ledger that reconciles (EPM-DEC-001-0032).
+(cd business_architecture/ontology/organization && run with_deps python build_assignments.py --verify)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
   business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
   business_architecture/ontology/organization/test_roles.py \
+  business_architecture/ontology/organization/test_assignments.py \
   business_architecture/ontology/ref-mpc/test_ref_mpc.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
