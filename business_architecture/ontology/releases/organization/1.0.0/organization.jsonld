@@ -16,6 +16,12 @@
     "@value": "2026-10-13"
    }
   ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-13"
+   }
+  ],
   "http://purl.org/dc/terms/requires": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/core/1.0.0"

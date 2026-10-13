@@ -985,9 +985,10 @@ without a dated amendment and Hamid's explicit agreement.
 ### Step 10 module release candidates (2026-10-13)
 - `release/build_module.py` packages the organization and ref-mpc modules
   in the shape of the core 1.0.0 package: Turtle, JSON-LD, shapes, a DCAT
-  record, a changelog and a manifest with SHA-256s. Both are built as
+  record, a changelog and a manifest with SHA-256s. Both were built as
   1.0.0-rc.1 with no issued date: a first release is a major, which is
-  Hamid's. ref-mpc requires the organization candidate it ships with. The
+  Hamid's; he approved 1.0.0 the same day (entry above). The candidate
+  ref-mpc required the organization candidate it shipped with. The
   design is EPM-DEC-001-0037, decided under EPM-DEC-001-0028; the w3id
   registration and the hosting wait for Hamid.
 

@@ -11,6 +11,7 @@
 <https://w3id.org/lsc/ontology/modules/ref-mpc> a owl:Ontology ;
     dcterms:description "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5)."@en ;
     dcterms:issued "2026-10-13"^^xsd:date ;
+    dcterms:modified "2026-10-13"^^xsd:date ;
     dcterms:requires orgm:1.0.0 ;
     dcterms:title "LSC Reference Instances: Marathon Petroleum Corporation"@en ;
     owl:versionIRI refmpc:1.0.0 ;

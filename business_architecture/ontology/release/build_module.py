@@ -86,7 +86,10 @@ def build(name):
     for dep, version in sorted(dependencies(name).items()):
         g.add((iri, DCTERMS.requires, URIRef(f"{MODULES_NS}{dep}/{version}")))
     if m["issued"]:
+        # Issued and modified dates on every release, both the issue date at the cut (playbook
+        # Step 10; build_core.py does the same for core).
         g.add((iri, DCTERMS.issued, Literal(m["issued"], datatype=XSD.date)))
+        g.add((iri, DCTERMS.modified, Literal(m["issued"], datatype=XSD.date)))
     return g
 
 

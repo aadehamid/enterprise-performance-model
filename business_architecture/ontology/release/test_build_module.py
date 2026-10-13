@@ -16,6 +16,21 @@ from rdflib.namespace import DCTERMS, OWL, RDF
 import build_module as bm
 
 DCAT = bm.DCAT
+# The sentence that approved each issued release (EPM-DEC-001-0037).
+SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
+APPROVALS = {"organization": (SESSION2, "aprove now"), "ref-mpc": (SESSION2, "aprove now")}
+
+
+def approval_holds(name, m):
+    """The release names the sentence Hamid wrote for it, and that sentence is in the body of the
+    saved file. Another sentence of the same file, an answer to another question, is not an approval."""
+    path, words = m["approval"]
+    if (path, words) != APPROVALS[name]:
+        return False
+    with open(os.path.join(bm.ONTOLOGY, path)) as f:
+        # Hamid's words sit in the body; Claude's context sits in HTML comments.
+        body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
+    return words in body
 
 
 class Packages(unittest.TestCase):
@@ -36,17 +51,21 @@ class Packages(unittest.TestCase):
                 manifest = json.loads(bm.package(name, g)["manifest.json"])
                 issued = (URIRef(bm.MODULES_NS + name), DCTERMS.issued, None) in g
                 if m["stage"] is None:
-                    path, words = m["approval"]
-                    with open(os.path.join(bm.ONTOLOGY, path)) as f:
-                        # Hamid's words sit in the body; Claude's context sits in HTML comments.
-                        body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
-                    self.assertIn(words, body)
+                    path, _ = m["approval"]
+                    self.assertTrue(approval_holds(name, m))
                     self.assertTrue(issued)
+                    iri = URIRef(bm.MODULES_NS + name)
+                    self.assertEqual(g.value(iri, DCTERMS.modified), g.value(iri, DCTERMS.issued))
                     self.assertFalse(manifest["release_candidate"])
                     self.assertEqual(manifest["approved_by"]["recorded_in"], path)
                 else:
                     self.assertFalse(issued)
                     self.assertTrue(manifest["release_candidate"])
+
+    def test_another_sentence_of_the_answers_file_is_not_an_approval(self):
+        wrong = dict(bm.MODULES["organization"], approval=(SESSION2, "it is SIPOC"))
+        self.assertFalse(approval_holds("organization", wrong))
+        self.assertTrue(approval_holds("organization", bm.MODULES["organization"]))
 
     def test_dependencies_name_versions_that_exist(self):
         for name in bm.MODULES:
