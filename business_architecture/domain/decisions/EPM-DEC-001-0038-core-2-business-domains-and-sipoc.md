@@ -41,7 +41,7 @@ Left out: the evidence nodes on canonical facts (EPM-DEC-001-0035), which wait f
 
 ## Hamid's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`. On `sioc`: "it is SIPOC: SIPOC stands for Suppliers, Inputs, Process, Outputs, and Customers. It describes a process’s boundaries and the things that flow into and out of it." On the domains: "They two separate business domains: Commercial and Marketing". On the split: "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own". The build choices (items 3 to 7) are Claude's, made under EPM-DEC-001-0028 ("yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
+Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`. On `sioc`: "it is SIPOC: SIPOC stands for Suppliers, Inputs, Process, Outputs, and Customers. It describes a process’s boundaries and the things that flow into and out of it." On the domains: "They two separate business domains: Commercial and Marketing". On the split: "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own". The build choices (items 3 to 7) are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
 
 ## Evidence
 

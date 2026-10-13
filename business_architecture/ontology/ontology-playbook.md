@@ -707,8 +707,9 @@ the method improves, by a dated amendment with the owner's agreement.
   (Appendix A). Do not model data fields, systems, KPIs, controls or
   thresholds as process concepts.
 - **Confirm an ambiguous source field before you name a term after it.** A
-  field called `sioc` is not the W3C SIOC vocabulary until someone confirms
-  its business meaning.
+  field called `sioc` is not the W3C SIOC vocabulary; in this build its
+  business meaning was confirmed (as SIPOC) before any term was named
+  after it.
 - **Do not invent ownership to fill a gap.**
 
 ### Decisions and this playbook
@@ -1212,7 +1213,7 @@ read RDF 1.2 (EPM-DEC-001-0020; guideline v2.1).
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared
-disjoint. A JSON field named `sioc` has an unconfirmed meaning. Several
+disjoint. A JSON field named `sioc` had an unconfirmed meaning until it was confirmed as SIPOC (see the worklog). Several
 Order-to-Cash processes have empty output sets, to be resolved in Step 7 as
 explicit decisions.
 

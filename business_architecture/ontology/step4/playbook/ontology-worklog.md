@@ -1020,8 +1020,9 @@ without a dated amendment and Hamid's explicit agreement.
   definition: a `prov:Activity` whose single qualified association has
   `prov:hadPlan` pointing at a live core process concept (P-Plan's
   whole-plan link). No new terms. A shape fails any core concept typed as
-  a `prov:Activity`; core 1.0.0 passes. Planned inputs and outputs wait
-  for Hamid to confirm what the process map's `sioc` field means. The
+  a `prov:Activity`; core 1.0.0 passes. Planned inputs and outputs waited
+  for Hamid to confirm what the process map's `sioc` field means; he
+  confirmed it is SIPOC on 2026-10-13 (EPM-DEC-001-0038). The
   design is EPM-DEC-001-0034, decided under EPM-DEC-001-0028.
 
 ### Step 5 ref-mpc module (2026-10-13)
@@ -1326,6 +1327,10 @@ record in `business_architecture/domain/decisions/` (index in its README):
   exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
   6 cross-functional combos, normalized to a governed
   "Cross-functional" value with detail preserved in a note).
+  *Amendment 2026-10-13:* Hamid decided the values are business domains,
+  not org units, and split Commercial & Marketing into Commercial and
+  Marketing; the core 2.0.0 candidate links processes to a business domain
+  list instead (EPM-DEC-001-0038).
 - **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
   `core:conceptKind` is an object property to a controlled SKOS scheme,
   not a string. Kinds: Process (real business process — inputs,
@@ -1729,7 +1734,8 @@ record in `business_architecture/domain/decisions/` (index in its README):
   workbook, TTL, identity map, and cross-references.
 - **Confirm the `sioc` JSON field's meaning** (SIPOC/SIOC?) before
   naming ontology terms; do not confuse it with the W3C SIOC vocabulary
-  (2026-09-17).
+  (2026-09-17). *Resolved 2026-10-13:* Hamid confirmed it is SIPOC
+  (EPM-DEC-001-0038).
 
 ---
 
@@ -2001,8 +2007,8 @@ URI.
 
 ### What we evaluated and set aside
 - **W3C SIOC** (social/online-community vocabulary): not applicable;
-  the repo JSON's `sioc` field is still unconfirmed and must not be
-  confused with it.
+  the repo JSON's `sioc` field is SIPOC (Hamid, 2026-10-13;
+  EPM-DEC-001-0038) and must not be confused with it.
 - **ODPS family** (Open Data Product Specification / ODPC / ODPV / ODPG):
   mapped for awareness (ODPC→DCAT, ODPV→SKOS, ODPG→RDF) but not adopted —
   the W3C stack covers our needs without adding a second modeling
@@ -2024,8 +2030,9 @@ Facts about the source material that are easy to get wrong:
   and not globally unique outside this map.
 - **`officeLane` values:** `front_office`, `middle_office`,
   `back_office`, `operations`. Not declared disjoint.
-- **The `sioc` JSON field is unconfirmed.** Verify whether it means
-  SIPOC/SIOC in the business sense before minting any ontology term.
+- **The `sioc` JSON field is SIPOC** (suppliers, inputs, outputs,
+  customers; the process is the node). Hamid confirmed it on 2026-10-13
+  (EPM-DEC-001-0038).
 - **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
   processes have empty `produces` arrays; no AR credit/receivables/
   collections portfolio exists (do not reuse `dp-commercial-risk`);

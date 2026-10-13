@@ -37,9 +37,13 @@ class Candidate(unittest.TestCase):
 
     def test_the_figures(self):
         # Pinned from the 2026-10-13 build; a source change must update them deliberately.
-        self.assertEqual((COUNTS["business domain commercial"], COUNTS["business domain marketing"],
-                          COUNTS["processes with planned inputs and outputs"], COUNTS["planned inputs"],
-                          COUNTS["planned outputs"]), (205, 251, 153, 362, 219))
+        self.assertEqual({k: v for k, v in COUNTS.items()}, {
+            "business domain commercial": 205, "business domain marketing": 251,
+            "business domain finance-enabled-supply-and-trading": 13, "business domain cross-functional": 12,
+            "business domain finance": 2, "business domain refining": 2,
+            "processes with planned inputs and outputs": 153, "planned inputs": 362, "planned outputs": 219})
+        self.assertEqual(sorted(b.DOMAINS), ["commercial", "cross-functional", "finance",
+                                             "finance-enabled-supply-and-trading", "it-services", "marketing", "refining"])
 
     def test_planned_inputs_and_outputs_arrive_whole(self):
         for process, inputs, outputs in b.sipoc():
