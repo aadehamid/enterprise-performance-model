@@ -17,4 +17,4 @@ On core 1.0.0: 5 answerable, 5 partial (Q11, Q39, Q40, Q43, Q44), 34 waiting. Th
 
 A module PR moves its questions from `waits` to `answerable` in the same PR that makes them answerable.
 
-The status assignments are delegated under EPM-DEC-001-0028. Its amendment covering Steps 5 to 12 is pending in #252; Hamid's words are "yes, extend the delegation to steps 5 to 12."
+The status assignments are delegated under EPM-DEC-001-0028. Its amendment covering Steps 5 to 12 merged in #252; Hamid's words are "yes, extend the delegation to steps 5 to 12."

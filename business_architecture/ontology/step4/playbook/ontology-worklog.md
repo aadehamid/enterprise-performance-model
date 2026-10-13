@@ -84,7 +84,7 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Planned |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes in `organization/` (EPM-DEC-001-0030, decided under EPM-DEC-001-0028); roles, assignments and `ref-mpc` to follow |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Planned |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
@@ -957,6 +957,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Step 5 organization vocabulary (2026-10-13)
+- `organization/` holds the module's vocabulary and shapes:
+  `orgm:ResponsibilityAssignment` (one process, role and RACI level, with
+  the source's role text and a source), the RACI level list and
+  `orgm:ControlRelationship` (share, as-of date, source). The design is
+  EPM-DEC-001-0030, decided under EPM-DEC-001-0028, whose scope
+  amendment for Steps 5 to 12 merged in #252. The process map holds RACI on 153 processes, with 91 role
+  strings to normalize in the next slice.
+
 ### Step 11 competency regression started (2026-10-13)
 - `regression/` holds one SPARQL query per answerable part of the 44
   competency questions, a status for each question (`expected.csv`), and a
@@ -964,7 +973,7 @@ without a dated amendment and Hamid's explicit agreement.
   Q16, Q18), 5 partial (Q11, Q39, Q40, Q43, Q44), 34 waiting for Steps 5, 6
   and 7 or for EPM-DEC-001-0004 (Customer). Each module PR moves its questions to
   answerable. The status assignments are delegated under EPM-DEC-001-0028,
-  whose Steps 5 to 12 amendment is pending in #252.
+  whose Steps 5 to 12 amendment merged in #252.
 
 ### core 1.0.0 released (EPM-DEC-001-0029, 2026-10-13)
 - After the six Phase 1 sweep batches, `release/build_core.py` builds
