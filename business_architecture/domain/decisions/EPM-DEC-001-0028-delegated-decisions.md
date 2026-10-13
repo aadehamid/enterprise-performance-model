@@ -22,6 +22,8 @@ Claude decides open project questions on Hamid's behalf. Each delegated decision
 
 Unchanged: every change still goes through a pull request, the checks in AGENTS.md and an independent review.
 
+Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, with a log of what was done. Kimi K3 is the independent reviewer. Each PR gets at least one independent review and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review.
+
 Merging: Hamid asked how to remove the merge block because he would be away, then added the Claude Code permission rule `Bash(gh pr merge:*)`. Claude merges a PR with a merge commit only after `scripts/check.sh` passes, every independent-review finding is fixed or answered, and CI is green, and records the merge on the PR.
 
 ## Alternatives considered
@@ -35,6 +37,8 @@ Merging: Hamid asked how to remove the merge block because he would be away, the
 Hamid gave the instruction in the Claude Code session on 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation.md`): "do you need my approval for anything. I want you to keep going until we finish the ontology. Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity. Can we work this way"
 
 On merging, later in the same session ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137253866), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-merge.md`): "how do i remove the merge bock. I am going to bed and wont be around to merge"
+
+On scope and review ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137266851), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-goal.md`): "go until we finish emiting the ontology and updating the ontology playbook. Keep a log of what you did. Keep using kimi for PR reviewers. Do you need independent reviewer. We should do independent reviewer at least once and at most two times"
 
 ## Consequences
 
