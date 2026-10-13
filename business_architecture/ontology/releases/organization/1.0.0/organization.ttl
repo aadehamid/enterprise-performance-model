@@ -12,10 +12,12 @@
 
 <https://w3id.org/lsc/ontology/modules/organization> a owl:Ontology ;
     dcterms:description "Roles, RACI responsibility assignments and control between legal entities (Step 5)."@en ;
+    dcterms:issued "2026-10-13"^^xsd:date ;
+    dcterms:modified "2026-10-13"^^xsd:date ;
     dcterms:requires <https://w3id.org/lsc/ontology/modules/core/1.0.0> ;
     dcterms:title "LSC Organization Module"@en ;
-    owl:versionIRI orgm:1.0.0-rc.1 ;
-    owl:versionInfo "1.0.0-rc.1" .
+    owl:versionIRI orgm:1.0.0 ;
+    owl:versionInfo "1.0.0" .
 
 orgm:asOf a owl:DatatypeProperty ;
     rdfs:label "as of"@en ;

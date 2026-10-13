@@ -10,6 +10,18 @@
     "@value": "Roles, RACI responsibility assignments and control between legal entities (Step 5)."
    }
   ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-13"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-13"
+   }
+  ],
   "http://purl.org/dc/terms/requires": [
    {
     "@id": "https://w3id.org/lsc/ontology/modules/core/1.0.0"
@@ -23,12 +35,12 @@
   ],
   "http://www.w3.org/2002/07/owl#versionIRI": [
    {
-    "@id": "https://w3id.org/lsc/ontology/modules/organization/1.0.0-rc.1"
+    "@id": "https://w3id.org/lsc/ontology/modules/organization/1.0.0"
    }
   ],
   "http://www.w3.org/2002/07/owl#versionInfo": [
    {
-    "@value": "1.0.0-rc.1"
+    "@value": "1.0.0"
    }
   ]
  },

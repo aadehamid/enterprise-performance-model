@@ -7,7 +7,8 @@
 The package holds the module's Turtle and JSON-LD, its shapes, a DCAT record, its changelog and a
 manifest with each file's SHA-256, the shape of the core 1.0.0 package (EPM-DEC-001-0029). A release
 candidate (a stage such as "rc.1") carries no issued date: a module's first release is a major, and
-a major needs Hamid's approval (module policy, 2026-09-18).
+a major needs Hamid's approval (module policy, 2026-09-18). An issued release names where his
+approval is recorded; the tests check that the words are there.
 """
 import argparse
 import hashlib
@@ -29,7 +30,8 @@ MODULES = {
     "organization": {
         "title": "LSC Organization Module",
         "description": "Roles, RACI responsibility assignments and control between legal entities (Step 5).",
-        "version": "1.0.0", "stage": "rc.1", "issued": None,
+        "version": "1.0.0", "stage": None, "issued": "2026-10-13",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md", "aprove now"),
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
         "depends_on": ["core"],
@@ -38,7 +40,8 @@ MODULES = {
     "ref-mpc": {
         "title": "LSC Reference Instances: Marathon Petroleum Corporation",
         "description": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5).",
-        "version": "1.0.0", "stage": "rc.1", "issued": None,
+        "version": "1.0.0", "stage": None, "issued": "2026-10-13",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md", "aprove now"),
         "parts": ["ref-mpc/ref-mpc.ttl"],
         "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl"],
         "depends_on": ["organization"],
@@ -83,7 +86,10 @@ def build(name):
     for dep, version in sorted(dependencies(name).items()):
         g.add((iri, DCTERMS.requires, URIRef(f"{MODULES_NS}{dep}/{version}")))
     if m["issued"]:
+        # Issued and modified dates on every release, both the issue date at the cut (playbook
+        # Step 10; build_core.py does the same for core).
         g.add((iri, DCTERMS.issued, Literal(m["issued"], datatype=XSD.date)))
+        g.add((iri, DCTERMS.modified, Literal(m["issued"], datatype=XSD.date)))
     return g
 
 
@@ -149,6 +155,7 @@ def package(name, g):
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
+        "approved_by": None if m["stage"] else {"who": "Hamid", "recorded_in": m["approval"][0]},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 
