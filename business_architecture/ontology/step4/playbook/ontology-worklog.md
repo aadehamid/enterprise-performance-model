@@ -963,7 +963,7 @@ without a dated amendment and Hamid's explicit agreement.
   answer register built in batches (Step 4), building a release with a
   checked, deterministic builder (Appendix B, "Releasing a module"), and
   delegated decisions, with what stays with the owner (Section 6). Project
-  records: EPM-DEC-001-0025, -0027 and -0028 (pending in #242). The release
+  records: EPM-DEC-001-0025 and -0027 (merged); -0028 (pending in #242). The release
   build itself is pending its own PR.
 
 ### Phase 1 sweep register approved; #206 built (2026-10-12)
