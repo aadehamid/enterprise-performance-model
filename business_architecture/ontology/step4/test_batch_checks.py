@@ -188,12 +188,33 @@ class SweepBatch203(unittest.TestCase):
         with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
             self.approval = f.read()
         self.facts, self.v2 = facts(), v2()
+        with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
+            self.taxonomy = f.read()
 
-    def problems(self, fact_rows):
-        return batch_checks.sweep_batch_problems("203", self.rows, self.register, self.approval, self.v2, fact_rows)
+    def problems(self, fact_rows, rows=None, taxonomy=None):
+        return batch_checks.sweep_batch_problems("203", rows if rows is not None else self.rows, self.register,
+                                                 self.approval, self.v2, fact_rows,
+                                                 taxonomy=taxonomy if taxonomy is not None else self.taxonomy)
 
     def test_the_batch_matches_the_register(self):
         self.assertEqual(self.problems(self.facts), [])
+
+    def test_a_changed_direction_or_reason_is_caught(self):
+        for field, value in (("direction", "as-asserted"), ("reason", "edited")):
+            rows = copy.deepcopy(self.rows)
+            i = next(i for i, r in enumerate(rows) if r["direction"] == "reversed")
+            rows[i][field] = value
+            self.assertTrue(any(field in p for p in self.problems(self.facts, rows=rows)), field)
+
+    def test_a_sentence_missing_from_the_published_scope_note_is_caught(self):
+        row = next(r for r in self.rows if r["row_id"] == "REL-00263")
+        sentence = " ".join(row["scope_note_sentence"].split())
+        flat = " ".join(self.taxonomy.split())
+        self.assertIn(sentence, flat)
+        mutated = self.taxonomy.replace(row["scope_note_sentence"].split(",")[0], "Manage Risk Reporting always consumes", 1)
+        self.assertNotEqual(mutated, self.taxonomy)
+        self.assertTrue(any("REL-00263" in p and "published scope note" in p
+                            for p in self.problems(self.facts, taxonomy=mutated)))
 
     def test_recorded_provenance_is_allowed_only_on_its_fact(self):
         fact = batch_checks.SWEEP_PROVENANCE["REL-00436"]

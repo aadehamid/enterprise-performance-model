@@ -91,7 +91,8 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
 # the approved register, review-evidence/phase1-sweep/register.csv, approved as a
 # whole in review-evidence/hamid-answers/phase1-sweep.md.
 SWEEP_APPROVAL = "approve register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all."
-SWEEP_FIELDS = ("verdict", "verb", "target_slug", "stored_fact", "condition", "scope_note_sentence")
+SWEEP_FIELDS = ("verdict", "verb", "target_slug", "direction", "stored_fact", "condition", "scope_note_sentence",
+                "reason")
 SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #207 comment 6133390674)"
 SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
 # Issues whose register rows are adopted into Step 4. Each has
@@ -112,12 +113,27 @@ def sweep_files_problems(found):
     return problems
 
 
-def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
+def concept_block(taxonomy, slug):
+    """The Turtle block for proc:<slug> in the taxonomy text, whitespace-collapsed ("" if absent)."""
+    lines, block = taxonomy.split("\n"), []
+    for i, line in enumerate(lines):
+        if line.startswith(f"proc:{slug} a "):
+            block = [line]
+            for nxt in lines[i + 1:]:
+                if nxt.startswith("proc:"):
+                    break
+                block.append(nxt)
+            break
+    return " ".join(" ".join(block).split())
+
+
+def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxonomy=None):
     """Problems with one issue's sweep review rows, checked against the approved register.
 
     issue: the issue number as a string. rows: the batch review CSV as dicts.
     register: row ID -> register.csv row. v2: row ID -> target-dispositions-v2 row.
-    facts: (s, p, o) -> list of row IDs.
+    facts: (s, p, o) -> list of row IDs. taxonomy: the pinned baseline taxonomy text; when
+    given, each emitting row's sentence must appear in its scope-note concept's block.
     The review covers exactly the issue's register rows. Each row repeats its
     register row's decided values, Hamid's approval and the outcome they imply;
     an emitting row is on its stored fact, and a no-relationship row is on no fact.
@@ -164,6 +180,9 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
             problems.append(f"{rid}: fresh_verdict must be APPROVE")
         if r["scope_note_slug"] != r["source_slug"]:
             problems.append(f"{rid}: the sentence goes in the source's scope note")
+        if taxonomy is not None and " ".join(r["scope_note_sentence"].split()) not in concept_block(
+                taxonomy, r["scope_note_slug"]):
+            problems.append(f"{rid}: the approved sentence is not in {r['scope_note_slug']}'s published scope note")
         fact = tuple(reg["stored_fact"].split())
         if carried != [fact]:
             problems.append(f"{rid}: carried by {carried}, expected only {' '.join(fact)}")

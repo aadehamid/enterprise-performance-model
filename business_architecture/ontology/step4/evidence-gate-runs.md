@@ -88,4 +88,7 @@ gate was run against, not the pin. Do not retitle the checklist's
   418 → 397 PASS. `batch_checks.SWEEP_PROVENANCE` lets REL-00436, answered
   no relationship, keep its recorded duplicate provenance on the REL-00447
   fact and no other.
+  The sweep check now also compares each row's `direction` and `reason`
+  with the register, and requires each emitting row's approved sentence in
+  its source's scope note in the pinned baseline taxonomy (no count change).
 
