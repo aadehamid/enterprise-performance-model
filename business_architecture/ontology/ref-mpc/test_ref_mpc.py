@@ -39,6 +39,13 @@ class Facts(unittest.TestCase):
         ok, _, text = conforms(MODULE)
         self.assertTrue(ok, text)
 
+    def test_the_module_meets_the_core_source_shape(self):
+        # Core requires every dcterms:source target to be a titled bibliographic resource. A source
+        # node gives its URL as a citation, as core's own source nodes do (EPM-DEC-001-0033).
+        core_shapes = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "shapes.ttl"))
+        ok, _, text = validate(MODULE, shacl_graph=core_shapes)
+        self.assertTrue(ok, text)
+
     def test_three_reportable_segments_of_mpc(self):
         # 10-K: "Our operations consist of three reportable operating segments: Refining &
         # Marketing, Midstream and Renewable Diesel."
