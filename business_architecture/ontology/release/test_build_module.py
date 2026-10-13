@@ -41,10 +41,19 @@ class Packages(unittest.TestCase):
         for name in bm.MODULES:
             for dep, version in bm.dependencies(name).items():
                 with self.subTest(module=name, dep=dep):
-                    exists = bm.RELEASED.get(dep) == version or (dep in bm.MODULES and bm.label(bm.MODULES[dep]) == version)
-                    self.assertTrue(exists, f"{name} names {dep} {version}")
+                    # The dependency's package must be on disk, not only in the builder's own table.
+                    package = os.path.join(bm.ONTOLOGY, "releases", dep, version)
+                    self.assertTrue(os.path.isfile(os.path.join(package, "manifest.json")), f"{name} names {dep} {version}")
+                    with open(os.path.join(package, "manifest.json")) as f:
+                        self.assertEqual(json.load(f)["version"], version)
                     self.assertIn((URIRef(bm.MODULES_NS + name), DCTERMS.requires,
                                    URIRef(f"{bm.MODULES_NS}{dep}/{version}")), bm.build(name))
+
+    def test_ref_mpc_is_validated_with_the_control_relationship_shape(self):
+        # ref-mpc's control relationship is checked by the organization module's shapes.
+        shapes = bm.parse(bm.MODULES["ref-mpc"]["shapes"])
+        sh = "http://www.w3.org/ns/shacl#"
+        self.assertIn((None, URIRef(sh + "targetClass"), URIRef(bm.MODULES_NS + "organization/ControlRelationship")), shapes)
 
     def test_the_header_names_the_version(self):
         for name in bm.MODULES:
