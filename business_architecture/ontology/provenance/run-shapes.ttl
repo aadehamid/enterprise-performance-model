@@ -35,8 +35,9 @@ shp:DefinitionIsNotARun a sh:NodeShape ;
     sh:message "A process definition is typed as a prov:Activity; runs belong to the consuming systems." .
 
 # The definition a run follows is a live process: in the core scheme, not retired, not a
-# structural anchor, which no one performs, and not a capability, which processes realize
-# and no one runs (worklog, conceptKind decision of 2026-09-22; EPM-DEC-001-0034).
+# structural anchor, which no one performs (worklog, conceptKind decision of 2026-09-22), and
+# not a capability: the worklog defines one as an ability realized by processes, and a run
+# follows one of those processes, not the capability (EPM-DEC-001-0034, amendment).
 shp:LiveProcess a sh:NodeShape ;
     sh:property [ sh:path skos:inScheme ; sh:hasValue <https://w3id.org/lsc/ontology/modules/core> ] ;
     sh:not [ sh:path owl:deprecated ; sh:hasValue true ] ;
