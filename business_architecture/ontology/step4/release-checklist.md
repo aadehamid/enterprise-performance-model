@@ -66,18 +66,18 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
 - [x] Explicit promotion approval — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)
 
-## core 1.0.0 release (EPM-DEC-001-0013; built as EPM-DEC-001-0029 proposes)
+## core 1.0.0 release (EPM-DEC-001-0013; built as EPM-DEC-001-0029 decides)
 
 - [x] Every Phase 1 row has a fresh verdict: the six sweep batches (#206, #203, #210, #202, #209, #201) after #204 and #205; 51 Phase 1 rows stay held with recorded reasons (`epm_facts.py counts`). #202 merged in #244, #209 in #247 and #201 in #248.
 - [x] The release builds from the pinned evidence: `release/build_core.py` writes `releases/core/1.0.0/`; `check.sh` runs `--verify`.
 - [x] Zero `intake:` and full conservation: `conservation.csv` reconciles 5,571 source = 5,571 migrated; the build stops on any leftover `intake:` triple or blank node.
 - [x] SHACL release slice conforms (`release/shapes.ttl`; EPM-DEC-001-0014).
 - [x] LPG rules 1, 2, 3 and 5 (EPM-DEC-001-0020): one kind and one range per property (tested), a stated cardinality on every core property (shapes; tested), no blank nodes, fixed prefixes.
-- [ ] **Conservation ledger approval: Hamid.** The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
+- [x] **Conservation ledger approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
 - [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012) and merged in #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
-- [ ] **Fresh no-consumer attestation: Hamid.** It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
-- [ ] **Release approval: Hamid.** A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
-- [ ] At the cut: in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild, tag the merge commit `core-v1.0.0`.
+- [x] **Fresh no-consumer attestation: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
+- [x] **Release approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
+- [x] At the cut (2026-10-13): in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild, tag the merge commit `core-v1.0.0`.
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).

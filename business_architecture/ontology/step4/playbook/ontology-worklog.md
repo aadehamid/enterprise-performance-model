@@ -965,7 +965,7 @@ without a dated amendment and Hamid's explicit agreement.
   which is built and checked but pending its own PR. Delegated decisions,
   with what stays with the owner (Section 6), from Hamid's delegation of
   2026-10-12. Project records: EPM-DEC-001-0025 and -0027 (merged); -0028
-  (pending in #242).
+  (merged in #242).
 
 ### Phase 1 sweep register approved; #206 built (2026-10-12)
 - Hamid delegated drafting of all 245 remaining Phase 1 answers: Claude and
@@ -994,11 +994,12 @@ without a dated amendment and Hamid's explicit agreement.
   `intake:` field migrated (5,571 of 5,571), the 640 canonical facts as direct
   triples, the scoped sequences, eight code lists, IRIs for the 1,003 former
   blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
-  manifest. The package is built as release candidate `1.0.0-rc.1`, with no
-  issued date. The design choices are proposed in EPM-DEC-001-0029 under the
-  delegation in EPM-DEC-001-0028 (pending in #242). The release waits for
-  Hamid's decision on that design, his fresh attestation, the ledger approval
-  and his release approval.
+  manifest. The design choices are in EPM-DEC-001-0029, drafted under the
+  delegation in EPM-DEC-001-0028 (merged in #242).
+- Released 2026-10-13. Hamid approved the design, the ledger and the release,
+  and attested: "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
+  The builder dropped the `-rc.1` stage and set the issue date; the merge
+  commit is tagged `core-v1.0.0`.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

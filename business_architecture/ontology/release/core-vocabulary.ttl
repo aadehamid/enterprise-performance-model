@@ -1,5 +1,5 @@
 # The core vocabulary for core 1.0.0: relationship predicates, the properties that
-# replace intake:, and their code lists. Proposed in EPM-DEC-001-0029; each definition
+# replace intake:, and their code lists. Decided in EPM-DEC-001-0029; each definition
 # follows its approved source, named in dcterms:source. Scoped-sequence terms are in
 # step4/scoped-sequence/vocabulary.ttl (EPM-DEC-001-0026).
 @prefix core: <https://w3id.org/lsc/ontology/modules/core/> .

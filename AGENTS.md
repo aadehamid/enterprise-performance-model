@@ -16,6 +16,8 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 ## Working rules
 
 - **Every change goes through a pull request.** A reviewer merges or HOLDs.
+  Under EPM-DEC-001-0028 the PR reviewer posts MERGE or HOLD, and Claude merges
+  on a MERGE for the current head.
   Address review feedback on the same branch. Don't start unrelated work while
   a PR is open.
 - **`business_architecture/` takes precedence** over other folders. The process
@@ -28,7 +30,12 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   then downstream-specific industry sources. Generic frameworks are support
   only. Cite every fact.
 - **Don't mark anything Decided or Approved without Hamid's recorded
-  decision.** A merge alone doesn't decide or approve it.
+  decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
+  EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
+  updating its playbook to Claude: a decision in that scope made from the
+  evidence order above and recorded as "delegated under EPM-DEC-001-0028"
+  counts as Decided. It also sets the independent review at one or two rounds
+  per PR, and names the reviewers.
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
   `APPROVAL_POLICY.md` (when a human must review). Authors can read it before pushing.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
@@ -36,7 +43,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 
 ## Before every push
 
-Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes.
+Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes, except that the independent review in item 5 runs at most twice per PR (EPM-DEC-001-0028).
 
 1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
@@ -46,9 +53,16 @@ Run these before you open a pull request, and again before you push a review fix
    Commit first; the review reads committed work only.
    - **Inside Herdr** (`HERDR_ENV=1`): run the Herdr review in the `way-of-working`
      skill (`references/before-push.md`). A reviewer agent of a different kind runs
-     `ce-code-review` in this repo's `review-<repo>` tab.
-   - **Outside Herdr**: Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`.
-     Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
+     `ce-code-review` in its own review tab. EPM-DEC-001-0028 names the reviewer:
+     the Cursor agent on Grok 4.6 (`herdr-review.sh --kind cursor`).
+   - **Rounds:** at most two per PR (EPM-DEC-001-0028). Round 1 reviews the whole
+     branch. Round 2 runs only if round 1 found something, and reviews the fix
+     commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
+     no third review.
+   - **Outside Herdr**: run the reviewer EPM-DEC-001-0028 names, the Cursor agent on
+     Grok 4.6: `agent -p --model cursor-grok-4.6-medium "<review prompt>"`. If it is
+     unavailable, Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`,
+     and Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
 
    Record any disagreement on a judgement call in the PR body.
 

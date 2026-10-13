@@ -37,10 +37,10 @@ SHAPES = os.path.join(HERE, "shapes.ttl")
 CHANGELOG = os.path.join(HERE, "CHANGELOG.md")
 PINNED = os.path.join(STEP4, "PINNED_SHA.txt")
 VERSION = "1.0.0"
-# Until Hamid approves the release, the package is a release candidate: it carries the
-# pre-release version and no issued date. At the cut: STAGE = None, ISSUED = the date.
-STAGE = "rc.1"
-ISSUED = None
+# A package built before Hamid approves a release is a release candidate (STAGE set,
+# no issued date). Hamid approved core 1.0.0 on 2026-10-13.
+STAGE = None
+ISSUED = "2026-10-13"
 LABEL = VERSION if STAGE is None else f"{VERSION}-{STAGE}"
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", VERSION)
 

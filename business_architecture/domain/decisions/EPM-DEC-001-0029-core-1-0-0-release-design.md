@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed (Claude's delegated choice under EPM-DEC-001-0028, which is pending in #242; Hamid decides) |
+| Status | Decided (Hamid approved, 2026-10-13) |
 | Date | 2026-10-13 |
 | Questions | The open implementation questions of the `core` 1.0.0 release |
-| Source | Claude Code session, 2026-10-13, under Hamid's delegation of 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677)); EPM-DEC-001-0028 is pending in #242 |
+| Source | Claude Code session, 2026-10-13, under Hamid's delegation of 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677)); EPM-DEC-001-0028 merged in #242; Hamid approved the design on 2026-10-13 |
 
 ## Context
 
@@ -39,11 +39,11 @@ EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at tha
 
 **The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `counts.json` (the build's measured figures), `label-dispositions.csv` (the label report the former names follow), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`; `core.jsonld`, `shapes.ttl` and the DCAT record `catalog.ttl` ship beside them. The header follows the playbook's worked example (`ontology-playbook.md`, "Ontology IRI and version IRI"). Until Hamid approves the release, the package is built as release candidate `1.0.0-rc.1`, with no `dcterms:issued`; at the cut, `build_core.py` sets the release date as `dcterms:issued` and drops the candidate label. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
 
-**Approvals stay with Hamid.** This record proposes the release design under EPM-DEC-001-0028; it becomes Decided only with Hamid's recorded words. Three things wait for Hamid: the fresh no-consumer attestation, a fact about who uses the ontology (`step4/no-consumer-attestation.md:3`); the conservation ledger's approval (`step4/ledger-v2.md`), now backed by a reconciled before/after run; and the release itself, because a major release needs his approval ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). The release PR waits for all three.
+**Approvals.** Hamid approved this design, the conservation ledger and the release on 2026-10-13, and gave the fresh no-consumer attestation (see Hamid's recorded words). A major release needs his approval ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release").
 
 ## Hamid's recorded words
 
-Hamid delegated these questions in the Claude Code session on 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation.md`): "I want you to keep going until we finish the ontology. Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity." Each choice above is delegated under that instruction (EPM-DEC-001-0028, pending in #242); Hamid did not make these choices himself, and he can reverse any of them.
+Hamid delegated these questions in the Claude Code session on 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation.md`): "I want you to keep going until we finish the ontology. Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity." Claude drafted each choice above under that instruction (EPM-DEC-001-0028, merged in #242). Hamid then approved the design in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/core-1-0-0-release.md`): "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
 
 ## Alternatives considered
 

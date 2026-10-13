@@ -9,12 +9,12 @@ Hamid's review.
   recorded on PR #190). All 10 boxes in `release-checklist.md` are complete.
   Promotion approved the review. The `core` 1.0.0 release (serializing the
   canonical facts to Turtle and retiring `intake:` in one flag-day release,
-  per decision Q2) is still an open decision, and nothing retires until it
-  is approved. *Since 2026-10-13 the release is built and checked
-  (`release/build_core.py`, EPM-DEC-001-0029); it waits for Hamid's decision on
-  that design, his fresh attestation, the ledger approval and the release
-  approval (`release-checklist.md`, core 1.0.0).*
+  per decision Q2) was released on 2026-10-13 with Hamid's approval
+  (`release/build_core.py`, EPM-DEC-001-0029; `release-checklist.md`, core
+  1.0.0). `intake:` is retired in `releases/core/1.0.0/`.
 - **Nothing here merges to `main`** without Hamid's explicit approval.
+  EPM-DEC-001-0028 records his approval for Claude to merge, while he is away,
+  a PR whose PR reviewer posted MERGE for its current head.
 - **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
   `section <issue>` from the repo root. It computes them from the files below;
   `scripts/test_published_figures.py` fails if this file states a figure.

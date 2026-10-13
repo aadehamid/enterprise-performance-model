@@ -156,11 +156,11 @@ class Destinations(unittest.TestCase):
             if (r["object"], r["predicate"], r["subject"]) not in stored:
                 self.assertNotIn((b.PROC[r["object"]], p, b.PROC[r["subject"]]), self.g)
 
-    def test_the_package_is_a_release_candidate_until_approved(self):
+    def test_the_package_is_the_approved_release(self):
         g = self.g
-        # Literal on purpose: at the cut, Hamid's approval changes this test with build_core.py.
-        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, OWL.versionInfo)), "1.0.0-rc.1")
-        self.assertIsNone(g.value(b.ONTOLOGY_IRI, DCTERMS.issued))
+        # Literal on purpose: Hamid approved the release on 2026-10-13.
+        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, OWL.versionInfo)), "1.0.0")
+        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, DCTERMS.issued)), "2026-10-13")
         self.assertEqual(len(list(g.objects(b.ONTOLOGY_IRI, DCTERMS.title))), 1)
 
 

@@ -1,11 +1,11 @@
-# Intake Predicate Conservation Ledger v2 — DRAFT, ready for Hamid's approval
+# Intake Predicate Conservation Ledger v2 — approved by Hamid, 2026-10-13
 
-**Status:** ready for Hamid's approval with the core 1.0.0 release. The targets are
-the ones EPM-DEC-001-0029 proposes. The before/after run is
+**Status:** approved by Hamid with the core 1.0.0 release, 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`: "I approve the conservation ledger and the core 1.0.0 release."). The targets are
+the ones EPM-DEC-001-0029 decides. The before/after run is
 `release/build_core.py`; its after half, `releases/core/1.0.0/conservation.csv`,
 reconciles every census triple: 5,571 source = 5,571 migrated, zero `intake:` left.
 Where this ledger and an approved Step 4 decision disagree (`level`, Q8 and Q9
-status, cross-functional domains), the decision wins (as EPM-DEC-001-0029 proposes). Two measured
+status, cross-functional domains), the decision wins (EPM-DEC-001-0029). Two measured
 splits differ from this census, taken 2026-09-25 on an older baseline: terminology
 notes 385 editorial / 97 provenance / 6 decision-pointer / 3 dual-aspect, and 736
 source links with 8 annotations (`releases/core/1.0.0/counts.json`). The source-link

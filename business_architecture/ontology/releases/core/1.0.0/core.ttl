@@ -17157,10 +17157,12 @@ mod:core a owl:Ontology,
         skos:ConceptScheme ;
     dcterms:creator "Hamid" ;
     dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en ;
+    dcterms:issued "2026-10-13"^^xsd:date ;
     dcterms:license core:license ;
+    dcterms:modified "2026-10-13"^^xsd:date ;
     dcterms:title "LSC Core Process Ontology"@en ;
-    owl:versionIRI core:1.0.0-rc.1 ;
-    owl:versionInfo "1.0.0-rc.1" ;
+    owl:versionIRI core:1.0.0 ;
+    owl:versionInfo "1.0.0" ;
     skos:hasTopConcept proc:L0-downstream-operations,
         proc:L0-enabling-functions .
 
