@@ -35,7 +35,7 @@ PROPS |= {s for s in VOCAB.subjects(RDFS.label, None) if str(s).startswith(str(O
 EXACTLY_ONE = {  # EPM-DEC-001-0030: these paths carry exactly one value on their shape
     ORGM.forProcess, ORGM.assignedRole, ORGM.raciLevel, ORGM.sourceRoleText,
     ORGM.controllingEntity, ORGM.controlledEntity, ORGM.asOf, SKOS.prefLabel}
-AT_MOST_ONE = {ORGM.ownershipShare, SKOS.definition}  # optional, but never two
+AT_MOST_ONE = {ORGM.ownershipShare, SKOS.definition, SKOS.scopeNote}  # optional, but never two
 LEVELS = {RACI.responsible, RACI.accountable, RACI.consulted, RACI.informed}
 
 
@@ -45,6 +45,7 @@ def valid_graph():
     g.add((EX.process, RDF.type, SKOS.Concept))
     g.add((EX.role, RDF.type, ORG.Role))
     g.add((EX.role, SKOS.prefLabel, Literal("Refinery Scheduler", lang="en")))
+    g.add((EX.role, DCTERMS.source, EX.processMap))
     a = EX.assignment
     g.add((a, RDF.type, ORGM.ResponsibilityAssignment))
     g.add((a, ORGM.forProcess, EX.process))
@@ -93,7 +94,7 @@ class Vocabulary(unittest.TestCase):
 
     def test_every_shape_path_is_a_declared_property(self):
         # A path only the shapes name would escape the one-kind and one-range check above.
-        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition}
+        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition, SKOS.scopeNote}
         paths = set(SHAPES.objects(None, SH.path))
         self.assertEqual(sorted(map(str, paths - PROPS - external)), [])
 
@@ -112,8 +113,8 @@ class Vocabulary(unittest.TestCase):
                 with self.subTest(path=str(path)):
                     self.assertEqual(int(SHAPES.value(n, SH.maxCount)), 1)
 
-    def test_both_shapes_require_a_source(self):
-        for shape in (SHP.Assignment, SHP.Control):
+    def test_assignment_control_and_role_shapes_require_a_source(self):
+        for shape in (SHP.Assignment, SHP.Control, SHP.Role):
             mins = [SHAPES.value(n, SH.minCount) for n in SHAPES.objects(shape, SH.property)
                     if SHAPES.value(n, SH.path) == DCTERMS.source]
             self.assertEqual([int(m) for m in mins], [1], str(shape))
