@@ -1,0 +1,22 @@
+{
+  "module": "ref-mpc",
+  "version": "1.0.0-rc.1",
+  "release_candidate": true,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/ref-mpc",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/ref-mpc/1.0.0-rc.1",
+  "depends_on": {
+    "organization": "1.0.0-rc.1"
+  },
+  "decisions": [
+    "EPM-DEC-001-0015",
+    "EPM-DEC-001-0033"
+  ],
+  "triples": 138,
+  "files": {
+    "CHANGELOG.md": "676de401e866bd3aaa1255515e1e431704c68c7df8bfca25cd52a5bace481316",
+    "catalog.ttl": "abd08fe4708ea430e4ebadd215b530cd19458a70c36df6b6db1158f645e7d7a2",
+    "ref-mpc.jsonld": "f44e00371b54f6ce2f7046899865c7b69e6c0f23527d666c79e7d4afbfb85d76",
+    "ref-mpc.ttl": "ece69ea56130cbf87baebf671d834c24d65cca67ee06b6071289ded590616388",
+    "shapes.ttl": "8b1e041ccc26fe7495acb0fcbdef722d45cf6c0686983c4429adba4b60b6cd3a"
+  }
+}

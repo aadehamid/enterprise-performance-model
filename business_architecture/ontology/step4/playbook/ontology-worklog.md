@@ -89,7 +89,7 @@ ontology; everything else points at it.
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization and ref-mpc candidates 1.0.0-rc.1, 2026-10-13 (EPM-DEC-001-0037); 1.0.0, w3id registration and hosting wait for Hamid |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 1.0.0 with the organization and ref-mpc modules; two Rule 1 gaps in core 1.0.0 wait for the next core release |
 
@@ -956,6 +956,15 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 10 module release candidates (2026-10-13)
+- `release/build_module.py` packages the organization and ref-mpc modules
+  in the shape of the core 1.0.0 package: Turtle, JSON-LD, shapes, a DCAT
+  record, a changelog and a manifest with SHA-256s. Both are built as
+  1.0.0-rc.1 with no issued date: a first release is a major, which is
+  Hamid's. ref-mpc requires the organization candidate it ships with. The
+  design is EPM-DEC-001-0037, decided under EPM-DEC-001-0028; the w3id
+  registration and the hosting wait for Hamid.
 
 ### Step 12 projection pipeline (2026-10-13)
 - `projection/pipeline.py` runs the guideline's five steps over core
