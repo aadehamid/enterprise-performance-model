@@ -36,6 +36,7 @@ root.
 | `lpg-projection/` | Pinned snapshot of the ontology-to-LPG projection guideline used in Step 12 (EPM-DEC-001-0020, 0021) |
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
 | `competency-questions.md` | The 44-question acceptance baseline — doubles as the Step 11 SPARQL regression tests |
+| `regression/` | The Step 11 SPARQL regression: one query per answerable question, each question's status, and the runner `check.sh` calls |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |
 | `build/step2-identity-map.py` | Reproducible script: URI slug for every one of the 680 nodes |

@@ -1,0 +1,9 @@
+# Q1. What are the child processes of X? (every parent and its children)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?parent ?child WHERE { ?child skos:broader ?parent ; skos:inScheme mod:core . }

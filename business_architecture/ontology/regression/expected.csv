@@ -1,0 +1,45 @@
+question,status,queries,waits_for
+1,answerable,q01a-children.rq;q01b-path-to-root.rq,
+2,answerable,q02a-no-parent.rq;q02b-children-expected.rq,
+3,waits:step-5,,RACI assignments (Step 5)
+4,waits:step-5,,accountable owner (Step 5)
+5,waits:step-5,,roles (Step 5)
+6,waits:step-7,,systems (Step 7)
+7,waits:step-7,,data products (Step 7)
+8,waits:step-6,,planned inputs and outputs (Step 6)
+9,waits:step-7,,lanes (Step 7)
+10,waits:step-7,,capabilities and value streams (Step 7)
+11,partial,q11-apqc-references.rq,"APQC elements with no local counterpart need the APQC element list in the graph (external mappings, EPM-DEC-001-0023, Step 7)"
+12,answerable,q12-apqc-divergence.rq,
+13,waits:step-7,,"concept vs named measure vs report (KPI seed, EPM-DEC-001-0017)"
+14,waits:step-7,,which concepts may become a number (KPI seed)
+15,waits:step-7,,"same word, same meaning test (Step 7 bindings)"
+16,answerable,q16-names.rq,
+17,waits:step-5,,meaning owner vs data steward (Step 5)
+18,answerable,q18-identity-version.rq,
+19,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+20,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+21,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+22,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+23,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+24,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+25,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+26,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+27,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+28,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+29,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+30,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+31,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+32,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+33,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+34,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+35,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+36,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
+37,waits:step-7,,placement of concepts and Named KPIs (Step 7)
+38,waits:step-7,,placement certification vs context (Step 7)
+39,partial,q39-downstream.rq,processes answer now; concepts and Named KPIs wait for Step 7
+40,waits:step-10,,published wording for people (Step 10); graph part only (EPM-DEC-001-0019)
+41,waits:step-7,,what an agent may answer needs the KPI module; graph part only
+42,waits:step-7,,what an agent must refuse needs the KPI module; graph part only
+43,waits:step-7,,Genie gets the same definition; graph part only (EPM-DEC-001-0019)
+44,partial,q44-sources.rq,marking which source is authoritative (Step 7 or 9)

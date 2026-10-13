@@ -1,0 +1,9 @@
+# Q12. Where did we deliberately diverge from APQC, and why? (the rejected or no-candidate mapping decision, with its notes)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?c ?decision ?note WHERE { ?c core:apqcMappingDecision ?decision . VALUES ?decision { apqc:rejected apqc:no-candidate } OPTIONAL { ?c skos:editorialNote ?note } }

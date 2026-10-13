@@ -1,0 +1,9 @@
+# Q2. Which processes have no children where children are expected? (a planned child note, no narrower concept)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?c ?planned WHERE { ?c core:plannedChildNote ?planned . FILTER NOT EXISTS { ?x skos:broader ?c } }

@@ -90,7 +90,7 @@ ontology; everything else points at it.
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Planned |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Planned |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0, 5 answerable, 3 partial, 36 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Planned |
 
 Note: Step 8 was completed early (it was originally sequenced after
@@ -956,6 +956,15 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 11 competency regression started (2026-10-13)
+- `regression/` holds one SPARQL query per answerable part of the 44
+  competency questions, a status for each question (`expected.csv`), and a
+  runner that `check.sh` runs. On core 1.0.0: 5 answerable (Q1, Q2, Q12,
+  Q16, Q18), 3 partial (Q11, Q39, Q44), 36 waiting for Steps 5, 6, 7 and 10
+  or for EPM-DEC-001-0004 (Customer). Each module PR moves its questions to
+  answerable. The status assignments are delegated under EPM-DEC-001-0028,
+  whose Steps 5 to 12 amendment is pending in #252.
 
 ### core 1.0.0 released (EPM-DEC-001-0029, 2026-10-13)
 - After the six Phase 1 sweep batches, `release/build_core.py` builds

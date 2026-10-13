@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run the repo's automated checks: the Step 4 evidence gate, the scoped-sequence
-# build and SHACL check, every test script, epm-facts counts, the decision-record
+# build and SHACL check, the Step 11 competency regression, every test script, epm-facts counts, the decision-record
 # and quote checks, and the Step 4 pin check. CI and the pre-push hook run this
 # file; run it yourself before opening a pull request.
 #
@@ -47,8 +47,11 @@ done
 (cd "$step4/scoped-sequence" && run with_deps python build.py --verify)
 # The core release package (EPM-DEC-001-0029) must equal a fresh build from the pinned evidence.
 (cd business_architecture/ontology/release && run with_deps python build_core.py --verify)
+# Step 11: the competency questions the release can answer must still answer (EPM-DEC-001-0019).
+(cd business_architecture/ontology/regression && run with_deps python run.py)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
-  "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py
+  "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
+  business_architecture/ontology/regression/test_run.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase

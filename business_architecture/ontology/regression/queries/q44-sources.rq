@@ -1,0 +1,9 @@
+# Q44 (part). Which source does each definition cite? (marking one source as authoritative waits; see expected.csv)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+
+SELECT ?c ?source ?title WHERE { ?c dcterms:source ?source . ?source dcterms:title ?title . }
