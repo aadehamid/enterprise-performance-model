@@ -957,12 +957,28 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### core 1.0.0 released (EPM-DEC-001-0029, 2026-10-13)
+- After the six Phase 1 sweep batches, `release/build_core.py` builds
+  `releases/core/1.0.0/` from the pinned evidence: the taxonomy with every
+  `intake:` field migrated (5,571 of 5,571), the 640 canonical facts as direct
+  triples, the scoped sequences, eight code lists, IRIs for the 1,003 former
+  blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
+  manifest. The design choices are in EPM-DEC-001-0029, drafted under the
+  delegation in EPM-DEC-001-0028 (merged in #242).
+- Released 2026-10-13. Hamid approved the design, the ledger and the release,
+  and attested: "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
+  The builder dropped the `-rc.1` stage and set the issue date.
+- Merged in #249 as d8b16e1 and tagged `core-v1.0.0`. The release lessons
+  (a release candidate until the owner approves, tests that check the
+  builder independently, a stated cardinality on every property) are in the
+  playbook, Appendix B.
+
 ### Playbook method update (2026-10-13)
 - Three practices are now in the playbook. Working a source-correction
   backlog as one approved answer register built in batches (Step 4), proved
   by the Phase 1 sweep. Building a release with a checked, deterministic
-  builder (Appendix B, "Releasing a module"), from the core 1.0.0 build,
-  which is built and checked but pending its own PR. Delegated decisions,
+  builder (Appendix B, "Releasing a module"), from the core 1.0.0 build
+  (released in #249). Delegated decisions,
   with what stays with the owner (Section 6), from Hamid's delegation of
   2026-10-12. Project records: EPM-DEC-001-0025 and -0027 (merged); -0028
   (merged in #242).
@@ -987,19 +1003,6 @@ without a dated amendment and Hamid's explicit agreement.
 - #202 is the fourth batch: 41 G1b and informed-by rows emit (24 new facts, 5 existing facts gain a contributor) after their verbs were corrected in the source, and 3 rows close with no relationship. Merged in #244.
 - #209 is the fifth batch: 41 G3 Section A rows emit (40 new facts, 1 existing fact gains a contributor; 33 through `provides-input-to` or `governs`, 6 as `informs`, 2 as `triggers`) and 6 close with no relationship. Merged in #247.
 - #201 is the sixth and last batch: 84 G3 Section B rows emit (78 new facts, 6 existing facts gain a contributor; 49 through `provides-input-to`, `governs` or `constrains`; 9 confirm `enables`, REL-00243 through the row-level override) and 18 close with no relationship. Merged in #248.
-
-### core 1.0.0 release built (EPM-DEC-001-0029, 2026-10-13)
-- After the six Phase 1 sweep batches, `release/build_core.py` builds
-  `releases/core/1.0.0/` from the pinned evidence: the taxonomy with every
-  `intake:` field migrated (5,571 of 5,571), the 640 canonical facts as direct
-  triples, the scoped sequences, eight code lists, IRIs for the 1,003 former
-  blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
-  manifest. The design choices are in EPM-DEC-001-0029, drafted under the
-  delegation in EPM-DEC-001-0028 (merged in #242).
-- Released 2026-10-13. Hamid approved the design, the ledger and the release,
-  and attested: "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
-  The builder dropped the `-rc.1` stage and set the issue date; the merge
-  commit of #249 gets the tag `core-v1.0.0` at merge.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

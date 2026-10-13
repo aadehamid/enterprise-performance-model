@@ -1348,10 +1348,32 @@ targets; the builder never chooses between sources at write time, and it
 fails if a staging predicate has no recorded target. Mark the ledger where
 it disagrees, pointing to the record, so no reader follows the old target.
 
+Test the builder from outside. Conservation counts balance even when a
+field lands on the wrong property, so they cannot catch a swapped target.
+Write tests that read each staging value from the source themselves and
+check it sits on its recorded target in the built graph, with the full set
+of values a rule produces (a value that sets two facets checks both). Prove
+the tests: change the builder to send one field to the wrong target, and
+confirm the suite fails. Pin measured splits (for example, how many notes
+are provenance and how many are editorial), so that routing every value
+one way fails.
+
+State a cardinality on every property in the SHACL slice: `sh:maxCount 1`
+on a single-valued property, `sh:minCount 0` with no maximum on a
+multi-valued one. Test that every property has one, including properties
+the release declares but does not use yet.
+
+Until the owner approves, build the release as a release candidate
+(`1.0.0-rc.1`): the candidate label in `owl:versionInfo`, the version IRI
+and the catalog, and no `dcterms:issued`. The cut is one commit after the
+approval: drop the stage, set the issue date, update the test that pins
+the version, and rebuild. Tag the merge commit after the merge. Records
+written before the merge say the tag comes at merge, never that it exists.
+
 Every release ships:
 
 - `owl:versionInfo` on each module and on the release.
-- `dcterms:issued` and `dcterms:modified` dates.
+- `dcterms:issued` and `dcterms:modified` dates, set at the cut.
 - A changelog entry per change: what changed, why, who approved, and the
   version classification.
 - A new dataset version in the DCAT catalog, with its distributions.
@@ -1373,6 +1395,10 @@ example's header looks like this:
     dcterms:creator "Hamid" ;
     dcterms:license <https://w3id.org/lsc/ontology/modules/core/license> .
 ```
+
+When the module's concepts are `skos:inScheme` the module IRI, type it
+`skos:ConceptScheme` as well as `owl:Ontology`. Without the scheme type, the
+concepts sit in a scheme the release never declares.
 
 Consumers who need the current meaning use the ontology IRI. Consumers who
 need reproducibility pin the version IRI or a versioned distribution
