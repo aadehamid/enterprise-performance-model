@@ -1364,8 +1364,8 @@ multi-valued one. Test that every property has one, including properties
 the release declares but does not use yet.
 
 Until the owner approves, build the release as a release candidate
-(`1.0.0-rc.1`): the candidate label in `owl:versionInfo`, the version IRI
-and the catalog, and no `dcterms:issued`. The cut is one commit after the
+(`1.0.0-rc.1`): the candidate label in `owl:versionInfo`, the version IRI,
+the catalog and the manifest, and no `dcterms:issued`. The cut is one commit after the
 approval: drop the stage, set the issue date, update the test that pins
 the version, and rebuild. Tag the merge commit after the merge. Records
 written before the merge say the tag comes at merge, never that it exists.
