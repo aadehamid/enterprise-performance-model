@@ -8,6 +8,4 @@ Roles, RACI assignments, and control between legal entities. The module depends 
 - `build_assignments.py`, `assignments.ttl`, `raci-conservation.csv`: the RACI assignments. One assignment per RACI entry in the process map and per role it names, with the entry's text and the process map as its source. Nothing is inferred from the hierarchy. The ledger reconciles entries in with assignments out. `test_assignments.py` tests it.
 - `test_vocabulary.py`: checks one kind and one range per property, and a cardinality on each. It also checks that SHACL accepts a valid assignment and control relationship and rejects broken ones. `scripts/check.sh` runs it.
 
-Later Step 5 slices add, in order:
-1. The `ref-mpc` reference module.
-2. The links from `core:responsibleDomain` to org units.
+The `ref-mpc` reference module (`../ref-mpc/`) uses this module's control relationship. A later Step 5 slice adds the links from `core:responsibleDomain` to org units, made only where the operating model evidences the relationship; some of its values are business domains, not org units (Step 4 Q7, `../step4/step4-decisions.md`).
