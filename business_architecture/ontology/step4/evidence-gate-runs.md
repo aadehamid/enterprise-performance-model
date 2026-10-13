@@ -63,9 +63,9 @@ gate was run against, not the pin. Do not retitle the checklist's
   `core:triggeredBy` facts (`batch_checks.py`), replacing eleven per-row
   checks: 436 → 426 PASS.
 
-## 2026-10-12 — branch `phase1/sweep-register`, pin `7b670ad`
+## 2026-10-12 — branch `phase1/sweep-register`, pin `2bc25cb`
 
-- **Evidence pin (`PINNED_SHA.txt`):** `7b670ad58c095e0f2d907afcfa938964bb4e8138`
+- **Evidence pin (`PINNED_SHA.txt`):** `2bc25cb899943d29fa486565e447b50d7ca80782`
 - **Gate:** `evidence-gate.py` — 417 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==478,
   contradictions==0. A new check runs `batch_checks.sweep_batch_problems`

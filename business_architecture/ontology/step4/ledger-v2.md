@@ -2085,7 +2085,7 @@ Conservation: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓
 Hamid approved the Phase 1 answer register on 2026-10-12 (#207 comment
 6133390674, saved in `review-evidence/hamid-answers/phase1-sweep.md`). The
 #206 rows are the first batch built from it. Step 4 was re-pinned to
-`7b670ad`. Row verdicts: `review-evidence/phase1-sweep/206-review.csv`.
+`2bc25cb`. Row verdicts: `review-evidence/phase1-sweep/206-review.csv`.
 
 - **APPROVE, emitting `core:governedBy` (10):** REL-00050, REL-00067,
   REL-00215, REL-00394, REL-00399, REL-00406, REL-00937, REL-01005,
