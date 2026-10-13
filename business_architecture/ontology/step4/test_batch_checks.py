@@ -243,9 +243,22 @@ class SweepBatch203(unittest.TestCase):
     def test_a_reverted_relationship_in_the_published_taxonomy_is_caught(self):
         # REL-00263's corrected segment back to enables, with its sentence left in the scope note.
         reverted = self.taxonomy.replace("provides-input-to: Manage Risk Reporting", "enables: Manage Risk Reporting", 1)
-        self.assertNotEqual(reverted, self.taxonomy)
+        # The uncorrected segment appended beside the corrected one.
+        appended = self.taxonomy.replace("provides-input-to: Manage Risk Reporting",
+                                         "provides-input-to: Manage Risk Reporting | enables: Manage Risk Reporting", 1)
+        for mutated in (reverted, appended):
+            self.assertNotEqual(mutated, self.taxonomy)
+            self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
+                                for p in self.problems(self.facts, taxonomy=mutated)))
+
+    def test_a_relationship_classify_cannot_read_does_not_count(self):
+        # Moved into a triple-quoted literal: valid Turtle, but classify_v2 reads only one-line literals.
+        line = next(l for l in self.taxonomy.splitlines()
+                    if "provides-input-to: Manage Risk Reporting" in l)
+        hidden = self.taxonomy.replace(line, line.replace('"', '"""', 1).replace('"@', '"""@', 1), 1)
+        self.assertNotEqual(hidden, self.taxonomy)
         self.assertTrue(any("REL-00263" in p and "relatedConcepts" in p
-                            for p in self.problems(self.facts, taxonomy=reverted)))
+                            for p in self.problems(self.facts, taxonomy=hidden)))
 
     def test_sweep_provenance_matches_the_mapping_attachments(self):
         import ast

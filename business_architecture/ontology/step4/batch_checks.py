@@ -119,14 +119,24 @@ def scope_notes(taxonomy, slug):
 
 
 def related_segments(taxonomy, slug):
-    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, split as classify_v2.py splits them."""
-    pairs = []
-    for text in literals(taxonomy, slug, "intake:relatedConcepts"):
-        for part in text.split("|"):
-            part = part.strip()
-            if part and ":" in part:
-                verb, target = part.split(":", 1)
-                pairs.append((verb.strip(), target.strip()))
+    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, read exactly as classify_v2.py reads them.
+
+    The same per-line regexes and the same split: a relationship classify_v2 cannot
+    see is not seen here either.
+    """
+    pairs, current = [], None
+    for line in taxonomy.splitlines():
+        m = re.match(r"proc:([A-Za-z]+-\d[\d-]*)\s+a\s+skos:Concept", line)
+        if m:
+            current = m.group(1)
+            continue
+        m = re.search(r'intake:relatedConcepts\s+"([^"]*)"', line)
+        if m and current == slug:
+            for part in m.group(1).split("|"):
+                part = part.strip()
+                if part and ":" in part:
+                    verb, target = part.split(":", 1)
+                    pairs.append((verb.strip(), target.strip()))
     return pairs
 
 
@@ -236,9 +246,14 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxono
             segment = (verb, v2[rid]["raw_target"])
             if v2[rid]["verb"] != verb:
                 problems.append(f"{rid}: the dispositions carry verb {v2[rid]['verb']!r}, not {verb!r}")
-            if related_segments(taxonomy, r["source_slug"]).count(segment) != 1:
+            pairs = related_segments(taxonomy, r["source_slug"])
+            if pairs.count(segment) != 1:
                 problems.append(f"{rid}: '{verb}: {segment[1]}' is not exactly once in "
                                 f"{r['source_slug']}'s published relatedConcepts")
+            # Another verb to the same target, such as the uncorrected enables left beside it.
+            others = [v for v, t in pairs if t == segment[1] and v != verb]
+            if others:
+                problems.append(f"{rid}: {r['source_slug']}'s relatedConcepts also has {others} to {segment[1]}")
         sentence = " ".join(r["scope_note_sentence"].split())
         if taxonomy is not None and not any(sentence in note for note in scope_notes(taxonomy, r["scope_note_slug"])):
             problems.append(f"{rid}: the approved sentence is not in {r['scope_note_slug']}'s published scope note")
