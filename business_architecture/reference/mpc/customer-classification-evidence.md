@@ -110,7 +110,10 @@ and the two-way volume split in the delivery-tier facet.
 6. **Midstream shipper.** MPLX serves "principally … the Refining & Marketing
    segment", and Midstream has external-customer revenue ($5,628M in 2025, Note
    20). The words "third-party shippers" haven't been found in MPC documents yet.
-   Confirm from the MPLX 10-K (MPC-S08).
+   The MPLX 10-K (MPLX-S01, read 2026-10-13) doesn't use them either; it says "We
+   have multiple transportation and terminal services agreements with third
+   parties under which we provide use of pipelines and tank storage". Whether
+   those third parties form a customer class stays open.
 7. **Crude oil buyers — resolved.** Added as C8 (Hamid, 2026-09-29), with the
    exchange / buy-sell counterparty exclusion stated in §1.
 8. **Restatements.** FY2022 direct-to-end-user volume is 2,355 mbpd in the FY2023

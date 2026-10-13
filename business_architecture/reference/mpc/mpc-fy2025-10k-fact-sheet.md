@@ -183,4 +183,4 @@ module, cited to MPC-S01.
   gives 2,986 at year end. Confirm whether utilization uses average or
   year-end capacity before defining `CrudeCapacityUtilization`.
 - Read MPC-S03 (Q2 2026 10-Q) for changes since FY2025.
-- Read MPC-S08 (MPLX 10-K) before modeling Midstream processes.
+- Read the MPLX 10-K before modeling Midstream processes. Done 2026-10-13 from EDGAR (MPLX-S01): `mplx-fy2025-10k-fact-sheet.md`.

@@ -23,6 +23,7 @@ EPM-DEC-001-0011 asks for this read before ruling on MPC-P01 (the empty Midstrea
 
 - "In 2025, MPC accounted for 48 percent of our total revenues and other income, primarily within our Crude Oil and Products Logistics segment." Excluding significant non-cash items, the share was 48, 49 and 50 percent for 2025, 2024 and 2023.
 - MPLX has "fee-based agreements with minimum volume commitments with MPC which provide us with a stable and predictable revenue stream". Under them, "we provide transportation, terminal and storage services to MPC and most of these agreements include minimum committed volumes from MPC."
+- MPLX also serves third parties: "We have multiple transportation and terminal services agreements with third parties under which we provide use of pipelines and tank storage, and provide services, facilities and other infrastructure related to the receipt, storage, throughput, blending and delivery of commodities."
 
 ## 4. Assets named (Item 1 and Item 2)
 
