@@ -97,7 +97,7 @@ SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #
 SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
 # Issues whose register rows are adopted into Step 4. Each has
 # review-evidence/phase1-sweep/<issue>-review.csv covering exactly its register rows.
-SWEEP_ADOPTED = ("206", "203", "210")
+SWEEP_ADOPTED = ("206", "203", "210", "202")
 # No-relationship rows the approved register keeps as duplicate provenance on a fact
 # another row carries (mapping_v2.DUPLICATE_PROVENANCE_ATTACH). Each may sit on that
 # fact only. REL-00436: "REL-00436 stays attached to that fact as duplicate provenance"

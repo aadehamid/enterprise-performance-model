@@ -11,7 +11,9 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register; was `adc7483522a7f3845dceca90c95187b6253372a4`).
+**Baseline:** `37fed949fbd2e7b333663e170717262e26ca73ac` (re-pinned 2026-10-12 for the #202 answers from the Phase 1 register; was `efc47150504face11bee5fdb2d57d737cfb170ca`).
+
+*Previous baseline:* `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register; was `adc7483522a7f3845dceca90c95187b6253372a4`).
 
 *Previous baseline:* `adc7483522a7f3845dceca90c95187b6253372a4` (re-pinned 2026-10-12 for the #203 answers from the Phase 1 register; was `2bc25cb899943d29fa486565e447b50d7ca80782`).
 
@@ -192,7 +194,7 @@ mapping applies those mention-level holds separately),
 | `governs` (S, T) | `T core:governedBy S` | mirror of `governed-by`; the emission guard reads T as governed, S as owner (EPM-DEC-001-0027) |
 | `triggers` (S, T) | `T core:triggeredBy S` | 18 rows (18 reviewed 2026-09-26: 2 stand, 5 promote, 11 held; the 11 emit since #204 batch 1, 2026-10-12, 7 of them as conditional triggers) |
 | `assures` (S, T) | `T core:assuredBy S` | 5 rows approved 2026-09-26; 3 held (2 context, 1 workbook correction) |
-| `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 36 G1a evidence-only (35 emitting; REL-00436 held-attached) + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3) |
+| `enables` (S, T) | `T core:enabledBy S` (G3 only) | 84 stored + 36 G1a evidence-only (35 emitting; REL-00436 held-attached) + 13 G2 no-triple; G1b 29 held non-emitting (see Answer 3); since the #202 Phase 1 sweep (2026-10-12) 28 of them are corrected in the source and emit under their new verbs, and REL-00499 stays held |
 
 The raw verb is retained in migration/provenance evidence on every emitted triple.
 
@@ -840,6 +842,11 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   REL-00469's hierarchy hold untouched.
 - **Counts:** 29 held = 28 emitting rows whose facts were removed +
   REL-01224 (already held). All 29 are on the workbook backlog.
+  *Phase 1 sweep, #202 (2026-10-12): 28 of the 29, REL-01224 among them,
+  were corrected in the source (to `provides-input-to`, `uses-input`,
+  `informs` or `governs`) and now emit their approved facts; REL-00499
+  stays held. The gate's removed-fact checks now let such a fact return
+  only through an approved register row (`review-evidence/phase1-sweep/202-review.csv`).*
 - **Gate:** GREEN since 2026-09-26. It fails if any `core:dependsOnOutputOf`
   fact is supported only by an `enables` source row, or is emitted only
   because a reverse `informed-by` exists. For each held G1b row — no

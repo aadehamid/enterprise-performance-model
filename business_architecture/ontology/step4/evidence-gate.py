@@ -3,8 +3,8 @@
 
 Fails loud (nonzero exit) on the first inconsistency. Proves:
   1. Every generated evidence CSV cites the pinned baseline SHA on every row.
-  2. Mention arithmetic reconciles from the actual files: 1086+217+12+1+2=1318.
-  3. canonical-facts.csv has exactly 498 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
+  2. Mention arithmetic reconciles from the actual files: 1114+189+12+1+2=1318.
+  3. canonical-facts.csv has exactly 522 distinct facts; contradictions.csv has 0 (no-two-cycle rule).
   4. No orphan row_ids across the package.
   5. Sample review has 51 verdicts, all OK or FLAG.
   6. Label report: 104 rows, 90 carried-approved, 14 undecided with blank decisions.
@@ -33,7 +33,11 @@ for fn in sha_files:
 # 2. mention arithmetic from the files
 v2 = rows("target-report/target-dispositions-v2.csv")
 ctx = {r["row_id"]: r["outcome"] for r in rows("target-report/context-pass.csv")}
-# property-rule holds (Hamid 2026-09-24; enabledBy verdicts same day):
+# property-rule holds (Hamid 2026-09-24; enabledBy verdicts same day). The dated
+# notes below are history: the Phase 1 sweep corrected REL-01312, REL-01053,
+# REL-00758, REL-01094, REL-01131, REL-01192, REL-00936 and REL-00445 in the
+# source (#210) and the G1b rows (#202); those rows now emit and have left
+# prop_holds.
 # REL-00503 held (mutual informedBy, this direction B-only).
 # REL-01312 and REL-01053 held for source-workbook correction (reverse
 # enablement means control/constraint or close-feed consumption, not capability
@@ -55,12 +59,8 @@ prop_holds = {"REL-00503", "REL-00208",
               "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
               # Phase 1 sweep, #203: 12 S&T rows released (203-review.csv); REL-00436 stays.
               "REL-00436",
-              "REL-00140", "REL-00499", "REL-00565", "REL-00648", "REL-00679",
-              "REL-00709", "REL-00732", "REL-00973", "REL-00974", "REL-00977",
-              "REL-01108", "REL-01112", "REL-01148", "REL-01151", "REL-01154",
-              "REL-01181", "REL-01184", "REL-01191", "REL-01194", "REL-01197",
-              "REL-01213", "REL-01225", "REL-01230", "REL-01233", "REL-01234",
-              "REL-01273", "REL-01296", "REL-01315"}
+              # Phase 1 sweep, #202: 27 G1b rows released (202-review.csv); REL-00499 stays.
+              "REL-00499"}
 promoted = sum(1 for r in v2 if r["disposition"] == "ResolvedToConcept") + \
            sum(1 for v in ctx.values() if v == "PROMOTE") - len(prop_holds)
 held_ctx = sum(1 for v in ctx.values() if v == "HOLD") + len(prop_holds)
@@ -69,8 +69,8 @@ ext = sum(1 for r in v2 if r["disposition"] == "ExternalGovernanceReference")
 flow = sum(1 for r in v2 if r["disposition"] == "StructuredFlowValue")
 check("mention-arithmetic", promoted + held_ctx + ambig + ext + flow == 1318 == len(v2),
       f"{promoted}+{held_ctx}+{ambig}+{ext}+{flow}={promoted+held_ctx+ambig+ext+flow} vs {len(v2)}")
-check("promoted==1086", promoted == 1086, str(promoted))
-check("held==217", held_ctx == 217, str(held_ctx))
+check("promoted==1114", promoted == 1114, str(promoted))
+check("held==189", held_ctx == 189, str(held_ctx))
 
 # 2b. enabledBy control cases (Hamid verdicts 2026-09-24/25), checked against the
 # STORED canonical fact — not the verb string. "Approved as core:enables"
@@ -357,15 +357,18 @@ for rid, pred in (("REL-00131", "core:precedes"), ("REL-00734", "core:precedes")
 # (already context-held) emits no fact. REL-00489's "keep approved enabledBy"
 # listing is superseded 2026-09-26 (G3-B5) — no fact, no-fact hold control;
 # REL-00469 stays non-emitting.
-for rid in ("REL-00140", "REL-00499", "REL-00565", "REL-00648", "REL-00679",
-            "REL-00709", "REL-00732", "REL-00973", "REL-00974", "REL-00977",
-            "REL-01108", "REL-01112", "REL-01148", "REL-01151", "REL-01154",
-            "REL-01181", "REL-01184", "REL-01191", "REL-01194", "REL-01197",
-            "REL-01213", "REL-01225", "REL-01230", "REL-01233", "REL-01234",
-            "REL-01273", "REL-01296", "REL-01315", "REL-01224"):
+# Phase 1 sweep, #202: the other 28 G1b rows, REL-01224 among them, were corrected
+# in the source and now emit; the sweep check covers them.
+for rid in ("REL-00499",):
     check(f"G1b {rid} emits no triple",
           _emits_nothing(rid),
           "HOLD / D:hamid-verdict / G1bNoVerbChange 2026-09-26; no substitute predicate")
+import importlib.util as _ilu_g
+_gspec = _ilu_g.spec_from_file_location("gate_batch_checks_g1b", "batch_checks.py")
+_gmod = _ilu_g.module_from_spec(_gspec)
+_gspec.loader.exec_module(_gmod)
+_g1b_register = {r["row_id"]: r for r in rows("review-evidence/phase1-sweep/register.csv")
+                 if r["issue"] in _gmod.SWEEP_ADOPTED}
 for fact in (("CM-1-1-7-3-1", "core:dependsOnOutputOf", "CM-1-1-7-3-3"),
              ("CM-1-2-7-2-3", "core:dependsOnOutputOf", "CM-1-2-7-2-1"),
              ("CM-1-3-2-1", "core:dependsOnOutputOf", "CM-1-3-1-6"),
@@ -394,9 +397,12 @@ for fact in (("CM-1-1-7-3-1", "core:dependsOnOutputOf", "CM-1-1-7-3-3"),
              ("CM-1-3-5-2", "core:dependsOnOutputOf", "CM-1-3-5-3"),
              ("CM-1-3-5-3", "core:dependsOnOutputOf", "CM-1-3-3-5"),
              ("CM-1-3-5-5-3", "core:dependsOnOutputOf", "CM-1-3-6-6")):
+    # Phase 1 sweep, #202: the fact may come back only from the corrected source, i.e.
+    # every row carrying it is a register row whose approved stored fact is this fact.
+    _carriers = _fact_rowids.get(fact, [])
     check(f"G1b removed fact absent {fact[0]}->{fact[2]}",
-          fact not in _fact_rowids,
-          "silent dependsOnOutputOf fact removed 2026-09-26; uniqueness validated")
+          all(_g1b_register.get(_r, {}).get("stored_fact", "").split() == list(fact) for _r in _carriers),
+          "silent dependsOnOutputOf fact removed 2026-09-26; it returns only through an approved source correction")
 # G1b reconciled exclusions: REL-00489 approval superseded (G3-B5; already
 # covered by the control-case no-fact hold list); REL-00469 non-emitting
 # (already covered by the 2k hierarchy holds).
@@ -539,8 +545,8 @@ check("scoped-sequence 17 nodes / 16 handoffs",
 
 # 3. canonical facts + contradictions
 cf = cfacts
-check("canonical-facts==498", len(cf) == 498, str(len(cf)))
-check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 498)
+check("canonical-facts==522", len(cf) == 522, str(len(cf)))
+check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 522)
 
 # Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
