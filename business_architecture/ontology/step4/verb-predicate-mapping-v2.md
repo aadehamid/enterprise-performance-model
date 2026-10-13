@@ -11,7 +11,9 @@ so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
 No emission script may use this mapping until Hamid approves it row by row.
-**Baseline:** `adc7483522a7f3845dceca90c95187b6253372a4` (re-pinned 2026-10-12 for the #203 answers from the Phase 1 register; was `2bc25cb899943d29fa486565e447b50d7ca80782`).
+**Baseline:** `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register; was `adc7483522a7f3845dceca90c95187b6253372a4`).
+
+*Previous baseline:* `adc7483522a7f3845dceca90c95187b6253372a4` (re-pinned 2026-10-12 for the #203 answers from the Phase 1 register; was `2bc25cb899943d29fa486565e447b50d7ca80782`).
 
 *Previous baseline:* `2bc25cb899943d29fa486565e447b50d7ca80782` (re-pinned 2026-10-12 for the #206 answers from the Phase 1 register; was `51a32aa2eea43a819a7fff23b624ff8bd291bfad`).
 
