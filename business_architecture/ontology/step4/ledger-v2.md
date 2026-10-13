@@ -2152,7 +2152,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 - **APPROVE, emitting `core:informedBy` (17):** REL-00140, REL-00565, REL-00643, REL-00648, REL-00709, REL-00732, REL-00896, REL-00965, REL-00974, REL-00977, REL-01148, REL-01150, REL-01154, REL-01181, REL-01184, REL-01193, REL-01205.
 - **HOLD, no relationship (3):** REL-00499, REL-00505, REL-01130.
 
-41 mentions move from held to emitting; 41 facts added. No contradiction.
+41 mentions move from held to emitting; 24 facts added, and 5 existing facts gain a contributor (REL-00140, REL-00565, REL-00709, REL-00732, REL-01181). No contradiction.
 
 **Current totals:** **699 emitting / 587 held / 17 scoped sequence** / 522 facts.
 Conservation: 699 + 587 + 12 + 1 + 2 + 17 = 1,318. ✓
