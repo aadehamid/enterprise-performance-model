@@ -74,7 +74,7 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - [x] SHACL release slice conforms (`release/shapes.ttl`; EPM-DEC-001-0014).
 - [x] LPG rules 1, 2, 3 and 5 (EPM-DEC-001-0020): one kind and one range per property (tested), a stated cardinality on every core property (shapes; tested), no blank nodes, fixed prefixes.
 - [ ] **Conservation ledger approval: Hamid.** The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
-- [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012): #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
+- [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012) and merged in #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
 - [ ] **Fresh no-consumer attestation: Hamid.** It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, only `scripts/epm_facts.py` (a counting tool) names `intake:`.
 - [ ] **Release approval: Hamid.** A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
 - [ ] At the cut: in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild, tag the merge commit `core-v1.0.0`.

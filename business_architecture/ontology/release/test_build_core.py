@@ -116,6 +116,8 @@ class Destinations(unittest.TestCase):
         status = dict((str(v), s) for s, v in self.values("status"))
         self.assertIn((status["retired"], b.CORE.lifecycleStatus, b.CODE["lifecycle-status"]["retired"]), self.g)
         self.assertIn((status["blocked"], b.CORE.holdStatus, b.CODE["hold-status"]["implementation-hold"]), self.g)
+        self.assertIn((status["retired"], OWL.deprecated, Literal(True)), self.g)
+        self.assertEqual(len(list(self.g.objects(status["blocked"], b.CORE.holdReason))), 1)
 
     def test_notes_and_sources(self):
         # Q10 split, measured on the baseline (ledger-v2.md status; counts.json): 97 provenance
