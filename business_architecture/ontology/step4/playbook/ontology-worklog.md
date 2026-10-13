@@ -91,7 +91,7 @@ ontology; everything else points at it.
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Planned |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
-| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Planned |
+| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 1.0.0 with the organization and ref-mpc modules; two Rule 1 gaps in core 1.0.0 wait for the next core release |
 
 Note: Step 8 was completed early (it was originally sequenced after
 integration) because the scope decisions shape the foundations. The plan
@@ -956,6 +956,18 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
+
+### Step 12 projection pipeline (2026-10-13)
+- `projection/pipeline.py` runs the guideline's five steps over core
+  1.0.0, the organization module and ref-mpc. The last run loaded 2,154
+  nodes and 11,778 relationships into Neo4j 2025.06.2 with n10s 2025.06.1:
+  no SHACL violation in the graph, an empty round-trip diff, equal hashes
+  for the sorted and shuffled loads. n10s names terms in SHORTEN mode; a
+  subset of the shapes runs in the graph and the rest in Step 1; ELK adds
+  no domain inferences. Core 1.0.0 gives `earlierProcess` and
+  `laterProcess` no range (Rule 1); the pipeline lists both gaps for the
+  next core release. The design is EPM-DEC-001-0036, decided under
+  EPM-DEC-001-0028.
 
 ### Step 9 controlled values (2026-10-13)
 - `validation/controlled-values.ttl` requires every code-list property of
