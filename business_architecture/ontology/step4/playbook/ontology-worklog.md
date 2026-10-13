@@ -957,6 +957,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Playbook method update (2026-10-13)
+- Three practices are now in the playbook. Working a source-correction
+  backlog as one approved answer register built in batches (Step 4), proved
+  by the Phase 1 sweep. Building a release with a checked, deterministic
+  builder (Appendix B, "Releasing a module"), from the core 1.0.0 build,
+  which is built and checked but pending its own PR. Delegated decisions,
+  with what stays with the owner (Section 6), from Hamid's delegation of
+  2026-10-12. Project records: EPM-DEC-001-0025 and -0027 (merged); -0028
+  (pending in #242).
+
 ### Phase 1 sweep register approved; #206 built (2026-10-12)
 - Hamid delegated drafting of all 245 remaining Phase 1 answers: Claude and
   Codex drafted from MPC and industry research briefs, each model reviewed
@@ -974,8 +984,8 @@ without a dated amendment and Hamid's explicit agreement.
   Production Scheduling, and 3 rows close with no relationship. Merged in
   #241.
 - #210 is the third batch: 6 rows emit `informedBy`, REL-01053 `dependsOnOutputOf`, REL-01312 `governedBy` through `governs`, and 14 rows close with no relationship. Merged in #243.
-- #202 is the fourth batch: 41 G1b and informed-by rows emit (24 new facts, 5 existing facts gain a contributor) after their verbs were corrected in the source, and 3 rows close with no relationship. Pending its PR.
-- #209 is the fifth batch: 41 G3 Section A rows emit (40 new facts, 1 existing fact gains a contributor; 33 through `provides-input-to` or `governs`, 2 as `triggers`) and 6 close with no relationship. Pending its PR.
+- #202 is the fourth batch: 41 G1b and informed-by rows emit (24 new facts, 5 existing facts gain a contributor) after their verbs were corrected in the source, and 3 rows close with no relationship. Merged in #244.
+- #209 is the fifth batch: 41 G3 Section A rows emit (40 new facts, 1 existing fact gains a contributor; 33 through `provides-input-to` or `governs`, 6 as `informs`, 2 as `triggers`) and 6 close with no relationship. Pending its PR.
 - #201 is the sixth and last batch: 84 G3 Section B rows emit (78 new facts, 6 existing facts gain a contributor; 49 through `provides-input-to`, `governs` or `constrains`; 9 confirm `enables`, REL-00243 through the row-level override) and 18 close with no relationship. Pending its PR.
 
 ### core 1.0.0 release built (EPM-DEC-001-0029, 2026-10-13)

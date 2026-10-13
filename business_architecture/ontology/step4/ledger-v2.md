@@ -2153,7 +2153,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 **Current totals:** **658 emitting / 628 held / 17 scoped sequence** / 498 facts.
 Conservation: 658 + 628 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #202: G1b pairs held on both sides||G1b rows held for a verb correction (Hamid 2026-10-12)
+## Phase 1 sweep, #202: G1b rows and their reverse informed-by rows (Hamid 2026-10-12)
 
 A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `37fed94`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/202-review.csv`.
 

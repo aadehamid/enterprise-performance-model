@@ -163,6 +163,10 @@ PROPERTY_RULE_HOLDS = {
                   "uses-input evidence exists. Stored core:dependsOnOutputOf "
                   "fact removed (Rule 11: no silent verb change); retain the "
                   "enables assertion as non-emitting evidence."),
+    # Phase 1 sweep, #209 (Hamid 2026-10-12, #207 comment 6133390674): the 41 G3
+    # Section A rows held in the A1-A6 blocks below were corrected in the source and
+    # now emit; the row counts in those dated comments are history, and the six
+    # no-relationship rows that stay are listed in review-evidence/phase1-sweep/209-review.csv.
     # Hamid 2026-09-26: G3 Section A1 verdicts (D:hamid-verdict). Explicit
     # target reference is not enablement proof. These 6 rows fail the
     # capability-effect test: exclusion references, informational/evidence
