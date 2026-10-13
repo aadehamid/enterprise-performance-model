@@ -51,7 +51,8 @@ done
 (cd business_architecture/ontology/regression && run with_deps python run.py)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
-  business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py
+  business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
+  business_architecture/ontology/provenance/test_run_shapes.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase
