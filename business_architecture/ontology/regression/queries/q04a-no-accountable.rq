@@ -1,4 +1,4 @@
-# Q4. Which processes have no accountable owner? (live processes of the core scheme with no accountable assignment; structural anchors carry no RACI)
+# Q4. Which processes have no accountable owner? (live concepts of the core scheme with no accountable assignment, of kind process, capability or none; structural anchors carry no RACI)
 PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
 PREFIX kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

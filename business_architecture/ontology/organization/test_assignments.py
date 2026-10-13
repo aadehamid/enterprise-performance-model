@@ -76,9 +76,16 @@ class Assignments(unittest.TestCase):
             ba.ledger(ENTRIES, REGISTER, g)
 
     def test_iris_do_not_depend_on_list_order(self):
-        p = next(iter(IRIS.values()))
-        self.assertEqual(ba.assignment_iri(p, "accountable", "trader", "Traders"),
-                         ba.assignment_iri(p, "accountable", "trader", "Traders"))
+        # The IRI hashes the source string, so it is fixed whatever the entry's position.
+        p = IRIS["CM 1.1.2.1"]
+        self.assertEqual(str(ba.assignment_iri(p, "accountable", "trader", "Traders")),
+                         "https://w3id.org/lsc/ontology/modules/organization/assignment/CM-1-1-2-1--accountable--trader--"
+                         + __import__("hashlib").sha256(b"Traders").hexdigest()[:8])
+        reversed_entries = list(reversed(ENTRIES))
+        with mock.patch.object(br, "raci_entries", lambda node, out: out.extend(reversed_entries) or out):
+            _, _, rebuilt = ba.build()
+        self.assertEqual(set(rebuilt.subjects(RDF.type, O.ResponsibilityAssignment)),
+                         set(GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)))
         self.assertNotEqual(ba.assignment_iri(p, "accountable", "trader", "Traders"),
                             ba.assignment_iri(p, "accountable", "trader", "Supply Coordinators/Traders"))
 

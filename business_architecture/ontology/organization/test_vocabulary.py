@@ -146,6 +146,9 @@ class Shapes(unittest.TestCase):
     def test_an_assignment_with_two_levels_fails(self):
         self.assertFalse(self.broken(lambda g: g.add((EX.assignment, ORGM.raciLevel, RACI.informed))))
 
+    def test_a_role_without_a_source_fails(self):
+        self.assertFalse(self.broken(lambda g: g.remove((EX.role, DCTERMS.source, None))))
+
     def test_an_assignment_without_a_source_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((EX.assignment, DCTERMS.source, None))))
 

@@ -963,7 +963,8 @@ without a dated amendment and Hamid's explicit agreement.
   role the entry names, keeping the entry's text. Nothing is inferred from
   the hierarchy. `raci-conservation.csv` reconciles entries in with
   assignments out. Competency questions 3 to 5 are answerable. Q4 lists
-  the live processes with no RACI in the source; whether they need RACI is
+  the live, non-anchor concepts (processes, capabilities and concepts with
+  no kind) with no RACI in the source; whether they need RACI is
   a scope question for Hamid, recorded in EPM-DEC-001-0032, which is
   decided under EPM-DEC-001-0028.
 
