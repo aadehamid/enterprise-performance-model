@@ -243,7 +243,7 @@ Sources were read or retrieved on 2026-10-12. Filing dates below follow the peer
 
 ### Repository and downstream framework
 
-- **W1.** The supplied worklist, the held rows of the Phase 1 issues (not saved; [register.csv](register.csv) holds the same rows). Counts and process labels are direct observations, not source claims about industry practice.
+- **W1.** The research worklist supplied with the brief (not saved in the repository). The approved answers drafted from this research are in [register.csv](register.csv), a separate file. Counts and process labels are direct observations, not source claims about industry practice.
 - **M1.** [Verb-predicate mapping v2](../../verb-predicate-mapping-v2.md), approved 2026-09-29 with recorded updates through 2026-10-12. Sections: mapping answers; enablement; recommendation rule; governed-by guard; assured-by scope; constrained-by; triggers; hierarchy and identity gates.
 - **M2.** [Pricing, market-data, and price-risk peer evidence](../../../../reference/downstream-peers/pricing-market-data-risk-evidence.md), draft 2026-09-29. Used first as a source locator and domain-distinction reference, not as a substitute for filings.
 - **A1.** APQC, [Petroleum Downstream PCF v7.2.2 workbook](../../../../reference/APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx). Cover says generated 2025-05-19; repository catalog dates release 2025-05-30. Cited numbers are hierarchy IDs. Stable PCF IDs include 12908 for 3.6, 12953 for 3.7, 12899 for 4.1.3, 12923 for 4.4.2, and 19611 for 4.4.5.5. Generic marketing, product, and finance content is explicitly supporting evidence. Extraction: `.firecrawl/apqc-local.txt`. [APQC overview](https://www.apqc.org/pcf).
