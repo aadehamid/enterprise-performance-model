@@ -37,7 +37,7 @@ root.
 | `../domain/decisions/` | Project decision records (EPM-DEC-001) |
 | `competency-questions.md` | The 44-question acceptance baseline, tested by the Step 11 regression in `regression/` |
 | `ref-mpc/` | The Step 5 reference instances for MPC: MPC, MPLX, MPC's control of MPLX, segments and refineries, from the FY2025 10-K (EPM-DEC-001-0033) |
-| `organization/` | The Step 5 organization module: the RACI assignment and control vocabulary, its SHACL shapes and tests (EPM-DEC-001-0030) |
+| `organization/` | The Step 5 organization module: the RACI assignment and control vocabulary, its SHACL shapes and tests (EPM-DEC-001-0030), and the role register with the roles built from it (EPM-DEC-001-0031) |
 | `regression/` | The Step 11 SPARQL regression: one query per tested part of a question, each question's status, and the runner `check.sh` calls |
 | `apqc-scope-decisions.md` | One-at-a-time in/out-of-scope calls for the seven APQC gap candidates |
 | `apqc-crosscheck-report.md` | Repo process map vs APQC Downstream PCF v7.2.2 consistency check (2026-09-17) |

@@ -1,0 +1,285 @@
+# Roles of the organization module (Step 5, slice 2; EPM-DEC-001-0031).
+# Built by build_roles.py from role-register.csv and roles.csv. Do not edit by hand.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/organization/role/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+
+role:action-owner a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Action Owners"@en ;
+    skos:prefLabel "Action Owner"@en .
+
+role:asphalt-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Asphalt manager"@en ;
+    skos:prefLabel "Asphalt Manager"@en .
+
+role:black-oil-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Black oil manager"@en ;
+    skos:prefLabel "Black Oil Manager"@en .
+
+role:bpa a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "BP&A"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:business-analyst a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Business Analyst"@en .
+
+role:cci-director a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "CCI Director"@en .
+
+role:commercial-scheduler a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Commercial Schedulers"@en ;
+    skos:prefLabel "Commercial Scheduler"@en .
+
+role:cp-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "CP Manager"@en .
+
+role:cpvc-scheduler a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "CPVC schedulers"@en ;
+    skos:prefLabel "CPVC Scheduler"@en .
+
+role:crude-coordinator a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude coordinator"@en ;
+    skos:prefLabel "Crude Coordinator"@en .
+
+role:crude-feedstock-trading-lead a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude /Feedstock trading lead"@en ;
+    skos:prefLabel "Crude/Feedstock Trading Lead"@en .
+
+role:crude-oil-trader a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude Oil Traders"@en ;
+    skos:prefLabel "Crude Oil Trader"@en .
+
+role:crude-planning-and-optimization-director a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude Planning & Optimization Director"@en ;
+    skos:prefLabel "Crude Planning and Optimization Director"@en .
+
+role:crude-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude representative"@en ;
+    skos:prefLabel "Crude Representative"@en .
+
+role:crude-rfc a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Crude RFC"@en .
+
+role:crude-scheduler a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Crude Schedulers"@en,
+        "Crude schedulers"@en ;
+    skos:prefLabel "Crude Scheduler"@en .
+
+role:distribution-backcaster a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Distribution backcaster"@en ;
+    skos:prefLabel "Distribution Backcaster"@en .
+
+role:distribution-planner a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Distribution planner"@en ;
+    skos:prefLabel "Distribution Planner"@en .
+
+role:e-and-p-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "E&P Manager"@en .
+
+role:e-and-p-supervisor a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "E&P Supervisor"@en .
+
+role:forecaster a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Forecaster"@en .
+
+role:gasoline-blend-optimizer a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Gasoline Blend Optimizer"@en .
+
+role:gfvc-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Manager: GFVC"@en .
+
+role:global-feedstocks-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Global Feedstocks Manager"@en .
+
+role:inventory-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Inventory Representative"@en .
+
+role:it-data-custodian a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "IT Data Custodian"@en .
+
+role:it-data-owner a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "IT Data Owner"@en .
+
+role:it-data-steward a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "IT Data Steward"@en .
+
+role:local-refinery-forecaster a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Local Refinery Forecaster"@en .
+
+role:marine-dock-scheduler a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Marine Dock Schedulers"@en ;
+    skos:prefLabel "Marine Dock Scheduler"@en .
+
+role:operations a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Operations"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:pricing-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Pricing representative"@en ;
+    skos:prefLabel "Pricing Representative"@en .
+
+role:product-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Product representative"@en ;
+    skos:prefLabel "Product Representative"@en .
+
+role:psm a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "PSM"@en .
+
+role:rcvo-advisor a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "RCVO Advisor"@en .
+
+role:refinery-backcaster a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Refinery backcaster"@en ;
+    skos:prefLabel "Refinery Backcaster"@en .
+
+role:refinery-econ-and-planning-supervisor a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Refinery Econ & Planning Supervisor"@en .
+
+role:refinery-feedstock-coordinator a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Refinery Feedstock Coordinator"@en .
+
+role:refinery-planner a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Refinery Planner"@en .
+
+role:refinery-planning-engineer a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Refinery planning engineer"@en,
+        "Refinery planning engineers"@en ;
+    skos:prefLabel "Refinery Planning Engineer"@en .
+
+role:refinery-scheduler a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Refinery Schedulers"@en,
+        "Refinery scheduler"@en,
+        "Refinery schedulers"@en ;
+    skos:prefLabel "Refinery Scheduler"@en .
+
+role:refinery-technical-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Refinery technical representative"@en ;
+    skos:prefLabel "Refinery Technical Representative"@en .
+
+role:refinery-technical-service-representative a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Refinery Technical Service Representative"@en .
+
+role:regional-backcaster a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Regional backcaster"@en ;
+    skos:prefLabel "Regional Backcaster"@en .
+
+role:regional-business-director a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Regional Business Director"@en .
+
+role:regional-planning-director a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Regional Planning Director"@en .
+
+role:regional-planning-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Regional Planning Manager"@en .
+
+role:regional-planning-team a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Regional Planning Team"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:regional-production-planner a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Regional Production Planner"@en .
+
+role:risk-group a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Risk Group"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:rvco-advisor a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "RVCO Advisor"@en .
+
+role:site-tactical-team a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Site Tactical Team"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:supply-coordinator a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Supply Coordinators"@en,
+        "Supply coordinator"@en ;
+    skos:prefLabel "Supply Coordinator"@en .
+
+role:supply-operations-director a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Supply Operations Director"@en .
+
+role:supply-operations-manager a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Supply Operations Manager"@en .
+
+role:tech-services a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "Tech Services"@en ;
+    skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
+
+role:trader a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Traders"@en ;
+    skos:prefLabel "Trader"@en .
+
+role:vp-clean-products-crude-trading-ngls-asphalt-petchem a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)"@en .
+
+role:vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "VP (Clean Products, RVCO, Crude Trading, NGLs, Asphalt, Petchem)"@en .
+
+role:vp-rvco a org:Role ;
+    dcterms:source src:downstream-process-map ;
+    skos:prefLabel "VP RVCO"@en .
+
+src:downstream-process-map a dcterms:BibliographicResource ;
+    dcterms:title "Downstream process map, business_architecture/business_process/downstream_process_map.json"@en .
+

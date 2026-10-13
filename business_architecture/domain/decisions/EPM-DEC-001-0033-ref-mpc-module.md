@@ -16,7 +16,6 @@ MPC's FY2025 Form 10-K (MPC-S01, accession 0001510295-26-000009, filed 2026-02-2
 - "Our operations consist of three reportable operating segments: Refining & Marketing, Midstream and Renewable Diesel."
 - MPC owns and operates refineries in the Gulf Coast, Mid-Continent and West Coast regions, with 2,986 mbpcd of crude oil refining capacity. Item 2 names 13 refineries (`business_architecture/reference/mpc/mpc-fy2025-10k-fact-sheet.md`, section 3).
 
-The step plan named two segments. The filing names three, so the module follows the filing.
 
 ## Decision
 
@@ -37,7 +36,7 @@ Left out for now:
 ## Alternatives considered
 
 - **MPLX as `org:subOrganizationOf` MPC.** Rejected by EPM-DEC-001-0015.
-- **Two segments, as in the step plan.** Rejected: the FY2025 10-K names three.
+- **Only the Midstream segment,** the one EPM-DEC-001-0015 names. Rejected: the FY2025 10-K names three, and Refining & Marketing holds the refineries.
 - **An as-of date on the source only.** Rejected: the playbook asks for one on each fact, and a later filing may restate some facts but not others.
 
 ## Hamid's recorded words
