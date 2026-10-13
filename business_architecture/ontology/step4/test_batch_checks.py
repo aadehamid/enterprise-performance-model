@@ -171,9 +171,11 @@ class SweepBatch206(unittest.TestCase):
             self.assertTrue(any(field in p for p in self.problems(rows=rows)), (field, value))
 
     def test_review_files_match_the_adopted_issues(self):
-        self.assertEqual(batch_checks.sweep_files_problems(set(batch_checks.SWEEP_ADOPTED)), [])
+        names = {f"{i}-review.csv" for i in batch_checks.SWEEP_ADOPTED}
+        self.assertEqual(batch_checks.sweep_files_problems(names), [])
         self.assertTrue(batch_checks.sweep_files_problems(set()))
-        self.assertTrue(batch_checks.sweep_files_problems(set(batch_checks.SWEEP_ADOPTED) | {"999"}))
+        for extra in ("999-review.csv", "206-copy-review.csv"):
+            self.assertTrue(any(extra in p for p in batch_checks.sweep_files_problems(names | {extra})), extra)
 
 
 if __name__ == "__main__":

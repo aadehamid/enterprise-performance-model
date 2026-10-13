@@ -100,20 +100,30 @@ def main():
     if errors:
         sys.exit("refused, nothing written:\n  " + "\n  ".join(errors))
 
+    # Apply every plan to copies of the cells, then check the combined result, so two
+    # corrections cannot together leave a duplicate that a re-run would refuse.
+    final = {e["source_slug"]: segments(by_slug[e["source_slug"]][idx["related_concepts"]].value) for e, _ in plan}
     changed = skipped = 0
     for e, at in plan:
         if at is None:
             skipped += 1
             print(f"skip {e['row_id']}: already corrected")
             continue
-        cell = by_slug[e["source_slug"]][idx["related_concepts"]]
-        parts = segments(cell.value)
+        parts = final[e["source_slug"]]
         lead = parts[at][:len(parts[at]) - len(parts[at].lstrip())]
         trail = parts[at][len(parts[at].rstrip()):]
         parts[at] = f"{lead}{e['new_verb']}: {e['new_target']}{trail}"
-        cell.value = "|".join(parts)
         changed += 1
         print(f"set  {e['row_id']}: {e['old_verb']}: {e['old_target']} -> {e['new_verb']}: {e['new_target']}")
+    for e, _ in plan:
+        n = sum(parse(p) == (e["new_verb"], e["new_target"]) for p in final[e["source_slug"]])
+        if n != 1:
+            errors.append(f"{e['row_id']}: the corrections together leave '{e['new_verb']}: {e['new_target']}' "
+                          f"{n} times in {e['source_slug']}'s cell")
+    if errors:
+        sys.exit("refused, nothing written:\n  " + "\n  ".join(errors))
+    for slug, parts in final.items():
+        by_slug[slug][idx["related_concepts"]].value = "|".join(parts)
 
     print(f"{changed} changed, {skipped} already corrected")
     if changed and not args.check:

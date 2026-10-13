@@ -92,6 +92,18 @@ class RelationCorrect(unittest.TestCase):
             self.assertIn("already appears", result.stderr)
             self.assertEqual(wb.read_bytes(), before)
 
+    def test_refuses_corrections_that_together_make_a_duplicate(self):
+        cell = "enables: Trade Capture (CM-1-2-1-3) | governs: Trade Capture (CM-1-2-1-3)"
+        wb, c = _fixture(cell, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
+                                 "informs", "Trade Capture (CM-1-2-1-3)"],
+                                ["REL-2", "A-1", "governs", "Trade Capture (CM-1-2-1-3)",
+                                 "informs", "Trade Capture (CM-1-2-1-3)"]])
+        before = wb.read_bytes()
+        result = _run(wb, c)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("together leave", result.stderr)
+        self.assertEqual(wb.read_bytes(), before)
+
     def test_refuses_unknown_verb_and_unapproved_row(self):
         wb, c = _fixture(CELL, [["REL-1", "A-1", "enables", "Trade Capture (CM-1-2-1-3)",
                                  "feeds", "Trade Capture (CM-1-2-1-3)"]])

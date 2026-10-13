@@ -100,9 +100,10 @@ SWEEP_ADOPTED = ("206",)
 
 
 def sweep_files_problems(found):
-    """Problems with the set of sweep review files: one per adopted issue, no others."""
-    problems = [f"{i}-review.csv is missing for adopted issue #{i}" for i in SWEEP_ADOPTED if i not in found]
-    problems += [f"{i}-review.csv exists but #{i} is not in SWEEP_ADOPTED" for i in sorted(set(found) - set(SWEEP_ADOPTED))]
+    """Problems with the sweep review file names found: exactly <issue>-review.csv per adopted issue."""
+    expected = {f"{i}-review.csv" for i in SWEEP_ADOPTED}
+    problems = [f"{name} is missing for an adopted issue" for name in sorted(expected - set(found))]
+    problems += [f"{name} is not the review file of an issue in SWEEP_ADOPTED" for name in sorted(set(found) - expected)]
     return problems
 
 
