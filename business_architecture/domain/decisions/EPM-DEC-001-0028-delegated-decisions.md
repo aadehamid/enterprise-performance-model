@@ -22,7 +22,7 @@ Claude decides open project questions on Hamid's behalf. Each delegated decision
 
 Unchanged: every change still goes through a pull request, the checks in AGENTS.md and an independent review.
 
-Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, with a log of what was done. Kimi K3 is the independent reviewer. Each PR gets at least one independent review and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review.
+Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, with a log of what was done. Each PR gets at least one independent review before it opens and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review. After the PR opens, one PR reviewer reviews it the way the Cursor review bot did: one agent, no subagents, one MERGE or HOLD comment, and a new review after each push until merge. Hamid named the reviewers in the same session: the Cursor agent on Grok 4.6 for the independent review, and Pi on `glm-5.3-flash:cloud` for the PR review (Kimi K3 first, until its usage ran out).
 
 Merging: Hamid asked how to remove the merge block because he would be away, then added the Claude Code permission rule `Bash(gh pr merge:*)`. Claude merges a PR with a merge commit only after `scripts/check.sh` passes, every independent-review finding is fixed or answered, and CI is green, and records the merge on the PR.
 
@@ -39,6 +39,8 @@ Hamid gave the instruction in the Claude Code session on 2026-10-12 ([#207](http
 On merging, later in the same session ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137253866), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-merge.md`): "how do i remove the merge bock. I am going to bed and wont be around to merge"
 
 On scope and review ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137266851), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-goal.md`): "go until we finish emiting the ontology and updating the ontology playbook. Keep a log of what you did. Keep using kimi for PR reviewers. Do you need independent reviewer. We should do independent reviewer at least once and at most two times"
+
+On the reviewers ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137449831), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-reviewers.md`): "so let us use kimi k3 for PR review and cursor agent from here with Grok 4.6 for independent reviews. cool?"; "kimi can review the PR until we merge we dont need subagents for this. we should do review like cursor bot was doing it."; "Can you try "ollama launch pi --model glm-5.3-flash:cloud""; "it looks like the two kimi got stuck. I ran out of usgae. So we will need to siwtch those to either cursor agent or pi depending on wether ther pre-PR or PR"
 
 ## Consequences
 

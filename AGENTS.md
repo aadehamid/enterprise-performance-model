@@ -32,7 +32,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   EPM-DEC-001-0028 delegates open questions to Claude: a decision made from
   the evidence order below and recorded as "delegated under EPM-DEC-001-0028"
   counts as Decided. It also sets the independent review at one or two rounds
-  per PR, with Kimi K3 as the reviewer.
+  per PR, and names the reviewers.
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
   `APPROVAL_POLICY.md` (when a human must review). Authors can read it before pushing.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
@@ -40,7 +40,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 
 ## Before every push
 
-Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes.
+Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes, except that the independent review in item 5 runs at most twice per PR (EPM-DEC-001-0028).
 
 1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
