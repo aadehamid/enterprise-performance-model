@@ -25,11 +25,11 @@ The process map holds RACI on 153 processes. Two cases need a rule:
 
 `build_assignments.py` prints the figures.
 
-### For Hamid: which processes need RACI
+### RACI scope: decided by Hamid, 2026-10-13
 
 Q4 lists the live concepts of the core scheme with no accountable role, other than structural anchors. They include concepts of kind process, concepts of kind capability, and concepts with no kind. Today that means every live, non-anchor concept without RACI in the source. The Step 5 gate asks for RACI on every **in-scope** process, and no recorded decision says which processes are in scope for RACI.
 
-Recommendation: count the processes that have RACI in the source as the RACI scope for this release. Treat the rest as the source author's backlog, not as a gap for the ontology to fill. The Step 5 gate stays open until Hamid confirms or changes that.
+Claude recommended counting the processes that have RACI in the source as the RACI scope for this release, and treating the rest as the source author's backlog, not as a gap for the ontology to fill. Hamid chose that option (recorded below). So the 153 processes with RACI in the source are this release's RACI scope. Every one has RACI and an accountable role (Q4's must-be-none query), so the Step 5 gate's RACI condition holds. Q4 keeps listing the other live concepts, as the source author's backlog.
 
 ## Alternatives considered
 
@@ -39,7 +39,9 @@ Recommendation: count the processes that have RACI in the source as the RACI sco
 
 ## Hamid's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them. The RACI scope question above is his to answer.
+Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." Hamid did not make the design choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+
+Hamid decided the RACI scope himself in the same session (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/raci-scope.md`). Asked which processes need RACI for this release, he chose: "The 153 with source RACI (Recommended)".
 
 ## Evidence
 
