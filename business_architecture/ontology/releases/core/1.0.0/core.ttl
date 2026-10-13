@@ -17156,15 +17156,11 @@ src:step3c-definition-workbook a dcterms:BibliographicResource ;
 mod:core a owl:Ontology,
         skos:ConceptScheme ;
     dcterms:creator "Hamid" ;
-    dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en,
-        "SKOS taxonomy of Lagos Specialty Chemicals' downstream petroleum business processes (levels L0-L6), derived from business_architecture/business_process/downstream_process_map.json. The core module namespace serves as the ConceptScheme."@en ;
-    dcterms:issued "2026-10-13"^^xsd:date ;
+    dcterms:description "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."@en ;
     dcterms:license core:license ;
-    dcterms:modified "2026-10-13"^^xsd:date ;
-    dcterms:title "LSC Core Process Ontology"@en,
-        "LSC downstream process taxonomy"@en ;
-    owl:versionIRI core:1.0.0 ;
-    owl:versionInfo "1.0.0" ;
+    dcterms:title "LSC Core Process Ontology"@en ;
+    owl:versionIRI core:1.0.0-rc.1 ;
+    owl:versionInfo "1.0.0-rc.1" ;
     skos:hasTopConcept proc:L0-downstream-operations,
         proc:L0-enabling-functions .
 

@@ -38,16 +38,6 @@
    {
     "@language": "en",
     "@value": "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle."
-   },
-   {
-    "@language": "en",
-    "@value": "SKOS taxonomy of Lagos Specialty Chemicals' downstream petroleum business processes (levels L0-L6), derived from business_architecture/business_process/downstream_process_map.json. The core module namespace serves as the ConceptScheme."
-   }
-  ],
-  "http://purl.org/dc/terms/issued": [
-   {
-    "@type": "http://www.w3.org/2001/XMLSchema#date",
-    "@value": "2026-10-13"
    }
   ],
   "http://purl.org/dc/terms/license": [
@@ -55,30 +45,20 @@
     "@id": "https://w3id.org/lsc/ontology/modules/core/license"
    }
   ],
-  "http://purl.org/dc/terms/modified": [
-   {
-    "@type": "http://www.w3.org/2001/XMLSchema#date",
-    "@value": "2026-10-13"
-   }
-  ],
   "http://purl.org/dc/terms/title": [
    {
     "@language": "en",
     "@value": "LSC Core Process Ontology"
-   },
-   {
-    "@language": "en",
-    "@value": "LSC downstream process taxonomy"
    }
   ],
   "http://www.w3.org/2002/07/owl#versionIRI": [
    {
-    "@id": "https://w3id.org/lsc/ontology/modules/core/1.0.0"
+    "@id": "https://w3id.org/lsc/ontology/modules/core/1.0.0-rc.1"
    }
   ],
   "http://www.w3.org/2002/07/owl#versionInfo": [
    {
-    "@value": "1.0.0"
+    "@value": "1.0.0-rc.1"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#hasTopConcept": [

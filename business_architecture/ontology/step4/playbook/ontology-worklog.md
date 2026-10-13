@@ -994,9 +994,11 @@ without a dated amendment and Hamid's explicit agreement.
   `intake:` field migrated (5,571 of 5,571), the 640 canonical facts as direct
   triples, the scoped sequences, seven code lists, IRIs for the 1,003 former
   blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
-  manifest. The design choices are delegated under EPM-DEC-001-0028 and
-  recorded in EPM-DEC-001-0029. The release waits for Hamid's fresh
-  attestation and approval.
+  manifest. The package is built as release candidate `1.0.0-rc.1`, with no
+  issued date. The design choices are proposed in EPM-DEC-001-0029 under the
+  delegation in EPM-DEC-001-0028 (pending in #242). The release waits for
+  Hamid's decision on that design, his fresh attestation, the ledger approval
+  and his release approval.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
 - Hamid: "yes, add both verbs and record the decision." `provides-input-to`

@@ -37,8 +37,11 @@ SHAPES = os.path.join(HERE, "shapes.ttl")
 CHANGELOG = os.path.join(HERE, "CHANGELOG.md")
 PINNED = os.path.join(STEP4, "PINNED_SHA.txt")
 VERSION = "1.0.0"
-# The release date. Set when the release is cut; a later cut updates it and rebuilds.
-ISSUED = "2026-10-13"
+# Until Hamid approves the release, the package is a release candidate: it carries the
+# pre-release version and no issued date. At the cut: STAGE = None, ISSUED = the date.
+STAGE = "rc.1"
+ISSUED = None
+LABEL = VERSION if STAGE is None else f"{VERSION}-{STAGE}"
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", VERSION)
 
 CORE = Namespace("https://w3id.org/lsc/ontology/modules/core/")
@@ -265,14 +268,18 @@ def build():
 
     # 6. Ontology header (ontology-playbook.md, worked example).
     out.add((ONTOLOGY_IRI, RDF.type, OWL.Ontology))
+    # The taxonomy names its concept scheme on the same IRI; the ontology header replaces that.
+    out.remove((ONTOLOGY_IRI, DCTERMS.title, None))
+    out.remove((ONTOLOGY_IRI, DCTERMS.description, None))
     out.add((ONTOLOGY_IRI, DCTERMS.title, en("LSC Core Process Ontology")))
     out.add((ONTOLOGY_IRI, DCTERMS.description, en(
         "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle.")))
-    out.add((ONTOLOGY_IRI, OWL.versionIRI, URIRef(f"{ONTOLOGY_IRI}/{VERSION}")))
-    out.add((ONTOLOGY_IRI, OWL.versionInfo, Literal(VERSION)))
+    out.add((ONTOLOGY_IRI, OWL.versionIRI, URIRef(f"{ONTOLOGY_IRI}/{LABEL}")))
+    out.add((ONTOLOGY_IRI, OWL.versionInfo, Literal(LABEL)))
     out.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("Hamid")))
-    out.add((ONTOLOGY_IRI, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
-    out.add((ONTOLOGY_IRI, DCTERMS.modified, Literal(ISSUED, datatype=XSD.date)))
+    if ISSUED:
+        out.add((ONTOLOGY_IRI, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
+        out.add((ONTOLOGY_IRI, DCTERMS.modified, Literal(ISSUED, datatype=XSD.date)))
     out.add((ONTOLOGY_IRI, DCTERMS.license, URIRef(f"{ONTOLOGY_IRI}/license")))
 
     # 7. Nothing intake:, no blank nodes.
@@ -330,18 +337,19 @@ def serialize(graph):
 def catalog():
     """The DCAT record of this release: one dataset version with its distributions."""
     dcat = Namespace("http://www.w3.org/ns/dcat#")
-    base = f"{ONTOLOGY_IRI}/releases/{VERSION}"
+    base = f"{ONTOLOGY_IRI}/releases/{LABEL}"
     g = Graph()
     g.bind("dcat", dcat)
     g.bind("dcterms", DCTERMS)
-    catalog_iri, dataset = URIRef("https://w3id.org/lsc/ontology/catalog"), URIRef(f"{ONTOLOGY_IRI}/{VERSION}")
+    catalog_iri, dataset = URIRef("https://w3id.org/lsc/ontology/catalog"), URIRef(f"{ONTOLOGY_IRI}/{LABEL}")
     g.add((catalog_iri, RDF.type, dcat.Catalog))
     g.add((catalog_iri, dcat.dataset, dataset))
     g.add((dataset, RDF.type, dcat.Dataset))
-    g.add((dataset, DCTERMS.title, en(f"LSC Core Process Ontology {VERSION}")))
+    g.add((dataset, DCTERMS.title, en(f"LSC Core Process Ontology {LABEL}")))
     g.add((dataset, DCTERMS.isVersionOf, ONTOLOGY_IRI))
-    g.add((dataset, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
-    g.add((dataset, OWL.versionInfo, Literal(VERSION)))
+    if ISSUED:
+        g.add((dataset, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
+    g.add((dataset, OWL.versionInfo, Literal(LABEL)))
     for name, media in (("core.ttl", "text/turtle"), ("core.jsonld", "application/ld+json"),
                         ("shapes.ttl", "text/turtle"), ("canonical-facts.csv", "text/csv")):
         dist = URIRef(f"{base}/{name}")
@@ -373,8 +381,8 @@ def package(graph, counts, rows):
         pin = f.read().strip()
     # The manifest names the evidence commit the package was built from, and each file's SHA-256.
     files["manifest.json"] = json.dumps({
-        "module": "core", "version": VERSION, "ontology_iri": str(ONTOLOGY_IRI),
-        "version_iri": f"{ONTOLOGY_IRI}/{VERSION}", "built_from_pin": pin,
+        "module": "core", "version": LABEL, "release_candidate": STAGE is not None,
+        "ontology_iri": str(ONTOLOGY_IRI), "version_iri": f"{ONTOLOGY_IRI}/{LABEL}", "built_from_pin": pin,
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 
@@ -390,7 +398,7 @@ def main():
     if not conforms:
         sys.exit("SHACL release slice fails:\n" + report)
     files = package(graph, counts, rows)
-    print(f"core {VERSION}: {len(graph)} triples; SHACL slice conforms; " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
+    print(f"core {LABEL}: {len(graph)} triples; SHACL slice conforms; " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items())))
     if args.verify:
         def current(n, text):
             path = os.path.join(RELEASE_DIR, n)

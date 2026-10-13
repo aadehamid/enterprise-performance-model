@@ -3,14 +3,16 @@ the migration rules, and the vocabulary's one kind and one range per property.
 
 Run: python3 -m pytest test_build_core.py (needs rdflib, openpyxl, pyshacl).
 """
+import csv
 import os
+import re
 import shutil
 import sys
 import tempfile
 import unittest
 
 from rdflib import BNode, Graph, Literal, URIRef
-from rdflib.namespace import OWL, RDF, RDFS, SKOS
+from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -47,6 +49,95 @@ class Build(unittest.TestCase):
                                                  "governedBy", "triggeredBy", "constrainedBy", "requires", "assuredBy")
                  and str(t[0]).startswith(str(b.PROC))]
         self.assertEqual(len(facts), counts["canonical facts"])
+
+
+class Destinations(unittest.TestCase):
+    """Each intake: value is read from the source taxonomy here, independently of the
+    builder, and must sit on its EPM-DEC-001-0029 predicate in the built graph. A swapped
+    or reversed mapping fails these even when the conservation counts still balance."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.g = BUILT[0]
+        cls.base = Graph()
+        cls.base.parse(b.TAXONOMY)
+
+    def values(self, name):
+        return list(self.base.subject_objects(b.INTAKE[name]))
+
+    def norm(self, text):
+        return Literal(" ".join(str(text).split()), lang="en")
+
+    def test_literal_fields_land_on_their_own_predicates(self):
+        for name, prop in (("primaryPurpose", b.CORE.primaryPurpose), ("primaryOutput", b.CORE.primaryOutputFlow)):
+            for s, v in self.values(name):
+                with self.subTest(field=name, concept=str(s)):
+                    self.assertIn((s, prop, self.norm(v)), self.g)
+        for s, v in self.values("responsibleDomain"):
+            expected = "Cross-functional" if str(v).startswith("Cross-functional") else v
+            self.assertIn((s, b.CORE.responsibleDomain, self.norm(expected)), self.g)
+        for s, v in self.values("keyInputs"):
+            for flow in str(v).split("|"):
+                if flow.strip():
+                    self.assertIn((s, b.CORE.keyInputFlow, self.norm(flow)), self.g)
+
+    def test_level_kind_apqc_horizon_and_status(self):
+        kinds = {"process": "process", "capability": "capability", "not-process": "structural-anchor"}
+        for s, v in self.values("level"):
+            self.assertIn((s, b.CORE.taxonomyLevel, Literal(int(str(v)[1:]), datatype=XSD.integer)), self.g)
+        for s, v in self.values("conceptTypeCheck"):
+            self.assertIn((s, b.CORE.conceptKind, b.CODE["concept-kind"][kinds[str(v)]]), self.g)
+        for s, v in self.values("apqcDecision"):
+            member = self.g.value(s, b.CORE.apqcMappingDecision)
+            self.assertEqual(str(self.g.value(member, SKOS.notation)), str(v))
+        horizon = {"daily": ("cadence", "daily"), "weekly": ("cadence", "weekly"), "monthly": ("cadence", "monthly"),
+                   "tactical": ("planning-level", "tactical"), "strategic": ("planning-level", "strategic"),
+                   "event-driven": ("operating-mode", "event-driven"), "continuous": ("operating-mode", "continuous"),
+                   "periodic": ("operating-mode", "periodic")}
+        for s, v in self.values("processHorizon"):
+            code, member = horizon[str(v)]
+            self.assertIn((s, b.HORIZON_PROPERTY[code], b.CODE[code][member]), self.g)
+        status = dict((str(v), s) for s, v in self.values("status"))
+        self.assertIn((status["retired"], b.CORE.lifecycleStatus, b.CODE["lifecycle-status"]["retired"]), self.g)
+        self.assertIn((status["blocked"], b.CORE.holdStatus, b.CODE["hold-status"]["implementation-hold"]), self.g)
+
+    def test_notes_and_sources(self):
+        for s, v in self.values("terminologyNotes"):
+            text = self.norm(v)
+            on_prov, on_edit = (s, DCTERMS.provenance, text) in self.g, (s, SKOS.editorialNote, text) in self.g
+            self.assertTrue(on_prov != on_edit, str(s))
+            if re.search(r"renam", str(v), re.I):
+                self.assertTrue(on_prov, f"{s}: a rename note is provenance")
+        for s, v in self.values("referenceSources"):
+            for ident in re.findall(r"SRC-[A-Z0-9-]+", str(v)):
+                self.assertIn((s, DCTERMS.source, b.SRC[ident.lower()]), self.g)
+
+    def test_former_names_follow_the_label_report(self):
+        with open(b.LABELS, newline="") as f:
+            for row in csv.DictReader(f):
+                s, label = b.PROC[row["concept_slug"]], self.norm(row["historical_label"])
+                searchable = row["label_kind"] == "prior_name" and row["proposed_disposition"] in (
+                    "AddAsAltLabel", "RetainAsAltLabel")
+                with self.subTest(concept=row["concept_slug"], label=str(label)):
+                    self.assertEqual((s, SKOS.altLabel, label) in self.g, searchable)
+                    self.assertEqual((s, b.CORE.priorPreferredLabel, label) in self.g, not searchable)
+
+    def test_facts_keep_their_direction(self):
+        with open(b.FACTS, newline="") as f:
+            rows = list(csv.DictReader(f))
+        stored = {(r["subject"], r["predicate"], r["object"]) for r in rows}
+        for r in rows:
+            p = b.CORE[r["predicate"].split(":", 1)[1]]
+            self.assertIn((b.PROC[r["subject"]], p, b.PROC[r["object"]]), self.g)
+            if (r["object"], r["predicate"], r["subject"]) not in stored:
+                self.assertNotIn((b.PROC[r["object"]], p, b.PROC[r["subject"]]), self.g)
+
+    def test_the_package_is_a_release_candidate_until_approved(self):
+        g = self.g
+        self.assertEqual(str(g.value(b.ONTOLOGY_IRI, OWL.versionInfo)), b.LABEL)
+        if b.STAGE is not None:
+            self.assertIsNone(g.value(b.ONTOLOGY_IRI, DCTERMS.issued))
+        self.assertEqual(len(list(g.objects(b.ONTOLOGY_IRI, DCTERMS.title))), 1)
 
 
 class Rules(unittest.TestCase):
