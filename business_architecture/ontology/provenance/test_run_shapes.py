@@ -8,7 +8,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Literal, Namespace, URIRef
-from rdflib.namespace import OWL, PROV, RDF, XSD
+from rdflib.namespace import OWL, PROV, RDF, SH, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CORE = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "core.ttl"))
@@ -18,14 +18,25 @@ EX = Namespace("https://example.org/consumer/")
 PROC = Namespace("https://w3id.org/lsc/ontology/process/")
 CORE_NS = Namespace("https://w3id.org/lsc/ontology/modules/core/")
 KIND = Namespace("https://w3id.org/lsc/ontology/modules/core/concept-kind/")
+SHP = Namespace("https://w3id.org/lsc/ontology/modules/core/run-shapes/")
 RUN, ASSOCIATION = EX["run-2026-10-01-001"], EX["run-2026-10-01-001-association"]
 
 
-def conforms(*graphs):
+def report(*graphs):
     data = Graph()
     for g in graphs:
         data += g
-    return validate(data, shacl_graph=SHAPES)[0]
+    return validate(data, shacl_graph=SHAPES)
+
+
+def conforms(*graphs):
+    return report(*graphs)[0]
+
+
+def failing_shapes(*graphs):
+    """The shapes whose violations the report names."""
+    results = report(*graphs)[1]
+    return set(results.objects(None, SH.sourceShape))
 
 
 def with_example(change):
@@ -40,10 +51,12 @@ class Definitions(unittest.TestCase):
         self.assertEqual(list(CORE.subjects(RDF.type, PROV.Activity)), [])
         self.assertTrue(conforms(CORE))
 
-    def test_a_definition_typed_as_a_run_fails(self):
+    def test_a_definition_typed_as_a_run_fails_the_definition_shape(self):
+        # Typing a definition as a run also trips the run shape (no start time), so the test
+        # checks that the definition shape itself fired.
         g = Graph()
         g.add((PROC["CM-1-1-2-1"], RDF.type, PROV.Activity))
-        self.assertFalse(conforms(CORE, g))
+        self.assertIn(SHP.DefinitionIsNotARun, failing_shapes(CORE, g))
 
 
 class Runs(unittest.TestCase):
@@ -68,6 +81,10 @@ class Runs(unittest.TestCase):
     def test_a_run_following_a_structural_anchor_fails(self):
         anchor = next(CORE.subjects(CORE_NS.conceptKind, KIND["structural-anchor"]))
         self.assertFalse(with_example(lambda g: g.set((ASSOCIATION, PROV.hadPlan, anchor))))
+
+    def test_a_run_following_a_capability_fails(self):
+        capability = next(CORE.subjects(CORE_NS.conceptKind, KIND.capability))
+        self.assertFalse(with_example(lambda g: g.set((ASSOCIATION, PROV.hadPlan, capability))))
 
     def test_a_run_without_a_start_fails(self):
         self.assertFalse(with_example(lambda g: g.remove((RUN, PROV.startedAtTime, None))))
