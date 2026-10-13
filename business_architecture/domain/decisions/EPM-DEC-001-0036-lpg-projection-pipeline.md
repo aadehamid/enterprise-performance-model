@@ -23,14 +23,14 @@ EPM-DEC-001-0020 adds Step 12: follow the guideline's pipeline (check, reason, l
 
 Choices where the guideline leaves room or does not fit the tools:
 
-- **SHORTEN, not the guideline's MAP example.** n10s 2025.06.1 validates SHACL only in a namespace-aware graph. In SHORTEN mode each name is the fixed prefix plus the local name (`skos__prefLabel`), so no two terms share a name (Rule 5) without a separate names file.
-- **A subset of the shapes runs in the graph.** n10s cannot check `sh:datatype rdf:langString`, `sh:not`, `sh:languageIn`, object and subject targets, `sh:node` or `sh:nodeKind`. Step 1 checks all of them with pySHACL on the exact triples that are loaded. A zero round-trip diff proves the graph holds those triples, so the full shapes hold in the graph. To show the in-graph check can fail, Step 5 removes one role's name and requires n10s to report it.
-- **The round trip compares values, not spellings.** A plain literal and an `xsd:string` literal are the same (RDF 1.1). Integers load as INTEGER and return as `xsd:long`, and decimals load as FLOAT and return as `xsd:double` (guideline section 8). n10s keeps a language tag inside the stored string, and the export returns it untagged, so the comparison reads the tag back. The build refuses a source string that ends like a tag, and a decimal that a FLOAT cannot hold exactly.
+- **SHORTEN, not the guideline's MAP example.** In MAP mode, n10s 2025.06.1 would not import the shapes here: `n10s.validation.shacl.import.fetch` failed with "The graph is not namespace aware". The same mode is behind neosemantics issue #237 (open since 2021-11-09: SHACL not validating with `handleVocabUris` set to MAP); its fix, PR #361, is still open. In SHORTEN mode each name is the fixed prefix plus the local name (`skos__prefLabel`), so no two terms share a name (Rule 5) without a separate names file.
+- **A subset of the shapes runs in the graph.** The in-graph subset leaves out `sh:datatype rdf:langString`, which n10s rejects, and `sh:not`, `sh:languageIn`, object and subject targets and `sh:node`, which it does not support. Step 1 checks all of them with pySHACL on every triple that is loaded: the asserted data and `inferred.nt`. A zero round-trip diff proves the graph holds those triples, so the full shapes hold in the graph. To show the in-graph check can fail, Step 5 removes one role's name and requires n10s to report it.
+- **The round trip compares values, not spellings.** A plain literal and an `xsd:string` literal are the same (RDF 1.1). Integers load as INTEGER and return as `xsd:long`, and decimals load as FLOAT and return as `xsd:double` (guideline section 8). n10s keeps a language tag inside the stored string, and the export returns it untagged, so the comparison reads the tag back. The build refuses a source string that ends like a tag, and a decimal whose value, printed as a double, is not its own lexical form (0.64 prints back as 0.64; a decimal such as 0.1000000000000000055 would not).
 - **Add-on C (exact decimals) is not adopted.** The one decimal property is the two-place ownership share, and no query computes with it. Adopt Add-on C if a decimal needs exact arithmetic.
 - **Release gaps are listed, not hidden.** `core` 1.0.0 gives `core:earlierProcess` and `core:laterProcess` no `rdfs:range`, which breaks Rule 1. Only a new `core` release can fix that. The pipeline names both gaps with their fix and fails on any other gap, and on a listed gap that no longer occurs.
 - **Steps 2, 4 and 5 run locally.** They need Java and a Neo4j container. `scripts/check.sh` runs Steps 1 and 3 and checks that the committed report matches the current inputs and passed.
 
-The first run found a defect in `ref-mpc`, fixed in its own PR: its source nodes linked their URLs through `dcterms:source`, which core's source shape forbids.
+The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): its source nodes linked their URLs through `dcterms:source`, which core's source shape forbids.
 
 ### For Hamid
 
@@ -38,7 +38,7 @@ The next `core` release should add `rdfs:range skos:Concept` to `core:earlierPro
 
 ## Alternatives considered
 
-- **MAP mode with explicit names.** Rejected: n10s then refuses to import SHACL shapes.
+- **MAP mode with explicit names.** Rejected: the SHACL import failed in that mode (above).
 - **Keep the OWL API declarations in `inferred.nt`.** Rejected: every instance would gain an `owl__NamedIndividual` label and nothing about the domain.
 - **Skip the in-graph SHACL.** Rejected: the guideline requires it; the subset plus the round trip keeps the guarantee.
 

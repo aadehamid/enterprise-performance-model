@@ -2,7 +2,7 @@
   "determinism_hash_shuffled": "3f486e7c6cf387d4a5ab73988b8a0a5b0c654c343f3d64ab3fe83bbb23d1e9e0",
   "determinism_hash_sorted": "3f486e7c6cf387d4a5ab73988b8a0a5b0c654c343f3d64ab3fe83bbb23d1e9e0",
   "in_graph_mutant_violations": 1,
-  "in_graph_shape_constraints": 107,
+  "in_graph_shape_constraints": 112,
   "input_fingerprint": "e513606c2b9bbe5466e2eef8c7d3fa4860f58a54b8bef66a9aff591ea1742134",
   "nodes": 2154,
   "relationships": 11778,

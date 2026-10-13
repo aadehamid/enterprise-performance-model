@@ -42,6 +42,14 @@ class Rules(unittest.TestCase):
         problems = rule_problems(change)
         self.assertTrue(any(x.startswith("Rule 2") and "unshapedProperty" in x for x in problems), problems)
 
+    def test_a_literal_range_fails_rule_1(self):
+        p = URIRef(CORE + "taxonomyLevel")
+        def change(g):
+            g.remove((p, RDFS.range, None))
+            g.add((p, RDFS.range, RDFS.Literal))
+        problems = rule_problems(change)
+        self.assertTrue(any(x.startswith("Rule 1") and "taxonomyLevel" in x for x in problems), problems)
+
     def test_a_blank_node_fails_rule_3(self):
         problems = rule_problems(lambda g: g.add((BNode(), RDF.type, OWL.Class)))
         self.assertIn("Rule 3: the data holds a blank node", problems)
@@ -62,6 +70,27 @@ class Rules(unittest.TestCase):
         self.assertEqual(pl.lpg_name(str(RDFS.label)), "rdfs__label")
         self.assertEqual(pl.lpg_name("http://www.w3.org/ns/org#identifier"), "org__identifier")
         self.assertEqual(pl.lpg_name("http://purl.org/dc/terms/identifier"), "dcterms__identifier")
+
+    def test_a_term_without_an_lpg_name_fails_rule_5(self):
+        # In the core namespace (so Rule 3 passes) but with a slash in the local part, so SHORTEN
+        # cannot name it.
+        problems = rule_problems(lambda g: g.add((URIRef(CORE + "x"), URIRef(CORE + "a/b"), Literal("v"))))
+        self.assertTrue(any(x.startswith("Rule 5: no LPG name") for x in problems), problems)
+
+    def test_step_1_validates_the_inferred_triples_too(self):
+        # An inferred type that breaks a shape must stop the build, as an asserted one would.
+        from unittest import mock
+        role = next(DATA.subjects(RDF.type, URIRef("http://www.w3.org/ns/org#Role")))
+        bad = f"<{role}> <{RDF.type}> <{pl.OWN[1]}ResponsibilityAssignment> .\n"
+        real_open = open
+        def fake_open(path, *a, **k):
+            if path == pl.INFERRED:
+                import io
+                return io.StringIO(bad)
+            return real_open(path, *a, **k)
+        with mock.patch("builtins.open", fake_open), mock.patch("os.path.exists", lambda p: True):
+            with self.assertRaises(SystemExit):
+                pl.build()
 
     def test_a_listed_release_gap_that_no_longer_occurs_fails_the_build(self):
         def close_gap(g):

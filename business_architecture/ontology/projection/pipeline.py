@@ -102,7 +102,8 @@ def check_rules(data, shapes):
         r = list(data.objects(p, RDFS.range))
         if len(k) != 1:
             problems.append(f"Rule 1: {p} has {len(k)} kinds")
-        if len(r) != 1 or isinstance(r[0], BNode):
+        # A concrete range: one IRI, and not rdfs:Literal or rdfs:Resource, which say nothing.
+        if len(r) != 1 or isinstance(r[0], BNode) or r[0] in (RDFS.Literal, RDFS.Resource):
             problems.append(f"Rule 1: {p} has no single concrete range")
     # Rule 2: every own predicate has a shape that states its cardinality.
     stated = {shapes.value(n, SH.path) for n in shapes.subjects(SH.path, None)
@@ -114,7 +115,8 @@ def check_rules(data, shapes):
     for p in preds:
         if not any(str(p).startswith(ns) for ns in PREFIXES.values()):
             problems.append(f"Rule 3: no fixed prefix for {p}")
-    # Rule 4a: every qualified-relation node has an IRI and one value for each end.
+    # Rule 4a: every qualified-relation node has an IRI and one value for each end. These are the two
+    # qualified-relation classes the modules define today; a new one must be added here.
     for cls, ends in ((URIRef(OWN[1] + "ResponsibilityAssignment"), ("forProcess", "assignedRole")),
                       (URIRef(OWN[1] + "ControlRelationship"), ("controllingEntity", "controlledEntity"))):
         for node in data.subjects(RDF.type, cls):
@@ -148,11 +150,15 @@ def check(data, shapes):
 
 def build():
     data, shapes = graph(INPUTS), graph(SHAPES)
-    problems = check(data, shapes)
+    inferred = open(INFERRED).read() if os.path.exists(INFERRED) else ""
+    # Step 1 checks every triple that is loaded: the asserted data and the inferred triples.
+    checked = Graph()
+    checked += data
+    checked.parse(data=inferred, format="nt")
+    problems = check(checked, shapes)
     if problems:
         sys.exit("Step 1 stops the build:\n  " + "\n  ".join(problems))
     loadable = sorted_nt(data)
-    inferred = open(INFERRED).read() if os.path.exists(INFERRED) else ""
     manifest = {
         "inputs": {p: sha(open(os.path.join(ONTOLOGY, p)).read()) for p in INPUTS},
         "shapes": {p: sha(open(os.path.join(ONTOLOGY, p)).read()) for p in SHAPES},
@@ -208,7 +214,7 @@ def literal_multivalued(data, shapes):
 # What n10s 2025.06.1 cannot validate in the graph. Step 1 has already validated every one of these
 # with pySHACL on the exact triples that are loaded, and the round trip proves the graph holds those
 # triples, so the full shapes hold in the graph (EPM-DEC-001-0036).
-N10S_UNSUPPORTED = [SH["not"], SH.languageIn, SH.targetObjectsOf, SH.targetSubjectsOf, SH.node, SH.nodeKind,
+N10S_UNSUPPORTED = [SH["not"], SH.languageIn, SH.targetObjectsOf, SH.targetSubjectsOf, SH.node,
                     SH.message, SH.severity]
 
 
