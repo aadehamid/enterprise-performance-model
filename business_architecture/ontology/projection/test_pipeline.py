@@ -97,6 +97,16 @@ class Rules(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 pl.build()
 
+    def test_step_1_runs_the_sparql_targeted_process_shape(self):
+        # Only core's ProcessConcept shape, whose target is a SPARQL query, limits a process to one
+        # parent. Without SHACL-AF (advanced=True) it would not run and this would pass.
+        g = Graph()
+        g += DATA
+        proc = URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-2-1")
+        g.add((proc, URIRef("http://www.w3.org/2004/02/skos/core#broader"), URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-3")))
+        problems = pl.check(g, SHAPES)
+        self.assertTrue(any(x.startswith("SHACL") and "broader" in x for x in problems), problems)
+
     def test_a_listed_release_gap_that_no_longer_occurs_fails_the_build(self):
         def close_gap(g):
             for p in ("earlierProcess", "laterProcess"):

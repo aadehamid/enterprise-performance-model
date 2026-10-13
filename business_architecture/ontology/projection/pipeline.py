@@ -148,7 +148,9 @@ def check(data, shapes):
     found = check_rules(data, shapes)
     problems = [p for p in found if p not in RELEASE_EXCEPTIONS]
     problems += [f"listed release exception no longer occurs: {e}" for e in RELEASE_EXCEPTIONS if e not in found]
-    conforms, _, text = validate(data, shacl_graph=shapes)
+    # advanced=True runs the SHACL-AF parts: SPARQL targets (core's ProcessConcept) and SPARQL
+    # constraints (the scoped-sequence ancestor check).
+    conforms, _, text = validate(data, shacl_graph=shapes, advanced=True)
     if not conforms:
         problems.append("SHACL: the data does not conform:\n" + text)
     return problems
