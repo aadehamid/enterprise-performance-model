@@ -1,8 +1,9 @@
 # Reference instances for Marathon Petroleum Corporation (Step 5, slice 4; EPM-DEC-001-0015,
 # EPM-DEC-001-0033). Public facts from MPC's FY2025 Form 10-K (MPC-S01 in
 # business_architecture/reference/mpc/source-register.md), plus the two LEIs from GLEIF
-# (EPM-DEC-001-0023: GLEIF is mapped at Step 5, not imported). Each instance cites its source,
-# and each holds as of the date in dcterms:date. The core and organization modules stay
+# (EPM-DEC-001-0023: GLEIF is mapped at Step 5, not imported). Each instance cites its source.
+# The organizations, segments and refineries hold as of their dcterms:date; the control
+# relationship holds as of its orgm:asOf. The core and organization modules stay
 # company-neutral: this module refers to their terms by IRI.
 @prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
 @prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
