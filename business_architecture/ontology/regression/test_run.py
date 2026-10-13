@@ -6,7 +6,7 @@ import sys
 import unittest
 
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import SKOS
+from rdflib.namespace import DCTERMS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -39,7 +39,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (5, 3, 36))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (5, 5, 34))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -51,6 +51,35 @@ class Release(unittest.TestCase):
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
         self.assertEqual(len([f for f in failures if "no rows" in f]), 8)
+
+    def mutated(self, change):
+        g = Graph()
+        g += GRAPH
+        change(g)
+        return run.check(g, run.load_expected())[0]
+
+    def test_losing_the_planned_child_notes_fails_q2(self):
+        note = URIRef("https://w3id.org/lsc/ontology/modules/core/plannedChildNote")
+        failures = self.mutated(lambda g: g.remove((None, note, None)))
+        self.assertTrue(any(f.startswith("Q2 q02b") for f in failures), failures)
+
+    def test_references_to_a_non_apqc_source_fail_q11(self):
+        def rewrite(g):
+            other = URIRef("https://w3id.org/lsc/ontology/source/src-api-mpms-001")
+            for s, o in list(g.subject_objects(DCTERMS.references)):
+                g.remove((s, DCTERMS.references, o))
+                g.add((s, DCTERMS.references, other))
+        self.assertTrue(any(f.startswith("Q11") for f in self.mutated(rewrite)))
+
+    def test_a_lost_definition_fails_q40(self):
+        concept = URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-1")
+        failures = self.mutated(lambda g: g.remove((concept, SKOS.definition, None)))
+        self.assertTrue(any(f.startswith("Q40") for f in failures), failures)
+
+    def test_a_second_definition_fails_q43(self):
+        concept = URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-1")
+        failures = self.mutated(lambda g: g.add((concept, SKOS.definition, Literal("A copy.", lang="en"))))
+        self.assertTrue(any(f.startswith("Q43") for f in failures), failures)
 
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()

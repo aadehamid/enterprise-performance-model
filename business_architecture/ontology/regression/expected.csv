@@ -9,7 +9,7 @@ question,status,queries,waits_for
 8,waits:step-6,,planned inputs and outputs (Step 6)
 9,waits:step-7,,lanes (Step 7)
 10,waits:step-7,,capabilities and value streams (Step 7)
-11,partial,q11-apqc-references.rq,"APQC elements with no local counterpart need the APQC element list in the graph (external mappings, EPM-DEC-001-0023, Step 7)"
+11,partial,q11-apqc-references.rq,APQC elements with no local counterpart need the full APQC PCF 7.2.2 element list in the graph; the release carries only the referenced elements
 12,answerable,q12-apqc-divergence.rq,
 13,waits:step-7,,"concept vs named measure vs report (KPI seed, EPM-DEC-001-0017)"
 14,waits:step-7,,which concepts may become a number (KPI seed)
@@ -38,8 +38,8 @@ question,status,queries,waits_for
 37,waits:step-7,,placement of concepts and Named KPIs (Step 7)
 38,waits:step-7,,placement certification vs context (Step 7)
 39,partial,q39-downstream.rq,processes answer now; concepts and Named KPIs wait for Step 7
-40,waits:step-10,,published wording for people (Step 10); graph part only (EPM-DEC-001-0019)
+40,partial,q40-official-wording.rq,"where the wording is published for people, and what is only a copy (Step 10)"
 41,waits:step-7,,what an agent may answer needs the KPI module; graph part only
 42,waits:step-7,,what an agent must refuse needs the KPI module; graph part only
-43,waits:step-7,,Genie gets the same definition; graph part only (EPM-DEC-001-0019)
+43,partial,q43-one-definition.rq,"the Genie binding itself, outside the graph (EPM-DEC-001-0019)"
 44,partial,q44-sources.rq,marking which source is authoritative (Step 7 or 9)

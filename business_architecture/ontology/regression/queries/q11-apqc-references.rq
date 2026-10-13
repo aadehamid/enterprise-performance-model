@@ -1,9 +1,10 @@
-# Q11. Which local processes reference APQC element E?
+# Q11. Which local processes reference APQC element E? (elements of APQC PCF 7.2.2 only)
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
 PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
-PREFIX apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/>
+PREFIX src: <https://w3id.org/lsc/ontology/source/>
+PREFIX proc: <https://w3id.org/lsc/ontology/process/>
 
-SELECT ?c ?element ?id WHERE { ?c dcterms:references ?element . ?element dcterms:identifier ?id . }
+SELECT ?c ?element ?id WHERE { ?c dcterms:references ?element . ?element dcterms:isPartOf src:apqc-pcf-7.2.2 ; dcterms:identifier ?id . }
