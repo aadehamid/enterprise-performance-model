@@ -12,8 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import run  # noqa: E402
 
-GRAPH = Graph()
-GRAPH.parse(run.RELEASE)
+GRAPH = run.load(run.RELEASE)
 MOD = URIRef("https://w3id.org/lsc/ontology/modules/core")
 
 
@@ -39,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (5, 5, 34))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (8, 5, 31))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -50,7 +49,7 @@ class Release(unittest.TestCase):
 
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 8)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 11)
 
     def mutated(self, change):
         g = Graph()
@@ -81,11 +80,37 @@ class Release(unittest.TestCase):
         failures = self.mutated(lambda g: g.add((concept, SKOS.definition, Literal("A copy.", lang="en"))))
         self.assertTrue(any(f.startswith("Q43") for f in failures), failures)
 
+    def test_a_raci_process_without_an_accountable_role_fails_q4(self):
+        orgm = "https://w3id.org/lsc/ontology/modules/organization/"
+        accountable = URIRef(orgm + "raci-level/accountable")
+        process = URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-2-1")
+
+        def drop(g):
+            for a in list(g.subjects(URIRef(orgm + "forProcess"), process)):
+                if (a, URIRef(orgm + "raciLevel"), accountable) in g:
+                    g.remove((a, None, None))
+        failures = self.mutated(drop)
+        self.assertTrue(any(f.startswith("Q4 q04b") for f in failures), failures)
+
+    def test_an_assignment_to_a_process_outside_core_fails_q3(self):
+        orgm = "https://w3id.org/lsc/ontology/modules/organization/"
+        a = next(GRAPH.subjects(URIRef(orgm + "forProcess"), None))
+        failures = self.mutated(lambda g: g.set((a, URIRef(orgm + "forProcess"), URIRef("https://example.org/nowhere"))))
+        self.assertTrue(any(f.startswith("Q3 q03b") for f in failures), failures)
+
+    def test_an_assignment_on_a_structural_anchor_fails_q3(self):
+        orgm = "https://w3id.org/lsc/ontology/modules/organization/"
+        kind = URIRef("https://w3id.org/lsc/ontology/modules/core/conceptKind")
+        anchor = next(GRAPH.subjects(kind, URIRef("https://w3id.org/lsc/ontology/modules/core/concept-kind/structural-anchor")))
+        a = next(GRAPH.subjects(URIRef(orgm + "forProcess"), None))
+        failures = self.mutated(lambda g: g.set((a, URIRef(orgm + "forProcess"), anchor)))
+        self.assertTrue(any(f.startswith("Q3 q03b") for f in failures), failures)
+
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
-        rows[2] = dict(rows[2], queries="q01a-children.rq")
+        rows[5] = dict(rows[5], queries="q01a-children.rq")
         failures, _ = run.check(GRAPH, rows)
-        self.assertIn("Q3: waits but lists queries", failures)
+        self.assertIn("Q6: waits but lists queries", failures)
 
 
 if __name__ == "__main__":

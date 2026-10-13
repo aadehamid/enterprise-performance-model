@@ -28,7 +28,10 @@ shp:Role a sh:NodeShape ;
     sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
                   sh:languageIn ( "en" ) ; sh:message "A role has exactly one English name." ] ;
     sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
-    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] .
+    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A role cites the source that names it." ] .
 
 shp:Control a sh:NodeShape ;
     sh:targetClass orgm:ControlRelationship ;

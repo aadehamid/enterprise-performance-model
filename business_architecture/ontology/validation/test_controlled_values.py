@@ -20,6 +20,7 @@ SH = Namespace("http://www.w3.org/ns/shacl#")
 DATA = Graph()
 DATA.parse(os.path.join(ONTOLOGY, "releases", "core", "1.0.0", "core.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
+DATA.parse(os.path.join(ONTOLOGY, "organization", "assignments.ttl"))
 CODED = [SHAPES.value(s, SH.targetObjectsOf) for s in SHAPES.subjects(RDF.type, SH.NodeShape)]
 
 
@@ -55,8 +56,8 @@ class ControlledValues(unittest.TestCase):
 
     def test_each_shape_names_the_list_its_property_uses(self):
         # Where the property has values, they sit in the scheme the shape names. Where it has none
-        # yet (governance status, RACI level), the property and the scheme carry the same label in
-        # their vocabularies.
+        # yet (governance status), the property and the scheme carry the same label in their
+        # vocabularies.
         vocab = Graph()
         vocab.parse(os.path.join(ONTOLOGY, "release", "core-vocabulary.ttl"))
         vocab.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))

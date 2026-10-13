@@ -1,0 +1,16 @@
+# An illustration of a run recorded by a consuming system (Step 6; EPM-DEC-001-0034). It is
+# not data: the ontology holds no runs. The run, the agent and the times are made up; the
+# definition is a real core 1.0.0 process concept.
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <https://example.org/consumer/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+
+ex:run-2026-10-01-001 a prov:Activity ;
+    prov:startedAtTime "2026-10-01T08:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-10-01T09:30:00Z"^^xsd:dateTime ;
+    prov:qualifiedAssociation ex:run-2026-10-01-001-association .
+
+ex:run-2026-10-01-001-association a prov:Association ;
+    prov:hadPlan proc:CM-1-1-2-1 ;
+    prov:agent ex:business-analyst-on-shift .
