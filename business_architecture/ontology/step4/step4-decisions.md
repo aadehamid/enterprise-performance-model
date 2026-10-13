@@ -129,8 +129,9 @@ in a note. Controlled list makes the Step 5 migration mechanical.
 
 *Superseded 2026-10-13:* Hamid decided the values are business domains,
 not org units, and split Commercial & Marketing into Commercial and
-Marketing; the core 2.0.0 candidate links processes to a business domain
-list (EPM-DEC-001-0038).
+Marketing; the core 2.0.0 candidate links the concepts that carry these
+values (processes and capabilities) to a business domain list
+(EPM-DEC-001-0038).
 
 ## Standing rule (2026-09-22, per Hamid)
 

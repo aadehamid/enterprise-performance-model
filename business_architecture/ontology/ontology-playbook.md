@@ -707,9 +707,8 @@ the method improves, by a dated amendment with the owner's agreement.
   (Appendix A). Do not model data fields, systems, KPIs, controls or
   thresholds as process concepts.
 - **Confirm an ambiguous source field before you name a term after it.** A
-  field called `sioc` is not the W3C SIOC vocabulary; in this build its
-  business meaning was confirmed (as SIPOC) before any term was named
-  after it.
+  field called `sioc` is not the W3C SIOC vocabulary until someone confirms
+  its business meaning.
 - **Do not invent ownership to fill a gap.**
 
 ### Decisions and this playbook

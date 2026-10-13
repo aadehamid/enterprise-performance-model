@@ -114,7 +114,7 @@ def vocabulary(g):
     """The new and changed terms."""
     g.add((CORE.BusinessDomain, RDF.type, SKOS.ConceptScheme))
     g.add((CORE.BusinessDomain, RDFS.label, en("Business domain")))
-    g.add((CORE.BusinessDomain, SKOS.definition, en("The business domains that own processes (Hamid, 2026-10-13).")))
+    g.add((CORE.BusinessDomain, SKOS.definition, en("The business domains that own processes and capabilities (Hamid, 2026-10-13).")))
     for key, (label, definition) in DOMAINS.items():
         c = DOMAIN[key]
         g.add((c, RDF.type, SKOS.Concept))
@@ -126,7 +126,7 @@ def vocabulary(g):
     g.add((p, RDFS.label, en("business domain")))
     g.add((p, RDFS.domain, SKOS.Concept))
     g.add((p, RDFS.range, SKOS.Concept))
-    g.add((p, SKOS.definition, en("The business domain that owns the process: a concept of the business domain list.")))
+    g.add((p, SKOS.definition, en("The business domain that owns the concept, a process or a capability: a concept of the business domain list.")))
     g.add((p, DCTERMS.bibliographicCitation, en(DECIDED)))
     for name, label, definition in (
             ("plannedInput", "planned input", "Something the process is designed to take in, as the process map's SIPOC inputs name it."),

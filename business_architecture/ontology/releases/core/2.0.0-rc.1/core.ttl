@@ -44,7 +44,7 @@ core:businessDomain a owl:ObjectProperty ;
     dcterms:bibliographicCitation "EPM-DEC-001-0038; Hamid's words in step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"@en ;
     rdfs:domain skos:Concept ;
     rdfs:range skos:Concept ;
-    skos:definition "The business domain that owns the process: a concept of the business domain list."@en .
+    skos:definition "The business domain that owns the concept, a process or a capability: a concept of the business domain list."@en .
 
 core:cadence a owl:ObjectProperty ;
     rdfs:label "cadence"@en ;
@@ -16656,7 +16656,7 @@ src:src-cftc-p45-001 a dcterms:BibliographicResource ;
 
 core:BusinessDomain a skos:ConceptScheme ;
     rdfs:label "Business domain"@en ;
-    skos:definition "The business domains that own processes (Hamid, 2026-10-13)."@en .
+    skos:definition "The business domains that own processes and capabilities (Hamid, 2026-10-13)."@en .
 
 proc:CM-1-1-7-2 a skos:Concept ;
     dcterms:references <https://w3id.org/lsc/ontology/source/apqc-pcf-7.2.2/element/10303> ;

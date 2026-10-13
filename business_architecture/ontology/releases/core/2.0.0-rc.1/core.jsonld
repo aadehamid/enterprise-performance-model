@@ -113,7 +113,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The business domains that own processes (Hamid, 2026-10-13)."
+    "@value": "The business domains that own processes and capabilities (Hamid, 2026-10-13)."
    }
   ]
  },
@@ -702,7 +702,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The business domain that owns the process: a concept of the business domain list."
+    "@value": "The business domain that owns the concept, a process or a capability: a concept of the business domain list."
    }
   ]
  },

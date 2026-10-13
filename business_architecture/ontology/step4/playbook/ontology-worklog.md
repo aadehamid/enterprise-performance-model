@@ -1329,8 +1329,9 @@ record in `business_architecture/domain/decisions/` (index in its README):
   "Cross-functional" value with detail preserved in a note).
   *Amendment 2026-10-13:* Hamid decided the values are business domains,
   not org units, and split Commercial & Marketing into Commercial and
-  Marketing; the core 2.0.0 candidate links processes to a business domain
-  list instead (EPM-DEC-001-0038).
+  Marketing; the core 2.0.0 candidate links the concepts that carry these
+  values (processes and capabilities) to a business domain list instead
+  (EPM-DEC-001-0038).
 - **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
   `core:conceptKind` is an object property to a controlled SKOS scheme,
   not a string. Kinds: Process (real business process — inputs,
