@@ -1,7 +1,22 @@
-# Intake Predicate Conservation Ledger v2 — DRAFT (not approved)
+# Intake Predicate Conservation Ledger v2 — approved by Hamid, 2026-10-13
 
-**Status:** draft for review. No predicate retires until Hamid approves this ledger
-AND the promotion script proves the migration in a before/after reconciliation run.
+**Status:** approved by Hamid with the core 1.0.0 release, 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`: "I approve the conservation ledger and the core 1.0.0 release."). The targets are
+the ones EPM-DEC-001-0029 decides. The before/after run is
+`release/build_core.py`; its after half, `releases/core/1.0.0/conservation.csv`,
+reconciles every census triple: 5,571 source = 5,571 migrated, zero `intake:` left.
+Where this ledger and an approved Step 4 decision disagree (`level`, Q8 and Q9
+status, cross-functional domains), the decision wins (EPM-DEC-001-0029). Two measured
+splits differ from this census, taken 2026-09-25 on an older baseline: terminology
+notes 385 editorial / 97 provenance / 6 decision-pointer / 3 dual-aspect, and 736
+source links with 8 annotations (`releases/core/1.0.0/counts.json`). The source-link
+difference has one cause: the annotation on
+`L2-refinery-asset-reliability-and-turnaround-coordination` (SRC-OSHA-PSM-001)
+contains a ";", and the census split it there, counting its second half as a
+ninth annotated token. The release tokenizer keeps an annotation whole:
+728 plain + 8 annotated = 736 links.
+*Original status (2026-09-25): draft for review. No predicate retires until Hamid
+approves this ledger AND the promotion script proves the migration in a
+before/after reconciliation run.*
 **Baseline:** `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (PR #120).
 **Census method:** literal-aware block parser (triple-quoted literals kept intact).
 **Census date:** 2026-09-25.

@@ -9,8 +9,9 @@ Hamid's review.
   recorded on PR #190). All 10 boxes in `release-checklist.md` are complete.
   Promotion approved the review. The `core` 1.0.0 release (serializing the
   canonical facts to Turtle and retiring `intake:` in one flag-day release,
-  per decision Q2) is still an open decision, and nothing retires until it
-  is approved.
+  per decision Q2) was released on 2026-10-13 with Hamid's approval
+  (`release/build_core.py`, EPM-DEC-001-0029; `release-checklist.md`, core
+  1.0.0). `intake:` is retired in `releases/core/1.0.0/`.
 - **Nothing here merges to `main`** without Hamid's explicit approval.
   EPM-DEC-001-0028 records his approval for Claude to merge, while he is away,
   a PR whose PR reviewer posted MERGE for its current head.

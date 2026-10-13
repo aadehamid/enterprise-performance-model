@@ -6,7 +6,7 @@
 | Date | 2026-10-13 |
 | Decision | EPM-DEC-001-0012: "Raise a process-map proposal (not a direct edit) to assign IDs to the three nodes." |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P02 |
-| Recommendation | Delegated under EPM-DEC-001-0028 (pending in #242): keep the minted slugs; the IDs become notation only |
+| Recommendation | Delegated under EPM-DEC-001-0028 (merged in #242): keep the minted slugs; the IDs become notation only |
 
 ## The nodes
 

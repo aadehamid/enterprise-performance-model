@@ -1,0 +1,14 @@
+intake_predicate,source_triples,migrated,target
+apqcDecision,500,500,core:apqcMappingDecision
+conceptTypeCheck,488,488,core:conceptKind
+keyInputs,485,485,core:keyInputFlow
+level,683,683,core:taxonomyLevel
+parkedChildren,5,5,core:plannedChildNote
+primaryOutput,485,485,core:primaryOutputFlow
+primaryPurpose,488,488,core:primaryPurpose
+processHorizon,485,485,core:operatingMode / cadence / planningLevel
+referenceSources,488,488,dcterms:source (src:)
+relatedConcepts,486,486,canonical facts and scoped sequences
+responsibleDomain,485,485,core:responsibleDomain
+status,2,2,core:lifecycleStatus / core:holdStatus
+terminologyNotes,491,491,dcterms:provenance / skos:editorialNote

@@ -1,0 +1,233 @@
+# The core vocabulary for core 1.0.0: relationship predicates, the properties that
+# replace intake:, and their code lists. Decided in EPM-DEC-001-0029; each definition
+# follows its approved source, named in dcterms:source. Scoped-sequence terms are in
+# step4/scoped-sequence/vocabulary.ttl (EPM-DEC-001-0026).
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/> .
+@prefix apqc: <https://w3id.org/lsc/ontology/modules/core/apqc-mapping-decision/> .
+@prefix mode: <https://w3id.org/lsc/ontology/modules/core/operating-mode/> .
+@prefix cad: <https://w3id.org/lsc/ontology/modules/core/cadence/> .
+@prefix plan: <https://w3id.org/lsc/ontology/modules/core/planning-level/> .
+@prefix life: <https://w3id.org/lsc/ontology/modules/core/lifecycle-status/> .
+@prefix gov: <https://w3id.org/lsc/ontology/modules/core/governance-status/> .
+@prefix hold: <https://w3id.org/lsc/ontology/modules/core/hold-status/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- Relationship predicates (stored direction; verb-predicate-mapping-v2.md) ----
+
+core:precedes a owl:ObjectProperty ;
+    rdfs:label "precedes"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The whole subject process completes before the object process begins."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0026; verb-predicate-mapping-v2.md, canonical direction table"@en .
+
+core:dependsOnOutputOf a owl:ObjectProperty ;
+    rdfs:label "depends on output of"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject process consumes an output of the object process. A process is not an input; its output is. Stored from consumer to producer."@en ;
+    dcterms:bibliographicCitation "verb-predicate-mapping-v2.md, Answer 1 (approved 2026-09-26)"@en .
+
+core:informedBy a owl:ObjectProperty ;
+    rdfs:label "informed by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject process takes information from the object process: an informational dependency, kept distinct from depending on an output. A mutual pair records two-way information flow and is not a contradiction."@en ;
+    dcterms:bibliographicCitation "verb-predicate-mapping-v2.md, Answer 2 (approved 2026-09-26)"@en .
+
+core:enabledBy a owl:ObjectProperty ;
+    rdfs:label "enabled by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The object process supplies a maintained, governed or operationally necessary capability or input base that makes the subject process able to perform its stated function. Advice, information passed along, ordinary sequence and the parent-child hierarchy are not enablement."@en ;
+    dcterms:bibliographicCitation "verb-predicate-mapping-v2.md, Answer 3 and Enablement definition (approved 2026-09-26)"@en .
+
+core:governedBy a owl:ObjectProperty ;
+    rdfs:label "governed by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject process operates within a policy, authority, control framework, delegation, limit or approved rule owned by the object process."@en ;
+    dcterms:bibliographicCitation "verb-predicate-mapping-v2.md, Governed-by (2026-09-25)"@en .
+
+core:triggeredBy a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject activity is initiated or materially invoked by a defined event, exception, monitoring outcome, change, referral, detection or handoff that the object activity generates, detects, manages or records."@en ;
+    dcterms:bibliographicCitation "verb-predicate-mapping-v2.md, Triggers (2026-09-26)"@en .
+
+core:constrainedBy a owl:ObjectProperty ;
+    rdfs:label "constrained by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject activity, decision or outcome is bounded by the object, its binding constraint source. Advice, broad association, ownership, sequencing and optional considerations are excluded."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, constrained-by definition (2026-09-26)"@en .
+
+core:requires a owl:ObjectProperty ;
+    rdfs:label "requires"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The subject cannot validly start, proceed or reach its controlled state without the object, its completed control or its required condition. Not inferred merely because the object later uses related information."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, requires definition (2026-09-25)"@en .
+
+core:assuredBy a owl:ObjectProperty ;
+    rdfs:label "assured by"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The object, an assurance activity, performs a defined governance, compliance, quality, review, control-testing or equivalent oversight role over the subject. Not operational support, supply, documentation, evidence, balancing, fulfillment, feeding or mere necessity."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, assured-by definition (2026-09-26)"@en .
+
+# ---- Properties that replace intake: (EPM-DEC-001-0029) ----
+
+core:taxonomyLevel a owl:DatatypeProperty ;
+    rdfs:label "taxonomy level"@en ;
+    rdfs:domain skos:Concept ; rdfs:range xsd:integer ;
+    skos:definition "The concept's current rendered depth in the process taxonomy, 0 for the roots. Derived metadata: never a basis for security, KPI ownership, criticality or domain assignment."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md:35-37"@en .
+
+core:apqcMappingDecision a owl:ObjectProperty ;
+    rdfs:label "APQC mapping decision"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The recorded outcome of aligning the concept with the APQC Process Classification Framework, taken from the APQC mapping decision list. An audit trail, not a mapping."@en ;
+    dcterms:bibliographicCitation "ledger-v2.md, apqcDecision"@en .
+
+core:priorPreferredLabel a owl:AnnotationProperty ;
+    rdfs:label "prior preferred label"@en ;
+    rdfs:range rdf:langString ;
+    skos:definition "A former preferred label kept as migration history. Not a search alias: generic, ambiguous, overstating or scoped former names go here, never to skos:altLabel."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q10 (approved 2026-09-22)"@en .
+
+core:primaryPurpose a owl:DatatypeProperty ;
+    rdfs:label "primary purpose"@en ;
+    rdfs:domain skos:Concept ; rdfs:range rdf:langString ;
+    skos:definition "Why the process exists, in one statement from the source author."@en ;
+    dcterms:bibliographicCitation "ledger-v2.md, primaryPurpose"@en .
+
+core:conceptKind a owl:ObjectProperty ;
+    rdfs:label "concept kind"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "What kind of thing the concept is, taken from the concept kind list. Consumers asking for all processes leave out structural anchors."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q8 (approved 2026-09-22)"@en .
+
+core:responsibleDomain a owl:DatatypeProperty ;
+    rdfs:label "responsible domain"@en ;
+    rdfs:domain skos:Concept ; rdfs:range rdf:langString ;
+    skos:definition "The business domain responsible for the process, as a governed literal. Interim: Step 5 replaces it with references to organization units and roles."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q7 (approved 2026-09-22)"@en .
+
+core:operatingMode a owl:ObjectProperty ;
+    rdfs:label "operating mode"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "Whether the process runs on events, periodically or continuously, taken from the operating mode list."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q6 (approved 2026-09-22)"@en .
+
+core:cadence a owl:ObjectProperty ;
+    rdfs:label "cadence"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "How often a periodic process runs, taken from the cadence list. Absent when the source states no cadence."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q6 (approved 2026-09-22)"@en .
+
+core:planningLevel a owl:ObjectProperty ;
+    rdfs:label "planning level"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The planning horizon the process works at, taken from the planning level list."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q6 (approved 2026-09-22)"@en .
+
+core:primaryOutputFlow a owl:DatatypeProperty ;
+    rdfs:label "primary output flow"@en ;
+    rdfs:domain skos:Concept ; rdfs:range rdf:langString ;
+    skos:definition "The name of the main thing the process produces, as a governed flow value. Not a node: information objects are minted only when a use case needs one."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q5 (approved 2026-09-22)"@en .
+
+core:keyInputFlow a owl:DatatypeProperty ;
+    rdfs:label "key input flow"@en ;
+    rdfs:domain skos:Concept ; rdfs:range rdf:langString ;
+    skos:definition "The name of one key input the process consumes, as a governed flow value. Not a node."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q5 (approved 2026-09-22)"@en .
+
+core:plannedChildNote a owl:AnnotationProperty ;
+    rdfs:label "planned child note"@en ;
+    rdfs:range rdf:langString ;
+    skos:definition "A child process the source author plans but has not yet modeled."@en ;
+    dcterms:bibliographicCitation "ledger-v2.md, parkedChildren"@en .
+
+core:lifecycleStatus a owl:ObjectProperty ;
+    rdfs:label "lifecycle status"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "Where the concept is in its life, taken from the lifecycle status list. Deprecated and retired concepts also carry owl:deprecated true."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q9 revision (approved 2026-09-22)"@en .
+
+core:governanceStatus a owl:ObjectProperty ;
+    rdfs:label "governance status"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "How far the concept has moved through governance, taken from the governance status list. Independent of lifecycle and hold status."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q9 revision (approved 2026-09-22)"@en .
+
+core:holdStatus a owl:ObjectProperty ;
+    rdfs:label "hold status"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "Whether work on the concept is held, and why in kind, taken from the hold status list."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q9 revision (approved 2026-09-22)"@en .
+
+core:holdReason a owl:DatatypeProperty ;
+    rdfs:label "hold reason"@en ;
+    rdfs:domain skos:Concept ; rdfs:range rdf:langString ;
+    skos:definition "Why the concept is held, in words."@en ;
+    dcterms:bibliographicCitation "step4-decisions.md, Q9 revision (approved 2026-09-22)"@en .
+
+# ---- Code lists ----
+
+core:ConceptKind a skos:ConceptScheme ; rdfs:label "Concept kind"@en ;
+    skos:definition "What kind of thing a process-taxonomy concept is (Q8)."@en .
+kind:process a skos:Concept ; skos:inScheme core:ConceptKind ; skos:prefLabel "Process"@en ;
+    skos:definition "A real business process, with inputs, outputs and a cadence."@en .
+kind:capability a skos:Concept ; skos:inScheme core:ConceptKind ; skos:prefLabel "Capability"@en ;
+    skos:definition "An ability the organization has, realized by processes. A classification value, not core:BusinessCapability."@en .
+kind:structural-anchor a skos:Concept ; skos:inScheme core:ConceptKind ; skos:prefLabel "Structural anchor"@en ;
+    skos:definition "A navigation or grouping node, such as an L0 root, an empty stub or a tombstone. Not work anyone performs."@en .
+
+core:ApqcMappingDecision a skos:ConceptScheme ; rdfs:label "APQC mapping decision"@en ;
+    skos:definition "Outcomes of aligning a concept with the APQC Process Classification Framework (Step 3b)."@en .
+apqc:review-link a skos:Concept ; skos:inScheme core:ApqcMappingDecision ; skos:prefLabel "Review link"@en ; skos:notation "REVIEW LINK" ;
+    skos:definition "A candidate APQC element was linked for comparison; it does not define the concept."@en .
+apqc:no-source a skos:Concept ; skos:inScheme core:ApqcMappingDecision ; skos:prefLabel "No source"@en ; skos:notation "NO SOURCE" ;
+    skos:definition "No source row was available to compare."@en .
+apqc:no-candidate a skos:Concept ; skos:inScheme core:ApqcMappingDecision ; skos:prefLabel "No candidate"@en ; skos:notation "NO CANDIDATE" ;
+    skos:definition "No APQC element was a credible candidate."@en .
+apqc:rejected a skos:Concept ; skos:inScheme core:ApqcMappingDecision ; skos:prefLabel "Rejected"@en ; skos:notation "REJECTED" ;
+    skos:definition "A candidate APQC element was considered and rejected."@en .
+apqc:adopted a skos:Concept ; skos:inScheme core:ApqcMappingDecision ; skos:prefLabel "Adopted"@en ; skos:notation "ADOPTED" ;
+    skos:definition "The APQC element's text was adopted for the concept."@en .
+
+core:OperatingMode a skos:ConceptScheme ; rdfs:label "Operating mode"@en ; skos:definition "How a process is set off (Q6)."@en .
+mode:event-driven a skos:Concept ; skos:inScheme core:OperatingMode ; skos:prefLabel "Event-driven"@en ; skos:definition "Runs when a defined event occurs."@en .
+mode:periodic a skos:Concept ; skos:inScheme core:OperatingMode ; skos:prefLabel "Periodic"@en ; skos:definition "Runs on a repeating schedule."@en .
+mode:continuous a skos:Concept ; skos:inScheme core:OperatingMode ; skos:prefLabel "Continuous"@en ; skos:definition "Runs without stopping."@en .
+
+core:Cadence a skos:ConceptScheme ; rdfs:label "Cadence"@en ; skos:definition "How often a periodic process runs (Q6)."@en .
+cad:daily a skos:Concept ; skos:inScheme core:Cadence ; skos:prefLabel "Daily"@en ; skos:definition "Once a day."@en .
+cad:weekly a skos:Concept ; skos:inScheme core:Cadence ; skos:prefLabel "Weekly"@en ; skos:definition "Once a week."@en .
+cad:monthly a skos:Concept ; skos:inScheme core:Cadence ; skos:prefLabel "Monthly"@en ; skos:definition "Once a month."@en .
+cad:quarterly a skos:Concept ; skos:inScheme core:Cadence ; skos:prefLabel "Quarterly"@en ; skos:definition "Once a quarter."@en .
+cad:annual a skos:Concept ; skos:inScheme core:Cadence ; skos:prefLabel "Annual"@en ; skos:definition "Once a year."@en .
+
+core:PlanningLevel a skos:ConceptScheme ; rdfs:label "Planning level"@en ; skos:definition "The planning horizon a process works at (Q6)."@en .
+plan:strategic a skos:Concept ; skos:inScheme core:PlanningLevel ; skos:prefLabel "Strategic"@en ; skos:definition "Long-horizon direction setting."@en .
+plan:tactical a skos:Concept ; skos:inScheme core:PlanningLevel ; skos:prefLabel "Tactical"@en ; skos:definition "Medium-horizon planning within the strategy."@en .
+plan:operational a skos:Concept ; skos:inScheme core:PlanningLevel ; skos:prefLabel "Operational"@en ; skos:definition "Short-horizon execution planning."@en .
+
+core:LifecycleStatus a skos:ConceptScheme ; rdfs:label "Lifecycle status"@en ; skos:definition "Where a concept is in its life (Q9 revision)."@en .
+life:active a skos:Concept ; skos:inScheme core:LifecycleStatus ; skos:prefLabel "Active"@en ; skos:definition "In use."@en .
+life:deprecated a skos:Concept ; skos:inScheme core:LifecycleStatus ; skos:prefLabel "Deprecated"@en ; skos:definition "Still resolvable, no longer to be used; superseded concepts are deprecated and carry dcterms:isReplacedBy."@en .
+life:retired a skos:Concept ; skos:inScheme core:LifecycleStatus ; skos:prefLabel "Retired"@en ; skos:definition "Out of active use; restorable only through a new governance decision with provenance."@en .
+
+core:GovernanceStatus a skos:ConceptScheme ; rdfs:label "Governance status"@en ; skos:definition "How far a concept has moved through governance (Q9 revision)."@en .
+gov:exploratory a skos:Concept ; skos:inScheme core:GovernanceStatus ; skos:prefLabel "Exploratory"@en ; skos:definition "Under exploration; not proposed."@en .
+gov:draft a skos:Concept ; skos:inScheme core:GovernanceStatus ; skos:prefLabel "Draft"@en ; skos:definition "Written, not yet proposed for approval."@en .
+gov:candidate a skos:Concept ; skos:inScheme core:GovernanceStatus ; skos:prefLabel "Candidate"@en ; skos:definition "Proposed for approval."@en .
+gov:approved-baseline a skos:Concept ; skos:inScheme core:GovernanceStatus ; skos:prefLabel "Approved baseline"@en ; skos:definition "Approved by the owner."@en .
+gov:implemented a skos:Concept ; skos:inScheme core:GovernanceStatus ; skos:prefLabel "Implemented"@en ; skos:definition "Approved and in use by a consumer."@en .
+
+core:HoldStatus a skos:ConceptScheme ; rdfs:label "Hold status"@en ; skos:definition "Whether work on a concept is held, and why in kind (Q9 revision)."@en .
+hold:no-hold a skos:Concept ; skos:inScheme core:HoldStatus ; skos:prefLabel "No hold"@en ; skos:definition "Nothing holds the concept."@en .
+hold:evidence-hold a skos:Concept ; skos:inScheme core:HoldStatus ; skos:prefLabel "Evidence hold"@en ; skos:definition "Waiting for evidence."@en .
+hold:ownership-hold a skos:Concept ; skos:inScheme core:HoldStatus ; skos:prefLabel "Ownership hold"@en ; skos:definition "Waiting for an owner."@en .
+hold:decision-hold a skos:Concept ; skos:inScheme core:HoldStatus ; skos:prefLabel "Decision hold"@en ; skos:definition "Waiting for a decision."@en .
+hold:implementation-hold a skos:Concept ; skos:inScheme core:HoldStatus ; skos:prefLabel "Implementation hold"@en ; skos:definition "Decided, waiting for the change to be made."@en .

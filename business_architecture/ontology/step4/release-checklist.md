@@ -26,7 +26,7 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 *(At promotion, 2026-09-30: 617 emitting + 686 held + 12 deferred + 1 external-governance + 2 structured-flow = 1,318, corrected 2026-09-29 from 615/688. Each later change is a dated entry in ledger-v2.md.)*
 
 ### Pinned Evidence
-- **PINNED_SHA:** `388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9` (re-pinned 2026-10-13 for the #201 answers from the Phase 1 register, from `883bd57a1a1f98267489c875887462e11ed99027`; all 7 SHA-stamped CSVs re-stamped, 2,807 rows; the re-pin itself changes only the SHA column. The #201 adoption that followed changed content: 75 rows left their verb-review file (2,731 stamped rows after it), and the dispositions, context notes and canonical facts took the corrected verbs). Promotion was approved against `6a155bc2`.
+- **PINNED_SHA:** `388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9` (re-pinned 2026-10-13 for the #201 answers from the Phase 1 register, from `883bd57a1a1f98267489c875887462e11ed99027`; all 7 SHA-stamped CSVs re-stamped, 2,807 rows; the re-pin itself changes only the SHA column. The #201 adoption that followed changed content: 75 rows left their verb-review file and REL-00138 left `context-pass.csv` (its retarget names a stable ID, so it now resolves directly), 2,731 stamped rows after it, and the dispositions, context notes and canonical facts took the corrected verbs). Promotion was approved against `6a155bc2`.
   - Previous pin: `883bd57a1a1f98267489c875887462e11ed99027` (re-pinned 2026-10-13 for the #209 answers from the Phase 1 register, from `37fed949fbd2e7b333663e170717262e26ca73ac`; all 7 SHA-stamped CSVs re-stamped, 2,848 rows; the re-pin itself changes only the SHA column. The #209 adoption that followed changed content: 41 rows left their verb-review file (2,807 stamped rows after it), and the dispositions, context notes and canonical facts took the corrected verbs). Promotion was approved against `6a155bc2`.
   - Previous pin: `37fed949fbd2e7b333663e170717262e26ca73ac` (re-pinned 2026-10-12 for the #202 answers from the Phase 1 register, from `efc47150504face11bee5fdb2d57d737cfb170ca`; all 7 SHA-stamped CSVs re-stamped, 2,876 rows; the re-pin itself changes only the SHA column. The #202 adoption that followed changed content: its 28 rows left `enables-review.csv` (2,848 stamped rows after it), and the dispositions, context notes and canonical facts took the corrected verbs). Promotion was approved against `6a155bc2`.
   - Previous pin: `efc47150504face11bee5fdb2d57d737cfb170ca` (re-pinned 2026-10-12 for the #210 answers from the Phase 1 register, from `adc7483522a7f3845dceca90c95187b6253372a4`; all 7 SHA-stamped CSVs re-stamped, 2,884 rows; the re-pin itself changes only the SHA column. The #210 adoption that followed changed content: its 8 rows left `enables-review.csv` (2,876 stamped rows after it), and the dispositions, context notes and canonical facts took the corrected verbs). Promotion was approved against `6a155bc2`.
@@ -65,6 +65,19 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
   14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
 - [x] Explicit promotion approval — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)
+
+## core 1.0.0 release (EPM-DEC-001-0013; built as EPM-DEC-001-0029 decides)
+
+- [x] Every Phase 1 row has a fresh verdict: the six sweep batches (#206, #203, #210, #202, #209, #201) after #204 and #205; 51 Phase 1 rows stay held with recorded reasons (`epm_facts.py counts`). #202 merged in #244, #209 in #247 and #201 in #248.
+- [x] The release builds from the pinned evidence: `release/build_core.py` writes `releases/core/1.0.0/`; `check.sh` runs `--verify`.
+- [x] Zero `intake:` and full conservation: `conservation.csv` reconciles 5,571 source = 5,571 migrated; the build stops on any leftover `intake:` triple or blank node.
+- [x] SHACL release slice conforms (`release/shapes.ttl`; EPM-DEC-001-0014).
+- [x] LPG rules 1, 2, 3 and 5 (EPM-DEC-001-0020): one kind and one range per property (tested), a stated cardinality on every core property (shapes; tested), no blank nodes, fixed prefixes.
+- [x] **Conservation ledger approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
+- [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012) and merged in #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
+- [x] **Fresh no-consumer attestation: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
+- [x] **Release approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
+- [x] At the cut (2026-10-13): in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild. The merge commit of #249 gets the tag `core-v1.0.0` when it merges.
 
 ## Notes
 - PR #160 closed without merge (was stacked: 4 verb packages + checklist).

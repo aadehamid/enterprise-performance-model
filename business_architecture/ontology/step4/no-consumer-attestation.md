@@ -1,4 +1,17 @@
-# No-Consumer Attestation — 2026-09-29
+# No-Consumer Attestation — 2026-10-13 (fresh, for the core 1.0.0 release)
+
+| Field | Value |
+|---|---|
+| Attester | Hamid |
+| Date | 2026-10-13, immediately before the core 1.0.0 release |
+| Search scope | Same as 2026-09-29: sole author; the ontology has not been published |
+| Result | Confirmed — no consumer uses the ontology |
+
+**Attester's statement:** "No one uses the ontology yet." (`review-evidence/hamid-answers/core-1-0-0-release.md`)
+
+Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
+
+# No-Consumer Attestation — 2026-09-29 (superseded by the attestation above)
 
 **Rule:** re-attest immediately before the flag-day `intake:` retirement
 and 1.0.0 release. A stale attestation is not an attestation.
