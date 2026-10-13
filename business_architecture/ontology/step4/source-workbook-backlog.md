@@ -21,7 +21,7 @@ Before posting a batch's questions to the source author, read `source-question-t
 | Supply & Trading recommend/advise rows | #203 | 15 |
 | Triggers | #204 | 11 |
 | Precedes/follows | #205 | 20 |
-| Governed-by | #206 | 10 superseded approvals, 2 pass-backlog rows, 3 rows from the verb reviews |
+| Governed-by | #206 | 10 superseded approvals, 2 pass-backlog rows, 3 rows from the verb reviews; all 15 answered in the Phase 1 sweep (2026-10-12) |
 | G3 Section A: held after the explicit-reference review (A1 to A6) | #209 | 47 |
 | Other verb-review holds | #210 | 22 |
 
@@ -295,9 +295,9 @@ Rows held in G3 Sections A1 to A6. Each needs a workbook authoring change (#209)
 
 | row_id | issue | parked | status |
 |---|---|---|---|
-| REL-00274 | `governed-by` (Establish and Maintain Delegation Of Authority → Regulatory & Compliance): Trading Regulatory & Compliance does not evidence ownership of the delegation-of-authority framework — the target appears to be an overbroad compliance capability rather than the accountable risk-governance/authority owner. Correct the target in the workbook (candidate: the market-risk or delegated-authority governance owner, once modeled). Do not reinterpret in promotion. Held by Hamid 2026-09-25. | 2026-09-25 | awaiting workbook authoring change |
-| REL-01143 | `governed-by` (Terminal Operations Management → Develop Compliance Policies & Procedures): known classifier error — terminal/fleet/site operation under EHS, safety, asset, and operational-accountability boundaries is not governed by trading-compliance policies (market conduct, information barriers, trading reporting). Correct or remove the relationship in the workbook. Held by Hamid 2026-09-25. | 2026-09-25 | awaiting workbook authoring change |
-| REL-01286 | `governed-by` (Credit Risk Management → Regulatory & Compliance): Credit Risk Management is an independent risk-control function with its own assessment, limits, collateral, margining, exposure, monitoring, and reporting. Trading Regulatory & Compliance does not establish authority over credit-risk policy. Possible future `subjectToComplianceRequirements` relation — not `governedBy`. Held by Hamid 2026-09-25. | 2026-09-25 | awaiting workbook authoring change |
+| REL-00274 | `governed-by` (Establish and Maintain Delegation Of Authority → Regulatory & Compliance): Trading Regulatory & Compliance does not evidence ownership of the delegation-of-authority framework — the target appears to be an overbroad compliance capability rather than the accountable risk-governance/authority owner. Correct the target in the workbook (candidate: the market-risk or delegated-authority governance owner, once modeled). Do not reinterpret in promotion. Held by Hamid 2026-09-25. | 2026-09-25 | answered in the Phase 1 sweep (2026-10-12): no relationship; question closed |
+| REL-01143 | `governed-by` (Terminal Operations Management → Develop Compliance Policies & Procedures): known classifier error — terminal/fleet/site operation under EHS, safety, asset, and operational-accountability boundaries is not governed by trading-compliance policies (market conduct, information barriers, trading reporting). Correct or remove the relationship in the workbook. Held by Hamid 2026-09-25. | 2026-09-25 | answered in the Phase 1 sweep (2026-10-12): no relationship; question closed |
+| REL-01286 | `governed-by` (Credit Risk Management → Regulatory & Compliance): Credit Risk Management is an independent risk-control function with its own assessment, limits, collateral, margining, exposure, monitoring, and reporting. Trading Regulatory & Compliance does not establish authority over credit-risk policy. Possible future `subjectToComplianceRequirements` relation — not `governedBy`. Held by Hamid 2026-09-25. | 2026-09-25 | answered in the Phase 1 sweep (2026-10-12): no relationship; question closed |
 
 ## Other verb-review holds
 
@@ -390,6 +390,28 @@ Each requires source-workbook correction to add an affirmative citation
 - REL-01005
 - REL-01228 (scope conditions lapsed)
 - REL-01256 (scope conditions lapsed)
+### Phase 1 sweep fresh verdicts for #206 (Hamid 2026-10-12)
+
+Hamid approved the Phase 1 answer register as a whole on 2026-10-12 ([#207 comment 6133390674](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6133390674), saved in `review-evidence/hamid-answers/phase1-sweep.md`): "approve register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all." The register (`review-evidence/phase1-sweep/register.csv`) answers all 15 #206 rows. Each confirmed row's governed-by sentence went into the source's scope note, which is the affirmative citation the governed-by guard needs. REL-00190's segment now names the delegation-of-authority child by slug. Each row's sentence, condition and reason: `review-evidence/phase1-sweep/206-review.csv`.
+
+| Row | Answer | Fresh verdict | Stored fact |
+|---|---|---|---|
+| REL-00050 | confirm governed-by | APPROVE | CM-1-1-3-7-12 core:governedBy CM-1-1-3-7-3 |
+| REL-00067 | confirm governed-by | APPROVE | CM-1-1-3-7-9 core:governedBy CM-1-1-3-7-3 |
+| REL-00215 | confirm governed-by | APPROVE | CM-1-2-1-4 core:governedBy CM-1-2-2-3 |
+| REL-00274 | no relationship | HOLD | — |
+| REL-00394 | confirm governed-by | APPROVE | CM-1-2-4-3-2 core:governedBy CM-1-2-4-3-1 |
+| REL-00399 | confirm governed-by | APPROVE | CM-1-2-4-3-4 core:governedBy CM-1-2-4-3-1 |
+| REL-00406 | confirm governed-by | APPROVE | CM-1-2-4-3-6 core:governedBy CM-1-2-4-3-1 |
+| REL-00907 | no relationship | HOLD | — |
+| REL-00937 | confirm governed-by | APPROVE | CM-1-3-7-2-4 core:governedBy CM-1-3-7-4-1 |
+| REL-01005 | confirm governed-by | APPROVE | CM-1-3-8-1-2 core:governedBy CM-1-3-7-2-1 |
+| REL-01143 | no relationship | HOLD | — |
+| REL-01228 | confirm governed-by | APPROVE | CM-1-2-2-2 core:governedBy CM-1-2-4-3 |
+| REL-01256 | confirm governed-by | APPROVE | CM-1-3-7-3 core:governedBy CM-1-3-7-4 |
+| REL-01286 | no relationship | HOLD | — |
+| REL-00190 | retarget to CM-1-2-2-3-2 | APPROVE | CM-1-2-1-3-2 core:governedBy CM-1-2-2-3-2 |
+
 ## Triggers pass: 11 held rows routed for source correction (Hamid 2026-09-26)
 
 Each held row needs an affirmative citation tying the source's event or result

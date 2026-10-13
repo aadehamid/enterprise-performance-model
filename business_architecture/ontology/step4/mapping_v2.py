@@ -1098,11 +1098,12 @@ INFORMEDBY_20260926_HOLDS = {
 }
 
 # Hamid 2026-09-26: governed-by full review — 20 rows held, superseding 2026-09-25 approvals (NoAffirmativeCitation). Source: evidence-gate.py control cases; review-evidence/governed-by-full-review-batch.csv.
+# Phase 1 sweep, #206 (Hamid 2026-10-12, #207 comment 6133390674): 10 of these rows
+# were approved with a governed-by sentence in the source scope note and now emit;
+# REL-00907 stays held with no relationship. review-evidence/phase1-sweep/206-review.csv.
 GOVERNEDBY_20260926_HOLDS = {
-    "REL-00050", "REL-00067", "REL-00185", "REL-00215", "REL-00250", "REL-00394",
-    "REL-00399", "REL-00406", "REL-00620", "REL-00625", "REL-00629", "REL-00907",
-    "REL-00937", "REL-00969", "REL-01005", "REL-01113", "REL-01228", "REL-01256",
-    "REL-01300", "REL-01310",
+    "REL-00185", "REL-00250", "REL-00620", "REL-00625", "REL-00629", "REL-00907",
+    "REL-00969", "REL-01113", "REL-01300", "REL-01310",
 }
 
 # Hamid 2026-09-26: triggers review — 11 rows held, superseding 2026-09-26 approvals (NoAffirmativeTriggerLink). Source: evidence-gate.py control cases; review-evidence/triggers-18-review-batch.csv.

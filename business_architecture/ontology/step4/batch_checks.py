@@ -85,3 +85,79 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
         if row_id not in facts.get((target, "core:triggeredBy", source), []):
             problems.append(f"{where}: no stored fact {target} core:triggeredBy {source} carrying the row")
     return problems
+
+
+# Phase 1 sweep (Hamid 2026-10-12, #207 comment 6133390674): the decided record is
+# the approved register, review-evidence/phase1-sweep/register.csv, approved as a
+# whole in review-evidence/hamid-answers/phase1-sweep.md.
+SWEEP_APPROVAL = "approve register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all."
+SWEEP_FIELDS = ("verdict", "verb", "target_slug", "stored_fact", "condition", "scope_note_sentence")
+SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #207 comment 6133390674)"
+SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
+# Issues whose register rows are adopted into Step 4. Each has
+# review-evidence/phase1-sweep/<issue>-review.csv covering exactly its register rows.
+SWEEP_ADOPTED = ("206",)
+
+
+def sweep_files_problems(found):
+    """Problems with the sweep review file names found: exactly <issue>-review.csv per adopted issue."""
+    expected = {f"{i}-review.csv" for i in SWEEP_ADOPTED}
+    problems = [f"{name} is missing for an adopted issue" for name in sorted(expected - set(found))]
+    problems += [f"{name} is not the review file of an issue in SWEEP_ADOPTED" for name in sorted(set(found) - expected)]
+    return problems
+
+
+def sweep_batch_problems(issue, rows, register, approval_text, v2, facts):
+    """Problems with one issue's sweep review rows, checked against the approved register.
+
+    issue: the issue number as a string. rows: the batch review CSV as dicts.
+    register: row ID -> register.csv row. v2: row ID -> target-dispositions-v2 row.
+    facts: (s, p, o) -> list of row IDs.
+    The review covers exactly the issue's register rows. Each row repeats its
+    register row's decided values, Hamid's approval and the outcome they imply;
+    an emitting row is on its stored fact, and a no-relationship row is on no fact.
+    """
+    problems = []
+    if SWEEP_APPROVAL not in approval_text:
+        problems.append("the saved approval does not contain Hamid's approval words")
+    expected = {rid for rid, reg in register.items() if reg["issue"] == issue}
+    got = {r["row_id"] for r in rows}
+    for rid in sorted(expected - got):
+        problems.append(f"{rid}: #{issue} register row has no review row")
+    seen = set()
+    for r in rows:
+        rid = r["row_id"]
+        if rid in seen:
+            problems.append(f"{rid}: reviewed more than once")
+        seen.add(rid)
+        reg = register.get(rid)
+        if reg is None:
+            problems.append(f"{rid}: not in the approved register")
+            continue
+        if reg["issue"] != issue or r["issue"] != issue:
+            problems.append(f"{rid}: belongs to #{reg['issue']}, not #{issue}")
+            continue
+        for field in SWEEP_FIELDS:
+            if r[field] != reg[field]:
+                problems.append(f"{rid}: {field} differs from the approved register")
+        if r["Hamid_decision"] != SWEEP_DECISION:
+            problems.append(f"{rid}: Hamid_decision must be {SWEEP_DECISION!r}")
+        outcome = (SWEEP_HELD_OUTCOME if reg["verdict"] == "no-relationship"
+                   else f"Emitted as {reg['stored_fact'].split()[1]}" if reg["stored_fact"] else None)
+        if r["outcome"] != outcome:
+            problems.append(f"{rid}: outcome must be {outcome!r}")
+        if r["source_slug"] != v2[rid]["source_slug"]:
+            problems.append(f"{rid}: source_slug must be {v2[rid]['source_slug']}")
+        carried = [k for k, ids in facts.items() if rid in ids]
+        if reg["verdict"] == "no-relationship":
+            if r["fresh_verdict"] != "HOLD" or carried:
+                problems.append(f"{rid}: a no-relationship row stays HOLD and carries no fact")
+            continue
+        if r["fresh_verdict"] != "APPROVE":
+            problems.append(f"{rid}: fresh_verdict must be APPROVE")
+        if r["scope_note_slug"] != r["source_slug"]:
+            problems.append(f"{rid}: the sentence goes in the source's scope note")
+        fact = tuple(reg["stored_fact"].split())
+        if carried != [fact]:
+            problems.append(f"{rid}: carried by {carried}, expected only {' '.join(fact)}")
+    return problems

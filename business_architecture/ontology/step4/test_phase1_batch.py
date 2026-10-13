@@ -34,7 +34,7 @@ class Step4Copy(unittest.TestCase):
         shutil.copytree(HERE, self.step4, ignore=shutil.ignore_patterns("__pycache__", "proposal"))
         self.output = os.path.join(self.tmp, "output")
         os.makedirs(self.output)
-        for name in ("step3-taxonomy.ttl", "step2-identity-map.json"):
+        for name in phase1_batch.PROVENANCE_FILES:
             with open(os.path.join(self.output, name), "w") as f:
                 f.write(f"rebuilt {name}\n")
         with open(os.path.join(self.step4, "PINNED_SHA.txt")) as f:
@@ -47,18 +47,23 @@ class Step4Copy(unittest.TestCase):
         with open(os.path.join(self.step4, name)) as f:
             return f.read()
 
+    def committed(self, name):
+        """The --to commit's build/output files: here, the same as the fixture's output."""
+        with open(os.path.join(self.output, name), "rb") as f:
+            return f.read()
+
 
 class Repin(Step4Copy):
     def test_dry_run_counts_rows_and_writes_nothing(self):
         before = {n: self.read(n) for n in phase1_batch.SHA_FILES + ["PINNED_SHA.txt", "release-checklist.md"]}
-        total, out = quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=False)
+        total, out = quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=False, committed=self.committed)
         self.assertGreater(total, 0)
         self.assertIn(f"{total:,} rows in 7 CSVs", out)
         self.assertEqual(before, {n: self.read(n) for n in before})
 
     def test_write_restamps_only_the_sha_column(self):
         before = {n: self.read(n) for n in phase1_batch.SHA_FILES}
-        total, _ = quiet(phase1_batch.repin, self.step4, self.output, NEW, "test batch", write=True, today="2026-10-12")
+        total, _ = quiet(phase1_batch.repin, self.step4, self.output, NEW, "test batch", write=True, today="2026-10-12", committed=self.committed)
         stamped = 0
         for name in phase1_batch.SHA_FILES:
             after = self.read(name)
@@ -76,7 +81,7 @@ class Repin(Step4Copy):
     def test_write_keeps_the_previous_pin_statements_word_for_word(self):
         checklist_pin = phase1_batch.CHECKLIST_PIN.search(self.read("release-checklist.md")).group(0)
         mapping_pin = phase1_batch.MAPPING_PIN.search(self.read("verb-predicate-mapping-v2.md")).group(0)
-        quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+        quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
         self.assertIn("  - Previous pin: " + checklist_pin.replace("- **PINNED_SHA:** ", "", 1),
                       self.read("release-checklist.md"))
         self.assertIn("*Previous baseline:* " + mapping_pin.replace("**Baseline:** ", "", 1),
@@ -86,7 +91,7 @@ class Repin(Step4Copy):
         os.remove(os.path.join(self.output, "step2-identity-map.json"))
         before = {n: self.read(n) for n in phase1_batch.SHA_FILES + ["PINNED_SHA.txt"]}
         with self.assertRaises(FileNotFoundError):
-            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
         self.assertEqual(before, {n: self.read(n) for n in before})
 
     def test_sha_files_match_the_evidence_gate(self):
@@ -102,7 +107,7 @@ class Repin(Step4Copy):
         with open(path, "w") as f:
             f.write(raw.replace(self.old, "f" * 40, 1))
         with self.assertRaises(SystemExit) as stop:
-            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
         self.assertIn("not stamped", str(stop.exception))
         self.assertEqual(self.read("PINNED_SHA.txt").strip(), self.old)
 
@@ -114,13 +119,45 @@ class Repin(Step4Copy):
         with open(path, "w", newline="") as f:
             csv.writer(f).writerows(rows)
         with self.assertRaises(SystemExit) as stop:
-            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True)
+            quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
         self.assertIn("outside the baseline_sha column", str(stop.exception))
+
+    def test_refuses_a_commit_whose_build_output_differs(self):
+        before = {n: self.read(n) for n in phase1_batch.SHA_FILES + ["PINNED_SHA.txt"]}
+        for name in phase1_batch.PROVENANCE_FILES:
+            other = lambda n, name=name: b"another commit\n" if n == name else self.committed(n)
+            with self.assertRaises(SystemExit) as stop:
+                quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=other)
+            self.assertIn(name, str(stop.exception))
+        self.assertEqual(before, {n: self.read(n) for n in before})
+
+    def test_a_failed_replace_restores_every_file_and_a_retry_succeeds(self):
+        names = phase1_batch.SHA_FILES + ["PINNED_SHA.txt", "release-checklist.md", "verb-predicate-mapping-v2.md",
+                                          "baseline/step3-taxonomy.ttl", "baseline/step2-identity-map.json"]
+        before = {n: self.read(n) for n in names}
+        real, calls = os.replace, []
+
+        def flaky(src, dst):
+            calls.append(dst)
+            if len(calls) == 9:
+                raise OSError("disk full")
+            real(src, dst)
+        phase1_batch.os.replace = flaky
+        try:
+            with self.assertRaises(OSError):
+                quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
+        finally:
+            phase1_batch.os.replace = real
+        self.assertEqual(before, {n: self.read(n) for n in names})
+        self.assertFalse([p for p in os.listdir(os.path.join(self.step4, "baseline")) if p.endswith(".repin-tmp")])
+        total, _ = quiet(phase1_batch.repin, self.step4, self.output, NEW, "test", write=True, committed=self.committed)
+        self.assertGreater(total, 0)
+        self.assertEqual(self.read("PINNED_SHA.txt"), NEW + "\n")
 
     def test_refuses_a_short_or_unchanged_sha(self):
         for bad in ("abc123", self.old):
             with self.assertRaises(SystemExit):
-                quiet(phase1_batch.repin, self.step4, self.output, bad, "test", write=False)
+                quiet(phase1_batch.repin, self.step4, self.output, bad, "test", write=False, committed=self.committed)
 
 
 class Adopt(Step4Copy):
@@ -161,7 +198,13 @@ class Adopt(Step4Copy):
 
     def test_the_pipeline_reproduces_the_governed_files_byte_for_byte(self):
         tmp = tempfile.mkdtemp(dir=self.tmp)
-        new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        new_disp, new_ctx, new_facts = phase1_batch._proposals(self.step4, tmp)
+        # The governed dispositions add review notes classify does not write; its own columns must match.
+        governed = phase1_batch._rows(os.path.join(self.step4, "target-report", "target-dispositions-v2.csv"),
+                                      lambda r: r["row_id"])
+        regenerated = phase1_batch._rows(new_disp, lambda r: r["row_id"])
+        self.assertEqual({k: [r[c] for c in phase1_batch.CLASSIFIED] for k, r in governed.items()},
+                         {k: [r[c] for c in phase1_batch.CLASSIFIED] for k, r in regenerated.items()})
         for new, governed in ((new_ctx, "target-report/context-pass.csv"), (new_facts, "canonical-facts.csv")):
             with open(new, "rb") as a, open(os.path.join(self.step4, governed), "rb") as b:
                 self.assertEqual(a.read(), b.read(), governed)
@@ -190,6 +233,30 @@ class Adopt(Step4Copy):
         self.set_contributors(ids, first)
         status, out = quiet(phase1_batch.adopt, self.step4, set(rest.split(";")), write=False)
         self.assertEqual(status, 0, out)
+
+    def edit_disposition(self, row_id):
+        """Change a classified column of one governed disposition row, so the re-run differs only there."""
+        path = os.path.join(self.step4, "target-report", "target-dispositions-v2.csv")
+        with open(path, newline="") as f:
+            reader = csv.DictReader(f)
+            fields, rows = reader.fieldnames, list(reader)
+        next(r for r in rows if r["row_id"] == row_id)["evidence"] += " (edited)"
+        with open(path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def test_stops_on_a_disposition_row_outside_the_batch(self):
+        self.edit_disposition("REL-00002")
+        status, out = quiet(phase1_batch.adopt, self.step4, {"REL-00001"}, write=False)
+        self.assertEqual(status, 1, out)
+        self.assertIn("disposition row REL-00002 changed but is not in the batch", out)
+
+    def test_accepts_a_disposition_row_in_the_batch(self):
+        self.edit_disposition("REL-00002")
+        status, out = quiet(phase1_batch.adopt, self.step4, {"REL-00002"}, write=False)
+        self.assertEqual(status, 0, out)
+        self.assertIn("disposition rows changed: 1", out)
 
     def test_an_inherited_step4_override_cannot_redirect_the_context_pass(self):
         other = os.path.join(self.tmp, "other-step4")

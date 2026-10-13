@@ -39,7 +39,8 @@ step4="business_architecture/ontology/step4"
 for t in "$step4/test_mapping_v2_regression.py" "$step4/test_ledger_v2_census.py" "$step4/test_batch_checks.py" "$step4/test_phase1_batch.py" "$step4/test_mirror_verbs.py" \
          "$step4/test_script_portability.py" "$step4/target-report/test_context_pass.py" \
          "business_architecture/ontology/build/scripts/test_step3c_workbook_validate.py" \
-         "business_architecture/ontology/build/scripts/test_scope_note_append.py"; do
+         "business_architecture/ontology/build/scripts/test_scope_note_append.py" \
+         "business_architecture/ontology/build/scripts/test_relation_correct.py"; do
   (cd "$(dirname "$t")" && echo "--- $t" && with_deps python "$(basename "$t")" >/dev/null)
 done
 (cd "$step4/scoped-sequence" && run with_deps python build.py --verify)
