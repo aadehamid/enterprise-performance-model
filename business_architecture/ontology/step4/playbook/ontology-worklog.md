@@ -964,7 +964,10 @@ without a dated amendment and Hamid's explicit agreement.
   and 12,290 relationships, with no SHACL violation in the graph, an empty
   round-trip diff and equal determinism hashes. Q8 is answerable: 153
   processes carry planned inputs and outputs, and 504 live processes have
-  neither (`q08a`, `q08b`). Coverage: 9 answerable, 5 partial, 30 waiting.
+  neither (`q08a`, `q08b`). Hamid decided those 504 are the source
+  author's backlog: the ontology drafts no SIPOC for them
+  (`review-evidence/hamid-answers/sipoc-scope.md`). Coverage: 9 answerable,
+  5 partial, 30 waiting.
   EPM-DEC-001-0036 and EPM-DEC-001-0038.
 
 ### core 2.0.0 released (2026-10-13)
