@@ -421,10 +421,27 @@ person can be Accountable for one process and only Informed on another.
    qualified-relation node (§2, Modeling discipline).
 6. Map organization concepts to a public registry vocabulary where one
    exists (Step 0).
+7. Normalize the source's role strings through a role register: one row
+   per string as the source spells it, mapped to one or more roles. Merge
+   two strings only when they differ in case, plural, punctuation or "&".
+   Split a compound string ("Planner / Scheduler") into its roles, keep a
+   qualifier ("for crude") on the assignment, not in the role, and model a
+   team as a role with a scope note. A build script checks the register
+   against the source, so a new or changed string stops the build. Put a
+   possible misspelling or an unexplained acronym to the owner. Do not
+   correct it yourself.
+8. Emit one assignment per source entry and per role the entry names, and
+   keep the source's role text on each assignment. Reconcile entries in
+   with assignments out in a conservation table: the entries, plus the
+   extra roles that compound strings add, equal the assignments, at every
+   RACI level.
+9. Get a recorded scope before you test the gate. "Every in-scope process"
+   needs a decision on which processes are in scope. Processes outside it
+   go on the source author's backlog. Do not invent RACI for them.
 
-**Done when:** every in-scope process has its RACI assignments; no
-responsibility is implied by position in the hierarchy; every reference
-instance cites its source.
+**Done when:** every in-scope process has its RACI assignments, under a
+recorded scope; no responsibility is implied by position in the
+hierarchy; every reference instance cites its source.
 
 ### Step 6. Interfaces and provenance
 
@@ -432,7 +449,13 @@ instance cites its source.
 
 **Procedure.**
 
-1. Model planned inputs and outputs on the process definitions.
+1. Model planned inputs and outputs on the process definitions. Take
+   them only from a source field whose meaning the owner has confirmed. A
+   field with an unclear name (a misspelled acronym, for example) gets a
+   question to the owner before any term is named after it. Carry each
+   input and output as a governed literal until a use case needs to trace
+   one flow as a node of its own. Processes the source gives no inputs or
+   outputs go on the source author's backlog. Do not draft them.
 2. Define the bridge from a definition to its runs with P-Plan, the PROV-O
    extension for plans and their steps. A run of a process is a
    `prov:Activity`. Never type a definition as an activity: the recipe is
@@ -442,6 +465,11 @@ instance cites its source.
    runs.
 4. Use PROV-O's second job, trust, to record which source asserted a
    mapping, when, and under what authority.
+5. Ship the pattern as shapes, not new terms: a run is a `prov:Activity`
+   with one qualified association whose `prov:hadPlan` points at a live
+   process definition. Add a shape that fails any definition typed as an
+   activity, and an example run that passes, so a consumer can test its
+   own records.
 
 **Done when:** no definition is typed as an occurrence; the definition-to-run
 pattern is defined; every occurrence a consumer records can link to its
@@ -498,6 +526,12 @@ revival trigger.
    constraint.
 4. Treat a validation report as data. A failing shape is a question for a
    person, not proof of a bad model.
+5. Test the shapes' coverage, not only their results. A test that fails
+   when a code-list property has no shape finds the properties a
+   hand-written shapes file missed. Prove each shape can fail: change one
+   value in a copy of the data and require a violation.
+6. Shapes written after a release run against that release without
+   changing it. They join the release's own shapes at the next release.
 
 **Done when:** the shapes run against the data with zero unexplained
 violations.
@@ -515,6 +549,11 @@ violations.
    on every release.
 3. If consumers will validate against the release, ship a release package
    with a manifest: immutable version, checksums, and the dependencies.
+4. Give every module the same package shape (Turtle, JSON-LD, shapes, a
+   DCAT record, a changelog and a manifest with SHA-256s), built by one
+   script. A module that depends on another names that module's version,
+   and the build fails if that version does not exist. Appendix B covers
+   release candidates, the cut and the next major.
 
 **Done when:** the catalog resolves; the current release is retrievable as
 versioned distributions.
@@ -531,6 +570,17 @@ versioned distributions.
    recorded, deliberate change. It is never a surprise.
 4. Where a question depends on a system outside the ontology (a catalog
    page, an assistant), test only the part the graph supplies.
+5. Start the harness early, before most questions can pass. Give each
+   question a status: answerable (its queries run), partial (the graph
+   part runs and the rest is named), or waiting on a named step or
+   decision. A module's pull request moves its questions to answerable.
+6. A query either must return rows or, marked "(must be none)", must
+   return none. Test the harness with mutated graphs: remove the fact a
+   query needs and require it to fail.
+7. Check a query's population against the whole before you trust its
+   count. A filter on one concept kind silently drops concepts that carry
+   no kind. Count the population the query selects, the rows it returns
+   and the rows it leaves out, and confirm they add up.
 
 **Done when:** every competency question passes on the published release,
 or is parked by a recorded decision.
@@ -570,6 +620,44 @@ ordinary node, so the guideline's flatten queries are not needed. Its pipeline r
 
 Materialize inverse relations before the load if consumers need them. OWL 2
 EL has no inverse properties, and a property graph does not infer them.
+
+What the loader and the reasoner do that the guideline does not say:
+
+- **Pick the loader's naming mode by what validates.** With Neo4j's n10s
+  plugin, SHACL validation inside the graph needs a namespace-aware graph.
+  Use the SHORTEN mode with fixed prefixes, not MAP. In SHORTEN, each
+  name is the prefix plus the local name, so two terms cannot share a name
+  (Rule 5).
+- **Run the full shapes upstream and a subset in the graph.** Check every
+  shape with pySHACL, SHACL-AF included, over the asserted and the
+  inferred triples before the load. Load only the constraints the loader
+  can run, and record which ones it leaves out and why. An empty
+  round-trip diff then shows the graph holds the triples that passed the
+  full shapes. Prove the in-graph check can fail: remove one value in the
+  graph and require a violation.
+- **Filter the reasoner's declarations.** The OWL API writes declarations
+  such as `owl:NamedIndividual` and `owl:Class` into the reasoner's
+  output. They are not inferences about the domain. Drop any triple whose
+  object is an OWL or RDFS built-in before you write `inferred.nt`.
+- **Compare values, not spellings, in the round trip.** A plain literal
+  equals an `xsd:string` literal. Integers return as `xsd:long` and
+  decimals as `xsd:double`. A language tag may come back inside the
+  string. Refuse, at build time, any source value that would not survive
+  the trip: a string that ends like a language tag, or a decimal that a
+  double cannot hold exactly.
+- **List the release's known rule gaps, and fail on a stale list.** When a
+  released module breaks a design rule that only its next release can
+  fix, name the gap and its fix in the pipeline. Fail on any gap not
+  listed, and on a listed gap that no longer occurs.
+- **Make the committed report go stale.** Record a fingerprint of the
+  loaded files and of every shape file in the report. The check script
+  rebuilds them, so a changed input fails the check until someone reruns
+  the pipeline. CI runs the check and serialise steps. The reason step
+  needs Java, and the load and verify steps need a Neo4j container, so
+  they run on a workstation.
+- **Pin the tools by version and checksum.** Record the Neo4j, plugin and
+  reasoner versions in the manifest, and the download URL and SHA-256 of
+  each plugin jar in the pipeline's README.
 
 **Done when:** the three checks in the verify step pass on the published
 release.
@@ -1200,21 +1288,112 @@ used as the placement test:
 - Shared Services: executes designated services and never replaces the
   accountable functional owner.
 
-**Step 5 plan.** Reference instances go in a `ref-mpc` module. MPLX is an
-Organization that MPC controls and consolidates. The ownership share, as-of
-date and source sit on a qualified-relation node, and the Midstream segment
-is a separate concept (EPM-DEC-001-0015).
+**How Steps 5 to 12 ran.** The owner delegated the build choices for
+Steps 5 to 12 to the agent (EPM-DEC-001-0028). The owner kept the
+decisions the method reserves for the owner: scope, the meaning of a source
+field, and every major release. Each choice below has its decision record.
+Steps 5, 6 and 9 to 12 ran on 2026-10-13. Step 7 is open.
 
-**Step 12 plan.** The projection follows the guideline in `lpg-projection/`,
-with design Rules 1, 2, 3 and 5 applied from `core` 1.0.0 and Rule 4 set to
-option 4a, qualified-relation nodes, because the build's Python tools cannot
-read RDF 1.2 (EPM-DEC-001-0020; guideline v2.1).
+**Step 5, organizations and roles.**
+
+- *Vocabulary* (EPM-DEC-001-0030). The `organization` module holds
+  `orgm:ResponsibilityAssignment`, one process, one role and one RACI
+  level, with the source's role text and a source. It also holds a RACI
+  level code list and `orgm:ControlRelationship`, a qualified-relation node
+  with a share, an as-of date and a source.
+- *Role register* (EPM-DEC-001-0031). The process map spells roles 91
+  ways. The register maps each string to one or more of 60 roles.
+  `build_roles.py` checks the register against the source and writes
+  `roles.ttl`. Likely misspellings and unexplained acronyms went to the
+  owner as open questions.
+- *Assignments* (EPM-DEC-001-0032). `build_assignments.py` turns the 913
+  RACI entries on 153 processes into 940 assignments: 27 extra roles come
+  from compound strings. `raci-conservation.csv` reconciles every RACI
+  level. Nothing is inferred from the hierarchy.
+- *Scope.* The owner set the RACI scope to the 153 processes with RACI in
+  the source. The other live concepts are the source author's backlog.
+  Competency questions 3 to 5 became answerable.
+- *Reference instances* (EPM-DEC-001-0033). `ref-mpc` holds MPC and MPLX,
+  MPC's control of MPLX (about 64 percent, as of 2025-12-31) as a control
+  relationship node, MPC's three reportable segments, and its 13
+  refineries as sites. Each fact cites MPC's FY2025 10-K with an as-of
+  date. Refinery capacity waits for Step 7's measure pattern.
+- *Domains.* The process map's `responsibleDomain` values looked like org
+  units. The owner decided they are business domains, and split "Commercial
+  & Marketing" by branch. No org units were made for them (EPM-DEC-001-0038).
+
+**Step 6, plans and runs** (EPM-DEC-001-0034, EPM-DEC-001-0038).
+`provenance/run-shapes.ttl` defines the run pattern with no new terms: a
+`prov:Activity` whose qualified association has `prov:hadPlan` pointing at
+a live process. A shape fails any core concept typed as an activity. The
+process map had a field named `sioc`. The agent did not guess its meaning.
+The owner confirmed it is SIPOC, and core 2.0.0 carries its inputs and
+outputs as `core:plannedInput` and `core:plannedOutput`: 362 inputs and
+219 outputs on 153 processes. The other 504 live processes have none. The
+owner made them the source author's backlog.
+
+**Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
+`core` 1.0.0 checked `conceptKind` against its own list and the other
+code-list values only as `skos:Concept`.
+`validation/controlled-values.ttl` requires each code-list property to
+take its values from its own list. Its coverage test found two properties
+with no shape. The evidence-link shape waits for a `core` release that
+carries each fact's evidence in the graph.
+
+**Step 10, publication** (EPM-DEC-001-0029, EPM-DEC-001-0037,
+EPM-DEC-001-0038). Four releases, each first built as a candidate and
+issued on the owner's written approval:
+
+| Release | What it holds | Builder |
+|---|---|---|
+| `core` 1.0.0 | The taxonomy, the 640 canonical facts, the scoped sequences and eight code lists | `release/build_core.py`, from the pinned evidence |
+| `organization` 1.0.0 | The vocabulary, the roles and the RACI assignments | `release/build_module.py` |
+| `ref-mpc` 1.0.0 | MPC and MPLX reference instances; requires `organization` 1.0.0 | `release/build_module.py` |
+| `core` 2.0.0 | The business domain list, planned inputs and outputs, two ranges; `core:responsibleDomain` deprecated, its values kept | `release/build_core_next.py`, from the released 1.0.0 |
+
+Deprecating a property made 2.0.0 a major. Before approving it, the owner
+stated that no one used the ontology yet. The 2.0.0 cut found that the
+candidate had copied 1.0.0's `dcterms:modified`. The builder now sets it
+at the cut. The w3id registration and the hosting wait for the owner.
+
+**Step 11, regression.** `regression/` holds one SPARQL query per tested
+part of the 44 competency questions and a status for each question. It
+started on `core` 1.0.0 with 5 answerable. On `core` 2.0.0 with the
+organization module, 9 are answerable, 5 partial and 30 waiting. Most of
+the waiting questions need Step 7, and the customer questions wait for the
+Customer / Party module. The first query for Q8 filtered on the "process"
+kind. It reported all 463 process-kind concepts as having no inputs or
+outputs, because the 153 processes that do have them carry no kind.
+Counting the query's population against the whole caught it.
+
+**Step 12, projection** (EPM-DEC-001-0020, EPM-DEC-001-0036).
+`projection/pipeline.py` runs the guideline in `lpg-projection/` with
+Rule 4 set to option 4a, qualified-relation nodes, because the build's
+Python tools cannot read RDF 1.2. It uses Neo4j 2025.06.2, n10s 2025.06.1,
+APOC, and ELK through ROBOT 1.9.10. The first run on `core` 1.0.0 found
+three things the guideline does not cover, and one defect:
+
+- n10s would not import the shapes in MAP mode ("The graph is not
+  namespace aware"), so the pipeline names terms in SHORTEN mode.
+- n10s cannot run every shape, so a subset runs in the graph and Step 1
+  runs all of them.
+- ELK's output carried OWL API declarations, which the pipeline drops.
+  That leaves no inferences, because the ontology is SKOS-first.
+- The defect: `ref-mpc`'s source nodes linked their URLs through
+  `dcterms:source`, which core's source shape forbids. It was fixed in
+  `ref-mpc`.
+
+Core 1.0.0 gave `earlierProcess` and `laterProcess` no range, which breaks
+Rule 1. The pipeline listed both as release gaps until core 2.0.0 added the
+ranges. The run on core 2.0.0, the organization module and `ref-mpc` loaded
+2,166 nodes and 12,290 relationships, with no SHACL violation in the
+graph, an empty round-trip diff and equal hashes for two load orders.
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared
-disjoint. A JSON field named `sioc` had an unconfirmed meaning until it was confirmed as SIPOC (see the worklog). Several
-Order-to-Cash processes have empty output sets, to be resolved in Step 7 as
-explicit decisions.
+disjoint. A JSON field named `sioc` is SIPOC, as the owner confirmed. The `responsibleDomain` values are business
+domains, not org units. Several Order-to-Cash processes have empty output
+sets, to be resolved in Step 7 as explicit decisions.
 
 ---
 
@@ -1369,6 +1548,19 @@ the catalog and the manifest, and no `dcterms:issued`. The cut is one commit aft
 approval: drop the stage, set the issue date, update the test that pins
 the version, and rebuild. Tag the merge commit after the merge. Records
 written before the merge say the tag comes at merge, never that it exists.
+At the cut, set `dcterms:modified` from the cut date. Do not keep one
+copied from the earlier release. Remove the candidate package, so only the
+release is left. Pin the sentence that approved the release in the
+manifest and in a test that reads it from the saved answer, so the
+release cannot be issued without it.
+
+Build the next release from the released graph, not from the evidence
+again. The builder reads the released package, applies the decided
+changes, and records a hash of the released manifest, so the check fails
+if the released package changes. The earlier release
+stays reproducible from its own pinned evidence. Test that every triple
+of the earlier release is kept, except the version header and anything a
+decision changed.
 
 Every release ships:
 
