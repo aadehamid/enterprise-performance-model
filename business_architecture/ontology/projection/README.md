@@ -1,6 +1,6 @@
 # Property-graph projection (Step 12)
 
-Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.1) with Rule 4a, qualified-relation nodes. Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036.
+Projects the ontology into a Neo4j labelled property graph, following the guideline in `../lpg-projection/` (v2.2) with Rule 4a, qualified-relation nodes. Turtle stays the master copy; the graph can be rebuilt from it at any time. The design is EPM-DEC-001-0036.
 
 | File | What it is |
 |---|---|

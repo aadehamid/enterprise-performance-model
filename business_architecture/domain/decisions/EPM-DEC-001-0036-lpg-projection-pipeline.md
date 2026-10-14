@@ -36,6 +36,8 @@ The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): it
 
 The next `core` release should add `rdfs:range skos:Concept` to `core:earlierProcess` and `core:laterProcess`. The pipeline then fails until the two listed gaps are removed.
 
+*Note 2026-10-14:* guideline v2.2 (enterprise-people-graph PR #3, `8ce9ada`) adopts the choices above (SHORTEN, the in-graph subset, the declaration filter, the round-trip value rules, the CI report check), so they are no longer deviations from the guideline. `lpg-projection/` is re-pinned to it (EPM-DEC-001-0021).
+
 *Amendment 2026-10-13:* done. `core` 2.0.0 (EPM-DEC-001-0038) adds both ranges. The pipeline now projects 2.0.0, and its list of release gaps is empty.
 
 ## Alternatives considered

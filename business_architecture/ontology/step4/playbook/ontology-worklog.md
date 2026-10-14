@@ -957,6 +957,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### LPG guideline v2.2 (2026-10-14)
+- `lpg-projection/` is re-pinned to `8ce9ada`, guideline v2.2
+  (enterprise-people-graph PR #3). v2.2 takes in what the projection's
+  first full run found: SHORTEN naming, the in-graph shape subset, no OWL
+  API declarations in `inferred.nt`, the round-trip value rules and the CI
+  report check (EPM-DEC-001-0036). The pipeline already followed them.
+  The playbook's decimal rule now matches the guideline's print test.
+  EPM-DEC-001-0021.
+
 ### Playbook updated for Steps 5 to 12 (2026-10-13)
 - The playbook's method gains what Steps 5 to 12 taught: the role
   register and RACI conservation (Step 5), confirmed source fields and the

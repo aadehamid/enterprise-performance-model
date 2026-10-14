@@ -28,6 +28,7 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Ham
 ## Snapshot updates
 
 - 2026-10-06: re-pinned to `e7b09e8` (guideline v2.1, enterprise-people-graph PR #1).
+- 2026-10-14: re-pinned to `8ce9ada` (guideline v2.2, enterprise-people-graph PR #3), which takes in the projection pipeline's findings (EPM-DEC-001-0036).
 
 ## Evidence
 

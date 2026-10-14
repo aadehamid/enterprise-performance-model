@@ -1,9 +1,18 @@
-# Ontology_to_LPG_Conversion_Playbook (v2.1)
+# Ontology_to_LPG_Conversion_Playbook (v2.2)
 
 **Converting a W3C ontology (RDF 1.2 / RDFS / OWL 2 / SKOS / SHACL) into a Neo4j Labelled Property Graph: deterministic, repeatable, high fidelity, and as simple as possible.**
 
-Version 2.1 · October 2026 · Author: Hamid Adesokan (with Perplexity; v2.1 with Claude Code)
+Version 2.2 · October 2026 · Author: Hamid Adesokan (with Perplexity; v2.1 and v2.2 with Claude Code)
 
+> **What changed in v2.2**
+> v2.2 records what the first full run of the pipeline found, on the Enterprise Performance Model ontology with Neo4j 2025.06.2, n10s 2025.06.1 and ROBOT 1.9.10 (October 2026).
+> - **SHORTEN replaces MAP** in the n10s configuration (Step 4). In MAP mode, n10s 2025.06.1 would not import the shapes ("The graph is not namespace aware"). MAP also drops the namespace of terms without a mapping, which breaks the round trip (this repo's issue #2, item 2). SHORTEN keeps both, at the cost of the Rule 5 names (Rule 5).
+> - **Step 4's worked example uses SHORTEN names** (`ex__alias`, `lpg__EdgeRecord`). The Rule 4b collapse is generated once per predicate with the predicate's SHORTEN name, which answers this repo's issue #2, item 1. The run behind v2.2 used Rule 4a, so the 4b path has not been run end to end.
+> - **The full shapes run upstream, and a subset runs in the graph** (Steps 1, 4 and 5). n10s cannot run every SHACL constraint, and loading one it cannot run is not a check.
+> - **`inferred.nt` drops the reasoner's declarations** (Step 3). The OWL API writes `owl:NamedIndividual`, `owl:Class` and similar declarations into ROBOT's output. They are not inferences.
+> - **The round trip compares values, not spellings** (Step 5), and the build refuses values that cannot survive the trip.
+> - **CI checks the committed result** when it cannot run Java and Neo4j (§9), and the plugin jars are pinned by checksum.
+>
 > **What changed in v2.1**
 > - Rule 4 now has two options. **4a, qualified-relation nodes,** is the default: plain RDF that every common tool reads today. **4b, RDF 1.2 reifiers,** is for toolchains that support RDF 1.2.
 > - Status corrections, checked in October 2026: RDF 1.2 is a W3C Candidate Recommendation (Snapshot of 7 April 2026), not yet a Recommendation. Apache Jena 6.1.0 or later (May 2026) and Eclipse RDF4J 6.0.0 or later (July 2026) read and write RDF 1.2; Jena 5.4.0 to 6.0.x was an experimental preview without Turtle output of reifiers or annotations. rdflib, and pySHACL, which is built on it, do not support it yet.
@@ -27,8 +36,8 @@ If the ontology follows the **5 Core Rules** (§3), the Core Path produces an LP
 |---|---|
 | Every individual, type, literal value and link | Nodes, labels, properties, relationships |
 | Statement-level metadata (flow rate, valid-from, source, confidence) | Properties of the qualified-relation node (Rule 4a), or relationship properties via RDF 1.2 reifiers (Rule 4b) |
-| Class / property hierarchy, domain, range | Schema nodes (`:Class`, `:Relationship`, `:Property`) |
-| Cardinality and constraints | SHACL shapes, checked in Neo4j |
+| Class / property hierarchy, domain, range | Schema nodes from `n10s.onto.import`: in SHORTEN mode (v2.2) `:n4sch__Class`, `:n4sch__Relationship`, `:n4sch__Property`, linked by `n4sch__SCO`, `n4sch__DOMAIN`, `n4sch__RANGE` (MAP mode, v2.1: `:Class`, `:Relationship`, `:Property`) |
+| Cardinality and constraints | SHACL shapes: all of them checked before the load (Step 1), and the subset n10s supports checked again in Neo4j (Step 5) |
 | A full round trip back to RDF | Verified by an automated diff |
 
 **Not preserved:** OWL *reasoning* (open world, complex class expressions, property chains). Neo4j has no reasoner. The Core Path runs a reasoner first and loads the inferred results as data. The OWL axioms themselves stay in the `.ttl` files, which remain the master copy.
@@ -103,7 +112,7 @@ ex:feedSource lpg:name "FEED_SOURCE" .   # Rule 5: name the relationship types
 ex:feedTarget lpg:name "FEED_TARGET" .
 ```
 
-**LPG result:** a `:Feed` node with its properties and two relationships.
+**LPG result:** a `:Feed` node with its properties and two relationships. The names shown are the Rule 5 names. In SHORTEN mode (v2.2) they appear only after the rename that Rule 5 describes; without it they are `ex__Feed`, `ex__feedSource`, `ex__maxFlowBblPerDay` and so on.
 
 ```
 (TK-101)<-[:FEED_SOURCE]-(feed_0042:Feed {uri:"…feed_0042", maxFlowBblPerDay:120000, validFrom:date('2026-01-01'), source:"P&ID-0042 rev C"})-[:FEED_TARGET]->(CDU-1)
@@ -137,7 +146,7 @@ ex:feed_0042 ex:maxFlowBblPerDay 120000 ;
              ex:source "P&ID-0042 rev C" .
 ```
 
-**LPG result:** one relationship per reifier.
+**LPG result:** one relationship per reifier. As in 4a, the names shown are the Rule 5 names; in SHORTEN mode without the rename they are `ex__feeds`, `ex__maxFlowBblPerDay` and so on.
 
 ```
 (TK-101)-[:FEEDS {uri:"…feed_0042", maxFlowBblPerDay:120000, validFrom:date('2026-01-01'), source:"P&ID-0042 rev C"}]->(CDU-1)
@@ -163,7 +172,9 @@ ex:alias  lpg:name "aliases" .
 ex:feeds  lpg:name "FEEDS" .
 ```
 
-Where there's no `lpg:name`, the IRI local name is used as-is. A CI check fails the build if two IRIs end up with the same name.
+In MAP mode (v2.1), n10s uses the `lpg:name` where there is one and the IRI local name as-is where there is not. A CI check fails the build if two IRIs end up with the same name. In SHORTEN mode (v2.2), see below.
+
+**v2.2: Rule 5 names need MAP mode.** n10s applies `lpg:name` mappings only when `handleVocabUris` is `'MAP'` ([n10s mapping reference](https://neo4j.com/labs/neosemantics/4.0/mapping/)). Step 4 now uses `'SHORTEN'`, because in-graph SHACL needs it (Step 4c). In SHORTEN mode every name is the registered prefix plus the local name (`skos__prefLabel`), so no two IRIs share a name and the collision check passes by construction, but the custom names are not applied. If the graph's consumers need the Rule 5 names, add them as a generated, idempotent rename after the load and before Step 5, and reverse it in the round-trip export. Do not switch to MAP until n10s validates SHACL in MAP mode (neosemantics issue [#237](https://github.com/neo4j-labs/neosemantics/issues/237), open since 2021-11-09; the proposed fix, PR [#361](https://github.com/neo4j-labs/neosemantics/pull/361), is open as of 2026-10-13).
 
 That's the whole required design discipline. Optional annotations (`lpg:cypherType`, `lpg:langPolicy`, …) are covered in the add-ons.
 
@@ -207,6 +218,12 @@ Run SHACL "meta-shapes" over the ontology file itself:
 
 Then validate the data against `shapes.ttl`. **Any violation stops the build.**
 
+**v2.2: this is the full check, so make it complete.**
+
+- Run every shape here, including the ones n10s cannot run (Step 4d lists them). If any shape uses SPARQL targets or SPARQL constraints, turn on SHACL-AF (`advanced=True` in pySHACL).
+- After Step 3, run the shapes again over `loadable.nt` and `inferred.nt` together. An inference can break a shape, and the graph will hold both files.
+- Before the load, refuse any value that cannot survive the round trip: a string that ends like a language tag (`"…@en"`), and an `xsd:decimal` whose value, printed as a double, is not its own lexical form (0.64 survives; 0.1000000000000000055 does not). Step 5 explains why.
+
 ### Step 2: Reason (once, upstream)
 
 ```bash
@@ -230,6 +247,7 @@ The SHA-256 of the two files together is the *input fingerprint*.
 1. Convert the reasoner's input (`ontology.ttl`) and output (`reasoned.ttl`) to sorted N-Triples, `input.nt` and `reasoned.nt`, with Jena's `riot` or any RDF library.
 2. Keep the lines of `reasoned.nt` that are not in `input.nt` (`comm -13 input.nt reasoned.nt`).
 3. Of those, keep only `rdf:type` and `rdfs:subClassOf` triples whose subject and object are both IRIs. Drop anything with a blank node: OWL axioms are written with blank nodes whose labels change from run to run, so they would look new every time.
+4. *(v2.2)* Drop triples whose object is an OWL or RDFS built-in (any IRI in the `owl:` or `rdfs:` namespace). ROBOT writes its output through the OWL API, which declares every individual `owl:NamedIndividual` and adds `owl:Class`, `owl:Thing`, `owl:AnnotationProperty` and `rdfs:Datatype` declarations. These are new in the output, so step 2 keeps them, but they are not inferences about the domain. On a SKOS-first ontology with few class axioms, the result can be empty, which is correct.
 
 The result is `inferred.nt`. By construction it holds no triple from the reasoner's input.
 
@@ -269,21 +287,26 @@ The union is the original data minus its triple terms, plus the `EdgeRecord` tri
 // 4a. Clean DB + constraint
 CREATE CONSTRAINT n10s_unique_uri IF NOT EXISTS FOR (r:Resource) REQUIRE r.uri IS UNIQUE;
 
-// 4b. Fixed prefixes and names (generated from prefixes.ttl + lpg:name)
+// 4b. Fixed prefixes (generated from prefixes.ttl), in a fixed order, so n10s
+//     never invents an ns0-style prefix. Register every namespace in the data,
+//     including the lpg: vocabulary that Rule 4b's EdgeRecords use. In SHORTEN
+//     mode every name is prefix__localName (ex:alias -> ex__alias), and n10s
+//     ignores n10s.mapping.add, so no lpg:name mappings are generated (Rule 5).
 CALL n10s.nsprefixes.add('ex','https://example.org/refinery#');
-CALL n10s.mapping.add('https://example.org/refinery#alias','aliases');
-CALL n10s.mapping.add('https://example.org/refinery#feeds','FEEDS');
+CALL n10s.nsprefixes.add('lpg','https://example.org/lpg-mapping#');
 
-// 4c. Config (generated; multivalPropList comes from SHACL maxCount)
+// 4c. Config (generated; multivalPropList comes from SHACL maxCount).
+//     SHORTEN, not MAP: n10s 2025.06.1 imports and validates SHACL only in a
+//     namespace-aware graph, and MAP drops the namespace of unmapped terms (issue #2).
 CALL n10s.graphconfig.init({
-  handleVocabUris:'MAP', handleRDFTypes:'LABELS_AND_NODES',
+  handleVocabUris:'SHORTEN', handleRDFTypes:'LABELS_AND_NODES',
   handleMultival:'ARRAY', multivalPropList:['https://example.org/refinery#alias'],
   keepLangTag:true, keepCustomDataTypes:true
 });
 
 // 4d. Load in fixed order: schema, shapes, data, inferred
 CALL n10s.onto.import.fetch('file:///ontology.ttl','Turtle');
-CALL n10s.validation.shacl.import.fetch('file:///shapes.ttl','Turtle');
+CALL n10s.validation.shacl.import.fetch('file:///shapes-in-graph.ttl','Turtle');  // the subset; see below
 CALL n10s.rdf.import.fetch('file:///loadable.nt','N-Triples');
 CALL n10s.rdf.import.fetch('file:///inferred.nt','N-Triples');
 // n10s keeps no graph names, so inside Neo4j asserted and inferred triples are merged.
@@ -291,9 +314,14 @@ CALL n10s.rdf.import.fetch('file:///inferred.nt','N-Triples');
 
 // 4e. Rule 4b only. The ONE post-load transform: EdgeRecord → relationship with properties.
 //     With Rule 4a there are no EdgeRecords; qualified-relation nodes load as ordinary nodes.
-MATCH (r:EdgeRecord)-[:edgeSource]->(s), (r)-[:edgeTarget]->(t), (r)-[:edgePredicate]->(p)
-WITH r, s, t, p ORDER BY r.uri
-CALL apoc.merge.relationship(s, coalesce(p.lpgName, n10s.rdf.getIRILocalName(p.uri)),
+//     Generated once per reified predicate. The relationship type is the predicate's SHORTEN
+//     name, computed by the generator from prefixes.ttl, so it equals the type n10s gave the
+//     plain edge and 4f can match them (this repo's issue #2, item 1).
+//     v2.2 has not run the 4b path end to end; the run behind v2.2 used Rule 4a.
+MATCH (r:lpg__EdgeRecord)-[:lpg__edgeSource]->(s), (r)-[:lpg__edgeTarget]->(t),
+      (r)-[:lpg__edgePredicate]->(p {uri: 'https://example.org/refinery#feeds'})
+WITH r, s, t ORDER BY r.uri
+CALL apoc.merge.relationship(s, 'ex__feeds',
      {uri: r.uri}, apoc.map.removeKeys(properties(r), ['uri']), t, {}) YIELD rel
 DETACH DELETE r;
 
@@ -303,15 +331,19 @@ MATCH (s)-[plain]->(t), (s)-[reified]->(t)
 WHERE type(plain) = type(reified) AND plain.uri IS NULL AND reified.uri IS NOT NULL
 DELETE plain;
 
-// 4g. Sort array properties (generated per multivalued key)
-MATCH (n:Resource) WHERE n.aliases IS NOT NULL SET n.aliases = apoc.coll.sort(n.aliases);
+// 4g. Sort array properties (generated per multivalued key, with its SHORTEN name)
+MATCH (n:Resource) WHERE n.ex__alias IS NOT NULL SET n.ex__alias = apoc.coll.sort(n.ex__alias);
 ```
 
 Every statement uses `MERGE` / `SET` with explicit ordering, so running it again gives the same graph.
 
+**v2.2: load only the shapes n10s can run.** n10s 2025.06.1 rejects `sh:datatype rdf:langString` and does not support `sh:not`, `sh:languageIn`, `sh:node`, `sh:targetSubjectsOf` or `sh:targetObjectsOf`. It never runs a shape with a SPARQL target, and it does not read `sh:targetSubjectsOf` or `sh:targetObjectsOf`. The subset below keeps only node shapes with a `sh:targetClass`, which loses nothing Step 1 does not already check. A node-level `sh:nodeKind` (one on a node shape, not a property shape) compiles to no check. Generate `shapes-in-graph.ttl` from `shapes.ttl`: remove those constraints (and `sh:message` and `sh:severity`), then remove every node shape left without a `sh:targetClass`, with its property shapes. Record what was removed and why. Step 1 already ran all of them, and an empty round-trip diff (Step 5) shows the graph holds exactly the triples that passed. Treat the number of constraints n10s compiles as a reported figure, not an assumption.
+
+**v2.2: install n10s from its release, pinned by checksum.** Download the jar that matches the Neo4j version from the [neosemantics releases](https://github.com/neo4j-labs/neosemantics/releases) (for Neo4j 2025.06, `neosemantics-2025.06.1.jar`), record its SHA-256, and mount it as the container's `/plugins` folder. The Neo4j image installs APOC itself through `NEO4J_PLUGINS='["apoc"]'`. Allow both with `NEO4J_dbms_security_procedures_unrestricted='apoc.*,n10s.*'`.
+
 ### Step 5: Verify
 
-1. `CALL n10s.validation.shacl.validate()` returns **zero** violations.
+1. `CALL n10s.validation.shacl.validate()` returns **zero** violations. *(v2.2)* Then prove the check can fail: in the loaded graph, remove one value a shape requires, run the validation again, require at least one violation, and restore the value. Zero violations from shapes n10s ignored would otherwise look the same as a pass.
 2. **Round trip:** export with `n10s.rdf.export.cypher` and diff against the union of `loadable.nt` and `inferred.nt`. With Rule 4b, first rebuild `EdgeRecord`s from relationships that have a `uri`:
 
 ```python
@@ -322,6 +354,14 @@ out = to_isomorphic(Graph().parse("roundtrip.nt"))
 both, lost, added = graph_diff(src, out)
 assert len(lost) == 0 and len(added) == 0, (len(lost), len(added))
 ```
+
+*(v2.2)* **Compare values, not spellings.** Before the diff, normalise both graphs the same way:
+
+- A plain literal and an `xsd:string` literal with the same text are the same (RDF 1.1).
+- Integers load as INTEGER and export as `xsd:long`. Decimals load as FLOAT and export as `xsd:double` (§8). Compare the values.
+- With `keepLangTag`, n10s stores the tag inside the string (`"Crude Unit@en"`) and exports the literal untagged. Read the tag back out of the exported string before comparing.
+
+Step 1 refused the values for which these rules would hide a real change.
 
 3. **Determinism:** load twice into clean databases, with the triple order shuffled the second time. Hash the graphs (nodes sorted by `uri`, edges by `(src, type, tgt, uri)`). The two hashes must match.
 
@@ -363,7 +403,7 @@ The big biomedical graphs (RTX-KG2, BioCypher-based KGs) use this same "canonica
 | boolean | BOOLEAN |
 | integer, long, int, nonNegativeInteger | INTEGER (64-bit, range-checked) |
 | double, float | FLOAT |
-| decimal | FLOAT (or STRING with Add-on C) |
+| decimal | FLOAT (or STRING with Add-on C). *(v2.2)* Refuse a decimal whose value, printed as a double, is not its own lexical form (Step 1: 0.64 passes, 0.1000000000000000055 does not), or adopt Add-on C |
 | date | DATE |
 | dateTimeStamp / dateTime with timezone | ZONED DATETIME |
 | dateTime without timezone | LOCAL DATETIME (better: forbid it in SHACL) |
@@ -385,15 +425,20 @@ The big biomedical graphs (RTX-KG2, BioCypher-based KGs) use this same "canonica
 
 **Pipeline**
 
-- [ ] Versions pinned (Neo4j, n10s, APOC, Jena/RDF4J, ROBOT).
-- [ ] Steps 1–5 automated in CI.
+- [ ] Versions pinned (Neo4j, n10s, APOC, Jena/RDF4J, ROBOT), and each plugin jar's download URL and SHA-256 recorded.
+- [ ] Steps 1–5 automated in CI. *(v2.2)* If CI cannot run Java and Neo4j, CI runs Steps 1 and 3, and a workstation runs Steps 2, 4 and 5 and commits a report. The report records the SHA-256 of `loadable.nt` + `inferred.nt` and of every shape file, so CI fails when the inputs or the shapes change and the report was not rerun.
 - [ ] SHACL clean, round-trip diff zero, determinism hashes equal.
+- [ ] *(v2.2)* n10s in SHORTEN mode; the in-graph shapes are a recorded subset; a mutated graph makes the in-graph validation fail.
+- [ ] *(v2.2)* `inferred.nt` holds no OWL or RDFS declarations.
+- [ ] *(v2.2)* A rule violation that only a new release of the ontology can fix is listed by name with its fix. The build fails on any violation not listed, and on a listed one that no longer occurs.
 
 ---
 
 ## 10. Anti-patterns
 
 - Relying on n10s defaults (`OVERWRITE` for multivalues, auto-generated `ns0` prefixes).
+- *(v2.2)* Loading shapes n10s cannot run, and reading its silence as a pass.
+- *(v2.2)* Loading the reasoner's OWL API declarations as if they were inferences.
 - Blank-node reifiers. The relationship then has no stable identity.
 - Merging two reifiers of the same triple into one relationship.
 - Handwritten Cypher that isn't generated from the ontology.
@@ -408,6 +453,10 @@ The big biomedical graphs (RTX-KG2, BioCypher-based KGs) use this same "canonica
 - W3C: Organization Ontology (`org:Membership`, the qualified-relation pattern). https://www.w3.org/TR/vocab-org/
 - W3C: PROV-O qualified relations. https://www.w3.org/TR/prov-o/#description-qualified-terms
 - Apache Jena CHANGES (RDF 1.2 syntax input and output, and SPARQL 1.2, from 6.1.0). https://github.com/apache/jena/blob/main/CHANGES.txt
+- neosemantics 2025.06.1 release (the n10s jar for Neo4j 2025.06). https://github.com/neo4j-labs/neosemantics/releases/tag/2025.06.1
+- neosemantics issue #237 (SHACL not validating with `handleVocabUris` set to MAP, open since 2021-11-09) and PR #361 (the proposed fix, open as of 2026-10-13). https://github.com/neo4j-labs/neosemantics/issues/237 · https://github.com/neo4j-labs/neosemantics/pull/361
+- n10s mapping reference (mappings apply in MAP mode). https://neo4j.com/labs/neosemantics/4.0/mapping/
+- First full run of v2.2's changes: the Enterprise Performance Model ontology's projection pipeline and decision record EPM-DEC-001-0036 (aadehamid/enterprise-performance-model, `business_architecture/ontology/projection/`).
 - Eclipse RDF4J 6.0.0 release notes (RDF 1.2 and SPARQL 1.2). https://rdf4j.org/release-notes/6.0.0/
 - W3C: RDF 1.2 Primer. https://www.w3.org/TR/rdf12-primer/
 - W3C: RDF 1.2 Turtle (`<<( )>>`, `~ reifier`, `{| |}` annotation syntax). https://www.w3.org/TR/rdf12-turtle/
