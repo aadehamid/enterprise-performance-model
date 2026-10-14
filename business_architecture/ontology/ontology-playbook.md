@@ -1355,7 +1355,9 @@ issued on the owner's written approval:
 Deprecating a property made 2.0.0 a major. Before approving it, the owner
 stated that no one used the ontology yet. The 2.0.0 cut found that the
 candidate had copied 1.0.0's `dcterms:modified`. The builder now sets it
-at the cut. The w3id registration and the hosting wait for the owner.
+at the cut. The owner decided not to register or host the namespace yet,
+because the domain may change, so the IRIs are placeholders and Step 10's
+"catalog resolves" gate is parked (EPM-DEC-001-0039).
 
 **Step 11, regression.** `regression/` holds one SPARQL query per tested
 part of the 44 competency questions and a status for each question. It

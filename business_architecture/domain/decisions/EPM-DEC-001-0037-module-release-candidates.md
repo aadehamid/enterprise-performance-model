@@ -28,8 +28,8 @@ Hamid approved both modules as 1.0.0 (saved in `business_architecture/ontology/s
 
 Step 10 is done when the catalog resolves and the release can be retrieved. Three things are his:
 1. **Approve organization 1.0.0 and `ref-mpc` 1.0.0** (each a major). Done: approved on 2026-10-13 (above).
-2. **Register `w3id.org/lsc`.** The IRIs resolve only after a redirect is registered with w3id, a public, outside action.
-3. **Choose where the files are hosted and under which license.** The ontology README says the folder is proprietary, all rights reserved; a public catalog needs a decision on what is published.
+2. **Register `w3id.org/lsc`.** The IRIs resolve only after a redirect is registered with w3id, a public, outside action. *Decided 2026-10-14:* not registered; the namespace is a placeholder (Hamid, EPM-DEC-001-0039).
+3. **Choose where the files are hosted and under which license.** *2026-10-14:* not hosted (Hamid, EPM-DEC-001-0039); the licence is still open. The ontology README says the folder is proprietary, all rights reserved; a public catalog needs a decision on what is published.
 
 ## Alternatives considered
 
