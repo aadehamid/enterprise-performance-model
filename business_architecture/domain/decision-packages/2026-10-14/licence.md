@@ -49,4 +49,4 @@ Nothing is hosted, and a public catalog is not planned. The recorded policy of 2
 
 ## Related, not part of this question
 
-Your namespace decision of 2026-10-13 is not yet in the repo. Two places still ask for registration: `business_architecture/ontology/README.md` line 73 ("register `w3id.org/lsc`") and EPM-DEC-001-0037 "For Hamid" item 2 (line 31). Each needs a dated note in a small PR. That PR can carry the note for this question too.
+Your namespace decision of 2026-10-14 is recorded in EPM-DEC-001-0039 (PR #273). The ontology README (line 73) and EPM-DEC-001-0037 "For Hamid" items 2 and 3 now carry it. Item 3 says the licence is still open, which is this question.
