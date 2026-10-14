@@ -1,7 +1,7 @@
-"""Build the next core release candidate from the released core 1.0.0 (EPM-DEC-001-0038).
+"""Build core 2.0.0 from the released core 1.0.0 (EPM-DEC-001-0038).
 
     python3 build_core_next.py            # build, validate, print the figures
-    python3 build_core_next.py --write    # write releases/core/2.0.0-rc.1/
+    python3 build_core_next.py --write    # write releases/core/2.0.0/
     python3 build_core_next.py --verify   # fail unless the written package equals a fresh build
 
 core 1.0.0 stays as it was built from its pinned evidence (build_core.py). This builder starts from
@@ -16,8 +16,9 @@ that released graph and applies the changes Hamid decided on 2026-10-13:
    core:plannedOutput, one governed literal per input or output (the 2026-09-22 flow decision).
 3. core:earlierProcess and core:laterProcess get rdfs:range skos:Concept (guideline Rule 1).
 
-Deprecating a property makes this a major: 2.0.0, built as a candidate with no issued date until
-Hamid approves it (module policy, 2026-09-18).
+Deprecating a property makes this a major: 2.0.0, which needs Hamid's approval (module policy,
+2026-09-18). It was built as the candidate 2.0.0-rc.1 with no issued date; Hamid approved the
+release on 2026-10-13 (APPROVAL below).
 """
 import argparse
 import hashlib
@@ -36,7 +37,9 @@ BASE = os.path.join(ONTOLOGY, "releases", "core", "1.0.0")
 SOURCE = os.path.join(ONTOLOGY, "..", "business_process", "downstream_process_map.json")
 IDENTITY = os.path.join(ONTOLOGY, "build", "output", "step2-identity-map.json")
 CHANGELOG = os.path.join(ONTOLOGY, "releases", "core", "CHANGELOG-2.0.0.md")
-VERSION, STAGE, ISSUED = "2.0.0", "rc.1", None
+VERSION, STAGE, ISSUED = "2.0.0", None, "2026-10-13"
+# The sentence that approved the release: (saved file, Hamid's words in its body).
+APPROVAL = ("step4/review-evidence/hamid-answers/core-2-0-0-release.md", "I approve the core 2.0.0 releas")
 LABEL = VERSION if STAGE is None else f"{VERSION}-{STAGE}"
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", LABEL)
 
@@ -167,13 +170,14 @@ def build():
         counts["planned inputs"] += len(inputs)
         counts["planned outputs"] += len(outputs)
     # The ontology header names the new version; it replaces 1.0.0's version triples.
-    for p in (OWL.versionInfo, OWL.versionIRI, DCTERMS.issued, OWL.priorVersion):
+    for p in (OWL.versionInfo, OWL.versionIRI, DCTERMS.issued, DCTERMS.modified, OWL.priorVersion):
         g.remove((ONTOLOGY_IRI, p, None))
     g.add((ONTOLOGY_IRI, OWL.versionInfo, Literal(LABEL)))
     g.add((ONTOLOGY_IRI, OWL.versionIRI, URIRef(f"{ONTOLOGY_IRI}/{LABEL}")))
     g.add((ONTOLOGY_IRI, OWL.priorVersion, URIRef(f"{ONTOLOGY_IRI}/1.0.0")))
     if ISSUED:
         g.add((ONTOLOGY_IRI, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
+        g.add((ONTOLOGY_IRI, DCTERMS.modified, Literal(ISSUED, datatype=XSD.date)))
     return g, counts
 
 
@@ -263,6 +267,7 @@ def package(g, s, counts):
         "built_from": {"core 1.0.0 manifest": hashlib.sha256(base_manifest.encode()).hexdigest(),
                        "process map": hashlib.sha256(open(SOURCE, "rb").read()).hexdigest()},
         "decisions": ["EPM-DEC-001-0038"],
+        **({"approval": {"file": APPROVAL[0], "words": APPROVAL[1]}} if STAGE is None else {}),
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 

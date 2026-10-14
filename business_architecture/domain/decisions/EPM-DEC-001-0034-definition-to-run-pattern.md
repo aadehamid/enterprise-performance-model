@@ -24,7 +24,7 @@ Step 6's first procedure, planned inputs and outputs on the definitions, is not 
 
 ### The `sioc` field: answered by Hamid, 2026-10-13
 
-Hamid confirmed that `sioc` is SIPOC. EPM-DEC-001-0038 records his words and carries the inputs and outputs into the `core` 2.0.0 candidate as planned inputs and outputs.
+Hamid confirmed that `sioc` is SIPOC. EPM-DEC-001-0038 records his words and carries the inputs and outputs into `core` 2.0.0 as planned inputs and outputs.
 
 ## Amendment, 2026-10-13
 

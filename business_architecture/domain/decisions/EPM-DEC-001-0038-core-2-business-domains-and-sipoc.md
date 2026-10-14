@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (Hamid, 2026-10-13: SIPOC and the domain split; the build choices delegated under EPM-DEC-001-0028) |
+| Status | Decided (Hamid, 2026-10-13: SIPOC, the domain split and the 2.0.0 release; the build choices delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-13 |
 | Questions | What the process map's `sioc` field means; whether the `core:responsibleDomain` values are org units or business domains, and how "Commercial & Marketing" splits; how those answers and the two missing ranges reach `core` |
 | Source | Claude Code session, 2026-10-13 |
@@ -24,13 +24,14 @@
 4. **`core:responsibleDomain` is deprecated, not removed.** It is marked `owl:deprecated true`, and its values stay, so consumers that read it keep working while they move to `core:businessDomain`.
 5. **Planned inputs and outputs.** `core:plannedInput` and `core:plannedOutput` carry the SIPOC inputs and outputs as governed literals, one per item (the 2026-09-22 flow decision: no flow nodes). That is 362 inputs and 219 outputs on 153 processes. Suppliers and customers stay parked: they name roles and systems, which need their own mapping.
 6. **The two ranges.** `core:earlierProcess` and `core:laterProcess` get `rdfs:range skos:Concept`.
-7. **A major release, built as a candidate.** A deprecation makes this 2.0.0 (module policy: majors are Hamid's). `release/build_core_next.py` builds it from the released 1.0.0 graph, so 1.0.0 stays as built from its pinned evidence. It writes `releases/core/2.0.0-rc.1/` with no issued date.
+7. **A major release, built as a candidate.** A deprecation makes this 2.0.0 (module policy: majors are Hamid's). `release/build_core_next.py` builds it from the released 1.0.0 graph, so 1.0.0 stays as built from its pinned evidence. It wrote `releases/core/2.0.0-rc.1/` with no issued date until Hamid approved the release.
+8. **The release.** Hamid approved core 2.0.0 on 2026-10-13. The builder now writes `releases/core/2.0.0/`: the candidate's content with `dcterms:issued` and `dcterms:modified` set to 2026-10-13 and the stage removed. The candidate package is removed, as 1.0.0-rc.1 was at the 1.0.0 cut. The manifest and the tests name the sentence that approved it. The merge commit gets the tag `core-v2.0.0`.
 
 Left out: the evidence nodes on canonical facts (EPM-DEC-001-0035), which wait for Hamid's walkthrough.
 
 ### For Hamid
 
-1. **Approve core 2.0.0** when ready. On approval, the candidate gets its issued date and the projection (EPM-DEC-001-0036) and regression move to it. That closes the two listed release gaps, and question 8 can be answered from the planned inputs and outputs.
+1. ~~Approve core 2.0.0.~~ Approved 2026-10-13 (item 8). Next, the projection (EPM-DEC-001-0036) and the regression move to 2.0.0 in their own change. That closes the two listed release gaps, and question 8 can be answered from the planned inputs and outputs.
 2. **Consider moving CM 1.4 IT Services under the enabling functions** (`L1-process-excellence-it`). That changes the process map, so it is a proposal for the source author.
 
 ## Alternatives considered
@@ -41,7 +42,7 @@ Left out: the evidence nodes on canonical facts (EPM-DEC-001-0035), which wait f
 
 ## Hamid's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`. On `sioc`: "it is SIPOC: SIPOC stands for Suppliers, Inputs, Process, Outputs, and Customers. It describes a process’s boundaries and the things that flow into and out of it." On the domains: "They two separate business domains: Commercial and Marketing". On the split: "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own". The build choices (items 3 to 7) are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
+Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md`. On `sioc`: "it is SIPOC: SIPOC stands for Suppliers, Inputs, Process, Outputs, and Customers. It describes a process’s boundaries and the things that flow into and out of it." On the domains: "They two separate business domains: Commercial and Marketing". On the split: "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own". On the release, saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/core-2-0-0-release.md`: "No one uses the ontology yet. I approve the core 2.0.0 releas". The build choices (items 3 to 7) are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
 
 ## Evidence
 
@@ -51,4 +52,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/ans
 
 - `scripts/check.sh` runs `build_core_next.py --verify` and `test_build_core_next.py`.
 - Core 1.0.0, its builder and its tests are unchanged.
+- Hamid stated on 2026-10-13 that no one uses the ontology yet, so on that date deprecating `core:responsibleDomain` broke no consumer.
 - This supersedes the plan, in EPM-DEC-001-0029 and EPM-DEC-001-0030, to link `core:responsibleDomain` to org units; both records carry a dated note.
