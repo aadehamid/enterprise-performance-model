@@ -1237,8 +1237,9 @@ hook) and external relationships (corporate affairs, no hook) went out with
 boundary notes and revival triggers.
 
 **Steps 1 and 2.** The URI base is `https://w3id.org/lsc/ontology/`. It is
-scoped to the organization and behind a redirect, because the repository had
-already been renamed once. Module namespaces follow
+scoped to the organization and meant to sit behind a redirect, because the
+repository had already been renamed once. No redirect is registered: the base
+is a placeholder until a domain is decided (EPM-DEC-001-0039). Module namespaces follow
 `https://w3id.org/lsc/ontology/modules/{module}`. Local codes became
 `skos:notation` and slugs (`CM 1.2.1.3` became `CM-1-2-1-3`), and 11 nodes
 without IDs got minted slugs. The labels-are-presentation rule was written
@@ -1355,7 +1356,10 @@ issued on the owner's written approval:
 Deprecating a property made 2.0.0 a major. Before approving it, the owner
 stated that no one used the ontology yet. The 2.0.0 cut found that the
 candidate had copied 1.0.0's `dcterms:modified`. The builder now sets it
-at the cut. The w3id registration and the hosting wait for the owner.
+at the cut. The owner decided not to host the namespace, because the
+domain may change, and to keep it as a placeholder. Under the delegation,
+nothing is registered with w3id.org either, and Step 10's "catalog
+resolves" gate is parked (EPM-DEC-001-0039).
 
 **Step 11, regression.** `regression/` holds one SPARQL query per tested
 part of the 44 competency questions and a status for each question. It

@@ -89,7 +89,7 @@ ontology; everything else points at it.
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for a `core` release that carries evidence (2.0.0 does not) |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); w3id registration and hosting wait for Hamid |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); not hosted, the namespace a placeholder (Hamid, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence waits for Hamid |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.0.0 with the organization module, 9 answerable (Q8 added), 5 partial, 30 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.0.0 with the organization and ref-mpc modules, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
@@ -189,6 +189,11 @@ constraints are not being modeled; the Customer/Party domain is.
   structurally).
 - Open action: register `w3id.org/lsc` (small request to the w3id.org
   repo; does not block modeling).
+  *Amendment 2026-10-14:* Hamid decided not to host the namespace and to
+  keep it as a placeholder, because the domain may change. Under the
+  delegation, it is not registered, so no redirect is in place and the
+  sentence above about w3id.org redirects describes the plan, not the
+  current state (EPM-DEC-001-0039).
 
 **Language policy — decided 2026-09-18.**
 - Primary language: English. Every human-readable literal carries `@en`
@@ -957,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Namespace is a placeholder (2026-10-14)
+- Hamid decided not to host the namespace, because the domain may change,
+  and to keep `https://w3id.org/lsc/ontology/` as a placeholder. Under the
+  delegation, nothing is registered with w3id.org, and no release changes. Step 10's
+  "catalog resolves" gate is parked until a domain is decided. The licence
+  is still open. EPM-DEC-001-0039, with his words in
+  `review-evidence/hamid-answers/namespace-hosting.md`.
+
 ### LPG guideline v2.2 (2026-10-14)
 - `lpg-projection/` is re-pinned to `8ce9ada`, guideline v2.2
   (enterprise-people-graph PR #3). v2.2 takes in what the projection's
@@ -1045,7 +1058,9 @@ without a dated amendment and Hamid's explicit agreement.
   Hamid's; he approved 1.0.0 the same day (entry above). The candidate
   ref-mpc required the organization candidate it shipped with. The
   design is EPM-DEC-001-0037, decided under EPM-DEC-001-0028; the w3id
-  registration and the hosting wait for Hamid.
+  registration and the hosting waited for Hamid (on 2026-10-14 he decided
+  against hosting; registration is not pursued, under the delegation;
+  EPM-DEC-001-0039).
 
 ### Step 12 projection pipeline (2026-10-13)
 - `projection/pipeline.py` runs the guideline's five steps over core

@@ -70,7 +70,7 @@ root.
 
 - **Source of truth:** `../business_process/downstream_process_map.json`.
   The ontology models those processes; APQC is a consistency reference.
-- **URI base:** `https://w3id.org/lsc/ontology/` (redirect-backed; register `w3id.org/lsc`).
+- **URI base:** `https://w3id.org/lsc/ontology/`, a placeholder: not registered with w3id.org and not hosted, because the domain may change (EPM-DEC-001-0039).
 - **License:** this folder's contents are proprietary, all rights reserved.
   APQC-sourced material is used under the APQC/IBM license terms —
   attribution travels with every distribution (see `../reference/README.md`).
