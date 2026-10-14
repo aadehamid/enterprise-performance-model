@@ -621,7 +621,7 @@ ordinary node, so the guideline's flatten queries are not needed. Its pipeline r
 Materialize inverse relations before the load if consumers need them. OWL 2
 EL has no inverse properties, and a property graph does not infer them.
 
-What the loader and the reasoner do that the guideline does not say:
+What the loader and the reasoner do. Guideline v2.1 did not say these; v2.2 does:
 
 - **Pick the loader's naming mode by what validates.** With Neo4j's n10s
   plugin, SHACL validation inside the graph needs a namespace-aware graph.
@@ -1372,7 +1372,8 @@ Counting the query's population against the whole caught it.
 Rule 4 set to option 4a, qualified-relation nodes, because the build's
 Python tools cannot read RDF 1.2. It uses Neo4j 2025.06.2, n10s 2025.06.1,
 APOC, and ELK through ROBOT 1.9.10. The first run on `core` 1.0.0 found
-three things the guideline does not cover, and one defect:
+three things guideline v2.1 did not cover, and one defect. v2.2 now covers
+all three:
 
 - n10s would not import the shapes in MAP mode ("The graph is not
   namespace aware"), so the pipeline names terms in SHORTEN mode.
