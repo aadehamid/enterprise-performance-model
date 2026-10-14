@@ -957,6 +957,18 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Playbook updated for Steps 5 to 12 (2026-10-13)
+- The playbook's method gains what Steps 5 to 12 taught: the role
+  register and RACI conservation (Step 5), confirmed source fields and the
+  run-pattern shapes (Step 6), shape coverage tests (Step 9), one package
+  shape per module (Step 10), early harness and population checks
+  (Step 11), and the loader, reasoner and round-trip rules for the
+  projection (Step 12). Appendix B adds the cut's `dcterms:modified` and
+  approval pin, and building the next major from the released graph. §7
+  replaces the Step 5 and Step 12 plans with how Steps 5 to 12 ran. The
+  projection README gains the n10s and ROBOT download steps with
+  checksums. EPM-DEC-001-0024 (the playbook changes when the method does).
+
 ### Projection and regression on core 2.0.0 (2026-10-13)
 - The projection (`projection/pipeline.py`) and the regression (`regression/run.py`)
   now run on core 2.0.0. 2.0.0 gives `earlierProcess` and `laterProcess` a
