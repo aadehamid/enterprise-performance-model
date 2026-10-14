@@ -1,9 +1,12 @@
-"""Tests for the core 2.0.0 candidate (EPM-DEC-001-0038): it is core 1.0.0 plus exactly the changes
-Hamid decided, the split follows his rule, the SIPOC lists arrive whole, and the package is current.
+"""Tests for core 2.0.0 (EPM-DEC-001-0038): it is core 1.0.0 plus exactly the changes Hamid decided,
+the split follows his rule, the SIPOC lists arrive whole, the release carries his approval, and the
+package is current.
 
 Run: python3 -m pytest test_build_core_next.py (needs rdflib, pyshacl).
 """
+import json
 import os
+import re
 import unittest
 
 from rdflib import Graph, URIRef
@@ -18,7 +21,7 @@ BASE = Graph().parse(os.path.join(b.BASE, "core.ttl"))
 class Candidate(unittest.TestCase):
     def test_every_1_0_0_triple_is_kept_except_the_version_header(self):
         header = {(b.ONTOLOGY_IRI, p, o) for p, o in BASE.predicate_objects(b.ONTOLOGY_IRI)
-                  if p in (OWL.versionInfo, OWL.versionIRI, b.DCTERMS.issued, OWL.priorVersion)}
+                  if p in (OWL.versionInfo, OWL.versionIRI, b.DCTERMS.issued, b.DCTERMS.modified, OWL.priorVersion)}
         changed = {(b.CORE.responsibleDomain, SKOS.definition, o) for o in BASE.objects(b.CORE.responsibleDomain, SKOS.definition)}
         missing = set(BASE) - set(G) - header - changed
         self.assertEqual(missing, set())
@@ -55,9 +58,22 @@ class Candidate(unittest.TestCase):
         for p in (b.CORE.earlierProcess, b.CORE.laterProcess):
             self.assertEqual(G.value(p, RDFS.range), SKOS.Concept)
 
-    def test_the_candidate_has_no_issued_date(self):
-        self.assertIsNotNone(b.STAGE, "2.0.0 is a major; it is issued only when Hamid approves it")
-        self.assertNotIn((b.ONTOLOGY_IRI, b.DCTERMS.issued, None), G)
+    def test_the_package_is_the_approved_release(self):
+        # Literal on purpose: 2.0.0 is a major, and Hamid approved it on 2026-10-13 in these words.
+        self.assertEqual(b.APPROVAL, ("step4/review-evidence/hamid-answers/core-2-0-0-release.md",
+                                      "I approve the core 2.0.0 releas"))
+        with open(os.path.join(b.ONTOLOGY, b.APPROVAL[0])) as f:
+            # Hamid's words sit in the body; Claude's context sits in HTML comments.
+            body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
+        self.assertIn(b.APPROVAL[1], body)
+        self.assertIsNone(b.STAGE)
+        self.assertEqual(str(G.value(b.ONTOLOGY_IRI, OWL.versionInfo)), "2.0.0")
+        for p in (b.DCTERMS.issued, b.DCTERMS.modified):
+            self.assertEqual([str(o) for o in G.objects(b.ONTOLOGY_IRI, p)], ["2026-10-13"])
+        with open(os.path.join(b.RELEASE_DIR, "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertFalse(manifest["release_candidate"])
+        self.assertEqual(manifest["approval"], {"file": b.APPROVAL[0], "words": b.APPROVAL[1]})
 
     def test_a_domain_outside_the_list_fails_the_shapes(self):
         g = Graph()

@@ -84,12 +84,12 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by the core 2.0.0 candidate (EPM-DEC-001-0038) |
-| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in the core 2.0.0 candidate (EPM-DEC-001-0038) |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
+| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); w3id registration and hosting wait for Hamid |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); w3id registration and hosting wait for Hamid |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 1.0.0 with the organization and ref-mpc modules; two Rule 1 gaps in core 1.0.0 wait for the next core release |
 
@@ -957,6 +957,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### core 2.0.0 released (2026-10-13)
+- Hamid approved core 2.0.0 and stated that no one uses the ontology yet,
+  so the deprecation of `core:responsibleDomain` breaks no consumer. The
+  release is the 2.0.0-rc.1 candidate with the issued and modified dates
+  set and the stage removed. The merge commit gets the tag `core-v2.0.0`.
+  The projection and the regression move to 2.0.0 in their own change.
+  EPM-DEC-001-0038, with his words in
+  `review-evidence/hamid-answers/core-2-0-0-release.md`.
+
 ### Step 7 groundwork: MPLX FY2025 10-K read for MPC-P01 (2026-10-13)
 - EPM-DEC-001-0011 asks for the MPLX 10-K read before the ruling on
   MPC-P01 (the empty Midstream L1). `reference/mpc/mplx-fy2025-10k-fact-sheet.md`
@@ -1338,7 +1347,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   "Cross-functional" value with detail preserved in a note).
   *Amendment 2026-10-13:* Hamid decided the values are business domains,
   not org units, and split Commercial & Marketing into Commercial and
-  Marketing; the core 2.0.0 candidate links the concepts that carry these
+  Marketing; core 2.0.0 links the concepts that carry these
   values (processes and capabilities) to a business domain list instead
   (EPM-DEC-001-0038).
 - **Step 4 Q8: controlled `conceptKind` scheme (2026-09-22).**
