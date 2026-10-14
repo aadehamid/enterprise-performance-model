@@ -2,7 +2,7 @@
 
 Prepared for Hamid on 2026-10-14. Nothing here is decided. The question ends with options, a recommendation and what happens on each answer.
 
-On 2026-10-13 you decided that the namespace `https://w3id.org/lsc/ontology/` is a placeholder. It will not be registered or hosted, because the domain may change. No record in the repo holds that decision yet. EPM-DEC-001-0037 "For Hamid" item 3 still asks you to "Choose where the files are hosted and under which license" (line 32). This package covers the licence half of that item.
+On 2026-10-14 you decided not to host the namespace `https://w3id.org/lsc/ontology/`, because the domain may change: "we can use it as placeholder for now" (EPM-DEC-001-0039; your words in `ontology/step4/review-evidence/hamid-answers/namespace-hosting.md`). EPM-DEC-001-0037 "For Hamid" item 3 still asks you to "Choose where the files are hosted and under which license" (line 32). This package covers the licence half of that item.
 
 ## What you need to do
 

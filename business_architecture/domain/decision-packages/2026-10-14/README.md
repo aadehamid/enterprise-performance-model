@@ -16,4 +16,4 @@ Three facts the packages found that you may want first:
 - On #262, #266 and #269, the Cursor app merged 7 to 10 seconds after the bot's MERGE, before the `checks` workflow finished. CI passed afterwards on each (PR review package).
 - The domain split in #266 rests on your answer "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own . This makes sesne to me. What do you think?". The PR review package asks you to confirm it was a decision.
 
-Hosting is not in these packages. You decided on 2026-10-14 not to host the namespace. That decision is recorded in its own pull request, separate from these packages.
+Hosting is not in these packages. You decided on 2026-10-14 not to host the namespace, because the domain may change. EPM-DEC-001-0039 records it with your words.

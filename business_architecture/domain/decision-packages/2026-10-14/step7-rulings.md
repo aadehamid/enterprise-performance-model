@@ -176,7 +176,7 @@ A is recommended because the planning, backcasting and settlement steps for tran
 
 Proposal: decide scope. At minimum, add renewable feedstock sourcing and renewable fuel marketing. Production can stay parked.
 
-Evidence for: Renewable Diesel is one of MPC's three reportable segments, with the Dickinson plant, the Martinez joint venture, and feedstock aggregation and pre-treatment sites (`mpc-fy2025-10k-fact-sheet.md` §2, §7). The map has only CM 1.2.1.1.3 Forecast Renewables and CM 1.2.1.3.6 Capture Environmental/Renewable Deals, and the words "Renewable Diesel" appear nowhere in it.
+Evidence for: Renewable Diesel is one of MPC's three reportable segments, with the Dickinson plant, the Martinez joint venture, and feedstock aggregation and pre-treatment sites (`mpc-fy2025-10k-fact-sheet.md` §2, §7). The map's renewables work is trading and forecasting: CM 1.2.1.1.3 Forecast Renewables, CM 1.2.1.3.6 Capture Environmental/Renewable Deals, and the settlement and power nodes flagged `renewablesSpecific` (`process-map-suggestions.md`, P04 row). The words "Renewable Diesel" appear nowhere in it.
 
 Evidence against: production is a plant operation, and the map covers no plant operations for fossil refining either. Its refining children are planning only (`process-map-suggestions.md`, P03 row).
 
