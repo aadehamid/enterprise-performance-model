@@ -652,9 +652,9 @@ What the loader and the reasoner do that the guideline does not say:
 - **Make the committed report go stale.** Record a fingerprint of the
   loaded files and of every shape file in the report. The check script
   rebuilds them, so a changed input fails the check until someone reruns
-  the pipeline. CI runs the check and serialise steps; the reason, load
-  and verify steps need Java and a Neo4j container, so they run on a
-  workstation.
+  the pipeline. CI runs the check and serialise steps. The reason step
+  needs Java, and the load and verify steps need a Neo4j container, so
+  they run on a workstation.
 - **Pin the tools by version and checksum.** Record the Neo4j, plugin and
   reasoner versions in the manifest, and the download URL and SHA-256 of
   each plugin jar in the pipeline's README.
@@ -1333,7 +1333,8 @@ outputs as `core:plannedInput` and `core:plannedOutput`: 362 inputs and
 owner made them the source author's backlog.
 
 **Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
-`core` 1.0.0 checked code-list values only as `skos:Concept`.
+`core` 1.0.0 checked `conceptKind` against its own list and the other
+code-list values only as `skos:Concept`.
 `validation/controlled-values.ttl` requires each code-list property to
 take its values from its own list. Its coverage test found two properties
 with no shape. The evidence-link shape waits for a `core` release that

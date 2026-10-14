@@ -10,11 +10,11 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
-`scripts/check.sh` runs `pipeline.py build --verify` and the tests. Steps 2, 4 and 5 need Java and Docker, so they run on a workstation, not in CI.
+`scripts/check.sh` runs `pipeline.py build --verify` and the tests. Step 2 needs Java, and Steps 4 and 5 need a Neo4j container in Docker, so they run on a workstation, not in CI.
 
 ## Rerun the whole pipeline
 
-Rerun it after any input or shape changes. You need Java 11 or later (the last run used OpenJDK 24.0.2), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
+Rerun it after any input or shape changes. You need Java 11 or later (ROBOT 1.9.10 asks for 11), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
 
 1. Make two empty folders outside the repo: one for the Neo4j plugins and one for the import files.
 
@@ -34,15 +34,16 @@ Rerun it after any input or shape changes. You need Java 11 or later (the last r
 3. Download ROBOT 1.9.10 (it runs the ELK reasoner), and check its SHA-256.
 
    ```bash
-   curl -L -o robot.jar https://github.com/ontodev/robot/releases/download/v1.9.10/robot.jar
-   shasum -a 256 robot.jar
+   ROBOT=~/epm-lpg/robot.jar
+   curl -L -o "$ROBOT" https://github.com/ontodev/robot/releases/download/v1.9.10/robot.jar
+   shasum -a 256 "$ROBOT"
    # expect 16a73c074f3df359a7338a84b4e0788785fe06117f931bb9796e9619ea776105
    ```
 
 4. Reason. This rewrites `inferred.nt`, the reasoner's inferences, which the repo keeps.
 
    ```bash
-   uv run --with rdflib --with pyshacl python pipeline.py reason --robot robot.jar
+   uv run --with rdflib --with pyshacl python pipeline.py reason --robot "$ROBOT"
    ```
 
 5. Start Neo4j 2025.06.2 with the plugins folder mounted. The image downloads APOC itself (`NEO4J_PLUGINS`), and n10s loads from the mounted jar. Wait until `docker logs epm-lpg` prints `Started.`
@@ -60,11 +61,11 @@ Rerun it after any input or shape changes. You need Java 11 or later (the last r
      --bolt bolt://localhost:17687 --password <password> --import-dir "$IMPORT"
    ```
 
-7. Rewrite the manifest (`projection-manifest.json`), then remove the container and the downloaded `robot.jar`. Neither belongs in the repo. Commit `inferred.nt`, the manifest and the report together.
+7. Rewrite the manifest (`projection-manifest.json`), then remove the container. Commit `inferred.nt`, the manifest and the report together. The downloads stay in `~/epm-lpg/`, outside the repo.
 
    ```bash
    uv run --with rdflib --with pyshacl python pipeline.py build
-   docker rm -f epm-lpg; rm robot.jar
+   docker rm -f epm-lpg
    ```
 
 The last run, on core 2.0.0: 2,166 nodes and 12,290 relationships, no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
