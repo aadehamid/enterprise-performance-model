@@ -29,9 +29,9 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
-INPUTS = ["releases/core/1.0.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
+INPUTS = ["releases/core/2.0.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
           "organization/assignments.ttl", "ref-mpc/ref-mpc.ttl"]
-SHAPES = ["releases/core/1.0.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
+SHAPES = ["releases/core/2.0.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
           "validation/controlled-values.ttl", "provenance/run-shapes.ttl"]
 LOADABLE = os.path.join(HERE, "loadable.nt")
 INFERRED = os.path.join(HERE, "inferred.nt")
@@ -49,12 +49,7 @@ PREFIXES = {
 # Rule gaps in a released module, which only a new release of that module can close. Each is
 # named here with its fix target; the build fails on any gap not listed, and on a listed gap
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
-RELEASE_EXCEPTIONS = {
-    "Rule 1: https://w3id.org/lsc/ontology/modules/core/earlierProcess has no single concrete range":
-        "core 1.0.0 declares no rdfs:range; the next core release adds rdfs:range skos:Concept",
-    "Rule 1: https://w3id.org/lsc/ontology/modules/core/laterProcess has no single concrete range":
-        "core 1.0.0 declares no rdfs:range; the next core release adds rdfs:range skos:Concept",
-}
+RELEASE_EXCEPTIONS = {}
 VERSIONS = {"neo4j": "2025.06.2", "n10s": "2025.06.1", "apoc": "bundled with neo4j:2025.06.2",
             "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.1 (lpg-projection/, pin e7b09e8)"}
 

@@ -6,7 +6,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 |---|---|
 | `pipeline.py` | The five steps: `build` (check the rules, validate, serialise), `reason` (ELK through ROBOT), `load-verify` (load with n10s, then SHACL in the graph, round trip, determinism) |
 | `inferred.nt` | The reasoner's inferences about the domain (empty today: the ontology is SKOS-first) |
-| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps |
+| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none since core 2.0.0) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
@@ -21,4 +21,4 @@ python3 pipeline.py load-verify --bolt bolt://localhost:17687 --password <passwo
 python3 pipeline.py build                              # rewrite the manifest
 ```
 
-The last run: 2,154 nodes and 11,778 relationships, no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
+The last run, on core 2.0.0: 2,166 nodes and 12,290 relationships, no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.

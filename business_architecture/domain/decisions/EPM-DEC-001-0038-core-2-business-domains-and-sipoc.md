@@ -31,7 +31,7 @@ Left out: the evidence nodes on canonical facts (EPM-DEC-001-0035), which wait f
 
 ### For Hamid
 
-1. ~~Approve core 2.0.0.~~ Approved 2026-10-13 (item 8). Next, the projection (EPM-DEC-001-0036) and the regression move to 2.0.0 in their own change. That closes the two listed release gaps, and question 8 can be answered from the planned inputs and outputs.
+1. ~~Approve core 2.0.0.~~ Approved 2026-10-13 (item 8). The projection (EPM-DEC-001-0036) and the regression then moved to 2.0.0 in their own change. That closed the two listed release gaps, and question 8 is answerable from the planned inputs and outputs.
 2. **Consider moving CM 1.4 IT Services under the enabling functions** (`L1-process-excellence-it`). That changes the process map, so it is a proposal for the source author.
 
 ## Alternatives considered
