@@ -49,7 +49,7 @@ class Release(unittest.TestCase):
 
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 11)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 13)
 
     def mutated(self, change):
         g = Graph()

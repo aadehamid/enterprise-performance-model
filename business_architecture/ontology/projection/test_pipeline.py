@@ -6,6 +6,7 @@ Run: python3 -m pytest test_pipeline.py (needs rdflib, pyshacl).
 """
 import json
 import unittest
+from unittest import mock
 
 from rdflib import BNode, Graph, Literal, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, XSD
@@ -108,14 +109,15 @@ class Rules(unittest.TestCase):
         self.assertTrue(any(x.startswith("SHACL") and "broader" in x for x in problems), problems)
 
     def test_a_listed_release_gap_that_no_longer_occurs_fails_the_build(self):
-        def close_gap(g):
-            for p in ("earlierProcess", "laterProcess"):
-                g.add((URIRef(CORE + p), RDFS.range, URIRef("http://www.w3.org/2004/02/skos/core#Concept")))
-        g = Graph()
-        g += DATA
-        close_gap(g)
-        problems = pl.check(g, SHAPES)
+        # core 2.0.0 closed the two real gaps, so the list is empty; list one that does not occur.
+        gap = f"Rule 1: {CORE}earlierProcess has no single concrete range"
+        with mock.patch.dict(pl.RELEASE_EXCEPTIONS, {gap: "closed by core 2.0.0"}):
+            problems = pl.check(DATA, SHAPES)
         self.assertTrue(any(x.startswith("listed release exception no longer occurs") for x in problems), problems)
+
+    def test_a_property_without_its_range_fails_rule_1(self):
+        problems = rule_problems(lambda g: g.remove((URIRef(CORE + "earlierProcess"), RDFS.range, None)))
+        self.assertIn(f"Rule 1: {CORE}earlierProcess has no single concrete range", problems)
 
 
 class Build(unittest.TestCase):
