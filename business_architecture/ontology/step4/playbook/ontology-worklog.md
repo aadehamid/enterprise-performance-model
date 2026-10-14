@@ -959,7 +959,8 @@ without a dated amendment and Hamid's explicit agreement.
 
 ### core 2.0.0 released (2026-10-13)
 - Hamid approved core 2.0.0 and stated that no one uses the ontology yet,
-  so the deprecation of `core:responsibleDomain` breaks no consumer. The
+  so on that date the deprecation of `core:responsibleDomain` broke no
+  consumer. The
   release is the 2.0.0-rc.1 candidate with the issued and modified dates
   set and the stage removed. The merge commit gets the tag `core-v2.0.0`.
   The projection and the regression move to 2.0.0 in their own change.
@@ -979,12 +980,13 @@ without a dated amendment and Hamid's explicit agreement.
 - Hamid confirmed the process map's `sioc` field is SIPOC, and decided the
   `responsibleDomain` values are business domains: Commercial & Marketing
   splits into Marketing (CM 1.3) and Commercial (CM 1.1, CM 1.2), with
-  CM 1.4 IT Services its own domain. `release/build_core_next.py` builds
+  CM 1.4 IT Services its own domain. `release/build_core_next.py` built
   core 2.0.0-rc.1 from the released 1.0.0: a business domain code list and
   `core:businessDomain` (205 Commercial, 251 Marketing), `responsibleDomain`
   deprecated, planned inputs and outputs (362 and 219 on 153 processes),
   and ranges for `earlierProcess` and `laterProcess`. A deprecation makes
-  it a major, so it waits for Hamid's approval. EPM-DEC-001-0038.
+  it a major, so it waited for Hamid's approval (given the same day; see
+  "core 2.0.0 released" above). EPM-DEC-001-0038.
 
 ### organization 1.0.0 and ref-mpc 1.0.0 released (2026-10-13)
 - Hamid approved both modules as 1.0.0. The releases are the 1.0.0-rc.1

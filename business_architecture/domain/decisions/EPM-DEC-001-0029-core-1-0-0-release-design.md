@@ -59,4 +59,4 @@ The approved decisions cited above; the census and measured splits in `step4/led
 
 - New `core` terms: the predicates above, `core:priorPreferredLabel`, `core:holdReason`, and eight code lists. Each gets a label, a definition, one kind and one range.
 - `ledger-v2.md` gets its after half and is ready for Hamid's approval.
-- Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says. (Superseded 2026-10-13: Hamid decided the values are business domains, not org units; the `core` 2.0.0 candidate links them to a business domain list, EPM-DEC-001-0038.)
+- Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says. (Superseded 2026-10-13: Hamid decided the values are business domains, not org units; `core` 2.0.0 links them to a business domain list, EPM-DEC-001-0038.)

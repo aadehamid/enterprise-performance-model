@@ -52,5 +52,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/ans
 
 - `scripts/check.sh` runs `build_core_next.py --verify` and `test_build_core_next.py`.
 - Core 1.0.0, its builder and its tests are unchanged.
-- Hamid stated on 2026-10-13 that no one uses the ontology yet, so deprecating `core:responsibleDomain` breaks no consumer.
+- Hamid stated on 2026-10-13 that no one uses the ontology yet, so on that date deprecating `core:responsibleDomain` broke no consumer.
 - This supersedes the plan, in EPM-DEC-001-0029 and EPM-DEC-001-0030, to link `core:responsibleDomain` to org units; both records carry a dated note.

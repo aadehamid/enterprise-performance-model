@@ -50,7 +50,7 @@ done
 # Step 10: the module release candidates must equal a fresh build (EPM-DEC-001-0037).
 (cd business_architecture/ontology/release && run with_deps python build_module.py organization --verify)
 (cd business_architecture/ontology/release && run with_deps python build_module.py ref-mpc --verify)
-# The core 2.0.0 candidate must equal a fresh build from core 1.0.0 (EPM-DEC-001-0038).
+# The core 2.0.0 release must equal a fresh build from core 1.0.0 (EPM-DEC-001-0038).
 (cd business_architecture/ontology/release && run with_deps python build_core_next.py --verify)
 # Step 11: the competency questions the release can answer must still answer (EPM-DEC-001-0019).
 (cd business_architecture/ontology/regression && run with_deps python run.py)
