@@ -134,7 +134,7 @@ No row in `expected.csv` waits on this draft by name. In my reading it supports 
 
 ### The question
 
-Rule on MPC-P01 and P03 to P09 (`business_architecture/reference/mpc/process-map-suggestions.md`). EPM-DEC-001-0011 moved them to Step 7 and asked for the MPLX 10-K read before P01. That read is done (`business_architecture/reference/mpc/mplx-fy2025-10k-fact-sheet.md`; worklog entry "Step 7 groundwork", `business_architecture/ontology/step4/playbook/ontology-worklog.md` line 984). EPM-DEC-001-0012 also deferred the turnaround lifecycle children of P02 to Step 7, so that item is included as P02b.
+Rule on MPC-P01 and P03 to P09 (`business_architecture/reference/mpc/process-map-suggestions.md`). EPM-DEC-001-0011 moved them to Step 7 and asked for the MPLX 10-K read before P01. That read is done (`business_architecture/reference/mpc/mplx-fy2025-10k-fact-sheet.md`; worklog entry "Step 7 groundwork", `business_architecture/ontology/step4/playbook/ontology-worklog.md`, section "Step 7 groundwork: MPLX FY2025 10-K read for MPC-P01 (2026-10-13)"). EPM-DEC-001-0012 also deferred the turnaround lifecycle children of P02 to Step 7, so that item is included as P02b.
 
 ### How any answer is carried out
 
@@ -208,7 +208,7 @@ A is recommended because one concept with kinds avoids three parallel trees, and
 
 Proposal: make the sales channel explicit, either as a dimension or as channel-specific L4 steps.
 
-Evidence for: MPC sells through 7,882 jobber outlets and 1,162 direct-dealer locations in four markets (`mpc-fy2025-10k-fact-sheet.md` §5). The words "jobber" and "dealer" appear nowhere in the map. The customer classification C1 to C8 already names these channels (`data-domain-register.md` line 35).
+Evidence for: MPC sells through 7,882 brand jobber outlets in 40 states, DC and Mexico, and 1,162 direct-dealer locations, mainly in Southern California (`mpc-fy2025-10k-fact-sheet.md` §5). The words "jobber" and "dealer" appear nowhere in the map. The customer classification C1 to C8 already names these channels (`data-domain-register.md` line 35).
 
 Evidence against channel-specific steps: the map stays company-neutral (`process-map-suggestions.md`, "Not suggested"). The use of C1 to C8 waits for your customer details (EPM-DEC-001-0004).
 
