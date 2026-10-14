@@ -1,6 +1,6 @@
 """Step 12: project the ontology into a Neo4j labelled property graph (EPM-DEC-001-0020, 0021, 0036).
 
-Follows the guideline in ../lpg-projection/ (v2.1) with Rule 4 set to 4a, qualified-relation nodes:
+Follows the guideline in ../lpg-projection/ (v2.2) with Rule 4 set to 4a, qualified-relation nodes:
 
     python3 pipeline.py build                    # Steps 1 and 3: check the rules, validate, write the
                                                  # sorted N-Triples and the manifest (no tools beyond rdflib)
@@ -51,7 +51,7 @@ PREFIXES = {
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
 RELEASE_EXCEPTIONS = {}
 VERSIONS = {"neo4j": "2025.06.2", "n10s": "2025.06.1", "apoc": "bundled with neo4j:2025.06.2",
-            "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.1 (lpg-projection/, pin e7b09e8)"}
+            "robot": "1.9.10", "reasoner": "ELK (through ROBOT)", "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)"}
 
 
 def graph(paths):

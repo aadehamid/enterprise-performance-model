@@ -21,7 +21,7 @@
   },
   "versions": {
     "apoc": "bundled with neo4j:2025.06.2",
-    "guideline": "v2.1 (lpg-projection/, pin e7b09e8)",
+    "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)",
     "n10s": "2025.06.1",
     "neo4j": "2025.06.2",
     "reasoner": "ELK (through ROBOT)",

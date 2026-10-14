@@ -2,7 +2,7 @@
 
 **What you need to get good at in the W3C stack so your ontologies map cleanly and deterministically to a Neo4j LPG**
 
-Companion to *Ontology_to_LPG_Conversion_Playbook v2.1* · October 2026
+Companion to *Ontology_to_LPG_Conversion_Playbook v2.2* · October 2026
 
 ---
 

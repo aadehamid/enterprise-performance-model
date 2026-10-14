@@ -14,9 +14,9 @@ commit below (EPM-DEC-001-0021).
 | Field | Value |
 |---|---|
 | Source | https://github.com/aadehamid/enterprise-people-graph/tree/main/guideline_to_map_ontology_to_LPG |
-| Pinned commit | `e7b09e8` (v2.1; earlier pin `cd63e12`, v2) |
-| Guideline version | v2.1, October 2026 |
-| Copied | 2026-10-06 (v2 first copied 2026-10-05) |
+| Pinned commit | `8ce9ada` (v2.2; earlier pins `e7b09e8`, v2.1, and `cd63e12`, v2) |
+| Guideline version | v2.2, October 2026 |
+| Copied | 2026-10-14 (v2.2; v2.1 copied 2026-10-06, v2 2026-10-05) |
 
 ## How this build uses it
 
@@ -33,6 +33,15 @@ authority for how this build applies the guideline. In short
   serialises the files; the flatten queries are not needed.
 - The pipeline runs once the ontology is built (Step 12). Turtle stays the
   master copy.
+
+## What v2.2 adds (2026-10-14)
+
+Guideline v2.2 (enterprise-people-graph PR #3, merged as `8ce9ada`) takes in
+what this build's first full run found (EPM-DEC-001-0036): SHORTEN instead
+of MAP for n10s, the full shapes upstream and a subset in the graph, no OWL
+API declarations in `inferred.nt`, the round-trip value rules, and a CI
+check of the committed report. `projection/pipeline.py` already follows
+each of these.
 
 ## Points checked on 2026-10-05 (resolved in v2.1)
 

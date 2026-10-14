@@ -643,8 +643,9 @@ What the loader and the reasoner do that the guideline does not say:
   equals an `xsd:string` literal. Integers return as `xsd:long` and
   decimals as `xsd:double`. A language tag may come back inside the
   string. Refuse, at build time, any source value that would not survive
-  the trip: a string that ends like a language tag, or a decimal that a
-  double cannot hold exactly.
+  the trip: a string that ends like a language tag, or a decimal whose
+  value, printed as a double, is not its own lexical form (0.64 passes;
+  0.1000000000000000055 does not).
 - **List the release's known rule gaps, and fail on a stale list.** When a
   released module breaks a design rule that only its next release can
   fix, name the gap and its fix in the pipeline. Fail on any gap not
