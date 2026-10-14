@@ -88,10 +88,10 @@ ontology; everything else points at it.
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions, Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Planned |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
-| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for the next `core` release |
+| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; evidence links wait for a `core` release that carries evidence (2.0.0 does not) |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); w3id registration and hosting wait for Hamid |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 1.0.0 with the organization module, 8 answerable, 5 partial, 31 waiting |
-| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 1.0.0 with the organization and ref-mpc modules; two Rule 1 gaps in core 1.0.0 wait for the next core release |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.0.0 with the organization module, 9 answerable (Q8 added), 5 partial, 30 waiting |
+| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.0.0 with the organization and ref-mpc modules, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
 Note: Step 8 was completed early (it was originally sequenced after
 integration) because the scope decisions shape the foundations. The plan
@@ -957,13 +957,27 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Projection and regression on core 2.0.0 (2026-10-13)
+- The projection (`projection/pipeline.py`) and the regression (`regression/run.py`)
+  now run on core 2.0.0. 2.0.0 gives `earlierProcess` and `laterProcess` a
+  range, so the pipeline lists no release gap. The rerun loaded 2,166 nodes
+  and 12,290 relationships, with no SHACL violation in the graph, an empty
+  round-trip diff and equal determinism hashes. Q8 is answerable: 153
+  processes carry planned inputs and outputs, and 504 live processes have
+  neither (`q08a`, `q08b`). Hamid decided those 504 are the source
+  author's backlog: the ontology drafts no SIPOC for them
+  (`review-evidence/hamid-answers/sipoc-scope.md`). Coverage: 9 answerable,
+  5 partial, 30 waiting.
+  EPM-DEC-001-0036 and EPM-DEC-001-0038.
+
 ### core 2.0.0 released (2026-10-13)
 - Hamid approved core 2.0.0 and stated that no one uses the ontology yet,
   so on that date the deprecation of `core:responsibleDomain` broke no
   consumer. The
   release is the 2.0.0-rc.1 candidate with the issued and modified dates
   set and the stage removed. The merge commit gets the tag `core-v2.0.0`.
-  The projection and the regression move to 2.0.0 in their own change.
+  The projection and the regression moved to 2.0.0 in their own change
+  ("Projection and regression on core 2.0.0" above).
   EPM-DEC-001-0038, with his words in
   `review-evidence/hamid-answers/core-2-0-0-release.md`.
 

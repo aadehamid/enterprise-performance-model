@@ -1,0 +1,13 @@
+# Q8. Which processes have empty produces / consumes? (live concepts of the core scheme with no planned input or no planned output, of kind process or none; capabilities and structural anchors have no flows; the SIPOC field, EPM-DEC-001-0038)
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+
+SELECT ?process WHERE {
+  ?process skos:inScheme mod:core .
+  FILTER NOT EXISTS { ?process owl:deprecated true }
+  FILTER NOT EXISTS { ?process core:conceptKind kind:structural-anchor }
+  FILTER NOT EXISTS { ?process core:conceptKind kind:capability }
+  FILTER (NOT EXISTS { ?process core:plannedInput ?input } || NOT EXISTS { ?process core:plannedOutput ?output }) }

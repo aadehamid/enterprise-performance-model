@@ -1,0 +1,5 @@
+# Q8. Which processes have planned inputs and outputs? (the other side of Q8: the processes that carry planned inputs and outputs, EPM-DEC-001-0038)
+PREFIX core: <https://w3id.org/lsc/ontology/modules/core/>
+
+SELECT DISTINCT ?process WHERE {
+  ?process core:plannedInput ?input ; core:plannedOutput ?output . }

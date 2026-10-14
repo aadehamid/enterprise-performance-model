@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (8, 5, 31))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (9, 5, 30))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -47,9 +47,17 @@ class Release(unittest.TestCase):
         failures, _ = run.check(g, run.load_expected())
         self.assertTrue(any(f.startswith("Q2 q02a") for f in failures), failures)
 
+    def test_q8_processes_carry_both_flows_or_neither(self):
+        # The worklog's "504 have neither" depends on this: no process has inputs without outputs.
+        core = "https://w3id.org/lsc/ontology/modules/core/"
+        inputs = set(GRAPH.subjects(URIRef(core + "plannedInput"), None))
+        outputs = set(GRAPH.subjects(URIRef(core + "plannedOutput"), None))
+        self.assertEqual(inputs, outputs)
+        self.assertEqual(len(inputs), 153)
+
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 11)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 13)
 
     def mutated(self, change):
         g = Graph()
