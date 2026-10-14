@@ -14,7 +14,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 
 ## Rerun the whole pipeline
 
-Rerun it after any input or shape changes. You need Java 11 or later (ROBOT 1.9.10 asks for 11), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
+Rerun it after any input or shape changes. You need Java 11 or later ([ROBOT's Getting Started](https://robot.obolibrary.org/): "make sure you have Java 11 or later installed"), Docker, and [uv](https://docs.astral.sh/uv/). Run the commands from this folder.
 
 1. Make two empty folders outside the repo: one for the Neo4j plugins and one for the import files.
 

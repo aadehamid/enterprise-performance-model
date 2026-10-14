@@ -28,7 +28,7 @@ Choices where the guideline leaves room or does not fit the tools:
 - **The round trip compares values, not spellings.** A plain literal and an `xsd:string` literal are the same (RDF 1.1). Integers load as INTEGER and return as `xsd:long`, and decimals load as FLOAT and return as `xsd:double` (guideline section 8). n10s keeps a language tag inside the stored string, and the export returns it untagged, so the comparison reads the tag back. The build refuses a source string that ends like a tag, and a decimal whose value, printed as a double, is not its own lexical form (0.64 prints back as 0.64; a decimal such as 0.1000000000000000055 would not).
 - **Add-on C (exact decimals) is not adopted.** The one decimal property is the two-place ownership share, and no query computes with it. Adopt Add-on C if a decimal needs exact arithmetic.
 - **Release gaps are listed, not hidden.** `core` 1.0.0 gives `core:earlierProcess` and `core:laterProcess` no `rdfs:range`, which breaks Rule 1. Only a new `core` release can fix that. The pipeline names both gaps with their fix and fails on any other gap, and on a listed gap that no longer occurs.
-- **Steps 2, 4 and 5 run locally.** They need Java and a Neo4j container. `scripts/check.sh` runs Steps 1 and 3 and checks that the committed report matches the current inputs and passed.
+- **Steps 2, 4 and 5 run locally.** Step 2 needs Java, and Steps 4 and 5 need a Neo4j container. `scripts/check.sh` runs Steps 1 and 3 and checks that the committed report matches the current inputs and passed.
 
 The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): its source nodes linked their URLs through `dcterms:source`, which core's source shape forbids.
 
