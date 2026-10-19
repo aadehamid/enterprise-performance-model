@@ -1,5 +1,7 @@
 # Step 9 walkthrough: controlled values and evidence on canonical facts
 
+*2026-10-18:* answered by Hamid, "1a, 2a", with implementation requirements (`answers-2026-10-18.md`); carried out in a later pull request.
+
 Prepared for Hamid on 2026-10-14. This package decides nothing. It sets out the two things EPM-DEC-001-0035 leaves for you, in its section "For Hamid: evidence on the facts" (lines 25 to 29).
 
 Figures come from repo commit `6baf510` (`python3 scripts/epm_facts.py counts`) and from running the shapes with pySHACL against `business_architecture/ontology/releases/core/2.0.0/core.ttl`. Paths below are relative to `business_architecture/ontology/` unless they start with `business_architecture/` or `scripts/`.
