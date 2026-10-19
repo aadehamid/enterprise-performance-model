@@ -977,10 +977,10 @@ without a dated amendment and the decision owner's explicit agreement.
 ### Package 1 and the measure categories approved (2026-10-19)
 - The decision owner approved decision package 1 and the eight measure
   categories (EPM-DEC-001-0050). PRs #262, #266 and #269 stand as merged,
-  with a dated note in EPM-DEC-001-0036 and 0038. The approved ruleset on
-  `main` is blocked: GitHub returns HTTP 403 for rulesets and branch
-  protection on this private repository on the current plan, so it waits
-  for the decision owner. MPC-P09 is unblocked and goes in its own pull
+  with a dated note in EPM-DEC-001-0036 and 0038. GitHub refuses the approved
+  ruleset on `main` while the repository is private (HTTP 403), so the
+  decision owner made the repository public temporarily, for the current
+  goal; the ruleset is added after the record merges. MPC-P09 is unblocked and goes in its own pull
   request.
 
 ### Process-map gaps addressed (2026-10-19)
