@@ -85,9 +85,13 @@ Industry definitions (not MPC), from MPC-S14 (EIA):
 3. **Regional margins per barrel** ($14.82 / $17.27 / $20.57) aren't verified
    yet. MPC-S07 confirms the regional margins in $ millions (E19). Per-barrel
    figures need regional net throughput from the same release.
+   *2026-10-18:* confirmed from MPC-S07 pp. 10–11
+   (`mpc-performance-measures-evidence.md`, finding 2).
 4. **Capacity basis.** MPC-S07 reports FY2025 capacity of 2,963 mbpcd next to
    94% utilization. The 10-K reports 2,986 mbpcd at year end. The
    utilization denominator still needs confirming (fact-sheet open item).
+   *2026-10-18:* settled: average calendar-day capacity
+   (`mpc-performance-measures-evidence.md`, finding 1).
 5. **Retail pricing sits with independent operators.** MPC has no
    company-operated retail (Speedway sold in 2021). Marathon and ARCO sites are
    run by jobbers and direct dealers, so posted pump prices are their data.
