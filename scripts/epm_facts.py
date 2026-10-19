@@ -907,20 +907,24 @@ OWNER_NAMES = re.compile("|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" 
 
 
 def _office_texts(where, data):
-    """An Office part's raw XML, and the displayed text of each cell, shared string or paragraph.
+    """An Office part's raw XML, and its decoded values: each cell, shared string or paragraph
+    as Office displays it, plus every element's text and every attribute value.
 
-    Parsing decodes character references and joins rich-text runs, so a name split across
-    runs or written as &#97; is found as Office displays it.
+    Parsing decodes character references (H&#97;...), and a cell's text comes from its text
+    runs (`t` elements) alone, so a name split across runs, or indented XML, is still found.
     """
     import xml.etree.ElementTree as ET
-    text = data.decode("utf-8", "replace")
-    out = [(where, text)]
+    local = lambda el: el.tag.rsplit("}", 1)[-1]
+    out = [(where, data.decode("utf-8", "replace"))]
     try:
         root = ET.fromstring(data)
     except ET.ParseError:
         return out
-    shown = ["".join(el.itertext()) for el in root.iter() if el.tag.rsplit("}", 1)[-1] in ("c", "si", "is", "p")]
+    shown = ["".join(t.text or "" for t in el.iter() if local(t) == "t")
+             for el in root.iter() if local(el) in ("c", "si", "is", "p")]
+    values = [v for el in root.iter() for v in [el.text or "", *el.attrib.values()] if v.strip()]
     out.append((f"{where} (displayed text)", "\n".join(shown)))
+    out.append((f"{where} (decoded values)", "\n".join(values)))
     return out
 
 

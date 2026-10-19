@@ -735,12 +735,20 @@ def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
     with zipfile.ZipFile(tmp_path / "PROBE.XLSX", "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("xl/sharedStrings.xml",
                    '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
-                   "<si><t>H&#97;mid</t></si><si><r><t>Ha</t></r><r><t>mid</t></r></si></sst>")
+                   "<si><t>H&#97;mid</t></si>\n  <si>\n    <r><t>Ha</t></r>\n    <r><t>mid</t></r>\n  </si></sst>")
+        # A sheet tab and an author property, each written with a character reference.
+        z.writestr("xl/workbook.xml", '<workbook><sheets><sheet name="H&#97;mid" sheetId="1"/></sheets></workbook>')
+        z.writestr("docProps/core.xml", '<cp:coreProperties xmlns:cp="urn:cp" xmlns:dc="urn:dc">'
+                   "<dc:creator>H&#97;mid</dc:creator></cp:coreProperties>")
     subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
     assert sorted(epm_facts.name_problems(str(tmp_path))) == sorted([
         "PROBE.XLSX!xl/sharedStrings.xml (displayed text):1: names the decision owner",
         "PROBE.XLSX!xl/sharedStrings.xml (displayed text):2: names the decision owner",
+        "PROBE.XLSX!xl/sharedStrings.xml (decoded values):1: names the decision owner",
+        "PROBE.XLSX!xl/workbook.xml (decoded values):1: names the decision owner",
+        "PROBE.XLSX!docProps/core.xml (decoded values):1: names the decision owner",
         "book.xlsx!xl/worksheets/sheet1.xml:1: names the decision owner",
+        "book.xlsx!xl/worksheets/sheet1.xml (decoded values):1: names the decision owner",
         f"{first}-link.md: the path names the decision owner",
         f"{first.lower()}-notes.txt: the path names the decision owner",
         "link.md:1: names the decision owner",
