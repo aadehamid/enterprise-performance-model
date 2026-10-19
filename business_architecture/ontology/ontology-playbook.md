@@ -491,7 +491,7 @@ capabilities, systems, measures and data products.
    them:
    - **A KPI is a designation, not a kind of measure.** A measure is a KPI
      only when the business names it as one of the few measures of a stated
-     objective, with a target and an owner who can act on it. Most measures
+     objective, with a target and an accountable owner. Most measures
      on a team's list are operational metrics. Record the target and owner
      before you call a measure a KPI. Mark an operational metric a KPI
      candidate only where the evidence makes it a strong one, such as a
@@ -1397,7 +1397,7 @@ owner made them the source author's backlog.
   and the evidence agreed. Of 41 measures (32 from the list, 8 that MPC
   publishes, 1 from industry practice), 15 are operational metrics, 7
   market indicators, 6 plan-variance diagnostics, 6 trackers or reports, 2
-  alerts, 1 a decision-support indicator and 2 future capabilities. The
+  alerts, 2 KPIs, 1 a decision-support indicator and 2 future capabilities. The
   only KPIs are MPC's two annual-bonus refining measures, because only they
   have a published target and owner. Six operational metrics are KPI
   candidates, among them crude utilization and margin capture. MPC itself
