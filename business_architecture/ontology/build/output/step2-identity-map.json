@@ -3398,6 +3398,39 @@
   "deprecated": false
  },
  {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-8",
+  "slug": "CM-1-2-4-3-8",
+  "level": 5,
+  "name": "Manage Environmental Credits and Clean-Fuel Incentives",
+  "skos_notation": "CM 1.2.4.3.8",
+  "parent_slug": "CM-1-2-4-3",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.8",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-8-1",
+  "slug": "CM-1-2-4-3-8-1",
+  "level": 6,
+  "name": "Manage Environmental Compliance Credits",
+  "skos_notation": "CM 1.2.4.3.8.1",
+  "parent_slug": "CM-1-2-4-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.8.1",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-3-8-2",
+  "slug": "CM-1-2-4-3-8-2",
+  "level": 6,
+  "name": "Manage Clean-Fuel Production Tax Credits",
+  "skos_notation": "CM 1.2.4.3.8.2",
+  "parent_slug": "CM-1-2-4-3-8",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.4.3.8.2",
+  "deprecated": false
+ },
+ {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-4-4",
   "slug": "CM-1-2-4-4",
   "level": 4,
