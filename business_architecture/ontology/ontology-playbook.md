@@ -487,7 +487,38 @@ capabilities, systems, measures and data products.
    because a value stream cuts across the hierarchy and cannot be a parent.
 2. Model measures as definitions: what a named measure is, its population,
    its grain, and what it is not. Cite the public filing or source that uses
-   each measure. Values stay out (Step 1).
+   each measure. Values stay out (Step 1). Before you define them, classify
+   them:
+   - **A KPI is a designation, not a kind of measure.** A measure is a KPI
+     only when the business names it as one of the few measures of a stated
+     objective, with a target and an accountable owner. Most measures
+     on a team's list are operational metrics. Record the target and owner
+     before you call a measure a KPI. Mark an operational metric a KPI
+     candidate only where the evidence makes it a strong one, such as a
+     headline measure the company reports or a peer targets.
+     Never invent a target or an owner to fill the field.
+   - **Classify each measure by kind, with tests in a fixed order.** No
+     formula, unit or grain: a tracker or report, or not a measure at all
+     for a capability request. Fires only on a
+     condition: an alert. Set by a market the business cannot influence: a
+     market indicator; computed from market prices and a planning model to
+     start or rank a decision, with no performance target: a
+     decision-support indicator. Actual or plan against
+     a plan, forecast, version or history for one period: a plan-variance
+     diagnostic. Otherwise an operational metric, unless designated a KPI.
+     Record the test that assigned each class and the reason.
+   - **A comparison is part of a variance measure, and only a view of any
+     other.** "Demand against forecast" is defined by its comparison.
+     Utilization against plan, or against five years of history, is the
+     same measure asked against different references, not a second one.
+   - **Name the basis.** A ratio names its denominator (calendar-day or
+     stream-day capacity; net or gross throughput). A definition that
+     changes between filings gets a version, not a silent edit.
+   - **People become roles.** The people on a measure list become the roles
+     they hold, defined by plan type and horizon. No person's name enters
+     the ontology.
+   - **Link measures to processes as context.** A link says which process a
+     measure informs. It does not certify the process.
 3. Apply the external mappings you assigned to this step in Step 0.
 4. Resolve the gaps earlier steps exposed, such as empty output sets or
    missing owners, one at a time, each as a recorded decision. Do not invent
@@ -1186,11 +1217,31 @@ Nothing is decided or approved until the owner has recorded it. A merge
 alone does not decide anything. Quote the owner's words in the decision
 record.
 
+Under the owner's decisions, write only what the owner's saved words say
+and the option text the owner chose. Everything the agent adds (names it
+proposed, rules it applies, detail from an analysis the owner pasted but
+did not adopt word for word) goes under what follows, as the agent's. A
+reviewer reads the decisions against the saved words line by line, and an
+added phrase reads as the owner's.
+
 The owner can delegate open questions in recorded words. A delegated
 decision names the delegation and its evidence, so the owner can audit or
 reverse it. Some things stay with the owner even then: a statement of fact
 only the owner can make (who consumes the ontology), and the approvals the
 versioning policy reserves for the owner (a major release).
+
+### A process description says only what its source says
+A description in the process map is the definition of the process. When it
+cites a filing, every claim in it must be in that filing, with the item
+that holds it. A fact with no primary source stays out of the description,
+however plausible.
+
+### Merging a branch with main
+When a merge conflicts in a table, merge the row: keep one row per key,
+carrying both sides' changes. Keeping both sides of a table conflict
+duplicates rows. Keeping both sides is safe only for entries that are
+separate by design, such as decision-log groups and index rows; then put
+the rows back in their order.
 
 ### The playbook learns the same week
 When a practice is proven, add it to the section a reader would look in,
@@ -1294,7 +1345,8 @@ used as the placement test:
 Steps 5 to 12 to the agent (EPM-DEC-001-0028). The owner kept the
 decisions the method reserves for the owner: scope, the meaning of a source
 field, and every major release. Each choice below has its decision record.
-Steps 5, 6 and 9 to 12 ran on 2026-10-13. Step 7 is open.
+Steps 5, 6 and 9 to 12 ran on 2026-10-13. Step 7 ran on 2026-10-18 and
+2026-10-19.
 
 **Step 5, organizations and roles.**
 
@@ -1333,6 +1385,55 @@ The owner confirmed it is SIPOC, and core 2.0.0 carries its inputs and
 outputs as `core:plannedInput` and `core:plannedOutput`: 362 inputs and
 219 outputs on 153 processes. The other 504 live processes have none. The
 owner made them the source author's backlog.
+
+**Step 7, integration** (EPM-DEC-001-0040 to 0043, 0046).
+
+- *The KPI seed.* The owner's list of a planning team's measures was the
+  seed, not a list of KPI categories (EPM-DEC-001-0040, amending 0017). The
+  list stays outside the repository. Its four personas became planning
+  roles, and no person's name entered the ontology; a test checks every
+  tracked file against hashed name tokens.
+- *Most of the list is not KPIs* (EPM-DEC-001-0042). The owner said so,
+  and the evidence agreed. Of 41 measures (32 from the list, 8 that MPC
+  publishes, 1 from industry practice), 15 are operational metrics, 7
+  market indicators, 6 plan-variance diagnostics, 6 trackers or reports, 2
+  alerts, 2 KPIs, 1 a decision-support indicator and 2 future capabilities. The
+  only KPIs are MPC's two annual-bonus refining measures, because only they
+  have a published target and owner. Six operational metrics are KPI
+  candidates, among them crude utilization and margin capture. MPC itself
+  files prices and crack spreads under "Market indicators", which settled
+  that class.
+- *The module* (EPM-DEC-001-0043). The `kpi` module holds the 41
+  definitions with their kind, grain, basis, aliases, "not to be confused
+  with" links, personas and process links. It took regression from 9 to 17
+  answerable questions, and was released as 1.0.0 on the owner's approval.
+- *Market Data and Commercial Risk* (EPM-DEC-001-0046). The owner defined
+  both domains and named the Risk Group as owner, Market Data
+  provisionally.
+- *The measure list's source* (kpi 1.0.1). The owner named the product
+  the list belongs to, Value Chain Optimization Decision Support and
+  Visualization (VCO DSV); the source keeps its IRI and carries that title.
+- *MPC process-map proposals* (EPM-DEC-001-0047, 0048). The owner accepted
+  the proposals and said to apply them to the map. Each landed in its own
+  pull request: Midstream as fuels logistics (`MS 1`), the Refining IDs and
+  turnaround coordination children (`RF 1`), scope notes on retail nodes,
+  environmental compliance credits kept apart from the clean-fuel tax
+  credit, renewables by reuse of existing processes, affiliate fees, and the
+  transfer coverage check. Two gaps the checks found went to the owner as
+  proposals; the owner said to address them, Marathon's public information
+  first, and each is one step in its own pull request: movement losses and
+  gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
+  (CM 1.2.5.1.5, merged). A third, the quality of transferred intermediates, was not
+  in the owner's answer and stays open. P06 waits for the customer work and P09 for
+  the owner's approval of the measure categories.
+- *What the reviews caught.* Most review holds in Step 7 were attribution:
+  a record listed the agent's wording (role names, a rule, detail from a
+  pasted analysis) under the owner's decisions. Working agreements now say
+  where that wording goes. On the process map the holds were source
+  fidelity: a description said more than its filing (customer terms given
+  to third parties, a "physical or apparent" analysis no cited standard
+  states, "oils and fats" where the filing names soybean oil). Each was cut
+  back to what the source says.
 
 **Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
 `core` 1.0.0 checked `conceptKind` against its own list and the other
@@ -1469,7 +1570,8 @@ Done when: a consumer needs one of these layers. Then promote that overlay,
 one at a time, against the released backbone.
 Revival trigger: someone asks for, say, the Order-to-Cash value stream end
 to end, and the backbone alone cannot answer. The worked example revives
-this layer at Step 7 (EPM-DEC-001-0017).
+this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
+revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
 
 ---
 
