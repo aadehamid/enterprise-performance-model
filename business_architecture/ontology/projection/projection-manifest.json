@@ -12,7 +12,7 @@
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
-    "organization/shapes.ttl": "493c8d7bae99677966a8922fc97d96dd8fcc511aa5887292d80b21dce9bc7049",
+    "organization/shapes.ttl": "ff8decff5b85dcb77cb0674e14674310666bbea9bf1f94bfc16c55bf4b100e56",
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
     "releases/core/2.0.0/shapes.ttl": "8ed0310141839a97f88ffa751e64e1dc7da8579dcc7017a97abd20dcda074c3b",

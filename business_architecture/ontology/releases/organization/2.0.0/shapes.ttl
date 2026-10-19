@@ -89,9 +89,9 @@ shp:Role a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:minCount 0 ;
             sh:path skos:editorialNote ],
-        [ sh:in ( true ) ;
+        [ sh:datatype xsd:boolean ;
             sh:maxCount 1 ;
-            sh:message "A role is deprecated with owl:deprecated true, or not at all." ;
+            sh:message "A role carries owl:deprecated at most once, as a boolean (n10s reads sh:in on booleans wrongly)." ;
             sh:minCount 0 ;
             sh:path owl:deprecated ],
         [ sh:class org:Role ;
