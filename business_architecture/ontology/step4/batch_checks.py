@@ -118,26 +118,47 @@ def scope_notes(taxonomy, slug):
     return [" ".join(t.split()) for t in literals(taxonomy, slug, "skos:scopeNote")]
 
 
-def related_segments(taxonomy, slug):
-    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, read exactly as classify_v2.py reads them.
+# A one-line Turtle string literal on intake:relatedConcepts. Escaped characters (\" or
+# \\) are part of the string, so a quote inside a target does not end it (issue #240).
+RELATED_LITERAL = re.compile(r'intake:relatedConcepts\s+"((?:[^"\\\n]|\\.)*)"')
+_ECHAR = {"t": "\t", "b": "\b", "n": "\n", "r": "\r", "f": "\f", '"': '"', "'": "'", "\\": "\\"}
 
-    The same per-line regexes and the same split: a relationship classify_v2 cannot
-    see is not seen here either.
+
+def turtle_unescape(text):
+    """Decode a Turtle short string's escapes: ECHAR (\\t, \\", \\\\, ...) and UCHAR (\\uXXXX, \\UXXXXXXXX)."""
+    def one(m):
+        e = m.group(1)
+        return _ECHAR[e] if e in _ECHAR else chr(int(e[1:], 16))
+    return re.sub(r"\\([tbnrf\"'\\]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})", one, text)
+
+
+def related_mentions(taxonomy):
+    """Every intake:relatedConcepts mention as (subject slug, verb, target), in file order.
+
+    The single reader of the field: classify_v2.py numbers its rows from this order (the
+    positional REL IDs), and the batch checks read the same pairs, so the two never disagree.
+    Only one-line literals are read; a triple-quoted literal is not seen by either.
     """
-    pairs, current = [], None
+    out, current = [], None
     for line in taxonomy.splitlines():
         m = re.match(r"proc:([A-Za-z]+-\d[\d-]*)\s+a\s+skos:Concept", line)
         if m:
             current = m.group(1)
             continue
-        m = re.search(r'intake:relatedConcepts\s+"([^"]*)"', line)
-        if m and current == slug:
-            for part in m.group(1).split("|"):
+        m = RELATED_LITERAL.search(line)
+        if m and current:
+            for part in turtle_unescape(m.group(1)).split("|"):
                 part = part.strip()
                 if part and ":" in part:
                     verb, target = part.split(":", 1)
-                    pairs.append((verb.strip(), target.strip()))
-    return pairs
+                    out.append((current, verb.strip(), target.strip()))
+    return out
+
+
+def related_segments(taxonomy, slug):
+    """proc:<slug>'s intake:relatedConcepts as (verb, target) pairs, read by related_mentions,
+    the reader classify_v2.py uses: a relationship classify_v2 cannot see is not seen here either."""
+    return [(verb, target) for s, verb, target in related_mentions(taxonomy) if s == slug]
 
 
 # Raw verbs a reversed register row is written with (EPM-DEC-001-0027).
