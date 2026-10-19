@@ -55,9 +55,10 @@ MODULES = {
     "kpi": {
         "title": "LSC KPI Module",
         "description": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values.",
-        # 1.0.0 is the module's first release, a major approved by Hamid (EPM-DEC-001-0043).
-        "version": "1.0.0", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md", "Approve kpi 1.0.0 release too"),
+        # 1.0.0 was the module's first release, a major approved by Hamid (EPM-DEC-001-0043).
+        # 1.0.1 is a patch: the planner list's source names VCO DSV (EPM-DEC-001-0040).
+        "version": "1.0.1", "stage": None, "issued": "2026-10-19",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md", "You have my approval to keep going and release things as needed. while I am out"),
         "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],

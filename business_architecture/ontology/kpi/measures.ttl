@@ -933,7 +933,8 @@ persona:short-term-planner a org:Role ;
     kpi:planType "short-term refinery LP plan (XPIMS)"^^xsd:string .
 
 src:hamid-planner-measure-list-2026-10-18 a dcterms:BibliographicResource ;
-    dcterms:title "Hamid's planner measure list, 2026-10-18, held outside the repository (EPM-DEC-001-0040)"@en .
+    dcterms:alternative "VCO DSV"@en ;
+    dcterms:title "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as Hamid sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)"@en .
 
 src:kpi-classification-evidence a dcterms:BibliographicResource ;
     dcterms:title "KPI or operational metric, business_architecture/reference/downstream-peers/kpi-classification-evidence.md"@en .
