@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Status | Decided (delegated under EPM-DEC-001-0028); its questions answered by Hamid, EPM-DEC-001-0045 (2026-10-18) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 2: which of the RACI role strings in the process map name the same role, and how a team, a qualifier or a compound string is handled |
 | Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
@@ -29,6 +29,8 @@ The repository does not expand the acronyms in the role strings (CCI, CP, CPVC, 
 The result: 60 roles, 54 positions and 6 teams. Splitting the 11 compound strings turns the 913 entries into 940 role references. `build_roles.py` prints the figures.
 
 ### Questions for Hamid
+
+*2026-10-18:* answered by Hamid; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open.
 
 These do not block the build. Each would merge two roles, or define one, if Hamid confirms it. `roles.csv` holds each one in its `question` column.
 

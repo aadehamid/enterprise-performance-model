@@ -8,6 +8,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix shp: <https://w3id.org/lsc/ontology/modules/organization/shapes/> .
 
 shp:Assignment a sh:NodeShape ;
@@ -21,7 +22,9 @@ shp:Assignment a sh:NodeShape ;
                   sh:message "An assignment has exactly one RACI level." ] ;
     sh:property [ sh:path orgm:sourceRoleText ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
-                  sh:message "An assignment cites its source." ] .
+                  sh:message "An assignment cites its source." ] ;
+    sh:property [ sh:path ( orgm:assignedRole owl:deprecated ) ; sh:maxCount 0 ;
+                  sh:message "An assignment names a live role, not a deprecated one (EPM-DEC-001-0045)." ] .
 
 shp:Role a sh:NodeShape ;
     sh:targetClass org:Role ;
@@ -30,6 +33,12 @@ shp:Role a sh:NodeShape ;
     sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:hiddenLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path owl:deprecated ; sh:minCount 0 ; sh:maxCount 1 ; sh:in ( true ) ;
+                  sh:message "A role is deprecated with owl:deprecated true, or not at all." ] ;
+    sh:property [ sh:path dcterms:isReplacedBy ; sh:minCount 0 ; sh:maxCount 1 ; sh:class org:Role ;
+                  sh:message "A deprecated role names one successor role." ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
                   sh:message "A role cites the source that names it." ] .
 

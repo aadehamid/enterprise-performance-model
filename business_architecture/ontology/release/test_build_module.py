@@ -18,7 +18,8 @@ import build_module as bm
 DCAT = bm.DCAT
 # The sentence that approved each issued release (EPM-DEC-001-0037).
 SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
-APPROVALS = {"organization": (SESSION2, "aprove now"), "ref-mpc": (SESSION2, "aprove now")}
+NIGHT = "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
+APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"), "ref-mpc": (SESSION2, "aprove now")}
 
 
 def approval_holds(name, m):
@@ -63,7 +64,7 @@ class Packages(unittest.TestCase):
                     self.assertTrue(manifest["release_candidate"])
 
     def test_another_sentence_of_the_answers_file_is_not_an_approval(self):
-        wrong = dict(bm.MODULES["organization"], approval=(SESSION2, "it is SIPOC"))
+        wrong = dict(bm.MODULES["organization"], approval=(NIGHT, "Yes, cut 2.1.0 (Recommended)"))
         self.assertFalse(approval_holds("organization", wrong))
         self.assertTrue(approval_holds("organization", bm.MODULES["organization"]))
 
@@ -105,6 +106,22 @@ class Packages(unittest.TestCase):
             self.assertEqual(set(manifest["files"]), set(files) - {"manifest.json"})
             for fname, digest in manifest["files"].items():
                 self.assertEqual(hashlib.sha256(files[fname].encode()).hexdigest(), digest)
+
+
+class EarlierReleases(unittest.TestCase):
+    def test_organization_1_0_0_is_untouched(self):
+        # The builder now builds 2.0.0; the released 1.0.0 package must still match its own manifest.
+        out = os.path.join(bm.ONTOLOGY, "releases", "organization", "1.0.0")
+        with open(os.path.join(out, "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertEqual(manifest["version"], "1.0.0")
+        for fname, digest in manifest["files"].items():
+            with open(os.path.join(out, fname), "rb") as f:
+                self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest, fname)
+
+    def test_ref_mpc_still_requires_organization_1_0_0(self):
+        self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "1.0.0"})
+        self.assertEqual(bm.dependencies("organization"), {"core": "2.0.0"})
 
 
 if __name__ == "__main__":

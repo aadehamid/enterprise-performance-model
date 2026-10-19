@@ -35,7 +35,8 @@ PROPS |= {s for s in VOCAB.subjects(RDFS.label, None) if str(s).startswith(str(O
 EXACTLY_ONE = {  # EPM-DEC-001-0030: these paths carry exactly one value on their shape
     ORGM.forProcess, ORGM.assignedRole, ORGM.raciLevel, ORGM.sourceRoleText,
     ORGM.controllingEntity, ORGM.controlledEntity, ORGM.asOf, SKOS.prefLabel}
-AT_MOST_ONE = {ORGM.ownershipShare, SKOS.definition, SKOS.scopeNote}  # optional, but never two
+AT_MOST_ONE = {ORGM.ownershipShare, SKOS.definition, SKOS.scopeNote, SKOS.editorialNote,
+               OWL.deprecated, DCTERMS.isReplacedBy}  # optional, but never two
 LEVELS = {RACI.responsible, RACI.accountable, RACI.consulted, RACI.informed}
 
 
@@ -94,8 +95,12 @@ class Vocabulary(unittest.TestCase):
 
     def test_every_shape_path_is_a_declared_property(self):
         # A path only the shapes name would escape the one-kind and one-range check above.
-        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition, SKOS.scopeNote}
-        paths = set(SHAPES.objects(None, SH.path))
+        external = {DCTERMS.source, SKOS.prefLabel, SKOS.altLabel, SKOS.definition, SKOS.scopeNote,
+                    SKOS.hiddenLabel, SKOS.editorialNote, OWL.deprecated, DCTERMS.isReplacedBy}
+        # A sequence path (a list node) is built from properties; check its members instead.
+        paths = set()
+        for p in SHAPES.objects(None, SH.path):
+            paths |= set(Collection(SHAPES, p)) if (p, RDF.first, None) in SHAPES else {p}
         self.assertEqual(sorted(map(str, paths - PROPS - external)), [])
 
     def test_exactly_one_paths_have_both_bounds(self):

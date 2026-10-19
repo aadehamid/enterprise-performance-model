@@ -1,6 +1,6 @@
 # Role questions from the role register
 
-*2026-10-18:* answered by Hamid (`answers-2026-10-18.md`); carried out in a later pull request.
+*2026-10-18:* answered by Hamid (`answers-2026-10-18.md`); carried out by organization 2.0.0 (EPM-DEC-001-0045).
 
 Prepared for Hamid on 2026-10-14. This package decides nothing. It sets out the questions EPM-DEC-001-0031 leaves for you (lines 31 to 39), with the evidence for each answer, and says how they relate to competency question 17.
 

@@ -47,6 +47,8 @@ class RegisterReconciles(unittest.TestCase):
         self.assertEqual((f["processes with RACI"], f["RACI entries"], f["distinct source strings"], f["roles"],
                           f["positions"], f["teams"], f["compound strings"], f["role references after splitting"]),
                          (153, 913, 91, 60, 54, 6, 11, 940))
+        # EPM-DEC-001-0045: Hamid's three merges deprecate three roles; none is deleted.
+        self.assertEqual((f["deprecated roles"], f["live roles"]), (3, 57))
 
     def test_roles_ttl_is_current(self):
         with open(br.OUTPUT) as f:
@@ -119,6 +121,20 @@ class BrokenRegisterFails(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 br.load()
 
+    def test_a_successor_that_is_not_a_role_fails(self):
+        self.run_mutant(roles_edit=lambda d: [dict(r, replaced_by="no-such-role") if r["replaced_by"] else r for r in d])
+
+    def test_a_successor_that_is_itself_deprecated_fails(self):
+        def edit(d):
+            return [dict(r, replaced_by="rcvo-advisor", replaced_label_kind="alt") if r["slug"] == "vp-rvco" else r for r in d]
+        self.run_mutant(roles_edit=edit)
+
+    def test_a_merge_without_a_label_kind_fails(self):
+        self.run_mutant(roles_edit=lambda d: [dict(r, replaced_label_kind="") for r in d])
+
+    def test_two_live_roles_showing_one_name_fails(self):
+        self.run_mutant(roles_edit=lambda d: [dict(r, preferred_label="Trader") if r["slug"] == "crude-oil-trader" else r for r in d])
+
     def test_a_team_rule_mapped_to_a_position_fails(self):
         self.run_mutant(roles_edit=lambda d: [dict(r, kind="position") for r in d])
 
@@ -136,6 +152,13 @@ class RolesConform(unittest.TestCase):
         for role in roles:
             self.assertEqual(len(list(data.objects(role, SKOS.prefLabel))), 1, role)
             self.assertIn((role, br.DCTERMS.source, br.PROCESS_MAP), data)
+
+    def test_the_misspelling_is_a_hidden_label_and_the_acronym_an_alternative(self):
+        data = Graph().parse(br.OUTPUT)
+        rvco = br.ROLE["rvco-advisor"]
+        self.assertEqual(str(data.value(rvco, SKOS.prefLabel)), "Refinery Value Chain Optimization Advisor")
+        self.assertIn("RVCO Advisor", {str(x) for x in data.objects(rvco, SKOS.altLabel)})
+        self.assertEqual({str(x) for x in data.objects(rvco, SKOS.hiddenLabel)}, {"RCVO Advisor"})
 
     def test_teams_carry_the_team_note_and_positions_do_not(self):
         data = Graph().parse(br.OUTPUT)
