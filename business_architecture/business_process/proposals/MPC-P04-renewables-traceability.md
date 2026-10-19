@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. One gap, feedstock traceability and carbon-intensity evidence, is proposed to Hamid below; no process is added until he rules |
+| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. One gap, feedstock traceability and carbon-intensity evidence, was proposed to Hamid below; he answered on 2026-10-19 (EPM-DEC-001-0048), and its step lands in its own pull request |
 | Ruling | Hamid: "P04: A with reuse before new process creation" (`step4/review-evidence/hamid-answers/answers-2026-10-18.md`); production stays parked |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P04 |
 
@@ -12,7 +12,7 @@ MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 j
 
 | Need | Existing process | Fit |
 |---|---|---|
-| Buy feedstock | CM 1.2.5.2.1 Coordinate Feedstock Trading; CM 1.2.1.3.3 Capture Physical Trades | Fits. A vegetable oil or fat is a feedstock trade like any other |
+| Buy feedstock | CM 1.2.5.2.1 Coordinate Feedstock Trading; CM 1.2.1.3.3 Capture Physical Trades | Fits. A renewable feedstock such as refined soybean oil (MPC FY2025 Form 10-K; `mpc-fy2025-10k-fact-sheet.md` §7) is a feedstock trade like any other |
 | Plan demand and slate | CM 1.2.5.2.2 Develop Feedstock Demand; CM 1.2.5.2.3 Plan Optimal Feedstock Slate And Run Rate | Fits |
 | Move and store it | CM 1.2.5.3 Crude/Feed Transportation Management; CM 1.2.5.4.2 Manage Feedstock Inventory | Fits |
 | Feedstock quality | CM 1.2.5.1 Crude/Feed Quality Management | Fits for quality |
@@ -32,12 +32,14 @@ No marketing step is needed: every marketing need fits an existing process.
 
 Renewable fuel production (pre-treatment, hydrotreating, the plant and joint-venture operations) stays parked. The map holds no plant operations for petroleum refining either.
 
-## What Hamid decides
+## What Hamid decided
 
-The gap: no step keeps the evidence for each renewable feedstock lot that its credits depend on. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (RC-03), and LCFS credits depend on a fuel's carbon intensity (RC-02).
+*2026-10-19:* Hamid said to address the gap from high-quality references, MPC's public information first (EPM-DEC-001-0048). Under the delegation, option A applies: CM 1.2.5.1.5, in `process-map/p04-gap-feedstock-traceability`. Until that pull request merges, the step is not in the map. The options below are kept as the record of what was proposed.
+
+The gap, as proposed: no step keeps the evidence for each renewable feedstock lot that its credits depend on. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (RC-03), and LCFS credits depend on a fuel's carbon intensity (RC-02).
 
 1. (A, recommended) Add one step, "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence", under CM 1.2.5.1 Crude/Feed Quality Management, feeding CM 1.2.4.3.8. It sits under quality management because it is evidence about each lot, kept with its other lot data.
 2. (B) Widen CM 1.2.5.1's description to cover the evidence, with no new step.
 3. (C) Leave the gap open.
 
-A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). Nothing is added until Hamid rules (EPM-DEC-001-0047, What follows, item 4).
+A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). (Until Hamid ruled, nothing was added: EPM-DEC-001-0047, What follows, item 4.)
