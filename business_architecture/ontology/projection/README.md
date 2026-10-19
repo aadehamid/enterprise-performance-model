@@ -6,7 +6,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 |---|---|
 | `pipeline.py` | The five steps: `build` (check the rules, validate, serialise), `reason` (ELK through ROBOT), `load-verify` (load with n10s, then SHACL in the graph, round trip, determinism) |
 | `inferred.nt` | The reasoner's inferences about the domain (empty today: the ontology is SKOS-first) |
-| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none since core 2.0.0) |
+| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none since core 2.0.0; the run is on core 2.1.0) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
@@ -68,4 +68,4 @@ Rerun it after any input or shape changes. You need Java 11 or later ([ROBOT's G
    docker rm -f epm-lpg
    ```
 
-The last run, on core 2.0.0: 2,166 nodes and 12,290 relationships, no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
+The last run, on core 2.1.0 (2026-10-18): 2,811 nodes and 14,862 relationships (the 2.0.0 run had 2,166 and 12,290; 2.1.0 adds 640 canonical-fact nodes), no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
