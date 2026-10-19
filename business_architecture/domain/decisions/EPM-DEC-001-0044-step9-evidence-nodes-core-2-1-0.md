@@ -34,7 +34,7 @@ EPM-DEC-001-0035 left two things for Hamid: approving the eleven controlled-valu
 
 ## Hamid's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "1a, 2a." and "Add one evidence node per canonical fact and keep the direct triple." His approval of the cut is saved in `answers-2026-10-18-night.md`: "Yes, cut 2.1.0 (Recommended)". Items 1 to 6 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
+Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "1a, 2a." and "Add one evidence node per canonical fact and keep the direct triple." His approval of the cut is saved in `answers-2026-10-18-night.md`: "Yes, cut 2.1.0 (Recommended)". He also gave standing approval for the night's releases, saved in `answers-2026-10-19-releases.md`: "You have my approval to keep going and release things as needed. while I am out". This release needed no other module release. Items 1 to 6 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
 
 ## Evidence
 

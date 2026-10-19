@@ -1,0 +1,3 @@
+<!-- Hamid's words, verbatim from the Claude Code session of 2026-10-18 to 2026-10-19, as the coordinating session relayed them to the session building core 2.1.0. Context (Claude's words, kept in this comment so they do not enter the quote corpus): standing approval to cut releases during the night run while he is away. Core 2.1.0 has its own approval ("Yes, cut 2.1.0 (Recommended)", answers-2026-10-18-night.md); this covers any further release the night's work needs. "while I am out" is as he typed it. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+You have my approval to keep going and release things as needed. while I am out
