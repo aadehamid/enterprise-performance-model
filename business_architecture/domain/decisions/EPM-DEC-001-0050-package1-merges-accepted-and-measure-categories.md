@@ -1,10 +1,10 @@
-# EPM-DEC-001-0050: PRs #262, #266 and #269 accepted as merged, a ruleset on `main`, and the eight measure categories approved
+# EPM-DEC-001-0050: PRs #262, #266 and #269 accepted as merged, a ruleset on `main` (blocked), and the eight measure categories approved
 
 | Field | Value |
 |---|---|
 | Status | Decided (the decision owner, 2026-10-19; how each is carried out delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Decision package 1 (`decision-packages/2026-10-14/pr-reviews-262-266-269.md`, questions 1 and 2); the eight measure categories of the `kpi` module (EPM-DEC-001-0042), on which MPC-P09 waits (EPM-DEC-001-0047, What follows, item 6) |
+| Questions | Decision package 1 (`decision-packages/2026-10-14/pr-reviews-262-266-269.md`, questions 1 and 2); the eight measure categories of the `kpi` module (EPM-DEC-001-0042), on which MPC-P09 waited (EPM-DEC-001-0047, What follows, item 6) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
@@ -21,7 +21,7 @@ EPM-DEC-001-0042 sorts every measure into eight classes: KPI, operational metric
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **The three merges stand.** No file changes. EPM-DEC-001-0036 (#262) and EPM-DEC-001-0038 (#266 and #269) each carry a dated note that the decision owner accepted the merge after the fact.
-2. **The ruleset is added after this record merges.** It applies to `main`, requires the `checks` status check to pass and one approving review, and lists the repository admin role on its bypass list. It is added once this record merges, so that this record's own pull request does not wait on it. The package's caveat stands: whether an approval from `cursor[bot]` counts as the required review is not confirmed. If it does not count, every pull request waits for the decision owner until the rule is adjusted, and the next pull request's log says so.
+2. **The ruleset is blocked, and waits for the decision owner.** Option (A) is a ruleset that applies to `main`, requires the `checks` status check to pass and one approving review, and lists the repository admin role on its bypass list. GitHub refuses it on this repository. On 2026-10-19, `gh api repos/<owner>/<repo>/rulesets` and `gh api repos/<owner>/<repo>/branches/main/protection` each returned HTTP 403: "Upgrade to GitHub Pro or make this repository public to enable this feature." The package read the repository's state on 2026-10-14, while the repository was still public; it has been private since 2026-10-18, at the decision owner's instruction (`decision-packages/2026-10-14/README.md`). Both ways to enable it are the decision owner's: a paid GitHub plan, or making the repository public again, which reverses their 2026-10-18 instruction. Until they choose, `main` has no ruleset, and merges follow `APPROVAL_POLICY.md` as before. The package's other caveat still applies once a ruleset exists: whether an approval from `cursor[bot]` counts as the required review is not confirmed.
 3. **The approval covers the classes, not each row.** The decision owner approved the eight categories. The rule that assigns them, and each measure's class and candidate flag in `kpi/measure-classification.csv`, stay Claude's under the delegation (EPM-DEC-001-0042), and the decision owner can reverse them.
 4. **MPC-P09 is unblocked.** It is applied in its own pull request (EPM-DEC-001-0047, What follows, items 1 and 6).
 
@@ -40,6 +40,6 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- Once the ruleset is in place, no pull request merges before `checks` passes, and a pull request without an approving review waits for the decision owner.
+- No ruleset is in place. If the decision owner enables one, no pull request merges before `checks` passes, and a pull request without an approving review waits for them.
 - EPM-DEC-001-0042's eight classes are approved; a change to the set needs the decision owner.
 - MPC-P09 can be applied.
