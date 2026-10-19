@@ -1345,8 +1345,9 @@ hold the controlled-value shapes and the evidence-link shapes
 (EPM-DEC-001-0044).
 
 **Step 10, publication** (EPM-DEC-001-0029, EPM-DEC-001-0037,
-EPM-DEC-001-0038). Four releases, each first built as a candidate and
-issued on the owner's written approval:
+EPM-DEC-001-0038, EPM-DEC-001-0044). Five releases, each issued on the
+owner's written approval. The first four were built as candidates first;
+`core` 2.1.0, a minor, was cut directly on the owner's approval of the cut:
 
 | Release | What it holds | Builder |
 |---|---|---|
