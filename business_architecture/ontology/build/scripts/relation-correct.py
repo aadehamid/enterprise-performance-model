@@ -84,10 +84,11 @@ def main():
             errors.append(f"{rid}: new verb {e['new_verb']!r} is not in the direction table")
         if "|" in e["new_target"]:
             errors.append(f"{rid}: new target contains '|', which would add a segment")
-        # classify_v2 reads the taxonomy literal up to the first '"', so a quote or an
-        # escaping backslash would cut the cell short and shift the REL IDs after it.
+        # No workbook target holds a quote or backslash, and corrections keep it that way:
+        # a target is a plain process name. The classifier reads escapes since #240, so this
+        # is policy and defence in depth, not a workaround for a misread.
         if set(e["new_target"]) & {'"', "\\"}:
-            errors.append(f"{rid}: new target contains a quote or backslash, which the classifier misreads")
+            errors.append(f"{rid}: new target contains a quote or backslash; a target is a plain process name")
         # Non-printable characters (controls, U+FFFE, U+FFFF) cannot be saved as worksheet XML.
         if not e["new_target"].isprintable():
             errors.append(f"{rid}: new target contains a non-printable character")

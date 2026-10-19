@@ -40,7 +40,8 @@ def copy_step4(dest, taxonomy_text):
 
 class Reader(unittest.TestCase):
     def test_escapes_are_decoded(self):
-        self.assertEqual(turtle_unescape(r'Trade \"Capture\" a\\b é'), 'Trade "Capture" a\\b é')
+        self.assertEqual(turtle_unescape(r'Trade \"Capture\" a\\b'), 'Trade "Capture" a\\b')
+        self.assertEqual(turtle_unescape(r'café \U0001F600'), 'caf' + chr(0xE9) + ' ' + chr(0x1F600))
 
     def test_a_quoted_target_is_read_whole(self):
         text = ('proc:CM-1-1 a skos:Concept ;\n'
