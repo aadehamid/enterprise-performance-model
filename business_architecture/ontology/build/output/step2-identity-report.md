@@ -31,3 +31,5 @@
 
 `https://w3id.org/lsc/ontology/process/{slug}` — e.g. `https://w3id.org/lsc/ontology/process/CM-1-2-1-3`, `https://w3id.org/lsc/ontology/process/L1-human-resources`.
 No version segment; versions ride on `owl:versionInfo` (Appendix B).
+
+*2026-10-18:* the counts above are the last Step 2 run's. MPC-P05 (EPM-DEC-001-0047) added CM 1.2.4.3.8 and its two children to the map, and the curated identity map holds a row for each, as Step 2 would emit it; the next identity pass regenerates this report.
