@@ -1,11 +1,11 @@
 # Step 3c Workbook Review — Agent Handoff
 
-**Project:** `aadehamid/enterprise-performance-model` — governed downstream oil & gas SKOS process ontology
+**Project:** `<owner>/enterprise-performance-model` — governed downstream oil & gas SKOS process ontology
 **Artifact under review:** `business_architecture/ontology/build/output/step3c-definition-authoring-workbook.xlsx` (503 rows)
-**Process:** human-in-the-loop batch review with Hamid as sole approver and merger
+**Process:** human-in-the-loop batch review with the decision owner as sole approver and merger
 **State at handoff (post PR #77):** `approved=477 pending=22 blocked=3 retired=1 blocking=0 questions=0 notes=15 open_ptc=1` · reference register last row **57** (`SRC-FASB-ASC326-001`) · batches 1–39 complete, PRs through **#77**
 
-This document is the complete operating manual. A new agent following it can continue the review at the same quality. Everything in it was established by explicit decisions of Hamid's during batches 1–39; where a rule cites "bNN", that is the batch where Hamid locked it.
+This document is the complete operating manual. A new agent following it can continue the review at the same quality. Everything in it was established by explicit decisions of the decision owner's during batches 1–39; where a rule cites "bNN", that is the batch where the decision owner locked it.
 
 ---
 
@@ -13,23 +13,23 @@ This document is the complete operating manual. A new agent following it can con
 
 Every batch follows the same eight steps, in order. **Never skip or reorder.**
 
-1. **Sync main.** `git fetch origin main && git reset --hard origin/main`. Verify the last merged batch landed and nothing else touched the workbook (Hamid sometimes commits unrelated files, and once rewrote history — always inspect `git log` and, if surprised, diff the workbook against your expectation before proceeding).
-2. **Scope the batch.** List the target rows from the workbook (slug, level, name, status, APQC candidate/score/triage, review notes). Batches are hierarchy-led and parent-first: an L4 with its L5 children, sized ~5–26 rows. Hamid decides splits ("split batch N as suggested") and merges ("take batch N whole") when you offer options.
+1. **Sync main.** `git fetch origin main && git reset --hard origin/main`. Verify the last merged batch landed and nothing else touched the workbook (the decision owner sometimes commits unrelated files, and once rewrote history — always inspect `git log` and, if surprised, diff the workbook against your expectation before proceeding).
+2. **Scope the batch.** List the target rows from the workbook (slug, level, name, status, APQC candidate/score/triage, review notes). Batches are hierarchy-led and parent-first: an L4 with its L5 children, sized ~5–26 rows. The decision owner decides splits ("split batch N as suggested") and merges ("take batch N whole") when you offer options.
 3. **Research.** Downstream oil & gas is the frame. Use high-quality sources only: regulators (EPA, FTC, IRS, OFAC, CFPB, Treasury), standards bodies (API, FASB, PCI SSC), statutes (PMPA). Direct fetches to most .gov/standards sites are **egress-blocked** — verify via web-search result metadata, record the access date, and disclose the method ("verified via web search; direct fetch blocked") in the package and register entry.
 4. **Deliver the review package in chat — before any workbook edit.** Format in §3. No exceptions: the package is always delivered and approved before a single cell changes.
-5. **Wait for Hamid's review.** It always arrives as "approve with refinements." Apply **exactly** his refinements — his quoted wording goes in **verbatim** (see §4). Never silently improve, soften, or extend his text.
+5. **Wait for the decision owner's review.** It always arrives as "approve with refinements." Apply **exactly** their refinements — their quoted wording goes in **verbatim** (see §4). Never silently improve, soften, or extend their text.
 6. **Apply on a fresh branch.** `git checkout -B ontology/step3c-review-batch-NN origin/main`. Apply via a Python script (scaffold in §5) that edits **only** the workbook. Run the validation gate; fix any new note before committing (§6).
 7. **Cell-diff verify** against HEAD (§7): only the expected rows (and expected register rows) changed; **names untouched**; all sheets, freeze panes, auto-filters, and data validations preserved.
-8. **Commit, push, open a draft PR** (§8). **Never merge — Hamid merges.** Report in chat with the PR link, what was applied, the gate line, and what the next batch is. Then wait for "#NN merged" (with or without "continue") and start the next cycle.
+8. **Commit, push, open a draft PR** (§8). **Never merge — the decision owner merges.** Report in chat with the PR link, what was applied, the gate line, and what the next batch is. Then wait for "#NN merged" (with or without "continue") and start the next cycle.
 
 ---
 
 ## 2. Hard constraints (violating any of these is a failed batch)
 
 - **Only the workbook file changes.** Never touch `downstream_process_map.json`, `step3-taxonomy.ttl`, `step2-identity-map.json`, generated reports, or build scripts. The validator writes `step3c-workbook-findings.md` into the cwd — `rm -f` it before committing.
-- **Row names mirror the locked taxonomy and are never changed.** Preferred normalized labels go to `alt_labels` (subject to the collision rule, §4.2) and the naming queue (terminology notes + PR body). This holds even when Hamid supplies a "preferred normalized label" — record it, don't rename.
+- **Row names mirror the locked taxonomy and are never changed.** Preferred normalized labels go to `alt_labels` (subject to the collision rule, §4.2) and the naming queue (terminology notes + PR body). This holds even when the decision owner supplies a "preferred normalized label" — record it, don't rename.
 - **PTC rows are untouchable.** `CM-1-1-4-6` (retired) and `CM-1-1-4-6-1/-2/-3` (blocked) must never be redefined, re-parented, or status-changed; PTC-001 stays open (closes only in Step 3d); PTC-002 stays closed.
-- **`pending` is never a parking state.** Every row in a batch moves to `approved` on Hamid's sign-off, or stays out of the batch entirely.
+- **`pending` is never a parking state.** Every row in a batch moves to `approved` on the decision owner's sign-off, or stays out of the batch entirely.
 - **Approved rows have empty `open_questions`.** Open items go to terminology notes ("OPEN ISSUE" text) and the PR follow-ups section — never into `open_questions`.
 - **Controlled vocabulary values must be exact:** `status` ∈ pending|approved|blocked|retired; `concept_type_check` ∈ process|capability|mixed/needs-review|not-process; `process_horizon` ∈ strategic|tactical|monthly|weekly|daily|intraday|event-driven|continuous|periodic|not-applicable|needs-review; relationship types ∈ enables|informed-by|uses-input|produces|constrained-by|governed-by|assures|triggers|requires|precedes|follows. `responsible_domain` is **not** vocabulary-controlled (b15) — free text, including cross-functional forms.
 - **Never edit already-approved rows** — even when a new batch's review implies a change to one (e.g., a naming suggestion for an approved row goes to the PR naming queue only, row untouched — b29 AMPM precedent).
@@ -42,8 +42,8 @@ Every batch follows the same eight steps, in order. **Never skip or reorder.**
 Structure used every batch:
 
 1. **Header + batch overview.** Slugs, row count, what the cluster is in downstream terms, and how it connects to already-locked rules ("this is the receiving end of…"). Confirm baseline state (gate counts) and that main is synced.
-2. **A centerpiece rule (usually Q2).** Most batches propose one durable, quotable rule (see §9 catalog). Hamid frequently rewrites it into "canonical wording" — expect that and apply his version verbatim.
-3. **Questions Q1–Q6** for his decision, always including:
+2. **A centerpiece rule (usually Q2).** Most batches propose one durable, quotable rule (see §9 catalog). The decision owner frequently rewrites it into "canonical wording" — expect that and apply their version verbatim.
+3. **Questions Q1–Q6** for their decision, always including:
    - **Q1:** concept types (process vs capability — test in §10), horizons per row, and `responsible_domain` (cross-functional proposal where warranted, §10).
    - Middle Qs: the batch's material boundary questions, each with a concrete proposal (recommend, don't survey).
    - **Last Q:** naming pass (queue + proposed alt labels, §4.2) and the register decision (new source proposed / considered-and-skipped, §4.4).
@@ -51,14 +51,14 @@ Structure used every batch:
 5. **Proposed register entries** (if any) with all 9 columns drafted (§4.4).
 6. **Closing:** expected gate line after approval, branch name, "draft PR", and what the next batch is.
 
-Style: lead with what matters, cite prior batches by number ("the b14 payment-authority rule"), and keep every proposal decision-ready. Hamid reads closely and corrects wording — precision in the package saves a correction cycle.
+Style: lead with what matters, cite prior batches by number ("the b14 payment-authority rule"), and keep every proposal decision-ready. The decision owner reads closely and corrects wording — precision in the package saves a correction cycle.
 
 ---
 
-## 4. Applying Hamid's review
+## 4. Applying the decision owner's review
 
 ### 4.1 Verbatim rule
-Any wording Hamid marks "Use:", "Canonical wording:", "Recommended…", or quotes in a blockquote goes into the workbook **verbatim** (module-level string constants in the apply script, concatenated into scope notes). The terminology note records "review X adopted verbatim". When his wording *replaces* yours (he often corrects over-absolute phrasing — e.g., "never unbilled" → evidence-model wording, "decided here and nowhere else" → delegated-authority model), note the replacement in terminology_notes.
+Any wording the decision owner marks "Use:", "Canonical wording:", "Recommended…", or quotes in a blockquote goes into the workbook **verbatim** (module-level string constants in the apply script, concatenated into scope notes). The terminology note records "review X adopted verbatim". When their wording *replaces* yours (they often correct over-absolute phrasing — e.g., "never unbilled" → evidence-model wording, "decided here and nowhere else" → delegated-authority model), note the replacement in terminology_notes.
 
 ### 4.2 Alt labels and the naming queue (the "b18/b26/b28 lesson")
 - The validator checks altLabel-vs-prefLabel collisions **case-insensitively, including against the row's own name**. Therefore: **case-only or punctuation-only** normalizations (capitalization, `&`→`and`, `/`→spacing, `- X`→`(X)`) go to the **queue only — never into `alt_labels`**.
@@ -67,12 +67,12 @@ Any wording Hamid marks "Use:", "Canonical wording:", "Recommended…", or quote
 - The naming queue lives in each row's terminology_notes ("recorded as alt label and queued" / "queued, no alt label") and as a table in the PR body.
 
 ### 4.3 Vocabulary-missing relations (the b10/b23 precedent)
-Hamid sometimes requests relation types not in the vocabulary (`informs`, `governs-change-to`, `may-follow`, `requires: <non-concept>`). Procedure: record his requested relation **verbatim in terminology_notes**, apply the nearest vocabulary term against a **locked row name** (or put `informed-by` on the receiving row if it's still pending; if the receiver is approved, note that it couldn't be added), and flag the substitution in the chat report and PR body. Never invent relation types or reference unauthored/invented target names.
+The decision owner sometimes requests relation types not in the vocabulary (`informs`, `governs-change-to`, `may-follow`, `requires: <non-concept>`). Procedure: record their requested relation **verbatim in terminology_notes**, apply the nearest vocabulary term against a **locked row name** (or put `informed-by` on the receiving row if it's still pending; if the receiver is approved, note that it couldn't be added), and flag the substitution in the chat report and PR body. Never invent relation types or reference unauthored/invented target names.
 
 ### 4.4 The reference register (need-driven)
-- Add a source only when needed. The decision rule Hamid locked: **if a specific statute/standard is named in canonical row text, register it** (Reg B, ASC 606, ASC 326, OFAC, PCI DSS precedents); **if the legal statement is generic/unnamed or jurisdiction-undefined, record it as an open issue and register nothing** (unclaimed-property, consumer-debt precedents).
+- Add a source only when needed. The decision rule the decision owner locked: **if a specific statute/standard is named in canonical row text, register it** (Reg B, ASC 606, ASC 326, OFAC, PCI DSS precedents); **if the legal statement is generic/unnamed or jurisdiction-undefined, record it as an open issue and register nothing** (unclaimed-property, consumer-debt precedents).
 - Register columns (9): `source_id | organization | title | version_or_date | url_or_identifier | authority_type | permitted_use | relevance | status`. IDs follow `SRC-<ORG>-<TOPIC>-001`. Append after the last populated row (next is **row 58**), assert no duplicate ID.
-- `permitted_use` is always scoped: what the source evidences, who owns the determinations it does *not* make ("fact-dependent… determined by <owner>… evidence only; does not determine process ownership or legal conclusions"). Hamid usually tightens this wording — apply his version.
+- `permitted_use` is always scoped: what the source evidences, who owns the determinations it does *not* make ("fact-dependent… determined by <owner>… evidence only; does not determine process ownership or legal conclusions"). The decision owner usually tightens this wording — apply their version.
 - `version_or_date` records the access date and the verification method ("accessed YYYY-MM-DD (verified via web search; direct fetch blocked from build environment)").
 
 ### 4.5 Fact-dependent legal statements
@@ -156,9 +156,9 @@ Sheets: `Start Here — Decisions & Phases`, `Review & authoring`, `Column guide
 - **Branch:** `ontology/step3c-review-batch-NN` from `origin/main`, fresh each batch.
 - **Commit message:** `Step 3c: review batch NN — <cluster short name>` + a paragraph summarizing what was approved and which review refinements were applied verbatim + the gate line. End every commit with the attribution block the session's system reminder specifies (Co-Authored-By + Claude-Session lines). Never put model identifiers anywhere else in pushed content.
 - **Push:** `git push -u origin <branch>`; on network failure retry ×4 with 2/4/8/16s backoff.
-- **PR:** created via the GitHub MCP tool (`mcp__github__create_pull_request`, `draft: true` — reload the tool via ToolSearch after MCP reconnects, which happen constantly). Body structure: `⚠️ Do not merge without Hamid's review.` header → batch summary → "Review refinements applied" (bulleted, "verbatim" flagged) → register additions (if any) → naming-queue table → "Standing follow-ups (from Hamid's open questions)" → gate line → "Next: batch NN+1…". End with the generated-with footer + session URL per the system reminder.
-- **Never merge, never mark ready-for-review.** Hamid merges and says "#NN merged".
-- If remote main was rewritten (happened once — a client-name scrub): reset local main to origin, verify the rewrite didn't touch the workbook, report it to Hamid, continue.
+- **PR:** created via the GitHub MCP tool (`mcp__github__create_pull_request`, `draft: true` — reload the tool via ToolSearch after MCP reconnects, which happen constantly). Body structure: `⚠️ Do not merge without the decision owner's review.` header → batch summary → "Review refinements applied" (bulleted, "verbatim" flagged) → register additions (if any) → naming-queue table → "Standing follow-ups (from the decision owner's open questions)" → gate line → "Next: batch NN+1…". End with the generated-with footer + session URL per the system reminder.
+- **Never merge, never mark ready-for-review.** The decision owner merges and says "#NN merged".
+- If remote main was rewritten (happened once — a client-name scrub): reset local main to origin, verify the rewrite didn't touch the workbook, report it to the decision owner, continue.
 
 ---
 
@@ -192,9 +192,9 @@ Sheets: `Start Here — Decisions & Phases`, `Review & authoring`, `Column guide
 
 ## 10. Concept types, horizons, domains
 
-- **Capability test:** children are heterogeneous *concurrent controls* over an ongoing operation → `capability` (Insight & Metrics b21, Licensing & IP b26, Loyalty & Cards b29, Master Data b31, Commercial Terms b32, Credit & Risk b34, Service b35, Receivables Resolution b38, Accounting & Compliance b39). Children form a *lifecycle with variants* → `process` (Order Fulfillment b33, Billing b36, Cash Application b37, Rebates b29). When it's arguable, present both readings with a recommendation — Hamid decides (he flipped b38 to capability, kept b36/b37 process).
-- **All capabilities are `continuous`.** Horizon reflects the operating signal: `daily` used sparingly and justified (Sales Pricing b28, Credit Card Transactions b29, order allocation-adjacent rows b33, billing runs b36, receipts/application/reconciliations b37). When Hamid prefers `event-driven` with cycles, record the cycle statement verbatim in the scope note (b33 allocation pattern). "Continuous with periodic cycles within" is a legitimate pattern (b30 inspections).
-- **`responsible_domain`:** default `Commercial & Marketing`; cross-functional on L4s where control authority genuinely sits elsewhere, using Hamid's exact framing each time (b26 parenthetical style; b31 long parenthetical; b34+ em-dash style, e.g. `Cross-functional — Finance / Tax / O2C Operations / Legal / Commercial Administration`). Children usually keep Commercial & Marketing as the operating home; the L4 scope note states that placement assigns no single owner.
+- **Capability test:** children are heterogeneous *concurrent controls* over an ongoing operation → `capability` (Insight & Metrics b21, Licensing & IP b26, Loyalty & Cards b29, Master Data b31, Commercial Terms b32, Credit & Risk b34, Service b35, Receivables Resolution b38, Accounting & Compliance b39). Children form a *lifecycle with variants* → `process` (Order Fulfillment b33, Billing b36, Cash Application b37, Rebates b29). When it's arguable, present both readings with a recommendation — the decision owner decides (they flipped b38 to capability, kept b36/b37 process).
+- **All capabilities are `continuous`.** Horizon reflects the operating signal: `daily` used sparingly and justified (Sales Pricing b28, Credit Card Transactions b29, order allocation-adjacent rows b33, billing runs b36, receipts/application/reconciliations b37). When the decision owner prefers `event-driven` with cycles, record the cycle statement verbatim in the scope note (b33 allocation pattern). "Continuous with periodic cycles within" is a legitimate pattern (b30 inspections).
+- **`responsible_domain`:** default `Commercial & Marketing`; cross-functional on L4s where control authority genuinely sits elsewhere, using the decision owner's exact framing each time (b26 parenthetical style; b31 long parenthetical; b34+ em-dash style, e.g. `Cross-functional — Finance / Tax / O2C Operations / Legal / Commercial Administration`). Children usually keep Commercial & Marketing as the operating home; the L4 scope note states that placement assigns no single owner.
 
 ---
 
@@ -202,11 +202,11 @@ Sheets: `Start Here — Decisions & Phases`, `Review & authoring`, `Column guide
 
 **Authorable (19 rows):**
 - **`CM-1-3-9` — Service & Support (15 rows, 3 L4s):** `-9-1` Service & Support Enablement (L4 + Define Operating Model, Manage Operations, Manage Service Employees, Manage Facilities, Manage Technology, Manage Contact Center); `-9-2` Service & Support Delivery (L4 + Manage Data, Manage Customer, Fulfill Service Event); `-9-3` Service & Support Measurement (L4 + Measure Service Infrastructure, Measure Service Employees, Measure Service Effectiveness). Expect heavy inheritance from b35 (service capability boundaries, resolution routing), b31 (data/records distinctions), b24 (operating model as blueprint), and the KPI Store/measurement rules on the -9-3 rows. Watch generic names ("Manage Data", "Manage Customer") — they need tight downstream-service readings and disambiguating alt labels.
-- **`CM-1-3-10` — terminal commercial operations (4 L4s, no children):** Setup and Maintain Customer In Terminal, Process Forecast and Nominations, Manage Allocation, Capture Deal. These border the supply-chain/trading branches: nominations and allocation must respect the SC/logistics boundaries (b33 commercial/physical split, pipeline nomination evidence), Capture Deal must not collide with trading deal capture (b11/b14 territory — differentiate as commercial terminal-sales deal capture or route the question to Hamid), and terminal customer setup is the b28/b31/b34 onboarding/KYC/credit receiving end (loading-authorized party role).
-- Batch sizing suggestion: offer 40 = CM-1-3-9 (15 rows), 41 = CM-1-3-10 (4 rows), with the option to take them whole — Hamid decides.
+- **`CM-1-3-10` — terminal commercial operations (4 L4s, no children):** Setup and Maintain Customer In Terminal, Process Forecast and Nominations, Manage Allocation, Capture Deal. These border the supply-chain/trading branches: nominations and allocation must respect the SC/logistics boundaries (b33 commercial/physical split, pipeline nomination evidence), Capture Deal must not collide with trading deal capture (b11/b14 territory — differentiate as commercial terminal-sales deal capture or route the question to the decision owner), and terminal customer setup is the b28/b31/b34 onboarding/KYC/credit receiving end (loading-authorized party role).
+- Batch sizing suggestion: offer 40 = CM-1-3-9 (15 rows), 41 = CM-1-3-10 (4 rows), with the option to take them whole — the decision owner decides.
 
 **Held (not yours to author without instruction):**
-- `CM-1-1-3-5-3 Process Business Renewal Request` — pending Hamid's business confirmation. The sole intentional pending row after batch 42; do not force it approved.
+- `CM-1-1-3-5-3 Process Business Renewal Request` — pending the decision owner's business confirmation. The sole intentional pending row after batch 42; do not force it approved.
 - PTC-001 rows (retired/blocked) — untouchable; PTC-001 closes in Step 3d.
 - The 15 pre-intake notes — backfill in a later authored pass, per the validator's own instruction.
 - ~~`L0-downstream-operations`, `L0-enabling-functions`~~ — dispositioned: approved as scheme roots in batch 42 (PR #82) under the `SCHEME_ROOT_APPROVED` gate whitelist.
@@ -217,18 +217,18 @@ The queue is the controlled Draft artifact `business_architecture/ontology/step3
 
 1. **Critical semantic collision first** (8 entries — duplicate prefLabels such as the two `Determine Taxability` rows, the five `Define KPI Framework` rows, `Demand Forecasting` L3/L4, `Inventory`/`Manage Inventory`). These are the only entries that gate semantic-model publication; nothing publishes with duplicate prefLabels outstanding.
 2. Then authority-risk, scope-ambiguity, directionality, generic-label, and normalization-only categories — same pass, no publication gate.
-3. Deliver the proposed rename set to Hamid **in chat for review before any file changes**, exactly like a definition batch. The queue artifact itself authorizes no renames.
+3. Deliver the proposed rename set to the decision owner **in chat for review before any file changes**, exactly like a definition batch. The queue artifact itself authorizes no renames.
 4. Each executed rename: queued label becomes the prefLabel, the old name becomes an alt label — nothing is deleted, only re-ranked. Renames ripple into the workbook name column, the TTL regeneration, the identity map, breadcrumbs, and every `related_concepts` cell naming the row — the pass must sweep all of them and re-run the validation gate and taxonomy regen.
 5. After the naming pass: PTC-001 resolution and the pre-intake backfill authored pass (the rest of Step 3d, see the ontology playbook), and the `CM-1-1-3-5-3` disposition whenever the business owner answers.
 
-The open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, terminal system-of-record questions, etc. — all recorded in PR follow-up sections) remains a parallel backlog Hamid directs.
+The open-issue log (location master-data child, unclaimed-property jurisdictions, consent-data ownership, terminal system-of-record questions, etc. — all recorded in PR follow-up sections) remains a parallel backlog the decision owner directs.
 
 ---
 
 ## 12. Working relationship notes
 
-- Hamid's reviews are long, structured, and authoritative: an outcome line, per-question rulings ("Approve with…"), verbatim wording blocks, an "Artifact Update Block" at the end. The Artifact Update Block lists artifacts (decision logs, glossaries) that are **out of scope** — only the workbook changes; acknowledge once that their substance is captured in PR follow-ups.
-- His messages sometimes duplicate (the same review sent twice) — check whether it's already applied before re-applying anything.
-- When he corrects you (over-absolute wording, wrong classification, missing boundary), apply the correction verbatim, name it in the terminology note and PR ("review X adopted verbatim, replacing …"), and carry the corrected pattern forward to future batches — corrections are precedents.
-- Report format after applying: PR link first, then what was applied (his refinements named), the verification (gate line + cell-diff), any wrinkle honestly (validator note fixed, MCP reconnects, history rewrite), and what's next. Concise, complete sentences, no invented shorthand.
+- The decision owner's reviews are long, structured, and authoritative: an outcome line, per-question rulings ("Approve with…"), verbatim wording blocks, an "Artifact Update Block" at the end. The Artifact Update Block lists artifacts (decision logs, glossaries) that are **out of scope** — only the workbook changes; acknowledge once that their substance is captured in PR follow-ups.
+- Their messages sometimes duplicate (the same review sent twice) — check whether it's already applied before re-applying anything.
+- When they correct you (over-absolute wording, wrong classification, missing boundary), apply the correction verbatim, name it in the terminology note and PR ("review X adopted verbatim, replacing …"), and carry the corrected pattern forward to future batches — corrections are precedents.
+- Report format after applying: PR link first, then what was applied (their refinements named), the verification (gate line + cell-diff), any wrinkle honestly (validator note fixed, MCP reconnects, history rewrite), and what's next. Concise, complete sentences, no invented shorthand.
 - Everything is evidence-first: if you didn't verify it (search, workbook read, gate run), don't claim it.

@@ -1,7 +1,7 @@
 name: Checks
 
 # Runs scripts/check.sh: the Step 4 evidence gate, every test script,
-# epm-facts counts, the decision-record and quote checks, and the Step 4 pin check. The pre-push hook in
+# epm-facts counts, the decision-record and quote checks, the names check, and the Step 4 pin check. The pre-push hook in
 # scripts/hooks runs the same script locally.
 
 on:

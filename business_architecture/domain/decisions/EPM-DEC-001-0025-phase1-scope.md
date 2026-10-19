@@ -30,9 +30,9 @@ Option (a). Phase 1 is the source-correction backlog: the rows worked through th
 
 (b) Phase 1 covers all 686 held mentions, with new issues for the 167 context-pass holds (target clarification, like #201) and the 234 `uses-input`, `informed-by` and dependent holds (citations, like #205). Roughly 2.5 times the Phase 1 work before the first release.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Asked to choose between (a) and (b), with (a) recommended, Hamid replied on 2026-10-06: "i agree with your recommendation"
+Asked to choose between (a) and (b), with (a) recommended, the decision owner replied on 2026-10-06: "i agree with your recommendation"
 
 ## Amendment (2026-10-12)
 

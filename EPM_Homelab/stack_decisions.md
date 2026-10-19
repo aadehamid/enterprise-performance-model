@@ -4,7 +4,7 @@ Use this EXACT terminology, tool set, and naming across every homelab document. 
 
 ## Project naming
 - Project name: **Downstream O&G Knowledge Homelab** (a personal, educational sandbox inspired by and loosely parallel to the enterprise "Enterprise Performance Model" (EPM) initiative the owner works on professionally — but NOT part of the governed EPM artifact set, not subject to EPM approval workflow, and free to take shortcuts EPM cannot).
-- Owner: Hamid Adesokan.
+- Owner: The decision owner.
 - Domain scenario: Downstream Oil & Gas — refining margin/netback, wholesale rack marketing, terminal custody transfer, retail fuel, order-to-cash — chosen because it mirrors the owner's professional domain (Downstream O&G, EPM/KPI Store work) so learning transfers directly.
 
 ## Layer-by-layer tool decisions (baseline / default path)
@@ -85,7 +85,7 @@ Operational and analytical data (Postgres, DuckDB) remain the systems of record 
 ## Formatting rules for every homelab document
 - Markdown only. Use `##`/`###` headers, tables, and fenced code blocks (` ```turtle `, ` ```sparql `, ` ```yaml `, ` ```python `, ` ```mermaid ` or ASCII art for diagrams).
 - Every external fact/tool/dataset claim must carry an inline markdown link citation, e.g. `([Apache Jena](https://jena.apache.org/download/index.cgi))`. Pull these URLs from the two research files above — do not invent URLs.
-- Start each document with a short header block: Title, Purpose (1-2 lines), Status: Draft (personal homelab, not an EPM governed artifact), Owner: Hamid Adesokan, Last updated: 2026-08-09.
+- Start each document with a short header block: Title, Purpose (1-2 lines), Status: Draft (personal homelab, not an EPM governed artifact), Owner: The decision owner, Last updated: 2026-08-09.
 - End each document with a "Related homelab documents" list (the other 6 documents, by filename) and, where relevant, a "See also (enterprise EPM parallel)" line pointing to the conceptual EPM artifact it mirrors (e.g., "mirrors the EPM KPI Store" or "mirrors the EPM Downstream O2C Blueprint") — for flavor/context only, not as a claim of formal linkage.
 - Do not use emojis. Do not use exclamation points. Keep prose concise; prefer tables and structured lists over long paragraphs.
 

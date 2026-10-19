@@ -2,7 +2,7 @@
 
 The terms this repository uses, with one definition each. Use these names in
 issues, proposals and documents. A term says **Approved Baseline** only when
-Hamid has recorded that approval. A PR merge alone does not approve it. See
+The decision owner has recorded that approval. A PR merge alone does not approve it. See
 `docs/agents/domain.md` for the entry format.
 
 | Term | Definition | Avoid | Source | Status |
@@ -15,7 +15,7 @@ Hamid has recorded that approval. A PR merge alone does not approve it. See
 | Qualified-relation node | A node with its own IRI that stands for one relationship between two things and holds that relationship's properties, such as a share, a date or a source. Used instead of RDF 1.2 reifiers. | "reifier", "edge record" | EPM-DEC-001-0020 | Draft |
 | Scoped sequence | A qualified-relation node stating that, for each instance of a named scope unit, a stated part of an earlier process happens before a stated part of a later process. Neither process needs to complete. It may hold only under a stated condition. | "precedes" (which means the whole earlier process completes first), "handoff" | EPM-DEC-001-0026 | Draft |
 | Scope unit | The kind of business object a scoped sequence repeats for, such as a transaction, a delivery period or a forecast version. A scope unit names a kind of object, never a particular trade or claim. | "scope" (alone), "instance" | EPM-DEC-001-0026 | Draft |
-| Evidence basis | How firm the evidence for a relationship is: source-confirmed, or a reference-model assumption that Hamid adopted from industry practice without a verified MPC procedure. | "verified" (for an assumption) | EPM-DEC-001-0026 | Draft |
+| Evidence basis | How firm the evidence for a relationship is: source-confirmed, or a reference-model assumption that the decision owner adopted from industry practice without a verified MPC procedure. | "verified" (for an assumption) | EPM-DEC-001-0026 | Draft |
 | LPG projection | Loading the finished ontology into a labelled property graph (Neo4j) by the fixed pipeline in `business_architecture/ontology/lpg-projection/`. Turtle stays the master copy. | "Neo4j migration" | EPM-DEC-001-0020 | Draft |
 | Downstream consumer | A system that validates against or uses an EPM release without being an EPM authority. PPC is the first one, planned and not yet active. | "client" | EPM-DEC-001-0001; EPM-FOUND-000 D-18 | Draft |
 | Commercial Pricing & Price Realization | The data domain for the price a company offers or contracts, how it is applied and adjusted, and what it realizes. | "Pricing" (alone) | EPM-DEC-001-0009; `data-domain-register.md` | Draft |

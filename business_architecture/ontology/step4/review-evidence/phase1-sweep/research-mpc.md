@@ -8,7 +8,7 @@
 - **MPC-S15 / marathonfuel.com:** site navigation, read 2026-10-12.
 - Local evidence already cited in the repo: `mpc-fy2025-10k-fact-sheet.md`, `pricing-domain-evidence.md`, `customer-classification-evidence.md`, `process-map-suggestions.md`.
 
-**The main limit.** MPC discloses what it does, its results and its governance. It does not disclose internal workflows: who hands what to whom between, for example, trade capture and confirmation, or forecasting and optimization. For nearly every held row, MPC evidence supports the business context only. The handoff itself has to be a reference-model position, which is the same basis Hamid used for #204 and #205.
+**The main limit.** MPC discloses what it does, its results and its governance. It does not disclose internal workflows: who hands what to whom between, for example, trade capture and confirmation, or forecasting and optimization. For nearly every held row, MPC evidence supports the business context only. The handoff itself has to be a reference-model position, which is the same basis the decision owner used for #204 and #205.
 
 ## 1. Planning, refining and supply
 
@@ -51,4 +51,4 @@
 ## 6. What this brief supports, and what it doesn't
 
 - **Supports, with MPC citations:** advisory vs deciding roles in market risk (policy, then daily monitoring); a credit-assessment pattern; the RIN purchase and integrity link; integrated refining with intermediate transfers; card-transaction processing for marketing customers; jobber and dealer channels; board-level ERM governance.
-- **Doesn't support:** any specific internal handoff between two named processes. Those answers must be reference-model positions informed by the industry brief (`research-industry.md`), labelled as such, as Hamid's #204 and #205 answers were.
+- **Doesn't support:** any specific internal handoff between two named processes. Those answers must be reference-model positions informed by the industry brief (`research-industry.md`), labelled as such, as the decision owner's #204 and #205 answers were.

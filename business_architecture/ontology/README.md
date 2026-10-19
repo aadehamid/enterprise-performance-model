@@ -40,7 +40,7 @@ root.
 | `validation/` | Step 9 shapes run against the released modules: controlled values (EPM-DEC-001-0035) |
 | `provenance/` | The Step 6 definition-to-run pattern: the shapes a consumer's run must meet, an example run and tests (EPM-DEC-001-0034) |
 | `ref-mpc/` | The Step 5 reference instances for MPC: MPC, MPLX, MPC's control of MPLX, segments and refineries, from the FY2025 10-K (EPM-DEC-001-0033) |
-| `kpi/` | The Step 7 kpi module: 41 measure definitions classified by kind (EPM-DEC-001-0042), the measure-kind code list, planning personas and process links (EPM-DEC-001-0043); released as 1.0.0 (`releases/kpi/1.0.0/`), approved by Hamid, and 1.0.1, a patch naming the measure list's source (VCO DSV) |
+| `kpi/` | The Step 7 kpi module: 41 measure definitions classified by kind (EPM-DEC-001-0042), the measure-kind code list, planning personas and process links (EPM-DEC-001-0043); released as 1.0.0 (`releases/kpi/1.0.0/`), approved by the decision owner, and 1.0.1, a patch naming the measure list's source (VCO DSV) |
 | `organization/` | The Step 5 organization module: the RACI assignment and control vocabulary, its SHACL shapes and tests (EPM-DEC-001-0030), the role register with the roles built from it (EPM-DEC-001-0031), and the RACI assignments with their ledger (EPM-DEC-001-0032) |
 | `regression/` | The Step 11 SPARQL regression: one query per tested part of a question, each question's status, and the runner `check.sh` calls |
 | `release/`, `releases/` | Release builders and packages: `core` 1.0.0 (EPM-DEC-001-0029), organization 1.0.0 and ref-mpc 1.0.0 (EPM-DEC-001-0037), core 2.0.0 (EPM-DEC-001-0038), core 2.1.0 (EPM-DEC-001-0044), organization 2.0.0 and ref-mpc 1.1.0 (EPM-DEC-001-0045), and kpi 1.0.0 and 1.0.1 (EPM-DEC-001-0043) |
@@ -61,7 +61,7 @@ root.
 | `build/output/step3b-web-input.json` | 131 strong-match rows sent for web validation |
 | `build/output/step3b-web-validations.json` | 111 automated web-validation records |
 | `build/output/step3b-web-validations-manual.json` | 11 human-vetted manual validation records |
-| `build/output/step3c-authored-definitions.json` | 14 human-authored L1–L3 definitions (approved by Hamid 2026-09-18) merged into the taxonomy |
+| `build/output/step3c-authored-definitions.json` | 14 human-authored L1–L3 definitions (approved by the decision owner 2026-09-18) merged into the taxonomy |
 | `build/output/step3c-definition-authoring-workbook.xlsx` | Semantic-intake workbook (6 sheets, 503 rows). Step 3c closed 2026-09-21: 498/503 approved (see the working record's decision log) |
 | `build/scripts/step3c-workbook-validate.py` | Mechanical review gate. Synced v2026-09-19b (`ptc-closed` is blocked-only) |
 | `step3c-reviewer-instructions.md` | Locked reviewer guide (v2026-09-19b) |

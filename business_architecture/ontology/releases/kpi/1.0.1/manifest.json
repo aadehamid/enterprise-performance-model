@@ -14,14 +14,14 @@
   ],
   "triples": 1018,
   "approved_by": {
-    "who": "Hamid",
-    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md"
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md"
   },
   "files": {
-    "CHANGELOG.md": "592bf147adafde6072c8953518aa21b90e178a73bd350f88b34baba1ad542469",
+    "CHANGELOG.md": "5c73edc5a1256d86765d97d5ac6de060041f17fb542c1236dcd91e4cad05dcb1",
     "catalog.ttl": "8697b9a3b99112409879049274275005bed3beb7d206a780859d9c175c2848a2",
-    "kpi.jsonld": "103c3743c21669ce8ff57faec1565878aa6ba58c124d166a236b5599223d2f0b",
-    "kpi.ttl": "f5a738d40363e44de8884c99cbaa0b58a7cc9b1f502c601c3916e13000dd52b6",
+    "kpi.jsonld": "1b0892dc3b1d6f82826fb395b5f370b7f34121d3ec9f3e05b1c57c1ad885e5b0",
+    "kpi.ttl": "99954bafb4ee3365da19ddaf7bc2a6233fab4b4b64a42010c8b3c7b134136da1",
     "shapes.ttl": "91f6e3613079f2b1893102319949b920c80025565547ee1dc8fb90ab2c75712b"
   }
 }

@@ -2,7 +2,7 @@
 
 **Converting a W3C ontology (RDF 1.2 / RDFS / OWL 2 / SKOS / SHACL) into a Neo4j Labelled Property Graph: deterministic, repeatable, high fidelity, and as simple as possible.**
 
-Version 2.2 · October 2026 · Author: Hamid Adesokan (with Perplexity; v2.1 and v2.2 with Claude Code)
+Version 2.2 · October 2026 · Author: The decision owner (with Perplexity; v2.1 and v2.2 with Claude Code)
 
 > **What changed in v2.2**
 > v2.2 records what the first full run of the pipeline found, on the Enterprise Performance Model ontology with Neo4j 2025.06.2, n10s 2025.06.1 and ROBOT 1.9.10 (October 2026).
@@ -456,7 +456,7 @@ The big biomedical graphs (RTX-KG2, BioCypher-based KGs) use this same "canonica
 - neosemantics 2025.06.1 release (the n10s jar for Neo4j 2025.06). https://github.com/neo4j-labs/neosemantics/releases/tag/2025.06.1
 - neosemantics issue #237 (SHACL not validating with `handleVocabUris` set to MAP, open since 2021-11-09) and PR #361 (the proposed fix, open as of 2026-10-13). https://github.com/neo4j-labs/neosemantics/issues/237 · https://github.com/neo4j-labs/neosemantics/pull/361
 - n10s mapping reference (mappings apply in MAP mode). https://neo4j.com/labs/neosemantics/4.0/mapping/
-- First full run of v2.2's changes: the Enterprise Performance Model ontology's projection pipeline and decision record EPM-DEC-001-0036 (aadehamid/enterprise-performance-model, `business_architecture/ontology/projection/`).
+- First full run of v2.2's changes: the Enterprise Performance Model ontology's projection pipeline and decision record EPM-DEC-001-0036 (<owner>/enterprise-performance-model, `business_architecture/ontology/projection/`).
 - Eclipse RDF4J 6.0.0 release notes (RDF 1.2 and SPARQL 1.2). https://rdf4j.org/release-notes/6.0.0/
 - W3C: RDF 1.2 Primer. https://www.w3.org/TR/rdf12-primer/
 - W3C: RDF 1.2 Turtle (`<<( )>>`, `~ reifier`, `{| |}` annotation syntax). https://www.w3.org/TR/rdf12-turtle/

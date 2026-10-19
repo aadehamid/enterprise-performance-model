@@ -5,7 +5,7 @@
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 4: which MPC reference instances the `ref-mpc` module holds, and how each fact carries its source and as-of date |
-| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
+| Source | Claude Code session, 2026-10-13, under the decision owner's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
 
 ## Context
 
@@ -39,9 +39,9 @@ Left out for now:
 - **Only the Midstream segment,** the one EPM-DEC-001-0015 names. Rejected: the FY2025 10-K names three, and Refining & Marketing holds the refineries.
 - **An as-of date on the source only.** Rejected: the playbook asks for one on each fact, and a later filing may restate some facts but not others.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+The decision owner extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." The decision owner did not make the choices above themselves. Claude made them under that delegation, and the decision owner can reverse any of them.
 
 ## Evidence
 

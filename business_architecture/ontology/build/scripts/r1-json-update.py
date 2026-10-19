@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """R1 Refining structural reclassification — one-shot source-JSON update.
 
-Applies the Hamid-approved R1 move set to
+Applies the owner-approved R1 move set to
 `business_architecture/business_process/downstream_process_map.json`,
 deterministically and with assertions:
 

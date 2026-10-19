@@ -74,7 +74,7 @@ def test_three_no_sequence_rows_are_absent(table):
     ("REL-00008", {"evidence_basis": "source-confirmed"}, "but Q13 gives reference-model-assumption"),
     ("REL-00188", {"evidence_basis": "source-confirmed"}, "but Q13 gives reference-model-assumption"),
     ("REL-00193", {"evidence_basis": "reference-model-assumption"}, "but Q13 gives source-confirmed"),
-    ("REL-00193", {"answer": "https://github.com/aadehamid/enterprise-performance-model/issues/226#issuecomment-6123946413"},
+    ("REL-00193", {"answer": "urn:epm:issue:226:comment:6123946413"},
      "answer must be the batch's saved answer"),
     ("REL-00193", {"scope_unit": "forecast-version", "node_slug": "CM-1-2-1-3-3--CM-1-2-2-2--forecast-version"},
      "but Q9 approved transaction"),

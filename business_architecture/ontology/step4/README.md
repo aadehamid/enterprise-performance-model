@@ -3,17 +3,17 @@
 This directory is the working area for **Step 4**: mapping the source
 workbook's relationship verbs (`uses-input`, `informed-by`, `enables`,
 `requires`, `governed-by`, …) to ontology predicates, row by row, under
-Hamid's review.
+The decision owner's review.
 
-- **Step 4 is PROMOTED** (2026-09-30; Hamid: "I approved the promotion",
+- **Step 4 is PROMOTED** (2026-09-30; the decision owner: "I approved the promotion",
   recorded on PR #190). All 10 boxes in `release-checklist.md` are complete.
   Promotion approved the review. The `core` 1.0.0 release (serializing the
   canonical facts to Turtle and retiring `intake:` in one flag-day release,
-  per decision Q2) was released on 2026-10-13 with Hamid's approval
+  per decision Q2) was released on 2026-10-13 with the decision owner's approval
   (`release/build_core.py`, EPM-DEC-001-0029; `release-checklist.md`, core
   1.0.0). `intake:` is retired in `releases/core/1.0.0/`.
-- **Nothing here merges to `main`** without Hamid's explicit approval.
-  EPM-DEC-001-0028 records his approval for Claude to merge, while he is away,
+- **Nothing here merges to `main`** without the decision owner's explicit approval.
+  EPM-DEC-001-0028 records their approval for Claude to merge, while they are away,
   a PR whose PR reviewer posted MERGE for its current head.
 - **Figures and row status:** run `python3 scripts/epm_facts.py counts`, `row REL-xxxxx` or
   `section <issue>` from the repo root. It computes them from the files below;
@@ -32,5 +32,5 @@ Hamid's review.
   `source-question-template.md` (how to ask the source author about a batch),
   `scoped-sequence/` (the scoped sequence relation, EPM-DEC-001-0026: source
   table, vocabulary, SHACL shapes, nodes and `build.py`),
-  `review-evidence/` (row-level review batches; `hamid-answers/` holds his
+  `review-evidence/` (row-level review batches; `decision-owner-answers/` holds their
   answers verbatim, which `epm_facts.py quotes` checks quotes against).

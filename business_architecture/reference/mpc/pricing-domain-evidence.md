@@ -1,6 +1,6 @@
 # Pricing Data Domain — Classification and Evidence
 
-**Status:** Proposed domain. Classification P1–P11 proposed by Hamid
+**Status:** Proposed domain. Classification P1–P11 proposed by the decision owner
 (2026-09-29). Scope decisions D1–D4 are proposed in §5. · **Domain:** Pricing ·
 **Evidence checked:** 2026-09-29
 
@@ -145,7 +145,7 @@ Based on it, this is proposed:
 | D3 Margin indicators (P2) | **KPI Store** measures built on Market Data. Refining economics owns the indicator method | P2 inside Pricing |
 | D4 Domain name | **Commercial Pricing & Price Realization**, owning P3–P9 and the price-list part of P11 (approvals, overrides, audit) | "Commercial Pricing, Market Data and Price Realization" |
 
-D1–D4 stay **proposed** until Hamid records a decision on them. The domain
+D1–D4 stay **proposed** until the decision owner records a decision on them. The domain
 register (`../../domain/data-domain-register.md`) shows the same proposed
 split and the same status.
 

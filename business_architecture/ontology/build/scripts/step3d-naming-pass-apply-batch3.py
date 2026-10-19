@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass - scope-ambiguity Batch 3 (E+F, 12 renames).
 
-Approved by Hamid 2026-09-21 on the independent reviewer's recommendation
+Approved by the decision owner 2026-09-21 on the independent reviewer's recommendation
 (approve as proposed; CM-1-3-1-6 capability-versus-process stays a separate
 modeling follow-up; preserve the Finance bad-debt authority boundary, the
 receipt-recording vs settlement boundary, the reconciliation vs settlement
@@ -214,7 +214,7 @@ def main() -> int:
         e["scoped_historical_alias"] = None
         e["name_change_note"] = (
             "Step 3d naming pass \u2014 scope-ambiguity Batch 3 (E+F, 2026-09-21): "
-            f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21, "
+            f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21, "
             "independent reviewer recommendation: approve as proposed). Prior "
             "label retained as skos:altLabel; no identifier, hierarchy, or "
             "definition change."
@@ -245,11 +245,11 @@ def main() -> int:
     assert old_hdr in text, "queue scope-ambiguity header not in expected form"
     text = text.replace(old_hdr, new_hdr)
     old_status = ("and 11 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 2 D, Hamid approval 2026-09-21). The remaining 57 queue entries "
+                  "Batch 2 D, the decision owner's approval 2026-09-21). The remaining 57 queue entries "
                   "are still queued for the consolidated naming pass.")
     new_status = ("and 11 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 2 D, Hamid approval 2026-09-21) and 12 scope-ambiguity entries "
-                  "executed 2026-09-21 (Step 3d naming pass Batch 3 E+F, Hamid approval "
+                  "Batch 2 D, the decision owner's approval 2026-09-21) and 12 scope-ambiguity entries "
+                  "executed 2026-09-21 (Step 3d naming pass Batch 3 E+F, the decision owner's approval "
                   "2026-09-21). The remaining 45 queue entries are still queued for the "
                   "consolidated naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"

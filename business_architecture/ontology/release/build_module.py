@@ -7,7 +7,7 @@
 The package holds the module's Turtle and JSON-LD, its shapes, a DCAT record, its changelog and a
 manifest with each file's SHA-256, the shape of the core 1.0.0 package (EPM-DEC-001-0029). A release
 candidate (a stage such as "rc.1") carries no issued date: a module's first release is a major, and
-a major needs Hamid's approval (module policy, 2026-09-18). An issued release names where his
+a major needs the decision owner's approval (module policy, 2026-09-18). An issued release names where their
 approval is recorded; the tests check that the words are there.
 """
 import argparse
@@ -30,11 +30,11 @@ MODULES = {
     "organization": {
         "title": "LSC Organization Module",
         "description": "Roles, RACI responsibility assignments and control between legal entities (Step 5).",
-        # 2.0.0 carries Hamid's role answers: three roles deprecated, their assignments moved
+        # 2.0.0 carries the decision owner's role answers: three roles deprecated, their assignments moved
         # (EPM-DEC-001-0045). Each earlier package stays on disk as released; test_build_module.py
         # checks it is untouched.
         "version": "2.0.0", "stage": None, "issued": "2026-10-18",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-18-night.md", "Yes, approve 2.0.0 (Recommended)"),
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md", "Yes, approve 2.0.0 (Recommended)"),
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
         "depends_on": ["core"],
@@ -46,7 +46,7 @@ MODULES = {
         "description": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5).",
         # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
         "version": "1.1.0", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md", "Approve the ref-mpc release too if needed"),
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-mpc.md", "Approve the ref-mpc release too if needed"),
         "parts": ["ref-mpc/ref-mpc.ttl"],
         "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl"],
         "depends_on": ["organization"],
@@ -55,10 +55,10 @@ MODULES = {
     "kpi": {
         "title": "LSC KPI Module",
         "description": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values.",
-        # 1.0.0 was the module's first release, a major approved by Hamid (EPM-DEC-001-0043).
+        # 1.0.0 was the module's first release, a major approved by the decision owner (EPM-DEC-001-0043).
         # 1.0.1 is a patch: the planner list's source names VCO DSV (EPM-DEC-001-0040).
         "version": "1.0.1", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md", "You have my approval to keep going and release things as needed. while I am out"),
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md", "You have my approval to keep going and release things as needed. while I am out"),
         "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],
@@ -178,7 +178,7 @@ def package(name, g):
         "module": name, "version": lab, "release_candidate": m["stage"] is not None,
         "ontology_iri": MODULES_NS + name, "version_iri": f"{MODULES_NS}{name}/{lab}",
         "depends_on": dependencies(name), "decisions": m["decisions"], "triples": len(g),
-        "approved_by": None if m["stage"] else {"who": "Hamid", "recorded_in": m["approval"][0]},
+        "approved_by": None if m["stage"] else {"who": "The decision owner", "recorded_in": m["approval"][0]},
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"
     return files
 

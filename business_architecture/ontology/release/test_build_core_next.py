@@ -1,5 +1,5 @@
-"""Tests for core 2.0.0 (EPM-DEC-001-0038): it is core 1.0.0 plus exactly the changes Hamid decided,
-the split follows his rule, the SIPOC lists arrive whole, the release carries his approval, and the
+"""Tests for core 2.0.0 (EPM-DEC-001-0038): it is core 1.0.0 plus exactly the changes the decision owner decided,
+the split follows their rule, the SIPOC lists arrive whole, the release carries their approval, and the
 package is current.
 
 Run: python3 -m pytest test_build_core_next.py (needs rdflib, pyshacl).
@@ -59,11 +59,11 @@ class Candidate(unittest.TestCase):
             self.assertEqual(G.value(p, RDFS.range), SKOS.Concept)
 
     def test_the_package_is_the_approved_release(self):
-        # Literal on purpose: 2.0.0 is a major, and Hamid approved it on 2026-10-13 in these words.
-        self.assertEqual(b.APPROVAL, ("step4/review-evidence/hamid-answers/core-2-0-0-release.md",
+        # Literal on purpose: 2.0.0 is a major, and the decision owner approved it on 2026-10-13 in these words.
+        self.assertEqual(b.APPROVAL, ("step4/review-evidence/decision-owner-answers/core-2-0-0-release.md",
                                       "I approve the core 2.0.0 releas"))
         with open(os.path.join(b.ONTOLOGY, b.APPROVAL[0])) as f:
-            # Hamid's words sit in the body; Claude's context sits in HTML comments.
+            # The decision owner's words sit in the body; Claude's context sits in HTML comments.
             body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
         self.assertIn(b.APPROVAL[1], body)
         self.assertIsNone(b.STAGE)

@@ -28,19 +28,19 @@ role:bpa a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "BP&A"@en ;
     skos:definition "A team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."@en ;
-    skos:editorialNote "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the …\" and name the organization served, such as \"the Specialty Products (including Asphalt, Petrochemicals, and Petroleum Coke/Sulfur) commercial organization\" (MPC postings 00023257 and 00024586, read through a search index and third-party hosts, 2026-10-19). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
+    skos:editorialNote "BP&A expanded as Business Planning and Analysis (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the …\" and name the organization served, such as \"the Specialty Products (including Asphalt, Petrochemicals, and Petroleum Coke/Sulfur) commercial organization\" (MPC postings 00023257 and 00024586, read through a search index and third-party hosts, 2026-10-19). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
     skos:prefLabel "Business Planning and Analysis"@en ;
     skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
 
 role:business-analyst a org:Role ;
     dcterms:source src:downstream-process-map ;
-    skos:editorialNote "In \"Business Analyst (RO)\", RO means Regional Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045): \"Q6: RO = Regional Optimization\")."@en ;
+    skos:editorialNote "In \"Business Analyst (RO)\", RO means Regional Optimization (the decision owner, 2026-10-18 (EPM-DEC-001-0045): \"Q6: RO = Regional Optimization\")."@en ;
     skos:prefLabel "Business Analyst"@en .
 
 role:cci-director a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "CCI Director"@en ;
-    skos:editorialNote "CCI expanded as Continual Commercial Improvement (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"The Continual Commercial Improvement (CCI) Engineer\" (builtin.com job 7627760, read 2026-10-18, third-party host). \"Continual\", not \"Continuous\"."@en ;
+    skos:editorialNote "CCI expanded as Continual Commercial Improvement (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"The Continual Commercial Improvement (CCI) Engineer\" (builtin.com job 7627760, read 2026-10-18, third-party host). \"Continual\", not \"Continuous\"."@en ;
     skos:prefLabel "Continual Commercial Improvement Director"@en .
 
 role:commercial-scheduler a org:Role ;
@@ -51,14 +51,14 @@ role:commercial-scheduler a org:Role ;
 role:cp-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "CP Manager"@en ;
-    skos:editorialNote "CP expanded as Clean Products (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in this role only, by Claude. Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."@en ;
+    skos:editorialNote "CP expanded as Clean Products (the decision owner, 2026-10-18 (EPM-DEC-001-0045)); applied in this role only, by Claude. Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."@en ;
     skos:prefLabel "Clean Products Manager"@en .
 
 role:cpvc-scheduler a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "CPVC Scheduler"@en,
         "CPVC schedulers"@en ;
-    skos:editorialNote "CPVC expanded as Clean Products Value Chain (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, \"MPC team places 2nd in Master Modeler Competition\", 2023-04-20: \"Marathon Petroleum's Clean Products Value Chain (CPVC) employees\" (read through a search index; the page is behind a bot check)."@en ;
+    skos:editorialNote "CPVC expanded as Clean Products Value Chain (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, \"MPC team places 2nd in Master Modeler Competition\", 2023-04-20: \"Marathon Petroleum's Clean Products Value Chain (CPVC) employees\" (read through a search index; the page is behind a bot check)."@en ;
     skos:prefLabel "Clean Products Value Chain Scheduler"@en .
 
 role:crude-coordinator a org:Role ;
@@ -91,7 +91,7 @@ role:crude-rfc a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "Crude RFC"@en ;
     skos:definition "Coordinates crude feedstock requirements and refinery planning inputs for crude purchase and allocation evaluations."@en ;
-    skos:editorialNote "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title. The definition is Claude's EPM working definition, not an MPC position description."@en ;
+    skos:editorialNote "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title. The definition is Claude's EPM working definition, not an MPC position description."@en ;
     skos:prefLabel "Crude Refinery Feedstock Coordinator"@en .
 
 role:crude-scheduler a org:Role ;
@@ -113,18 +113,18 @@ role:distribution-planner a org:Role ;
 role:e-and-p-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "E&P Manager"@en ;
-    skos:editorialNote "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in the refinery-planning roles, by Claude. externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."@en ;
+    skos:editorialNote "E&P expanded as Economics and Planning (the decision owner, 2026-10-18 (EPM-DEC-001-0045)); applied in the refinery-planning roles, by Claude. externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."@en ;
     skos:prefLabel "Economics and Planning Manager"@en .
 
 role:e-and-p-supervisor a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "E&P Supervisor"@en ;
-    skos:editorialNote "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager. May be the Refinery Econ & Planning Supervisor; not merged, because an expanded acronym does not prove one position."@en ;
+    skos:editorialNote "E&P expanded as Economics and Planning (the decision owner, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager. May be the Refinery Econ & Planning Supervisor; not merged, because an expanded acronym does not prove one position."@en ;
     skos:prefLabel "Economics and Planning Supervisor"@en .
 
 role:forecaster a org:Role ;
     dcterms:source src:downstream-process-map ;
-    skos:editorialNote "Kept apart (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 2: \"no for now\")."@en ;
+    skos:editorialNote "Kept apart (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 2: \"no for now\")."@en ;
     skos:prefLabel "Forecaster"@en .
 
 role:gasoline-blend-optimizer a org:Role ;
@@ -134,7 +134,7 @@ role:gasoline-blend-optimizer a org:Role ;
 role:gfvc-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "Manager: GFVC"@en ;
-    skos:editorialNote "GFVC expanded as Global Feedstocks Value Chain (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, \"Marathon Petroleum scores 100% on 2021 Corporate Equality Index\", 2021-06-02, names a \"Senior Vice President, Global Feedstocks Value Chain\" (read through a search index; the page is behind a bot check). A 2021 source: it supports the term, not today's structure."@en ;
+    skos:editorialNote "GFVC expanded as Global Feedstocks Value Chain (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, \"Marathon Petroleum scores 100% on 2021 Corporate Equality Index\", 2021-06-02, names a \"Senior Vice President, Global Feedstocks Value Chain\" (read through a search index; the page is behind a bot check). A 2021 source: it supports the term, not today's structure."@en ;
     skos:prefLabel "Global Feedstocks Value Chain Manager"@en .
 
 role:global-feedstocks-manager a org:Role ;
@@ -183,14 +183,14 @@ role:product-representative a org:Role ;
 
 role:psm a org:Role ;
     dcterms:source src:downstream-process-map ;
-    skos:editorialNote "Left unexpanded (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 6)."@en ;
+    skos:editorialNote "Left unexpanded (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 6)."@en ;
     skos:prefLabel "PSM"@en .
 
 role:rcvo-advisor a org:Role ;
     dcterms:isReplacedBy role:rvco-advisor ;
     dcterms:source src:downstream-process-map ;
     owl:deprecated true ;
-    skos:editorialNote "Deprecated: \"RCVO\" is a misspelling of \"RVCO\" (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 1). The process map writes RVCO Advisor on the same process's SIPOC."@en ;
+    skos:editorialNote "Deprecated: \"RCVO\" is a misspelling of \"RVCO\" (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 1). The process map writes RVCO Advisor on the same process's SIPOC."@en ;
     skos:prefLabel "RCVO Advisor"@en .
 
 role:refinery-backcaster a org:Role ;
@@ -227,7 +227,7 @@ role:refinery-technical-service-representative a org:Role ;
     dcterms:isReplacedBy role:refinery-technical-representative ;
     dcterms:source src:downstream-process-map ;
     owl:deprecated true ;
-    skos:editorialNote "Deprecated: the same role as Refinery Technical Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3)."@en ;
+    skos:editorialNote "Deprecated: the same role as Refinery Technical Representative (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 3)."@en ;
     skos:prefLabel "Refinery Technical Service Representative"@en .
 
 role:regional-backcaster a org:Role ;
@@ -294,13 +294,13 @@ role:vp-clean-products-crude-trading-ngls-asphalt-petchem a org:Role ;
     dcterms:isReplacedBy role:vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem ;
     dcterms:source src:downstream-process-map ;
     owl:deprecated true ;
-    skos:editorialNote "Deprecated in favour of the VP string that includes RVCO (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 4: \"choose the string with \"RVCO\" in the list\")."@en ;
+    skos:editorialNote "Deprecated in favour of the VP string that includes RVCO (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 4: \"choose the string with \"RVCO\" in the list\")."@en ;
     skos:prefLabel "VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)"@en .
 
 role:vp-rvco a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "VP RVCO"@en ;
-    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization, with the evidence on the Refinery Value Chain Optimization Advisor role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string, as the role questions package proposed: it is Accountable where that VP is Informed."@en ;
+    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization, with the evidence on the Refinery Value Chain Optimization Advisor role (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string, as the role questions package proposed: it is Accountable where that VP is Informed."@en ;
     skos:prefLabel "VP Refinery Value Chain Optimization"@en .
 
 role:refinery-technical-representative a org:Role ;
@@ -308,21 +308,21 @@ role:refinery-technical-representative a org:Role ;
     skos:altLabel "Refinery Technical Service Representative"@en,
         "Refinery technical representative"@en ;
     skos:definition "Represents refinery technical expertise in planning and backcasting reviews, including review of operating assumptions, technical constraints and modeled refinery performance."@en ;
-    skos:editorialNote "The surviving role for the Refinery Technical Service Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3). The definition is Claude's EPM working definition, inferred from the backcasting processes it is consulted on; it is not an MPC position description."@en ;
+    skos:editorialNote "The surviving role for the Refinery Technical Service Representative (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 3). The definition is Claude's EPM working definition, inferred from the backcasting processes it is consulted on; it is not an MPC position description."@en ;
     skos:prefLabel "Refinery Technical Representative"@en .
 
 role:rvco-advisor a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "RVCO Advisor"@en ;
     skos:definition "Advises on refinery and commercial optimization by evaluating feedstock choices, production plans, product placement, operating constraints and economic opportunities."@en ;
-    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host). The definition is Claude's EPM working definition, not an MPC position description."@en ;
+    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization (the decision owner, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host). The definition is Claude's EPM working definition, not an MPC position description."@en ;
     skos:hiddenLabel "RCVO Advisor"@en ;
     skos:prefLabel "Refinery Value Chain Optimization Advisor"@en .
 
 role:vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)"@en ;
-    skos:editorialNote "The surviving VP role for both long VP strings (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 4)."@en ;
+    skos:editorialNote "The surviving VP role for both long VP strings (the decision owner, 2026-10-18 (EPM-DEC-001-0045), question 4)."@en ;
     skos:prefLabel "VP (Clean Products, RVCO, Crude Trading, NGLs, Asphalt, Petchem)"@en .
 
 src:downstream-process-map a dcterms:BibliographicResource ;

@@ -592,7 +592,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -673,7 +673,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -777,7 +777,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -872,7 +872,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -988,7 +988,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1126,7 +1126,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1233,7 +1233,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1358,7 +1358,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1416,7 +1416,7 @@
   "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
    {
     "@type": "http://www.w3.org/2001/XMLSchema#string",
-    "@value": "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. Hamid asked for this to be researched (Part B, Q8)."
+    "@value": "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. The decision owner asked for this to be researched (Part B, Q8)."
    }
   ],
   "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
@@ -1484,7 +1484,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1606,7 +1606,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1719,7 +1719,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -1943,7 +1943,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2044,7 +2044,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2157,7 +2157,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2279,7 +2279,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2392,7 +2392,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2610,7 +2610,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2720,7 +2720,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2809,7 +2809,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -2910,7 +2910,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3017,7 +3017,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3118,7 +3118,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3243,7 +3243,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3338,7 +3338,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3445,7 +3445,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3552,7 +3552,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -3766,7 +3766,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -4264,7 +4264,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -4353,7 +4353,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -4469,7 +4469,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -4570,7 +4570,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -4894,7 +4894,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    },
    {
     "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
@@ -5082,7 +5082,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
@@ -5117,7 +5117,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
@@ -5152,7 +5152,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
@@ -5187,7 +5187,7 @@
   ],
   "http://purl.org/dc/terms/source": [
    {
-    "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18"
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
    }
   ],
   "http://www.w3.org/2004/02/skos/core#definition": [
@@ -5352,14 +5352,14 @@
   ]
  },
  {
-  "@id": "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18",
+  "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18",
   "@type": [
    "http://purl.org/dc/terms/BibliographicResource"
   ],
   "http://purl.org/dc/terms/title": [
    {
     "@language": "en",
-    "@value": "Hamid's planner measure list, 2026-10-18, held outside the repository (EPM-DEC-001-0040)"
+    "@value": "The decision owner's planner measure list, 2026-10-18, held outside the repository (EPM-DEC-001-0040)"
    }
   ]
  },

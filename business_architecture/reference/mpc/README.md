@@ -1,6 +1,6 @@
 # Reference: Marathon Petroleum Corporation (MPC) — anchor company
 
-**Status:** Draft · **Owner:** Hamid Adesokan · **Created:** 2026-09-29
+**Status:** Draft · **Owner:** The decision owner · **Created:** 2026-09-29
 
 Marathon Petroleum Corporation (MPC) stands in for "a Downstream Oil & Gas
 company" so the ontology has a concrete, public, citable company to anchor
@@ -38,4 +38,4 @@ instances, KPIs and definitions against.
 | `pricing-domain-evidence.md` | Evidence for Pricing as a candidate data domain (MPC filings + EIA definitions) |
 | `mpc-performance-measures-evidence.md` | MPC's publicly defined performance measures (30, one of them read only in a not-confirmed copy, in a 33-row table that also lists 3 it does not publish), their grain, which drive the annual cash bonus, and a peer comparison; used for the `kpi` module's classification |
 | `loss-gain-and-feedstock-evidence.md` | MPC and MPLX statements on movement losses and gains and on renewable feedstock traceability (EPM-DEC-001-0048) |
-| `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (ruled by Hamid on 2026-10-18, EPM-DEC-001-0047; each row says whether it is applied) |
+| `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (ruled by the decision owner on 2026-10-18, EPM-DEC-001-0047; each row says whether it is applied) |

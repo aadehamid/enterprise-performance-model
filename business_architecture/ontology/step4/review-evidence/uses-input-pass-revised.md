@@ -1,6 +1,6 @@
 # Revised `uses-input` pass — 2026-09-26 (fourth revision)
 
-Responds to Hamid's review of the third revision. **Nothing applied** —
+Responds to the decision owner's review of the third revision. **Nothing applied** —
 approval requested. Supersedes the third revision.
 
 ## Changes from the third revision

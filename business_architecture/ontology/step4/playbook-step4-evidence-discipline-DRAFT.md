@@ -1,6 +1,6 @@
 # DRAFT — Playbook addition: Step 4 evidence discipline
 
-> Status: PROPOSED 2026-09-24. Not yet in the playbook. Hamid to review wording
+> Status: PROPOSED 2026-09-24. Not yet in the playbook. The decision owner to review wording
 > before it is added. Intended placement: new section after the step log
 > (before §4 Decision log), plus a short Step 4 step-log entry pointing to it.
 > Based on the repo working-tree copy (reviewer-evolved).
@@ -142,4 +142,4 @@ of patching the row.
 - **Write the failing check first:** every regression fix starts with a gate
   assertion watched failing on the broken state, then the fix, then the pass.
 - **Reviewer verdicts:** every evidence package gets the interrogate pass
-  (Act On / Consider / Noted / Dismissed) before Hamid reviews it.
+  (Act On / Consider / Noted / Dismissed) before the decision owner reviews it.

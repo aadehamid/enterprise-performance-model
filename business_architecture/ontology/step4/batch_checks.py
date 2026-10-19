@@ -2,7 +2,7 @@
 
 REVIEW_STANDARDS rule 8: a check of decided values compares each value with the
 record that decided it. For a batch, that record is the saved answer
-(`review-evidence/hamid-answers/<issue>-<batch>.md`), one numbered line per
+(`review-evidence/decision-owner-answers/<issue>-<batch>.md`), one numbered line per
 question: `N: a — “sentence”` or `N: b — “sentence”`. Standard library only, so
 evidence-gate.py can call it.
 """
@@ -61,10 +61,10 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
         where = f"question {number} ({row_id})"
         if r["question"] != str(number):
             problems.append(f"{where}: question is {r['question']}")
-        if r["hamid_answer"] != letter:
-            problems.append(f"{where}: hamid_answer {r['hamid_answer']} but the saved answer is {letter}")
-        if r["hamid_words"] != sentence:
-            problems.append(f"{where}: hamid_words differ from the saved answer's sentence")
+        if r["owner_answer"] != letter:
+            problems.append(f"{where}: owner_answer {r['owner_answer']} but the saved answer is {letter}")
+        if r["owner_words"] != sentence:
+            problems.append(f"{where}: owner_words differ from the saved answer's sentence")
         if r["scope_note_sentence"] != sentence:
             problems.append(f"{where}: scope_note_sentence differs from the saved answer's sentence")
         source = v2[row_id]["source_slug"]
@@ -76,7 +76,7 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
             continue
         if r["fresh_verdict"] != "APPROVE" or r["outcome"] != "Emitted as core:triggeredBy":
             problems.append(f"{where}: fresh_verdict/outcome must be APPROVE / Emitted as core:triggeredBy")
-        # A (b) answer is a conditional trigger. Its condition is Hamid's whole sentence,
+        # A (b) answer is a conditional trigger. Its condition is the decision owner's whole sentence,
         # recorded verbatim so no paraphrase can narrow or widen it.
         if letter == "b" and r["condition"] != sentence:
             problems.append(f"{where}: a conditional trigger's condition must be the answer's full sentence")
@@ -87,13 +87,13 @@ def triggers_batch_problems(rows, answer_text, questions, v2, facts):
     return problems
 
 
-# Phase 1 sweep (Hamid 2026-10-12, #207 comment 6133390674): the decided record is
+# Phase 1 sweep (the decision owner 2026-10-12, #207 comment 6133390674): the decided record is
 # the approved register, review-evidence/phase1-sweep/register.csv, approved as a
-# whole in review-evidence/hamid-answers/phase1-sweep.md.
+# whole in review-evidence/decision-owner-answers/phase1-sweep.md.
 SWEEP_APPROVAL = "approve register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all."
 SWEEP_FIELDS = ("verdict", "verb", "target_slug", "direction", "stored_fact", "condition", "scope_note_sentence",
                 "reason")
-SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (Hamid 2026-10-12, #207 comment 6133390674)"
+SWEEP_DECISION = "APPROVE: approved in the Phase 1 register (the decision owner 2026-10-12, #207 comment 6133390674)"
 SWEEP_HELD_OUTCOME = "Held: no relationship; question closed"
 # Issues whose register rows are adopted into Step 4. Each has
 # review-evidence/phase1-sweep/<issue>-review.csv covering exactly its register rows.
@@ -217,12 +217,12 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxono
     facts: (s, p, o) -> list of row IDs. taxonomy: the pinned baseline taxonomy text; when
     given, each emitting row's sentence must appear in its scope-note concept's block.
     The review covers exactly the issue's register rows. Each row repeats its
-    register row's decided values, Hamid's approval and the outcome they imply;
+    register row's decided values, the decision owner's approval and the outcome they imply;
     an emitting row is on its stored fact, and a no-relationship row is on no fact.
     """
     problems = []
     if SWEEP_APPROVAL not in approval_text:
-        problems.append("the saved approval does not contain Hamid's approval words")
+        problems.append("the saved approval does not contain the decision owner's approval words")
     expected = {rid for rid, reg in register.items() if reg["issue"] == issue}
     got = {r["row_id"] for r in rows}
     for rid in sorted(expected - got):
@@ -243,8 +243,8 @@ def sweep_batch_problems(issue, rows, register, approval_text, v2, facts, taxono
         for field in SWEEP_FIELDS:
             if r[field] != reg[field]:
                 problems.append(f"{rid}: {field} differs from the approved register")
-        if r["Hamid_decision"] != SWEEP_DECISION:
-            problems.append(f"{rid}: Hamid_decision must be {SWEEP_DECISION!r}")
+        if r["owner_decision"] != SWEEP_DECISION:
+            problems.append(f"{rid}: owner_decision must be {SWEEP_DECISION!r}")
         outcome = (SWEEP_HELD_OUTCOME if reg["verdict"] == "no-relationship"
                    else f"Emitted as {reg['stored_fact'].split()[1]}" if reg["stored_fact"] else None)
         if r["outcome"] != outcome:

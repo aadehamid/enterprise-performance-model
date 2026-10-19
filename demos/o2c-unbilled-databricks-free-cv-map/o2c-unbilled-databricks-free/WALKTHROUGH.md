@@ -74,7 +74,7 @@ jobs onto **one Free Edition workspace**:
 | Local Python | `uv` + dbt + mf | `uv` scripts in `scripts/` (SQL connector). Not MetricFlow. |
 
 Azure Databricks (`*.azuredatabricks.net`, Entra, Purview, classic
-compute in your subscription) is for the **actual project**. Hamid
+compute in your subscription) is for the **actual project**. The decision owner
 said so. This pack signs in at [login.databricks.com](https://login.databricks.com)
 and stays on Free.
 

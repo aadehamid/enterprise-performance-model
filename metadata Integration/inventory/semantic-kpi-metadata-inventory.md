@@ -2,7 +2,7 @@
 
 **ID:** EPM-STAGE-A-SEMANTIC-KPI-INVENTORY  
 **Status:** Draft evidence. Not a catalog. Not process authority. Not Stage B.  
-**Pin:** `aadehamid/enterprise-performance-model` `814cb79d2b79b51210d4e21170f4579c1940b891`  
+**Pin:** `<owner>/enterprise-performance-model` `814cb79d2b79b51210d4e21170f4579c1940b891`  
 **Scope:** `demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/`  
 **Extracted:** 2026-08-23 19:58 CT  
 **Out of scope:** learner folder, Track A, MetricFlow/dbt, `models/marts/schema.yml` (phantom), joined demos.

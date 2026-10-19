@@ -9,11 +9,11 @@
 
 ## Context
 
-In #205, Hamid answered 20 held `precedes`/`follows` rows as source author. For 17 of them his answers describe a sequence that holds per trade, delivery, claim, forecast version or other unit, sometimes only under a condition, and never as completion of a whole process. `core:precedes` stays locked as a process-level finish-to-start ("The source completes before the target begins"), so it cannot carry them. On PR #225 Hamid decided: "Define a scoped sequence relation for these answers before the core 1.0.0 release, tracked in its own issue under #207." Issue #226 tracks that work. The three other rows (REL-01227, REL-00184, REL-00149) have no sequence.
+In #205, the decision owner answered 20 held `precedes`/`follows` rows as source author. For 17 of them their answers describe a sequence that holds per trade, delivery, claim, forecast version or other unit, sometimes only under a condition, and never as completion of a whole process. `core:precedes` stays locked as a process-level finish-to-start ("The source completes before the target begins"), so it cannot carry them. On PR #225 the decision owner decided: "Define a scoped sequence relation for these answers before the core 1.0.0 release, tracked in its own issue under #207." Issue #226 tracks that work. The three other rows (REL-01227, REL-00184, REL-00149) have no sequence.
 
 ## Decision
 
-The 18 decisions, as posted on #226 ([summary](https://github.com/aadehamid/enterprise-performance-model/issues/226#issuecomment-6123931847), saved in `business_architecture/ontology/step4/review-evidence/226-design-summary.md`):
+The 18 decisions, as posted on #226 (summary, #226 comment 6123931847, saved in `business_architecture/ontology/step4/review-evidence/226-design-summary.md`):
 
 **Shape**
 
@@ -40,19 +40,19 @@ The 18 decisions, as posted on #226 ([summary](https://github.com/aadehamid/ente
 15. The ledger gets its own scoped-sequence category (617 emitting / 669 held / 12 deferred / 1 external governance / 2 structured flow / 17 scoped sequence = 1318), and `epm_facts.py counts` reports 17 nodes and 16 handoffs.
 16. The class, its properties and both code lists go in the `core` module. `core` 1.0.0 releases only when the relation and its SHACL shapes pass. This amends EPM-DEC-001-0013 and EPM-DEC-001-0025.
 17. In later batches (#209, #210 and after), an answer that gives a sequence only per a scope unit goes straight to a scoped-sequence verdict under these rules. A new design round is needed only for a new scope unit or an answer that does not fit the definition.
-18. Hamid's approval is saved under `step4/review-evidence/hamid-answers/` and quoted below.
+18. The decision owner's approval is saved under `step4/review-evidence/decision-owner-answers/` and quoted below.
 
 ## Alternatives considered
 
 - A plain link between the two processes with the scope only in scope-note text (Q1): no place for a scope or condition that a query or SHACL can check.
-- New sub-step identities such as "Initial trade capture" (Q2): Hamid's batch 2 answer says "Do not create a new target identity by inference", and it would reopen the finished Step 3 taxonomy.
+- New sub-step identities such as "Initial trade capture" (Q2): The decision owner's batch 2 answer says "Do not create a new target identity by inference", and it would reopen the finished Step 3 taxonomy.
 - Free-text scope (Q3) and a controlled list of conditions (Q10).
 - The name "handoff" (Q8): not every row hands something over.
 - Mapping to P-Plan `p:isPrecededBy` now (Q7): it orders steps inside one plan, with no scope or condition.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid accepted the recommendations in three rounds of the session; those answers are not saved, so this record does not quote them. He then approved the posted summary on #226 ([comment](https://github.com/aadehamid/enterprise-performance-model/issues/226#issuecomment-6123946413), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/226-design.md`): "Approved: Q1–Q18 as recommended in the comment above"
+The decision owner accepted the recommendations in three rounds of the session; those answers are not saved, so this record does not quote them. They then approved the posted summary on #226 (#226 comment 6123946413, saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/226-design.md`): "Approved: Q1–Q18 as recommended in the comment above"
 
 ## Amendments to earlier records
 
@@ -61,4 +61,4 @@ Hamid accepted the recommendations in three rounds of the session; those answers
 
 ## Evidence
 
-`business_architecture/ontology/step4/scoped-sequence/` (`scoped-sequences.csv`, `vocabulary.ttl`, `shapes.ttl`, `scoped-sequences.ttl`, `build.py`); `review-evidence/precedes-follows-batch1-review.csv` and `-batch2-review.csv`; `review-evidence/hamid-answers/205-batch1.md`, `205-batch2.md`, `225-option1.md`, `226-design.md`; `evidence-gate.py` section 2k.
+`business_architecture/ontology/step4/scoped-sequence/` (`scoped-sequences.csv`, `vocabulary.ttl`, `shapes.ttl`, `scoped-sequences.ttl`, `build.py`); `review-evidence/precedes-follows-batch1-review.csv` and `-batch2-review.csv`; `review-evidence/decision-owner-answers/205-batch1.md`, `205-batch2.md`, `225-option1.md`, `226-design.md`; `evidence-gate.py` section 2k.

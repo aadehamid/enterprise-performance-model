@@ -3,14 +3,14 @@
 **Title:** Downstream O&G Knowledge Homelab — Curriculum and Learning Modules  
 **Purpose:** Define an evidence-producing learning sequence that builds the Gasoline Netback / Refining Margin CPG capstone from conceptual model through a grounded AI-agent interface. Each module uses the personal, open-source homelab stack and a consistent Downstream O&G scenario.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-29  
 
 ## Curriculum intent and roadmap mapping
 
 This curriculum converts the six-phase roadmap into a learning path. Phase 0 is a preflight for the repository, Python environment, Docker Compose, PostgreSQL 18, and DuckDB. Modules 01–04 support Phase 2; Modules 05–06 support Phases 1 and 3; Modules 07–08 cover Phases 4 and 6; Modules 09–10 implement the KPI and lineage vertical slice; and Module 11 completes Phase 5. Clearly labeled extensions within Modules 04, 05, 06, 10, and 11 add the O2C process backbone, ERP/CRM source systems, master-data exercise, entity-linked unstructured-data path, an Owlready2/HermiT ontology reasoning gate, and an agent-agnostic MCP server with a tiered resolution model, without renumbering the established module sequence. The reasoning-gate and MCP/tiered-resolution extensions are adapted from patterns in AWS's Context Ontology Accelerator (ADR-HL-018 through ADR-HL-020 in `02-Tool-Selection-and-ADRs.md`; [AWS Context Ontology Accelerator docs](https://aws.github.io/context-ontology-accelerator/)).
 
-The sequence expands Hamid Adesokan’s original six-module sketch into eleven modules spanning conceptual modeling, controlled vocabularies, SKOS, RDF/RDFS/OWL, materialized and virtual RDF, SHACL, Neo4j, KPI engineering, lineage, and a graph-grounded agent. The capstone is the simplified **Gasoline Netback / Refining Margin CPG** KPI, combining public EIA inputs with synthetic terminal, custody-transfer, contract, order, and invoice facts. EIA publishes the spot-price and petroleum-marketing sources used for the exercises ([EIA Spot Prices](https://www.eia.gov/dnav/pet/pet_pri_spt_s1_d.htm); [EIA Petroleum Marketing Monthly](https://www.eia.gov/petroleum/marketing/monthly/)).
+The sequence expands the decision owner’s original six-module sketch into eleven modules spanning conceptual modeling, controlled vocabularies, SKOS, RDF/RDFS/OWL, materialized and virtual RDF, SHACL, Neo4j, KPI engineering, lineage, and a graph-grounded agent. The capstone is the simplified **Gasoline Netback / Refining Margin CPG** KPI, combining public EIA inputs with synthetic terminal, custody-transfer, contract, order, and invoice facts. EIA publishes the spot-price and petroleum-marketing sources used for the exercises ([EIA Spot Prices](https://www.eia.gov/dnav/pet/pet_pri_spt_s1_d.htm); [EIA Petroleum Marketing Monthly](https://www.eia.gov/petroleum/marketing/monthly/)).
 
 PostgreSQL retains operational facts, DuckDB retains analytical/KPI facts, and RDF/OWL supplies meaning. Ontop exposes relational sources virtually where possible; Fuseki and Neo4j receive only deliberate materializations, avoiding a graph copy as an independent business record.
 

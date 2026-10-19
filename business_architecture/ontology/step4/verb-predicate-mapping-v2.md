@@ -1,6 +1,6 @@
-# Verb → Predicate Mapping v2 — APPROVED (Hamid 2026-09-29, 16/16 sections)
+# Verb → Predicate Mapping v2 — APPROVED (the decision owner 2026-09-29, 16/16 sections)
 
-**Status:** approved 2026-09-29 (Hamid, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
+**Status:** approved 2026-09-29 (the decision owner, 16/16 sections); supersedes `verb-predicate-mapping.md` (v1).
 Current figures: `python3 scripts/epm_facts.py counts` (ledger, facts and the
 per-verb breakdown). The figure sections below are a snapshot as of #204 batch 1
 (2026-10-12), kept for the reconciliation they show; history of each figure:
@@ -10,7 +10,7 @@ per-verb breakdown). The figure sections below are a snapshot as of #204 batch 1
 so true k=40 and G1a 75 → 35. Every link after the uses-input pass shifts
 +2 emitting / −2 held. Independently verified by Cursor EPM against the
 artifacts. No mention changes bucket; no fact changes.*
-No emission script may use this mapping until Hamid approves it row by row.
+No emission script may use this mapping until the decision owner approves it row by row.
 **Baseline:** `388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9` (re-pinned 2026-10-13 for the #201 answers from the Phase 1 register; was `883bd57a1a1f98267489c875887462e11ed99027`).
 
 *Previous baseline:* `883bd57a1a1f98267489c875887462e11ed99027` (re-pinned 2026-10-13 for the #209 answers from the Phase 1 register; was `37fed949fbd2e7b333663e170717262e26ca73ac`).
@@ -32,7 +32,7 @@ mapping applies those mention-level holds separately),
 `requires-review.csv`, `assures-review.csv`, `enables-review.csv`,
 `canonical-facts.csv`, `contradictions.csv`.
 
-## The 5 mapping answers — Approved Baseline (Hamid 2026-09-26)
+## The 5 mapping answers — Approved Baseline (the decision owner 2026-09-26)
 
 > **Status:** Answers 1–5 are approved. Any later change needs a decision-log
 > entry. (Items 1–5 are the mapping answers; item 6, "Enablement is not
@@ -67,7 +67,7 @@ mapping applies those mention-level holds separately),
    An approval **never transfers authority** from the target to the source.
 
    Current disposition of the 132 emitting `enables` mentions (refreshed 2026-09-26):
-   - **G3 (84)** stored as `core:enabledBy` (approved by Hamid 2026-09-26 —
+   - **G3 (84)** stored as `core:enabledBy` (approved by the decision owner 2026-09-26 —
      the Section A explicit-reference approvals; Section B's 96 nearness-only
      rows are all held);
    - **5 former row-level verdicts** stored as `core:enabledBy` (REL-00243,
@@ -94,7 +94,7 @@ mapping applies those mention-level holds separately),
    - **G1b (29)** approved 2026-09-26: HOLD for workbook correction (merging
      into `dependsOnOutputOf` would change the verb — only an `informed-by`
      mention exists on the reverse pair);
-   - **G2 (15 rows)**: 13 emitting mentions with no triple (13 Hamid
+   - **G2 (15 rows)**: 13 emitting mentions with no triple (13 the decision owner
      verdicts: NoSeparateEnablesFact — the sequence fact already records the
      relationship); 2 held after superseding their earlier row-level
      approvals. The enables assertions are kept as non-emitting evidence.
@@ -126,9 +126,9 @@ mapping applies those mention-level holds separately),
    REL-00129 and REL-00728 checked as absent; their `precedes`/`follows`
    facts (on REL-00131 and REL-00734) checked as present.
 
-   **Status: Approved Baseline (Hamid 2026-09-26).**
+   **Status: Approved Baseline (the decision owner 2026-09-26).**
 4. **`requires` → `core:requires`** for 5 genuine prerequisite-condition rows, approved
-   by Hamid 2026-09-25 (REL-00158, REL-00168, REL-00247, REL-00872, REL-00873);
+   by the decision owner 2026-09-25 (REL-00158, REL-00168, REL-00247, REL-00872, REL-00873);
    REL-00208 held for workbook correction — no remap at emission.
    `core:requires`: the source cannot validly start, proceed, or reach its
    intended controlled state without the target activity or the condition the
@@ -146,7 +146,7 @@ mapping applies those mention-level holds separately),
    example `A precedes B` + `B follows A`) merge into one canonical fact. No
    transitivity asserted without a separate semantic decision.
 
-6. **Enablement is not reciprocal by default** (Hamid 2026-09-24). A mutual
+6. **Enablement is not reciprocal by default** (the decision owner 2026-09-24). A mutual
    `enables` pair (A enables B and B enables A) emits a direction only if that
    direction passes a context test independently. A direction held up only by
    its mirror row is not evidence. Control, authority, prerequisite, cadence,
@@ -162,7 +162,7 @@ mapping applies those mention-level holds separately),
    `governs` (stored CM-1-2-1-3 core:governedBy CM-1-2-2-3) and REL-01053 as
    `uses-input` (stored CM-1-3-8-4-1 core:dependsOnOutputOf CM-1-3-8-4-2).*
 
-   **The four dependency meanings** (Hamid 2026-09-25) — the promotion layer
+   **The four dependency meanings** (the decision owner 2026-09-25) — the promotion layer
    must not silently translate between them:
    - `enables`: the source process, capability, framework, artifact, or control
      output makes the target process able to operate as defined.
@@ -178,9 +178,9 @@ mapping applies those mention-level holds separately),
    business review when the relationship verb does not match the approved
    process definitions (precedent: REL-00936).
 
-## Canonical direction table (raw verb → stored triple) — Approved Baseline (Hamid 2026-09-26)
+## Canonical direction table (raw verb → stored triple) — Approved Baseline (the decision owner 2026-09-26)
 
-> **Status:** Rows 1–12 approved; `provides-input-to` and `governs` added by EPM-DEC-001-0027 (Hamid 2026-10-12). Two-cycle rules for `precedes` and
+> **Status:** Rows 1–12 approved; `provides-input-to` and `governs` added by EPM-DEC-001-0027 (the decision owner 2026-10-12). Two-cycle rules for `precedes` and
 > `governedBy` approved and gate-enforced. Zero-inverse-predicate check
 > gate-enforced. Later changes need a decision-log entry.
 
@@ -248,9 +248,9 @@ Emitting mentions in this table: 628 (the G1b row is non-emitting and shown
 for completeness). The 5 former row-level `core:enabledBy` verdicts were
 superseded 2026-09-26; none remains emitting.
 
-## Contradictions (3) — for Hamid
+## Contradictions (3) — for the decision owner
 
-**Property rule (Hamid 2026-09-24; tightened 2026-09-26):** whether a mutual
+**Property rule (the decision owner 2026-09-24; tightened 2026-09-26):** whether a mutual
 pair is a contradiction depends on the property.
 - **Sequence (`core:precedes`): no mutual pairs allowed.** A process cannot come
   both before and after another in the same lifecycle. Both mentions are held
@@ -261,7 +261,7 @@ pair is a contradiction depends on the property.
 - **`core:informedBy`: mutual pairs allowed.** Feedback loops are normal.
   Both directions emit if *each* has its own evidence; a direction promoted
   on nearness alone is held.
-- **`core:dependsOnOutputOf`: no two-cycles (hard gate, Hamid 2026-09-26).**
+- **`core:dependsOnOutputOf`: no two-cycles (hard gate, the decision owner 2026-09-26).**
   For a concept pair (A, B), the facts A → B and B → A cannot both be
   emitted. A detected pair blocks promotion until each row has an independent
   direction verdict; at most one direction is retained unless the source model
@@ -276,7 +276,7 @@ Ruled pairs (not contradictions):
   (nearness) and is held per the property rule; REL-00500 was held in the
   informed-by pass (2026-09-26) and is on no fact.
 - **Mutual governedBy, Accounting ↔ procedures child (REL-01309 / REL-00366):**
-  not a contradiction in the emitting set. REL-01309 **approved** by Hamid
+  not a contradiction in the emitting set. REL-01309 **approved** by the decision owner
   2026-09-24 — a parent capability governed by its own procedures child fits
   the approved Accounting-cluster pattern (set-versus-apply: the procedures
   child governs how the parent executes). REL-00366 held — **restates
@@ -308,7 +308,7 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
   REL-00873, the last with a credit-controlled-onboarding scope note);
   REL-00208 held for workbook correction (no remap at emission). (The CSV
   cell for REL-00873 still carries the superseded `HOLD /
-  D:hamid-verdict / TargetIdentityUnconfirmed /
+  D:owner-verdict / TargetIdentityUnconfirmed /
   Supersedes2026-09-25requiresApproval` verdict; the reversal and restored
   fact are recorded in `supersession-register.md` and `canonical-facts.csv`.)
 - `review-evidence/assures-8-review-batch.csv` — 8 rows decided 2026-09-26:
@@ -322,7 +322,7 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
   file.)
 - `enables-review.csv` — all 399 rows with pipeline-built group, proposed
   disposition, decision cells blank.
-- `review-evidence/enables-g1-split.csv` — G1 split per Hamid 2026-09-25:
+- `review-evidence/enables-g1-split.csv` — G1 split per the decision owner 2026-09-25:
   **G1a (81)** duplicates proposed for merge as evidence; **G1b (31)**
   proposed hold for workbook correction (verb change, not a duplicate).
 - `review-evidence/enables-g3-genuine-enablement-review-batch.csv` — G3
@@ -339,7 +339,7 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
   (`review-evidence/phase1-sweep/201-review.csv`).* (The B5 verdicts
   live in `review-evidence/enables-g3-section-b5-class-verdict.csv` — 42
   rows: the 36 B5 plus six outside-B supersessions; the G3 batch's 36 B5
-  `Hamid_decision` cells are blank.) Six further supersessions (REL-00129,
+  `owner_decision` cells are blank.) Six further supersessions (REL-00129,
   REL-00243, REL-00304, REL-00489, REL-00728, REL-01006) sit outside the
   Section B population. Every emitting `core:enabledBy` fact was matched to
   its target by an explicit reference in the source definition and carries
@@ -368,13 +368,13 @@ Zero reciprocal `core:dependsOnOutputOf` two-cycles is a hard gate.
 6. G1 split (G1a merge / G1b hold), then G2, then G3.
 7. The mapping doc itself (the 5 answers + canonical direction table) —
    **completed 2026-09-29** (figures refreshed 2026-09-26; section-by-section
-   approval complete 2026-09-29, Hamid).
+   approval complete 2026-09-29, the decision owner).
 8. Emission gate (sequence step, superseded): the 2026-09-25 plan held that
    nothing emits until every decision cell is resolved and the release
    checklist is green. Emission proceeded per-verb under the evidence
    discipline instead — 457 facts stored on `main`. The fresh no-consumer
    attestation box was checked 2026-09-29; the mapping-document sign-off
-   box was checked 2026-09-29 (16/16 sections). Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190).
+   box was checked 2026-09-29 (16/16 sections). The decision owner: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190).
    Step 4 PROMOTED 2026-09-30.
 
 Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
@@ -384,8 +384,8 @@ Steps 1–6 completed 2026-09-26: requires (5 approved, 1 held), assures
 (1 recorded exception), S&T sweep decided, G1a decided (77 APPROVE in the
 duplicate-review batch), G1b 29 holds decided with REL-00469/REL-00489 cells
 blank, G2 decided, G3 decided with B5 verdicts in the class-verdict file
-(the G3 batch's 36 B5 `Hamid_decision` cells are blank; `enables-g1-split.csv`
-carries no decisions — its `Hamid_decision` cells are blank).
+(the G3 batch's 36 B5 `owner_decision` cells are blank; `enables-g1-split.csv`
+carries no decisions — its `owner_decision` cells are blank).
 
 **Resolved 2026-09-26:** the 3 `dependsOnOutputOf` reciprocal pairs are
 resolved — pairs 2 and 3 retained one direction each (REL-00862, REL-01029;
@@ -393,7 +393,7 @@ each reverse fact verified unique before removal); pair 1 retained neither
 (REL-01061/REL-01065, neither on a fact); `contradictions.csv` is 0. The
 no-two-cycle hard gate above supersedes the earlier "allowed where each
 direction is independently evidenced" reading. The 2 mutual `enabledBy`
-pairs were decided by row-level Hamid verdict overriding the 2026-09-24
+pairs were decided by row-level the decision owner's verdict overriding the 2026-09-24
 group hold: one direction each is stored on `core:enabledBy` (REL-01303,
 REL-01056); the reverses (REL-01312, REL-01053) remain held —
 see `review-evidence/enabledby-mutual-review-batch.csv`. *Phase 1 sweep,
@@ -402,7 +402,7 @@ as `core:governedBy` (REL-01312, raw verb `governs`) and
 `core:dependsOnOutputOf` (REL-01053, raw verb `uses-input`);
 `review-evidence/phase1-sweep/210-review.csv`.*
 
-## Governed-by (added 2026-09-25, Hamid)
+## Governed-by (added 2026-09-25, the decision owner)
 
 - **Governed-by:** a process/capability operates within a policy, authority,
   control framework, delegation, limit, or approved rule owned by another
@@ -432,7 +432,7 @@ as `core:governedBy` (REL-01312, raw verb `governs`) and
   REL-00406, REL-00907, REL-00937, REL-01005, REL-01228, REL-01256), none on
   a fact; no reciprocal two-cycles (gate-checked).
 
-## Requires (added 2026-09-25, Hamid)
+## Requires (added 2026-09-25, the decision owner)
 - **`core:requires`:** a directed relationship in which the source activity
   cannot validly start, complete, proceed, or reach its intended controlled
   state without the target activity, its completed control, or its required
@@ -451,17 +451,17 @@ as `core:governedBy` (REL-01312, raw verb `governs`) and
   decision must be established under the applicable onboarding policy. The
   scope note lives in the rationale column; the stored triple is plain
   `core:requires`. (The `requires-6-review-batch.csv` cell for REL-00873
-  still carries the superseded `HOLD / D:hamid-verdict /
+  still carries the superseded `HOLD / D:owner-verdict /
   TargetIdentityUnconfirmed / Supersedes2026-09-25requiresApproval` verdict;
   the reversal and restored fact are recorded in `supersession-register.md`
   and `canonical-facts.csv`.)
 - Requires mapping: approved for these five evidenced rows only; no blanket
   remapping rule approved.
 
-## Basis change versus bucket change (standing rule, Hamid 2026-09-25)
+## Basis change versus bucket change (standing rule, the decision owner 2026-09-25)
 
 - Approving a row that is already emitting changes only its basis
-  (proposed → `D:hamid-verdict`); the count does not move.
+  (proposed → `D:owner-verdict`); the count does not move.
 - Counts change only when a row moves between buckets: emitting ↔ held ↔
   deferred (12 AmbiguousDeferred) ↔ external governance (1
   ExternalGovernanceReference, REL-00022) ↔ structured flow (2
@@ -469,7 +469,7 @@ as `core:governedBy` (REL-01312, raw verb `governs`) and
   emitted as scoped-sequence nodes; added by EPM-DEC-001-0026, 2026-10-12).
   Every expected ledger effect is stated in bucket terms from now on.
 
-## Assures (added 2026-09-25, Hamid)
+## Assures (added 2026-09-25, the decision owner)
 
 - Stored direction follows the dependent-to-dependency rule: `core:assuredBy`
   runs from the thing being assured to the assurance activity.
@@ -482,7 +482,7 @@ as `core:governedBy` (REL-01312, raw verb `governs`) and
 - A row whose direction is already on the workbook backlog is not emitted on
   any reading of the verb; direction must be corrected first.
 
-## `core:assuredBy` scope boundary (approved, Hamid 2026-09-26)
+## `core:assuredBy` scope boundary (approved, the decision owner 2026-09-26)
 
 > `core:assuredBy` applies when the assurance activity performs a defined
 > governance, compliance, quality, review, control-testing, or equivalent
@@ -500,11 +500,11 @@ and no substitute emitted.
 > for all five, per `review-evidence/identity-scope-explicit-reference-test.csv`
 > (not a `match_type` — `identity-scope-match-types.csv` has no rows for
 > these five; they stay blank).
-> #155 verdicts (5 APPROVE / 3 HOLD, D:hamid-verdict) stand — this note
+> #155 verdicts (5 APPROVE / 3 HOLD, D:owner-verdict) stand — this note
 > records basis only: no bucket change, no re-review, no Rule 6 gate on
 > approved rows.
 
-## Constrained-by (added 2026-09-26, Hamid)
+## Constrained-by (added 2026-09-26, the decision owner)
 
 - **`core:constrainedBy`** is stored from the activity, decision, process, or
   outcome whose feasible choices are bounded to the activity, policy,
@@ -538,10 +538,10 @@ and no substitute emitted.
 > **Identity basis (2026-09-28):** per
 > `review-evidence/identity-scope-explicit-reference-test.csv`, `basis_before`
 > is nearness-only for REL-00087, REL-00091, REL-00099, and REL-00894.
-> #156 verdicts (10 APPROVE / 1 HOLD, D:hamid-verdict) stand — this note
+> #156 verdicts (10 APPROVE / 1 HOLD, D:owner-verdict) stand — this note
 > records basis only: no bucket change, no re-review.
 
-## Triggers (added 2026-09-26, Hamid)
+## Triggers (added 2026-09-26, the decision owner)
 
 - **`core:triggeredBy`** is stored from an activity initiated or materially
   invoked by a defined event, exception, monitoring outcome, change, referral,
@@ -568,9 +568,9 @@ and no substitute emitted.
   (trigger, route to, refer, escalate, hand off). A statement of where work
   is done does not count.
 - Reviewed 2026-09-26 (18 rows): 2 STAND (rule 4: REL-00725, REL-00897);
-  5 PROMOTE (`D:hamid-verdict`: REL-00127, REL-00235, REL-00236, REL-00246,
+  5 PROMOTE (`D:owner-verdict`: REL-00127, REL-00235, REL-00236, REL-00246,
   REL-00901 — each with an event-to-target citation); 11 HOLD
-  (`D:hamid-verdict` / `NoAffirmativeTriggerLink` / `Supersedes2026-09-26Approval`:
+  (`D:owner-verdict` / `NoAffirmativeTriggerLink` / `Supersedes2026-09-26Approval`:
   REL-00049, REL-00163, REL-00169, REL-00170, REL-00252, REL-00291, REL-00396,
   REL-00398, REL-00400, REL-00403, REL-00892). 7 `core:triggeredBy` facts
   emitting. (The `triggers-18-review-batch.csv` cells still show `APPROVE` on
@@ -580,17 +580,17 @@ and no substitute emitted.
   controls, not universal — REL-00897 is a formal delinquency referral, not
   every delinquency; REL-00901 is analysis that detects suspected fraud, not
   every analyzed transaction.
-- #204 batch 1 (Hamid 2026-10-12, comment 6130380041): all 11 held rows
+- #204 batch 1 (the decision owner 2026-10-12, comment 6130380041): all 11 held rows
   answered with a trigger sentence added to the source scope note, and all
   11 now emit (18 `core:triggeredBy` facts). Seven are conditional triggers
   (REL-00049, REL-00291, REL-00892, REL-00163, REL-00169, REL-00170,
   REL-00252): the condition in each sentence defines the trigger event, and
   invoking the target for assessment does not approve its eventual action.
   Four are unconditional for the findings their sentences name (REL-00396,
-  REL-00398, REL-00400, REL-00403). Hamid adopted them as reference-model
+  REL-00398, REL-00400, REL-00403). The decision owner adopted them as reference-model
   operating rules. Row conditions: `review-evidence/triggers-batch1-review.csv`.
 
-## No-two-cycle rule (hard gate, Hamid 2026-09-26)
+## No-two-cycle rule (hard gate, the decision owner 2026-09-26)
 
 > **No two-cycle rule for `core:dependsOnOutputOf`:** for a concept pair
 > (A, B), the facts A → B and B → A cannot both be emitted under
@@ -605,7 +605,7 @@ and no substitute emitted.
   only — but the uses-input pass later held it as wrong-concept, and neither
   REL-01061 nor REL-01065 emits).
 
-## Unique-candidate triage-signal rule (Hamid 2026-09-26)
+## Unique-candidate triage-signal rule (the decision owner 2026-09-26)
 
 > **A unique-candidate match is a triage signal only.** A candidate selected
 > only through label similarity, unique-candidate filtering, structural
@@ -625,7 +625,7 @@ working, not an exception to it.)*
   unique and removed; the global reciprocal-cycle assertion now requires
   zero two-cycles.
 
-## Hierarchy non-duplication rule (hard gate, Hamid 2026-09-26)
+## Hierarchy non-duplication rule (hard gate, the decision owner 2026-09-26)
 
 > **Ancestor/descendant non-duplication rule:** Do not emit a semantic
 > relationship solely because the source and target are in an
@@ -651,7 +651,7 @@ working, not an exception to it.)*
   precedent for automatic emission. Its match basis is included in the
   scope census; the recorded exception stands only if it passes all six
   exception conditions.
-- **Recorded exceptions (Hamid 2026-09-26, governed-by pass).** Each passes
+- **Recorded exceptions (the decision owner 2026-09-26, governed-by pass).** Each passes
   all six exception conditions and is **not a precedent** for automatic
   emission:
   - **REL-00531** (`CM-1-3-1-3-1 core:governedBy CM-1-3-1-3`).
@@ -662,14 +662,14 @@ working, not an exception to it.)*
     (3) Rationale: the citation names a specific governance instrument
     (the shared personal-data governance statement), not the hierarchy path.
     (4) Hierarchy path: CM-1-3-1-3-1 → CM-1-3-1-3 (child → parent).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
   - **REL-00542** (`CM-1-3-1-4-1 core:governedBy CM-1-3-1-4`).
     (1) Independent semantics: same privacy-governance control as REL-00531.
     (2) Identity: source CM-1-3-1-4-1, target CM-1-3-1-4 (stable-ID).
     (3) Rationale: citation names the shared personal-data governance
     statement, not the hierarchy path.
     (4) Hierarchy path: CM-1-3-1-4-1 → CM-1-3-1-4 (child → parent).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
   - **REL-00588** (`CM-1-3-2-1-1 core:governedBy CM-1-3-2-1`).
     (1) Independent semantics: a legal constraint — "franchise constraints…
     (cluster PMPA statement at [parent])"; PMPA is the franchise law, an
@@ -678,19 +678,19 @@ working, not an exception to it.)*
     (3) Rationale: the citation names an external legal constraint, not
     the hierarchy path.
     (4) Hierarchy path: CM-1-3-2-1-1 → CM-1-3-2-1 (child → parent).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
   - **REL-00601** (`CM-1-3-2-2-2 core:governedBy CM-1-3-2-2`).
     (1) Independent semantics: same PMPA legal constraint as REL-00588.
     (2) Identity: source CM-1-3-2-2-2, target CM-1-3-2-2 (stable-ID).
     (3) Rationale: citation names the PMPA franchise-law constraint.
     (4) Hierarchy path: CM-1-3-2-2-2 → CM-1-3-2-2 (child → parent).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
   - **REL-00623** (`CM-1-3-2-4-2 core:governedBy CM-1-3-2-4`).
     (1) Independent semantics: same PMPA legal constraint as REL-00588.
     (2) Identity: source CM-1-3-2-4-2, target CM-1-3-2-4 (stable-ID).
     (3) Rationale: citation names the PMPA franchise-law constraint.
     (4) Hierarchy path: CM-1-3-2-4-2 → CM-1-3-2-4 (child → parent).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
   - **REL-00106** (`CM-1-1-4-7-7 core:governedBy CM-1-1-4`).
     (1) Independent semantics: decision rights — "the Refinery Planning and
     Optimization (CM-1-1-4) decision this step records"; the ancestor
@@ -700,7 +700,7 @@ working, not an exception to it.)*
     ancestor, not the hierarchy path.
     (4) Hierarchy path: CM-1-1-4-7-7 → CM-1-1-4-7 → CM-1-1-4
     (grandchild → ancestor).
-    (5) Hamid approved 2026-09-26. (6) Target identified by stable ID.
+    (5) the decision owner approved 2026-09-26. (6) Target identified by stable ID.
 - Applies to every predicate, not only `governedBy`.
 - The 10 held rows are on the workbook backlog for source-author
   clarification.
@@ -708,9 +708,9 @@ working, not an exception to it.)*
   that emits must carry a recorded exception that passes all six
   conditions.
 
-**Status: Approved Baseline (Hamid 2026-09-26).**
+**Status: Approved Baseline (the decision owner 2026-09-26).**
 
-## Enablement definition (reinforced by the S&T sweep, Hamid 2026-09-26)
+## Enablement definition (reinforced by the S&T sweep, the decision owner 2026-09-26)
 
 - **Enablement:** a maintained, governed, or operationally necessary
   capability/input base that makes the target able to perform its stated
@@ -736,7 +736,7 @@ working, not an exception to it.)*
   population) — each had judged the relationship plausible without evidence
   of which target the source meant.
 
-## Duplicate-evidence merge (defined 2026-09-26, Hamid G1a verdict)
+## Duplicate-evidence merge (defined 2026-09-26, the decision owner's G1a verdict)
 
 - **Duplicate evidence merge:** retention of an additional source assertion
   as provenance for a canonical fact already independently supported by
@@ -790,14 +790,14 @@ working, not an exception to it.)*
   regenerated to replace the `<generator object …>` values with fixed,
   readable values.
 
-**Status: Approved Baseline (Hamid 2026-09-26).**
-*Figure correction 2026-09-29 (Hamid-authorized; independently verified by
+**Status: Approved Baseline (the decision owner 2026-09-26).**
+*Figure correction 2026-09-29 (owner-authorized; independently verified by
 Cursor EPM): these counts read 77 → 33 emitting with k=42. The applied hold
 set has 41 rows including already-held REL-00152, so true k=40 and 77 → 36
 attached (35 emitting); REL-00152 was never re-attached. The approval's
 substance (merge-as-duplicate-evidence rule) is unchanged.*
 
-## Recommendation versus enablement (added 2026-09-25, Hamid)
+## Recommendation versus enablement (added 2026-09-25, the decision owner)
 
 - **Recommendation rule:** a process that recommends, advises, or proposes an
   input which another process may accept, modify, or reject does **not**
@@ -832,9 +832,9 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   enable the **production of the recommendation**. They do not assert
   decision authority, a binding plan, or trade approval.
 
-**Status: Approved Baseline (Hamid 2026-09-26).**
+**Status: Approved Baseline (the decision owner 2026-09-26).**
 
-## G1b no-verb-change rule (hard gate, Hamid 2026-09-26)
+## G1b no-verb-change rule (hard gate, the decision owner 2026-09-26)
 
 - **Rule:** when an `enables` source assertion has only an opposite-direction
   `informed-by` counterpart and no independently approved `uses-input`
@@ -851,7 +851,7 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   record. A reverse `informed-by` row is evidence only for its own
   `informedBy` fact (Answer 2). It never establishes target identity or
   predicate for the opposite-direction row.
-- **Precedent:** 29 G1b rows held (HOLD / D:hamid-verdict / G1bNoVerbChange);
+- **Precedent:** 29 G1b rows held (HOLD / D:owner-verdict / G1bNoVerbChange);
   28 stored `core:dependsOnOutputOf` facts removed after fact-provenance
   uniqueness validation (all 28 were unique single-row facts); reverse
   informed-by facts preserved on their own records. REL-00489's "leave
@@ -875,4 +875,4 @@ substance (merge-as-duplicate-evidence rule) is unchanged.*
   otherwise the reverse row is held with no fact. For REL-00489 — superseded;
   no emitted fact. For REL-00469 — no emitted fact.
 
-**Status: Approved Baseline (Hamid 2026-09-26).**
+**Status: Approved Baseline (the decision owner 2026-09-26).**

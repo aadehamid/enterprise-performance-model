@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d Phase 1 execution: critical semantic-collision renames (8).
 
-Approved by Hamid 2026-09-21 with two label-policy refinements:
+Approved by the decision owner 2026-09-21 with two label-policy refinements:
   1. CM-1-1-1-1 -> "Produce Demand Forecast" (verb-led); "Demand Forecasting"
      is NOT retained as an altLabel (L3 keeps it as prefLabel).
   2. The five "Define KPI Framework" rows take domain-specific Measurement

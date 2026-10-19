@@ -59,7 +59,7 @@ gate was run against, not the pin. Do not retitle the checklist's
 - **Gate:** `evidence-gate.py` — 426 PASS, 0 FAIL — **GATE GREEN**
 - **Gate-asserted figures:** promoted==1066, held==237, canonical-facts==468,
   contradictions==0. Section 2i now checks, in one check, that the 11 #204
-  batch 1 review rows match Hamid's saved answer row by row and emit their
+  batch 1 review rows match the decision owner's saved answer row by row and emit their
   `core:triggeredBy` facts (`batch_checks.py`), replacing eleven per-row
   checks: 436 → 426 PASS.
 
@@ -71,7 +71,7 @@ gate was run against, not the pin. Do not retitle the checklist's
   contradictions==0. A new check runs `batch_checks.sweep_batch_problems`
   over each adopted issue's `review-evidence/phase1-sweep/<issue>-review.csv`:
   the file holds exactly that issue's register rows, each row matches the
-  approved register, its outcome and Hamid_decision follow from it, emitting
+  approved register, its outcome and owner_decision follow from it, emitting
   rows carry their fact and no-relationship rows carry none. It replaces ten per-row hold checks for the #206 rows
   that now emit: 426 → 417 PASS. A second check requires exactly one review
   file per adopted issue (`batch_checks.SWEEP_ADOPTED`), and the per-issue

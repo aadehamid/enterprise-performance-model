@@ -1,7 +1,7 @@
 # Step 4 Design Proposal — Process-definition ontology & `intake:` retirement
 
-**Status:** Survey and design proposal for Hamid's review. Nothing implemented, no branches, no PRs.
-**Source:** `aadehamid/enterprise-performance-model`, main HEAD `2d5529841cd33cab427f1d72dccf669c65516d77` (verified read-only via GitHub API, 2026-09-22).
+**Status:** Survey and design proposal for the decision owner's review. Nothing implemented, no branches, no PRs.
+**Source:** `<owner>/enterprise-performance-model`, main HEAD `2d5529841cd33cab427f1d72dccf669c65516d77` (verified read-only via GitHub API, 2026-09-22).
 **Input artifact:** `business_architecture/ontology/build/output/step3-taxonomy.ttl` (683 concepts, 14,496 triples, 681 broader links).
 
 **Playbook intent for Step 4** (plan table + decision log): build the process-definition ontology — `ProcessDefinition`/`ProcessType` classes; systems, variants, lanes, flags, capabilities, value streams — and promote the provisional `intake:` annotations to real properties between concept URIs, retiring the `intake:` predicates. The RDFS/OWL "why we chose it" section already anticipates real classes (`ProcessDefinition`, `ResponsibilityAssignment`, `NamedKPI`); Step 6 then layers planned-vs-observed execution (PROV-O) on top of Step 4's planned flow model.
@@ -95,7 +95,7 @@ Per the standing plan ("inputs/outputs → flow modeling"), Step 4 mints `core:I
 ## 5. Cutover approach (ordered)
 
 1. **Pre-Step-4 workbook patch (separate, small).** Normalize before any promotion: fix the 16 `relatedConcepts` cells with stale pre-R1 bare targets ("Refinery Planning" → "Refinery Planning and Optimization"; "Refinery Scheduling" → "Refinery Production Planning and Scheduling") — subjects: CM-1-1-2-10, CM-1-1-2-12, CM-1-1-2-13, CM-1-1-3-7-1, CM-1-1-3-7-2, CM-1-1-4-7-7, CM-1-1-4-7-8, CM-1-1-7-2-6, CM-1-2-1-1-1, CM-1-2-5-1-2, CM-1-2-5-2-2, CM-1-2-5-2-3, CM-1-2-5-2, CM-1-1-7-2, CM-1-2-1-1, CM-1-1-4-7 — and resolve the 7 non-matching bare targets (Data Governance [external workstream], Monthly Operating Plan, Network Design, "Manage Trading Books & Strategies Structure", "contemporaneous assumption basis for Regional Backcasting" [prose, not a concept]). Workbook patch → TTL regen → gates, as its own review.
-2. **Step 4a — vocabulary.** Author `core:` classes + ~20 properties with `rdfs:label`, `skos:definition`, `rdfs:domain`/`range` (Hamid-reviewed batch). Additive only.
+2. **Step 4a — vocabulary.** Author `core:` classes + ~20 properties with `rdfs:label`, `skos:definition`, `rdfs:domain`/`range` (owner-reviewed batch). Additive only.
 3. **Step 4b — migration.** New `build/step4-promote-intake.py`: parses the workbook Phase-1 columns (the authoring source of truth, not the TTL strings) and emits the new triples; writes a held-for-review report for ambiguous / unresolvable targets instead of emitting them.
 4. **Cutover: flag-day in one release.** The generator's `intake:` block is replaced by the new emission; the release drops all 5,571 `intake:` triples and adds the promoted model. (Rationale §6.)
 5. **Pipeline updates.** Gate checker: assert zero `intake:` triples + assert the new properties' invariants (target resolvability, controlled vocabs, flow-node dedup). Report template updated. Workbook columns unchanged (they remain the authoring source).
@@ -107,8 +107,8 @@ Per the standing plan ("inputs/outputs → flow modeling"), Step 4 mints `core:I
 
 - **New vocabulary (classes, properties, new triples): minor** — purely additive.
 - **Removing the 5,571 `intake:` triples: major.** Version-policy test: "would every query, report, and Genie answer produced under the old data still be correct?" — any consumer reading `intake:` predicates breaks. "When in doubt, it's major."
-- **Retirement mode: outright removal, not `owl:deprecated` aliases.** The `intake:` namespace was explicitly provisional ("explicitly NOT the Step 4 model"), was never a published contract, and Gate 2 evidence stands: **zero consumers** (foundation stage, Hamid 2026-09-22). Deprecating a staging namespace would double ~5.5k triples of dead weight for ceremony. Document the removal in the changelog instead.
-- **Recommendation:** ship the Step 4 release as the first versioned release (`core` 1.0.0 + release 1.0.0), with the changelog recording the `intake:` retirement as the breaking change from the unversioned baseline. Majors require Hamid's approval — which starting Step 4 constitutes.
+- **Retirement mode: outright removal, not `owl:deprecated` aliases.** The `intake:` namespace was explicitly provisional ("explicitly NOT the Step 4 model"), was never a published contract, and Gate 2 evidence stands: **zero consumers** (foundation stage, the decision owner 2026-09-22). Deprecating a staging namespace would double ~5.5k triples of dead weight for ceremony. Document the removal in the changelog instead.
+- **Recommendation:** ship the Step 4 release as the first versioned release (`core` 1.0.0 + release 1.0.0), with the changelog recording the `intake:` retirement as the breaking change from the unversioned baseline. Majors require the decision owner's approval — which starting Step 4 constitutes.
 
 ---
 
@@ -117,7 +117,7 @@ Per the standing plan ("inputs/outputs → flow modeling"), Step 4 mints `core:I
 1. **Target ambiguity:** 6 `relatedConcepts` target names match 2–5 concepts each (Actualizations, Analyze Data, Define Analysis Objectives & Scope, Determine Taxability, Document Findings, Source & Collect Information). Migration must hold these for human disambiguation.
 2. **Stale references:** the 16 cells in §5(1) missed the R1 stale-label sweep; promoting them unresolved would bake dangling targets into object properties.
 3. **Separator inconsistency:** `referenceSources` cells mix `|` and `;` separators and carry annotation suffixes — parser must normalize.
-4. **`processHorizon` semantic mixing:** cadence vs mode vs planning-level values in one column; controlled-vocab normalization needs Hamid's value list.
+4. **`processHorizon` semantic mixing:** cadence vs mode vs planning-level values in one column; controlled-vocab normalization needs the decision owner's value list.
 5. **`responsibleDomain` free text:** "Cross-functional (…)" variants need a multi-value or interim-literal decision before Step 5.
 6. **Flow-node dedup:** ~1,900 `InformationObject` nodes from free prose; near-duplicate strings will need a review pass to avoid a noisy flow graph.
 7. **`conceptTypeCheck` vs CM-1-3-1-6:** the capability-vs-process modeling question is still open; a datatype property now keeps options open, class promotion later is additive.
@@ -127,16 +127,16 @@ Per the standing plan ("inputs/outputs → flow modeling"), Step 4 mints `core:I
 ## 8. Effort estimate (concrete steps, review-batch sized)
 
 1. Workbook patch batch: 16 stale cells + 7 target resolutions → regen → gates. (1 batch)
-2. Core vocabulary authoring: 2 classes + ~20 properties with definitions. (1 Hamid-reviewed batch)
+2. Core vocabulary authoring: 2 classes + ~20 properties with definitions. (1 owner-reviewed batch)
 3. `step4-promote-intake.py`: parser + emitter + held-for-review report. (1 batch)
 4. Generator swap (`step3-skos-taxonomy.py`), gate-checker updates, report template. (1 batch)
-5. Full gates + workbook validation + Hamid review → merge. (1 batch)
+5. Full gates + workbook validation + the decision owner's review → merge. (1 batch)
 
 **Total: ~5 review batches.** No Step 5/6/9 work is pulled in; SHACL for the new controlled vocabs lands in Step 9 as planned.
 
 ---
 
-## 9. Decision questions for Hamid
+## 9. Decision questions for the decision owner
 
 1. **Vocabulary namespace:** `core:` (`https://w3id.org/lsc/ontology/modules/core/`) for the new classes/properties, keeping `proc:` for concept instances? (Recommended: yes — APPROVED as Q1, 2026-09-22.)
 2. **Retirement mode:** flag-day removal of all `intake:` triples in the Step 4 release (recommended), vs. a deprecated-alias transition release?

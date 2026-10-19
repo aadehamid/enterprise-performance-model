@@ -45,7 +45,7 @@
 
 **Verification (2) Step 9 / Appendix B remainder.** No contradiction with Step 9 (small slice, SHACL Core first, failing shape is a question) or with Appendix B's remaining text except the worked Turtle header still types only `owl:Ontology` while the new paragraph requires ConceptScheme when concepts are inScheme that IRI.
 
-**Verification (3) Decision log.** Newest-first: core 1.0.0 released (2026-10-13), then Playbook method update, then Phase 1. Entry states merge d8b16e1 and tag `core-v1.0.0`; tag peels to d8b16e1; Hamid quote matches `hamid-answers/core-1-0-0-release.md`. Miss: checklist still future-tense.
+**Verification (3) Decision log.** Newest-first: core 1.0.0 released (2026-10-13), then Playbook method update, then Phase 1. Entry states merge d8b16e1 and tag `core-v1.0.0`; tag peels to d8b16e1; the decision owner's quote matches `decision-owner-answers/core-1-0-0-release.md`. Miss: checklist still future-tense.
 
 **How this could pass review while still being wrong.** A reviewer who only diffs the two changed files would miss the checklist. Figures 5571/640/1003 were moved, not re-derived. Residual cardinality overstatement vs the shipped slice. Turtle example vs ConceptScheme paragraph.
 

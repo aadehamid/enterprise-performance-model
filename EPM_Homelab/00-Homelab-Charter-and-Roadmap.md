@@ -3,12 +3,12 @@
 **Title:** Downstream O&G Knowledge Homelab — Charter and Roadmap  
 **Purpose:** Establish the personal learning mission, architectural boundaries, capstone pilot, and delivery sequence for the homelab. This document is the master index for the six supporting homelab documents.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-29  
 
 ## Vision
 
-The **Downstream O&G Knowledge Homelab** exists to deepen Hamid Adesokan's ontology, RDF/OWL, Neo4j, R2RML, AI-agent, and Python data-engineering skills through one realistic but self-contained Downstream Oil & Gas scenario. Rather than learning each technology in isolation, the homelab builds an end-to-end reference architecture around refining margin/netback, wholesale rack marketing, terminal custody transfer, retail fuel, and order-to-cash. The result should be a portfolio-worthy working system that demonstrates how business meaning, operational facts, governed KPIs, semantic models, knowledge graphs, and agentic consumption connect in practice.
+The **Downstream O&G Knowledge Homelab** exists to deepen the decision owner's ontology, RDF/OWL, Neo4j, R2RML, AI-agent, and Python data-engineering skills through one realistic but self-contained Downstream Oil & Gas scenario. Rather than learning each technology in isolation, the homelab builds an end-to-end reference architecture around refining margin/netback, wholesale rack marketing, terminal custody transfer, retail fuel, and order-to-cash. The result should be a portfolio-worthy working system that demonstrates how business meaning, operational facts, governed KPIs, semantic models, knowledge graphs, and agentic consumption connect in practice.
 
 ## Learning objectives
 

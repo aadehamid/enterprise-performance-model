@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d: PTC-001 workbook updates (partial resolution).
 
-Hamid's decision (2026-09-21, revised proposal): the tree pass moved two
+The decision owner's decision (2026-09-21, revised proposal): the tree pass moved two
 rows and tombstoned Commercial Development. This script mirrors those
 changes into step3c-definition-authoring-workbook.xlsx:
 
@@ -118,7 +118,7 @@ RISK_SCOPE = (
 
 CANDIDATE_NOTE = (
     "Step 3d PTC-001 tree pass (2026-09-21): new Candidate architecture node — "
-    "structural placement approved via ptc-001-tree-proposal.md (Hamid). "
+    "structural placement approved via ptc-001-tree-proposal.md (the decision owner). "
     "Definition authoring queued as a follow-up mini-batch."
 )
 

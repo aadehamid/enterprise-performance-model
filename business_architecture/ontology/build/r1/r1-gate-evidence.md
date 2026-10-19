@@ -1,6 +1,6 @@
 # R1 Refining reclassification — gate evidence
 
-Hamid-approved decision package: `r1-refining-proposal.md` (workspace;
+owner-approved decision package: `r1-refining-proposal.md` (workspace;
 Candidate decision recorded 2026-09-22). This file records the evidence for
 the four PR gates defined in that package, with exact re-verification
 instructions. All paths below are relative to the repository root.
@@ -38,14 +38,14 @@ are required arguments):
 
 ## Gate 2 — path compatibility
 
-Hamid stated 2026-09-22 (recorded): **"Right now no consumer have been
+The decision owner stated 2026-09-22 (recorded): **"Right now no consumer have been
 consuming what we are building. We are building the foundation that
 everything else will connect to later."** This is the superseding fact for
 Gate 2: no hierarchy-dependent consumer exists yet, so no consumer can break.
 
 - `build/r1/r1-path-compatibility-register.csv` — 42 data rows (one per
   migrated concept) plus header. Every row's disposition:
-  **"No consumer — foundation stage, confirmed 2026-09-22 (Hamid)"**.
+  **"No consumer — foundation stage, confirmed 2026-09-22 (the decision owner)"**.
 - `build/r1/r1-path-compatibility-register.md` — human-readable companion.
 - `build/r1/r1-consumer-inventory-checklist.md` — the external-team inventory
   (Power BI / RLS-OLS / catalog / data products / saved queries). **This

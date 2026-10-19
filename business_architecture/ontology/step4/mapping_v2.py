@@ -9,7 +9,7 @@ from collections import defaultdict, Counter
 BASE = os.path.dirname(os.path.abspath(__file__))
 # Proposal outputs go here — never overwrite the governed CSVs.
 # canonical-facts.csv, contradictions.csv, enables-review.csv at BASE are the
-# Step 4 source of truth (Hamid 2026-09-28: PR #167 HOLD). The script is a
+# Step 4 source of truth (the decision owner 2026-09-28: PR #167 HOLD). The script is a
 # proposal generator until its verdict logic is brought current.
 OUT = os.path.join(BASE, "proposal")
 os.makedirs(OUT, exist_ok=True)
@@ -19,46 +19,46 @@ v2 = list(csv.DictReader(open(f"{BASE}/target-report/target-dispositions-v2.csv"
 ctx = {r["row_id"]: r["outcome"] for r in csv.DictReader(open(f"{BASE}/target-report/context-pass.csv"))}
 
 # ---- emitting mentions: ResolvedToConcept + promoted SoleCandidate ----
-# Property rule (Hamid 2026-09-24): for properties that allow mutual pairs
+# Property rule (the decision owner 2026-09-24): for properties that allow mutual pairs
 # (informedBy, dependsOnOutputOf), both directions emit only if EACH has its
 # own evidence. A direction promoted on nearness alone is held here — this is
 # a mapping-level hold, not a context outcome change.
 #
-# Mutual enabledBy (Hamid verdicts 2026-09-24): enablement is not reciprocal by
+# Mutual enabledBy (the decision owner's verdicts 2026-09-24): enablement is not reciprocal by
 # default. REL-01303 and REL-01056 approved for emission (removed from holds).
 # REL-01312 and REL-01053 held for source-workbook correction — the reverse
 # direction means control/constraint or close-feed consumption, not capability
 # enablement. See source-workbook-backlog.md.
-# Phase 1 sweep, #210 (Hamid 2026-10-12, #207 comment 6133390674): REL-00445,
+# Phase 1 sweep, #210 (the decision owner 2026-10-12, #207 comment 6133390674): REL-00445,
 # REL-00758, REL-00936, REL-01053, REL-01094, REL-01131, REL-01192 and REL-01312,
 # held here until then, were corrected in the source and now emit; the comments
 # above that name them are history. review-evidence/phase1-sweep/210-review.csv.
 PROPERTY_RULE_HOLDS = {
     "REL-00503": ("mutual-informedBy with REL-00500: this direction B-only "
                   "(structural nearness); held per property rule — REL-00500 (A+B) emits"),
-    # Hamid 2026-09-25: enables sample review verdicts. These B-only rows are
+    # The decision owner 2026-09-25: enables sample review verdicts. These B-only rows are
     # held because "enables" flattens "informs"/"supports" — not genuine
     # capability enablement. The promotion layer must not silently translate
     # enables into informs; rows are held for workbook correction.
-    # Hamid 2026-09-25: held for source classification review — the business
+    # The decision owner 2026-09-25: held for source classification review — the business
     # must confirm whether customer-profitability analysis is plan-based
     # (dependsOnOutputOf) or actual-data-based (informs). Not rewritten in Step 4.
-    # Hamid 2026-09-25: HOLD for source correction ("enables" flattening
+    # The decision owner 2026-09-25: HOLD for source correction ("enables" flattening
     # "informed-by"). A trading-side feedstock slate/run-rate recommendation
     # feeds the binding plan without setting it — informational, not
     # enablement. Per the PTC-002 principle (Refinery Planning and Optimization
     # decides; Supply & Trading advises), the workbook verb must be corrected
     # through reviewed authoring, not reinterpreted in promotion.
-    # Hamid 2026-09-26: HOLD for workbook correction. Crude/Feed Supply
+    # The decision owner 2026-09-26: HOLD for workbook correction. Crude/Feed Supply
     # Management manages the feedstock supply position and associated risks; it
     # does not assure Crude/Feed Demand Management. The relationship may
     # represent coordination, fulfillment, balance, or dependency, but its
     # intended semantics and direction require workbook-author correction.
     # Remove the existing core:assuredBy fact; emit no substitute; require a
     # fresh verdict after source correction.
-    "REL-01106": ("Hamid 2026-09-26: HOLD for workbook correction. Supply "
+    "REL-01106": ("The decision owner 2026-09-26: HOLD for workbook correction. Supply "
                   "position management does not assure demand management."),
-    # Hamid 2026-09-26: dependsOnOutputOf contradiction resolution. A symmetric
+    # The decision owner 2026-09-26: dependsOnOutputOf contradiction resolution. A symmetric
     # core:dependsOnOutputOf pair collapses producer/consumer direction; retain
     # at most one direction per pair. REL-00917: maintaining price/discount
     # records is not shown to consume the operational output of an implemented
@@ -69,80 +69,80 @@ PROPERTY_RULE_HOLDS = {
     # does not consume reconciled indirect-tax reporting outputs (may be
     # feedback / reporting-impact consideration). Each needs author
     # clarification; do not reverse dependencies at promotion time.
-    "REL-00917": ("Hamid 2026-09-26: HOLD for workbook correction. "
+    "REL-00917": ("The decision owner 2026-09-26: HOLD for workbook correction. "
                   "dependsOnOutputOf contradiction pair A: retain REL-00862 "
                   "direction only."),
-    "REL-00884": ("Hamid 2026-09-26: HOLD for workbook correction. "
+    "REL-00884": ("The decision owner 2026-09-26: HOLD for workbook correction. "
                   "dependsOnOutputOf contradiction pair B: retain REL-01029 "
                   "direction only."),
-    "REL-01065": ("Hamid 2026-09-26: HOLD for workbook correction. "
+    "REL-01065": ("The decision owner 2026-09-26: HOLD for workbook correction. "
                   "dependsOnOutputOf contradiction pair C: retain REL-01061 "
                   "direction only."),
-    # Hamid 2026-09-26: ancestor/descendant hierarchy holds. Each asserts a
+    # The decision owner 2026-09-26: ancestor/descendant hierarchy holds. Each asserts a
     # relationship between a descendant activity and its ancestor/parent
     # capability; the hierarchy already represents composition and scope, and
     # the definitions establish no independent cross-cutting governance,
     # output-dependency, or capability-enablement relationship. Facts removed
     # (each verified unique); REL-01309 remains an already-approved exception
     # and is untouched.
-    "REL-00002": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00002": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Produce Demand Forecast <-> Prepare Master Data To Create "
                   "Demand Forecast is parent/child composition; no independent "
                   "enabledBy evidence. Fact removed."),
-    "REL-00013": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00013": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Produce Demand Forecast <-> Monitor Demand Forecasting "
                   "Performance and Reporting is parent/child composition; no "
                   "independent enabledBy evidence. Fact removed."),
-    "REL-00466": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00466": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Supply Network Participation Analysis <-> Evaluate Market "
                   "Attractiveness is parent/child composition; no independent "
                   "enabledBy evidence. Fact removed."),
-    "REL-00469": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00469": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Supply Network Participation Analysis <-> Assess "
                   "Cost-to-Serve Performance is parent/child composition; no "
                   "independent output-dependency evidence. Fact removed."),
-    "REL-00764": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00764": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Determine & Allocate Sales Targets <-> Sales Planning "
                   "governedBy merely restates containment. Fact removed."),
-    "REL-00768": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00768": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Develop & Agree Demand Forecasting Process <-> Sales "
                   "Planning governedBy merely restates containment. "
                   "Fact removed."),
-    "REL-00773": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00773": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Sales Planning <-> Analyze Gaps Between Forecast & Actual "
                   "Margins is parent/child composition; no independent "
                   "enabledBy evidence. Fact removed."),
-    "REL-00912": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00912": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Conduct Commercial Audit <-> Commercial Agreement "
                   "Compliance Management governedBy adds no separate "
                   "relationship evidence. Fact removed."),
-    "REL-00923": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00923": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Maintain Commercial Workflow Configuration <-> Manage "
                   "Commercial Master Data Stewardship governedBy adds no "
                   "separate relationship evidence. Fact removed."),
-    # Phase 1 sweep, #203 (Hamid 2026-10-12, #207 comment 6133390674): the 12
+    # Phase 1 sweep, #203 (the decision owner 2026-10-12, #207 comment 6133390674): the 12
     # S&T advisory and ambiguous-enables rows held here were corrected in the
     # source (enables -> informs or provides-input-to) and now emit. REL-00436,
     # REL-00466 and REL-00469 were answered no relationship and stay held.
     # review-evidence/phase1-sweep/203-review.csv.
-    "REL-00436": ("Hamid 2026-09-26: HOLD. Ambiguous enables: source "
+    "REL-00436": ("The decision owner 2026-09-26: HOLD. Ambiguous enables: source "
                   "assertion is enables but stored as dependsOnOutputOf; a "
                   "plausible output dependency is not authorized at emission. "
                   "Remove this row's evidence; the fact is preserved via the "
                   "independent approved row REL-00447."),
-    "REL-00925": ("Hamid 2026-09-26: HOLD. Hierarchy restatement: "
+    "REL-00925": ("The decision owner 2026-09-26: HOLD. Hierarchy restatement: "
                   "Maintain Commercial Policy Content and Approved Parameters "
                   "<-> Manage Commercial Master Data Stewardship governedBy "
                   "adds no separate relationship evidence. Fact removed."),
-    # Hamid 2026-09-25: HOLD for workbook correction. The asserted requires
+    # The decision owner 2026-09-25: HOLD for workbook correction. The asserted requires
     # relation is not sufficiently supported as a prerequisite gate, and the
     # proposed remap to core:dependsOnOutputOf would alter source meaning at
     # emission time. Emit no triple — neither requires nor dependsOnOutputOf.
-    "REL-00208": ("Hamid 2026-09-25: HOLD for workbook correction. Neither "
+    "REL-00208": ("The decision owner 2026-09-25: HOLD for workbook correction. Neither "
                   "core:requires nor core:dependsOnOutputOf may be emitted "
                   "from the present assertion; route for source-workbook "
                   "relationship review and correction"),
-    # Hamid 2026-09-26: G1b no-verb-change verdict (D:hamid-verdict /
+    # The decision owner 2026-09-26: G1b no-verb-change verdict (D:owner-verdict /
     # G1bNoVerbChange). The source assertion uses enables; the only paired
     # evidence is the reverse informed-by assertion, and there is no
     # independently approved uses-input assertion for the pair. The pipeline
@@ -153,34 +153,34 @@ PROPERTY_RULE_HOLDS = {
     # its own source record. A corrected source assertion requires a fresh
     # verdict. REL-01224 (already held by the context-confirmation pass) is
     # governed by the same verdict but needs no code change.
-    # Phase 1 sweep, #202 (Hamid 2026-10-12, #207 comment 6133390674): 27 of the
+    # Phase 1 sweep, #202 (the decision owner 2026-10-12, #207 comment 6133390674): 27 of the
     # 28 G1b rows held here, and REL-01224, were corrected in the source and now
     # emit; REL-00499 stays. 13 #202 rows also left INFORMEDBY_20260926_HOLDS.
     # review-evidence/phase1-sweep/202-review.csv.
-    "REL-00499": ("Hamid 2026-09-26: HOLD under G1bNoVerbChange. "
+    "REL-00499": ("The decision owner 2026-09-26: HOLD under G1bNoVerbChange. "
                   "Source assertion uses enables; only paired evidence "
                   "is the reverse informed-by assertion; no independent "
                   "uses-input evidence exists. Stored core:dependsOnOutputOf "
                   "fact removed (Rule 11: no silent verb change); retain the "
                   "enables assertion as non-emitting evidence."),
-    # Phase 1 sweep, #209 (Hamid 2026-10-12, #207 comment 6133390674): the 41 G3
+    # Phase 1 sweep, #209 (the decision owner 2026-10-12, #207 comment 6133390674): the 41 G3
     # Section A rows held in the A1-A6 blocks below were corrected in the source and
     # now emit; the row counts in those dated comments are history, and the six
     # no-relationship rows that stay are listed in review-evidence/phase1-sweep/209-review.csv.
-    # Hamid 2026-09-26: G3 Section A1 verdicts (D:hamid-verdict). Explicit
+    # The decision owner 2026-09-26: G3 Section A1 verdicts (D:owner-verdict). Explicit
     # target reference is not enablement proof. These 6 rows fail the
     # capability-effect test: exclusion references, informational/evidence
     # feeds, or lifecycle/sequence assertions. Remove the stored
     # core:enabledBy fact (each verified unique, single-row, no independent
     # supporter); emit no substitute predicate; retain the enables assertion
     # as non-emitting evidence; route for source-workbook correction.
-    "REL-00176": ("Hamid 2026-09-26: HOLD (G3-A1). Lifecycle relation: contract "
+    "REL-00176": ("The decision owner 2026-09-26: HOLD (G3-A1). Lifecycle relation: contract "
                   "termination/novation requires obligations settled or queued, "
                   "but this does not evidence that termination enables the "
                   "independent settlements capability; dependency points the "
                   "other lifecycle way. No remap authorized. Stored "
                   "core:enabledBy fact removed."),
-    # Hamid 2026-09-26: G3 Section A2 verdicts (D:hamid-verdict). Explicit
+    # The decision owner 2026-09-26: G3 Section A2 verdicts (D:owner-verdict). Explicit
     # target reference is not enablement proof. These 6 rows fail the
     # capability-effect test: analytical advice, output contribution,
     # operational feedback, informational feed, excluded scope, or
@@ -188,21 +188,21 @@ PROPERTY_RULE_HOLDS = {
     # (each verified unique, single-row, no independent supporter); emit no
     # substitute predicate; retain the enables assertion as non-emitting
     # evidence; route for source-workbook correction.
-    "REL-00294": ("Hamid 2026-09-26: HOLD (G3-A2). Output contribution: "
+    "REL-00294": ("The decision owner 2026-09-26: HOLD (G3-A2). Output contribution: "
                   "position and P&L analysis delivers the official economic "
                   "P&L that accounting reconciliation uses. Strong output/data "
                   "relationship, but the source assertion is enables and must "
                   "not be silently converted to dependsOnOutputOf. Stored "
                   "core:enabledBy fact removed; retained as non-emitting "
                   "evidence pending workbook correction."),
-    "REL-00479": ("Hamid 2026-09-26: HOLD (G3-A2). Informational feed: an "
+    "REL-00479": ("The decision owner 2026-09-26: HOLD (G3-A2). Informational feed: an "
                   "operational demand forecast informs replenishment "
                   "fulfillment, but the target receives quantities and timing "
                   "from the accountable replenishment decision owner. "
                   "Forecasting supplies neither authorization, supply source, "
                   "nor executable fulfillment capability. Stored "
                   "core:enabledBy fact removed."),
-    # Hamid 2026-09-26: G3 Section A3 verdicts (D:hamid-verdict). Reconciled
+    # The decision owner 2026-09-26: G3 Section A3 verdicts (D:owner-verdict). Reconciled
     # count: 12 approved / 13 held (row-level table authoritative; the
     # "14/11" summary text was a counting error). These 13 rows fail the
     # capability-effect test: documentation feeds, analytical feedback,
@@ -212,12 +212,12 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); emit no substitute predicate; retain the
     # enables assertion as non-emitting evidence; route for source-workbook
     # correction.
-    "REL-00846": ("Hamid 2026-09-26: HOLD (G3-A3). Partitioned ownership: the "
+    "REL-00846": ("The decision owner 2026-09-26: HOLD (G3-A3). Partitioned ownership: the "
                   "source definition partitions commercial stewardship from "
                   "target-owned transactional order and fulfillment records; "
                   "definitions do not establish enablement. Stored "
                   "core:enabledBy fact removed."),
-    # Hamid 2026-09-26: G3 Section A4 verdicts (D:hamid-verdict). Reconciled
+    # The decision owner 2026-09-26: G3 Section A4 verdicts (D:owner-verdict). Reconciled
     # count: 16 approved / 9 held (row-level table authoritative; the
     # "13/12" summary text was a counting error — the table's verdict rows
     # plus per-row hold narratives all say 16/9). These 9 rows fail the
@@ -228,18 +228,18 @@ PROPERTY_RULE_HOLDS = {
     # unique, single-row, no independent supporter); emit no substitute
     # predicate; retain the enables assertion as non-emitting evidence;
     # route for source-workbook correction.
-    "REL-00857": ("Hamid 2026-09-26: HOLD (G3-A4). Deployment/data-consumption: "
+    "REL-00857": ("The decision owner 2026-09-26: HOLD (G3-A4). Deployment/data-consumption: "
                   "the source coordinates deployment of approved price changes "
                   "and lists invoicing as a downstream consumer — not evidence "
                   "that price implementation makes the billing capability able "
                   "to operate. Stored core:enabledBy fact removed; no remap."),
-    "REL-01082": ("Hamid 2026-09-26: HOLD (G3-A4). Coordination/support: the "
+    "REL-01082": ("The decision owner 2026-09-26: HOLD (G3-A4). Coordination/support: the "
                   "source coordinates workplace needs, upkeep, moves, and "
                   "compliance with corporate owners; it does not own "
                   "facilities capability or establish a maintained operating "
                   "base for service operations. Stored core:enabledBy fact "
                   "removed."),
-    # Hamid 2026-09-26: G3 Section A5 verdicts (D:hamid-verdict). Reconciled
+    # The decision owner 2026-09-26: G3 Section A5 verdicts (D:owner-verdict). Reconciled
     # count: 14 approved / 11 held (row-level table authoritative; the
     # "13/12" summary text was a counting error). These 11 rows fail the
     # capability-effect test: analytical/evidence feeds, operational outputs,
@@ -249,7 +249,7 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); emit no substitute predicate; retain the
     # enables assertion as non-emitting evidence; route for source-workbook
     # correction.
-    # Hamid 2026-09-26: G3 Section A6 verdicts (D:hamid-verdict). Final
+    # The decision owner 2026-09-26: G3 Section A6 verdicts (D:owner-verdict). Final
     # explicit-reference section: 4 approvals / 2 holds (table is
     # authoritative; no count conflict). These 2 rows fail the
     # capability-effect test: adjacent/independent functions rather than
@@ -257,7 +257,7 @@ PROPERTY_RULE_HOLDS = {
     # verified unique, single-row, no independent supporter); emit no
     # substitute predicate; retain the enables assertion as non-emitting
     # evidence; route for source-workbook correction.
-    # Hamid 2026-09-26: G3 Section B1 verdicts (D:hamid-verdict). The first
+    # The decision owner 2026-09-26: G3 Section B1 verdicts (D:owner-verdict). The first
     # nearness-only chunk: all 15 rows HELD. Each candidate target was
     # selected solely by classifier nearness (unique label matching), with
     # no stable identifier, explicit target name, or source-definition /
@@ -270,23 +270,23 @@ PROPERTY_RULE_HOLDS = {
     # verified unique, single-row, no independent supporter); no retarget
     # or remap at promotion; retain the enables assertion as non-emitting
     # evidence; route for source-workbook target clarification.
-    "REL-00032": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
+    "REL-00032": ("The decision owner 2026-09-26: HOLD (G3-B1). Target identity "
                   "unconfirmed: nearness-only candidate; no source-level "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed; no emission without workbook-author target "
                   "confirmation and fresh verdict."),
-    "REL-00121": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity "
+    "REL-00121": ("The decision owner 2026-09-26: HOLD (G3-B1). Target identity "
                   "unconfirmed: scheduling master data proximity to "
                   "production-wheel review; predicate not confirmed. "
                   "Stored core:enabledBy fact removed."),
-    "REL-00164": ("Hamid 2026-09-26: HOLD (G3-B1). Target identity REJECTED: "
+    "REL-00164": ("The decision owner 2026-09-26: HOLD (G3-B1). Target identity REJECTED: "
                   "monitoring contracts surfaces obligations/expiries/breaches "
                   "— it does not provide the governed strategy-definition, "
                   "authority, or operating base needed to develop and steward "
                   "trading strategies. Candidate selection rests only on "
                   "nearness/label matching. No retargeting or inference of "
                   "an alternative. Stored core:enabledBy fact removed."),
-    # Hamid 2026-09-26: G3 Section B2 verdicts (D:hamid-verdict). Second
+    # The decision owner 2026-09-26: G3 Section B2 verdicts (D:owner-verdict). Second
     # nearness-only chunk: all 15 rows HELD at the target-identity gate —
     # no predicate review reached. 13 rows have plausible but unconfirmed
     # targets; 2 rows (REL-00266, REL-00285) have the candidate target
@@ -295,42 +295,42 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); no retarget or remap at promotion; retain
     # the enables assertion as non-emitting evidence; route for
     # source-workbook target clarification.
-    "REL-00253": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
+    "REL-00253": ("The decision owner 2026-09-26: HOLD (G3-B2). Target identity "
                   "unconfirmed: nearness-only candidate; confirmation "
                   "disputes may affect settlement readiness but the target "
                   "is not source-evidenced. Stored core:enabledBy fact "
                   "removed."),
-    "REL-00431": ("Hamid 2026-09-26: HOLD (G3-B2). Target identity "
+    "REL-00431": ("The decision owner 2026-09-26: HOLD (G3-B2). Target identity "
                   "unconfirmed: LP-model integrity may support development "
                   "of a term procurement slate but the target is not "
                   "source-evidenced. Stored core:enabledBy fact removed."),
-    # Hamid 2026-09-26: G3 Section B3 verdicts (D:hamid-verdict). Third
+    # The decision owner 2026-09-26: G3 Section B3 verdicts (D:owner-verdict). Third
     # nearness-only chunk: all 15 rows HELD at the target-identity gate —
     # no predicate review reached. 14 rows are TargetIdentityUnconfirmed;
     # REL-00770 carries a formal supersession of its 2026-09-25 approval
     # (predicate plausibility cannot substitute for source-backed target
-    # identity under the Hamid-approved nearness-only identity rule).
+    # identity under the owner-approved nearness-only identity rule).
     # Remove the stored core:enabledBy fact (each verified unique,
     # single-row, no independent supporter); no retarget or remap at
     # promotion; retain the enables assertion as non-emitting evidence;
     # route for source-workbook target clarification.
-    "REL-00506": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
+    "REL-00506": ("The decision owner 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
-    "REL-00766": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
+    "REL-00766": ("The decision owner 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
-    "REL-00767": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
+    "REL-00767": ("The decision owner 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
-    "REL-00837": ("Hamid 2026-09-26: HOLD (G3-B3). Target identity "
+    "REL-00837": ("The decision owner 2026-09-26: HOLD (G3-B3). Target identity "
                   "unconfirmed: nearness-only candidate; no source-backed "
                   "evidence identifies the target. Stored core:enabledBy "
                   "fact removed."),
-    # Hamid 2026-09-26: G3 Section B4 verdicts (D:hamid-verdict). Fourth
+    # The decision owner 2026-09-26: G3 Section B4 verdicts (D:owner-verdict). Fourth
     # nearness-only chunk: all 15 rows HELD at the target-identity gate.
     # 13 rows are TargetIdentityUnconfirmed; REL-00960 is
     # TargetIdentityRejected (order-book tracking has nothing to do with
@@ -342,28 +342,28 @@ PROPERTY_RULE_HOLDS = {
     # independent supporter); no retarget or remap at promotion; retain
     # the enables assertion as non-emitting evidence; route for
     # source-workbook target clarification.
-    "REL-00924": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00999": ("Hamid 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
-    "REL-00939": ("Hamid 2026-09-26: HOLD (G3-B4) / TargetIdentityUnconfirmed / Supersedes2026-09-25Approval. The 2026-09-25 approval found that approved financing/payment methods, terms, eligibility, and commercial rules are governed prerequisites for billing — which may well be true — but the source row never names Manage Customer Invoicing and Billing as its target. Under the nearness-only identity rule, a plausible relationship cannot stand in for a named target. Supersede the prior approval (retained in provenance as superseded, not deleted); remove the current core:enabledBy fact; emit no substitute or retargeted fact; require source-workbook target clarification and a fresh verdict."),
-    # Hamid 2026-09-26: G3 Section B5 — prior-approval sweep supersessions
-    # (D:hamid-verdict). Nine earlier approvals whose targets were matched
+    "REL-00924": ("The decision owner 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
+    "REL-00999": ("The decision owner 2026-09-26: HOLD (G3-B4). Target identity unconfirmed: nearness-only candidate; no source-backed evidence identifies the target. Stored core:enabledBy fact removed."),
+    "REL-00939": ("The decision owner 2026-09-26: HOLD (G3-B4) / TargetIdentityUnconfirmed / Supersedes2026-09-25Approval. The 2026-09-25 approval found that approved financing/payment methods, terms, eligibility, and commercial rules are governed prerequisites for billing — which may well be true — but the source row never names Manage Customer Invoicing and Billing as its target. Under the nearness-only identity rule, a plausible relationship cannot stand in for a named target. Supersede the prior approval (retained in provenance as superseded, not deleted); remove the current core:enabledBy fact; emit no substitute or retargeted fact; require source-workbook target clarification and a fresh verdict."),
+    # The decision owner 2026-09-26: G3 Section B5 — prior-approval sweep supersessions
+    # (D:owner-verdict). Nine earlier approvals whose targets were matched
     # by nearness only. Each approval judged relationship plausibility, not
     # target identity; no source row evidences which target was meant.
     # All nine superseded under the nearness-only identity rule; prior
     # decisions retained in provenance as superseded, not deleted.
 
-    # Hamid 2026-09-26: G3 Section B5 — 33-row class verdict (D:hamid-verdict).
+    # The decision owner 2026-09-26: G3 Section B5 — 33-row class verdict (D:owner-verdict).
     # Every row confirmed nearness-only (SoleCandidate) with no source-backed
     # identity override and no prior approval. HOLD / TargetIdentityUnconfirmed
     # / ClassVerdict-B-2026-09-26. Stored core:enabledBy facts removed
     # (each verified unique, single-row); no substitutes; assertions retained
     # as non-emitting evidence; routed for source-workbook target clarification.
-    "REL-01142": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01195": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01204": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01219": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01237": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
-    "REL-01288": ("Hamid 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01142": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01195": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01204": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01219": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01237": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
+    "REL-01288": ("The decision owner 2026-09-26: HOLD (G3-B5) / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26. Nearness-only candidate (SoleCandidate); no source-backed target identity and no prior approval. Stored core:enabledBy fact removed (verified unique); no substitute; assertion retained as non-emitting evidence; route for source-workbook target clarification and a fresh verdict."),
 
 
 
@@ -376,7 +376,7 @@ PROPERTY_RULE_HOLDS = {
 
 
 }
-# Hamid 2026-09-26: uses-input pass — 114 rows emitting→held (82 no-citation, 31 exclusion/boundary, REL-01061 wrong-concept). Source: review-evidence/uses-input-application-log.md; ledger-v2.md 'uses-input pass applied'.
+# The decision owner 2026-09-26: uses-input pass — 114 rows emitting→held (82 no-citation, 31 exclusion/boundary, REL-01061 wrong-concept). Source: review-evidence/uses-input-application-log.md; ledger-v2.md 'uses-input pass applied'.
 USES_INPUT_20260926_HOLDS = {
     "REL-00012", "REL-00047", "REL-00048", "REL-00064", "REL-00066", "REL-00085",
     "REL-00086", "REL-00101", "REL-00110", "REL-00111", "REL-00117", "REL-00124",
@@ -399,7 +399,7 @@ USES_INPUT_20260926_HOLDS = {
     "REL-01264", "REL-01278", "REL-01279", "REL-01293", "REL-01308", "REL-01314",
 }
 
-# Hamid 2026-09-26: uses-input pass — 41 G1a-shared enables mentions emitting→held. Underlying uses-input row held (fact removed); enables mention cannot carry a fact alone. Source: ledger-v2.md 'uses-input pass applied' (114 facts removed: 73 sole-evidence, 41 G1a-shared).
+# The decision owner 2026-09-26: uses-input pass — 41 G1a-shared enables mentions emitting→held. Underlying uses-input row held (fact removed); enables mention cannot carry a fact alone. Source: ledger-v2.md 'uses-input pass applied' (114 facts removed: 73 sole-evidence, 41 G1a-shared).
 # Phase 1 sweep, #203: REL-00152 left this set when its source verb was corrected
 # to informs; 40 remain.
 USES_INPUT_G1A_20260926_HOLDS = {
@@ -412,7 +412,7 @@ USES_INPUT_G1A_20260926_HOLDS = {
     "REL-01133", "REL-01240", "REL-01265", "REL-01268", "REL-01297",
 }
 
-# Hamid 2026-09-26: informed-by pass — 95 rows held (55 exclusion/boundary-only, 1 counterpart REL-00476 opposite flow, 39 no citation). Source: ledger-v2.md 'Informed-by pass'.
+# The decision owner 2026-09-26: informed-by pass — 95 rows held (55 exclusion/boundary-only, 1 counterpart REL-00476 opposite flow, 39 no citation). Source: ledger-v2.md 'Informed-by pass'.
 INFORMEDBY_20260926_HOLDS = {
     "REL-00029", "REL-00045", "REL-00051", "REL-00062", "REL-00069", "REL-00082",
     "REL-00090", "REL-00102", "REL-00105", "REL-00128", "REL-00134", "REL-00139",
@@ -432,8 +432,8 @@ INFORMEDBY_20260926_HOLDS = {
     "REL-01247", "REL-01290", "REL-01306", "REL-01317",
 }
 
-# Hamid 2026-09-26: governed-by full review — 20 rows held, superseding 2026-09-25 approvals (NoAffirmativeCitation). Source: evidence-gate.py control cases; review-evidence/governed-by-full-review-batch.csv.
-# Phase 1 sweep, #206 (Hamid 2026-10-12, #207 comment 6133390674): 10 of these rows
+# The decision owner 2026-09-26: governed-by full review — 20 rows held, superseding 2026-09-25 approvals (NoAffirmativeCitation). Source: evidence-gate.py control cases; review-evidence/governed-by-full-review-batch.csv.
+# Phase 1 sweep, #206 (the decision owner 2026-10-12, #207 comment 6133390674): 10 of these rows
 # were approved with a governed-by sentence in the source scope note and now emit;
 # REL-00907 stays held with no relationship. review-evidence/phase1-sweep/206-review.csv.
 GOVERNEDBY_20260926_HOLDS = {
@@ -441,22 +441,22 @@ GOVERNEDBY_20260926_HOLDS = {
     "REL-00969", "REL-01113", "REL-01300", "REL-01310",
 }
 
-# Hamid 2026-09-26: triggers review — 11 rows held, superseding 2026-09-26 approvals (NoAffirmativeTriggerLink). Source: evidence-gate.py control cases; review-evidence/triggers-18-review-batch.csv.
-# #204 batch 1 (Hamid 2026-10-12, comment 6130380041): all 11 answered with a
+# The decision owner 2026-09-26: triggers review — 11 rows held, superseding 2026-09-26 approvals (NoAffirmativeTriggerLink). Source: evidence-gate.py control cases; review-evidence/triggers-18-review-batch.csv.
+# #204 batch 1 (the decision owner 2026-10-12, comment 6130380041): all 11 answered with a
 # trigger sentence in the source scope note (7 conditional, 4 unconditional) and
 # now emit; review-evidence/triggers-batch1-review.csv. The set stays, empty,
 # as the place a later triggers hold would go.
 TRIGGERS_20260926_HOLDS = set()
 
-# Hamid 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
-# #205 (Hamid 2026-10-11/12): all 20 rows reviewed, not emitted; their
+# The decision owner 2026-09-27: precedes/follows amendment — 20 rows held (NoAffirmativeSequenceCitation or ExclusionBoundaryCitation), superseding 2026-09-26 approvals. Rule 5: siblings need structural nearness only; non-siblings need affirmative citation or two-way route. Source: review-evidence/precedes-follows-routes.csv; evidence-gate.py section 2j.
+# #205 (the decision owner 2026-10-11/12): all 20 rows reviewed, not emitted; their
 # questions are closed (review-evidence/precedes-follows-batch1-review.csv,
 # -batch2-review.csv). REL-00149, REL-00184 and REL-01227 have no sequence and
 # stay held here. The other 17 are scoped sequences that core:precedes cannot
 # carry; EPM-DEC-001-0026 (#226) emits them as scoped-sequence nodes instead.
 PRECEDES_20260927_HOLDS = {"REL-00149", "REL-00184", "REL-01227"}
 
-# EPM-DEC-001-0026 (Hamid 2026-10-12, #226): rows emitted as scoped-sequence
+# EPM-DEC-001-0026 (the decision owner 2026-10-12, #226): rows emitted as scoped-sequence
 # nodes, not as core facts. The governed list is scoped-sequence/scoped-sequences.csv.
 with open(f"{BASE}/scoped-sequence/scoped-sequences.csv", newline="") as _f:
     SCOPED_SEQUENCE_ROWS = {r["row_id"] for r in csv.DictReader(_f)}
@@ -497,14 +497,14 @@ def enables_group(r, tgt):
     if dep: return "G1-redundant-output-dep"
     return "G3-genuine-enablement"
 
-# REQUIRES_REMAP retired 2026-09-25: Hamid held REL-00208 for workbook
+# REQUIRES_REMAP retired 2026-09-25: The decision owner held REL-00208 for workbook
 # correction (no remap at emission). Any future treatment needs a fresh verdict.
 
-# Hamid 2026-09-25: row-level verdicts "approved as core:enables" override the
+# The decision owner 2026-09-25: row-level verdicts "approved as core:enables" override the
 # G1/G2/G3 group proposal for these rows. Stored as (target, core:enabledBy,
-# source); core:enables is available as its inverse. If Hamid later revisits
+# source); core:enables is available as its inverse. If the decision owner later revisits
 # any of these in the G1-split/G2 review, update this set.
-# Phase 1 sweep, #201 (Hamid 2026-10-12, #207 comment 6133390674): the register
+# Phase 1 sweep, #201 (the decision owner 2026-10-12, #207 comment 6133390674): the register
 # confirms REL-00243 as enables (target identity now evidenced in the source scope
 # note), a row-level verdict. Without the override, the held reverse uses-input row
 # REL-00242 would group it as an output dependency and store dependsOnOutputOf on
@@ -514,14 +514,14 @@ EN_ENABLEDBY_OVERRIDE = {"REL-01303", "REL-01056", "REL-00243"}
 # nearness-only targets removed from the override set:
 # REL-00129, REL-00243, REL-00304, REL-00728, REL-01006, REL-01016
 # (review32 2026-09-25 approvals; REL-00129/REL-00728 also G2
-# ExistingRowLevelApproval exceptions) — superseded by Hamid's 2026-09-26
-# verdicts (D:hamid-verdict / TargetIdentityUnconfirmed /
+# ExistingRowLevelApproval exceptions) — superseded by the decision owner's 2026-09-26
+# verdicts (D:owner-verdict / TargetIdentityUnconfirmed /
 # Supersedes2026-09-25Review32Approval). Each approval judged the
 # relationship plausible; no source row gives evidence of which target was
 # meant. Prior decisions retained in provenance as superseded.
 # REL-00489 removed separately (Supersedes2026-09-26STApproval).
 # 2026-09-26: REL-00939 removed from the override set — superseded by
-# Hamid's G3-B4 verdict (D:hamid-verdict / TargetIdentityUnconfirmed /
+# The decision owner's G3-B4 verdict (D:owner-verdict / TargetIdentityUnconfirmed /
 # Supersedes2026-09-25Approval). Its 2026-09-25 row-level approval
 # ("approved financing/payment methods, terms, eligibility, commercial
 # rules are governed prerequisites for billing", review32-enables-batch)
@@ -530,7 +530,7 @@ EN_ENABLEDBY_OVERRIDE = {"REL-01303", "REL-01056", "REL-00243"}
 # nearness-only identity rule, a plausible relationship cannot stand in
 # for a named target. Prior decision retained in provenance as superseded.
 # 2026-09-26: REL-00770 removed from the override set — superseded by
-# Hamid's G3-B3 verdict (D:hamid-verdict / TargetIdentityUnconfirmed /
+# The decision owner's G3-B3 verdict (D:owner-verdict / TargetIdentityUnconfirmed /
 # Supersedes2026-09-25Approval). Its 2026-09-25 row-level approval ("Account
 # planning explicitly feeds Sales Execution with account-level objectives,
 # opportunity maps, actions, evidence", review32-enables-batch) recognized
@@ -540,14 +540,14 @@ EN_ENABLEDBY_OVERRIDE = {"REL-01303", "REL-01056", "REL-00243"}
 # substitute for source-backed target identity. Prior decision remains in
 # provenance as superseded, not deleted.
 # 2026-09-26: REL-00428 removed from the override set — superseded by
-# Hamid's G3-B2 verdict (D:hamid-verdict / TargetIdentityUnconfirmed). Its
+# The decision owner's G3-B2 verdict (D:owner-verdict / TargetIdentityUnconfirmed). Its
 # 2026-09-25 row-level approval rested on semantic plausibility
 # (review32-enables-batch), but the nearness-only identity rule (B1,
-# Hamid-approved) requires source-backed target identity before any
+# owner-approved) requires source-backed target identity before any
 # predicate verdict; the B2 row-level verdict is later and authoritative.
 # REL-00059 and REL-00133 were never row-level approved (corrected G3-B1).
 
-# Hamid 2026-09-26: G2 no-separate-enables-fact verdicts. These 13 enables
+# The decision owner 2026-09-26: G2 no-separate-enables-fact verdicts. These 13 enables
 # assertions are disguised sequence (same-parent siblings with an
 # independently recorded precedes/follows fact); the enables mention emits
 # no triple and is recorded as non-emitting evidence. REL-00129 and REL-00728
@@ -580,12 +580,12 @@ def stored_fact(r, tgt):
     if v == "assures":      return (tgt, "core:assuredBy", s, "inverse of raw assures")
     if v == "enables":
         if r["row_id"] in EN_ENABLEDBY_OVERRIDE:
-            return (tgt, "core:enabledBy", s, "Hamid verdict: approved as core:enables (row-level, overrides group)")
+            return (tgt, "core:enabledBy", s, "The decision owner's verdict: approved as core:enables (row-level, overrides group)")
         g = enables_group(r, tgt)
         if g == "G1-redundant-output-dep":
             return (tgt, "core:dependsOnOutputOf", s, "proposed merge into existing output-dependency fact")
         if g == "G2-disguised-sequence":
-            return (None, None, None, "Hamid verdict 2026-09-26: no separate triple; sequence fact already recorded")
+            return (None, None, None, "The decision owner's verdict 2026-09-26: no separate triple; sequence fact already recorded")
         return (tgt, "core:enabledBy", s, "inverse of raw enables")
     raise ValueError(v)
 
@@ -626,7 +626,7 @@ print("\nper-verb proposed predicate:")
 for (v, p), n in sorted(perverb.items()):
     print(f"  {v:15s} -> {p:28s} {n}")
 
-# Hamid 2026-09-26 (G1a verdict): duplicate-provenance attach. These rows are
+# The decision owner 2026-09-26 (G1a verdict): duplicate-provenance attach. These rows are
 # held (no independent emission) but their raw enables assertions are retained
 # as duplicate provenance on independently-evidenced canonical facts. Each fact
 # survives through its approved uses-input row; the enables rows add provenance
@@ -640,7 +640,7 @@ for _rid, _key in DUPLICATE_PROVENANCE_ATTACH.items():
         continue
     assert _rid not in [r for r, _, _ in facts[_key]], f"{_rid} already attached"
     facts[_key].append((_rid, "enables",
-        "Hamid 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input"))
+        "The decision owner 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input"))
 
 # save (proposal only — governed CSVs at BASE are the source of truth)
 with open(f"{OUT}/canonical-facts.csv", "w", newline="") as f:

@@ -5,7 +5,7 @@
     python3 build_core_next.py --verify   # fail unless the written package equals a fresh build
 
 core 1.0.0 stays as it was built from its pinned evidence (build_core.py). This builder starts from
-that released graph and applies the changes Hamid decided on 2026-10-13:
+that released graph and applies the changes the decision owner decided on 2026-10-13:
 
 1. Business domains as a code list. A new object property core:businessDomain links each concept
    that carries a 1.0.0 core:responsibleDomain value (processes and capabilities) to a concept of
@@ -16,8 +16,8 @@ that released graph and applies the changes Hamid decided on 2026-10-13:
    core:plannedOutput, one governed literal per input or output (the 2026-09-22 flow decision).
 3. core:earlierProcess and core:laterProcess get rdfs:range skos:Concept (guideline Rule 1).
 
-Deprecating a property makes this a major: 2.0.0, which needs Hamid's approval (module policy,
-2026-09-18). It was built as the candidate 2.0.0-rc.1 with no issued date; Hamid approved the
+Deprecating a property makes this a major: 2.0.0, which needs the decision owner's approval (module policy,
+2026-09-18). It was built as the candidate 2.0.0-rc.1 with no issued date; the decision owner approved the
 release on 2026-10-13 (APPROVAL below).
 """
 import argparse
@@ -43,8 +43,8 @@ SOURCE_COMMIT = "b75fd991e243248e60ecc832b3ad2c4f5c91740a"
 IDENTITY = os.path.join(ONTOLOGY, "build", "output", "step2-identity-map.json")
 CHANGELOG = os.path.join(ONTOLOGY, "releases", "core", "CHANGELOG-2.0.0.md")
 VERSION, STAGE, ISSUED = "2.0.0", None, "2026-10-13"
-# The sentence that approved the release: (saved file, Hamid's words in its body).
-APPROVAL = ("step4/review-evidence/hamid-answers/core-2-0-0-release.md", "I approve the core 2.0.0 releas")
+# The sentence that approved the release: (saved file, the decision owner's words in its body).
+APPROVAL = ("step4/review-evidence/decision-owner-answers/core-2-0-0-release.md", "I approve the core 2.0.0 releas")
 LABEL = VERSION if STAGE is None else f"{VERSION}-{STAGE}"
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", LABEL)
 
@@ -54,7 +54,7 @@ PROC = "https://w3id.org/lsc/ontology/process/"
 ONTOLOGY_IRI = URIRef("https://w3id.org/lsc/ontology/modules/core")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
-DECIDED = "EPM-DEC-001-0038; Hamid's words in step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
+DECIDED = "EPM-DEC-001-0038; the decision owner's words in step4/review-evidence/decision-owner-answers/answers-2026-10-13-session2.md"
 
 # The business domain list. Each 1.0.0 responsibleDomain value maps to one concept, except
 # "Commercial & Marketing", which splits by the branch of CM 1 the process sits in.
@@ -128,7 +128,7 @@ def vocabulary(g):
     """The new and changed terms."""
     g.add((CORE.BusinessDomain, RDF.type, SKOS.ConceptScheme))
     g.add((CORE.BusinessDomain, RDFS.label, en("Business domain")))
-    g.add((CORE.BusinessDomain, SKOS.definition, en("The business domains that own processes and capabilities (Hamid, 2026-10-13).")))
+    g.add((CORE.BusinessDomain, SKOS.definition, en("The business domains that own processes and capabilities (the decision owner, 2026-10-13).")))
     for key, (label, definition) in DOMAINS.items():
         c = DOMAIN[key]
         g.add((c, RDF.type, SKOS.Concept))

@@ -1,6 +1,6 @@
-# Intake Predicate Conservation Ledger v2 — approved by Hamid, 2026-10-13
+# Intake Predicate Conservation Ledger v2 — approved by the decision owner, 2026-10-13
 
-**Status:** approved by Hamid with the core 1.0.0 release, 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`: "I approve the conservation ledger and the core 1.0.0 release."). The targets are
+**Status:** approved by the decision owner with the core 1.0.0 release, 2026-10-13 (`review-evidence/decision-owner-answers/core-1-0-0-release.md`: "I approve the conservation ledger and the core 1.0.0 release."). The targets are
 the ones EPM-DEC-001-0029 decides. The before/after run is
 `release/build_core.py`; its after half, `releases/core/1.0.0/conservation.csv`,
 reconciles every census triple: 5,571 source = 5,571 migrated, zero `intake:` left.
@@ -14,7 +14,7 @@ difference has one cause: the annotation on
 contains a ";", and the census split it there, counting its second half as a
 ninth annotated token. The release tokenizer keeps an annotation whole:
 728 plain + 8 annotated = 736 links.
-*Original status (2026-09-25): draft for review. No predicate retires until Hamid
+*Original status (2026-09-25): draft for review. No predicate retires until the decision owner
 approves this ledger AND the promotion script proves the migration in a
 before/after reconciliation run.*
 **Baseline:** `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (PR #120).
@@ -78,7 +78,7 @@ Deterministic classification rules (reviewed, not yet approved):
 - `dcterms:provenance` — note documents a migration event: rename, prior-name
   carryover, tombstone re-anchor, label-change history, or an R1 reclassification move.
 - decision-log reference — note's primary content is a pointer to a decision record
-  ("decision recorded on", "per Hamid's decision (…)", "Hamid accepted Option …",
+  ("decision recorded on", "per the decision owner's decision (…)", "The decision owner accepted Option …",
   "PTC-001 (step3c-parked-tree-changes.md)").
 - `skos:editorialNote` — authoring/review history, batch notes, weak-match
   assessments, scope notes about the intake process itself.
@@ -87,7 +87,7 @@ Deterministic classification rules (reviewed, not yet approved):
 
 Measured: **editorialNote 384 / provenance 95 / decision-log-ref 7 / dual-aspect 5.**
 The promotion script must apply these exact rules; any note matching none falls to
-a manual-review bucket (currently 0). Hamid approves the rules, then the run proves
+a manual-review bucket (currently 0). The decision owner approves the rules, then the run proves
 491 = 384 + 95 + 7 + 5.
 
 ### referenceSources (488 triples → 737 resource links)
@@ -130,7 +130,7 @@ Full accounting in `verb-predicate-mapping-v2.md` and `canonical-facts.csv`:
 | bucket | count | composition |
 |---|---|---|
 | ResolvedToConcept / StableIdentifier | 239 | 203 carried from v1.1 + 35 strengthened (ContextualResolved→StableIdentifier, same target — carries per rule-3 exception) + 1 new R1 `informs` interface row (REL-00028) |
-| ResolvedToConcept / ContextualInferredSibling | 42 | held for Hamid's review (sibling batch) |
+| ResolvedToConcept / ContextualInferredSibling | 42 | held for the decision owner's review (sibling batch) |
 | ResolvedToConcept / ContextualResolved | 1 | REL-00388 — resolution basis changed to contextual |
 | SoleCandidate / CandidateOnly | 1,021 | 852 context-promoted + 169 context-held |
 | AmbiguousDeferred | 12 | — |
@@ -138,7 +138,7 @@ Full accounting in `verb-predicate-mapping-v2.md` and `canonical-facts.csv`:
 | StructuredFlowValue | 2 | `produces` → Q5 flow values, no process relationship |
 | **Total** | **1,318** | 239+42+1+1021+12+1+2 |
 
-(The 37 Hamid flagged: 35 strengthened + 1 new `informs` row + REL-00388.)
+(The 37 the decision owner flagged: 35 strengthened + 1 new `informs` row + REL-00388.)
 
 **Emission → facts derivation:**
 1,129 emitting mentions (282 ResolvedToConcept + 852 promoted − 5 property-rule
@@ -161,7 +161,7 @@ under the property rule); ruled pairs recorded in the mapping doc.
 - [x] Structured-flow accounting: produces emits zero relationship triples.
 - [x] Per-verb relationship conservation table (mapping v2, per-verb counts).
 - [x] Mentions → canonical facts → merged mirrors accounting.
-- [x] Contradiction report produced for Hamid.
+- [x] Contradiction report produced for the decision owner.
 - [ ] Promotion script implements these rules and reproduces this ledger in a
       before/after reconciliation run (NOT YET BUILT — no implementation authorized).
 - [ ] Fresh no-consumer attestation at release time (last: 2026-09-22 foundation-stage).
@@ -178,7 +178,7 @@ under the property rule); ruled pairs recorded in the mapping doc.
 - Historical labels v1.2: 90 carried by exact key; 14 new proposals for review.
 - Context confirmation: corrected pass implemented; 51-row sample reviewed 51/51 OK.
 
-## Nearness-only stratified review (2026-09-24, Hamid-approved plan)
+## Nearness-only stratified review (2026-09-24, owner-approved plan)
 
 Population: 161 B-only promoted rows (145 enables + 16 governed-by; REL-01312
 excluded — held as a mutual-enabledBy pair). Seeded sample (seed 20260924):
@@ -200,7 +200,7 @@ policies (market-conduct, information barriers, personal-account dealing).
 Unsupported cross-domain governance implication — structural nearness at L1
 (CM-1-2) was too coarse to license a governance claim.
 
-**Stop-rule application (Hamid 2026-09-24):** automatic approval stopped for
+**Stop-rule application (the decision owner 2026-09-24):** automatic approval stopped for
 the governed-by stratum. The 11 individually human-reviewed OKs stand (human
 review supersedes automatic approval). The 4 rows unreviewed at stop time
 (REL-01228, REL-01256, REL-01286, REL-01313) are held with reason
@@ -209,15 +209,15 @@ The enables strata are unaffected.
 
 **Diagnosed rule defect:** the B (structural-nearness) test licensed
 governed-by promotions across L2 boundaries without checking that the target
-policy's domain covers the source's activity. **Proposed fix (for Hamid's
+policy's domain covers the source's activity. **Proposed fix (for the decision owner's
 approval):** governed-by promotion on nearness alone requires source and
 target in the same L2 branch; cross-L2 governance claims go to human review.
 Predicted effect: REL-01143-type rows held; also holds the weak cross-L2 rows
 REL-00190, REL-00274, REL-00858, REL-00907, REL-01005, REL-01228, REL-01286,
-REL-01313 for review. Re-run of the classifier and re-sampling follow Hamid's
+REL-01313 for review. Re-run of the classifier and re-sampling follow the decision owner's
 approval of the fix.
 
-## Decisions recorded 2026-09-24 (Hamid)
+## Decisions recorded 2026-09-24 (the decision owner)
 
 - 53 changed-label rows: 35 "Approval carried" under the documented
   evidence-strengthening exception (same subject/verb/candidate/disposition;
@@ -242,25 +242,25 @@ approval of the fix.
 
 Docs-only PR #121 opened (branch `docs/step4-evidence-discipline`, base pinned
 main `6ab2197ba3fe6246bdb501391d22b71d0338d2c7`): the Step 4 evidence-discipline
-section with Hamid's six wording edits, placed after the step log / before §4
+section with the decision owner's six wording edits, placed after the step log / before §4
 Decision log, plus a short Step 4 step-log pointer. Blast-radius proof: parent
 is pinned main, exactly one file changed
 (`business_architecture/ontology/ontology-playbook.md`). **DO NOT MERGE**
-without Hamid's explicit approval. Local draft superseded by the PR.
+without the decision owner's explicit approval. Local draft superseded by the PR.
 
 ## PR #121 merged (2026-09-24)
 
-Hamid merged PR #121 at 2026-09-25T01:51:39Z. Merge commit
+The decision owner merged PR #121 at 2026-09-25T01:51:39Z. Merge commit
 `577c3aa13d784f5f77bdf023c378aed79a70dc5a` is the new `main` head. The Step 4
 evidence-discipline section (eleven rules, six edits applied) is merged **as
-PROPOSED** — its own text says it becomes canonical only on Hamid's explicit
-approval (via #122, after he reads the final wording). Until then, work to the
+PROPOSED** — its own text says it becomes canonical only on the decision owner's explicit
+approval (via #122, after they read the final wording). Until then, work to the
 proposed rules but do not describe them as adopted. (Correction 2026-09-24: an
 earlier ledger line called the section canonical; that was wrong.)
 
 Note: the section's status blockquote still reads "PROPOSED 2026-09-24" —
 stale now that the merge is the approval. Follow-up: flip it to Approved in a
-tiny docs PR (awaiting Hamid's word).
+tiny docs PR (awaiting the decision owner's word).
 
 Baseline note: the Step 4 evidence package remains pinned to
 `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (the approved main at evidence
@@ -270,10 +270,10 @@ the eventual release; the merge does not invalidate the pinned evidence.
 ## Status-flip follow-up (2026-09-24)
 
 PR #121 merged with the section's PROPOSED marker stripped, but the Step 4
-step-log pointer still read "(proposed 2026-09-24; canonical on Hamid's
-approval)". Hamid approved the flip; docs-only PR #122 opened
+step-log pointer still read "(proposed 2026-09-24; canonical on the decision owner's
+approval)". The decision owner approved the flip; docs-only PR #122 opened
 (branch `docs/step4-evidence-discipline-approved`, parent = current main
-`577c3aa1`, one file changed, blast radius proven). Ready for his merge.
+`577c3aa1`, one file changed, blast radius proven). Ready for their merge.
 
 ## Row-level change section: 1,133 → 1,129 emitting (2026-09-24)
 
@@ -284,12 +284,12 @@ facts), held +5, new-label pending −2.
 
 | row_id | old bucket | new bucket | reason |
 |---|---|---|---|
-| REL-00503 | emitting (promoted) | held (property-rule) | Mutual `informedBy` with REL-00500; this direction nearness-only. Hamid 2026-09-24: emit only the independently evidenced direction. |
-| REL-01303 | emitting (promoted, A+B) | held (property-rule) | Mutual `enabledBy` pair 1 (Trade Capture ↔ Market Risk Mgmt). Hamid 2026-09-24: enablement not automatically reciprocal; hold both pending review. |
+| REL-00503 | emitting (promoted) | held (property-rule) | Mutual `informedBy` with REL-00500; this direction nearness-only. The decision owner 2026-09-24: emit only the independently evidenced direction. |
+| REL-01303 | emitting (promoted, A+B) | held (property-rule) | Mutual `enabledBy` pair 1 (Trade Capture ↔ Market Risk Mgmt). The decision owner 2026-09-24: enablement not automatically reciprocal; hold both pending review. |
 | REL-01312 | emitting (promoted, B-only) | held (property-rule) | Same as REL-01303, other direction. |
-| REL-01056 | emitting (promoted, stable-ID) | held (property-rule) | Mutual `enabledBy` pair 2 (Period-End Processing ↔ AR Reconciliation and Compliance). Same Hamid decision. |
+| REL-01056 | emitting (promoted, stable-ID) | held (property-rule) | Mutual `enabledBy` pair 2 (Period-End Processing ↔ AR Reconciliation and Compliance). Same the decision owner's decision. |
 | REL-01053 | emitting (promoted, stable-ID) | held (property-rule) | Same as REL-01056, other direction. |
-| CM-1-1-4 (label row) | new-label pending | decided: MigrationOnly | R1 prior name ("Refinery Planning"); Hamid 2026-09-24 approved MigrationOnly, do not add as alias. |
+| CM-1-1-4 (label row) | new-label pending | decided: MigrationOnly | R1 prior name ("Refinery Planning"); the decision owner 2026-09-24 approved MigrationOnly, do not add as alias. |
 | CM-1-1-7 (label row) | new-label pending | decided: MigrationOnly | R1 prior name ("Refinery Scheduling"); same decision. |
 
 Held bucket composition now: 169 context-held + 5 property-rule holds
@@ -301,7 +301,7 @@ mapping until the governed-by classifier re-run below.
 
 ## Governed-by re-run under the stricter rule (2026-09-24)
 
-Hamid's amendment (2026-09-24): structural closeness alone **never** promotes
+The decision owner's amendment (2026-09-24): structural closeness alone **never** promotes
 governed-by, at any level. Governance is a claim about authority; the
 hierarchy says nothing about authority. Implemented in
 `target-report/context_pass.py` (`_real()` excludes `B:structural-nearness`
@@ -321,14 +321,14 @@ None had non-singleton facts.
 | held (incl. 5 property-rule) | 174 | 190 | +16 |
 
 Enables membership verified unchanged (282 promoted, same row set).
-The 16 rows: 11 previously sample-OK (superseded — Hamid reviews all 16),
+The 16 rows: 11 previously sample-OK (superseded — the decision owner reviews all 16),
 REL-01143 (sample error), 4 stratum-stop rows (absorbed). No overlap with the
 10 ancestor/descendant held rows. Enables re-sample: not needed (membership
 unchanged).
 
 ## EnabledBy verdicts recorded (2026-09-24)
 
-Hamid's verdicts on the mutual-enabledBy special batch: emit one direction
+The decision owner's verdicts on the mutual-enabledBy special batch: emit one direction
 per pair, hold the reverse. Neither pair is a genuine reciprocal
 `core:enables` loop — the reverse direction means control/constraint or
 close-feed consumption, not capability enablement.
@@ -337,10 +337,10 @@ Row-level changes:
 
 | row_id | old bucket | new bucket | reason |
 |---|---|---|---|
-| REL-01303 | held (property-rule, pending review) | emitting (approved) | Hamid 2026-09-24: Trade Capture creates the deal record Market Risk measures; explicit reference, directionally sensible. |
-| REL-01056 | held (property-rule, pending review) | emitting (approved) | Hamid 2026-09-24: reconciliation readiness enables a supported, evidenced close. |
-| REL-01312 | held (property-rule, pending review) | held (source correction) | Hamid 2026-09-24: governance/constraint, not enablement. No `core:enables` triple; workbook correction via reviewed authoring (see source-workbook-backlog.md). |
-| REL-01053 | held (property-rule, pending review) | held (source correction) | Hamid 2026-09-24: close verifies/consumes reconciliation evidence; does not enable it. Same correction path. |
+| REL-01303 | held (property-rule, pending review) | emitting (approved) | The decision owner 2026-09-24: Trade Capture creates the deal record Market Risk measures; explicit reference, directionally sensible. |
+| REL-01056 | held (property-rule, pending review) | emitting (approved) | The decision owner 2026-09-24: reconciliation readiness enables a supported, evidenced close. |
+| REL-01312 | held (property-rule, pending review) | held (source correction) | The decision owner 2026-09-24: governance/constraint, not enablement. No `core:enables` triple; workbook correction via reviewed authoring (see source-workbook-backlog.md). |
+| REL-01053 | held (property-rule, pending review) | held (source correction) | The decision owner 2026-09-24: close verifies/consumes reconciliation evidence; does not enable it. Same correction path. |
 
 New totals: emitting 1,115 (+2), held 188 (−2: 185 context + 3 property-rule),
 canonical facts 907 (+2). Conservation: 1,115 + 188 + 12 + 1 + 2 = 1,318.
@@ -364,17 +364,17 @@ enablement cases.
 
 ## 32-row review run (2026-09-24/25)
 
-Hamid's next action: record the enabledBy verdicts, then run the stratified
+The decision owner's next action: record the enabledBy verdicts, then run the stratified
 32-row review (16 enables sampled + all 16 governed-by in full) with the four
 enabledBy decisions enforced as regression tests (done — see gate section 2b).
 
 Worklist: `target-report/review32-worklist.json` (seed 20260925). Enables
 sample: 8 same-parent + 8 cross-parent, all fresh (the 23 high-risk enables
 were exhausted in round 1 — all reviewed). Governed-by: all 16 rows, for
-Hamid's review (`review-evidence/governed-by-full-review-batch.csv`).
+The decision owner's review (`review-evidence/governed-by-full-review-batch.csv`).
 
 Assistant review of the 16 enables (`review-evidence/review32-enables-batch.csv`):
-**12 approve (1 weak), 4 hold.** The 4 holds all follow the pattern Hamid
+**12 approve (1 weak), 4 hold.** The 4 holds all follow the pattern the decision owner
 identified in the enabledBy verdicts — "enables" flattening "informs":
 - REL-01131 (Supply Network Participation Analysis → Refined Product Demand
   Management): strategic scoping, not necessary for operational demand
@@ -386,11 +386,11 @@ identified in the enabledBy verdicts — "enables" flattening "informs":
 - REL-01094 (Measure Service Infrastructure → Manage Technology): measurement
   evidence informs the roadmap; management does not require it. Better: informs.
 
-These are recommendations; Hamid decides. Not applied to the pipeline.
+These are recommendations; the decision owner decides. Not applied to the pipeline.
 
 ## Enables-sample verdicts recorded (2026-09-25)
 
-Hamid's verdicts on the 16-row enables sample: **11 approved as
+The decision owner's verdicts on the 16-row enables sample: **11 approved as
 `core:enables`, 4 held for source correction, 1 held for source classification
 review.** More conservative than the reviewer's 12/4 — REL-00936 downgraded:
 the revenue plan is not demonstrated as necessary for profitability analysis.
@@ -423,11 +423,11 @@ influence/informs (context without necessity), source classification review
 
 ## Governed-by verdicts recorded (2026-09-25)
 
-Hamid's verdicts on the 16-row governed-by batch: **13 approved as
+The decision owner's verdicts on the 16-row governed-by batch: **13 approved as
 `core:governedBy` (4 with scope qualifiers), 3 held for source review.**
 Approvals rest on explicit authority/policy/framework/set-versus-apply
 language — none on hierarchy proximity, consistent with the stricter rule.
-Promotion basis for the 13 is the recorded `D:hamid-verdict(2026-09-25)`
+Promotion basis for the 13 is the recorded `D:owner-verdict(2026-09-25)`
 evidence test in `context_pass.py`; the B-exclusion rule is unchanged for all
 other rows.
 
@@ -457,7 +457,7 @@ New totals: emitting 1,123 (+13), held 180 (−13: 172 context + 8 property-rule
 canonical facts 916 (+13; all singleton facts).
 Conservation: 1,123 + 180 + 12 + 1 + 2 = 1,318.
 
-Note on verdict arithmetic: Hamid's message carried three different totals
+Note on verdict arithmetic: The decision owner's message carried three different totals
 (heading "approve 11, hold 5, defer 1"; footer "Approved: 12, Held: 3"; per-row
 table 13 approve + 3 hold = 16). Recorded the per-row table — the only one
 summing to the 16-row batch — and flagged the discrepancy for confirmation.
@@ -468,18 +468,18 @@ Recorded in: `review-evidence/governed-by-full-review-batch.csv` (16 decisions),
 `verb-predicate-mapping-v2.md` (governed-by definition, scope-qualified
 governance relation, emission guard), `evidence-gate.py` (16 new control-case
 regression tests; 36 total), `target-report/context_pass.py`
-(HAMID_APPROVED_GOVERNED_BY + D:hamid-verdict evidence test).
+(OWNER_APPROVED_GOVERNED_BY + D:owner-verdict evidence test).
 
 Definitions adopted: governed-by (operates within target-owned policy/
 authority/framework/delegation/limit/rule); scope-qualified governance
 relation (named control boundary, not operational ownership).
 
-Next per Hamid: the 18 changed-label rows and 12 new historical-label rows,
+Next per the decision owner: the 18 changed-label rows and 12 new historical-label rows,
 then unblocking the Step 4 migration script.
 
 ## Label batches recorded; REL-00445 held (2026-09-25)
 
-Hamid's verdicts: **12 historical-label rows approved as proposed**
+The decision owner's verdicts: **12 historical-label rows approved as proposed**
 (3 AddAsAltLabel, 1 MigrationOnly, 8 RetainAsAltLabel); **18 changed-label
 rows: 17 carry existing decisions forward, REL-00445 held for source
 correction** (enables → informed-by; PTC-002: planning decides, trading
@@ -510,7 +510,7 @@ triggers), `source-workbook-backlog.md` (REL-00445),
 Definition adopted: recommendation rule (advisory input is informed-by, not
 enables, even when it feeds a binding decision).
 
-## Verb-mapping review prep (2026-09-25, per Hamid's sequence)
+## Verb-mapping review prep (2026-09-25, per the decision owner's sequence)
 
 **G1 split** (rule 11): 112 G1 rows split by reverse-pair evidence —
 **G1a 81** (a `uses-input` mention states the same pair; merge as extra
@@ -522,7 +522,7 @@ the verb → proposed hold for workbook correction).
 **S&T enables search** (REL-00445 pattern): 21 rows where the source
 definition says recommend/advise. Triaged by reading each definition —
 **5 pattern-holds** (source advises, target decides), **9 genuine**
-(source builds the base the target operates on), **7 ambiguous** (Hamid
+(source builds the base the target operates on), **7 ambiguous** (the decision owner
 decides). The search is a candidate filter, not a verdict.
 `review-evidence/st-enables-search.csv`.
 
@@ -531,7 +531,7 @@ decides). The search is a candidate filter, not a verdict.
 + 89 SoleCandidate/PROMOTE-A) and **106 nearness-only**
 (SoleCandidate/PROMOTE-B); the 21 context-held G3 rows are out of scope.
 Section A6 decided 2026-09-26 (final explicit-reference chunk): 4 approved
-(REL-01274, REL-01298, REL-01303, REL-01311; basis to D:hamid-verdict; scope
+(REL-01274, REL-01298, REL-01303, REL-01311; basis to D:owner-verdict; scope
 conditions on each), 2 held (REL-01277 adjacent execution, REL-01299
 independent-function exclusion; facts removed after uniqueness
 validation). Section A is now COMPLETE: 143/143 explicit-reference rows
@@ -561,17 +561,17 @@ stored, recorded as evidence; not a verb change.
 (6 rows, full definitions, reviewer notes). REL-00208's proposed remap
 flagged as a verb change at emission time — expected hold, not remap.
 
-## 2026-09-25 — Requires verdicts recorded (Hamid)
+## 2026-09-25 — Requires verdicts recorded (the decision owner)
 
 Decision basis: requires-6-review-batch.csv (6/6 decided).
 
 | Row | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00158 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:hamid-verdict) | Approved: genuine credit-clearance precondition |
-| REL-00168 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:hamid-verdict) | Approved: valid closure-control prerequisite |
-| REL-00247 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:hamid-verdict) | Approved: clear lifecycle dependency |
-| REL-00872 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:hamid-verdict) | Approved: legitimate KYC onboarding gate |
-| REL-00873 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:hamid-verdict) | Approved with scope note: credit-controlled onboarding prerequisite only, not every prospect setup |
+| REL-00158 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:owner-verdict) | Approved: genuine credit-clearance precondition |
+| REL-00168 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:owner-verdict) | Approved: valid closure-control prerequisite |
+| REL-00247 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:owner-verdict) | Approved: clear lifecycle dependency |
+| REL-00872 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:owner-verdict) | Approved: legitimate KYC onboarding gate |
+| REL-00873 | emitting (proposed `core:requires`) | emitting (`core:requires`, D:owner-verdict) | Approved with scope note: credit-controlled onboarding prerequisite only, not every prospect setup |
 | REL-00208 | emitting (proposed remap to `core:dependsOnOutputOf`) | held — source-workbook correction | Neither requires nor dependsOnOutputOf supported; remap at emission would change source meaning |
 
 **Bucket totals:** emitting 1,122 → **1,121** (−1); held 181 → **182** (+1);
@@ -579,29 +579,29 @@ deferred 12; external-governance 1; structured-flow 2. Canonical facts
 920 → **919** (−1; REL-00208's dependsOnOutputOf fact removed, nothing replaces
 it). Conservation: 1,121 + 182 + 12 + 1 + 2 = 1,318 ✓.
 
-**Standing rule (Hamid 2026-09-25):** approving a row that is already emitting
-changes only its basis (proposed → D:hamid-verdict); counts move only when a
+**Standing rule (the decision owner 2026-09-25):** approving a row that is already emitting
+changes only its basis (proposed → D:owner-verdict); counts move only when a
 row changes bucket. The 5 approved requires rows were already emitting, so the
 +5 expectation in the verdict brief was corrected to a basis change only.
 
 **Ledger-flag:** the provisional expectation in the verdict brief was
 +5 emitting (1,127). The 5 approved rows were already emitting under the
 proposed mapping — approvals change the decision basis (proposed →
-D:hamid-verdict), not the bucket. The only bucket change is REL-00208
+D:owner-verdict), not the bucket. The only bucket change is REL-00208
 emitting → held. No triple merges/drops occurred: the 5 approved
 (core:requires) stored triples were and remain fact-distinct.
 
-## 2026-09-26 — Assures verdicts recorded (Hamid)
+## 2026-09-26 — Assures verdicts recorded (the decision owner)
 
 Decision basis: assures-8-review-batch.csv (8/8 decided; 0 deferred).
 
 | Row | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00401 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:hamid-verdict) | Approved: tax-compliance control assurance |
-| REL-00719 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:hamid-verdict) | Approved: management/quality assurance of research conduct |
-| REL-00801 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:hamid-verdict) | Approved: bounded brand-compliance assurance over campaigns |
-| REL-01269 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:hamid-verdict) | Approved: regulatory/compliance assurance over Trading Management |
-| REL-01270 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:hamid-verdict) | Approved: regulatory/compliance assurance over Settlements |
+| REL-00401 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:owner-verdict) | Approved: tax-compliance control assurance |
+| REL-00719 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:owner-verdict) | Approved: management/quality assurance of research conduct |
+| REL-00801 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:owner-verdict) | Approved: bounded brand-compliance assurance over campaigns |
+| REL-01269 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:owner-verdict) | Approved: regulatory/compliance assurance over Trading Management |
+| REL-01270 | emitting (proposed `core:assuredBy`) | emitting (`core:assuredBy`, D:owner-verdict) | Approved: regulatory/compliance assurance over Settlements |
 | REL-00355 | held (context) | held (context) | No change: documents support/evidencing is not assurance |
 | REL-00385 | held (context) | held (context) | No change: reporting support is not assurance |
 | REL-01106 | emitting (`core:assuredBy` fact) | held — source-workbook correction | Supply-position management does not assure demand management; existing fact removed, no substitute |
@@ -613,22 +613,22 @@ no other row stored the identical fact). Conservation: 1,120 + 183 + 12 + 1
 + 2 = 1,318 ✓. Per the basis/bucket standing rule, the five approvals
 changed only the decision basis.
 
-## 2026-09-26 — Constrained-by verdicts recorded (Hamid)
+## 2026-09-26 — Constrained-by verdicts recorded (the decision owner)
 
 Decision basis: constrained-by-11-review-batch.csv (11/11 decided; 0 deferred).
 
 | Row | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00015 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: inventory-bound allocation |
-| REL-00018 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: inventory-bound allocation |
-| REL-00024 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: inventory-bound planning |
-| REL-00087 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: refinery operating-envelope bound |
-| REL-00091 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: refinery operating-envelope bound |
-| REL-00099 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved canonical inversion of source `constrains`; original assertion preserved in fact row (`raw_verbs: constrains`) |
-| REL-00103 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: inventory-bound capture |
-| REL-00574 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: terminal lifting allocation controls |
-| REL-00894 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: genuine credit-control constraint |
-| REL-01284 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:hamid-verdict) | Approved: inventory-bound optimization |
+| REL-00015 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: inventory-bound allocation |
+| REL-00018 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: inventory-bound allocation |
+| REL-00024 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: inventory-bound planning |
+| REL-00087 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: refinery operating-envelope bound |
+| REL-00091 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: refinery operating-envelope bound |
+| REL-00099 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved canonical inversion of source `constrains`; original assertion preserved in fact row (`raw_verbs: constrains`) |
+| REL-00103 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: inventory-bound capture |
+| REL-00574 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: terminal lifting allocation controls |
+| REL-00894 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: genuine credit-control constraint |
+| REL-01284 | emitting (proposed `core:constrainedBy`) | emitting (`core:constrainedBy`, D:owner-verdict) | Approved: inventory-bound optimization |
 | REL-00097 | held (context) | held (context) | No change: broad undefined Refining target; backlog row 14 added for target clarification |
 
 **Bucket totals:** emitting **1,120**; held **183**; deferred 12;
@@ -640,13 +640,13 @@ only** — no row moved buckets.
 its fact row carries `raw_verbs: constrains` and the inversion note, so
 source-direction provenance is intact.
 
-## 2026-09-26 — Triggers verdicts recorded (Hamid)
+## 2026-09-26 — Triggers verdicts recorded (the decision owner)
 
 Decision basis: triggers-18-review-batch.csv (18/18 decided; 0 deferred).
 
 | Row | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00049, REL-00127, REL-00163, REL-00169, REL-00170, REL-00235, REL-00236, REL-00246, REL-00252, REL-00291, REL-00396, REL-00398, REL-00400, REL-00403, REL-00725, REL-00892, REL-00897, REL-00901 | emitting (proposed `core:triggeredBy`) | emitting (`core:triggeredBy`, D:hamid-verdict) | Approved: identifiable event/exception/threshold/handoff invoking the target; stored direction (triggered → trigger) correct |
+| REL-00049, REL-00127, REL-00163, REL-00169, REL-00170, REL-00235, REL-00236, REL-00246, REL-00252, REL-00291, REL-00396, REL-00398, REL-00400, REL-00403, REL-00725, REL-00892, REL-00897, REL-00901 | emitting (proposed `core:triggeredBy`) | emitting (`core:triggeredBy`, D:owner-verdict) | Approved: identifiable event/exception/threshold/handoff invoking the target; stored direction (triggered → trigger) correct |
 
 **Bucket totals:** emitting **1,120**; held **183**; deferred 12;
 external-governance 1; structured-flow 2. Canonical facts **918**. Conservation:
@@ -655,17 +655,17 @@ only** — no row moved buckets. Scope notes recorded for the card-process
 triggers (conditional workflow triggers, not universal) and the four
 compliance-monitoring rows (monitoring-finding → exception-workflow pattern).
 
-## 2026-09-26 — dependsOnOutputOf contradiction verdicts recorded (Hamid)
+## 2026-09-26 — dependsOnOutputOf contradiction verdicts recorded (the decision owner)
 
 Decision basis: dependsOnOutputOf-3-contradictions-batch.csv (3 pairs / 6 rows).
 
 | Row | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00862 | emitting (`core:dependsOnOutputOf`) | emitting (D:hamid-verdict) | Pair A retained: rebate implementation consumes maintained price/discount master data |
+| REL-00862 | emitting (`core:dependsOnOutputOf`) | emitting (D:owner-verdict) | Pair A retained: rebate implementation consumes maintained price/discount master data |
 | REL-00917 | emitting (`core:dependsOnOutputOf`) | held — workbook correction | Pair A reverse: definitions don't show consumption of implemented-rebate output; fact removed |
-| REL-01029 | emitting (`core:dependsOnOutputOf`) | emitting (D:hamid-verdict) | Pair B retained: reconciliation consumes card-transaction records/exceptions |
+| REL-01029 | emitting (`core:dependsOnOutputOf`) | emitting (D:owner-verdict) | Pair B retained: reconciliation consumes card-transaction records/exceptions |
 | REL-00884 | emitting (`core:dependsOnOutputOf`) | held — workbook correction | Pair B reverse: may be exception feedback/remediation loop; fact removed |
-| REL-01061 | emitting (`core:dependsOnOutputOf`) | emitting (D:hamid-verdict) | Pair C retained on definitions; ContextualInferredSibling supplementary only |
+| REL-01061 | emitting (`core:dependsOnOutputOf`) | emitting (D:owner-verdict) | Pair C retained on definitions; ContextualInferredSibling supplementary only |
 | REL-01065 | emitting (`core:dependsOnOutputOf`) | held — workbook correction | Pair C reverse: may be feedback/reporting-impact consideration; fact removed |
 
 **Bucket totals:** emitting 1,120 → **1,117** (−3); held 183 → **186** (+3);
@@ -677,7 +677,7 @@ Conservation: 1,117 + 186 + 12 + 1 + 2 = 1,318 ✓.
 emitted; `contradictions.csv` must stay at 0; the gate asserts zero cycles
 globally plus six presence/absence controls.
 
-## 2026-09-26 — Ancestor/descendant governance verdicts recorded (Hamid)
+## 2026-09-26 — Ancestor/descendant governance verdicts recorded (the decision owner)
 
 Decision basis: ancestor-descendant-10-review-batch.csv (10/10 held; REL-01309
 excluded as an already-approved exception — untouched, original evidence marker
@@ -698,13 +698,13 @@ hierarchy-adjacent row may emit only with documented independent evidence,
 all five exception conditions, and explicit reviewer approval. REL-01309
 remains a recorded exception with its own rationale, not a precedent.
 
-## 2026-09-26 — Supply & Trading enables verdicts recorded (Hamid)
+## 2026-09-26 — Supply & Trading enables verdicts recorded (the decision owner)
 
 Decision basis: st-enables-21-review-batch.csv (21/21 decided; 0 deferred).
 
 | Rows | Old bucket | New bucket | Reason |
 |---|---|---|---|
-| REL-00433, REL-00437, REL-00489, REL-01124, REL-01172, REL-01174 | emitting | emitting (D:hamid-verdict) | Approved as genuine, bounded enablement (maintained/quality-controlled base). REL-00489: reviewer-approved core:enabledBy (override of G1-redundant group proposal) |
+| REL-00433, REL-00437, REL-00489, REL-01124, REL-01172, REL-01174 | emitting | emitting (D:owner-verdict) | Approved as genuine, bounded enablement (maintained/quality-controlled base). REL-00489: reviewer-approved core:enabledBy (override of G1-redundant group proposal) |
 | REL-00152, REL-00262, REL-00458, REL-01122, REL-01129 | emitting | held — workbook correction | Advisory/recommendation pattern (REL-00445 family): source advises, target decides. No emission-time remap |
 | REL-00263, REL-00436, REL-00440, REL-00455, REL-00712, REL-00750, REL-01064, REL-01206 | emitting | held — workbook correction | Ambiguous enables; may be informational, output dependency, event handoff, or no separate relationship. No emission-time remap |
 | REL-00466, REL-00469 | held | held | Existing hierarchy holds; no change |
@@ -730,7 +730,7 @@ correction; semantic plausibility alone never authorizes reclassification.
 PTC-002 (Refinery Planning and Optimization decides; Supply & Trading advises)
 remains the recommendation-versus-enablement control.
 
-## 2026-09-26 — G1a duplicate-merge verdicts recorded (Hamid)
+## 2026-09-26 — G1a duplicate-merge verdicts recorded (the decision owner)
 
 Population-level ruling for the G1a batch: 77 rows approved as
 `MergeAsDuplicateEvidence`. Provenance and decision basis only — no bucket
@@ -745,7 +745,7 @@ every row exposes its named independent supporter in `merged_with_rows`.
 **Exclusions (4 of the original 81, not G1a):**
 | Row | Reason |
 |---|---|
-| REL-00243, REL-00304, REL-01006 | Row-level approved `core:enabledBy` facts (Hamid verdicts) — independent facts, not duplicates |
+| REL-00243, REL-00304, REL-01006 | Row-level approved `core:enabledBy` facts (the decision owner's verdicts) — independent facts, not duplicates |
 | REL-00936 | Held for source-classification review; not finalized |
 
 **Special provenance handling:** REL-00152 and REL-00436 re-attached as
@@ -761,12 +761,12 @@ structured-flow 2. Canonical facts 894. Conservation:
 every row names ≥1 independent `uses-input` partner, every fact survives on
 independent evidence, no G1a row is sole evidence, no new fact created.
 
-## 2026-09-26 — G2 disguised-sequence verdicts recorded (Hamid)
+## 2026-09-26 — G2 disguised-sequence verdicts recorded (the decision owner)
 
 Batch ruling for the 15-row G2 batch
 (`review-evidence/enables-g2-disguised-sequence-review-batch.csv`):
 
-- **13 rows approved as `NoSeparateEnablesFact`** (APPROVE / D:hamid-verdict):
+- **13 rows approved as `NoSeparateEnablesFact`** (APPROVE / D:owner-verdict):
   REL-00122, REL-00135, REL-00174, REL-00216, REL-00375, REL-00698, REL-00727,
   REL-00731, REL-00955, REL-00983, REL-00992, REL-01024, REL-01090. Each
   connects same-parent sibling activities with an independently recorded
@@ -776,7 +776,7 @@ Batch ruling for the 15-row G2 batch
   `core:enabledBy` fact is emitted and the assertion is not remapped to
   another predicate.
 - **2 rows retain prior row-level `core:enabledBy` approvals**
-  (APPROVE / D:hamid-verdict / ExistingRowLevelApproval): REL-00129
+  (APPROVE / D:owner-verdict / ExistingRowLevelApproval): REL-00129
   (Manage Production Schedule Exceptions → Measure Production Scheduling
   Performance) and REL-00728 (Set up Intellectual Asset Framework → Protect
   Intellectual Assets). Group classification never overrides a named,
@@ -793,12 +793,12 @@ structured-flow 2. Canonical facts 894. Conservation:
 1,094 + 209 + 12 + 1 + 2 = 1,318 ✓. Decision basis only — no row changed
 bucket, no fact count moved.
 
-## 2026-09-26 — G1b no-verb-change verdicts recorded (Hamid)
+## 2026-09-26 — G1b no-verb-change verdicts recorded (the decision owner)
 
 Batch ruling for the 31-row G1b batch
 (`review-evidence/enables-g1b-verb-change-risk-review-batch.csv`):
 
-- **29 rows HELD** (HOLD / D:hamid-verdict / G1bNoVerbChange): the source
+- **29 rows HELD** (HOLD / D:owner-verdict / G1bNoVerbChange): the source
   assertion uses `enables`; the only paired evidence is the inverse
   `informed-by` assertion; no independently approved `uses-input`
   assertion exists for the pair. Emitting `core:dependsOnOutputOf` would
@@ -815,7 +815,7 @@ Batch ruling for the 31-row G1b batch
 `VERB_CHANGE_RISK / only apparent match is informed-by via no partner...`
 but named no informed_by_rows on any of the 31 rows. The repaired batch
 names the actual reverse informed-by row and its emission status for
-every candidate before Hamid's review.
+every candidate before the decision owner's review.
 
 **Fact-provenance uniqueness validation:** all 28 removed
 `core:dependsOnOutputOf` facts were unique single-row facts — each
@@ -873,17 +873,17 @@ as non-emitting evidence unless it receives a separate explicit
 row-level `core:enabledBy` approval. The gate stays red until every such
 fact emission is removed, then passes only on proven fact provenance.
 
-## 2026-09-26 — G3 Section A1 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section A1 verdicts recorded (the decision owner)
 
 Section A1: first 25 undecided explicit-reference rows
 (`review-evidence/enables-g3-section-a1-review.csv`), REL-00009 → REL-00211.
 
-- **19 rows APPROVED** (APPROVE / D:hamid-verdict) as genuine, bounded
+- **19 rows APPROVED** (APPROVE / D:owner-verdict) as genuine, bounded
   `core:enabledBy`: the sources supply policies, governed terms,
   operational parameters, or controlled records that make the target
   processes able to operate. **Basis change only** — all 19 were already
   emitting; no bucket or fact-count movement.
-- **6 rows HELD** (HOLD / D:hamid-verdict): exclusion references
+- **6 rows HELD** (HOLD / D:owner-verdict): exclusion references
   (REL-00009, REL-00054, REL-00077), informational/evidence feeds
   (REL-00041, REL-00118), lifecycle/sequence assertion (REL-00176).
   Explicit target identification is not enablement proof. Stored
@@ -906,25 +906,25 @@ retained via other evidence.
 | REL-00077 | emitting | held | G3-A1: exclusion reference, not enablement |
 | REL-00118 | emitting | held | G3-A1: input/evidence feed, not proven enablement |
 | REL-00176 | emitting | held | G3-A1: lifecycle relation, wrong direction |
-| REL-00027 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00038 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00043 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00052 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00053 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00060 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00065 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00074 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00108 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00160 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00161 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00172 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00177 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00178 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00179 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00180 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00196 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00199 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
-| REL-00211 | emitting | emitting | G3-A1 APPROVED — basis to D:hamid-verdict |
+| REL-00027 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00038 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00043 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00052 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00053 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00060 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00065 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00074 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00108 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00160 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00161 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00172 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00177 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00178 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00179 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00180 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00196 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00199 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
+| REL-00211 | emitting | emitting | G3-A1 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,066 → **1,060** (−6); held 237 → **243**
 (+6); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -935,17 +935,17 @@ facts 866 → **860** (−6). Conservation:
 to 860 facts). Promotion remains blocked pending completion
 of G3 review and the mapping-document review.
 
-## 2026-09-26 — G3 Section A2 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section A2 verdicts recorded (the decision owner)
 
 Section A2: next 25 undecided explicit-reference rows
 (`review-evidence/enables-g3-section-a2-review.csv`), REL-00217 → REL-00517.
 
-- **19 rows APPROVED** (APPROVE / D:hamid-verdict) as genuine, bounded
+- **19 rows APPROVED** (APPROVE / D:owner-verdict) as genuine, bounded
   `core:enabledBy`: decision criteria, limits, control structures,
   approved terms, operational demand signals, or service capability that
   makes the target able to operate. **Basis change only** — no bucket or
   fact-count movement.
-- **6 rows HELD** (HOLD / D:hamid-verdict): analytical advice
+- **6 rows HELD** (HOLD / D:owner-verdict): analytical advice
   (REL-00232), output contribution (REL-00294), operational feedback
   (REL-00409), informational feed (REL-00479), excluded scope
   (REL-00493), documentation contribution (REL-00517). Stored
@@ -968,25 +968,25 @@ retained via other evidence.
 | REL-00479 | emitting | held | G3-A2: informational feed, no executable capability |
 | REL-00493 | emitting | held | G3-A2: excluded scope owned by target |
 | REL-00517 | emitting | held | G3-A2: documentation contribution, not enablement |
-| REL-00217 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00220 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00221 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00223 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00226 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00254 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00255 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00272 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00273 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00276 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00284 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00367 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00386 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00391 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00433 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00472 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00473 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00475 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
-| REL-00501 | emitting | emitting | G3-A2 APPROVED — basis to D:hamid-verdict |
+| REL-00217 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00220 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00221 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00223 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00226 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00254 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00255 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00272 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00273 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00276 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00284 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00367 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00386 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00391 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00433 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00472 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00473 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00475 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
+| REL-00501 | emitting | emitting | G3-A2 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,060 → **1,054** (−6); held 243 → **249**
 (+6); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -996,17 +996,17 @@ facts 860 → **854** (−6). Conservation:
 **Gate:** all 393 evidence-gate checks pass (conservation assertions
 updated to 854 facts). Promotion remains blocked.
 
-## 2026-09-26 — G3 Section A3 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section A3 verdicts recorded (the decision owner)
 
 Section A3: 25 explicit-reference rows (`review-evidence/enables-g3-section-a3-review.csv`),
 REL-00528 → REL-00852.
 
 **Count reconciliation (authoritative = row-level table):** the message
 summary said "14 approve / 11 hold" but the verdict table lists **12
-approvals and 13 holds**; the table was applied per Hamid's instruction
+approvals and 13 holds**; the table was applied per the decision owner's instruction
 that the row-level decisions are the intended substance.
 
-- **12 rows APPROVED** (APPROVE / D:hamid-verdict): approved strategic
+- **12 rows APPROVED** (APPROVE / D:owner-verdict): approved strategic
   direction, operating calendars, authority frameworks, governed pricing
   direction, integrated plans, or release-ready deliverables that make
   the target able to operate. **Basis change only** — no bucket or
@@ -1014,7 +1014,7 @@ that the row-level decisions are the intended substance.
   approvals do NOT transfer authorization — the source gains no media-buying
   authority, procurement commitment, in-market deployment, or release
   approval; the approval is limited to the governed directional base.
-- **13 rows HELD** (HOLD / D:hamid-verdict): four documentation feeds
+- **13 rows HELD** (HOLD / D:owner-verdict): four documentation feeds
   (REL-00528, REL-00539, REL-00551, REL-00562), partitioned ownership
   (REL-00665, REL-00846), forecast inputs (REL-00811, REL-00834),
   analytical feedback (REL-00818, REL-00820), hierarchy-adjacent
@@ -1046,7 +1046,7 @@ have different targets — distinct facts.)
 | REL-00846 | emitting | held | G3-A3: partitioned ownership (commercial vs fulfillment records) |
 | REL-00851 | emitting | held | G3-A3: informational contribution (sales reporting) |
 | REL-00852 | emitting | held | G3-A3: informational contribution (sales reporting) |
-| (REL-00595→REL-00816 approvals) | emitting | emitting | G3-A3 APPROVED — basis to D:hamid-verdict |
+| (REL-00595→REL-00816 approvals) | emitting | emitting | G3-A3 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,054 → **1,041** (−13); held 249 → **262**
 (+13); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -1056,7 +1056,7 @@ facts 854 → **841** (−13). Conservation:
 **Gate:** all 393 evidence-gate checks pass (conservation assertions
 updated to 841 facts). Promotion remains blocked.
 
-## 2026-09-26 — G3 Section A4 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section A4 verdicts recorded (the decision owner)
 
 Section A4: 25 explicit-reference rows (`review-evidence/enables-g3-section-a4-review.csv`),
 REL-00857 → REL-01092.
@@ -1065,13 +1065,13 @@ REL-00857 → REL-01092.
 summary said "13 approve / 12 hold" and its ledger-impact section assumed
 13/12, but the verdict table's Approve/Hold column and per-row hold
 narratives all say **16 approvals and 9 holds** (16+9=25). The 16/9 split
-was applied per Hamid's instruction.
+was applied per the decision owner's instruction.
 
-- **16 rows APPROVED** (APPROVE / D:hamid-verdict): governed master data,
+- **16 rows APPROVED** (APPROVE / D:owner-verdict): governed master data,
   policies, operational controls, service capacity, or required terms that
   make the target capable of operating. **Basis change only** — no bucket
   or fact-count movement.
-- **9 rows HELD** (HOLD / D:hamid-verdict): deployment/data-consumption
+- **9 rows HELD** (HOLD / D:owner-verdict): deployment/data-consumption
   (REL-00857), operational-data feed (REL-00886), boundary statement
   (REL-00889), input/data relationship (REL-00898), exception/lifecycle
   handoff (REL-01038), output/input to billing (REL-01072), output/input to
@@ -1098,7 +1098,7 @@ retained via other evidence.
 | REL-01073 | emitting | held | G3-A4: output/input to close |
 | REL-01082 | emitting | held | G3-A4: coordination/support |
 | REL-01092 | emitting | held | G3-A4: evidence/output for billing |
-| (REL-00880→REL-01087 approvals) | emitting | emitting | G3-A4 APPROVED — basis to D:hamid-verdict |
+| (REL-00880→REL-01087 approvals) | emitting | emitting | G3-A4 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,041 → **1,032** (−9); held 262 → **271**
 (+9); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -1108,7 +1108,7 @@ facts 841 → **832** (−9). Conservation:
 **Gate:** all 393 evidence-gate checks pass (conservation assertions
 updated to 832 facts). Promotion remains blocked.
 
-## 2026-09-26 — G3 Section A5 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section A5 verdicts recorded (the decision owner)
 
 Section A5: 25 explicit-reference rows (`review-evidence/enables-g3-section-a5-review.csv`),
 REL-01100 → REL-01267.
@@ -1116,9 +1116,9 @@ REL-01100 → REL-01267.
 **Count reconciliation (authoritative = row-level table):** the message
 summary said "13 approve / 12 hold" and its ledger-impact section assumed
 13/12, but the verdict table's Approve/Hold column lists **14 approvals and
-11 holds** (14+11=25). The 14/11 split was applied per Hamid's instruction.
+11 holds** (14+11=25). The 14/11 split was applied per the decision owner's instruction.
 
-- **14 rows APPROVED** (APPROVE / D:hamid-verdict): approved strategy,
+- **14 rows APPROVED** (APPROVE / D:owner-verdict): approved strategy,
   governed agreements, operational infrastructure, controls, or required
   close inputs that make the target capable of operating. **Basis change
   only** — no bucket or fact-count movement. Authority-preserving
@@ -1126,7 +1126,7 @@ summary said "13 approve / 12 hold" and its ledger-impact section assumed
   REL-01149, REL-01215, REL-01267: enablement does not transfer decision,
   approval, legal, procurement, scheduling, or platform authority; the
   target retains ownership of its functions.
-- **11 rows HELD** (HOLD / D:hamid-verdict): analysis/evidence feeds
+- **11 rows HELD** (HOLD / D:owner-verdict): analysis/evidence feeds
   (REL-01157, REL-01178, REL-01182, REL-01185), output/evidence feeds
   (REL-01163, REL-01171, REL-01257), forecast input (REL-01216),
   partitioned coordination (REL-01210), cross-capability partition
@@ -1155,7 +1155,7 @@ retained via other evidence.
 | REL-01254 | emitting | held | G3-A5: cross-capability partition |
 | REL-01257 | emitting | held | G3-A5: output/lifecycle relation |
 | REL-01262 | emitting | held | G3-A5: non-enabling coordination |
-| (REL-01100→REL-01267 approvals) | emitting | emitting | G3-A5 APPROVED — basis to D:hamid-verdict |
+| (REL-01100→REL-01267 approvals) | emitting | emitting | G3-A5 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,032 → **1,021** (−11); held 271 → **282**
 (+11); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -1165,19 +1165,19 @@ facts 832 → **821** (−11). Conservation:
 **Gate:** all 393 evidence-gate checks pass (conservation assertions
 updated to 821 facts). Promotion remains blocked.
 
-## 2026-09-26 — G3 Section A6 verdicts recorded (Hamid); Section A complete
+## 2026-09-26 — G3 Section A6 verdicts recorded (the decision owner); Section A complete
 
 Section A6: final 6 explicit-reference rows
 (`review-evidence/enables-g3-section-a6-review.csv`), REL-01274 → REL-01311.
 Table says 4 approvals / 2 holds — message narrative, row table, and hold
 narratives agree; no reconciliation needed.
 
-- **4 rows APPROVED** (APPROVE / D:hamid-verdict): governed strategy,
+- **4 rows APPROVED** (APPROVE / D:owner-verdict): governed strategy,
   contract/control framework, controlled transaction record, or
   independent risk-control basis that makes the target capable. **Basis
   change only.** Scope conditions recorded on each approval
   (REL-01274/01298/01303/01311).
-- **2 rows HELD** (HOLD / D:hamid-verdict): adjacent execution
+- **2 rows HELD** (HOLD / D:owner-verdict): adjacent execution
   (REL-01277), independent-function exclusion (REL-01299). Stored
   `core:enabledBy` facts removed; no substitute predicate emitted; enables
   assertions retained as non-emitting evidence; routed for source-workbook
@@ -1194,7 +1194,7 @@ retained via other evidence.
 |---|---|---|---|
 | REL-01277 | emitting | held | G3-A6: adjacent execution |
 | REL-01299 | emitting | held | G3-A6: independent-function exclusion |
-| (REL-01274, REL-01298, REL-01303, REL-01311) | emitting | emitting | G3-A6 APPROVED — basis to D:hamid-verdict |
+| (REL-01274, REL-01298, REL-01303, REL-01311) | emitting | emitting | G3-A6 APPROVED — basis to D:owner-verdict |
 
 **Bucket totals:** emitting 1,021 → **1,019** (−2); held 282 → **284**
 (+2); deferred 12; external-governance 1; structured-flow 2. Canonical
@@ -1212,7 +1212,7 @@ All **143 Section A explicit-reference rows** are now decided:
 - 12 pre-existing held rows remained reconciliation-only (not re-decided).
 
 Remaining G3 work: 96 undecided Section B nearness-only rows
-(`B — nearness-only (needs Hamid verdict)`), plus 10 already-held
+(`B — nearness-only (needs the decision owner's verdict)`), plus 10 already-held
 Section B reconciliation rows. Promotion remains blocked until every
 recorded batch and the mapping document are approved.
 
@@ -1224,16 +1224,16 @@ Independent-function exclusion (a source explicitly excluding the
 target's owned operational function cannot be promoted as enabling it
 without separate positive capability-effect evidence).
 
-## 2026-09-26 — G3 Section B1 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section B1 verdicts recorded (the decision owner)
 
 Section B1: first 15 nearness-only rows (`review-evidence/enables-g3-section-b1-review.csv`),
 REL-00032 → REL-00239. All were emitting before review.
 
 - **15 rows HELD** — no predicate review reached; target identity fails first.
-  - 13 rows: **HOLD / D:hamid-verdict / TargetIdentityUnconfirmed** — candidate
+  - 13 rows: **HOLD / D:owner-verdict / TargetIdentityUnconfirmed** — candidate
     target plausible but no stable identifier, explicit target name, or
     source-definition/scope evidence links the source to that target.
-  - 2 rows: **HOLD / D:hamid-verdict / TargetIdentityRejected** — candidate
+  - 2 rows: **HOLD / D:owner-verdict / TargetIdentityRejected** — candidate
     target semantically misaligned (REL-00164: contract monitoring vs
     trading-strategy stewardship; REL-00239: credit-risk reporting vs
     trading-strategy stewardship).
@@ -1256,7 +1256,7 @@ facts 819 → **804** (−15). Conservation:
 1,004 + 299 + 12 + 1 + 2 = 1,318 ✓.
 
 **New hard gate rule — nearness-only identity rule** (implemented in
-evidence-gate.py, Hamid 2026-09-26): a candidate resolved solely by label
+evidence-gate.py, the decision owner 2026-09-26): a candidate resolved solely by label
 similarity, unique-candidate filtering, structural proximity, or other
 classifier nearness evidence cannot emit a semantic fact; it requires
 explicit target evidence or a separately recorded manual identity
@@ -1268,7 +1268,7 @@ evidence.
 **Control-case correction (observed failure → fix → pass):** two
 control-case checks (`control-case stored REL-00059/REL-00133 as
 core:enabledBy`) failed after B1 verdicts were applied. Investigation:
-both rows were never row-level approved by Hamid — the control-case
+both rows were never row-level approved by the decision owner — the control-case
 assertion was mistaken (they were previously "held pending domain-batch
 review" and emitting only as unreviewed pipeline output). Moved both from
 the approved-emission control list to the hold control list; gate now
@@ -1278,14 +1278,14 @@ green on 395 checks.
 to 804 facts; 15 B1 no-fact assertions live in the nearness-identity
 rule). Promotion remains blocked.
 
-## 2026-09-26 — G3 Section B2 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section B2 verdicts recorded (the decision owner)
 
 Section B2: second 15 nearness-only rows (`review-evidence/enables-g3-section-b2-review.csv`),
 REL-00253 → REL-00431. All were emitting before review.
 
 - **15 rows HELD** — no predicate review reached; target identity fails first.
-  - 13 rows: **HOLD / D:hamid-verdict / TargetIdentityUnconfirmed**.
-  - 2 rows: **HOLD / D:hamid-verdict / TargetIdentityRejected** — candidate
+  - 13 rows: **HOLD / D:owner-verdict / TargetIdentityUnconfirmed**.
+  - 2 rows: **HOLD / D:owner-verdict / TargetIdentityRejected** — candidate
     target semantically misaligned (REL-00266: risk reporting vs trading
     strategy stewardship; REL-00285: risk limits vs trading strategy
     stewardship).
@@ -1310,9 +1310,9 @@ facts 804 → **789** (−15). Conservation:
 **REL-00428 supersession (observed failure → fix → pass):** REL-00428 had a
 genuine 2026-09-25 row-level approval ("validated feedstock-quality data
 underpins term-slate quality screening", review32-enables-batch) and was in
-EN_ENABLEDBY_OVERRIDE. Hamid's B2 verdict now holds it
+EN_ENABLEDBY_OVERRIDE. The decision owner's B2 verdict now holds it
 (TargetIdentityUnconfirmed): the approval rested on semantic plausibility,
-but the Hamid-approved nearness-only identity rule requires source-backed
+but the owner-approved nearness-only identity rule requires source-backed
 target identity before any predicate verdict — the later row-level verdict
 is authoritative. REL-00428 removed from EN_ENABLEDBY_OVERRIDE and moved
 from the stored-emission control list to the hold control list.
@@ -1321,14 +1321,14 @@ from the stored-emission control list to the hold control list.
 to 789 facts; nearness-identity rule extended to B2). Promotion remains
 blocked.
 
-## 2026-09-26 — G3 Section B3 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section B3 verdicts recorded (the decision owner)
 
 Section B3: third 15 nearness-only rows (`review-evidence/enables-g3-section-b3-review.csv`),
 REL-00437 → REL-00837. All were emitting before review.
 
 - **15 rows HELD** — no predicate review reached; target identity fails first.
-  - 14 rows: **HOLD / D:hamid-verdict / TargetIdentityUnconfirmed**.
-  - **REL-00770**: HOLD / D:hamid-verdict / TargetIdentityUnconfirmed /
+  - 14 rows: **HOLD / D:owner-verdict / TargetIdentityUnconfirmed**.
+  - **REL-00770**: HOLD / D:owner-verdict / TargetIdentityUnconfirmed /
     **Supersedes2026-09-25Approval** — the 2026-09-25 approval recognized a
     plausible semantic relationship, but the source assertion never
     identified Sales Execution as its target; under the subsequently
@@ -1357,7 +1357,7 @@ facts 789 → **774** (−15). Conservation:
 genuine 2026-09-26 S&T approval ("quality-screened spot options make
 coordinated purchases, sales, and exchanges operationally actionable;
 bounded: trading coordination on quality-screened choices, not
-directing/approving trades", st-enables-21-review-batch). Hamid's same-day
+directing/approving trades", st-enables-21-review-batch). The decision owner's same-day
 B3 verdict holds it (TargetIdentityUnconfirmed): the approval assumed the
 asserted target, but the identity rule requires source-backed target
 identity before any predicate verdict — the later row-level verdict is
@@ -1375,19 +1375,19 @@ to 774 facts; nearness-identity rule extended to B3; explicit
 superseded-fact absence tests for REL-00770 and REL-00437). Promotion
 remains blocked.
 
-## 2026-09-26 — G3 Section B4 verdicts recorded (Hamid)
+## 2026-09-26 — G3 Section B4 verdicts recorded (the decision owner)
 
 Section B4: fourth 15 nearness-only rows (`review-evidence/enables-g3-section-b4-review.csv`),
 REL-00867 → REL-01013. All were emitting before review.
 
 - **15 rows HELD** — no predicate review reached; target identity fails first.
-  - 13 rows: **HOLD / D:hamid-verdict / TargetIdentityUnconfirmed**.
-  - **REL-00960**: HOLD / D:hamid-verdict / **TargetIdentityRejected** —
+  - 13 rows: **HOLD / D:owner-verdict / TargetIdentityUnconfirmed**.
+  - **REL-00960**: HOLD / D:owner-verdict / **TargetIdentityRejected** —
     order-book tracking and volume forecasting give scheduling and supply
     their planning basis; they have nothing to do with running the customer
     self-service portal. The label match reads order tracking as portal
     operation; neither definition supports that.
-  - **REL-00939**: HOLD / D:hamid-verdict / TargetIdentityUnconfirmed /
+  - **REL-00939**: HOLD / D:owner-verdict / TargetIdentityUnconfirmed /
     **Supersedes2026-09-25Approval** — the earlier approval's relationship
     may well be true, but the source row never names Manage Customer
     Invoicing and Billing as its target. Prior decision retained in
@@ -1420,14 +1420,14 @@ superseded-fact absence test for REL-00939). Promotion remains blocked.
 
 **Section B running total: 60 rows held out of 60 decided.**
 
-## 2026-09-26 — G3 Section B5: 9 prior-approval supersessions + 33-row class verdict (Hamid)
+## 2026-09-26 — G3 Section B5: 9 prior-approval supersessions + 33-row class verdict (the decision owner)
 
 All 96 Section B rows are now HELD; Section B is complete at **96 holds out of 96**
 (60 in B1–B4; 36 in B5: 33-row class verdict + 3 supersessions — REL-01016,
 REL-01124, REL-01174; 6 further supersessions outside the Section B population).
 Verdicts recorded in `review-evidence/enables-g3-section-b5-class-verdict.csv` (42 rows).
 
-**The 9 prior approvals** — all recorded as HOLD / D:hamid-verdict / TargetIdentityUnconfirmed / Supersedes<date><batch>Approval.
+**The 9 prior approvals** — all recorded as HOLD / D:owner-verdict / TargetIdentityUnconfirmed / Supersedes<date><batch>Approval.
 Each approval judged whether the relationship made sense, not whether the target was right;
 none of the nine has evidence of which target the source meant. Original approval text kept in
 provenance, marked superseded.
@@ -1456,7 +1456,7 @@ provenance, marked superseded.
 
 **The 33-row class verdict** (REL-01049 through REL-01318): each confirmed nearness-only
 (SoleCandidate), no source-backed identity override, no prior approval, none marked Rejected.
-All recorded as HOLD / D:hamid-verdict / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26.
+All recorded as HOLD / D:owner-verdict / TargetIdentityUnconfirmed / ClassVerdict-B-2026-09-26.
 If the source author finds a clearly wrong candidate while clearing the backlog, it can be
 relabelled then; the outcome is the same either way.
 
@@ -1484,10 +1484,10 @@ is next.
 **G3 status:** Section B Candidate → Approved, all 96 rows held. G3 overall: Approved
 with held exceptions (Section A: 84 approvals emitting, all cleared by the sweep).
 
-## 2026-09-26 — Mapping answers 1–5: Approved Baseline (Hamid)
+## 2026-09-26 — Mapping answers 1–5: Approved Baseline (the decision owner)
 
 **Answers 1–5: Candidate → Approved Baseline.** Answer 1 approved as written;
-Answers 2–5 approved with Hamid's wording edits (controls already agreed, now
+Answers 2–5 approved with the decision owner's wording edits (controls already agreed, now
 stated in the answers so the doc stands alone). Baseline change control: any
 later change to an approved answer needs a decision-log entry. Counts
 unchanged: 917 emitting / 386 held / 717 facts. Doc figures-fix pass (6
@@ -1495,7 +1495,7 @@ issues) also landed 2026-09-26; gate green including the new
 zero-stored-inverse-predicate check (Answer 5).
 Next: canonical direction table, row by row, then the rule sections.
 
-## 2026-09-26 — Direction table: two new two-cycle rules (Hamid)
+## 2026-09-26 — Direction table: two new two-cycle rules (the decision owner)
 
 **New rule 1: no reciprocal `core:precedes` two-cycles.** A process cannot come
 both before and after another in the same lifecycle. Gate check added and
@@ -1520,7 +1520,7 @@ Direction table: Rows 1–4, 6, 9–11 approved as written; Rows 5, 7, 8, 12
 approved with the edits above. Reconciliation recorded in the doc:
 829 + 75 + 13 = 917 emitting mentions.
 
-## 2026-09-26 — Direction table: Approved Baseline (Hamid)
+## 2026-09-26 — Direction table: Approved Baseline (the decision owner)
 
 **Direction table Rows 1–12: Candidate → Approved Baseline.** Wording fix:
 829 mentions map to their own predicate; 75 G1a attach as duplicate evidence
@@ -1529,7 +1529,7 @@ approved with the edits above. Reconciliation recorded in the doc:
 1 ExternalGovernanceReference, 12 deferred." Counts unchanged: 917 / 386 / 717.
 Next: the rule sections, one at a time.
 
-## 2026-09-26 — Rule section 1 (disguised-sequence control): Approved Baseline (Hamid)
+## 2026-09-26 — Rule section 1 (disguised-sequence control): Approved Baseline (the decision owner)
 
 **Rule section 1: Candidate → Approved Baseline** with 5 edits. The exception
 clause now requires (a) source-backed target identity AND (b) independent
@@ -1545,7 +1545,7 @@ ExistingRowLevelApproval exceptions as superseded 2026-09-26. Gate: 15 G2
 rows emit no enabledBy fact; REL-00129/REL-00728 absent; their sequence facts
 (REL-00131, REL-00734) present. Counts unchanged: 917 / 386 / 717.
 
-## 2026-09-26 — Rule section 2 (recommendation versus enablement): Approved Baseline (Hamid)
+## 2026-09-26 — Rule section 2 (recommendation versus enablement): Approved Baseline (the decision owner)
 
 **Rule section 2: Candidate → Approved Baseline** with 4 edits. The rule now
 classifies and routes for source correction — never remaps to informedBy at
@@ -1558,7 +1558,7 @@ ambiguous; 2 hierarchy holds kept) replaces it. REL-00433/REL-01172 scope
 note: they enable production of the recommendation only. Counts unchanged:
 917 / 386 / 717.
 
-## 2026-09-26 — Rule section 3 (duplicate-evidence merge): Approved Baseline (Hamid)
+## 2026-09-26 — Rule section 3 (duplicate-evidence merge): Approved Baseline (the decision owner)
 
 **Rule section 3: Candidate → Approved Baseline** with 5 edits. True duplicate
 now defined: same source/target slugs, same canonical direction, same fact as
@@ -1572,7 +1572,7 @@ fact. REL-00152/REL-00436 stay counted in the 386 held. G1a batch gained a
 `target_match` column; gate asserts it plus the not-sole-evidence rule (562
 checks, all pass). Counts unchanged: 917 / 386 / 717.
 
-## 2026-09-26 — Rule section 4 (G1b no-verb-change): Approved Baseline (Hamid)
+## 2026-09-26 — Rule section 4 (G1b no-verb-change): Approved Baseline (the decision owner)
 
 **Rule section 4: Candidate → Approved Baseline** with 4 edits. The exception
 route now requires an Answer-3-meeting row-level approval (identity +
@@ -1590,10 +1590,10 @@ nearness-only. By verb (nearness-only): uses-input 152/215, informed-by
 16/18, assures 5/5, enables 52/172 (rest stable-id/explicit). REL-00873
 (requires) approved on PROMOTE/B:structural-nearness — same premise
 superseded for REL-00770. 51 of the 77 G1a supporting uses-input rows are
-nearness-only. Hamid to rule: apply everywhere with per-verb supersession
-pass, or limit with a recorded reason. No action until he rules.
+nearness-only. The decision owner to rule: apply everywhere with per-verb supersession
+pass, or limit with a recorded reason. No action until they rule.
 
-## 2026-09-26 — Rule section 5 (hierarchy non-duplication): Approved Baseline (Hamid)
+## 2026-09-26 — Rule section 5 (hierarchy non-duplication): Approved Baseline (the decision owner)
 
 **Rule section 5: Candidate → Approved Baseline** with 5 edits: sixth exception
 condition added (target identified by source-backed evidence under the
@@ -1628,7 +1628,7 @@ concrete collision cases. Repo data validates the underlying concern:
 
 Pending: explicit-reference test + match-type breakdown (delegated).
 
-## 2026-09-26 — Identity-rule scope census results (for Hamid's ruling)
+## 2026-09-26 — Identity-rule scope census results (for the decision owner's ruling)
 
 Explicit-reference test on all 657 nearness-only emitting mentions:
 **21 pass / 636 do not.** Passes by verb: assures 5, constrained-by 3,
@@ -1651,7 +1651,7 @@ stable-id (identity confirmed), 51 exact-unique-label.
 Files: review-evidence/identity-scope-explicit-reference-test.csv,
 review-evidence/identity-scope-match-types.csv. No counts changed.
 
-## 2026-09-26 — Identity-rule scope RULING (Hamid)
+## 2026-09-26 — Identity-rule scope RULING (the decision owner)
 
 **Part 1 — scope:** the identity rule applies to every verb. Rule 5 evidence
 routes: sibling sequences (precedes/follows) may promote on structural
@@ -1696,15 +1696,15 @@ one approval at a time.
 - Census extended with two-way-mention and branch flags; per-verb pass with
   rule 6 sampling follows, starting with uses-input.
 
-**Open:** the definition of "approved decision evidence" in rule 5. Hamid's
+**Open:** the definition of "approved decision evidence" in rule 5. The decision owner's
 reading: recorded architecture decisions (e.g. the R1 reviewed interface),
 not a row-level verdict that a relationship is plausible. The phrase is
 undefined in the playbook as merged — recommend pinning the definition via
 a small playbook amendment (PR + decision-log entry) before the per-verb
-pass relies on it. Hamid's reading is the safer one and is consistent with
+pass relies on it. The decision owner's reading is the safer one and is consistent with
 rule 6.
 
-## 2026-09-26 — PR #124 review fixes (Hamid: HOLD, not merging)
+## 2026-09-26 — PR #124 review fixes (the decision owner: HOLD, not merging)
 
 Two leftover defects found on review of `step4/working` at `3a1a413`:
 
@@ -1727,15 +1727,15 @@ Two leftover defects found on review of `step4/working` at `3a1a413`:
    unchanged. Gate re-run: GREEN.
 
 Current: 917 emitting / 386 held / 716 facts. PR stays DO NOT MERGE;
-Hamid re-reviews after the sync.
+The decision owner re-reviews after the sync.
 
-*Superseded 2026-09-27: PR #124 was merged by aadehamid as `479c75f`
+*Superseded 2026-09-27: PR #124 was merged by the decision owner as `479c75f`
 (2026-09-27T00:37:59Z) as an intentional working-area drop. See "PR #124
 merge — resolved" entry below.*
 
 ## uses-input pass applied (2026-09-26)
 
-Hamid approved the 33/31 citation split and the disposition at
+The decision owner approved the 33/31 citation split and the disposition at
 761 emitting / 542 held / 603 facts (PR #125, #126; fourth revision; corrected 2026-09-26: 917 baseline was stale, true pre-pass 916/387).
 
 **Applied:**
@@ -1760,7 +1760,7 @@ held; 716 − 114 + 1 = 603 facts. Conservation: 761 + 542 = 1303. ✓
 rows, REL-00873 stored, REL-01061 held, REL-00214 fact removed).
 Pre-existing SHA-pin failures unchanged.
 
-## Informed-by pass (2026-09-26, Hamid approved)
+## Informed-by pass (2026-09-26, the decision owner approved)
 
 139 emitting `informed-by` rows reviewed under the strict citation test
 (slug, unique label, or range in the source's definition or scope note),
@@ -1770,7 +1770,7 @@ and rule 5 checked per row.
 - **24 rows stand** under rule 4 (stable-ID identity; no rule 5 route required):
   7 with an affirmative citation + 17 without.
 - **20 label-only rows promote** on an affirmative citation, recorded
-  `D:hamid-verdict`.
+  `D:owner-verdict`.
 - **95 rows held**: 55 exclusion/boundary-only citations, 1 counterpart
   citation with information flowing the wrong way (REL-00476,
   "counterpart, opposite flow"), 39 with no citation.
@@ -1814,7 +1814,7 @@ The other 16 G1b reverse rows keep their facts: 6 STAND by rule 4
 10 PROMOTE (REL-00706, REL-00739, REL-00775, REL-00776, REL-00948,
 REL-01110, REL-01196, REL-01202, REL-01232, REL-01272).
 
-## Governed-by pass (2026-09-26, Hamid approved)
+## Governed-by pass (2026-09-26, the decision owner approved)
 
 38 emitting `governed-by` rows reviewed (predicate `core:governedBy`).
 
@@ -1825,7 +1825,7 @@ REL-01110, REL-01196, REL-01202, REL-01232, REL-01272).
   - 4 non-hierarchy affirmative citations: REL-00397, REL-00876, REL-00952,
     REL-01158. (REL-00876, REL-00952: short snippets verified against full
     definition/scope text.)
-  - 6 hierarchy exceptions (Hamid 2026-09-26, each not a precedent):
+  - 6 hierarchy exceptions (the decision owner 2026-09-26, each not a precedent):
     REL-00531, REL-00542 (privacy-governance control at parent);
     REL-00588, REL-00601, REL-00623 (PMPA legal constraint at cluster);
     REL-00106 (decision rights, ancestor decides).
@@ -1843,18 +1843,18 @@ REL-01110, REL-01196, REL-01202, REL-01232, REL-01272).
     REL-00067, REL-00394, REL-00399, REL-00406, REL-00907, REL-00937,
     REL-01005, REL-01228, REL-01256.
 
-**Rule 6 check:** PASSED. Hamid read all 13 promotions against citations and
-exception rationales; none reversed. Recorded as `D:hamid-verdict` 2026-09-26.
+**Rule 6 check:** PASSED. The decision owner read all 13 promotions against citations and
+exception rationales; none reversed. Recorded as `D:owner-verdict` 2026-09-26.
 
 **Totals:** 666 − 20 = **646** emitting; 637 + 20 = **657** held;
 508 − 20 = **488** facts. Conservation: 646 + 657 + 12 + 1 + 2 = 1,318.
 
-## Triggers pass (2026-09-26, Hamid approved)
+## Triggers pass (2026-09-26, the decision owner approved)
 
 18 emitting `triggers` rows reviewed (2 stable-ID, 16 label-only).
 
 - **2 STAND** (rule 4, stable-ID): REL-00725, REL-00897.
-- **5 PROMOTE** (affirmative citation + event semantics, `D:hamid-verdict`):
+- **5 PROMOTE** (affirmative citation + event semantics, `D:owner-verdict`):
   REL-00127 ("triggering rescheduling through…"),
   REL-00235 ("deterioration signals that trigger event-driven reviews"),
   REL-00236 ("trigger event-driven reviews or limit actions (CM-1-2-2-1-2)"),
@@ -1866,7 +1866,7 @@ exception rationales; none reversed. Recorded as `D:hamid-verdict` 2026-09-26.
   are done, does not link finding to target).
 
 Rule 6 (seed 42): 5 passed, REL-00163 held after scope-sentence review.
-Recorded `D:hamid-verdict` 2026-09-26.
+Recorded `D:owner-verdict` 2026-09-26.
 
 **Definition adopted:** an affirmative citation for `triggers` must tie the
 source's event or result to the target (trigger, route to, refer, escalate,
@@ -1878,12 +1878,12 @@ All 11 held facts verified unique single-row; zero knock-on effects.
 11 supersession entries in `step4-decisions.md`; 11 backlog items for source
 correction (including target-side range check for the 4 compliance monitors).
 
-## Precedes/follows pass (Hamid 2026-09-26, AMENDED 2026-09-27)
+## Precedes/follows pass (the decision owner 2026-09-26, AMENDED 2026-09-27)
 
 **Verdicts:**
 - **38 STAND** (rule 4, stable-ID mentions).
-- **256 PROMOTE** (D:hamid-verdict / Rule 5 sequence route).
-- **20 HOLD** (D:hamid-verdict / Supersedes2026-09-26Approval):
+- **256 PROMOTE** (D:owner-verdict / Rule 5 sequence route).
+- **20 HOLD** (D:owner-verdict / Supersedes2026-09-26Approval):
   - 6 ExclusionBoundaryCitation (REL-01223, 01227, 01241, 01289, 01291, 01294).
   - 14 exclusion/boundary/owned-by/reference-data as sole route (REL-00008, 00068, 00112,
     00149, 00184, 00188, 00193, 00200, 00206, 00307, 00319, 00351, 00374, 00930).
@@ -1891,7 +1891,7 @@ correction (including target-side range check for the 4 compliance monitors).
 **NOT basis-only:** 20 facts removed (all unique single-row, zero knock-on).
 Raw `B follows A` retained in provenance for emitting rows.
 
-**Rule 6:** method approved 2026-09-26 (seed 42). All 18 samples `D:hamid-verdict` PASS 2026-09-27. REL-01241 held. CM-1-1-4 label corrected.
+**Rule 6:** method approved 2026-09-26 (seed 42). All 18 samples `D:owner-verdict` PASS 2026-09-27. REL-01241 held. CM-1-1-4 label corrected.
 Evidence in `review-evidence/precedes-follows-rule6-samples.md`.
 
 **Evidence Discipline Rule 5 (lock):** non-sibling precedes/follows needs an
@@ -1936,14 +1936,14 @@ History on `main` is not rewritten; this entry is the correction.
 ## PR #124 merge — resolved (2026-09-27, corrected)
 
 PR #124 ("DO NOT MERGE — Step 4 verb-mapping working area") was merged
-2026-09-27 00:37:59Z by aadehamid (merge commit 479c75f), putting the
+2026-09-27 00:37:59Z by the decision owner (merge commit 479c75f), putting the
 Step 4 working area (103 files under `business_architecture/ontology/step4/`)
 onto `main`. This was intentional: the drop establishes the working area
 on main, with promotion to TTL still blocked by the step4 README. Not to be
 confused with PR #121 (the other DO NOT MERGE — Step 4 evidence-discipline
 playbook section, merged 2026-09-25, later marked Approved by #122).
 
-## Figure correction — G1a attach count (2026-09-29, Hamid-authorized)
+## Figure correction — G1a attach count (2026-09-29, owner-authorized)
 
 **Error:** the 2026-09-26 uses-input pass entry records "42 enables mentions
 moved emitting → held (k=42; G1a 75 → 33)". The applied hold set
@@ -1956,8 +1956,8 @@ The "77 − 2 property holds − 42 = 33" breakdown in
 overcount cascaded into every totals line after the uses-input pass.
 
 **Evidence:** `canonical-facts.csv` (main `df8f89ba`) attaches 36 enables
-row IDs to `core:dependsOnOutputOf` facts; all 36 carry Hamid's
-APPROVE / D:hamid-verdict / MergeAsDuplicateEvidence. Evidence gate:
+row IDs to `core:dependsOnOutputOf` facts; all 36 carry the decision owner's
+APPROVE / D:owner-verdict / MergeAsDuplicateEvidence. Evidence gate:
 "36 active G1a rows". Every per-pass hold set (uses-input 114, informed-by
 95, governed-by 20, triggers 11, precedes 20) has zero attached rows; the
 only attached-but-held mention is REL-00436 (documented). Per-verb attached
@@ -1983,12 +1983,12 @@ Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
 The 2026-09-26/27 entries above keep their recorded-at-the-time figures;
 this entry is the correction. History on `main` is not rewritten.
 
-## #205 batch 1: precedes/follows source corrections (Hamid 2026-10-11)
+## #205 batch 1: precedes/follows source corrections (the decision owner 2026-10-11)
 
-Hamid answered batch 1's 13 questions on #205 and posted them as his
+The decision owner answered batch 1's 13 questions on #205 and posted them as their
 authorization on 2026-10-11 (#205 comment 6115309253, "Take this as my
 authorization"; quoted in `source-workbook-backlog.md`, "Batch 1 fresh
-verdicts"). Twelve of his sentences went into eleven approved scope notes,
+verdicts"). Twelve of their sentences went into eleven approved scope notes,
 and Step 4 was re-pinned to `532eeee`. Each corrected row was then reviewed
 against the locked `core:precedes` definition (`evidence-discipline.md`):
 "The source completes before the target begins, as a sequence the business
@@ -1996,15 +1996,15 @@ asserts." Row verdicts: `review-evidence/precedes-follows-batch1-review.csv`.
 
 - **HOLD, reviewed, not emitted (13):** REL-00184, REL-00188, REL-00193,
   REL-00200, REL-00206, REL-00307, REL-00319, REL-00351, REL-00374,
-  REL-01227, REL-01289, REL-01291, REL-01294. Hamid answered (b) to
+  REL-01227, REL-01289, REL-01291, REL-01294. The decision owner answered (b) to
   questions 3 and 4 (REL-00184, REL-01227): the mandatory sequence is not
-  established. His eleven (a) answers each describe a scoped sequence (per
+  established. Their eleven (a) answers each describe a scoped sequence (per
   trade, delivery, period, claim or posting, sometimes conditional), "not
   completion of an entire organizational process", so none meets the
   definition. The rows stay in
   `PRECEDES_20260927_HOLDS`; their questions are closed and the rows are
   done for Phase 1.
-- Hamid decided on PR #225 (comment 6115615577): "Define a scoped sequence
+- The decision owner decided on PR #225 (comment 6115615577): "Define a scoped sequence
   relation for these answers before the core 1.0.0 release, tracked in its
   own issue under #207." That issue is #226.
 
@@ -2024,10 +2024,10 @@ only (2,898 rows). No mention changes bucket; no fact changes.
 **Current totals:** **617 emitting / 686 held** / 457 facts.
 Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
 
-## #205 batch 2: precedes/follows source corrections (Hamid 2026-10-12)
+## #205 batch 2: precedes/follows source corrections (the decision owner 2026-10-12)
 
-Hamid answered batch 2's 7 questions in the Claude Code session of
-2026-10-12 (#205 comment 6116668059, posted verbatim by Claude because his
+The decision owner answered batch 2's 7 questions in the Claude Code session of
+2026-10-12 (#205 comment 6116668059, posted verbatim by Claude because their
 own comment did not save; quoted in `source-workbook-backlog.md`, "Batch 2
 fresh verdicts"). Six (b) sentences went into six approved scope notes, and
 Step 4 was re-pinned to `d8b4827`. Row verdicts:
@@ -2041,7 +2041,7 @@ Step 4 was re-pinned to `d8b4827`. Row verdicts:
   REL-00008 and REL-01223 are the same forecast handoff at two hierarchy
   levels. REL-00112 is a step-level sequence ending at plan selection and
   approval within CM-1-1-4, an ancestor of its source (parent CM-1-1-4-7).
-  Hamid gave all seven answers as "adopted reference-model positions …,
+  the decision owner gave all seven answers as "adopted reference-model positions …,
   not verified MPC internal procedures".
 
 All 20 #205 rows now have fresh verdicts. No mention changes bucket and no
@@ -2050,9 +2050,9 @@ fact changes.
 **Current totals:** **617 emitting / 686 held** / 457 facts.
 Conservation: 617 + 686 + 12 + 1 + 2 = 1,318. ✓
 
-## #226: scoped sequences emitted (EPM-DEC-001-0026, Hamid 2026-10-12)
+## #226: scoped sequences emitted (EPM-DEC-001-0026, the decision owner 2026-10-12)
 
-Hamid approved the scoped sequence design on #226 (comment 6123946413:
+The decision owner approved the scoped sequence design on #226 (comment 6123946413:
 "Approved: Q1–Q18 as recommended in the comment above"). The 17 #205 rows
 whose answers give a sequence per scope unit get a fresh APPROVE and emit one
 scoped-sequence node each, not a `core:precedes` fact. They leave the held
@@ -2073,10 +2073,10 @@ No emitting mention changes and no fact changes.
 **Current totals:** **617 emitting / 669 held / 17 scoped sequence** / 457 facts.
 Conservation: 617 + 669 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## #204 batch 1: triggers source corrections (Hamid 2026-10-12)
+## #204 batch 1: triggers source corrections (the decision owner 2026-10-12)
 
-Hamid answered all 11 held `triggers` questions on #204 (comment 6130380041,
-saved in `review-evidence/hamid-answers/204-batch1.md`). Each answer added a
+The decision owner answered all 11 held `triggers` questions on #204 (comment 6130380041,
+saved in `review-evidence/decision-owner-answers/204-batch1.md`). Each answer added a
 sentence to the source's scope note tying the source's event or result to
 the target, which is the affirmative citation the triggers rule requires.
 Step 4 was re-pinned to `51a32aa`. Row verdicts:
@@ -2085,7 +2085,7 @@ Step 4 was re-pinned to `51a32aa`. Row verdicts:
 - **APPROVE, emitting `core:triggeredBy` (11):** REL-00049, REL-00163,
   REL-00169, REL-00170, REL-00252, REL-00291, REL-00396, REL-00398,
   REL-00400, REL-00403, REL-00892. Seven are conditional triggers (b); four
-  are unconditional for the findings their sentences name (a). Hamid gave
+  are unconditional for the findings their sentences name (a). The decision owner gave
   them as adopted reference-model operating rules.
 
 11 mentions move from held to emitting; 11 new facts, none merged with an
@@ -2095,10 +2095,10 @@ reference for the eight rows that relied on structural nearness.
 **Current totals:** **628 emitting / 658 held / 17 scoped sequence** / 468 facts.
 Conservation: 628 + 658 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #206: governed-by source corrections (Hamid 2026-10-12)
+## Phase 1 sweep, #206: governed-by source corrections (the decision owner 2026-10-12)
 
-Hamid approved the Phase 1 answer register on 2026-10-12 (#207 comment
-6133390674, saved in `review-evidence/hamid-answers/phase1-sweep.md`). The
+The decision owner approved the Phase 1 answer register on 2026-10-12 (#207 comment
+6133390674, saved in `review-evidence/decision-owner-answers/phase1-sweep.md`). The
 #206 rows are the first batch built from it. Step 4 was re-pinned to
 `2bc25cb`. Row verdicts: `review-evidence/phase1-sweep/206-review.csv`.
 
@@ -2119,7 +2119,7 @@ merged, no contradiction.
 **Current totals:** **638 emitting / 648 held / 17 scoped sequence** / 478 facts.
 Conservation: 638 + 648 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #203: Supply & Trading recommend/advise rows (Hamid 2026-10-12)
+## Phase 1 sweep, #203: Supply & Trading recommend/advise rows (the decision owner 2026-10-12)
 
 The second batch from the approved Phase 1 register (#207 comment
 6133390674). The source corrections are in `adc7483`, and Step 4 was
@@ -2144,7 +2144,7 @@ merged, no contradiction.
 **Current totals:** **650 emitting / 636 held / 17 scoped sequence** / 490 facts.
 Conservation: 650 + 636 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #210: Other verb-review holds (Hamid 2026-10-12)
+## Phase 1 sweep, #210: Other verb-review holds (the decision owner 2026-10-12)
 
 A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `efc4715`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/210-review.csv`.
 
@@ -2158,7 +2158,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 **Current totals:** **658 emitting / 628 held / 17 scoped sequence** / 498 facts.
 Conservation: 658 + 628 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #202: G1b rows and their reverse informed-by rows (Hamid 2026-10-12)
+## Phase 1 sweep, #202: G1b rows and their reverse informed-by rows (the decision owner 2026-10-12)
 
 A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `37fed94`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/202-review.csv`.
 
@@ -2172,7 +2172,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 **Current totals:** **699 emitting / 587 held / 17 scoped sequence** / 522 facts.
 Conservation: 699 + 587 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #209: G3 Section A: held after the explicit-reference review (Hamid 2026-10-12)
+## Phase 1 sweep, #209: G3 Section A: held after the explicit-reference review (the decision owner 2026-10-12)
 
 A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `883bd57`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/209-review.csv`.
 
@@ -2187,7 +2187,7 @@ A batch from the approved Phase 1 register (#207 comment 6133390674). The source
 **Current totals:** **740 emitting / 546 held / 17 scoped sequence** / 562 facts.
 Conservation: 740 + 546 + 12 + 1 + 2 + 17 = 1,318. ✓
 
-## Phase 1 sweep, #201: G3 Section B — target-clarification requests (Hamid 2026-10-12)
+## Phase 1 sweep, #201: G3 Section B — target-clarification requests (the decision owner 2026-10-12)
 
 A batch from the approved Phase 1 register (#207 comment 6133390674). The source corrections are in `388d8a0`, and Step 4 was re-pinned to it. Row verdicts: `review-evidence/phase1-sweep/201-review.csv`.
 

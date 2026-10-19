@@ -3,7 +3,7 @@
 **Title:** Downstream O&G Knowledge Homelab — Data Strategy and Datasets  
 **Purpose:** Define the public-data foundation, synthetic-data boundaries, acquisition sequence, and source-to-data-product mappings for the homelab’s Gasoline Netback / Refining Margin CPG pilot. This is a practical data strategy for a single-machine educational sandbox, not a production data program.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-09  
 
 ## Data strategy overview

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run the repo's automated checks: the Step 4 evidence gate, the scoped-sequence
 # build and SHACL check, the Step 11 competency regression, every test script, epm-facts counts, the decision-record
-# and quote checks, and the Step 4 pin check. CI and the pre-push hook run this
+# and quote checks, the check that no tracked file names the decision owner, and the Step 4 pin check. CI and the pre-push hook run this
 # file; run it yourself before opening a pull request.
 #
 # Needs python3 and uv (https://docs.astral.sh/uv/) for the test dependencies.
@@ -80,6 +80,8 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/projection/test_pipeline.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
+# EPM-DEC-001-0049: the repo names the decision owner by role, never by name or account.
+run python3 scripts/epm_facts.py names
 # The Step 4 pin must name a commit in this branch's history. A squash or rebase
 # merge of the pinning PR leaves it off main (PR #225, re-pinned in #227).
 pin="$(cat "$step4/PINNED_SHA.txt")"

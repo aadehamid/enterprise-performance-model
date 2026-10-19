@@ -3,7 +3,7 @@
 **Purpose:** Define the concrete, small OWL/SHACL/RDF model and KPI specification for the Downstream O&G Knowledge Homelab capstone. It connects synthetic terminal custody events to a transparent Gasoline Netback CPG calculation while preserving relational facts as the source of record.
 
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-10
 
 ## Pilot scope and competency questions
@@ -597,7 +597,7 @@ The default is **virtual-RDF-first**: PostgreSQL remains authoritative for `cust
 |---|---|
 | **KPI Name** | Gasoline Netback CPG |
 | **Business Objective** | Learn to trace a reproducible terminal-level commercial-margin proxy from custody volume and price inputs to a reviewed weekly result. |
-| **Owner** | Hamid Adesokan (personal homelab owner). |
+| **Owner** | The decision owner (personal homelab owner). |
 | **Formula** | `Netback CPG = (Rack Price − Crude Cost Basis − Transportation Adjustment) × 100`. Inputs are normalized to USD/gallon before multiplication. A future weighted result uses net-gallon weights across eligible tickets. |
 | **Dimensions** | Terminal, Product, Week; optional diagnostic dimensions: Customer, Contract, Price Index, and Data Source. |
 | **Time Grain** | Weekly, with daily ticket events assigned to their ISO week. PMM monthly rack values are used only as a benchmark/proxy and must be explicitly carried or allocated to the week; this is a documented simplification, not a daily rack-price claim. |

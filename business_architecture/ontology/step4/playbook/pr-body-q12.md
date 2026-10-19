@@ -1,4 +1,4 @@
-# DO NOT MERGE — awaiting Hamid's review
+# DO NOT MERGE — awaiting the decision owner's review
 
 ## What this PR does
 

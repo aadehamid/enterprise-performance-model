@@ -6,14 +6,14 @@
   "version_iri": "https://w3id.org/lsc/ontology/modules/core/1.0.0",
   "built_from_pin": "388d8a0517cc74eaedbfca1cc963f4a4a0dc15d9",
   "files": {
-    "CHANGELOG.md": "fb8277faeef281d5d6dae3754b504f88b0d119eee937082fe2121807d5f27640",
-    "canonical-facts.csv": "7ed7c7ae9eb40cded17b314d9ab262c845602585c112ac309cf93e8290e81e53",
+    "CHANGELOG.md": "d8002ad354373beab0d7e55f9d7de7f73df9f90acb49236726cdc74ce5a92fc7",
+    "canonical-facts.csv": "10d1fc0bd75fbf09816beba199193452923c1d5b65944d75629b22ba1cc049d5",
     "catalog.ttl": "8b320bdcd2bc7bc01f0653f0994616c5bcc395f248a3e418e534d04136edb781",
     "conservation.csv": "f30667104b421a2428c9e84786b3bb26d1390ab250ff0006312d13014a6397cb",
-    "core.jsonld": "0ff4175e4bb64cc3fa179c478cdafcd9f67df8d8a9a02c7308aad3fdc5ad2b73",
-    "core.ttl": "69e7646d4b0587feb2cf2f1e1fa1c4150c4ed56cb888549df83f24ac4990a9f3",
+    "core.jsonld": "e1113403c04b00b04c7d44adabe8a9f97f6888ea44b3d2e1224cd10917a198b3",
+    "core.ttl": "a2dd61b5d9f2bb46ae2de8c7210b734b42a412e38946aee25aa38b8c1bbfe2e1",
     "counts.json": "e8662c08a68182025e0b811de9ec9cbeca190befed242559f8af2b471d47aafc",
-    "label-dispositions.csv": "79544848f9e51fe87463e2b49469e00be956126d6bf6cb8716fe31a0fb83dda2",
+    "label-dispositions.csv": "eac6f217d0dd8d985ba77d5841cb80073353145cdb175f969d35cf036411b1f5",
     "shapes.ttl": "2acb3c1f5ef6867daae0f9028e5e226df3afddf6e583df7cb32b6630ebd5228a"
   }
 }

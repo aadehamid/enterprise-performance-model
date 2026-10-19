@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d: PTC-001 consolidated tree pass (partial resolution).
 
-Hamid's decision (2026-09-21, revised proposal with four review
+The decision owner's decision (2026-09-21, revised proposal with four review
 adjustments): open Finance and Refining minimally, reparent the two
 movable rows, tombstone Commercial Development, keep Develop Strategic
 Business Plan parked under PTC-001-B.

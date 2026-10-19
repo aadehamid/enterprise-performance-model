@@ -1,10 +1,10 @@
 # The ontology licence, now that nothing will be hosted
 
-*2026-10-18:* answered by Hamid, "5. Make it propriatery" (EPM-DEC-001-0041).
+*2026-10-18:* answered by the decision owner, "5. Make it propriatery" (EPM-DEC-001-0041).
 
-Prepared for Hamid on 2026-10-14. When prepared, nothing here was decided. The question ends with options, a recommendation and what happens on each answer.
+Prepared for the decision owner on 2026-10-14. When prepared, nothing here was decided. The question ends with options, a recommendation and what happens on each answer.
 
-On 2026-10-14 you decided not to host the namespace `https://w3id.org/lsc/ontology/`, because the domain may change: "we can use it as placeholder for now" (EPM-DEC-001-0039; your words in `ontology/step4/review-evidence/hamid-answers/namespace-hosting.md`). EPM-DEC-001-0037 "For Hamid" item 3 asked you (until 2026-10-18) to "Choose where the files are hosted and under which license" (line 32). This package covers the licence half of that item.
+On 2026-10-14 you decided not to host the namespace `https://w3id.org/lsc/ontology/`, because the domain may change: "we can use it as placeholder for now" (EPM-DEC-001-0039; your words in `ontology/step4/review-evidence/decision-owner-answers/namespace-hosting.md`). EPM-DEC-001-0037 "For the decision owner" item 3 asked you (until 2026-10-18) to "Choose where the files are hosted and under which license" (line 32). This package covers the licence half of that item.
 
 ## What you need to do
 
@@ -29,7 +29,7 @@ The released files say less than that policy:
 - None of the four DCAT records (`releases/core/1.0.0/catalog.ttl`, `releases/core/2.0.0/catalog.ttl`, `releases/organization/1.0.0/catalog.ttl`, `releases/ref-mpc/1.0.0/catalog.ttl`) carries `dcterms:license` or `dcterms:rights`.
 - No release header carries the `dcterms:rights` "© LSC. All rights reserved." statement that the worklog's example ontology header shows (search the worklog for `All rights reserved`).
 
-One fact changes the picture. The GitHub repo `aadehamid/enterprise-performance-model` is public, and it has no LICENSE file (`gh repo view --json visibility,licenseInfo` returns `PUBLIC` and `null`; 0 forks). So the ontology is not hosted, but anyone can read it. *2026-10-18:* the repository is now private, at Hamid's instruction (EPM-DEC-001-0040). GitHub's documentation says that without a licence "the default copyright laws apply, meaning that you retain all rights to your source code and no one may reproduce, distribute, or create derivative works from your work." It also says that other GitHub users "have the right to view and fork your repository" under GitHub's Terms of Service (https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository, read 2026-10-14).
+One fact changes the picture. The GitHub repo `<owner>/enterprise-performance-model` is public, and it has no LICENSE file (`gh repo view --json visibility,licenseInfo` returns `PUBLIC` and `null`; 0 forks). So the ontology is not hosted, but anyone can read it. *2026-10-18:* the repository is now private, at the decision owner's instruction (EPM-DEC-001-0040). GitHub's documentation says that without a licence "the default copyright laws apply, meaning that you retain all rights to your source code and no one may reproduce, distribute, or create derivative works from your work." It also says that other GitHub users "have the right to view and fork your repository" under GitHub's Terms of Service (https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository, read 2026-10-14).
 
 ## What third-party content the ontology carries
 
@@ -51,4 +51,4 @@ Nothing is hosted, and a public catalog is not planned. The recorded policy of 2
 
 ## Related, not part of this question
 
-Your namespace decision of 2026-10-14 is recorded in EPM-DEC-001-0039 (PR #273). The ontology README (line 73) and EPM-DEC-001-0037 "For Hamid" items 2 and 3 now carry it. Item 3 said the licence was still open, which was this question. *2026-10-18:* item 3 is closed (EPM-DEC-001-0041).
+Your namespace decision of 2026-10-14 is recorded in EPM-DEC-001-0039 (PR #273). The ontology README (line 73) and EPM-DEC-001-0037 "For the decision owner" items 2 and 3 now carry it. Item 3 said the licence was still open, which was this question. *2026-10-18:* item 3 is closed (EPM-DEC-001-0041).

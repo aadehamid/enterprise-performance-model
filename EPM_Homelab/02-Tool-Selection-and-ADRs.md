@@ -3,7 +3,7 @@
 **Title:** Tool Selection and Architecture Decision Records  
 **Purpose:** Record the rationale, boundaries, and trade-offs behind the tool choices in `01-Reference-Architecture.md`. These ADRs provide a compact decision trail for a personal, open-source, single-machine learning stack.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-29
 
 This document records the “why” behind each reference-architecture tool choice using a lightweight Architecture Decision Record (ADR) format. It is adapted from the enterprise EPM Architecture Decision Log pattern, but is intentionally scoped to the **Downstream O&G Knowledge Homelab**: an educational sandbox that may take practical shortcuts and is not part of the governed Enterprise Performance Model (EPM) artifact set.
@@ -268,7 +268,7 @@ The enterprise client has no triple store and will not be sold one. Their unused
 
 **Status:** Accepted (for a personal homelab)
 
-**Context.** The homelab needs a self-hosted ERP covering all ten Order-to-Cash process groups (downstream O&G redline, approved 2026-08-09) in the Deloitte-style taxonomy. ERPNext is GPL-3.0 software built on the Frappe framework and natively supports the Quotation → Sales Order → Delivery Note → Sales Invoice → Payment Entry flow for Master Data Mgmt, Quote & Sale, Order & Fulfillment, Billing, and Receipt. It was already proven for O2C in the owner’s own `scada_harmonization` repository. ([ERPNext repository](https://github.com/frappe/erpnext)) ([scada_harmonization PR #18](https://github.com/aadehamid/scada_harmonization/pull/18)) ERPNext has no native DocType for Credit & Risk, Collection, Dispute, Close, or Measure & Custody Transfer (a new Level 1 group added 2026-08-09 for custody-transfer/quantity-quality determination, mirroring the EPM blueprint's separate Measure/Title chevron).
+**Context.** The homelab needs a self-hosted ERP covering all ten Order-to-Cash process groups (downstream O&G redline, approved 2026-08-09) in the Deloitte-style taxonomy. ERPNext is GPL-3.0 software built on the Frappe framework and natively supports the Quotation → Sales Order → Delivery Note → Sales Invoice → Payment Entry flow for Master Data Mgmt, Quote & Sale, Order & Fulfillment, Billing, and Receipt. It was already proven for O2C in the owner’s own `scada_harmonization` repository. ([ERPNext repository](https://github.com/frappe/erpnext)) (scada_harmonization PR #18) ERPNext has no native DocType for Credit & Risk, Collection, Dispute, Close, or Measure & Custody Transfer (a new Level 1 group added 2026-08-09 for custody-transfer/quantity-quality determination, mirroring the EPM blueprint's separate Measure/Title chevron).
 
 **Decision.** Use **ERPNext** for the five natively supported groups. Add light custom Frappe DocTypes—**Credit Limit Review**, **Collection Case**, **Dispute Case**, **AR Sub-Ledger Close Task**, and **Custody Transfer Ticket**—with minimal state-transition workflows for the remaining five groups, rather than treating them as data-only simulation or describe-only. This is an explicit scoping decision confirmed on 2026-08-09.
 

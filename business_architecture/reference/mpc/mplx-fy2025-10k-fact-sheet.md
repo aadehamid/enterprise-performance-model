@@ -40,7 +40,7 @@ MPC-P01 recommends modeling the fuels-logistics work that serves Refining & Mark
 - The work that serves MPC sits in **Crude Oil and Products Logistics**: transport, terminals and storage under fee-based agreements with minimum volumes, where most of MPC's 48 percent of MPLX's total revenues and other income falls.
 - **Natural Gas and NGL Services** is wellhead-to-market gas and NGL work that does not serve the downstream refining and marketing processes in the map.
 
-The ruling on P01 is Hamid's (EPM-DEC-001-0011): it adds children to the process map's Midstream L1, which is the source author's.
+The ruling on P01 is the decision owner's (EPM-DEC-001-0011): it adds children to the process map's Midstream L1, which is the source author's.
 
 ## Open items
 

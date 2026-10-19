@@ -11,6 +11,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
+    python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
     add --json for machine-readable output
 
 How it gets the numbers:
@@ -24,7 +25,7 @@ How it gets the numbers:
   Phase 1 section, both cells of the #202 pairs table, and the IDs listed in
   the prose sections (the text before any parenthesis). An ID cited inside a
   rationale ("Precedent: REL-00366") is not a row. See EPM-DEC-001-0025.
-- A review hold is a non-blank `Hamid_decision` cell that records a hold, in
+- A review hold is a non-blank `owner_decision` cell that records a hold, in
   any wording ("HOLD ...", "Held for source correction", "Carry forward
   (remains held)"). Other columns are ignored (see test_review_holds_read_only_the_decision_column).
 
@@ -53,7 +54,7 @@ REVIEWS = os.path.join(STEP4, "review-evidence")
 FACTS = os.path.join(STEP4, "canonical-facts.csv")
 TAXONOMY = os.path.join(ROOT, "business_architecture", "ontology", "build", "output", "step3-taxonomy.ttl")
 DECISIONS = os.path.join(ROOT, "business_architecture", "domain", "decisions")
-ANSWERS = os.path.join(REVIEWS, "hamid-answers")
+ANSWERS = os.path.join(REVIEWS, "decision-owner-answers")
 SCOPED = os.path.join(STEP4, "scoped-sequence")
 
 NOT_HELD = {"AmbiguousDeferred", "ExternalGovernanceReference", "StructuredFlowValue"}
@@ -237,7 +238,7 @@ def phase1_rows(text=None):
 # ---------- reviews ----------
 
 def review_holds():
-    """Per review file: rows whose Hamid_decision records a hold; and per row, its decisions."""
+    """Per review file: rows whose owner_decision records a hold; and per row, its decisions."""
     per_file, per_row = {}, collections.defaultdict(list)
     for path in sorted(glob.glob(os.path.join(REVIEWS, "*.csv"))):
         try:
@@ -245,11 +246,11 @@ def review_holds():
                 reader = list(csv.DictReader(f))
         except (csv.Error, UnicodeDecodeError):
             continue
-        if not reader or "Hamid_decision" not in reader[0]:
+        if not reader or "owner_decision" not in reader[0]:
             continue
         held = []
         for r in reader:
-            decision = (r.get("Hamid_decision") or "").strip()
+            decision = (r.get("owner_decision") or "").strip()
             row_id = (r.get("row_id") or "").strip()
             if not row_id.startswith("REL-") or not decision:
                 continue
@@ -366,7 +367,7 @@ def cmd_counts(args):
     print(f"Phase 1 (EPM-DEC-001-0025): {ph['rows']} rows, {ph['held']} held; not held: {', '.join(ph['not_held']) or 'none'}")
     print("  by issue: " + ", ".join(f"#{k} {v}" for k, v in ph["by_issue"].items()))
     print(f"  held outside Phase 1: {ph['held_outside']}: " + ", ".join(f"{k} {v}" for k, v in ph["held_outside_by_reason"].items()))
-    print("review holds (Hamid_decision) by file:")
+    print("review holds (owner_decision) by file:")
     for name, n in out["review_holds_by_file"].items():
         if n:
             print(f"  {n:4d}  {name}")
@@ -524,9 +525,9 @@ def decision_problems(folder=DECISIONS):
         # quotes and curly quotes included, against the saved answers); this simpler
         # presence rule covers the earlier records it skips.
         if lead == "Decided" and int(number) < FIRST_QUOTE_CHECKED_DECISION:
-            words = re.search(r"^## Hamid's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+            words = re.search(r"^## The decision owner's recorded words\s*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
             if not words or not QUOTE.search(words.group(1)):
-                problems.append(f"{number}: Decided, but no quote under \"Hamid's recorded words\"")
+                problems.append(f"{number}: Decided, but no quote under \"The decision owner's recorded words\"")
     return problems
 
 
@@ -541,7 +542,7 @@ def _flat(text):
 
 
 def answer_corpus(folder=ANSWERS):
-    """Hamid's saved answers, whitespace-collapsed, without each file's HTML header comment."""
+    """The decision owner's saved answers, whitespace-collapsed, without each file's HTML header comment."""
     parts = []
     for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
         with open(path) as f:
@@ -681,7 +682,7 @@ def _edge_ok(token, word, start):
 
 
 def rendered_answer_corpus(folder=ANSWERS):
-    """Hamid's saved answers as displayed text, one line per block, to compare with displayed quotes."""
+    """The decision owner's saved answers as displayed text, one line per block, to compare with displayed quotes."""
     lines = []
     for path in sorted(glob.glob(os.path.join(folder, "*.md"))):
         with open(path) as f:
@@ -706,7 +707,7 @@ def displayed_status_rows(text):
             if len(row) >= 2 and row[0][0].lower() == "status"]
 
 
-RECORDED_WORDS_KEY = "hamidsrecordedwords"
+RECORDED_WORDS_KEY = "thedecisionownersrecordedwords"
 INVISIBLE_MARKS = re.compile("[\ufe00-\ufe0f\U000e0100-\U000e01ef]")   # variation selectors
 
 
@@ -723,7 +724,7 @@ def has_invisible(text):
 
 
 def recorded_words(text):
-    """Each "Hamid's recorded words" section: (displayed blocks, contains raw HTML, block-quote paragraphs).
+    """Each "The decision owner's recorded words" section: (displayed blocks, contains raw HTML, block-quote paragraphs).
 
     The displayed text comes back as one string per block, so quote marks pair
     only within a block: a stray mark in one paragraph cannot open a quote that
@@ -769,13 +770,13 @@ FIRST_QUOTE_CHECKED_DECISION = 26
 
 
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
-    """Text attributed to Hamid that is not word for word in a saved answer.
+    """Text attributed to the decision owner that is not word for word in a saved answer.
 
-    Checked: in every review file with a `hamid_words` column, that column, the
+    Checked: in every review file with a `owner_words` column, that column, the
     `scope_note_sentence`, and each quoted span of three or more words in
-    `semantic_reason` and `Hamid_decision`; every block quote in the
+    `semantic_reason` and `owner_decision`; every block quote in the
     source-correction backlog; and each quoted span of three or more words in
-    the displayed text of the "Hamid's recorded words" section of EPM-DEC-001
+    the displayed text of the "The decision owner's recorded words" section of EPM-DEC-001
     records from 0026 on, compared with the saved answers' displayed text; a
     Decided record must have at least one, raw HTML there is reported, and so is a paragraph there whose quote marks do not pair (an odd count of straight marks, or unequal curly ones). An ellipsis (…) splits a quoted span, and each
     part of three or more words is checked. Each text is searched across all
@@ -797,28 +798,28 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
             header = next(csv.reader(f), [])
             f.seek(0)
             rows = list(csv.DictReader(f))
-        if "hamid_words" not in header:
+        if "owner_words" not in header:
             continue
         repeated = sorted({h for h in header if header.count(h) > 1})
         if repeated:
             problems.append(f"{os.path.basename(path)}: repeated column {repeated}; cannot check it unambiguously")
             continue
         if not rows:
-            problems.append(f"{os.path.basename(path)}: has a hamid_words column but no rows")
+            problems.append(f"{os.path.basename(path)}: has a owner_words column but no rows")
             continue
         checked_files += 1
         name = os.path.basename(path)
         for r in rows:
             where = f"{name} {r.get('row_id', '?')}"
-            if not (r["hamid_words"] or "").strip():
-                problems.append(f"{where}: hamid_words is blank")
-            check(f"{where} hamid_words", r["hamid_words"])
+            if not (r["owner_words"] or "").strip():
+                problems.append(f"{where}: owner_words is blank")
+            check(f"{where} owner_words", r["owner_words"])
             check(f"{where} scope_note_sentence", r.get("scope_note_sentence", ""))
-            for col in ("semantic_reason", "Hamid_decision"):
+            for col in ("semantic_reason", "owner_decision"):
                 for span in _spans(r.get(col, "")):
                     check(f"{where} {col}", span)
     if not checked_files:
-        problems.append(f"no review file with a hamid_words column in {reviews}: nothing checked")
+        problems.append(f"no review file with a owner_words column in {reviews}: nothing checked")
     with open(backlog) as f:
         text = f.read()
     for para in block_quotes(text):
@@ -859,11 +860,11 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         decided = _status_parts(statuses[0][0])[0] == "Decided"
         sections = recorded_words(record)
         if len(sections) > 1:
-            problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
+            problems.append(f"{name}: more than one \"The decision owner's recorded words\" section; cannot check it unambiguously")
             continue
         blocks, html, quoted = sections[0] if sections else ([], False, [])
         if html:
-            problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
+            problems.append(f"{name}: raw HTML in \"The decision owner's recorded words\"; write the section in plain Markdown")
             continue
         unpaired = [b for b in blocks if b.count('"') % 2 or b.count("“") != b.count("”")]
         for block in unpaired:
@@ -871,7 +872,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
             problems.append(f"{name} recorded words: a paragraph has an unpaired quote mark; close the quotation: {_flat(block)[:90]!r}")
         spans = [span for block in blocks for span in _spans(block)] + [q for q in quoted if len(q.split()) >= 3]
         if decided and not spans:
-            problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
+            problems.append(f"{name}: Decided, but its \"The decision owner's recorded words\" section has no quote of three or more words to check")
         for span in spans:
             if not in_corpus_as_words(span, rendered_corpus):
                 problems.append(f"{name} recorded words: not in a saved answer: {span[:90]!r}")
@@ -900,6 +901,51 @@ def cmd_decisions(args):
     return 1 if problems else 0
 
 
+# EPM-DEC-001-0049: the repo names the decision owner by role. These are the personal name,
+# the family name and the GitHub username, built from fragments so this file does not match itself.
+OWNER_NAMES = re.compile("|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" + "mid"]), re.I)
+
+
+def _name_texts(path):
+    """The text to scan in one file: the file itself, or each XML part of an Office file."""
+    with open(path, "rb") as f:
+        data = f.read()
+    if path.endswith((".xlsx", ".docx", ".pptx")):
+        import zipfile
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            return [(f"{path}!{n}", z.read(n).decode("utf-8", "replace")) for n in z.namelist()]
+    return [(path, data.decode("utf-8", "replace"))]
+
+
+def name_problems(root=ROOT):
+    """Each tracked file and line that names the decision owner, in any case."""
+    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z"]).decode().split("\0")
+    problems = []
+    for name in names:
+        path = os.path.join(root, name)
+        if not name or os.path.islink(path) or not os.path.isfile(path):
+            continue
+        if OWNER_NAMES.search(name):
+            problems.append(f"{name}: the path names the decision owner")
+        for where, text in _name_texts(path):
+            where = os.path.relpath(where, root)
+            for i, line in enumerate(text.split("\n"), 1):
+                if OWNER_NAMES.search(line):
+                    problems.append(f"{where}:{i}: names the decision owner")
+    return problems
+
+
+def cmd_names(args):
+    problems = name_problems()
+    if args.json:
+        print(json.dumps({"commit": commit(), "problems": problems}, indent=2))
+    else:
+        print(f"commit {commit()}: {len(problems)} tracked line(s) name the decision owner")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="epm-facts", description=__doc__.split("\n")[0])
     parser.add_argument("--json", action="store_true", help="machine-readable output")
@@ -912,10 +958,11 @@ def main(argv=None):
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
-    sub.add_parser("quotes", help="check text attributed to Hamid against his saved answers (exit 1 on problems)")
+    sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
+    sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names}[args.cmd](args)
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 1: the classes and properties the organization module needs before roles and assignments are emitted |
-| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028 amended in #252, merged) |
+| Source | Claude Code session, 2026-10-13, under the decision owner's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028 amended in #252, merged) |
 
 ## Context
 
@@ -30,7 +30,7 @@ The organization module's namespace is `https://w3id.org/lsc/ontology/modules/or
 - **Role:** exactly one English name. A definition is optional until the role register supplies definitions.
 - **Control relationship:** exactly one of each entity, at most one share, exactly one as-of date, and at least one source.
 
-Left to later slices: the roles themselves and their normalization from the source's 91 role strings; the assignments; the `ref-mpc` instances; the links from `core:responsibleDomain` to org units; and the relation for who owns a meaning (competency question 17). (Superseded 2026-10-13 for the `core:responsibleDomain` links: Hamid decided the values are business domains, not org units, EPM-DEC-001-0038.)
+Left to later slices: the roles themselves and their normalization from the source's 91 role strings; the assignments; the `ref-mpc` instances; the links from `core:responsibleDomain` to org units; and the relation for who owns a meaning (competency question 17). (Superseded 2026-10-13 for the `core:responsibleDomain` links: The decision owner decided the values are business domains, not org units, EPM-DEC-001-0038.)
 
 ## Alternatives considered
 
@@ -38,9 +38,9 @@ Left to later slices: the roles themselves and their normalization from the sour
 - **Import W3C ORG.** Rejected by EPM-DEC-001-0023: map, don't import.
 - **Make a role definition required now.** Rejected for this slice: the source gives role names only. Definitions come with the role register.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`; also added in #252, merged): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+The decision owner extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`; also added in #252, merged): "yes, extend the delegation to steps 5 to 12." The decision owner did not make the choices above themselves. Claude made them under that delegation, and the decision owner can reverse any of them.
 
 ## Evidence
 

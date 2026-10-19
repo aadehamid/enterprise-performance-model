@@ -2,7 +2,7 @@
 
 **Status:** Evidence for MPC-P05 (EPM-DEC-001-0047) · **Retrieved:** 2026-10-19
 
-Hamid accepted MPC-P05 with changes: one governance frame, but separate lifecycles for compliance credits and for the 45Z tax credit, with no RIN retirement semantics on 45Z. These are the regulators' statements the process map's descriptions rest on (CM 1.2.4.3.8 and its children). MPC's own statement is in `../mpc/mpc-fy2025-10k-fact-sheet.md` §7: renewable diesel "generates federal RINs, 45Z tax credits and LCFS credits".
+The decision owner accepted MPC-P05 with changes: one governance frame, but separate lifecycles for compliance credits and for the 45Z tax credit, with no RIN retirement semantics on 45Z. These are the regulators' statements the process map's descriptions rest on (CM 1.2.4.3.8 and its children). MPC's own statement is in `../mpc/mpc-fy2025-10k-fact-sheet.md` §7: renewable diesel "generates federal RINs, 45Z tax credits and LCFS credits".
 
 | ID | Source | What it says (quoted) | Supports |
 |---|---|---|---|

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass - normalization-only mechanical Batch 6 (13 renames).
 
-Approved by Hamid 2026-09-21: 13-row table approved as listed, with
+Approved by the decision owner 2026-09-21: 13-row table approved as listed, with
 "Perform Position & P&L Analysis" (P&L retained, ampersand kept as the
 standard paired trading term) and "Manage and Support Emissions Trading"
 (plural, standard EPA terminology) confirmed. Alias dispositions per the
@@ -321,7 +321,7 @@ def main() -> int:
                           "identity/migration map only.")
             e["name_change_note"] = (
                 "Step 3d naming pass \u2014 normalization-only mechanical Batch 6 (2026-09-21): "
-                f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21). "
+                f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21). "
                 "Migration-map-only disposition per the generic-alias precedent: "
                 + reason + " "
                 "No identifier, hierarchy, or definition change."
@@ -329,7 +329,7 @@ def main() -> int:
         else:
             e["name_change_note"] = (
                 "Step 3d naming pass \u2014 normalization-only mechanical Batch 6 (2026-09-21): "
-                f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21). "
+                f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21). "
                 "Purely lexical normalization (capitalization / punctuation / "
                 "abbreviation / number / separator); prior label retained as "
                 "skos:altLabel; no identifier, hierarchy, or definition change."
@@ -376,12 +376,12 @@ def main() -> int:
     assert old_hdr in text, "queue section header not found"
     text = text.replace(old_hdr, new_hdr)
     old_status = ("and 11 generic-operational entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 5, Hamid approval 2026-09-21). The remaining 26 queue entries "
+                  "Batch 5, the decision owner's approval 2026-09-21). The remaining 26 queue entries "
                   "are still queued for the consolidated naming pass.")
     new_status = ("and 11 generic-operational entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 5, Hamid approval 2026-09-21) and 13 normalization-only "
+                  "Batch 5, the decision owner's approval 2026-09-21) and 13 normalization-only "
                   "mechanical entries executed 2026-09-21 (Step 3d naming pass Batch 6, "
-                  "Hamid approval 2026-09-21). The remaining 13 queue entries "
+                  "The decision owner's approval 2026-09-21). The remaining 13 queue entries "
                   "(normalization-only, judgment) are still queued for the naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"
     text = text.replace(old_status, new_status)

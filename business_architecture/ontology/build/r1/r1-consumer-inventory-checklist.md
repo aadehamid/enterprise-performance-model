@@ -1,6 +1,6 @@
 # R1 Hierarchy-Consumer Inventory — Team Checklist
 
-**Status (2026-09-22):** NOT REQUIRED at foundation stage — Hamid confirmed no consumers exist yet.
+**Status (2026-09-22):** NOT REQUIRED at foundation stage — the decision owner confirmed no consumers exist yet.
 Retained as the standing instrument for the first consumer connection; Gate 2 then reactivates.
 
 **Purpose (when consumers exist):** Gate 2 of the R1 Refining structural reclassification requires proof, not assumption,

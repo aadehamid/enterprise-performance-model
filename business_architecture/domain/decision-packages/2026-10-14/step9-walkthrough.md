@@ -1,8 +1,8 @@
 # Step 9 walkthrough: controlled values and evidence on canonical facts
 
-*2026-10-18:* answered by Hamid, "1a, 2a", with implementation requirements (`answers-2026-10-18.md`); carried out in a later pull request.
+*2026-10-18:* answered by the decision owner, "1a, 2a", with implementation requirements (`answers-2026-10-18.md`); carried out in a later pull request.
 
-Prepared for Hamid on 2026-10-14. This package decides nothing. It sets out the two things EPM-DEC-001-0035 leaves for you, in its section "For Hamid: evidence on the facts" (lines 25 to 29).
+Prepared for the decision owner on 2026-10-14. This package decides nothing. It sets out the two things EPM-DEC-001-0035 leaves for you, in its section "For the decision owner: evidence on the facts" (lines 25 to 29).
 
 Figures come from repo commit `6baf510` (`python3 scripts/epm_facts.py counts`) and from running the shapes with pySHACL against `business_architecture/ontology/releases/core/2.0.0/core.ttl`. Paths below are relative to `business_architecture/ontology/` unless they start with `business_architecture/` or `scripts/`.
 
@@ -93,7 +93,7 @@ Under option 2b, the first line is removed and the node is the only record of th
 ### Options
 
 - 2a (Recommended). Add one node per canonical fact and keep the direct triple. This is the qualified-relation pattern you adopted in EPM-DEC-001-0020 (decision item 3), and it changes nothing that current queries read. The cost is 640 nodes and about 3,372 triples (640 times four, plus 812 row values) on the 16,200 triples of 2.0.0. It only adds terms, so it is a minor release under the playbook's Appendix B (`ontology-playbook.md`, section "What counts as what": new concepts are minor), most likely `core` 2.1.0. The module policy gives minor releases to the module owner (EPM-DEC-001-0037, line 12); your answer here sets the pattern. Two follow-on changes come with it. The projection's Rule 4a check must name the new class (`projection/pipeline.py`, lines 119 to 121), and Neo4j gets 640 more nodes. The risk is that the triple and the node drift apart, so the evidence-link shape would require exactly one node for each direct triple, and the reverse.
-- 2b. Add the node and drop the direct triple. This removes triples that queries read, so it is a major release under Appendix B (section "What counts as what": a change that can make an existing consumer wrong is major), `core` 3.0.0, which needs your approval. It breaks the competency query for Q39 (`regression/queries/q39-downstream.rq` reads the direct triples) and the projection's process-to-process edges. You said "No one uses the ontology yet" (`step4/review-evidence/hamid-answers/core-2-0-0-release.md`), so the cost to consumers is low today. The cost to this repo's own queries and projection is not.
+- 2b. Add the node and drop the direct triple. This removes triples that queries read, so it is a major release under Appendix B (section "What counts as what": a change that can make an existing consumer wrong is major), `core` 3.0.0, which needs your approval. It breaks the competency query for Q39 (`regression/queries/q39-downstream.rq` reads the direct triples) and the projection's process-to-process edges. You said "No one uses the ontology yet" (`step4/review-evidence/decision-owner-answers/core-2-0-0-release.md`), so the cost to consumers is low today. The cost to this repo's own queries and projection is not.
 - 2c. Keep the evidence in the CSV and check it with a script. EPM-DEC-001-0035 rejected this as the Step 9 shape, because the rule is that the graph itself links each fact to its evidence. What happens: the first Step 9 rule is never checked in the graph, and the playbook's Step 9 "Done when" needs a recorded exception.
 - 2d. Wait. Nothing changes, and the evidence-link shape stays unbuilt.
 

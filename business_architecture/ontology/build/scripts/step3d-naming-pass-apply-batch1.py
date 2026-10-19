@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 10 renames).
 
-Approved by Hamid 2026-09-21 with three reviewer refinements adopted:
+Approved by the decision owner 2026-09-21 with three reviewer refinements adopted:
   1. CM-1-1-3-6-2 -> "Administer Scheduled Shipment Loading" (not
      "Administer Shipment Loading"): "Scheduled" distinguishes
      scheduled-load administration from physical loading, dispatch,

@@ -8,7 +8,7 @@ The register (role-register.csv) maps every role string in the process map's `ra
 one or more roles in roles.csv. The build fails unless the register holds each distinct source
 string exactly once, names only roles that roles.csv defines, and uses every role it defines.
 
-Since organization 2.0.0 (EPM-DEC-001-0045), roles.csv also carries Hamid's answers to the role
+Since organization 2.0.0 (EPM-DEC-001-0045), roles.csv also carries the decision owner's answers to the role
 questions. `label` stays the source spelling, which the surface rules check against; a
 `preferred_label` replaces it as skos:prefLabel and the source spelling becomes an alternative
 label. A role with `replaced_by` is deprecated, never deleted (playbook Appendix B): it keeps its

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass - directionality-missing Batch 4 (11 renames).
 
-Approved by Hamid 2026-09-21 (explicit go-ahead in chat).
+Approved by the decision owner 2026-09-21 (explicit go-ahead in chat).
 
 Two groups:
   A. Claims lifecycle (7 rows, CM-1-2-4-4-2..8): plain "Claim" labels read
@@ -15,7 +15,7 @@ Two groups:
      mid-sentence; the workbook carries the full queued labels).
      NOTE: executed label for CM-1-3-2-3-4 is "Develop and Update Consumer
      Value Proposition Strategy" (workbook queued value), not the
-     chat-proposed "Develop/Update ..." — flagged for Hamid's review.
+     chat-proposed "Develop/Update ..." — flagged for the decision owner's review.
 
 B2B-cluster protection: the four old consumer labels are also the live
 prefLabels of the B2B siblings CM-1-3-2-2-1..4 (the pre-existing duplicate
@@ -235,7 +235,7 @@ def main() -> int:
         e["scoped_historical_alias"] = None
         e["name_change_note"] = (
             "Step 3d naming pass \u2014 directionality-missing Batch 4 (2026-09-21): "
-            f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21, "
+            f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21, "
             "independent reviewer recommendation: approve as proposed). Prior "
             "label retained as skos:altLabel; no identifier, hierarchy, or "
             "definition change."
@@ -286,11 +286,11 @@ def main() -> int:
     assert old_hdr in text, "queue directionality header not in expected form"
     text = text.replace(old_hdr, new_hdr)
     old_status = ("and 12 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 3 E+F, Hamid approval 2026-09-21). The remaining 45 queue entries "
+                  "Batch 3 E+F, the decision owner's approval 2026-09-21). The remaining 45 queue entries "
                   "are still queued for the consolidated naming pass.")
     new_status = ("and 12 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 3 E+F, Hamid approval 2026-09-21) and 8 directionality-missing "
-                  "entries executed 2026-09-21 (Step 3d naming pass Batch 4, Hamid approval "
+                  "Batch 3 E+F, the decision owner's approval 2026-09-21) and 8 directionality-missing "
+                  "entries executed 2026-09-21 (Step 3d naming pass Batch 4, the decision owner's approval "
                   "2026-09-21). The remaining 37 queue entries are still queued for the "
                   "consolidated naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"

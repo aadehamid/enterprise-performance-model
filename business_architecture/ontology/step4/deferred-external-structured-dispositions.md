@@ -47,7 +47,7 @@ identify which actualization process is meant.
 ## Status
 
 All 15 formally recorded. The 12 deferred rows await source-workbook
-clarification (Hamid's domain). The structured-flow and external-governance
+clarification (the decision owner's domain). The structured-flow and external-governance
 rows are correctly classified; no further action required.
 
 Pre-reviewed by Cursor EPM on Slack (naming correction: the three

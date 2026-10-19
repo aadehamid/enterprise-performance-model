@@ -1,7 +1,7 @@
 # Verb → Predicate Mapping — CANDIDATE FOR REVIEW (not approved)
 
 **Status:** draft for controlled review. No emission script may use this
-mapping until Hamid approves it row by row.
+mapping until the decision owner approves it row by row.
 
 **Locked input (Step 4 Q4, review-corrected):** a process-to-process
 input dependency is `core:dependsOnOutputOf` (consumer → producer),

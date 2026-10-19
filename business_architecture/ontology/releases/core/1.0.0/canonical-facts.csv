@@ -155,14 +155,14 @@ CM-1-2-2-1-5,core:precedes,CM-1-2-4-1-16,1,REL-00230,precedes,
 CM-1-2-2-1-7,core:enabledBy,CM-1-2-2-1-2,1,REL-00221,enables,inverse of raw enables
 CM-1-2-2-2,core:dependsOnOutputOf,CM-1-2-1-2,1,REL-01299,provides-input-to,inverse of raw provides-input-to
 CM-1-2-2-2,core:governedBy,CM-1-2-4-3,1,REL-01228,governed-by,
-CM-1-2-2-2-1,core:enabledBy,CM-1-2-2-2-2,1,REL-00243,enables,"Hamid verdict: approved as core:enables (row-level, overrides group)"
+CM-1-2-2-2-1,core:enabledBy,CM-1-2-2-2-2,1,REL-00243,enables,"The decision owner's verdict: approved as core:enables (row-level, overrides group)"
 CM-1-2-2-2-1,core:precedes,CM-1-2-2-2-3,1,REL-00245,follows,canonicalized from follows
 CM-1-2-2-2-1,core:precedes,CM-1-2-2-2-5,2,REL-00241;REL-00251,follows;precedes,canonicalized from follows
 CM-1-2-2-2-2,core:informedBy,CM-1-2-1-2,1,REL-00244,informed-by,
 CM-1-2-2-2-3,core:requires,CM-1-2-1-3,1,REL-00247,requires,
 CM-1-2-2-2-3,core:triggeredBy,CM-1-2-2-2-5,1,REL-00252,triggers,inverse of raw triggers
 CM-1-2-2-2-4,core:triggeredBy,CM-1-2-2-2-3,1,REL-00246,triggers,inverse of raw triggers
-CM-1-2-2-3,core:enabledBy,CM-1-2-1-3,1,REL-01303,enables,"Hamid verdict: approved as core:enables (row-level, overrides group)"
+CM-1-2-2-3,core:enabledBy,CM-1-2-1-3,1,REL-01303,enables,"The decision owner's verdict: approved as core:enables (row-level, overrides group)"
 CM-1-2-2-3-10,core:dependsOnOutputOf,CM-1-2-2-3-2,1,REL-00256,uses-input,
 CM-1-2-2-3-13,core:dependsOnOutputOf,CM-1-2-2-3-10,1,REL-00257,provides-input-to,inverse of raw provides-input-to
 CM-1-2-2-3-13,core:dependsOnOutputOf,CM-1-2-2-3-11,1,REL-00260,provides-input-to,inverse of raw provides-input-to
@@ -245,7 +245,7 @@ CM-1-2-5-2-2,core:dependsOnOutputOf,CM-1-1-4,1,REL-00442,uses-input,
 CM-1-2-5-2-2,core:dependsOnOutputOf,CM-1-2-5-4,1,REL-01104,provides-input-to,inverse of raw provides-input-to
 CM-1-2-5-2-2,core:dependsOnOutputOf,CM-1-2-5-4-2,2,REL-00443;REL-00460,enables;uses-input,proposed merge into existing output-dependency fact
 CM-1-2-5-2-2,core:precedes,CM-1-2-5-2-1,2,REL-00439;REL-00444,follows;precedes,canonicalized from follows
-CM-1-2-5-2-3,core:dependsOnOutputOf,CM-1-2-5-1-4,2,REL-00447;REL-00436,enables;uses-input,Hamid 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input
+CM-1-2-5-2-3,core:dependsOnOutputOf,CM-1-2-5-1-4,2,REL-00447;REL-00436,enables;uses-input,The decision owner 2026-09-26: G1a duplicate-provenance attach; fact independently evidenced via uses-input
 CM-1-2-5-2-3,core:dependsOnOutputOf,CM-1-2-5-2-2,1,REL-00446,uses-input,
 CM-1-2-5-2-3,core:enabledBy,CM-1-2-5-1,1,REL-01172,enables,inverse of raw enables
 CM-1-2-5-2-3,core:enabledBy,CM-1-2-5-1-3,1,REL-00433,enables,inverse of raw enables
@@ -615,7 +615,7 @@ CM-1-3-8-4-1,core:dependsOnOutputOf,CM-1-3-8-4-3,2,REL-01052;REL-01060,enables;u
 CM-1-3-8-4-1,core:dependsOnOutputOf,CM-1-3-8-4-7,1,REL-01073,provides-input-to,inverse of raw provides-input-to
 CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-2,1,REL-01266,enables,inverse of raw enables
 CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-3,1,REL-01222,enables,inverse of raw enables
-CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-4-2,1,REL-01056,enables,"Hamid verdict: approved as core:enables (row-level, overrides group)"
+CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-4-2,1,REL-01056,enables,"The decision owner's verdict: approved as core:enables (row-level, overrides group)"
 CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-4-4,1,REL-01063,enables,inverse of raw enables
 CM-1-3-8-4-1,core:enabledBy,CM-1-3-8-4-6,1,REL-01068,enables,inverse of raw enables
 CM-1-3-8-4-2,core:dependsOnOutputOf,CM-1-3-8-2-4,2,REL-01028;REL-01055,enables;uses-input,proposed merge into existing output-dependency fact

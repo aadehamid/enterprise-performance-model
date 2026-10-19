@@ -1,6 +1,6 @@
 # DO NOT MERGE — Step 4 evidence-discipline playbook section (proposed 2026-09-24)
 
-Docs-only PR. **Do not merge without Hamid's explicit approval.**
+Docs-only PR. **Do not merge without the decision owner's explicit approval.**
 Base: `main` at `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (verified current
 before push; no other files touched).
 
@@ -10,9 +10,9 @@ One new playbook section, **Step 4 evidence discipline — promoting intake
 data without corrupting it**, placed after the step log and before §4
 Decision log (the approved placement), plus a short Step 4 step-log pointer
 entry. The section is marked PROPOSED 2026-09-24 and becomes canonical
-operating discipline only on Hamid's approval.
+operating discipline only on the decision owner's approval.
 
-The eleven rules (Hamid's six wording edits applied):
+The eleven rules (the decision owner's six wording edits applied):
 
 1. Pin all evidence to one approved `main` SHA.
 2. Regenerate old review packages after the taxonomy evolves.
@@ -50,12 +50,12 @@ to the conservation ledger's exact mention-to-canonical-fact reconciliation.
 - No changes to any existing decision-log entry or step-log entry.
 - Review evidence CSVs (53/14/11-row batches, nearness sample, enabledBy
   mutual batch) are **not** in this PR — they live with the evidence
-  package pending Hamid's review-batch decisions.
+  package pending the decision owner's review-batch decisions.
 
 ## Evidence and review instructions
 
 - The section text was built from the reviewer-evolved working-tree draft;
-  the six edits above are Hamid's 2026-09-24 wording, applied verbatim.
+  the six edits above are the decision owner's 2026-09-24 wording, applied verbatim.
 - Verify placement: new `### Step 4` pointer at the end of §3 step log; full
   section between the step log's closing `---` and `## 4. Decision log`.
 - Verify the status blockquote still reads PROPOSED (not canonical).

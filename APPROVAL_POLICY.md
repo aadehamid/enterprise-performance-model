@@ -22,6 +22,6 @@ A missing Bugbot signal is absence of evidence, not a finding. Do not invent Bug
 
 ## Still require a human when
 
-- The PR is a Step 3c definition batch (workbook approvals) unless Hamid has already recorded the decisions in the PR body and the mechanical gate is `blocking=0`.
+- The PR is a Step 3c definition batch (workbook approvals) unless the decision owner has already recorded the decisions in the PR body and the mechanical gate is `blocking=0`.
 - The PR changes approval policy, routing, or this file (use the base-branch version; do not relax review on the same PR).
 - Risk is medium or higher on your own reading of the diff.

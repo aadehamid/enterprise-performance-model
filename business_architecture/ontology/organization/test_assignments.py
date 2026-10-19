@@ -94,7 +94,7 @@ class Assignments(unittest.TestCase):
 
 
 class RoleMerges(unittest.TestCase):
-    """Organization 2.0.0 (EPM-DEC-001-0045): Hamid's three merges deprecate, never delete."""
+    """Organization 2.0.0 (EPM-DEC-001-0045): The decision owner's three merges deprecate, never delete."""
 
     RELEASED = os.path.join(br.HERE, "..", "releases", "organization", "1.0.0", "organization.ttl")
 

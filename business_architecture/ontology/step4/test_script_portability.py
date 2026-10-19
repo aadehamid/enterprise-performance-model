@@ -56,7 +56,7 @@ def main():
 
     # 3. Writer scripts must never overwrite governed target-report files.
     #    Once runnable from any checkout, a rerun could revert reviewed
-    #    decisions (e.g. target-dispositions-v2.csv carries Hamid's
+    #    decisions (e.g. target-dispositions-v2.csv carries the decision owner's
     #    2026-09-25 approvals). Run them in a throwaway copy laid out like
     #    the original separate workspace (<ws>/ontology-step4 beside
     #    <ws>/enterprise-performance-model), with no path overrides, so

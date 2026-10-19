@@ -9,7 +9,7 @@
 
 ## Context
 
-Hamid asked to project the finished ontology to a Neo4j labelled property graph using his guideline (Ontology_to_LPG_Conversion_Playbook v2, enterprise-people-graph commit cd63e12). An external check on 2026-10-05 found: RDF 1.2 is a W3C Candidate Recommendation Snapshot (7 April 2026), not a Recommendation; rdflib has no RDF 1.2 support (issue #3524, all stages open), and pySHACL depends on rdflib; RDF4J documents support; Jena's tracking issue #2805 is open; n10s is maintained (commit 29 May 2026, Neo4j 2025.06.2) and does not read RDF 1.2.
+The decision owner asked to project the finished ontology to a Neo4j labelled property graph using their guideline (Ontology_to_LPG_Conversion_Playbook v2, enterprise-people-graph commit cd63e12). An external check on 2026-10-05 found: RDF 1.2 is a W3C Candidate Recommendation Snapshot (7 April 2026), not a Recommendation; rdflib has no RDF 1.2 support (issue #3524, all stages open), and pySHACL depends on rdflib; RDF4J documents support; Jena's tracking issue #2805 is open; n10s is maintained (commit 29 May 2026, Neo4j 2025.06.2) and does not read RDF 1.2.
 
 ## Decision
 
@@ -19,11 +19,11 @@ Hamid asked to project the finished ontology to a Neo4j labelled property graph 
 
 Apply the guideline only at projection time; adopt all five rules including RDF 1.2 reifiers; adopt Rule 4 at Step 5.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Q24: "can we adopt the guideline to project ontology to label property graph at https://github.com/aadehamid/enterprise-people-graph/tree/main/guideline_to_map_ontology_to_LPG Can we update our playbook with this." Q29: "I am aligned . But can you check this ontology to LPG projection guideline by doing a quick extrrnal search to make sure the guideline hold up and that it does not make the ontology unnecessarily complex." Q33: "We still have a way of representing this behavious without using reifers." Q30: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned."
+Q24: "can we adopt the guideline to project ontology to label property graph at the enterprise-people-graph repository (`guideline_to_map_ontology_to_LPG`) Can we update our playbook with this." Q29: "I am aligned . But can you check this ontology to LPG projection guideline by doing a quick extrrnal search to make sure the guideline hold up and that it does not make the ontology unnecessarily complex." Q33: "We still have a way of representing this behavious without using reifers." Q30: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Correction (2026-10-06)
 

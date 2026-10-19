@@ -19,11 +19,11 @@ The ontology holds concepts, definitions, relationships, and publicly available 
 
 No figures at all (the first reading of Q6 and Q11); public figures of every kind, including measure values.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Q11: "We will not have the actual data. The ontology is only for concept structuring, definition, and relationship to enable semantic knowledge management system. We have Pricing domain KPI category or type such as Crack Spread. I will share them later." Q19: "I do want this kind of data. The data that I dont want is to say something like Crack Spread is $5 or something like Cusomer A bout 5 barrels of oil. I do want data that are oublickly available about the downstream oil and gas. So having the MPC, refrienery is fine where appropriate. [...] Excatly record of what happen is what we dont want in the ontology." Q26: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned."
+Q11: "We will not have the actual data. The ontology is only for concept structuring, definition, and relationship to enable semantic knowledge management system. We have Pricing domain KPI category or type such as Crack Spread. I will share them later." Q19: "I do want this kind of data. The data that I dont want is to say something like Crack Spread is $5 or something like Cusomer A bout 5 barrels of oil. I do want data that are oublickly available about the downstream oil and gas. So having the MPC, refrienery is fine where appropriate. [...] Excatly record of what happen is what we dont want in the ontology." Q26: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Evidence
 

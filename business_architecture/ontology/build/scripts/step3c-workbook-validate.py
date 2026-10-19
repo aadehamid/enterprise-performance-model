@@ -70,12 +70,12 @@ PTC_STATUS_RE = re.compile(r"^\*\*Status:\*\*\s*\**(\w+)", re.M)
 STATUS_OK = {"pending", "approved", "blocked", "retired"}
 
 # Only these may sit on an approved row. mixed/needs-review and
-# not-process require Hamid's decision and must stay pending (or move
+# not-process require the decision owner's decision and must stay pending (or move
 # to blocked/retired after that decision).
 APPROVABLE_TYPE = {"process", "capability"}
 
 # The two L0 scheme roots, approved as taxonomy/navigation anchors with
-# concept_type_check 'not-process' by Hamid's batch 42 decision
+# concept_type_check 'not-process' by the decision owner's batch 42 decision
 # (2026-09-21). Frozen like PRE_INTAKE_APPROVED: do not grow this set —
 # every other not-process row still requires its own explicit decision
 # and stays pending, blocked, or retired.
@@ -400,7 +400,7 @@ def main() -> int:
                     BLOCKING,
                     slug,
                     "unapprovable-concept-type",
-                    f"concept_type_check={concept_type!r} cannot be approved without Hamid's decision.",
+                    f"concept_type_check={concept_type!r} cannot be approved without the decision owner's decision.",
                 )
 
         pre_intake = slug in PRE_INTAKE_APPROVED

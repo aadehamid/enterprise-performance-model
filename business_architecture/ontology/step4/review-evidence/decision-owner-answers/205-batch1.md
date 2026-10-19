@@ -1,4 +1,4 @@
-<!-- Hamid's words, verbatim from https://github.com/aadehamid/enterprise-performance-model/issues/205#issuecomment-6115309253 (fetched 2026-10-12). Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+<!-- The decision owner's words, verbatim from urn:epm:issue:205:comment:6115309253 (fetched 2026-10-12). Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 Take this as my authorization
 

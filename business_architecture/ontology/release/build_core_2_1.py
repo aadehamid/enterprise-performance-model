@@ -5,7 +5,7 @@
     python3 build_core_2_1.py --verify   # fail unless the written package equals a fresh build
 
 core 2.0.0 stays as it was released (build_core_next.py). This builder starts from that graph and
-applies Hamid's Step 9 answer of 2026-10-18, "1a, 2a":
+applies the decision owner's Step 9 answer of 2026-10-18, "1a, 2a":
 
 1. The eleven controlled-value shapes of validation/controlled-values.ttl join the release shapes.
    They check scheme membership: each value of a code-list property carries skos:inScheme with its
@@ -17,7 +17,7 @@ applies Hamid's Step 9 answer of 2026-10-18, "1a, 2a":
 3. The dangling dcterms:license IRI gives way to a dcterms:rights statement: proprietary, all rights
    reserved (EPM-DEC-001-0041), with APQC's attribution.
 
-It only adds terms and shapes, so it is a minor release; Hamid approved cutting it (APPROVAL below).
+It only adds terms and shapes, so it is a minor release; the decision owner approved cutting it (APPROVAL below).
 """
 import argparse
 import csv
@@ -41,15 +41,15 @@ MAPPING = os.path.join(ONTOLOGY, "releases", "core", "1.0.0", "canonical-facts.c
 CONTROLLED = os.path.join(ONTOLOGY, "validation", "controlled-values.ttl")
 CHANGELOG = os.path.join(ONTOLOGY, "releases", "core", "CHANGELOG-2.1.0.md")
 VERSION, ISSUED = "2.1.0", "2026-10-18"
-# The sentence that approved cutting the release: (saved file, Hamid's words in its body).
-APPROVAL = ("step4/review-evidence/hamid-answers/answers-2026-10-18-night.md", "Yes, cut 2.1.0 (Recommended)")
+# The sentence that approved cutting the release: (saved file, the decision owner's words in its body).
+APPROVAL = ("step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md", "Yes, cut 2.1.0 (Recommended)")
 RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", VERSION)
 
 CORE = prev.CORE
 PROC = prev.PROC
 FACT = Namespace("https://w3id.org/lsc/ontology/fact/")
 ONTOLOGY_IRI = prev.ONTOLOGY_IRI
-DECIDED = "EPM-DEC-001-0044; Hamid's words in step4/review-evidence/hamid-answers/answers-2026-10-18.md"
+DECIDED = "EPM-DEC-001-0044; the decision owner's words in step4/review-evidence/decision-owner-answers/answers-2026-10-18.md"
 REL_ID = re.compile(r"^REL-[0-9]{5}$")
 RIGHTS = ("© LSC. All rights reserved. Proprietary (EPM-DEC-001-0041). "
           "This work is based in part on an Industry Process Classification Framework (\"PCF\"), an open standard "
@@ -179,7 +179,7 @@ def fact_shapes(preds):
     inlist = " ".join(f"core:{str(p)[len(str(CORE)):]}" for p in preds)
     return f"""
 # ---- Added in 2.1.0: evidence on canonical facts (EPM-DEC-001-0044) ----
-# Hamid's seven checks: fact structure, predicate scope, triple to node, node to triple, evidence
+# The decision owner's seven checks: fact structure, predicate scope, triple to node, node to triple, evidence
 # presence, evidence correctness and reproducibility. The shapes cover the first five; evidence
 # correctness against the mapping and reproducibility are build checks (build_core_2_1.py,
 # evidence_problems and --verify) and tests (test_build_core_2_1.py).
@@ -249,7 +249,7 @@ def shapes_text(preds):
         base = f.read()
     with open(CONTROLLED) as f:
         controlled = f.read()
-    return (base + "\n# ---- Added in 2.1.0: the controlled-value shapes (EPM-DEC-001-0035, 0044), as Hamid approved them ----\n"
+    return (base + "\n# ---- Added in 2.1.0: the controlled-value shapes (EPM-DEC-001-0035, 0044), as the decision owner approved them ----\n"
             + controlled + fact_shapes(preds))
 
 

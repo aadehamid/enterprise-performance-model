@@ -2,7 +2,7 @@
 
 **Purpose:** Define the end-to-end reference architecture for a personal, open-source, single-machine learning environment that connects Downstream Oil & Gas facts, a governed meaning layer, graph serving, and a locally hosted AI agent.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-29  
 
 ## Architecture overview

@@ -1,4 +1,4 @@
-**Posted by Claude:** design round for the scoped sequence relation. Hamid accepted each recommendation below in a chat design round on 2026-10-12. Reply to this comment with your approval so the decision record can quote it.
+**Posted by Claude:** design round for the scoped sequence relation. The decision owner accepted each recommendation below in a chat design round on 2026-10-12. Reply to this comment with your approval so the decision record can quote it.
 
 **Shape**
 
@@ -40,7 +40,7 @@
 - **Q15.** The ledger gets its own scoped-sequence category: 617 emitting / 669 held / 12 deferred / 1 external governance / 2 structured flow / 17 scoped sequence = 1318. `epm_facts.py counts` reports "17 nodes, 16 handoffs".
 - **Q16.** The class, its properties and both lists go in the `core` module. Core 1.0.0 releases only when the relation and its SHACL shapes pass. This amends EPM-DEC-001-0013 and 0025.
 - **Q17.** In later batches (#209, #210 and after), an answer that gives a sequence only per a scope unit goes straight to a scoped-sequence verdict under these rules. A new design round is needed only for a new scope unit or an answer that doesn't fit the definition.
-- **Q18.** Your reply below is saved under `step4/review-evidence/hamid-answers/`. EPM-DEC-001-0026 quotes it.
+- **Q18.** Your reply below is saved under `step4/review-evidence/decision-owner-answers/`. EPM-DEC-001-0026 quotes it.
 
 **To approve,** reply: `Approved: Q1–Q18 as recommended in the comment above.`
 

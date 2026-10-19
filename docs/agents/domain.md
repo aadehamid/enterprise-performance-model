@@ -37,12 +37,12 @@ decision is actually resolved.
 
 - **Glossary entry:** term, definition, "avoid" synonyms, source (cite the
   evidence file or filing), status (Draft / Candidate / Approved Baseline). A
-  term says **Approved Baseline** only when Hamid has recorded that approval. A
+  term says **Approved Baseline** only when the decision owner has recorded that approval. A
   PR merge alone doesn't approve it. EPM-DEC-001-0028 does not delegate it.
 - **Decision record:** one file per decision, `EPM-DEC-001-NNNN-<slug>.md`, with
   context, decision, alternatives considered, evidence, status (Proposed /
-  Decided / Superseded) and date. A record says **Decided** only when Hamid has
-  recorded the decision. A PR merge alone doesn't decide it. A decision recorded as "delegated under EPM-DEC-001-0028" counts as Hamid's recorded decision, within that record's scope. A
+  Decided / Superseded) and date. A record says **Decided** only when the decision owner has
+  recorded the decision. A PR merge alone doesn't decide it. A decision recorded as "delegated under EPM-DEC-001-0028" counts as the decision owner's recorded decision, within that record's scope. A
   reversed decision is marked Superseded, naming the record that reverses it.
 - Every change lands through a PR (see `AGENTS.md`).
 

@@ -1,4 +1,4 @@
-"""Tests for core 2.1.0 (EPM-DEC-001-0044): it is core 2.0.0 plus the Step 9 additions Hamid approved,
+"""Tests for core 2.1.0 (EPM-DEC-001-0044): it is core 2.0.0 plus the Step 9 additions the decision owner approved,
 each canonical fact has exactly one evidence node that matches the mapping, the shapes catch each
 kind of drift, and the package is the approved, current release.
 
@@ -75,7 +75,7 @@ class Release(unittest.TestCase):
 
 
 class Drift(unittest.TestCase):
-    """Hamid's checks: each kind of drift between the triple, the node and the mapping fails."""
+    """The decision owner's checks: each kind of drift between the triple, the node and the mapping fails."""
 
     def test_the_release_passes_the_fact_shapes(self):
         self.assertTrue(fact_shapes_hold(SUB))
@@ -162,7 +162,7 @@ class ControlledValues(unittest.TestCase):
 
 class Package(unittest.TestCase):
     def test_the_package_is_the_approved_release(self):
-        self.assertEqual(b.APPROVAL, ("step4/review-evidence/hamid-answers/answers-2026-10-18-night.md",
+        self.assertEqual(b.APPROVAL, ("step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md",
                                       "Yes, cut 2.1.0 (Recommended)"))
         with open(os.path.join(b.ONTOLOGY, b.APPROVAL[0])) as f:
             body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)

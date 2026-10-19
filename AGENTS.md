@@ -29,7 +29,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   then U.S. refining peers' SEC filings (`business_architecture/reference/downstream-peers/`),
   then downstream-specific industry sources. Generic frameworks are support
   only. Cite every fact.
-- **Don't mark anything Decided or Approved without Hamid's recorded
+- **Don't mark anything Decided or Approved without the decision owner's recorded
   decision.** A merge alone doesn't decide or approve it. Since 2026-10-12,
   EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
   updating its playbook to Claude, and since 2026-10-13 those of Steps 5 to 12: a decision in that scope made from the
@@ -45,14 +45,14 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 
 Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes, except that the independent review in item 5 runs at most twice per PR (EPM-DEC-001-0028).
 
-1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
+1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, the check that no tracked file names the decision owner (`epm_facts.py names`, EPM-DEC-001-0049), and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
 3. **External facts cite a primary source**: release notes, a changelog, a specification or a filing, with version and date. A version claim names the first release with full support, not a preview.
 4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change; it also finds text split across lines. When you change a rule, walk every section that depends on it. When a change adds a value to a set (a ledger bucket, a status, a route) or replaces an instruction, also search the bare old figure (`686`, not `686 held`), the set's other members (`structured flow`), and the old instruction's words (`#226`, `waits for`). Review rounds on PR #231 found statements of each kind that the change had missed.
 5. **A different model reviews the diff, and every finding is fixed or answered.**
    Commit first; the review reads committed work only.
    - **Who reviews:** the `way-of-working` skill's "Who reviews" table
-     (`references/changing.md`), as Hamid set it on 2026-10-13 (EPM-DEC-001-0028,
+     (`references/changing.md`), as the decision owner set it on 2026-10-13 (EPM-DEC-001-0028,
      amendment of 2026-10-18). While the Cursor bot is available, Pi gives the
      independent review (`pi-review.sh --role independent`) and the Cursor bot gives
      the PR verdict. When the bot is not available, the Cursor agent CLI on Grok 4.6

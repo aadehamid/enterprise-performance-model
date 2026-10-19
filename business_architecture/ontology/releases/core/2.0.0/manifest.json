@@ -5,21 +5,21 @@
   "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
   "version_iri": "https://w3id.org/lsc/ontology/modules/core/2.0.0",
   "built_from": {
-    "core 1.0.0 manifest": "06393bcfb56e7d51cb23a07575fdd6d2fbe06750168bf492488d3985bb28aca0",
+    "core 1.0.0 manifest": "6e1d855b0532e93fed4bd0781d4165be7f13834e36baa334faf5c62488d321cd",
     "process map": "a727129925ec96a232d654ba233f9f29a7c4aba22cea4cc74e712cdf4b03a2d2"
   },
   "decisions": [
     "EPM-DEC-001-0038"
   ],
   "approval": {
-    "file": "step4/review-evidence/hamid-answers/core-2-0-0-release.md",
+    "file": "step4/review-evidence/decision-owner-answers/core-2-0-0-release.md",
     "words": "I approve the core 2.0.0 releas"
   },
   "files": {
-    "CHANGELOG.md": "73745f5f6baa223b03e77478089b886d84736ef64cd43a8d5b3006c605c4dbed",
+    "CHANGELOG.md": "6c34dce2e98acdcdaf814ead21b58ad3c06c08ebfab168cf8d7c8d063af19fa5",
     "catalog.ttl": "72ffeab26735f6e5881566b226242edf4ee58347c3115f758b95f31ee9d40f61",
-    "core.jsonld": "4ae9c6dbdf44e911baaa9ba60ed904691d6111a2f7fc50df6c33c3ce3394a6d8",
-    "core.ttl": "b6d83aa343be0e2afbab21c923af4086b283c9e8063defee7ac3af2567be5d90",
+    "core.jsonld": "9ff3b86e8d13aa91bd284721914dbce3edc7b59e53ca7a0918ce439ea645cfbe",
+    "core.ttl": "8a491ee6f5394b299d98174b511aeee3b130621330d876ec684d102584634445",
     "counts.json": "d7f90cc44c002d7eed33cbbfef1bd59a8ab2e645914a720ac273337464a7f80e",
     "shapes.ttl": "8ed0310141839a97f88ffa751e64e1dc7da8579dcc7017a97abd20dcda074c3b"
   }

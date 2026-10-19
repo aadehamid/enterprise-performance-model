@@ -190,7 +190,7 @@ def main() -> None:
                          '+ provenance (triangulated APQC/EIA definitions)')
     ap.add_argument('--authored', default=None,
                     help='step3c-authored-definitions.json: slug -> human-'
-                         'authored definition + scope note (approved by Hamid)')
+                         'authored definition + scope note (approved by the decision owner)')
     ap.add_argument('--workbook', default=None,
                     help='step3c-definition-authoring-workbook.xlsx: approved '
                          'rows overlay the taxonomy (definitions, scope notes, '
@@ -379,7 +379,7 @@ def main() -> None:
                 g.add((c, SKOS.scopeNote,
                        Literal(d["scope_note"], lang=EN)))
             # provenance: human-authored, approved by the domain owner
-            prov_source(c, f"Human-authored definition, approved by Hamid "
+            prov_source(c, f"Human-authored definition, approved by the decision owner "
                            f"({d.get('date', '')})")
         elif slug in adoptions:
             a = adoptions[slug]

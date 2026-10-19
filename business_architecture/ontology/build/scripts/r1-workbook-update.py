@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """R1 Refining structural reclassification — one-shot workbook update.
 
-Applies the Hamid-approved R1 change set to the Step 3c definition workbook
+Applies the owner-approved R1 change set to the Step 3c definition workbook
 ("Review & authoring" sheet), deterministically and with assertions:
 
   1. Migrated rows (42): level, parent (display name), breadcrumb from the new

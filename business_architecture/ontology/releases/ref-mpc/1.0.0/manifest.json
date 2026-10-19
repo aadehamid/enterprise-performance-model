@@ -13,11 +13,11 @@
   ],
   "triples": 140,
   "approved_by": {
-    "who": "Hamid",
-    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-13-session2.md"
   },
   "files": {
-    "CHANGELOG.md": "45f51c285bf16a72168598cda425becd660e6f226bfc75130a7cae7db13fc51d",
+    "CHANGELOG.md": "a9ad311498a1168ee59fdf425ca18f6809875e265a708a7fb8478433f258a1a5",
     "catalog.ttl": "7a299c88c4f0af30e3bb3d8ee0b48ad07e30947910fbd317add8afdaf719a0ff",
     "ref-mpc.jsonld": "7af8255e2aba60950de66377a3e8cfc7e9ed194e9474ce995a9b7a81258f781a",
     "ref-mpc.ttl": "1f1d15414ecd945433a47cbbbcef403156af01409e870788948d99df3bf67d74",
