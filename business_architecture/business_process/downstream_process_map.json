@@ -7138,7 +7138,7 @@
                         "id": "CM 1.2.4.3.8",
                         "level": 5,
                         "name": "Manage Environmental Credits and Clean-Fuel Incentives",
-                        "description": "Govern the environmental compliance credits and clean-fuel tax credits a company generates, buys, holds and uses, under one set of controls: provenance, eligibility evidence, valuation, reconciliation and audit. The instruments are not interchangeable. Compliance credits (RINs under the Renewable Fuel Standard, LCFS credits) are obtained and used against a compliance obligation; the clean-fuel production credit (Section 45Z) is a federal income tax credit claimed on a tax return, so it has its own lifecycle. MPC's renewable diesel generates RINs, 45Z tax credits and LCFS credits (MPC FY2025 Form 10-K, Item 1). EPM-DEC-001-0047, MPC-P05.",
+                        "description": "Govern the environmental compliance credits a company generates, buys, holds and uses, and the clean-fuel tax credits it earns and claims, under one set of controls: provenance, eligibility evidence, valuation, reconciliation and audit. The instruments are not interchangeable. Compliance credits (RINs under the Renewable Fuel Standard, LCFS credits) are obtained and used against a compliance obligation; the clean-fuel production credit (Section 45Z) is a federal income tax credit claimed on a tax return, so it has its own lifecycle. MPC's renewable diesel generates RINs, 45Z tax credits and LCFS credits (MPC FY2025 Form 10-K, Item 1). EPM-DEC-001-0047, MPC-P05.",
                         "renewablesSpecific": true,
                         "children": [
                           {
