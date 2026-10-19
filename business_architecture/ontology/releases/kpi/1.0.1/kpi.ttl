@@ -1,0 +1,1104 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix persona: <https://w3id.org/lsc/ontology/modules/kpi/persona/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/kpi> a owl:Ontology ;
+    dcterms:description "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values."@en ;
+    dcterms:issued "2026-10-19"^^xsd:date ;
+    dcterms:modified "2026-10-19"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.1.0> ;
+    dcterms:title "LSC KPI Module"@en ;
+    owl:versionIRI kpi:1.0.1 ;
+    owl:versionInfo "1.0.1" .
+
+kpi:basis a owl:DatatypeProperty ;
+    rdfs:label "basis"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042, decision 8"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:string ;
+    skos:definition "How the measure is formed, in words: its numerator, its denominator and its unit. A description, not a formula the ontology computes."@en .
+
+kpi:classificationReason a owl:DatatypeProperty ;
+    rdfs:label "classification reason"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:string ;
+    skos:definition "Why the measure has its kind, in one or two sentences."@en .
+
+kpi:classificationTest a owl:DatatypeProperty ;
+    rdfs:label "classification test"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:integer ;
+    skos:definition "The number of the test, from 1 to 5, in EPM-DEC-001-0042's rule that assigned the measure's kind."@en .
+
+kpi:comparedAgainst a owl:DatatypeProperty ;
+    rdfs:label "compared against"@en ;
+    dcterms:bibliographicCitation "competency question 30; EPM-DEC-001-0042, decision 7"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:string ;
+    skos:definition "The references the measure is asked against: plans, forecasts, plan versions or history. For a plan-variance diagnostic the comparison is part of the measure. For any other kind it is a way of asking for the same measure, not a second measure."@en .
+
+kpi:grain a owl:DatatypeProperty ;
+    rdfs:label "grain"@en ;
+    dcterms:bibliographicCitation "competency question 29"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:string ;
+    skos:definition "The time and dimension the measure is stated at, for example daily by refinery."@en .
+
+kpi:informsProcess a owl:ObjectProperty ;
+    rdfs:label "informs process"@en ;
+    dcterms:bibliographicCitation "competency questions 33, 37 and 38; EPM-DEC-001-0043"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process the measure informs. The link is context for where the measure is used, not a certification that the process owns or computes it."@en .
+
+kpi:kpiCandidate a owl:DatatypeProperty ;
+    rdfs:label "KPI candidate"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:boolean ;
+    skos:definition "True when industry practice and public information make the measure a strong KPI candidate. It becomes a KPI only by a recorded decision that names its target and owner."@en .
+
+measure:ad-hoc-plan-trends a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "A future capability for ad hoc trends of plan data and a chatbot over the planning database."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "ad-hoc-plan-trends"^^xsd:string ;
+    skos:prefLabel "Business Planning Data Trends (Ad Hoc / Chatbot)"@en ;
+    kpi:classificationReason "A future capability: ad hoc trends and a chatbot over the planning database. Parked for a later phase."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:not-a-measure ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner,
+        persona:short-term-planner .
+
+measure:additional-market-prices a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Further benchmark, crude, renewables and NGL prices used in planning."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "additional-market-prices"^^xsd:string ;
+    skos:prefLabel "Additional Market Prices (Benchmark, Crude, Renewables, NGLs)"@en ;
+    kpi:basis "as published"^^xsd:string ;
+    kpi:classificationReason "Further benchmark, crude, renewables and NGL prices. External market observations."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "5-year history"^^xsd:string ;
+    kpi:grain "daily, by marker"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:publicCounterpart "MPC 11"^^xsd:string ;
+    kpi:usedBy persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:capital-project-evaluations a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23; KI-02"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Open capital project evaluations against their due dates."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "capital-project-evaluations"^^xsd:string ;
+    skos:prefLabel "Capital Projects Evaluation"@en ;
+    kpi:basis "completion date against due date"^^xsd:string ;
+    kpi:classificationReason "Open project evaluations against due dates. Its linked alert (missed deadline, X days) is an alert; a count of late evaluations would be an operational metric."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "due date"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:clean-product-make a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 53; DP-01 p. 42"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "clean products production"@en ;
+    skos:definition "Total clean product output by refinery over the plan horizon."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "clean-product-make"^^xsd:string ;
+    skos:prefLabel "Production Make (Clean Products)"@en ;
+    skos:scopeNote "Not a yield: it is a volume."@en ;
+    kpi:basis "clean products production (bbl/d)"^^xsd:string ;
+    kpi:classificationReason "Clean product output by refinery. Phillips 66 sets a clean product yield target, which would make a yield ratio a candidate at that company, but the list's measure is a volume with no target."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "distribution plan; prior forecast"^^xsd:string ;
+    kpi:grain "daily and month to date, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4,
+        proc:CM-1-1-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 5 (yields); Phillips 66 clean product yield target"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner .
+
+measure:crude-prices a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 pp. 46, 51; KI-27"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "crude markers"@en ;
+    skos:definition "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "crude-prices"^^xsd:string ;
+    skos:prefLabel "Crude Market Pricing"@en ;
+    kpi:basis "$/bbl, $/MMBtu or cents/gal as published"^^xsd:string ;
+    kpi:classificationReason "Crude benchmarks and differentials (Brent, WTI, Bakken at Patoka vs WTI CMA, natural gas, heating oil, RBOB). External market observations."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "30-day trend; % change threshold"^^xsd:string ;
+    kpi:grain "daily, by marker"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:publicCounterpart "MPC 11, 12 (crude markers; sweet and sour differentials)"^^xsd:string ;
+    kpi:usedBy persona:prompt-planner .
+
+measure:crude-value-to-breakeven a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "VT-01; VT-02; VT-04; VT-09; VT-12; VT-20"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "V2Be"@en,
+        "incremental crude value"@en,
+        "variance to breakeven"@en ;
+    skos:definition "A screen of each crude's breakeven value from the planning model against its delivered price, by refinery, to pick incremental barrels for a full evaluation."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "crude-value-to-breakeven"^^xsd:string ;
+    skos:prefLabel "Crude Value to Breakeven"@en ;
+    skos:scopeNote "Not a measure of how well crude was bought: that is margin capture or a backcast."@en ;
+    kpi:basis "breakeven value ($/bbl) against delivered price ($/bbl)"^^xsd:string ;
+    kpi:classificationReason "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. Hamid asked for this to be researched (Part B, Q8)."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "delivered crude price"^^xsd:string ;
+    kpi:grain "monthly, by refinery and crude"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-2-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:decision-support-indicator ;
+    kpi:notToBeConfusedWith measure:margin-capture ;
+    kpi:publicCounterpart "none (MPC names crude selection as a lever; margin capture is its after-the-fact counterpart)"^^xsd:string ;
+    kpi:usedBy persona:prompt-planner .
+
+measure:demand-vs-forecast a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-25; KI-26; KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "sales vs forecast"@en ;
+    skos:definition "Actual sales less forecast sales for the period, against the plan version named."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "demand-vs-forecast"^^xsd:string ;
+    skos:prefLabel "Demand vs. Forecast"@en ;
+    skos:scopeNote "Not forecast accuracy over many periods, which would be a separate measure."@en ;
+    kpi:basis "actual demand - forecast demand (bbl)"^^xsd:string ;
+    kpi:classificationReason "Actual sales less forecast for one period. A single-period gap is a diagnostic (Gartner Correct tier). Forecast accuracy over many periods, with a target, could be a KPI (Gartner puts it top-tier as a driver); that would be a separate measure."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "distribution plan; short-term LP plan; mid-term vs short-term plan"^^xsd:string ;
+    kpi:grain "daily and month to date, by product and region"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-1-1-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "MPC 18 (refined product sales volumes)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:mid-term-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:distillate-prices a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "ULSD prices"@en ;
+    skos:definition "Benchmark distillate and jet spot prices at named hubs."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "distillate-prices"^^xsd:string ;
+    skos:prefLabel "Distillate Market Pricing"@en ;
+    kpi:basis "$/gal as published"^^xsd:string ;
+    kpi:classificationReason "Benchmark distillate prices (NYH, USGC and Chicago ULSD; USGC jet). External market observations."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "30-day trend; 5-year history"^^xsd:string ;
+    kpi:grain "daily, by hub"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:publicCounterpart "MPC 11 (benchmark spot prices)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:distillate-yield a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "diesel yield"@en ;
+    skos:definition "Distillate produced (ULSD, kerosene, jet) as a share of crude and feed charged."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "distillate-yield"^^xsd:string ;
+    skos:prefLabel "Distillate Yield"@en ;
+    skos:scopeNote "Not distillate sales: it counts production."@en ;
+    kpi:basis "distillate production (bbl) / total crude and feed charged (bbl) x 100"^^xsd:string ;
+    kpi:classificationReason "Distillate output as a share of crude and feed charged. MPC reports yields as operating statistics, not as key measures; no target or owner is recorded."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "opening forecast plan; latest weekly schedule; short-term LP plan; distribution plan"^^xsd:string ;
+    kpi:grain "daily and month to date, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4,
+        proc:CM-1-1-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 5 (distillates, mbpd)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:distribution-cost-per-barrel a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 pp. 46, 51, 52"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:definition "Distribution costs, excluding depreciation and amortization, per barrel of net refinery throughput; mostly long-term agreements with MPLX."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "distribution-cost-per-barrel"^^xsd:string ;
+    skos:prefLabel "Distribution Costs per Barrel"@en ;
+    skos:scopeNote "Not a contract tariff: a disclosed aggregate cost per barrel."@en ;
+    kpi:basis "distribution costs ($) / net refinery throughput (bbl)"^^xsd:string ;
+    kpi:classificationReason "Mostly MPLX agreements with minimum commitments, so largely contracted rather than managed day to day."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "prior periods"^^xsd:string ;
+    kpi:grain "quarterly and annual, company"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 15"^^xsd:string .
+
+measure:dpo-input-variance-alert a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-31; KI-04"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "An alert raised when a distribution-plan input table changes by more than a set share from the week before."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "dpo-input-variance-alert"^^xsd:string ;
+    skos:prefLabel "WoW Variances on DPO Input Tables"@en ;
+    kpi:basis "week-on-week change above X%"^^xsd:string ;
+    kpi:classificationReason "Raised when an input table changes by more than X% week on week. It fires on a condition, so it is an alert, not a series."^^xsd:string ;
+    kpi:classificationTest 2 ;
+    kpi:comparedAgainst "prior week's input tables"^^xsd:string ;
+    kpi:grain "weekly, by input table"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:alert ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner .
+
+measure:gasoline-prices a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "CBOB prices"@en ;
+    skos:definition "Benchmark gasoline spot prices at named hubs."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "gasoline-prices"^^xsd:string ;
+    skos:prefLabel "Gasoline Market Pricing"@en ;
+    kpi:basis "$/gal as published"^^xsd:string ;
+    kpi:classificationReason "Benchmark gasoline prices (NYH, USGC and Chicago CBOB). External market observations."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "30-day trend; 5-year history"^^xsd:string ;
+    kpi:grain "daily, by hub"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:publicCounterpart "MPC 11 (benchmark spot prices)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:gasoline-yield a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "gas yield"@en ;
+    skos:definition "Gasoline produced (finished and blendstock) as a share of crude and feed charged."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "gasoline-yield"^^xsd:string ;
+    skos:prefLabel "Gasoline Yield"@en ;
+    skos:scopeNote "Not gasoline sales: it counts production."@en ;
+    kpi:basis "gasoline production (bbl) / total crude and feed charged (bbl) x 100"^^xsd:string ;
+    kpi:classificationReason "Gasoline output as a share of crude and feed charged. Same reasoning as Distillate Yield."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "opening forecast plan; latest weekly schedule; short-term LP plan; distribution plan"^^xsd:string ;
+    kpi:grain "daily and month to date, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4,
+        proc:CM-1-1-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 5 (gasoline, mbpd)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:interregional-volumes a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "interregional movements"@en ;
+    skos:definition "Total product moved between regions on named segments, by product and mode."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "interregional-volumes"^^xsd:string ;
+    skos:prefLabel "Interregional Volume Totals"@en ;
+    kpi:basis "volume transferred between regions (bbl) per period"^^xsd:string ;
+    kpi:classificationReason "Volume moved between regions per period, by product and mode. A descriptive activity measure (SCOR) used to see when movements must change."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "distribution plan; 5 years of history"^^xsd:string ;
+    kpi:grain "daily and month to date, by segment, product and mode"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3,
+        proc:CM-1-1-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:short-term-planner .
+
+measure:key-activity-tracker a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Critical planning activities and meetings against their due dates."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "key-activity-tracker"^^xsd:string ;
+    skos:prefLabel "Key Activity Tracker"@en ;
+    kpi:basis "completion date against due date"^^xsd:string ;
+    kpi:classificationReason "Critical activities and meetings against due dates."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "due date"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-6-1 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:marine-utilization a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPLX-S01 p. 56; KI-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Volume moved by barge and vessel as a share of available marine capacity."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "marine-utilization"^^xsd:string ;
+    skos:prefLabel "Marine Utilization"@en ;
+    kpi:basis "volume moved by marine (bbl) / available marine capacity (bbl) x 100"^^xsd:string ;
+    kpi:classificationReason "Share of available barge and vessel capacity used. Actuals are not yet available in the prompt month."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "distribution plan; mid-term vs short-term plan; 5 years of history"^^xsd:string ;
+    kpi:grain "daily and month to date, by node and material"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3,
+        proc:CM-1-1-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 31 (barge and towboat counts; no utilization published)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:mid-term-planner,
+        persona:short-term-planner .
+
+measure:marketing-performance-vs-plan a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Marketing's results against the marketing plan."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "marketing-performance-vs-plan"^^xsd:string ;
+    skos:prefLabel "Marketing Performance vs. Plan"@en ;
+    kpi:classificationReason "Marketing's results against its plan. Everything else about it is TBD in the list; the class follows the name."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "marketing plan"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-3-5-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:prompt-planner .
+
+measure:mtp-submission-tracker a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "MTP submission"@en ;
+    skos:definition "Mid-term plan submissions against their due dates."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "mtp-submission-tracker"^^xsd:string ;
+    skos:prefLabel "MTP: Plan Submission"@en ;
+    kpi:basis "completion date against due date"^^xsd:string ;
+    kpi:classificationReason "Mid-term plan submissions against due dates."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "due date"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-6-1 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:ngl-balance a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "NGL commodities"@en ;
+    skos:definition "Each NGL product's balance at the refinery (opening, production, consumption, transfers) compared with planned purchases and make."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "ngl-balance"^^xsd:string ;
+    skos:prefLabel "NGL Commodities (Plan, Consumption, Transfers)"@en ;
+    kpi:basis "ending balance = opening + production - consumption +/- transfers"^^xsd:string ;
+    kpi:classificationReason "An NGL balance (opening plus production less consumption, plus or minus transfers) compared with planned purchases and make for the month."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "opening schedule forecast plan"^^xsd:string ;
+    kpi:grain "daily and month to date, by refinery and NGL product"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3-7 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner .
+
+measure:opening-inventory-vs-plan a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "Actual opening inventory against the planned opening level for the next month."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "opening-inventory-vs-plan"^^xsd:string ;
+    skos:prefLabel "Opening Inventory vs. Plan"@en ;
+    kpi:basis "actual opening inventory (bbl) against planned opening inventory (bbl)"^^xsd:string ;
+    kpi:classificationReason "Actual opening inventory against the planned level, to judge what must change to stay within plan."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "distribution plan for M+1"^^xsd:string ;
+    kpi:grain "monthly, by node and product"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3-7 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner .
+
+measure:pipeline-utilization a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 54; MPLX-S01 p. 56; KI-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "line utilization"@en ;
+    skos:definition "Pipeline throughput as a share of pipeline capacity, by distribution node and material."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "pipeline-utilization"^^xsd:string ;
+    skos:prefLabel "Pipeline Utilization"@en ;
+    skos:scopeNote "Not pipeline throughput, which MPC and MPLX publish: it is a share of capacity."@en ;
+    kpi:basis "actual throughput (bbl/d) / planned capacity (bbl/d) x 100"^^xsd:string ;
+    kpi:classificationReason "Share of pipeline capacity used. MPC and MPLX publish throughput, not utilization, and no target or owner is recorded. The mid-term view also communicates constraints to MPLX."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "distribution plan; mid-term vs short-term plan; 3 to 5 years of history"^^xsd:string ;
+    kpi:grain "daily and month to date, by pipeline segment, node and material"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3,
+        proc:CM-1-1-6 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "MPC 28, 29 (pipeline throughput; no utilization published)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:mid-term-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:plan-overview-key-changes a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23; KI-06"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "A summary of the largest plan changes and the economic drivers behind them."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "plan-overview-key-changes"^^xsd:string ;
+    skos:prefLabel "Plan Overview and Key Changes"@en ;
+    kpi:basis "top changes by economic impact"^^xsd:string ;
+    kpi:classificationReason "A summary of the top changes and their economic drivers. It has no single formula, unit or grain."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "prior plan version"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-2 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:short-term-planner .
+
+measure:plan-vs-historical-averages a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-26; KI-04"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "historical product make vs MTP"@en ;
+    skos:definition "The submitted mid-term plan for a month compared with the same month's average over prior years, by product (crude, gasoline, diesel, jet)."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "plan-vs-historical-averages"^^xsd:string ;
+    skos:prefLabel "Current Plan vs. Historical Averages (Crude, Gas, Diesel, Jet)"@en ;
+    kpi:basis "plan volume against the same-month average of 2 to 5 prior years"^^xsd:string ;
+    kpi:classificationReason "The submitted plan compared with history for the same month. A comparison of a plan with a reference, used to test the plan, not to score performance."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "same-month average over prior years"^^xsd:string ;
+    kpi:grain "monthly, by refinery and product"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-6-1 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "MPC 5 (refined product yields by group)"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:price-comparison a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 46; KI-27"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "spread"@en ;
+    skos:definition "The difference between two chosen market markers over time."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "price-comparison"^^xsd:string ;
+    skos:prefLabel "Price Comparison"@en ;
+    kpi:basis "price A - price B"^^xsd:string ;
+    kpi:classificationReason "The difference between two chosen markers. A spread of two market prices is still a market observation."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "any second marker; 5-year history"^^xsd:string ;
+    kpi:grain "daily, by marker pair"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:publicCounterpart "MPC 12 (differentials)"^^xsd:string ;
+    kpi:usedBy persona:short-term-planner .
+
+measure:production-rate-record a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-31"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "rate records"@en ;
+    skos:definition "A notification when a refinery sets a new clean products production rate record."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "production-rate-record"^^xsd:string ;
+    skos:prefLabel "Production Rate Records"@en ;
+    kpi:basis "current rate > previous record"^^xsd:string ;
+    kpi:classificationReason "A notification when a refinery sets a new clean products rate record. An event notification rather than an alarm, because a record is not an abnormal condition."^^xsd:string ;
+    kpi:classificationTest 2 ;
+    kpi:comparedAgainst "previous record"^^xsd:string ;
+    kpi:grain "event"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-7-2-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:alert ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:short-term-planner .
+
+measure:regional-site-monitoring a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "A future view of plant status across the region, combining operations notes with unit performance."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "regional-site-monitoring"^^xsd:string ;
+    skos:prefLabel "Regional / Site Monitoring"@en ;
+    kpi:classificationReason "A future capability: one view of plant status with operations notes. Parked for a later phase."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:not-a-measure ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:relative-adjusted-ebitda-per-barrel a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S16 p. 49; MPC-S18"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's annual cash bonus Adjusted EBITDA per barrel of total throughput, as a percentile against a peer group."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "relative-adjusted-ebitda-per-barrel"^^xsd:string ;
+    skos:prefLabel "Relative Adjusted EBITDA per Barrel of Total Throughput"@en ;
+    kpi:basis "ACB Adjusted EBITDA ($) / total throughput (bbl), percentile"^^xsd:string ;
+    kpi:classificationReason "An annual cash bonus metric (30%) with a target: MPC has designated it."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "peer percentile"^^xsd:string ;
+    kpi:grain "annual, company against peers"^^xsd:string ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:kpi ;
+    kpi:publicCounterpart "MPC 20"^^xsd:string .
+
+measure:relative-refining-margin-by-region a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S16 p. 49; MPC-S18"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Refining EBITDA per barrel of total throughput for each region, ranked against the same regions of Phillips 66 and Valero."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "relative-refining-margin-by-region"^^xsd:string ;
+    skos:prefLabel "Relative Refining Margin per Barrel by Region"@en ;
+    skos:scopeNote "Not R&M margin per barrel: it is built on Refining EBITDA."@en ;
+    kpi:basis "regional Refining EBITDA ($) / total throughput (bbl), ranked"^^xsd:string ;
+    kpi:classificationReason "An annual cash bonus metric (10%) with a target and accountable executives: MPC has designated it, so it passes test 5 on public evidence."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "Phillips 66 and Valero regions"^^xsd:string ;
+    kpi:grain "annual, by region against peers"^^xsd:string ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:kpi ;
+    kpi:notToBeConfusedWith measure:rm-margin-per-barrel ;
+    kpi:publicCounterpart "MPC 19"^^xsd:string .
+
+measure:sales-purchase-status a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "A trend of rack sales and purchase statuses from marketing, showing statuses held for more than a week."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "sales-purchase-status"^^xsd:string ;
+    skos:prefLabel "Sales/Purchases Status Control"@en ;
+    kpi:classificationReason "A trend of rack sales and purchase statuses that stay in place for over a week. A status view, not a quantity with a target."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "none"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner .
+
+measure:supply-vs-forecast a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-26; KI-23"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "purchases vs forecast"@en ;
+    skos:definition "Actual purchases less forecast purchases for the period, against the plan version named."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "supply-vs-forecast"^^xsd:string ;
+    skos:prefLabel "Supply vs. Forecast"@en ;
+    kpi:basis "actual supply - forecast supply (bbl)"^^xsd:string ;
+    kpi:classificationReason "Actual purchases less forecast for one period. Same reasoning as Demand vs. Forecast."^^xsd:string ;
+    kpi:classificationTest 4 ;
+    kpi:comparedAgainst "distribution plan; short-term LP plan; mid-term vs short-term plan"^^xsd:string ;
+    kpi:grain "daily and month to date, by product and region"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-3 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:plan-variance-diagnostic ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:mid-term-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:swing-stream-disposition a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-04"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:definition "The volume of swing streams and where they are routed, as they shift distillate and gasoline make."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "swing-stream-disposition"^^xsd:string ;
+    skos:prefLabel "Swing Stream Disposition"@en ;
+    kpi:basis "volume (bbl) by stream and routing; calculation not yet set"^^xsd:string ;
+    kpi:classificationReason "A volume of swing streams that shape distillate and gasoline make. The calculation is still TBD in the list; the class holds if it is a volume per period."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "none (no plan comparison wanted); 5-year history"^^xsd:string ;
+    kpi:grain "daily and month to date, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "none"^^xsd:string ;
+    kpi:usedBy persona:short-term-planner .
+
+measure:tar-activities-tracker a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "VT-16; VT-20; VT-26"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "TAR tracker"@en,
+        "turnaround tracker"@en ;
+    skos:definition "A list of turnaround activities planned for the next four months, by refinery."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "tar-activities-tracker"^^xsd:string ;
+    skos:prefLabel "TAR Activities Tracker"@en ;
+    skos:scopeNote "Not a turnaround optimization: it tracks the activities already planned."@en ;
+    kpi:classificationReason "A list of turnaround activities for the next four months. The Mid-Term Planner's turnaround work is optimization of windows and sequence, not tracking (Part B, Q9); its measures are listed separately below."^^xsd:string ;
+    kpi:classificationTest 1 ;
+    kpi:comparedAgainst "next 4 months"^^xsd:string ;
+    kpi:informsProcess proc:L2-refinery-asset-reliability-and-turnaround-coordination ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:tracker-or-report ;
+    kpi:publicCounterpart "MPC 16 (planned turnaround costs)"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner,
+        persona:prompt-planner .
+
+measure:turnaround-lost-margin a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "VT-18; VT-26"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence ;
+    skos:altLabel "lost profit opportunity"@en ;
+    skos:definition "The margin given up because of planned turnaround downtime."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "turnaround-lost-margin"^^xsd:string ;
+    skos:prefLabel "Lost Margin from Turnarounds"@en ;
+    kpi:basis "margin of the throughput lost to planned downtime ($)"^^xsd:string ;
+    kpi:classificationReason "The margin given up for planned downtime: the quantity a mid-term turnaround optimization minimizes. Named in academic and benchmarking practice, not by MPC."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:grain "per turnaround and annual, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:L2-refinery-asset-reliability-and-turnaround-coordination ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:publicCounterpart "none (MPC does not publish it)"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+kpi:measureKind a owl:ObjectProperty ;
+    rdfs:label "measure kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range skos:Concept ;
+    skos:definition "The kind of measure, from the measure-kind code list. Being a KPI is one kind: a designation with a target and an owner, not a property of the formula."@en .
+
+kpi:notToBeConfusedWith a owl:ObjectProperty ;
+    rdfs:label "not to be confused with"@en ;
+    dcterms:bibliographicCitation "competency questions 32 and 36"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "A nearby measure that people take for this one but that means something else. The skos:scopeNote says how they differ."@en .
+
+kpi:planHorizon a owl:DatatypeProperty ;
+    rdfs:label "plan horizon"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en ;
+    rdfs:domain org:Role ;
+    rdfs:range xsd:string ;
+    skos:definition "The months a planning persona plans for, counted from the current month M."@en .
+
+kpi:planType a owl:DatatypeProperty ;
+    rdfs:label "plan type"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en ;
+    rdfs:domain org:Role ;
+    rdfs:range xsd:string ;
+    skos:definition "The plan a planning persona builds or works from."@en .
+
+kpi:publicCounterpart a owl:DatatypeProperty ;
+    rdfs:label "public counterpart"@en ;
+    dcterms:bibliographicCitation "business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range xsd:string ;
+    skos:definition "The measure MPC publishes that is closest to this one, by its number in mpc-performance-measures-evidence.md, or none."@en .
+
+kpi:usedBy a owl:ObjectProperty ;
+    rdfs:label "used by"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    rdfs:range org:Role ;
+    skos:definition "A planning persona that uses the measure. A persona is a role, not a person."@en .
+
+kind:decision-support-indicator a skos:Concept ;
+    skos:definition "A value computed from market prices and the planning model to start or rank a decision, with no performance target."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "decision-support-indicator" ;
+    skos:prefLabel "Decision-support indicator"@en .
+
+measure:crude-utilization a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 53; MPC-S16; KI-13; KI-14; KI-16; DP-01"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "crude capacity utilization"@en,
+        "refinery utilization"@en ;
+    skos:definition "Fresh crude charged to the crude units as a share of crude capacity, for one refinery and month."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "crude-utilization"^^xsd:string ;
+    skos:prefLabel "Crude Utilization"@en ;
+    skos:scopeNote "Not unit utilization: it covers only the fresh crude charged to the crude units. Also not MPC's published figure, which is company-wide and uses average calendar-day capacity."@en ;
+    kpi:basis "crude throughput (bbl/d) / constrained crude capacity (bbl/d); MPC divides by average calendar-day capacity"^^xsd:string ;
+    kpi:classificationReason "Crude unit utilization is the headline refining measure that MPC, EIA and Solomon report and that Phillips 66 targets, so it is the strongest candidate. It stays an operational metric until a target and owner are recorded. The planner's denominator (constrained capacity) differs from MPC's (average calendar-day capacity)."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "submitted mid-term plan; same month in prior years (2 to 5 years)"^^xsd:string ;
+    kpi:grain "monthly, by refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-6-1,
+        proc:CM-1-1-5 ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:unit-utilization ;
+    kpi:publicCounterpart "MPC 2 (crude oil capacity utilization, average calendar-day capacity)"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:refining-opex-per-barrel a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 51"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:altLabel "opex per barrel"@en ;
+    skos:definition "Refining operating costs, excluding planned turnaround and depreciation and amortization, per barrel of throughput."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "refining-opex-per-barrel"^^xsd:string ;
+    skos:prefLabel "Refining Operating Costs per Barrel"@en ;
+    skos:scopeNote "Excludes planned turnaround costs, which have their own measure."@en ;
+    kpi:basis "refining operating costs ($) / throughput (bbl)"^^xsd:string ;
+    kpi:classificationReason "Excludes turnaround and D&A. A cost measure with quarterly guidance; not a named bonus metric."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "quarterly guidance; prior periods"^^xsd:string ;
+    kpi:grain "quarterly and annual, company (net throughput) and region (gross throughput)"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-5 ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:turnaround-cost-per-barrel ;
+    kpi:publicCounterpart "MPC 14"^^xsd:string .
+
+measure:turnaround-cost-per-barrel a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 85; VT-26; VT-28"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:altLabel "turnaround cost per barrel"@en ;
+    skos:definition "Planned turnaround and major maintenance costs, expensed as incurred, per barrel of net refinery throughput."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "turnaround-cost-per-barrel"^^xsd:string ;
+    skos:prefLabel "Planned Turnaround Costs per Barrel"@en ;
+    skos:scopeNote "Not refining operating costs per barrel, which exclude planned turnaround costs. Also not an annualized turnaround cost: MPC expenses turnarounds when incurred, so the figure rises in heavy turnaround years."@en ;
+    kpi:basis "planned turnaround costs ($) / throughput (bbl)"^^xsd:string ;
+    kpi:classificationReason "Expensed as incurred, so it rises in heavy turnaround years; an annualized cost (Solomon) compares years and peers more fairly. A turnaround outcome the Mid-Term Planner's sequencing affects (Part B, Q9)."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "quarterly guidance; prior periods"^^xsd:string ;
+    kpi:grain "quarterly and annual, company and region"^^xsd:string ;
+    kpi:informsProcess proc:L2-refinery-asset-reliability-and-turnaround-coordination ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:refining-opex-per-barrel ;
+    kpi:publicCounterpart "MPC 16"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner .
+
+measure:unit-utilization a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "KI-04; KI-26; KI-13; MPC-S01"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "unit rates"@en ;
+    skos:definition "A process unit's throughput as a share of its constrained capacity, for one refinery."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "unit-utilization"^^xsd:string ;
+    skos:prefLabel "Unit Utilization"@en ;
+    skos:scopeNote "Not crude utilization: it covers every unit, not only the crude unit, and uses constrained capacity."@en ;
+    kpi:basis "unit throughput (bbl/d) / constrained unit capacity (bbl/d), averaged over the period"^^xsd:string ;
+    kpi:classificationReason "A unit-level ratio of throughput to constrained capacity, watched by exception for units missing plan. Unit-level plant utilization sits in Gartner's Correct tier; no target or owner is recorded."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "plan (prompt schedule; short-term LP handover); prior plan version (mid-term vs short-term); last hour and last 24 hours"^^xsd:string ;
+    kpi:grain "hourly and daily, by unit and refinery"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-4,
+        proc:CM-1-1-7-2-5 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:crude-utilization ;
+    kpi:publicCounterpart "MPC 2 (company crude utilization only; no unit figure published)"^^xsd:string ;
+    kpi:usedBy persona:mid-term-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+kind:alert a skos:Concept ;
+    skos:definition "An event raised when a condition is met, for someone to notice or act on."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "alert" ;
+    skos:prefLabel "Alert"@en .
+
+kind:kpi a skos:Concept ;
+    skos:altLabel "key performance indicator"@en ;
+    skos:definition "A measure the business names as one of the few measures of a stated objective, with a target and an accountable owner."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "kpi" ;
+    skos:prefLabel "KPI"@en .
+
+kind:not-a-measure a skos:Concept ;
+    skos:definition "A capability request on the measure list that is not a measure, parked for a later phase."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "not-a-measure" ;
+    skos:prefLabel "Not a measure"@en .
+
+measure:crack-spreads a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 Item 7 pp. 46, 51; KI-27; KI-28"^^xsd:string ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18,
+        src:kpi-classification-evidence ;
+    skos:altLabel "3-2-1 crack"@en,
+        "crack spread"@en,
+        "the crack"@en ;
+    skos:definition "Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "crack-spreads"^^xsd:string ;
+    skos:prefLabel "Crack Spreads Pricing"@en ;
+    skos:scopeNote "Not realized refinery margin, not margin capture, and not MPC's R&M Margin Indicator. A 3-2-1 built from separate product and crude legs is not the published series."@en ;
+    kpi:basis "products price - crude price, for a stated crude:product ratio (for example 3-2-1)"^^xsd:string ;
+    kpi:classificationReason "MPC files crack spreads under market indicators and calls margins dependent on factors beyond its control. The list's cracks (NYMEX 3-2-1, USGC 3-2-1 MEH ex-RIN, Chicago WTI 3-2-1 ex-RIN) are benchmarks, not performance."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:comparedAgainst "30-day trend; 5-year history"^^xsd:string ;
+    kpi:grain "daily, by market hub"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:notToBeConfusedWith measure:margin-capture,
+        measure:rm-margin-indicator,
+        measure:rm-margin-per-barrel ;
+    kpi:publicCounterpart "MPC 10 (Gulf Coast, Mid-Continent, West Coast and blended 3-2-1 cracks)"^^xsd:string ;
+    kpi:usedBy persona:distribution-planner,
+        persona:prompt-planner,
+        persona:short-term-planner .
+
+measure:margin-capture a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S07 p. 5; MPC-S16"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:altLabel "capture"@en,
+        "refining margin capture"@en ;
+    skos:definition "Reported R&M margin as a share of the R&M Margin Indicator: how much of the benchmark margin was realized."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "margin-capture"^^xsd:string ;
+    skos:prefLabel "Margin Capture"@en ;
+    skos:scopeNote "Not the crack spread and not the indicator: it is the ratio of realized margin to the indicator."@en ;
+    kpi:basis "R&M margin / R&M Margin Indicator"^^xsd:string ;
+    kpi:classificationReason "Reported R&M margin divided by the R&M Margin Indicator. MPC calls it \"an operations metric\" and highlights it in the proxy, but sets no bonus target on it. It is the controllable measure built on the market indicators."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "R&M Margin Indicator"^^xsd:string ;
+    kpi:grain "quarterly and annual, company"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-5,
+        proc:CM-1-3-5-1-4 ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:crack-spreads,
+        measure:rm-margin-indicator ;
+    kpi:publicCounterpart "MPC 8"^^xsd:string .
+
+measure:rm-margin-indicator a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S07 p. 5"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:altLabel "R&M Margin Indicator"@en ;
+    skos:definition "MPC's hypothetical R&M margin built from market data and operational guidance, posted monthly."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "rm-margin-indicator"^^xsd:string ;
+    skos:prefLabel "R&M Margin Indicator"@en ;
+    skos:scopeNote "Not realized margin."@en ;
+    kpi:basis "not published"^^xsd:string ;
+    kpi:classificationReason "A hypothetical margin built from market data and MPC's operational guidance, posted monthly. Its formula is not published."^^xsd:string ;
+    kpi:classificationTest 3 ;
+    kpi:grain "monthly, company"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-4-7-4 ;
+    kpi:kpiCandidate false ;
+    kpi:measureKind kind:market-indicator ;
+    kpi:notToBeConfusedWith measure:rm-margin-per-barrel ;
+    kpi:publicCounterpart "MPC 9"^^xsd:string .
+
+measure:rm-margin-per-barrel a skos:Concept,
+        kpi:MeasureDefinition ;
+    dcterms:bibliographicCitation "MPC-S01 p. 51; MPC-S17; KI-01"^^xsd:string ;
+    dcterms:source src:kpi-classification-evidence,
+        src:mpc-performance-measures-evidence ;
+    skos:altLabel "R&M margin per barrel"@en,
+        "refining margin per barrel"@en ;
+    skos:definition "MPC's Refining & Marketing margin (sales revenue less the cost of refinery inputs and purchased products) per barrel of net refinery throughput."@en ;
+    skos:inScheme kpi:Measures ;
+    skos:notation "rm-margin-per-barrel"^^xsd:string ;
+    skos:prefLabel "R&M Margin per Barrel"@en ;
+    skos:scopeNote "Not a crack spread: it is realized, not a market benchmark."@en ;
+    kpi:basis "R&M margin ($) / net refinery throughput (bbl); from 2026 the margin includes impacts from derivative activity"^^xsd:string ;
+    kpi:classificationReason "MPC's non-GAAP realized margin per barrel of net refinery throughput, by region. A financial result measure (Parmenter's RI); MPC's bonus uses a related EBITDA measure instead. The definition changed in 2026 to include derivatives, so it is versioned."^^xsd:string ;
+    kpi:classificationTest 5 ;
+    kpi:comparedAgainst "R&M Margin Indicator; prior periods"^^xsd:string ;
+    kpi:grain "quarterly and annual, company and region"^^xsd:string ;
+    kpi:informsProcess proc:CM-1-1-5,
+        proc:CM-1-3-5-1-4 ;
+    kpi:kpiCandidate true ;
+    kpi:measureKind kind:operational-metric ;
+    kpi:notToBeConfusedWith measure:crack-spreads ;
+    kpi:publicCounterpart "MPC 7"^^xsd:string .
+
+kind:plan-variance-diagnostic a skos:Concept ;
+    skos:definition "Actual results against a plan, forecast, plan version or history, for one period."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "plan-variance-diagnostic" ;
+    skos:prefLabel "Plan-variance diagnostic"@en .
+
+kind:tracker-or-report a skos:Concept ;
+    skos:definition "A list, status or schedule of activities and dates, with no formula, unit or time grain."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "tracker-or-report" ;
+    skos:prefLabel "Tracker or report"@en .
+
+kind:market-indicator a skos:Concept ;
+    skos:definition "An external price, spread or benchmark that the region cannot influence."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "market-indicator" ;
+    skos:prefLabel "Market indicator"@en .
+
+kpi:MeasureKind a skos:ConceptScheme ;
+    rdfs:label "measure kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042; business_architecture/reference/downstream-peers/kpi-classification-evidence.md"@en ;
+    skos:definition "The eight kinds a measure in the kpi module can be, assigned by EPM-DEC-001-0042's five tests."@en .
+
+src:mpc-performance-measures-evidence a dcterms:BibliographicResource ;
+    dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en .
+
+persona:prompt-planner a org:Role ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    skos:definition "Plans the prompt month for the region's refineries from the latest schedule, and watches hourly and daily execution against it."@en ;
+    skos:prefLabel "Prompt Planner"@en ;
+    kpi:planHorizon "prompt month"^^xsd:string ;
+    kpi:planType "prompt-month refinery schedule (APS)"^^xsd:string .
+
+kind:operational-metric a skos:Concept ;
+    skos:definition "A recurring performance measure of a unit, asset or flow, watched by exception."@en ;
+    skos:inScheme kpi:MeasureKind ;
+    skos:notation "operational-metric" ;
+    skos:prefLabel "Operational metric"@en .
+
+persona:distribution-planner a org:Role ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    skos:definition "Plans product supply, demand, transport and inventory across the distribution network."@en ;
+    skos:prefLabel "Distribution Planner"@en ;
+    kpi:planHorizon "prompt to M+3"^^xsd:string ;
+    kpi:planType "distribution plan (DPO)"^^xsd:string .
+
+persona:mid-term-planner a org:Role ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    skos:definition "Builds and submits the mid-term plan, compares it with the short-term plans and history, and sequences turnarounds and capital evaluations."@en ;
+    skos:prefLabel "Mid-Term Planner"@en ;
+    kpi:planHorizon "M+4 to M+36"^^xsd:string ;
+    kpi:planType "mid-term plan (MTP)"^^xsd:string .
+
+persona:short-term-planner a org:Role ;
+    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    skos:definition "Builds the short-term refinery LP plan and hands it to refinery planning, and checks month-to-date performance against it."@en ;
+    skos:prefLabel "Short-Term Planner"@en ;
+    kpi:planHorizon "M+1 to M+3"^^xsd:string ;
+    kpi:planType "short-term refinery LP plan (XPIMS)"^^xsd:string .
+
+src:hamid-planner-measure-list-2026-10-18 a dcterms:BibliographicResource ;
+    dcterms:alternative "VCO DSV"@en ;
+    dcterms:title "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as Hamid sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)"@en .
+
+kpi:Measures a skos:ConceptScheme ;
+    rdfs:label "measures"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040, EPM-DEC-001-0042"@en ;
+    skos:definition "The measures the kpi module defines: the planning team's measures and the measures MPC publishes."@en .
+
+src:kpi-classification-evidence a dcterms:BibliographicResource ;
+    dcterms:title "KPI or operational metric, business_architecture/reference/downstream-peers/kpi-classification-evidence.md"@en .
+
+kpi:MeasureDefinition a owl:Class ;
+    rdfs:label "measure definition"@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 7 (measures are definitions, never values); EPM-DEC-001-0005, EPM-DEC-001-0043"@en ;
+    skos:definition "What a measure is, before anyone computes it: its meaning, kind, grain, basis and the processes it informs. A definition, never a value: the systems that compute the measure hold its values."@en .
+
