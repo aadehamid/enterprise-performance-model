@@ -140,7 +140,7 @@ Rule on MPC-P01 and P03 to P09 (`business_architecture/reference/mpc/process-map
 
 ### How any answer is carried out
 
-An accepted proposal becomes a proposal file in `business_architecture/business_process/proposals/`, like `MPC-P02-refining-ids.md`. Nobody edits the process map directly (AGENTS.md, working rules; `process-map-suggestions.md` lines 7 to 11). EPM-DEC-001-0017 places these proposals fourth in the Step 7 order, so the work on them starts after items 1 to 3, even if you answer now. *2026-10-18:* Hamid said to apply the accepted proposals to the map itself (EPM-DEC-001-0047); each map edit is its own pull request, under the delegation.
+An accepted proposal becomes a proposal file in `business_architecture/business_process/proposals/`, like `MPC-P02-refining-ids.md`. Nobody edits the process map directly (AGENTS.md, working rules; `process-map-suggestions.md`, the paragraph that starts "The process map is the process authority"). EPM-DEC-001-0017 places these proposals fourth in the Step 7 order, so the work on them starts after items 1 to 3, even if you answer now. *2026-10-18:* Hamid said to apply the accepted proposals to the map itself (EPM-DEC-001-0047); each map edit is its own pull request, under the delegation.
 
 ### P01: the empty Midstream L1
 
