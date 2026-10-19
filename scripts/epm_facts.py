@@ -864,6 +864,10 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if html:
             problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
             continue
+        unpaired = [b for b in blocks if b.count('"') % 2 or b.count("“") != b.count("”")]
+        for block in unpaired:
+            # Quote marks pair only within a block, so an unclosed quotation would go unchecked.
+            problems.append(f"{name} recorded words: a paragraph has an unpaired quote mark; close the quotation: {_flat(block)[:90]!r}")
         spans = [span for block in blocks for span in _spans(block)] + [q for q in quoted if len(q.split()) >= 3]
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
