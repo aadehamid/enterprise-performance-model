@@ -43,6 +43,8 @@ SLUG_PINS = {
     "RF 1": "L1-refining",
     "RF 1.1": "L2-refinery-performance-and-risk-coordination",
     "RF 1.2": "L2-refinery-asset-reliability-and-turnaround-coordination",
+    # MPC-P01 gives Midstream an ID (EPM-DEC-001-0047).
+    "MS 1": "L1-midstream",
 }
 
 

@@ -8127,7 +8127,7 @@
   "slug": "L1-midstream",
   "level": 1,
   "name": "Midstream",
-  "skos_notation": null,
+  "skos_notation": "MS 1",
   "parent_slug": "L0-downstream-operations",
   "minted": true,
   "proposed_repo_id": "L1-midstream",

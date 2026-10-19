@@ -9929,8 +9929,98 @@
         ]
       },
       {
+        "id": "MS 1",
         "level": 1,
-        "name": "Midstream"
+        "name": "Midstream",
+        "description": "Scope: Fuels Logistics supporting Refining and Marketing. Pipeline transportation, terminal, marine and storage services that move and hold crude oil, refined products and other hydrocarbons for affiliated and third-party customers under fee-based agreements, many with minimum volume commitments. Four roles stay separate, and one party can hold several: the service provider, the asset operator, the asset owner and the service customer. The customer side of these services is in Commercial & Marketing: transport, storage and exchange agreements (CM 1.2.7.1), terminal operations management (CM 1.2.7.2), terminal loading (CM 1.3.10), physical distribution scheduling (CM 1.1.3.6) and settlement (CM 1.2.4.1). Gas gathering, gas processing and NGL fractionation belong to midstream businesses such as MPLX's Natural Gas and NGL Services segment; they are outside the current model scope, not absent from the business (MPLX FY2025 Form 10-K, Items 1 and 2; EPM-DEC-001-0047, MPC-P01).",
+        "children": [
+          {
+            "id": "MS 1.1",
+            "level": 2,
+            "name": "Pipeline Transportation Services",
+            "description": "Provide pipeline transportation of crude oil, refined products and other hydrocarbons to shippers under transportation agreements and tariffs. The shipper's side is CM 1.2.7.1.2 Manage Product Transport Agreements, CM 1.1.3.6.1 Plan & Execute Nominations and CM 1.2.4.1.12 Settle Pipelines.",
+            "children": [
+              {
+                "id": "MS 1.1.1",
+                "level": 3,
+                "name": "Manage Pipeline Service Agreements and Tariffs",
+                "description": "Set up and maintain the transportation service agreements, committed volumes and tariff rates the provider offers affiliated and third-party shippers."
+              },
+              {
+                "id": "MS 1.1.2",
+                "level": 3,
+                "name": "Schedule and Operate Pipeline Movements",
+                "description": "Accept shipper nominations, schedule batches and run the movements through the pipeline system."
+              },
+              {
+                "id": "MS 1.1.3",
+                "level": 3,
+                "name": "Measure Pipeline Throughput and Bill Transportation",
+                "description": "Measure the barrels received and delivered, apply the tariff, and bill each shipper for the throughput and any shortfall against committed volumes."
+              }
+            ]
+          },
+          {
+            "id": "MS 1.2",
+            "level": 2,
+            "name": "Terminal Services",
+            "description": "Provide the receipt, storage, throughput, blending and delivery of products at terminals for affiliated and third-party customers. This is the provider's service; running a terminal site (safety, fleet, tanks and racks) is CM 1.2.7.2 Terminal Operations Management, and customer loading and allocation is CM 1.3.10 Terminal Loading, so neither is repeated here.",
+            "children": [
+              {
+                "id": "MS 1.2.1",
+                "level": 3,
+                "name": "Manage Terminal Service Agreements",
+                "description": "Set up and maintain the terminal service agreements, committed throughput and fees the provider offers its customers."
+              },
+              {
+                "id": "MS 1.2.2",
+                "level": 3,
+                "name": "Account for Terminal Throughput and Bill Services",
+                "description": "Record each customer's receipts, deliveries and blending at the terminal and bill the fees due under its agreement."
+              }
+            ]
+          },
+          {
+            "id": "MS 1.3",
+            "level": 2,
+            "name": "Marine Transportation Services",
+            "description": "Provide inland marine transportation of crude oil and products with towboats and barges for refineries and terminals. The customer's side is CM 1.2.3.1.4 Perform Vessel & Barge Actualization and CM 1.2.4.1.5 Settle Vessels & Barge.",
+            "children": [
+              {
+                "id": "MS 1.3.1",
+                "level": 3,
+                "name": "Manage Marine Fleet Availability",
+                "description": "Keep the towboat and barge fleet available for the planned voyages: deployment, maintenance windows and charters in or out."
+              },
+              {
+                "id": "MS 1.3.2",
+                "level": 3,
+                "name": "Manage Marine Service Agreements and Billing",
+                "description": "Set up and maintain the marine transportation agreements and bill the voyages and fees due under them."
+              }
+            ]
+          },
+          {
+            "id": "MS 1.4",
+            "level": 2,
+            "name": "Storage Services",
+            "description": "Provide tank storage for crude oil and products to affiliated and third-party customers. The customer's side is CM 1.2.7.1.3 Negotiate Storage / Throughput Agreements, CM 1.1.3.7.11 Manage Third Party Storage and CM 1.2.4.1.14 Settle Terminal/Storage.",
+            "children": [
+              {
+                "id": "MS 1.4.1",
+                "level": 3,
+                "name": "Manage Storage Agreements and Capacity",
+                "description": "Allocate tank capacity to customers under their storage agreements and track capacity committed and available."
+              },
+              {
+                "id": "MS 1.4.2",
+                "level": 3,
+                "name": "Bill Storage Services",
+                "description": "Bill each customer the storage fees and any throughput or excess charges due under its agreement."
+              }
+            ]
+          }
+        ]
       }
     ]
   },
