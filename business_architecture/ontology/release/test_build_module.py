@@ -20,8 +20,10 @@ DCAT = bm.DCAT
 SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
 NIGHT = "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
 RELEASES = "step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md"
+KPI = "step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md"
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
-             "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed")}
+             "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
+             "kpi": (KPI, "Approve kpi 1.0.0 release too")}
 
 
 def approval_holds(name, m):
@@ -126,6 +128,7 @@ class EarlierReleases(unittest.TestCase):
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
+        self.assertEqual(bm.dependencies("kpi"), {"core": "2.1.0"})
 
 
 if __name__ == "__main__":

@@ -52,6 +52,18 @@ MODULES = {
         "depends_on": ["organization"],
         "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033"],
     },
+    "kpi": {
+        "title": "LSC KPI Module",
+        "description": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values.",
+        # 1.0.0 is the module's first release, a major approved by Hamid (EPM-DEC-001-0043).
+        "version": "1.0.0", "stage": None, "issued": "2026-10-19",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md", "Approve kpi 1.0.0 release too"),
+        "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl"],
+        "shapes": ["kpi/shapes.ttl"],
+        "depends_on": ["core"],
+        "pins": {"core": "2.1.0"},
+        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043"],
+    },
 }
 
 
