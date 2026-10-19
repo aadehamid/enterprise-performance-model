@@ -20,10 +20,10 @@ DCAT = bm.DCAT
 SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
 NIGHT = "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
 RELEASES = "step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md"
-KPI = "step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md"
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
              "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
-             "kpi": (KPI, "Approve kpi 1.0.0 release too")}
+             "kpi": ("step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md",
+                     "You have my approval to keep going and release things as needed. while I am out")}
 
 
 def approval_holds(name, m):
@@ -116,7 +116,7 @@ class EarlierReleases(unittest.TestCase):
     def test_earlier_packages_are_untouched(self):
         # The builder now builds organization 2.0.0 and ref-mpc 1.1.0; each released 1.0.0 package
         # must still match its own manifest.
-        for name in ("organization", "ref-mpc"):
+        for name in ("organization", "ref-mpc", "kpi"):
             out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
