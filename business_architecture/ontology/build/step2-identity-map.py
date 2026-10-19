@@ -43,6 +43,8 @@ SLUG_PINS = {
     "RF 1": "L1-refining",
     "RF 1.1": "L2-refinery-performance-and-risk-coordination",
     "RF 1.2": "L2-refinery-asset-reliability-and-turnaround-coordination",
+    # MPC-P01 gives Midstream an ID (EPM-DEC-001-0047).
+    "MS 1": "L1-midstream",
 }
 
 
@@ -119,7 +121,8 @@ def main() -> None:
 
     minted = [r for r in rows if r["minted"]]
     # minted stubs == ID-less nodes in the input (14 at the Step 2 run: 13 baseline + R1's new L2;
-    # 11 once MPC-P02 gives Refining and its two L2 nodes IDs, which SLUG_PINS keeps on their slugs)
+    # 11 once MPC-P02 gives Refining and its two L2 nodes IDs, 10 once MPC-P01 gives Midstream MS 1;
+    # SLUG_PINS keeps all four on their slugs)
     def count_idless(nodes):
         return sum((0 if n.get("id") else 1) + count_idless(n.get("children", []) or [])
                    for n in nodes)

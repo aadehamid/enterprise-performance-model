@@ -197,7 +197,7 @@
           "id": "p-retail-sales-payment",
           "slideRef": "i",
           "name": "Retail Sales & Payment",
-          "description": "Execute the final sale to the end consumer at branded retail sites, securely process payments, and capture granular transaction data.",
+          "description": "Execute the final sale to the end consumer at branded retail sites, securely process payments, and capture granular transaction data. Applicability: where independent jobbers and dealers run the sites, as at MPC since it sold its company-operated retail in 2021 (MPC FY2025 Form 10-K, Item 1), they make the sale and set the pump price; for the brand owner this process is an external interface, not one it performs; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07).",
           "capabilityId": "cap-channel-pricing-sales",
           "linkedProcessIds": ["CM 1.3.6.6", "CM 1.3.6"],
           "produces": ["dp-retail-payments"],

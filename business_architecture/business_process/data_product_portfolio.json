@@ -65,6 +65,7 @@
               "id": "dp-retail-payments",
               "name": "Retail Payments",
               "description": "Retail transaction and payment data captured at branded retail sites (tender, cards, loyalty-linked payment).",
+              "notes": ["Applicability: at a brand owner that runs no retail sites (MPC since 2021), the sites are operated by independent jobbers and dealers (MPC FY2025 Form 10-K, Item 1). Which retail transactions reach the brand owner is not stated in the sources; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07)."],
               "status": "active"
             },
             {
@@ -154,8 +155,8 @@
     {
       "id": "seg-midstream",
       "name": "Midstream",
-      "description": "Midstream operations data domains. Process decomposition for Midstream does not yet exist in the LSC map (L1 stub); portfolios are cataloged here and remain unlinked until a midstream process source is modeled.",
-      "processDomainRef": "Downstream Operations > Midstream (L1 stub)",
+      "description": "Midstream operations data domains. Since 2026-10-18 the map decomposes Midstream as fuels logistics (MS 1: pipeline, terminal, marine and storage services, EPM-DEC-001-0047); the portfolios below are not yet linked to those processes.",
+      "processDomainRef": "Downstream Operations > Midstream (MS 1)",
       "productLines": [
         {
           "id": "dpl-terminals",

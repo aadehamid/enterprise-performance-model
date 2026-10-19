@@ -10,7 +10,7 @@
 
 ## The nodes
 
-MPC-P02 targets three Refining nodes that have no `id` in `business_architecture/business_process/downstream_process_map.json`. (When proposed, the map had 14 nodes without an `id` in all, 11 once these three take theirs; Midstream's is MPC-P01's open scope question, and the L0 roots and Enabling Functions nodes are outside MPC-P02.)
+MPC-P02 targets three Refining nodes that have no `id` in `business_architecture/business_process/downstream_process_map.json`. (When proposed, the map had 14 nodes without an `id` in all, 11 once these three take theirs, and 10 once Midstream takes `MS 1` under MPC-P01 (2026-10-18). Midstream's was MPC-P01's open scope question, and the L0 roots and Enabling Functions nodes are outside MPC-P02.)
 
 | Node | Level | Ontology slug today (minted in Step 2) |
 |---|---|---|
@@ -22,7 +22,7 @@ MPC-P02 targets three Refining nodes that have no `id` in `business_architecture
 
 | Node | Proposed `id` | Why |
 |---|---|---|
-| Refining | `RF 1` | Each L1 under Downstream Operations takes its own prefix: Commercial & Marketing is `CM 1`. `RF` for Refining follows the two-letter pattern and collides with no existing prefix (when proposed, the map used only `CM`). |
+| Refining | `RF 1` | Each L1 under Downstream Operations takes its own prefix: Commercial & Marketing is `CM 1`. `RF` for Refining follows the two-letter pattern and collides with no existing prefix (when proposed, the map used only `CM`; MPC-P01 later added `MS` for Midstream). |
 | Refinery Performance and Risk Coordination | `RF 1.1` | The first L2 under `RF 1`, in map order. |
 | Refinery Asset Reliability and Turnaround Coordination | `RF 1.2` | The second new L2 under `RF 1`. |
 
