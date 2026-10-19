@@ -182,5 +182,8 @@ module, cited to MPC-S01.
   read in full) appears to show 2,963 mbpcd alongside a utilization %. The 10-K
   gives 2,986 at year end. Confirm whether utilization uses average or
   year-end capacity before defining `CrudeCapacityUtilization`.
+  *2026-10-18:* settled. Utilization uses average calendar-day capacity
+  (MPC-S01 p. 53 footnote; MPC-S07 p. 9); see
+  `mpc-performance-measures-evidence.md`, finding 1.
 - Read MPC-S03 (Q2 2026 10-Q) for changes since FY2025.
 - Read the MPLX 10-K before modeling Midstream processes. Done 2026-10-13 from EDGAR (MPLX-S01): `mplx-fy2025-10k-fact-sheet.md`.
