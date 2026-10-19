@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028; the decision owner's instructions recorded in EPM-DEC-001-0040) |
+| Status | Decided (delegated under EPM-DEC-001-0028; the decision owner's instructions recorded in EPM-DEC-001-0040); *2026-10-19:* the decision owner approved the eight classes (EPM-DEC-001-0050); the rule and each row's class stay delegated |
 | Date | 2026-10-18 |
 | Questions | How to classify the measures in the decision owner's planner list (EPM-DEC-001-0040, the decision owner's decisions 6 and 7); what Crude Value to Breakeven is; whether the Mid-Term Planner's turnaround work is optimization or tracking |
 | Source | Claude Code session, 2026-10-18; research in `reference/mpc/mpc-performance-measures-evidence.md` and `reference/downstream-peers/kpi-classification-evidence.md` |

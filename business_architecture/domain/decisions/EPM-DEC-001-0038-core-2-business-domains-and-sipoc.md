@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (the decision owner, 2026-10-13: SIPOC, the domain split, the 2.0.0 release and the SIPOC backlog; the build choices delegated under EPM-DEC-001-0028) |
+| Status | Decided (the decision owner, 2026-10-13: SIPOC, the domain split, the 2.0.0 release and the SIPOC backlog; the build choices delegated under EPM-DEC-001-0028); *2026-10-19:* the decision owner accepted #266 and #269 as merged, after the fact (EPM-DEC-001-0050) |
 | Date | 2026-10-13 |
 | Questions | What the process map's `sioc` field means; whether the `core:responsibleDomain` values are org units or business domains, and how "Commercial & Marketing" splits; how those answers and the two missing ranges reach `core` |
 | Source | Claude Code session, 2026-10-13 |
