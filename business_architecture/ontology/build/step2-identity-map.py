@@ -118,7 +118,8 @@ def main() -> None:
     assert len(set(notations)) == len(notations), "notation collision"
 
     minted = [r for r in rows if r["minted"]]
-    # minted stubs == ID-less nodes in the input (13 baseline + R1's new L2)
+    # minted stubs == ID-less nodes in the input (14 at the Step 2 run: 13 baseline + R1's new L2;
+    # 11 once MPC-P02 gives Refining and its two L2 nodes IDs, which SLUG_PINS keeps on their slugs)
     def count_idless(nodes):
         return sum((0 if n.get("id") else 1) + count_idless(n.get("children", []) or [])
                    for n in nodes)

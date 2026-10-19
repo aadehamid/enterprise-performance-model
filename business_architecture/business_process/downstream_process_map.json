@@ -9922,7 +9922,7 @@
                 "id": "RF 1.2.5",
                 "level": 3,
                 "name": "Reconcile Turnaround Costs and Review Performance",
-                "description": "Compare the turnaround's cost, duration and lost margin with plan, and feed the lessons into the next turnaround plan. This is the process the turnaround cost measure sits on."
+                "description": "Compare the turnaround's cost, duration and lost margin with plan, and feed the lessons into the next turnaround plan. The reconciled cost is the figure the turnaround cost measure reports."
               }
             ]
           }
