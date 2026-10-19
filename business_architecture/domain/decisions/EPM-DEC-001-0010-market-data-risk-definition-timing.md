@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided; carried out by EPM-DEC-001-0046 (2026-10-18) |
+| Status | Decided; scope and owners carried out by EPM-DEC-001-0046 (2026-10-18); key entities still open |
 | Date | 2026-10-05 |
 | Questions | Q17 |
 | Source | Grilling session on the handover plan |
