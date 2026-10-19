@@ -5,6 +5,9 @@ printed for manual review. Reads the committed TTL + identity map."""
 import re, json, csv, os, sys
 from collections import Counter, defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from batch_checks import related_mentions  # noqa: E402
+
 # Paths derived from this file; EPM_STEP4_DIR / EPM_REPO_ROOT override.
 STEP4 = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _TTL_REL = "business_architecture/ontology/build/output/step3-taxonomy.ttl"
@@ -58,22 +61,8 @@ for slug, rec in by_slug.items():
 
 slug_in_parens = re.compile(r"\(([A-Za-z]+-\d[\d-]*)\)\s*$")
 
-# parse mentions: track current subject (proc:SLUG a skos:Concept), then its relatedConcepts literal
-rows = []
-current = None
-for line in ttl.splitlines():
-    m = re.match(r"proc:([A-Za-z]+-\d[\d-]*)\s+a\s+skos:Concept", line)
-    if m:
-        current = m.group(1)
-        continue
-    m = re.search(r'intake:relatedConcepts\s+"([^"]*)"', line)
-    if m and current:
-        for part in m.group(1).split("|"):
-            part = part.strip()
-            if not part or ":" not in part:
-                continue
-            verb, tgt = part.split(":", 1)
-            rows.append({"subject": current, "verb": verb.strip(), "target": tgt.strip()})
+# parse mentions with the one reader of intake:relatedConcepts (batch_checks.related_mentions, #240)
+rows = [{"subject": subj, "verb": verb, "target": tgt} for subj, verb, tgt in related_mentions(ttl)]
 print("mentions:", len(rows))
 
 # Manual dispositions for unmatched targets (Q11 decisions + Q12 amendment).
