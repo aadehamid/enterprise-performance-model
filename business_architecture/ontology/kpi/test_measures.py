@@ -2,7 +2,7 @@
 properties are well formed, the build reconciles and is current, SHACL accepts the module
 and rejects broken measures, and no person's name enters the module.
 
-Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl).
+Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl, jsonschema).
 """
 import csv
 import glob
@@ -237,7 +237,9 @@ class ValueStreamLinks(unittest.TestCase):
                 self.assertIn(m["measureId"], ids)
 
     def test_p09_links_are_present(self):
-        got = {(process, m["measureId"], m["relationship"]) for _, process, m in self.links()}
+        links = [(process, m["measureId"], m["relationship"]) for _, process, m in self.links()]
+        got = set(links)
+        self.assertEqual(len(links), len(got), "a measure link is listed twice")
         price, perf = "p-market-price-calculation-validation", "p-performance-tracking-analysis"
         self.assertEqual(got, {
             (price, "crack-spreads", "benchmarks"), (price, "rm-margin-per-barrel", "informs"),

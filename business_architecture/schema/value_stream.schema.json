@@ -124,7 +124,7 @@
         "rationale": { "type": ["string", "null"], "description": "Industry grounding for the sparse assignment" },
         "measures": {
           "type": "array",
-          "description": "Measures defined in the kpi module (ontology/kpi/measure-classification.csv) that relate to this process, each with its relationship. A link is not a KPI designation: the measure's class stays the one in the kpi module (EPM-DEC-001-0042). Definitions only, never values (MPC-P09, EPM-DEC-001-0047)",
+          "description": "Measures defined in the kpi module (ontology/kpi/measure-classification.csv) that relate to this process, each with its relationship. A link is not a KPI designation: the measure's class stays the one in the kpi module (EPM-DEC-001-0042). Definitions only, never values (EPM-DEC-001-0005); the links apply MPC-P09 (EPM-DEC-001-0047)",
           "items": {
             "type": "object",
             "required": ["measureId", "relationship", "basis"],
