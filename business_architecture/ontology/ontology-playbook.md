@@ -1339,12 +1339,15 @@ owner made them the source author's backlog.
 code-list values only as `skos:Concept`.
 `validation/controlled-values.ttl` requires each code-list property to
 take its values from its own list. Its coverage test found two properties
-with no shape. The evidence-link shape waits for a `core` release that
-carries each fact's evidence in the graph.
+with no shape. `core` 2.1.0 carries each fact's evidence in the graph,
+one node per fact with the direct triple kept, and its release shapes
+hold the controlled-value shapes and the evidence-link shapes
+(EPM-DEC-001-0044).
 
 **Step 10, publication** (EPM-DEC-001-0029, EPM-DEC-001-0037,
-EPM-DEC-001-0038). Four releases, each first built as a candidate and
-issued on the owner's written approval:
+EPM-DEC-001-0038, EPM-DEC-001-0044). Five releases, each issued on the
+owner's written approval. The first four were built as candidates first;
+`core` 2.1.0, a minor, was cut directly on the owner's approval of the cut:
 
 | Release | What it holds | Builder |
 |---|---|---|
@@ -1352,6 +1355,7 @@ issued on the owner's written approval:
 | `organization` 1.0.0 | The vocabulary, the roles and the RACI assignments | `release/build_module.py` |
 | `ref-mpc` 1.0.0 | MPC and MPLX reference instances; requires `organization` 1.0.0 | `release/build_module.py` |
 | `core` 2.0.0 | The business domain list, planned inputs and outputs, two ranges; `core:responsibleDomain` deprecated, its values kept | `release/build_core_next.py`, from the released 1.0.0 |
+| `core` 2.1.0 | One evidence node per canonical fact, the controlled-value and evidence-link shapes, a rights statement | `release/build_core_2_1.py`, from the released 2.0.0 |
 
 Deprecating a property made 2.0.0 a major. Before approving it, the owner
 stated that no one used the ontology yet. The 2.0.0 cut found that the
@@ -1391,9 +1395,10 @@ all three:
 
 Core 1.0.0 gave `earlierProcess` and `laterProcess` no range, which breaks
 Rule 1. The pipeline listed both as release gaps until core 2.0.0 added the
-ranges. The run on core 2.0.0, the organization module and `ref-mpc` loaded
-2,166 nodes and 12,290 relationships, with no SHACL violation in the
-graph, an empty round-trip diff and equal hashes for two load orders.
+ranges. The run on core 2.1.0, organization 2.0.0 and `ref-mpc` loads
+2,811 nodes and 14,865 relationships, with no SHACL violation in the
+graph, an empty round-trip diff and equal hashes for two load orders
+(`projection/projection-report.json`).
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared

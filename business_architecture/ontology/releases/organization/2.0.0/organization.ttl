@@ -14,7 +14,7 @@
     dcterms:description "Roles, RACI responsibility assignments and control between legal entities (Step 5)."@en ;
     dcterms:issued "2026-10-18"^^xsd:date ;
     dcterms:modified "2026-10-18"^^xsd:date ;
-    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.0.0> ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.1.0> ;
     dcterms:title "LSC Organization Module"@en ;
     owl:versionIRI orgm:2.0.0 ;
     owl:versionInfo "2.0.0" .

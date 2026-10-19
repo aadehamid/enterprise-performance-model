@@ -24,7 +24,7 @@
   ],
   "http://purl.org/dc/terms/requires": [
    {
-    "@id": "https://w3id.org/lsc/ontology/modules/core/2.0.0"
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.1.0"
    }
   ],
   "http://purl.org/dc/terms/title": [

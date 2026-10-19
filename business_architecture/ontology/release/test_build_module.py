@@ -125,7 +125,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
-        self.assertEqual(bm.dependencies("organization"), {"core": "2.0.0"})
+        self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
 
 
 if __name__ == "__main__":

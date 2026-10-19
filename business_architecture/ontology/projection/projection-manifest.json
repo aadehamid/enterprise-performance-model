@@ -1,23 +1,22 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "f52183acecf569bf584f53379d42be1a870db4c6c21721c3d734d7f7cb3bd4f0",
+  "input_fingerprint": "85f7d5ba61a0c53349ddb5db7990514f3798949b455f31e9bf136385b703dff9",
   "inputs": {
     "organization/assignments.ttl": "f4bee1bb3eed7791dcc7d9605637b8b2e75404a4c32a923983fa237730fb9c7e",
     "organization/roles.ttl": "214ad9179007f6ba1614c475764b05050c035d5115ff7e533a7663d3582a55be",
     "organization/vocabulary.ttl": "23bb7d1d65d879a38c1cb06fd26af853a4371bf9ead8ce6e23b31177f0e18e73",
     "ref-mpc/ref-mpc.ttl": "172b8f70ab96682f7f559855f370237c48ba6ab96c1e8f2c8d3751f656f508ef",
-    "releases/core/2.0.0/core.ttl": "b6d83aa343be0e2afbab21c923af4086b283c9e8063defee7ac3af2567be5d90"
+    "releases/core/2.1.0/core.ttl": "557ae2a44c5bc95551ae6d71cada97c3f654359674a82e4e513ba707e960805d"
   },
-  "loadable_triples": 22314,
+  "loadable_triples": 25714,
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
     "organization/shapes.ttl": "39d3066113038d7f1c1f621cb21f119911e662e122618925118c175cca1a7470",
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
-    "releases/core/2.0.0/shapes.ttl": "8ed0310141839a97f88ffa751e64e1dc7da8579dcc7017a97abd20dcda074c3b",
-    "step4/scoped-sequence/shapes.ttl": "6d9acb78ae3a464aad7d76b694d16e8f43122ba9bbff97d41a5eff99072d51e3",
-    "validation/controlled-values.ttl": "ffd564d419c2ef6bf940832d70ce48ecb5811f74daa263ee8429ba5bf389b084"
+    "releases/core/2.1.0/shapes.ttl": "754f32c91095dc9facf80fd38b7fdc33ec38e0a88dfffdd2bd2aa5b694678271",
+    "step4/scoped-sequence/shapes.ttl": "6d9acb78ae3a464aad7d76b694d16e8f43122ba9bbff97d41a5eff99072d51e3"
   },
   "versions": {
     "apoc": "bundled with neo4j:2025.06.2",

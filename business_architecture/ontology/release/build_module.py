@@ -38,7 +38,7 @@ MODULES = {
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.0.0"},
+        "pins": {"core": "2.1.0"},
         "decisions": ["EPM-DEC-001-0030", "EPM-DEC-001-0031", "EPM-DEC-001-0032", "EPM-DEC-001-0045"],
     },
     "ref-mpc": {
@@ -110,7 +110,7 @@ def check(name, g):
         data.parse(os.path.join(ONTOLOGY, "releases", "core", deps["core"], "core.ttl"))
     if "organization" in deps:
         data.parse(os.path.join(ONTOLOGY, "releases", "organization", deps["organization"], "organization.ttl"))
-        data.parse(os.path.join(ONTOLOGY, "releases", "core", "2.0.0", "core.ttl"))
+        data.parse(os.path.join(ONTOLOGY, "releases", "core", dependencies("organization")["core"], "core.ttl"))
     conforms, _, text = validate(data, shacl_graph=parse(m["shapes"]))
     return conforms, text
 
