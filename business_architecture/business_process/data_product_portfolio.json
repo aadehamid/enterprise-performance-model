@@ -65,7 +65,7 @@
               "id": "dp-retail-payments",
               "name": "Retail Payments",
               "description": "Retail transaction and payment data captured at branded retail sites (tender, cards, loyalty-linked payment).",
-              "notes": ["Applicability: at a brand owner that runs no retail sites (MPC since 2021), the sites belong to independent jobbers and dealers; the brand owner sees card, loyalty and brand-program transactions, not the full site sale (EPM-DEC-001-0047, MPC-P07)."],
+              "notes": ["Applicability: at a brand owner that runs no retail sites (MPC since 2021), the sites are operated by independent jobbers and dealers (MPC FY2025 Form 10-K, Item 1); the brand owner sees card, loyalty and brand-program transactions, not the full site sale (EPM-DEC-001-0047, MPC-P07)."],
               "status": "active"
             },
             {
