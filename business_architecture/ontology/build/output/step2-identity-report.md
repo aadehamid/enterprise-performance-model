@@ -1,5 +1,7 @@
 # Step 2 — Identity normalization report
 
+*2026-10-18:* this is the report of the last Step 2 run, kept as built. Since then MPC-P02 gave Refining and its two ID-less L2 nodes the IDs `RF 1`, `RF 1.1` and `RF 1.2` (EPM-DEC-001-0047). The curated identity map carries them with `minted: false` and their slugs pinned, and adds rows for the new nodes, so the three Refining rows in the stub table below are no longer stubs. The next identity pass regenerates this report.
+
 - Nodes processed: 683 (at the Step 2 run; later additions are dated below)
 - IDs preserved as skos:notation: 669 (at the Step 2 run) (all unique, all match `CM <dotted>` pattern)
 - Minted stub slugs: 14

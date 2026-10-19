@@ -7220,10 +7220,10 @@
   "slug": "L1-refining",
   "level": 1,
   "name": "Refining",
-  "skos_notation": null,
+  "skos_notation": "RF 1",
   "parent_slug": "L0-downstream-operations",
-  "minted": true,
-  "proposed_repo_id": "L1-refining",
+  "minted": false,
+  "proposed_repo_id": "RF 1",
   "deprecated": false
  },
  {
@@ -7231,10 +7231,10 @@
   "slug": "L2-refinery-performance-and-risk-coordination",
   "level": 2,
   "name": "Refinery Performance and Risk Coordination",
-  "skos_notation": null,
+  "skos_notation": "RF 1.1",
   "parent_slug": "L1-refining",
-  "minted": true,
-  "proposed_repo_id": "L2-refinery-performance-and-risk-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.1",
   "deprecated": false
  },
  {
@@ -8066,10 +8066,10 @@
   "slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
   "level": 2,
   "name": "Refinery Asset Reliability and Turnaround Coordination",
-  "skos_notation": null,
+  "skos_notation": "RF 1.2",
   "parent_slug": "L1-refining",
-  "minted": true,
-  "proposed_repo_id": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2",
   "deprecated": false,
   "r1_migration": {
    "change": "new",
@@ -8077,6 +8077,61 @@
    "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)",
    "note": "New Candidate L2 structural anchor under L1-refining; initially unpopulated; coordination-only. Review trigger: R2 evidence package / refinery maintenance and turnaround operating model."
   }
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/RF-1-2-1",
+  "slug": "RF-1-2-1",
+  "level": 3,
+  "name": "Define Turnaround Scope and Business Impacts",
+  "skos_notation": "RF 1.2.1",
+  "parent_slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2.1",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/RF-1-2-2",
+  "slug": "RF-1-2-2",
+  "level": 3,
+  "name": "Coordinate Turnaround Schedule and Commercial Plan",
+  "skos_notation": "RF 1.2.2",
+  "parent_slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2.2",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/RF-1-2-3",
+  "slug": "RF-1-2-3",
+  "level": 3,
+  "name": "Monitor Execution and Manage Commercial Impacts",
+  "skos_notation": "RF 1.2.3",
+  "parent_slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2.3",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/RF-1-2-4",
+  "slug": "RF-1-2-4",
+  "level": 3,
+  "name": "Coordinate Restart and Return-to-Service Assumptions",
+  "skos_notation": "RF 1.2.4",
+  "parent_slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2.4",
+  "deprecated": false
+ },
+ {
+  "uri": "https://w3id.org/lsc/ontology/process/RF-1-2-5",
+  "slug": "RF-1-2-5",
+  "level": 3,
+  "name": "Reconcile Turnaround Costs and Review Performance",
+  "skos_notation": "RF 1.2.5",
+  "parent_slug": "L2-refinery-asset-reliability-and-turnaround-coordination",
+  "minted": false,
+  "proposed_repo_id": "RF 1.2.5",
+  "deprecated": false
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/L1-midstream",

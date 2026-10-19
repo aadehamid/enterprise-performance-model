@@ -8929,7 +8929,8 @@
                       {
                         "id": "CM 1.3.8.4.6",
                         "level": 5,
-                        "name": "Manage Intercompany Invoicing"
+                        "name": "Manage Intercompany Invoicing",
+                        "description": "Invoice, reconcile and settle charges between affiliated legal entities, including fees for logistics services that an affiliate provides under long-term fee-based agreements (pipeline transportation, terminals, storage and marine). Each charge has three perspectives. The affiliate that provides the service bills it through its order-to-cash steps: billing, receipts and cash application, receivables and settlement. The entity that receives the service verifies the service, validates the invoice and pays it through procure-to-pay, which the map does not yet hold as processes. The consolidating entity reconciles the intercompany balances and eliminates them. The rates are terms of the agreements. A disclosed figure, such as the per-barrel fees MPC's Refining & Marketing segment paid MPLX ($3.69 per barrel in 2025, MPC FY2025 Form 10-K, Item 7), is an aggregate expense for a period, not a tariff (EPM-DEC-001-0047, MPC-P08)."
                       },
                       {
                         "id": "CM 1.3.8.4.7",
@@ -9077,10 +9078,12 @@
         ]
       },
       {
+        "id": "RF 1",
         "level": 1,
         "name": "Refining",
         "children": [
           {
+            "id": "RF 1.1",
             "level": 2,
             "name": "Refinery Performance and Risk Coordination",
             "children": [
@@ -9893,9 +9896,42 @@
             ]
           },
           {
+            "id": "RF 1.2",
             "level": 2,
             "name": "Refinery Asset Reliability and Turnaround Coordination",
-            "children": []
+            "description": "Coordinate the commercial and planning side of planned maintenance and turnarounds across the refining system: what goes down and when, how supply, inventory and the plan cover it, how the restart is assumed, and what it cost against plan. Physical maintenance execution is outside the current scope unless separately approved (EPM-DEC-001-0047, MPC-P02b).",
+            "children": [
+              {
+                "id": "RF 1.2.1",
+                "level": 3,
+                "name": "Define Turnaround Scope and Business Impacts",
+                "description": "Agree which units come down, for how long, and what the outage does to throughput, yields, product supply and margin. This is the commercial and planning view of the scope; the maintenance work list belongs to maintenance."
+              },
+              {
+                "id": "RF 1.2.2",
+                "level": 3,
+                "name": "Coordinate Turnaround Schedule and Commercial Plan",
+                "description": "Fit each turnaround window into the plan across refineries and units: its timing and sequence, the supply cover and inventory builds around it, and the moves of intermediate products to units that keep running."
+              },
+              {
+                "id": "RF 1.2.3",
+                "level": 3,
+                "name": "Monitor Execution and Manage Commercial Impacts",
+                "description": "Track the turnaround against its planned dates and duration, and adjust supply, sales and the plan when it runs long or short. The maintenance work itself is not part of this process."
+              },
+              {
+                "id": "RF 1.2.4",
+                "level": 3,
+                "name": "Coordinate Restart and Return-to-Service Assumptions",
+                "description": "Agree the restart date, ramp-up rates and time to on-specification product that the plan and the schedule use, and update them as the restart proceeds."
+              },
+              {
+                "id": "RF 1.2.5",
+                "level": 3,
+                "name": "Reconcile Turnaround Costs and Review Performance",
+                "description": "Compare the turnaround's cost, duration and lost margin with plan, and feed the lessons into the next turnaround plan."
+              }
+            ]
           }
         ]
       },

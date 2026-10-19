@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed. The process map changes only through its authoring path; this file does not edit it |
+| Status | Applied 2026-10-18, with MPC-P02b (EPM-DEC-001-0047): the map carries `RF 1`, `RF 1.1` and `RF 1.2`, and the identity map records them as `skos_notation` with the slugs unchanged. Proposed until then |
 | Date | 2026-10-13 |
 | Decision | EPM-DEC-001-0012: "Raise a process-map proposal (not a direct edit) to assign IDs to the three nodes." |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P02 |
@@ -10,7 +10,7 @@
 
 ## The nodes
 
-MPC-P02 targets three Refining nodes that have no `id` in `business_architecture/business_process/downstream_process_map.json`. (The map has 14 nodes without an `id` in all; Midstream's is MPC-P01's open scope question, and the L0 roots and Enabling Functions nodes are outside MPC-P02.)
+MPC-P02 targets three Refining nodes that have no `id` in `business_architecture/business_process/downstream_process_map.json`. (When proposed, the map had 14 nodes without an `id` in all, 11 once these three take theirs; Midstream's is MPC-P01's open scope question, and the L0 roots and Enabling Functions nodes are outside MPC-P02.)
 
 | Node | Level | Ontology slug today (minted in Step 2) |
 |---|---|---|
@@ -22,7 +22,7 @@ MPC-P02 targets three Refining nodes that have no `id` in `business_architecture
 
 | Node | Proposed `id` | Why |
 |---|---|---|
-| Refining | `RF 1` | Each L1 under Downstream Operations takes its own prefix: Commercial & Marketing is `CM 1`. `RF` for Refining follows the two-letter pattern and collides with no existing prefix (the map uses only `CM`). |
+| Refining | `RF 1` | Each L1 under Downstream Operations takes its own prefix: Commercial & Marketing is `CM 1`. `RF` for Refining follows the two-letter pattern and collides with no existing prefix (when proposed, the map used only `CM`). |
 | Refinery Performance and Risk Coordination | `RF 1.1` | The first L2 under `RF 1`, in map order. |
 | Refinery Asset Reliability and Turnaround Coordination | `RF 1.2` | The second new L2 under `RF 1`. |
 
@@ -39,4 +39,4 @@ The script is not the regeneration path today: the committed identity map carrie
 
 ## Not in this proposal
 
-The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012).
+The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012). *2026-10-18:* Hamid accepted them as turnaround coordination (MPC-P02b, EPM-DEC-001-0047); they are `RF 1.2.1` to `RF 1.2.5`.
