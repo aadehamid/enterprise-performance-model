@@ -5,18 +5,21 @@ SHACL that holds.
 Run: python3 -m pytest test_assignments.py (needs rdflib, pyshacl).
 """
 import json
+import os
 import unittest
 from collections import Counter
 from unittest import mock
 
-from rdflib import Graph
-from rdflib.namespace import RDF
+from rdflib import Graph, Literal
+from rdflib.namespace import DCTERMS, OWL, RDF
 
 import build_assignments as ba
 import build_roles as br
 
 ENTRIES, REGISTER, GRAPH = ba.build()
 ROLES_OF = {r["source_text"]: r["roles"].split(";") for r in REGISTER}
+# Organization 2.0.0 (EPM-DEC-001-0045): a deprecated role hands its assignments to its successor.
+LIVE = {r["slug"]: r["replaced_by"] or r["slug"] for r in br.read_csv(br.ROLES)}
 IRIS = ba.process_iris()
 O = br.ORGM
 
@@ -32,7 +35,7 @@ def emitted():
 
 class Assignments(unittest.TestCase):
     def test_each_source_entry_and_role_gives_exactly_one_assignment(self):
-        expected = Counter((IRIS[p], lvl, role, t) for p, lvl, t in ENTRIES for role in ROLES_OF[t])
+        expected = Counter((IRIS[p], lvl, LIVE[role], t) for p, lvl, t in ENTRIES for role in ROLES_OF[t])
         self.assertEqual(emitted(), expected)
 
     def test_only_processes_with_raci_in_the_source_get_assignments(self):
@@ -88,6 +91,50 @@ class Assignments(unittest.TestCase):
                          set(GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)))
         self.assertNotEqual(ba.assignment_iri(p, "accountable", "trader", "Traders"),
                             ba.assignment_iri(p, "accountable", "trader", "Supply Coordinators/Traders"))
+
+
+class RoleMerges(unittest.TestCase):
+    """Organization 2.0.0 (EPM-DEC-001-0045): Hamid's three merges deprecate, never delete."""
+
+    RELEASED = os.path.join(br.HERE, "..", "releases", "organization", "1.0.0", "organization.ttl")
+
+    def test_no_assignment_names_a_deprecated_role(self):
+        roles = Graph().parse(br.OUTPUT)
+        deprecated = {s for s in roles.subjects(OWL.deprecated, Literal(True))}
+        self.assertEqual({br.ROLE[s] for s, r in LIVE.items() if r != s}, deprecated)
+        self.assertFalse(set(GRAPH.objects(None, O.assignedRole)) & deprecated)
+
+    def test_an_assignment_to_a_deprecated_role_fails_shacl(self):
+        g = Graph()
+        g += GRAPH
+        a = next(g.subjects(O.assignedRole, br.ROLE["rvco-advisor"]))
+        g.set((a, O.assignedRole, br.ROLE["rcvo-advisor"]))
+        with self.assertRaises(SystemExit):
+            ba.shacl(g)
+
+    def test_the_merges_keep_every_released_iri(self):
+        # The same assignment IRIs as 1.0.0, and every 1.0.0 role still present.
+        released = Graph().parse(self.RELEASED)
+        self.assertEqual(set(GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)),
+                         set(released.subjects(RDF.type, O.ResponsibilityAssignment)))
+        roles = Graph().parse(br.OUTPUT)
+        self.assertEqual(set(released.subjects(RDF.type, br.ORG.Role)), set(roles.subjects(RDF.type, br.ORG.Role)))
+
+    def test_a_deprecated_role_keeps_its_triples_and_names_its_successor(self):
+        released = Graph().parse(self.RELEASED)
+        roles = Graph().parse(br.OUTPUT)
+        for slug, successor in ((s, r) for s, r in LIVE.items() if r != s):
+            with self.subTest(role=slug):
+                for triple in released.triples((br.ROLE[slug], None, None)):
+                    self.assertIn(triple, roles)
+                self.assertEqual(roles.value(br.ROLE[slug], DCTERMS.isReplacedBy), br.ROLE[successor])
+
+    def test_exactly_the_three_moved_assignments_changed_role(self):
+        released = Graph().parse(self.RELEASED)
+        moved = {a for a in GRAPH.subjects(RDF.type, O.ResponsibilityAssignment)
+                 if GRAPH.value(a, O.assignedRole) != released.value(a, O.assignedRole)}
+        self.assertEqual(len(moved), dict(ba.ledger(ENTRIES, REGISTER, GRAPH))["assignments moved to a successor role"])
+        self.assertEqual(len(moved), 3)
 
 
 if __name__ == "__main__":
