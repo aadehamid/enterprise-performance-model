@@ -2,7 +2,7 @@
 
 **Status:** Draft evidence · **Prepared:** 2026-10-18 · **Used for:** the `kpi` module's measure classification (EPM-DEC-001-0042)
 
-This file ranks below MPC's own material (`../mpc/mpc-performance-measures-evidence.md`) in the evidence order (AGENTS.md). Generic frameworks here (Parmenter, the KPI Institute, Kaplan and Norton, ISO 22400, SCOR, Gartner, APQC) are support only. The refining sources (EIA, Solomon, API, AFPM, Aspen, Haverly) are downstream-specific industry sources. Part A sets the classification rule. Part B answers two questions Hamid asked to have researched on 2026-10-18: what Crude Value to Breakeven is, and whether the Mid-Term Planner's turnaround work is optimization or tracking. Source IDs: KI- for Part A, VT- for Part B. Sources marked weak or secondary must not carry a claim alone.
+This file ranks below MPC's own material (`../mpc/mpc-performance-measures-evidence.md`) in the evidence order (AGENTS.md). Generic frameworks here (Parmenter, the KPI Institute, Kaplan and Norton, ISO 22400, SCOR, Gartner, APQC) are support only. The refining sources (EIA, Solomon, API, AFPM, Aspen, Haverly) are downstream-specific industry sources. Part A sets the classification rule. Part B answers two questions Hamid asked to have researched on 2026-10-18: what Crude Value to Breakeven is, and whether the Mid-Term Planner's turnaround work is optimization or tracking. Source IDs: KI- for Part A, VT- for Part B. Sources marked weak or secondary must not carry a claim alone. Where this research and EPM-DEC-001-0042 differ, the decision wins; each such place carries a note.
 
 ---
 
@@ -121,8 +121,8 @@ Apply the tests in order. Stop at the first test that assigns a class. Each test
 
 1. **Is it a quantity with a formula, a unit and a time grain?** If no, it is a **Tracker or report**. Examples: a list of due dates, a summary of plan changes, a status table. Basis: SCOR "descriptive or activity metrics" [KI-23]; ISO 22400-1 "not all measures are indicators" [KI-06].
 2. **Is it emitted only when a condition is met, as an event, not a series?** If yes, it is an **Alert**. Basis: ISA-18.2 alarm definition [KI-31]; Kaplan and Norton on signals of "unusual events" [KI-04].
-3. **Is its value set by an external market or published benchmark that the region cannot influence?** If yes, it is a **Market indicator**. Basis: MPC "Market indicators" and "beyond our control" [KI-20, KI-27]; controllability principle [KI-30].
-4. **Is it actual compared with a plan, forecast, prior version or target, for one period?** If yes, it is a **Plan-variance diagnostic**. Basis: Gartner "Production Schedule Variance" in the Correct tier [KI-26]; Kaplan and Norton "deviations from expectations" [KI-04]. Exception: an accuracy or attainment measure aggregated over periods, with a target and owner, goes on to test 5.
+3. **Is its value set by an external market or published benchmark that the region cannot influence?** If yes, it is a **Market indicator**. Basis: MPC "Market indicators" and "beyond our control" [KI-20, KI-27]; controllability principle [KI-30]. *(Decided rule, EPM-DEC-001-0042: test 3 also assigns **decision-support indicator** to a value computed from market prices and the planning model to start or rank a decision, with no performance target. Crude Value to Breakeven is that class; see Part B, Q8.)*
+4. **Is it actual compared with a plan, forecast, prior version or target, for one period? *(Decided wording, EPM-DEC-001-0042: actual results, or a plan, compared with a plan, forecast, prior plan version or history.)*** If yes, it is a **Plan-variance diagnostic**. Basis: Gartner "Production Schedule Variance" in the Correct tier [KI-26]; Kaplan and Norton "deviations from expectations" [KI-04]. Exception: an accuracy or attainment measure aggregated over periods, with a target and owner, goes on to test 5.
 5. **Does the business name it as one of the few measures of a stated objective, with a target and an accountable owner who can act on it?** If yes, it is a **KPI**. Otherwise it is an **Operational metric**. Basis: KPI Institute [KI-03]; Parmenter's team and CSF tests [KI-02]; SCOR "Only the top-level Metrics" [KI-23]; ISO 22400-1 note on KPIs chosen by criteria [KI-06].
 
 Test 5 needs a recorded business decision. A measure's formula does not show whether it is a KPI. Until someone records that decision, classify it as an **Operational metric (KPI candidate)**.
@@ -133,8 +133,8 @@ Test 5 needs a recorded business decision. A measure's formula does not show whe
 |---|---|---|---|
 | KPI | A metric designated as one of the few that show progress on a stated objective, with target and owner. | KPI Institute [KI-03]; SCOR level 1 [KI-22]; Parmenter [KI-01] | Crude (refinery) utilization against operable capacity; clean product make or yield, if the region sets it as an objective; margin capture, if added |
 | Operational metric | A recurring performance or diagnostic measure of a unit, asset or flow. Watched by exception. | Kaplan and Norton "diagnostic" [KI-04]; SCOR levels 2 and 3 [KI-22]; Parmenter PI and RI [KI-01]; ISO 22400-2 [KI-07] | Unit utilization; distillate and gasoline yield; pipeline and marine utilization; inter-regional volumes |
-| Plan-variance diagnostic | Actual against plan, forecast or a prior version, for one period. Explains a gap in a higher metric. | Gartner Correct tier [KI-26]; SCOR diagnostic metric [KI-23] | Demand vs forecast; supply vs forecast; opening inventory vs plan; week-on-week input-table variances |
-| Market indicator | An external price, spread or benchmark outside the region's control. A driver and benchmark. | MPC 10-K [KI-20, KI-27]; controllability principle [KI-30] | Crack spreads; benchmark product and crude prices; crude value to breakeven (see section 3) |
+| Plan-variance diagnostic | Actual against plan, forecast or a prior version, for one period. (Decided wording also covers a plan compared with history; EPM-DEC-001-0042.) Explains a gap in a higher metric. | Gartner Correct tier [KI-26]; SCOR diagnostic metric [KI-23] | Demand vs forecast; supply vs forecast; opening inventory vs plan. (Week-on-week input-table variances were listed here first; the decision classes them as an alert, because they fire when a table changes by more than a threshold.) |
+| Market indicator | An external price, spread or benchmark outside the region's control. A driver and benchmark. | MPC 10-K [KI-20, KI-27]; controllability principle [KI-30] | Crack spreads; benchmark product and crude prices. Crude value to breakeven was listed here first; Part B, Q8 classes it as a decision-support indicator (EPM-DEC-001-0042) |
 | Tracker or report | A list, status or schedule of activities and dates. Not a quantity with a target. | SCOR descriptive or activity metric [KI-23] | Turnaround activity tracker; capital project evaluation due dates; MTP submission due dates; plan change summaries; sales and purchase status trends |
 | Alert | An event raised when a condition is met, for someone to notice or act on. | ISA-18.2 [KI-31]; Kaplan and Norton [KI-04] | Production rate record alerts |
 
@@ -260,7 +260,7 @@ For a mid-term planner, turnaround work is **optimization**. The planner chooses
 
 Measure classes:
 
-- **KPIs (outcomes at site or portfolio level):** operational availability and mechanical availability, annualized turnaround cost (or MPC's planned turnaround cost per barrel), turnaround interval, and lost margin from turnarounds.
+- **KPIs (outcomes at site or portfolio level):** operational availability and mechanical availability, annualized turnaround cost (or MPC's planned turnaround cost per barrel), turnaround interval, and lost margin from turnarounds. *(Decided, EPM-DEC-001-0042: a KPI needs a recorded target and owner. MPC's planned turnaround cost per barrel and lost margin from turnarounds are therefore operational metrics marked KPI candidates, not KPIs.)*
 - **Operational metrics (event execution):** duration versus plan, cost versus budget, turnaround work hours, scope growth, and startup time to on-spec.
 - **Trackers (status, no target):** milestone schedule adherence, scope-freeze date met, readiness checklists, and the turnaround calendar itself.
 
@@ -311,9 +311,9 @@ Measure classes:
    | Measure | Class | Why |
    |---|---|---|
    | Operational availability / mechanical availability (Solomon) | KPI | Site outcome, benchmarked, has a target (above 97% OA) [VT-26] |
-   | Annualized turnaround cost; MPC planned turnaround cost per barrel | KPI (financial) | Reported outcome; MPC discloses it [VT-20] |
+   | Annualized turnaround cost; MPC planned turnaround cost per barrel | KPI candidate (financial; decided as an operational metric, EPM-DEC-001-0042) | Reported outcome; MPC discloses it [VT-20] |
    | Turnaround interval / run length | KPI (strategy) | Chosen outcome, benchmarked by unit type [VT-26] |
-   | Lost margin (lost profit opportunity) from turnarounds | KPI for the planner; decision value during optimization | Margin given up for planned downtime; the planner's objective function [VT-18] |
+   | Lost margin (lost profit opportunity) from turnarounds | KPI candidate for the planner (decided as an operational metric, EPM-DEC-001-0042); decision value during optimization | Margin given up for planned downtime; the planner's objective function [VT-18] |
    | Duration versus plan; duration as % of standard | Operational metric | Event execution [VT-27] |
    | Cost versus budget; turnaround work hours | Operational metric | Event execution; Solomon links work hours to cost [VT-26] |
    | Schedule (milestone) adherence; scope-freeze met | Tracker | Status against a plan, owned by the turnaround team |

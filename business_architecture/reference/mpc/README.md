@@ -36,5 +36,5 @@ instances, KPIs and definitions against.
 | `mplx-fy2025-10k-fact-sheet.md` | MPLX's FY2025 10-K: its two segments, how it serves MPC (48 percent of its total revenues and other income, fee-based minimum volumes), assets; read for MPC-P01 (EPM-DEC-001-0011) |
 | `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C8 + facets), each class cited to filings or MPC materials |
 | `pricing-domain-evidence.md` | Evidence for Pricing as a candidate data domain (MPC filings + EIA definitions) |
-| `mpc-performance-measures-evidence.md` | MPC's publicly defined performance measures (33), their grain, which drive the annual cash bonus, and a peer comparison; used for the `kpi` module's classification |
+| `mpc-performance-measures-evidence.md` | MPC's publicly defined performance measures (30, one of them read only in a not-confirmed copy, in a 33-row table that also lists 3 it does not publish), their grain, which drive the annual cash bonus, and a peer comparison; used for the `kpi` module's classification |
 | `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (Proposed — not applied) |
