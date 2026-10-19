@@ -1226,6 +1226,12 @@ reverse it. Some things stay with the owner even then: a statement of fact
 only the owner can make (who consumes the ontology), and the approvals the
 versioning policy reserves for the owner (a major release).
 
+### A process description says only what its source says
+A description in the process map is the definition of the process. When it
+cites a filing, every claim in it must be in that filing, with the item
+that holds it. A fact with no primary source stays out of the description,
+however plausible.
+
 ### Merging a branch with main
 When a merge conflicts in a table, merge the row: keep one row per key,
 carrying both sides' changes. Keeping both sides of a table conflict
@@ -1400,10 +1406,29 @@ owner made them the source author's backlog.
 - *Market Data and Commercial Risk* (EPM-DEC-001-0046). The owner defined
   both domains and named the Risk Group as owner, Market Data
   provisionally.
+- *The measure list's source* (kpi 1.0.1). The owner named the product
+  the list belongs to, Value Chain Optimization Decision Support and
+  Visualization (VCO DSV); the source keeps its IRI and carries that title.
+- *MPC process-map proposals* (EPM-DEC-001-0047, 0048). The owner accepted
+  the proposals and said to apply them to the map. Each landed in its own
+  pull request: Midstream as fuels logistics (`MS 1`), the Refining IDs and
+  turnaround coordination children (`RF 1`), scope notes on retail nodes,
+  environmental compliance credits kept apart from the clean-fuel tax
+  credit, renewables by reuse of existing processes, affiliate fees, and the
+  transfer coverage check. Two gaps the checks found went to the owner as
+  proposals; the owner said to address them, Marathon's public information first,
+  and each became one step (movement losses and gains; renewable feedstock
+  traceability). A third, the quality of transferred intermediates, was not
+  in the owner's answer and stays open. P06 waits for the customer work and P09 for
+  the owner's approval of the measure categories.
 - *What the reviews caught.* Most review holds in Step 7 were attribution:
   a record listed the agent's wording (role names, a rule, detail from a
   pasted analysis) under the owner's decisions. Working agreements now say
-  where that wording goes.
+  where that wording goes. On the process map the holds were source
+  fidelity: a description said more than its filing (customer terms given
+  to third parties, a "physical or apparent" analysis no cited standard
+  states, "oils and fats" where the filing names soybean oil). Each was cut
+  back to what the source says.
 
 **Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
 `core` 1.0.0 checked `conceptKind` against its own list and the other
