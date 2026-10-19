@@ -1,18 +1,18 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "35998f4fb37585fa90a9f550de2cca85258ec6220add9cdb93a792183b10bb68",
+  "input_fingerprint": "85f7d5ba61a0c53349ddb5db7990514f3798949b455f31e9bf136385b703dff9",
   "inputs": {
-    "organization/assignments.ttl": "f8ca14be4373fc40e73920ab4b3030f34694c01882cd2a07061a790c685cedf9",
-    "organization/roles.ttl": "cd16aa6c1e48192879289ed39bb1a895ba8c7f0fcc61bba51e6dac374dac00ba",
+    "organization/assignments.ttl": "f4bee1bb3eed7791dcc7d9605637b8b2e75404a4c32a923983fa237730fb9c7e",
+    "organization/roles.ttl": "214ad9179007f6ba1614c475764b05050c035d5115ff7e533a7663d3582a55be",
     "organization/vocabulary.ttl": "23bb7d1d65d879a38c1cb06fd26af853a4371bf9ead8ce6e23b31177f0e18e73",
     "ref-mpc/ref-mpc.ttl": "172b8f70ab96682f7f559855f370237c48ba6ab96c1e8f2c8d3751f656f508ef",
     "releases/core/2.1.0/core.ttl": "557ae2a44c5bc95551ae6d71cada97c3f654359674a82e4e513ba707e960805d"
   },
-  "loadable_triples": 25671,
+  "loadable_triples": 25714,
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
-    "organization/shapes.ttl": "57b672b8be82ba1dbbec24bcf1c7e143815a7d5db37e3cd71a69050ecef8ec49",
+    "organization/shapes.ttl": "39d3066113038d7f1c1f621cb21f119911e662e122618925118c175cca1a7470",
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
     "releases/core/2.1.0/shapes.ttl": "754f32c91095dc9facf80fd38b7fdc33ec38e0a88dfffdd2bd2aa5b694678271",

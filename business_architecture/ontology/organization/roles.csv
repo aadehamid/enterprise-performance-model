@@ -1,61 +1,61 @@
-slug,label,kind,question
-action-owner,Action Owner,position,"The source writes ""Action Owners"": the owner of each action, not one fixed position. Kept as a role."
-asphalt-manager,Asphalt Manager,position,
-black-oil-manager,Black Oil Manager,position,
-bpa,BP&A,team,The acronym is not expanded in the repository.
-business-analyst,Business Analyst,position,"One string adds the qualifier RO, which is not expanded in the repository."
-cci-director,CCI Director,position,The acronym is not expanded in the repository.
-commercial-scheduler,Commercial Scheduler,position,
-cp-manager,CP Manager,position,The acronym is not expanded in the repository.
-cpvc-scheduler,CPVC Scheduler,position,The acronym is not expanded in the repository.
-crude-coordinator,Crude Coordinator,position,
-crude-feedstock-trading-lead,Crude/Feedstock Trading Lead,position,
-crude-oil-trader,Crude Oil Trader,position,"Kept apart from Trader: the source names the commodity."
-crude-planning-and-optimization-director,Crude Planning and Optimization Director,position,
-crude-representative,Crude Representative,position,
-crude-rfc,Crude RFC,position,"The acronym is not expanded in the repository. It may be the crude Refinery Feedstock Coordinator; kept apart until confirmed."
-crude-scheduler,Crude Scheduler,position,
-distribution-backcaster,Distribution Backcaster,position,
-distribution-planner,Distribution Planner,position,
-e-and-p-manager,E&P Manager,position,The acronym E&P is not expanded in the repository.
-e-and-p-supervisor,E&P Supervisor,position,The acronym E&P is not expanded in the repository.
-forecaster,Forecaster,position,"Appears only inside two compound entries. It may be the Local Refinery Forecaster; kept apart until confirmed."
-gasoline-blend-optimizer,Gasoline Blend Optimizer,position,
-gfvc-manager,Manager: GFVC,position,The acronym is not expanded in the repository.
-global-feedstocks-manager,Global Feedstocks Manager,position,
-inventory-representative,Inventory Representative,position,
-it-data-custodian,IT Data Custodian,position,
-it-data-owner,IT Data Owner,position,
-it-data-steward,IT Data Steward,position,
-local-refinery-forecaster,Local Refinery Forecaster,position,
-marine-dock-scheduler,Marine Dock Scheduler,position,
-operations,Operations,team,
-pricing-representative,Pricing Representative,position,
-product-representative,Product Representative,position,
-psm,PSM,position,The acronym is not expanded in the repository.
-rcvo-advisor,RCVO Advisor,position,"Written once; RVCO Advisor is written 32 times. Likely the same role misspelt; kept apart until confirmed."
-refinery-backcaster,Refinery Backcaster,position,
-refinery-econ-and-planning-supervisor,Refinery Econ & Planning Supervisor,position,
-refinery-feedstock-coordinator,Refinery Feedstock Coordinator,position,
-refinery-planner,Refinery Planner,position,
-refinery-planning-engineer,Refinery Planning Engineer,position,
-refinery-scheduler,Refinery Scheduler,position,
-refinery-technical-representative,Refinery Technical Representative,position,
-refinery-technical-service-representative,Refinery Technical Service Representative,position,"Appears only inside one compound entry. It may be the Refinery Technical Representative; kept apart until confirmed."
-regional-backcaster,Regional Backcaster,position,
-regional-business-director,Regional Business Director,position,
-regional-planning-director,Regional Planning Director,position,
-regional-planning-manager,Regional Planning Manager,position,
-regional-planning-team,Regional Planning Team,team,
-regional-production-planner,Regional Production Planner,position,
-risk-group,Risk Group,team,
-rvco-advisor,RVCO Advisor,position,The acronym is not expanded in the repository.
-site-tactical-team,Site Tactical Team,team,
-supply-coordinator,Supply Coordinator,position,
-supply-operations-director,Supply Operations Director,position,
-supply-operations-manager,Supply Operations Manager,position,
-tech-services,Tech Services,team,
-trader,Trader,position,
-vp-clean-products-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)",position,"Two VP entries differ only in RVCO. They may be one VP; kept apart until confirmed."
-vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, RVCO, Crude Trading, NGLs, Asphalt, Petchem)",position,"See the VP entry without RVCO."
-vp-rvco,VP RVCO,position,
+slug,label,preferred_label,kind,replaced_by,replaced_label_kind,definition,note,question
+action-owner,Action Owner,,position,,,,"The source writes ""Action Owners"": the owner of each action, not one fixed position. Kept as a role.",
+asphalt-manager,Asphalt Manager,,position,,,,,
+black-oil-manager,Black Oil Manager,,position,,,,,
+bpa,BP&A,Business Planning and Analysis,team,,,"A team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization.","BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read ""The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the …"" and name the organization served, such as ""the Specialty Products (including Asphalt, Petrochemicals, and Petroleum Coke/Sulfur) commercial organization"" (MPC postings 00023257 and 00024586, read through a search index and third-party hosts, 2026-10-19). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team.",
+business-analyst,Business Analyst,,position,,,,"In ""Business Analyst (RO)"", RO means Regional Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045): ""Q6: RO = Regional Optimization"").",
+cci-director,CCI Director,Continual Commercial Improvement Director,position,,,,"CCI expanded as Continual Commercial Improvement (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads ""The Continual Commercial Improvement (CCI) Engineer"" (builtin.com job 7627760, read 2026-10-18, third-party host). ""Continual"", not ""Continuous"".",
+commercial-scheduler,Commercial Scheduler,,position,,,,,
+cp-manager,CP Manager,Clean Products Manager,position,,,,"CP expanded as Clean Products (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in this role only, by Claude. Inferred: the process map gathers deals ""for Clean Products"" from the supplier ""CP Trader"", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source.",
+cpvc-scheduler,CPVC Scheduler,Clean Products Value Chain Scheduler,position,,,,"CPVC expanded as Clean Products Value Chain (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, ""MPC team places 2nd in Master Modeler Competition"", 2023-04-20: ""Marathon Petroleum's Clean Products Value Chain (CPVC) employees"" (read through a search index; the page is behind a bot check).",
+crude-coordinator,Crude Coordinator,,position,,,,,
+crude-feedstock-trading-lead,Crude/Feedstock Trading Lead,,position,,,,,
+crude-oil-trader,Crude Oil Trader,,position,,,,Kept apart from Trader: the source names the commodity.,
+crude-planning-and-optimization-director,Crude Planning and Optimization Director,,position,,,,,
+crude-representative,Crude Representative,,position,,,,,
+crude-rfc,Crude RFC,Crude Refinery Feedstock Coordinator,position,,,Coordinates crude feedstock requirements and refinery planning inputs for crude purchase and allocation evaluations.,"Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title. The definition is Claude's EPM working definition, not an MPC position description.",RFC read as Refinery Feedstock Coordinator from the process map's context only; to be confirmed with the process owner.
+crude-scheduler,Crude Scheduler,,position,,,,,
+distribution-backcaster,Distribution Backcaster,,position,,,,,
+distribution-planner,Distribution Planner,,position,,,,,
+e-and-p-manager,E&P Manager,Economics and Planning Manager,position,,,,"E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in the refinery-planning roles, by Claude. externally corroborated: MPC job postings ask for ""Economics & Planning"" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor.",
+e-and-p-supervisor,E&P Supervisor,Economics and Planning Supervisor,position,,,,"E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager. May be the Refinery Econ & Planning Supervisor; not merged, because an expanded acronym does not prove one position.",
+forecaster,Forecaster,,position,,,,"Kept apart (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 2: ""no for now"").","Unresolved candidate equivalence with Local Refinery Forecaster. Question for the refinery Economics and Planning process owner: in these backcasting activities, does ""Forecaster"" mean the refinery-based role responsible for the refinery forecast, including the prompt-period forecast, or a different forecasting function?"
+gasoline-blend-optimizer,Gasoline Blend Optimizer,,position,,,,,
+gfvc-manager,Manager: GFVC,Global Feedstocks Value Chain Manager,position,,,,"GFVC expanded as Global Feedstocks Value Chain (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC newsroom, ""Marathon Petroleum scores 100% on 2021 Corporate Equality Index"", 2021-06-02, names a ""Senior Vice President, Global Feedstocks Value Chain"" (read through a search index; the page is behind a bot check). A 2021 source: it supports the term, not today's structure.",
+global-feedstocks-manager,Global Feedstocks Manager,,position,,,,,
+inventory-representative,Inventory Representative,,position,,,,,
+it-data-custodian,IT Data Custodian,,position,,,,,
+it-data-owner,IT Data Owner,,position,,,,,
+it-data-steward,IT Data Steward,,position,,,,,
+local-refinery-forecaster,Local Refinery Forecaster,,position,,,,,
+marine-dock-scheduler,Marine Dock Scheduler,,position,,,,,
+operations,Operations,,team,,,,,
+pricing-representative,Pricing Representative,,position,,,,,
+product-representative,Product Representative,,position,,,,,
+psm,PSM,,position,,,,"Left unexpanded (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 6).","Unresolved. Process Safety Management is the industry expansion, but nothing shows that this RACI party means it."
+rcvo-advisor,RCVO Advisor,,position,rvco-advisor,hidden,,"Deprecated: ""RCVO"" is a misspelling of ""RVCO"" (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 1). The process map writes RVCO Advisor on the same process's SIPOC.",
+refinery-backcaster,Refinery Backcaster,,position,,,,,
+refinery-econ-and-planning-supervisor,Refinery Econ & Planning Supervisor,,position,,,,,
+refinery-feedstock-coordinator,Refinery Feedstock Coordinator,,position,,,,,
+refinery-planner,Refinery Planner,,position,,,,,
+refinery-planning-engineer,Refinery Planning Engineer,,position,,,,,
+refinery-scheduler,Refinery Scheduler,,position,,,,,
+refinery-technical-representative,Refinery Technical Representative,,position,,,"Represents refinery technical expertise in planning and backcasting reviews, including review of operating assumptions, technical constraints and modeled refinery performance.","The surviving role for the Refinery Technical Service Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3). The definition is Claude's EPM working definition, inferred from the backcasting processes it is consulted on; it is not an MPC position description.",
+refinery-technical-service-representative,Refinery Technical Service Representative,,position,refinery-technical-representative,alt,,"Deprecated: the same role as Refinery Technical Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3).",
+regional-backcaster,Regional Backcaster,,position,,,,,
+regional-business-director,Regional Business Director,,position,,,,,
+regional-planning-director,Regional Planning Director,,position,,,,,
+regional-planning-manager,Regional Planning Manager,,position,,,,,
+regional-planning-team,Regional Planning Team,,team,,,,,
+regional-production-planner,Regional Production Planner,,position,,,,,
+risk-group,Risk Group,,team,,,,,
+rvco-advisor,RVCO Advisor,Refinery Value Chain Optimization Advisor,position,,,"Advises on refinery and commercial optimization by evaluating feedstock choices, production plans, product placement, operating constraints and economic opportunities.","RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads ""Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization"" (talents.vaia.com job 29020474, read 2026-10-18, third-party host). The definition is Claude's EPM working definition, not an MPC position description.",
+site-tactical-team,Site Tactical Team,,team,,,,,
+supply-coordinator,Supply Coordinator,,position,,,,,
+supply-operations-director,Supply Operations Director,,position,,,,,
+supply-operations-manager,Supply Operations Manager,,position,,,,,
+tech-services,Tech Services,,team,,,,,
+trader,Trader,,position,,,,,
+vp-clean-products-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)",,position,vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem,alt,,"Deprecated in favour of the VP string that includes RVCO (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 4: ""choose the string with ""RVCO"" in the list"").",
+vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem,"VP (Clean Products, RVCO, Crude Trading, NGLs, Asphalt, Petchem)",,position,,,,"The surviving VP role for both long VP strings (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 4).",
+vp-rvco,VP RVCO,VP Refinery Value Chain Optimization,position,,,,"RVCO expanded as Refinery Value Chain Optimization, with the evidence on the Refinery Value Chain Optimization Advisor role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string, as the role questions package proposed: it is Accountable where that VP is Informed.",
