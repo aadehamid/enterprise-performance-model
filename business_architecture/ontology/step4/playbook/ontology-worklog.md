@@ -962,12 +962,20 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
-### MPC process-map proposals ruled and applied (2026-10-18)
+### MPC process-map proposals ruled (2026-10-18)
 - Hamid accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
-  to apply them to the process map itself (EPM-DEC-001-0047). Each map
-  change is its own pull request. `core` 2.0.0 now builds from the map at
-  its pinned commit, so released packages do not move; new nodes reach the
-  ontology in a later `core` release.
+  to apply them to the process map itself (EPM-DEC-001-0047). Under the
+  delegation, each map change is its own pull request, and none is applied
+  by the record itself. With this record's pull request, `core` 2.0.0
+  builds from the map at its pinned commit, so released packages do not
+  move; new nodes reach the ontology in a later `core` release.
+
+### Market Data and Commercial Risk (2026-10-18)
+- Hamid accepted the domain split with explicit distinctions, gave both
+  definitions, and named the Risk Group as owner (Market Data
+  provisionally). Trading-counterparty credit is in Commercial Risk;
+  volatilities are risk-model parameters, vendor-supplied volatility
+  observations are Market Data. EPM-DEC-001-0046.
 
 ### Licence and KPI seed (2026-10-18)
 - Hamid decided the ontology stays proprietary, all rights reserved
