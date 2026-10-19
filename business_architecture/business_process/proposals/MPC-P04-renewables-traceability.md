@@ -12,7 +12,7 @@ MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 j
 
 | Need | Existing process | Fit |
 |---|---|---|
-| Buy feedstock | CM 1.2.5.2.1 Coordinate Feedstock Trading; CM 1.2.1.3.3 Capture Physical Trades | Fits. A vegetable oil or fat is a feedstock trade like any other |
+| Buy feedstock | CM 1.2.5.2.1 Coordinate Feedstock Trading; CM 1.2.1.3.3 Capture Physical Trades | Fits. A renewable feedstock such as refined soybean oil (MPC FY2025 Form 10-K; `mpc-fy2025-10k-fact-sheet.md` §7) is a feedstock trade like any other |
 | Plan demand and slate | CM 1.2.5.2.2 Develop Feedstock Demand; CM 1.2.5.2.3 Plan Optimal Feedstock Slate And Run Rate | Fits |
 | Move and store it | CM 1.2.5.3 Crude/Feed Transportation Management; CM 1.2.5.4.2 Manage Feedstock Inventory | Fits |
 | Feedstock quality | CM 1.2.5.1 Crude/Feed Quality Management | Fits for quality |

@@ -7,7 +7,7 @@ from this clone, derives a URI slug for every node:
   - Nodes with an ID (e.g. "CM 1.2.1.3") -> slug "CM-1-2-1-3"
     (spaces and dots become hyphens; the original code is kept as
     skos:notation, and the URI is https://w3id.org/lsc/ontology/process/{slug})
-  - The 13 ID-less stubs -> minted slug "L{level}-{name-slug}"
+  - ID-less stubs (13 at the first run) -> minted slug "L{level}-{name-slug}"
     (e.g. "L1-human-resources")
 
 A node marked "deprecated": true in the JSON (e.g. the CM-1-1-4-6
@@ -43,6 +43,8 @@ SLUG_PINS = {
     "RF 1": "L1-refining",
     "RF 1.1": "L2-refinery-performance-and-risk-coordination",
     "RF 1.2": "L2-refinery-asset-reliability-and-turnaround-coordination",
+    # MPC-P01 gives Midstream an ID (EPM-DEC-001-0047).
+    "MS 1": "L1-midstream",
 }
 
 
@@ -118,7 +120,9 @@ def main() -> None:
     assert len(set(notations)) == len(notations), "notation collision"
 
     minted = [r for r in rows if r["minted"]]
-    # minted stubs == ID-less nodes in the input (13 baseline + R1's new L2)
+    # minted stubs == ID-less nodes in the input (14 at the Step 2 run: 13 baseline + R1's new L2;
+    # 11 once MPC-P02 gives Refining and its two L2 nodes IDs, 10 once MPC-P01 gives Midstream MS 1;
+    # SLUG_PINS keeps all four on their slugs)
     def count_idless(nodes):
         return sum((0 if n.get("id") else 1) + count_idless(n.get("children", []) or [])
                    for n in nodes)
@@ -134,7 +138,8 @@ def main() -> None:
         "# Step 2 — Identity normalization report",
         "",
         f"- Nodes processed: {len(rows)}",
-        f"- IDs preserved as skos:notation: {len(notations)} (all unique, all match `CM <dotted>` pattern)",
+        f"- IDs preserved as skos:notation: {len(notations)} (all unique; prefixes "
+        + ", ".join(f"`{p}`" for p in sorted({n.split()[0] for n in notations})) + ", each `<prefix> <dotted>`)",
         f"- Minted stub slugs: {len(minted)}",
         f"- Deprecated tombstones: {sum(1 for r in rows if r['deprecated'])}",
         "- Slug collisions: none",

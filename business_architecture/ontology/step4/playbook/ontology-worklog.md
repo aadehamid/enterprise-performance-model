@@ -89,7 +89,7 @@ ontology; everything else points at it.
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions (seeded from Hamid's planner measure list since 2026-10-18, EPM-DEC-001-0040), Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Started 2026-10-18: the `kpi` module, 41 measure definitions classified by kind, released as `kpi` 1.0.0 on 2026-10-19 with Hamid's approval (EPM-DEC-001-0040, 0042, 0043) |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; `core` 2.1.0 carries the controlled-value shapes and one evidence node per canonical fact, with the evidence-link shapes (EPM-DEC-001-0044), 2026-10-18 |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with Hamid's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by Hamid (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by Hamid (EPM-DEC-001-0043); not hosted, the namespace a placeholder (Hamid, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (Hamid, EPM-DEC-001-0041, 2026-10-18) |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with Hamid's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by Hamid (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by Hamid, and kpi 1.0.1, a patch naming the list's source VCO DSV (EPM-DEC-001-0043); not hosted, the namespace a placeholder (Hamid, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (Hamid, EPM-DEC-001-0041, 2026-10-18) |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18) |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with organization 2.0.0 and the ref-mpc module, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
@@ -2166,7 +2166,7 @@ URI.
 Facts about the source material that are easy to get wrong:
 
 - **Scale:** ~680 nodes, levels L0–L6 (L0: 2, L1: 10, L2: 4, L3: 24,
-  L4: 117, L5: 502, L6: 21). 669 nodes have IDs; **11 roots/stubs do
+  L4: 117, L5: 502, L6: 21). 669 nodes have IDs at the Step 2 run (later additions are dated in `build/output/step2-identity-report.md`); **11 roots/stubs do
   not** (Downstream Operations, Refining, Midstream, Enabling Functions,
   Supply Chain Mgmt., Finance, Shared Services, Process Excellence & IT,
   Human Resources, Legal & Corp Comm, EHS & Gov Reporting). Step 2 mints
@@ -2181,8 +2181,9 @@ Facts about the source material that are easy to get wrong:
 - **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
   processes have empty `produces` arrays; no AR credit/receivables/
   collections portfolio exists (do not reuse `dp-commercial-risk`);
-  `office_lanes.json` is not linked by ID; Loss Control exists as a
-  data-product concern with no owning process.
+  `office_lanes.json` is not linked by ID; Loss Control was a
+  data-product concern with no owning process (*2026-10-19:* produced by
+  CM 1.1.3.7.13, EPM-DEC-001-0048).
 - **Systems vocabulary in the map:** XPIMS, DPO, PPIMS, MPR, Profisee,
   KittyHawk, RightAngle. System-specific jargon depresses naive
   term-overlap scores — coverage triage is human work.
