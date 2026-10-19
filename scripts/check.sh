@@ -47,7 +47,7 @@ done
 (cd "$step4/scoped-sequence" && run with_deps python build.py --verify)
 # The core release package (EPM-DEC-001-0029) must equal a fresh build from the pinned evidence.
 (cd business_architecture/ontology/release && run with_deps python build_core.py --verify)
-# Step 10: the module release candidates must equal a fresh build (EPM-DEC-001-0037).
+# Step 10: the module release packages must equal a fresh build (EPM-DEC-001-0037).
 (cd business_architecture/ontology/release && run with_deps python build_module.py organization --verify)
 (cd business_architecture/ontology/release && run with_deps python build_module.py ref-mpc --verify)
 (cd business_architecture/ontology/release && run with_deps python build_module.py kpi --verify)
