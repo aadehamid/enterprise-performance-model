@@ -1,5 +1,7 @@
 # Role questions from the role register
 
+*2026-10-18:* answered by Hamid (`answers-2026-10-18.md`); carried out in a later pull request.
+
 Prepared for Hamid on 2026-10-14. This package decides nothing. It sets out the questions EPM-DEC-001-0031 leaves for you (lines 31 to 39), with the evidence for each answer, and says how they relate to competency question 17.
 
 The register maps the 91 role strings in the process map's RACI lists to 60 roles: 54 positions and 6 teams (`business_architecture/ontology/organization/build_roles.py`, run at commit `6baf510`). Its rule 1 merges two strings only when they differ in case, plural, punctuation or "&" against "and" (EPM-DEC-001-0031, line 22). Every question below asks for a merge or a definition that rule 1 does not allow on spelling alone. Occurrence counts come from reading the `raci` lists of `business_architecture/business_process/downstream_process_map.json` with `build_roles.py`'s own reader. "R", "A", "C" and "I" are the four RACI levels.

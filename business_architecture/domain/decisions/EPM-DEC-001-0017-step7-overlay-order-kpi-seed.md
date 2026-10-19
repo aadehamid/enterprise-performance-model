@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided |
+| Status | Decided; order item 1 amended by EPM-DEC-001-0040 (2026-10-18) |
 | Date | 2026-10-05 |
 | Questions | Q21, Q22 |
 | Source | Grilling session on the handover plan |

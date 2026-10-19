@@ -962,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Licence and KPI seed (2026-10-18)
+- Hamid decided the ontology stays proprietary, all rights reserved
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.
+- The `kpi` module is seeded from Hamid's planner measure list, with
+  personas as planning roles and no person's name; his files stay out
+  of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). His words
+  are in `review-evidence/hamid-answers/answers-2026-10-18.md`.
+
 ### Namespace is a placeholder (2026-10-14)
 - Hamid decided not to host the namespace, because the domain may change,
   and to keep `https://w3id.org/lsc/ontology/` as a placeholder. Under the
