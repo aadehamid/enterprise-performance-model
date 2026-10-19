@@ -3631,6 +3631,17 @@
   "deprecated": false
  },
  {
+  "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-1-5",
+  "slug": "CM-1-2-5-1-5",
+  "level": 5,
+  "name": "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence",
+  "skos_notation": "CM 1.2.5.1.5",
+  "parent_slug": "CM-1-2-5-1",
+  "minted": false,
+  "proposed_repo_id": "CM 1.2.5.1.5",
+  "deprecated": false
+ },
+ {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-2-5-2",
   "slug": "CM-1-2-5-2",
   "level": 4,
