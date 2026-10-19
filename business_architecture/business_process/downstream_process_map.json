@@ -7893,6 +7893,7 @@
                     "id": "CM 1.3.3.4",
                     "level": 4,
                     "name": "Network Design (Retail)",
+                    "description": "Design the retail site network: target locations, operating alternatives and network size. Applicability depends on whether the company operates retail sites. A company that sells only through branded jobbers and dealers performs this with its partners, as brand network planning. MPC is such a company: it sold its company-operated retail (Speedway) in 2021 (MPC FY2025 Form 10-K, Item 1). Kept for companies that operate their own sites (EPM-DEC-001-0047, MPC-P07).",
                     "children": [
                       {
                         "id": "CM 1.3.3.4.1",
