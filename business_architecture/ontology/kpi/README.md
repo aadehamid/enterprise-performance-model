@@ -1,6 +1,6 @@
 # kpi: measure definitions
 
-The `kpi` module defines the measures that Hamid's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.0.0 for process IRIs and uses W3C ORG's `org:Role` by IRI.
+The `kpi` module defines the measures that Hamid's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.1.0 for process IRIs and uses W3C ORG's `org:Role` by IRI.
 
 | File | What |
 |---|---|
@@ -11,7 +11,7 @@ The `kpi` module defines the measures that Hamid's planning team uses and that M
 | `build_measures.py`, `measures.ttl` | The build: three tables in, 41 measure definitions and 4 personas out. `python3 build_measures.py` prints the figures; `--verify` fails unless `measures.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_measures.py` | Tests: the vocabulary is well formed, the build is current and reconciles, SHACL accepts the module and rejects broken measures, and no person's name from the measure list is in any tracked text file (every extension; binary files skipped), in any case, hyphenated, CamelCase or accented spelling |
 
-The module is built and checked, not yet released. Hamid approved its first release, 1.0.0 (a major); it is cut in the pull request that follows.
+The module is released as 1.0.0 (`../releases/kpi/1.0.0/`), approved by Hamid, and requires core 2.1.0.
 
 Where the rows come from: Hamid's planner measure list of 2026-10-18, which stays outside the repository (EPM-DEC-001-0040), and MPC's public measures (`../../reference/mpc/mpc-performance-measures-evidence.md`).
 
