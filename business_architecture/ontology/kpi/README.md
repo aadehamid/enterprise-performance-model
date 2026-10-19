@@ -1,10 +1,17 @@
 # kpi: measure definitions
 
-The `kpi` module defines the measures that Hamid's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005).
+The `kpi` module defines the measures that Hamid's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.0.0 for process IRIs and uses W3C ORG's `org:Role` by IRI.
 
 | File | What |
 |---|---|
 | `measure-classification.csv` | One row per distinct measure: its class, whether it is a KPI candidate, the personas who use it, what it is compared against, MPC's counterpart, the reason and the evidence (EPM-DEC-001-0042) |
+| `measure-details.csv` | Each measure's definition, grain, basis, aliases, the measures it is not to be confused with and how, and the core processes it informs (EPM-DEC-001-0043) |
+| `personas.csv` | The four planning personas, with plan type and horizon |
+| `vocabulary.ttl`, `shapes.ttl` | The module's terms and SHACL shapes, with a stated cardinality on every property (EPM-DEC-001-0043) |
+| `build_measures.py`, `measures.ttl` | The build: three tables in, 41 measure definitions and 4 personas out. `python3 build_measures.py` prints the figures; `--verify` fails unless `measures.ttl` equals a fresh build. `scripts/check.sh` runs it |
+| `test_measures.py` | Tests: the vocabulary is well formed, the build is current and reconciles, SHACL accepts the module and rejects broken measures, and no person's name from the measure list is anywhere in the repo |
+
+The module is built and checked, not released. Its first release, 1.0.0, is a major and waits for Hamid.
 
 Where the rows come from: Hamid's planner measure list of 2026-10-18, which stays outside the repository (EPM-DEC-001-0040), and MPC's public measures (`../../reference/mpc/mpc-performance-measures-evidence.md`).
 

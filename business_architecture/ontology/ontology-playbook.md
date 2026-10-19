@@ -1364,8 +1364,9 @@ resolves" gate is parked (EPM-DEC-001-0039).
 **Step 11, regression.** `regression/` holds one SPARQL query per tested
 part of the 44 competency questions and a status for each question. It
 started on `core` 1.0.0 with 5 answerable. On `core` 2.0.0 with the
-organization module, 9 are answerable, 5 partial and 30 waiting. Most of
-the waiting questions need Step 7, and the customer questions wait for the
+organization module, 9 were answerable, 5 partial and 30 waiting. With
+the kpi module (2026-10-18), 17 are answerable, 6 partial and 21 waiting.
+Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
 Customer / Party module. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.

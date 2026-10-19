@@ -1,0 +1,9 @@
+# Q13 Only a measure definition has a measure kind, so Customer or a process cannot be a KPI (must be none).
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?thing WHERE {
+  ?thing kpi:measureKind ?kind .
+  FILTER NOT EXISTS { ?thing a kpi:MeasureDefinition }
+}

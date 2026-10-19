@@ -1,0 +1,5 @@
+slug,label,definition,plan_type,horizon
+prompt-planner,Prompt Planner,"Plans the prompt month for the region's refineries from the latest schedule, and watches hourly and daily execution against it.",prompt-month refinery schedule (APS),prompt month
+short-term-planner,Short-Term Planner,"Builds the short-term refinery LP plan and hands it to refinery planning, and checks month-to-date performance against it.",short-term refinery LP plan (XPIMS),M+1 to M+3
+distribution-planner,Distribution Planner,"Plans product supply, demand, transport and inventory across the distribution network.",distribution plan (DPO),prompt to M+3
+mid-term-planner,Mid-Term Planner,"Builds and submits the mid-term plan, compares it with the short-term plans and history, and sequences turnarounds and capital evaluations.",mid-term plan (MTP),M+4 to M+36
