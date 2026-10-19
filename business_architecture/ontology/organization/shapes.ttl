@@ -36,7 +36,7 @@ shp:Role a sh:NodeShape ;
     sh:property [ sh:path skos:hiddenLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path owl:deprecated ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:boolean ;
-                  sh:message "A role carries owl:deprecated at most once, as a boolean (n10s reads sh:in on booleans wrongly)." ] ;
+                  sh:message "A role carries owl:deprecated at most once, as a boolean (EPM-DEC-001-0045)." ] ;
     sh:property [ sh:path dcterms:isReplacedBy ; sh:minCount 0 ; sh:maxCount 1 ; sh:class org:Role ;
                   sh:message "A deprecated role names one successor role." ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;

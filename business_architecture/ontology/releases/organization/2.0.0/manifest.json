@@ -13,16 +13,16 @@
     "EPM-DEC-001-0032",
     "EPM-DEC-001-0045"
   ],
-  "triples": 5984,
+  "triples": 5985,
   "approved_by": {
     "who": "Hamid",
     "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
   },
   "files": {
-    "CHANGELOG.md": "3b4f7290396f28b1b63f47e94f96cfac068e530ef7dfb01d084542dc2ca11f20",
+    "CHANGELOG.md": "6aa6720cd74a91402915dada21e0404153663e3d99d141a3fa43d428ebd79a6c",
     "catalog.ttl": "90e77a5f48ec20065de2a8feec80480c9c911e28cfc5ea2a575b870ebf1c37d7",
-    "organization.jsonld": "224ac7c8248a31e894ca629bded4e00349ce98e45e863c9a05009a3e33728e1c",
-    "organization.ttl": "df5c5b87ddf21681aa61b100485f2edbc8f49203b87c13adbef21a0ad7faef78",
-    "shapes.ttl": "b78aeca31df5e2ee822f97040a1beb18aed864ac31f2d5bc7f3e5c4c3044926a"
+    "organization.jsonld": "54ef6b343205be132f57538c199af08d5a75c53be6f35ec2fafd28b566d0a8ce",
+    "organization.ttl": "7d6ab60d4c0b312e8cd184c1cc1631dc27f1864ad08defc0e4335d48dfd29225",
+    "shapes.ttl": "2f3a700dc332c23cff4c78a574afeca8995ae914187aecc078ea21f3e3cb3338"
   }
 }

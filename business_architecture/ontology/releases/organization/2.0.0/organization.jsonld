@@ -30634,13 +30634,13 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."
+    "@value": "A team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings name \"the Business Planning and Analysis (BP&A) team\" (LinkedIn job 4452695204, posted 2025-07-23, third-party host). Whether the RACI entry means the team or one position is not settled; kept as a team."
+    "@value": "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the\" commercial organization they serve (LinkedIn job 4452695204, posted 2025-07-23, read through a search index; third-party host). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -30933,7 +30933,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title."
+    "@value": "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title. The definition is Claude's EPM working definition, not an MPC position description."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -31552,6 +31552,12 @@
     "@value": "Represents refinery technical expertise in planning and backcasting reviews, including review of operating assumptions, technical constraints and modeled refinery performance."
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The surviving role for the Refinery Technical Service Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3). The definition is Claude's EPM working definition, inferred from the backcasting processes it is consulted on; it is not an MPC position description."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
    {
     "@language": "en",
@@ -31755,7 +31761,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host)."
+    "@value": "RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host). The definition is Claude's EPM working definition, not an MPC position description."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#hiddenLabel": [
@@ -31983,7 +31989,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "RVCO expanded as above (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string: it is Accountable where that VP is Informed."
+    "@value": "RVCO expanded as Refinery Value Chain Optimization, with the evidence on the Refinery Value Chain Optimization Advisor role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string, as the role questions package proposed: it is Accountable where that VP is Informed."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [

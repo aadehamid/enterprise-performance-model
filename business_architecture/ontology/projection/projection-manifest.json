@@ -1,18 +1,18 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "206da947379d180a7e96d411ba3af71da780da6e75a0cf7a17a7ed788a9c4a3b",
+  "input_fingerprint": "f0bd19fe060c37c493f0ba5416cba980b99bfe4223969db88a259f6dfcde5167",
   "inputs": {
     "organization/assignments.ttl": "f4bee1bb3eed7791dcc7d9605637b8b2e75404a4c32a923983fa237730fb9c7e",
-    "organization/roles.ttl": "aabda2b79ec5ac7edb79d095b42eb860b916a10185b346fc085e294872a86e74",
+    "organization/roles.ttl": "57960a6244aa538d744e7fb38b2153c6be232b71dbb12b2513967ec075f49966",
     "organization/vocabulary.ttl": "23bb7d1d65d879a38c1cb06fd26af853a4371bf9ead8ce6e23b31177f0e18e73",
     "ref-mpc/ref-mpc.ttl": "172b8f70ab96682f7f559855f370237c48ba6ab96c1e8f2c8d3751f656f508ef",
     "releases/core/2.0.0/core.ttl": "b6d83aa343be0e2afbab21c923af4086b283c9e8063defee7ac3af2567be5d90"
   },
-  "loadable_triples": 22311,
+  "loadable_triples": 22312,
   "release_exceptions": {},
   "rule4": "4a: qualified-relation nodes (EPM-DEC-001-0020)",
   "shapes": {
-    "organization/shapes.ttl": "ff8decff5b85dcb77cb0674e14674310666bbea9bf1f94bfc16c55bf4b100e56",
+    "organization/shapes.ttl": "39d3066113038d7f1c1f621cb21f119911e662e122618925118c175cca1a7470",
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
     "releases/core/2.0.0/shapes.ttl": "8ed0310141839a97f88ffa751e64e1dc7da8579dcc7017a97abd20dcda074c3b",

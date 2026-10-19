@@ -13,7 +13,7 @@ from unittest import mock
 
 from pyshacl import validate
 from rdflib import Graph
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import OWL, RDF, SKOS
 
 import build_roles as br
 
@@ -159,6 +159,26 @@ class RolesConform(unittest.TestCase):
         self.assertEqual(str(data.value(rvco, SKOS.prefLabel)), "Refinery Value Chain Optimization Advisor")
         self.assertIn("RVCO Advisor", {str(x) for x in data.objects(rvco, SKOS.altLabel)})
         self.assertEqual({str(x) for x in data.objects(rvco, SKOS.hiddenLabel)}, {"RCVO Advisor"})
+
+    def test_every_deprecation_is_true_and_matches_roles_csv(self):
+        # The shape checks a boolean only; this pins the value and the set (EPM-DEC-001-0045).
+        data = Graph().parse(br.OUTPUT)
+        values = list(data.subject_objects(OWL.deprecated))
+        self.assertTrue(all(v.toPython() is True for _, v in values))
+        self.assertEqual({s for s, _ in values}, {br.ROLE[r["slug"]] for r in rows(br.ROLES) if r["replaced_by"]})
+
+    def test_the_answers_point_the_right_way(self):
+        # Hamid's answers 1, 3 and 4 (EPM-DEC-001-0045): which role survives each merge.
+        replaced = {r["slug"]: r["replaced_by"] for r in rows(br.ROLES) if r["replaced_by"]}
+        self.assertEqual(replaced, {
+            "rcvo-advisor": "rvco-advisor",
+            "refinery-technical-service-representative": "refinery-technical-representative",
+            "vp-clean-products-crude-trading-ngls-asphalt-petchem": "vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem"})
+        kept = {r["slug"] for r in rows(br.ROLES) if not r["replaced_by"]}
+        self.assertTrue({"forecaster", "local-refinery-forecaster", "crude-rfc", "vp-rvco"} <= kept)
+
+    def test_ten_roles_take_an_expanded_name(self):
+        self.assertEqual(sum(1 for r in rows(br.ROLES) if r["preferred_label"]), 10)
 
     def test_teams_carry_the_team_note_and_positions_do_not(self):
         data = Graph().parse(br.OUTPUT)

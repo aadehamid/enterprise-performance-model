@@ -26,8 +26,8 @@ role:black-oil-manager a org:Role ;
 role:bpa a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "BP&A"@en ;
-    skos:definition "The team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."@en ;
-    skos:editorialNote "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings name \"the Business Planning and Analysis (BP&A) team\" (LinkedIn job 4452695204, posted 2025-07-23, third-party host). Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
+    skos:definition "A team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."@en ;
+    skos:editorialNote "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the\" commercial organization they serve (LinkedIn job 4452695204, posted 2025-07-23, read through a search index; third-party host). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
     skos:prefLabel "Business Planning and Analysis"@en ;
     skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
 
@@ -89,7 +89,7 @@ role:crude-rfc a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "Crude RFC"@en ;
     skos:definition "Coordinates crude feedstock requirements and refinery planning inputs for crude purchase and allocation evaluations."@en ;
-    skos:editorialNote "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title."@en ;
+    skos:editorialNote "Kept its own role, distinct from Refinery Feedstock Coordinator and from Crude Coordinator (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 5 b). The RFC expansion is a contextual reading, not a published MPC title. The definition is Claude's EPM working definition, not an MPC position description."@en ;
     skos:prefLabel "Crude Refinery Feedstock Coordinator"@en .
 
 role:crude-scheduler a org:Role ;
@@ -298,7 +298,7 @@ role:vp-clean-products-crude-trading-ngls-asphalt-petchem a org:Role ;
 role:vp-rvco a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "VP RVCO"@en ;
-    skos:editorialNote "RVCO expanded as above (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string: it is Accountable where that VP is Informed."@en ;
+    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization, with the evidence on the Refinery Value Chain Optimization Advisor role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Kept apart from the long VP string, as the role questions package proposed: it is Accountable where that VP is Informed."@en ;
     skos:prefLabel "VP Refinery Value Chain Optimization"@en .
 
 role:refinery-technical-representative a org:Role ;
@@ -306,13 +306,14 @@ role:refinery-technical-representative a org:Role ;
     skos:altLabel "Refinery Technical Service Representative"@en,
         "Refinery technical representative"@en ;
     skos:definition "Represents refinery technical expertise in planning and backcasting reviews, including review of operating assumptions, technical constraints and modeled refinery performance."@en ;
+    skos:editorialNote "The surviving role for the Refinery Technical Service Representative (Hamid, 2026-10-18 (EPM-DEC-001-0045), question 3). The definition is Claude's EPM working definition, inferred from the backcasting processes it is consulted on; it is not an MPC position description."@en ;
     skos:prefLabel "Refinery Technical Representative"@en .
 
 role:rvco-advisor a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "RVCO Advisor"@en ;
     skos:definition "Advises on refinery and commercial optimization by evaluating feedstock choices, production plans, product placement, operating constraints and economic opportunities."@en ;
-    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host)."@en ;
+    skos:editorialNote "RVCO expanded as Refinery Value Chain Optimization (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: an MPC job posting reads \"Refinery Value Chain Optimization (RVCO) is seeking a motivated employee with interest in commercial optimization\" (talents.vaia.com job 29020474, read 2026-10-18, third-party host). The definition is Claude's EPM working definition, not an MPC position description."@en ;
     skos:hiddenLabel "RCVO Advisor"@en ;
     skos:prefLabel "Refinery Value Chain Optimization Advisor"@en .
 
