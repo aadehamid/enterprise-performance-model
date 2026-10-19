@@ -1,5 +1,6 @@
-"""Tests for the Step 9 controlled-value shapes (EPM-DEC-001-0014, EPM-DEC-001-0035): the core
-release and the organization module conform, and a value from the wrong list fails.
+"""Tests for the Step 9 controlled-value shapes (EPM-DEC-001-0014, EPM-DEC-001-0035, EPM-DEC-001-0044):
+the core release (2.1.0, which carries these shapes in its release shapes) and the organization module
+conform, a value from the wrong list fails, and every code-list property of core has a shape.
 
 Run: python3 -m pytest test_controlled_values.py (needs rdflib, pyshacl).
 """
@@ -18,10 +19,23 @@ ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
 DATA = Graph()
-DATA.parse(os.path.join(ONTOLOGY, "releases", "core", "1.0.0", "core.ttl"))
+RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.1.0")
+DATA.parse(os.path.join(RELEASE, "core.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "assignments.ttl"))
 CODED = [SHAPES.value(s, SH.targetObjectsOf) for s in SHAPES.subjects(RDF.type, SH.NodeShape)]
+RELEASE_SHAPES = Graph().parse(os.path.join(RELEASE, "shapes.ttl"))
+
+
+def membership_targets(shapes):
+    """Properties whose values a shape checks for membership of a named list (skos:inScheme, sh:hasValue)."""
+    out = set()
+    for shape in shapes.subjects(RDF.type, SH.NodeShape):
+        target = shapes.value(shape, SH.targetObjectsOf)
+        for prop in shapes.objects(shape, SH.property):
+            if shapes.value(prop, SH.path) == SKOS.inScheme and shapes.value(prop, SH.hasValue) is not None:
+                out.add(target)
+    return out
 
 
 def conforms(g):
@@ -52,7 +66,13 @@ class ControlledValues(unittest.TestCase):
         # scheme itself is not a code list: process-to-process relations are not coded values.
         schemes = set(DATA.subjects(RDF.type, SKOS.ConceptScheme)) - {URIRef("https://w3id.org/lsc/ontology/modules/core")}
         used = {p for s, p, o in DATA if str(p).startswith(str(CORE)) and DATA.value(o, SKOS.inScheme) in schemes}
-        self.assertEqual(sorted(map(str, used - set(CODED))), [])
+        self.assertEqual(sorted(map(str, used - set(CODED))), [str(CORE.businessDomain)])
+        # core:businessDomain has no shape here: the release shapes check it (shp:BusinessDomainValue,
+        # added in core 2.0.0). Every coded property is covered by one or the other.
+        self.assertEqual(sorted(map(str, used - membership_targets(RELEASE_SHAPES))), [])
+
+    def test_the_release_shapes_carry_every_controlled_value_shape(self):
+        self.assertTrue(set(CODED) <= membership_targets(RELEASE_SHAPES))
 
     def test_each_shape_names_the_list_its_property_uses(self):
         # Where the property has values, they sit in the scheme the shape names. Where it has none

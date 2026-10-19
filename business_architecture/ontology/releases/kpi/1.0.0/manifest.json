@@ -1,0 +1,27 @@
+{
+  "module": "kpi",
+  "version": "1.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/kpi",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/kpi/1.0.0",
+  "depends_on": {
+    "core": "2.1.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0040",
+    "EPM-DEC-001-0042",
+    "EPM-DEC-001-0043"
+  ],
+  "triples": 1017,
+  "approved_by": {
+    "who": "Hamid",
+    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md"
+  },
+  "files": {
+    "CHANGELOG.md": "20507f401237597d14caea9e4902190ae1d957e2350e366e91c70e56cef8b16c",
+    "catalog.ttl": "521f4b97ac73a137190a7783d03e8b4ddefe4a7a5460a0c9195c43c6a15eced4",
+    "kpi.jsonld": "e9d3102804a1646d9e5be0a725f315628f483765f56ac8f8c340fcf77396a239",
+    "kpi.ttl": "3a88efcc834bc127184268b35dc423c06b0cf80d0545a4f70e1394a5fc62cb80",
+    "shapes.ttl": "91f6e3613079f2b1893102319949b920c80025565547ee1dc8fb90ab2c75712b"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "module": "organization",
+  "version": "2.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/organization",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/organization/2.0.0",
+  "depends_on": {
+    "core": "2.1.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0030",
+    "EPM-DEC-001-0031",
+    "EPM-DEC-001-0032",
+    "EPM-DEC-001-0045"
+  ],
+  "triples": 5987,
+  "approved_by": {
+    "who": "Hamid",
+    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
+  },
+  "files": {
+    "CHANGELOG.md": "36afb6f6b5643163817be29d81b87802c0cedb06125771997081de1198871450",
+    "catalog.ttl": "90e77a5f48ec20065de2a8feec80480c9c911e28cfc5ea2a575b870ebf1c37d7",
+    "organization.jsonld": "7e0cadd8c288aaffbbbfc3608efacb06dd65fdf502081318e4417cf729b69aa4",
+    "organization.ttl": "34cc7ca60b8214c39a5b2f59ce75c8d780a21810081c3f1c529e00f459b40e17",
+    "shapes.ttl": "2f3a700dc332c23cff4c78a574afeca8995ae914187aecc078ea21f3e3cb3338"
+  }
+}
