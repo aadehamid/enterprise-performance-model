@@ -1,0 +1,72 @@
+# SHACL shapes for the kpi module (Step 7; EPM-DEC-001-0043). A stated cardinality on every
+# property (EPM-DEC-001-0020, rule 2; playbook Appendix B).
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/kpi/shapes/> .
+
+shp:Measure a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A measure has exactly one English name." ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:message "A measure has exactly one definition." ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue kpi:Measures ] ;
+    sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path kpi:measureKind ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( kind:kpi kind:operational-metric kind:plan-variance-diagnostic kind:market-indicator
+                          kind:decision-support-indicator kind:tracker-or-report kind:alert kind:not-a-measure ) ;
+                  sh:message "A measure has exactly one kind from the measure-kind list." ] ;
+    sh:property [ sh:path kpi:kpiCandidate ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+    sh:property [ sh:path kpi:classificationTest ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ;
+                  sh:minInclusive 1 ; sh:maxInclusive 5 ] ;
+    sh:property [ sh:path kpi:classificationReason ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:usedBy ; sh:minCount 0 ; sh:class org:Role ] ;
+    sh:property [ sh:path kpi:informsProcess ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path kpi:comparedAgainst ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:grain ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:basis ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:publicCounterpart ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:notToBeConfusedWith ; sh:minCount 0 ; sh:class kpi:MeasureDefinition ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A measure cites its source." ] ;
+    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+# Only a measure definition carries a measure kind, so a domain concept such as Customer
+# cannot be classified as a KPI (competency question 13, "done when").
+shp:KindOnlyOnMeasures a sh:NodeShape ;
+    sh:targetSubjectsOf kpi:measureKind ;
+    sh:class kpi:MeasureDefinition ;
+    sh:message "Only a measure definition has a measure kind." .
+
+# A KPI is a designation with a target and an owner (EPM-DEC-001-0042). A KPI candidate is
+# an operational metric still waiting for that decision.
+shp:CandidateIsOperational a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:path kpi:kpiCandidate ; sh:hasValue false ]
+            [ sh:path kpi:measureKind ; sh:hasValue kind:operational-metric ] ) ;
+    sh:message "Only an operational metric can be a KPI candidate." .
+
+# A tracker or report has no formula, unit or time grain (EPM-DEC-001-0042, rule 1), and a
+# capability that is not a measure has none either.
+shp:NoGrainWithoutAMeasure a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:path kpi:grain ; sh:maxCount 0 ]
+            [ sh:not [ sh:path kpi:measureKind ; sh:in ( kind:tracker-or-report kind:not-a-measure ) ] ] ) ;
+    sh:message "A tracker, report or non-measure has no grain." .
+
+shp:Persona a sh:NodeShape ;
+    sh:targetSubjectsOf kpi:planType ;
+    sh:class org:Role ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path kpi:planType ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path kpi:planHorizon ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ] .

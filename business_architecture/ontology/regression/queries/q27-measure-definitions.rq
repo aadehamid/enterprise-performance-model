@@ -1,0 +1,8 @@
+# Q27 What is a Named KPI, as a concept, before anyone computes it? A measure definition with a name, a definition and a kind, and no value.
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?measure ?name ?definition ?kind WHERE {
+  ?measure a kpi:MeasureDefinition ; skos:prefLabel ?name ; skos:definition ?definition ; kpi:measureKind ?kind .
+}

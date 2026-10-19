@@ -2523,7 +2523,7 @@ asg:CM-1-1-2-8-1--informed--regional-planning-team--7505ce40 a orgm:Responsibili
 
 asg:CM-1-1-2-8-1--responsible--rcvo-advisor--240fbf04 a orgm:ResponsibilityAssignment ;
     dcterms:source src:downstream-process-map ;
-    orgm:assignedRole role:rcvo-advisor ;
+    orgm:assignedRole role:rvco-advisor ;
     orgm:forProcess <https://w3id.org/lsc/ontology/process/CM-1-1-2-8-1> ;
     orgm:raciLevel raci:responsible ;
     orgm:sourceRoleText "RCVO Advisor"^^xsd:string .
@@ -2579,7 +2579,7 @@ asg:CM-1-1-2-8-2--informed--supply-operations-director--169f49b1 a orgm:Responsi
 
 asg:CM-1-1-2-8-2--informed--vp-clean-products-crude-trading-ngls-asphalt-petchem--025665c4 a orgm:ResponsibilityAssignment ;
     dcterms:source src:downstream-process-map ;
-    orgm:assignedRole role:vp-clean-products-crude-trading-ngls-asphalt-petchem ;
+    orgm:assignedRole role:vp-clean-products-rvco-crude-trading-ngls-asphalt-petchem ;
     orgm:forProcess <https://w3id.org/lsc/ontology/process/CM-1-1-2-8-2> ;
     orgm:raciLevel raci:informed ;
     orgm:sourceRoleText "VP (Clean Products, Crude Trading, NGLs, Asphalt, Petchem)"^^xsd:string .
@@ -4553,7 +4553,7 @@ asg:CM-1-1-5-5-3--consulted--forecaster--3925dd09 a orgm:ResponsibilityAssignmen
 
 asg:CM-1-1-5-5-3--consulted--refinery-technical-service-representative--3925dd09 a orgm:ResponsibilityAssignment ;
     dcterms:source src:downstream-process-map ;
-    orgm:assignedRole role:refinery-technical-service-representative ;
+    orgm:assignedRole role:refinery-technical-representative ;
     orgm:forProcess <https://w3id.org/lsc/ontology/process/CM-1-1-5-5-3> ;
     orgm:raciLevel raci:consulted ;
     orgm:sourceRoleText "Refinery technical service representatives/Forecasters/ E&P manager"^^xsd:string .
