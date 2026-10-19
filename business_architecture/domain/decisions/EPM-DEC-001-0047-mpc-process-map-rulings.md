@@ -20,11 +20,11 @@ EPM-DEC-001-0011 moved MPC-P01 and P03 to P09 to Step 7, and EPM-DEC-001-0012 de
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **One pull request per proposal that edits the map**, each citing this record. Proposals that need no map edit are recorded here and in `process-map-suggestions.md`.
-2. **Released packages stay fixed.** `core` 2.0.0 builds from the map at the commit it was released from (the pull request "core 2.0.0 builds from the process map at its pinned commit"), so a map edit does not change a released package. New and changed nodes reach the ontology in a later `core` release, through the usual path: identity (Step 2), definitions (Step 3), then the release build.
-3. **IDs follow the map's pattern.** Each L1 under Downstream Operations takes a two-letter prefix, as the MPC-P02 proposal set out: `RF 1` for Refining (with `RF 1.1` and `RF 1.2`), and `MS 1` for Midstream. P02's three IDs are applied with P02b, because P02b's children need their parent's ID. The minted slugs stay (SLUG_PINS in `build/step2-identity-map.py`).
-4. **Nothing is invented to close a gap.** Where a condition Hamid set (P03's physical-execution coverage check, P04's fit-gap) finds a real gap, the pull request writes a targeted proposal for Hamid instead of adding a process.
-5. **P06 needs no map edit now.** Hamid approved the sales channel as a dimension, not as process nodes. The dimension is built from the customer classification C1 to C8 when the Customer work resumes (EPM-DEC-001-0004).
-6. **P09 follows the measure classification.** Hamid accepted it "after category approval". The candidate measures attach to the value-stream stages once the measure classification (EPM-DEC-001-0042) has merged, each with an explicit relationship (informs, benchmarks, measures performance).
+2. **Released packages stay fixed.** With this record's pull request (commit "fix(release): core 2.0.0 builds from the process map at its pinned commit"), `core` 2.0.0 builds from the map at the commit it was released from, so a map edit does not change a released package. New and changed nodes reach the ontology in a later `core` release, through the usual path: identity (Step 2), definitions (Step 3), then the release build.
+3. **IDs follow the map's pattern.** The MPC-P02 proposal set out the pattern, a two-letter prefix for each L1 under Downstream Operations, and the IDs `RF 1`, `RF 1.1` and `RF 1.2`. P02's three IDs are applied with P02b, because P02b's children need their parent's ID. Midstream's ID was left to P01; its application gives it `MS 1` by the same pattern. The minted slugs stay (SLUG_PINS in `build/step2-identity-map.py`).
+4. **Nothing is invented to close a gap.** Where a condition Hamid set (P03's physical-execution coverage check; P04's "reuse before new process creation", checked as a fit-gap) finds a real gap, the pull request writes a targeted proposal for Hamid instead of adding a process.
+5. **P06 needs no map edit now.** Hamid accepted P06 ("P06: A."); the package's option A was a channel dimension, built from the customer classification C1 to C8 when the Customer work resumes (EPM-DEC-001-0004). Claude applies it that way, as a dimension rather than channel-specific steps; that choice is Claude's, under the delegation.
+6. **P09 waits for Hamid's category approval.** Hamid accepted it "after category approval". The measure categories are the classes in EPM-DEC-001-0042, which Claude decided under the delegation; that is not Hamid's approval. So P09 is prepared, with each measure's relationship to its stage (informs, benchmarks, measures performance), and applied only after Hamid approves the categories.
 7. **Process names stay company-neutral.** MPC facts go in descriptions with their source, never in a node name (`process-map-suggestions.md`, "Not suggested").
 
 ## Alternatives considered
@@ -42,5 +42,5 @@ The rulings, saved in `business_architecture/ontology/step4/review-evidence/hami
 
 ## Consequences
 
-- `process-map-suggestions.md` records each proposal's ruling, and each map-edit pull request updates its own row when it lands.
+- `process-map-suggestions.md` records each proposal's ruling (P02b in the P02 row), and each map-edit pull request updates its own row when it lands.
 - Step 7 order item 4 (EPM-DEC-001-0017) is carried out by these pull requests.
