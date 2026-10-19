@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed, for Hamid. No process is added until he rules |
+| Status | Question 1 answered by Hamid on 2026-10-19 and applied: CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048). Question 2 (quality of transferred intermediates) is still open |
 | Date | 2026-10-18 |
 | Decision | EPM-DEC-001-0047: Hamid accepted MPC-P03 "with a physical-execution coverage check" |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P03 |
@@ -18,7 +18,7 @@ MPC's refineries move intermediate products between sites, including during part
 | Quantity measurement | CM 1.1.3.7.4 Measure Inventory; CM 1.2.3 Actualizations (final ticket volumes) | Covered |
 | Quality measurement | CM 1.2.5.1 Crude/Feed Quality Management | **Gap.** CM 1.2.5.1 covers crude and feedstock quality. No step names the quality of an intermediate that one refinery sends and another receives |
 | Receipt and inventory reconciliation | CM 1.1.3.6.4 Discharge & Reconcile Load; CM 1.1.3.7.5 Perform Inventory Reconciliation; CM 1.1.5.1.2.5 Receive actual data for inventory & transfers | Covered |
-| Loss and gain | none | **Gap.** No step names the loss and gain reconciliation of a movement. The Loss Control data product ("Custody transfer, gain/loss, and shrinkage data across movements and terminal operations", `data_product_portfolio.json`) exists without a process that produces it; the worklog's Step 7 row lists "Loss Control ownership" as open |
+| Loss and gain | CM 1.1.3.7.13 Reconcile Movement Losses and Gains (added 2026-10-19, EPM-DEC-001-0048) | **Was a gap; filled.** No step names the loss and gain reconciliation of a movement. The Loss Control data product ("Custody transfer, gain/loss, and shrinkage data across movements and terminal operations", `data_product_portfolio.json`) exists without a process that produces it; the worklog's Step 7 row lists "Loss Control ownership" as open |
 | Settlement | CM 1.2.4.1.18 Settle Intermediates | Covered |
 
 Assumption behind "covered": CM 1.1.3 (Distribution Planning & Scheduling and Inventory Management) handles intermediates as well as finished products. Its inventory steps include "Develop Intermediates Inventory Policy" (CM 1.1.3.7.2), which supports that reading. If Hamid reads CM 1.1.3 as finished products only, the rows that rest on CM 1.1.3 alone become gaps: nomination and scheduling, and movement execution. Quantity measurement keeps CM 1.2.3, receipt and reconciliation keep CM 1.1.5.1.2.5, and settlement keeps CM 1.2.4.1.18, because those sit outside CM 1.1.3.

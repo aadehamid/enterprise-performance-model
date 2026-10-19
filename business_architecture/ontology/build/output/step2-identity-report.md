@@ -31,3 +31,5 @@
 
 `https://w3id.org/lsc/ontology/process/{slug}` — e.g. `https://w3id.org/lsc/ontology/process/CM-1-2-1-3`, `https://w3id.org/lsc/ontology/process/L1-human-resources`.
 No version segment; versions ride on `owl:versionInfo` (Appendix B).
+
+*2026-10-19:* EPM-DEC-001-0048 added CM 1.1.3.7.13 Reconcile Movement Losses and Gains to the map; the curated identity map holds its row, as Step 2 would emit it.
