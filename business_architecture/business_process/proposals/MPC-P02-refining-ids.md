@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed. The process map changes only through its authoring path; this file does not edit it |
+| Status | Applied 2026-10-18, with MPC-P02b (EPM-DEC-001-0047): the map carries `RF 1`, `RF 1.1` and `RF 1.2`, and the identity map records them as `skos_notation` with the slugs unchanged. Proposed until then |
 | Date | 2026-10-13 |
 | Decision | EPM-DEC-001-0012: "Raise a process-map proposal (not a direct edit) to assign IDs to the three nodes." |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P02 |
@@ -39,4 +39,4 @@ The script is not the regeneration path today: the committed identity map carrie
 
 ## Not in this proposal
 
-The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012).
+The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012). *2026-10-18:* Hamid accepted them as turnaround coordination (MPC-P02b, EPM-DEC-001-0047); they are `RF 1.2.1` to `RF 1.2.5`.
