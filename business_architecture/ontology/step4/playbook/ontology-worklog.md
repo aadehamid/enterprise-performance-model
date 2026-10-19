@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Market Data and Commercial Risk (2026-10-18)
+- Hamid accepted the domain split with explicit distinctions, gave both
+  definitions, and named the Risk Group as owner (Market Data
+  provisionally). Trading-counterparty credit is in Commercial Risk;
+  volatilities are risk-model parameters, vendor-supplied volatility
+  observations are Market Data. EPM-DEC-001-0046.
+
 ### Licence and KPI seed (2026-10-18)
 - Hamid decided the ontology stays proprietary, all rights reserved
   (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.
