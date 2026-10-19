@@ -1,0 +1,223 @@
+# The SHACL release slice for core 1.0.0 (EPM-DEC-001-0014): labels, IDs and resolving
+# references on every process concept, and a stated cardinality on every core property
+# (EPM-DEC-001-0020, rule 2): sh:maxCount 1 on a single-valued property, and sh:minCount 0
+# with no maximum on a multi-valued one. test_build_core.py checks each property has one. "No intake: namespace" and "no blank nodes" are checked
+# by build_core.py over the whole graph before these shapes run.
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix mod: <https://w3id.org/lsc/ontology/modules/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/core/concept-kind/> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/shapes/> .
+
+# Every concept of the process scheme.
+shp:ProcessConcept a sh:NodeShape ;
+    sh:target [ a sh:SPARQLTarget ; sh:select """
+        SELECT ?this WHERE { ?this <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/lsc/ontology/modules/core> }""" ] ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A process concept has exactly one English prefLabel." ] ;
+    sh:property [ sh:path core:taxonomyLevel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ;
+                  sh:minInclusive 0 ; sh:maxInclusive 6 ] ;
+    sh:property [ sh:path skos:broader ; sh:maxCount 1 ; sh:class skos:Concept ;
+                  sh:message "At most one parent, and it resolves to a concept." ] ;
+    sh:property [ sh:path core:conceptKind ; sh:maxCount 1 ; sh:in ( kind:process kind:capability kind:structural-anchor ) ] ;
+    sh:property [ sh:path core:apqcMappingDecision ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:primaryPurpose ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:responsibleDomain ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:primaryOutputFlow ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:keyInputFlow ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:plannedChildNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:priorPreferredLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path core:operatingMode ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:cadence ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:planningLevel ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:lifecycleStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:governanceStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:holdStatus ; sh:maxCount 1 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:holdReason ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:nodeKind sh:IRI ;
+                  sh:message "A cited source is an IRI, never a blank node." ] ;
+    sh:property [ sh:path dcterms:references ; sh:nodeKind sh:IRI ] .
+
+# A concept with an ID carries it as one notation.
+shp:NotatedConcept a sh:NodeShape ;
+    sh:targetSubjectsOf skos:notation ;
+    sh:property [ sh:path skos:notation ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+# Relationship facts resolve: subject and object are process concepts.
+shp:RelationshipEnds a sh:NodeShape ;
+    sh:targetSubjectsOf core:precedes, core:dependsOnOutputOf, core:informedBy, core:enabledBy,
+        core:governedBy, core:triggeredBy, core:constrainedBy, core:requires, core:assuredBy ;
+    sh:class skos:Concept ;
+    sh:property [ sh:path core:precedes ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:dependsOnOutputOf ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:informedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:enabledBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:governedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:triggeredBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:constrainedBy ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:requires ; sh:minCount 0 ; sh:class skos:Concept ] ;
+    sh:property [ sh:path core:assuredBy ; sh:minCount 0 ; sh:class skos:Concept ] .
+
+# Cited sources resolve to a described resource.
+shp:CitedSource a sh:NodeShape ;
+    sh:targetObjectsOf dcterms:source, dcterms:references ;
+    sh:class dcterms:BibliographicResource ;
+    sh:property [ sh:path dcterms:title ; sh:minCount 1 ] .
+
+# ---- Added in 2.0.0 (EPM-DEC-001-0038) ----
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:BusinessDomainValue a sh:NodeShape ;
+    sh:property shp:BusinessDomainValue-inScheme ;
+    sh:targetObjectsOf core:businessDomain .
+
+shp:ProcessConcept sh:property shp:ProcessConcept-businessDomain,
+        shp:ProcessConcept-plannedInput,
+        shp:ProcessConcept-plannedOutput .
+
+shp:BusinessDomainValue-inScheme sh:hasValue core:BusinessDomain ;
+    sh:message "A business domain comes from the business domain list."@en ;
+    sh:path skos:inScheme .
+
+shp:ProcessConcept-businessDomain sh:class skos:Concept ;
+    sh:maxCount 1 ;
+    sh:path core:businessDomain .
+
+shp:ProcessConcept-plannedInput sh:datatype rdf:langString ;
+    sh:minCount 0 ;
+    sh:path core:plannedInput .
+
+shp:ProcessConcept-plannedOutput sh:datatype rdf:langString ;
+    sh:minCount 0 ;
+    sh:path core:plannedOutput .
+
+
+# ---- Added in 2.1.0: the controlled-value shapes (EPM-DEC-001-0035, 0044), as Hamid approved them ----
+# Step 9, controlled values (EPM-DEC-001-0014, EPM-DEC-001-0035): each code-list property of
+# core takes its values from its own code list, not from any SKOS concept. The core 1.0.0
+# release shapes check sh:in on conceptKind, only sh:class skos:Concept on seven others, and
+# nothing on evidenceBasis and sequenceScope (their build-time shapes are in
+# step4/scoped-sequence/). These shapes run against the released core without changing it.
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/step9-shapes/> .
+
+shp:ApqcMappingDecision a sh:NodeShape ; sh:targetObjectsOf core:apqcMappingDecision ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ApqcMappingDecision ;
+                  sh:message "An APQC mapping decision comes from the APQC mapping decision list." ] .
+
+shp:OperatingMode a sh:NodeShape ; sh:targetObjectsOf core:operatingMode ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:OperatingMode ;
+                  sh:message "An operating mode comes from the operating mode list." ] .
+
+shp:Cadence a sh:NodeShape ; sh:targetObjectsOf core:cadence ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:Cadence ;
+                  sh:message "A cadence comes from the cadence list." ] .
+
+shp:PlanningLevel a sh:NodeShape ; sh:targetObjectsOf core:planningLevel ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:PlanningLevel ;
+                  sh:message "A planning level comes from the planning level list." ] .
+
+shp:LifecycleStatus a sh:NodeShape ; sh:targetObjectsOf core:lifecycleStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:LifecycleStatus ;
+                  sh:message "A lifecycle status comes from the lifecycle status list." ] .
+
+shp:GovernanceStatus a sh:NodeShape ; sh:targetObjectsOf core:governanceStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:GovernanceStatus ;
+                  sh:message "A governance status comes from the governance status list." ] .
+
+shp:HoldStatus a sh:NodeShape ; sh:targetObjectsOf core:holdStatus ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:HoldStatus ;
+                  sh:message "A hold status comes from the hold status list." ] .
+
+shp:ConceptKind a sh:NodeShape ; sh:targetObjectsOf core:conceptKind ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ConceptKind ;
+                  sh:message "A concept kind comes from the concept kind list." ] .
+
+# The organization module's RACI level (EPM-DEC-001-0030) is checked the same way.
+shp:RaciLevel a sh:NodeShape ; sh:targetObjectsOf orgm:raciLevel ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue orgm:RaciLevel ;
+                  sh:message "A RACI level comes from the RACI level list." ] .
+
+# The scoped-sequence code lists (EPM-DEC-001-0026).
+shp:EvidenceBasis a sh:NodeShape ; sh:targetObjectsOf core:evidenceBasis ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:EvidenceBases ;
+                  sh:message "An evidence basis comes from the evidence basis list." ] .
+
+shp:SequenceScope a sh:NodeShape ; sh:targetObjectsOf core:sequenceScope ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue core:ScopeUnits ;
+                  sh:message "A sequence scope comes from the scope unit list." ] .
+
+# ---- Added in 2.1.0: evidence on canonical facts (EPM-DEC-001-0044) ----
+# Hamid's seven checks: fact structure, predicate scope, triple to node, node to triple, evidence
+# presence, evidence correctness and reproducibility. The shapes cover the first five; evidence
+# correctness against the mapping and reproducibility are build checks (build_core_2_1.py,
+# evidence_problems and --verify) and tests (test_build_core_2_1.py).
+@prefix core: <https://w3id.org/lsc/ontology/modules/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/core/shapes/> .
+
+shp:CanonicalFact a sh:NodeShape ;
+    sh:targetClass core:CanonicalFact ;
+    sh:nodeKind sh:IRI ;
+    sh:property shp:CanonicalFact-factSubject, shp:CanonicalFact-factPredicate, shp:CanonicalFact-factObject,
+        shp:CanonicalFact-evidenceRow ;
+    sh:sparql shp:CanonicalFact-hasDirectTriple .
+
+shp:CanonicalFact-factSubject sh:path core:factSubject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ;
+    sh:message "A canonical fact names exactly one subject, a concept." .
+shp:CanonicalFact-factPredicate sh:path core:factPredicate ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:in ( core:assuredBy core:constrainedBy core:dependsOnOutputOf core:enabledBy core:governedBy core:informedBy core:precedes core:requires core:triggeredBy ) ;
+    sh:message "A canonical fact names exactly one of the canonical relationship predicates." .
+shp:CanonicalFact-factObject sh:path core:factObject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ;
+    sh:message "A canonical fact names exactly one object, a concept." .
+shp:CanonicalFact-evidenceRow sh:path core:evidenceRow ; sh:minCount 1 ; sh:datatype xsd:string ;
+    sh:pattern "^REL-[0-9]{5}$" ;
+    sh:message "A canonical fact carries at least one workbook row ID (REL-nnnnn)." .
+
+shp:CanonicalFact-hasDirectTriple a sh:SPARQLConstraint ;
+    sh:message "A canonical fact describes a direct triple that the graph holds." ;
+    sh:select """
+        SELECT $this WHERE {
+            $this <https://w3id.org/lsc/ontology/modules/core/factSubject> ?s ; <https://w3id.org/lsc/ontology/modules/core/factPredicate> ?p ; <https://w3id.org/lsc/ontology/modules/core/factObject> ?o .
+            FILTER NOT EXISTS { ?s ?p ?o }
+        }""" .
+
+shp:CanonicalTriple a sh:NodeShape ;
+    sh:targetSubjectsOf core:assuredBy, core:constrainedBy, core:dependsOnOutputOf, core:enabledBy, core:governedBy, core:informedBy, core:precedes, core:requires, core:triggeredBy ;
+    sh:sparql shp:CanonicalTriple-hasOneFact, shp:CanonicalTriple-noSecondFact .
+
+shp:CanonicalTriple-hasOneFact a sh:SPARQLConstraint ;
+    sh:message "Every canonical relationship triple has a canonical fact node." ;
+    sh:select """
+        SELECT $this ?value WHERE {
+            $this ?p ?value .
+            FILTER (?p IN (<https://w3id.org/lsc/ontology/modules/core/assuredBy>, <https://w3id.org/lsc/ontology/modules/core/constrainedBy>, <https://w3id.org/lsc/ontology/modules/core/dependsOnOutputOf>, <https://w3id.org/lsc/ontology/modules/core/enabledBy>, <https://w3id.org/lsc/ontology/modules/core/governedBy>, <https://w3id.org/lsc/ontology/modules/core/informedBy>, <https://w3id.org/lsc/ontology/modules/core/precedes>, <https://w3id.org/lsc/ontology/modules/core/requires>, <https://w3id.org/lsc/ontology/modules/core/triggeredBy>))
+            FILTER NOT EXISTS {
+                ?f a <https://w3id.org/lsc/ontology/modules/core/CanonicalFact> ; <https://w3id.org/lsc/ontology/modules/core/factSubject> $this ; <https://w3id.org/lsc/ontology/modules/core/factPredicate> ?p ; <https://w3id.org/lsc/ontology/modules/core/factObject> ?value .
+            }
+        }""" .
+
+shp:CanonicalTriple-noSecondFact a sh:SPARQLConstraint ;
+    sh:message "A canonical relationship triple has exactly one canonical fact node." ;
+    sh:select """
+        SELECT $this ?value WHERE {
+            $this ?p ?value .
+            FILTER (?p IN (<https://w3id.org/lsc/ontology/modules/core/assuredBy>, <https://w3id.org/lsc/ontology/modules/core/constrainedBy>, <https://w3id.org/lsc/ontology/modules/core/dependsOnOutputOf>, <https://w3id.org/lsc/ontology/modules/core/enabledBy>, <https://w3id.org/lsc/ontology/modules/core/governedBy>, <https://w3id.org/lsc/ontology/modules/core/informedBy>, <https://w3id.org/lsc/ontology/modules/core/precedes>, <https://w3id.org/lsc/ontology/modules/core/requires>, <https://w3id.org/lsc/ontology/modules/core/triggeredBy>))
+            ?f1 <https://w3id.org/lsc/ontology/modules/core/factSubject> $this ; <https://w3id.org/lsc/ontology/modules/core/factPredicate> ?p ; <https://w3id.org/lsc/ontology/modules/core/factObject> ?value .
+            ?f2 <https://w3id.org/lsc/ontology/modules/core/factSubject> $this ; <https://w3id.org/lsc/ontology/modules/core/factPredicate> ?p ; <https://w3id.org/lsc/ontology/modules/core/factObject> ?value .
+            FILTER (?f1 != ?f2)
+        }""" .

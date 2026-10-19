@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Status | Decided (delegated under EPM-DEC-001-0028); its questions answered by Hamid, EPM-DEC-001-0045 (2026-10-18) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 2: which of the RACI role strings in the process map name the same role, and how a team, a qualifier or a compound string is handled |
 | Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
@@ -30,7 +30,9 @@ The result: 60 roles, 54 positions and 6 teams. Splitting the 11 compound string
 
 ### Questions for Hamid
 
-These do not block the build. Each would merge two roles, or define one, if Hamid confirms it. `roles.csv` holds each one in its `question` column.
+*2026-10-18:* answered by Hamid; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open.
+
+These do not block the build. Each would merge two roles, or define one, if Hamid confirms it. `roles.csv` held each one in its `question` column; since 2.0.0 that column holds only the questions still open (Forecaster, PSM and Crude RFC's expansion), and the answers and settled rationales sit in its `note` column.
 
 - **RCVO Advisor** (written once) and **RVCO Advisor** (written 32 times): one role misspelt?
 - **Forecaster** and **Refinery Technical Service Representative** appear only inside two compound strings. Are they the Local Refinery Forecaster and the Refinery Technical Representative?

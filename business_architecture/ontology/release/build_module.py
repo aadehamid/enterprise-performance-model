@@ -30,22 +30,39 @@ MODULES = {
     "organization": {
         "title": "LSC Organization Module",
         "description": "Roles, RACI responsibility assignments and control between legal entities (Step 5).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-13",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md", "aprove now"),
+        # 2.0.0 carries Hamid's role answers: three roles deprecated, their assignments moved
+        # (EPM-DEC-001-0045). Each earlier package stays on disk as released; test_build_module.py
+        # checks it is untouched.
+        "version": "2.0.0", "stage": None, "issued": "2026-10-18",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-18-night.md", "Yes, approve 2.0.0 (Recommended)"),
         "parts": ["organization/vocabulary.ttl", "organization/roles.ttl", "organization/assignments.ttl"],
         "shapes": ["organization/shapes.ttl"],
         "depends_on": ["core"],
-        "decisions": ["EPM-DEC-001-0030", "EPM-DEC-001-0031", "EPM-DEC-001-0032"],
+        "pins": {"core": "2.1.0"},
+        "decisions": ["EPM-DEC-001-0030", "EPM-DEC-001-0031", "EPM-DEC-001-0032", "EPM-DEC-001-0045"],
     },
     "ref-mpc": {
         "title": "LSC Reference Instances: Marathon Petroleum Corporation",
         "description": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5).",
-        "version": "1.0.0", "stage": None, "issued": "2026-10-13",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md", "aprove now"),
+        # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-19",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md", "Approve the ref-mpc release too if needed"),
         "parts": ["ref-mpc/ref-mpc.ttl"],
         "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl"],
         "depends_on": ["organization"],
         "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033"],
+    },
+    "kpi": {
+        "title": "LSC KPI Module",
+        "description": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values.",
+        # 1.0.0 is the module's first release, a major approved by Hamid (EPM-DEC-001-0043).
+        "version": "1.0.0", "stage": None, "issued": "2026-10-19",
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md", "Approve kpi 1.0.0 release too"),
+        "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl"],
+        "shapes": ["kpi/shapes.ttl"],
+        "depends_on": ["core"],
+        "pins": {"core": "2.1.0"},
+        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043"],
     },
 }
 
@@ -60,7 +77,8 @@ def label(m):
 def dependencies(name):
     """Each dependency with the version this package is built against: a released version, or the
     dependency's own current candidate, so a candidate never names a release that does not exist."""
-    return {d: RELEASED.get(d) or label(MODULES[d]) for d in MODULES[name]["depends_on"]}
+    pins = MODULES[name].get("pins", {})
+    return {d: pins.get(d) or RELEASED.get(d) or label(MODULES[d]) for d in MODULES[name]["depends_on"]}
 
 
 def parse(paths):
@@ -94,13 +112,17 @@ def build(name):
 
 
 def check(name, g):
-    """The module's shapes over the module, with core 1.0.0 loaded for the concepts it refers to."""
+    """The module's shapes over the module, with the released packages it depends on loaded: core for
+    the concepts organization refers to, and the pinned organization release for ref-mpc."""
     m = MODULES[name]
     data = Graph()
     data += g
-    data.parse(os.path.join(ONTOLOGY, "releases", "core", "1.0.0", "core.ttl"))
-    if name == "ref-mpc":
-        data += build("organization")
+    deps = dependencies(name)
+    if "core" in deps:
+        data.parse(os.path.join(ONTOLOGY, "releases", "core", deps["core"], "core.ttl"))
+    if "organization" in deps:
+        data.parse(os.path.join(ONTOLOGY, "releases", "organization", deps["organization"], "organization.ttl"))
+        data.parse(os.path.join(ONTOLOGY, "releases", "core", dependencies("organization")["core"], "core.ttl"))
     conforms, _, text = validate(data, shacl_graph=parse(m["shapes"]))
     return conforms, text
 
