@@ -962,6 +962,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Process-map gaps addressed (2026-10-19)
+- Hamid said to address the two gaps the MPC-P03 and MPC-P04 checks
+  found from high-quality references, MPC's public information first.
+  Under the delegation: CM 1.1.3.7.13 Reconcile Movement Losses and Gains
+  (MPLX's imbalances policy) and CM 1.2.5.1.5 Manage Renewable Feedstock
+  Traceability and Carbon-Intensity Evidence (MPC's supplier feedstock
+  commitment; EPA, CARB and IRS record rules), each in its own pull
+  request; the feedstock step lands after the loss and gain step.
+  EPM-DEC-001-0048, with his
+  words in `review-evidence/hamid-answers/answers-2026-10-19-morning.md`.
+
 ### MPC process-map proposals ruled (2026-10-18)
 - Hamid accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
   to apply them to the process map itself (EPM-DEC-001-0047). Under the
@@ -2155,7 +2166,7 @@ URI.
 Facts about the source material that are easy to get wrong:
 
 - **Scale:** ~680 nodes, levels L0–L6 (L0: 2, L1: 10, L2: 4, L3: 24,
-  L4: 117, L5: 502, L6: 21). 669 nodes have IDs; **11 roots/stubs do
+  L4: 117, L5: 502, L6: 21). 669 nodes have IDs at the Step 2 run (later additions are dated in `build/output/step2-identity-report.md`); **11 roots/stubs do
   not** (Downstream Operations, Refining, Midstream, Enabling Functions,
   Supply Chain Mgmt., Finance, Shared Services, Process Excellence & IT,
   Human Resources, Legal & Corp Comm, EHS & Gov Reporting). Step 2 mints
@@ -2170,8 +2181,9 @@ Facts about the source material that are easy to get wrong:
 - **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
   processes have empty `produces` arrays; no AR credit/receivables/
   collections portfolio exists (do not reuse `dp-commercial-risk`);
-  `office_lanes.json` is not linked by ID; Loss Control exists as a
-  data-product concern with no owning process.
+  `office_lanes.json` is not linked by ID; Loss Control was a
+  data-product concern with no owning process (*2026-10-19:* produced by
+  CM 1.1.3.7.13, EPM-DEC-001-0048).
 - **Systems vocabulary in the map:** XPIMS, DPO, PPIMS, MPR, Profisee,
   KittyHawk, RightAngle. System-specific jargon depresses naive
   term-overlap scores — coverage triage is human work.

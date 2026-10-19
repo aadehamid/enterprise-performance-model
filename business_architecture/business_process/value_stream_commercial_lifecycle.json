@@ -262,9 +262,9 @@
     },
     {
       "item": "Loss Control process home",
-      "status": "missing",
-      "closestProcessIds": ["CM 1.2.3", "CM 1.3.10"],
-      "note": "No dedicated custody-transfer/loss-control process nodes; data portfolio exists without a clear LSC owner process."
+      "status": "partial",
+      "closestProcessIds": ["CM 1.1.3.7.13", "CM 1.2.3", "CM 1.3.10"],
+      "note": "Since 2026-10-19, CM 1.1.3.7.13 Reconcile Movement Losses and Gains produces the Loss Control data product (EPM-DEC-001-0048). Not yet linked to a stage of this value stream; custody-transfer measurement itself stays in CM 1.1.3.7.4 and CM 1.2.3."
     },
     {
       "item": "Blending operations",
