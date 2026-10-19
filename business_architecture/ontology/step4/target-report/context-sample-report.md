@@ -32,14 +32,14 @@ Primary-test mix: A 26, B 24, C 1.
 rule, no test-tightening triggered; the corrected premise holds.**
 
 Full per-row verdicts: `context-sample-review.md`. Notes (resolution correct,
-mapping-level questions for Hamid):
+mapping-level questions for the decision owner):
 
 - REL-00008 / REL-00112: `precedes` aimed at a whole L2 — the sequence claim is
   sound; scope of the claim is mapping v2's read.
 - REL-00190 / REL-01005: B-only `governed-by` — plausible but the weakest
   evidence tier; flagged for batch-reviewer eyes.
 - REL-00089 / REL-00122 / REL-01133: G1/G2 `enables` — resolutions correct;
-  merge-vs-emit is Hamid's mapping decision.
+  merge-vs-emit is the decision owner's mapping decision.
 - REL-00715 (`Ideation` governed-by its parent): now correctly HELD by the
   ancestor exclusion — hierarchy is not a relationship.
 - REL-00374 (`AR/AP actuals` follows `Settlements`): the false two-way (backed by

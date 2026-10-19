@@ -1,8 +1,8 @@
 # Step 7 rulings: decision package
 
-*2026-10-18:* answered by Hamid. KPI: his planner measure list (EPM-DEC-001-0040). MD and P: his rulings in `answers-2026-10-18.md`, carried out in later pull requests.
+*2026-10-18:* answered by the decision owner. KPI: their planner measure list (EPM-DEC-001-0040). MD and P: their rulings in `answers-2026-10-18.md`, carried out in later pull requests.
 
-Status: Answered by Hamid on 2026-10-18 (see the note above). Date: 2026-10-14. When prepared, nothing in this package was ruled. Each question ends with options, and the recommendation is listed first.
+Status: Answered by the decision owner on 2026-10-18 (see the note above). Date: 2026-10-14. When prepared, nothing in this package was ruled. Each question ends with options, and the recommendation is listed first.
 
 ## What you need to do
 
@@ -20,7 +20,7 @@ Step 7 starts with your Pricing KPI categories and the named KPI definitions und
 
 ### Background
 
-On 2026-10-05 you wrote, in answer to Q11: "We have Pricing domain KPI category or type such as Crack Spread. I will share them later." (EPM-DEC-001-0005 and EPM-DEC-001-0017, "Hamid's recorded words"). The repo has no copy of that list. A search of the repo and of `business_architecture/ontology/step4/review-evidence/hamid-answers/` found no later message that carries it.
+On 2026-10-05 you wrote, in answer to Q11: "We have Pricing domain KPI category or type such as Crack Spread. I will share them later." (EPM-DEC-001-0005 and EPM-DEC-001-0017, "The decision owner's recorded words"). The repo has no copy of that list. A search of the repo and of `business_architecture/ontology/step4/review-evidence/decision-owner-answers/` found no later message that carries it.
 
 The repo does hold the pricing classification P1 to P11, which you proposed on 2026-09-29 (`business_architecture/reference/mpc/pricing-domain-evidence.md` §1). My reading is that P1 to P11 classifies pricing data, and your KPI categories are a different list. Your Q11 remark came six days after P1 to P11 and still said "I will share them later". I could not confirm this reading from the repo. If your categories are P1 to P11, say so, and that answers the question.
 
@@ -61,7 +61,7 @@ The list lets Step 7 build the `kpi` module. In `business_architecture/ontology/
 
 ### The question
 
-`business_architecture/domain/market-data-and-commercial-risk-draft.md` (merged in PR #268, commit cd3ba23) proposes full definitions for the two domains. EPM-DEC-001-0010 left those definitions to Step 7. The draft asks you for five answers. Its own list is at "What Hamid decides", lines 36 to 40.
+`business_architecture/domain/market-data-and-commercial-risk-draft.md` (merged in PR #268, commit cd3ba23) proposes full definitions for the two domains. EPM-DEC-001-0010 left those definitions to Step 7. The draft asks you for five answers. Its own list is at "What the decision owner decides", lines 36 to 40.
 
 ### Background
 
@@ -140,7 +140,7 @@ Rule on MPC-P01 and P03 to P09 (`business_architecture/reference/mpc/process-map
 
 ### How any answer is carried out
 
-An accepted proposal becomes a proposal file in `business_architecture/business_process/proposals/`, like `MPC-P02-refining-ids.md`. Nobody edits the process map directly (AGENTS.md, working rules; `process-map-suggestions.md`, the paragraph that starts "The process map is the process authority"). EPM-DEC-001-0017 places these proposals fourth in the Step 7 order, so the work on them starts after items 1 to 3, even if you answer now. *2026-10-18:* Hamid said to apply the accepted proposals to the map itself (EPM-DEC-001-0047); each map edit is its own pull request, under the delegation.
+An accepted proposal becomes a proposal file in `business_architecture/business_process/proposals/`, like `MPC-P02-refining-ids.md`. Nobody edits the process map directly (AGENTS.md, working rules; `process-map-suggestions.md`, the paragraph that starts "The process map is the process authority"). EPM-DEC-001-0017 places these proposals fourth in the Step 7 order, so the work on them starts after items 1 to 3, even if you answer now. *2026-10-18:* The decision owner said to apply the accepted proposals to the map itself (EPM-DEC-001-0047); each map edit is its own pull request, under the delegation.
 
 ### P01: the empty Midstream L1
 

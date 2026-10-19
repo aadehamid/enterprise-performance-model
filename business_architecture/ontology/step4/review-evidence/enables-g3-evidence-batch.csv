@@ -1,4 +1,4 @@
-row_id,source_label,target_label,evidence_type,disposition,proposed,Hamid_decision,Hamid_rationale
+row_id,source_label,target_label,evidence_type,disposition,proposed,owner_decision,owner_rationale
 REL-00002,Prepare Master Data To Create Demand Forecast,Produce Demand Forecast,A:explicit-reference (resolved),ResolvedToConcept,core:enabledBy (stored: target enabledBy source),,
 REL-00009,Publish Forecast and Generate Component Level Forecast Plan,Capture Product Demand Requirements,A:explicit-reference,SoleCandidate,core:enabledBy (stored: target enabledBy source),,
 REL-00013,Monitor Demand Forecasting Performance and Reporting,Produce Demand Forecast,A:explicit-reference (resolved),ResolvedToConcept,core:enabledBy (stored: target enabledBy source),,

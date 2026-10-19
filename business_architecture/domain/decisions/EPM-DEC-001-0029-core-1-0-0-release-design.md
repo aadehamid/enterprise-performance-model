@@ -2,14 +2,14 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (Hamid approved, 2026-10-13) |
+| Status | Decided (the decision owner approved, 2026-10-13) |
 | Date | 2026-10-13 |
 | Questions | The open implementation questions of the `core` 1.0.0 release |
-| Source | Claude Code session, 2026-10-13, under Hamid's delegation of 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677)); EPM-DEC-001-0028 merged in #242; Hamid approved the design on 2026-10-13 |
+| Source | Claude Code session, 2026-10-13, under the decision owner's delegation of 2026-10-12 (#207 comment 6137222677); EPM-DEC-001-0028 merged in #242; the decision owner approved the design on 2026-10-13 |
 
 ## Context
 
-EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at that time, zero `intake:` triples, and a fresh attestation. Step 4 decision Q2 retires all 5,571 `intake:` triples in one release (`step4/step4-decisions.md:52-62`). The approved decisions fix most targets (Q5 flows, Q6 horizon facets, Q7 responsible domain, Q8 concept kind, Q9 status dimensions, Q10 terminology notes). They leave implementation questions open, and the conservation ledger (`step4/ledger-v2.md`, still a draft) disagrees with the approved decisions in three places. Hamid delegated these questions: "Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity."
+EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at that time, zero `intake:` triples, and a fresh attestation. Step 4 decision Q2 retires all 5,571 `intake:` triples in one release (`step4/step4-decisions.md:52-62`). The approved decisions fix most targets (Q5 flows, Q6 horizon facets, Q7 responsible domain, Q8 concept kind, Q9 status dimensions, Q10 terminology notes). They leave implementation questions open, and the conservation ledger (`step4/ledger-v2.md`, still a draft) disagrees with the approved decisions in three places. The decision owner delegated these questions: "Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity."
 
 ## Decision
 
@@ -37,13 +37,13 @@ EPM-DEC-001-0013 releases `core` 1.0.0 after Phase 1: the canonical facts at tha
 
 **No blank nodes.** The 500 APQC `dcterms:references` nodes become `src:apqc-pcf-7.2.2/element/<id>` resources with the same identifier, title and `dcterms:isPartOf`. The 503 workbook `dcterms:source` nodes, which all carry the same title, become one resource, `src:step3c-definition-workbook`. (Playbook: "No blank nodes in released data"; EPM-DEC-001-0020 rule 3.)
 
-**The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `counts.json` (the build's measured figures), `label-dispositions.csv` (the label report the former names follow), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`; `core.jsonld`, `shapes.ttl` and the DCAT record `catalog.ttl` ship beside them. The header follows the playbook's worked example (`ontology-playbook.md`, "Ontology IRI and version IRI"). Until Hamid approves the release, the package is built as release candidate `1.0.0-rc.1`, with no `dcterms:issued`; at the cut, `build_core.py` sets the release date as `dcterms:issued` and drops the candidate label. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
+**The release package.** `business_architecture/ontology/release/build_core.py` builds `business_architecture/ontology/releases/core/1.0.0/` from the pinned Step 4 baseline: `core.ttl` (the ontology header, the core vocabulary, the code lists, the taxonomy with its migrated fields, the canonical facts and the scoped sequences), `canonical-facts.csv` (provenance), `conservation.csv` (the after half of the ledger: every census triple's destination), `counts.json` (the build's measured figures), `label-dispositions.csv` (the label report the former names follow), `manifest.json` (files and SHA-256 checksums, the source commit) and `CHANGELOG.md`; `core.jsonld`, `shapes.ttl` and the DCAT record `catalog.ttl` ship beside them. The header follows the playbook's worked example (`ontology-playbook.md`, "Ontology IRI and version IRI"). Until the decision owner approves the release, the package is built as release candidate `1.0.0-rc.1`, with no `dcterms:issued`; at the cut, `build_core.py` sets the release date as `dcterms:issued` and drops the candidate label. The SHACL release slice (EPM-DEC-001-0014) runs on `core.ttl` before the package is written.
 
-**Approvals.** Hamid approved this design, the conservation ledger and the release on 2026-10-13, and gave the fresh no-consumer attestation (see Hamid's recorded words). A major release needs his approval ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release").
+**Approvals.** The decision owner approved this design, the conservation ledger and the release on 2026-10-13, and gave the fresh no-consumer attestation (see the decision owner's recorded words). A major release needs their approval ("Major (including any deprecation): The decision owner. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release").
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid delegated these questions in the Claude Code session on 2026-10-12 ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation.md`): "I want you to keep going until we finish the ontology. Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity." Claude drafted each choice above under that instruction (EPM-DEC-001-0028, merged in #242). Hamid then approved the design in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/core-1-0-0-release.md`): "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
+The decision owner delegated these questions in the Claude Code session on 2026-10-12 (#207 comment 6137222677, saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation.md`): "I want you to keep going until we finish the ontology. Make decisions for me using available evidence to make the best decision and light external searcch to resolve ambiguity." Claude drafted each choice above under that instruction (EPM-DEC-001-0028, merged in #242). The decision owner then approved the design in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/core-1-0-0-release.md`): "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
 
 ## Alternatives considered
 
@@ -58,5 +58,5 @@ The approved decisions cited above; the census and measured splits in `step4/led
 ## Consequences
 
 - New `core` terms: the predicates above, `core:priorPreferredLabel`, `core:holdReason`, and eight code lists. Each gets a label, a definition, one kind and one range.
-- `ledger-v2.md` gets its after half and is ready for Hamid's approval.
-- Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says. (Superseded 2026-10-13: Hamid decided the values are business domains, not org units; `core` 2.0.0 links them to a business domain list, EPM-DEC-001-0038.)
+- `ledger-v2.md` gets its after half and is ready for the decision owner's approval.
+- Step 5 (ORG/RACI) later replaces `core:responsibleDomain` literals with references to org units, as Q7 says. (Superseded 2026-10-13: The decision owner decided the values are business domains, not org units; `core` 2.0.0 links them to a business domain list, EPM-DEC-001-0038.)

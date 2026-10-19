@@ -1,13 +1,13 @@
 # Mark Step 4 evidence-discipline section Approved
 
-Docs-only follow-up to merged PR #121. Ready to merge — Hamid approved this
+Docs-only follow-up to merged PR #121. Ready to merge — the decision owner approved this
 exact change ("Yes, flip it to Approved").
 
 ## What changed
 
 When PR #121 merged, the section itself landed without the PROPOSED status
 marker, but the Step 4 step-log pointer still read "(proposed 2026-09-24;
-canonical on Hamid's approval)". This flips that parenthetical to
+canonical on the decision owner's approval)". This flips that parenthetical to
 "(approved 2026-09-24; canonical)".
 
 ## Blast radius

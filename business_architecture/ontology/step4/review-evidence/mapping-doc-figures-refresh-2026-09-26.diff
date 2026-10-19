@@ -6,7 +6,7 @@
  **Status:** draft for controlled review, supersedes `verb-predicate-mapping.md` (v1).
 +Figures refreshed 2026-09-26 to the reviewed evidence package
 +(917 emitting / 386 held / 717 facts); section-by-section approval pending.
- No emission script may use this mapping until Hamid approves it row by row.
+ No emission script may use this mapping until the decision owner approves it row by row.
  **Baseline:** `6ab2197ba3fe6246bdb501391d22b71d0338d2c7` (PR #120).
  **Inputs:** `target-dispositions-v2.csv` (1,318 mentions), `context-pass.csv`
 -(812 promoted / 172 context-held — 37 property-rule/hierarchy holds,
@@ -23,13 +23,13 @@
 -   - **242** G3 stored as `core:enabledBy` (proposed);
 -   - **5** row-level verdicts stored as `core:enabledBy`, overriding the group
 -     proposal: REL-00243, REL-00304, REL-01006 (G1a) and REL-00129,
--     REL-00728 (G2) — approved as `core:enables` by Hamid 2026-09-25;
+-     REL-00728 (G2) — approved as `core:enables` by the decision owner 2026-09-25;
 -   - **G1a (77 remaining)** proposed: merge as extra evidence on the existing
 -     `dependsOnOutputOf` fact (duplicate merge, not a verb change);
 -   - **G1b (30)** proposed: HOLD for workbook correction (merging into
 -     `dependsOnOutputOf` would change the verb — only an `informed-by`
 +   disposition of the 172 emitting `enables` mentions (refreshed 2026-09-26):
-+   - **G3 (84)** stored as `core:enabledBy` (approved by Hamid 2026-09-26 —
++   - **G3 (84)** stored as `core:enabledBy` (approved by the decision owner 2026-09-26 —
 +     the Section A explicit-reference approvals; Section B's 96 nearness-only
 +     rows are all held);
 +   - **5 former row-level verdicts** stored as `core:enabledBy` (REL-00243,
@@ -45,12 +45,12 @@
 +     into `dependsOnOutputOf` would change the verb — only an `informed-by`
       mention exists on the reverse pair);
 -   - **G2 (13)** approved 2026-09-26: no separate triple — the sequence fact
--     already records it (Hamid verdict: NoSeparateEnablesFact; the enables
+-     already records it (the decision owner's verdict: NoSeparateEnablesFact; the enables
 -     assertion is kept as non-emitting evidence).
--   The G1 split lives in `review-evidence/enables-g1-split.csv`. Hamid decides
--   each group; the 5 row-level verdicts stand unless he revisits them.
+-   The G1 split lives in `review-evidence/enables-g1-split.csv`. The decision owner decides
+-   each group; the 5 row-level verdicts stand unless they revisit them.
 +   - **G2 (15)** approved 2026-09-26: no separate triple — the sequence fact
-+     already records it (13 Hamid verdicts: NoSeparateEnablesFact; plus the 2
++     already records it (13 the decision owner's verdicts: NoSeparateEnablesFact; plus the 2
 +     former row-level exceptions, superseded 2026-09-26); the enables
 +     assertions are kept as non-emitting evidence.
 +   The G1 split lives in `review-evidence/enables-g1-split.csv`.
@@ -129,9 +129,9 @@
 +for completeness). The 5 former row-level `core:enabledBy` verdicts were
 +superseded 2026-09-26; none remains emitting.
 +
- ## Contradictions (3) — for Hamid
+ ## Contradictions (3) — for the decision owner
  
- **Property rule (Hamid 2026-09-24):** whether a mutual pair is a contradiction
+ **Property rule (the decision owner 2026-09-24):** whether a mutual pair is a contradiction
 @@ -166,19 +175,22 @@
    child governs how the parent executes). REL-00366 held — **restates
    hierarchy**: child "governed by" parent mostly repeats `skos:broader`.
@@ -181,7 +181,7 @@
 +  audit-authority grant.
  - `enables-review.csv` — all 399 rows with pipeline-built group, proposed
    disposition, decision cells blank.
- - `review-evidence/enables-g1-split.csv` — G1 split per Hamid 2026-09-25:
+ - `review-evidence/enables-g1-split.csv` — G1 split per the decision owner 2026-09-25:
    **G1a (81)** duplicates proposed for merge as evidence; **G1b (31)**
    proposed hold for workbook correction (verb change, not a duplicate).
 -- `review-evidence/enables-g3-evidence-batch.csv` — G3 (270 rows) with the
@@ -224,7 +224,7 @@
 +
  Rule on the 3 remaining contradictions (all `dependsOnOutputOf` loops,
  allowed where each direction is independently evidenced). The 2 mutual
- `enabledBy` pairs are **held** (Hamid 2026-09-24: enablement is not
+ `enabledBy` pairs are **held** (the decision owner 2026-09-24: enablement is not
 @@ -429,11 +458,13 @@
    survives only via the independent `uses-input` row REL-00447.)
  - **PTC-002** (Refinery Planning and Optimization decides; Supply & Trading
@@ -242,7 +242,7 @@
 +  each had judged the relationship plausible without evidence of which
 +  target the source meant.
  
- ## Duplicate-evidence merge (defined 2026-09-26, Hamid G1a verdict)
+ ## Duplicate-evidence merge (defined 2026-09-26, the decision owner's G1a verdict)
  
 @@ -451,9 +482,10 @@
  - Precedents: REL-00152 and REL-00436 attach as duplicate provenance on
@@ -256,10 +256,10 @@
 +  is moot: those approvals were superseded 2026-09-26 (G3-B5) under the
 +  nearness-only identity rule, and the rows are now held with no fact.
  
- ## Recommendation versus enablement (added 2026-09-25, Hamid)
+ ## Recommendation versus enablement (added 2026-09-25, the decision owner)
  
 @@ -485,12 +517,14 @@
- - **Precedent:** 29 G1b rows held (HOLD / D:hamid-verdict / G1bNoVerbChange);
+ - **Precedent:** 29 G1b rows held (HOLD / D:owner-verdict / G1bNoVerbChange);
    28 stored `core:dependsOnOutputOf` facts removed after fact-provenance
    uniqueness validation (all 28 were unique single-row facts); reverse
 -  informed-by facts preserved on their own records; REL-00489's approved

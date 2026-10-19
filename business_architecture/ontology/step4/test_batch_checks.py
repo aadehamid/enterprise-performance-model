@@ -13,7 +13,7 @@ sys.path.insert(0, HERE)
 import batch_checks  # noqa: E402
 
 REVIEW = os.path.join(HERE, "review-evidence", "triggers-batch1-review.csv")
-ANSWER = os.path.join(HERE, "review-evidence", "hamid-answers", "204-batch1.md")
+ANSWER = os.path.join(HERE, "review-evidence", "decision-owner-answers", "204-batch1.md")
 
 
 def facts():
@@ -57,7 +57,7 @@ class TriggersBatch1(unittest.TestCase):
         self.assertTrue(any("condition" in p for p in self.problems(rows)))
 
     def test_a_partial_condition_is_caught(self):
-        # Exclusion-only or event-only fragments drop half of what Hamid decided.
+        # Exclusion-only or event-only fragments drop half of what the decision owner decided.
         for fragment in ("a corporate event",
                          "A corporate event alone does not trigger termination or novation; applicable legal, "
                          "credit, and consent requirements remain in force."):
@@ -83,12 +83,12 @@ class TriggersBatch1(unittest.TestCase):
     def test_answers_swapped_between_rows_are_caught(self):
         rows = copy.deepcopy(self.rows)
         a, b = rows[0], rows[1]
-        for col in ("hamid_words", "scope_note_sentence"):
+        for col in ("owner_words", "scope_note_sentence"):
             a[col], b[col] = b[col], a[col]
-        self.assertTrue(any("hamid_words" in p for p in self.problems(rows)))
+        self.assertTrue(any("owner_words" in p for p in self.problems(rows)))
 
     def test_a_wrong_answer_letter_is_caught(self):
-        self.assertTrue(any("hamid_answer" in p for p in self.problems(self.changed("REL-00396", hamid_answer="b"))))
+        self.assertTrue(any("owner_answer" in p for p in self.problems(self.changed("REL-00396", owner_answer="b"))))
 
     def test_a_reversed_direction_is_caught(self):
         rows = self.changed("REL-00291", source_slug="CM-1-2-2-3-6", target_slug="CM-1-2-2-3-8")
@@ -115,7 +115,7 @@ class SweepBatch206(unittest.TestCase):
             self.rows = list(csv.DictReader(f))
         with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
             self.register = {r["row_id"]: r for r in csv.DictReader(f)}
-        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+        with open(os.path.join(HERE, "review-evidence", "decision-owner-answers", "phase1-sweep.md")) as f:
             self.approval = f.read()
         self.facts, self.v2 = facts(), v2()
 
@@ -165,7 +165,7 @@ class SweepBatch206(unittest.TestCase):
         held = next(i for i, r in enumerate(self.rows) if r["verdict"] == "no-relationship")
         for i, field, value in ((emit, "outcome", batch_checks.SWEEP_HELD_OUTCOME),
                                 (held, "outcome", "Emitted as core:governedBy"),
-                                (emit, "Hamid_decision", "Hamid refused this relationship")):
+                                (emit, "owner_decision", "The decision owner refused this relationship")):
             rows = copy.deepcopy(self.rows)
             rows[i][field] = value
             self.assertTrue(any(field in p for p in self.problems(rows=rows)), (field, value))
@@ -185,7 +185,7 @@ class SweepBatch203(unittest.TestCase):
             self.rows = list(csv.DictReader(f))
         with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
             self.register = {r["row_id"]: r for r in csv.DictReader(f)}
-        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+        with open(os.path.join(HERE, "review-evidence", "decision-owner-answers", "phase1-sweep.md")) as f:
             self.approval = f.read()
         self.facts, self.v2 = facts(), v2()
         with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
@@ -295,7 +295,7 @@ class SweepBatchesAfter203(unittest.TestCase):
     def setUp(self):
         with open(os.path.join(SWEEP, "register.csv"), newline="") as f:
             self.register = {r["row_id"]: r for r in csv.DictReader(f)}
-        with open(os.path.join(HERE, "review-evidence", "hamid-answers", "phase1-sweep.md")) as f:
+        with open(os.path.join(HERE, "review-evidence", "decision-owner-answers", "phase1-sweep.md")) as f:
             self.approval = f.read()
         with open(os.path.join(HERE, "baseline", "step3-taxonomy.ttl")) as f:
             self.taxonomy = f.read()

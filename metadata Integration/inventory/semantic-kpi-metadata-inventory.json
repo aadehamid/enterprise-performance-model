@@ -2,7 +2,7 @@
   "inventory_id": "EPM-STAGE-A-SEMANTIC-KPI-INVENTORY",
   "status": "Draft evidence. Not a catalog. Not process authority. Not Stage B.",
   "pin": {
-    "repo": "aadehamid/enterprise-performance-model",
+    "repo": "<owner>/enterprise-performance-model",
     "commit": "814cb79d2b79b51210d4e21170f4579c1940b891",
     "scope": "demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/",
     "excluded": [

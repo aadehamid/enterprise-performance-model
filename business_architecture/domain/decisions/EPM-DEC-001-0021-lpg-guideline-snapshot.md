@@ -9,7 +9,7 @@
 
 ## Context
 
-Hamid asked to add the guideline to this repo's documentation.
+The decision owner asked to add the guideline to this repo's documentation.
 
 ## Decision
 
@@ -19,11 +19,11 @@ Copy both guideline files into `business_architecture/ontology/lpg-projection/` 
 
 Make this repo the master copy; link only.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Q24: "Also can we add this to our documentation in this repo". Q31: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned."
+Q24: "Also can we add this to our documentation in this repo". Q31: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Snapshot updates
 
@@ -32,4 +32,4 @@ Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Ham
 
 ## Evidence
 
-https://github.com/aadehamid/enterprise-people-graph/tree/main/guideline_to_map_ontology_to_LPG
+the enterprise-people-graph repository (`guideline_to_map_ontology_to_LPG`)

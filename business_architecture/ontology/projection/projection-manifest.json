@@ -1,12 +1,12 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "85f7d5ba61a0c53349ddb5db7990514f3798949b455f31e9bf136385b703dff9",
+  "input_fingerprint": "139fe515fcefc2ab97ba340aa74253429f0d4d7661c46c54abf51122526e430c",
   "inputs": {
     "organization/assignments.ttl": "f4bee1bb3eed7791dcc7d9605637b8b2e75404a4c32a923983fa237730fb9c7e",
-    "organization/roles.ttl": "214ad9179007f6ba1614c475764b05050c035d5115ff7e533a7663d3582a55be",
+    "organization/roles.ttl": "d7f8051a1f4a992b3f1f3f82a2155aa1e8916169944cc57732b995a2ac2a3800",
     "organization/vocabulary.ttl": "23bb7d1d65d879a38c1cb06fd26af853a4371bf9ead8ce6e23b31177f0e18e73",
     "ref-mpc/ref-mpc.ttl": "172b8f70ab96682f7f559855f370237c48ba6ab96c1e8f2c8d3751f656f508ef",
-    "releases/core/2.1.0/core.ttl": "557ae2a44c5bc95551ae6d71cada97c3f654359674a82e4e513ba707e960805d"
+    "releases/core/2.1.0/core.ttl": "c0d92c556be2c37fd3be2214d204cbb418b12bb7b0ec19b513b3e3ba8c02d941"
   },
   "loadable_triples": 25714,
   "release_exceptions": {},
@@ -15,7 +15,7 @@
     "organization/shapes.ttl": "39d3066113038d7f1c1f621cb21f119911e662e122618925118c175cca1a7470",
     "provenance/run-shapes.ttl": "112bc288a257b6d6698ee0f477c6a940e765506e68860ade3b041286e217b524",
     "ref-mpc/shapes.ttl": "fea2f78892d5d12de70e5984922f682a5df062ca9efb9d81903f2819bd25d7ff",
-    "releases/core/2.1.0/shapes.ttl": "754f32c91095dc9facf80fd38b7fdc33ec38e0a88dfffdd2bd2aa5b694678271",
+    "releases/core/2.1.0/shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680",
     "step4/scoped-sequence/shapes.ttl": "6d9acb78ae3a464aad7d76b694d16e8f43122ba9bbff97d41a5eff99072d51e3"
   },
   "versions": {

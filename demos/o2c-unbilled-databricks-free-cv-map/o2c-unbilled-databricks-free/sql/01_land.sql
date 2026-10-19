@@ -12,7 +12,7 @@
 --   * Outbound internet restricted — upload CSVs via the workspace UI. Do not wget.
 --   * One SQL warehouse, 2X-Small. Attach the default Serverless Starter Warehouse.
 --
--- Untested on workspace — needs Hamid URL.
+-- Untested on workspace — needs the decision owner's URL.
 -- =============================================================================
 
 -- ---------------------------------------------------------------------------
@@ -45,7 +45,7 @@ SELECT current_catalog() AS catalog_name,
 -- Part B — run after the UI upload
 -- read_files is Databricks SQL. Infer + CAST so money/dates stay typed.
 -- If read_files is refused on this warehouse, use the COPY INTO block at the
--- bottom (commented). Untested on workspace — needs Hamid URL.
+-- bottom (commented). Untested on workspace — needs the decision owner's URL.
 -- ---------------------------------------------------------------------------
 
 CREATE OR REPLACE TABLE {{catalog}}.{{schema}}.raw_parties AS

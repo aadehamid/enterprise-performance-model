@@ -146,7 +146,7 @@ the check failed and we fixed the premise instead of patching the row.
   gate assertion watched failing on the broken state, then the fix,
   then the pass.
 - **Reviewer verdicts:** every evidence package gets the interrogate
-  pass (Act On / Consider / Noted / Dismissed) before Hamid reviews it.
+  pass (Act On / Consider / Noted / Dismissed) before the decision owner reviews it.
 
 
 ### Verb review methodology — how to judge a predicate family
@@ -187,7 +187,7 @@ verdict: APPROVE, HOLD, or STAND.
 
 **Phase 4 — Sample and reconcile.** For large batches, sample per the
 evidence discipline (Rule 6): draw samples only from promotions, record
-outcomes as pending until Hamid reviews them. One wrong sample stops the
+outcomes as pending until the decision owner reviews them. One wrong sample stops the
 pass. Reconcile counts: every row has a verdict, every verdict is
 recorded, the ledger balances.
 

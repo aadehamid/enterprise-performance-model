@@ -54,7 +54,7 @@
   "proposed_repo_id": "CM 1.1.1.1",
   "deprecated": false,
   "prior_name": "Demand Forecasting",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Demand Forecasting' -> 'Produce Demand Forecast' — critical semantic-collision resolution (approved by Hamid)."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Demand Forecasting' -> 'Produce Demand Forecast' — critical semantic-collision resolution (approved by the decision owner)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-1",
@@ -925,7 +925,7 @@
   "proposed_repo_id": "CM 1.1.2.10",
   "deprecated": false,
   "prior_name": "Crude Allocation Decision",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Crude Allocation Decision' -> 'Allocate Crude and Feedstock' (Hamid approval 2026-09-22). verb-led normalization; 'and Feedstock' per the approved definition's coverage of crude and feedstock cargoes; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Crude Allocation Decision' -> 'Allocate Crude and Feedstock' (the decision owner's approval 2026-09-22). verb-led normalization; 'and Feedstock' per the approved definition's coverage of crude and feedstock cargoes; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -939,7 +939,7 @@
   "proposed_repo_id": "CM 1.1.2.11",
   "deprecated": false,
   "prior_name": "Product Allocation Decision",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Product Allocation Decision' -> 'Allocate Finished Products' (Hamid approval 2026-09-22). verb-led normalization parallel to the crude/feedstock allocation row; 'Finished' distinguishes finished products from feedstock per the approved definition; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Product Allocation Decision' -> 'Allocate Finished Products' (the decision owner's approval 2026-09-22). verb-led normalization parallel to the crude/feedstock allocation row; 'Finished' distinguishes finished products from feedstock per the approved definition; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -1184,7 +1184,7 @@
   "proposed_repo_id": "CM 1.1.3.6.2",
   "deprecated": false,
   "prior_name": "Loading Shipment",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Loading Shipment' -> 'Administer Scheduled Shipment Loading' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Loading Shipment' -> 'Administer Scheduled Shipment Loading' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -1220,7 +1220,7 @@
   "proposed_repo_id": "CM 1.1.3.7",
   "deprecated": false,
   "prior_name": "Inventory",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Inventory' -> 'Inventory Management' — critical semantic-collision resolution (approved by Hamid)."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Inventory' -> 'Inventory Management' — critical semantic-collision resolution (approved by the decision owner)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-1",
@@ -1354,7 +1354,7 @@
   "proposed_repo_id": "CM 1.1.3.7.12",
   "deprecated": false,
   "prior_name": "Manage Inventory",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Inventory' -> 'Monitor and Control Inventory Positions' — critical semantic-collision resolution (approved by Hamid)."
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Inventory' -> 'Monitor and Control Inventory Positions' — critical semantic-collision resolution (approved by the decision owner)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-3-8",
@@ -1400,7 +1400,7 @@
   "proposed_repo_id": "CM 1.1.3.8.3",
   "deprecated": false,
   "prior_name": "Setup Scheduling System",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Setup Scheduling System' -> 'Maintain Secondary Distribution Scheduling Basis' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Setup Scheduling System' -> 'Maintain Secondary Distribution Scheduling Basis' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -2058,7 +2058,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Commercial Development",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -2078,7 +2078,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Commercial Development > Develop Strategic Business Plan",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -2741,7 +2741,7 @@
   "proposed_repo_id": "CM 1.2.2.3.9",
   "deprecated": false,
   "prior_name": "Perform Position & PNL Analysis",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Position & PNL Analysis' -> 'Perform Position & P&L Analysis' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Position & PNL Analysis' -> 'Perform Position & P&L Analysis' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3030,7 +3030,7 @@
   "proposed_repo_id": "CM 1.2.4.1.8",
   "deprecated": false,
   "prior_name": "Settle Emissions",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Settle Emissions' -> 'Settle Environmental Instruments' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Settle Emissions' -> 'Settle Environmental Instruments' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -3187,7 +3187,7 @@
   "proposed_repo_id": "CM 1.2.4.2.2",
   "deprecated": false,
   "prior_name": "Manage Production Accounting",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Production Accounting' -> 'Manage Production & Inventory Accounting' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Production Accounting' -> 'Manage Production & Inventory Accounting' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -3234,7 +3234,7 @@
   "proposed_repo_id": "CM 1.2.4.2.6",
   "deprecated": false,
   "prior_name": "Reconcile Economic PNL To Accounting PNL",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Reconcile Economic PNL To Accounting PNL' -> 'Reconcile Economic PNL to Accounting PNL' (Hamid approval 2026-09-22). capitalization correction only ('To' -> 'to'); PNL retained in the technical label per the batch-12 convention, P&L in prose. Migration-map-only disposition: the old label is NOT retained as skos:altLabel — it differs from the new label by case only ('To' vs 'to'), which the validator flags as an altlabel-collision (queue rule: case/punctuation-only changes carry no alt label); it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Reconcile Economic PNL To Accounting PNL' -> 'Reconcile Economic PNL to Accounting PNL' (the decision owner's approval 2026-09-22). capitalization correction only ('To' -> 'to'); PNL retained in the technical label per the batch-12 convention, P&L in prose. Migration-map-only disposition: the old label is NOT retained as skos:altLabel — it differs from the new label by case only ('To' vs 'to'), which the validator flags as an altlabel-collision (queue rule: case/punctuation-only changes carry no alt label); it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3248,7 +3248,7 @@
   "proposed_repo_id": "CM 1.2.4.2.7",
   "deprecated": false,
   "prior_name": "Manage Financial Info. Documentation & Reporting",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Financial Info. Documentation & Reporting' -> 'Manage Financial Information Documentation and Reporting' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Financial Info. Documentation & Reporting' -> 'Manage Financial Information Documentation and Reporting' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3306,7 +3306,7 @@
   "proposed_repo_id": "CM 1.2.4.2.12",
   "deprecated": false,
   "prior_name": "Develop Accounting Policies & Procedures",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Develop Accounting Policies & Procedures' -> 'Maintain Trading Accounting Procedures and Guidance' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Develop Accounting Policies & Procedures' -> 'Maintain Trading Accounting Procedures and Guidance' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -3430,7 +3430,7 @@
   "proposed_repo_id": "CM 1.2.4.4.2",
   "deprecated": false,
   "prior_name": "Create Claim",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Create Claim' -> 'Create Outbound Delay Compensation Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Create Claim' -> 'Create Outbound Delay Compensation Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3444,7 +3444,7 @@
   "proposed_repo_id": "CM 1.2.4.4.3",
   "deprecated": false,
   "prior_name": "Receive Demurrage Claim",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Receive Demurrage Claim' -> 'Receive Inbound Delay Compensation Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Receive Demurrage Claim' -> 'Receive Inbound Delay Compensation Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3458,7 +3458,7 @@
   "proposed_repo_id": "CM 1.2.4.4.4",
   "deprecated": false,
   "prior_name": "Assess Claim",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Assess Claim' -> 'Assess Inbound Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Assess Claim' -> 'Assess Inbound Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3472,7 +3472,7 @@
   "proposed_repo_id": "CM 1.2.4.4.5",
   "deprecated": false,
   "prior_name": "Communicate and Negotiate Claim",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Communicate and Negotiate Claim' -> 'Negotiate Outbound Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Communicate and Negotiate Claim' -> 'Negotiate Outbound Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3486,7 +3486,7 @@
   "proposed_repo_id": "CM 1.2.4.4.6",
   "deprecated": false,
   "prior_name": "Validate and Negotiate Claim",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Validate and Negotiate Claim' -> 'Validate and Negotiate Inbound Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Validate and Negotiate Claim' -> 'Validate and Negotiate Inbound Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3500,7 +3500,7 @@
   "proposed_repo_id": "CM 1.2.4.4.7",
   "deprecated": false,
   "prior_name": "Send Claim Invoice",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Send Claim Invoice' -> 'Invoice Agreed Outbound Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Send Claim Invoice' -> 'Invoice Agreed Outbound Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3514,7 +3514,7 @@
   "proposed_repo_id": "CM 1.2.4.4.8",
   "deprecated": false,
   "prior_name": "Receive Claim Invoice",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Receive Claim Invoice' -> 'Process Invoice for Agreed Inbound Claim' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Receive Claim Invoice' -> 'Process Invoice for Agreed Inbound Claim' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3550,7 +3550,7 @@
   "proposed_repo_id": "CM 1.2.5.1.1",
   "deprecated": false,
   "prior_name": "Manage feedstock Data Quality",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage feedstock Data Quality' -> 'Manage Feedstock Data Quality' (Hamid approval 2026-09-21). Purely lexical capitalization fix; prior label NOT retained as skos:altLabel — it differs by case only and the validator flags case-only altLabels as collisions (queue rule: case/punctuation-only changes carry no alt label); preserved as prior_name in the identity/migration map. No identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage feedstock Data Quality' -> 'Manage Feedstock Data Quality' (the decision owner's approval 2026-09-21). Purely lexical capitalization fix; prior label NOT retained as skos:altLabel — it differs by case only and the validator flags case-only altLabels as collisions (queue rule: case/punctuation-only changes carry no alt label); preserved as prior_name in the identity/migration map. No identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -3630,7 +3630,7 @@
   "proposed_repo_id": "CM 1.2.5.2.3",
   "deprecated": false,
   "prior_name": "Plan Optimal Feedstock Slate And Run Rate",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Plan Optimal Feedstock Slate And Run Rate' -> 'Recommend Feedstock Slate And Run Rate' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Plan Optimal Feedstock Slate And Run Rate' -> 'Recommend Feedstock Slate And Run Rate' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -3732,7 +3732,7 @@
   "proposed_repo_id": "CM 1.2.6.1",
   "deprecated": false,
   "prior_name": "Network Management",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Network Management' -> 'Supply Network Participation Analysis' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Network Management' -> 'Supply Network Participation Analysis' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -3812,7 +3812,7 @@
   "proposed_repo_id": "CM 1.2.6.2.3",
   "deprecated": false,
   "prior_name": "Forecast Refined Product Demand",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Forecast Refined Product Demand' -> 'Forecast Operational Refined Product Demand' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Forecast Refined Product Demand' -> 'Forecast Operational Refined Product Demand' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -3837,7 +3837,7 @@
   "proposed_repo_id": "CM 1.2.6.3.1",
   "deprecated": false,
   "prior_name": "Manage Primary Distribution Operations",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Primary Distribution Operations' -> 'Coordinate S&T Source-Point Supply Operations' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage Primary Distribution Operations' -> 'Coordinate S&T Source-Point Supply Operations' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -3851,7 +3851,7 @@
   "proposed_repo_id": "CM 1.2.6.3.2",
   "deprecated": false,
   "prior_name": "Manage Replenishment",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Replenishment' -> 'Fulfill Replenishment From Trading Sources' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Replenishment' -> 'Fulfill Replenishment From Trading Sources' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -3865,7 +3865,7 @@
   "proposed_repo_id": "CM 1.2.6.3.3",
   "deprecated": false,
   "prior_name": "Manage Primary Distribution Transportation",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Primary Distribution Transportation' -> 'Coordinate S&T-Sourced Primary Transportation' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Primary Distribution Transportation' -> 'Coordinate S&T-Sourced Primary Transportation' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -4275,7 +4275,7 @@
   "proposed_repo_id": "CM 1.3.1.6",
   "deprecated": false,
   "prior_name": "Insight and Metrics",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Insight and Metrics' -> 'Marketing Insight and Metrics Stewardship' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Insight and Metrics' -> 'Marketing Insight and Metrics Stewardship' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4311,7 +4311,7 @@
   "proposed_repo_id": "CM 1.3.2.1.1",
   "deprecated": false,
   "prior_name": "Formulate and Evaluate Strategic Operating Alternative",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Formulate and Evaluate Strategic Operating Alternative' -> 'Formulate and Evaluate Strategic Operating Alternatives' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Formulate and Evaluate Strategic Operating Alternative' -> 'Formulate and Evaluate Strategic Operating Alternatives' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4424,7 +4424,7 @@
   "proposed_repo_id": "CM 1.3.2.3.1",
   "deprecated": false,
   "prior_name": "Test Customer value proposition",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Test Customer value proposition' -> 'Test Consumer Value Proposition' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Test Customer value proposition' -> 'Test Consumer Value Proposition' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4438,7 +4438,7 @@
   "proposed_repo_id": "CM 1.3.2.3.2",
   "deprecated": false,
   "prior_name": "Formulate and Evaluate Strategic Operating Alternatives (CVP)",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Formulate and Evaluate Strategic Operating Alternatives (CVP)' -> 'Formulate and Evaluate Consumer Value Proposition Alternatives' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Formulate and Evaluate Strategic Operating Alternatives (CVP)' -> 'Formulate and Evaluate Consumer Value Proposition Alternatives' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4452,7 +4452,7 @@
   "proposed_repo_id": "CM 1.3.2.3.3",
   "deprecated": false,
   "prior_name": "Establish CVP principles and objectives",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Establish CVP principles and objectives' -> 'Establish Consumer Value Proposition Principles and Objectives' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Establish CVP principles and objectives' -> 'Establish Consumer Value Proposition Principles and Objectives' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4466,7 +4466,7 @@
   "proposed_repo_id": "CM 1.3.2.3.4",
   "deprecated": false,
   "prior_name": "Develop/Update Strategy (CVP)",
-  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Develop/Update Strategy (CVP)' -> 'Develop and Update Consumer Value Proposition Strategy' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — directionality-missing Batch 4 (2026-09-21): renamed 'Develop/Update Strategy (CVP)' -> 'Develop and Update Consumer Value Proposition Strategy' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -4612,7 +4612,7 @@
   "proposed_repo_id": "CM 1.3.3.1.4",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Offer Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Offer)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Offer Measurement Framework' — critical semantic-collision resolution (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Offer)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Offer)"
  },
  {
@@ -4681,7 +4681,7 @@
   "proposed_repo_id": "CM 1.3.3.2.5",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Pricing Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Pricing)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Pricing Measurement Framework' — critical semantic-collision resolution (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Pricing)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Pricing)"
  },
  {
@@ -4750,7 +4750,7 @@
   "proposed_repo_id": "CM 1.3.3.3.5",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Channel Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Channel)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Channel Measurement Framework' — critical semantic-collision resolution (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Channel)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Channel)"
  },
  {
@@ -4808,7 +4808,7 @@
   "proposed_repo_id": "CM 1.3.3.4.4",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Network Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Network)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Network Measurement Framework' — critical semantic-collision resolution (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Network)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Network)"
  },
  {
@@ -4899,7 +4899,7 @@
   "proposed_repo_id": "CM 1.3.3.5.7",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Marketing Communications Measurement Framework' — sixth and final 'Define KPI Framework' collision resolved (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Marketing Communications)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Marketing Communications Measurement Framework' — sixth and final 'Define KPI Framework' collision resolved (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Marketing Communications)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Marketing Communications)"
  },
  {
@@ -4968,7 +4968,7 @@
   "proposed_repo_id": "CM 1.3.3.6.5",
   "deprecated": false,
   "prior_name": "Define KPI Framework",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Operating Model Measurement Framework' — critical semantic-collision resolution (approved by Hamid). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Operating Model)' recorded here.",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> 'Define Operating Model Measurement Framework' — critical semantic-collision resolution (approved by the decision owner). Prior label retired from ontology aliases; scoped historical alias 'Define KPI Framework (Operating Model)' recorded here.",
   "scoped_historical_alias": "Define KPI Framework (Operating Model)"
  },
  {
@@ -5246,7 +5246,7 @@
   "proposed_repo_id": "CM 1.3.4.5.4",
   "deprecated": false,
   "prior_name": "Manage R&D Portfolios",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage R&D Portfolios' -> 'Develop Portfolio Recommendations and Track Decisions' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Manage R&D Portfolios' -> 'Develop Portfolio Recommendations and Track Decisions' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -5326,7 +5326,7 @@
   "proposed_repo_id": "CM 1.3.5.1",
   "deprecated": false,
   "prior_name": "Sales Strategy & Planning",
-  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Sales Strategy & Planning' -> 'Sales Planning' — authority-risk label resolution (approved by Hamid).",
+  "name_change_note": "Step 3d naming pass (2026-09-21): renamed 'Sales Strategy & Planning' -> 'Sales Planning' — authority-risk label resolution (approved by the decision owner).",
   "scoped_historical_alias": null
  },
  {
@@ -5868,7 +5868,7 @@
   "proposed_repo_id": "CM 1.3.6.5.2",
   "deprecated": false,
   "prior_name": "Manage Promotions/Events Execution",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Promotions/Events Execution' -> 'Manage Promotions and Events Execution' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Promotions/Events Execution' -> 'Manage Promotions and Events Execution' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -5893,7 +5893,7 @@
   "proposed_repo_id": "CM 1.3.6.6",
   "deprecated": false,
   "prior_name": "Loyalty And Cards Management - Marketing",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Loyalty And Cards Management - Marketing' -> 'Loyalty and Cards Management (Marketing)' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Loyalty And Cards Management - Marketing' -> 'Loyalty and Cards Management (Marketing)' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -5907,7 +5907,7 @@
   "proposed_repo_id": "CM 1.3.6.6.1",
   "deprecated": false,
   "prior_name": "Setup Prospect",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Setup Prospect' -> 'Set Up Prospect' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Setup Prospect' -> 'Set Up Prospect' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -5921,7 +5921,7 @@
   "proposed_repo_id": "CM 1.3.6.6.2",
   "deprecated": false,
   "prior_name": "Manage Invoicing",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Invoicing' -> 'Manage Card Program Billing Coordination' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Invoicing' -> 'Manage Card Program Billing Coordination' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -5946,7 +5946,7 @@
   "proposed_repo_id": "CM 1.3.6.6.4",
   "deprecated": false,
   "prior_name": "Manage Cards Administration (Order New Cards, Change Card Data)",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Cards Administration (Order New Cards, Change Card Data)' -> 'Manage Card Administration' (Hamid approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Cards Administration (Order New Cards, Change Card Data)' -> 'Manage Card Administration' (the decision owner's approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -5971,7 +5971,7 @@
   "proposed_repo_id": "CM 1.3.6.6.6",
   "deprecated": false,
   "prior_name": "Manage Bad Debt",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Bad Debt' -> 'Manage Card Delinquency and Collections Referral' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Manage Bad Debt' -> 'Manage Card Delinquency and Collections Referral' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -5985,7 +5985,7 @@
   "proposed_repo_id": "CM 1.3.6.6.7",
   "deprecated": false,
   "prior_name": "Perform Transaction Analysis Reporting & Confirmation",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Perform Transaction Analysis Reporting & Confirmation' -> 'Analyze, Report, and Confirm Card Transactions' (Hamid approval 2026-09-22). verb-led normalization preserving all three approved definition verbs (analyze, report, confirm); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Perform Transaction Analysis Reporting & Confirmation' -> 'Analyze, Report, and Confirm Card Transactions' (the decision owner's approval 2026-09-22). verb-led normalization preserving all three approved definition verbs (analyze, report, confirm); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6010,7 +6010,7 @@
   "proposed_repo_id": "CM 1.3.6.6.9",
   "deprecated": false,
   "prior_name": "Analyze Consumption Planning & Monitor Stock",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Analyze Consumption Planning & Monitor Stock' -> 'Plan Card Stock Consumption and Monitor Inventory' (Hamid approval 2026-09-22). verb-led normalization; 'card stock' is the scope note's blank-card/issuance-material inventory term; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Analyze Consumption Planning & Monitor Stock' -> 'Plan Card Stock Consumption and Monitor Inventory' (the decision owner's approval 2026-09-22). verb-led normalization; 'card stock' is the scope note's blank-card/issuance-material inventory term; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6046,7 +6046,7 @@
   "proposed_repo_id": "CM 1.3.6.6.12",
   "deprecated": false,
   "prior_name": "Manage Additional Card Services (On Road Services)",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Additional Card Services (On Road Services)' -> 'Manage Additional Card Services' (Hamid approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage Additional Card Services (On Road Services)' -> 'Manage Additional Card Services' (the decision owner's approval 2026-09-21). Migration-map-only disposition per the generic-alias precedent: the old label is NOT retained as skos:altLabel — it would falsely narrow scope / is not a useful ontology synonym; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6093,7 +6093,7 @@
   "proposed_repo_id": "CM 1.3.6.7",
   "deprecated": false,
   "prior_name": "Brand Standard Management",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Brand Standard Management' -> 'Brand Standards Management' (Hamid approval 2026-09-22). plural alignment with the approved definition and the child row's terminology; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Brand Standard Management' -> 'Brand Standards Management' (the decision owner's approval 2026-09-22). plural alignment with the approved definition and the child row's terminology; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6107,7 +6107,7 @@
   "proposed_repo_id": "CM 1.3.6.7.1",
   "deprecated": false,
   "prior_name": "Manage Brand Standards and Perform Inspection",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Manage Brand Standards and Perform Inspection' -> 'Manage Brand Standards and Inspections' (Hamid approval 2026-09-22). plural alignment ('inspections'); the definition governs an inspection program, not a one-off inspection; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Manage Brand Standards and Perform Inspection' -> 'Manage Brand Standards and Inspections' (the decision owner's approval 2026-09-22). plural alignment ('inspections'); the definition governs an inspection program, not a one-off inspection; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6132,7 +6132,7 @@
   "proposed_repo_id": "CM 1.3.6.8",
   "deprecated": false,
   "prior_name": "Compliance Management",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Compliance Management' -> 'Commercial Agreement Compliance Management' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Compliance Management' -> 'Commercial Agreement Compliance Management' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6146,7 +6146,7 @@
   "proposed_repo_id": "CM 1.3.6.8.1",
   "deprecated": false,
   "prior_name": "Conduct Audit To Validate Reported Sales",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Conduct Audit To Validate Reported Sales' -> 'Conduct Commercial Audit to Validate Reported Sales' (approved by Hamid; prior label retained as skos:altLabel).",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 1 (A+B+C, 2026-09-21): renamed 'Conduct Audit To Validate Reported Sales' -> 'Conduct Commercial Audit to Validate Reported Sales' (approved by the decision owner; prior label retained as skos:altLabel).",
   "scoped_historical_alias": null
  },
  {
@@ -6171,7 +6171,7 @@
   "proposed_repo_id": "CM 1.3.7.1",
   "deprecated": false,
   "prior_name": "Manage Master Data (Customer, Price, Product, Tax, Location)",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Master Data (Customer, Price, Product, Tax, Location)' -> 'Manage Commercial Master Data Stewardship' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Master Data (Customer, Price, Product, Tax, Location)' -> 'Manage Commercial Master Data Stewardship' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6185,7 +6185,7 @@
   "proposed_repo_id": "CM 1.3.7.1.1",
   "deprecated": false,
   "prior_name": "Maintain Customer Master Data",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Customer Master Data' -> 'Maintain Customer and Commercial Account Master Data' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Customer Master Data' -> 'Maintain Customer and Commercial Account Master Data' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6210,7 +6210,7 @@
   "proposed_repo_id": "CM 1.3.7.1.3",
   "deprecated": false,
   "prior_name": "Maintain Product Master Data",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Product Master Data' -> 'Maintain Product and Service Master Data' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Product Master Data' -> 'Maintain Product and Service Master Data' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6235,7 +6235,7 @@
   "proposed_repo_id": "CM 1.3.7.1.5",
   "deprecated": false,
   "prior_name": "Maintain Workflows",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Workflows' -> 'Maintain Commercial Workflow Configuration' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Workflows' -> 'Maintain Commercial Workflow Configuration' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6249,7 +6249,7 @@
   "proposed_repo_id": "CM 1.3.7.1.6",
   "deprecated": false,
   "prior_name": "Maintain Commercial Policies",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Commercial Policies' -> 'Maintain Commercial Policy Content and Approved Parameters' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Commercial Policies' -> 'Maintain Commercial Policy Content and Approved Parameters' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6263,7 +6263,7 @@
   "proposed_repo_id": "CM 1.3.7.2",
   "deprecated": false,
   "prior_name": "Manage Pricing & Contracting (Manage Quote & Sale)",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Pricing & Contracting (Manage Quote & Sale)' -> 'Manage Commercial Terms, Quoting, and Customer Commercial Services' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Pricing & Contracting (Manage Quote & Sale)' -> 'Manage Commercial Terms, Quoting, and Customer Commercial Services' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6299,7 +6299,7 @@
   "proposed_repo_id": "CM 1.3.7.2.3",
   "deprecated": false,
   "prior_name": "Develop & Monitor Revenue Plan",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Develop & Monitor Revenue Plan' -> 'Develop and Monitor Commercial Revenue Plan' (Hamid approval 2026-09-22). 'Commercial' qualifier per the approved definition ('the commercial revenue plan'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Develop & Monitor Revenue Plan' -> 'Develop and Monitor Commercial Revenue Plan' (the decision owner's approval 2026-09-22). 'Commercial' qualifier per the approved definition ('the commercial revenue plan'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6379,7 +6379,7 @@
   "proposed_repo_id": "CM 1.3.7.3.3",
   "deprecated": false,
   "prior_name": "Change / Cancel Order",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Change / Cancel Order' -> 'Change or Cancel Order' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Change / Cancel Order' -> 'Change or Cancel Order' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6404,7 +6404,7 @@
   "proposed_repo_id": "CM 1.3.7.3.5",
   "deprecated": false,
   "prior_name": "Track & Forecast Order",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Track & Forecast Order' -> 'Track Order Book and Forecast Order Volumes' (Hamid approval 2026-09-22). object correction per the approved definition: track the order book; forecast order volumes (timing stays in the definition); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Track & Forecast Order' -> 'Track Order Book and Forecast Order Volumes' (the decision owner's approval 2026-09-22). object correction per the approved definition: track the order book; forecast order volumes (timing stays in the definition); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6418,7 +6418,7 @@
   "proposed_repo_id": "CM 1.3.7.3.6",
   "deprecated": false,
   "prior_name": "Manage Returns",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Returns' -> 'Manage Commercial Returns Authorization and Coordination' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Manage Returns' -> 'Manage Commercial Returns Authorization and Coordination' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6487,7 +6487,7 @@
   "proposed_repo_id": "CM 1.3.7.4.5",
   "deprecated": false,
   "prior_name": "Perform Customer Closure & Reinstatement",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Perform Customer Closure & Reinstatement' -> 'Perform Credit-Driven Customer Closure and Reinstatement' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Perform Customer Closure & Reinstatement' -> 'Perform Credit-Driven Customer Closure and Reinstatement' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6501,7 +6501,7 @@
   "proposed_repo_id": "CM 1.3.7.4.6",
   "deprecated": false,
   "prior_name": "KYC Process",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'KYC Process' -> 'Perform KYC Due Diligence' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'KYC Process' -> 'Perform KYC Due Diligence' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6526,7 +6526,7 @@
   "proposed_repo_id": "CM 1.3.7.5.1",
   "deprecated": false,
   "prior_name": "Establish Priority Assignment of Customer Request/Inquiry",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Establish Priority Assignment of Customer Request/Inquiry' -> 'Prioritize Customer Requests and Inquiries' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Establish Priority Assignment of Customer Request/Inquiry' -> 'Prioritize Customer Requests and Inquiries' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6540,7 +6540,7 @@
   "proposed_repo_id": "CM 1.3.7.5.2",
   "deprecated": false,
   "prior_name": "Maintain Requests and Inquiries Master Database",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Requests and Inquiries Master Database' -> 'Maintain Customer Request and Inquiry Records' (Hamid approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 2 (D, 2026-09-21): renamed 'Maintain Requests and Inquiries Master Database' -> 'Maintain Customer Request and Inquiry Records' (the decision owner's approval 2026-09-21, independent reviewer recommendation). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6565,7 +6565,7 @@
   "proposed_repo_id": "CM 1.3.7.5.4",
   "deprecated": false,
   "prior_name": "Perform Customer Follow up",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Customer Follow up' -> 'Perform Customer Follow-Up' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Perform Customer Follow up' -> 'Perform Customer Follow-Up' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6579,7 +6579,7 @@
   "proposed_repo_id": "CM 1.3.7.5.5",
   "deprecated": false,
   "prior_name": "Conduct Quarterly Review Meeting",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Conduct Quarterly Review Meeting' -> 'Conduct Customer Service Reviews' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Conduct Quarterly Review Meeting' -> 'Conduct Customer Service Reviews' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6626,7 +6626,7 @@
   "proposed_repo_id": "CM 1.3.8.1.1",
   "deprecated": false,
   "prior_name": "Create & Distribute Bill",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Create & Distribute Bill' -> 'Create and Distribute Bill' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Create & Distribute Bill' -> 'Create and Distribute Bill' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6640,7 +6640,7 @@
   "proposed_repo_id": "CM 1.3.8.1.2",
   "deprecated": false,
   "prior_name": "Perform Accounting For Self-billing",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Accounting For Self-billing' -> 'Perform Self-Billing Accounting' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Accounting For Self-billing' -> 'Perform Self-Billing Accounting' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6676,7 +6676,7 @@
   "proposed_repo_id": "CM 1.3.8.1.5",
   "deprecated": false,
   "prior_name": "Create Exception & Reverse Invoice",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Create Exception & Reverse Invoice' -> 'Manage Invoice Exceptions, Reversals, and Rebilling' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Create Exception & Reverse Invoice' -> 'Manage Invoice Exceptions, Reversals, and Rebilling' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6701,7 +6701,7 @@
   "proposed_repo_id": "CM 1.3.8.2.1",
   "deprecated": false,
   "prior_name": "Receive Cash Receipts / Payment",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Receive Cash Receipts / Payment' -> 'Record Customer Receipts and Payment Notifications' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Receive Cash Receipts / Payment' -> 'Record Customer Receipts and Payment Notifications' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6737,7 +6737,7 @@
   "proposed_repo_id": "CM 1.3.8.2.4",
   "deprecated": false,
   "prior_name": "Manage Unapplied Receipts / Exceptions",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Unapplied Receipts / Exceptions' -> 'Manage Unapplied Receipts and Exceptions' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Unapplied Receipts / Exceptions' -> 'Manage Unapplied Receipts and Exceptions' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6751,7 +6751,7 @@
   "proposed_repo_id": "CM 1.3.8.2.5",
   "deprecated": false,
   "prior_name": "Perform Reconciliations & Settlements",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Reconciliations & Settlements' -> 'Perform Cash, Acquirer, and Receivables Reconciliations' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Perform Reconciliations & Settlements' -> 'Perform Cash, Acquirer, and Receivables Reconciliations' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6776,7 +6776,7 @@
   "proposed_repo_id": "CM 1.3.8.3",
   "deprecated": false,
   "prior_name": "Manage Collection and Disputes",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection and Disputes' -> 'Manage Receivables Resolution' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection and Disputes' -> 'Manage Receivables Resolution' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6790,7 +6790,7 @@
   "proposed_repo_id": "CM 1.3.8.3.1",
   "deprecated": false,
   "prior_name": "Dispute Management",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Dispute Management' -> 'Manage Receivables Disputes' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Dispute Management' -> 'Manage Receivables Disputes' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6804,7 +6804,7 @@
   "proposed_repo_id": "CM 1.3.8.3.2",
   "deprecated": false,
   "prior_name": "Collection Management",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Collection Management' -> 'Manage Receivables Collections' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Collection Management' -> 'Manage Receivables Collections' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6818,7 +6818,7 @@
   "proposed_repo_id": "CM 1.3.8.3.3",
   "deprecated": false,
   "prior_name": "Bad Debt Allowance",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Bad Debt Allowance' -> 'Determine Bad Debt Allowance' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Bad Debt Allowance' -> 'Determine Bad Debt Allowance' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6832,7 +6832,7 @@
   "proposed_repo_id": "CM 1.3.8.3.4",
   "deprecated": false,
   "prior_name": "Develop Root Cause Analysis/Action Plan",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Develop Root Cause Analysis/Action Plan' -> 'Develop Root-Cause Analyses and Action Plans' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Develop Root Cause Analysis/Action Plan' -> 'Develop Root-Cause Analyses and Action Plans' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6857,7 +6857,7 @@
   "proposed_repo_id": "CM 1.3.8.4.1",
   "deprecated": false,
   "prior_name": "Period End Processing",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Period End Processing' -> 'Perform Period-End Processing' (Hamid approval 2026-09-22). verb-led normalization with hyphenated 'Period-End'; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Period End Processing' -> 'Perform Period-End Processing' (the decision owner's approval 2026-09-22). verb-led normalization with hyphenated 'Period-End'; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6871,7 +6871,7 @@
   "proposed_repo_id": "CM 1.3.8.4.2",
   "deprecated": false,
   "prior_name": "AR Reconciliation / Compliance",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'AR Reconciliation / Compliance' -> 'Perform AR Reconciliation and Compliance' (Hamid approval 2026-09-22). verb-led normalization; the slash is replaced by 'and'; 'compliance' stays fenced to O2C control evidence by the approved scope note; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'AR Reconciliation / Compliance' -> 'Perform AR Reconciliation and Compliance' (the decision owner's approval 2026-09-22). verb-led normalization; the slash is replaced by 'and'; 'compliance' stays fenced to O2C control evidence by the approved scope note; prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6885,7 +6885,7 @@
   "proposed_repo_id": "CM 1.3.8.4.3",
   "deprecated": false,
   "prior_name": "Accruals Analysis And Calculation",
-  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Accruals Analysis And Calculation' -> 'Analyze and Calculate Accruals' (Hamid approval 2026-09-22). verb-led normalization mirroring the approved definition ('Analyze and calculate'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only judgment Batch 7 (2026-09-22): renamed 'Accruals Analysis And Calculation' -> 'Analyze and Calculate Accruals' (the decision owner's approval 2026-09-22). verb-led normalization mirroring the approved definition ('Analyze and calculate'); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6932,7 +6932,7 @@
   "proposed_repo_id": "CM 1.3.8.4.7",
   "deprecated": false,
   "prior_name": "Manage Collection of Royalty and Fees",
-  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection of Royalty and Fees' -> 'Administer Royalty, Brand Fee, and Contribution Streams' (Hamid approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — scope-ambiguity Batch 3 (E+F, 2026-09-21): renamed 'Manage Collection of Royalty and Fees' -> 'Administer Royalty, Brand Fee, and Contribution Streams' (the decision owner's approval 2026-09-21, independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -6979,7 +6979,7 @@
   "proposed_repo_id": "CM 1.3.9.1.2",
   "deprecated": false,
   "prior_name": "Manage Operations",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Operations' -> 'Manage Service Operations' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Operations' -> 'Manage Service Operations' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7048,7 +7048,7 @@
   "proposed_repo_id": "CM 1.3.9.2.1",
   "deprecated": false,
   "prior_name": "Manage Data",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Data' -> 'Manage Service Delivery Data' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Data' -> 'Manage Service Delivery Data' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7062,7 +7062,7 @@
   "proposed_repo_id": "CM 1.3.9.2.2",
   "deprecated": false,
   "prior_name": "Manage Customer",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Customer' -> 'Manage Customer Interactions in Service Delivery' (Hamid approval 2026-09-21; independent reviewer recommendation: approve with plural 'Interactions' refinement for the enduring multi-interaction process). Alias-control exception: the bare historical label 'Manage Customer' is NOT retained as skos:altLabel — uniqueness/collision validation found no exact pref/alt collision on other rows, but the bare label is a prefix of live labels (Manage Customer Portal, Manage Customer Invoicing and Billing, Manage Customer Requests and Inquiries) and would reintroduce retrieval ambiguity; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Customer' -> 'Manage Customer Interactions in Service Delivery' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve with plural 'Interactions' refinement for the enduring multi-interaction process). Alias-control exception: the bare historical label 'Manage Customer' is NOT retained as skos:altLabel — uniqueness/collision validation found no exact pref/alt collision on other rows, but the bare label is a prefix of live labels (Manage Customer Portal, Manage Customer Invoicing and Billing, Manage Customer Requests and Inquiries) and would reintroduce retrieval ambiguity; it is preserved as prior_name in the identity/migration map only. No identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7076,7 +7076,7 @@
   "proposed_repo_id": "CM 1.3.9.2.3",
   "deprecated": false,
   "prior_name": "Fulfill Service Event",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Fulfill Service Event' -> 'Fulfill Service Events' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Fulfill Service Event' -> 'Fulfill Service Events' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7112,7 +7112,7 @@
   "proposed_repo_id": "CM 1.3.9.3.2",
   "deprecated": false,
   "prior_name": "Measure Service Employees",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Measure Service Employees' -> 'Measure Service Workforce Performance' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Measure Service Employees' -> 'Measure Service Workforce Performance' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7148,7 +7148,7 @@
   "proposed_repo_id": "CM 1.3.10.1",
   "deprecated": false,
   "prior_name": "Setup and Maintain Customer In Terminal",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Setup and Maintain Customer In Terminal' -> 'Set Up and Maintain Terminal Customer Authorization' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Setup and Maintain Customer In Terminal' -> 'Set Up and Maintain Terminal Customer Authorization' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7162,7 +7162,7 @@
   "proposed_repo_id": "CM 1.3.10.2",
   "deprecated": false,
   "prior_name": "Process Forecast and Nominations",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Process Forecast and Nominations' -> 'Process Customer Lifting Forecasts and Nominations' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Process Forecast and Nominations' -> 'Process Customer Lifting Forecasts and Nominations' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7176,7 +7176,7 @@
   "proposed_repo_id": "CM 1.3.10.3",
   "deprecated": false,
   "prior_name": "Manage Allocation",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Allocation' -> 'Manage Terminal Lifting Allocation' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Manage Allocation' -> 'Manage Terminal Lifting Allocation' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7190,7 +7190,7 @@
   "proposed_repo_id": "CM 1.3.10.4",
   "deprecated": false,
   "prior_name": "Capture Deal",
-  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Capture Deal' -> 'Capture Terminal Sales Deal' (Hamid approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — generic-operational Batch 5 (2026-09-21): renamed 'Capture Deal' -> 'Capture Terminal Sales Deal' (the decision owner's approval 2026-09-21; independent reviewer recommendation: approve as proposed). Prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null
  },
  {
@@ -7237,7 +7237,7 @@
   "proposed_repo_id": "CM 1.1.4.6.3",
   "deprecated": false,
   "prior_name": "Manage Site Specific Business Risk",
-  "name_change_note": "Step 3d PTC-001 tree pass (2026-09-21): renamed 'Manage Site Specific Business Risk' -> 'Coordinate Site Business Risk Management' on reparenting from Commercial Development to Refinery Performance and Risk Coordination (approved by Hamid). Prior label retained as altLabel (no collision)."
+  "name_change_note": "Step 3d PTC-001 tree pass (2026-09-21): renamed 'Manage Site Specific Business Risk' -> 'Coordinate Site Business Risk Management' on reparenting from Commercial Development to Refinery Performance and Risk Coordination (approved by the decision owner). Prior label retained as altLabel (no collision)."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4",
@@ -7256,10 +7256,10 @@
    "to_level": 2,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "prior_name": "Refinery Planning",
-  "name_change_note": "R1 Refining reclassification (2026-09-22): renamed 'Refinery Planning' -> 'Refinery Planning and Optimization' — L3->L2 promotion, reparented under L1-refining (R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22))."
+  "name_change_note": "R1 Refining reclassification (2026-09-22): renamed 'Refinery Planning' -> 'Refinery Planning and Optimization' — L3->L2 promotion, reparented under L1-refining (R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22))."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1",
@@ -7278,7 +7278,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Develop Refinery Premise for Prompt and Out Month",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7298,7 +7298,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Develop Refinery Premise for Prompt and Out Month > Review business context and identify data objects requiring changes in Refinery Premise",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7318,7 +7318,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Develop Refinery Premise for Prompt and Out Month > Engage Key stakeholders to finalize overrides and develop rationale for Refinery Premise",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7338,7 +7338,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Develop Refinery Premise for Prompt and Out Month > Perform overrides (with rationale) in Refinery Premise",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7358,7 +7358,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Develop Refinery Premise for Prompt and Out Month > Identify changes needed out of cycle for refinery premise",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7378,7 +7378,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Receive RO Targets",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7398,7 +7398,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Receive RO Targets > Perform Initial Review of M+1",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7418,7 +7418,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Receive RO Targets > Receive Handover of M+1 Plan",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7438,7 +7438,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refresh Refinery Plan for month M",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7458,7 +7458,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Perform Prompt Month Evaluations",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7478,7 +7478,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Perform Prompt Month Evaluations > Evaluate Market Scenarios Identified for Prompt Month Horizon",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7498,7 +7498,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Perform Prompt Month Evaluations > Develop Step Cases for Prompt Month Horizon",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7518,7 +7518,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Perform Prompt Month Evaluations > Run Step Cases for Prompt Month Horizon",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7538,7 +7538,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Communicate Changes to Scheduling",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7558,7 +7558,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7578,7 +7578,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Product Demand Requirements",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7598,7 +7598,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Evaluate Crude & Feedstock",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7618,7 +7618,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Crude Availability",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7638,7 +7638,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Product/Crude/Feedstock Price",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7658,7 +7658,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Refinery Level Constraints",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7678,7 +7678,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Inventory",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7698,7 +7698,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Capture Monthly Operating Plan",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7718,7 +7718,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Planning > Refinery Optimization > Perform Scenario Analysis",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7738,10 +7738,10 @@
    "to_level": 2,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "prior_name": "Refinery Scheduling",
-  "name_change_note": "R1 Refining reclassification (2026-09-22): renamed 'Refinery Scheduling' -> 'Refinery Production Planning and Scheduling' — L3->L2 promotion, reparented under L1-refining (R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22))."
+  "name_change_note": "R1 Refining reclassification (2026-09-22): renamed 'Refinery Scheduling' -> 'Refinery Production Planning and Scheduling' — L3->L2 promotion, reparented under L1-refining (R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22))."
  },
  {
   "uri": "https://w3id.org/lsc/ontology/process/CM-1-1-7-1",
@@ -7760,7 +7760,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Daily Execution Planning",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7780,7 +7780,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Daily Execution Planning > Update Refinery Execution Instructions",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7800,7 +7800,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Daily Execution Planning > Schedule Resources",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7820,7 +7820,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Daily Execution Planning > Perform Production Accounting",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7840,7 +7840,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7860,7 +7860,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Maintain Production Scheduling Master Data",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7880,7 +7880,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Review Production Wheel and Run Length",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7900,7 +7900,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Create Production Scheduling and Sequencing Plan",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7920,7 +7920,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Manage Production Schedule Exceptions",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7940,7 +7940,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Measure Production Scheduling Performance",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7960,7 +7960,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Production Scheduling > Manage The Interface to Planning, Operations, Engineering & Maintenance",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   }
  },
  {
@@ -7980,7 +7980,7 @@
    "to_level": 3,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Energy & Utility Management",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "placement_note": "Placement status: Temporary / inherited through scheduling parent. Current approved definitions frame it as planning- and scheduling-level energy economics and energy-balance targets. Review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision. Not a final ownership decision; must not cause a second move."
  },
@@ -8001,7 +8001,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Energy & Utility Management > Optimize Internal vs. External Energy Sources",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "placement_note": "Placement status: Temporary / inherited through scheduling parent. Current approved definitions frame it as planning- and scheduling-level energy economics and energy-balance targets. Review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision. Not a final ownership decision; must not cause a second move."
  },
@@ -8022,7 +8022,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Energy & Utility Management > Optimize Plant Energy Balance",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "placement_note": "Placement status: Temporary / inherited through scheduling parent. Current approved definitions frame it as planning- and scheduling-level energy economics and energy-balance targets. Review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision. Not a final ownership decision; must not cause a second move."
  },
@@ -8037,7 +8037,7 @@
   "proposed_repo_id": "CM 1.1.7.3.3",
   "deprecated": false,
   "prior_name": "Manage and Support Emission Trading",
-  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage and Support Emission Trading' -> 'Manage and Support Emissions Trading' (Hamid approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
+  "name_change_note": "Step 3d naming pass — normalization-only mechanical Batch 6 (2026-09-21): renamed 'Manage and Support Emission Trading' -> 'Manage and Support Emissions Trading' (the decision owner's approval 2026-09-21). Purely lexical normalization (capitalization / punctuation / abbreviation / number / separator); prior label retained as skos:altLabel; no identifier, hierarchy, or definition change.",
   "scoped_historical_alias": null,
   "r1_migration": {
    "from_parent": "CM-1-1-7-3",
@@ -8046,7 +8046,7 @@
    "to_level": 4,
    "historical_breadcrumb": "Downstream Operations > Commercial & Marketing > Planning & Scheduling > Refinery Scheduling > Energy & Utility Management > Manage and Support Emission Trading",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)"
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)"
   },
   "placement_note": "Placement status: Temporary / inherited through scheduling parent. Current approved definitions frame it as planning- and scheduling-level energy economics and energy-balance targets. Review trigger: R2 Refinery Energy, Utilities, and Environmental Performance scope decision. Not a final ownership decision; must not cause a second move."
  },
@@ -8063,7 +8063,7 @@
   "r1_migration": {
    "change": "new",
    "date": "2026-09-22",
-   "package": "R1 Refining structural reclassification (Candidate, approved by Hamid 2026-09-22)",
+   "package": "R1 Refining structural reclassification (Candidate, approved by the decision owner 2026-09-22)",
    "note": "New Candidate L2 structural anchor under L1-refining; initially unpopulated; coordination-only. Review trigger: R2 evidence package / refinery maintenance and turnaround operating model."
   }
  },

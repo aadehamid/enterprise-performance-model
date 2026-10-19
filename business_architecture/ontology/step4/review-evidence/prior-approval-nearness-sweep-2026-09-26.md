@@ -32,6 +32,6 @@ Cleared by the sweep (not nearness-only): all Section A emitting approvals
 (explicit-reference identity basis + row-level approval), REL-01056, REL-01303,
 REL-00433, REL-01172 (A-approved + control-listed).
 
-**No action taken on the 9 — each needs Hamid's verdict** (supersede under the
+**No action taken on the 9 — each needs the decision owner's verdict** (supersede under the
 identity rule with formal supersession lineage, or confirm target identity with
 source-backed evidence).

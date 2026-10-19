@@ -6,7 +6,7 @@ under Marketing Communications Strategy still carried the generic
 "Define KPI Framework" prefLabel, with "Define Marketing Communications
 Measurement Framework" already queued as its altLabel.
 
-Hamid's decision (2026-09-21): rename to
+The decision owner's decision (2026-09-21): rename to
 "Define Marketing Communications Measurement Framework" so it matches
 the five siblings — the generic label must not survive as the one
 remaining semantic collision.
@@ -46,7 +46,7 @@ SCOPED_ALIAS = "Define KPI Framework (Marketing Communications)"
 EXEC_NOTE = (
     "Step 3d naming pass (2026-09-21): renamed from 'Define KPI Framework' to "
     "'Define Marketing Communications Measurement Framework' — sixth and final "
-    "'Define KPI Framework' collision resolved (Hamid's follow-up decision, "
+    "'Define KPI Framework' collision resolved (the decision owner's follow-up decision, "
     "discovered after the 8-rename Phase 1 execution). Prior label retired from "
     "ontology aliases (a shared generic altLabel would recreate the collision); "
     f"scoped historical alias '{SCOPED_ALIAS}' recorded in the identity/migration map."
@@ -86,7 +86,7 @@ def main() -> int:
     entry["name_change_note"] = (
         "Step 3d naming pass (2026-09-21): renamed 'Define KPI Framework' -> "
         f"'{NEW_NAME}' — sixth and final 'Define KPI Framework' collision "
-        "resolved (approved by Hamid). Prior label retired from ontology "
+        "resolved (approved by the decision owner). Prior label retired from ontology "
         f"aliases; scoped historical alias '{SCOPED_ALIAS}' recorded here."
     )
     IDENTITY_MAP.write_text(json.dumps(entries, indent=1, ensure_ascii=False) + "\n",
@@ -115,9 +115,9 @@ def main() -> int:
         raise AssertionError("anchor row not found")
     text = "\n".join(lines)
     old_hdr = ("**Execution status 2026-09-21:** all 8 critical-collision entries executed in Step 3d Phase 1\n"
-               "(Hamid approval 2026-09-21). The remaining 84 queue entries are still queued for the consolidated naming pass.")
+               "(the decision owner's approval 2026-09-21). The remaining 84 queue entries are still queued for the consolidated naming pass.")
     new_hdr = ("**Execution status 2026-09-21:** all 9 critical-collision entries executed in Step 3d Phase 1\n"
-               "(Hamid approval 2026-09-21, including the 6th 'Define KPI Framework' row discovered after\n"
+               "(the decision owner's approval 2026-09-21, including the 6th 'Define KPI Framework' row discovered after\n"
                "the initial 8-rename execution). The remaining 84 queue entries are still queued for the consolidated naming pass.")
     assert old_hdr in text, "queue header not in expected form"
     text = text.replace(old_hdr, new_hdr)

@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2026-10-13)
 
-Approved by Hamid on 2026-10-13: the release design (EPM-DEC-001-0029), the conservation ledger, a fresh no-consumer attestation and the release.
+Approved by the decision owner on 2026-10-13: the release design (EPM-DEC-001-0029), the conservation ledger, a fresh no-consumer attestation and the release.
 
 The first release of the `core` module (EPM-DEC-001-0013, built as EPM-DEC-001-0029 decides).
 

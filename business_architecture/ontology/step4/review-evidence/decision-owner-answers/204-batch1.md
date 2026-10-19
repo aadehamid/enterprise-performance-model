@@ -1,4 +1,4 @@
-<!-- Hamid's words, verbatim from https://github.com/aadehamid/enterprise-performance-model/issues/204#issuecomment-6130380041 (fetched 2026-10-12). Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+<!-- The decision owner's words, verbatim from urn:epm:issue:204:comment:6130380041 (fetched 2026-10-12). Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 Please record the following as my source-author responses for issue #204, Batch 1. These are adopted reference-model operating rules informed by industry practice
 

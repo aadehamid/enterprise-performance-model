@@ -3,15 +3,15 @@
 All row-level verdict supersessions across the Step 4 review, reconciled
 from `step4-decisions.md` and `ledger-v2.md` on main `1c8c1a09`.
 
-Principle (Hamid 2026-09-26): a prior row-level verdict may be superseded
+Principle (the decision owner 2026-09-26): a prior row-level verdict may be superseded
 when a newly approved gate/control exposes a missing required premise.
 The old decision remains traceable with its reason, date, and superseding
 decision — retained in provenance as superseded, never deleted.
 
-## Governed-by: 10 supersessions (Hamid 2026-09-26)
+## Governed-by: 10 supersessions (the decision owner 2026-09-26)
 
 Pattern: **Supersedes2026-09-25Approval**
-Verdict: HOLD / D:hamid-verdict / NoAffirmativeCitation
+Verdict: HOLD / D:owner-verdict / NoAffirmativeCitation
 
 | Row | Superseded rationale (retained in provenance) |
 |---|---|
@@ -28,10 +28,10 @@ Verdict: HOLD / D:hamid-verdict / NoAffirmativeCitation
 
 All ten routed to source workbooks for correction.
 
-## Triggers: 11 supersessions (Hamid 2026-09-26)
+## Triggers: 11 supersessions (the decision owner 2026-09-26)
 
 Pattern: **Supersedes2026-09-26Approval**
-Verdict: HOLD / D:hamid-verdict / NoAffirmativeTriggerLink
+Verdict: HOLD / D:owner-verdict / NoAffirmativeTriggerLink
 
 | Row | Reason |
 |---|---|
@@ -47,16 +47,16 @@ Verdict: HOLD / D:hamid-verdict / NoAffirmativeTriggerLink
 | REL-00400 | Sibling nearness alone is not a route for `triggers`. |
 | REL-00403 | Sibling nearness alone is not a route for `triggers`. |
 
-All eleven routed to source workbooks for correction. #204 batch 1 (Hamid
+All eleven routed to source workbooks for correction. #204 batch 1 (the decision owner
 2026-10-12, comment 6130380041) answered all eleven; each now has a fresh
 APPROVE verdict on its corrected source and emits
 (`review-evidence/triggers-batch1-review.csv`). The supersessions above stay
 as the record of why the 2026-09-26 approvals did not stand.
 
-## Precedes/follows: 20 supersessions (Hamid 2026-09-27, amending 2026-09-26)
+## Precedes/follows: 20 supersessions (the decision owner 2026-09-27, amending 2026-09-26)
 
 Pattern: **Supersedes2026-09-26Approval**
-Verdict: HOLD / D:hamid-verdict
+Verdict: HOLD / D:owner-verdict
 All 20 facts verified unique single-row; zero knock-on.
 
 | Row | Reason |
@@ -86,7 +86,7 @@ All 20 routed to source workbooks for correction.
 
 ## Requires: 0 active supersessions
 
-REL-00208 is a plain HOLD (D:hamid-verdict 2026-09-25), not a supersession.
+REL-00208 is a plain HOLD (D:owner-verdict 2026-09-25), not a supersession.
 The one requires-row supersession (REL-00873) was reversed — see below.
 
 ## Enables prior-approval supersessions: 13 (2026-09-26)

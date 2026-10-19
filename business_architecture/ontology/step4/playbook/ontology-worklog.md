@@ -6,7 +6,7 @@
 > Earlier entries and PR bodies refer to this file by its old name.
 
 **Status:** Living document. Updated as each plan step completes.
-**Owner:** Hamid · **Built with:** Kailey
+**Owner:** The decision owner · **Built with:** Kailey
 **Started:** 2026-09-17
 
 ## About this document
@@ -44,7 +44,7 @@ published versions; `~/workspace/ontology-build/` holds working copies.
 
 **Source of truth.** The business processes in
 `business_architecture/business_process/downstream_process_map.json` in the
-`aadehamid/enterprise-performance-model` repo (680 nodes, levels L0–L6).
+`<owner>/enterprise-performance-model` repo (680 nodes, levels L0–L6).
 We model *those* processes — we do not copy a reference framework into the
 model.
 
@@ -78,18 +78,18 @@ ontology; everything else points at it.
 | 3c | Human definition authoring — semantic-intake workbook; 42 review batches → **498/503 approved** (2026-09-21); 1 pending (intentional business-evidence hold, batch 05), 3 blocked (PTC-001), 1 retired; taxonomy regenerated from the closed workbook via PR #83 (675/680 defined, 14,403 triples; Phase-1 capture under provisional `intake:` annotations) | ✅ Done 2026-09-21 |
 | 3d | Tree reconciliation — naming pass first, then the consolidated repo-JSON tree pass (PTC-001). Summary of the completed step; the sub-logs below break it down. | ✅ Completed with explicit open exceptions 2026-09-22 |
 | 3d-a | Naming Pass Closure Log — 92/92 queued renames executed across 7 batches (PR #84, #85, #89, #91, #92, #94, #96, #98, #100, #103): critical collisions, authority-risk, scope-ambiguity, directionality-missing, generic-operational, normalization-only (mechanical then judgment). Final naming state 682 concepts, 14,481 triples, 317 altLabels. | ✅ Closed 2026-09-22 |
-| 3d-b | PTC-001 Tree Remediation Log — PR #86 (Commercial Development tombstone + 2 reparented L3s + 2 Candidate L2s); PR #87 definition mini-batch; PTC-001-B confirmed as intentional strategy-ownership hold (Hamid, 2026-09-22). PTC-001 stays open until PTC-001-B closes. | ✅ Partially resolved; hold by design |
+| 3d-b | PTC-001 Tree Remediation Log — PR #86 (Commercial Development tombstone + 2 reparented L3s + 2 Candidate L2s); PR #87 definition mini-batch; PTC-001-B confirmed as intentional strategy-ownership hold (the decision owner, 2026-09-22). PTC-001 stays open until PTC-001-B closes. | ✅ Partially resolved; hold by design |
 | 3d-c | R1 Refining Structural Reclassification — decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed); implementation PR #108 merged 2026-09-22 (merge b75fd991). 42 concepts reparented with stable slugs/IRIs/notations; two promoted L2s (Refinery Planning and Optimization; Refinery Production Planning and Scheduling); new Candidate R&T L2; tombstone re-anchored under Planning & Scheduling; reviewed RO→Refining interface relation materialized. 683 concepts, 14,496 triples (+15), 681 broader links. | ✅ Candidate → Implemented 2026-09-22 |
 | 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. | ⏳ Open |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
-| R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038); Hamid's role answers in organization 2.0.0, 2026-10-18 (EPM-DEC-001-0045) |
-| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
-| 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions (seeded from Hamid's planner measure list since 2026-10-18, EPM-DEC-001-0040), Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Started 2026-10-18: the `kpi` module, 41 measure definitions classified by kind, released as `kpi` 1.0.0 on 2026-10-19 with Hamid's approval (EPM-DEC-001-0040, 0042, 0043) |
+| R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by the decision owner |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by the decision owner to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (the decision owner), carried by core 2.0.0 (approved by the decision owner 2026-10-13) (EPM-DEC-001-0038); the decision owner's role answers in organization 2.0.0, 2026-10-18 (EPM-DEC-001-0045) |
+| 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (the decision owner confirmed) in core 2.0.0 (approved by the decision owner 2026-10-13) (EPM-DEC-001-0038) |
+| 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions (seeded from the decision owner's planner measure list since 2026-10-18, EPM-DEC-001-0040), Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Started 2026-10-18: the `kpi` module, 41 measure definitions classified by kind, released as `kpi` 1.0.0 on 2026-10-19 with the decision owner's approval (EPM-DEC-001-0040, 0042, 0043) |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; `core` 2.1.0 carries the controlled-value shapes and one evidence node per canonical fact, with the evidence-link shapes (EPM-DEC-001-0044), 2026-10-18 |
-| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with Hamid's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by Hamid (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by Hamid, and kpi 1.0.1, a patch naming the list's source VCO DSV (EPM-DEC-001-0043); not hosted, the namespace a placeholder (Hamid, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (Hamid, EPM-DEC-001-0041, 2026-10-18) |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with the decision owner's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by the decision owner (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by the decision owner, and kpi 1.0.1, a patch naming the list's source VCO DSV (EPM-DEC-001-0043); not hosted, the namespace a placeholder (the decision owner, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (the decision owner, EPM-DEC-001-0041, 2026-10-18) |
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18) |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with organization 2.0.0 and the ref-mpc module, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
@@ -123,7 +123,7 @@ order is otherwise unchanged.
   — corrected.
 - Delivered via PR #25
   (`update/apqc-pcf-7.2.2`), commits authored as
-  `aadehamid <aadehamid@gmail.com>` — **merged 2026-09-18**.
+  `The decision owner's account` — **merged 2026-09-18**.
 
 **Decisions.** APQC is a consistency reference, not the source model
 (§4). Cited APQC IDs are verified against the workbook, not trusted
@@ -159,10 +159,10 @@ the existing hierarchy — no level-less nodes.
 
 ### Step 1 — Foundations ✅ (complete)
 
-**Competency questions** — reviewed and approved by Hamid; merged
+**Competency questions** — reviewed and approved by the decision owner; merged
 baseline of 44 questions in `competency-questions.md`, locked 2026-09-18.
 These double as the Step 11 SPARQL regression tests: the exam is written
-before the coursework. Constraints section removed at Hamid's direction —
+before the coursework. Constraints section removed at the decision owner's direction —
 constraints are not being modeled; the Customer/Party domain is.
 
 **URI policy — decided 2026-09-18.**
@@ -189,7 +189,7 @@ constraints are not being modeled; the Customer/Party domain is.
   structurally).
 - Open action: register `w3id.org/lsc` (small request to the w3id.org
   repo; does not block modeling).
-  *Amendment 2026-10-14:* Hamid decided not to host the namespace and to
+  *Amendment 2026-10-14:* The decision owner decided not to host the namespace and to
   keep it as a placeholder, because the domain may change. Under the
   delegation, it is not registered, so no redirect is in place and the
   sentence above about w3id.org redirects describes the plan, not the
@@ -211,7 +211,7 @@ Appendix B.
 
 **License policy — decided 2026-09-18.**
 - The ontology artifacts are **proprietary, all rights reserved**.
-  Hamid is the IP owner. Rationale: the ontology describes LSC's actual
+  the decision owner is the IP owner. Rationale: the ontology describes LSC's actual
   operations (commercial processes, refinery planning, systems) —
   competitively sensitive. Can be opened later; cannot be un-opened.
 - **APQC content remains usable.** The APQC/IBM license grants
@@ -240,7 +240,7 @@ Appendix B.
 - Rules: dependencies point one way, no cycles (enforced by CI);
   cross-module use is by URI reference, never by redefinition
   (define once, reference everywhere); modules version and validate
-  independently; minor/patch approved by module owner, majors by Hamid.
+  independently; minor/patch approved by module owner, majors by the decision owner.
 
 - **`party` is the sole concept-owning module for the Customer domain.**
   There is no `customer` module by design. Customer-domain *processes*
@@ -298,7 +298,7 @@ triples, in stable document order.
 - **Known gap, not invented:** 503 concepts had no `skos:definition`
   (the repo describes only 177 nodes). The language policy requires one
   per concept — Step 3b (2026-09-18) triangulated 1 adoption;
-  **Step 3c** (2026-09-18) human-authored the 14 L1–L3 gaps with Hamid.
+  **Step 3c** (2026-09-18) human-authored the 14 L1–L3 gaps with the decision owner.
   192/680 concepts now carry definitions; 488 gaps remain (all L4–L6),
   for future authoring passes. A Step 9 SHACL shape can flag the
   unfilled ones.
@@ -313,7 +313,7 @@ triples, in stable document order.
 ### Step 3c — human definition authoring ✅ (2026-09-18, complete)
 
 The 14 L1–L3 definition gaps from the Step 3b workqueue, authored one
-at a time with Hamid: 10 L1 enabling/value-chain functions (Commercial
+at a time with the decision owner: 10 L1 enabling/value-chain functions (Commercial
 & Marketing, Refining, Midstream, Supply Chain Management, Finance,
 Shared Services, Process Excellence & IT, Human Resources, Legal &
 Corporate Communications, EHS & Government Reporting) and 4 commercial
@@ -321,7 +321,7 @@ planning stubs under C&M › Planning & Scheduling (Regional
 Optimization, Regional Backcasting, Refinery Planning, Distribution
 Backcasting).
 
-- **Working method:** draft → Hamid's wording (most L1s are his, verbatim
+- **Working method:** draft → the decision owner's wording (most L1s are theirs, verbatim
   or near-verbatim) → approved definition + scope note recorded in
   `step3c-authored-definitions.json` with parked child concepts,
   planned Step 8 children, and terminology notes.
@@ -341,7 +341,7 @@ Backcasting).
   "Supply chain resilience"→Regional Optimization.
 - **Merge:** `step3-skos-taxonomy.py --authored` adds `skos:definition`
   + `skos:scopeNote` + `dcterms:source` (human-authored, approved by
-  Hamid, dated) per concept; validation asserts hold. Taxonomy now:
+  the decision owner, dated) per concept; validation asserts hold. Taxonomy now:
   **680 concepts, 678 broader links, 192 definitions, 3,660 triples.**
 - **Delivered** via the Step 3c PR (new branch off main, after PR #28
   merged 2026-09-18) — `downstream_process_map.json` untouched.
@@ -388,21 +388,21 @@ the gate was rewritten before the next batch.
   namespace (see decision log); Step 4 promotes it to real properties.
   Blocked rows are definition-less; the retired row is `owl:deprecated`
   (`dcterms:isReplacedBy` waits for Step 3d). Sequencing agreed with
-  Hamid: regen now (parallel to review batches) → finish 3c → 3d tree
+  the decision owner: regen now (parallel to review batches) → finish 3c → 3d tree
   reconciliation → Step 4 design together.
 
 - **Closeout (2026-09-21, batch 42, PR #82).** Step 3c is finished:
   approved=498, pending=1 (`CM-1-1-3-5-3`, the intentional business-evidence
   hold from batch 05 — not forced), blocked=3 (PTC-001), retired=1
   (`CM-1-1-4-6`); gate blocking=0, questions=0, notes=15, open_ptc=1.
-  Hamid's **option A** decision admitted the two L0 scheme roots
+  the decision owner's **option A** decision admitted the two L0 scheme roots
   (`L0-downstream-operations`, `L0-enabling-functions`) as the only approved
   `not-process` rows via a frozen `SCHEME_ROOT_APPROVED` whitelist, mirroring
   the `PRE_INTAKE_APPROVED` pattern. Batches 23–41 covered Offer/Pricing/
   Channel (23), Network/Communications/Operating Model (24), Visioning/Concept/
   Product Development (25), Order Management, SCM, Finance/Accounting, Service
   & Support, and Terminal Commercial Operations (41).
-- **Final TTL regen (2026-09-21, PR #83).** Per Hamid's sequencing decision
+- **Final TTL regen (2026-09-21, PR #83).** Per the decision owner's sequencing decision
   (regen once at the end of Step 3c, not per batch): 680 concepts, 14,403
   triples, 675/680 defined (498 workbook + 177 repo descriptions); the 5
   definition-less are the 3 blocked, 1 retired, 1 pending hold. 182
@@ -413,7 +413,7 @@ the gate was rewritten before the next batch.
   Draft): 92 queued renames in six categories; the **Critical semantic
   collision** category (duplicate prefLabels) gates semantic-model
   publication and runs first in Step 3d. The queue authorizes no renames by
-  itself — proposals go to Hamid for review like any batch.
+  itself — proposals go to the decision owner for review like any batch.
 
 ### Step 3d — tree reconciliation 🔄 (PTC-001 partially resolved 2026-09-21)
 
@@ -432,13 +432,13 @@ consolidated pass that applies them.
   (EPM-BA-NAMING-QUEUE-001, Draft), 92 queued renames in six categories.
   The **Critical semantic collision** category (duplicate prefLabels)
   gates semantic-model publication and runs first; the queue authorizes
-  no renames by itself — proposals go to Hamid for review like any
+  no renames by itself — proposals go to the decision owner for review like any
   batch, and each executed rename promotes the queued label to prefLabel
   with the old name kept as alt label (subject to the collision and
   refinement rules recorded 2026-09-21, below), then sweeps the workbook,
   TTL regen, identity map, and cross-references, and re-runs the gate.
 - **Phase 1 executed and merged 2026-09-21 — all 9 critical collisions.** All 9
-  critical collisions renamed per Hamid's approval (2026-09-21), with two
+  critical collisions renamed per the decision owner's approval (2026-09-21), with two
   refinements over the queued labels: `CM-1-1-1-1` → **Produce Demand
   Forecast** (verb-led; `Demand Forecasting` is NOT kept as an altLabel
   because the L3 parent keeps it as prefLabel) and the six
@@ -447,9 +447,9 @@ consolidated pass that applies them.
   historical aliases such as `Define KPI Framework (Offer)` recorded in
   the identity/migration map). The sixth KPI row (`CM-1-3-3-5-7`,
   Marketing Communications) was discovered after the initial 8-rename
-  execution and renamed in a follow-up commit per Hamid's decision
+  execution and renamed in a follow-up commit per the decision owner's decision
   the same day. PR #84 (8 renames) and PR #85 (9th rename) both merged
-  by Hamid 2026-09-21 — **nothing merged on assumption**.
+  by the decision owner 2026-09-21 — **nothing merged on assumption**.
   Approved labels:
   `CM-1-1-1-1` → Produce Demand Forecast; `CM-1-1-3-7` → Inventory
   Management (`Inventory` kept as altLabel); `CM-1-1-3-7-12` → Monitor
@@ -463,8 +463,8 @@ consolidated pass that applies them.
   No definitions, hierarchy, process identities, authority boundaries,
   source evidence, slugs, or IRIs change. The 9th rename lived on branch
   `step3d/naming-kpi6-marcomms` (from merged main `86d6fbb`); PR #85 merged
-  by Hamid 2026-09-21 — **nothing merged on assumption**. The taxonomy is
-  unpublished with no external consumers (Hamid, 2026-09-21), so no
+  by the decision owner 2026-09-21 — **nothing merged on assumption**. The taxonomy is
+  unpublished with no external consumers (the decision owner, 2026-09-21), so no
   deprecation period or consumer notice is needed; the repository-wide
   cross-reference sweep was still run (workbook, identity map,
   terminology notes; TTL regenerated with the exact PR #83 invocation —
@@ -480,7 +480,7 @@ consolidated pass that applies them.
   labels as altLabel only when uniquely resolvable and semantically
   safe.
 - **PTC-001 partial resolution — executed and merged 2026-09-21 (PR #86).**
-  Hamid approved the revised consolidated proposal
+  the decision owner approved the revised consolidated proposal
   (`files/ptc-001-tree-proposal.md`, four review adjustments adopted):
   new Candidate L2 **Financial Planning and Performance Management** under
   Finance hosting **Plan Budgets** (L3); new Candidate L2 **Refinery
@@ -495,7 +495,7 @@ consolidated pass that applies them.
   authoring, parent-first: the two Candidate L2 stubs and the two
   reparented L3s (Plan Budgets; Coordinate Site Business Risk Management).
   The independent review came back APPROVE-WITH-NOTES; two non-blocking
-  cleanups were applied before merge per Hamid's call: (1) the risk L3's
+  cleanups were applied before merge per the decision owner's call: (1) the risk L3's
   scope note now states the hybrid cadence — event-driven for new/changed
   risks, incidents, breaches, and escalations, with periodic monitoring
   and review of ownership, treatment plans, and status; (2) the Refining
@@ -512,7 +512,7 @@ consolidated pass that applies them.
   untouched.
 - **Authority-risk naming batch — executed and merged 2026-09-21 (PR #89).**
   The second naming-pass category: 6 labels that overstated each concept's
-  mandate, renamed per Hamid's approval 2026-09-21 — `CM-1-2-4-2-12` →
+  mandate, renamed per the decision owner's approval 2026-09-21 — `CM-1-2-4-2-12` →
   Maintain Trading Accounting Procedures and Guidance; `CM-1-2-5-2-3` →
   Recommend Feedstock Slate And Run Rate (protects the PTC-002
   decide-vs-advise boundary: S&T recommends, Refinery Planning decides);
@@ -534,7 +534,7 @@ consolidated pass that applies them.
   93 entries remaining (categories 3–6).
 - **Scope-ambiguity naming batches 1 & 2 — executed and merged 2026-09-21
   (PR #91, PR #92).** The third naming-pass category: 21 labels whose
-  wording left the process scope ambiguous, renamed per Hamid's approval
+  wording left the process scope ambiguous, renamed per the decision owner's approval
   2026-09-21 in two batches. Batch 1 (A+B+C, 10 renames, PR #91, merged
   2026-09-21): `CM-1-1-3-6-2` → Administer Scheduled Shipment Loading;
   `CM-1-1-3-8-3` → Maintain Secondary Distribution Scheduling Basis;
@@ -573,7 +573,7 @@ consolidated pass that applies them.
   26 normalization-only).
 - **Scope-ambiguity naming batch 3 — executed and merged 2026-09-21
   (PR #94).** The last of the third naming-pass category: 12 labels (E+F)
-  whose wording left the process scope ambiguous, renamed per Hamid's
+  whose wording left the process scope ambiguous, renamed per the decision owner's
   approval 2026-09-21: `CM-1-3-1-6` → Marketing Insight and Metrics
   Stewardship; `CM-1-3-8-1-2` → Perform Self-Billing Accounting;
   `CM-1-3-8-1-5` → Manage Invoice Exceptions, Reversals, and Rebilling;
@@ -608,7 +608,7 @@ consolidated pass that applies them.
 - **Directionality-missing naming batch — executed and merged 2026-09-21
   (PR #96).** The fourth naming-pass category: 11 labels whose wording
   hid the direction of economic exposure or the Consumer-versus-B2B
-  distinction, renamed per Hamid's approval 2026-09-21. Claims lifecycle
+  distinction, renamed per the decision owner's approval 2026-09-21. Claims lifecycle
   (`CM-1-2-4-4-2..8`): Create Claim → Create Outbound Delay
   Compensation Claim; Receive Demurrage Claim → Receive Inbound Delay
   Compensation Claim; Assess Claim → Assess Inbound Claim; Communicate
@@ -645,7 +645,7 @@ consolidated pass that applies them.
 - **Generic-operational naming batch — executed and merged 2026-09-21
   (PR #98).** The fifth naming-pass category: 11 labels whose wording was
   generic (scope implied by the parent) rather than self-describing,
-  renamed per Hamid's approval 2026-09-21. Terminal commercial
+  renamed per the decision owner's approval 2026-09-21. Terminal commercial
   (`CM-1-3-10-1..4`): `Setup and Maintain Customer In Terminal` -> Set Up
   and Maintain Terminal Customer Authorization; `Process Forecast and
   Nominations` -> Process Customer Lifting Forecasts and Nominations;
@@ -659,7 +659,7 @@ consolidated pass that applies them.
   (`CM-1-3-9-1-2`): `Manage Operations` -> Manage Service Operations.
   Service delivery (`CM-1-3-9-2-1..3`): `Manage Data` -> Manage Service
   Delivery Data; `Manage Customer` -> Manage Customer Interactions in
-  Service Delivery (Hamid's approved plural refinement of the queued
+  Service Delivery (the decision owner's approved plural refinement of the queued
   singular); `Fulfill Service Event` -> Fulfill Service Events. Workforce
   (`CM-1-3-9-3-2`): `Measure Service Employees` -> Measure Service
   Workforce Performance. Ten old labels retained as `skos:altLabel`; the
@@ -668,7 +668,7 @@ consolidated pass that applies them.
   of live labels (Manage Customer Portal, Manage Customer Invoicing and
   Billing, Manage Customer Requests and Inquiries) and would reintroduce
   search ambiguity; the queued singular near-duplicate `Manage Customer
-  Interaction in Service Delivery` was also dropped (Hamid approved the
+  Interaction in Service Delivery` was also dropped (the decision owner approved the
   drop 2026-09-21 on the reviewer's recommendation). Generic-alias
   migration-map-only treatment is now the reusable naming-pass precedent
   for the remaining normalization-only rows. Slugs, IRIs, hierarchy,
@@ -689,7 +689,7 @@ consolidated pass that applies them.
   closed.
 - **Normalization-only mechanical batch — executed and merged 2026-09-22
   (PR #100).** The first half of the sixth naming-pass category, executed
-  per Hamid's approved sequencing (mechanical first, judgment second):
+  per the decision owner's approved sequencing (mechanical first, judgment second):
   13 normalization-only renames approved 2026-09-21. `CM-1-1-7-3-3` →
   Manage and Support Emissions Trading; `CM-1-2-2-3-9` → Perform Position
   & P&L Analysis; `CM-1-2-4-2-7` → Manage Financial Information
@@ -731,7 +731,7 @@ consolidated pass that applies them.
   the judgment batch is proposed in chat before any repo changes.
 - **Normalization-only judgment batch — executed and merged 2026-09-22
   (PR #103).** The second half of the sixth naming-pass category and the final
-  naming batch: 12 renames per Hamid's approved judgment proposal 2026-09-22
+  naming batch: 12 renames per the decision owner's approved judgment proposal 2026-09-22
   (proposal review: approve 11 as recommended, 1 with the concise refinement
   — `Track Order Book and Forecast Order Volumes`, timing kept in the
   definition — 1 conditional on the AR-compliance scope note, verified narrow).
@@ -778,7 +778,7 @@ consolidated pass that applies them.
   sit under it, and the other nine L1s have no children. There is no
   destination for any parked child, so Step 3d includes decomposing at
   least one undecomposed L1. That is a domain-architecture pass, not a
-  reparenting chore, and it needs Hamid's explicit scope expansion.
+  reparenting chore, and it needs the decision owner's explicit scope expansion.
 - **How it gets picked up.** Not by memory. The gate reads the register
   every run, prints `open_ptc=N` in its summary line (which lands in
   every batch PR body), and raises BLOCKING `step-3c-not-complete` if the
@@ -788,7 +788,7 @@ consolidated pass that applies them.
   rows re-statused to `pending` under real parents, identity map and TTL
   regenerated, and the gate reporting `open_ptc=0`.
 - **R1 Refining structural reclassification — IMPLEMENTED 2026-09-22 (PR #108 merged).**
-  Hamid approved the Candidate package and, after two review rounds, merged PR #108
+  the decision owner approved the Candidate package and, after two review rounds, merged PR #108
   (merge `b75fd991e243248e60ecc832b3ad2c4f5c91740a`, 2026-09-22T12:51:35Z).
   Status change: R1 moves from **Candidate** to **Implemented**; the Refining L1 now
   carries four L2s — Refinery Planning and Optimization, Refinery Production
@@ -802,15 +802,15 @@ consolidated pass that applies them.
   Optimization (CM-1-1-4)"@en`). Identity stable: slugs, IRIs, notations
   unchanged; tombstone re-anchored under Planning & Scheduling; PTC-001-B still
   blocked; PTC-002 and the S&T feedstock-quality cluster untouched.
-- **R1 review rounds (2026-09-22).** Round 1: Hamid returned "approve after one
+- **R1 review rounds (2026-09-22).** Round 1: The decision owner returned "approve after one
   required correction" — the taxonomy-report generator still hard-coded "680
   broader links" in its validation prose; fixed to the derived count, report
-  regenerated, gates rerun. Round 2: Hamid requested (a) the report prose fix
+  regenerated, gates rerun. Round 2: The decision owner requested (a) the report prose fix
   be completed, (b) the reviewed RO→Refining interface relation materialized in
   the TTL behind a reviewed-interface allowlist (any unreviewed pending-row
   `related_concepts` entry fails the build loudly instead of emitting), and
   (c) softened triple-delta wording; all applied and re-verified before merge.
-  Pre-merge Hamid caught one workbook-only regression the gates had missed: the
+  Pre-merge the decision owner caught one workbook-only regression the gates had missed: the
   one-shot script rebuilt breadcrumbs from stale process-JSON names, reverting
   `CM-1-1-7-3-3`'s leaf to "Manage and Support Emission Trading". A systematic
   re-scan found 25 more stale-label breadcrumb cells (26 total, all corrected;
@@ -826,7 +826,7 @@ consolidated pass that applies them.
   This phrasing supersedes the earlier PR-body wording.
 - **Standing after merge:** Step 4 (process-definition ontology; retirement of
   the provisional `intake:` predicates) is NOT started — it still requires
-  Hamid's explicit approval. PR #30 remains parked. The consumer-inventory
+  the decision owner's explicit approval. PR #30 remains parked. The consumer-inventory
   checklist reactivates before the first hierarchy-dependent consumer connects.
 
 ### Step 3b — definition triangulation ✅ (2026-09-18, complete)
@@ -887,7 +887,7 @@ must pass a semantic test before it becomes a canonical fact — or be
 held with a recorded reason. The approach, in five parts:
 
 1. **Predicates have definitions, not vibes.** Each canonical predicate
-   carries a precise semantic test, decided with Hamid before any row
+   carries a precise semantic test, decided with the decision owner before any row
    was judged: `core:requires` = the source cannot validly proceed
    without the target (not merely "the target later uses related
    info"); `core:assuredBy` = a defined governance/compliance/quality/
@@ -917,7 +917,7 @@ held with a recorded reason. The approach, in five parts:
    each CSV-derived number against the actual CSV, and report a
    discrepancy instead of fudging it. Blank `match_type` is deliberate —
    never invent a default.
-5. **Two-agent review.** Hamid reviews section by section ("one at a
+5. **Two-agent review.** The decision owner reviews section by section ("one at a
    time to make sure I get it"). Cursor EPM pre-reviews every section
    against the repo; an independent verification re-checks every figure
    against the actual artifacts. Nothing merges on assumption.
@@ -936,15 +936,15 @@ batches, and the supersession register live under
 `business_architecture/ontology/step4/review-evidence/`; the mapping
 document (`verb-predicate-mapping-v2.md`) received two figure corrections
 against the artifacts (PRs #178, #181); the mapping-document sign-off
-itself (release-checklist.md L51) was completed 2026-09-29 (16/16 sections, Hamid).
+itself (release-checklist.md L51) was completed 2026-09-29 (16/16 sections, the decision owner).
 
 **Status.** Ten of ten checklist items green 2026-09-30: every row
 verdict-recorded, ledger reconciled, methodology approved (PR #159),
 evidence gate 433 PASS, evidence pinned, regression tests 17/17,
 blast-radius proof CLEAN, fresh no-consumer attestation ("no downstream
 consumer is consuming the ontology yet… the very first build out"),
-mapping-document sign-off (16/16 sections, Hamid), explicit promotion
-approval (Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)). Step 4 PROMOTED.
+mapping-document sign-off (16/16 sections, the decision owner), explicit promotion
+approval (the decision owner: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)). Step 4 PROMOTED.
 Mapping-document sign-off was completed 2026-09-29. The provisional `intake:`
 namespace stays until a future step promotes intake annotations to real
 properties and retires those predicates.
@@ -960,21 +960,33 @@ properties and retires those predicates.
 ## 4. Decision log
 
 Locked decisions. Newest first within each group. Nothing here changes
-without a dated amendment and Hamid's explicit agreement.
+without a dated amendment and the decision owner's explicit agreement.
+
+### The decision owner named by role (2026-10-19)
+- The repo names no person: every current file says "the decision owner".
+  Git history, commit authors and tags are unchanged. Released packages
+  are edited in place, with the same versions and dates, and pass
+  `--verify`. Two kinds of IRI change, and only these: the kpi source
+  `src:planner-measure-list-2026-10-18`, and the two scoped-sequence
+  sources, now `urn:epm:issue:205:comment:…` URNs. The answers folder is
+  `review-evidence/decision-owner-answers/`. `epm_facts.py names` in
+  `scripts/check.sh` fails on any tracked file that names the person.
+  EPM-DEC-001-0049, with their words in
+  `review-evidence/decision-owner-answers/answers-2026-10-19-after-run.md`.
 
 ### Process-map gaps addressed (2026-10-19)
-- Hamid said to address the two gaps the MPC-P03 and MPC-P04 checks
+- The decision owner said to address the two gaps the MPC-P03 and MPC-P04 checks
   found from high-quality references, MPC's public information first.
   Under the delegation: CM 1.1.3.7.13 Reconcile Movement Losses and Gains
   (MPLX's imbalances policy) and CM 1.2.5.1.5 Manage Renewable Feedstock
   Traceability and Carbon-Intensity Evidence (MPC's supplier feedstock
   commitment; EPA, CARB and IRS record rules), each in its own pull
   request; the feedstock step lands after the loss and gain step.
-  EPM-DEC-001-0048, with his
-  words in `review-evidence/hamid-answers/answers-2026-10-19-morning.md`.
+  EPM-DEC-001-0048, with their
+  words in `review-evidence/decision-owner-answers/answers-2026-10-19-morning.md`.
 
 ### MPC process-map proposals ruled (2026-10-18)
-- Hamid accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
+- The decision owner accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
   to apply them to the process map itself (EPM-DEC-001-0047). Under the
   delegation, each map change is its own pull request, and none is applied
   by the record itself. With this record's pull request, `core` 2.0.0
@@ -982,26 +994,26 @@ without a dated amendment and Hamid's explicit agreement.
   move; new nodes reach the ontology in a later `core` release.
 
 ### kpi module (2026-10-18)
-- Hamid's planner measures and MPC's public measures are classified by kind
+- The decision owner's planner measures and MPC's public measures are classified by kind
   (EPM-DEC-001-0042): most are operational metrics, two are KPIs (MPC's
   bonus measures) and six are KPI candidates. The `kpi` module defines the
   41 measures (EPM-DEC-001-0043). It is built and checked, and released:
-  1.0.0, a major, was approved by Hamid and cut on 2026-10-19. Coverage: 17 answerable, 6 partial,
+  1.0.0, a major, was approved by the decision owner and cut on 2026-10-19. Coverage: 17 answerable, 6 partial,
   21 waiting.
 
 ### Role answers and organization 2.0.0 (2026-10-18)
-- Hamid answered the seven role questions and approved organization 2.0.0.
+- The decision owner answered the seven role questions and approved organization 2.0.0.
   Three roles are deprecated into their successors, never deleted; their
   three assignments keep their IRIs. Forecaster and PSM stay open, and Q17
   waits for a separate governance decision. ref-mpc 1.1.0 (2026-10-19,
-  approved by Hamid) requires organization 2.0.0; organization 2.0.0
+  approved by the decision owner) requires organization 2.0.0; organization 2.0.0
   requires core 2.1.0. The projection on both loads 2,811 nodes and
-  14,865 relationships. EPM-DEC-001-0045, with his
-  words in `review-evidence/hamid-answers/answers-2026-10-18.md` and
+  14,865 relationships. EPM-DEC-001-0045, with their
+  words in `review-evidence/decision-owner-answers/answers-2026-10-18.md` and
   `answers-2026-10-18-night.md`.
 
 ### core 2.1.0: evidence on canonical facts (2026-10-18)
-- Hamid answered the Step 9 walkthrough "1a, 2a" and approved cutting the
+- The decision owner answered the Step 9 walkthrough "1a, 2a" and approved cutting the
   release. `core` 2.1.0 adds one `core:CanonicalFact` node per canonical
   fact (640), each with its subject, predicate, object and every
   supporting REL row (812), and keeps the direct triples. The eleven
@@ -1009,10 +1021,10 @@ without a dated amendment and Hamid's explicit agreement.
   shapes; a build check matches each node's rows to the mapping, which
   ships in the package. The header's licence IRI gives way to an
   all-rights-reserved statement. Projection and regression read 2.1.0.
-  EPM-DEC-001-0044; his words in `review-evidence/hamid-answers/`.
+  EPM-DEC-001-0044; their words in `review-evidence/decision-owner-answers/`.
 
 ### KPI measure classification (2026-10-18)
-- Most measures on Hamid's planner list are operational metrics. A KPI
+- Most measures on the decision owner's planner list are operational metrics. A KPI
   is a designation with a target and an owner, not a kind of measure.
   41 measures classified: 15 operational metrics (6 KPI candidates),
   7 market indicators, 6 plan-variance diagnostics, 6 trackers or
@@ -1021,28 +1033,28 @@ without a dated amendment and Hamid's explicit agreement.
   EPM-DEC-001-0042, table in `ontology/kpi/measure-classification.csv`.
 
 ### Market Data and Commercial Risk (2026-10-18)
-- Hamid accepted the domain split with explicit distinctions, gave both
+- The decision owner accepted the domain split with explicit distinctions, gave both
   definitions, and named the Risk Group as owner (Market Data
   provisionally). Trading-counterparty credit is in Commercial Risk;
   volatilities are risk-model parameters, vendor-supplied volatility
   observations are Market Data. EPM-DEC-001-0046.
 
 ### Licence and KPI seed (2026-10-18)
-- Hamid decided the ontology stays proprietary, all rights reserved
+- The decision owner decided the ontology stays proprietary, all rights reserved
   (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.
-- The `kpi` module is seeded from Hamid's planner measure list, with
-  personas as planning roles and no person's name; his files stay out
-  of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). His words
-  are in `review-evidence/hamid-answers/answers-2026-10-18.md`.
+- The `kpi` module is seeded from the decision owner's planner measure list, with
+  personas as planning roles and no person's name; their files stay out
+  of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words
+  are in `review-evidence/decision-owner-answers/answers-2026-10-18.md`.
 
 ### Namespace is a placeholder (2026-10-14)
-- Hamid decided not to host the namespace, because the domain may change,
+- The decision owner decided not to host the namespace, because the domain may change,
   and to keep `https://w3id.org/lsc/ontology/` as a placeholder. Under the
   delegation, nothing is registered with w3id.org, and no release changes. Step 10's
   "catalog resolves" gate is parked until a domain is decided. The licence
   is still open (*2026-10-18:* decided, proprietary; see the group above,
-  EPM-DEC-001-0041). EPM-DEC-001-0039, with his words in
-  `review-evidence/hamid-answers/namespace-hosting.md`.
+  EPM-DEC-001-0041). EPM-DEC-001-0039, with their words in
+  `review-evidence/decision-owner-answers/namespace-hosting.md`.
 
 ### LPG guideline v2.2 (2026-10-14)
 - `lpg-projection/` is re-pinned to `8ce9ada`, guideline v2.2
@@ -1072,22 +1084,22 @@ without a dated amendment and Hamid's explicit agreement.
   and 12,290 relationships, with no SHACL violation in the graph, an empty
   round-trip diff and equal determinism hashes. Q8 is answerable: 153
   processes carry planned inputs and outputs, and 504 live processes have
-  neither (`q08a`, `q08b`). Hamid decided those 504 are the source
+  neither (`q08a`, `q08b`). The decision owner decided those 504 are the source
   author's backlog: the ontology drafts no SIPOC for them
-  (`review-evidence/hamid-answers/sipoc-scope.md`). Coverage: 9 answerable,
+  (`review-evidence/decision-owner-answers/sipoc-scope.md`). Coverage: 9 answerable,
   5 partial, 30 waiting.
   EPM-DEC-001-0036 and EPM-DEC-001-0038.
 
 ### core 2.0.0 released (2026-10-13)
-- Hamid approved core 2.0.0 and stated that no one uses the ontology yet,
+- The decision owner approved core 2.0.0 and stated that no one uses the ontology yet,
   so on that date the deprecation of `core:responsibleDomain` broke no
   consumer. The
   release is the 2.0.0-rc.1 candidate with the issued and modified dates
   set and the stage removed. The merge commit gets the tag `core-v2.0.0`.
   The projection and the regression moved to 2.0.0 in their own change
   ("Projection and regression on core 2.0.0" above).
-  EPM-DEC-001-0038, with his words in
-  `review-evidence/hamid-answers/core-2-0-0-release.md`.
+  EPM-DEC-001-0038, with their words in
+  `review-evidence/decision-owner-answers/core-2-0-0-release.md`.
 
 ### Step 7 groundwork: MPLX FY2025 10-K read for MPC-P01 (2026-10-13)
 - EPM-DEC-001-0011 asks for the MPLX 10-K read before the ruling on
@@ -1096,10 +1108,10 @@ without a dated amendment and Hamid's explicit agreement.
   Natural Gas and NGL Services; MPC is 48 percent of MPLX's 2025 total revenues and other income,
   mostly in the first, under fee-based agreements with minimum volumes.
   It supports P01's recommended scope (the fuels logistics that serves
-  Refining & Marketing). The ruling is Hamid's.
+  Refining & Marketing). The ruling is the decision owner's.
 
 ### core 2.0.0 candidate: business domains and SIPOC (2026-10-13)
-- Hamid confirmed the process map's `sioc` field is SIPOC, and decided the
+- The decision owner confirmed the process map's `sioc` field is SIPOC, and decided the
   `responsibleDomain` values are business domains: Commercial & Marketing
   splits into Marketing (CM 1.3) and Commercial (CM 1.1, CM 1.2), with
   CM 1.4 IT Services its own domain. `release/build_core_next.py` built
@@ -1107,32 +1119,32 @@ without a dated amendment and Hamid's explicit agreement.
   `core:businessDomain` (205 Commercial, 251 Marketing), `responsibleDomain`
   deprecated, planned inputs and outputs (362 and 219 on 153 processes),
   and ranges for `earlierProcess` and `laterProcess`. A deprecation makes
-  it a major, so it waited for Hamid's approval (given the same day; see
+  it a major, so it waited for the decision owner's approval (given the same day; see
   "core 2.0.0 released" above). EPM-DEC-001-0038.
 
 ### organization 1.0.0 and ref-mpc 1.0.0 released (2026-10-13)
-- Hamid approved both modules as 1.0.0. The releases are the 1.0.0-rc.1
+- The decision owner approved both modules as 1.0.0. The releases are the 1.0.0-rc.1
   candidates with the issued date set and the stage removed; ref-mpc
   requires organization 1.0.0. The merge commit gets the tags
-  `organization-v1.0.0` and `ref-mpc-v1.0.0`. EPM-DEC-001-0037, with his words in
-  `review-evidence/hamid-answers/answers-2026-10-13-session2.md`.
+  `organization-v1.0.0` and `ref-mpc-v1.0.0`. EPM-DEC-001-0037, with their words in
+  `review-evidence/decision-owner-answers/answers-2026-10-13-session2.md`.
 
-### Step 5 RACI scope decided by Hamid (2026-10-13)
-- Hamid chose the 153 processes with RACI in the source as this release's
+### Step 5 RACI scope decided by the decision owner (2026-10-13)
+- The decision owner chose the 153 processes with RACI in the source as this release's
   RACI scope; the other live concepts that Q4 lists are the source
   author's backlog. All 153 have RACI and an accountable role, so the
   Step 5 gate's RACI condition holds. Recorded in EPM-DEC-001-0032, with
-  his words in `review-evidence/hamid-answers/raci-scope.md`.
+  their words in `review-evidence/decision-owner-answers/raci-scope.md`.
 
 ### Step 10 module release candidates (2026-10-13)
 - `release/build_module.py` packages the organization and ref-mpc modules
   in the shape of the core 1.0.0 package: Turtle, JSON-LD, shapes, a DCAT
   record, a changelog and a manifest with SHA-256s. Both were built as
   1.0.0-rc.1 with no issued date: a first release is a major, which is
-  Hamid's; he approved 1.0.0 the same day (entry above). The candidate
+  the decision owner's; they approved 1.0.0 the same day (entry above). The candidate
   ref-mpc required the organization candidate it shipped with. The
   design is EPM-DEC-001-0037, decided under EPM-DEC-001-0028; the w3id
-  registration and the hosting waited for Hamid (on 2026-10-14 he decided
+  registration and the hosting waited for the decision owner (on 2026-10-14 they decided
   against hosting; registration is not pursued, under the delegation;
   EPM-DEC-001-0039).
 
@@ -1165,7 +1177,7 @@ without a dated amendment and Hamid's explicit agreement.
   `prov:hadPlan` pointing at a live core process concept (P-Plan's
   whole-plan link). No new terms. A shape fails any core concept typed as
   a `prov:Activity`; core 1.0.0 passes. Planned inputs and outputs waited
-  for Hamid to confirm what the process map's `sioc` field means; he
+  for the decision owner to confirm what the process map's `sioc` field means; they
   confirmed it is SIPOC on 2026-10-13 (EPM-DEC-001-0038). The
   design is EPM-DEC-001-0034, decided under EPM-DEC-001-0028.
 
@@ -1185,8 +1197,8 @@ without a dated amendment and Hamid's explicit agreement.
   assignments out. Competency questions 3 to 5 are answerable. Q4 lists
   the live, non-anchor concepts (processes, capabilities and concepts with
   no kind) with no RACI in the source; whether they need RACI was
-  a scope question for Hamid, recorded in EPM-DEC-001-0032, which is
-  decided under EPM-DEC-001-0028 (Hamid answered it the same day; see
+  a scope question for the decision owner, recorded in EPM-DEC-001-0032, which is
+  decided under EPM-DEC-001-0028 (the decision owner answered it the same day; see
   the RACI scope entry).
 
 ### Step 5 role register (2026-10-13)
@@ -1196,7 +1208,7 @@ without a dated amendment and Hamid's explicit agreement.
   Strings merge only on case, plural, punctuation or "&"; a qualifier stays
   with the entry; a compound string splits; a team becomes a role with a
   scope note. The design is EPM-DEC-001-0031, decided under
-  EPM-DEC-001-0028. Its open questions for Hamid (likely misspellings and
+  EPM-DEC-001-0028. Its open questions for the decision owner (likely misspellings and
   the acronyms) are listed there. Run `build_roles.py` for the figures.
 
 ### Step 5 organization vocabulary (2026-10-13)
@@ -1225,7 +1237,7 @@ without a dated amendment and Hamid's explicit agreement.
   blank nodes, the SHACL slice (conforms), JSON-LD, a DCAT record and a
   manifest. The design choices are in EPM-DEC-001-0029, drafted under the
   delegation in EPM-DEC-001-0028 (merged in #242).
-- Released 2026-10-13. Hamid approved the design, the ledger and the release,
+- Released 2026-10-13. The decision owner approved the design, the ledger and the release,
   and attested: "Merge #242. I approve the release design in EPM-DEC-001-0029. No one uses the ontology yet. I approve the conservation ledger and the core 1.0.0 release."
   The builder dropped the `-rc.1` stage and set the issue date.
 - Merged in #249 as d8b16e1 and tagged `core-v1.0.0`. The release lessons
@@ -1239,14 +1251,14 @@ without a dated amendment and Hamid's explicit agreement.
   by the Phase 1 sweep. Building a release with a checked, deterministic
   builder (Appendix B, "Releasing a module"), from the core 1.0.0 build
   (released in #249). Delegated decisions,
-  with what stays with the owner (Section 6), from Hamid's delegation of
+  with what stays with the owner (Section 6), from the decision owner's delegation of
   2026-10-12. Project records: EPM-DEC-001-0025 and -0027 (merged); -0028
   (merged in #242).
 
 ### Phase 1 sweep register approved; #206 built (2026-10-12)
-- Hamid delegated drafting of all 245 remaining Phase 1 answers: Claude and
+- The decision owner delegated drafting of all 245 remaining Phase 1 answers: Claude and
   Codex drafted from MPC and industry research briefs, each model reviewed
-  the other's half, and Hamid approved the register as a whole: "approve
+  the other's half, and the decision owner approved the register as a whole: "approve
   register, Q1 yes, Q2 yes, Q3 yes, flagged: yes to all." (#207 comment
   6133390674). The register and its evidence are in
   `review-evidence/phase1-sweep/`, not in the ontology.
@@ -1265,7 +1277,7 @@ without a dated amendment and Hamid's explicit agreement.
 - #201 is the sixth and last batch: 84 G3 Section B rows emit (78 new facts, 6 existing facts gain a contributor; 49 through `provides-input-to`, `governs` or `constrains`; 9 confirm `enables`, REL-00243 through the row-level override) and 18 close with no relationship. Merged in #248.
 
 ### Mirror raw verbs (EPM-DEC-001-0027, 2026-10-12)
-- Hamid: "yes, add both verbs and record the decision." `provides-input-to`
+- The decision owner: "yes, add both verbs and record the decision." `provides-input-to`
   (S, T) is stored as T core:dependsOnOutputOf S and `governs` (S, T) as T
   core:governedBy S, so a Phase 1 correction that reverses a row's direction
   rewrites the segment in place and keeps its REL ID. Each follows the rules
@@ -1273,8 +1285,8 @@ without a dated amendment and Hamid's explicit agreement.
   `business_architecture/domain/decisions/EPM-DEC-001-0027-mirror-raw-verbs.md`.
 
 ### #204 triggers batch 1 (2026-10-12)
-- Hamid answered all 11 held `triggers` rows on #204 (comment 6130380041):
-  seven conditional triggers, four unconditional. He agreed that "a
+- The decision owner answered all 11 held `triggers` rows on #204 (comment 6130380041):
+  seven conditional triggers, four unconditional. They agreed that "a
   conditional trigger fits the locked core:triggeredBy definition where the
   condition identifies a specific event, finding, or authorized handoff that
   invokes the target", and that "No new relation or design round is needed
@@ -1283,7 +1295,7 @@ without a dated amendment and Hamid's explicit agreement.
   emitting / 658 held / 468 facts at that merge); #204 closed with it.
 
 ### Scoped sequence relation built (2026-10-12)
-- EPM-DEC-001-0026: Hamid approved the #226 design (comment 6123946413:
+- EPM-DEC-001-0026: The decision owner approved the #226 design (comment 6123946413:
   "Approved: Q1–Q18 as recommended in the comment above"). A scoped sequence
   is a qualified-relation node in `core` (`core:ScopedSequence`) from an
   earlier to a later process, with a scope unit from a 10-value list, an
@@ -1297,7 +1309,7 @@ without a dated amendment and Hamid's explicit agreement.
 - #205 batch 1 answers describe sequences per trade, delivery, settlement
   period, claim or posting, "not completion of an entire organizational
   process", so `core:precedes` (process-level finish-to-start) cannot carry
-  them and all 13 rows closed as not emitted. Hamid on PR #225 (comment
+  them and all 13 rows closed as not emitted. The decision owner on PR #225 (comment
   6115615577): "Option 1: close all 13 batch 1 rows as not emitted. Keep
   core:precedes locked as a process-level finish-to-start. Define a scoped
   sequence relation for these answers before the core 1.0.0 release,
@@ -1310,9 +1322,9 @@ without a dated amendment and Hamid's explicit agreement.
   a re-pin in every batch that edits the workbook, one reusable tested
   workbook-edit script, (b) answers leave the workbook relationship in place,
   and row verdicts go in the batch review file and the backlog with no
-  decision record per row. Hamid did not comment on them, and his recorded
+  decision record per row. The decision owner did not comment on them, and their recorded
   rule is "If i dont comment on a question, it means I am aligned"
-  (EPM-DEC-001-0001). He then authorized batch 1 on #205 (comment
+  (EPM-DEC-001-0001). They then authorized batch 1 on #205 (comment
   6115309253, 2026-10-11: "Take this as my authorization").
   The script is `build/scripts/scope-note-append.py`. First used for #205
   batch 1 (`step4/source-workbook-backlog.md`, "Batch 1 fresh verdicts").
@@ -1331,7 +1343,7 @@ without a dated amendment and Hamid's explicit agreement.
   enterprise-people-graph issue #2.
 
 ### Grilling session on the handover plan (2026-10-05)
-Hamid answered Q1 to Q34 and confirmed the full list. Each decision has a
+The decision owner answered Q1 to Q34 and confirmed the full list. Each decision has a
 record in `business_architecture/domain/decisions/` (index in its README):
 - PPC is planned, not active; build as if no consumer (EPM-DEC-001-0001).
 - Playbook maintenance rule decided (0002), then amended (0024): the
@@ -1471,7 +1483,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   exceptions (Finance-enabled Supply & Trading, Finance, Refining, and
   6 cross-functional combos, normalized to a governed
   "Cross-functional" value with detail preserved in a note).
-  *Amendment 2026-10-13:* Hamid decided the values are business domains,
+  *Amendment 2026-10-13:* The decision owner decided the values are business domains,
   not org units, and split Commercial & Marketing into Commercial and
   Marketing; core 2.0.0 links the concepts that carry these
   values (processes and capabilities) to a business domain list instead
@@ -1679,7 +1691,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   operational) — each independently queryable. The 107 "periodic"-only
   rows are recorded as cadence-unspecified: honest about the gap rather
   than pretending "periodic" is a cadence.
-- **License: proprietary, all rights reserved** (2026-09-18). Hamid is
+- **License: proprietary, all rights reserved** (2026-09-18). The decision owner is
   the IP owner. Rationale: the ontology describes LSC's actual
   operations — competitively sensitive; can be opened later, cannot be
   un-opened. APQC/IBM terms separately permit use, copying, publishing,
@@ -1692,7 +1704,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   `party:PartyRole` (external commercial roles) are different beasts.
   Rules: dependencies point one way, no cycles (CI-enforced);
   cross-module use by URI reference, never redefinition; independent
-  versioning/validation; minor/patch by module owner, majors by Hamid.
+  versioning/validation; minor/patch by module owner, majors by the decision owner.
 - **`party` is the sole concept-owning module for the Customer domain** (2026-09-18). There is deliberately no `customer` module — it would reintroduce the overloading the August Party model eliminated. Customer-domain processes live in `core` (O2C), customer-grained KPIs in `kpi` bound to Party/Account/Role, RACI in `organization`; the domain is a view across modules, its concepts anchored in `party`.
 - **Separate definitions from occurrences.** Process types/definitions
   are distinct from execution occurrences (2026-09-17).
@@ -1869,7 +1881,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   (`CM-1-1-3-5-3`, batch 05), 3 blocked await the Step 3d tree pass
   (PTC-001), 1 retired (`CM-1-1-4-6`). Gate: 0 blocking, 0 questions.
 - **Taxonomy TTL regenerates once at the end of Step 3c** (2026-09-20,
-  Hamid's decision): the graph is a snapshot and may lag the workbook
+  the decision owner's decision): the graph is a snapshot and may lag the workbook
   mid-pass; the final regen (PR #83, 14,403 triples, 675/680 defined)
   is the handoff into Step 3d.
 - **Naming normalization is a Step 3d activity, not a Step 3c one**
@@ -1879,7 +1891,7 @@ record in `business_architecture/domain/decisions/` (index in its README):
   workbook, TTL, identity map, and cross-references.
 - **Confirm the `sioc` JSON field's meaning** (SIPOC/SIOC?) before
   naming ontology terms; do not confuse it with the W3C SIOC vocabulary
-  (2026-09-17). *Resolved 2026-10-13:* Hamid confirmed it is SIPOC
+  (2026-09-17). *Resolved 2026-10-13:* The decision owner confirmed it is SIPOC
   (EPM-DEC-001-0038).
 
 ---
@@ -1910,7 +1922,7 @@ each node is an ontological class.
 OWL class/subclass. That would assert logical commitments (disjointness,
 inheritance of restrictions) that a naming hierarchy does not support —
 and that no reasoner could then be trusted to check.
-**Decisions (2026-09-21, Step 3d Phase 1, Hamid):** 8 critical-collision
+**Decisions (2026-09-21, Step 3d Phase 1, the decision owner):** 8 critical-collision
 renames approved — `CM-1-1-1-1` → Produce Demand Forecast (verb-led;
 `Demand Forecasting` not retained as altLabel since the L3 parent keeps
 it as prefLabel); `CM-1-1-3-7` → Inventory Management (`Inventory` kept
@@ -1921,7 +1933,7 @@ Network / Operating Model Measurement Framework (the shared generic
 label retired from ontology aliases; scoped historical aliases such as
 `Define KPI Framework (Offer)` recorded in the identity/migration map).
 No definitions, hierarchy, process identities, slugs, or IRIs change.
-**Decisions (2026-09-21, Step 3d Phase 1 follow-up, Hamid):** the sixth
+**Decisions (2026-09-21, Step 3d Phase 1 follow-up, the decision owner):** the sixth
 `Define KPI Framework` row (`CM-1-3-3-5-7`, under Marketing Communications
 Strategy) — discovered after the 8-rename execution — renamed to
 Define Marketing Communications Measurement Framework, matching the five
@@ -1935,9 +1947,9 @@ a prefLabel or workbook name as a join key, DAX lookup key, RLS
 condition, contract key, API key, KPI identity, or logic condition — use
 stable identifiers for technical relationships. Retain historical labels
 as altLabel only when uniquely resolvable and semantically safe.
-**Taxonomy unpublished (2026-09-21, Hamid):** no external consumers, so
+**Taxonomy unpublished (2026-09-21, the decision owner):** no external consumers, so
 renames need no deprecation period or consumer notice.
-**Decisions (2026-09-22, Step 3d naming pass Batch 7, Hamid):** the 12
+**Decisions (2026-09-22, Step 3d naming pass Batch 7, the decision owner):** the 12
 normalization-only judgment renames approved as proposed, with three
 judgment calls: (1) the allocation pair stays together as verb-led
 `Allocate Crude and Feedstock` / `Allocate Finished Products`, bounded by
@@ -1952,12 +1964,12 @@ materials — not petroleum inventory. The `Reconcile Economic PNL To
 Accounting PNL` case-only variant is migration-map-only (no altLabel), and
 the queue rule now codified is: case/punctuation-only changes carry no alt
 label. No definitions, hierarchy, process identities, slugs, or IRIs change.
-**Step 3d closure (2026-09-22, Hamid):** Step 3d closed as "Completed with
-explicit open exceptions" on Hamid's approval of the closeout recommendation.
+**Step 3d closure (2026-09-22, the decision owner):** Step 3d closed as "Completed with
+explicit open exceptions" on the decision owner's approval of the closeout recommendation.
 Naming normalization fully executed (92/92 queue entries); evidence-supported
 tree remediation complete (PTC-001 partial resolution: tombstone + 2 reparented
 L3s + 2 Candidate L2s).
-**PTC-001-B confirmed as intentional governance hold (2026-09-22, Hamid):**
+**PTC-001-B confirmed as intentional governance hold (2026-09-22, the decision owner):**
 `Develop Strategic Business Plan` remains `blocked` under the retired
 `Commercial Development` tombstone until evidence establishes whether
 enterprise strategic-business planning is owned by (A) Corporate Planning
@@ -1971,7 +1983,7 @@ operating-model definition, corporate-planning charter approval, or enterprise
 architecture/charter revision. A blocked row with a named decision, explicit
 options, evidence requirement, and review trigger is governance maturity —
 not incomplete work.
-**Refining Architecture Scoping Decision (2026-09-22, Hamid):** approved in
+**Refining Architecture Scoping Decision (2026-09-22, the decision owner):** approved in
 principle with refinements; R1 is a controlled re-homing and normalization
 pass, not a greenfield refinery model. R0 inventory complete (2026-09-22):
 the Refining L1 holds only 3 concepts; the substantive refinery estate —
@@ -1979,7 +1991,7 @@ Refinery Planning (26 concepts) and Refinery Scheduling (16 concepts) —
 sits under Commercial & Marketing → Planning & Scheduling. R1 therefore
 promotes existing approved concepts with stable slugs/IRIs rather than
 duplicating or recreating ~40 concepts.
-**Structural framing (Hamid correction, 2026-09-22):** the change is a
+**Structural framing (the decision owner's correction, 2026-09-22):** the change is a
 **controlled structural reclassification and reparenting with stable
 identity** — NOT label-only. Parent-child relationships, concept levels,
 `skos:broader` links, hierarchy navigation, query paths, and
@@ -1989,7 +2001,7 @@ mandatory.
 Priority L2s: **Refinery Planning and Optimization** (promote `CM-1-1-4`,
 approved in principle subject to the consolidated hierarchy map and the
 Optimization-coverage evidence check); **Refinery Production Planning and
-Scheduling** (narrower R1 label for the promoted `CM-1-1-7` estate — Hamid's
+Scheduling** (narrower R1 label for the promoted `CM-1-1-7` estate — the decision owner's
 lean; the broader "Refinery Operations and Production Management" is NOT
 auto-approved and waits on the CM-1-1-7 evidence review, else arrives in R2
 when operating-execution concepts exist); **Refinery Asset Reliability and
@@ -2006,7 +2018,7 @@ Energy & Utility Management follows its parent in R1 under Temporary/inherited p
 not a final ownership decision. EHS / process safety, enterprise risk, maintenance
 authority, Finance, Supply & Trading, Midstream, Commercial, Legal, Security,
 and IT boundaries stay explicit.
-**R&T L2 definition (Hamid-authored, 2026-09-22):** "The Refining capability
+**R&T L2 definition (owner-authored, 2026-09-22):** "The Refining capability
 that coordinates refinery availability, asset-condition and integrity inputs,
 maintenance and turnaround windows, production-plan impacts, readiness, and
 recovery interfaces so refinery performance objectives can be planned and
@@ -2044,8 +2056,8 @@ RLS/OLS, catalog, data products), governance/traceability (identity-map
 migration overlay, historical paths, PTC-001-B/tombstone/PTC-002 unchanged),
 and generation (workbook, JSON, TTL, gate, diffs) must pass before any
 structural change merges.
-**R1 structural decision package (approved as Candidate, 2026-09-22, Hamid):**
-delivered as a no-change proposal and approved as **Candidate** on Hamid's independent review:
+**R1 structural decision package (approved as Candidate, 2026-09-22, the decision owner):**
+delivered as a no-change proposal and approved as **Candidate** on the decision owner's independent review:
 (1) current-to-target hierarchy map for 40 concepts with old/new parent and level, (2) candidate
 L2 definitions, (3) R1/R2 boundary, (4) terminology decision ledger, (5) impact analysis with the
 four-gate merge framework, (6) evidence (internal definitions, OSHA/Cal-OSHA/API context, APQC
@@ -2067,7 +2079,7 @@ question).
 **SemVer treatment for Refining changes (2026-09-22):** new L2 nodes are
 additive (minor); reparenting existing concepts changes broader links and is
 validated by the consumer-impact merge gate before merge.
-**R1 implementation — merged (2026-09-22, Hamid):** PR #108 merged as
+**R1 implementation — merged (2026-09-22, the decision owner):** PR #108 merged as
 `b75fd991` (2026-09-22T12:51:35Z). R1 status **Candidate → Implemented**. Final
 state: 683 concepts, 14,496 triples, 681 broader links. Gate results at merge:
 hierarchy 42/42 checks (incl. the new blocked-status and breadcrumb-label locks),
@@ -2152,7 +2164,7 @@ URI.
 
 ### What we evaluated and set aside
 - **W3C SIOC** (social/online-community vocabulary): not applicable;
-  the repo JSON's `sioc` field is SIPOC (Hamid, 2026-10-13;
+  the repo JSON's `sioc` field is SIPOC (the decision owner, 2026-10-13;
   EPM-DEC-001-0038) and must not be confused with it.
 - **ODPS family** (Open Data Product Specification / ODPC / ODPV / ODPG):
   mapped for awareness (ODPC→DCAT, ODPV→SKOS, ODPG→RDF) but not adopted —
@@ -2176,7 +2188,7 @@ Facts about the source material that are easy to get wrong:
 - **`officeLane` values:** `front_office`, `middle_office`,
   `back_office`, `operations`. Not declared disjoint.
 - **The `sioc` JSON field is SIPOC** (suppliers, inputs, outputs,
-  customers; the process is the node). Hamid confirmed it on 2026-10-13
+  customers; the process is the node). The decision owner confirmed it on 2026-10-13
   (EPM-DEC-001-0038).
 - **Known data gaps to resolve in Step 7:** all 46 Order-to-Cash
   processes have empty `produces` arrays; no AR credit/receivables/
@@ -2196,7 +2208,7 @@ Facts about the source material that are easy to get wrong:
 1. **Read §1–§2** for the shape of the whole build; **§5** before
    touching any standard.
 2. **Check §4** before making any modeling choice — if the decision is
-   locked, follow it; if you believe it's wrong, raise it with Hamid
+   locked, follow it; if you believe it's wrong, raise it with the decision owner
    and record a dated amendment. Do not silently override.
 3. **Work one plan step at a time**, in order, appending the step's
    entry to §3 with: what was done, what was decided, and what remains
@@ -2207,12 +2219,12 @@ Facts about the source material that are easy to get wrong:
 5. **Boundary notes are decisions too.** "Out of scope" with a recorded
    reason beats silent omission; future-you will thank present-you.
 6. **Definition authoring workflow (Step 3c, locked 2026-09-19).**
-   Hamid or a designated reviewer fills the 6-sheet semantic-intake
+   the decision owner or a designated reviewer fills the 6-sheet semantic-intake
    workbook `step3c-definition-authoring-workbook.xlsx` and returns it
-   to Hamid or commits it to a reviewer branch — never `main` directly.
+   to the decision owner or commits it to a reviewer branch — never `main` directly.
    The assistant pulls it, runs `step3c-workbook-validate.py`
    (mechanical gate), then performs a full semantic review. Every doubt
-   comes back to Hamid as a question. Only `approved` rows whose
+   comes back to the decision owner as a question. Only `approved` rows whose
    questions are resolved merge into the taxonomy via
    `step3-skos-taxonomy.py --authored`. Nothing merges on assumption —
    the human gate from Step 3b applies to human-authored text too.
@@ -2246,7 +2258,7 @@ Facts about the source material that are easy to get wrong:
 7. **Park, don't smuggle** — future processes in `parked_children`; no data fields, systems, KPIs, controls, or thresholds as concepts.
 8. **Evidence-based** — high-quality references inform; nothing copied verbatim.
 9. **Planning baseline preserved** — backcasting compares against the approved plan and contemporaneous assumptions.
-10. **Provenance-clean** — `dcterms:source` records human authorship, Hamid's approval, and date.
+10. **Provenance-clean** — `dcterms:source` records human authorship, the decision owner's approval, and date.
 
 ---
 
@@ -2382,7 +2394,7 @@ The ontology is named, not anonymous. Each module ships one
     owl:versionInfo "1.0.0" ;
     dcterms:issued "2026-09-22"^^xsd:date ;
     dcterms:modified "2026-09-22"^^xsd:date ;
-    dcterms:creator "Hamid" ;
+    dcterms:creator "The decision owner" ;
     dcterms:license <https://w3id.org/lsc/ontology/modules/core/license> ;
     dcterms:rights "© LSC. All rights reserved. APQC PCF content used with attribution per APQC/IBM terms."@en .
 ```
@@ -2413,7 +2425,7 @@ Rules:
 - A changelog entry per change: what changed, why, who approved, and
   the SemVer classification. Format:
   `[minor] Added skos:Concept L1-human-resources children 7.2/7.3/7.5
-   per APQC scope decision 2. Approved: Hamid, 2026-09-18.`
+   per APQC scope decision 2. Approved: The decision owner, 2026-09-18.`
 - The DCAT catalog records the release as a new `dcat:Dataset` version
   with its distributions (Turtle, JSON-LD, SHACL shapes, HTML docs).
 
@@ -2438,4 +2450,4 @@ When APQC publishes v7.3 or v8:
 
 ### Who approves a release
 Minor and patch: the module owner. Major (including any deprecation):
-Hamid. No exceptions — majors change the meaning of published truth.
+The decision owner. No exceptions — majors change the meaning of published truth.

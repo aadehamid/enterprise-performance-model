@@ -1,0 +1,3 @@
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-19. Context (Claude's words, kept in this comment so they do not enter the quote corpus): after kpi 1.0.0 was released, the decision owner asked which source the measures from their planner list cite. They cited a source titled "The decision owner's planner measure list, 2026-10-18". This is their message; they name the product the list belongs to. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+By the way do we have a source for the operational metrics/KPI? It should be "Value Chain Optimization Decision Support and Visualization (VCO DSV)"

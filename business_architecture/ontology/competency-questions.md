@@ -6,9 +6,9 @@ answer a question here, the model is incomplete — not the question.
 The Step 11 SPARQL regression in `regression/` tests them.
 
 **Sources merged:** the process-map question set (Kailey, 2026-09-17)
-and Hamid's domain question set A–F (2026-09-18), minus the constraints
+and the decision owner's domain question set A–F (2026-09-18), minus the constraints
 section (parked 2026-09-18 — constraints are not being modeled). Light
-editorial merges are marked; Hamid's wording is otherwise preserved
+editorial merges are marked; the decision owner's wording is otherwise preserved
 verbatim.
 
 ---

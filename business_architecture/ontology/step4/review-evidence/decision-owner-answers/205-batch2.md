@@ -1,4 +1,4 @@
-<!-- Hamid's words, verbatim from https://github.com/aadehamid/enterprise-performance-model/issues/205#issuecomment-6116668059 (fetched 2026-10-12). Claude's one-line attribution heading is removed; the rest is verbatim. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+<!-- The decision owner's words, verbatim from urn:epm:issue:205:comment:6116668059 (fetched 2026-10-12). Claude's one-line attribution heading is removed; the rest is verbatim. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 Please record the following as my source-author responses for Batch 2. These are adopted reference-model positions informed by the downstream business context and industry practice, not verified MPC internal procedures.
 

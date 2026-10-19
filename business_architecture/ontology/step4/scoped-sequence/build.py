@@ -26,8 +26,8 @@ SHAPES = os.path.join(HERE, "shapes.ttl")
 OUTPUT = os.path.join(HERE, "scoped-sequences.ttl")
 TAXONOMY = os.path.join(STEP4, "baseline", "step3-taxonomy.ttl")
 REVIEWS = [os.path.join(STEP4, "review-evidence", f"precedes-follows-batch{n}-review.csv") for n in (1, 2)]
-ANSWERS = os.path.join(STEP4, "review-evidence", "hamid-answers")
-# The #226 design summary Hamid approved (EPM-DEC-001-0026): per-row scope, conditions, refinement, ancestors.
+ANSWERS = os.path.join(STEP4, "review-evidence", "decision-owner-answers")
+# The #226 design summary the decision owner approved (EPM-DEC-001-0026): per-row scope, conditions, refinement, ancestors.
 DESIGN = os.path.join(STEP4, "review-evidence", "226-design-summary.md")
 # The saved answer each review batch came from.
 BATCH_ANSWER = {REVIEWS[0]: "205-batch1.md", REVIEWS[1]: "205-batch2.md"}
@@ -105,7 +105,7 @@ def approved_ancestor_nodes(path=SHAPES):
 
 
 def approvals():
-    """What Hamid approved for each row, from the #226 summary and the #205 review batches.
+    """What the decision owner approved for each row, from the #226 summary and the #205 review batches.
 
     scope: row -> scope unit; conditional, refinement, ancestor: row sets named by Q10, Q12, Q6;
     answer: row -> saved answer URL; basis: row -> evidence basis (Q13).
@@ -131,7 +131,7 @@ def approvals():
             for r in csv.DictReader(f):
                 answer[r["row_id"]] = url
                 # Q13: all of batch 2, and the batch 1 answers adopted as reference-model assumptions.
-                assumption = path == REVIEWS[1] or "reference-model assumption" in r["hamid_words"]
+                assumption = path == REVIEWS[1] or "reference-model assumption" in r["owner_words"]
                 basis[r["row_id"]] = "reference-model-assumption" if assumption else "source-confirmed"
     return {"scope": scope, "conditional": rows_in("Q10"), "refinement": rows_in("Q12"),
             "ancestor": rows_in("Q6"), "answer": answer, "basis": basis}
@@ -171,7 +171,7 @@ def check(columns=None, rows=None):
         if r["evidence_basis"] not in bases:
             problems.append(f"{where}: evidence_basis {r['evidence_basis']} is not in the evidence-basis list")
         if r["answer"] not in answers:
-            problems.append(f"{where}: answer {r['answer']} is not a saved answer in review-evidence/hamid-answers")
+            problems.append(f"{where}: answer {r['answer']} is not a saved answer in review-evidence/decision-owner-answers")
         if r["condition"] and r["condition"] not in r["definition"]:
             problems.append(f"{where}: condition is not words of the definition")
         # Q4 and Q11: direction and definition come from the reviewed row.

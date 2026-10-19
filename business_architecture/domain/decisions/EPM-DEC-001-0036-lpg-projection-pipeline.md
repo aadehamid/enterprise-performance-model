@@ -5,7 +5,7 @@
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-13 |
 | Questions | Step 12: how the ontology is projected into Neo4j under the guideline in `lpg-projection/` (v2.1, Rule 4a), and what the pipeline proves |
-| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
+| Source | Claude Code session, 2026-10-13, under the decision owner's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
 
 ## Context
 
@@ -32,7 +32,7 @@ Choices where the guideline leaves room or does not fit the tools:
 
 The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): its source nodes linked their URLs through `dcterms:source`, which core's source shape forbids.
 
-### For Hamid
+### For the decision owner
 
 The next `core` release should add `rdfs:range skos:Concept` to `core:earlierProcess` and `core:laterProcess`. The pipeline then fails until the two listed gaps are removed.
 
@@ -46,9 +46,9 @@ The next `core` release should add `rdfs:range skos:Concept` to `core:earlierPro
 - **Keep the OWL API declarations in `inferred.nt`.** Rejected: every instance would gain an `owl__NamedIndividual` label and nothing about the domain.
 - **Skip the in-graph SHACL.** Rejected: the guideline requires it; the subset plus the round trip keeps the guarantee.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+The decision owner extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." The decision owner did not make the choices above themselves. Claude made them under that delegation, and the decision owner can reverse any of them.
 
 ## Evidence
 

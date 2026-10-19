@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass - generic-operational Batch 5 (11 renames).
 
-Approved by Hamid 2026-09-21 (explicit "Go ahead" in chat on the reviewer's
+Approved by the decision owner 2026-09-21 (explicit "Go ahead" in chat on the reviewer's
 verdict: approve with one label refinement and one alias-control exception).
 
 The batch converts labels that depended on parent context into standalone,
@@ -282,7 +282,7 @@ def main() -> int:
         if slug == ALIAS_EXCEPTION:
             e["name_change_note"] = (
                 "Step 3d naming pass \u2014 generic-operational Batch 5 (2026-09-21): "
-                f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21; "
+                f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21; "
                 "independent reviewer recommendation: approve with plural "
                 "'Interactions' refinement for the enduring multi-interaction "
                 "process). Alias-control exception: the bare historical label "
@@ -298,7 +298,7 @@ def main() -> int:
         else:
             e["name_change_note"] = (
                 "Step 3d naming pass \u2014 generic-operational Batch 5 (2026-09-21): "
-                f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21; "
+                f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21; "
                 "independent reviewer recommendation: approve as proposed). Prior "
                 "label retained as skos:altLabel; no identifier, hierarchy, or "
                 "definition change."
@@ -341,11 +341,11 @@ def main() -> int:
     assert old_hdr in text, "queue generic-operational header not in expected form"
     text = text.replace(old_hdr, new_hdr)
     old_status = ("and 8 directionality-missing entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 4, Hamid approval 2026-09-21). The remaining 37 queue entries "
+                  "Batch 4, the decision owner's approval 2026-09-21). The remaining 37 queue entries "
                   "are still queued for the consolidated naming pass.")
     new_status = ("and 8 directionality-missing entries executed 2026-09-21 (Step 3d naming pass "
-                  "Batch 4, Hamid approval 2026-09-21) and 11 generic-operational "
-                  "entries executed 2026-09-21 (Step 3d naming pass Batch 5, Hamid approval "
+                  "Batch 4, the decision owner's approval 2026-09-21) and 11 generic-operational "
+                  "entries executed 2026-09-21 (Step 3d naming pass Batch 5, the decision owner's approval "
                   "2026-09-21). The remaining 26 queue entries are still queued for the "
                   "consolidated naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"

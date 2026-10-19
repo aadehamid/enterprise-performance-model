@@ -2,7 +2,7 @@
 
 **Status:** Evidence for EPM-DEC-001-0048 · **Retrieved:** 2026-10-19
 
-Hamid ruled that MPC's public information takes precedence over any other source for these two gaps. This file holds what MPC and MPLX say themselves. The regulators' record rules and the industry standards, which rank below it, are in `../downstream-peers/loss-gain-and-feedstock-regulatory-evidence.md`.
+The decision owner ruled that MPC's public information takes precedence over any other source for these two gaps. This file holds what MPC and MPLX say themselves. The regulators' record rules and the industry standards, which rank below it, are in `../downstream-peers/loss-gain-and-feedstock-regulatory-evidence.md`.
 
 ## Movement losses and gains
 

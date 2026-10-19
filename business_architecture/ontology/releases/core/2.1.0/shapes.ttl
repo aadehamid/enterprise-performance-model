@@ -101,7 +101,7 @@ shp:ProcessConcept-plannedOutput sh:datatype rdf:langString ;
     sh:path core:plannedOutput .
 
 
-# ---- Added in 2.1.0: the controlled-value shapes (EPM-DEC-001-0035, 0044), as Hamid approved them ----
+# ---- Added in 2.1.0: the controlled-value shapes (EPM-DEC-001-0035, 0044), as the decision owner approved them ----
 # Step 9, controlled values (EPM-DEC-001-0014, EPM-DEC-001-0035): each code-list property of
 # core takes its values from its own code list, not from any SKOS concept. The core 1.0.0
 # release shapes check sh:in on conceptKind, only sh:class skos:Concept on seven others, and
@@ -160,7 +160,7 @@ shp:SequenceScope a sh:NodeShape ; sh:targetObjectsOf core:sequenceScope ;
                   sh:message "A sequence scope comes from the scope unit list." ] .
 
 # ---- Added in 2.1.0: evidence on canonical facts (EPM-DEC-001-0044) ----
-# Hamid's seven checks: fact structure, predicate scope, triple to node, node to triple, evidence
+# The decision owner's seven checks: fact structure, predicate scope, triple to node, node to triple, evidence
 # presence, evidence correctness and reproducibility. The shapes cover the first five; evidence
 # correctness against the mapping and reproducibility are build checks (build_core_2_1.py,
 # evidence_problems and --verify) and tests (test_build_core_2_1.py).

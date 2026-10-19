@@ -17,23 +17,23 @@ import build_module as bm
 
 DCAT = bm.DCAT
 # The sentence that approved each issued release (EPM-DEC-001-0037).
-SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
-NIGHT = "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
-RELEASES = "step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md"
+SESSION2 = "step4/review-evidence/decision-owner-answers/answers-2026-10-13-session2.md"
+NIGHT = "step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md"
+RELEASES = "step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-mpc.md"
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
              "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
-             "kpi": ("step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md",
+             "kpi": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md",
                      "You have my approval to keep going and release things as needed. while I am out")}
 
 
 def approval_holds(name, m):
-    """The release names the sentence Hamid wrote for it, and that sentence is in the body of the
+    """The release names the sentence the decision owner wrote for it, and that sentence is in the body of the
     saved file. Another sentence of the same file, an answer to another question, is not an approval."""
     path, words = m["approval"]
     if (path, words) != APPROVALS[name]:
         return False
     with open(os.path.join(bm.ONTOLOGY, path)) as f:
-        # Hamid's words sit in the body; Claude's context sits in HTML comments.
+        # The decision owner's words sit in the body; Claude's context sits in HTML comments.
         body = re.sub(r"<!--.*?-->", "", f.read(), flags=re.S)
     return words in body
 
@@ -48,8 +48,8 @@ class Packages(unittest.TestCase):
                     with open(os.path.join(bm.release_dir(name), fname)) as f:
                         self.assertEqual(f.read(), text, fname)
 
-    def test_an_issued_release_carries_hamids_recorded_approval_and_a_candidate_no_date(self):
-        # A module's first release is a major, which needs Hamid's approval (module policy).
+    def test_an_issued_release_carries_the_owners_recorded_approval_and_a_candidate_no_date(self):
+        # A module's first release is a major, which needs the decision owner's approval (module policy).
         for name, m in bm.MODULES.items():
             with self.subTest(module=name):
                 g = bm.build(name)

@@ -37,12 +37,12 @@ SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 KINDS = ("kpi", "operational-metric", "plan-variance-diagnostic", "market-indicator",
          "decision-support-indicator", "tracker-or-report", "alert", "not-a-measure")
 SOURCES = {  # where a measure comes from -> the source it cites
-    "planner list": SRC["hamid-planner-measure-list-2026-10-18"],
+    "planner list": SRC["planner-measure-list-2026-10-18"],
     "MPC": SRC["mpc-performance-measures-evidence"],
     "industry": SRC["kpi-classification-evidence"],
 }
 SOURCE_TITLES = {
-    SOURCES["planner list"]: "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as Hamid sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)",
+    SOURCES["planner list"]: "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as the decision owner sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)",
     SOURCES["MPC"]: "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md",
     SOURCES["industry"]: "KPI or operational metric, business_architecture/reference/downstream-peers/kpi-classification-evidence.md",
 }
@@ -113,7 +113,7 @@ def build(rows, details, personas, labels, procs):
     for iri, title in SOURCE_TITLES.items():
         g.add((iri, RDF.type, DCTERMS.BibliographicResource))
         g.add((iri, DCTERMS.title, Literal(title, lang="en")))
-    # The planner list's short name, as Hamid gave it (answers-2026-10-19-vco-dsv.md).
+    # The planner list's short name, as the decision owner gave it (answers-2026-10-19-vco-dsv.md).
     g.add((SOURCES["planner list"], DCTERMS.alternative, Literal("VCO DSV", lang="en")))
     for p in personas:
         iri = PERSONA[p["slug"]]

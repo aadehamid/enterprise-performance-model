@@ -71,8 +71,8 @@ kpi:kpiCandidate a owl:DatatypeProperty ;
 
 measure:ad-hoc-plan-trends a skos:Concept,
         kpi:MeasureDefinition ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "A future capability for ad hoc trends of plan data and a chatbot over the planning database."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "ad-hoc-plan-trends"^^xsd:string ;
@@ -88,8 +88,8 @@ measure:ad-hoc-plan-trends a skos:Concept,
 measure:additional-market-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Further benchmark, crude, renewables and NGL prices used in planning."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "additional-market-prices"^^xsd:string ;
@@ -109,8 +109,8 @@ measure:additional-market-prices a skos:Concept,
 measure:capital-project-evaluations a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23; KI-02"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Open capital project evaluations against their due dates."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "capital-project-evaluations"^^xsd:string ;
@@ -128,8 +128,8 @@ measure:capital-project-evaluations a skos:Concept,
 measure:clean-product-make a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; DP-01 p. 42"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "clean products production"@en ;
     skos:definition "Total clean product output by refinery over the plan horizon."@en ;
     skos:inScheme kpi:Measures ;
@@ -151,8 +151,8 @@ measure:clean-product-make a skos:Concept,
 measure:crude-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 pp. 46, 51; KI-27"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "crude markers"@en ;
     skos:definition "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)."@en ;
     skos:inScheme kpi:Measures ;
@@ -172,8 +172,8 @@ measure:crude-prices a skos:Concept,
 measure:crude-value-to-breakeven a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "VT-01; VT-02; VT-04; VT-09; VT-12; VT-20"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "V2Be"@en,
         "incremental crude value"@en,
         "variance to breakeven"@en ;
@@ -183,7 +183,7 @@ measure:crude-value-to-breakeven a skos:Concept,
     skos:prefLabel "Crude Value to Breakeven"@en ;
     skos:scopeNote "Not a measure of how well crude was bought: that is margin capture or a backcast."@en ;
     kpi:basis "breakeven value ($/bbl) against delivered price ($/bbl)"^^xsd:string ;
-    kpi:classificationReason "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. Hamid asked for this to be researched (Part B, Q8)."^^xsd:string ;
+    kpi:classificationReason "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. The decision owner asked for this to be researched (Part B, Q8)."^^xsd:string ;
     kpi:classificationTest 3 ;
     kpi:comparedAgainst "delivered crude price"^^xsd:string ;
     kpi:grain "monthly, by refinery and crude"^^xsd:string ;
@@ -197,8 +197,8 @@ measure:crude-value-to-breakeven a skos:Concept,
 measure:demand-vs-forecast a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-25; KI-26; KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "sales vs forecast"@en ;
     skos:definition "Actual sales less forecast sales for the period, against the plan version named."@en ;
     skos:inScheme kpi:Measures ;
@@ -222,8 +222,8 @@ measure:demand-vs-forecast a skos:Concept,
 measure:distillate-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "ULSD prices"@en ;
     skos:definition "Benchmark distillate and jet spot prices at named hubs."@en ;
     skos:inScheme kpi:Measures ;
@@ -245,8 +245,8 @@ measure:distillate-prices a skos:Concept,
 measure:distillate-yield a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "diesel yield"@en ;
     skos:definition "Distillate produced (ULSD, kerosene, jet) as a share of crude and feed charged."@en ;
     skos:inScheme kpi:Measures ;
@@ -290,8 +290,8 @@ measure:distribution-cost-per-barrel a skos:Concept,
 measure:dpo-input-variance-alert a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-31; KI-04"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "An alert raised when a distribution-plan input table changes by more than a set share from the week before."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "dpo-input-variance-alert"^^xsd:string ;
@@ -310,8 +310,8 @@ measure:dpo-input-variance-alert a skos:Concept,
 measure:gasoline-prices a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 51; KI-27"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "CBOB prices"@en ;
     skos:definition "Benchmark gasoline spot prices at named hubs."@en ;
     skos:inScheme kpi:Measures ;
@@ -333,8 +333,8 @@ measure:gasoline-prices a skos:Concept,
 measure:gasoline-yield a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; KI-04"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "gas yield"@en ;
     skos:definition "Gasoline produced (finished and blendstock) as a share of crude and feed charged."@en ;
     skos:inScheme kpi:Measures ;
@@ -358,8 +358,8 @@ measure:gasoline-yield a skos:Concept,
 measure:interregional-volumes a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "interregional movements"@en ;
     skos:definition "Total product moved between regions on named segments, by product and mode."@en ;
     skos:inScheme kpi:Measures ;
@@ -381,8 +381,8 @@ measure:interregional-volumes a skos:Concept,
 measure:key-activity-tracker a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Critical planning activities and meetings against their due dates."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "key-activity-tracker"^^xsd:string ;
@@ -400,8 +400,8 @@ measure:key-activity-tracker a skos:Concept,
 measure:marine-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPLX-S01 p. 56; KI-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Volume moved by barge and vessel as a share of available marine capacity."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "marine-utilization"^^xsd:string ;
@@ -423,8 +423,8 @@ measure:marine-utilization a skos:Concept,
 measure:marketing-performance-vs-plan a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Marketing's results against the marketing plan."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "marketing-performance-vs-plan"^^xsd:string ;
@@ -441,8 +441,8 @@ measure:marketing-performance-vs-plan a skos:Concept,
 measure:mtp-submission-tracker a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "MTP submission"@en ;
     skos:definition "Mid-term plan submissions against their due dates."@en ;
     skos:inScheme kpi:Measures ;
@@ -461,8 +461,8 @@ measure:mtp-submission-tracker a skos:Concept,
 measure:ngl-balance a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "NGL commodities"@en ;
     skos:definition "Each NGL product's balance at the refinery (opening, production, consumption, transfers) compared with planned purchases and make."@en ;
     skos:inScheme kpi:Measures ;
@@ -482,8 +482,8 @@ measure:ngl-balance a skos:Concept,
 measure:opening-inventory-vs-plan a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "Actual opening inventory against the planned opening level for the next month."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "opening-inventory-vs-plan"^^xsd:string ;
@@ -502,8 +502,8 @@ measure:opening-inventory-vs-plan a skos:Concept,
 measure:pipeline-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 54; MPLX-S01 p. 56; KI-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "line utilization"@en ;
     skos:definition "Pipeline throughput as a share of pipeline capacity, by distribution node and material."@en ;
     skos:inScheme kpi:Measures ;
@@ -528,8 +528,8 @@ measure:pipeline-utilization a skos:Concept,
 measure:plan-overview-key-changes a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23; KI-06"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "A summary of the largest plan changes and the economic drivers behind them."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "plan-overview-key-changes"^^xsd:string ;
@@ -547,8 +547,8 @@ measure:plan-overview-key-changes a skos:Concept,
 measure:plan-vs-historical-averages a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26; KI-04"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "historical product make vs MTP"@en ;
     skos:definition "The submitted mid-term plan for a month compared with the same month's average over prior years, by product (crude, gasoline, diesel, jet)."@en ;
     skos:inScheme kpi:Measures ;
@@ -568,8 +568,8 @@ measure:plan-vs-historical-averages a skos:Concept,
 measure:price-comparison a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 46; KI-27"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "spread"@en ;
     skos:definition "The difference between two chosen market markers over time."@en ;
     skos:inScheme kpi:Measures ;
@@ -589,8 +589,8 @@ measure:price-comparison a skos:Concept,
 measure:production-rate-record a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-31"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "rate records"@en ;
     skos:definition "A notification when a refinery sets a new clean products production rate record."@en ;
     skos:inScheme kpi:Measures ;
@@ -609,8 +609,8 @@ measure:production-rate-record a skos:Concept,
 
 measure:regional-site-monitoring a skos:Concept,
         kpi:MeasureDefinition ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "A future view of plant status across the region, combining operations notes with unit performance."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "regional-site-monitoring"^^xsd:string ;
@@ -663,8 +663,8 @@ measure:relative-refining-margin-by-region a skos:Concept,
 measure:sales-purchase-status a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "A trend of rack sales and purchase statuses from marketing, showing statuses held for more than a week."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "sales-purchase-status"^^xsd:string ;
@@ -681,8 +681,8 @@ measure:sales-purchase-status a skos:Concept,
 measure:supply-vs-forecast a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-26; KI-23"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "purchases vs forecast"@en ;
     skos:definition "Actual purchases less forecast purchases for the period, against the plan version named."@en ;
     skos:inScheme kpi:Measures ;
@@ -705,8 +705,8 @@ measure:supply-vs-forecast a skos:Concept,
 measure:swing-stream-disposition a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-04"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:definition "The volume of swing streams and where they are routed, as they shift distillate and gasoline make."@en ;
     skos:inScheme kpi:Measures ;
     skos:notation "swing-stream-disposition"^^xsd:string ;
@@ -725,8 +725,8 @@ measure:swing-stream-disposition a skos:Concept,
 measure:tar-activities-tracker a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "VT-16; VT-20; VT-26"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "TAR tracker"@en,
         "turnaround tracker"@en ;
     skos:definition "A list of turnaround activities planned for the next four months, by refinery."@en ;
@@ -814,8 +814,8 @@ kind:decision-support-indicator a skos:Concept ;
 measure:crude-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 p. 53; MPC-S16; KI-13; KI-14; KI-16; DP-01"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "crude capacity utilization"@en,
         "refinery utilization"@en ;
     skos:definition "Fresh crude charged to the crude units as a share of crude capacity, for one refinery and month."@en ;
@@ -884,8 +884,8 @@ measure:turnaround-cost-per-barrel a skos:Concept,
 measure:unit-utilization a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "KI-04; KI-26; KI-13; MPC-S01"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "unit rates"@en ;
     skos:definition "A process unit's throughput as a share of its constrained capacity, for one refinery."@en ;
     skos:inScheme kpi:Measures ;
@@ -929,8 +929,8 @@ kind:not-a-measure a skos:Concept ;
 measure:crack-spreads a skos:Concept,
         kpi:MeasureDefinition ;
     dcterms:bibliographicCitation "MPC-S01 Item 7 pp. 46, 51; KI-27; KI-28"^^xsd:string ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18,
-        src:kpi-classification-evidence ;
+    dcterms:source src:kpi-classification-evidence,
+        src:planner-measure-list-2026-10-18 ;
     skos:altLabel "3-2-1 crack"@en,
         "crack spread"@en,
         "the crack"@en ;
@@ -1052,7 +1052,7 @@ src:mpc-performance-measures-evidence a dcterms:BibliographicResource ;
     dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en .
 
 persona:prompt-planner a org:Role ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    dcterms:source src:planner-measure-list-2026-10-18 ;
     skos:definition "Plans the prompt month for the region's refineries from the latest schedule, and watches hourly and daily execution against it."@en ;
     skos:prefLabel "Prompt Planner"@en ;
     kpi:planHorizon "prompt month"^^xsd:string ;
@@ -1065,29 +1065,29 @@ kind:operational-metric a skos:Concept ;
     skos:prefLabel "Operational metric"@en .
 
 persona:distribution-planner a org:Role ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    dcterms:source src:planner-measure-list-2026-10-18 ;
     skos:definition "Plans product supply, demand, transport and inventory across the distribution network."@en ;
     skos:prefLabel "Distribution Planner"@en ;
     kpi:planHorizon "prompt to M+3"^^xsd:string ;
     kpi:planType "distribution plan (DPO)"^^xsd:string .
 
 persona:mid-term-planner a org:Role ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    dcterms:source src:planner-measure-list-2026-10-18 ;
     skos:definition "Builds and submits the mid-term plan, compares it with the short-term plans and history, and sequences turnarounds and capital evaluations."@en ;
     skos:prefLabel "Mid-Term Planner"@en ;
     kpi:planHorizon "M+4 to M+36"^^xsd:string ;
     kpi:planType "mid-term plan (MTP)"^^xsd:string .
 
 persona:short-term-planner a org:Role ;
-    dcterms:source src:hamid-planner-measure-list-2026-10-18 ;
+    dcterms:source src:planner-measure-list-2026-10-18 ;
     skos:definition "Builds the short-term refinery LP plan and hands it to refinery planning, and checks month-to-date performance against it."@en ;
     skos:prefLabel "Short-Term Planner"@en ;
     kpi:planHorizon "M+1 to M+3"^^xsd:string ;
     kpi:planType "short-term refinery LP plan (XPIMS)"^^xsd:string .
 
-src:hamid-planner-measure-list-2026-10-18 a dcterms:BibliographicResource ;
+src:planner-measure-list-2026-10-18 a dcterms:BibliographicResource ;
     dcterms:alternative "VCO DSV"@en ;
-    dcterms:title "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as Hamid sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)"@en .
+    dcterms:title "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as the decision owner sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)"@en .
 
 kpi:Measures a skos:ConceptScheme ;
     rdfs:label "measures"@en ;

@@ -1,4 +1,0 @@
-<!-- Hamid's words, verbatim from the Claude Code session of 2026-10-19, relayed by the coordinating session to the process-map work. Context (Claude's words, kept in this comment so they do not enter the quote corpus): overnight, two checks Hamid had set on the MPC process-map proposals found gaps that the PRs proposed to him instead of filling: loss and gain on movements (MPC-P03, business_architecture/business_process/proposals/MPC-P03-transfer-coverage-gaps.md) and renewable feedstock traceability and carbon-intensity evidence (MPC-P04, MPC-P04-renewables-traceability.md). This is his answer to those two. "thiungs", "refrence", "publickly" and "informtion" are as he typed them. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
-
-On the thiungs you are waiting on me for:
-On two gaps the process-maps found. Address it using high quality refrence materials. Any publickly available informtion from Marathon superseded any other information

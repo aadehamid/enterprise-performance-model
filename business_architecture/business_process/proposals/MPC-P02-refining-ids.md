@@ -39,4 +39,4 @@ The script is not the regeneration path today: the committed identity map carrie
 
 ## Not in this proposal
 
-The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012). *2026-10-18:* Hamid accepted them as turnaround coordination (MPC-P02b, EPM-DEC-001-0047); they are `RF 1.2.1` to `RF 1.2.5`.
+The turnaround-lifecycle children that MPC-P02 also suggests wait for Step 7, with the turnaround-cost measure (EPM-DEC-001-0012). *2026-10-18:* The decision owner accepted them as turnaround coordination (MPC-P02b, EPM-DEC-001-0047); they are `RF 1.2.1` to `RF 1.2.5`.

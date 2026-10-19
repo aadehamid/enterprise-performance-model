@@ -30,7 +30,7 @@ corrected for stale entries. Verified against repository artifacts.
 The table in `step4/playbook/ontology-playbook.md` listed Step 4 as
 "Planned"; this PR sets the status cell to PROMOTED 2026-09-30. The
 description column still uses the older "Process-definition ontology" wording.
-Step 4 was PROMOTED 2026-09-30 — all 10 checklist boxes complete (Hamid:
+Step 4 was PROMOTED 2026-09-30 — all 10 checklist boxes complete (the decision owner:
 "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)).
 (Mapping sign-off completed 2026-09-29, 16/16 sections. Fresh no-consumer
 attestation checked 2026-09-29.)

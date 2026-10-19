@@ -1,6 +1,6 @@
 # LPG projection guideline (snapshot)
 
-These two files are a pinned copy of Hamid's guideline for projecting a W3C
+These two files are a pinned copy of the decision owner's guideline for projecting a W3C
 ontology into a Neo4j labelled property graph (LPG). The master copy is in
 the enterprise-people-graph repo. This folder is not edited here. To update
 it, change the master first, then copy the files again and record the new
@@ -13,7 +13,7 @@ commit below (EPM-DEC-001-0021).
 
 | Field | Value |
 |---|---|
-| Source | https://github.com/aadehamid/enterprise-people-graph/tree/main/guideline_to_map_ontology_to_LPG |
+| Source | the enterprise-people-graph repository (`guideline_to_map_ontology_to_LPG`) |
 | Pinned commit | `8ce9ada` (v2.2; earlier pins `e7b09e8`, v2.1, and `cd63e12`, v2) |
 | Guideline version | v2.2, October 2026 |
 | Copied | 2026-10-14 (v2.2; v2.1 copied 2026-10-06, v2 2026-10-05) |

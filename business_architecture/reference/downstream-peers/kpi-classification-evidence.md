@@ -2,7 +2,7 @@
 
 **Status:** Draft evidence · **Prepared:** 2026-10-18 · **Used for:** the `kpi` module's measure classification (EPM-DEC-001-0042)
 
-This file ranks below MPC's own material (`../mpc/mpc-performance-measures-evidence.md`) in the evidence order (AGENTS.md). Generic frameworks here (Parmenter, the KPI Institute, Kaplan and Norton, ISO 22400, SCOR, Gartner, APQC) are support only. The refining sources (EIA, Solomon, API, AFPM, Aspen, Haverly) are downstream-specific industry sources. Part A sets the classification rule. Part B answers two questions Hamid asked to have researched on 2026-10-18: what Crude Value to Breakeven is, and whether the Mid-Term Planner's turnaround work is optimization or tracking. Source IDs: KI- for Part A, VT- for Part B. Sources marked weak or secondary must not carry a claim alone. Where this research and EPM-DEC-001-0042 differ, the decision wins; each such place carries a note.
+This file ranks below MPC's own material (`../mpc/mpc-performance-measures-evidence.md`) in the evidence order (AGENTS.md). Generic frameworks here (Parmenter, the KPI Institute, Kaplan and Norton, ISO 22400, SCOR, Gartner, APQC) are support only. The refining sources (EIA, Solomon, API, AFPM, Aspen, Haverly) are downstream-specific industry sources. Part A sets the classification rule. Part B answers two questions the decision owner asked to have researched on 2026-10-18: what Crude Value to Breakeven is, and whether the Mid-Term Planner's turnaround work is optimization or tracking. Source IDs: KI- for Part A, VT- for Part B. Sources marked weak or secondary must not carry a claim alone. Where this research and EPM-DEC-001-0042 differ, the decision wins; each such place carries a note.
 
 ---
 
@@ -33,7 +33,7 @@ Parmenter sorts measures into two groups and four types [KI-01, KI-02].
 
 The seven characteristics [KI-02] are: non-financial; measured frequently ("24 by 7, daily, or weekly"); the CEO's attention; clear and concise ("All staff understand the measure and what corrective action is required"); tied to a team ("A team will accept responsibility and can take action"); significant impact on one or more critical success factors; and a limited dark side (unintended consequence). **Quote** [KI-02]: "A monthly, quarterly, or annual measure cannot be a KPI".
 
-**Inference:** under Parmenter, no price, crack spread or dollar margin can be a KPI, and a monthly refinery utilization figure is a KRI or RI. Most of the planner's list falls into his RI and PI types.
+**Inference:** under Parmenter, no price, crack spread or dollar margin can be a KPI, and a monthly refinery utilization figure is a KRI or RI. Most of the planner's list falls into Parmenter's RI and PI types.
 
 ### The KPI Institute
 

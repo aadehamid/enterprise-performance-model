@@ -33,7 +33,7 @@ CORE = Graph().parse(bm.CORE)
 KINDS = (OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty)
 PROPS = {p for k in KINDS for p in VOCAB.subjects(RDF.type, k)} | set(VOCAB.subjects(RDFS.domain, None))
 # sha256 (first 16 hex digits) of the lower-cased given and family names of the people in
-# Hamid's measure list, so this test can check for them without the repo holding them.
+# The decision owner's measure list, so this test can check for them without the repo holding them.
 NAME_HASHES = {"db42328112177c2d", "326b6af3d84957a1", "6bf3d7f77d878d88", "d095241715e0e35b",
                "4d9cb7a511c6f91c", "431964611ee7be5d", "e1608f75c5d7813f", "0488d02ebacb6b22",
                "c35d6aaf3b3885df"}
@@ -85,11 +85,11 @@ class Vocabulary(unittest.TestCase):
 
 class Build(unittest.TestCase):
     def test_the_planner_list_source_is_named_vco_dsv(self):
-        # Hamid named the list's source (answers-2026-10-19-vco-dsv.md); the source keeps its IRI.
+        # The decision owner named the list's source (answers-2026-10-19-vco-dsv.md); the source keeps its IRI.
         from rdflib.namespace import DCTERMS
         g = Graph().parse(os.path.join(HERE, "measures.ttl"))
         src = bm.SOURCES["planner list"]
-        self.assertEqual(str(src), "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18")
+        self.assertEqual(str(src), "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18")
         self.assertIn("Value Chain Optimization Decision Support and Visualization (VCO DSV)", str(g.value(src, DCTERMS.title)))
         self.assertEqual(g.value(src, DCTERMS.alternative), Literal("VCO DSV", lang="en"))
 

@@ -237,7 +237,7 @@ Verdict: OK — definition/scope supports the verb and target; evidence test app
 Definition: Manage refined-product demand on the supply side — maintaining the operational demand picture the supply chain runs on, forecasting location-level product demand for supply operations, and managing product-exchange volumes as a balancing lever — so supply operations, replenishment, and trading coordination work from one current, operational demand view.
 Scope: Covers the operational demand cycle: managing the current demand picture against supply capability (CM-1-2-6-2-1), operational location-level demand forecasting for the supply-chain context (CM-1-2-6-2-3, under the batch 03 constraint), and operational management of product-exchange volumes as a supply and demand balancing lever (CM-1-2-6-2-2). The enterprise published demand forecast is owned by Produce Demand Forecast (CM-1-1-1-1) and consumed here as an input; trading's forward-view intake is Receive Demand Forecast (CM-1-2-1-1-2); the refinery-planning demand basis is Capture Product Deman
 Tests: B:structural-nearness C:two-way-absent(back-verbs=uses-input)
-Verdict: OK on resolution — G1 enables; merge-vs-emit is a mapping decision for Hamid, resolution itself correct.
+Verdict: OK on resolution — G1 enables; merge-vs-emit is a mapping decision for the decision owner, resolution itself correct.
 
 ## REL-01165 [Commercial & Marketing] PROMOTE via A:explicit-reference
 **CM-1-3-9-3** --uses-input--> **CM-1-3-9-2** (Service & Support Delivery)
@@ -309,7 +309,7 @@ Definition: Establish which crude and feedstock volumes can realistically be sec
 Scope: Covers the supply-side volume basis of an optimization case: confirming contracted and term volumes, identifying credible additional spot availability, and stating arrival windows and any logistics or quality qualifications. Establishes what is available, not what is bought or where it is sent. Excludes securing supply and executing trades, owned by Supply And Trading (CM-1-2); excludes arrival and delivery scheduling, owned by Plan Feedstock Arrival (CM-1-2-5-3-3); excludes placing secured supply across refineries, owned by Allocate Crude and Feedstock (CM-1-1-2-10).
 In scope: Confirm contrac
 Tests: A:explicit-reference | B:structural-nearness C:two-way-absent(back-verbs=uses-input)
-Verdict: OK on resolution — G1 enables; merge proposal stands for Hamid.
+Verdict: OK on resolution — G1 enables; merge proposal stands for the decision owner.
 
 ## REL-00090 [Refining] PROMOTE via A:explicit-reference
 **CM-1-1-4-7-3** --informed-by--> **CM-1-2** (Supply And Trading)
@@ -346,7 +346,7 @@ Definition: Review and maintain the production wheel — the recurring sequence 
 Scope: Covers the periodic review of campaign sequence and duration: the transition structure (which product can follow which at what cost), wheel cycle time, run lengths per product against demand and storage, and wheel exceptions for demand shifts and outages. Excludes building the dated schedule itself, owned by Create Production Scheduling and Sequencing Plan (CM-1-1-7-2-3); excludes plan-period product mix decisions, owned by Refinery Planning and Optimization (CM-1-1-4); excludes executing transitions, owned by Refining.
 In scope: Maintain the campaign transition structure and costs | set wheel
 Tests: A:explicit-reference | B:structural-nearness C:two-way-absent(back-verbs=follows)
-Verdict: OK on resolution — G2 disguised sequence; no-separate-triple proposal stands for Hamid.
+Verdict: OK on resolution — G2 disguised sequence; no-separate-triple proposal stands for the decision owner.
 
 ## REL-00129 [Refining] PROMOTE via B:structural-nearness
 **CM-1-1-7-2-4** --enables--> **CM-1-1-7-2-5** (Measure Production Scheduling Performance)

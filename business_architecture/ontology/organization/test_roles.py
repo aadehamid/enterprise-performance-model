@@ -47,7 +47,7 @@ class RegisterReconciles(unittest.TestCase):
         self.assertEqual((f["processes with RACI"], f["RACI entries"], f["distinct source strings"], f["roles"],
                           f["positions"], f["teams"], f["compound strings"], f["role references after splitting"]),
                          (153, 913, 91, 60, 54, 6, 11, 940))
-        # EPM-DEC-001-0045: Hamid's three merges deprecate three roles; none is deleted.
+        # EPM-DEC-001-0045: The decision owner's three merges deprecate three roles; none is deleted.
         self.assertEqual((f["deprecated roles"], f["live roles"]), (3, 57))
 
     def test_roles_ttl_is_current(self):
@@ -168,7 +168,7 @@ class RolesConform(unittest.TestCase):
         self.assertEqual({s for s, _ in values}, {br.ROLE[r["slug"]] for r in rows(br.ROLES) if r["replaced_by"]})
 
     def test_the_answers_point_the_right_way(self):
-        # Hamid's answers 1, 3 and 4 (EPM-DEC-001-0045): which role survives each merge.
+        # The decision owner's answers 1, 3 and 4 (EPM-DEC-001-0045): which role survives each merge.
         replaced = {r["slug"]: r["replaced_by"] for r in rows(br.ROLES) if r["replaced_by"]}
         self.assertEqual(replaced, {
             "rcvo-advisor": "rvco-advisor",

@@ -3,7 +3,7 @@
 **What this is.** A method for building a business ontology from scratch, step
 by step, with the rules that keep it trustworthy and the reasons for each
 rule. Anyone can follow it for their own domain.
-**Owner:** Hamid. **Built with:** Kailey and Claude Code.
+**Owner:** The decision owner. **Built with:** Kailey and Claude Code.
 **Started:** 2026-09-17. **Rewritten as a company-neutral method:** 2026-10-05.
 
 ## About this document
@@ -1459,7 +1459,7 @@ cut directly on the owner's approval of each cut:
 | `ref-mpc` 1.0.0 | MPC and MPLX reference instances; requires `organization` 1.0.0 | `release/build_module.py` |
 | `core` 2.0.0 | The business domain list, planned inputs and outputs, two ranges; `core:responsibleDomain` deprecated, its values kept | `release/build_core_next.py`, from the released 1.0.0 |
 | `core` 2.1.0 | One evidence node per canonical fact, the controlled-value and evidence-link shapes, a rights statement | `release/build_core_2_1.py`, from the released 2.0.0 |
-| `organization` 2.0.0 | Hamid's role answers: three roles deprecated into their successors, their assignments moved; requires `core` 2.1.0 | `release/build_module.py` |
+| `organization` 2.0.0 | The decision owner's role answers: three roles deprecated into their successors, their assignments moved; requires `core` 2.1.0 | `release/build_module.py` |
 | `ref-mpc` 1.1.0 | The same reference instances; requires `organization` 2.0.0 | `release/build_module.py` |
 | `kpi` 1.0.0 | 41 measure definitions classified by kind, the planning personas and the processes each measure informs; requires `core` 2.1.0 | `release/build_module.py` |
 | `kpi` 1.0.1 | A patch: the measure list's source is named, Value Chain Optimization Decision Support and Visualization (VCO DSV) | `release/build_module.py` |
@@ -1704,7 +1704,7 @@ example's header looks like this:
     owl:versionIRI <https://w3id.org/lsc/ontology/modules/core/1.0.0> ;
     owl:versionInfo "1.0.0" ;
     dcterms:issued "2026-09-22"^^xsd:date ;
-    dcterms:creator "Hamid" ;
+    dcterms:creator "The decision owner" ;
     dcterms:license <https://w3id.org/lsc/ontology/modules/core/license> .
 ```
 

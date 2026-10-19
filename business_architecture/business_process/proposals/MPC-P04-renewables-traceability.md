@@ -2,11 +2,11 @@
 
 | Field | Value |
 |---|---|
-| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. The one gap, feedstock traceability and carbon-intensity evidence, was answered by Hamid on 2026-10-19 and is filled by CM 1.2.5.1.5 (EPM-DEC-001-0048) |
-| Ruling | Hamid: "P04: A with reuse before new process creation" (`step4/review-evidence/hamid-answers/answers-2026-10-18.md`); production stays parked |
+| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. The one gap, feedstock traceability and carbon-intensity evidence, was answered by the decision owner on 2026-10-19 and is filled by CM 1.2.5.1.5 (EPM-DEC-001-0048) |
+| Ruling | The decision owner: "P04: A with reuse before new process creation" (`step4/review-evidence/decision-owner-answers/answers-2026-10-18.md`); production stays parked |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P04 |
 
-MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 joint venture at Martinez, and feedstock aggregation and pre-treatment sites (`reference/mpc/mpc-fy2025-10k-fact-sheet.md` §7). This fit-gap applies Hamid's condition. It asks three questions: do the existing sourcing and marketing processes cover renewables by specialization, which controls are different, and which interfaces credit eligibility needs.
+MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 joint venture at Martinez, and feedstock aggregation and pre-treatment sites (`reference/mpc/mpc-fy2025-10k-fact-sheet.md` §7). This fit-gap applies the decision owner's condition. It asks three questions: do the existing sourcing and marketing processes cover renewables by specialization, which controls are different, and which interfaces credit eligibility needs.
 
 ## Sourcing
 
@@ -32,9 +32,9 @@ No marketing step is needed: every marketing need fits an existing process.
 
 Renewable fuel production (pre-treatment, hydrotreating, the plant and joint-venture operations) stays parked. The map holds no plant operations for petroleum refining either.
 
-## What Hamid decided
+## What the decision owner decided
 
-*2026-10-19:* Hamid said to address the gap from high-quality references, MPC's public information first (EPM-DEC-001-0048). Under the delegation, Claude applied option A: CM 1.2.5.1.5. The options below are kept as the record of what was proposed.
+*2026-10-19:* The decision owner said to address the gap from high-quality references, MPC's public information first (EPM-DEC-001-0048). Under the delegation, Claude applied option A: CM 1.2.5.1.5. The options below are kept as the record of what was proposed.
 
 The gap, before 2026-10-19: no step kept the evidence for each renewable feedstock lot that its credits depend on. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (RC-03), and LCFS credits depend on a fuel's carbon intensity (RC-02).
 
@@ -42,4 +42,4 @@ The gap, before 2026-10-19: no step kept the evidence for each renewable feedsto
 2. (B) Widen CM 1.2.5.1's description to cover the evidence, with no new step.
 3. (C) Leave the gap open.
 
-A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). (Until Hamid ruled, nothing was added: EPM-DEC-001-0047, What follows, item 4.)
+A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). (Until the decision owner ruled, nothing was added: EPM-DEC-001-0047, What follows, item 4.)

@@ -19,11 +19,11 @@ Keep EPM's own terms and link them to these sources with SKOS mapping properties
 
 Import one or more of them; ignore them.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-"can you do a external search to see if there are publickly available business architecture/process ontology for Downstream oil and gas that we can adapt in our ontology here." Q34: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned." Later: "make sure to update the playbook with how we use this publickly aavailable ontology."
+"can you do a external search to see if there are publickly available business architecture/process ontology for Downstream oil and gas that we can adapt in our ontology here." Q34: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned." Later: "make sure to update the playbook with how we use this publickly aavailable ontology."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Evidence
 

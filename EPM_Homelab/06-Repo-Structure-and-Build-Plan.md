@@ -3,7 +3,7 @@
 **Title:** Downstream O&G Knowledge Homelab — Repository Structure and Build Plan  
 **Purpose:** Provide a practical, reproducible implementation plan for the personal Downstream O&G Knowledge Homelab, from local prerequisites through the capstone vertical slice.  
 **Status:** Draft (personal homelab, not an EPM governed artifact)  
-**Owner:** Hamid Adesokan  
+**Owner:** The decision owner  
 **Last updated:** 2026-08-10  
 
 ## Prerequisites

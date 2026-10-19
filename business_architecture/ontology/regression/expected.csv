@@ -15,16 +15,16 @@ question,status,queries,waits_for
 14,answerable,q14a-may-become-a-number.rq;q14b-processes-are-not-measures.rq,
 15,waits:step-7,,"same word, same meaning test (Step 7 bindings)"
 16,answerable,q16-names.rq,
-17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, Hamid's answer 7 a)"
+17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, the decision owner's answer 7 a)"
 18,answerable,q18-identity-version.rq,
-19,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-20,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-21,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-22,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-23,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-24,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-25,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-26,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
+19,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+20,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+21,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+22,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+23,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+24,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+25,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
+26,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
 27,answerable,q27-measure-definitions.rq,
 28,waits:step-7,,"population in and out of a measure (kpi module holds definition and basis, not population rules)"
 29,answerable,q29-grain.rq,

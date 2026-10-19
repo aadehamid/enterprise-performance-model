@@ -19,11 +19,11 @@ Rule on MPC-P02 now, because its missing IDs block stable IRIs for the `core` 1.
 
 Rule on P01 to P03 now (the first answer to Q10, made before the backlog check); defer all nine; move P01 and P03 to Step 5.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Q10: Round 1: "Agree with the rest." Q14: "I am alligned." Q18: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned."
+Q10: Round 1: "Agree with the rest." Q14: "I am alligned." Q18: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Evidence
 

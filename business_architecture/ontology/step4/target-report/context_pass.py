@@ -17,7 +17,7 @@ Tests (strongest first):
                          the target to be neither a strict ancestor nor a
                          strict descendant of the source (no hierarchy
                          masquerading as a relationship).
-                         EXCEPTION (Hamid 2026-09-24): B never promotes
+                         EXCEPTION (the decision owner 2026-09-24): B never promotes
                          governed-by. Governance is a claim about authority and
                          the hierarchy says nothing about authority, so
                          closeness alone — at any level — is not evidence for
@@ -142,24 +142,24 @@ def run_pass():
             tests.append(f"C:two-way-absent(back-verbs={'/'.join(back)})")
         if structural_nearness(src, r["verb"], tgt):
             tests.append("B:structural-nearness")
-        if r["row_id"] in HAMID_APPROVED_GOVERNED_BY:
-            tests.append("D:hamid-verdict(2026-09-25)")
+        if r["row_id"] in OWNER_APPROVED_GOVERNED_BY:
+            tests.append("D:owner-verdict(2026-09-25)")
         results.append((r, tgt, tests))
     return results
 
 def _real(r, tests):
     """Tests that count toward promotion. B never counts for governed-by
-    (Hamid 2026-09-24), nor for its mirror governs (EPM-DEC-001-0027)."""
+    (the decision owner 2026-09-24), nor for its mirror governs (EPM-DEC-001-0027)."""
     real = [t for t in tests if not t.startswith("C:two-way-absent")]
     if r["verb"] in ("governed-by", "governs"):
         real = [t for t in real if t != "B:structural-nearness"]
     return real
 
-# Hamid's explicit governed-by verdicts, 2026-09-25: these 13 rows are approved
+# The decision owner's explicit governed-by verdicts, 2026-09-25: these 13 rows are approved
 # for emission as core:governedBy on definition/policy/authority evidence (not
-# B). His recorded verdict is the evidence basis; the B-exclusion rule still
+# B). Their recorded verdict is the evidence basis; the B-exclusion rule still
 # applies to every other governed-by row.
-HAMID_APPROVED_GOVERNED_BY = {
+OWNER_APPROVED_GOVERNED_BY = {
     "REL-00050", "REL-00067", "REL-00190", "REL-00394", "REL-00399",
     "REL-00406", "REL-00858", "REL-00907", "REL-00937", "REL-01005",
     "REL-01228", "REL-01256", "REL-01313",

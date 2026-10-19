@@ -17,13 +17,13 @@ Step 5 models the classes and relations (role, organization, site, the RACI assi
 
 ## Alternatives considered
 
-Classes only, with MPC as evidence and not as instances (the Round 3 recommendation, which Hamid changed); MPC instances inside the core modules.
+Classes only, with MPC as evidence and not as instances (the Round 3 recommendation, which the decision owner changed); MPC instances inside the core modules.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Q19: "This is a tricky one. I do want this kind of data. [...] So having the MPC, refrienery is fine where appropriate. MPLX should alos be modeled in way that is reasonable accoring to [ublicly avialble information." Q27, Q28: Not commented on; agreed per Hamid's rule "If i dont comment on a question, it means I am aligned."
+Q19: "This is a tricky one. I do want this kind of data. [...] So having the MPC, refrienery is fine where appropriate. MPLX should alos be modeled in way that is reasonable accoring to [ublicly avialble information." Q27, Q28: Not commented on; agreed per the decision owner's rule "If i dont comment on a question, it means I am aligned."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Evidence
 

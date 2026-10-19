@@ -5,8 +5,8 @@
   "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
   "version_iri": "https://w3id.org/lsc/ontology/modules/core/2.1.0",
   "built_from": {
-    "core 2.0.0 manifest": "253f404bd753b00622d9d24430e349c73aa410ffb6385545e71e556d79a72643",
-    "canonical-fact mapping (core 1.0.0)": "fd2a0d7d7a71d5b061235d6ec7457135bae86a93f299df8c4af80634597ccc56",
+    "core 2.0.0 manifest": "7e4f19d8818834d9fcee1437a7e63695f72efe1e129b81a6fff423b4f8d497c1",
+    "canonical-fact mapping (core 1.0.0)": "6c8a68e3c23ab8cd6e45b624fe0352f0e643a27ad1a5a4b0d850acba8cf87a7a",
     "controlled-value shapes": "ffd564d419c2ef6bf940832d70ce48ecb5811f74daa263ee8429ba5bf389b084"
   },
   "decisions": [
@@ -15,16 +15,16 @@
     "EPM-DEC-001-0044"
   ],
   "approval": {
-    "file": "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md",
+    "file": "step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md",
     "words": "Yes, cut 2.1.0 (Recommended)"
   },
   "files": {
-    "CHANGELOG.md": "f949891e0b31f5cfa37e4ae29ddaaf21107deb23d890dda6b19d9da53635bb12",
-    "canonical-facts.csv": "fd2a0d7d7a71d5b061235d6ec7457135bae86a93f299df8c4af80634597ccc56",
+    "CHANGELOG.md": "cd5a5a5c52d5b68ddd439c6e989cecacd3ffc7d131f375ee0548d3b998ca8ccb",
+    "canonical-facts.csv": "6c8a68e3c23ab8cd6e45b624fe0352f0e643a27ad1a5a4b0d850acba8cf87a7a",
     "catalog.ttl": "dc350052457073484490b1e1b885b2f341233a9b55b633f7112b2badfca79f87",
-    "core.jsonld": "482d2387945c1dbd65531484777971b38ae92e3950520e75ca0c33c51548e02a",
-    "core.ttl": "557ae2a44c5bc95551ae6d71cada97c3f654359674a82e4e513ba707e960805d",
+    "core.jsonld": "464dc6593872d11d76bb9685963dd79dd529d6bc941b1eff5bebef63c164983d",
+    "core.ttl": "c0d92c556be2c37fd3be2214d204cbb418b12bb7b0ec19b513b3e3ba8c02d941",
     "counts.json": "295898c71706fc54d664398365cb23b1504d45b147dd984a1b5a32251cd1ba31",
-    "shapes.ttl": "754f32c91095dc9facf80fd38b7fdc33ec38e0a88dfffdd2bd2aa5b694678271"
+    "shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680"
   }
 }

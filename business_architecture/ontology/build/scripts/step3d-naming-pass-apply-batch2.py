@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 3d naming pass - scope-ambiguity Batch 2 (D, 11 renames).
 
-Approved by Hamid 2026-09-21 on independent reviewer recommendation
+Approved by the decision owner 2026-09-21 on independent reviewer recommendation
 (approve as proposed, with the KYC scope-boundary condition verified
 against the workbook before execution).
 
@@ -217,7 +217,7 @@ def main() -> int:
         e["scoped_historical_alias"] = None
         e["name_change_note"] = (
             "Step 3d naming pass \u2014 scope-ambiguity Batch 2 (D, 2026-09-21): "
-            f"renamed '{OLD[slug]}' -> '{new_name}' (Hamid approval 2026-09-21, "
+            f"renamed '{OLD[slug]}' -> '{new_name}' (the decision owner's approval 2026-09-21, "
             "independent reviewer recommendation). Prior label retained as "
             "skos:altLabel; no identifier, hierarchy, or definition change."
         )
@@ -248,8 +248,8 @@ def main() -> int:
     text = text.replace(old_hdr, new_hdr)
     old_status = ("The remaining 78 queue entries are still queued for the consolidated naming pass.")
     new_status = ("10 scope-ambiguity entries executed 2026-09-21 (Step 3d naming pass Batch 1 A+B+C, "
-                  "Hamid approval 2026-09-21) and 11 scope-ambiguity entries executed 2026-09-21 "
-                  "(Step 3d naming pass Batch 2 D, Hamid approval 2026-09-21). The remaining 57 "
+                  "The decision owner's approval 2026-09-21) and 11 scope-ambiguity entries executed 2026-09-21 "
+                  "(Step 3d naming pass Batch 2 D, the decision owner's approval 2026-09-21). The remaining 57 "
                   "queue entries are still queued for the consolidated naming pass.")
     assert old_status in text, "queue execution-status line not in expected form"
     text = text.replace(old_status, new_status)

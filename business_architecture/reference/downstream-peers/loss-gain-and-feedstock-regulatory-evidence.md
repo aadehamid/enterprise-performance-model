@@ -2,7 +2,7 @@
 
 **Status:** Evidence for EPM-DEC-001-0048 · **Retrieved:** 2026-10-19
 
-This file ranks below MPC's own statements (`../mpc/loss-gain-and-feedstock-evidence.md`), which Hamid ruled take precedence. The regulators' rules set what the feedstock traceability step must keep. The industry standards are support only.
+This file ranks below MPC's own statements (`../mpc/loss-gain-and-feedstock-evidence.md`), which the decision owner ruled take precedence. The regulators' rules set what the feedstock traceability step must keep. The industry standards are support only.
 
 ## Regulators
 

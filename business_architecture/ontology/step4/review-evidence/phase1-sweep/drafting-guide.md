@@ -1,17 +1,17 @@
 # Phase 1 sweep: drafting guide
 
-This guide is for the agents drafting answers to the held Phase 1 rows, and for the agents reviewing those drafts. Hamid delegated the drafting ("research … then take the best of both worlds to inform how you will handle the ontology", session of 2026-10-12; proposal on #207). He approves the finished register before anything is built. An answer drafted here is a **proposal**, never a decision.
+This guide is for the agents drafting answers to the held Phase 1 rows, and for the agents reviewing those drafts. The decision owner delegated the drafting ("research … then take the best of both worlds to inform how you will handle the ontology", session of 2026-10-12; proposal on #207). They approve the finished register before anything is built. An answer drafted here is a **proposal**, never a decision.
 
 ## Inputs, all in this folder
 
 - `rows-<issue>.jsonl`: one row per line. Each has the verb, source, candidate target(s), disposition, hold set, backlog note, and the source's and every target's label, definition, scope note and parent.
 - `research-mpc.md`: MPC's public evidence, with citations.
 - `research-industry.md`: peers and industry practice, with citations, written by Codex.
-- **The authoritative rules**, in the repo at `/Users/hamidadesokan/Dropbox/1_PROJECTS/Enterprise Performance Model`, read-only:
+- **The authoritative rules**, in the repo at `~/Dropbox/1_PROJECTS/Enterprise Performance Model`, read-only:
   - `business_architecture/ontology/step4/verb-predicate-mapping-v2.md`: predicate meanings, canonical directions, the triggers rule (the "Triggers" section), the no-two-cycle rule, and the G1/G2/G3 enables groups.
   - `business_architecture/ontology/step4/evidence-discipline.md`: the evidence rules, affirmative citation, and the nearness-only identity rule.
   - `business_architecture/ontology/step4/source-workbook-backlog.md`: each issue's section explains why its rows are held.
-  - Hamid's own answers, as precedent for tone and evidence basis: `step4/review-evidence/hamid-answers/204-batch1.md`, `205-batch1.md`, `205-batch2.md`.
+  - The decision owner's own answers, as precedent for tone and evidence basis: `step4/review-evidence/decision-owner-answers/204-batch1.md`, `205-batch1.md`, `205-batch2.md`.
 
 ## Rules every answer follows
 
@@ -32,7 +32,7 @@ This guide is for the agents drafting answers to the held Phase 1 rows, and for 
 
    "Feeds", "supports" and "is associated with" are not enablement. A statement of where work happens is not a citation.
 3. **No hierarchy restatements.** A child relating to its own parent or ancestor only restates the taxonomy. Answer "no relationship" unless the child produces something specific the parent uses beyond being part of it, and then say what.
-4. **Every emitting answer needs a scope-note sentence.** It goes in the **source** process's scope note, names both processes with their slugs, for example "Monitor Risk (CM-1-2-2-3-8)", and states the relationship in plain words. If the relationship holds only under a condition, the sentence states the condition, as Hamid's #204 answers did.
+4. **Every emitting answer needs a scope-note sentence.** It goes in the **source** process's scope note, names both processes with their slugs, for example "Monitor Risk (CM-1-2-2-3-8)", and states the relationship in plain words. If the relationship holds only under a condition, the sentence states the condition, as the decision owner's #204 answers did.
 5. **Evidence basis on every row.**
    - **mpc-sourced:** the research brief cites MPC for the relationship itself, which is rare.
    - **reference-model:** MPC evidence supports only the context, and the handoff follows industry practice. Most rows will be this.
@@ -43,9 +43,9 @@ This guide is for the agents drafting answers to the held Phase 1 rows, and for 
    - the evidence doesn't decide between two answers;
    - the answer would change the model's structure, such as a new process, a moved boundary or an ownership change;
    - the row's target data is missing or garbled;
-   - or the right answer contradicts one of Hamid's recorded positions.
+   - or the right answer contradicts one of the decision owner's recorded positions.
 
-   Flagged rows go to Hamid; they are not decided here.
+   Flagged rows go to the decision owner; they are not decided here.
 
 ## Output: one JSON object per row, in `answers-<issue>.jsonl`
 

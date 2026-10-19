@@ -1,12 +1,12 @@
 # Constrained-by Evidence Profile
 
 **Date:** 2026-09-28
-**Basis:** Hamid 2026-09-26 review verdicts; dispositions from `target-dispositions-v2.csv` (verbatim).
+**Basis:** The decision owner 2026-09-26 review verdicts; dispositions from `target-dispositions-v2.csv` (verbatim).
 **Scope:** Evidence only. No bucket moves. No verdict changes. No new match-type rows.
 
 ## Identity basis
 
-Per Hamid 2026-09-28: `match_type` stays blank for all 11 rows (none are in `identity-scope-match-types.csv`; no default). Disposition and confidence are copied verbatim from `target-dispositions-v2.csv` — they are recorded here, not written into `match_type`.
+Per the decision owner 2026-09-28: `match_type` stays blank for all 11 rows (none are in `identity-scope-match-types.csv`; no default). Disposition and confidence are copied verbatim from `target-dispositions-v2.csv` — they are recorded here, not written into `match_type`.
 
 `existing_verdict` below is the 2026-09-26 review, not `emission_decision`.
 
@@ -34,4 +34,4 @@ Per Hamid 2026-09-28: `match_type` stays blank for all 11 rows (none are in `ide
 
 ## Assures
 
-No new assures artifact per Hamid 2026-09-28. Merged PR #164 is the governing note: five approvals are nearness-only, #155 verdicts stay 5 APPROVE / 3 HOLD, no re-review, no bucket move, no Rule 6 gate. `shared-l3` and `sibling` stay out of the evidence profile.
+No new assures artifact per the decision owner 2026-09-28. Merged PR #164 is the governing note: five approvals are nearness-only, #155 verdicts stay 5 APPROVE / 3 HOLD, no re-review, no bucket move, no Rule 6 gate. `shared-l3` and `sibling` stay out of the evidence profile.

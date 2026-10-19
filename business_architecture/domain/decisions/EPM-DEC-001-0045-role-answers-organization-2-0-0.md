@@ -1,19 +1,19 @@
-# EPM-DEC-001-0045: Hamid's role answers, carried by organization 2.0.0
+# EPM-DEC-001-0045: The decision owner's role answers, carried by organization 2.0.0
 
 | Field | Value |
 |---|---|
-| Status | Decided (Hamid, 2026-10-18 and 2026-10-19: the seven role answers, organization 2.0.0 and ref-mpc 1.1.0; the build choices delegated under EPM-DEC-001-0028) |
+| Status | Decided (the decision owner, 2026-10-18 and 2026-10-19: the seven role answers, organization 2.0.0 and ref-mpc 1.1.0; the build choices delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-18 |
 | Questions | The seven questions of `decision-packages/2026-10-14/role-questions.md`, left open by EPM-DEC-001-0031 |
 | Source | Claude Code session, 2026-10-18 |
 
 ## Context
 
-EPM-DEC-001-0031 merged role strings on spelling only and left seven questions for Hamid. Organization 1.0.0 was released with those roles on 2026-10-13. A merge cannot delete a released role: the playbook deprecates it and points it at its successor, in a major release only (`ontology-playbook.md`, Appendix B, "Deprecation (never delete)").
+EPM-DEC-001-0031 merged role strings on spelling only and left seven questions for the decision owner. Organization 1.0.0 was released with those roles on 2026-10-13. A merge cannot delete a released role: the playbook deprecates it and points it at its successor, in a major release only (`ontology-playbook.md`, Appendix B, "Deprecation (never delete)").
 
 ## Decision
 
-**Hamid's decisions:**
+**The decision owner's decisions:**
 1. RCVO Advisor and RVCO Advisor are one role; "RCVO" is a misspelling.
 2. Forecaster stays apart from Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same.
 3. Refinery Technical Service Representative is the Refinery Technical Representative.
@@ -28,7 +28,7 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 2. **Assignments keep their IRIs.** The three assignments that named a deprecated role now name its successor. Each keeps its IRI, which names the role the source string was registered to, and its source text. 940 assignments, as before; the ledger adds a row for the 3 moved. A SHACL shape rejects an assignment that names a deprecated role. The `owl:deprecated` shape checks a boolean datatype; `test_roles.py` checks every value is true. (`sh:in ( true )` was tried first; in the projection run of 2026-10-19 the in-graph n10s validation reported each deprecated role's `true` as not in the list, while pyshacl accepted it. That is what this repo observed, not a documented n10s behaviour.)
 3. **Labels.** `roles.csv` keeps the source spelling in `label`, which the surface rules of EPM-DEC-001-0031 check. An expanded `preferred_label` becomes the `skos:prefLabel`, and the source spelling an `skos:altLabel`. Ten roles take an expanded name: nine from question 6 and Crude RFC from question 5. CP is expanded only in CP Manager, and E&P only in the refinery-planning roles. VP RVCO stays its own role, as the package proposed: it is Accountable where the long VP is Informed.
 4. **Evidence.** Each answered role carries an editorial note with its evidence and its status: inferred from the process map (CP), or externally corroborated by MPC material. The corroborating sources are an MPC newsroom article for CPVC (2023-04-20) and for GFVC (2021-06-02), both read through a search index because the site blocks automated reads, and MPC job postings on third-party hosts for RVCO, CCI, E&P and BP&A, each read on 2026-10-18. A job posting on a third-party host is weaker evidence than a filing. A 2021 source supports the term, not today's structure.
-5. **Definitions.** Four roles take a working definition, written by Claude: Refinery Value Chain Optimization Advisor, Refinery Technical Representative and Crude Refinery Feedstock Coordinator carry EPM working definitions, not MPC position descriptions. Business Planning and Analysis carries a definition adapted from an MPC job posting, which its note quotes. Hamid's answers chose which roles expand; they do not word the definitions.
+5. **Definitions.** Four roles take a working definition, written by Claude: Refinery Value Chain Optimization Advisor, Refinery Technical Representative and Crude Refinery Feedstock Coordinator carry EPM working definitions, not MPC position descriptions. Business Planning and Analysis carries a definition adapted from an MPC job posting, which its note quotes. The decision owner's answers chose which roles expand; they do not word the definitions.
 6. **Not merged on an expansion.** E&P Supervisor and Refinery Econ & Planning Supervisor stay apart; CP Manager and the Global Feedstocks Manager stay apart.
 7. **Competency question 17** stays waiting, now on this record. The proposed design, not built: a qualified governance assignment that names a concept or scheme, a role, a responsibility (semantic owner, business data steward, technical data custodian or process owner), a scope, dates, evidence and an approval status.
 8. **Release.** Organization 2.0.0 (issued 2026-10-18) requires `core` 2.1.0. The branch first required 2.0.0; core 2.1.0 was released while it was open (EPM-DEC-001-0044). 2.1.0 is a minor release: it adds evidence nodes and shapes and keeps every process concept the assignments point at, so the assignments mean the same on it. A new release requires the current release of what it depends on, and organization 2.0.0 was not yet released, so changing its requirement changes no published package. `ref-mpc` 1.1.0 (issued 2026-10-19) requires organization 2.0.0. It is a minor release: only its requirement changes, and every query on 1.0.0 gives the same answer on 1.1.0, because ref-mpc uses only the control relationship, which organization 2.0.0 keeps unchanged. The 1.0.0 packages of both modules stay on disk as released. `build_module.py` gives organization 2.0.0 5,987 triples and ref-mpc 1.1.0 140. The projection, rerun on core 2.1.0 with organization 2.0.0, loads 2,811 nodes and 14,865 relationships: three more relationships than on organization 1.0.0, the `dcterms:isReplacedBy` links. It has no SHACL violation in the graph, an empty round-trip diff and equal hashes for two load orders.
@@ -36,13 +36,13 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 ## Alternatives considered
 
 - **Delete the merged roles.** Not chosen: the playbook forbids it; a deleted IRI orphans every reference.
-- **Leave `ref-mpc` on organization 1.0.0.** Considered first; not chosen once Hamid approved a `ref-mpc` release, because a consumer loading the current releases would otherwise mix two organization versions.
+- **Leave `ref-mpc` on organization 1.0.0.** Considered first; not chosen once the decision owner approved a `ref-mpc` release, because a consumer loading the current releases would otherwise mix two organization versions.
 - **Mint new assignment IRIs for the moved assignments.** Not chosen: it would remove three released IRIs.
 - **Put the expanded name in `label`.** Not chosen: the surface rules check `label` against the source spelling.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "1 yes. Merge RCVO Advisor into RVCO Advisor as a source-label correction.", "2 no for now. Retain Forecaster separately until the refinery Economics and Planning process owner confirms that it denotes the Local Refinery Forecaster.", "3 yes. Merge the technical-service representative into Refinery Technical Representative and retain both source labels.", "For queston 4 choose the string with "RVCO" in the list", "5 b. Retain Crude RFC as a distinct crude-specific role.", "Q6: RO = Regional Optimization", "Keep PSM unresolved.", "7 a. Address concept-meaning ownership through a separate governance decision and explicit assignments, independent of process RACI." Saved in `answers-2026-10-18-night.md`: "Yes, approve 2.0.0 (Recommended)". Saved in `answers-2026-10-19-ref-mpc.md`: "Approve the ref-mpc release too if needed"; and in `answers-2026-10-19-releases.md`: "You have my approval to keep going and release things as needed. while I am out". Items 1 to 8 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
+Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-18.md`: "1 yes. Merge RCVO Advisor into RVCO Advisor as a source-label correction.", "2 no for now. Retain Forecaster separately until the refinery Economics and Planning process owner confirms that it denotes the Local Refinery Forecaster.", "3 yes. Merge the technical-service representative into Refinery Technical Representative and retain both source labels.", "For queston 4 choose the string with "RVCO" in the list", "5 b. Retain Crude RFC as a distinct crude-specific role.", "Q6: RO = Regional Optimization", "Keep PSM unresolved.", "7 a. Address concept-meaning ownership through a separate governance decision and explicit assignments, independent of process RACI." Saved in `answers-2026-10-18-night.md`: "Yes, approve 2.0.0 (Recommended)". Saved in `answers-2026-10-19-ref-mpc.md`: "Approve the ref-mpc release too if needed"; and in `answers-2026-10-19-releases.md`: "You have my approval to keep going and release things as needed. while I am out". Items 1 to 8 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and the decision owner can reverse them.
 
 ## Evidence
 

@@ -1,6 +1,6 @@
 # Step 4 Release Checklist — v1.0 PROMOTED
 
-**Status:** PROMOTED 2026-09-30 — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190). All 10 checklist boxes complete.
+**Status:** PROMOTED 2026-09-30 — the decision owner: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190). All 10 checklist boxes complete.
 **Date:** 2026-09-27 (status); re-pin 2026-09-29
 
 ## Current state (as of the commit containing this file; promotion was approved at 6a155bc2)
@@ -40,7 +40,7 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - At #124: `7b21bd2402721cfa1eef4103b8d460a92e996268a1c6495bfed4ea12ac2d3a58`
 - At promotion (`6a155bc2`) and unchanged through #205: `fc5d2db759358638557198dea43a13027236ae80c0aa8a569b8f8492651539d0` (457 facts)
 - After #204 batch 1 (468 facts, 11 `core:triggeredBy` added): `8726f8057b048f21dc19152a65c145465d27360fa46cd64d17fc4bf49091ec13`
-- `no-consumer-attestation.md` re-attested 2026-09-29 (Hamid) against pin `6a155bc23ba3971ce430b774b4ddd6f4a933e380` — supersedes the stale #124 attestation.
+- `no-consumer-attestation.md` re-attested 2026-09-29 (the decision owner) against pin `6a155bc23ba3971ce430b774b4ddd6f4a933e380` — supersedes the stale #124 attestation.
 
 ## Promotion Preconditions
 
@@ -55,16 +55,16 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - [x] Regression tests pass (`test_context_pass.py` 17/17; evidence-gate GREEN post re-pin)
 - [x] Blast-radius proof against real artifacts (re-pin proven content-neutral: 7 CSVs differ only in `baseline_sha`, 2,898 rows, no verdict-column change)
 
-### Pending — Hamid
+### Pending — the decision owner
 - [x] Fresh no-consumer attestation (dated after re-pin) — attested 2026-09-29
-- [x] Mapping document sign-off (section by section) — all 16 sections approved by Hamid 2026-09-29:
+- [x] Mapping document sign-off (section by section) — all 16 sections approved by the decision owner 2026-09-29:
   1. The 5 mapping answers, 2. Canonical direction table, 3. Mention → canonical fact → mirror accounting,
   4. Per-verb proposed predicate counts, 5. Contradictions, 6. Review instruments, 7. How to review,
   8. Basis change versus bucket change, 9. `core:assuredBy` scope boundary, 10. No-two-cycle rule,
   11. Unique-candidate triage-signal rule, 12. Hierarchy non-duplication rule, 13. Enablement definition,
   14. Duplicate-evidence merge, 15. Recommendation versus enablement, 16. G1b no-verb-change rule.
   (5 verb sections previously reviewed; Section 1 accounting approved 2026-09-29.)
-- [x] Explicit promotion approval — Hamid: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)
+- [x] Explicit promotion approval — the decision owner: "I approved the promotion" (2026-09-30 03:26 UTC, recorded on PR #190)
 
 ## core 1.0.0 release (EPM-DEC-001-0013; built as EPM-DEC-001-0029 decides)
 
@@ -73,10 +73,10 @@ Current figures: `python3 scripts/epm_facts.py counts`; every bucket conserves t
 - [x] Zero `intake:` and full conservation: `conservation.csv` reconciles 5,571 source = 5,571 migrated; the build stops on any leftover `intake:` triple or blank node.
 - [x] SHACL release slice conforms (`release/shapes.ttl`; EPM-DEC-001-0014).
 - [x] LPG rules 1, 2, 3 and 5 (EPM-DEC-001-0020): one kind and one range per property (tested), a stated cardinality on every core property (shapes; tested), no blank nodes, fixed prefixes.
-- [x] **Conservation ledger approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
+- [x] **Conservation ledger approval: The decision owner.** Given 2026-10-13 (`review-evidence/decision-owner-answers/core-1-0-0-release.md`). The before/after run reconciles (`conservation.csv`); `ledger-v2.md` is ready for approval.
 - [x] MPC-P02 process-map ID proposal raised (EPM-DEC-001-0011, 0012) and merged in #245. The three Refining nodes ship their minted IRIs, which stay stable when the IDs land (Step 2 pins them).
-- [x] **Fresh no-consumer attestation: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
-- [x] **Release approval: Hamid.** Given 2026-10-13 (`review-evidence/hamid-answers/core-1-0-0-release.md`). A major release needs Hamid's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... Hamid. No exceptions").
+- [x] **Fresh no-consumer attestation: The decision owner.** Given 2026-10-13 (`review-evidence/decision-owner-answers/core-1-0-0-release.md`). It states a fact about consumers, so it is not delegated. Repo-side evidence: outside the ontology build, `intake:` appears only in `scripts/epm_facts.py` (a counting tool) and in decision-record prose; nothing reads or consumes the namespace.
+- [x] **Release approval: The decision owner.** Given 2026-10-13 (`review-evidence/decision-owner-answers/core-1-0-0-release.md`). A major release needs the decision owner's approval (`playbook/ontology-worklog.md`, "Who approves a release": "Major ... The decision owner. No exceptions").
 - [x] At the cut (2026-10-13): in `build_core.py` set `STAGE = None` and `ISSUED` to the cut date, change the release-candidate test in `test_build_core.py` to the dated 1.0.0, replace the changelog's "not yet released" note with the approver and date, rebuild. Merged in #249 as d8b16e1, tagged `core-v1.0.0`.
 
 ## Notes

@@ -1,4 +1,4 @@
-row_id,split_group,source_label,target_label,disposition,context,reverse_pair_verbs,proposed,Hamid_decision,Hamid_rationale
+row_id,split_group,source_label,target_label,disposition,context,reverse_pair_verbs,proposed,owner_decision,owner_rationale
 REL-00010,G1a-duplicate,Publish Forecast and Generate Component Level Forecast Plan,Receive Demand Forecast,SoleCandidate,PROMOTE/A:explicit-reference,uses-input,merge as evidence on existing dependsOnOutputOf fact,,
 REL-00057,G1a-duplicate,Measure Inventory,Monitor and Control Inventory Positions,ResolvedToConcept,,uses-input,merge as evidence on existing dependsOnOutputOf fact,,
 REL-00089,G1a-duplicate,Capture Crude Availability,Evaluate Crude & Feedstock,SoleCandidate,PROMOTE/A:explicit-reference,uses-input,merge as evidence on existing dependsOnOutputOf fact,,

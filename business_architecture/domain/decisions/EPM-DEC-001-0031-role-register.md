@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028); its questions answered by Hamid, EPM-DEC-001-0045 (2026-10-18) |
+| Status | Decided (delegated under EPM-DEC-001-0028); its questions answered by the decision owner, EPM-DEC-001-0045 (2026-10-18) |
 | Date | 2026-10-13 |
 | Questions | Step 5, slice 2: which of the RACI role strings in the process map name the same role, and how a team, a qualifier or a compound string is handled |
-| Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
+| Source | Claude Code session, 2026-10-13, under the decision owner's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
 
 ## Context
 
@@ -28,11 +28,11 @@ The repository does not expand the acronyms in the role strings (CCI, CP, CPVC, 
 
 The result: 60 roles, 54 positions and 6 teams. Splitting the 11 compound strings turns the 913 entries into 940 role references. `build_roles.py` prints the figures.
 
-### Questions for Hamid
+### Questions for the decision owner
 
-*2026-10-18:* answered by Hamid; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open.
+*2026-10-18:* answered by the decision owner; organization 2.0.0 carries the answers (EPM-DEC-001-0045). Forecaster and PSM stay open.
 
-These do not block the build. Each would merge two roles, or define one, if Hamid confirms it. `roles.csv` held each one in its `question` column; since 2.0.0 that column holds only the questions still open (Forecaster, PSM and Crude RFC's expansion), and the answers and settled rationales sit in its `note` column.
+These do not block the build. Each would merge two roles, or define one, if the decision owner confirms it. `roles.csv` held each one in its `question` column; since 2.0.0 that column holds only the questions still open (Forecaster, PSM and Crude RFC's expansion), and the answers and settled rationales sit in its `note` column.
 
 - **RCVO Advisor** (written once) and **RVCO Advisor** (written 32 times): one role misspelt?
 - **Forecaster** and **Refinery Technical Service Representative** appear only inside two compound strings. Are they the Local Refinery Forecaster and the Refinery Technical Representative?
@@ -44,11 +44,11 @@ These do not block the build. Each would merge two roles, or define one, if Hami
 
 - **Merge by meaning now** (RCVO into RVCO, Forecaster into Local Refinery Forecaster). Rejected: the evidence is the spelling alone, and a wrong merge would assign one role's responsibilities to another. Splitting later costs more than merging later.
 - **Model teams as `org:OrganizationalUnit`, assigned directly.** Rejected for this slice: EPM-DEC-001-0030 gives an assignment exactly one `org:Role`, and changing that shape for six strings would widen every query that asks who is accountable. Slice 5 links the units.
-- **Put the whole register to Hamid before building on it.** Rejected: under rule 1 the register applies only mechanical rules, which the delegation covers. The judgement calls are listed above, for Hamid to answer when convenient.
+- **Put the whole register to the decision owner before building on it.** Rejected: under rule 1 the register applies only mechanical rules, which the delegation covers. The judgement calls are listed above, for the decision owner to answer when convenient.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
-Hamid extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." Hamid did not make the choices above himself. Claude made them under that delegation, and Hamid can reverse any of them.
+The decision owner extended the delegation in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12." The decision owner did not make the choices above themselves. Claude made them under that delegation, and the decision owner can reverse any of them.
 
 ## Evidence
 

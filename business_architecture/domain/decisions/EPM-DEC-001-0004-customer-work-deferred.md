@@ -1,4 +1,4 @@
-# EPM-DEC-001-0004: Customer domain work waits for Hamid's additional details
+# EPM-DEC-001-0004: Customer domain work waits for the decision owner's additional details
 
 | Field | Value |
 |---|---|
@@ -13,17 +13,17 @@ The Customer classification C1 to C8 was adopted on 2026-09-29. Three evidence i
 
 ## Decision
 
-Use of C1 to C8 in Step 5 waits until Hamid shares his additional customer information. The lubricants and marine evidence check waits with it. The 5,900 customers figure is not needed and is not verified or cited.
+Use of C1 to C8 in Step 5 waits until the decision owner shares their additional customer information. The lubricants and marine evidence check waits with it. The 5,900 customers figure is not needed and is not verified or cited.
 
 ## Alternatives considered
 
 Confirm C1 to C8 as the Step 5 party-role scheme now; verify all three evidence items now.
 
-## Hamid's recorded words
+## The decision owner's recorded words
 
 Q5: "I will provide you with more details with customer when we get there. I have additional information that I need to parse and then share with you." Q6: "do we even need this figure in the ontology. We are not adding numbers yet so the 5900 may not be relevant now."
 
-Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with Hamid). Hamid answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." He also stated: "If i dont comment on a question, it means I am aligned." A question he did not comment on is therefore recorded as agreed with the recommendation.
+Session: Grilling session on the handover plan, 2026-10-05 (Claude Code with the decision owner). The decision owner answered numbered questions Q1 to Q34 in five rounds and confirmed the full decision list with: "Confirmed, go ahead and open the two PRs." They also stated: "If i dont comment on a question, it means I am aligned." A question they did not comment on is therefore recorded as agreed with the recommendation.
 
 ## Evidence
 

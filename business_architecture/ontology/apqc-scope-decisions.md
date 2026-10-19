@@ -1,6 +1,6 @@
 # APQC Scope Decisions
 
-One decision per APQC gap candidate, taken with Hamid one at a time (2026-09-17).
+One decision per APQC gap candidate, taken with the decision owner one at a time (2026-09-17).
 Decisions accumulate here; they are applied to the model in a single pass later
 (Step 3/4 of the ontology plan), followed by one consolidated proposal to update
 `downstream_process_map.json` in the repo — not one edit per decision.

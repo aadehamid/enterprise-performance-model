@@ -33,7 +33,7 @@ for fn in sha_files:
 # 2. mention arithmetic from the files
 v2 = rows("target-report/target-dispositions-v2.csv")
 ctx = {r["row_id"]: r["outcome"] for r in rows("target-report/context-pass.csv")}
-# property-rule holds (Hamid 2026-09-24; enabledBy verdicts same day). The dated
+# property-rule holds (the decision owner 2026-09-24; enabledBy verdicts same day). The dated
 # notes below are history: the Phase 1 sweep corrected REL-01312, REL-01053,
 # REL-00758, REL-01094, REL-01131, REL-01192, REL-00936 and REL-00445 in the
 # source (#210) and the G1b rows (#202); those rows now emit and have left
@@ -72,7 +72,7 @@ check("mention-arithmetic", promoted + held_ctx + ambig + ext + flow == 1318 == 
 check("promoted==1114", promoted == 1114, str(promoted))
 check("held==189", held_ctx == 189, str(held_ctx))
 
-# 2b. enabledBy control cases (Hamid verdicts 2026-09-24/25), checked against the
+# 2b. enabledBy control cases (the decision owner's verdicts 2026-09-24/25), checked against the
 # STORED canonical fact — not the verb string. "Approved as core:enables"
 # means the stored triple is (target_slug, core:enabledBy, source_slug), with
 # core:enables available as its inverse. Row-level verdicts override the
@@ -114,7 +114,7 @@ for rid in ("REL-01303", "REL-01056"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:enables per Hamid 2026-09-24/25; expected stored fact {fact}")
+          f"approved as core:enables per the decision owner 2026-09-24/25; expected stored fact {fact}")
 # 2026-09-26 (G3-B5): REL-00129, REL-00243, REL-00304, REL-00728, REL-01006,
 # REL-01016 were removed from the override set — prior approvals superseded
 # under the nearness-only identity rule. Their facts were verified unique
@@ -144,18 +144,18 @@ for rid in ("REL-00208", "REL-01106",
             "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925",
             ):
     check(f"control-case hold {rid}", _emits_nothing(rid),
-          "must stay held (source correction) per Hamid 2026-09-24/25: no stored triple")
-# Hamid 2026-09-26: G3-B1 verdicts (D:hamid-verdict). Target identity
+          "must stay held (source correction) per the decision owner 2026-09-24/25: no stored triple")
+# The decision owner 2026-09-26: G3-B1 verdicts (D:owner-verdict). Target identity
 # unconfirmed for nearness-only candidates — no stored triple. These two
 # rows were previously listed in the approved-emission control-case list
 # on a mistaken basis (they were never row-level approved); observed
 # failing 2026-09-26 after B1 verdicts, corrected here.
 for rid in ():
     check(f"control-case hold {rid}", _emits_nothing(rid),
-          "must stay held (G3-B1 target identity unconfirmed) per Hamid 2026-09-26: no stored triple")
+          "must stay held (G3-B1 target identity unconfirmed) per the decision owner 2026-09-26: no stored triple")
 # REL-00428: genuine 2026-09-25 row-level approval (review32-enables-batch,
 # "validated feedstock-quality data underpins term-slate quality screening")
-# SUPERSEDED by Hamid's 2026-09-26 G3-B2 verdict (D:hamid-verdict /
+# SUPERSEDED by the decision owner's 2026-09-26 G3-B2 verdict (D:owner-verdict /
 # TargetIdentityUnconfirmed): the approval rested on semantic plausibility,
 # but the nearness-only identity rule requires source-backed target identity
 # before any predicate verdict; the later row-level verdict is
@@ -164,18 +164,18 @@ check("control-case hold REL-00428", _held_or_swept("REL-00428"),
       "must stay held (G3-B2 supersession of 2026-09-25 approval): no stored triple")
 # REL-00770: genuine 2026-09-25 row-level approval (review32-enables-batch:
 # "Account planning explicitly feeds Sales Execution with account-level
-# objectives, opportunity maps, actions, evidence") SUPERSEDED by Hamid's
-# 2026-09-26 G3-B3 verdict (D:hamid-verdict / TargetIdentityUnconfirmed /
+# objectives, opportunity maps, actions, evidence") SUPERSEDED by the decision owner's
+# 2026-09-26 G3-B3 verdict (D:owner-verdict / TargetIdentityUnconfirmed /
 # Supersedes2026-09-25Approval). Predicate plausibility cannot substitute
-# for source-backed target identity under the Hamid-approved nearness-only
+# for source-backed target identity under the owner-approved nearness-only
 # identity rule. Prior decision retained in provenance as superseded, not
 # deleted. Removed from EN_ENABLEDBY_OVERRIDE 2026-09-26.
 check("control-case hold REL-00770", _held_or_swept("REL-00770"),
       "must stay held (G3-B3 supersession of 2026-09-25 approval): no stored triple")
 # REL-00939: genuine 2026-09-25 row-level approval (review32-enables-batch:
 # "approved financing/payment methods, terms, eligibility, commercial
-# rules are governed prerequisites for billing") SUPERSEDED by Hamid's
-# 2026-09-26 G3-B4 verdict (D:hamid-verdict / TargetIdentityUnconfirmed /
+# rules are governed prerequisites for billing") SUPERSEDED by the decision owner's
+# 2026-09-26 G3-B4 verdict (D:owner-verdict / TargetIdentityUnconfirmed /
 # Supersedes2026-09-25Approval). The source row never names Manage Customer
 # Invoicing and Billing as its target; under the nearness-only identity
 # rule, a plausible relationship cannot stand in for a named target. Prior
@@ -183,7 +183,7 @@ check("control-case hold REL-00770", _held_or_swept("REL-00770"),
 # EN_ENABLEDBY_OVERRIDE 2026-09-26.
 check("control-case hold REL-00939", _emits_nothing("REL-00939"),
       "must stay held (G3-B4 supersession of 2026-09-25 approval): no stored triple")
-# 2d. governed-by control cases (Hamid verdicts 2026-09-25, as amended
+# 2d. governed-by control cases (the decision owner's verdicts 2026-09-25, as amended
 # 2026-09-26). Checked against the stored fact (source, core:governedBy,
 # target) — never on structural nearness. 2026-09-26: 10 of the 13 prior
 # approvals superseded (NoAffirmativeCitation); only 3 retain stored facts.
@@ -191,8 +191,8 @@ for rid in ("REL-00190", "REL-00858", "REL-01313"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:governedBy per Hamid 2026-09-25/26; expected stored fact {fact}")
-# Phase 1 sweep, #206 (Hamid 2026-10-12): 9 of these 10 rows now emit with an
+          f"approved as core:governedBy per the decision owner 2026-09-25/26; expected stored fact {fact}")
+# Phase 1 sweep, #206 (the decision owner 2026-10-12): 9 of these 10 rows now emit with an
 # approved governed-by sentence; the sweep check below covers them. REL-00907
 # stays held (no relationship). REL-00190 now resolves to its DOA child.
 for rid in ("REL-00907",):
@@ -200,8 +200,8 @@ for rid in ("REL-00907",):
           "superseded 2026-09-26 (NoAffirmativeCitation); no relationship in the Phase 1 sweep")
 for rid in ("REL-00274", "REL-01143", "REL-01286"):
     check(f"control-case hold {rid}", _emits_nothing(rid),
-          "must stay held per Hamid 2026-09-25: no stored triple")
-# 2f. requires control cases (Hamid verdicts 2026-09-25, as amended 2026-09-26).
+          "must stay held per the decision owner 2026-09-25: no stored triple")
+# 2f. requires control cases (the decision owner's verdicts 2026-09-25, as amended 2026-09-26).
 # The 4 still-approved rows must store (source, core:requires, target).
 # REL-00208 is asserted above via _emits_nothing: neither requires nor
 # dependsOnOutputOf may be stored. REL-00873 was superseded 2026-09-26
@@ -211,8 +211,8 @@ for rid in ("REL-00158", "REL-00168", "REL-00247", "REL-00872", "REL-00873"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:requires per Hamid 2026-09-25; expected stored fact {fact}")
-# 2g. assures control cases (Hamid verdicts 2026-09-26). The 5 approved rows
+          f"approved as core:requires per the decision owner 2026-09-25; expected stored fact {fact}")
+# 2g. assures control cases (the decision owner's verdicts 2026-09-26). The 5 approved rows
 # must store (assured, core:assuredBy, assurance-activity). REL-01106 is
 # asserted above via _emits_nothing: its assuredBy fact was removed and no
 # substitute may be stored.
@@ -220,13 +220,13 @@ for rid in ("REL-00401", "REL-00719", "REL-00801", "REL-01269", "REL-01270"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:assuredBy per Hamid 2026-09-26; expected stored fact {fact}")
+          f"approved as core:assuredBy per the decision owner 2026-09-26; expected stored fact {fact}")
 # REL-01106's old fact must be gone entirely: no row may store the
 # (CM-1-2-5-2, core:assuredBy, CM-1-2-5-4) triple.
 check("control-case REL-01106 fact removed",
       ("CM-1-2-5-2", "core:assuredBy", "CM-1-2-5-4") not in _fact_rowids,
       "held for workbook correction; fact removed 2026-09-26")
-# 2h. constrained-by control cases (Hamid verdicts 2026-09-26). Ten approved
+# 2h. constrained-by control cases (the decision owner's verdicts 2026-09-26). Ten approved
 # rows must store (constrained-thing, core:constrainedBy, constraint-source).
 # All were already emitting: basis changes only. REL-00097 stays held.
 for rid in ("REL-00015", "REL-00018", "REL-00024", "REL-00087", "REL-00091",
@@ -234,10 +234,10 @@ for rid in ("REL-00015", "REL-00018", "REL-00024", "REL-00087", "REL-00091",
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:constrainedBy per Hamid 2026-09-26; expected stored fact {fact}")
+          f"approved as core:constrainedBy per the decision owner 2026-09-26; expected stored fact {fact}")
 check("control-case hold REL-00097", _emits_nothing("REL-00097"),
-      "context hold retained per Hamid 2026-09-26: no stored triple")
-# 2j. dependsOnOutputOf contradiction control cases (Hamid verdicts 2026-09-26).
+      "context hold retained per the decision owner 2026-09-26: no stored triple")
+# 2j. dependsOnOutputOf contradiction control cases (the decision owner's verdicts 2026-09-26).
 # Retain one direction per pair; the reverse facts must be gone. Hard rule:
 # zero reciprocal two-cycles across all canonical dependsOnOutputOf facts.
 # REL-01061 held in the 2026-09-26 uses-input pass (wrong-concept citation).
@@ -245,7 +245,7 @@ for rid in ("REL-00862", "REL-01029"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"retained direction per Hamid 2026-09-26; expected stored fact {fact}")
+          f"retained direction per the decision owner 2026-09-26; expected stored fact {fact}")
 check("control-case hold REL-01061", _emits_nothing("REL-01061"),
       "held 2026-09-26 uses-input pass: wrong-concept citation; fact removed")
 for fact in (("CM-1-3-7-1-2", "core:dependsOnOutputOf", "CM-1-3-6-4-2"),
@@ -255,7 +255,7 @@ for fact in (("CM-1-3-7-1-2", "core:dependsOnOutputOf", "CM-1-3-6-4-2"),
           fact not in _fact_rowids,
           "held reverse direction; fact removed 2026-09-26")
 _dep = {(r["subject"], r["object"]) for r in cfacts if r["predicate"] == "core:dependsOnOutputOf"}
-# 2l. S&T enables control cases (Hamid verdicts 2026-09-26). Two approved
+# 2l. S&T enables control cases (the decision owner's verdicts 2026-09-26). Two approved
 # rows must keep their core:enabledBy facts. 2026-09-26 (G3-B5):
 # REL-00489, REL-01124, REL-01174 — prior S&T approvals superseded under the
 # nearness-only identity rule (Supersedes2026-09-26STApproval); S&T stored
@@ -265,12 +265,12 @@ for rid in ("REL-00433", "REL-01172"):
     fact = _stored(rid)
     check(f"control-case stored {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved as core:enabledBy per Hamid 2026-09-26; expected stored fact {fact}")
+          f"approved as core:enabledBy per the decision owner 2026-09-26; expected stored fact {fact}")
 # REL-00437: genuine 2026-09-26 S&T approval ("quality-screened spot options
 # make coordinated purchases, sales, and exchanges operationally actionable;
 # bounded: trading coordination on quality-screened choices, not
-# directing/approving trades") SUPERSEDED by Hamid's same-day G3-B3 verdict
-# (D:hamid-verdict / TargetIdentityUnconfirmed). The approval assumed the
+# directing/approving trades") SUPERSEDED by the decision owner's same-day G3-B3 verdict
+# (D:owner-verdict / TargetIdentityUnconfirmed). The approval assumed the
 # asserted target; the nearness-only identity rule requires source-backed
 # target identity before any predicate verdict. The later row-level verdict
 # is authoritative. Prior decision retained in provenance as superseded.
@@ -286,7 +286,7 @@ for rid in (
     check(f"control-case hold {rid}",
           _emits_nothing(rid),
           "S&T enables hold 2026-09-26; no emitted triple")
-# 2m. G1a duplicate-provenance rows (Hamid 2026-09-26, updated 2026-09-26
+# 2m. G1a duplicate-provenance rows (the decision owner 2026-09-26, updated 2026-09-26
 # uses-input pass). REL-00436 is held as enables but attached as duplicate
 # provenance on the independently-evidenced uses-input fact (REL-00447,
 # via scope-note range citation). REL-00152's fact (via REL-00214) was
@@ -305,7 +305,7 @@ for rid, fact in (("REL-00447", ("CM-1-2-5-2-3", "core:dependsOnOutputOf", "CM-1
           rid in _fact_rowids.get(fact, []),
           "independent approved evidence survives; G1a attach adds provenance only")
 
-# 2n. G1a duplicate-merge control cases (Hamid verdicts 2026-09-26). Every G1a
+# 2n. G1a duplicate-merge control cases (the decision owner's verdicts 2026-09-26). Every G1a
 # row must name at least one independent uses-input row for the same directed
 # fact; the fact must exist with that independent evidence; no G1a row may be
 # the sole evidence for its fact; no new fact may be created by a merge.
@@ -334,7 +334,7 @@ for g in g1a_active:
               "label-match-only (identity-unconfirmed provenance)"),
           "census 2026-09-26: how the target was matched")
 
-# 2o. G2 disguised-sequence verdicts (Hamid 2026-09-26). The 13 approved rows
+# 2o. G2 disguised-sequence verdicts (the decision owner 2026-09-26). The 13 approved rows
 # emit no core:enabledBy fact; the independently recorded sequence fact is
 # preserved and the enables assertion is kept as non-emitting evidence.
 # 2026-09-26 (G3-B5): the two row-level exceptions (REL-00129, REL-00728)
@@ -344,7 +344,7 @@ for g in g1a_active:
 # (they are supported by REL-00131 and REL-00734, not by these rows).
 g2 = list(rows("review-evidence/enables-g2-disguised-sequence-review-batch.csv"))
 check("G2 batch has 15 rows with recorded verdicts",
-      len(g2) == 15 and all(x["Hamid_decision"].strip() for x in g2), str(len(g2)))
+      len(g2) == 15 and all(x["owner_decision"].strip() for x in g2), str(len(g2)))
 for rid in ("REL-00122", "REL-00135", "REL-00174", "REL-00216", "REL-00375",
             "REL-00698", "REL-00727", "REL-00731", "REL-00955", "REL-00983",
             "REL-00992", "REL-01024", "REL-01090"):
@@ -363,7 +363,7 @@ for rid, pred in (("REL-00131", "core:precedes"), ("REL-00734", "core:precedes")
           fact[1] == pred and fact in _fact_rowids and rid in _fact_rowids[fact],
           f"REL-00129/REL-00728 supersession removes only the enables fact, not the sequence fact")
 
-# 2p. G1b no-verb-change verdicts (Hamid 2026-09-26). The 28 previously
+# 2p. G1b no-verb-change verdicts (the decision owner 2026-09-26). The 28 previously
 # emitting rows must support no triple at all; their stored
 # core:dependsOnOutputOf facts were removed (Rule 11: enables with only
 # reverse informed-by evidence cannot emit dependsOnOutputOf). REL-01224
@@ -375,7 +375,7 @@ for rid, pred in (("REL-00131", "core:precedes"), ("REL-00734", "core:precedes")
 for rid in ("REL-00499",):
     check(f"G1b {rid} emits no triple",
           _emits_nothing(rid),
-          "HOLD / D:hamid-verdict / G1bNoVerbChange 2026-09-26; no substitute predicate")
+          "HOLD / D:owner-verdict / G1bNoVerbChange 2026-09-26; no substitute predicate")
 import importlib.util as _ilu_g
 _gspec = _ilu_g.spec_from_file_location("gate_batch_checks_g1b", "batch_checks.py")
 _gmod = _ilu_g.module_from_spec(_gspec)
@@ -420,7 +420,7 @@ for fact in (("CM-1-1-7-3-1", "core:dependsOnOutputOf", "CM-1-1-7-3-3"),
 # covered by the control-case no-fact hold list); REL-00469 non-emitting
 # (already covered by the 2k hierarchy holds).
 
-# 2k. hierarchy-hold control cases (Hamid verdicts 2026-09-26). Each held row
+# 2k. hierarchy-hold control cases (the decision owner's verdicts 2026-09-26). Each held row
 # must have zero emitted triples; none may be promoted via the hierarchy path.
 for rid in ("REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
             "REL-00768", "REL-00773", "REL-00912", "REL-00923", "REL-00925"):
@@ -430,13 +430,13 @@ for rid in ("REL-00002", "REL-00013", "REL-00466", "REL-00469", "REL-00764",
 # REL-01309 exception stays emitting under its original evidence marker.
 check("REL-01309 remains emitting", not _emits_nothing("REL-01309"),
       "approved hierarchy exception; prior decision stands")
-# Governed-by hierarchy exceptions (Hamid 2026-09-26). Each is a recorded
+# Governed-by hierarchy exceptions (the decision owner 2026-09-26). Each is a recorded
 # exception, not a precedent; the gate treats each as approved.
 for rid in ("REL-00531", "REL-00542", "REL-00588", "REL-00601", "REL-00623",
             "REL-00106"):
     check(f"hierarchy exception {rid} remains emitting", not _emits_nothing(rid),
           "approved hierarchy exception 2026-09-26; not a precedent")
-# Governed-by pass holds (Hamid 2026-09-26): exclusion/boundary citations
+# Governed-by pass holds (the decision owner 2026-09-26): exclusion/boundary citations
 # and hierarchy restatements. Each held row emits nothing. (The 10
 # superseded 2026-09-25 approvals are covered by the 2d hold checks above.)
 for rid in ("REL-00185", "REL-00250", "REL-00969", "REL-01113",  # REL-00215 emits since #206
@@ -444,12 +444,12 @@ for rid in ("REL-00185", "REL-00250", "REL-00969", "REL-01113",  # REL-00215 emi
             "REL-00620", "REL-00625", "REL-00629"):  # hierarchy restatements
     check(f"governed-by hold {rid} emits nothing",
           _emits_nothing(rid),
-          "HOLD / D:hamid-verdict 2026-09-26; fact removed")
+          "HOLD / D:owner-verdict 2026-09-26; fact removed")
 
 check("hard rule: zero reciprocal dependsOnOutputOf two-cycles",
       not any((o, s) in _dep for s, o in _dep),
       "no (A->B, B->A) pair may be emitted")
-# Direction-table rules (Hamid 2026-09-26): no reciprocal two-cycles for
+# Direction-table rules (the decision owner 2026-09-26): no reciprocal two-cycles for
 # core:precedes or core:governedBy either. A process cannot come both
 # before and after another in the same lifecycle; governance runs one way.
 _prec = {(r["subject"], r["object"]) for r in cfacts if r["predicate"] == "core:precedes"}
@@ -460,7 +460,7 @@ _gov = {(r["subject"], r["object"]) for r in cfacts if r["predicate"] == "core:g
 check("hard rule: zero reciprocal governedBy two-cycles",
       not any((o, s) in _gov for s, o in _gov),
       "no (A->B, B->A) pair may be emitted")
-# Answer 5 baseline (Hamid 2026-09-26): inverse properties may be declared
+# Answer 5 baseline (the decision owner 2026-09-26): inverse properties may be declared
 # for query and navigation, but materialized inverse triples are never
 # written to the canonical facts store.
 _inverse_preds = {"core:providesInputTo", "core:informs", "core:enables",
@@ -471,36 +471,36 @@ _inverse_stored = [(r["subject"], r["predicate"], r["object"]) for r in cfacts
 check("hard rule: zero stored triples using an inverse predicate",
       not _inverse_stored,
       f"inverse predicates are query-only; found {_inverse_stored[:3]}" if _inverse_stored else "")
-# 2i. triggers pass (Hamid 2026-09-26). 2 stand (rule 4) + 5 promote on
+# 2i. triggers pass (the decision owner 2026-09-26). 2 stand (rule 4) + 5 promote on
 # affirmative citation + event semantics must store
 # (triggered-activity, core:triggeredBy, trigger-activity). The 11 rows held
 # that day (supersession entries in step4-decisions.md) were answered in #204
-# batch 1 (Hamid 2026-10-12, comment 6130380041) with a trigger sentence in each
+# batch 1 (the decision owner 2026-10-12, comment 6130380041) with a trigger sentence in each
 # source scope note, and emit (review-evidence/triggers-batch1-review.csv).
 for rid in ("REL-00725", "REL-00897",
             "REL-00127", "REL-00235", "REL-00236", "REL-00246", "REL-00901"):
     fact = _stored(rid)
     check(f"triggers emitting {rid} as {fact[1]}",
           fact in _fact_rowids and rid in _fact_rowids[fact],
-          f"approved core:triggeredBy per Hamid 2026-09-26; expected stored fact {fact}")
-# Each row's review record must match Hamid's saved answer (REVIEW_STANDARDS rule 8):
+          f"approved core:triggeredBy per the decision owner 2026-09-26; expected stored fact {fact}")
+# Each row's review record must match the decision owner's saved answer (REVIEW_STANDARDS rule 8):
 # question, answer letter, exact sentence, slugs, verdict, condition and stored fact.
 import importlib.util as _ilu_b
 _bspec = _ilu_b.spec_from_file_location("gate_batch_checks", "batch_checks.py")
 _batch = _ilu_b.module_from_spec(_bspec)
 _bspec.loader.exec_module(_batch)
-with open("review-evidence/hamid-answers/204-batch1.md") as _f:
+with open("review-evidence/decision-owner-answers/204-batch1.md") as _f:
     _answer_204 = _f.read()
 _batch_problems = _batch.triggers_batch_problems(
     rows("review-evidence/triggers-batch1-review.csv"), _answer_204, _batch.TRIGGERS_BATCH1_QUESTIONS,
     {r["row_id"]: r for r in v2}, _fact_rowids)
-check("triggers #204 batch 1: 11 review rows match Hamid's saved answer and emit",
+check("triggers #204 batch 1: 11 review rows match the decision owner's saved answer and emit",
       not _batch_problems, "; ".join(_batch_problems[:5]))
-# Phase 1 sweep (Hamid 2026-10-12, #207 comment 6133390674): each issue's review rows
+# Phase 1 sweep (the decision owner 2026-10-12, #207 comment 6133390674): each issue's review rows
 # match the approved register; emitting rows carry their fact, the rest carry none.
 import glob as _glob
 _register = {r["row_id"]: r for r in rows("review-evidence/phase1-sweep/register.csv")}
-with open("review-evidence/hamid-answers/phase1-sweep.md") as _f:
+with open("review-evidence/decision-owner-answers/phase1-sweep.md") as _f:
     _approval = _f.read()
 _sweep_found = {p.rsplit("/", 1)[1] for p in _glob.glob("review-evidence/phase1-sweep/*-review.csv")}
 with open("baseline/step3-taxonomy.ttl") as _f:
@@ -521,8 +521,8 @@ for _issue in _batch.SWEEP_ADOPTED:
     check(f"Phase 1 sweep #{_issue}: review rows are exactly the approved register's rows and match it",
           not _sweep_problems, "; ".join(_sweep_problems[:5]))
 
-# 2j. precedes/follows amendment (Hamid 2026-09-27). 20 held rows emit nothing.
-# #205 batches 1 and 2 (Hamid 2026-10-11 and 2026-10-12; review-evidence/
+# 2j. precedes/follows amendment (the decision owner 2026-09-27). 20 held rows emit nothing.
+# #205 batches 1 and 2 (the decision owner 2026-10-11 and 2026-10-12; review-evidence/
 # precedes-follows-batch1-review.csv and -batch2-review.csv): all 20 reviewed,
 # none emits a core:precedes fact. 3 answered (b)/(c) as no sequence; 17 are
 # scoped sequences that core:precedes cannot carry (2k).
@@ -532,9 +532,9 @@ for rid in ("REL-00008", "REL-00068", "REL-00112", "REL-00149", "REL-00184",
             "REL-01227", "REL-01241", "REL-01289", "REL-01291", "REL-01294"):
     check(f"precedes/follows reviewed-not-emitted {rid} emits no triple",
           _emits_nothing(rid),
-          "HOLD / D:hamid-verdict 2026-10-11/12 / reviewed, not emitted (#205)")
+          "HOLD / D:owner-verdict 2026-10-11/12 / reviewed, not emitted (#205)")
 
-# 2k. Scoped sequences (EPM-DEC-001-0026, Hamid 2026-10-12, #226). The 17
+# 2k. Scoped sequences (EPM-DEC-001-0026, the decision owner 2026-10-12, #226). The 17
 # scoped rows emit scoped-sequence nodes, built from scoped-sequence/
 # scoped-sequences.csv; they never emit a core fact (checked in 2j). The three
 # no-sequence rows stay out. build.py --verify adds SHACL in check.sh.
@@ -561,7 +561,7 @@ cf = cfacts
 check("canonical-facts==640", len(cf) == 640, str(len(cf)))
 check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"]) for r in cf}) == 640)
 
-# Hamid 2026-09-26: nearness-only identity rule (G3-B1). A candidate
+# The decision owner 2026-09-26: nearness-only identity rule (G3-B1). A candidate
 # resolved solely by label similarity, unique-candidate filtering,
 # structural proximity, or other classifier nearness evidence cannot emit
 # a semantic fact. It requires explicit target evidence or a separately
@@ -569,7 +569,7 @@ check("canonical-facts-distinct", len({(r["subject"], r["predicate"], r["object"
 # gate fails if a row whose target_identity_evidence is "NEARENESS ONLY"
 # contributes a canonical relationship fact without a row-level identity
 # override backed by source evidence.
-# Hamid 2026-09-26: nearness-only identity rule (G3-B1, extended B2).
+# The decision owner 2026-09-26: nearness-only identity rule (G3-B1, extended B2).
 _rows_in_facts = set()
 for _fr in cfacts:
     _rows_in_facts.update(x.strip() for x in _fr["row_ids"].split(";"))
@@ -582,7 +582,7 @@ for _bfile in ("review-evidence/enables-g3-section-b1-review.csv",
     _bb = {r["row_id"]: r for r in csv.DictReader(open(_bfile))}
     _held = [rid for rid, r in _bb.items()
              if "NEARENESS ONLY" in r.get("target_identity_evidence", "")
-             and r.get("Hamid_decision", "").startswith("HOLD")]
+             and r.get("owner_decision", "").startswith("HOLD")]
     # A row released by the Phase 1 sweep has source-backed identity: its approved
     # sentence is in the source scope note, and _held_or_swept allows only its fact.
     _b1b2_violation += [(_bfile.split("section-")[1].split("-")[0], rid)
@@ -637,7 +637,7 @@ check("label-new==14 (all approved 2026-09-25)", len(new) == 14 and
 # core:dependsOnOutputOf. Storing it so changes the verb at emission
 # (Rule 11): the source said "enables", the corroboration says
 # "informed-by", and no independent uses-input evidence exists. Row-level
-# Hamid verdicts approving a different predicate are the only exception.
+# The decision owner's verdicts approving a different predicate are the only exception.
 from collections import defaultdict as _dd
 _graph = _dd(set)
 for _r in v2:

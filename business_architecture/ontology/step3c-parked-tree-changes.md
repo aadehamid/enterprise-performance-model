@@ -29,22 +29,22 @@ body. See playbook §3, Step 3d.
 
 | ID | Affected node | Status | Decision | Rows parked |
 | --- | --- | --- | --- | --- |
-| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — partially resolved 2026-09-21 (PTC-001-B sub-decision open) | Option A, accepted by Hamid 2026-09-18; sub-decisions settled 2026-09-18; partial-resolution proposal approved by Hamid 2026-09-21 | 2 (1 retired tombstone, 1 blocked) |
-| PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | **Closed** 2026-09-18 — no tree change required | Option 1, accepted by Hamid | 0 |
+| PTC-001 | `CM-1-1-4-6` Commercial Development | Open — partially resolved 2026-09-21 (PTC-001-B sub-decision open) | Option A, accepted by the decision owner 2026-09-18; sub-decisions settled 2026-09-18; partial-resolution proposal approved by the decision owner 2026-09-21 | 2 (1 retired tombstone, 1 blocked) |
+| PTC-002 | `CM-1-2-5-2-3` Plan Optimal Feedstock Slate And Run Rate | **Closed** 2026-09-18 — no tree change required | Option 1, accepted by the decision owner | 0 |
 
 ---
 
 ## PTC-001 — Commercial Development does not belong under Refinery Planning
 
 **Raised:** 2026-09-18, review batch 01
-**Accepted:** 2026-09-18 by Hamid (Option A); sub-decisions 1–4 settled 2026-09-18
+**Accepted:** 2026-09-18 by the decision owner (Option A); sub-decisions 1–4 settled 2026-09-18
 **Status:** Open — partially resolved 2026-09-21 (tree pass executed; PTC-001-B strategy-ownership sub-decision open)
 **Precedent:** handled the same way as the parked `IT Services` reparenting question recorded on
 the approved `CM-1` record, which was likewise deferred rather than churning the tree mid-pass.
 
 ### Partial resolution — executed 2026-09-21
 
-Hamid approved the revised consolidated proposal (`ptc-001-tree-proposal.md`,
+The decision owner approved the revised consolidated proposal (`ptc-001-tree-proposal.md`,
 four review adjustments adopted):
 
 | Slug | Resolution |
@@ -79,7 +79,7 @@ delegated authority, corporate-planning charter, current planning artifacts.
 terminology_notes cites PTC-001-B; the gate resolves the citation to PTC-001, which
 remains open until PTC-001-B closes).
 
-**Hold confirmed 2026-09-22 (Hamid):** PTC-001-B is an intentional governance
+**Hold confirmed 2026-09-22 (the decision owner):** PTC-001-B is an intentional governance
 hold, not incomplete work — Step 3d closed with this exception. The row stays
 `blocked` under the tombstone so it is never orphaned. Do not place it under
 Finance as a side effect; no Strategy L1 without a charter-level decision.
@@ -201,8 +201,8 @@ The full structured question, with options and evidence, is preserved verbatim i
 ## PTC-002 — Slate and run-rate planning appears in two branches
 
 **Raised:** 2026-09-18, review batch 02
-**Status:** **Closed** 2026-09-18 — Option 1 accepted by Hamid, no tree change required
-**Decided by:** Hamid
+**Status:** **Closed** 2026-09-18 — Option 1 accepted by the decision owner, no tree change required
+**Decided by:** The decision owner
 
 ### Affected rows
 

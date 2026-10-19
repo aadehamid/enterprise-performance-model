@@ -1,6 +1,6 @@
 # Step 4 decision log (working)
 
-Decisions taken with Hamid, one at a time. Folded into the design proposal revision once all are recorded.
+Decisions taken with the decision owner, one at a time. Folded into the design proposal revision once all are recorded.
 
 ## Q1 — Vocabulary namespace (2026-09-22): APPROVED
 
@@ -63,7 +63,7 @@ Preconditions before that release ships:
 
 ## Workbook PR #110 (2026-09-22, DO NOT MERGE)
 
-https://github.com/aadehamid/enterprise-performance-model/pull/110
+#110
 16 stale pre-R1 relationship-label cells fixed (`Refinery Planning` →
 `Refinery Planning and Optimization`, `Refinery Scheduling` →
 `Refinery Production Planning and Scheduling`); TTL regenerated
@@ -127,13 +127,13 @@ cross-functional ×6). The 6 free-text cross-functional entries are
 normalized to a governed "Cross-functional" value with detail preserved
 in a note. Controlled list makes the Step 5 migration mechanical.
 
-*Superseded 2026-10-13:* Hamid decided the values are business domains,
+*Superseded 2026-10-13:* The decision owner decided the values are business domains,
 not org units, and split Commercial & Marketing into Commercial and
 Marketing; core 2.0.0 links the concepts that carry these
 values (processes and capabilities) to a business domain list
 (EPM-DEC-001-0038).
 
-## Standing rule (2026-09-22, per Hamid)
+## Standing rule (2026-09-22, per the decision owner)
 
 Every Step 4 design decision that comes out of the Q&A goes in the
 ontology playbook's decision log — the playbook is the team handover,
@@ -143,7 +143,7 @@ so the approach must live there, not just in working notes. Backfilled
 
 ## Value-stream / capability / activity / event / decision layer (2026-09-22): PARKED
 
-Hamid asked whether the fuller business-architecture hierarchy (domain >
+The decision owner asked whether the fuller business-architecture hierarchy (domain >
 value stream > stages; value stream > capability > business process >
 activity; events; decisions — as in the KPI Store / domain modeling docs)
 should be represented in the ontology. Decision: park it as a post-1.0.0
@@ -168,7 +168,7 @@ parked modeling question. We build the shelf; classification comes later.
 
 ## Review corrections applied (2026-09-22)
 
-Hamid approved the external review feedback. Applied in the consolidated
+The decision owner approved the external review feedback. Applied in the consolidated
 playbook PR:
 - Q4 property renamed: `core:usesInput` → `core:dependsOnOutputOf` /
   inverse `core:providesInputTo` (a process is not an input; its output
@@ -189,7 +189,7 @@ playbook PR:
 PRs #111-#115 closed as superseded. Single consolidated playbook PR
 opened: #116 (DO NOT MERGE), branch docs/step4-decisions-consolidated,
 commit e13b70738e41fa73f37ac2f2568440f0a68a5b72, based on main
-c801d982f5ec6b545cf1e3101a72489b15ea5abe. Awaiting Hamid's review, then
+c801d982f5ec6b545cf1e3101a72489b15ea5abe. Awaiting the decision owner's review, then
 Q9 (lifecycle model).
 
 ## Q9 — lifecycle model (2026-09-22): APPROVED
@@ -212,7 +212,7 @@ to the successor where one exists.
 
 ## IRI fork correction (2026-09-22)
 
-Hamid caught a fork: the Q1/Q3 wording in the consolidated PR used
+The decision owner caught a fork: the Q1/Q3 wording in the consolidated PR used
 `https://w3id.org/lsc/ontology/core` as the ontology IRI, but the locked
 Step 1 URI policy (2026-09-18) fixes module namespaces at
 `…/ontology/modules/{module}`. Decision: KEEP the locked
@@ -225,7 +225,7 @@ explicit reconciliation note in the decision log.
 
 ## Q9 revision — three dimensions (2026-09-22)
 
-Hamid approved the review feedback on PR #117. The single-chain model
+The decision owner approved the review feedback on PR #117. The single-chain model
 (Candidate → Approved → Deprecated → Retired) is WITHDRAWN — it
 conflated concept lifecycle with approval status, violating the Q1
 three-layer lock. Replaced with three independent dimensions:
@@ -299,7 +299,7 @@ rationale, emit-triple-or-not).
 
 ## Q11 correction — six dispositions fixed (2026-09-22)
 
-Hamid caught that the first-cut "unmatched" report matched bare phrases
+The decision owner caught that the first-cut "unmatched" report matched bare phrases
 and missed parenthetical qualifiers. Verified against the identity map
 and committed TTL: six of the nine were wrongly parked/dropped.
 Corrected: DOA -> CM-1-2-2-3-2; Integrated Marketing Planning ->
@@ -345,7 +345,7 @@ record: labels aren't identity (2026-09-21 lock); label match is a
 candidate filter, never a join; resolutions recorded as slugs.
 Pre-cutover gates: 92-row label report, row-level target report,
 Q2 ledger, no-consumer confirmation. No implementation without
-Hamid's explicit approval.
+The decision owner's explicit approval.
 
 ## Step 4 design complete (2026-09-23)
 
@@ -355,9 +355,9 @@ record: labels aren't identity (2026-09-21 lock); label match is a
 candidate filter, never a join; resolutions recorded as slugs.
 Pre-cutover gates: 92-row label report, row-level target report,
 Q2 ledger, no-consumer confirmation. No implementation without
-Hamid's explicit approval.
+The decision owner's explicit approval.
 
-## Scope-note range citation route (2026-09-26, Hamid)
+## Scope-note range citation route (2026-09-26, the decision owner)
 
 A bounded range citation, written in the source's scope note, that
 explicitly covers the target and is affirmative, counts as a citation
@@ -367,7 +367,7 @@ Applied in the uses-input pass: REL-00447 (CM-1-2-5-1-3/-4) and
 REL-00564 (CM-1-3-1-1 through -5). Range-shaped citations in exclusion
 contexts (REL-01278, REL-01279) do not qualify.
 
-## Scope-note label citation route (2026-09-26, Hamid)
+## Scope-note label citation route (2026-09-26, the decision owner)
 
 A scope-note citation by the target's exact unique current preferred
 label counts as a citation route for Rule 5, recorded separately from
@@ -390,7 +390,7 @@ is now 33 emitting after the 2026-09-26 uses-input pass held 42 G1a mentions
 (k=42). The "77 → 75" line now reads "77 → 33". Rule text unchanged; only the
 counts reflect the applied pass.
 
-## G1b reverse-fact gate check amended (2026-09-26, Hamid)
+## G1b reverse-fact gate check amended (2026-09-26, the decision owner)
 
 Amends approved rule text in section 4. The G1b gate check "reverse informed-by
 fact present through its own row-level evidence" is now conditional: the reverse
@@ -402,7 +402,7 @@ Reason: The informed-by pass holds 15 reverse informed-by rows that lack a route
 When both sides of a G1b pair are held, the relationship disappears from the
 graph entirely. The 15 pairs are on the backlog (contradiction-pair-C pattern).
 
-## Informed-by pass applied (2026-09-26, Hamid approved)
+## Informed-by pass applied (2026-09-26, the decision owner approved)
 
 139 emitting `informed-by` rows reviewed under the strict citation test:
 
@@ -411,7 +411,7 @@ graph entirely. The 15 pairs are on the backlog (contradiction-pair-C pattern).
   REL-00071, REL-00123, REL-00136, REL-00365, REL-00877, REL-00905, REL-01107,
   REL-01147, REL-01177, REL-01190, REL-01207, REL-01229, REL-01282, REL-01283).
 - **20 label-only rows promote** on an affirmative citation, recorded
-  `D:hamid-verdict` (REL-00114, REL-00116, REL-00141, REL-00224, REL-00244,
+  `D:owner-verdict` (REL-00114, REL-00116, REL-00141, REL-00224, REL-00244,
   REL-00418, REL-00434, REL-00706, REL-00739, REL-00775, REL-00776, REL-00826,
   REL-00948, REL-01110, REL-01140, REL-01196, REL-01202, REL-01232, REL-01244,
   REL-01272).
@@ -426,14 +426,14 @@ source). Signals a potential verb fix, not a target fix.
 Totals: 761 → 666 emitting; 542 → 637 held; 603 → 508 facts.
 Conservation: 666 + 637 + 12 + 1 + 2 = 1,318. ✓
 
-## Governed-by pass: 10 supersessions (Hamid 2026-09-26)
+## Governed-by pass: 10 supersessions (the decision owner 2026-09-26)
 
 The 2026-09-25 row-level governed-by approvals are not approved decision
 evidence (recorded architecture decisions only: PR #110, PR #119). Each row
 below was re-tested with the strict citation test (slug, unique label, range
 — affirmative only). None carries an affirmative citation. Each is now:
 
-**HOLD / D:hamid-verdict / NoAffirmativeCitation / Supersedes2026-09-25Approval**
+**HOLD / D:owner-verdict / NoAffirmativeCitation / Supersedes2026-09-25Approval**
 
 The 2026-09-25 rationale is retained in provenance as superseded, not deleted.
 Scope conditions on REL-00907, REL-01228, and REL-01256 lapse with the hold.
@@ -470,12 +470,12 @@ All ten are routed to the source workbooks for correction.
 - **REL-01256**: 2026-09-25 rationale (superseded): "SCOPE: credit-control
   gates within fulfillment (no-self-exception rule) — not all
   order/fulfillment decisions." Scope condition lapses.
-## Triggers pass: 2 stand, 5 promote, 11 hold (Hamid 2026-09-26)
+## Triggers pass: 2 stand, 5 promote, 11 hold (the decision owner 2026-09-26)
 
 **STAND (rule 4, stable-ID):** REL-00725, REL-00897. Keep emitting; basis only.
 
-**PROMOTE (D:hamid-verdict):** REL-00127, REL-00235, REL-00236, REL-00246,
-REL-00901. Keep emitting; basis → D:hamid-verdict 2026-09-26.
+**PROMOTE (D:owner-verdict):** REL-00127, REL-00235, REL-00236, REL-00246,
+REL-00901. Keep emitting; basis → D:owner-verdict 2026-09-26.
 
 **HOLD (11):** The 2026-09-26 row-level "Trigger pattern" approvals are not
 approved decision evidence (recorded architecture decisions only: PR #110,
@@ -484,7 +484,7 @@ must tie the source's event or result to the target (trigger, route to,
 refer, escalate, hand off). A statement of where work is done does not
 count. None of the 11 carries such a citation. Each is now:
 
-**HOLD / D:hamid-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval**
+**HOLD / D:owner-verdict / NoAffirmativeTriggerLink / Supersedes2026-09-26Approval**
 
 The 2026-09-26 "Trigger pattern" rationale is retained in provenance as
 superseded, not deleted. All eleven are routed to the source workbooks for
@@ -512,10 +512,10 @@ No citation:
 
 ## Precedes/follows pass (2026-09-26 approved, AMENDED 2026-09-27)
 
-38 STAND (rule 4, stable-ID). 256 PROMOTE (D:hamid-verdict / Rule 5 sequence route).
-20 HOLD (D:hamid-verdict). **NOT basis-only** — 20 facts removed.
+38 STAND (rule 4, stable-ID). 256 PROMOTE (D:owner-verdict / Rule 5 sequence route).
+20 HOLD (D:owner-verdict). **NOT basis-only** — 20 facts removed.
 
-### Amendment 2026-09-27 (Hamid HOLD review)
+### Amendment 2026-09-27 (the decision owner's HOLD review)
 Evidence Discipline Rule 5 (lock): non-sibling precedes/follows needs an
 *affirmative* sequence citation (or two-way). Exclusion/boundary/owned-by is
 NOT a route (REL-00009 precedent applies to sequence verbs).
@@ -530,7 +530,7 @@ NOT a route (REL-00009 precedent applies to sequence verbs).
 - REL-00426 KEPT: scope has affirmative handoff ("submitting a payment
   request... to the designated AP/Treasury process").
 
-Each hold: **HOLD / D:hamid-verdict / Supersedes2026-09-26Approval**.
+Each hold: **HOLD / D:owner-verdict / Supersedes2026-09-26Approval**.
 All 20 facts verified unique single-row; zero knock-on.
 
 **Totals:** 635 − 20 = **615** emitting; 668 + 20 = **688** held;
@@ -548,13 +548,13 @@ Conservation: 615 + 688 + 12 + 1 + 2 = 1,318. ✓
 
 Raw `B follows A` retained in provenance; canonical fact remains `A core:precedes B`.
 
-### Precedes/follows supersessions (Hamid 2026-09-27, amending 2026-09-26 approval)
+### Precedes/follows supersessions (the decision owner 2026-09-27, amending 2026-09-26 approval)
 
 The 2026-09-26 precedes/follows approval did not cover rows without an
 affirmative sequence citation. Each row below was re-tested 2026-09-27
 against the full scope text (Evidence Discipline Rule 5). Each is now:
 
-**HOLD / D:hamid-verdict / NoAffirmativeSequenceCitation / ExclusionBoundaryCitation / Supersedes2026-09-26Approval**
+**HOLD / D:owner-verdict / NoAffirmativeSequenceCitation / ExclusionBoundaryCitation / Supersedes2026-09-26Approval**
 
 - **REL-01223**: ExclusionBoundaryCitation — source cites target as "owned by Regional Optimization (CM-1-1-2)"; boundary context only, not sequence.
 - **REL-01227**: ExclusionBoundaryCitation — source cites target in "excludes settlement … (CM-1-2-4-1)"; boundary only, not sequence.
@@ -586,7 +586,7 @@ reach its controlled state without the target, its completed control, or its
 required condition. Not merely inferred because the target later
 consumes/calculates/uses related information.
 
-5 APPROVE (D:hamid-verdict 2026-09-25). 1 HOLD (D:hamid-verdict 2026-09-25).
+5 APPROVE (D:owner-verdict 2026-09-25). 1 HOLD (D:owner-verdict 2026-09-25).
 **NOT basis-only** — 1 fact not emitted.
 
 **5 approved:**
@@ -611,7 +611,7 @@ consumes/calculates/uses related information.
 
 **1 held:**
 - REL-00208: CM-1-2-1-3-8 (Capture Structured Deals) requires CM-1-2-2-3-15
-  (Manage Commodity Valuations). **HOLD / D:hamid-verdict**. The asserted
+  (Manage Commodity Valuations). **HOLD / D:owner-verdict**. The asserted
   requires relation is not sufficiently supported as a prerequisite gate, and
   the proposed remap to core:dependsOnOutputOf would alter source meaning at
   emission time. Emit no triple. Route for source-workbook relationship review
@@ -627,7 +627,7 @@ oversight role over the assured thing or outcome. Not operational support,
 supply, documentation, evidence, balancing, fulfillment, feeding, or mere
 necessity.
 
-5 APPROVE (D:hamid-verdict). 3 HOLD (D:hamid-verdict).
+5 APPROVE (D:owner-verdict). 3 HOLD (D:owner-verdict).
 **NOT basis-only** — 3 facts not emitted.
 
 **5 approved:**
@@ -651,15 +651,15 @@ necessity.
   settlement operations.
 
 **3 held:**
-- REL-00355: **HOLD / D:hamid-verdict**. Manage Settlement Documents controls
+- REL-00355: **HOLD / D:owner-verdict**. Manage Settlement Documents controls
   documents used to execute and evidence settlements — operational support
   and evidence management, not sufficiently explicit independent assurance.
   Emit no triple.
-- REL-00385: **HOLD / D:hamid-verdict**. Documentation, workpapers,
+- REL-00385: **HOLD / D:owner-verdict**. Documentation, workpapers,
   reconciliation evidence, and controlled reporting support or evidence
   Accounting but do not establish that the source performs assurance over
   Accounting. Emit no triple.
-- REL-01106: **HOLD / D:hamid-verdict**. Crude/Feed Supply Management manages
+- REL-01106: **HOLD / D:owner-verdict**. Crude/Feed Supply Management manages
   the feedstock supply position and associated risks; it does not assure
   Crude/Feed Demand Management. The existing core:assuredBy fact is removed;
   emit no substitute.
@@ -672,7 +672,7 @@ Definition: `core:constrainedBy` — stored from the bounded activity, decision,
 or outcome to its binding constraint source. Excludes advice, broad
 association, ownership, sequencing, and optional considerations.
 
-10 APPROVE (D:hamid-verdict). 1 HOLD (D:hamid-verdict).
+10 APPROVE (D:owner-verdict). 1 HOLD (D:owner-verdict).
 **NOT basis-only** — 1 fact not emitted.
 
 **10 approved:**
@@ -698,14 +698,14 @@ association, ownership, sequencing, and optional considerations.
   (Inventory Management).
 
 **1 held:**
-- REL-00097: **HOLD / D:hamid-verdict**. The broad Refining target has no
+- REL-00097: **HOLD / D:owner-verdict**. The broad Refining target has no
   supplied definition and does not provide evidence that it is a constraint
   source for Capture Refinery Level Constraints. Retain the context hold,
   emit no triple.
 
 No count changes — all 10 approved facts already stored in canonical-facts.csv.
 
-## Figure correction — G1a attach count (2026-09-29, Hamid-authorized)
+## Figure correction — G1a attach count (2026-09-29, owner-authorized)
 
 The totals recorded in the precedes/follows amendment above (615 emitting /
 688 held) inherit a 2-row overcount from the 2026-09-26 uses-input pass,

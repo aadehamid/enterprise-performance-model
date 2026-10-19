@@ -89,7 +89,7 @@ risk.
 - Excluded: APQC cross-industry elements (e.g. 9.7.5 hedging), which aren't
   specific to downstream.
 
-## Conclusion (recommendation, for Hamid's decision)
+## Conclusion (recommendation, for the decision owner's decision)
 
 1. **Market Data is its own domain.** Downstream refiners buy it from licensed
    vendors and use it across valuation, margin benchmarking, RIN pricing,

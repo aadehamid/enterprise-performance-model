@@ -736,7 +736,7 @@ Only cells that changed are listed. `terminology_notes` was never touched except
 
 ## Follow-up: Step 3d breadcrumb-lock corrections (pre-merge, 2026-09-22)
 
-Hamid's pre-merge hold on one reverted Step 3d label in a breadcrumb cell (`CM-1-1-7-3-3`: crumb leaf "Manage and Support Emission Trading" vs executed "Manage and Support Emissions Trading"). Root cause: the R1 one-shot script rebuilt breadcrumbs from `downstream_process_map.json` node names, which carry stale pre-Step-3d labels; naming authority is the identity-map executed `name` (the same names that render TTL prefLabels). The script's breadcrumb logic is fixed in this commit to use the identity map; `tree_info` in `build/scripts/r1-workbook-update.py`.
+The decision owner's pre-merge hold on one reverted Step 3d label in a breadcrumb cell (`CM-1-1-7-3-3`: crumb leaf "Manage and Support Emission Trading" vs executed "Manage and Support Emissions Trading"). Root cause: the R1 one-shot script rebuilt breadcrumbs from `downstream_process_map.json` node names, which carry stale pre-Step-3d labels; naming authority is the identity-map executed `name` (the same names that render TTL prefLabels). The script's breadcrumb logic is fixed in this commit to use the identity map; `tree_info` in `build/scripts/r1-workbook-update.py`.
 
 A systematic scan of all 522 workbook rows against the identity-map naming authority found 26 stale breadcrumb cells of the same class — 1 introduced by the R1 script (CM-1-1-7-3-3) and 25 older ones from prior steps — all corrected below. Every corrected cell's leaf now equals the row's executed `name`, and every segment equals the executed name of its concept. Process JSON untouched (out of scope); the JSON diff stays exactly as approved.
 

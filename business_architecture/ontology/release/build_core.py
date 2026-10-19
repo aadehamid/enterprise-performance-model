@@ -37,8 +37,8 @@ SHAPES = os.path.join(HERE, "shapes.ttl")
 CHANGELOG = os.path.join(HERE, "CHANGELOG.md")
 PINNED = os.path.join(STEP4, "PINNED_SHA.txt")
 VERSION = "1.0.0"
-# A package built before Hamid approves a release is a release candidate (STAGE set,
-# no issued date). Hamid approved core 1.0.0 on 2026-10-13.
+# A package built before the decision owner approves a release is a release candidate (STAGE set,
+# no issued date). The decision owner approved core 1.0.0 on 2026-10-13.
 STAGE = None
 ISSUED = "2026-10-13"
 LABEL = VERSION if STAGE is None else f"{VERSION}-{STAGE}"
@@ -63,7 +63,7 @@ PREFIXES = {"core": CORE, "proc": PROC, "src": SRC, "mod": Namespace("https://w3
 # skos:editorialNote. A note that is both is filed under provenance.
 MIGRATION_EVENT = re.compile(r"renam|prior name|formerly|previously (named|labell?ed)|was (named|labell?ed)|"
                              r"tombstone|re-anchor|label[- ]change|relabel|R1 reclassif|reclassif", re.I)
-DECISION_POINTER = re.compile(r"decision recorded on|per Hamid's decision \(|Hamid accepted Option|"
+DECISION_POINTER = re.compile(r"decision recorded on|per the decision owner's decision \(|the decision owner accepted Option|"
                               r"PTC-001 \(step3c-parked-tree-changes\.md\)", re.I)
 HORIZON = {"event-driven": [("operating-mode", "event-driven")], "continuous": [("operating-mode", "continuous")],
            "periodic": [("operating-mode", "periodic")],
@@ -257,10 +257,10 @@ def build():
     for path in (VOCABULARY, os.path.join(SEQ_DIR, "vocabulary.ttl"), os.path.join(SEQ_DIR, "scoped-sequences.ttl")):
         out.parse(path)
 
-    # The scoped sequences cite the source author's answers as GitHub issue comments;
-    # describe each cited page so every dcterms:source resolves to a described resource.
+    # The scoped sequences cite the source author's answers as GitHub issue comments, named by
+    # URN (EPM-DEC-001-0049); describe each so every dcterms:source resolves to a described resource.
     for page in set(out.objects(None, DCTERMS.source)):
-        m = re.match(r"https://github\.com/[^/]+/[^/]+/issues/(\d+)#issuecomment-(\d+)$", str(page))
+        m = re.match(r"urn:epm:issue:(\d+):comment:(\d+)$", str(page))
         if m and (page, RDF.type, None) not in out:
             out.add((page, RDF.type, DCTERMS.BibliographicResource))
             out.add((page, DCTERMS.title, en(f"Source-author answer, GitHub issue #{m.group(1)}, comment {m.group(2)}")))
@@ -276,7 +276,7 @@ def build():
         "Governed definitions of LSC's business processes: identity, hierarchy, relationships, and lifecycle.")))
     out.add((ONTOLOGY_IRI, OWL.versionIRI, URIRef(f"{ONTOLOGY_IRI}/{LABEL}")))
     out.add((ONTOLOGY_IRI, OWL.versionInfo, Literal(LABEL)))
-    out.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("Hamid")))
+    out.add((ONTOLOGY_IRI, DCTERMS.creator, Literal("The decision owner")))
     if ISSUED:
         out.add((ONTOLOGY_IRI, DCTERMS.issued, Literal(ISSUED, datatype=XSD.date)))
         out.add((ONTOLOGY_IRI, DCTERMS.modified, Literal(ISSUED, datatype=XSD.date)))

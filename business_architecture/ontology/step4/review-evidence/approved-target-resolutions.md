@@ -1,7 +1,7 @@
 # Approved target resolutions — rule 5 "approved decision evidence"
 
 Extracted 2026-09-26 from the `main` branch of
-`aadehamid/enterprise-performance-model` (read-only, via GitHub API).
+`<owner>/enterprise-performance-model` (read-only, via GitHub API).
 These are the identity resolutions recorded as approved decision evidence
 that Step 4 relationship rows may be matched against under playbook Rule 5
 (same-branch nearness + approved decision evidence).

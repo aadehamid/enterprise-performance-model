@@ -1,7 +1,7 @@
 # Business Process Architecture Playbook — Downstream Process Definitions
 
 **Status:** Living document. Updated as each review batch completes; final update when Step 3c closes.
-**Owner:** Hamid
+**Owner:** The decision owner
 **Started:** 2026-09-21 (covering work from 2026-09-17)
 
 ## 1. About this document
@@ -37,7 +37,7 @@ A taxonomy alone (names in a hierarchy) is *useful*: people can navigate it. The
 | `process_horizon` | temporal dimension | Strategic through intraday: aligns each process to the planning/monitoring cadence it actually runs on, so KPI frequency and operating rhythm can be derived, not guessed. |
 | `responsible_domain` | accountability dimension | Who operates it — including cross-functional forms where authority genuinely spans functions. Placement in the taxonomy deliberately does *not* assign ownership; this field does. |
 | `reference_sources` | provenance (register IDs) | Every claim that leans on a regulator, statute, or standard is traceable to a registered source with scoped permitted use (§8). Evidence-linked, not vibes-linked. |
-| `terminology_notes` | decision provenance | The batch-stamped record of what was decided, what Hamid corrected, which labels are queued, and which open issues exist — the audit trail that makes the content defensible. |
+| `terminology_notes` | decision provenance | The batch-stamped record of what was decided, what the decision owner corrected, which labels are queued, and which open issues exist — the audit trail that makes the content defensible. |
 | `open_questions` / `status` / `parked_children` | workflow governance | Review-state machinery: approved rows carry no open questions; nothing parks silently; parked tree changes bind to the PTC register. |
 | `apqc_*` columns | external mapping evidence | The APQC cross-check that seeded each row — kept as comparison evidence, never as authority (APQC informs, local decisions govern). |
 
@@ -50,9 +50,9 @@ The consequence: the ontology built from this workbook can answer not only "what
 Human-in-the-loop, batch-based, evidence-first:
 
 1. **Batches are hierarchy-led and parent-first** — an L4 with its L5 children (5–26 rows), so every child is defined inside an already-agreed parent frame.
-2. **Package before edit** — the full proposed content (every field, every row) plus explicit questions (Q1–Q6) is delivered for Hamid's review *before* any cell changes. The package always recommends; it never surveys.
-3. **Approve with refinements** — every batch. Hamid's wording is applied verbatim; his corrections become precedents for all later batches.
-4. **Apply → validate → verify → draft PR** — scripted apply touching only the workbook; validation gate to the healthy baseline (`blocking=0 questions=0 notes=15 open_ptc=1`); cell-level diff proving only the intended rows changed and no name moved; draft PR that only Hamid merges.
+2. **Package before edit** — the full proposed content (every field, every row) plus explicit questions (Q1–Q6) is delivered for the decision owner's review *before* any cell changes. The package always recommends; it never surveys.
+3. **Approve with refinements** — every batch. The decision owner's wording is applied verbatim; their corrections become precedents for all later batches.
+4. **Apply → validate → verify → draft PR** — scripted apply touching only the workbook; validation gate to the healthy baseline (`blocking=0 questions=0 notes=15 open_ptc=1`); cell-level diff proving only the intended rows changed and no name moved; draft PR that only the decision owner merges.
 5. **Every rule cites its batch** ("the b14 payment-authority rule"), so any definition can be traced to the decision that shaped it and the PR that recorded it.
 
 Full operational detail (scripts, validator behavior, git mechanics, package format) lives in `step3c-review-handoff.md`; this playbook does not duplicate it.
@@ -98,7 +98,7 @@ Full operational detail (scripts, validator behavior, git mechanics, package for
 | 39 | Accounting, Reporting & Compliance (CM-1-3-8-4, 8) | #77 | **Accounting Execution Rule** (durable) with governed close exceptions; compliance = O2C control-operation evidence only; taxability recommendations for Tax approval; intercompany execution per approved transfer-pricing basis; royalty/fee stream administration; completed CM-1-3-8. |
 | 40 | Service & Support (CM-1-3-9, 15 rows) | #80 | Enablement and Delivery as continuous capabilities (Delivery reclassified in review); canonical request/enable/deliver/measure rule with case-to-service-event linkage; HR/IT/Facilities/contact-center corporate boundaries; five-way service data distinction; service-event outcome taxonomy + billable-evidence rule; workforce-data and formal-research controls; five generic-name alt labels. |
 | 41 | Terminal commercial operations (CM-1-3-10, 4 rows) | #81 | **Final intake batch.** Dual book-ownership/system-of-record boundary between Trade Capture and terminal sales-deal capture (durable); terminal authorization record-versus-decision rule with explicit lifecycle; Tax/Legal-approved rack-tax status consumed, not determined; customer lifting nominations vs shipper-side nominations (b33 split completed); rack allocation enforcement with title/rights limitation and four-way control separation; controlled deal-capture corrections; four preferred labels queued (Capture Terminal Sales Deal high-priority). |
-| 42 | L0 scheme roots + Step 3c closeout (2 rows) | #82 | **Closeout batch.** Downstream Operations and Enabling Functions approved as scheme roots (taxonomy/navigation anchors, `not-process`, no authority conferred by grouping); Midstream scoped to the downstream enterprise model, no categorical industry claim; gate amended with the frozen SCHEME_ROOT_APPROVED whitelist (option A, Hamid); naming-pass queue committed as controlled Draft artifact EPM-BA-NAMING-QUEUE-001 (`step3c-naming-pass-queue.md`, 92 entries in six categories); `CM-1-1-3-5-3` retained as the sole intentional pending business-evidence hold. Final state: approved=498 pending=1 blocked=3 retired=1. |
+| 42 | L0 scheme roots + Step 3c closeout (2 rows) | #82 | **Closeout batch.** Downstream Operations and Enabling Functions approved as scheme roots (taxonomy/navigation anchors, `not-process`, no authority conferred by grouping); Midstream scoped to the downstream enterprise model, no categorical industry claim; gate amended with the frozen SCHEME_ROOT_APPROVED whitelist (option A, the decision owner); naming-pass queue committed as controlled Draft artifact EPM-BA-NAMING-QUEUE-001 (`step3c-naming-pass-queue.md`, 92 entries in six categories); `CM-1-1-3-5-3` retained as the sole intentional pending business-evidence hold. Final state: approved=498 pending=1 blocked=3 retired=1. |
 
 ---
 
@@ -136,7 +136,7 @@ These rules were locked by explicit review decisions and govern all content, pre
 
 - **Process vs capability test:** children that are heterogeneous *concurrent controls* over an ongoing operation → `capability` (Insight & Metrics, Licensing & IP, Loyalty & Cards, Master Data, Commercial Terms, Credit & Risk, Service, Receivables Resolution, Accounting & Compliance). Children forming a *lifecycle with variants* → `process` (Order Fulfillment, Billing, Cash Application, Rebates). All capabilities are `continuous`.
 - **Horizons** reflect the true operating signal; `daily` is used sparingly and only where the cycle is genuinely daily (sales pricing, card acceptance, billing runs, receipt recording/application/reconciliation, order-book refresh). "Event-driven with daily/intraday cycles" and "continuous with periodic cycles within" are recorded patterns.
-- **`responsible_domain`** defaults to the operating branch; L4s whose control authority genuinely spans functions carry a cross-functional value (in Hamid's exact framing per batch), with children keeping the operating home and the L4 scope note stating that taxonomy placement assigns no single owner.
+- **`responsible_domain`** defaults to the operating branch; L4s whose control authority genuinely spans functions carry a cross-functional value (in the decision owner's exact framing per batch), with children keeping the operating home and the L4 scope note stating that taxonomy placement assigns no single owner.
 - **Naming:** locked names are never edited; preferred normalized labels accumulate as alt labels (word-level changes only — case/punctuation-only normalizations queue without alt labels) plus the naming-pass queue for a future taxonomy cycle.
 
 ---
@@ -158,8 +158,8 @@ Reading guide: each entry shows the source's organization, reference, access/ver
 ## 9. Completion checklist (fill in when Step 3c closes)
 
 - [x] Final batches (CM-1-3-9, CM-1-3-10) merged (#80, #81); batch log entries appended above.
-- [x] Held rows dispositioned with Hamid (b42): the two L0 roots approved as scheme roots; `CM-1-1-3-5-3` retained pending as the intentional business-evidence hold (batch 05 decision) — do not force it approved; pre-intake backfill remains a Step 3d authored pass (do not grow PRE_INTAKE_APPROVED).
-- [x] PTC-001 partially resolved in Step 3d; PTC-001-B confirmed as intentional strategy-ownership hold 2026-09-22 (Hamid) — Step 3d closed with that exception; PTC register updated.
+- [x] Held rows dispositioned with the decision owner (b42): the two L0 roots approved as scheme roots; `CM-1-1-3-5-3` retained pending as the intentional business-evidence hold (batch 05 decision) — do not force it approved; pre-intake backfill remains a Step 3d authored pass (do not grow PRE_INTAKE_APPROVED).
+- [x] PTC-001 partially resolved in Step 3d; PTC-001-B confirmed as intentional strategy-ownership hold 2026-09-22 (the decision owner) — Step 3d closed with that exception; PTC register updated.
 - [x] Traceability appendix regenerated against the finished workbook (#81).
 - [x] Naming-pass queue extracted into the controlled Draft artifact `step3c-naming-pass-queue.md` (EPM-BA-NAMING-QUEUE-001, b42). Execution is the first Step 3d activity: Critical semantic collision category gates semantic publication; the queue itself authorizes no renames.
 - [ ] Batches 1–20 log entries backfilled from PR history (dated amendment).

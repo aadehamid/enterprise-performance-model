@@ -1,4 +1,4 @@
-<!-- Hamid's words, verbatim from the Claude Code session of 2026-10-12, posted on #207 at https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137449831. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-12, posted on #207 at urn:epm:issue:207:comment:6137449831. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 so let us use kimi k3 for PR review and cursor agent from here with Grok 4.6 for independent reviews. cool?
 
