@@ -772,7 +772,7 @@ FIRST_QUOTE_CHECKED_DECISION = 26
 def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=DECISIONS):
     """Text attributed to the decision owner that is not word for word in a saved answer.
 
-    Checked: in every review file with a `owner_words` column, that column, the
+    Checked: in every review file with an `owner_words` column, that column, the
     `scope_note_sentence`, and each quoted span of three or more words in
     `semantic_reason` and `owner_decision`; every block quote in the
     source-correction backlog; and each quoted span of three or more words in
@@ -805,7 +805,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
             problems.append(f"{os.path.basename(path)}: repeated column {repeated}; cannot check it unambiguously")
             continue
         if not rows:
-            problems.append(f"{os.path.basename(path)}: has a owner_words column but no rows")
+            problems.append(f"{os.path.basename(path)}: has an owner_words column but no rows")
             continue
         checked_files += 1
         name = os.path.basename(path)
@@ -819,7 +819,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
                 for span in _spans(r.get(col, "")):
                     check(f"{where} {col}", span)
     if not checked_files:
-        problems.append(f"no review file with a owner_words column in {reviews}: nothing checked")
+        problems.append(f"no review file with an owner_words column in {reviews}: nothing checked")
     with open(backlog) as f:
         text = f.read()
     for para in block_quotes(text):
@@ -906,29 +906,53 @@ def cmd_decisions(args):
 OWNER_NAMES = re.compile("|".join(["ha" + "mid", "ade" + "sokan", "aade" + "ha" + "mid"]), re.I)
 
 
-def _name_texts(path):
-    """The text to scan in one file: the file itself, or each XML part of an Office file."""
+def _office_texts(where, data):
+    """An Office part's raw XML, and the displayed text of each cell, shared string or paragraph.
+
+    Parsing decodes character references and joins rich-text runs, so a name split across
+    runs or written as &#97; is found as Office displays it.
+    """
+    import xml.etree.ElementTree as ET
+    text = data.decode("utf-8", "replace")
+    out = [(where, text)]
+    try:
+        root = ET.fromstring(data)
+    except ET.ParseError:
+        return out
+    shown = ["".join(el.itertext()) for el in root.iter() if el.tag.rsplit("}", 1)[-1] in ("c", "si", "is", "p")]
+    out.append((f"{where} (displayed text)", "\n".join(shown)))
+    return out
+
+
+def _name_texts(path, name):
+    """(label, text) to scan in one file: the file itself, or each part of an Office file."""
     with open(path, "rb") as f:
         data = f.read()
-    if path.endswith((".xlsx", ".docx", ".pptx")):
+    if name.lower().endswith((".xlsx", ".docx", ".pptx")):
         import zipfile
+        texts = []
         with zipfile.ZipFile(io.BytesIO(data)) as z:
-            return [(f"{path}!{n}", z.read(n).decode("utf-8", "replace")) for n in z.namelist()]
-    return [(path, data.decode("utf-8", "replace"))]
+            for n in z.namelist():
+                texts += _office_texts(f"{name}!{n}", z.read(n))
+        return texts
+    return [(name, data.decode("utf-8", "replace"))]
 
 
 def name_problems(root=ROOT):
-    """Each tracked file and line that names the decision owner, in any case."""
-    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z"]).decode().split("\0")
+    """Each tracked path, and each line of a tracked file, that names the decision owner, in any case."""
+    # Inherited GIT_DIR or GIT_INDEX_FILE (a hook sets them) would point git at another repository.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    names = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], env=env).decode().split("\0")
     problems = []
     for name in names:
-        path = os.path.join(root, name)
-        if not name or os.path.islink(path) or not os.path.isfile(path):
+        if not name:
             continue
         if OWNER_NAMES.search(name):
             problems.append(f"{name}: the path names the decision owner")
-        for where, text in _name_texts(path):
-            where = os.path.relpath(where, root)
+        path = os.path.join(root, name)
+        if os.path.islink(path) or not os.path.isfile(path):
+            continue
+        for where, text in _name_texts(path, name):
             for i, line in enumerate(text.split("\n"), 1):
                 if OWNER_NAMES.search(line):
                     problems.append(f"{where}:{i}: names the decision owner")

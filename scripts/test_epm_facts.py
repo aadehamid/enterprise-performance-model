@@ -721,16 +721,27 @@ def test_no_tracked_file_names_the_decision_owner():
 def test_names_check_finds_the_owner_in_any_case_path_and_office_file(tmp_path):
     import zipfile
     first, user = "Ha" + "mid", "aade" + "ha" + "mid"
-    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    # A clean environment, so an inherited GIT_DIR or GIT_INDEX_FILE cannot point git elsewhere.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True, env=env)
     (tmp_path / "clean.md").write_text("The decision owner approved it.\n")
     (tmp_path / "prose.md").write_text(f"line one\n{first.upper()} approved it.\n")
     (tmp_path / "link.md").write_text(f"https://github.com/{user}/repo\n")
     (tmp_path / f"{first.lower()}-notes.txt").write_text("no name inside\n")
+    os.symlink("clean.md", tmp_path / f"{first}-link.md")
     with zipfile.ZipFile(tmp_path / "book.xlsx", "w") as z:
         z.writestr("xl/worksheets/sheet1.xml", f"<t>{first}'s verdict</t>")
-    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True)
+    # Office shows these cells as the name: a character reference, and two rich-text runs.
+    with zipfile.ZipFile(tmp_path / "PROBE.XLSX", "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("xl/sharedStrings.xml",
+                   '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+                   "<si><t>H&#97;mid</t></si><si><r><t>Ha</t></r><r><t>mid</t></r></si></sst>")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "."], check=True, env=env)
     assert sorted(epm_facts.name_problems(str(tmp_path))) == sorted([
+        "PROBE.XLSX!xl/sharedStrings.xml (displayed text):1: names the decision owner",
+        "PROBE.XLSX!xl/sharedStrings.xml (displayed text):2: names the decision owner",
         "book.xlsx!xl/worksheets/sheet1.xml:1: names the decision owner",
+        f"{first}-link.md: the path names the decision owner",
         f"{first.lower()}-notes.txt: the path names the decision owner",
         "link.md:1: names the decision owner",
         "prose.md:2: names the decision owner",
