@@ -15,7 +15,7 @@ EPM-DEC-001-0017 seeds the `kpi` module from "Hamid's Pricing KPI categories and
 
 **Hamid's decisions:**
 1. His two files are the KPI answer. The pasted "KPI: B" in his Step 7 reply is not his answer.
-2. Personas stay as a notion, without the people's names. Hamid chose the four planning roles Claude proposed ("Use these four (Recommended)").
+2. Personas stay as a notion, without the people's names. To Claude's question on persona names he answered "Use these four (Recommended)".
 3. Internal system, table and report names may be used. The GitHub repository was switched to private on 2026-10-18 for this reason (`gh repo edit --visibility private`; the API then returned `"visibility": "private"`); only the personas are generalized.
 4. He wrote to ignore the "DVS data pull"; the column in his files is headed DSV Data Pull, so that column is ignored.
 5. The two files are not added to the repository. The module holds the definitions built from them.
@@ -25,7 +25,7 @@ EPM-DEC-001-0017 seeds the `kpi` module from "Hamid's Pricing KPI categories and
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. This amends EPM-DEC-001-0017, order item 1: the module is seeded from the planner measure list, not from a list of Pricing KPI categories. The Pricing measures already in the repo (R&M margin per barrel, margin capture, the regional 3-2-1 crack spreads) join the module beside the list's rows, each citing MPC's filing.
 2. The classification rule, the evidence and the verdict for each row get their own decision record, in the classification pull request that follows this one.
-3. The four planning roles Claude proposed, and Hamid's choice confirmed: Prompt Planner (prompt month, hourly and daily, the APS schedule), Short-Term Planner (M+1 to M+3, the LP plan handed to the refineries), Distribution Planner (the DPO plan, prompt to M+3: pipelines, marine, inventory) and Mid-Term Planner (the MTP, M+4 to M+36). The names and horizons are Claude's wording.
+3. The four personas are Claude's proposal, the option that answer selected: Prompt Planner (prompt month, hourly and daily, the APS schedule), Short-Term Planner (M+1 to M+3, the LP plan handed to the refineries), Distribution Planner (the DPO plan, prompt to M+3: pipelines, marine, inventory) and Mid-Term Planner (the MTP, M+4 to M+36). The names and horizons are Claude's wording.
 4. Any other person named in a cell of his files also becomes a role, so no person's name enters the repo.
 5. No target or owner is invented to make a measure a KPI; a measure becomes a KPI only by a recorded decision that names them.
 6. The ontology still holds definitions only, never values (EPM-DEC-001-0005). The list's plan and actuals sources, tools and history windows describe how a consuming system computes a measure; they are recorded as attributes of the definition where a competency question needs them, and nowhere else.
