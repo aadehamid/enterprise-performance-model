@@ -36,4 +36,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - Every step of an inter-refinery transfer in the coverage check is now covered by a named process.
-- The MPC-P03 coverage check is closed.
+- The MPC-P03 coverage check is closed, on the proposal's stated assumption that CM 1.1.3 handles intermediates as well as finished products. If the decision owner reads CM 1.1.3 as finished products only, the rows that rest on it reopen (`MPC-P03-transfer-coverage-gaps.md`, the paragraph after the table).
