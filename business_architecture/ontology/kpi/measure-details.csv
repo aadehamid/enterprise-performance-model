@@ -14,7 +14,7 @@ demand-vs-forecast,"Actual sales less forecast sales for the period, against the
 supply-vs-forecast,"Actual purchases less forecast purchases for the period, against the plan version named.","daily and month to date, by product and region",actual supply - forecast supply (bbl),purchases vs forecast,,,CM 1.1.3
 opening-inventory-vs-plan,Actual opening inventory against the planned opening level for the next month.,"monthly, by node and product",actual opening inventory (bbl) against planned opening inventory (bbl),,,,CM 1.1.3.7
 dpo-input-variance-alert,An alert raised when a distribution-plan input table changes by more than a set share from the week before.,"weekly, by input table",week-on-week change above X%,,,,CM 1.1.3
-plan-overview-key-changes,A summary of the largest plan changes and the economic drivers behind them.,weekly,top changes by economic impact,,,,CM 1.1.2
+plan-overview-key-changes,A summary of the largest plan changes and the economic drivers behind them.,,top changes by economic impact,,,,CM 1.1.2
 crude-value-to-breakeven,"A screen of each crude's breakeven value from the planning model against its delivered price, by refinery, to pick incremental barrels for a full evaluation.","monthly, by refinery and crude",breakeven value ($/bbl) against delivered price ($/bbl),V2Be;variance to breakeven;incremental crude value,margin-capture,Not a measure of how well crude was bought: that is margin capture or a backcast.,CM 1.1.2.6
 crack-spreads,"Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price.","daily, by market hub","products price - crude price, for a stated crude:product ratio (for example 3-2-1)",the crack;3-2-1 crack;crack spread,rm-margin-per-barrel;margin-capture;rm-margin-indicator,"Not realized refinery margin, not margin capture, and not MPC's R&M Margin Indicator. A 3-2-1 built from separate product and crude legs is not the published series.",CM 1.1.4.7.4
 gasoline-prices,Benchmark gasoline spot prices at named hubs.,"daily, by hub",$/gal as published,CBOB prices,,,CM 1.1.4.7.4
@@ -22,13 +22,13 @@ distillate-prices,Benchmark distillate and jet spot prices at named hubs.,"daily
 crude-prices,"Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB).","daily, by marker","$/bbl, $/MMBtu or cents/gal as published",crude markers,,,CM 1.1.4.7.4
 price-comparison,The difference between two chosen market markers over time.,"daily, by marker pair",price A - price B,spread,,,CM 1.1.4.7.4
 additional-market-prices,"Further benchmark, crude, renewables and NGL prices used in planning.","daily, by marker",as published,,,,CM 1.1.4.7.4
-tar-activities-tracker,"A list of turnaround activities planned for the next four months, by refinery.",daily view of a four-month horizon,none,TAR tracker;turnaround tracker,,Not a turnaround optimization: it tracks the activities already planned.,L2-refinery-asset-reliability-and-turnaround-coordination
-sales-purchase-status,"A trend of rack sales and purchase statuses from marketing, showing statuses held for more than a week.",daily,none,,,,CM 1.1.3
+tar-activities-tracker,"A list of turnaround activities planned for the next four months, by refinery.",,,TAR tracker;turnaround tracker,,Not a turnaround optimization: it tracks the activities already planned.,L2-refinery-asset-reliability-and-turnaround-coordination
+sales-purchase-status,"A trend of rack sales and purchase statuses from marketing, showing statuses held for more than a week.",,,,,,CM 1.1.3
 production-rate-record,A notification when a refinery sets a new clean products production rate record.,event,current rate > previous record,rate records,,,CM 1.1.7.2.5
-capital-project-evaluations,Open capital project evaluations against their due dates.,daily,completion date against due date,,,,CM 1.1.4.6
-mtp-submission-tracker,Mid-term plan submissions against their due dates.,daily,completion date against due date,MTP submission,,,CM 1.1.4.6.1
-key-activity-tracker,Critical planning activities and meetings against their due dates.,daily,completion date against due date,,,,CM 1.1.4.6.1
-marketing-performance-vs-plan,Marketing's results against the marketing plan.,not yet set,not yet set,,,,CM 1.3.5.5
+capital-project-evaluations,Open capital project evaluations against their due dates.,,completion date against due date,,,,CM 1.1.4.6
+mtp-submission-tracker,Mid-term plan submissions against their due dates.,,completion date against due date,MTP submission,,,CM 1.1.4.6.1
+key-activity-tracker,Critical planning activities and meetings against their due dates.,,completion date against due date,,,,CM 1.1.4.6.1
+marketing-performance-vs-plan,Marketing's results against the marketing plan.,,,,,,CM 1.3.5.5
 regional-site-monitoring,"A future view of plant status across the region, combining operations notes with unit performance.",,,,,,
 ad-hoc-plan-trends,A future capability for ad hoc trends of plan data and a chatbot over the planning database.,,,,,,
 rm-margin-per-barrel,MPC's Refining & Marketing margin (sales revenue less the cost of refinery inputs and purchased products) per barrel of net refinery throughput.,"quarterly and annual, company and region",R&M margin ($) / net refinery throughput (bbl); from 2026 the margin includes impacts from derivative activity,R&M margin per barrel;refining margin per barrel,crack-spreads,"Not a crack spread: it is realized, not a market benchmark.",CM 1.1.5;CM 1.3.5.1.4

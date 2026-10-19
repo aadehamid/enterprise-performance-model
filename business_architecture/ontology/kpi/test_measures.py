@@ -11,6 +11,7 @@ import os
 import re
 import subprocess
 import sys
+import unicodedata
 import unittest
 
 from pyshacl import validate
@@ -151,24 +152,49 @@ class Shapes(unittest.TestCase):
     def test_a_measure_without_a_source_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((MEASURE["margin-capture"], URIRef("http://purl.org/dc/terms/source"), None))))
 
+    def test_a_tracker_with_a_grain_fails(self):
+        self.assertFalse(self.broken(lambda g: g.add((MEASURE["tar-activities-tracker"], KPI.grain,
+                                                      Literal("daily")))))
+
     def test_a_measure_without_a_definition_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((MEASURE["margin-capture"], SKOS.definition, None))))
 
 
+def name_tokens(text):
+    """Lower-case word tokens, with accents removed and CamelCase split, so a name written
+    "Name", "NAME", "name-surname", "NameSurname" or with an accent still matches."""
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    text = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", text)
+    return set(re.findall(r"[a-z]+", text.lower()))
+
+
 class Privacy(unittest.TestCase):
     def test_no_person_name_from_the_measure_list_is_in_the_repo(self):
-        # EPM-DEC-001-0040: personas stay, the people's names do not. Every tracked text file
-        # is checked, plus this folder's files before they are committed.
+        # EPM-DEC-001-0040: personas stay, the people's names do not. Every tracked file is
+        # read, whatever its extension, and so is every file in this folder before it is
+        # committed. A file holding a NUL byte is binary and skipped.
         tracked = subprocess.run(["git", "ls-files", "-z"], cwd=bm.REPO, capture_output=True, check=True).stdout
         paths = {os.path.join(bm.REPO, os.fsdecode(n)) for n in tracked.split(b"\0") if n}
         paths |= {p for p in glob.glob(os.path.join(HERE, "*")) if os.path.isfile(p)}
-        text_files = [p for p in paths if re.search(r"\.(md|csv|ttl|py|json|rq|txt|sh|yml)$", p) and os.path.isfile(p)]
-        self.assertTrue(text_files)
-        for path in sorted(text_files):
-            with open(path, encoding="utf-8", errors="replace") as f:
-                tokens = set(re.findall(r"[a-z]+", f.read().lower()))
-            hits = {t for t in tokens if hashlib.sha256(t.encode()).hexdigest()[:16] in NAME_HASHES}
+        checked = 0
+        for path in sorted(p for p in paths if os.path.isfile(p)):
+            with open(path, "rb") as f:
+                data = f.read()
+            if b"\0" in data:
+                continue
+            checked += 1
+            hits = {t for t in name_tokens(data.decode("utf-8", errors="replace"))
+                    if hashlib.sha256(t.encode()).hexdigest()[:16] in NAME_HASHES}
             self.assertEqual(hits, set(), os.path.relpath(path, bm.REPO))
+        self.assertGreater(checked, 600)
+
+    def test_the_matcher_catches_case_hyphen_camel_case_and_accents(self):
+        # A stand-in name, so the test shows the matcher works without naming anyone.
+        target = hashlib.sha256(b"placeholder").hexdigest()[:16]
+        for text in ("Placeholder", "PLACEHOLDER", "placeholder-person", "PlaceholderPerson", "Pl\u00e1ceholder"):
+            with self.subTest(text=text):
+                self.assertIn(target, {hashlib.sha256(t.encode()).hexdigest()[:16] for t in name_tokens(text)})
 
 
 if __name__ == "__main__":

@@ -62,7 +62,6 @@ measure:capital-project-evaluations a skos:Concept,
     kpi:classificationReason "Open project evaluations against due dates. Its linked alert (missed deadline, X days) is an alert; a count of late evaluations would be an operational metric."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "due date"^^xsd:string ;
-    kpi:grain "daily"^^xsd:string ;
     kpi:informsProcess proc:CM-1-1-4-6 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;
@@ -335,7 +334,6 @@ measure:key-activity-tracker a skos:Concept,
     kpi:classificationReason "Critical activities and meetings against due dates."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "due date"^^xsd:string ;
-    kpi:grain "daily"^^xsd:string ;
     kpi:informsProcess proc:CM-1-1-4-6-1 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;
@@ -374,11 +372,9 @@ measure:marketing-performance-vs-plan a skos:Concept,
     skos:inScheme kpi:Measures ;
     skos:notation "marketing-performance-vs-plan"^^xsd:string ;
     skos:prefLabel "Marketing Performance vs. Plan"@en ;
-    kpi:basis "not yet set"^^xsd:string ;
     kpi:classificationReason "Marketing's results against its plan. Everything else about it is TBD in the list; the class follows the name."^^xsd:string ;
     kpi:classificationTest 4 ;
     kpi:comparedAgainst "marketing plan"^^xsd:string ;
-    kpi:grain "not yet set"^^xsd:string ;
     kpi:informsProcess proc:CM-1-3-5-5 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:plan-variance-diagnostic ;
@@ -399,7 +395,6 @@ measure:mtp-submission-tracker a skos:Concept,
     kpi:classificationReason "Mid-term plan submissions against due dates."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "due date"^^xsd:string ;
-    kpi:grain "daily"^^xsd:string ;
     kpi:informsProcess proc:CM-1-1-4-6-1 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;
@@ -486,7 +481,6 @@ measure:plan-overview-key-changes a skos:Concept,
     kpi:classificationReason "A summary of the top changes and their economic drivers. It has no single formula, unit or grain."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "prior plan version"^^xsd:string ;
-    kpi:grain "weekly"^^xsd:string ;
     kpi:informsProcess proc:CM-1-1-2 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;
@@ -618,11 +612,9 @@ measure:sales-purchase-status a skos:Concept,
     skos:inScheme kpi:Measures ;
     skos:notation "sales-purchase-status"^^xsd:string ;
     skos:prefLabel "Sales/Purchases Status Control"@en ;
-    kpi:basis "none"^^xsd:string ;
     kpi:classificationReason "A trend of rack sales and purchase statuses that stay in place for over a week. A status view, not a quantity with a target."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "none"^^xsd:string ;
-    kpi:grain "daily"^^xsd:string ;
     kpi:informsProcess proc:CM-1-1-3 ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;
@@ -685,11 +677,9 @@ measure:tar-activities-tracker a skos:Concept,
     skos:notation "tar-activities-tracker"^^xsd:string ;
     skos:prefLabel "TAR Activities Tracker"@en ;
     skos:scopeNote "Not a turnaround optimization: it tracks the activities already planned."@en ;
-    kpi:basis "none"^^xsd:string ;
     kpi:classificationReason "A list of turnaround activities for the next four months. The Mid-Term Planner's turnaround work is optimization of windows and sequence, not tracking (Part B, Q9); its measures are listed separately below."^^xsd:string ;
     kpi:classificationTest 1 ;
     kpi:comparedAgainst "next 4 months"^^xsd:string ;
-    kpi:grain "daily view of a four-month horizon"^^xsd:string ;
     kpi:informsProcess proc:L2-refinery-asset-reliability-and-turnaround-coordination ;
     kpi:kpiCandidate false ;
     kpi:measureKind kind:tracker-or-report ;

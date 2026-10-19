@@ -9,7 +9,7 @@ The `kpi` module defines the measures that Hamid's planning team uses and that M
 | `personas.csv` | The four planning personas, with plan type and horizon |
 | `vocabulary.ttl`, `shapes.ttl` | The module's terms and SHACL shapes, with a stated cardinality on every property (EPM-DEC-001-0043) |
 | `build_measures.py`, `measures.ttl` | The build: three tables in, 41 measure definitions and 4 personas out. `python3 build_measures.py` prints the figures; `--verify` fails unless `measures.ttl` equals a fresh build. `scripts/check.sh` runs it |
-| `test_measures.py` | Tests: the vocabulary is well formed, the build is current and reconciles, SHACL accepts the module and rejects broken measures, and no person's name from the measure list is anywhere in the repo |
+| `test_measures.py` | Tests: the vocabulary is well formed, the build is current and reconciles, SHACL accepts the module and rejects broken measures, and no person's name from the measure list is in any tracked text file (every extension; binary files skipped), in any case, hyphenated, CamelCase or accented spelling |
 
 The module is built and checked, not released. Its first release, 1.0.0, is a major and waits for Hamid.
 

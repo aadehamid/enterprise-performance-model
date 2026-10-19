@@ -54,6 +54,14 @@ shp:CandidateIsOperational a sh:NodeShape ;
             [ sh:path kpi:measureKind ; sh:hasValue kind:operational-metric ] ) ;
     sh:message "Only an operational metric can be a KPI candidate." .
 
+# A tracker or report has no formula, unit or time grain (EPM-DEC-001-0042, rule 1), and a
+# capability that is not a measure has none either.
+shp:NoGrainWithoutAMeasure a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:or ( [ sh:path kpi:grain ; sh:maxCount 0 ]
+            [ sh:not [ sh:path kpi:measureKind ; sh:in ( kind:tracker-or-report kind:not-a-measure ) ] ] ) ;
+    sh:message "A tracker, report or non-measure has no grain." .
+
 shp:Persona a sh:NodeShape ;
     sh:targetSubjectsOf kpi:planType ;
     sh:class org:Role ;
