@@ -19,7 +19,7 @@ EPM-DEC-001-0037 left the licence open after Hamid decided not to host the names
 1. No open licence is applied. The ontology README's licence line stays as it is.
 2. EPM-DEC-001-0037, For Hamid item 3, is closed: not hosted (EPM-DEC-001-0039), proprietary (this record).
 3. The released packages do not change. The next `core` release writes a `dcterms:rights` statement that says all rights reserved and carries APQC's attribution, in place of the dangling `dcterms:license` IRI.
-4. The repository is private since 2026-10-18 (EPM-DEC-001-0040; `gh api repos/aadehamid/enterprise-performance-model` returned `"visibility": "private"` after the switch that day), so the package's option C is also in effect.
+4. Separately, Hamid had the repository made private on 2026-10-18 so that internal names may be used (EPM-DEC-001-0040). That is not the package's option C, which kept the licence open; the licence is decided here.
 
 ## Alternatives considered
 
