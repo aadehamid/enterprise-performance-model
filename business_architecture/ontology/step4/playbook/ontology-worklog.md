@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### MPC process-map proposals ruled and applied (2026-10-18)
+- Hamid accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
+  to apply them to the process map itself (EPM-DEC-001-0047). Each map
+  change is its own pull request. `core` 2.0.0 now builds from the map at
+  its pinned commit, so released packages do not move; new nodes reach the
+  ontology in a later `core` release.
+
 ### Licence and KPI seed (2026-10-18)
 - Hamid decided the ontology stays proprietary, all rights reserved
   (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.
