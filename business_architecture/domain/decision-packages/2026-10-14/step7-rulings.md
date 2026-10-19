@@ -1,6 +1,8 @@
 # Step 7 rulings: decision package
 
-Status: Open, for Hamid. Date: 2026-10-14. Nothing in this package is ruled. Each question ends with options, and the recommendation is listed first.
+*2026-10-18:* answered by Hamid. KPI: his planner measure list (EPM-DEC-001-0040). MD and P: his rulings in `answers-2026-10-18.md`, carried out in later pull requests.
+
+Status: Answered by Hamid on 2026-10-18 (see the note above). Date: 2026-10-14. When prepared, nothing in this package was ruled. Each question ends with options, and the recommendation is listed first.
 
 ## What you need to do
 

@@ -1,6 +1,8 @@
 # Decision packages, 2026-10-14
 
-Five packages, prepared overnight for Hamid. Nothing in them is decided. Each question lists its options with the recommended one first, the reason, and what each answer changes. Reply in the chat with the short form each package gives. The agent then records your words in `business_architecture/ontology/step4/review-evidence/hamid-answers/` and makes the changes in pull requests, as usual.
+Five packages, prepared overnight for Hamid. *2026-10-18:* Hamid answered packages 2 to 5 (his words in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`); package 1 is still open. The licence and KPI-seed answers are recorded in the pull request that records the answers; the others are carried out in their own pull requests. The licence is recorded in EPM-DEC-001-0041 and the KPI seed in EPM-DEC-001-0040.
+
+When prepared, nothing in them was decided. Each question lists its options with the recommended one first, the reason, and what each answer changes. Reply in the chat with the short form each package gives. The agent then records your words in `business_architecture/ontology/step4/review-evidence/hamid-answers/` and makes the changes in pull requests, as usual.
 
 | # | Package | What you answer | Recommended |
 |---|---|---|---|
@@ -12,7 +14,7 @@ Five packages, prepared overnight for Hamid. Nothing in them is decided. Each qu
 
 Three facts the packages found that you may want first:
 
-- The GitHub repository is public and has no LICENSE file, so anyone can read the ontology even though nothing is hosted (licence package).
+- The GitHub repository is public and has no LICENSE file, so anyone can read the ontology even though nothing is hosted (licence package). *2026-10-18:* the repository is now private, at Hamid's instruction.
 - On #262, #266 and #269, the Cursor app merged 7 to 10 seconds after the bot's MERGE, before the `checks` workflow finished. CI passed afterwards on each (PR review package).
 - The domain split in #266 rests on your answer "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own . This makes sesne to me. What do you think?". The PR review package asks you to confirm it was a decision.
 
