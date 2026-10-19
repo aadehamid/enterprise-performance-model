@@ -360,6 +360,22 @@ def test_quotes_accept_saved_words_in_a_decision_record(tmp_path):
     assert _decision_fixture(tmp_path, 26, words) == []
 
 
+def test_quotes_pair_quote_marks_within_one_paragraph(tmp_path):
+    # Issue #251: a stray quote mark in one paragraph paired with the opening mark of a quote
+    # in the next, and the words between them were reported as an unsaved quote.
+    words = ('He approved on #226: "Approved: Q1–Q18 as recommended in the comment above" and left a stray " mark.\n\n'
+             'Later he wrote this in the session: "yes, extend the delegation to steps 5 to 12."')
+    assert _decision_fixture(tmp_path, 26, words) == []
+
+
+def test_quotes_still_catch_an_unsaved_quote_after_a_stray_mark(tmp_path):
+    words = ('He left a stray " mark here.\n\n'
+             'Then he said "these words were never saved anywhere at all".')
+    problems = _decision_fixture(tmp_path, 26, words)
+    assert any("never saved anywhere" in p for p in problems)
+    assert not any("mark here" in p for p in problems)
+
+
 def test_quotes_check_only_the_recorded_words_section(tmp_path):
     # The Decision section quotes the predicate's definition, which is not Hamid's answer.
     assert _decision_fixture(tmp_path, 27, 'He said "Approved: Q1–Q18 as recommended in the comment above"') == []

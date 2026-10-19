@@ -48,9 +48,9 @@ On merging, later in the same session (saved in `business_architecture/ontology/
 
 On scope and review ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137266851), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-goal.md`): "go until we finish emiting the ontology and updating the ontology playbook. Keep a log of what you did. Keep using kimi for PR reviewers. Do you need independent reviewer. We should do independent reviewer at least once and at most two times"
 
-On the extension, in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12."
-
 On the reviewers ([#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137449831), saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-reviewers.md`): "so let us use kimi k3 for PR review and cursor agent from here with Grok 4.6 for independent reviews. cool?"; "kimi can review the PR until we merge we dont need subagents for this. we should do review like cursor bot was doing it."; "Can you try "ollama launch pi --model glm-5.3-flash:cloud""; "it looks like the two kimi got stuck. I ran out of usgae. So we will need to siwtch those to either cursor agent or pi depending on wether ther pre-PR or PR"
+
+On the extension, in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12."
 
 ## Consequences
 
