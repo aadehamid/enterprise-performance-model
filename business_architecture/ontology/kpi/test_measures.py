@@ -84,6 +84,15 @@ class Vocabulary(unittest.TestCase):
 
 
 class Build(unittest.TestCase):
+    def test_the_planner_list_source_is_named_vco_dsv(self):
+        # Hamid named the list's source (answers-2026-10-19-vco-dsv.md); the source keeps its IRI.
+        from rdflib.namespace import DCTERMS
+        g = Graph().parse(os.path.join(HERE, "measures.ttl"))
+        src = bm.SOURCES["planner list"]
+        self.assertEqual(str(src), "https://w3id.org/lsc/ontology/source/hamid-planner-measure-list-2026-10-18")
+        self.assertIn("Value Chain Optimization Decision Support and Visualization (VCO DSV)", str(g.value(src, DCTERMS.title)))
+        self.assertEqual(g.value(src, DCTERMS.alternative), Literal("VCO DSV", lang="en"))
+
     def test_measures_ttl_is_current(self):
         r = subprocess.run([sys.executable, os.path.join(HERE, "build_measures.py"), "--verify"],
                            capture_output=True, text=True)
