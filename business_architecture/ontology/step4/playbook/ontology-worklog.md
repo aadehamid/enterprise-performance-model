@@ -963,8 +963,8 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
 ### Market Data and Commercial Risk (2026-10-18)
-- Hamid defined both domains by the meaning and control needs of their
-  information, and named the Risk Group as owner (Market Data
+- Hamid accepted the domain split with explicit distinctions, gave both
+  definitions, and named the Risk Group as owner (Market Data
   provisionally). Trading-counterparty credit is in Commercial Risk;
   volatilities are risk-model parameters, vendor observations are Market
   Data. EPM-DEC-001-0046.
