@@ -42,7 +42,7 @@ SOURCES = {  # where a measure comes from -> the source it cites
     "industry": SRC["kpi-classification-evidence"],
 }
 SOURCE_TITLES = {
-    SOURCES["planner list"]: "Hamid's planner measure list, 2026-10-18, held outside the repository (EPM-DEC-001-0040)",
+    SOURCES["planner list"]: "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as Hamid sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)",
     SOURCES["MPC"]: "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md",
     SOURCES["industry"]: "KPI or operational metric, business_architecture/reference/downstream-peers/kpi-classification-evidence.md",
 }
@@ -113,6 +113,8 @@ def build(rows, details, personas, labels, procs):
     for iri, title in SOURCE_TITLES.items():
         g.add((iri, RDF.type, DCTERMS.BibliographicResource))
         g.add((iri, DCTERMS.title, Literal(title, lang="en")))
+    # The planner list's short name, as Hamid gave it (answers-2026-10-19-vco-dsv.md).
+    g.add((SOURCES["planner list"], DCTERMS.alternative, Literal("VCO DSV", lang="en")))
     for p in personas:
         iri = PERSONA[p["slug"]]
         g.add((iri, RDF.type, ORG.Role))
