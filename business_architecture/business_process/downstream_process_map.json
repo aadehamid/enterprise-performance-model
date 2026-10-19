@@ -7132,12 +7132,36 @@
                         "id": "CM 1.2.4.3.6",
                         "level": 5,
                         "name": "Manage RINs Reporting",
+                        "description": "Report RIN generation, transactions and retirements. A step of environmental compliance credit management (CM 1.2.4.3.8.1).",
                         "renewablesSpecific": true
                       },
                       {
                         "id": "CM 1.2.4.3.7",
                         "level": 5,
                         "name": "Manage Exceptions"
+                      },
+                      {
+                        "id": "CM 1.2.4.3.8",
+                        "level": 5,
+                        "name": "Manage Environmental Credits and Clean-Fuel Incentives",
+                        "description": "Govern the environmental compliance credits a company generates, buys, holds and uses, and the clean-fuel tax credits it earns and claims, under one set of controls: provenance, eligibility evidence, valuation, reconciliation and audit. The instruments are not interchangeable. Compliance credits (RINs under the Renewable Fuel Standard, LCFS credits) are obtained and used against a compliance obligation; the clean-fuel production credit (Section 45Z) is a federal income tax credit claimed on a tax return, so it has its own lifecycle. MPC's renewable diesel generates RINs, 45Z tax credits and LCFS credits (MPC FY2025 Form 10-K, Item 1). EPM-DEC-001-0047, MPC-P05.",
+                        "renewablesSpecific": true,
+                        "children": [
+                          {
+                            "id": "CM 1.2.4.3.8.1",
+                            "level": 6,
+                            "name": "Manage Environmental Compliance Credits",
+                            "description": "Run the lifecycle of compliance credits for each program: determine the obligation (a Renewable Volume Obligation under the RFS; deficits under LCFS), generate credits from qualifying fuel, buy and sell credits with integrity checks on the counterparty and the credit (MPC runs a RIN integrity program to vet the RINs it buys, MPC FY2025 Form 10-K, Item 1), transfer them between accounts, and retire them to show compliance. RINs are generated with renewable fuel, traded assigned or separated, and retired by obligated parties for compliance (U.S. EPA, \"Renewable Identification Numbers (RINs) under the Renewable Fuel Standard Program\"). LCFS fuels below the carbon-intensity benchmark generate credits and fuels above it generate deficits, which a deficit generator meets with credits it earns or acquires (California Air Resources Board, \"Low Carbon Fuel Standard\", About page). RIN actualization (CM 1.2.3.1.7) and RIN reporting (CM 1.2.4.3.6) are steps of this lifecycle.",
+                            "renewablesSpecific": true
+                          },
+                          {
+                            "id": "CM 1.2.4.3.8.2",
+                            "level": 6,
+                            "name": "Manage Clean-Fuel Production Tax Credits",
+                            "description": "Run the lifecycle of the Section 45Z clean fuel production credit: register as a producer of clean fuel before production (Form 637), document that each fuel qualifies (qualified facility, qualified sale, emissions factor, and from 2026 feedstock from the United States, Mexico or Canada), determine the credit for the taxable year, and claim it with the income tax return (Form 7218). The credit is not retired against an obligation (Internal Revenue Service, \"Clean Fuel Production Credit\").",
+                            "renewablesSpecific": true
+                          }
+                        ]
                       }
                     ]
                   },
