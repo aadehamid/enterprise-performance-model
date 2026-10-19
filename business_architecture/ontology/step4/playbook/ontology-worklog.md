@@ -985,6 +985,13 @@ without a dated amendment and the decision owner's explicit agreement.
   EPM-DEC-001-0048, with their
   words in `review-evidence/decision-owner-answers/answers-2026-10-19-morning.md`.
 
+### Package 1 and the measure categories approved (2026-10-19)
+- The decision owner approved decision package 1 and the eight measure
+  categories (EPM-DEC-001-0050). PRs #262, #266 and #269 stand as merged,
+  with a dated note in EPM-DEC-001-0036 and 0038. A ruleset on `main`, which
+  requires `checks` and one approving review, is added after the record
+  merges. MPC-P09 is unblocked and goes in its own pull request.
+
 ### MPC process-map proposals ruled (2026-10-18)
 - The decision owner accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
   to apply them to the process map itself (EPM-DEC-001-0047). Under the
