@@ -7216,7 +7216,7 @@
                 "id": "CM 1.2.5",
                 "level": 3,
                 "name": "Crude/Feed Supply Chain Management",
-                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management.",
+                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management. Renewable feedstocks, such as vegetable oils and fats for renewable diesel, run through the same processes as other feedstocks; the one control they add is the traceability and carbon-intensity evidence their credits depend on (CM 1.2.5.1.5). Renewable fuel production stays outside the current scope (EPM-DEC-001-0047, MPC-P04).",
                 "officeLane": "operations",
                 "variants": [
                   "crude",
@@ -7254,6 +7254,13 @@
                         "id": "CM 1.2.5.1.4",
                         "level": 5,
                         "name": "Develop Spot Slate"
+                      },
+                      {
+                        "id": "CM 1.2.5.1.5",
+                        "level": 5,
+                        "name": "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence",
+                        "description": "Keep the evidence for each renewable feedstock lot that credit eligibility depends on: where the feedstock came from and its carbon-intensity data. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (IRS), and LCFS credits depend on a fuel's carbon intensity (CARB). The evidence feeds environmental credit and clean-fuel incentive management (CM 1.2.4.3.8).",
+                        "renewablesSpecific": true
                       }
                     ]
                   },
