@@ -29,10 +29,12 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
-INPUTS = ["releases/core/2.0.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
+INPUTS = ["releases/core/2.1.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
           "organization/assignments.ttl", "ref-mpc/ref-mpc.ttl"]
-SHAPES = ["releases/core/2.0.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
-          "validation/controlled-values.ttl", "provenance/run-shapes.ttl"]
+# core 2.1.0's release shapes carry the controlled-value shapes (EPM-DEC-001-0044), so
+# validation/controlled-values.ttl is not listed again.
+SHAPES = ["releases/core/2.1.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
+          "provenance/run-shapes.ttl"]
 LOADABLE = os.path.join(HERE, "loadable.nt")
 INFERRED = os.path.join(HERE, "inferred.nt")
 MANIFEST = os.path.join(HERE, "projection-manifest.json")
@@ -117,9 +119,11 @@ def check_rules(data, shapes):
         if not any(str(p).startswith(ns) for ns in PREFIXES.values()):
             problems.append(f"Rule 3: no fixed prefix for {p}")
     # Rule 4a: every qualified-relation node has an IRI and one value for each end. These are the
-    # three qualified-relation classes the modules define (core's scoped sequence, EPM-DEC-001-0026;
-    # the organization module's assignment and control relationship); a new one must be added here.
+    # four qualified-relation classes the modules define (core's scoped sequence, EPM-DEC-001-0026,
+    # and canonical fact, EPM-DEC-001-0044; the organization module's assignment and control
+    # relationship); a new one must be added here.
     for cls, ends in ((URIRef(OWN[0] + "ScopedSequence"), (OWN[0] + "earlierProcess", OWN[0] + "laterProcess")),
+                      (URIRef(OWN[0] + "CanonicalFact"), (OWN[0] + "factSubject", OWN[0] + "factPredicate", OWN[0] + "factObject")),
                       (URIRef(OWN[1] + "ResponsibilityAssignment"), (OWN[1] + "forProcess", OWN[1] + "assignedRole")),
                       (URIRef(OWN[1] + "ControlRelationship"), (OWN[1] + "controllingEntity", OWN[1] + "controlledEntity"))):
         for node in data.subjects(RDF.type, cls):

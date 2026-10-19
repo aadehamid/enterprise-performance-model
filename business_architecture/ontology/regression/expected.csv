@@ -11,11 +11,11 @@ question,status,queries,waits_for
 10,waits:step-7,,capabilities and value streams (Step 7)
 11,partial,q11-apqc-references.rq,APQC elements with no local counterpart need the full APQC PCF 7.2.2 element list in the graph; the release carries only the referenced elements
 12,answerable,q12-apqc-divergence.rq,
-13,waits:step-7,,"concept vs named measure vs report (KPI seed, EPM-DEC-001-0017)"
-14,waits:step-7,,which concepts may become a number (KPI seed)
+13,answerable,q13a-measure-vs-report.rq;q13b-only-measures-have-kinds.rq,
+14,answerable,q14a-may-become-a-number.rq;q14b-processes-are-not-measures.rq,
 15,waits:step-7,,"same word, same meaning test (Step 7 bindings)"
 16,answerable,q16-names.rq,
-17,waits:step-5,,meaning owner vs data steward (Step 5)
+17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, Hamid's answer 7 a)"
 18,answerable,q18-identity-version.rq,
 19,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
 20,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
@@ -25,21 +25,21 @@ question,status,queries,waits_for
 24,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
 25,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
 26,waits:EPM-DEC-001-0004,,Customer / Party module waits for Hamid's customer details
-27,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-28,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-29,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-30,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-31,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-32,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-33,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-34,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-35,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-36,waits:step-7,,"Named KPI (KPI seed, EPM-DEC-001-0017)"
-37,waits:step-7,,placement of concepts and Named KPIs (Step 7)
+27,answerable,q27-measure-definitions.rq,
+28,waits:step-7,,"population in and out of a measure (kpi module holds definition and basis, not population rules)"
+29,answerable,q29-grain.rq,
+30,answerable,q30-comparisons-are-views.rq,
+31,waits:step-7,,same vs different published series: the kpi module groups the crack spreads as one market indicator; per-series identity waits for the Market Data definitions
+32,answerable,q32-crack-is-not.rq,
+33,answerable,q33-informs-process.rq,
+34,waits:step-7,,"which domain concepts a measure quantifies (region, product slate, crude marker) waits for the Market Data definitions"
+35,waits:step-7,,catalog binding waits for the data products (Step 7 order item 3)
+36,answerable,q36-the-crack.rq,
+37,partial,q37-kpi-placement.rq,Named KPI candidates answer now (EPM-DEC-001-0043); concepts' placement waits for the Step 7 overlays
 38,waits:step-7,,placement certification vs context (Step 7)
 39,partial,q39-downstream.rq,processes answer now; concepts and Named KPIs wait for Step 7
 40,partial,q40-official-wording.rq,"where the wording is published for people, and what is only a copy (Step 10)"
-41,waits:step-7,,what an agent may answer needs the KPI module; graph part only
-42,waits:step-7,,what an agent must refuse needs the KPI module; graph part only
+41,waits:step-7,,what an agent may answer needs answer rules over the kpi module; graph part only
+42,waits:step-7,,what an agent must refuse needs refusal rules over the kpi module; graph part only
 43,partial,q43-one-definition.rq,"the Genie binding itself, outside the graph (EPM-DEC-001-0019)"
 44,partial,q44-sources.rq,marking which source is authoritative (Step 7 or 9)

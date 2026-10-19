@@ -8,6 +8,11 @@ One assignment per RACI entry and role: an entry that names two roles (a compoun
 gives two assignments. Nothing is inferred from the hierarchy: a process without a `raci`
 object in the source gets no assignment. The ledger (raci-conservation.csv) reconciles
 entries in with assignments out.
+
+A role deprecated in organization 2.0.0 (EPM-DEC-001-0045) hands its assignments to its
+successor: orgm:assignedRole names the live role, and the assignment keeps its IRI (which names
+the role the source string was registered to) and its source text. No assignment IRI is added
+or removed by a role merge.
 """
 import argparse
 import csv
@@ -47,6 +52,7 @@ def assignment_iri(process_iri, level, role, text):
 def build():
     entries, register, roles = br.load()
     roles_of = {r["source_text"]: r["roles"].split(";") for r in register}
+    live = {r["slug"]: r["replaced_by"] or r["slug"] for r in roles}
     iris = process_iris()
     missing = sorted({p for p, _, _ in entries if p not in iris})
     if missing:
@@ -62,11 +68,15 @@ def build():
                 sys.exit(f"two assignments share the IRI {a}: the same string twice in one list of {process}")
             g.add((a, RDF.type, br.ORGM.ResponsibilityAssignment))
             g.add((a, br.ORGM.forProcess, iris[process]))
-            g.add((a, br.ORGM.assignedRole, br.ROLE[role]))
+            g.add((a, br.ORGM.assignedRole, br.ROLE[live[role]]))
             g.add((a, br.ORGM.raciLevel, RACI[level]))
             g.add((a, br.ORGM.sourceRoleText, Literal(text, datatype=XSD.string)))
             g.add((a, DCTERMS.source, br.PROCESS_MAP))
     return entries, register, g
+
+
+def roles_of_text(register, text):
+    return next(r["roles"].split(";") for r in register if r["source_text"] == text)
 
 
 def ledger(entries, register, g):
@@ -79,6 +89,11 @@ def ledger(entries, register, g):
             ("assignments emitted", len(set(g.subjects(RDF.type, br.ORGM.ResponsibilityAssignment))))]
     rows += [(f"assignments at level {lvl}", out[lvl]) for lvl in br.LEVELS]
     rows += [(f"entries at level {lvl}", sum(1 for _, lv, _ in entries if lv == lvl)) for lvl in br.LEVELS]
+    # Organization 2.0.0 (EPM-DEC-001-0045): assignments whose registered role was deprecated
+    # now name its successor. Moving them changes no count above.
+    replaced = {r["slug"] for r in br.read_csv(br.ROLES) if r["replaced_by"]}
+    rows.append(("assignments moved to a successor role",
+                 sum(1 for _, _, t in entries for role in roles_of_text(register, t) if role in replaced)))
     values = dict(rows)
     if values["RACI entries in the source"] + values["extra roles from compound strings"] != values["assignments emitted"]:
         sys.exit("RACI ledger does not reconcile: entries + extra roles != assignments")

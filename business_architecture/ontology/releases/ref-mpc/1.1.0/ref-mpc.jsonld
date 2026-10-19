@@ -1,0 +1,790 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5)."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-19"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-19"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/organization/2.0.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Reference Instances: Marathon Petroleum Corporation"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/1.1.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.1.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc",
+  "@type": [
+   "http://www.w3.org/ns/org#FormalOrganization"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/gleif-lei"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+   {
+    "@id": "https://api.gleif.org/api/v1/lei-records/3BNYRYQHD39K4LCKQF12"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "MPC"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marathon Petroleum Corporation"
+   }
+  ],
+  "http://www.w3.org/ns/org#identifier": [
+   {
+    "@value": "3BNYRYQHD39K4LCKQF12"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc-controls-mplx",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/organization/ControlRelationship"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "The filing states the share as approximate: \"As of December 31, 2025, we owned the general partner of MPLX and approximately 64 percent of the outstanding MPLX common units.\" MPC controls and consolidates MPLX (Item 1, Overview; Item 7)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/organization/asOf": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/organization/controlledEntity": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mplx"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/organization/controllingEntity": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/organization/ownershipShare": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#decimal",
+    "@value": "0.64"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mplx",
+  "@type": [
+   "http://www.w3.org/ns/org#FormalOrganization"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/gleif-lei"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#seeAlso": [
+   {
+    "@id": "https://api.gleif.org/api/v1/lei-records/5493000CZJ19CK4P3G36"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "MPLX"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "GLEIF lists this LEI's registration as LAPSED (last updated 2023-08-04) and records no accounting-consolidation parent (reporting exception NO_KNOWN_PERSON), so the control relationship below has no GLEIF Level 2 counterpart."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MPLX LP"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "A master limited partnership that MPC sponsors. A separate legal entity, not a unit of MPC: MPC's control of it is the control relationship below, not org:subOrganizationOf."
+   }
+  ],
+  "http://www.w3.org/ns/org#identifier": [
+   {
+    "@value": "5493000CZJ19CK4P3G36"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-anacortes",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Anacortes, Washington; in MPC's West Coast refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Anacortes refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-canton",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Canton, Ohio; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Canton refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-catlettsburg",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Catlettsburg, Kentucky; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Catlettsburg refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-detroit",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Detroit, Michigan; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Detroit refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-el-paso",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in El Paso, Texas; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "El Paso refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-galveston-bay",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Texas City, Texas; in MPC's Gulf Coast refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Galveston Bay refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-garyville",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Garyville, Louisiana; in MPC's Gulf Coast refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Garyville refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-kenai",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Kenai, Alaska; in MPC's West Coast refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Kenai refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-los-angeles",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Los Angeles, California; in MPC's West Coast refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Los Angeles refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-mandan",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Mandan, North Dakota; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Mandan refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-robinson",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Robinson, Illinois; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Robinson refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-salt-lake-city",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in Salt Lake City, Utah; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Salt Lake City refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/refinery-st-paul-park",
+  "@type": [
+   "http://www.w3.org/ns/org#Site"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#note": [
+   {
+    "@language": "en",
+    "@value": "Located in St. Paul Park, Minnesota; in MPC's Mid-Continent refining region."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "St. Paul Park refinery"
+   }
+  ],
+  "http://www.w3.org/ns/org#siteOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/segment-midstream",
+  "@type": [
+   "http://www.w3.org/ns/org#OrganizationalUnit"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's reportable segment that gathers, transports, stores and distributes crude oil, refined products and natural gas liquids, and processes natural gas. It is primarily MPLX."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "A reporting segment of MPC, separate from the legal entity MPLX whose operations roll up into it (EPM-DEC-001-0015)."
+   }
+  ],
+  "http://www.w3.org/ns/org#unitOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/segment-refining-and-marketing",
+  "@type": [
+   "http://www.w3.org/ns/org#OrganizationalUnit"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's reportable segment that refines crude oil and other feedstocks at its refineries and sells refined products."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Refining & Marketing"
+   }
+  ],
+  "http://www.w3.org/ns/org#unitOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/segment-renewable-diesel",
+  "@type": [
+   "http://www.w3.org/ns/org#OrganizationalUnit"
+  ],
+  "http://purl.org/dc/terms/date": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2025-12-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-s01"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's reportable segment that processes renewable feedstocks into renewable diesel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Renewable Diesel"
+   }
+  ],
+  "http://www.w3.org/ns/org#unitOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/ref-mpc/mpc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/gleif-lei",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "https://api.gleif.org/api/v1/lei-records"
+   }
+  ],
+  "http://purl.org/dc/terms/identifier": [
+   {
+    "@value": "GLEIF API v1, lei-records"
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-13"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "GLEIF LEI records (Level 1 and Level 2), golden copy published 2026-10-13"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-s01",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm"
+   }
+  ],
+  "http://purl.org/dc/terms/identifier": [
+   {
+    "@value": "0001510295-26-000009"
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-02-26"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "Marathon Petroleum Corporation, Form 10-K for the fiscal year ended 2025-12-31"
+   }
+  ]
+ }
+]

@@ -85,6 +85,9 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
   Pricing and Rack Pricing data products.
 - Confirm the capacity-utilization basis and regional per-barrel margins
   before any KPI is defined on them.
+  *2026-10-18:* both confirmed: utilization uses average calendar-day
+  capacity, and the regional per-barrel margins are in MPC-S07
+  (`../reference/mpc/mpc-performance-measures-evidence.md`, findings 1 and 2).
 
 ## Change log
 
@@ -93,4 +96,5 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
 | 2026-09-29 | v0.1 created: Customer (classification adopted), Commercial Pricing & Price Realization, Market Data and Commercial Risk (proposed) |
 | 2026-10-05 | v0.2: D1 to D4 decided (EPM-DEC-001-0006 to 0009); Market Data and Commercial Risk definitions set for Step 7; Customer work waits for Hamid's details |
 | 2026-10-13 | Open item points to the draft Market Data and Commercial Risk definitions (`market-data-and-commercial-risk-draft.md`) for Hamid's decision |
+| 2026-10-18 | Open item on the capacity basis and regional per-barrel margins closed (EPM-DEC-001-0042 evidence) |
 | 2026-10-18 | Market Data and Commercial Risk defined, with owners (EPM-DEC-001-0046) |
