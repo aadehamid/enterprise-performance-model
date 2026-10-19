@@ -26,7 +26,7 @@ EPM-DEC-001-0011 moved MPC-P01 and P03 to P09 to Step 7, and EPM-DEC-001-0012 de
 5. **P06 needs no map edit now.** Hamid chose the channel dimension ("P06: A."; the package's option A: a channel dimension built from the customer classification C1 to C8 when the Customer work resumes, EPM-DEC-001-0004). What is Claude's, under the delegation, is only the follow-through: no map edit until the Customer work resumes.
 6. **P09 waits for Hamid's category approval.** Hamid accepted it "after category approval". The measure categories are the classes in EPM-DEC-001-0042, which Claude decided under the delegation; that is not Hamid's approval. So P09 is to be prepared, with each measure's relationship to its stage (informs, benchmarks, measures performance), and applied only after Hamid approves the categories.
 7. **Process names stay company-neutral.** MPC facts go in descriptions with their source, never in a node name (`process-map-suggestions.md`, "Not suggested").
-8. **P01's scope label is Claude's.** The fuels-logistics scope Hamid accepted ("P01: A.") is labelled "Fuels Logistics supporting Refining and Marketing", wording from the analysis he pasted with his rulings; the label itself is not in his saved answers, so it is Claude's, under the delegation.
+8. **P01's scope label is Claude's.** Hamid accepted the fuels-logistics scope ("P01: A."). Claude, under the delegation, labels it "Fuels Logistics supporting Refining and Marketing", Claude's wording, built on the proposal's recommendation to model the fuels-logistics part that serves R&M (`process-map-suggestions.md`, MPC-P01).
 
 ## Alternatives considered
 
