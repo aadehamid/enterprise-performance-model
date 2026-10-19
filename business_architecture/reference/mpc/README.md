@@ -37,4 +37,5 @@ instances, KPIs and definitions against.
 | `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C8 + facets), each class cited to filings or MPC materials |
 | `pricing-domain-evidence.md` | Evidence for Pricing as a candidate data domain (MPC filings + EIA definitions) |
 | `mpc-performance-measures-evidence.md` | MPC's publicly defined performance measures (30, one of them read only in a not-confirmed copy, in a 33-row table that also lists 3 it does not publish), their grain, which drive the annual cash bonus, and a peer comparison; used for the `kpi` module's classification |
+| `loss-gain-and-feedstock-evidence.md` | MPC and MPLX statements on movement losses and gains and on renewable feedstock traceability (EPM-DEC-001-0048) |
 | `process-map-suggestions.md` | Proposed updates to the process map suggested by MPC material (Proposed — not applied) |

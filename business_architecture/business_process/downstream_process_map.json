@@ -3912,6 +3912,12 @@
                         "id": "CM 1.1.3.7.12",
                         "level": 5,
                         "name": "Manage Inventory"
+                      },
+                      {
+                        "id": "CM 1.1.3.7.13",
+                        "level": 5,
+                        "name": "Reconcile Movement Losses and Gains",
+                        "description": "Compare the quantities measured at each end of a movement or held in storage, find the losses and gains, and settle the imbalances, for every movement by pipeline, marine, rail, truck and storage, including transfers of intermediates between refineries. Gains and losses come from pressure and temperature changes, evaporation and differences between meter readings and other measurement methods; until settled, an imbalance is carried as an asset or a payable, and it is settled in cash, by physical delivery of volumes from another source, or tracked and settled later (MPLX FY2025 Form 10-K, Note 2, Imbalances). API MPMS Chapter 17.5 (marine cargo quantity differences) and Chapter 23 (loss and gain on non-marine systems) are the industry standards for this work. Produces the Loss Control data product (EPM-DEC-001-0048)."
                       }
                     ]
                   },
@@ -9800,7 +9806,7 @@
             "id": "CM 1.1.7",
             "level": 2,
             "name": "Refinery Production Planning and Scheduling",
-            "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management. Inter-refinery transfers of intermediate products (IRT) run through existing steps, not a separate process: regional targets that include refinery transfers (CM 1.1.2.9.1); the IRT optimization case (CM 1.1.5.5.4); physical distribution scheduling, which nominates, loads, tracks, discharges and reconciles each movement (CM 1.1.3.6.1 to CM 1.1.3.6.4); inventory measurement and reconciliation (CM 1.1.3.7.4, CM 1.1.3.7.5); actual transfer volumes and costs for backcasting (CM 1.1.5.1.2.1, CM 1.1.5.1.2.5); and settlement of intermediates (CM 1.2.4.1.18). No step yet names the loss and gain reconciliation of a transfer, or the quality measurement of a transferred intermediate; MPC-P03 coverage gaps, business_architecture/business_process/proposals/MPC-P03-transfer-coverage-gaps.md (EPM-DEC-001-0047).",
+            "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management. Inter-refinery transfers of intermediate products (IRT) run through existing steps, not a separate process: regional targets that include refinery transfers (CM 1.1.2.9.1); the IRT optimization case (CM 1.1.5.5.4); physical distribution scheduling, which nominates, loads, tracks, discharges and reconciles each movement (CM 1.1.3.6.1 to CM 1.1.3.6.4); inventory measurement and reconciliation (CM 1.1.3.7.4, CM 1.1.3.7.5); actual transfer volumes and costs for backcasting (CM 1.1.5.1.2.1, CM 1.1.5.1.2.5); and settlement of intermediates (CM 1.2.4.1.18). Losses and gains on each transfer are reconciled in CM 1.1.3.7.13 (EPM-DEC-001-0048). No step yet names the quality measurement of a transferred intermediate; MPC-P03 coverage gaps, business_architecture/business_process/proposals/MPC-P03-transfer-coverage-gaps.md (EPM-DEC-001-0047).",
             "children": [
               {
                 "id": "CM 1.1.7.1",
