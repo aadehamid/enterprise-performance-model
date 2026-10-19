@@ -7222,7 +7222,7 @@
                 "id": "CM 1.2.5",
                 "level": 3,
                 "name": "Crude/Feed Supply Chain Management",
-                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management.",
+                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management. Renewable feedstocks for renewable diesel, such as refined soybean oil (MPC FY2025 Form 10-K, renewable diesel section), run through the same processes as other feedstocks. Renewable fuel production stays outside the current scope (EPM-DEC-001-0047, MPC-P04).",
                 "officeLane": "operations",
                 "variants": [
                   "crude",
