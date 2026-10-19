@@ -9,7 +9,7 @@
 
 ## Context
 
-Hamid said most of his list are operational metrics, not KPIs, and asked for each to be classified from industry practice and MPC's public information, with KPI candidates marked and no target or owner invented (EPM-DEC-001-0040). The classification is in `business_architecture/ontology/kpi/measure-classification.csv`: one row per distinct measure.
+Hamid said most of his list are operational metrics, not KPIs, and asked for each to be classified from industry practice and MPC's public information, with KPI candidates marked (EPM-DEC-001-0040). Under the delegation, no target or owner is invented (EPM-DEC-001-0040, What follows). The classification is in `business_architecture/ontology/kpi/measure-classification.csv`: one row per distinct measure.
 
 ## Decision
 
@@ -18,9 +18,9 @@ Hamid said most of his list are operational metrics, not KPIs, and asked for eac
    1. No formula, unit or time grain: **tracker or report** (or **not a measure**, for a capability request).
    2. Emitted only when a condition is met: **alert**.
    3. Value set by an external market or benchmark the region cannot influence: **market indicator**. A value computed from market prices and the planning model to start or rank a decision, with no performance target: **decision-support indicator**.
-   4. Actual against a plan, forecast, prior plan version or history, for one period: **plan-variance diagnostic**.
+   4. Actual results, or a plan, compared with a plan, forecast, prior plan version or history, for one period: **plan-variance diagnostic**.
    5. Designated as above, with a target and owner: **KPI**. Otherwise: **operational metric**. Where the evidence makes a measure a strong KPI candidate, the row says `kpi_candidate = yes`.
-3. **Result.** 41 measures: 32 from Hamid's list, 8 that MPC publishes and 1 from industry practice. By class: 15 operational metrics, 7 market indicators, 6 plan-variance diagnostics, 6 trackers or reports, 2 alerts, 2 not measures (future capabilities, parked), 2 KPIs and 1 decision-support indicator. Six operational metrics are KPI candidates: Crude Utilization, R&M Margin per Barrel, Margin Capture, Refining Operating Costs per Barrel, Planned Turnaround Costs per Barrel and Lost Margin from Turnarounds.
+3. **Result.** 41 measures: 32 from Hamid's list, 8 that MPC publishes and 1 from industry practice. By class: 15 operational metrics (Swing Stream Disposition counted here on the assumption that its TBD calculation is a volume per period), 7 market indicators, 6 plan-variance diagnostics, 6 trackers or reports, 2 alerts, 2 not measures (future capabilities, parked), 2 KPIs and 1 decision-support indicator. Six operational metrics are KPI candidates: Crude Utilization, R&M Margin per Barrel, Margin Capture, Refining Operating Costs per Barrel, Planned Turnaround Costs per Barrel and Lost Margin from Turnarounds.
 4. **No row of Hamid's list is a KPI on present evidence.** None has a recorded target or owner. The two KPIs are MPC's own: Relative Refining Margin per Barrel by Region and Relative Adjusted EBITDA per Barrel of Total Throughput, which MPC's annual cash bonus sets with targets (MPC-S16, MPC-S18).
 5. **Crude Value to Breakeven is a decision-support indicator.** It is a crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full evaluation. Its after-the-fact counterpart is margin capture (VT-01, VT-02, VT-04, VT-09, VT-12; MPC-S07). No public source uses the name "V2Be", so the reading matches the list's description to standard practice.
 6. **The Mid-Term Planner's turnaround work is optimization.** At M+4 to M+36 the planner chooses turnaround windows and their sequence, and plans supply and inventory around them; schedule adherence is the turnaround team's tracking (VT-16, VT-17, VT-18; MPC-S01). The TAR Activities Tracker stays a tracker for the Prompt Planner. Planned Turnaround Costs per Barrel (MPC) and Lost Margin from Turnarounds are the turnaround measures the mid-term view affects.

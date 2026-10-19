@@ -85,6 +85,9 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
   Pricing and Rack Pricing data products.
 - Confirm the capacity-utilization basis and regional per-barrel margins
   before any KPI is defined on them.
+  *2026-10-18:* both confirmed: utilization uses average calendar-day
+  capacity, and the regional per-barrel margins are in MPC-S07
+  (`../reference/mpc/mpc-performance-measures-evidence.md`, findings 1 and 2).
 
 ## Change log
 

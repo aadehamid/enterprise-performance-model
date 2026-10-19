@@ -962,6 +962,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### KPI measure classification (2026-10-18)
+- Most measures on Hamid's planner list are operational metrics. A KPI
+  is a designation with a target and an owner, not a kind of measure.
+  41 measures classified: 15 operational metrics (6 KPI candidates),
+  7 market indicators, 6 plan-variance diagnostics, 6 trackers or
+  reports, 2 alerts, 2 KPIs (MPC's bonus measures), 1 decision-support
+  indicator, 2 parked capabilities. Delegated under EPM-DEC-001-0028;
+  EPM-DEC-001-0042, table in `ontology/kpi/measure-classification.csv`.
+
 ### Licence and KPI seed (2026-10-18)
 - Hamid decided the ontology stays proprietary, all rights reserved
   (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.

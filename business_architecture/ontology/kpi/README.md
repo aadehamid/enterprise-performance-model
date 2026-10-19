@@ -16,7 +16,7 @@ Personas are planning roles, not people: Prompt Planner (prompt month, hourly an
 |---|---|
 | `kpi` | Designated as one of the few measures of a stated objective, with a target and an owner |
 | `operational-metric` | A recurring performance measure of a unit, asset or flow, watched by exception |
-| `plan-variance-diagnostic` | Actual against a plan, forecast, plan version or history, for one period |
+| `plan-variance-diagnostic` | Actual results, or a plan, compared with a plan, forecast, plan version or history, for one period |
 | `market-indicator` | An external price, spread or benchmark the region cannot influence |
 | `decision-support-indicator` | A value computed from market prices and the planning model to start or rank a decision |
 | `tracker-or-report` | A list, status or schedule; no formula, unit or grain |
