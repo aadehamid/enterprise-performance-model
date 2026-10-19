@@ -21,7 +21,7 @@ The URI policy of 2026-09-18 set the base `https://w3id.org/lsc/ontology/` and l
 3. Step 10's gate ("the catalog resolves and the release is retrievable") is parked by this decision. Releases stay retrievable from the repository under their tags. The revival trigger is a decision on the domain.
 4. If the domain changes, the base IRI changes with it. That is a change to every term's identity, so it needs its own decision and major releases of every module (playbook Appendix B). Choosing the domain before anyone uses the ontology keeps that cost low.
 
-The licence question (EPM-DEC-001-0037, For Hamid item 3) is separate and still open.
+The licence question (EPM-DEC-001-0037, For Hamid item 3) is separate and still open. *2026-10-18:* decided, proprietary (EPM-DEC-001-0041).
 
 ## Alternatives considered
 
