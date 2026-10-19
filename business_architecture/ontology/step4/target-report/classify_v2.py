@@ -11,8 +11,11 @@ Changes vs v1:
   PR #120: a label match only finds candidates; it never resolves.
 - baseline_sha recorded on every row (release-checklist requirement).
 """
-import re, json, csv, os
+import re, json, csv, os, sys
 from collections import Counter, defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from batch_checks import related_mentions  # noqa: E402  the one reader of intake:relatedConcepts
 
 # Step 4 working directory: derived from this file; EPM_STEP4_DIR overrides.
 BASE = os.environ.get("EPM_STEP4_DIR") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,22 +45,7 @@ for slug, rec in by_slug.items():
 
 slug_in_parens = re.compile(r"\(([A-Za-z]+-\d[\d-]*)\)\s*$")
 
-rows = []
-current = None
-for line in ttl.splitlines():
-    m = re.match(r"proc:([A-Za-z]+-\d[\d-]*)\s+a\s+skos:Concept", line)
-    if m:
-        current = m.group(1)
-        continue
-    m = re.search(r'intake:relatedConcepts\s+"([^"]*)"', line)
-    if m and current:
-        for part in m.group(1).split("|"):
-            part = part.strip()
-            if not part or ":" not in part:
-                continue
-            verb, tgt = part.split(":", 1)
-            rows.append({"subject": current, "verb": verb.strip(),
-                         "target": tgt.strip()})
+rows = [{"subject": s, "verb": verb, "target": tgt} for s, verb, tgt in related_mentions(ttl)]
 print("mentions:", len(rows))
 
 MANUAL = {
