@@ -369,12 +369,12 @@ def test_quotes_pair_quote_marks_within_one_paragraph(tmp_path):
     assert _decision_fixture(tmp_path, 26, words) == []
 
 
-def test_quotes_still_catch_an_unsaved_quote_after_a_stray_mark(tmp_path):
+def test_quotes_still_catch_an_unsaved_quote_after_an_empty_pair(tmp_path):
     words = ('He quoted "" here and moved on.\n\n'
              'Then he said "these words were never saved anywhere at all".')
     problems = _decision_fixture(tmp_path, 26, words)
     assert any("never saved anywhere" in p for p in problems)
-    assert not any("not in a saved answer" in p and "mark here" in p for p in problems)
+    assert not any("moved on" in p for p in problems)
 
 
 def test_quotes_report_an_unclosed_quotation(tmp_path):
@@ -384,6 +384,12 @@ def test_quotes_report_an_unclosed_quotation(tmp_path):
              'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"')
     problems = _decision_fixture(tmp_path, 26, words)
     assert any("unpaired quote mark" in p and "never saved" in p for p in problems)
+
+
+def test_quotes_report_unequal_curly_quote_marks(tmp_path):
+    words = ('He said “words never saved anywhere at all\n\n'
+             'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"')
+    assert any("unpaired quote mark" in p for p in _decision_fixture(tmp_path, 26, words))
 
 
 def test_quotes_check_only_the_recorded_words_section(tmp_path):
