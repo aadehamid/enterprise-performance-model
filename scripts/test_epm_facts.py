@@ -360,6 +360,38 @@ def test_quotes_accept_saved_words_in_a_decision_record(tmp_path):
     assert _decision_fixture(tmp_path, 26, words) == []
 
 
+def test_quotes_pair_quote_marks_within_one_paragraph(tmp_path):
+    # Issue #251: EPM-DEC-001-0028 quoted a nested quotation ending in "". The quote pattern
+    # skips an empty pair's first mark and paired its second with the opening mark of a quote
+    # in the next paragraph, reporting the words between them as an unsaved quote.
+    words = ('He approved on #226: "Approved: Q1–Q18 as recommended in the comment above" and quoted "" there.\n\n'
+             'Later he wrote this in the session: "yes, extend the delegation to steps 5 to 12."')
+    assert _decision_fixture(tmp_path, 26, words) == []
+
+
+def test_quotes_still_catch_an_unsaved_quote_after_an_empty_pair(tmp_path):
+    words = ('He quoted "" here and moved on.\n\n'
+             'Then he said "these words were never saved anywhere at all".')
+    problems = _decision_fixture(tmp_path, 26, words)
+    assert any("never saved anywhere" in p for p in problems)
+    assert not any("moved on" in p for p in problems)
+
+
+def test_quotes_report_an_unclosed_quotation(tmp_path):
+    # Pi's review of #251: quote marks pair only within a block, so an unclosed quotation
+    # beside a saved one would otherwise pass unchecked.
+    words = ('He said "words never saved anywhere at all\n\n'
+             'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"')
+    problems = _decision_fixture(tmp_path, 26, words)
+    assert any("unpaired quote mark" in p and "never saved" in p for p in problems)
+
+
+def test_quotes_report_unequal_curly_quote_marks(tmp_path):
+    words = ('He said “words never saved anywhere at all\n\n'
+             'He approved on #226: "Approved: Q1–Q18 as recommended in the comment above"')
+    assert any("unpaired quote mark" in p for p in _decision_fixture(tmp_path, 26, words))
+
+
 def test_quotes_check_only_the_recorded_words_section(tmp_path):
     # The Decision section quotes the predicate's definition, which is not Hamid's answer.
     assert _decision_fixture(tmp_path, 27, 'He said "Approved: Q1–Q18 as recommended in the comment above"') == []
