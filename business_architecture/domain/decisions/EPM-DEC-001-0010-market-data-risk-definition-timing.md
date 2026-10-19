@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided |
+| Status | Decided; carried out by EPM-DEC-001-0046 (2026-10-18) |
 | Date | 2026-10-05 |
 | Questions | Q17 |
 | Source | Grilling session on the handover plan |
