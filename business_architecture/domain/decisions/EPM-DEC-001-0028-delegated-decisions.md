@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12 |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, and 2026-10-18 on the reviewers |
 | Source | Claude Code session, 2026-10-12; recorded on [#207](https://github.com/aadehamid/enterprise-performance-model/issues/207#issuecomment-6137222677) |
 
 ## Context
@@ -34,7 +34,7 @@ On 2026-10-13, during the Steps 5 to 12 night run, Hamid changed the reviewers n
 
 After `core` 1.0.0 was released (#249) and the playbook updated (#250), the original scope was complete. Claude listed the remaining steps: 5 (organizations and roles), 6 (interfaces and provenance), 7 (integration), 9 (full SHACL), 10 (publication), 11 (regression tests) and 12 (property-graph projection). Step 8 was done on 2026-09-17. Claude said the delegation covered none of them and asked whether to extend it. Hamid extended it to Steps 5 to 12.
 
-The amendment changes only the scope. Everything else in this record applies unchanged to Steps 5 to 12: the evidence order, the recording rule, the one or two review rounds per PR, the reviewers and the merge conditions. A major release still needs Hamid ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). APPROVAL_POLICY.md still routes some PRs to a human.
+The amendment changes only the scope. Everything else in this record applies unchanged to Steps 5 to 12: the evidence order, the recording rule, the one or two review rounds per PR, the reviewers (changed 2026-10-13; see the amendment of 2026-10-18) and the merge conditions. A major release still needs Hamid ("Major (including any deprecation): Hamid. No exceptions", `step4/playbook/ontology-worklog.md`, "Who approves a release"). APPROVAL_POLICY.md still routes some PRs to a human.
 
 Not part of the decision: in the message Hamid answered, Claude proposed bringing three kinds of business facts to him in batches for approval, the way the Phase 1 register worked: the RACI assignments (Step 5), the KPI and Market Data and Commercial Risk definitions (Step 7), and the hosting and license choices (Step 10). Hamid's words extend the scope only; they neither adopt nor reject that proposal. Those questions are delegated like any other in scope, and Claude may still choose to put them to Hamid.
 
