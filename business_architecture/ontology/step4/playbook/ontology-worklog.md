@@ -966,7 +966,8 @@ without a dated amendment and Hamid's explicit agreement.
 - Hamid answered the seven role questions and approved organization 2.0.0.
   Three roles are deprecated into their successors, never deleted; their
   three assignments keep their IRIs. Forecaster and PSM stay open, and Q17
-  waits for a separate governance decision. EPM-DEC-001-0045, with his
+  waits for a separate governance decision. ref-mpc 1.1.0 (2026-10-19,
+  approved by Hamid) requires organization 2.0.0. EPM-DEC-001-0045, with his
   words in `review-evidence/hamid-answers/answers-2026-10-18.md` and
   `answers-2026-10-18-night.md`.
 

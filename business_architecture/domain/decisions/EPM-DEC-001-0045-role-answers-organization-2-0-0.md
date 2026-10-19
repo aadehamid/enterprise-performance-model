@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (Hamid, 2026-10-18: the seven role answers and the 2.0.0 release; the build choices delegated under EPM-DEC-001-0028) |
+| Status | Decided (Hamid, 2026-10-18 and 2026-10-19: the seven role answers, organization 2.0.0 and ref-mpc 1.1.0; the build choices delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-18 |
 | Questions | The seven questions of `decision-packages/2026-10-14/role-questions.md`, left open by EPM-DEC-001-0031 |
 | Source | Claude Code session, 2026-10-18 |
@@ -21,7 +21,7 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 5. Crude RFC stays its own role. RFC is read as Refinery Feedstock Coordinator, as a contextual reading pending confirmation.
 6. The acronym expansions with evidence are adopted: CP (Clean Products), CPVC (Clean Products Value Chain), GFVC (Global Feedstocks Value Chain), RVCO (Refinery Value Chain Optimization), CCI (Continual Commercial Improvement), E&P (Economics and Planning), BP&A (Business Planning and Analysis) and RO (Regional Optimization). PSM stays unresolved. An expansion is not a merge.
 7. Who owns a concept's meaning is a separate governance decision, not answered by process RACI.
-8. Organization 2.0.0 is approved for these merges.
+8. Organization 2.0.0 is approved for these merges, and a `ref-mpc` release if one is needed.
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **Deprecate, never delete.** `role:rcvo-advisor`, `role:refinery-technical-service-representative` and `role:vp-clean-products-crude-trading-ngls-asphalt-petchem` keep every 1.0.0 triple and gain `owl:deprecated true` and `dcterms:isReplacedBy` their successor. The misspelling becomes a `skos:hiddenLabel` of RVCO Advisor; the other two source spellings become `skos:altLabel`s of their successors. 60 roles, 57 live.
@@ -31,17 +31,18 @@ EPM-DEC-001-0031 merged role strings on spelling only and left seven questions f
 5. **Definitions.** Four roles take a working definition, written by Claude: Refinery Value Chain Optimization Advisor, Refinery Technical Representative and Crude Refinery Feedstock Coordinator carry EPM working definitions, not MPC position descriptions. Business Planning and Analysis carries a definition adapted from an MPC job posting, which its note quotes. Hamid's answers chose which roles expand; they do not word the definitions.
 6. **Not merged on an expansion.** E&P Supervisor and Refinery Econ & Planning Supervisor stay apart; CP Manager and the Global Feedstocks Manager stay apart.
 7. **Competency question 17** stays waiting, now on this record. The proposed design, not built: a qualified governance assignment that names a concept or scheme, a role, a responsibility (semantic owner, business data steward, technical data custodian or process owner), a scope, dates, evidence and an approval status.
-8. **Release.** Organization 2.0.0 (issued 2026-10-18) requires `core` 2.0.0. `ref-mpc` 1.0.0 is not re-released: it still requires organization 1.0.0, which 2.0.0 keeps intact because nothing is deleted. A `ref-mpc` release that requires 2.0.0 waits for its next change.
+8. **Release.** Organization 2.0.0 (issued 2026-10-18) requires `core` 2.0.0. `ref-mpc` 1.1.0 (issued 2026-10-19) requires organization 2.0.0. It is a minor release: only its requirement changes, and every query on 1.0.0 gives the same answer on 1.1.0, because ref-mpc uses only the control relationship, which organization 2.0.0 keeps unchanged. The 1.0.0 packages of both modules stay on disk as released.
 
 ## Alternatives considered
 
 - **Delete the merged roles.** Not chosen: the playbook forbids it; a deleted IRI orphans every reference.
+- **Leave `ref-mpc` on organization 1.0.0.** Considered first; not chosen once Hamid approved a `ref-mpc` release, because a consumer loading the current releases would otherwise mix two organization versions.
 - **Mint new assignment IRIs for the moved assignments.** Not chosen: it would remove three released IRIs.
 - **Put the expanded name in `label`.** Not chosen: the surface rules check `label` against the source spelling.
 
 ## Hamid's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "1 yes. Merge RCVO Advisor into RVCO Advisor as a source-label correction.", "2 no for now. Retain Forecaster separately until the refinery Economics and Planning process owner confirms that it denotes the Local Refinery Forecaster.", "3 yes. Merge the technical-service representative into Refinery Technical Representative and retain both source labels.", "For queston 4 choose the string with "RVCO" in the list", "5 b. Retain Crude RFC as a distinct crude-specific role.", "Q6: RO = Regional Optimization", "Keep PSM unresolved.", "7 a. Address concept-meaning ownership through a separate governance decision and explicit assignments, independent of process RACI." Saved in `answers-2026-10-18-night.md`: "Yes, approve 2.0.0 (Recommended)". Items 1 to 8 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
+Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "1 yes. Merge RCVO Advisor into RVCO Advisor as a source-label correction.", "2 no for now. Retain Forecaster separately until the refinery Economics and Planning process owner confirms that it denotes the Local Refinery Forecaster.", "3 yes. Merge the technical-service representative into Refinery Technical Representative and retain both source labels.", "For queston 4 choose the string with "RVCO" in the list", "5 b. Retain Crude RFC as a distinct crude-specific role.", "Q6: RO = Regional Optimization", "Keep PSM unresolved.", "7 a. Address concept-meaning ownership through a separate governance decision and explicit assignments, independent of process RACI." Saved in `answers-2026-10-18-night.md`: "Yes, approve 2.0.0 (Recommended)". Saved in `answers-2026-10-19-releases.md`: "Approve the ref-mpc release too if needed" and "You have my approval to keep going and release things as needed. while I am out". Items 1 to 8 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
 
 ## Evidence
 

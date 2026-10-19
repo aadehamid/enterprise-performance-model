@@ -1,0 +1,26 @@
+{
+  "module": "ref-mpc",
+  "version": "1.1.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/ref-mpc",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/ref-mpc/1.1.0",
+  "depends_on": {
+    "organization": "2.0.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0015",
+    "EPM-DEC-001-0033"
+  ],
+  "triples": 140,
+  "approved_by": {
+    "who": "Hamid",
+    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md"
+  },
+  "files": {
+    "CHANGELOG.md": "fede49d75b62b9218f6a220a296286306a77bd43fa5270fc6c00798b13297330",
+    "catalog.ttl": "a551c1ac5dcba8c25fe9ebaf4a71dd94d6ad9bad3b84713f28dc22465ff52b9d",
+    "ref-mpc.jsonld": "9bc52e5bfa54a61a53f2b5694dddf0bd5dac4e8fc0fd53885547d05e5f9925a8",
+    "ref-mpc.ttl": "99fbcff1f992047926a50c92f2ae54386e457e5e1a65d3fdefbd3fe007cc907e",
+    "shapes.ttl": "8b1e041ccc26fe7495acb0fcbdef722d45cf6c0686983c4429adba4b60b6cd3a"
+  }
+}

@@ -11,6 +11,7 @@
 role:action-owner a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "Action Owners"@en ;
+    skos:editorialNote "The source writes \"Action Owners\": the owner of each action, not one fixed position. Kept as a role."@en ;
     skos:prefLabel "Action Owner"@en .
 
 role:asphalt-manager a org:Role ;
@@ -27,7 +28,7 @@ role:bpa a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "BP&A"@en ;
     skos:definition "A team that captures, analyzes, forecasts and reports financial and operational data in support of a commercial organization."@en ;
-    skos:editorialNote "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the\" commercial organization they serve (LinkedIn job 4452695204, posted 2025-07-23, read through a search index; third-party host). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
+    skos:editorialNote "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the …\" and name the organization served, such as \"the Specialty Products (including Asphalt, Petrochemicals, and Petroleum Coke/Sulfur) commercial organization\" (MPC postings 00023257 and 00024586, read through a search index and third-party hosts, 2026-10-19). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."@en ;
     skos:prefLabel "Business Planning and Analysis"@en ;
     skos:scopeNote "The source names a team here, not a position. The role stands for the team acting as one party in a RACI chart."@en .
 
@@ -50,7 +51,7 @@ role:commercial-scheduler a org:Role ;
 role:cp-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "CP Manager"@en ;
-    skos:editorialNote "CP expanded as Clean Products in this role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."@en ;
+    skos:editorialNote "CP expanded as Clean Products (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in this role only, by Claude. Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."@en ;
     skos:prefLabel "Clean Products Manager"@en .
 
 role:cpvc-scheduler a org:Role ;
@@ -73,6 +74,7 @@ role:crude-feedstock-trading-lead a org:Role ;
 role:crude-oil-trader a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "Crude Oil Traders"@en ;
+    skos:editorialNote "Kept apart from Trader: the source names the commodity."@en ;
     skos:prefLabel "Crude Oil Trader"@en .
 
 role:crude-planning-and-optimization-director a org:Role ;
@@ -111,13 +113,13 @@ role:distribution-planner a org:Role ;
 role:e-and-p-manager a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "E&P Manager"@en ;
-    skos:editorialNote "E&P expanded as Economics and Planning, in the refinery-planning context (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."@en ;
+    skos:editorialNote "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in the refinery-planning roles, by Claude. externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."@en ;
     skos:prefLabel "Economics and Planning Manager"@en .
 
 role:e-and-p-supervisor a org:Role ;
     dcterms:source src:downstream-process-map ;
     skos:altLabel "E&P Supervisor"@en ;
-    skos:editorialNote "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager."@en ;
+    skos:editorialNote "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager. May be the Refinery Econ & Planning Supervisor; not merged, because an expanded acronym does not prove one position."@en ;
     skos:prefLabel "Economics and Planning Supervisor"@en .
 
 role:forecaster a org:Role ;

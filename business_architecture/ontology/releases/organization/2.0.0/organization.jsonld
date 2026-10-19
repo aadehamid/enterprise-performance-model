@@ -30562,6 +30562,12 @@
     "@value": "Action Owners"
    }
   ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The source writes \"Action Owners\": the owner of each action, not one fixed position. Kept as a role."
+   }
+  ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
    {
     "@language": "en",
@@ -30640,7 +30646,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the\" commercial organization they serve (LinkedIn job 4452695204, posted 2025-07-23, read through a search index; third-party host). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."
+    "@value": "BP&A expanded as Business Planning and Analysis (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings read \"The Business Planning and Analysis (BP&A) team is responsible for capturing, analyzing, forecasting, and reporting financial and operational data in support of the …\" and name the organization served, such as \"the Specialty Products (including Asphalt, Petrochemicals, and Petroleum Coke/Sulfur) commercial organization\" (MPC postings 00023257 and 00024586, read through a search index and third-party hosts, 2026-10-19). The definition is Claude's, adapted from that sentence. Whether the RACI entry means the team or one position is not settled; kept as a team."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -30750,7 +30756,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "CP expanded as Clean Products in this role (Hamid, 2026-10-18 (EPM-DEC-001-0045)). Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."
+    "@value": "CP expanded as Clean Products (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in this role only, by Claude. Inferred: the process map gathers deals \"for Clean Products\" from the supplier \"CP Trader\", and MPC names a Clean Products Value Chain (see cpvc-scheduler). Not applied to every CP in the source."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -30853,6 +30859,12 @@
    {
     "@language": "en",
     "@value": "Crude Oil Traders"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "Kept apart from Trader: the source names the commodity."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -31035,7 +31047,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "E&P expanded as Economics and Planning, in the refinery-planning context (Hamid, 2026-10-18 (EPM-DEC-001-0045)). externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."
+    "@value": "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); applied in the refinery-planning roles, by Claude. externally corroborated: MPC job postings ask for \"Economics & Planning\" experience next to backcasting and Technical Services (talents.vaia.com job 41460355, read 2026-10-18, third-party host). Not merged with Refinery Econ & Planning Supervisor."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [
@@ -31064,7 +31076,7 @@
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
    {
     "@language": "en",
-    "@value": "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager."
+    "@value": "E&P expanded as Economics and Planning (Hamid, 2026-10-18 (EPM-DEC-001-0045)); evidence as for Economics and Planning Manager. May be the Refinery Econ & Planning Supervisor; not merged, because an expanded acronym does not prove one position."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#prefLabel": [

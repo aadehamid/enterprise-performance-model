@@ -8,7 +8,7 @@ Major. Approved by Hamid on 2026-10-18 ("Yes, approve 2.0.0 (Recommended)", save
 - Breaking: the three assignments that named a deprecated role now name its successor. They keep their IRIs and source text. 940 assignments, as before.
 - Expanded names: ten roles take an expanded preferred label, with the source spelling kept as an alternative label: nine from the acronym answers (Refinery Value Chain Optimization Advisor, VP Refinery Value Chain Optimization, Continual Commercial Improvement Director, Clean Products Manager, Clean Products Value Chain Scheduler, Global Feedstocks Value Chain Manager, Economics and Planning Manager and Supervisor, Business Planning and Analysis), and Crude RFC, which becomes Crude Refinery Feedstock Coordinator and stays its own role.
 - Added: definitions on four roles, and an editorial note with the evidence and its status on each answered role. Forecaster and PSM stay unresolved, each with its open question.
-- Depends on `core` 2.0.0 by IRI (1.0.0 depended on `core` 1.0.0). `ref-mpc` 1.0.0 is not re-released and still requires organization 1.0.0.
+- Depends on `core` 2.0.0 by IRI (1.0.0 depended on `core` 1.0.0). `ref-mpc` 1.1.0 requires this release.
 
 ## 1.0.0 (2026-10-13)
 
