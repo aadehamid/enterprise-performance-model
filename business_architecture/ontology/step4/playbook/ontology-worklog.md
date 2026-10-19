@@ -974,6 +974,15 @@ without a dated amendment and the decision owner's explicit agreement.
   EPM-DEC-001-0049, with their words in
   `review-evidence/decision-owner-answers/answers-2026-10-19-after-run.md`.
 
+### Package 1 and the measure categories approved (2026-10-19)
+- The decision owner approved decision package 1 and the eight measure
+  categories (EPM-DEC-001-0050). PRs #262, #266 and #269 stand as merged,
+  with a dated note in EPM-DEC-001-0036 and 0038. GitHub refuses the approved
+  ruleset on `main` while the repository is private (HTTP 403), so the
+  decision owner had the repository made public temporarily, for the current
+  goal; the ruleset is added after the record merges. MPC-P09 is unblocked and goes in its own pull
+  request.
+
 ### Process-map gaps addressed (2026-10-19)
 - The decision owner said to address the two gaps the MPC-P03 and MPC-P04 checks
   found from high-quality references, MPC's public information first.
@@ -1041,7 +1050,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18.
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal (EPM-DEC-001-0050).
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words

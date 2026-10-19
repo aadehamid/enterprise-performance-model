@@ -1,0 +1,5 @@
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-19. Context (Claude's words, kept in this comment so they do not enter the quote corpus): Pi's independent review of EPM-DEC-001-0050 found that GitHub refuses rulesets and branch protection on this private repository on the current plan (HTTP 403, "Upgrade to GitHub Pro or make this repository public to enable this feature."). Claude listed three ways forward: a paid GitHub plan, making the repository public again, or no ruleset. Block 1 is the decision owner's reply. Claude made the repository public, then found that EPM-DEC-001-0040 item 3 relies on it being private for internal system, table and report names, made it private again, and asked how the ruleset should go ahead: stay private with no ruleset (recommended), public anyway for this goal, or a paid plan. Block 2 is their choice, as the tool returned it. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+change to public temporarily for this goal.
+
+Public anyway, for this goal

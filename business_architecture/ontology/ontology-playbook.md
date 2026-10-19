@@ -1424,8 +1424,9 @@ owner made them the source author's backlog.
   first, and each is one step in its own pull request: movement losses and
   gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
   (CM 1.2.5.1.5, merged). A third, the quality of transferred intermediates, was not
-  in the owner's answer and stays open. P06 waits for the customer work and P09 for
-  the owner's approval of the measure categories.
+  in the owner's answer and stays open. P06 waits for the customer work. P09 waited for
+  the owner's approval of the measure categories, which came on 2026-10-19
+  (EPM-DEC-001-0050), and is applied in its own pull request.
 - *What the reviews caught.* Most review holds in Step 7 were attribution:
   a record listed the agent's wording (role names, a rule, detail from a
   pasted analysis) under the owner's decisions. Working agreements now say

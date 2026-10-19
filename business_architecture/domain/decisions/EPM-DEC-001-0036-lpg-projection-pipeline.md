@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Status | Decided (delegated under EPM-DEC-001-0028); *2026-10-19:* the decision owner accepted #262 as merged, after the fact (EPM-DEC-001-0050) |
 | Date | 2026-10-13 |
 | Questions | Step 12: how the ontology is projected into Neo4j under the guideline in `lpg-projection/` (v2.1, Rule 4a), and what the pipeline proves |
 | Source | Claude Code session, 2026-10-13, under the decision owner's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
