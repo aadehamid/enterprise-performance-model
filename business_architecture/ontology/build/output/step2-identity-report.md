@@ -1,7 +1,7 @@
 # Step 2 — Identity normalization report
 
-- Nodes processed: 683
-- IDs preserved as skos:notation: 669 (all unique, all match `CM <dotted>` pattern)
+- Nodes processed: 683 (at the Step 2 run; later additions are dated below)
+- IDs preserved as skos:notation: 669 (at the Step 2 run) (all unique, all match `CM <dotted>` pattern)
 - Minted stub slugs: 14
 - Deprecated tombstones: 1
 - Slug collisions: none
@@ -32,4 +32,4 @@
 `https://w3id.org/lsc/ontology/process/{slug}` — e.g. `https://w3id.org/lsc/ontology/process/CM-1-2-1-3`, `https://w3id.org/lsc/ontology/process/L1-human-resources`.
 No version segment; versions ride on `owl:versionInfo` (Appendix B).
 
-*2026-10-19:* EPM-DEC-001-0048 added CM 1.1.3.7.13 Reconcile Movement Losses and Gains to the map; the curated identity map holds its row, as Step 2 would emit it.
+*2026-10-19:* EPM-DEC-001-0048 added CM 1.1.3.7.13 Reconcile Movement Losses and Gains to the map; the curated identity map holds its row, as Step 2 would emit it. This adds one node and one ID to the totals above.

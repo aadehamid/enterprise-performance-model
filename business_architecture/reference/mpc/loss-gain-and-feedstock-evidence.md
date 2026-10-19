@@ -9,7 +9,7 @@ Hamid ruled that MPC's public information takes precedence over any other source
 | ID | Source | What it says (quoted) | Supports |
 |---|---|---|---|
 | LG-01 | MPLX LP Form 10-K, FY2025 (MPLX-S01), Note 2, Summary of Principal Accounting Policies, "Imbalances" | "Within our pipelines and storage assets, we experience volume gains and losses due to pressure and temperature changes, evaporation and variances in meter readings and other measurement methods. Until settled, positive imbalances are recorded as other current assets and negative imbalances are recorded as accounts payable. Positive and negative imbalances are settled in cash, settled by physical delivery of volumes from a different source, or tracked and settled in the future." | Movements produce gains and losses that are measured, recorded as imbalances and settled three ways: the work of CM 1.1.3.7.13 |
-| LG-02 | MPC Form 10-K, FY2025 (MPC-S01), Item 1, operating facts (`mpc-fy2025-10k-fact-sheet.md`) | Refineries are integrated through pipelines, terminals and barges, and "intermediate products move between refineries" | Inter-refinery transfers are movements, so the step covers them with every other movement |
+| LG-02 | MPC Form 10-K, FY2025 (MPC-S01), Item 1, operating facts (`mpc-fy2025-10k-fact-sheet.md`) | "The transportation links that connect our refineries allow the movement of intermediate products between refineries to optimize operations, produce higher margin products and efficiently utilize our processing capacity." | Inter-refinery transfers are movements, so the step covers them with every other movement |
 
 ## Renewable feedstock traceability
 
