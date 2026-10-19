@@ -16,7 +16,7 @@ MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 j
 | Plan demand and slate | CM 1.2.5.2.2 Develop Feedstock Demand; CM 1.2.5.2.3 Plan Optimal Feedstock Slate And Run Rate | Fits |
 | Move and store it | CM 1.2.5.3 Crude/Feed Transportation Management; CM 1.2.5.4.2 Manage Feedstock Inventory | Fits |
 | Feedstock quality | CM 1.2.5.1 Crude/Feed Quality Management | Fits for quality |
-| Traceability and carbon intensity | CM 1.2.5.1.5 (added 2026-10-19, EPM-DEC-001-0048) | **Was a gap, a different control; filled.** Credit eligibility depends on the feedstock's origin and carbon intensity (`reference/downstream-peers/regulatory-credit-evidence.md`, RC-02 and RC-03). Proposed below |
+| Traceability and carbon intensity | CM 1.2.5.1.5 (added 2026-10-19, EPM-DEC-001-0048) | **Was a gap, a different control; filled.** Credit eligibility depends on the feedstock's origin and carbon intensity (`reference/downstream-peers/regulatory-credit-evidence.md`, RC-02 and RC-03). Decided below |
 
 ## Marketing
 
@@ -32,12 +32,14 @@ No marketing step is needed: every marketing need fits an existing process.
 
 Renewable fuel production (pre-treatment, hydrotreating, the plant and joint-venture operations) stays parked. The map holds no plant operations for petroleum refining either.
 
-## What Hamid decides
+## What Hamid decided
 
-The gap: no step keeps the evidence for each renewable feedstock lot that its credits depend on. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (RC-03), and LCFS credits depend on a fuel's carbon intensity (RC-02).
+*2026-10-19:* Hamid said to address the gap from high-quality references, MPC's public information first (EPM-DEC-001-0048). Under the delegation, Claude applied option A: CM 1.2.5.1.5. The options below are kept as the record of what was proposed.
+
+The gap, before 2026-10-19: no step kept the evidence for each renewable feedstock lot that its credits depend on. The Section 45Z credit requires feedstock produced or grown in the United States, Mexico or Canada for fuel produced after 2025 (RC-03), and LCFS credits depend on a fuel's carbon intensity (RC-02).
 
 1. (A, recommended) Add one step, "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence", under CM 1.2.5.1 Crude/Feed Quality Management, feeding CM 1.2.4.3.8. It sits under quality management because it is evidence about each lot, kept with its other lot data.
 2. (B) Widen CM 1.2.5.1's description to cover the evidence, with no new step.
 3. (C) Leave the gap open.
 
-A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). Nothing is added until Hamid rules (EPM-DEC-001-0047, What follows, item 4).
+A is recommended because the evidence is a separate control with its own outputs (the eligibility records the credit processes consume). (Until Hamid ruled, nothing was added: EPM-DEC-001-0047, What follows, item 4.)
