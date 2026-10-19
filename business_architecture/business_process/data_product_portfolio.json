@@ -154,8 +154,8 @@
     {
       "id": "seg-midstream",
       "name": "Midstream",
-      "description": "Midstream operations data domains. Process decomposition for Midstream does not yet exist in the LSC map (L1 stub); portfolios are cataloged here and remain unlinked until a midstream process source is modeled.",
-      "processDomainRef": "Downstream Operations > Midstream (L1 stub)",
+      "description": "Midstream operations data domains. Since 2026-10-18 the map decomposes Midstream as fuels logistics (MS 1: pipeline, terminal, marine and storage services, EPM-DEC-001-0047); the portfolios below are not yet linked to those processes.",
+      "processDomainRef": "Downstream Operations > Midstream (MS 1)",
       "productLines": [
         {
           "id": "dpl-terminals",
