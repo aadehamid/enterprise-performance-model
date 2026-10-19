@@ -1,8 +1,8 @@
 # Market Data and Commercial Risk: draft definitions
 
-**Status:** Draft, for Hamid's decision · **Date:** 2026-10-13 · **Decisions:** EPM-DEC-001-0006 (Market Data is its own domain), EPM-DEC-001-0007 (Commercial Risk owns P10), EPM-DEC-001-0010 (full definitions at Step 7)
+**Status:** Decided by Hamid on 2026-10-18 (EPM-DEC-001-0046), with changes; this draft is kept as the proposal he answered · **Date:** 2026-10-13 · **Decisions:** EPM-DEC-001-0006 (Market Data is its own domain), EPM-DEC-001-0007 (Commercial Risk owns P10), EPM-DEC-001-0010 (full definitions at Step 7)
 
-EPM-DEC-001-0010 leaves the full definitions (scope, owners, entities) to Step 7. This draft proposes them from the evidence the repo already holds, so Hamid can approve, change or reject each part. Nothing here is decided.
+EPM-DEC-001-0010 leaves the full definitions (scope, owners, entities) to Step 7. This draft proposes them from the evidence the repo already holds, so Hamid can approve, change or reject each part. When written, nothing here was decided.
 
 Evidence: `../reference/downstream-peers/pricing-market-data-risk-evidence.md` (Findings 1 to 3: MPC's FY2025 10-K and seven U.S. refining peers' FY2025 10-Ks; Finding 4: an SAP IS-Oil practitioner source, DP-08, and the APQC Downstream PCF, DP-09), and the process map's CM 1.2.2 Confirmations & Risk Management subtree.
 
@@ -39,4 +39,4 @@ Evidence: `../reference/downstream-peers/pricing-market-data-risk-evidence.md` (
 2. Name the owner of each domain.
 3. Answer the credit-risk and confirmations question, and the volatilities and correlations question.
 
-When he does, the answers go into a decision record and the data domain register (`data-domain-register.md`), and the glossary rows for both domains move from Draft.
+When he does, the answers go into a decision record and the data domain register (`data-domain-register.md`), and the glossary rows for both domains move from Draft. *2026-10-18:* answered (EPM-DEC-001-0046); the glossary rows were updated and stay Draft.
