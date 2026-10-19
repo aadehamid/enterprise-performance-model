@@ -13,7 +13,7 @@ Step 7 revives the parked overlay layer (value streams, capabilities, KPIs, data
 
 ## Decision
 
-Order: (1) Hamid's Pricing KPI categories and named KPI definitions, such as Crack Spread, with the Pricing domain concepts; (2) Market Data and Commercial Risk definitions; (3) data products such as Master Pricing and Rack Pricing; (4) the MPC-P01 and P03 to P09 proposals. The KPI module is seeded from Hamid's KPI categories. Each definition cites the MPC or peer filing that uses the measure; the filing is evidence for the definition, not a source of values.
+Order: (1) Hamid's Pricing KPI categories and named KPI definitions, such as Crack Spread, with the Pricing domain concepts; (2) Market Data and Commercial Risk definitions; (3) data products such as Master Pricing and Rack Pricing; (4) the MPC-P01 and P03 to P09 proposals. The KPI module is seeded from Hamid's KPI categories. *2026-10-18:* amended by EPM-DEC-001-0040: the seed is Hamid's planner measure list. Each definition cites the MPC or peer filing that uses the measure; the filing is evidence for the definition, not a source of values.
 
 ## Alternatives considered
 

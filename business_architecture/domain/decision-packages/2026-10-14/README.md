@@ -1,6 +1,6 @@
 # Decision packages, 2026-10-14
 
-Five packages, prepared overnight for Hamid. *2026-10-18:* Hamid answered packages 2 to 5 (his words in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`); package 1 is still open. Each answer is carried out in its own pull request. The licence is recorded in EPM-DEC-001-0041 and the KPI seed in EPM-DEC-001-0040.
+Five packages, prepared overnight for Hamid. *2026-10-18:* Hamid answered packages 2 to 5 (his words in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`); package 1 is still open. The licence and KPI-seed answers are recorded in the pull request that records the answers; the others are carried out in their own pull requests. The licence is recorded in EPM-DEC-001-0041 and the KPI seed in EPM-DEC-001-0040.
 
 When prepared, nothing in them was decided. Each question lists its options with the recommended one first, the reason, and what each answer changes. Reply in the chat with the short form each package gives. The agent then records your words in `business_architecture/ontology/step4/review-evidence/hamid-answers/` and makes the changes in pull requests, as usual.
 

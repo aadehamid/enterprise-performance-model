@@ -16,7 +16,7 @@ EPM-DEC-001-0017 seeds the `kpi` module from "Hamid's Pricing KPI categories and
 **Hamid's decisions:**
 1. His two files are the KPI answer. The pasted "KPI: B" in his Step 7 reply is not his answer.
 2. Personas stay as a notion, without the people's names. The four personas are planning roles: Prompt Planner (prompt month, hourly and daily, the APS schedule), Short-Term Planner (M+1 to M+3, the LP plan handed to the refineries), Distribution Planner (the DPO plan, prompt to M+3: pipelines, marine, inventory) and Mid-Term Planner (the MTP, M+4 to M+36). Any other person named in a cell also becomes a role.
-3. Internal system, table and report names may be used. The GitHub repository was switched to private on 2026-10-18 for this reason; only the personas are generalized.
+3. Internal system, table and report names may be used. The GitHub repository was switched to private on 2026-10-18 for this reason (`gh repo edit --visibility private`; the API then returned `"visibility": "private"`); only the personas are generalized.
 4. The "DSV Data Pull" column is ignored.
 5. The two files are not added to the repository. The module holds the definitions built from them.
 6. The list mixes true KPIs with operational metrics, and each row is to be classified, using industry practice, external research and MPC's public information.
