@@ -493,13 +493,17 @@ capabilities, systems, measures and data products.
      only when the business names it as one of the few measures of a stated
      objective, with a target and an owner who can act on it. Most measures
      on a team's list are operational metrics. Record the target and owner
-     before you call a measure a KPI; until then, mark it a KPI candidate.
+     before you call a measure a KPI. Mark an operational metric a KPI
+     candidate only where the evidence makes it a strong one, such as a
+     headline measure the company reports or a peer targets.
      Never invent a target or an owner to fill the field.
    - **Classify each measure by kind, with tests in a fixed order.** No
-     formula, unit or grain: a tracker or report. Fires only on a
+     formula, unit or grain: a tracker or report, or not a measure at all
+     for a capability request. Fires only on a
      condition: an alert. Set by a market the business cannot influence: a
      market indicator; computed from market prices and a planning model to
-     start a decision: a decision-support indicator. Actual or plan against
+     start or rank a decision, with no performance target: a
+     decision-support indicator. Actual or plan against
      a plan, forecast, version or history for one period: a plan-variance
      diagnostic. Otherwise an operational metric, unless designated a KPI.
      Record the test that assigned each class and the reason.
@@ -1416,9 +1420,10 @@ owner made them the source author's backlog.
   environmental compliance credits kept apart from the clean-fuel tax
   credit, renewables by reuse of existing processes, affiliate fees, and the
   transfer coverage check. Two gaps the checks found went to the owner as
-  proposals; the owner said to address them, Marathon's public information first,
-  and each became one step (movement losses and gains; renewable feedstock
-  traceability). A third, the quality of transferred intermediates, was not
+  proposals; the owner said to address them, Marathon's public information
+  first, and each is one step in its own pull request: movement losses and
+  gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
+  (CM 1.2.5.1.5, in its own pull request, not in the map until it merges). A third, the quality of transferred intermediates, was not
   in the owner's answer and stays open. P06 waits for the customer work and P09 for
   the owner's approval of the measure categories.
 - *What the reviews caught.* Most review holds in Step 7 were attribution:
