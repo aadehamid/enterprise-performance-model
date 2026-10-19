@@ -121,7 +121,25 @@
           "description": "Primary data portfolios (dp-*) or product lines (dpl-*) this process critically depends on",
           "items": { "type": "string", "pattern": "^(dp|dpl)-[a-z0-9-]+$" }
         },
-        "rationale": { "type": ["string", "null"], "description": "Industry grounding for the sparse assignment" }
+        "rationale": { "type": ["string", "null"], "description": "Industry grounding for the sparse assignment" },
+        "measures": {
+          "type": "array",
+          "description": "Measures defined in the kpi module (ontology/kpi/measure-classification.csv) that relate to this process, each with its relationship. A link is not a KPI designation: the measure's class stays the one in the kpi module (EPM-DEC-001-0042). Definitions only, never values (MPC-P09, EPM-DEC-001-0047)",
+          "items": {
+            "type": "object",
+            "required": ["measureId", "relationship", "basis"],
+            "additionalProperties": false,
+            "properties": {
+              "measureId": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "A measure_id in ontology/kpi/measure-classification.csv" },
+              "relationship": {
+                "type": "string",
+                "enum": ["informs", "benchmarks", "measures-performance"],
+                "description": "informs: the process uses the measure as an input. benchmarks: the process compares results against the measure as an external reference. measures-performance: the process tracks the measure as a result of the business"
+              },
+              "basis": { "type": "string", "description": "The source for the link, cited" }
+            }
+          }
+        }
       }
     }
   }
