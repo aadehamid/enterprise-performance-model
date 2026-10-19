@@ -967,7 +967,7 @@ without a dated amendment and Hamid's explicit agreement.
   (EPM-DEC-001-0042): most are operational metrics, two are KPIs (MPC's
   bonus measures) and six are KPI candidates. The `kpi` module defines the
   41 measures (EPM-DEC-001-0043). It is built and checked, not released:
-  1.0.0 is a major and waits for Hamid. Coverage: 17 answerable, 6 partial,
+  1.0.0, a major, was approved by Hamid on 2026-10-19 and is cut next. Coverage: 17 answerable, 6 partial,
   21 waiting.
 
 ### KPI measure classification (2026-10-18)

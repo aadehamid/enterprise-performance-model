@@ -29,6 +29,8 @@ EPM-DEC-001-0040 seeds the `kpi` module from Hamid's planner measure list, and E
 
 ## Hamid's recorded words
 
+On the release, saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-19-kpi.md`: "Approve kpi 1.0.0 release too".
+
 This record relies on Hamid's instructions in EPM-DEC-001-0040, saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "As far as Personae goes I dont wnat you to add names listed, but still represents the notion of persona". Everything in "Decision" is Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse it.
 
 ## Evidence
@@ -38,4 +40,4 @@ This record relies on Hamid's instructions in EPM-DEC-001-0040, saved in `busine
 ## Consequences
 
 - The regression loads the module. Q13, Q14, Q27, Q29, Q30, Q32, Q33 and Q36 are answerable and Q37 partial: 17 answerable, 6 partial, 21 waiting.
-- The module's first release (1.0.0) waits for Hamid.
+- The module's first release (1.0.0) was approved by Hamid on 2026-10-19 and is cut in the pull request that follows this one.

@@ -717,7 +717,7 @@ measure:crude-utilization a skos:Concept,
     skos:inScheme kpi:Measures ;
     skos:notation "crude-utilization"^^xsd:string ;
     skos:prefLabel "Crude Utilization"@en ;
-    skos:scopeNote "Not MPC's published figure, which is company-wide and uses average calendar-day capacity."@en ;
+    skos:scopeNote "Not unit utilization: it covers only the fresh crude charged to the crude units. Also not MPC's published figure, which is company-wide and uses average calendar-day capacity."@en ;
     kpi:basis "crude throughput (bbl/d) / constrained crude capacity (bbl/d); MPC divides by average calendar-day capacity"^^xsd:string ;
     kpi:classificationReason "Crude unit utilization is the headline refining measure that MPC, EIA and Solomon report and that Phillips 66 targets, so it is the strongest candidate. It stays an operational metric until a target and owner are recorded. The planner's denominator (constrained capacity) differs from MPC's (average calendar-day capacity)."^^xsd:string ;
     kpi:classificationTest 5 ;
@@ -763,7 +763,7 @@ measure:turnaround-cost-per-barrel a skos:Concept,
     skos:inScheme kpi:Measures ;
     skos:notation "turnaround-cost-per-barrel"^^xsd:string ;
     skos:prefLabel "Planned Turnaround Costs per Barrel"@en ;
-    skos:scopeNote "Not an annualized turnaround cost: MPC expenses turnarounds when incurred, so the figure rises in heavy turnaround years."@en ;
+    skos:scopeNote "Not refining operating costs per barrel, which exclude planned turnaround costs. Also not an annualized turnaround cost: MPC expenses turnarounds when incurred, so the figure rises in heavy turnaround years."@en ;
     kpi:basis "planned turnaround costs ($) / throughput (bbl)"^^xsd:string ;
     kpi:classificationReason "Expensed as incurred, so it rises in heavy turnaround years; an annualized cost (Solomon) compares years and peers more fairly. A turnaround outcome the Mid-Term Planner's sequencing affects (Part B, Q9)."^^xsd:string ;
     kpi:classificationTest 5 ;
