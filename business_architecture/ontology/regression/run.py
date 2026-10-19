@@ -17,7 +17,7 @@ from collections import Counter
 from rdflib import Graph
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RELEASE = os.path.join(HERE, "..", "releases", "core", "2.0.0", "core.ttl")
+RELEASE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
 # The module graphs loaded with the release (Step 5: roles and RACI assignments).
 MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")]
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")

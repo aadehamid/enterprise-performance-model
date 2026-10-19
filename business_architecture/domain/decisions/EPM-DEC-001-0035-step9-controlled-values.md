@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Status | Decided (delegated under EPM-DEC-001-0028); items 2 and 4 carried out in core 2.1.0 (EPM-DEC-001-0044, 2026-10-18) |
 | Date | 2026-10-13 |
 | Questions | Step 9: how the controlled-value shapes are added after the `core` 1.0.0 release, and what the evidence-link shape needs |
 | Source | Claude Code session, 2026-10-13, under Hamid's extension of the delegation to Steps 5 to 12 (EPM-DEC-001-0028, amended in #252) |
@@ -18,9 +18,9 @@ The 640 canonical facts in `core` 1.0.0 are direct triples. (The 17 scoped-seque
 ## Decision
 
 1. **A controlled-value shape for every code-list property.** `business_architecture/ontology/validation/controlled-values.ttl` requires each value of the ten coded properties of `core` (APQC mapping decision, operating mode, cadence, planning level, lifecycle status, governance status, hold status, concept kind, evidence basis, sequence scope) to be in its own code list. It applies the same rule to the organization module's RACI level. `core` 1.0.0 and the organization module's RACI assignments (EPM-DEC-001-0032) conform.
-2. **The shapes run against the released core without changing it.** `scripts/check.sh` runs them. They join the release shapes at the next `core` release.
+2. **The shapes run against the released core without changing it.** `scripts/check.sh` runs them. They join the release shapes at the next `core` release. *2026-10-18:* they did, in `core` 2.1.0 (EPM-DEC-001-0044).
 3. **A test keeps the list complete.** It fails when a core property takes values from a core code list and no shape covers it. That test found `evidenceBasis` and `sequenceScope` while this slice was built.
-4. **The evidence-link shape waits for the next `core` release.** EPM-DEC-001-0014 orders it first; this slice takes the second item first because today every canonical fact would fail it: no canonical fact carries its evidence in the graph. Adding that is a change to the released module.
+4. **The evidence-link shape waits for the next `core` release.** EPM-DEC-001-0014 orders it first; this slice takes the second item first because today every canonical fact would fail it: no canonical fact carries its evidence in the graph. Adding that is a change to the released module. *2026-10-18:* done in `core` 2.1.0, one evidence node per fact (EPM-DEC-001-0044).
 
 ### For Hamid: evidence on the facts
 
