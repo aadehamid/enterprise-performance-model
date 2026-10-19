@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. One gap, feedstock traceability and carbon-intensity evidence, is proposed to Hamid below; no process is added until he rules |
+| Status | Applied 2026-10-18, by reuse: CM 1.2.5's description says renewable feedstocks run through it. The one gap, feedstock traceability and carbon-intensity evidence, was answered by Hamid on 2026-10-19 and is filled by CM 1.2.5.1.5 (EPM-DEC-001-0048) |
 | Ruling | Hamid: "P04: A with reuse before new process creation" (`step4/review-evidence/hamid-answers/answers-2026-10-18.md`); production stays parked |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P04 |
 
@@ -16,7 +16,7 @@ MPC's Renewable Diesel segment runs a wholly owned plant at Dickinson, a 50/50 j
 | Plan demand and slate | CM 1.2.5.2.2 Develop Feedstock Demand; CM 1.2.5.2.3 Plan Optimal Feedstock Slate And Run Rate | Fits |
 | Move and store it | CM 1.2.5.3 Crude/Feed Transportation Management; CM 1.2.5.4.2 Manage Feedstock Inventory | Fits |
 | Feedstock quality | CM 1.2.5.1 Crude/Feed Quality Management | Fits for quality |
-| Traceability and carbon intensity | none | **Gap, a different control.** Credit eligibility depends on the feedstock's origin and carbon intensity (`reference/downstream-peers/regulatory-credit-evidence.md`, RC-02 and RC-03). Proposed below |
+| Traceability and carbon intensity | CM 1.2.5.1.5 (added 2026-10-19, EPM-DEC-001-0048) | **Was a gap, a different control; filled.** Credit eligibility depends on the feedstock's origin and carbon intensity (`reference/downstream-peers/regulatory-credit-evidence.md`, RC-02 and RC-03). Proposed below |
 
 ## Marketing
 

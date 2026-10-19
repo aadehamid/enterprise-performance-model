@@ -962,6 +962,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and Hamid's explicit agreement.
 
+### Process-map gaps filled (2026-10-19)
+- Hamid said to address the two gaps the MPC-P03 and MPC-P04 checks
+  found from high-quality references, MPC's public information first.
+  Under the delegation: CM 1.1.3.7.13 Reconcile Movement Losses and Gains
+  (MPLX's imbalances policy) and CM 1.2.5.1.5 Manage Renewable Feedstock
+  Traceability and Carbon-Intensity Evidence (MPC's supplier feedstock
+  commitment; EPA, CARB and IRS record rules). EPM-DEC-001-0048, with his
+  words in `review-evidence/hamid-answers/answers-2026-10-19-morning.md`.
+
 ### MPC process-map proposals ruled (2026-10-18)
 - Hamid accepted MPC-P01, P03 to P09 and P02b, with conditions, and said
   to apply them to the process map itself (EPM-DEC-001-0047). Under the

@@ -7216,7 +7216,7 @@
                 "id": "CM 1.2.5",
                 "level": 3,
                 "name": "Crude/Feed Supply Chain Management",
-                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management. Renewable feedstocks, such as vegetable oils and fats for renewable diesel, run through the same processes as other feedstocks. Renewable fuel production stays outside the current scope (EPM-DEC-001-0047, MPC-P04).",
+                "description": "Crude/feed supply chain management consists of processes required to plan, organize, coordinate & control crude/feed supply & processing at the refinery. This includes crude/feed transportation, slate, and supply & demand management. Renewable feedstocks, such as vegetable oils and fats for renewable diesel, run through the same processes as other feedstocks; the one control they add is the traceability and carbon-intensity evidence their credits depend on (CM 1.2.5.1.5, EPM-DEC-001-0048). Renewable fuel production stays outside the current scope (EPM-DEC-001-0047, MPC-P04).",
                 "officeLane": "operations",
                 "variants": [
                   "crude",
@@ -7254,6 +7254,13 @@
                         "id": "CM 1.2.5.1.4",
                         "level": 5,
                         "name": "Develop Spot Slate"
+                      },
+                      {
+                        "id": "CM 1.2.5.1.5",
+                        "level": 5,
+                        "name": "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence",
+                        "description": "Collect and keep, for each renewable feedstock lot, the evidence its credits depend on: supplier certifications, source location, feedstock type and quantity, and the carbon-intensity data of the pathway it supports, and check it before the lot is used. MPC requires its distillers corn oil and sorghum oil suppliers to adhere to a supplier feedstock information compliance commitment that includes renewable biomass certifications and source locations (MPC CDP Climate Change 2023 response). The rules set the minimum: feedstock type and quantity, and for waste oils, fats and greases the amounts purchased and where they were collected (40 CFR 80.1454(b)(3)(vi) and (j)); LCFS feedstock sustainability attestations and chain-of-custody documentation (CARB, section 95488.9(g)); and, for the Section 45Z credit, feedstock produced or grown in the United States, Mexico or Canada and records of the primary feedstock (proposed section 1.45Z-4(f)(1) and (g)(1)). Feeds environmental credit and clean-fuel incentive management (CM 1.2.4.3.8); EPM-DEC-001-0048.",
+                        "renewablesSpecific": true
                       }
                     ]
                   },
