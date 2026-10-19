@@ -1,0 +1,9 @@
+# Q33 Which process does this measure inform? (context, not certification)
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?measure ?process ?processName WHERE {
+  ?measure a kpi:MeasureDefinition ; kpi:informsProcess ?process .
+  ?process skos:prefLabel ?processName .
+}

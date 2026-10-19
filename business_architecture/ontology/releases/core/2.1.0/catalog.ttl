@@ -1,0 +1,35 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/catalog> a dcat:Catalog ;
+    dcat:dataset <https://w3id.org/lsc/ontology/modules/core/2.1.0> .
+
+<https://w3id.org/lsc/ontology/modules/core/2.1.0> a dcat:Dataset ;
+    dcterms:isVersionOf <https://w3id.org/lsc/ontology/modules/core> ;
+    dcterms:issued "2026-10-18"^^xsd:date ;
+    dcterms:rights "© LSC. All rights reserved. Proprietary (EPM-DEC-001-0041). This work is based in part on an Industry Process Classification Framework (\"PCF\"), an open standard developed by APQC and IBM to promote benchmarking and best practices worldwide. The PCF is intended to facilitate organizational improvement through process management and benchmarking, regardless of industry, size, or geography. To download the full PCF or other industry-specific versions of the PCF, as well as associated measures and benchmarking, please visit www.apqc.org/pcf. ©2025 APQC and IBM. The PCF is licensed perpetually, worldwide, royalty-free for use, copying, publication, modification, and derivative works, provided this notice and the attribution above travel with all copies."@en ;
+    dcterms:title "LSC Core Process Ontology 2.1.0"@en ;
+    owl:versionInfo "2.1.0" ;
+    dcat:distribution <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/canonical-facts.csv>,
+        <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.jsonld>,
+        <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.ttl>,
+        <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/shapes.ttl> .
+
+<https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/canonical-facts.csv> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/canonical-facts.csv> ;
+    dcat:mediaType "text/csv" .
+
+<https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.jsonld> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.jsonld> ;
+    dcat:mediaType "application/ld+json" .
+
+<https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/core.ttl> ;
+    dcat:mediaType "text/turtle" .
+
+<https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/shapes.ttl> a dcat:Distribution ;
+    dcat:downloadURL <https://w3id.org/lsc/ontology/modules/core/releases/2.1.0/shapes.ttl> ;
+    dcat:mediaType "text/turtle" .
+

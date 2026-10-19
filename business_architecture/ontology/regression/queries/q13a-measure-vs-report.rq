@@ -1,0 +1,9 @@
+# Q13 What is a concept vs a named measure vs a report? A report or tracker and a measure are both measure definitions, told apart by their kind.
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?report ?metric WHERE {
+  ?report a kpi:MeasureDefinition ; kpi:measureKind kind:tracker-or-report .
+  ?metric a kpi:MeasureDefinition ; kpi:measureKind kind:operational-metric .
+} LIMIT 1
