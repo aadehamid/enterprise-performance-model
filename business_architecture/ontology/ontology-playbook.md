@@ -1423,7 +1423,7 @@ owner made them the source author's backlog.
   proposals; the owner said to address them, Marathon's public information
   first, and each is one step in its own pull request: movement losses and
   gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
-  (CM 1.2.5.1.5, in its own pull request, not in the map until it merges). A third, the quality of transferred intermediates, was not
+  (CM 1.2.5.1.5, merged). A third, the quality of transferred intermediates, was not
   in the owner's answer and stays open. P06 waits for the customer work and P09 for
   the owner's approval of the measure categories.
 - *What the reviews caught.* Most review holds in Step 7 were attribution:
