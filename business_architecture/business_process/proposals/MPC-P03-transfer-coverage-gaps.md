@@ -9,9 +9,9 @@
 
 ## What the check found
 
-MPC's refineries move intermediate products between sites, including during partial shutdowns (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, Item 1 operating facts). Hamid asked whether the map covers the physical execution of those transfers, not only their planning and settlement. The check went through the five parts of physical execution he named. CM 1.1.7's description now names the existing steps.
+MPC's refineries move intermediate products between sites, including during partial shutdowns (`reference/mpc/mpc-fy2025-10k-fact-sheet.md`, Item 1 operating facts). Hamid ruled "P03: A with a physical-execution coverage check" (`step4/review-evidence/hamid-answers/answers-2026-10-18.md`). This check carries out that condition. It goes through the steps a transfer passes from nomination to settlement; rows 2 to 6 are its physical execution, and rows 1 and 7 frame it. CM 1.1.7's description now names the existing steps.
 
-| Part of physical execution | Covered by | Finding |
+| Step of a transfer | Covered by | Finding |
 |---|---|---|
 | Nomination and scheduling | CM 1.1.3.6.1 Plan & Execute Nominations | Covered. The node is generic: it does not say it includes intermediates moving between refineries |
 | Movement execution | CM 1.1.3.6.2 Loading Shipment; CM 1.1.3.6.3 Track Movements and Inventory Management | Covered, generic |
@@ -21,7 +21,7 @@ MPC's refineries move intermediate products between sites, including during part
 | Loss and gain | none | **Gap.** No step names the loss and gain reconciliation of a movement. The Loss Control data product ("Custody transfer, gain/loss, and shrinkage data across movements and terminal operations", `data_product_portfolio.json`) exists without a process that produces it; the worklog's Step 7 row lists "Loss Control ownership" as open |
 | Settlement | CM 1.2.4.1.18 Settle Intermediates | Covered |
 
-Assumption behind "covered": CM 1.1.3 (Distribution Planning & Scheduling and Inventory Management) handles intermediates as well as finished products. Its inventory steps include "Develop Intermediates Inventory Policy" (CM 1.1.3.7.2), which supports that reading. If Hamid reads CM 1.1.3 as finished products only, every row above except settlement becomes a gap.
+Assumption behind "covered": CM 1.1.3 (Distribution Planning & Scheduling and Inventory Management) handles intermediates as well as finished products. Its inventory steps include "Develop Intermediates Inventory Policy" (CM 1.1.3.7.2), which supports that reading. If Hamid reads CM 1.1.3 as finished products only, the rows that rest on CM 1.1.3 alone become gaps: nomination and scheduling, and movement execution. Quantity measurement keeps CM 1.2.3, receipt and reconciliation keep CM 1.1.5.1.2.5, and settlement keeps CM 1.2.4.1.18, because those sit outside CM 1.1.3.
 
 ## What Hamid decides
 
