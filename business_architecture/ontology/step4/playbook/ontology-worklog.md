@@ -93,6 +93,11 @@ ontology; everything else points at it.
 | 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.0.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18) |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.0.0 with the organization and ref-mpc modules, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
+| 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; `core` 2.1.0 carries the controlled-value shapes and one evidence node per canonical fact, with the evidence-link shapes (EPM-DEC-001-0044), 2026-10-18 |
+| 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by Hamid and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with Hamid's approval (EPM-DEC-001-0044); not hosted, the namespace a placeholder (Hamid, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (Hamid, EPM-DEC-001-0041, 2026-10-18) |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization module, 9 answerable (Q8 added), 5 partial, 30 waiting |
+| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with the organization and ref-mpc modules, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
+
 Note: Step 8 was completed early (it was originally sequenced after
 integration) because the scope decisions shape the foundations. The plan
 order is otherwise unchanged.
@@ -970,6 +975,17 @@ without a dated amendment and Hamid's explicit agreement.
   1.0.0, a major, was approved by Hamid on 2026-10-19 and is cut next. Coverage: 17 answerable, 6 partial,
   21 waiting.
 
+### core 2.1.0: evidence on canonical facts (2026-10-18)
+- Hamid answered the Step 9 walkthrough "1a, 2a" and approved cutting the
+  release. `core` 2.1.0 adds one `core:CanonicalFact` node per canonical
+  fact (640), each with its subject, predicate, object and every
+  supporting REL row (812), and keeps the direct triples. The eleven
+  controlled-value shapes and the evidence-link shapes join the release
+  shapes; a build check matches each node's rows to the mapping, which
+  ships in the package. The header's licence IRI gives way to an
+  all-rights-reserved statement. Projection and regression read 2.1.0.
+  EPM-DEC-001-0044; his words in `review-evidence/hamid-answers/`.
+
 ### KPI measure classification (2026-10-18)
 - Most measures on Hamid's planner list are operational metrics. A KPI
   is a designation with a target and an owner, not a kind of measure.
@@ -1115,7 +1131,7 @@ without a dated amendment and Hamid's explicit agreement.
   1.0.0 conforms. A test fails when a code-list property has no shape; it
   found `evidenceBasis` and `sequenceScope`. The evidence-link shape waits
   for the next `core` release, which must carry each fact's evidence in
-  the graph. The design is EPM-DEC-001-0035, decided under
+  the graph (*2026-10-18:* done in `core` 2.1.0, EPM-DEC-001-0044). The design is EPM-DEC-001-0035, decided under
   EPM-DEC-001-0028.
 
 ### Step 6 definition-to-run pattern (2026-10-13)
