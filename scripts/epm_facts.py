@@ -723,7 +723,12 @@ def has_invisible(text):
 
 
 def recorded_words(text):
-    """Each "Hamid's recorded words" section: (displayed text, contains raw HTML, block-quote paragraphs).
+    """Each "Hamid's recorded words" section: (displayed blocks, contains raw HTML, block-quote paragraphs).
+
+    The displayed text comes back as one string per block, so quote marks pair
+    only within a block: a stray mark in one paragraph cannot open a quote that
+    closes in the next (issue #251). quote_problems reports a block whose quote
+    marks do not pair, so an unclosed quotation is not left unchecked.
 
     A block-quote paragraph is a quotation in its own right, so it is returned
     whole, to be checked like a quoted span.
@@ -754,7 +759,7 @@ def recorded_words(text):
             if depth > 0 and tok.type in ("inline", "fence", "code_block"):
                 current["quoted"].append(_flat(displayed_text(tok)))
         i += 1
-    return [("\n".join(p for p in sec["parts"] if p), sec["html"], [q for q in sec["quoted"] if q])
+    return [([p for p in sec["parts"] if p], sec["html"], [q for q in sec["quoted"] if q])
             for sec in sections]
 
 
@@ -772,7 +777,7 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
     source-correction backlog; and each quoted span of three or more words in
     the displayed text of the "Hamid's recorded words" section of EPM-DEC-001
     records from 0026 on, compared with the saved answers' displayed text; a
-    Decided record must have at least one, and raw HTML there is reported. An ellipsis (…) splits a quoted span, and each
+    Decided record must have at least one, raw HTML there is reported, and so is a paragraph there whose quote marks do not pair (an odd count of straight marks, or unequal curly ones). An ellipsis (…) splits a quoted span, and each
     part of three or more words is checked. Each text is searched across all
     saved answers, not only the comment its row cites. Paraphrases are not
     checked. Needs markdown-it-py (check.sh supplies it).
@@ -856,11 +861,15 @@ def quote_problems(reviews=REVIEWS, backlog=BACKLOG, answers=ANSWERS, decisions=
         if len(sections) > 1:
             problems.append(f"{name}: more than one \"Hamid's recorded words\" section; cannot check it unambiguously")
             continue
-        words, html, quoted = sections[0] if sections else ("", False, [])
+        blocks, html, quoted = sections[0] if sections else ([], False, [])
         if html:
             problems.append(f"{name}: raw HTML in \"Hamid's recorded words\"; write the section in plain Markdown")
             continue
-        spans = list(_spans(words)) + [q for q in quoted if len(q.split()) >= 3]
+        unpaired = [b for b in blocks if b.count('"') % 2 or b.count("“") != b.count("”")]
+        for block in unpaired:
+            # Quote marks pair only within a block, so an unclosed quotation would go unchecked.
+            problems.append(f"{name} recorded words: a paragraph has an unpaired quote mark; close the quotation: {_flat(block)[:90]!r}")
+        spans = [span for block in blocks for span in _spans(block)] + [q for q in quoted if len(q.split()) >= 3]
         if decided and not spans:
             problems.append(f"{name}: Decided, but its \"Hamid's recorded words\" section has no quote of three or more words to check")
         for span in spans:
