@@ -2,11 +2,12 @@
 properties are well formed, the build reconciles and is current, SHACL accepts the module
 and rejects broken measures, and no person's name enters the module.
 
-Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl).
+Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl, jsonschema).
 """
 import csv
 import glob
 import hashlib
+import json
 import os
 import re
 import subprocess
@@ -14,6 +15,7 @@ import sys
 import unicodedata
 import unittest
 
+import jsonschema
 from pyshacl import validate
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
@@ -204,6 +206,47 @@ class Privacy(unittest.TestCase):
         for text in ("Placeholder", "PLACEHOLDER", "placeholder-person", "PlaceholderPerson", "Pl\u00e1ceholder"):
             with self.subTest(text=text):
                 self.assertIn(target, {hashlib.sha256(t.encode()).hexdigest()[:16] for t in name_tokens(text)})
+
+
+class ValueStreamLinks(unittest.TestCase):
+    """MPC-P09: value-stream processes name kpi measures, each with a relationship (EPM-DEC-001-0047)."""
+
+    BP = os.path.join(HERE, "..", "..", "business_process")
+    SCHEMA = os.path.join(HERE, "..", "..", "schema", "value_stream.schema.json")
+
+    def value_streams(self):
+        return {f: json.load(open(f)) for f in sorted(glob.glob(os.path.join(self.BP, "value_stream_*.json")))}
+
+    def links(self):
+        for f, vs in self.value_streams().items():
+            for stage in vs["stages"]:
+                for p in stage["processes"]:
+                    for m in p.get("measures", []):
+                        yield os.path.basename(f), p["id"], m
+
+    def test_every_value_stream_validates_against_the_schema(self):
+        validator = jsonschema.Draft202012Validator(json.load(open(self.SCHEMA)))
+        for f, vs in self.value_streams().items():
+            with self.subTest(f=os.path.basename(f)):
+                self.assertEqual([e.message for e in validator.iter_errors(vs)], [])
+
+    def test_every_linked_measure_is_defined(self):
+        ids = {r["measure_id"] for r in rows()}
+        for f, process, m in self.links():
+            with self.subTest(f=f, process=process, measure=m["measureId"]):
+                self.assertIn(m["measureId"], ids)
+
+    def test_p09_links_are_present(self):
+        links = [(process, m["measureId"], m["relationship"]) for _, process, m in self.links()]
+        got = set(links)
+        self.assertEqual(len(links), len(got), "a measure link is listed twice")
+        price, perf = "p-market-price-calculation-validation", "p-performance-tracking-analysis"
+        self.assertEqual(got, {
+            (price, "crack-spreads", "benchmarks"), (price, "rm-margin-per-barrel", "informs"),
+            (perf, "rm-margin-per-barrel", "measures-performance"), (perf, "crack-spreads", "benchmarks"),
+            (perf, "refining-opex-per-barrel", "measures-performance"),
+            (perf, "distribution-cost-per-barrel", "measures-performance"),
+            (perf, "turnaround-cost-per-barrel", "measures-performance")})
 
 
 if __name__ == "__main__":

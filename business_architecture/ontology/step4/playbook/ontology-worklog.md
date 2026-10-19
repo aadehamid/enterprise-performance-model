@@ -974,6 +974,15 @@ without a dated amendment and the decision owner's explicit agreement.
   EPM-DEC-001-0049, with their words in
   `review-evidence/decision-owner-answers/answers-2026-10-19-after-run.md`.
 
+### MPC-P09 applied (2026-10-19)
+- Price Management and Performance Management & Backcasting are capabilities
+  in `value_stream_commercial_lifecycle.json`, each realized by one process.
+  Those processes now name five `kpi` measures, each with a relationship
+  (informs, benchmarks or measures performance) and its MPC source. The
+  schema gains a `measures` field. A test validates both value streams
+  against the schema for the first time (both pass) and checks that every
+  named measure is defined. A link does not make a measure a KPI.
+
 ### Package 1 and the measure categories approved (2026-10-19)
 - The decision owner approved decision package 1 and the eight measure
   categories (EPM-DEC-001-0050). PRs #262, #266 and #269 stand as merged,

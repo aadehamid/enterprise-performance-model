@@ -8,7 +8,8 @@
       "Industry grounding: ETRM front/middle/back office lifecycle; downstream commercial value chain (trading & supply, planning & optimization, marketing/pricing/retail)"
     ],
     "catalogFile": "data_product_portfolio.json",
-    "processMapFile": "downstream_process_map.json"
+    "processMapFile": "downstream_process_map.json",
+    "measureCatalogFile": "../ontology/kpi/measure-classification.csv"
   },
   "id": "vs-commercial-hydrocarbon-lifecycle",
   "name": "Commercial Hydrocarbon Lifecycle",
@@ -117,7 +118,11 @@
           "linkedProcessIds": ["CM 1.3.3.2", "CM 1.3.6.3", "CM 1.3.7.2"],
           "produces": ["dp-master-pricing"],
           "consumes": ["dp-external-market-data", "dp-physical-trading"],
-          "rationale": "Classic price SoR publish (market operations): owns Master Pricing; consumes market feeds and deal context."
+          "rationale": "Classic price SoR publish (market operations): owns Master Pricing; consumes market feeds and deal context.",
+          "measures": [
+            { "measureId": "crack-spreads", "relationship": "benchmarks", "basis": "MPC's market benchmarks are the Gulf Coast, Mid-Continent and West Coast 3-2-1 crack spreads; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" },
+            { "measureId": "rm-margin-per-barrel", "relationship": "informs", "basis": "MPC defines R&M margin as the difference between the prices of refined products sold and the costs of crude oil and other charge and blendstocks refined, including transport to the refineries and products purchased for resale; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" }
+          ]
         },
         {
           "id": "p-supply-procurement-strategy",
@@ -232,7 +237,14 @@
           "linkedProcessIds": ["CM 1.1.5", "CM 1.1.6"],
           "produces": ["dp-backcasting-refining-ci"],
           "consumes": ["dp-operational-margin", "dpl-planning-optimization"],
-          "rationale": "Backcasting owns the Backcasting & Refining CI product; consumes margin outcomes and the planning line as baseline."
+          "rationale": "Backcasting owns the Backcasting & Refining CI product; consumes margin outcomes and the planning line as baseline.",
+          "measures": [
+            { "measureId": "rm-margin-per-barrel", "relationship": "measures-performance", "basis": "MPC reports R&M margin per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" },
+            { "measureId": "crack-spreads", "relationship": "benchmarks", "basis": "MPC states that the sweet and sour crude differentials explain why realized margin differs from the blended crack; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" },
+            { "measureId": "refining-opex-per-barrel", "relationship": "measures-performance", "basis": "MPC reports refining operating costs per barrel, excluding planned turnaround and D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" },
+            { "measureId": "distribution-cost-per-barrel", "relationship": "measures-performance", "basis": "MPC reports distribution costs per barrel, excluding D&A, for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" },
+            { "measureId": "turnaround-cost-per-barrel", "relationship": "measures-performance", "basis": "MPC reports planned turnaround costs per barrel for 2023 to 2025; MPC FY2025 10-K, Item 7 (reference/mpc/mpc-fy2025-10k-fact-sheet.md, section 8)" }
+          ]
         },
         {
           "id": "p-settlement-post-trade-reconciliation",

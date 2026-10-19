@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 export PYTHONDONTWRITEBYTECODE=1
 run() { echo "--- $*"; "$@"; }
-with_deps() { uv run -q --with pytest --with rdflib --with pyshacl --with openpyxl --with "markdown-it-py>=4,<5" "$@"; }
+with_deps() { uv run -q --with pytest --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" "$@"; }
 
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
