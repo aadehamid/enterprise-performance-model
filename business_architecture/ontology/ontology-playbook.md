@@ -1346,10 +1346,10 @@ hold the controlled-value shapes and the evidence-link shapes
 
 **Step 10, publication** (EPM-DEC-001-0029, EPM-DEC-001-0037,
 EPM-DEC-001-0038, EPM-DEC-001-0044, EPM-DEC-001-0045, EPM-DEC-001-0043).
-Eight releases, each issued on the owner's written approval. The first
-four were built as candidates first; the last four (`core` 2.1.0,
-`organization` 2.0.0, `ref-mpc` 1.1.0 and `kpi` 1.0.0) were cut directly
-on the owner's approval of each cut:
+Nine releases, each issued on the owner's written approval. The first
+four were built as candidates first; the last five (`core` 2.1.0,
+`organization` 2.0.0, `ref-mpc` 1.1.0, `kpi` 1.0.0 and `kpi` 1.0.1) were
+cut directly on the owner's approval of each cut:
 
 | Release | What it holds | Builder |
 |---|---|---|
@@ -1361,6 +1361,7 @@ on the owner's approval of each cut:
 | `organization` 2.0.0 | Hamid's role answers: three roles deprecated into their successors, their assignments moved; requires `core` 2.1.0 | `release/build_module.py` |
 | `ref-mpc` 1.1.0 | The same reference instances; requires `organization` 2.0.0 | `release/build_module.py` |
 | `kpi` 1.0.0 | 41 measure definitions classified by kind, the planning personas and the processes each measure informs; requires `core` 2.1.0 | `release/build_module.py` |
+| `kpi` 1.0.1 | A patch: the measure list's source is named, Value Chain Optimization Decision Support and Visualization (VCO DSV) | `release/build_module.py` |
 
 Deprecating a property made 2.0.0 a major. Before approving it, the owner
 stated that no one used the ontology yet. The 2.0.0 cut found that the

@@ -8923,7 +8923,8 @@
                       {
                         "id": "CM 1.3.8.4.6",
                         "level": 5,
-                        "name": "Manage Intercompany Invoicing"
+                        "name": "Manage Intercompany Invoicing",
+                        "description": "Invoice, reconcile and settle charges between affiliated legal entities, including fees for logistics services that an affiliate provides under long-term fee-based agreements (pipeline transportation, terminals, storage and marine). Each charge has three perspectives. The affiliate that provides the service bills it through its order-to-cash steps: billing, receipts and cash application, receivables and settlement. The entity that receives the service verifies the service, validates the invoice and pays it through procure-to-pay, which the map does not yet hold as processes. The consolidating entity reconciles the intercompany balances and eliminates them. The rates are terms of the agreements. A disclosed figure, such as the per-barrel fees MPC's Refining & Marketing segment paid MPLX ($3.69 per barrel in 2025, MPC FY2025 Form 10-K, Item 7), is an aggregate expense for a period, not a tariff (EPM-DEC-001-0047, MPC-P08)."
                       },
                       {
                         "id": "CM 1.3.8.4.7",
@@ -9799,7 +9800,7 @@
             "id": "CM 1.1.7",
             "level": 2,
             "name": "Refinery Production Planning and Scheduling",
-            "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management.",
+            "description": "Refinery scheduling covering daily execution planning, production scheduling, and energy & utility management. Inter-refinery transfers of intermediate products (IRT) run through existing steps, not a separate process: regional targets that include refinery transfers (CM 1.1.2.9.1); the IRT optimization case (CM 1.1.5.5.4); physical distribution scheduling, which nominates, loads, tracks, discharges and reconciles each movement (CM 1.1.3.6.1 to CM 1.1.3.6.4); inventory measurement and reconciliation (CM 1.1.3.7.4, CM 1.1.3.7.5); actual transfer volumes and costs for backcasting (CM 1.1.5.1.2.1, CM 1.1.5.1.2.5); and settlement of intermediates (CM 1.2.4.1.18). No step yet names the loss and gain reconciliation of a transfer, or the quality measurement of a transferred intermediate; MPC-P03 coverage gaps, business_architecture/business_process/proposals/MPC-P03-transfer-coverage-gaps.md (EPM-DEC-001-0047).",
             "children": [
               {
                 "id": "CM 1.1.7.1",

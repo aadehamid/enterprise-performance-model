@@ -30,6 +30,8 @@ EPM-DEC-001-0017 seeds the `kpi` module from "Hamid's Pricing KPI categories and
 5. No target or owner is invented to make a measure a KPI; a measure becomes a KPI only by a recorded decision that names them.
 6. The ontology still holds definitions only, never values (EPM-DEC-001-0005). The list's plan and actuals sources, tools and history windows describe how a consuming system computes a measure; they are recorded as attributes of the definition where a competency question needs them, and nowhere else.
 
+*2026-10-19:* Hamid named the list's source: "Value Chain Optimization Decision Support and Visualization (VCO DSV)". The source the planner-list measures and personas cite now carries that title, with "VCO DSV" as its short name; it keeps its IRI (kpi 1.0.1). His words are in `answers-2026-10-19-vco-dsv.md`.
+
 ## Alternatives considered
 
 - **Wait for a separate list of Pricing KPI categories.** Not chosen: Hamid's reply "I have already provided you the KPI" says the files are the list.
@@ -37,6 +39,8 @@ EPM-DEC-001-0017 seeds the `kpi` module from "Hamid's Pricing KPI categories and
 - **Keep the people's names.** Not chosen: Hamid said "I dont wnat you to add names listed".
 
 ## Hamid's recorded words
+
+On the source, saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-19-vco-dsv.md`: "By the way do we have a source for the operational metrics/KPI?"
 
 Saved in `business_architecture/ontology/step4/review-evidence/hamid-answers/answers-2026-10-18.md`: "Here is the KPI. As far as Personae goes I dont wnat you to add names listed, but still represents the notion of persona", "Some of these are not actually KPI, majority are operational metrics. Please lassify those as such. Use industry best practices and do additional external reserch onthis . Continue to use Marathn as the stand in public compnay... So use any publickly available data from Marathon", "Switch the repo to private so that we can use the name. The only think we should generalize is the persona.", "Use these four (Recommended)", "you should not include the files as source files.sounds.", "For the next one. I have already provided you the KPI. Here is the rest" and "7. Mark candidate based on industry best practices and publickly available information". Items 1 to 6 under "What follows" are Claude's, made under EPM-DEC-001-0028 (saved in `delegation-steps-5-12.md`: "yes, extend the delegation to steps 5 to 12."), and Hamid can reverse them.
 
