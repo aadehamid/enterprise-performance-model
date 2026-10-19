@@ -979,7 +979,7 @@ without a dated amendment and the decision owner's explicit agreement.
   categories (EPM-DEC-001-0050). PRs #262, #266 and #269 stand as merged,
   with a dated note in EPM-DEC-001-0036 and 0038. GitHub refuses the approved
   ruleset on `main` while the repository is private (HTTP 403), so the
-  decision owner made the repository public temporarily, for the current
+  decision owner had the repository made public temporarily, for the current
   goal; the ruleset is added after the record merges. MPC-P09 is unblocked and goes in its own pull
   request.
 
