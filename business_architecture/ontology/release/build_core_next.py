@@ -24,6 +24,7 @@ import argparse
 import hashlib
 import json
 import os
+import subprocess
 import sys
 from collections import Counter
 
@@ -34,7 +35,11 @@ from rdflib.namespace import DCTERMS, OWL, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.dirname(HERE)
 BASE = os.path.join(ONTOLOGY, "releases", "core", "1.0.0")
-SOURCE = os.path.join(ONTOLOGY, "..", "business_process", "downstream_process_map.json")
+# The process map as 2.0.0 was built from it. A released package is fixed, so the build reads the
+# map at the commit that last changed it before the release, not the working copy: later map
+# changes go into a later core release. CI fetches full history, so the commit is always there.
+SOURCE_PATH = "business_architecture/business_process/downstream_process_map.json"
+SOURCE_COMMIT = "b75fd991e243248e60ecc832b3ad2c4f5c91740a"
 IDENTITY = os.path.join(ONTOLOGY, "build", "output", "step2-identity-map.json")
 CHANGELOG = os.path.join(ONTOLOGY, "releases", "core", "CHANGELOG-2.0.0.md")
 VERSION, STAGE, ISSUED = "2.0.0", None, "2026-10-13"
@@ -89,12 +94,18 @@ def domain_of(process, value):
     return OTHER[value]
 
 
+def source_map():
+    """The bytes of the process map at SOURCE_COMMIT."""
+    repo = os.path.dirname(os.path.dirname(ONTOLOGY))
+    return subprocess.run(["git", "-C", repo, "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"],
+                          check=True, capture_output=True, stdin=subprocess.DEVNULL).stdout
+
+
 def sipoc():
     """(process IRI, inputs, outputs) for every process with a SIPOC field in the process map."""
     with open(IDENTITY) as f:
         iri = {row["skos_notation"]: URIRef(row["uri"]) for row in json.load(f) if row["skos_notation"]}
-    with open(SOURCE) as f:
-        data = json.load(f)
+    data = json.loads(source_map())
     out = []
 
     def walk(node):
@@ -265,7 +276,7 @@ def package(g, s, counts):
         "module": "core", "version": LABEL, "release_candidate": STAGE is not None,
         "ontology_iri": str(ONTOLOGY_IRI), "version_iri": f"{ONTOLOGY_IRI}/{LABEL}",
         "built_from": {"core 1.0.0 manifest": hashlib.sha256(base_manifest.encode()).hexdigest(),
-                       "process map": hashlib.sha256(open(SOURCE, "rb").read()).hexdigest()},
+                       "process map": hashlib.sha256(source_map()).hexdigest()},
         "decisions": ["EPM-DEC-001-0038"],
         **({"approval": {"file": APPROVAL[0], "words": APPROVAL[1]}} if STAGE is None else {}),
         "files": {n: hashlib.sha256(t.encode()).hexdigest() for n, t in sorted(files.items())}}, indent=2) + "\n"

@@ -89,5 +89,19 @@ class Candidate(unittest.TestCase):
                 self.assertEqual(f.read(), text, name)
 
 
+
+class PinnedSource(unittest.TestCase):
+    def test_the_build_reads_the_map_at_its_pinned_commit(self):
+        with open(os.path.join(b.RELEASE_DIR, "manifest.json")) as f:
+            recorded = json.load(f)["built_from"]["process map"]
+        self.assertEqual(b.hashlib.sha256(b.source_map()).hexdigest(), recorded)
+
+    def test_the_pinned_commit_is_in_this_branch(self):
+        repo = os.path.dirname(os.path.dirname(b.ONTOLOGY))
+        r = b.subprocess.run(["git", "-C", repo, "merge-base", "--is-ancestor", b.SOURCE_COMMIT, "HEAD"],
+                             stdin=b.subprocess.DEVNULL)
+        self.assertEqual(r.returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()
