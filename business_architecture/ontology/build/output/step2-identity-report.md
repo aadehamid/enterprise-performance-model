@@ -37,3 +37,5 @@ No version segment; versions ride on `owl:versionInfo` (Appendix B).
 *2026-10-19:* EPM-DEC-001-0048 added CM 1.1.3.7.13 Reconcile Movement Losses and Gains to the map; the curated identity map holds its row, as Step 2 would emit it. This adds one node and one ID; the 2026-10-18 note at the top of this report gives the Refining changes (three IDs on existing nodes, five new nodes).
 
 *2026-10-18:* the counts above are the last Step 2 run's. MPC-P05 (EPM-DEC-001-0047) added CM 1.2.4.3.8 and its two children to the map (three nodes, three IDs), and the curated identity map holds a row for each, as Step 2 would emit it; the next identity pass regenerates this report.
+
+*2026-10-19:* EPM-DEC-001-0048 added CM 1.2.5.1.5 Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence to the map; the curated identity map holds its row, as Step 2 would emit it. This adds one node and one ID.
