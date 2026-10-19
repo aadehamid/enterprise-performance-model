@@ -68,4 +68,4 @@ Rerun it after any input or shape changes. You need Java 11 or later ([ROBOT's G
    docker rm -f epm-lpg
    ```
 
-The last run, on core 2.1.0 (2026-10-18): 2,811 nodes and 14,862 relationships (the 2.0.0 run had 2,166 and 12,290; 2.1.0 adds 640 canonical-fact nodes), no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
+The last run, on core 2.1.0 (2026-10-18): 2,811 nodes and 14,862 relationships (the 2.0.0 run had 2,166 and 12,290; 2.1.0 adds 640 canonical-fact nodes and 5 vocabulary terms), no SHACL violation in the graph, an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
