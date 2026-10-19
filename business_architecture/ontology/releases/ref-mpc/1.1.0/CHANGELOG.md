@@ -2,7 +2,7 @@
 
 ## 1.1.0 (2026-10-19)
 
-Minor. Approved by Hamid ("Approve the ref-mpc release too if needed", and "You have my approval to keep going and release things as needed. while I am out", saved in `step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md`). The module now requires organization 2.0.0 in place of 1.0.0 (EPM-DEC-001-0045). Its facts, shapes and IRIs are unchanged: it uses only the control relationship, which organization 2.0.0 keeps as it was.
+Minor. Approved by Hamid ("Approve the ref-mpc release too if needed", and "You have my approval to keep going and release things as needed. while I am out", saved in `step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md` and `answers-2026-10-19-releases.md`). The module now requires organization 2.0.0 in place of 1.0.0 (EPM-DEC-001-0045). Its facts, shapes and IRIs are unchanged: it uses only the control relationship, which organization 2.0.0 keeps as it was.
 
 ## 1.0.0 (2026-10-13)
 

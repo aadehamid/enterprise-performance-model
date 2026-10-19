@@ -19,7 +19,7 @@ DCAT = bm.DCAT
 # The sentence that approved each issued release (EPM-DEC-001-0037).
 SESSION2 = "step4/review-evidence/hamid-answers/answers-2026-10-13-session2.md"
 NIGHT = "step4/review-evidence/hamid-answers/answers-2026-10-18-night.md"
-RELEASES = "step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md"
+RELEASES = "step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md"
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
              "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed")}
 

@@ -46,7 +46,7 @@ MODULES = {
         "description": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5).",
         # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
         "version": "1.1.0", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md", "Approve the ref-mpc release too if needed"),
+        "approval": ("step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md", "Approve the ref-mpc release too if needed"),
         "parts": ["ref-mpc/ref-mpc.ttl"],
         "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl"],
         "depends_on": ["organization"],

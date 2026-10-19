@@ -14,10 +14,10 @@
   "triples": 140,
   "approved_by": {
     "who": "Hamid",
-    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-19-releases.md"
+    "recorded_in": "step4/review-evidence/hamid-answers/answers-2026-10-19-ref-mpc.md"
   },
   "files": {
-    "CHANGELOG.md": "fede49d75b62b9218f6a220a296286306a77bd43fa5270fc6c00798b13297330",
+    "CHANGELOG.md": "05fea29e8c7cba4ac6e1b2c61f89147497bea1e18c3f68d1f2c2f8af2a4e071a",
     "catalog.ttl": "a551c1ac5dcba8c25fe9ebaf4a71dd94d6ad9bad3b84713f28dc22465ff52b9d",
     "ref-mpc.jsonld": "9bc52e5bfa54a61a53f2b5694dddf0bd5dac4e8fc0fd53885547d05e5f9925a8",
     "ref-mpc.ttl": "99fbcff1f992047926a50c92f2ae54386e457e5e1a65d3fdefbd3fe007cc907e",
