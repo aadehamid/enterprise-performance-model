@@ -1396,11 +1396,10 @@ all three:
 
 Core 1.0.0 gave `earlierProcess` and `laterProcess` no range, which breaks
 Rule 1. The pipeline listed both as release gaps until core 2.0.0 added the
-ranges. The run on core 2.0.0, the organization module and `ref-mpc` loaded
-2,166 nodes and 12,290 relationships, with no SHACL violation in the
-graph, an empty round-trip diff and equal hashes for two load orders. On
-core 2.1.0 it loads 2,811 nodes and 14,862 relationships, with the same
-three results.
+ranges. The run on core 2.1.0, organization 2.0.0 and `ref-mpc` loads
+2,811 nodes and 14,865 relationships, with no SHACL violation in the
+graph, an empty round-trip diff and equal hashes for two load orders
+(`projection/projection-report.json`).
 
 **Source facts that are easy to get wrong.** Codes like `CM 1.2.1.3` are
 local notation, not APQC identifiers. Office-lane values are not declared

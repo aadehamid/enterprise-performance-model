@@ -7,6 +7,13 @@
 The register (role-register.csv) maps every role string in the process map's `raci` lists to
 one or more roles in roles.csv. The build fails unless the register holds each distinct source
 string exactly once, names only roles that roles.csv defines, and uses every role it defines.
+
+Since organization 2.0.0 (EPM-DEC-001-0045), roles.csv also carries Hamid's answers to the role
+questions. `label` stays the source spelling, which the surface rules check against; a
+`preferred_label` replaces it as skos:prefLabel and the source spelling becomes an alternative
+label. A role with `replaced_by` is deprecated, never deleted (playbook Appendix B): it keeps its
+triples, gains owl:deprecated and dcterms:isReplacedBy, and its source spelling becomes an
+alternative label (`alt`) or, for a misspelling, a hidden label (`hidden`) of its successor.
 """
 import argparse
 import csv
@@ -16,7 +23,7 @@ import sys
 from collections import Counter
 
 from rdflib import Graph, Literal, Namespace, URIRef
-from rdflib.namespace import DCTERMS, RDF, SKOS
+from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
@@ -33,6 +40,7 @@ PROCESS_MAP = SRC["downstream-process-map"]
 LEVELS = ("responsible", "accountable", "consulted", "informed")
 RULES = {"exact", "case", "plural", "punctuation", "ampersand", "qualifier", "compound", "team"}
 KINDS = {"position", "team"}
+LABEL_KINDS = {"alt", "hidden"}
 TEAM_NOTE = ("The source names a team here, not a position. The role stands for the team "
              "acting as one party in a RACI chart.")
 
@@ -79,6 +87,17 @@ def load():
     labels = Counter(r["label"] for r in roles)
     problems += [f"two roles share the label {lab!r}" for lab, n in labels.items() if n > 1]
     problems += [f"role {r['slug']!r} has kind {r['kind']!r}" for r in roles if r["kind"] not in KINDS]
+    shown = Counter(r["preferred_label"] or r["label"] for r in roles if not r["replaced_by"])
+    problems += [f"two live roles show the name {lab!r}" for lab, n in shown.items() if n > 1]
+    for r in roles:
+        if r["replaced_by"]:
+            successor = next((x for x in roles if x["slug"] == r["replaced_by"]), None)
+            if successor is None or successor["replaced_by"]:
+                problems.append(f"role {r['slug']!r} is replaced by {r['replaced_by']!r}, which is not a live role")
+            if r["replaced_label_kind"] not in LABEL_KINDS:
+                problems.append(f"role {r['slug']!r} needs replaced_label_kind alt or hidden")
+        elif r["replaced_label_kind"]:
+            problems.append(f"role {r['slug']!r} has a replaced_label_kind but no replaced_by")
 
     used = set()
     for row in register:
@@ -118,17 +137,29 @@ def build(register, roles):
     for role in roles:
         iri = ROLE[role["slug"]]
         g.add((iri, RDF.type, ORG.Role))
-        g.add((iri, SKOS.prefLabel, Literal(role["label"], lang="en")))
+        g.add((iri, SKOS.prefLabel, Literal(role["preferred_label"] or role["label"], lang="en")))
+        if role["preferred_label"]:
+            g.add((iri, SKOS.altLabel, Literal(role["label"], lang="en")))
         g.add((iri, DCTERMS.source, PROCESS_MAP))
         if role["kind"] == "team":
             g.add((iri, SKOS.scopeNote, Literal(TEAM_NOTE, lang="en")))
+        if role["definition"]:
+            g.add((iri, SKOS.definition, Literal(role["definition"], lang="en")))
+        if role["note"]:
+            g.add((iri, SKOS.editorialNote, Literal(role["note"], lang="en")))
+        if role["replaced_by"]:
+            successor = ROLE[role["replaced_by"]]
+            g.add((iri, OWL.deprecated, Literal(True)))
+            g.add((iri, DCTERMS.isReplacedBy, successor))
+            kind = SKOS.hiddenLabel if role["replaced_label_kind"] == "hidden" else SKOS.altLabel
+            g.add((successor, kind, Literal(role["label"], lang="en")))
     # A source string that names one role without a qualifier, spelt differently from its
     # label, is an alternative label. A qualified string names the role in one setting only.
     for row in register:
         names = row["roles"].split(";")
         if len(names) == 1 and not row["qualifier"]:
-            label = next(r["label"] for r in roles if r["slug"] == names[0])
-            if row["source_text"] != label:
+            role = next(r for r in roles if r["slug"] == names[0])
+            if row["source_text"] not in (role["label"], role["preferred_label"]):
                 g.add((ROLE[names[0]], SKOS.altLabel, Literal(row["source_text"], lang="en")))
     return g
 
@@ -143,6 +174,8 @@ def figures(entries, register, roles):
         "roles": len(roles),
         "positions": kinds["position"],
         "teams": kinds["team"],
+        "deprecated roles": sum(1 for r in roles if r["replaced_by"]),
+        "live roles": sum(1 for r in roles if not r["replaced_by"]),
         "compound strings": sum(1 for n in per_text.values() if n > 1),
         "role references after splitting": sum(per_text[t] for _, _, t in entries),
     }
@@ -154,7 +187,7 @@ def main():
     ap.add_argument("--verify", action="store_true")
     args = ap.parse_args()
     entries, register, roles = load()
-    text = ("# Roles of the organization module (Step 5, slice 2; EPM-DEC-001-0031).\n"
+    text = ("# Roles of the organization module (Step 5, slice 2; EPM-DEC-001-0031; role answers EPM-DEC-001-0045).\n"
             "# Built by build_roles.py from role-register.csv and roles.csv. Do not edit by hand.\n"
             + build(register, roles).serialize(format="turtle"))
     print("; ".join(f"{k} {v}" for k, v in figures(entries, register, roles).items()))

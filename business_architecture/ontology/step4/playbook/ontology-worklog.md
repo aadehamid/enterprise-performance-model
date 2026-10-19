@@ -84,7 +84,7 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by Hamid |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by Hamid to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (Hamid), carried by core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038); Hamid's role answers in organization 2.0.0, 2026-10-18 (EPM-DEC-001-0045) |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (Hamid confirmed) in core 2.0.0 (approved by Hamid 2026-10-13) (EPM-DEC-001-0038) |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions (seeded from Hamid's planner measure list since 2026-10-18, EPM-DEC-001-0040), Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Started 2026-10-18: the `kpi` module, 41 measure definitions classified by kind, built and not released (EPM-DEC-001-0040, 0042, 0043) |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
@@ -969,6 +969,17 @@ without a dated amendment and Hamid's explicit agreement.
   41 measures (EPM-DEC-001-0043). It is built and checked, not released:
   1.0.0, a major, was approved by Hamid and is cut next. Coverage: 17 answerable, 6 partial,
   21 waiting.
+
+### Role answers and organization 2.0.0 (2026-10-18)
+- Hamid answered the seven role questions and approved organization 2.0.0.
+  Three roles are deprecated into their successors, never deleted; their
+  three assignments keep their IRIs. Forecaster and PSM stay open, and Q17
+  waits for a separate governance decision. ref-mpc 1.1.0 (2026-10-19,
+  approved by Hamid) requires organization 2.0.0; organization 2.0.0
+  requires core 2.1.0. The projection on both loads 2,811 nodes and
+  14,865 relationships. EPM-DEC-001-0045, with his
+  words in `review-evidence/hamid-answers/answers-2026-10-18.md` and
+  `answers-2026-10-18-night.md`.
 
 ### core 2.1.0: evidence on canonical facts (2026-10-18)
 - Hamid answered the Step 9 walkthrough "1a, 2a" and approved cutting the
