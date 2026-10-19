@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (9, 5, 30))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (17, 6, 21))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -55,9 +55,18 @@ class Release(unittest.TestCase):
         self.assertEqual(inputs, outputs)
         self.assertEqual(len(inputs), 153)
 
+    def test_a_crack_without_its_not_links_fails_q32_and_q36(self):
+        g = Graph()
+        g += GRAPH
+        g.remove((URIRef("https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"),
+                  URIRef("https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith"), None))
+        failures, _ = run.check(g, run.load_expected())
+        self.assertTrue(any(f.startswith("Q32") for f in failures), failures)
+        self.assertTrue(any(f.startswith("Q36") for f in failures), failures)
+
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 13)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 22)
 
     def mutated(self, change):
         g = Graph()

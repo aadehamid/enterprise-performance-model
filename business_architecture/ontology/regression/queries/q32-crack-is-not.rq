@@ -1,0 +1,9 @@
+# Q32 What is the 3-2-1 crack spread not? Not realized margin, not margin capture, not the margin indicator.
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?crack ?notThis ?how WHERE {
+  ?crack skos:altLabel "3-2-1 crack"@en ; kpi:notToBeConfusedWith ?notThis ; skos:scopeNote ?how .
+  FILTER (?notThis = measure:margin-capture)
+}

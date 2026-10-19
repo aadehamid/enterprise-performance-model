@@ -60,6 +60,8 @@ done
 (cd business_architecture/ontology/organization && run with_deps python build_roles.py --verify)
 # Step 5: the RACI assignments must equal a fresh build, with a ledger that reconciles (EPM-DEC-001-0032).
 (cd business_architecture/ontology/organization && run with_deps python build_assignments.py --verify)
+# Step 7: the kpi module's measures must equal a fresh build from its tables (EPM-DEC-001-0043).
+(cd business_architecture/ontology/kpi && run with_deps python build_measures.py --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
@@ -71,6 +73,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/organization/test_roles.py \
   business_architecture/ontology/organization/test_assignments.py \
   business_architecture/ontology/ref-mpc/test_ref_mpc.py \
+  business_architecture/ontology/kpi/test_measures.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \
   business_architecture/ontology/projection/test_pipeline.py
