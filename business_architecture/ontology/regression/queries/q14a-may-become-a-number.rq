@@ -1,0 +1,9 @@
+# Q14 Which concepts may become a number? Measures of a numeric kind, with the basis that forms the number.
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
+PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?measure ?basis WHERE {
+  ?measure a kpi:MeasureDefinition ; kpi:measureKind ?kind ; kpi:basis ?basis .
+  FILTER (?kind NOT IN (kind:tracker-or-report, kind:not-a-measure))
+}

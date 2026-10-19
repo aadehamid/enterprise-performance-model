@@ -1,0 +1,128 @@
+# The kpi module's vocabulary (Step 7): measure definitions, the measure-kind code list and
+# the planning personas. EPM-DEC-001-0043 records the design; EPM-DEC-001-0042 the
+# classification rule and the eight kinds. The module holds definitions only, never values
+# (EPM-DEC-001-0005). Roles are W3C ORG terms, referred to by IRI and not imported
+# (EPM-DEC-001-0023). Processes are concepts of the core process scheme, by IRI.
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- The measure definition ----
+
+kpi:MeasureDefinition a owl:Class ;
+    rdfs:label "measure definition"@en ;
+    skos:definition "What a measure is, before anyone computes it: its meaning, kind, grain, basis and the processes it informs. A definition, never a value: the systems that compute the measure hold its values."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 7 (measures are definitions, never values); EPM-DEC-001-0005, EPM-DEC-001-0043"@en .
+
+kpi:Measures a skos:ConceptScheme ;
+    rdfs:label "measures"@en ;
+    skos:definition "The measures the kpi module defines: the planning team's measures and the measures MPC publishes."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040, EPM-DEC-001-0042"@en .
+
+kpi:measureKind a owl:ObjectProperty ;
+    rdfs:label "measure kind"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range skos:Concept ;
+    skos:definition "The kind of measure, from the measure-kind code list. Being a KPI is one kind: a designation with a target and an owner, not a property of the formula."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en .
+
+kpi:kpiCandidate a owl:DatatypeProperty ;
+    rdfs:label "KPI candidate"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:boolean ;
+    skos:definition "True when industry practice and public information make the measure a strong KPI candidate. It becomes a KPI only by a recorded decision that names its target and owner."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en .
+
+kpi:classificationTest a owl:DatatypeProperty ;
+    rdfs:label "classification test"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:integer ;
+    skos:definition "The number of the test, from 1 to 5, in EPM-DEC-001-0042's rule that assigned the measure's kind."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en .
+
+kpi:classificationReason a owl:DatatypeProperty ;
+    rdfs:label "classification reason"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:string ;
+    skos:definition "Why the measure has its kind, in one or two sentences."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042"@en .
+
+kpi:usedBy a owl:ObjectProperty ;
+    rdfs:label "used by"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range org:Role ;
+    skos:definition "A planning persona that uses the measure. A persona is a role, not a person."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en .
+
+kpi:informsProcess a owl:ObjectProperty ;
+    rdfs:label "informs process"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range skos:Concept ;
+    skos:definition "A process the measure informs. The link is context for where the measure is used, not a certification that the process owns or computes it."@en ;
+    dcterms:bibliographicCitation "competency questions 33, 37 and 38; EPM-DEC-001-0043"@en .
+
+kpi:comparedAgainst a owl:DatatypeProperty ;
+    rdfs:label "compared against"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:string ;
+    skos:definition "The references the measure is asked against: plans, forecasts, plan versions or history. For a plan-variance diagnostic the comparison is part of the measure. For any other kind it is a way of asking for the same measure, not a second measure."@en ;
+    dcterms:bibliographicCitation "competency question 30; EPM-DEC-001-0042, decision 7"@en .
+
+kpi:grain a owl:DatatypeProperty ;
+    rdfs:label "grain"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:string ;
+    skos:definition "The time and dimension the measure is stated at, for example daily by refinery."@en ;
+    dcterms:bibliographicCitation "competency question 29"@en .
+
+kpi:basis a owl:DatatypeProperty ;
+    rdfs:label "basis"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:string ;
+    skos:definition "How the measure is formed, in words: its numerator, its denominator and its unit. A description, not a formula the ontology computes."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042, decision 8"@en .
+
+kpi:publicCounterpart a owl:DatatypeProperty ;
+    rdfs:label "public counterpart"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range xsd:string ;
+    skos:definition "The measure MPC publishes that is closest to this one, by its number in mpc-performance-measures-evidence.md, or none."@en ;
+    dcterms:bibliographicCitation "business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en .
+
+kpi:notToBeConfusedWith a owl:ObjectProperty ;
+    rdfs:label "not to be confused with"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range kpi:MeasureDefinition ;
+    skos:definition "A nearby measure that people take for this one but that means something else. The skos:scopeNote says how they differ."@en ;
+    dcterms:bibliographicCitation "competency questions 32 and 36"@en .
+
+# ---- The planning personas ----
+
+kpi:planType a owl:DatatypeProperty ;
+    rdfs:label "plan type"@en ;
+    rdfs:domain org:Role ; rdfs:range xsd:string ;
+    skos:definition "The plan a planning persona builds or works from."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en .
+
+kpi:planHorizon a owl:DatatypeProperty ;
+    rdfs:label "plan horizon"@en ;
+    rdfs:domain org:Role ; rdfs:range xsd:string ;
+    skos:definition "The months a planning persona plans for, counted from the current month M."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0040"@en .
+
+# ---- Code list: measure kinds (EPM-DEC-001-0042) ----
+
+kpi:MeasureKind a skos:ConceptScheme ; rdfs:label "measure kind"@en ;
+    skos:definition "The eight kinds a measure in the kpi module can be, assigned by EPM-DEC-001-0042's five tests."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0042; business_architecture/reference/downstream-peers/kpi-classification-evidence.md"@en .
+kind:kpi a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "KPI"@en ; skos:notation "kpi" ;
+    skos:altLabel "key performance indicator"@en ;
+    skos:definition "A measure the business names as one of the few measures of a stated objective, with a target and an accountable owner."@en .
+kind:operational-metric a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Operational metric"@en ; skos:notation "operational-metric" ;
+    skos:definition "A recurring performance measure of a unit, asset or flow, watched by exception."@en .
+kind:plan-variance-diagnostic a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Plan-variance diagnostic"@en ; skos:notation "plan-variance-diagnostic" ;
+    skos:definition "Actual results against a plan, forecast, plan version or history, for one period."@en .
+kind:market-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Market indicator"@en ; skos:notation "market-indicator" ;
+    skos:definition "An external price, spread or benchmark that the region cannot influence."@en .
+kind:decision-support-indicator a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Decision-support indicator"@en ; skos:notation "decision-support-indicator" ;
+    skos:definition "A value computed from market prices and the planning model to start or rank a decision, with no performance target."@en .
+kind:tracker-or-report a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Tracker or report"@en ; skos:notation "tracker-or-report" ;
+    skos:definition "A list, status or schedule of activities and dates, with no formula, unit or time grain."@en .
+kind:alert a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Alert"@en ; skos:notation "alert" ;
+    skos:definition "An event raised when a condition is met, for someone to notice or act on."@en .
+kind:not-a-measure a skos:Concept ; skos:inScheme kpi:MeasureKind ; skos:prefLabel "Not a measure"@en ; skos:notation "not-a-measure" ;
+    skos:definition "A capability request on the measure list that is not a measure, parked for a later phase."@en .
