@@ -2,8 +2,8 @@
 
 *2026-10-18:* this is the report of the last Step 2 run, kept as built. Since then MPC-P02 gave Refining and its two ID-less L2 nodes the IDs `RF 1`, `RF 1.1` and `RF 1.2` (EPM-DEC-001-0047). The curated identity map carries them with `minted: false` and their slugs pinned, and adds rows for the new nodes, so the three Refining rows in the stub table below are no longer stubs. The next identity pass regenerates this report.
 
-- Nodes processed: 683
-- IDs preserved as skos:notation: 669 (all unique, all match `CM <dotted>` pattern)
+- Nodes processed: 683 (at the Step 2 run; later changes are in the dated notes above and below, each with its own count)
+- IDs preserved as skos:notation: 669 (at the Step 2 run) (all unique, all match `CM <dotted>` pattern)
 - Minted stub slugs: 14
 - Deprecated tombstones: 1
 - Slug collisions: none
@@ -33,3 +33,5 @@
 
 `https://w3id.org/lsc/ontology/process/{slug}` — e.g. `https://w3id.org/lsc/ontology/process/CM-1-2-1-3`, `https://w3id.org/lsc/ontology/process/L1-human-resources`.
 No version segment; versions ride on `owl:versionInfo` (Appendix B).
+
+*2026-10-19:* EPM-DEC-001-0048 added CM 1.1.3.7.13 Reconcile Movement Losses and Gains to the map; the curated identity map holds its row, as Step 2 would emit it. This adds one node and one ID; the 2026-10-18 note above gives the Refining changes (three IDs on existing nodes, five new nodes).
