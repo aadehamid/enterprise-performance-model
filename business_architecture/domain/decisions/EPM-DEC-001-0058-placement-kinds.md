@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Competency questions 37 (what a concept or Named KPI sits on), 38 (whether a placement is certification or context) and 39 (what breaks if a meaning changes); Phase E of EPM-DEC-001-0052 |
+| Questions | Competency questions 37 (what a concept or Named KPI sits on), 38 (whether a placement is certification or context) and 39 (what breaks if a meaning changes); Phase E of EPM-DEC-001-0052, its Step 11 item (every competency question answerable or parked by decision) and the partial questions |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
