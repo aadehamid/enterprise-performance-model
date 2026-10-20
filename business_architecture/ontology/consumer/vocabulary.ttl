@@ -55,45 +55,45 @@ rk:must-refuse a skos:Concept ; skos:inScheme con:RuleKind ; skos:prefLabel "Mus
 rule:definitions a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a thing is"@en ;
     skos:definition "The definition, name, aliases and kind of any concept, measure, data product, series, system or lane, read from its skos:definition, labels and kind."@en ;
     con:reliesOn skos:definition, skos:prefLabel, skos:altLabel, kpi:measureKind ;
-    dcterms:source "competency questions 13, 16, 27 and 41"@en .
+    dcterms:bibliographicCitation "competency questions 13, 16, 27 and 41"@en .
 rule:not-to-be-confused-with a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a measure is not"@en ;
     skos:definition "The nearby measures and series a measure is not, and how they differ."@en ;
     con:reliesOn kpi:notToBeConfusedWith, mkt:seriesOf ;
-    dcterms:source "competency questions 31, 32 and 36"@en .
+    dcterms:bibliographicCitation "competency questions 31, 32 and 36"@en .
 rule:placement a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Where a thing sits, and what the placement claims"@en ;
     skos:definition "The processes, capabilities and value streams a measure or data product sits on, and whether each placement certifies or is context."@en ;
     con:reliesOn kpi:informsProcess, vs:measureLink, vs:produces, vs:consumes, plc:placementKind ;
-    dcterms:source "competency questions 33, 37 and 38; EPM-DEC-001-0058"@en .
+    dcterms:bibliographicCitation "competency questions 33, 37 and 38; EPM-DEC-001-0058"@en .
 rule:recipe a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a series is built from"@en ;
     skos:definition "A series' region, legs, barrels and RIN treatment, as a recipe, never as a value."@en ;
     con:reliesOn mkt:leg, mkt:barrels, mkt:region, mkt:excludesRINCost ;
-    dcterms:source "competency questions 31 and 34; EPM-DEC-001-0057"@en .
+    dcterms:bibliographicCitation "competency questions 31 and 34; EPM-DEC-001-0057"@en .
 rule:who-does-it a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Who is responsible"@en ;
     skos:definition "The roles responsible, accountable, consulted and informed for a process, as the RACI assignments record them."@en ;
     con:reliesOn orgm:forProcess ;
-    dcterms:source "competency questions 3 to 5"@en .
+    dcterms:bibliographicCitation "competency questions 3 to 5"@en .
 rule:which-source a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Which source says so"@en ;
     skos:definition "The sources a definition cites, and which one is authoritative when they disagree."@en ;
     con:reliesOn dcterms:source, auth:evidenceTier ;
-    dcterms:source "competency question 44; EPM-DEC-001-0059"@en .
+    dcterms:bibliographicCitation "competency question 44; EPM-DEC-001-0059"@en .
 
 rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute or quote a value"@en ;
     skos:definition "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."@en ;
     con:reliesOn kpi:basis ;
-    dcterms:source "competency question 42; EPM-DEC-001-0005"@en .
+    dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0005"@en .
 rule:no-crack-from-legs a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Build a crack from its legs"@en ;
     skos:definition "Calculate a crack spread from the prices of its crude and product legs. The official series is the published one; a homemade crack is a different number."@en ;
     con:reliesOn mkt:leg, mkt:seriesOf ;
-    dcterms:source "competency questions 32 and 42; EPM-DEC-001-0057"@en .
+    dcterms:bibliographicCitation "competency questions 32 and 42; EPM-DEC-001-0057"@en .
 rule:no-report-as-kpi a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Treat a report column as the KPI"@en ;
     skos:definition "Call a tracker, report or report column a KPI, or call a KPI candidate a KPI. A tracker has no grain, and a KPI needs a recorded decision that names its target and owner."@en ;
     con:reliesOn kpi:measureKind, kpi:kpiCandidate ;
-    dcterms:source "competency question 42; EPM-DEC-001-0042"@en .
+    dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0042"@en .
 rule:no-customer-without-role a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Name the customer without a role"@en ;
     skos:definition "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."@en ;
     con:reliesOn kpi:measureKind ;
-    dcterms:source "competency questions 25, 26 and 42; EPM-DEC-001-0004"@en .
+    dcterms:bibliographicCitation "competency questions 25, 26 and 42; EPM-DEC-001-0004"@en .
 rule:no-context-as-ownership a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Present context as ownership"@en ;
     skos:definition "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."@en ;
     con:reliesOn plc:placementKind ;
-    dcterms:source "competency question 38; EPM-DEC-001-0058"@en .
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .

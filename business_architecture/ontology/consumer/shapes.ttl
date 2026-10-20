@@ -23,4 +23,4 @@ shp:Rule a sh:NodeShape ;
     sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path con:ruleKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( rk:may-answer rk:must-refuse ) ] ;
     sh:property [ sh:path con:reliesOn ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
-    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ] .
+    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] .
