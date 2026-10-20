@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (17, 6, 21))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (17, 7, 20))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()

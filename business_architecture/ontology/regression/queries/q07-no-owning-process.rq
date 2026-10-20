@@ -1,0 +1,7 @@
+# Q7 (graph part). Which data products have no owning process? (no process produces them)
+PREFIX dp: <https://w3id.org/lsc/ontology/modules/data-product/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?product ?name WHERE {
+  ?product a dp:DataProduct ; skos:prefLabel ?name .
+  FILTER NOT EXISTS { ?product dp:producedBy ?process }
+}

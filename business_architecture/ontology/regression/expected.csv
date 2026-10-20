@@ -5,7 +5,7 @@ question,status,queries,waits_for
 4,answerable,q04a-no-accountable.rq;q04b-raci-has-accountable.rq,
 5,answerable,q05-roles.rq,
 6,waits:step-7,,systems (Step 7)
-7,waits:step-7,,data products (Step 7)
+7,partial,q07-no-owning-process.rq,data products with no owning process answer now (EPM-DEC-001-0053); what each process produces or consumes waits for the value-stream links (Phase B) and Loss Control's producer for core 2.2.0
 8,answerable,q08a-no-planned-flows.rq;q08b-planned-flows.rq,
 9,waits:step-7,,lanes (Step 7)
 10,waits:step-7,,capabilities and value streams (Step 7)

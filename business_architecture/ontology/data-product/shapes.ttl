@@ -1,0 +1,67 @@
+# SHACL shapes for the data-product module (Step 7; EPM-DEC-001-0053). A stated cardinality on
+# every property (EPM-DEC-001-0020, rule 2; playbook Appendix B).
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix status: <https://w3id.org/lsc/ontology/modules/data-product/status/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/data-product/shapes/> .
+
+# What every segment, line and data product has.
+shp:PortfolioItem a sh:NodeShape ;
+    sh:targetClass dp:PortfolioSegment, dp:DataProductLine, dp:DataProduct ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ; sh:message "A portfolio item has exactly one English name." ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:message "A portfolio item keeps its portfolio id as its notation." ] ;
+    sh:property [ sh:path skos:inScheme ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue dp:DataProducts ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:editorialNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A portfolio item cites its source." ] ;
+    # Defined, or parked with the reason: never both, never neither (Step 7, "done when").
+    sh:xone ( [ sh:path skos:definition ; sh:minCount 1 ] [ sh:path skos:editorialNote ; sh:minCount 1 ] ) ;
+    sh:message "A portfolio item has a definition or a note saying why it is parked, not both." .
+
+shp:Segment a sh:NodeShape ;
+    sh:targetClass dp:PortfolioSegment ;
+    sh:property [ sh:path skos:topConceptOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:hasValue dp:DataProducts ] ;
+    sh:property [ sh:path skos:broader ; sh:maxCount 0 ] ;
+    sh:property [ sh:path dp:anchoredIn ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A segment is anchored in exactly one part of the process map." ] .
+
+shp:Line a sh:NodeShape ;
+    sh:targetClass dp:DataProductLine ;
+    sh:property [ sh:path skos:broader ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dp:PortfolioSegment ;
+                  sh:message "A data product line sits in exactly one segment." ] ;
+    sh:property [ sh:path dp:portfolioStatus ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( status:active status:defined-only status:open-decision ) ] .
+
+shp:Product a sh:NodeShape ;
+    sh:targetClass dp:DataProduct ;
+    sh:property [ sh:path skos:broader ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dp:DataProductLine ;
+                  sh:message "A data product sits in exactly one data product line." ] ;
+    sh:property [ sh:path dp:portfolioStatus ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( status:active status:defined-only status:open-decision ) ] ;
+    sh:property [ sh:path dp:producedBy ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path dp:consumedBy ; sh:minCount 0 ; sh:nodeKind sh:IRI ] .
+
+# An active item is one the portfolio describes, so it is defined, not parked.
+shp:ActiveIsDefined a sh:NodeShape ;
+    sh:targetClass dp:DataProductLine, dp:DataProduct ;
+    sh:or ( [ sh:not [ sh:path dp:portfolioStatus ; sh:hasValue status:active ] ]
+            [ sh:path skos:definition ; sh:minCount 1 ] ) ;
+    sh:message "An active data product or line has a definition." .
+
+# A data product is a definition, never data: only definitions and links hang off it.
+shp:NoValuesOnProducts a sh:NodeShape ;
+    sh:targetClass dp:DataProduct ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:inScheme skos:definition skos:editorialNote
+                           skos:altLabel skos:scopeNote skos:broader dcterms:source
+                           dp:portfolioStatus dp:producedBy dp:consumedBy ) ;
+    sh:message "A data product carries only its definition and links, never data values (EPM-DEC-001-0005)." .
