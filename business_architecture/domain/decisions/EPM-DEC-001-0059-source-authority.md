@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Competency question 44 (which definition is authoritative when two sources disagree, and how that is marked), partial since the regression started; Phase E of EPM-DEC-001-0052 (Step 9) |
+| Questions | Competency question 44 (which definition is authoritative when two sources disagree, and how that is marked), partial since the regression started; Phase E of EPM-DEC-001-0052, the partial questions (Q44: mark which source is authoritative, at Step 7 or 9) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
