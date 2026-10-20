@@ -26,7 +26,7 @@ question,status,queries,waits_for
 25,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
 26,waits:EPM-DEC-001-0004,,Customer / Party module waits for the decision owner's customer details
 27,answerable,q27-measure-definitions.rq,
-28,waits:step-7,,"population in and out of a measure (kpi module holds definition and basis, not population rules)"
+28,answerable,q28-population.rq,
 29,answerable,q29-grain.rq,
 30,answerable,q30-comparisons-are-views.rq,
 31,answerable,q31a-series-of-one-measure.rq;q31b-same-name-different-series.rq,

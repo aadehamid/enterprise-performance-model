@@ -1,0 +1,6 @@
+# Q28 What population is in a Named KPI, and what is out, in business words? (measures whose public source states it)
+PREFIX pop: <https://w3id.org/lsc/ontology/modules/population/>
+SELECT ?measure ?includes ?excludes WHERE {
+  ?measure pop:includes ?includes .
+  OPTIONAL { ?measure pop:excludes ?excludes }
+}

@@ -1,0 +1,28 @@
+# Measure populations (Step 7; EPM-DEC-001-0062): what is in a measure and what is out, in
+# business words, where its public source says so (competency question 28). The statements hang
+# on the kpi module's measure IRIs.
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+pop:includes a owl:DatatypeProperty ;
+    rdfs:label "includes"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range rdf:langString ;
+    skos:definition "What the measure counts, in business words, as its source states it."@en ;
+    dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en .
+
+pop:excludes a owl:DatatypeProperty ;
+    rdfs:label "excludes"@en ;
+    rdfs:domain kpi:MeasureDefinition ; rdfs:range rdf:langString ;
+    skos:definition "What the measure leaves out, in business words, as its source states it."@en ;
+    dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en .
+
+pop:populationEvidence a owl:DatatypeProperty ;
+    rdfs:label "population evidence"@en ;
+    rdfs:domain kpi:MeasureDefinition ;
+    skos:definition "Where the population statements come from."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0062"@en .
