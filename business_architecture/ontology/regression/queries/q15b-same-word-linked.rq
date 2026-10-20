@@ -1,0 +1,14 @@
+# Q15 Where one word names two IRIs, are they one thing, or how are they related? (a retired IRI and its replacement, a value-stream process and the map process it realizes, a segment and its anchor)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+PREFIX dp: <https://w3id.org/lsc/ontology/modules/data-product/>
+SELECT ?word ?a ?link ?b WHERE {
+  { ?a vs:realizes ?b . BIND(vs:realizes AS ?link) }
+  UNION { ?a dp:anchoredIn ?b . BIND(dp:anchoredIn AS ?link) }
+  UNION { ?a dcterms:isReplacedBy ?b . BIND(dcterms:isReplacedBy AS ?link) }
+  ?a skos:prefLabel ?la .
+  ?b skos:prefLabel|skos:altLabel ?lb .
+  FILTER(LCASE(STR(?la)) = LCASE(STR(?lb)))
+  BIND(STR(?la) AS ?word)
+}
