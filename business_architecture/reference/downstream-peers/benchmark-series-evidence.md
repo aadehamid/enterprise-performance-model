@@ -38,7 +38,7 @@ Added 2026-10-20 to check EPM-DEC-001-0057's rule against peers' own filings, as
 
 | ID | Source | Retrieved |
 |---|---|---|
-| PBF-10K-2025 | PBF Energy Inc., Form 10-K for 2025, https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm | 2026-10-20 |
+| PBF-10K-2025 | PBF Energy Inc., Form 10-K for 2025, filed 2026-02-12, https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm | 2026-10-20 |
 | PSX-10K-2025 | Phillips 66, Form 10-K for 2025, filed 2026-02-20, https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm | 2026-10-20 |
 | DINO-10K-2025 | HF Sinclair Corporation, Form 10-K for 2025, filed 2026-02-27, https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm | 2026-10-20 |
 | VLO-10K-2025 | Valero Energy Corporation, Form 10-K for 2025, filed 2026-02-25, https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm | 2026-10-20 |
@@ -48,4 +48,4 @@ Added 2026-10-20 to check EPM-DEC-001-0057's rule against peers' own filings, as
 - DINO-10K-2025 defines the term only in general: "“Crack spread” is a common measure in the industry and is the difference between market prices for refined products and crude oil." It compares its margin "against publicly available crack spread data".
 - VLO-10K-2025 uses neither "crack spread" nor a benchmark refining margin in its text.
 
-So the peers agree with EPM-DEC-001-0057: a ratio label such as "3-2-1" does not make two series the same. Each company builds its benchmark from its own crude, product markets and legs, and Phillips 66's composite, like MPC's blended crack, is weighted to its own business. MPC stays the primary source for the five series; the peers add no series.
+So the peers agree with EPM-DEC-001-0057: a ratio label such as "3-2-1" does not make two series the same. PBF's Martinez "ANS (West Coast) 3-2-1" shares MPC's West Coast crude and ratio but has a jet fuel leg, so it is a different series. Phillips 66 reports a composite "for our business", not a market-wide series. HF Sinclair compares against public crack data and Valero names no crack benchmark. The peers add no series and change none.
