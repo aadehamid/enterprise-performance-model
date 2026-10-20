@@ -2188,7 +2188,9 @@ inspection execution, process-safety policy, work permits, contractor
 management, capital approval, or maintenance/turnaround execution unless
 separately assigned by the enterprise operating model. Status: Candidate;
 review trigger: R2 evidence package / refinery maintenance and turnaround
-operating model.
+operating model. *2026-10-19:* the ownership question is answered for the
+map's scope (EPM-DEC-001-0063); the next `core` release reviews the Candidate
+status.
 **Terminology governance (2026-09-22):** R1 resolves terminology only to the
 minimum required for an accurate hierarchy and non-misleading labels
 (stale parent/label/path references updated mechanically). Unresolved
