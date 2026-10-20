@@ -37,5 +37,5 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Consequences
 
-- The regression stands at 28 answerable, 3 partial and 13 waiting.
+- The regression stands at 27 answerable, 4 partial and 13 waiting.
 - A new source needs a row in `source-tiers.csv`; the test fails until it has one.
