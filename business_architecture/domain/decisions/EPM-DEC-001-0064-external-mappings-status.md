@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | The external mappings EPM-DEC-001-0023 assigned to Step 7, and its instruction to check PIDX's access terms before the Customer work; Phase E of EPM-DEC-001-0052 |
+| Questions | The external mappings EPM-DEC-001-0023 assigned to Step 7, and its instruction to check PIDX's access terms before the Customer work; Phase E of EPM-DEC-001-0052, the external mappings (EPM-DEC-001-0023) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
