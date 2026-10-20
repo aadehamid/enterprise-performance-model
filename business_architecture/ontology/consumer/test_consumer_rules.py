@@ -35,9 +35,9 @@ def conforms(extra=None):
 
 class Rules(unittest.TestCase):
     def test_counts(self):
-        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse.
+        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse; EPM-DEC-001-0062 adds a seventh.
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
-        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 6)
+        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 7)
         self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["must-refuse"]) in VOCAB]), 5)
 
     def test_each_rule_relies_on_its_decided_terms(self):
@@ -51,6 +51,7 @@ class Rules(unittest.TestCase):
         ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
         SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
         DCT = Namespace("http://purl.org/dc/terms/")
+        POP = Namespace("https://w3id.org/lsc/ontology/modules/population/")
         expected = {
             "definitions": {SKOS.definition, SKOS.prefLabel, SKOS.altLabel, KPI.measureKind},
             "not-to-be-confused-with": {KPI.notToBeConfusedWith, MKT.seriesOf},
@@ -63,6 +64,7 @@ class Rules(unittest.TestCase):
             "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
             "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1")},
             "no-context-as-ownership": {PLC.placementKind},
+            "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062
         }
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
         self.assertEqual(rules, {R[k] for k in expected})

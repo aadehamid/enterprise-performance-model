@@ -1,0 +1,35 @@
+# Measure populations (Step 7; EPM-DEC-001-0062). Built by build_population.py from
+# population.csv. Do not edit by hand.
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+measure:crack-spreads pop:excludes "The market cost of RINs, in MPC's regional and blended crack spreads."@en ;
+    pop:includes "The crude and product benchmarks of each series' recipe (the market-data module's series)."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 10"^^xsd:string .
+
+measure:distribution-cost-per-barrel pop:excludes "Depreciation and amortization."@en ;
+    pop:includes "Distribution costs, mainly the long-term agreements with MPLX, including their minimum commitments."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 15"^^xsd:string .
+
+measure:margin-capture pop:excludes "Regional capture, which MPC does not publish."@en ;
+    pop:includes "The company's reported R&M margin as a share of the R&M Margin Indicator."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 8"^^xsd:string .
+
+measure:refining-opex-per-barrel pop:excludes "Planned turnaround costs, and depreciation and amortization."@en ;
+    pop:includes "Refining operating costs, driven mainly by the energy the refineries use and the level of maintenance. The company figure is per barrel of net throughput; the regional figure is per barrel of gross throughput, which includes inter-refinery transfer volumes."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 14"^^xsd:string .
+
+measure:relative-adjusted-ebitda-per-barrel pop:includes "ACB Adjusted EBITDA per barrel of total throughput, against the applicable reporting segments of Chevron, Exxon Mobil, HF Sinclair, PBF Energy, Phillips 66 and Valero Energy."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 20"^^xsd:string .
+
+measure:relative-refining-margin-by-region pop:includes "Refining EBITDA per barrel of total throughput for MPC's Gulf Coast, Mid-Continent and West Coast regions, against the corresponding regions of Phillips 66 and Valero Energy."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 19"^^xsd:string .
+
+measure:rm-margin-per-barrel pop:excludes "Inter-refinery transfer volumes, which the regional per-barrel figures leave out of net refinery throughput."@en ;
+    pop:includes "Sales revenue less the cost of refinery inputs and purchased products, per barrel of net refinery throughput. From 2026 the margin includes impacts from derivative activity."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 7 and finding 5"^^xsd:string .
+
+measure:turnaround-cost-per-barrel pop:includes "Planned turnaround and other major maintenance costs, expensed in the period incurred: contractor repair services, materials and supplies, equipment rentals and MPC's labor costs."@en ;
+    pop:populationEvidence "mpc-performance-measures-evidence.md, row 16"^^xsd:string .
+

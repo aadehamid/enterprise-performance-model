@@ -1490,8 +1490,9 @@ With the placement kinds (2026-10-19), Q37, Q38 and Q39 became answerable: 26, 5
 With the source tiers (2026-10-19), Q44 became answerable: 27, 4 and 13.
 With the full APQC element list (2026-10-19), Q11 became answerable, and Q40 and Q43 count by their graph part: 30, 1 and 13.
 With the consumer rules (2026-10-19), Q35, Q41 and Q42 became answerable: 33, 1 and 10.
-Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
-Customer / Party module. The first query for Q8 filtered on the "process"
+With the measure populations (2026-10-19), Q28 became answerable: 34, 1 and 9. Every waiting question then waits on the decision owner.
+The waiting questions are the meaning owners (Q17) and the customer questions (Q19 to
+Q26); all wait on the decision owner. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.
 Counting the query's population against the whole caught it.

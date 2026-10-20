@@ -11,6 +11,7 @@
 @prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
 @prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
 @prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
 @prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
 @prefix proc: <https://w3id.org/lsc/ontology/process/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -77,6 +78,11 @@ rule:which-source a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Whic
     skos:definition "The sources a definition cites, and which one is authoritative when they disagree."@en ;
     con:reliesOn dcterms:source, auth:evidenceTier ;
     dcterms:bibliographicCitation "competency question 44; EPM-DEC-001-0059"@en .
+
+rule:what-a-measure-counts a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a measure counts"@en ;
+    skos:definition "What a measure includes and excludes, where its source says so, and where that statement comes from."@en ;
+    con:reliesOn pop:includes, pop:excludes, pop:populationEvidence ;
+    dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en .
 
 rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute or quote a value"@en ;
     skos:definition "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."@en ;
