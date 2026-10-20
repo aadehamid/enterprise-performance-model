@@ -962,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Repository visibility rule (2026-10-19)
+- The decision owner set a standing rule: the repository may be public
+  while work needs it, so ruleset 25440735 gates every pull request, and
+  it goes back to private at the end of each session or goal. Recorded as
+  an amendment to EPM-DEC-001-0050. Their words are saved in
+  `answers-2026-10-19-completion-order.md` and
+  `answers-2026-10-19-completion-goal.md`.
+
 ### Process-authority integrity checks (2026-10-20)
 - `business_process/test_business_process.py`, run by `check.sh`, now checks
   the process authority. The data product portfolio and both value streams
@@ -1012,7 +1020,8 @@ without a dated amendment and the decision owner's explicit agreement.
   that day:* ruleset 25440735 was created and gated #300 and #301; once
   they merged the repository went private again, and GitHub no longer
   enforces the ruleset. MPC-P09 is unblocked and goes in its own pull
-  request.
+  request. *Amended 2026-10-19:* public while work needs it, private at
+  the end of each session or goal.
 
 ### Process-map gaps addressed (2026-10-19)
 - The decision owner said to address the two gaps the MPC-P03 and MPC-P04 checks
@@ -1081,7 +1090,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050).
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050). *2026-10-19, amendment of EPM-DEC-001-0050:* public while work needs it, private at the end of each session or goal.
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words
