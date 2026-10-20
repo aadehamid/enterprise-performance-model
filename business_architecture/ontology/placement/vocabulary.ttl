@@ -1,7 +1,7 @@
-# Placement kinds (Step 7; EPM-DEC-001-0058): what each link that places a measure, data
-# product, system or lane on a process claims. A certification link says the target owns the
-# subject; a context link says only where the subject is used. Competency question 38 asks
-# which one a placement is. The annotations name properties of other modules by IRI.
+# Placement kinds (Step 7; EPM-DEC-001-0058): what each of twelve placing properties claims.
+# A certification link names a data product's owning process; a context link says only where
+# one thing is used or placed with another. Competency question 38 asks which one a placement
+# is. The annotations name properties of other modules by IRI.
 @prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
 @prefix kind: <https://w3id.org/lsc/ontology/modules/placement/kind/> .
 @prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
@@ -17,16 +17,16 @@
 
 plc:placementKind a owl:AnnotationProperty ;
     rdfs:label "placement kind"@en ;
-    skos:definition "What a placing property claims about its target: certification (the target owns the subject) or context (the subject is used there)."@en ;
+    skos:definition "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."@en ;
     dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
 
 plc:PlacementKind a skos:ConceptScheme ; rdfs:label "placement kind"@en ;
     skos:definition "The two things a placement can claim."@en ;
     dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
 kind:certification a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Certification"@en ; skos:notation "certification" ;
-    skos:definition "The link states that the target owns the subject: the process that produces a data product is its owning process."@en .
+    skos:definition "The link names a data product's owning process: the producing process, which is the subject of vs:produces and the target of dp:producedBy."@en .
 kind:context a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Context"@en ; skos:notation "context" ;
-    skos:definition "The link says only where the subject is used. It does not say the target owns, computes or approves the subject."@en .
+    skos:definition "The link says only where one thing is used or placed with another. It does not say either end owns, computes or approves the other."@en .
 
 kpi:informsProcess plc:placementKind kind:context .
 vs:measureLink plc:placementKind kind:context .

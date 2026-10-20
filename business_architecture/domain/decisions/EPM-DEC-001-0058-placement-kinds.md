@@ -9,7 +9,7 @@
 
 ## Context
 
-Since the Step 7 overlays, measures, data products, systems and lanes are placed on processes by twelve properties across six modules. Each property's own definition already says what it claims: `kpi:informsProcess` is "context for where the measure is used, not a certification" (EPM-DEC-001-0043); a value-stream process that produces a data product "owns/publishes" it (the value-stream schema; EPM-DEC-001-0054). The graph did not say so in a form a query can read.
+Since the Step 7 overlays, twelve properties across six modules place measures, data products, series, systems and lanes on processes, capabilities and regions. Each property's own definition already says what it claims: `kpi:informsProcess` is "context for where the measure is used, not a certification that the process owns or computes it" (`kpi/vocabulary.ttl`; EPM-DEC-001-0043 calls the links "context, not certification"); a value-stream process that produces a data product "owns/publishes" it (the value-stream schema; EPM-DEC-001-0054). The graph did not say so in a form a query can read.
 
 ## Decision
 

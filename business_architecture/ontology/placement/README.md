@@ -1,6 +1,6 @@
 # placement: what a placement claims
 
-Competency question 38 asks whether a measure's or concept's placement on a process certifies the process or is only context. This vocabulary answers it by marking each placing property of the other modules with its kind: `certification` (the target owns the subject) or `context` (the subject is used there). Only producing a data product certifies (`vs:produces`, `dp:producedBy`, the owning process). Every other placement, including every measure's, is context. EPM-DEC-001-0058 records the choice.
+Competency question 38 asks whether a measure's or concept's placement on a process certifies the process or is only context. This vocabulary answers it by marking each placing property of the other modules with its kind: `certification` (the link names a data product's owning process) or `context` (the link says only where one thing is used or placed with another). Only producing a data product certifies (`vs:produces`, `dp:producedBy`, the owning process). Every other placement, including every measure's, is context. EPM-DEC-001-0058 records the choice.
 
 | File | What |
 |---|---|

@@ -6,6 +6,8 @@ PREFIX kind: <https://w3id.org/lsc/ontology/modules/placement/kind/>
 SELECT ?measure ?p ?target WHERE {
   { ?measure a kpi:MeasureDefinition ; ?p ?target . }
   UNION
+  { ?target ?p ?measure . ?measure a kpi:MeasureDefinition . }
+  UNION
   { ?target ?p ?link . ?link vs:measure ?measure . }
   ?p plc:placementKind kind:certification .
 }

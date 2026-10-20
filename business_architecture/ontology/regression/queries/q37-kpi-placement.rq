@@ -1,4 +1,4 @@
-# Q37 What process does a Named KPI candidate sit on? (the measure part; concepts wait for Step 7 overlays)
+# Q37 What process does a Named KPI candidate sit on? (the measure part; q37b is the concepts part)
 PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
 PREFIX kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/>
 PREFIX measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/>
