@@ -45,6 +45,14 @@ class AllModules(unittest.TestCase):
         for path in SHAPE_FILES:
             self.assertTrue(os.path.exists(os.path.join(ONTOLOGY, path)), path)
 
+    def test_every_module_shape_file_is_listed(self):
+        # A module that gains a shapes.ttl must join the gate (Pi round 1 suggestion). The core 1.0.0
+        # slice (release/shapes.ttl) is part of core 2.1.0's shapes; the scoped-sequence shapes run in
+        # their own build check.
+        import glob
+        found = {os.path.relpath(p, ONTOLOGY) for p in glob.glob(os.path.join(ONTOLOGY, "*", "shapes.ttl"))}
+        self.assertEqual(found - set(SHAPE_FILES), {"release/shapes.ttl"})
+
     def test_the_whole_graph_conforms(self):
         ok, text = report(GRAPH)
         self.assertTrue(ok, text[:3000])
