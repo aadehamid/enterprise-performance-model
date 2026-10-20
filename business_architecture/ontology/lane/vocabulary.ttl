@@ -1,0 +1,19 @@
+# The lane module's vocabulary (Step 7; EPM-DEC-001-0056): the four office lanes of the
+# trading organization, from business_process/office_lanes.json, and the processes the process
+# map places in each. Processes are concepts of the core process scheme, by IRI.
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+lane:OfficeLanes a skos:ConceptScheme ;
+    rdfs:label "office lanes"@en ;
+    skos:definition "The four office lanes of the trading organization: front office, middle office, back office and operations. The lanes are not declared disjoint."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/office_lanes.json; EPM-DEC-001-0056"@en .
+
+lane:officeLane a owl:ObjectProperty ;
+    rdfs:label "office lane"@en ;
+    rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "The office lane the process map places a process in. Only the node that names a lane has one; its children do not inherit it."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, officeLane; competency question 9; EPM-DEC-001-0056"@en .

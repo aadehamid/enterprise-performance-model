@@ -7,7 +7,7 @@ question,status,queries,waits_for
 6,answerable,q06a-systems-for-process.rq;q06b-processes-for-system.rq,
 7,partial,q07a-produces-consumes.rq;q07-no-owning-process.rq,Loss Control's producer (CM 1.1.3.7.13) waits for core 2.2.0 (EPM-DEC-001-0053)
 8,answerable,q08a-no-planned-flows.rq;q08b-planned-flows.rq,
-9,waits:step-7,,lanes (Step 7)
+9,answerable,q09a-lane-processes.rq;q09b-thin-lanes.rq,
 10,answerable,q10a-capability-processes.rq;q10b-value-stream-processes.rq,
 11,partial,q11-apqc-references.rq,APQC elements with no local counterpart need the full APQC PCF 7.2.2 element list in the graph; the release carries only the referenced elements
 12,answerable,q12-apqc-divergence.rq,

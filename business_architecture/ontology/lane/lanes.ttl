@@ -1,0 +1,55 @@
+# Office lanes of the lane module (Step 7; EPM-DEC-001-0056).
+# Built by build_lanes.py from office_lanes.json and the process map. Do not edit by hand.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix lanev: <https://w3id.org/lsc/ontology/modules/lane/lane/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+proc:CM-1-2-1 lane:officeLane lanev:front-office .
+
+proc:CM-1-2-2 lane:officeLane lanev:middle-office .
+
+proc:CM-1-2-3 lane:officeLane lanev:operations .
+
+proc:CM-1-2-4 lane:officeLane lanev:back-office .
+
+proc:CM-1-2-5 lane:officeLane lanev:operations .
+
+proc:CM-1-2-6 lane:officeLane lanev:operations .
+
+proc:CM-1-2-7 lane:officeLane lanev:operations .
+
+lanev:back-office a skos:Concept ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Administrative and operational completion of the trade lifecycle: settlements, invoicing and netting, accounting and sub-ledger management, regulatory reporting, dispute resolution, and record-keeping."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "back_office"^^xsd:string ;
+    skos:prefLabel "Back Office"@en .
+
+lanev:front-office a skos:Concept ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Revenue-generating, market-facing functions of the trading organization: trading and deal execution, forecasting, pre-trade analysis, bidding strategy, and customer/counterparty engagement."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "front_office"^^xsd:string ;
+    skos:prefLabel "Front Office"@en .
+
+lanev:middle-office a skos:Concept ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Control and analytical layer between front and back office: monitors market and credit risk and exposure, validates captured trades, calculates P&L, manages confirmations and scenario modelling, and enforces risk limits, controls, and compliance."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "middle_office"^^xsd:string ;
+    skos:prefLabel "Middle Office"@en .
+
+lanev:operations a skos:Concept ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Physical supply chain execution supporting the traded book: scheduling, movement actualization, feedstock and product inventory management, transportation, and terminal operations."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "operations"^^xsd:string ;
+    skos:prefLabel "Operations"@en .
+
+src:office-lanes a dcterms:BibliographicResource ;
+    dcterms:title "Office lanes, business_architecture/business_process/office_lanes.json"@en .
+

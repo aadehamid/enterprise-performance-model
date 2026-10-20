@@ -1,0 +1,7 @@
+# Q9 Which lanes are thin? (each lane with its number of processes, fewest first)
+PREFIX lane: <https://w3id.org/lsc/ontology/modules/lane/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?lane (COUNT(?process) AS ?processes) WHERE {
+  ?lane skos:inScheme lane:OfficeLanes .
+  OPTIONAL { ?process lane:officeLane ?lane }
+} GROUP BY ?lane ORDER BY ?processes
