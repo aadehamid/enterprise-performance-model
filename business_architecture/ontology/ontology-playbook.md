@@ -1630,10 +1630,12 @@ to end, and the backbone alone cannot answer. The worked example revives
 this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
 revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
 *2026-10-19:* the data-product and value-stream layers parked here, and
-the systems and lanes, which Steps 4 and 5 left out with the other node
-fields (worklog, "Step 3 — SKOS taxonomy") and Phase B of EPM-DEC-001-0052 scheduled as
-overlays (EPM-DEC-001-0054, item 7), are revived as modules (EPM-DEC-001-0053 to 0056); they are not
-yet released.
+the systems and lanes, are revived as modules (EPM-DEC-001-0053 to 0056);
+they are not yet released. The Step 3 taxonomy had left systems and lanes
+for Steps 4 and 5 with the other node fields (worklog, "Step 3 — SKOS
+taxonomy"); Phase B of EPM-DEC-001-0052 scheduled them as overlays; and
+they went in their own pull requests because they are fields of the process
+map, not of the value streams (EPM-DEC-001-0054, item 7).
 
 ---
 
