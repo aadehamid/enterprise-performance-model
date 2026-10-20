@@ -36,7 +36,7 @@ question,status,queries,waits_for
 35,waits:step-7,,"catalog binding: the data products are defined (EPM-DEC-001-0053), but no source says which data product publishes which measure"
 36,answerable,q36-the-crack.rq,
 37,answerable,q37-kpi-placement.rq;q37b-concept-placement.rq,
-38,answerable,q38a-no-measure-certified.rq;q38b-placement-kinds.rq;q15a-same-word.rq,
+38,answerable,q38a-no-measure-certified.rq;q38b-placement-kinds.rq;q38c-same-name-processes.rq,
 39,answerable,q39-downstream.rq;q39b-meaning-dependents.rq,
 40,partial,q40-official-wording.rq,"where the wording is published for people, and what is only a copy (Step 10)"
 41,waits:step-7,,what an agent may answer needs answer rules over the kpi module; graph part only
