@@ -1,0 +1,5 @@
+# Q10 Which processes realize capability C? (value-stream processes that use C, and the process-map processes they realize)
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+SELECT ?capability ?step ?process WHERE {
+  ?step vs:usesCapability ?capability ; vs:realizes ?process .
+}

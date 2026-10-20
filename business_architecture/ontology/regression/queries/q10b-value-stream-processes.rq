@@ -1,0 +1,5 @@
+# Q10 Which process-map processes participate in value stream V?
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+SELECT DISTINCT ?stream ?process WHERE {
+  ?stream vs:hasStage/vs:hasProcess/vs:realizes ?process .
+}
