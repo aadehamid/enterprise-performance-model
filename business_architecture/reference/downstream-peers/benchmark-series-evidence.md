@@ -31,3 +31,21 @@ So "USGC 3-2-1 MEH ex-RIN" is MPC's Gulf Coast crack spread, and "Chicago WTI 3-
 - CME-FRESH names the legs and their tickers: "selling two RBOB Gasoline (RB) futures at $2.981 per gallon and one NY Harbor ULSD (HO) futures at $3.5400 per gallon, while buying three WTI Crude Oil (CL) futures". The prices are the article's example, not data the ontology keeps.
 
 So "NYMEX 3-2-1" shares the 3-2-1 ratio with MPC's cracks but is a different series: its legs are exchange futures, and its gasoline leg is RBOB, which MPC's benchmarks do not use.
+
+## U.S. refining peers (secondary)
+
+Added 2026-10-20 to check EPM-DEC-001-0057's rule against peers' own filings, as AGENTS.md's evidence order asks. Each is the FY2025 Form 10-K on sec.gov, read on 2026-10-20.
+
+| ID | Source | Retrieved |
+|---|---|---|
+| PBF-10K-2025 | PBF Energy Inc., Form 10-K for 2025, https://www.sec.gov/Archives/edgar/data/1534504/000153450426000010/pbf-20251231.htm | 2026-10-20 |
+| PSX-10K-2025 | Phillips 66, Form 10-K for 2025, filed 2026-02-20, https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm | 2026-10-20 |
+| DINO-10K-2025 | HF Sinclair Corporation, Form 10-K for 2025, filed 2026-02-27, https://www.sec.gov/Archives/edgar/data/1915657/000191565726000016/dino-20251231.htm | 2026-10-20 |
+| VLO-10K-2025 | Valero Energy Corporation, Form 10-K for 2025, filed 2026-02-25, https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm | 2026-10-20 |
+
+- PBF-10K-2025 names each refinery's benchmark by crude, market and ratio: "Our Toledo refinery generally follows the WTI (Chicago) 4-3-1 benchmark refining margin."; "Our Chalmette refinery generally follows the LLS (Gulf Coast) 2-1-1 benchmark refining margin."; "Our Martinez refinery generally follows the ANS (West Coast) 3-2-1 benchmark refining margin." Its 3-2-1 has different product legs from MPC's: "processing three barrels of crude oil to produce two barrels of gasoline and three-quarters of a barrel jet fuel and one-quarter of a barrel ULSD."
+- PSX-10K-2025 reports its own blend: "The composite 3:2:1 market crack spread for our business increased to an average of $20.42 per barrel during 2025". The figure is the filing's, not data the ontology keeps.
+- DINO-10K-2025 defines the term only in general: "“Crack spread” is a common measure in the industry and is the difference between market prices for refined products and crude oil." It compares its margin "against publicly available crack spread data".
+- VLO-10K-2025 uses neither "crack spread" nor a benchmark refining margin in its text.
+
+So the peers agree with EPM-DEC-001-0057: a ratio label such as "3-2-1" does not make two series the same. Each company builds its benchmark from its own crude, product markets and legs, and Phillips 66's composite, like MPC's blended crack, is weighted to its own business. MPC stays the primary source for the five series; the peers add no series.
