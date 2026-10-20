@@ -1,0 +1,26 @@
+# SHACL shapes for the consumer rules (Step 7; EPM-DEC-001-0061).
+@prefix con: <https://w3id.org/lsc/ontology/modules/consumer/> .
+@prefix rk: <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/consumer/shapes/> .
+
+# A catalog binding needs both ends defined first (question 35).
+shp:Binding a sh:NodeShape ;
+    sh:targetSubjectsOf con:publishesMeasure ;
+    sh:class dp:DataProduct ;
+    sh:property [ sh:path con:publishesMeasure ; sh:minCount 1 ; sh:class kpi:MeasureDefinition ;
+                  sh:message "A catalog binding points at a defined measure." ] ;
+    sh:message "Only a defined data product publishes a measure." .
+
+shp:Rule a sh:NodeShape ;
+    sh:targetClass con:Rule ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path con:ruleKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( rk:may-answer rk:must-refuse ) ] ;
+    sh:property [ sh:path con:reliesOn ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] .

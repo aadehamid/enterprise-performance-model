@@ -41,6 +41,7 @@ root.
 | `provenance/` | The Step 6 definition-to-run pattern: the shapes a consumer's run must meet, an example run and tests (EPM-DEC-001-0034) |
 | `ref-mpc/` | The Step 5 reference instances for MPC: MPC, MPLX, MPC's control of MPLX, segments and refineries, from the FY2025 10-K (EPM-DEC-001-0033) |
 | `kpi/` | The Step 7 kpi module: 41 measure definitions classified by kind (EPM-DEC-001-0042), the measure-kind code list, planning personas and process links (EPM-DEC-001-0043); released as 1.0.0 (`releases/kpi/1.0.0/`), approved by the decision owner, and 1.0.1, a patch naming the measure list's source (VCO DSV) |
+| `consumer/` | Rules for consumers: the catalog binding and what an agent may answer and must refuse (EPM-DEC-001-0061) |
 | `apqc/` | The full APQC Downstream Petroleum PCF 7.2.2 element list (2,012 elements), a reference for Q11 (EPM-DEC-001-0060) |
 | `authority/` | Step 9: the evidence tier of every cited source, so the best-tier source wins when two disagree (EPM-DEC-001-0059) |
 | `placement/` | The placement kinds: which placing properties certify (only producing a data product) and which give context (EPM-DEC-001-0058) |

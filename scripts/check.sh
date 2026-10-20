@@ -97,6 +97,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/placement/test_placement.py \
   business_architecture/ontology/authority/test_source_tiers.py \
   business_architecture/ontology/apqc/test_apqc_elements.py \
+  business_architecture/ontology/consumer/test_consumer_rules.py \
   business_architecture/business_process/test_business_process.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \

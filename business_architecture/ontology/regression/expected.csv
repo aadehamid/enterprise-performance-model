@@ -33,13 +33,13 @@ question,status,queries,waits_for
 32,answerable,q32-crack-is-not.rq,
 33,answerable,q33-informs-process.rq,
 34,answerable,q34-quantified-concepts.rq,
-35,waits:step-7,,"catalog binding: the data products are defined (EPM-DEC-001-0053), but no source says which data product publishes which measure"
+35,answerable,q35-catalog-binding.rq,
 36,answerable,q36-the-crack.rq,
 37,answerable,q37-kpi-placement.rq;q37b-concept-placement.rq,
 38,answerable,q38a-no-measure-certified.rq;q38b-placement-kinds.rq;q38c-same-name-processes.rq,
 39,answerable,q39-downstream.rq;q39b-meaning-dependents.rq,
 40,answerable,q40-official-wording.rq,
-41,waits:step-7,,what an agent may answer needs answer rules over the kpi module; graph part only
-42,waits:step-7,,what an agent must refuse needs refusal rules over the kpi module; graph part only
+41,answerable,q41-may-answer.rq,
+42,answerable,q42-must-refuse.rq,
 43,answerable,q43-one-definition.rq,
 44,answerable,q44-sources.rq;q44b-authoritative-source.rq,

@@ -1,0 +1,6 @@
+# Q42 What must the agent refuse? (calculate a crack from its legs, treat a report column as the KPI, name the customer without a role, and more)
+PREFIX con: <https://w3id.org/lsc/ontology/modules/consumer/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?rule ?name ?why WHERE {
+  ?rule con:ruleKind <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/must-refuse> ; skos:prefLabel ?name ; skos:definition ?why .
+}
