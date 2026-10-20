@@ -523,6 +523,26 @@ capabilities, systems, measures and data products.
 4. Resolve the gaps earlier steps exposed, such as empty output sets or
    missing owners, one at a time, each as a recorded decision. Do not invent
    an owner to fill a gap. "Unowned, parked" is better than a guess.
+5. Define only what a source describes. An item an overlay names without
+   describing (a data product, a system) gets a note saying its definition
+   waits for its owners, never a definition written from its name. A shape
+   requires one of the two, never both.
+6. Say what each placing link claims, in a form a query can read. Mark each
+   property that places a measure, data product or system on a process as
+   certification (the target owns the subject) or context (the subject is
+   used there). Only an owning link certifies.
+7. Separate a measure from its published series. A series is one form of a
+   measure, identified by what it is built from: region, legs and their
+   ratio, and what it leaves out. Store the recipe, never the prices. Two
+   series that differ in any of these are two series of one measure.
+8. Rank the sources. Give every cited source a tier from the project's
+   evidence order, so that when two sources of one concept disagree, the
+   best tier wins, and a query can say which.
+9. Write down the rules for the graph's consumers: how a catalog row binds a
+   measure (both ends defined first), what an agent may answer from the
+   graph alone, and what it must refuse, such as computing a value or
+   building a benchmark from its legs. Each rule names the terms it relies
+   on, so a test can check that they exist.
 
 **Done when:** every integration gap has a decision: linked, or explicitly
 parked.
@@ -563,6 +583,10 @@ revival trigger.
    value in a copy of the data and require a violation.
 6. Shapes written after a release run against that release without
    changing it. They join the release's own shapes at the next release.
+7. Run every module's shapes together on the whole graph, in one test. A
+   shape that targets too broadly (every subject of `skos:inScheme`), or a
+   value one module's shape forbids in another module, passes each module's
+   own tests and fails only there.
 
 **Done when:** the shapes run against the data with zero unexplained
 violations.
@@ -612,6 +636,10 @@ versioned distributions.
    count. A filter on one concept kind silently drops concepts that carry
    no kind. Count the population the query selects, the rows it returns
    and the rows it leaves out, and confirm they add up.
+8. Pin the counts a harness test checks by hand, and expect each new query
+   to change them. A test that pins how many queries fail on an empty
+   graph, or which question serves as the example of a waiting one, must
+   move with every module that adds a query or answers that question.
 
 **Done when:** every competency question passes on the published release,
 or is parked by a recorded decision.
@@ -1429,6 +1457,18 @@ owner made them the source author's backlog.
   the owner's approval of the measure categories, which came on 2026-10-19
   (EPM-DEC-001-0050), and is applied: two value-stream processes name
   five measures, each with its relationship and MPC source.
+- *The overlays* (EPM-DEC-001-0053 to 0062, 2026-10-19). Each layer came
+  in as its own module: data products (15 defined, 33 parked because the
+  portfolio names them without a description), the two value streams, the
+  map's systems through a spelling-only register, the office lanes, five
+  crack-spread series of one measure from MPC's 10-K and CME Group, the
+  placement kinds, the source tiers, the full APQC element list, the
+  consumer rules and the measure populations. Regression went from 17 to
+  35 answerable questions; the nine still waiting all wait on the owner.
+- *What the whole-graph gate caught* (EPM-DEC-001-0065). Every module's
+  own tests passed, yet running all the shapes together found a lane shape
+  that targeted every concept in any scheme and rules that gave
+  `dcterms:source` a text value. Both were fixed where they started.
 - *What the reviews caught.* Most review holds in Step 7 were attribution:
   a record listed the agent's wording (role names, a rule, detail from a
   pasted analysis) under the owner's decisions. Working agreements now say
@@ -1586,6 +1626,8 @@ Revival trigger: someone asks for, say, the Order-to-Cash value stream end
 to end, and the backbone alone cannot answer. The worked example revives
 this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
 revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
+*2026-10-19:* the data-product, value-stream, system and lane layers are
+revived as modules (EPM-DEC-001-0053 to 0056); they are not yet released.
 
 ---
 
