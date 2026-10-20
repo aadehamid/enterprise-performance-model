@@ -102,7 +102,7 @@ benchmark:meh a skos:Concept,
 
 benchmark:nymex-ny-harbor-ulsd a skos:Concept,
         mkt:Benchmark ;
-    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
     skos:definition "The NYMEX NY Harbor ULSD futures contract, the diesel leg of the NYMEX 3:2:1 crack spread."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "nymex-ny-harbor-ulsd"^^xsd:string ;
@@ -111,7 +111,7 @@ benchmark:nymex-ny-harbor-ulsd a skos:Concept,
 
 benchmark:nymex-rbob a skos:Concept,
         mkt:Benchmark ;
-    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
     skos:definition "The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "nymex-rbob"^^xsd:string ;
@@ -120,11 +120,11 @@ benchmark:nymex-rbob a skos:Concept,
 
 benchmark:nymex-wti a skos:Concept,
         mkt:Benchmark ;
-    dcterms:source src:cme-trading-crack-spreads-2024 ;
-    skos:definition "The NYMEX Light Sweet Crude Oil (WTI) futures contract, the crude leg of the NYMEX 3:2:1 crack spread."@en ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
+    skos:definition "The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread."@en ;
     skos:inScheme mkt:Series ;
     skos:notation "nymex-wti"^^xsd:string ;
-    skos:prefLabel "NYMEX WTI Light Sweet Crude Oil futures (CL)"@en ;
+    skos:prefLabel "NYMEX WTI Crude Oil futures (CL)"@en ;
     mkt:benchmarkKind bkind:crude-marker .
 
 benchmark:usgc-cbob a skos:Concept,
@@ -249,6 +249,12 @@ series:crack-west-coast-3-2-1 a skos:Concept,
     mkt:region region:west-coast ;
     mkt:seriesOf measure:crack-spreads .
 
+src:cme-trading-crack-spreads-2024 a dcterms:BibliographicResource ;
+    dcterms:title "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, retrieved 2026-10-19"@en .
+
+src:cme-fresh-from-the-trading-room-2026-07-14 a dcterms:BibliographicResource ;
+    dcterms:title "CME Group, Fresh from the Trading Room: Papering over the cracks (2026-07-14), https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html, retrieved 2026-10-19"@en .
+
 region:gulf-coast a skos:Concept ;
     dcterms:source src:mpc-performance-measures-evidence ;
     skos:definition "MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries."@en ;
@@ -270,9 +276,6 @@ region:west-coast a skos:Concept ;
     skos:notation "west-coast"^^xsd:string ;
     skos:prefLabel "West Coast"@en .
 
-src:cme-trading-crack-spreads-2024 a dcterms:BibliographicResource ;
-    dcterms:title "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, retrieved 2026-10-19"@en .
-
 src:mpc-performance-measures-evidence a dcterms:BibliographicResource ;
-    dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md (MPC FY2025 Form 10-K, Items 2 and 7, MPC-S01)"@en .
+    dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en .
 

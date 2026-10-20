@@ -9,7 +9,7 @@
 
 ## Context
 
-The `kpi` module defines one measure, `crack-spreads`, a market indicator (EPM-DEC-001-0042). The planner's measure list names three cracks: "NYMEX 3-2-1", "USGC 3-2-1 MEH ex-RIN" and "Chicago WTI 3-2-1 ex-RIN". MPC's FY2025 Form 10-K, Item 7, defines Gulf Coast, Mid-Continent, West Coast and blended crack spreads, each from a crude marker and two product benchmarks in a 3-2-1 ratio, without the cost of RINs (`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11). CME Group defines the exchange's 3:2:1 from WTI, RBOB and NY Harbor ULSD futures. EPM-DEC-001-0046 puts benchmark identifiers and assessment conventions in Market Data.
+The `kpi` module defines one measure, `crack-spreads`, a market indicator (EPM-DEC-001-0042). The planner's measure list names three cracks: "NYMEX 3-2-1", "USGC 3-2-1 MEH ex-RIN" and "Chicago WTI 3-2-1 ex-RIN". MPC's FY2025 Form 10-K, Item 7, defines Gulf Coast, Mid-Continent and West Coast crack spreads, each from a crude marker and two product benchmarks in a 3-2-1 ratio, and a blended crack spread weighted from the three by regional capacity, all without the cost of RINs (`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11). CME Group defines the exchange's 3:2:1 from WTI, RBOB and NY Harbor ULSD futures. EPM-DEC-001-0046 puts benchmark identifiers and assessment conventions in Market Data.
 
 ## Decision
 
@@ -32,7 +32,7 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Evidence
 
-`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11, and finding 3; `business_architecture/reference/downstream-peers/benchmark-series-evidence.md` (CME Group, "Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017); EPM-DEC-001-0005, 0042, 0046.
+`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11, and finding 3; `business_architecture/reference/downstream-peers/benchmark-series-evidence.md` (CME Group, "Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14); EPM-DEC-001-0005, 0042, 0046.
 
 ## Consequences
 

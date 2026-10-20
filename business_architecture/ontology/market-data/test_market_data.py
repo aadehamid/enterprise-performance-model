@@ -10,7 +10,7 @@ import sys
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -85,6 +85,16 @@ class Shapes(unittest.TestCase):
 
     def test_rejects_a_price(self):
         self.assertFalse(self.broken(lambda g: g.add((BENCH["wti"], MKT.price, Literal(65.5)))))
+
+    def test_rejects_a_price_on_a_leg(self):
+        self.assertFalse(self.broken(lambda g: g.add((LEG["crack-gulf-coast-3-2-1--meh"], MKT.price, Literal(65.5)))))
+
+    def test_shared_source_keeps_one_title(self):
+        # src:mpc-performance-measures-evidence is also declared by the kpi module (Pi round 1).
+        kpi = Graph().parse(bm.MEASURES)
+        src = bm.SOURCES["MPC-S01"][0]
+        both = set(DATA.objects(src, URIRef("http://purl.org/dc/terms/title"))) | set(kpi.objects(src, URIRef("http://purl.org/dc/terms/title")))
+        self.assertEqual(len(both), 1, both)
 
     def test_rejects_a_series_of_no_measure(self):
         self.assertFalse(self.broken(lambda g: g.remove((SERIES["crack-west-coast-3-2-1"], MKT.seriesOf, None))))

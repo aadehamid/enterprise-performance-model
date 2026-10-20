@@ -23,10 +23,11 @@ So "USGC 3-2-1 MEH ex-RIN" is MPC's Gulf Coast crack spread, and "Chicago WTI 3-
 | ID | Source | Retrieved |
 |---|---|---|
 | CME-CRACK | CME Group, "Trading Crack Spreads", 2024, https://www.cmegroup.com/articles/2024/trading-crack-spreads.html | 2026-10-19 |
-| CME-CRACK-INTRO | CME Group, "Introduction to Crack Spreads", 2017-05-09, https://www.cmegroup.com/education/articles-and-reports/introduction-to-crack-spreads | 2026-10-19 |
+| CME-CRACK-INTRO | CME Group, "Introduction to Crack Spreads", 2017, https://www.cmegroup.com/education/articles-and-reports/introduction-to-crack-spreads | 2026-10-19 |
+| CME-FRESH | CME Group, "Fresh from the Trading Room: Papering over the cracks", 2026-07-14, https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html | 2026-10-19 |
 
 - CME-CRACK: "A long 3:2:1 crack spread consists of buying two contracts of RBOB plus one contract of ULSD and selling three contracts of WTI."
 - CME-CRACK-INTRO: "3:2:1 crack spreads — three crude oil futures contracts versus two gasoline futures contracts and one ULSD futures contract."
-- CME's NYMEX product list names the legs as Light Sweet Crude (CL), RBOB Gasoline (RB) and NY Harbor ULSD (HO).
+- CME-FRESH names the legs and their tickers: "selling two RBOB Gasoline (RB) futures at $2.981 per gallon and one NY Harbor ULSD (HO) futures at $3.5400 per gallon, while buying three WTI Crude Oil (CL) futures". The prices are the article's example, not data the ontology keeps.
 
 So "NYMEX 3-2-1" shares the 3-2-1 ratio with MPC's cracks but is a different series: its legs are exchange futures, and its gasoline leg is RBOB, which MPC's benchmarks do not use.

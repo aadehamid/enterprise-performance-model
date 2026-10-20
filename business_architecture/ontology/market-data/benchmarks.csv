@@ -8,6 +8,6 @@ chicago-cbob,Chicago CBOB,product-benchmark,mid-continent,"The Chicago CBOB gaso
 chicago-ulsd,Chicago ULSD,product-benchmark,mid-continent,"The Chicago ULSD price, a benchmark price in MPC's marketing areas.",MPC-S01
 la-carbob,LA CARBOB,product-benchmark,west-coast,"The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01
 la-carb-diesel,LA CARB Diesel,product-benchmark,west-coast,"The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas.",MPC-S01
-nymex-wti,NYMEX WTI Light Sweet Crude Oil futures (CL),crude-marker,,"The NYMEX Light Sweet Crude Oil (WTI) futures contract, the crude leg of the NYMEX 3:2:1 crack spread.",CME-CRACK
-nymex-rbob,NYMEX RBOB Gasoline futures (RB),product-benchmark,,"The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks.",CME-CRACK
-nymex-ny-harbor-ulsd,NYMEX NY Harbor ULSD futures (HO),product-benchmark,,"The NYMEX NY Harbor ULSD futures contract, the diesel leg of the NYMEX 3:2:1 crack spread.",CME-CRACK
+nymex-wti,NYMEX WTI Crude Oil futures (CL),crude-marker,,"The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread.",CME-FRESH
+nymex-rbob,NYMEX RBOB Gasoline futures (RB),product-benchmark,,"The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks.",CME-FRESH
+nymex-ny-harbor-ulsd,NYMEX NY Harbor ULSD futures (HO),product-benchmark,,"The NYMEX NY Harbor ULSD futures contract, the diesel leg of the NYMEX 3:2:1 crack spread.",CME-FRESH

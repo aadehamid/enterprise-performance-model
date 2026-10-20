@@ -32,12 +32,15 @@ MEASURE = Namespace("https://w3id.org/lsc/ontology/modules/kpi/measure/")
 SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 MEASURE_ID = "crack-spreads"
 SOURCES = {
+    # The same title the kpi module gives this shared source node (build_measures.py).
     "MPC-S01": (SRC["mpc-performance-measures-evidence"],
-                "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md "
-                "(MPC FY2025 Form 10-K, Items 2 and 7, MPC-S01)"),
+                "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"),
     "CME-CRACK": (SRC["cme-trading-crack-spreads-2024"],
                   "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, "
                   "retrieved 2026-10-19"),
+    "CME-FRESH": (SRC["cme-fresh-from-the-trading-room-2026-07-14"],
+                  "CME Group, Fresh from the Trading Room: Papering over the cracks (2026-07-14), "
+                  "https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html, retrieved 2026-10-19"),
 }
 REGION_SOURCE = "MPC-S01"
 # The blended series' weights change by period, so they are a note with their source, not a value.

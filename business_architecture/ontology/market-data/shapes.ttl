@@ -33,6 +33,8 @@ shp:Series a sh:NodeShape ;
 
 shp:Leg a sh:NodeShape ;
     sh:targetClass mkt:Leg ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type mkt:benchmark mkt:barrels ) ;
     sh:property [ sh:path [ sh:inversePath mkt:leg ] ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path mkt:benchmark ; sh:minCount 1 ; sh:maxCount 1 ; sh:class mkt:Benchmark ] ;
     sh:property [ sh:path mkt:barrels ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ] .

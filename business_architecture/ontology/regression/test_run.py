@@ -64,6 +64,12 @@ class Release(unittest.TestCase):
         self.assertTrue(any(f.startswith("Q32") for f in failures), failures)
         self.assertTrue(any(f.startswith("Q36") for f in failures), failures)
 
+    def test_each_source_has_one_title(self):
+        # A source node shared by two modules must carry one title, not one per module.
+        title = URIRef("http://purl.org/dc/terms/title")
+        many = {s for s in set(GRAPH.subjects(title, None)) if len(set(GRAPH.objects(s, title))) > 1}
+        self.assertEqual(many, set())
+
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
         self.assertEqual(len([f for f in failures if "no rows" in f]), 35)
