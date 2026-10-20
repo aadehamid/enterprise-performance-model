@@ -34,4 +34,4 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Consequences
 
-- The regression stands at 35 answerable, 0 partial and 9 waiting. Every waiting question waits on the decision owner: question 17 (EPM-DEC-001-0045) and questions 19 to 26, the Customer module (EPM-DEC-001-0004).
+- The regression stands at 34 answerable, 1 partial (Q7) and 9 waiting. Every waiting question waits on the decision owner: question 17 (EPM-DEC-001-0045) and questions 19 to 26, the Customer module (EPM-DEC-001-0004).
