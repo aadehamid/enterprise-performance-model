@@ -1,6 +1,6 @@
 # authority: which source wins
 
-Competency question 44 asks which definition is authoritative when two sources disagree, and how that is marked. This module gives every source the modules cite an evidence tier, from the evidence order in `AGENTS.md`: (1) the process authority and the decision owner's own material, (2) Marathon Petroleum, (3) U.S. refining peers, (4) downstream industry and regulatory sources, (5) generic frameworks, support only. For a concept that cites several sources, a source in its best tier is authoritative. EPM-DEC-001-0059 records the choice.
+Competency question 44 asks which definition is authoritative when two sources disagree, and how that is marked. This module gives every source the modules cite an evidence tier, from the evidence order in `AGENTS.md`: (1) the process authority and the decision owner's own material, (2) Marathon Petroleum, (3) U.S. refining peers, (4) industry and regulatory sources, (5) generic frameworks, support only. For a concept that cites several sources, a source in its best tier is authoritative. EPM-DEC-001-0059 records the choice.
 
 | File | What |
 |---|---|
