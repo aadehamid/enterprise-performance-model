@@ -2,7 +2,7 @@
 properties are well formed, the build reconciles and is current, SHACL accepts the module
 and rejects broken measures, and no person's name enters the module.
 
-Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl, jsonschema).
+Run: python3 -m pytest test_measures.py (needs rdflib, pyshacl).
 """
 import csv
 import glob
@@ -15,7 +15,6 @@ import sys
 import unicodedata
 import unittest
 
-import jsonschema
 from pyshacl import validate
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, SKOS
@@ -212,7 +211,6 @@ class ValueStreamLinks(unittest.TestCase):
     """MPC-P09: value-stream processes name kpi measures, each with a relationship (EPM-DEC-001-0047)."""
 
     BP = os.path.join(HERE, "..", "..", "business_process")
-    SCHEMA = os.path.join(HERE, "..", "..", "schema", "value_stream.schema.json")
 
     def value_streams(self):
         return {f: json.load(open(f)) for f in sorted(glob.glob(os.path.join(self.BP, "value_stream_*.json")))}
@@ -223,12 +221,6 @@ class ValueStreamLinks(unittest.TestCase):
                 for p in stage["processes"]:
                     for m in p.get("measures", []):
                         yield os.path.basename(f), p["id"], m
-
-    def test_every_value_stream_validates_against_the_schema(self):
-        validator = jsonschema.Draft202012Validator(json.load(open(self.SCHEMA)))
-        for f, vs in self.value_streams().items():
-            with self.subTest(f=os.path.basename(f)):
-                self.assertEqual([e.message for e in validator.iter_errors(vs)], [])
 
     def test_every_linked_measure_is_defined(self):
         ids = {r["measure_id"] for r in rows()}

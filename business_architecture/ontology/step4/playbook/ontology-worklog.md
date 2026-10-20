@@ -962,6 +962,19 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Process-authority integrity checks (2026-10-20)
+- `business_process/test_business_process.py`, run by `check.sh`, now checks
+  the process authority. The data product portfolio and both value streams
+  validate against their schemas. Process-map node ids (696) and data
+  product and line ids (67) are unique. These references resolve: a value stream's
+  linkedProcessIds and gapAnalysis closestProcessIds to process-map nodes,
+  its produces and consumes to data products or lines, its capabilityId to
+  a capability and its flows to processes in the same file, and each
+  process-map officeLane to a lane in `office_lanes.json`. Every reference
+  resolved when the test was added. The value-stream
+  schema test moved here from `kpi/test_measures.py`. The process map has no
+  schema file, so its check is parse and id uniqueness.
+
 ### The decision owner named by role (2026-10-19)
 - The repo names no person: every current file says "the decision owner".
   Git history, commit authors and tags are unchanged. Released packages
