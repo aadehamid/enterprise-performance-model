@@ -1481,6 +1481,7 @@ started on `core` 1.0.0 with 5 answerable. On `core` 2.0.0 with the
 organization module, 9 were answerable, 5 partial and 30 waiting. With
 the kpi module (2026-10-18), 17 are answerable, 6 partial and 21 waiting.
 With the data-product module (2026-10-19), Q7 became partial: 17, 7 and 20.
+With the value-stream module (2026-10-19), Q7 and Q10 became answerable: 19, 6 and 19.
 Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
 Customer / Party module. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or

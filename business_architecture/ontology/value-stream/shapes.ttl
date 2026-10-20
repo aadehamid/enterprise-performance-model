@@ -1,0 +1,74 @@
+# SHACL shapes for the value-stream module (Step 7; EPM-DEC-001-0054). A stated cardinality on
+# every property (EPM-DEC-001-0020, rule 2; playbook Appendix B). Validate together with the
+# data-product module and the kpi module's measures, which the links point to.
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/value-stream/shapes/> .
+
+shp:Named a sh:NodeShape ;
+    sh:targetClass vs:ValueStream, vs:Stage, vs:Capability, vs:ValueStreamProcess ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ;
+                  sh:languageIn ( "en" ) ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "Each item cites the value-stream file it comes from." ] .
+
+shp:ValueStream a sh:NodeShape ;
+    sh:targetClass vs:ValueStream ;
+    sh:property [ sh:path vs:sourceDomain ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path vs:trigger ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path vs:outcome ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path vs:hasStage ; sh:minCount 1 ; sh:class vs:Stage ] ;
+    sh:property [ sh:path vs:usesCapabilityInStream ; sh:minCount 1 ; sh:class vs:Capability ] .
+
+shp:Stage a sh:NodeShape ;
+    sh:targetClass vs:Stage ;
+    sh:property [ sh:path vs:sequence ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ] ;
+    sh:property [ sh:path [ sh:inversePath vs:hasStage ] ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "A stage belongs to exactly one value stream." ] ;
+    sh:property [ sh:path vs:hasProcess ; sh:minCount 1 ; sh:class vs:ValueStreamProcess ] .
+
+shp:Capability a sh:NodeShape ;
+    sh:targetClass vs:Capability ;
+    sh:property [ sh:path vs:alignsToProcessGroup ; sh:minCount 0 ; sh:nodeKind sh:IRI ] .
+
+shp:ValueStreamProcess a sh:NodeShape ;
+    sh:targetClass vs:ValueStreamProcess ;
+    sh:property [ sh:path [ sh:inversePath vs:hasProcess ] ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "A value-stream process sits in exactly one stage." ] ;
+    sh:property [ sh:path vs:usesCapability ; sh:minCount 1 ; sh:maxCount 1 ; sh:class vs:Capability ] ;
+    sh:property [ sh:path vs:realizes ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    # The schema's sparse-link rule: at most four per relation.
+    sh:property [ sh:path vs:produces ; sh:minCount 0 ; sh:maxCount 4 ;
+                  sh:or ( [ sh:class dp:DataProduct ] [ sh:class dp:DataProductLine ] ) ] ;
+    sh:property [ sh:path vs:consumes ; sh:minCount 0 ; sh:maxCount 4 ;
+                  sh:or ( [ sh:class dp:DataProduct ] [ sh:class dp:DataProductLine ] ) ] ;
+    sh:property [ sh:path vs:feeds ; sh:minCount 0 ; sh:class vs:ValueStreamProcess ] ;
+    sh:property [ sh:path vs:informs ; sh:minCount 0 ; sh:class vs:ValueStreamProcess ] ;
+    sh:property [ sh:path vs:loopsTo ; sh:minCount 0 ; sh:class vs:ValueStreamProcess ] ;
+    sh:property [ sh:path vs:measureLink ; sh:minCount 0 ; sh:class vs:MeasureLink ] .
+
+shp:MeasureLink a sh:NodeShape ;
+    sh:targetClass vs:MeasureLink ;
+    sh:property [ sh:path [ sh:inversePath vs:measureLink ] ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path vs:measure ; sh:minCount 1 ; sh:maxCount 1 ; sh:class kpi:MeasureDefinition ;
+                  sh:message "A measure link names exactly one measure of the kpi module." ] ;
+    sh:property [ sh:path vs:relationship ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( rel:informs rel:benchmarks rel:measures-performance ) ] ;
+    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+                  sh:message "A measure link cites its basis." ] .
+
+# A measure link is context, never a KPI designation: the link carries no measure kind.
+shp:LinkIsNotADesignation a sh:NodeShape ;
+    sh:targetClass vs:MeasureLink ;
+    sh:property [ sh:path kpi:measureKind ; sh:maxCount 0 ] ;
+    sh:property [ sh:path kpi:kpiCandidate ; sh:maxCount 0 ] .

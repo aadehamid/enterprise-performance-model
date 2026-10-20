@@ -1,0 +1,163 @@
+# The value-stream module's vocabulary (Step 7; EPM-DEC-001-0054): value streams, their stages,
+# the capabilities they use, and the value-stream processes that realize core processes,
+# produce and consume data products and relate to measures. The overlay references process
+# nodes and never duplicates them (playbook, Step 7). Definitions only, never values
+# (EPM-DEC-001-0005). Processes are concepts of the core process scheme, by IRI.
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/value-stream/measure-relationship/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- Classes ----
+
+vs:ValueStream a owl:Class ;
+    rdfs:label "value stream"@en ;
+    skos:definition "An end-to-end sequence of stages that delivers an outcome, from a trigger, cutting across the process hierarchy. It references processes; it is never their parent."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json; ontology-playbook.md, Step 7; EPM-DEC-001-0054"@en .
+
+vs:Stage a owl:Class ;
+    rdfs:label "value-stream stage"@en ;
+    skos:definition "One step of a value stream, in a fixed sequence, grouping the value-stream processes done in it."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:Capability a owl:Class ;
+    rdfs:label "capability"@en ;
+    skos:definition "An enduring ability the business needs, which a value stream's stages use and which processes realize. Reusable across value streams."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:ValueStreamProcess a owl:Class ;
+    rdfs:label "value-stream process"@en ;
+    skos:definition "A unit of work in a value-stream stage, as the value stream's source names it. It uses one capability and realizes one or more process-map processes, which it references by IRI."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, $defs.process"@en .
+
+vs:MeasureLink a owl:Class ;
+    rdfs:label "measure link"@en ;
+    skos:definition "A cited link between a value-stream process and a measure of the kpi module, with the kind of relationship. Context for where the measure is used, not a KPI designation and not a certification of the process."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measures; EPM-DEC-001-0047 (MPC-P09)"@en .
+
+# ---- Properties ----
+
+vs:sourceDomain a owl:DatatypeProperty ;
+    rdfs:label "source domain"@en ;
+    rdfs:domain vs:ValueStream ; rdfs:range xsd:string ;
+    skos:definition "The domain the value stream's source file names, kept as written. It is not mapped to the core business-domain list (EPM-DEC-001-0054)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0054"@en .
+
+vs:trigger a owl:DatatypeProperty ;
+    rdfs:label "trigger"@en ;
+    rdfs:domain vs:ValueStream ; rdfs:range xsd:string ;
+    skos:definition "What starts the value stream."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:outcome a owl:DatatypeProperty ;
+    rdfs:label "outcome"@en ;
+    rdfs:domain vs:ValueStream ; rdfs:range xsd:string ;
+    skos:definition "What the value stream delivers when it ends."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:hasStage a owl:ObjectProperty ;
+    rdfs:label "has stage"@en ;
+    rdfs:domain vs:ValueStream ; rdfs:range vs:Stage ;
+    skos:definition "A stage of the value stream."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:usesCapabilityInStream a owl:ObjectProperty ;
+    rdfs:label "uses capability"@en ;
+    rdfs:domain vs:ValueStream ; rdfs:range vs:Capability ;
+    skos:definition "A capability the value stream's stages use."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, capabilities"@en .
+
+vs:sequence a owl:DatatypeProperty ;
+    rdfs:label "sequence"@en ;
+    rdfs:domain vs:Stage ; rdfs:range xsd:integer ;
+    skos:definition "The stage's position in its value stream, from 1."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:hasProcess a owl:ObjectProperty ;
+    rdfs:label "has process"@en ;
+    rdfs:domain vs:Stage ; rdfs:range vs:ValueStreamProcess ;
+    skos:definition "A value-stream process done in the stage."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+
+vs:usesCapability a owl:ObjectProperty ;
+    rdfs:label "uses capability"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range vs:Capability ;
+    skos:definition "The capability the value-stream process uses."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, capabilityId"@en .
+
+vs:realizes a owl:ObjectProperty ;
+    rdfs:label "realizes"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range skos:Concept ;
+    skos:definition "A process-map process the value-stream process realizes or references. The process stays where the hierarchy puts it."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, linkedProcessIds"@en .
+
+vs:alignsToProcessGroup a owl:ObjectProperty ;
+    rdfs:label "aligns to process group"@en ;
+    rdfs:domain vs:Capability ; rdfs:range skos:Concept ;
+    skos:definition "A process-map process group the capability aligns to."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, alignsToProcessGroups"@en .
+
+vs:produces a owl:ObjectProperty ;
+    rdfs:label "produces"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    skos:definition "A data product, or a whole data product line, that the value-stream process owns or publishes. The process is the data product's owning process."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, produces; competency question 7"@en .
+
+vs:consumes a owl:ObjectProperty ;
+    rdfs:label "consumes"@en ;
+    rdfs:domain vs:ValueStreamProcess ;
+    skos:definition "A data product, or a whole data product line, that the value-stream process critically depends on."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, consumes; competency question 7"@en .
+
+vs:feeds a owl:ObjectProperty ;
+    rdfs:label "feeds"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The process's results feed the other process, outside the stage order."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en .
+
+vs:informs a owl:ObjectProperty ;
+    rdfs:label "informs"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The process informs the other process, outside the stage order."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en .
+
+vs:loopsTo a owl:ObjectProperty ;
+    rdfs:label "loops to"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range vs:ValueStreamProcess ;
+    skos:definition "The value stream returns from this process to the other, starting a new cycle."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, flows"@en .
+
+vs:measureLink a owl:ObjectProperty ;
+    rdfs:label "measure link"@en ;
+    rdfs:domain vs:ValueStreamProcess ; rdfs:range vs:MeasureLink ;
+    skos:definition "A cited link from the value-stream process to a measure."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measures"@en .
+
+vs:measure a owl:ObjectProperty ;
+    rdfs:label "measure"@en ;
+    rdfs:domain vs:MeasureLink ; rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The measure the link names."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, measureId"@en .
+
+vs:relationship a owl:ObjectProperty ;
+    rdfs:label "relationship"@en ;
+    rdfs:domain vs:MeasureLink ; rdfs:range skos:Concept ;
+    skos:definition "How the process relates to the measure, from the measure-relationship code list."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, relationship"@en .
+
+# ---- Code list: measure relationships (the schema's enum) ----
+
+vs:MeasureRelationship a skos:ConceptScheme ; rdfs:label "measure relationship"@en ;
+    skos:definition "The three ways a value-stream process can relate to a measure."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json"@en .
+rel:informs a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Informs"@en ; skos:notation "informs" ;
+    skos:definition "The process uses the measure as an input."@en .
+rel:benchmarks a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Benchmarks"@en ; skos:notation "benchmarks" ;
+    skos:definition "The process compares results against the measure as an external reference."@en .
+rel:measures-performance a skos:Concept ; skos:inScheme vs:MeasureRelationship ; skos:prefLabel "Measures performance"@en ; skos:notation "measures-performance" ;
+    skos:definition "The process tracks the measure as a result of the business."@en .

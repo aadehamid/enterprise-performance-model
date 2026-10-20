@@ -18,10 +18,11 @@ from rdflib import Graph
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RELEASE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
-# The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi and data-product modules).
+# The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi, data-product and value-stream modules).
 MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")] \
     + [os.path.join(HERE, "..", "kpi", n) for n in ("vocabulary.ttl", "measures.ttl")] \
-    + [os.path.join(HERE, "..", "data-product", n) for n in ("vocabulary.ttl", "data-products.ttl")]  # Step 7: measures, data products
+    + [os.path.join(HERE, "..", "data-product", n) for n in ("vocabulary.ttl", "data-products.ttl")] \
+    + [os.path.join(HERE, "..", "value-stream", n) for n in ("vocabulary.ttl", "value-streams.ttl")]  # Step 7: measures, data products, value streams
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 

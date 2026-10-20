@@ -1,0 +1,8 @@
+# Q7 What data products does process P produce or consume? (value-stream processes, with the process-map processes they realize)
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?step ?process ?relation ?item WHERE {
+  VALUES ?relation { vs:produces vs:consumes }
+  ?step ?relation ?item .
+  OPTIONAL { ?step vs:realizes ?process }
+}
