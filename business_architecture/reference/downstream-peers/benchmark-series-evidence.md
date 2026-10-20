@@ -24,7 +24,7 @@ So "USGC 3-2-1 MEH ex-RIN" is MPC's Gulf Coast crack spread, and "Chicago WTI 3-
 |---|---|---|
 | CME-CRACK | CME Group, "Trading Crack Spreads", 2024, https://www.cmegroup.com/articles/2024/trading-crack-spreads.html | 2026-10-19 |
 | CME-CRACK-INTRO | CME Group, "Introduction to Crack Spreads", 2017, https://www.cmegroup.com/education/articles-and-reports/introduction-to-crack-spreads | 2026-10-19 |
-| CME-FRESH | CME Group, "Fresh from the Trading Room: Papering over the cracks", 2026-07-14, https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html | 2026-10-19 |
+| CME-FRESH | CME Group website, "Fresh from the Trading Room: Papering over the cracks", 2026-07-14, produced by ITS for CME Group (the page's footnote), https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html | 2026-10-19 |
 
 - CME-CRACK: "A long 3:2:1 crack spread consists of buying two contracts of RBOB plus one contract of ULSD and selling three contracts of WTI."
 - CME-CRACK-INTRO: "3:2:1 crack spreads — three crude oil futures contracts versus two gasoline futures contracts and one ULSD futures contract."

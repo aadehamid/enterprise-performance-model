@@ -96,6 +96,9 @@ class Shapes(unittest.TestCase):
         both = set(DATA.objects(src, URIRef("http://purl.org/dc/terms/title"))) | set(kpi.objects(src, URIRef("http://purl.org/dc/terms/title")))
         self.assertEqual(len(both), 1, both)
 
+    def test_rejects_a_value_on_a_region(self):
+        self.assertFalse(self.broken(lambda g: g.add((REGION["gulf-coast"], MKT.price, Literal(65.5)))))
+
     def test_rejects_a_series_of_no_measure(self):
         self.assertFalse(self.broken(lambda g: g.remove((SERIES["crack-west-coast-3-2-1"], MKT.seriesOf, None))))
 

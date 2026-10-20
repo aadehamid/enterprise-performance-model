@@ -5,7 +5,7 @@ The `market-data` module defines the published series of the `kpi` module's crac
 | File | What |
 |---|---|
 | `regions.csv`, `benchmarks.csv`, `series.csv` | MPC's three refining regions; 12 benchmarks (4 crude markers, 8 product benchmarks); 5 series, with their legs |
-| `vocabulary.ttl`, `shapes.ttl` | Classes (benchmark series, benchmark, leg), properties, the benchmark-kind code list, and shapes: a series has legs or a blend, never both; a series is of one kpi measure; no price on a series or benchmark |
+| `vocabulary.ttl`, `shapes.ttl` | Classes (benchmark series, benchmark, leg), properties, the benchmark-kind code list, and shapes: a series has legs or a blend, never both; a series is of one kpi measure; no price on a series, benchmark, leg or region |
 | `build_market_data.py`, `market-data.ttl` | The build. `--verify` fails unless `market-data.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_market_data.py` | Tests: the recipes match MPC's and CME's wording, the blend, the planner's names resolve to MPC's series, and SHACL rejects broken series |
 

@@ -51,3 +51,11 @@ shp:NoPrices a sh:NodeShape ;
     sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme
                            dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind ) ;
     sh:message "A series or benchmark carries its definition, never a price." .
+
+# A refining region is a definition too: no value hangs off it (Pi round 2).
+shp:Region a sh:NodeShape ;
+    sh:targetSubjectsOf skos:inScheme ;
+    sh:or ( [ sh:not [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ]
+            [ sh:closed true ;
+              sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:inScheme dcterms:source ) ] ) ;
+    sh:message "A refining region carries its definition, never a value." .
