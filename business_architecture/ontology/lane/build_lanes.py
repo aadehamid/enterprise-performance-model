@@ -74,6 +74,7 @@ def build(lanes, placed, procs):
     for key, lane in lanes.items():
         iri = LANEV[slug(key)]
         g.add((iri, RDF.type, SKOS.Concept))
+        g.add((iri, RDF.type, LANE.OfficeLane))
         g.add((iri, SKOS.inScheme, LANE.OfficeLanes))
         g.add((iri, SKOS.prefLabel, Literal(lane["name"], lang="en")))
         g.add((iri, SKOS.notation, Literal(key, datatype=XSD.string)))

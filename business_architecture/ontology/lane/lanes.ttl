@@ -22,28 +22,32 @@ proc:CM-1-2-6 lane:officeLane lanev:operations .
 
 proc:CM-1-2-7 lane:officeLane lanev:operations .
 
-lanev:back-office a skos:Concept ;
+lanev:back-office a skos:Concept,
+        lane:OfficeLane ;
     dcterms:source src:office-lanes ;
     skos:definition "Administrative and operational completion of the trade lifecycle: settlements, invoicing and netting, accounting and sub-ledger management, regulatory reporting, dispute resolution, and record-keeping."@en ;
     skos:inScheme lane:OfficeLanes ;
     skos:notation "back_office"^^xsd:string ;
     skos:prefLabel "Back Office"@en .
 
-lanev:front-office a skos:Concept ;
+lanev:front-office a skos:Concept,
+        lane:OfficeLane ;
     dcterms:source src:office-lanes ;
     skos:definition "Revenue-generating, market-facing functions of the trading organization: trading and deal execution, forecasting, pre-trade analysis, bidding strategy, and customer/counterparty engagement."@en ;
     skos:inScheme lane:OfficeLanes ;
     skos:notation "front_office"^^xsd:string ;
     skos:prefLabel "Front Office"@en .
 
-lanev:middle-office a skos:Concept ;
+lanev:middle-office a skos:Concept,
+        lane:OfficeLane ;
     dcterms:source src:office-lanes ;
     skos:definition "Control and analytical layer between front and back office: monitors market and credit risk and exposure, validates captured trades, calculates P&L, manages confirmations and scenario modelling, and enforces risk limits, controls, and compliance."@en ;
     skos:inScheme lane:OfficeLanes ;
     skos:notation "middle_office"^^xsd:string ;
     skos:prefLabel "Middle Office"@en .
 
-lanev:operations a skos:Concept ;
+lanev:operations a skos:Concept,
+        lane:OfficeLane ;
     dcterms:source src:office-lanes ;
     skos:definition "Physical supply chain execution supporting the traded book: scheduling, movement actualization, feedstock and product inventory management, transportation, and terminal operations."@en ;
     skos:inScheme lane:OfficeLanes ;

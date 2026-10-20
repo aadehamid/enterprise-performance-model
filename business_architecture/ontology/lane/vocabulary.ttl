@@ -12,6 +12,11 @@ lane:OfficeLanes a skos:ConceptScheme ;
     skos:definition "The four office lanes of the trading organization: front office, middle office, back office and operations. The lanes are not declared disjoint."@en ;
     dcterms:bibliographicCitation "business_architecture/business_process/office_lanes.json; EPM-DEC-001-0056"@en .
 
+lane:OfficeLane a owl:Class ;
+    rdfs:label "office lane"@en ;
+    skos:definition "One of the four office lanes of the trading organization."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/office_lanes.json; EPM-DEC-001-0056"@en .
+
 lane:officeLane a owl:ObjectProperty ;
     rdfs:label "office lane"@en ;
     rdfs:domain skos:Concept ; rdfs:range skos:Concept ;

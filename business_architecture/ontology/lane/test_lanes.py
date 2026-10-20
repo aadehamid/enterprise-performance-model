@@ -53,6 +53,14 @@ class Shapes(unittest.TestCase):
         g.add((PROC["CM-1-2-1"], LANE.officeLane, LANEV["back-office"]))
         self.assertFalse(conforms(g))
 
+    def test_leaves_other_concepts_alone(self):
+        # The lane shapes target lanes only: a concept of another scheme needs no notation here.
+        g = Graph()
+        for t in LANES:
+            g.add(t)
+        g.add((URIRef("https://example.org/other"), URIRef("http://www.w3.org/2004/02/skos/core#inScheme"), URIRef("https://example.org/scheme")))
+        self.assertTrue(conforms(g))
+
     def test_rejects_a_lane_off_the_list(self):
         g = Graph()
         for t in LANES:
