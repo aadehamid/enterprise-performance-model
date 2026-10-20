@@ -13,7 +13,7 @@ An external search on 2026-10-05 found no public business-architecture or proces
 
 ## Decision
 
-Keep EPM's own terms and link them to these sources with SKOS mapping properties (`skos:exactMatch`, `skos:closeMatch`) at the step where each fits: GLEIF at Step 5 (MPC and MPLX), PIDX and OEO at Step 7 and the Customer product-line facet, IOF Supply Chain at Step 7 if P01 brings in fuels logistics. Do not import them. Check PIDX's access terms before the Customer work.
+Keep EPM's own terms and link them to these sources with SKOS mapping properties (`skos:exactMatch`, `skos:closeMatch`) at the step where each fits: GLEIF at Step 5 (MPC and MPLX), PIDX and OEO at Step 7 and the Customer product-line facet, IOF Supply Chain at Step 7 if P01 brings in fuels logistics. Do not import them. Check PIDX's access terms before the Customer work. *2026-10-19:* checked; the standards are royalty free under PIDX's end user licence (EPM-DEC-001-0064).
 
 ## Alternatives considered
 

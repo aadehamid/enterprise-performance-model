@@ -962,6 +962,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### External mappings (2026-10-19)
+- Under the delegation (EPM-DEC-001-0064): PIDX's terms are checked
+  (royalty free, open licence); PIDX and OEO wait for product concepts,
+  which the Customer work brings; IOF Supply Chain is parked until a
+  logistics concept layer exists. GLEIF and DCAT are mapped.
+
 ### R2 backlog decided (2026-10-19)
 - Under the delegation (EPM-DEC-001-0063): the operating-execution layer
   and the R2 vocabulary package are out until the map gains an
