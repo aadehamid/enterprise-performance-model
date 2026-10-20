@@ -533,9 +533,11 @@ capabilities, systems, measures and data products.
    says only where one thing is used or placed with another). Only an owning
    link certifies.
 7. Separate a measure from its published series. A series is one form of a
-   measure, identified by what it is built from: region, legs and their
-   ratio, and what it leaves out. Store the recipe, never the prices. Two
-   series that differ in any of these are two series of one measure.
+   measure, built from parts its source names. Two series are the same only
+   when every attribute their sources use to tell them apart is the same;
+   otherwise they are two series of one measure, not two measures. Record
+   which attributes decide that in a decision record. Store the recipe,
+   never the prices.
 8. Rank the sources. Give every cited source a tier from the project's
    evidence order, so that when two sources of one concept disagree, the
    best tier wins, and a query can say which.
@@ -1462,8 +1464,8 @@ owner made them the source author's backlog.
   in as its own module: data products (15 defined, 33 parked because the
   portfolio names them without a description), the two value streams, the
   map's systems through a spelling-only register, the office lanes, five
-  crack-spread series of one measure from MPC's 10-K and CME Group, the
-  placement kinds, the source tiers, the full APQC element list, the
+  crack-spread series of one measure, told apart by region, legs, RIN
+  treatment and blend, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14), the placement kinds, the source tiers, the full APQC element list, the
   consumer rules and the measure populations. Regression went from 17 to
   34 answerable questions; the nine still waiting all wait on the owner.
 - *What the whole-graph gate caught* (EPM-DEC-001-0065). Every module's
@@ -1628,8 +1630,9 @@ to end, and the backbone alone cannot answer. The worked example revives
 this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
 revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
 *2026-10-19:* the data-product and value-stream layers parked here, and
-the systems and lanes deferred as node-field overlays (EPM-DEC-001-0052,
-Phase B), are revived as modules (EPM-DEC-001-0053 to 0056); they are not
+the systems and lanes, which Steps 4 and 5 left out with the other node
+fields (worklog, "Step 3 — SKOS taxonomy") and Phase B of EPM-DEC-001-0052 scheduled as
+overlays (EPM-DEC-001-0054, item 7), are revived as modules (EPM-DEC-001-0053 to 0056); they are not
 yet released.
 
 ---
