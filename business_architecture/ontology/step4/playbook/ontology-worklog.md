@@ -1065,7 +1065,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal (EPM-DEC-001-0050).
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050).
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words
