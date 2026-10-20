@@ -18,7 +18,8 @@ shp:Defined a sh:NodeShape ;
     sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
     sh:property [ sh:path mkt:region ; sh:minCount 0 ; sh:maxCount 1 ;
-                  sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ] ] ;
+                  sh:node [ sh:or ( [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ]
+                                    [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:MarketRegions ] ] ) ] ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
 
 shp:Series a sh:NodeShape ;
@@ -27,9 +28,11 @@ shp:Series a sh:NodeShape ;
     sh:property [ sh:path mkt:excludesRINCost ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
     sh:property [ sh:path mkt:leg ; sh:minCount 0 ; sh:class mkt:Leg ] ;
     sh:property [ sh:path mkt:blendOf ; sh:minCount 0 ; sh:class mkt:BenchmarkSeries ] ;
-    # A series is built either from legs or from other series, never both, never neither.
-    sh:xone ( [ sh:path mkt:leg ; sh:minCount 1 ] [ sh:path mkt:blendOf ; sh:minCount 1 ] ) ;
-    sh:message "A series has legs or blends other series, not both." .
+    sh:property [ sh:path mkt:legsUnstated ; sh:minCount 0 ; sh:maxCount 1 ; sh:in ( true ) ] ;
+    sh:property [ sh:path mkt:priceMasterId ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    # A series is built from legs, or from other series, or its source does not list its legs: exactly one.
+    sh:xone ( [ sh:path mkt:leg ; sh:minCount 1 ] [ sh:path mkt:blendOf ; sh:minCount 1 ] [ sh:path mkt:legsUnstated ; sh:minCount 1 ] ) ;
+    sh:message "A series has legs, blends other series, or is marked legs unstated: exactly one." .
 
 shp:Leg a sh:NodeShape ;
     sh:targetClass mkt:Leg ;
@@ -42,20 +45,23 @@ shp:Leg a sh:NodeShape ;
 shp:Benchmark a sh:NodeShape ;
     sh:targetClass mkt:Benchmark ;
     sh:property [ sh:path mkt:benchmarkKind ; sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:in ( bkind:crude-marker bkind:product-benchmark ) ] .
+                  sh:in ( bkind:crude-marker bkind:product-benchmark bkind:compliance-cost ) ] ;
+    sh:property [ sh:path mkt:priceMasterId ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
 
 # A benchmark or series is a definition: no price or value hangs off it (EPM-DEC-001-0005).
 shp:NoPrices a sh:NodeShape ;
     sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme
-                           dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind ) ;
+                           dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind
+                           mkt:priceMasterId mkt:legsUnstated ) ;
     sh:message "A series or benchmark carries its definition, never a price." .
 
 # A refining region is a definition too: no value hangs off it (Pi round 2).
 shp:Region a sh:NodeShape ;
     sh:targetSubjectsOf skos:inScheme ;
-    sh:or ( [ sh:not [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ]
+    sh:or ( [ sh:not [ sh:or ( [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ]
+                               [ sh:path skos:inScheme ; sh:hasValue mkt:MarketRegions ] ) ] ]
             [ sh:closed true ;
               sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:inScheme dcterms:source ) ] ) ;
-    sh:message "A refining region carries its definition, never a value." .
+    sh:message "A refining or market region carries its definition, never a value." .

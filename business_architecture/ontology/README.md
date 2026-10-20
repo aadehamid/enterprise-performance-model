@@ -46,7 +46,7 @@ root.
 | `apqc/` | The full APQC Downstream Petroleum PCF 7.2.2 element list (2,012 elements), a reference for Q11 (EPM-DEC-001-0060) |
 | `authority/` | Step 9: the evidence tier of every cited source, so the best-tier source wins when two disagree (EPM-DEC-001-0059) |
 | `placement/` | The placement kinds: which placing properties certify (only producing a data product) and which give context (EPM-DEC-001-0058) |
-| `market-data/` | The Step 7 market-data module: five series of the crack-spreads measure, their benchmarks and MPC's refining regions, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14) (EPM-DEC-001-0057); not released |
+| `market-data/` | The Step 7 market-data module: 13 series of the crack-spreads measure, from MPC Economics' definition first (six regional ex-RIN series, the NYMEX 3-2-1, two MPC-weighted blends), then MPC's FY2025 Form 10-K, Item 7, and CME Group, with their benchmarks and regions (EPM-DEC-001-0057, 0066); not released |
 | `lane/` | The Step 7 lane module: the four office lanes and the seven processes the process map places in them (EPM-DEC-001-0056); not released |
 | `system/` | The Step 7 system module: 32 systems from the process map's system strings, merged on spelling through a register, with their kind and the processes they support (EPM-DEC-001-0055); not released |
 | `value-stream/` | The Step 7 value-stream module: the Commercial Hydrocarbon Lifecycle and Order to Cash, their stages, capabilities and 58 value-stream processes, which realize core processes, produce and consume data products and carry the MPC-P09 measure links (EPM-DEC-001-0054); not released |

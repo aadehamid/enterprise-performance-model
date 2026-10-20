@@ -4,7 +4,7 @@
 @prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-measure:crack-spreads pop:excludes "The market cost of RINs, in MPC's regional and blended crack spreads."@en ;
+measure:crack-spreads pop:excludes "The market cost of RINs, in MPC's 10-K regional and blended crack spreads. MPC Economics' ex-RIN series deduct the RVO cost instead (EPM-DEC-001-0066)."@en ;
     pop:includes "The crude and product benchmarks of each series' recipe (the market-data module's series)."@en ;
     pop:populationEvidence "mpc-performance-measures-evidence.md, row 10"^^xsd:string .
 

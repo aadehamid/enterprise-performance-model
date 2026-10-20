@@ -16,7 +16,7 @@ The `kpi` module defines one measure, `crack-spreads`, a market indicator (EPM-D
 **What follows (Claude, under EPM-DEC-001-0028, from the evidence order: MPC first, then an industry source):**
 1. **A `market-data` module** for benchmark series, benchmarks and refining regions, separate from `kpi`, because Market Data governs them (EPM-DEC-001-0046) and their identifiers change apart from the measure.
 2. **One measure, several series.** Each series is `mkt:seriesOf` the crack-spreads measure. Two series are the same series only when region, legs and RIN treatment are all the same; otherwise they are different series of one measure, not two measures. A blended series is built from other series.
-3. **The planner's names resolve.** "USGC 3-2-1 MEH ex-RIN" is an alternative label of MPC's Gulf Coast crack spread, and "Chicago WTI 3-2-1 ex-RIN" of its Mid-Continent crack spread, because MPC's wording gives the same crude, product markets, ratio and RIN treatment. "NYMEX 3-2-1" is a fifth series, defined from CME Group: it shares the ratio but uses exchange futures and RBOB.
+3. **The planner's names resolve.** "USGC 3-2-1 MEH ex-RIN" is an alternative label of MPC's Gulf Coast crack spread, and "Chicago WTI 3-2-1 ex-RIN" of its Mid-Continent crack spread, because MPC's wording gives the same crude, product markets, ratio and RIN treatment. "NYMEX 3-2-1" is a fifth series, defined from CME Group: it shares the ratio but uses exchange futures and RBOB. *2026-10-20:* corrected by EPM-DEC-001-0066: by MPC Economics' definition, the planner's "USGC 3-2-1 MEH ex-RIN" and "Chicago WTI 3-2-1 ex-RIN" are its published series 43870 and 37438, which deduct the RVO cost; MPC's 10-K cracks do not, so they are different series.
 4. **Recipes, not prices.** A leg names a benchmark and its barrels; no price is stored (EPM-DEC-001-0005). The blended series' weights change by period, so they are a cited note, not a value.
 5. **Regions are MPC's.** Gulf Coast, Mid-Continent and West Coast, with the refineries MPC's Item 2 lists in each. A series or benchmark names its region where the source gives one.
 6. **Questions 31 and 34 are answerable.**
@@ -36,5 +36,5 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Consequences
 
-- The regression stands at 23 answerable, 7 partial and 14 waiting.
+- The regression stands at 23 answerable, 7 partial and 14 waiting. *2026-10-20:* the module now has 13 series, from MPC Economics' definition as the primary source (EPM-DEC-001-0066).
 - The module is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval.

@@ -42,6 +42,7 @@ class Tiers(unittest.TestCase):
     def test_decided_tiers(self):
         # EPM-DEC-001-0059, items 2 to 6, one example per tier.
         self.assertEqual(tier("downstream-process-map"), "process-authority")
+        self.assertEqual(tier("mpc-economics-crack-spread-kpi-definition"), "process-authority")  # EPM-DEC-001-0066
         self.assertEqual(tier("step3c-definition-workbook"), "process-authority")
         self.assertEqual(tier("urn:epm:issue:205:comment:6115309253"), "process-authority")
         self.assertEqual(tier("mpc-performance-measures-evidence"), "mpc")
