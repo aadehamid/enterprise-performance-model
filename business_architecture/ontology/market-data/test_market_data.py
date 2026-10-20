@@ -85,7 +85,11 @@ class Build(unittest.TestCase):
         # MPC's 10-K cracks do not reflect RIN costs; MPC Economics' ex-RIN cracks deduct them (EPM-DEC-001-0066);
         # the exchange spread states nothing about RINs.
         self.assertEqual(DATA.value(SERIES["crack-gulf-coast-3-2-1"], MKT.excludesRINCost), Literal(True))
-        self.assertEqual(DATA.value(SERIES["crack-mpr-43870"], MKT.excludesRINCost), Literal(False))
+        for s in ("crack-mpr-43870", "crack-mpr-37438", "crack-mpr-37439", "crack-mpr-36855", "crack-mpr-37443", "crack-mpr-37471",
+                  "crack-mpr-37464", "crack-mpr-42023"):
+            self.assertEqual(DATA.value(SERIES[s], MKT.excludesRINCost), Literal(False), s)
+        for s in ("crack-mid-continent-3-2-1", "crack-west-coast-3-2-1", "crack-blended-3-2-1"):
+            self.assertEqual(DATA.value(SERIES[s], MKT.excludesRINCost), Literal(True), s)
         self.assertIsNone(DATA.value(SERIES["crack-nymex-3-2-1"], MKT.excludesRINCost))
         # Same crude and product markets, opposite RIN treatment: two series.
         self.assertNotEqual(SERIES["crack-gulf-coast-3-2-1"], SERIES["crack-mpr-43870"])

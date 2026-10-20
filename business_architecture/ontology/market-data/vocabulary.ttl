@@ -19,7 +19,7 @@ mkt:BenchmarkSeries a owl:Class ;
 mkt:Benchmark a owl:Class ;
     rdfs:label "benchmark price"@en ;
     skos:definition "A published price that a series is built from: a crude marker, a refined-product benchmark at a named market, or a compliance cost such as the RVO."@en ;
-    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057"@en .
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057; EPM-DEC-001-0066"@en .
 
 mkt:Leg a owl:Class ;
     rdfs:label "series leg"@en ;
@@ -51,7 +51,7 @@ mkt:region a owl:ObjectProperty ;
     rdfs:label "region"@en ;
     rdfs:range skos:Concept ;
     skos:definition "The refining region a series tracks, or the market region of a series or a benchmark's market."@en ;
-    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057"@en .
+    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057; EPM-DEC-001-0066"@en .
 
 mkt:leg a owl:ObjectProperty ;
     rdfs:label "leg"@en ;
@@ -100,11 +100,11 @@ mkt:benchmarkKind a owl:ObjectProperty ;
     rdfs:label "benchmark kind"@en ;
     rdfs:domain mkt:Benchmark ; rdfs:range skos:Concept ;
     skos:definition "Whether the benchmark is a crude marker, a refined-product benchmark or a compliance cost."@en ;
-    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
 
 mkt:BenchmarkKind a skos:ConceptScheme ; rdfs:label "benchmark kind"@en ;
     skos:definition "The kinds of benchmark price a series is built from."@en ;
-    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
 bkind:crude-marker a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Crude marker"@en ; skos:notation "crude-marker" ;
     skos:definition "A published crude oil price that a crack spread uses for its crude leg."@en .
 bkind:product-benchmark a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Product benchmark"@en ; skos:notation "product-benchmark" ;
