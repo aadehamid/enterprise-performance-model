@@ -1,0 +1,7 @@
+# Q44 If two sources of a concept disagree, which is authoritative? (for each concept citing more than one source, the best evidence tier among them; a source in that tier wins)
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX auth: <https://w3id.org/lsc/ontology/modules/authority/>
+SELECT ?concept (MIN(?rank) AS ?authoritativeTier) (COUNT(DISTINCT ?source) AS ?sources) WHERE {
+  ?concept dcterms:source ?source .
+  ?source auth:evidenceTier/auth:rank ?rank .
+} GROUP BY ?concept HAVING (COUNT(DISTINCT ?source) > 1)

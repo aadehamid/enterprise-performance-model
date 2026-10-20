@@ -1,0 +1,131 @@
+# Evidence tiers of the cited sources (Step 9; EPM-DEC-001-0059).
+# Built by build_source_tiers.py from source-tiers.csv. Do not edit by hand.
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
+
+<https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/data-product-portfolio> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/downstream-process-map> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/gleif-lei> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/kpi-classification-evidence> auth:evidenceTier tier:peers .
+
+<https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/mpc-s01> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/src-api-653-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-api-mpms-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-apqc-pcf-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-ascm-cscp-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-bimco-ld-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-bjce-refps-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-002a> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-002b> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-gloss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-p180-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-p45-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cmu-refplan-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-doe-rppl-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-doe-sprassay-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ei-hm31-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ei-hm32-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-gloss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-lfmm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-pmm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-steo-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-emtr-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-emts-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-er-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-ff-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-rec-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-rfs-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc326-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc606-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc815-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ferc-rto-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fmcsa-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ftc-adm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ftc-rp-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-iea-omr-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-irs-p510-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-isda-ma-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-lnl-t2s-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-naesb-wgq-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ofac-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-orp-dpsc-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-osha-psm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-pci-dss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-pmpa-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-reg-b-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-snf-refps-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-uspto-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-w3c-skos-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/step3c-definition-workbook> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/value-stream-order-to-cash> auth:evidenceTier tier:process-authority .
+
+<urn:epm:issue:205:comment:6115309253> auth:evidenceTier tier:process-authority .
+
+<urn:epm:issue:205:comment:6116668059> auth:evidenceTier tier:process-authority .
+

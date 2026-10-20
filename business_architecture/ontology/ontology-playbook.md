@@ -1487,6 +1487,7 @@ With the lane module (2026-10-19), Q9 became answerable: 20, 7 and 17.
 Q15, the same-word test, then became answerable across the modules: 21, 7 and 16.
 With the market-data module (2026-10-19), Q31 and Q34 became answerable: 23, 7 and 14.
 With the placement kinds (2026-10-19), Q37, Q38 and Q39 became answerable: 26, 5 and 13.
+With the source tiers (2026-10-19), Q44 became answerable: 27, 4 and 13.
 Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
 Customer / Party module. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or

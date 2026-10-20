@@ -1,4 +1,4 @@
-# Q44 (part). Which source does each definition cite? (marking one source as authoritative waits; see expected.csv)
+# Q44 (part). Which source does each definition cite? (q44b says which tier, and so which source, wins)
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
