@@ -15,7 +15,7 @@ corrected for stale entries. Verified against repository artifacts.
 | 3 | SKOS taxonomy | Done 2026-09-18 |
 | 3b | Definition triangulation | Done 2026-09-18 |
 | 3c | Human definition authoring (498/503 approved) | Done 2026-09-21 |
-| 3d | Tree reconciliation | Completed with explicit open exceptions; R2 backlog still open |
+| 3d | Tree reconciliation | Completed with explicit open exceptions; R2 backlog still open. *2026-10-19:* the R2 backlog is decided (EPM-DEC-001-0063). |
 | 4 | The relationship layer | PROMOTED 2026-09-30: verb review on main (617/686/457); all 10 checklist boxes complete |
 | 5 | ORG + RACI | Planned |
 | 6 | Interfaces and PROV-O | Planned |
