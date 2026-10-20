@@ -1,0 +1,74 @@
+# The data-product module's vocabulary (Step 7, item 3 of EPM-DEC-001-0017): data product
+# definitions, the product lines and segments that group them, the portfolio status code list,
+# and the links to core processes. EPM-DEC-001-0053 records the design. The module holds
+# definitions only, never data values (EPM-DEC-001-0005). DCAT is mapped, not imported
+# (EPM-DEC-001-0023). Processes are concepts of the core process scheme, by IRI.
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix status: <https://w3id.org/lsc/ontology/modules/data-product/status/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ---- Classes ----
+
+dp:DataProduct a owl:Class ;
+    rdfs:label "data product"@en ;
+    skos:definition "A named, governed set of data that a business area publishes for others to use, defined by what it covers. A definition, never the data: the platforms that hold the data product hold its records."@en ;
+    skos:closeMatch dcat:Dataset ;
+    skos:scopeNote "Mapped to DCAT 3's dcat:Dataset with skos:closeMatch, not imported (EPM-DEC-001-0023). A data product here is the business definition; a DCAT dataset record of it would describe one published release of its data."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; W3C Data Catalog Vocabulary (DCAT) Version 3, W3C Recommendation, 22 August 2024; EPM-DEC-001-0053"@en .
+
+dp:DataProductLine a owl:Class ;
+    rdfs:label "data product line"@en ;
+    skos:definition "A group of related data products in one segment of the portfolio, such as Energy Trading & Risk Management."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"@en .
+
+dp:PortfolioSegment a owl:Class ;
+    rdfs:label "portfolio segment"@en ;
+    skos:definition "One of the portfolio's top-level groups of data product lines: Commercial, Midstream or Corporate. Each is anchored in a part of the process map."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"@en .
+
+dp:DataProducts a skos:ConceptScheme ;
+    rdfs:label "data product portfolio"@en ;
+    skos:definition "The portfolio's segments, data product lines and data products, as one hierarchy: a data product's skos:broader is its line, and a line's is its segment."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json"@en .
+
+# ---- Properties ----
+
+dp:portfolioStatus a owl:ObjectProperty ;
+    rdfs:label "portfolio status"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the portfolio describes the data product or line (active), only names it (defined only), or leaves a decision about it open, from the portfolio status code list."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/data_product_portfolio.schema.json"@en .
+
+dp:anchoredIn a owl:ObjectProperty ;
+    rdfs:label "anchored in"@en ;
+    rdfs:domain dp:PortfolioSegment ; rdfs:range skos:Concept ;
+    skos:definition "The part of the process map a segment's data products serve, from the portfolio's process-domain reference. Context, not ownership."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/data_product_portfolio.json, processDomainRef"@en .
+
+dp:producedBy a owl:ObjectProperty ;
+    rdfs:label "produced by"@en ;
+    rdfs:domain dp:DataProduct ; rdfs:range skos:Concept ;
+    skos:definition "The process whose work creates the data product's data, named by a recorded decision or the process authority. A data product with no producing process has no owning process (competency question 7)."@en ;
+    dcterms:bibliographicCitation "competency question 7; EPM-DEC-001-0048, EPM-DEC-001-0053"@en .
+
+dp:consumedBy a owl:ObjectProperty ;
+    rdfs:label "consumed by"@en ;
+    rdfs:domain dp:DataProduct ; rdfs:range skos:Concept ;
+    skos:definition "A process that uses the data product's data as an input. Context for where the data is used, not ownership."@en ;
+    dcterms:bibliographicCitation "competency question 7; EPM-DEC-001-0053"@en .
+
+# ---- Code list: portfolio status ----
+
+dp:PortfolioStatus a skos:ConceptScheme ; rdfs:label "portfolio status"@en ;
+    skos:definition "The three statuses the portfolio schema allows a data product or line. The portfolio uses two of them."@en ;
+    dcterms:bibliographicCitation "business_architecture/schema/data_product_portfolio.schema.json"@en .
+status:active a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Active"@en ; skos:notation "active" ;
+    skos:definition "The portfolio describes the data product or line, and it is in use."@en .
+status:defined-only a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Defined only"@en ; skos:notation "defined_only" ;
+    skos:definition "The portfolio names the data product or line but does not describe it. Its definition waits for its data owners."@en .
+status:open-decision a skos:Concept ; skos:inScheme dp:PortfolioStatus ; skos:prefLabel "Open decision"@en ; skos:notation "open_decision" ;
+    skos:definition "A decision about the data product or line is open."@en .
