@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Worklog row 3d-d, the R2 backlog "open by design" since 2026-09-22; Phase E of EPM-DEC-001-0052 |
+| Questions | Worklog row 3d-d, the R2 backlog "open by design" since 2026-09-22; Phase E of EPM-DEC-001-0052, the 3d-d backlog |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
