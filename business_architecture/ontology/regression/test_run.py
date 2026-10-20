@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (21, 7, 16))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (23, 7, 14))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -64,9 +64,15 @@ class Release(unittest.TestCase):
         self.assertTrue(any(f.startswith("Q32") for f in failures), failures)
         self.assertTrue(any(f.startswith("Q36") for f in failures), failures)
 
+    def test_each_source_has_one_title(self):
+        # A source node shared by two modules must carry one title, not one per module.
+        title = URIRef("http://purl.org/dc/terms/title")
+        many = {s for s in set(GRAPH.subjects(title, None)) if len(set(GRAPH.objects(s, title))) > 1}
+        self.assertEqual(many, set())
+
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 32)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 35)
 
     def mutated(self, change):
         g = Graph()

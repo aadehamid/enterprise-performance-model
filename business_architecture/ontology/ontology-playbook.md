@@ -1485,6 +1485,7 @@ With the value-stream module (2026-10-19), Q10 became answerable: 18, 7 and 19.
 With the system module (2026-10-19), Q6 became answerable: 19, 7 and 18.
 With the lane module (2026-10-19), Q9 became answerable: 20, 7 and 17.
 Q15, the same-word test, then became answerable across the modules: 21, 7 and 16.
+With the market-data module (2026-10-19), Q31 and Q34 became answerable: 23, 7 and 14.
 Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
 Customer / Party module. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or

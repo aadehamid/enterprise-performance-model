@@ -1,0 +1,93 @@
+# The market-data module's vocabulary (Step 7; EPM-DEC-001-0057): the published series of a
+# market measure, the benchmark prices and crude markers they are built from, and the refining
+# regions they track. Market Data governs benchmark identifiers and assessment conventions
+# (EPM-DEC-001-0046). Definitions only, never prices (EPM-DEC-001-0005).
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix bkind: <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+mkt:BenchmarkSeries a owl:Class ;
+    rdfs:label "benchmark series"@en ;
+    skos:definition "One published series of a market measure, identified by what it is built from: its region, its crude and product legs and their ratio, and what it leaves out. Two series of the same measure are different series when any of these differ."@en ;
+    dcterms:bibliographicCitation "competency question 31; EPM-DEC-001-0046, EPM-DEC-001-0057"@en .
+
+mkt:Benchmark a owl:Class ;
+    rdfs:label "benchmark price"@en ;
+    skos:definition "A published price that a series is built from: a crude marker or a refined-product benchmark at a named market."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057"@en .
+
+mkt:Leg a owl:Class ;
+    rdfs:label "series leg"@en ;
+    skos:definition "One part of a series' recipe: a benchmark and the number of barrels of it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
+
+mkt:RefiningRegions a skos:ConceptScheme ;
+    rdfs:label "refining regions"@en ;
+    skos:definition "MPC's three refining regions, by the names MPC uses."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 2 (mpc-performance-measures-evidence.md, finding 3)"@en .
+
+mkt:Series a skos:ConceptScheme ;
+    rdfs:label "benchmark series"@en ;
+    skos:definition "The benchmark series and benchmark prices the market-data module defines."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
+
+mkt:seriesOf a owl:ObjectProperty ;
+    rdfs:label "series of"@en ;
+    rdfs:domain mkt:BenchmarkSeries ; rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The measure of the kpi module that the series is one published form of."@en ;
+    dcterms:bibliographicCitation "competency question 31; EPM-DEC-001-0057"@en .
+
+mkt:region a owl:ObjectProperty ;
+    rdfs:label "region"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "The refining region a series tracks, or the region of a benchmark's market."@en ;
+    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057"@en .
+
+mkt:leg a owl:ObjectProperty ;
+    rdfs:label "leg"@en ;
+    rdfs:domain mkt:BenchmarkSeries ; rdfs:range mkt:Leg ;
+    skos:definition "One leg of the series' recipe."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
+
+mkt:benchmark a owl:ObjectProperty ;
+    rdfs:label "benchmark"@en ;
+    rdfs:domain mkt:Leg ; rdfs:range mkt:Benchmark ;
+    skos:definition "The benchmark price the leg uses."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
+
+mkt:barrels a owl:DatatypeProperty ;
+    rdfs:label "barrels"@en ;
+    rdfs:domain mkt:Leg ; rdfs:range xsd:integer ;
+    skos:definition "The number of barrels of the benchmark in the recipe, as in the 3 and 2 and 1 of a 3-2-1 crack spread. A ratio, not a price."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en .
+
+mkt:blendOf a owl:ObjectProperty ;
+    rdfs:label "blend of"@en ;
+    rdfs:domain mkt:BenchmarkSeries ; rdfs:range mkt:BenchmarkSeries ;
+    skos:definition "A series the blended series is weighted from. The weights are stated in the series' scope note, with their source and period, because they change."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (mpc-performance-measures-evidence.md, row 10)"@en .
+
+mkt:excludesRINCost a owl:DatatypeProperty ;
+    rdfs:label "excludes RIN cost"@en ;
+    rdfs:domain mkt:BenchmarkSeries ; rdfs:range xsd:boolean ;
+    skos:definition "True when the series does not reflect the market cost of RINs. A series with RIN costs and one without are different series."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7: the crack spreads \"do not reflect the market cost of RINs\" (mpc-performance-measures-evidence.md, row 10); competency question 31"@en .
+
+mkt:benchmarkKind a owl:ObjectProperty ;
+    rdfs:label "benchmark kind"@en ;
+    rdfs:domain mkt:Benchmark ; rdfs:range skos:Concept ;
+    skos:definition "Whether the benchmark is a crude marker or a refined-product benchmark."@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+
+mkt:BenchmarkKind a skos:ConceptScheme ; rdfs:label "benchmark kind"@en ;
+    skos:definition "The two kinds of benchmark price a series is built from."@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+bkind:crude-marker a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Crude marker"@en ; skos:notation "crude-marker" ;
+    skos:definition "A published crude oil price that a crack spread uses for its crude leg."@en .
+bkind:product-benchmark a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Product benchmark"@en ; skos:notation "product-benchmark" ;
+    skos:definition "A published refined-product price at a named market, used for a crack spread's product legs."@en .

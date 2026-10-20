@@ -1,0 +1,8 @@
+# Q31 Which series share the name 3-2-1 but are built from different legs? (pairs of series of one measure with a leg benchmark the other lacks)
+PREFIX mkt: <https://w3id.org/lsc/ontology/modules/market-data/>
+SELECT DISTINCT ?a ?b WHERE {
+  ?a mkt:seriesOf ?m ; mkt:leg/mkt:benchmark ?x .
+  ?b mkt:seriesOf ?m ; mkt:leg ?any .
+  FILTER(STR(?a) < STR(?b))
+  FILTER NOT EXISTS { ?b mkt:leg/mkt:benchmark ?x }
+}
