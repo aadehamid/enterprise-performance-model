@@ -974,6 +974,12 @@ without a dated amendment and the decision owner's explicit agreement.
   EPM-DEC-001-0049, with their words in
   `review-evidence/decision-owner-answers/answers-2026-10-19-after-run.md`.
 
+### MPC-P03 coverage check closed (2026-10-19)
+- The decision owner chose to widen CM 1.2.5.1 for the quality of
+  transferred intermediates (EPM-DEC-001-0051). CM 1.2.5.1 gets its first
+  description, cited to MPC's FY2025 10-K, Item 1, and CM 1.1.7 points to
+  it. No process is added.
+
 ### MPC-P09 applied (2026-10-19)
 - Price Management and Performance Management & Backcasting are capabilities
   in `value_stream_commercial_lifecycle.json`, each realized by one process.

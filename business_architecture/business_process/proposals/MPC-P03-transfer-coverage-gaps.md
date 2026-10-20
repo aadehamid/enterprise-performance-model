@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Question 1 answered by the decision owner on 2026-10-19 and applied: CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048). Question 2 (quality of transferred intermediates) is still open |
+| Status | Question 1 answered by the decision owner on 2026-10-19 and applied: CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048). Question 2 (quality of transferred intermediates) answered on 2026-10-19 and applied: CM 1.2.5.1's description now covers intermediates received as feed from another refinery (EPM-DEC-001-0051) |
 | Date | 2026-10-18 |
 | Decision | EPM-DEC-001-0047: The decision owner accepted MPC-P03 "with a physical-execution coverage check" |
 | Source suggestion | `business_architecture/reference/mpc/process-map-suggestions.md`, MPC-P03 |
@@ -16,7 +16,7 @@ MPC's refineries move intermediate products between sites, including during part
 | Nomination and scheduling | CM 1.1.3.6.1 Plan & Execute Nominations | Covered. The node is generic: it does not say it includes intermediates moving between refineries |
 | Movement execution | CM 1.1.3.6.2 Loading Shipment; CM 1.1.3.6.3 Track Movements and Inventory Management | Covered, generic |
 | Quantity measurement | CM 1.1.3.7.4 Measure Inventory; CM 1.2.3 Actualizations (final ticket volumes) | Covered |
-| Quality measurement | CM 1.2.5.1 Crude/Feed Quality Management | **Gap.** CM 1.2.5.1 covers crude and feedstock quality. No step names the quality of an intermediate that one refinery sends and another receives |
+| Quality measurement | CM 1.2.5.1 Crude/Feed Quality Management | **Was a gap; filled** by widening CM 1.2.5.1's description to cover intermediates received as feed from another refinery (EPM-DEC-001-0051). Before 2026-10-19 CM 1.2.5.1 covered crude and feedstock quality, and no step named the quality of an intermediate that one refinery sends and another receives |
 | Receipt and inventory reconciliation | CM 1.1.3.6.4 Discharge & Reconcile Load; CM 1.1.3.7.5 Perform Inventory Reconciliation; CM 1.1.5.1.2.5 Receive actual data for inventory & transfers | Covered |
 | Loss and gain | CM 1.1.3.7.13 Reconcile Movement Losses and Gains (added 2026-10-19, EPM-DEC-001-0048) | **Was a gap; filled** by CM 1.1.3.7.13, which produces the Loss Control data product ("Custody transfer, gain/loss, and shrinkage data across movements and terminal operations", `data_product_portfolio.json`). Before 2026-10-19 no step named the loss and gain reconciliation of a movement. Integration with the data product and the value streams is what remains under the worklog's Step 7 "Loss Control ownership" |
 | Settlement | CM 1.2.4.1.18 Settle Intermediates | Covered |
@@ -26,7 +26,7 @@ Assumption behind "covered": CM 1.1.3 (Distribution Planning & Scheduling and In
 ## What the decision owner decides
 
 1. **Loss and gain.** *Decided 2026-10-19: The decision owner said to address the gap (EPM-DEC-001-0048); option A was applied.* (A, recommended) Add one step, "Reconcile Movement Losses and Gains", under CM 1.1.3.7 Inventory, covering every movement, not only inter-refinery transfers; it produces the Loss Control data product. (B) Record loss and gain as part of CM 1.1.3.6.4 Discharge & Reconcile Load, by description only. (C) Leave the gap open.
-2. **Quality of transferred intermediates.** (A, recommended) Widen CM 1.2.5.1's description so it covers intermediates received as feed from another refinery. (B) Add a step under CM 1.1.7. (C) Leave it.
+2. **Quality of transferred intermediates.** *Decided 2026-10-19: the decision owner chose "Widen CM 1.2.5.1 (Recommended)" (EPM-DEC-001-0051); option A was applied.* (A, recommended) Widen CM 1.2.5.1's description so it covers intermediates received as feed from another refinery. (B) Add a step under CM 1.1.7. (C) Leave it.
 
 A is recommended for 1 because the data product already exists and needs a producing process (Step 7 integration), and one generic step avoids a transfer-only duplicate. A is recommended for 2 because a received intermediate is feed to the receiving refinery, which is the scope of CM 1.2.5.1.
 
