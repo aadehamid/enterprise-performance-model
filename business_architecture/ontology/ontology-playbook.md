@@ -529,9 +529,9 @@ capabilities, systems, measures and data products.
    requires one of the two, never both.
 6. Say what each placing link claims, in a form a query can read. Mark each
    property that places a measure, data product or system on a process as
-   as certification (the link names one end's owning
-   process) or context (it says only where one thing is used or placed with
-   another). Only an owning link certifies.
+   certification (the link names one end's owning process) or context (it
+   says only where one thing is used or placed with another). Only an owning
+   link certifies.
 7. Separate a measure from its published series. A series is one form of a
    measure, identified by what it is built from: region, legs and their
    ratio, and what it leaves out. Store the recipe, never the prices. Two
