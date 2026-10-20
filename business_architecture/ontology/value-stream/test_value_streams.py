@@ -62,7 +62,8 @@ class Build(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_figures(self):
-        # Counted by hand from the two value-stream files on 2026-10-19.
+        # Pinned on 2026-10-19. Streams, stages, capabilities, processes, flows and gap notes were
+        # counted by hand in the two files; the link counts are the build's.
         streams, *_ = bv.load()
         self.assertEqual(bv.figures(streams), {
             "value streams": 2, "stages": 12, "capabilities": 21, "value-stream processes": 58,
