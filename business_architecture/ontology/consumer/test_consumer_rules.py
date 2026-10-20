@@ -51,6 +51,7 @@ class Rules(unittest.TestCase):
         ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
         SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
         DCT = Namespace("http://purl.org/dc/terms/")
+        POP = Namespace("https://w3id.org/lsc/ontology/modules/population/")
         expected = {
             "definitions": {SKOS.definition, SKOS.prefLabel, SKOS.altLabel, KPI.measureKind},
             "not-to-be-confused-with": {KPI.notToBeConfusedWith, MKT.seriesOf},
@@ -63,6 +64,7 @@ class Rules(unittest.TestCase):
             "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
             "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1")},
             "no-context-as-ownership": {PLC.placementKind},
+            "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062
         }
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
         self.assertEqual(rules, {R[k] for k in expected})
