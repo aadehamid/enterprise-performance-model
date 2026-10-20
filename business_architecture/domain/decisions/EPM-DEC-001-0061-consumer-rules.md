@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Competency questions 35 (how a catalog row points at a Named KPI, and what must exist first), 41 (what an agent may answer without reading a table or inventing a formula) and 42 (what it must refuse); Phase E of EPM-DEC-001-0052 |
+| Questions | Competency questions 35 (how a catalog row points at a Named KPI, and what must exist first), 41 (what an agent may answer without reading a table or inventing a formula) and 42 (what it must refuse); Phase E of EPM-DEC-001-0052, its Step 11 item (every competency question answerable or parked by decision) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
