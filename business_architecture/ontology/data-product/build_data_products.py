@@ -6,9 +6,11 @@
 
 The portfolio (business_process/data_product_portfolio.json) gives the segments, lines and
 data products; links.csv gives the process links a recorded decision names. The build fails
-unless every id is unique, every status is on the code list, every segment's process-domain
-reference resolves to one core concept, every link names a data product, and every link's
-process is in core 2.1.0 unless the row says which release it waits for.
+unless every id is unique, every line and data product has a status on the code list, every
+segment has a description and a process-domain reference that resolves to one core concept,
+every link names a data product and cites a source, a link without waits_for has its process
+in core 2.1.0, and a link with waits_for does not (once the process is in core, the row must
+drop waits_for so the link is emitted).
 """
 import argparse
 import csv

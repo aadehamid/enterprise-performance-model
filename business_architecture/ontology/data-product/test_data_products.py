@@ -102,6 +102,47 @@ class Build(unittest.TestCase):
         self.assertFalse(list(PRODUCTS.objects(PRODUCT["ess"], SKOS.altLabel)))
 
 
+class Gates(unittest.TestCase):
+    """The build's own checks, run on doctored copies of its inputs (Pi round 2 suggestion)."""
+
+    def fails(self, edit_portfolio=None, links=None):
+        import copy
+        portfolio = copy.deepcopy(PORTFOLIO)
+        if edit_portfolio:
+            edit_portfolio(portfolio)
+        real_open = open
+
+        def fake_open(path, *a, **k):
+            import io
+            if path == bd.PORTFOLIO:
+                return io.StringIO(json.dumps(portfolio))
+            if path == bd.LINKS and links is not None:
+                return io.StringIO(links)
+            return real_open(path, *a, **k)
+        import builtins
+        builtins.open = fake_open
+        try:
+            with self.assertRaises(SystemExit) as cm:
+                bd.load()
+            return str(cm.exception)
+        finally:
+            builtins.open = real_open
+
+    def test_a_missing_status_fails(self):
+        def edit(p):
+            del p["segments"][0]["productLines"][0]["portfolios"][0]["status"]
+        self.assertIn("is not on the code list", self.fails(edit))
+
+    def test_a_segment_without_a_description_fails(self):
+        def edit(p):
+            p["segments"][1]["description"] = None
+        self.assertIn("needs a description", self.fails(edit))
+
+    def test_a_spent_waits_for_fails(self):
+        rows = "data_product,relation,process,source,waits_for\ndp-commercial-risk,produced-by,CM 1.2.2,test,core 2.9.9\n"
+        self.assertIn("is in core now", self.fails(links=rows))
+
+
 class Shapes(unittest.TestCase):
     def test_module_conforms(self):
         ok, report = conforms(PRODUCTS)
