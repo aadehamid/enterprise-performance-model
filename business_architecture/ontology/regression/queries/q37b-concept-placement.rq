@@ -1,0 +1,10 @@
+# Q37 What process or capability does a concept sit on? (data products and benchmark series, by the value-stream processes and capabilities that produce, consume or measure them)
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+PREFIX mkt: <https://w3id.org/lsc/ontology/modules/market-data/>
+SELECT ?concept ?step ?capability ?process WHERE {
+  { ?step vs:produces|vs:consumes ?concept . }
+  UNION
+  { ?concept mkt:seriesOf ?m . ?step vs:measureLink/vs:measure ?m . }
+  ?step vs:usesCapability ?capability .
+  OPTIONAL { ?step vs:realizes ?process }
+}

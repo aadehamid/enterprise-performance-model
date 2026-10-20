@@ -1,0 +1,11 @@
+# Q38 Is a measure's placement certification or context? No measure is placed by a certification link (must be none).
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+PREFIX plc: <https://w3id.org/lsc/ontology/modules/placement/>
+PREFIX kind: <https://w3id.org/lsc/ontology/modules/placement/kind/>
+SELECT ?measure ?p ?target WHERE {
+  { ?measure a kpi:MeasureDefinition ; ?p ?target . }
+  UNION
+  { ?target ?p ?link . ?link vs:measure ?measure . }
+  ?p plc:placementKind kind:certification .
+}

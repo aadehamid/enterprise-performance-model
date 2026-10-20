@@ -1,0 +1,10 @@
+# Q39 What depends on a measure's or a data product's meaning? (series of the measure, value-stream processes that link it, processes it informs, and the consumers of a data product)
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+PREFIX vs: <https://w3id.org/lsc/ontology/modules/value-stream/>
+PREFIX mkt: <https://w3id.org/lsc/ontology/modules/market-data/>
+SELECT ?changed ?dependent ?how WHERE {
+  { ?dependent mkt:seriesOf ?changed . BIND("series of" AS ?how) }
+  UNION { ?dependent vs:measureLink/vs:measure ?changed . BIND("value-stream process links it" AS ?how) }
+  UNION { ?changed kpi:informsProcess ?dependent . BIND("informs" AS ?how) }
+  UNION { ?dependent vs:consumes ?changed . BIND("consumes" AS ?how) }
+}
