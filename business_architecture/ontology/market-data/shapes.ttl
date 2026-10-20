@@ -1,0 +1,51 @@
+# SHACL shapes for the market-data module (Step 7; EPM-DEC-001-0057). A stated cardinality on
+# every property (EPM-DEC-001-0020, rule 2). Validate with the kpi module's measures.
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix bkind: <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/market-data/shapes/> .
+
+shp:Defined a sh:NodeShape ;
+    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:notation ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:altLabel ; sh:minCount 0 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path skos:scopeNote ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path mkt:region ; sh:minCount 0 ; sh:maxCount 1 ;
+                  sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue mkt:RefiningRegions ] ] ] ;
+    sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+
+shp:Series a sh:NodeShape ;
+    sh:targetClass mkt:BenchmarkSeries ;
+    sh:property [ sh:path mkt:seriesOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:class kpi:MeasureDefinition ] ;
+    sh:property [ sh:path mkt:excludesRINCost ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+    sh:property [ sh:path mkt:leg ; sh:minCount 0 ; sh:class mkt:Leg ] ;
+    sh:property [ sh:path mkt:blendOf ; sh:minCount 0 ; sh:class mkt:BenchmarkSeries ] ;
+    # A series is built either from legs or from other series, never both, never neither.
+    sh:xone ( [ sh:path mkt:leg ; sh:minCount 1 ] [ sh:path mkt:blendOf ; sh:minCount 1 ] ) ;
+    sh:message "A series has legs or blends other series, not both." .
+
+shp:Leg a sh:NodeShape ;
+    sh:targetClass mkt:Leg ;
+    sh:property [ sh:path [ sh:inversePath mkt:leg ] ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path mkt:benchmark ; sh:minCount 1 ; sh:maxCount 1 ; sh:class mkt:Benchmark ] ;
+    sh:property [ sh:path mkt:barrels ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ] .
+
+shp:Benchmark a sh:NodeShape ;
+    sh:targetClass mkt:Benchmark ;
+    sh:property [ sh:path mkt:benchmarkKind ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( bkind:crude-marker bkind:product-benchmark ) ] .
+
+# A benchmark or series is a definition: no price or value hangs off it (EPM-DEC-001-0005).
+shp:NoPrices a sh:NodeShape ;
+    sh:targetClass mkt:BenchmarkSeries, mkt:Benchmark ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme
+                           dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind ) ;
+    sh:message "A series or benchmark carries its definition, never a price." .

@@ -41,6 +41,7 @@ root.
 | `provenance/` | The Step 6 definition-to-run pattern: the shapes a consumer's run must meet, an example run and tests (EPM-DEC-001-0034) |
 | `ref-mpc/` | The Step 5 reference instances for MPC: MPC, MPLX, MPC's control of MPLX, segments and refineries, from the FY2025 10-K (EPM-DEC-001-0033) |
 | `kpi/` | The Step 7 kpi module: 41 measure definitions classified by kind (EPM-DEC-001-0042), the measure-kind code list, planning personas and process links (EPM-DEC-001-0043); released as 1.0.0 (`releases/kpi/1.0.0/`), approved by the decision owner, and 1.0.1, a patch naming the measure list's source (VCO DSV) |
+| `market-data/` | The Step 7 market-data module: five series of the crack-spreads measure, their benchmarks and MPC's refining regions, from MPC's 10-K and CME Group (EPM-DEC-001-0057); not released |
 | `lane/` | The Step 7 lane module: the four office lanes and the seven processes the process map places in them (EPM-DEC-001-0056); not released |
 | `system/` | The Step 7 system module: 32 systems from the process map's system strings, merged on spelling through a register, with their kind and the processes they support (EPM-DEC-001-0055); not released |
 | `value-stream/` | The Step 7 value-stream module: the Commercial Hydrocarbon Lifecycle and Order to Cash, their stages, capabilities and 58 value-stream processes, which realize core processes, produce and consume data products and carry the MPC-P09 measure links (EPM-DEC-001-0054); not released |

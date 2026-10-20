@@ -71,6 +71,8 @@ done
 (cd business_architecture/ontology/system && run with_deps python build_systems.py --verify)
 # Step 7: the lane module must equal a fresh build from office_lanes.json and the map (EPM-DEC-001-0056).
 (cd business_architecture/ontology/lane && run with_deps python build_lanes.py --verify)
+# Step 7: the market-data module must equal a fresh build from its tables (EPM-DEC-001-0057).
+(cd business_architecture/ontology/market-data && run with_deps python build_market_data.py --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
@@ -87,6 +89,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/value-stream/test_value_streams.py \
   business_architecture/ontology/system/test_systems.py \
   business_architecture/ontology/lane/test_lanes.py \
+  business_architecture/ontology/market-data/test_market_data.py \
   business_architecture/business_process/test_business_process.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \

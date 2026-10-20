@@ -1,0 +1,8 @@
+# Q34 Which domain concepts does a measure quantify (region, product slate, crude marker), without the formula?
+PREFIX mkt: <https://w3id.org/lsc/ontology/modules/market-data/>
+SELECT ?measure ?series ?concept ?role WHERE {
+  ?series mkt:seriesOf ?measure .
+  { ?series mkt:region ?concept . BIND("region" AS ?role) }
+  UNION
+  { ?series mkt:leg/mkt:benchmark ?concept . ?concept mkt:benchmarkKind ?k . BIND(STR(?k) AS ?role) }
+}

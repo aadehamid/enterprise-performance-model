@@ -1,0 +1,10 @@
+# Q31 When are two published series the same Named KPI and when different? (series of one measure, with what sets each apart: region, crude leg, RIN treatment, blend)
+PREFIX mkt: <https://w3id.org/lsc/ontology/modules/market-data/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?measure ?series ?region ?crude ?excludesRIN ?blendOf WHERE {
+  ?series mkt:seriesOf ?measure .
+  OPTIONAL { ?series mkt:region ?region }
+  OPTIONAL { ?series mkt:leg ?leg . ?leg mkt:benchmark ?crude . ?crude mkt:benchmarkKind <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker> }
+  OPTIONAL { ?series mkt:excludesRINCost ?excludesRIN }
+  OPTIONAL { ?series mkt:blendOf ?blendOf }
+}

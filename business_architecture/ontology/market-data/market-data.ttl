@@ -1,0 +1,278 @@
+# Benchmark series of the market-data module (Step 7; EPM-DEC-001-0057).
+# Built by build_market_data.py from regions.csv, benchmarks.csv and series.csv. Do not edit by hand.
+@prefix benchmark: <https://w3id.org/lsc/ontology/modules/market-data/benchmark/> .
+@prefix bkind: <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix leg: <https://w3id.org/lsc/ontology/modules/market-data/leg/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix region: <https://w3id.org/lsc/ontology/modules/market-data/region/> .
+@prefix series: <https://w3id.org/lsc/ontology/modules/market-data/series/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+series:crack-blended-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's blended crack spread: the Gulf Coast, Mid-Continent and West Coast crack spreads, weighted by MPC's refining capacity by region in each period."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-blended-3-2-1"^^xsd:string ;
+    skos:prefLabel "Blended 3-2-1 crack spread"@en ;
+    skos:scopeNote "Beginning in the second quarter of 2024, MPC weighted the blended crack spread 42 percent Gulf Coast, 40 percent Mid-Continent and 18 percent West Coast, based on its refining capacity by region in each period (MPC FY2025 Form 10-K, Item 7). The weights for 2026 are in the Q2 2026 Form 10-Q (MPC-S03; mpc-performance-measures-evidence.md, row 10)."@en ;
+    mkt:blendOf series:crack-gulf-coast-3-2-1,
+        series:crack-mid-continent-3-2-1,
+        series:crack-west-coast-3-2-1 ;
+    mkt:excludesRINCost true ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-nymex-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    skos:altLabel "NYMEX 3-2-1"@en ;
+    skos:definition "The exchange-traded crack spread: three NYMEX WTI crude oil futures against two RBOB gasoline futures and one NY Harbor ULSD futures. Not one of MPC's benchmarks."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-nymex-3-2-1"^^xsd:string ;
+    skos:prefLabel "NYMEX 3:2:1 crack spread"@en ;
+    skos:scopeNote "Shares the name 3-2-1 with MPC's regional crack spreads but is a different series: its legs are exchange futures, and its gasoline leg is RBOB, which MPC's benchmarks do not use."@en ;
+    mkt:leg leg:crack-nymex-3-2-1--nymex-ny-harbor-ulsd,
+        leg:crack-nymex-3-2-1--nymex-rbob,
+        leg:crack-nymex-3-2-1--nymex-wti ;
+    mkt:seriesOf measure:crack-spreads .
+
+benchmark:ans a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The ANS crude price, the crude marker of MPC's West Coast crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "ans"^^xsd:string ;
+    skos:prefLabel "ANS"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:west-coast .
+
+benchmark:chicago-cbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Chicago CBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "chicago-cbob"^^xsd:string ;
+    skos:prefLabel "Chicago CBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:mid-continent .
+
+benchmark:chicago-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Chicago ULSD price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "chicago-ulsd"^^xsd:string ;
+    skos:prefLabel "Chicago ULSD"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:mid-continent .
+
+benchmark:la-carb-diesel a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "la-carb-diesel"^^xsd:string ;
+    skos:prefLabel "LA CARB Diesel"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:west-coast .
+
+benchmark:la-carbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "la-carbob"^^xsd:string ;
+    skos:prefLabel "LA CARBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:west-coast .
+
+benchmark:meh a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The MEH crude price, the crude marker of MPC's Gulf Coast crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "meh"^^xsd:string ;
+    skos:prefLabel "MEH"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:gulf-coast .
+
+benchmark:nymex-ny-harbor-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    skos:definition "The NYMEX NY Harbor ULSD futures contract, the diesel leg of the NYMEX 3:2:1 crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-ny-harbor-ulsd"^^xsd:string ;
+    skos:prefLabel "NYMEX NY Harbor ULSD futures (HO)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark .
+
+benchmark:nymex-rbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    skos:definition "The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-rbob"^^xsd:string ;
+    skos:prefLabel "NYMEX RBOB Gasoline futures (RB)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark .
+
+benchmark:nymex-wti a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    skos:definition "The NYMEX Light Sweet Crude Oil (WTI) futures contract, the crude leg of the NYMEX 3:2:1 crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-wti"^^xsd:string ;
+    skos:prefLabel "NYMEX WTI Light Sweet Crude Oil futures (CL)"@en ;
+    mkt:benchmarkKind bkind:crude-marker .
+
+benchmark:usgc-cbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The USGC CBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "usgc-cbob"^^xsd:string ;
+    skos:prefLabel "USGC CBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:gulf-coast .
+
+benchmark:usgc-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The USGC ULSD price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "usgc-ulsd"^^xsd:string ;
+    skos:prefLabel "USGC ULSD"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:gulf-coast .
+
+benchmark:wti a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The WTI crude price, the crude marker of MPC's Mid-Continent crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "wti"^^xsd:string ;
+    skos:prefLabel "WTI"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:mid-continent .
+
+leg:crack-gulf-coast-3-2-1--meh a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:meh .
+
+leg:crack-gulf-coast-3-2-1--usgc-cbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:usgc-cbob .
+
+leg:crack-gulf-coast-3-2-1--usgc-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:usgc-ulsd .
+
+leg:crack-mid-continent-3-2-1--chicago-cbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:chicago-cbob .
+
+leg:crack-mid-continent-3-2-1--chicago-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:chicago-ulsd .
+
+leg:crack-mid-continent-3-2-1--wti a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:wti .
+
+leg:crack-nymex-3-2-1--nymex-ny-harbor-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:nymex-ny-harbor-ulsd .
+
+leg:crack-nymex-3-2-1--nymex-rbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:nymex-rbob .
+
+leg:crack-nymex-3-2-1--nymex-wti a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:nymex-wti .
+
+leg:crack-west-coast-3-2-1--ans a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:ans .
+
+leg:crack-west-coast-3-2-1--la-carb-diesel a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:la-carb-diesel .
+
+leg:crack-west-coast-3-2-1--la-carbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:la-carbob .
+
+series:crack-gulf-coast-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:altLabel "USGC 3-2-1 MEH ex-RIN"@en ;
+    skos:definition "MPC's Gulf Coast crack spread: three barrels of MEH crude producing two barrels of USGC CBOB gasoline and one barrel of USGC ULSD."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-gulf-coast-3-2-1"^^xsd:string ;
+    skos:prefLabel "Gulf Coast 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-gulf-coast-3-2-1--meh,
+        leg:crack-gulf-coast-3-2-1--usgc-cbob,
+        leg:crack-gulf-coast-3-2-1--usgc-ulsd ;
+    mkt:region region:gulf-coast ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mid-continent-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:altLabel "Chicago WTI 3-2-1 ex-RIN"@en ;
+    skos:definition "MPC's Mid-Continent crack spread: three barrels of WTI crude producing two barrels of Chicago CBOB gasoline and one barrel of Chicago ULSD."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mid-continent-3-2-1"^^xsd:string ;
+    skos:prefLabel "Mid-Continent 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-mid-continent-3-2-1--chicago-cbob,
+        leg:crack-mid-continent-3-2-1--chicago-ulsd,
+        leg:crack-mid-continent-3-2-1--wti ;
+    mkt:region region:mid-continent ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-west-coast-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's West Coast crack spread: three barrels of ANS crude producing two barrels of LA CARBOB and one barrel of LA CARB Diesel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-west-coast-3-2-1"^^xsd:string ;
+    skos:prefLabel "West Coast 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-west-coast-3-2-1--ans,
+        leg:crack-west-coast-3-2-1--la-carb-diesel,
+        leg:crack-west-coast-3-2-1--la-carbob ;
+    mkt:region region:west-coast ;
+    mkt:seriesOf measure:crack-spreads .
+
+region:gulf-coast a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "gulf-coast"^^xsd:string ;
+    skos:prefLabel "Gulf Coast"@en .
+
+region:mid-continent a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Mid-Continent refining region: the Catlettsburg, Robinson, Detroit, El Paso, St. Paul Park, Canton, Mandan and Salt Lake City refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "mid-continent"^^xsd:string ;
+    skos:prefLabel "Mid-Continent"@en .
+
+region:west-coast a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's West Coast refining region: the Los Angeles, Anacortes and Kenai refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "west-coast"^^xsd:string ;
+    skos:prefLabel "West Coast"@en .
+
+src:cme-trading-crack-spreads-2024 a dcterms:BibliographicResource ;
+    dcterms:title "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, retrieved 2026-10-19"@en .
+
+src:mpc-performance-measures-evidence a dcterms:BibliographicResource ;
+    dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md (MPC FY2025 Form 10-K, Items 2 and 7, MPC-S01)"@en .
+
