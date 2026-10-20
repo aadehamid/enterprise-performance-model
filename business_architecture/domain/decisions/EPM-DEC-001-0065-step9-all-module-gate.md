@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Step 9's "done when" (zero unexplained violations) for the modules added in Step 7; Phase E of EPM-DEC-001-0052 |
+| Questions | Step 9's "done when" (zero unexplained violations) for the modules added in Step 7; Phase E of EPM-DEC-001-0052, its Step 9 item (SHACL shapes for the new modules) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
