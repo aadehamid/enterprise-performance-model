@@ -962,6 +962,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Order of the remaining work (2026-10-19)
+- The decision owner chose Claude's recommended order for completing the
+  ontology (EPM-DEC-001-0052): Phase A data products, Phase B the
+  Commercial Lifecycle and Order to Cash value streams, Phase C the
+  Customer domain (waits for their customer information), Phase D a
+  `core` release, Phase E the remaining steps, and Phase F the `ontology`
+  skill rebuilt. Ambiguity is resolved by external search, MPC first and
+  the downstream peers second.
+
 ### Repository visibility rule (2026-10-19)
 - The decision owner set a standing rule: the repository may be public
   while work needs it, so ruleset 25440735 gates every pull request, and

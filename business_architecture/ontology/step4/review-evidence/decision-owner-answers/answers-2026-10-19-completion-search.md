@@ -1,0 +1,3 @@
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-19 (session 6). Context (Claude's words, kept in this comment so they do not enter the quote corpus): the decision owner sent this message while Claude worked on the first pull request of the run. "untill", "refrenceces", "comapnies", "sue" and "refrecnes" are as they typed them. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+Goal set: run all steps that does not need my input untill all PR merges. Do external search for high quality downstream oil and gas refrenceces to resolve any ambiguity. Use Marathon petroleum comapnies as the stand in company as primary and sue all other downstream oil and gas peer as secondary sources of refrecnes.
