@@ -10,7 +10,8 @@ import sys
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, URIRef
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import RDF, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -65,7 +66,15 @@ class Shapes(unittest.TestCase):
         g = Graph()
         for t in LANES:
             g.add(t)
-        g.add((PROC["CM-1-3-1"], LANE.officeLane, URIRef(str(LANEV) + "shared-services")))
+        fifth = URIRef(str(LANEV) + "shared-services")
+        g.add((PROC["CM-1-3-1"], LANE.officeLane, fifth))
+        self.assertFalse(conforms(g))
+        # Typed and fully described, but not one of the four: still rejected (Pi round 1).
+        for p, o in ((RDF.type, LANE.OfficeLane), (SKOS.prefLabel, Literal("Shared Services", lang="en")),
+                     (SKOS.notation, Literal("shared_services", datatype=XSD.string)),
+                     (SKOS.definition, Literal("Not one of the four.", lang="en")),
+                     (SKOS.inScheme, URIRef("https://example.org/other-scheme"))):
+            g.add((fifth, p, o))
         self.assertFalse(conforms(g))
 
 
