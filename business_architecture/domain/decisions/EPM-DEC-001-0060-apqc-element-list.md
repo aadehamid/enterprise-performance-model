@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Competency questions 11 (which APQC elements have no local counterpart), 40 and 43, each partial; Phase E of EPM-DEC-001-0052 |
+| Questions | Competency questions 11 (which APQC elements have no local counterpart), 40 and 43, each partial; Phase E of EPM-DEC-001-0052, the partial questions (Q11, Q40, Q43) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
