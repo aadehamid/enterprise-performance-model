@@ -529,8 +529,9 @@ capabilities, systems, measures and data products.
    requires one of the two, never both.
 6. Say what each placing link claims, in a form a query can read. Mark each
    property that places a measure, data product or system on a process as
-   certification (the target owns the subject) or context (the subject is
-   used there). Only an owning link certifies.
+   as certification (the link names one end's owning
+   process) or context (it says only where one thing is used or placed with
+   another). Only an owning link certifies.
 7. Separate a measure from its published series. A series is one form of a
    measure, identified by what it is built from: region, legs and their
    ratio, and what it leaves out. Store the recipe, never the prices. Two
@@ -1626,8 +1627,10 @@ Revival trigger: someone asks for, say, the Order-to-Cash value stream end
 to end, and the backbone alone cannot answer. The worked example revives
 this layer at Step 7 (EPM-DEC-001-0017). *2026-10-18:* the KPI layer is
 revived as the `kpi` module (EPM-DEC-001-0043), released as 1.0.0.
-*2026-10-19:* the data-product, value-stream, system and lane layers are
-revived as modules (EPM-DEC-001-0053 to 0056); they are not yet released.
+*2026-10-19:* the data-product and value-stream layers parked here, and
+the systems and lanes deferred as node-field overlays (EPM-DEC-001-0052,
+Phase B), are revived as modules (EPM-DEC-001-0053 to 0056); they are not
+yet released.
 
 ---
 
