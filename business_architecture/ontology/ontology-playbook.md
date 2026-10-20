@@ -1481,14 +1481,14 @@ started on `core` 1.0.0 with 5 answerable. On `core` 2.0.0 with the
 organization module, 9 were answerable, 5 partial and 30 waiting. With
 the kpi module (2026-10-18), 17 are answerable, 6 partial and 21 waiting.
 With the data-product module (2026-10-19), Q7 became partial: 17, 7 and 20.
-With the value-stream module (2026-10-19), Q7 and Q10 became answerable: 19, 6 and 19.
-With the system module (2026-10-19), Q6 became answerable: 20, 6 and 18.
-With the lane module (2026-10-19), Q9 became answerable: 21, 6 and 17.
-Q15, the same-word test, then became answerable across the modules: 22, 6 and 16.
-With the market-data module (2026-10-19), Q31 and Q34 became answerable: 24, 6 and 14.
-With the placement kinds (2026-10-19), Q37, Q38 and Q39 became answerable: 27, 4 and 13.
-With the source tiers (2026-10-19), Q44 became answerable: 28, 3 and 13.
-With the full APQC element list (2026-10-19), Q11 became answerable, and Q40 and Q43 count by their graph part: 31, 0 and 13.
+With the value-stream module (2026-10-19), Q10 became answerable: 18, 7 and 19.
+With the system module (2026-10-19), Q6 became answerable: 19, 7 and 18.
+With the lane module (2026-10-19), Q9 became answerable: 20, 7 and 17.
+Q15, the same-word test, then became answerable across the modules: 21, 7 and 16.
+With the market-data module (2026-10-19), Q31 and Q34 became answerable: 23, 7 and 14.
+With the placement kinds (2026-10-19), Q37, Q38 and Q39 became answerable: 26, 5 and 13.
+With the source tiers (2026-10-19), Q44 became answerable: 27, 4 and 13.
+With the full APQC element list (2026-10-19), Q11 became answerable, and Q40 and Q43 count by their graph part: 30, 1 and 13.
 Most of the waiting questions need the rest of Step 7, and the customer questions wait for the
 Customer / Party module. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
