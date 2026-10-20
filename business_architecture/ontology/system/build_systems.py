@@ -111,9 +111,7 @@ def build(register, slugs, uses, procs):
     for prefix, ns in (("sys", SYS), ("kind", KIND), ("system", SYSTEM), ("proc", PROC), ("src", SRC),
                        ("skos", SKOS), ("dcterms", DCTERMS)):
         g.bind(prefix, ns)
-    g.add((MAP_SOURCE, RDF.type, DCTERMS.BibliographicResource))
-    g.add((MAP_SOURCE, DCTERMS.title, Literal(
-        "The downstream process map, business_architecture/business_process/downstream_process_map.json", lang="en")))
+    # The map's source node is declared by the organization module (roles.ttl); only referenced here.
     for slug, s in slugs.items():
         iri = SYSTEM[slug]
         g.add((iri, RDF.type, SYS.System))
@@ -141,7 +139,8 @@ def figures(register, slugs, uses, procs):
         "systems": len(slugs),
         **{k: kinds[k] for k in KINDS},
         "no-system strings": sum(1 for r in register.values() if r["rule"] == "no-system"),
-        "processes naming a system": len({pid for pid, _ in uses}),
+        "processes with a systems field": len({pid for pid, _ in uses}),
+        "processes with a link": len({pid for _, pid in emitted}),
         "links": len(emitted),
         "links waiting for a core release": len(waiting),
     }

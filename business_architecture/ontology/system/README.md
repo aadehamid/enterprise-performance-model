@@ -7,7 +7,7 @@ The `system` module holds the systems, office tools and working documents that t
 | `register.csv` | Every distinct string in the map's `systems` fields (37), with the systems it names and the rule: `exact`, `spelling` (a merge on spelling only), `split` (a string that names several systems, split on "/"), or `no-system` (Manual, TBD and two plans to build something) |
 | `systems.csv` | The 32 systems, each with its name and kind: application, office tool or working document |
 | `vocabulary.ttl`, `shapes.ttl` | The class, the `supports` and `systemKind` properties, the system-kind code list, and the SHACL shapes |
-| `build_systems.py`, `systems.ttl` | The build: 32 systems and 285 links to 153 processes. `--verify` fails unless `systems.ttl` equals a fresh build. `scripts/check.sh` runs it |
+| `build_systems.py`, `systems.ttl` | The build: 32 systems and 285 links to 150 processes. 153 processes have a `systems` field; three of them name only Manual, TBD or a plan. `--verify` fails unless `systems.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_systems.py` | Tests: the build is current, the figures, the spelling merge, a split, Manual creating no system, kinds, pinned links, and SHACL accepting the module and rejecting an invented definition, two kinds, a kind off the list and a missing note |
 
 The module is not released yet. A release needs the decision owner's approval.

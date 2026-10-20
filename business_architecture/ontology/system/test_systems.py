@@ -10,7 +10,7 @@ import sys
 import unittest
 
 from pyshacl import validate
-from rdflib import Graph, Literal
+from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -34,10 +34,12 @@ class Build(unittest.TestCase):
 
     def test_figures(self):
         # Pinned on 2026-10-19. The string, system and kind counts were checked by hand against
-        # register.csv and systems.csv; the link count is the build's, over 153 processes.
+        # register.csv and systems.csv. The link count is the build's; 3 of the 153 processes with a
+        # systems field name only Manual, TBD or a plan, so 150 receive a link.
         self.assertEqual(bs.figures(*bs.load()), {
             "map strings": 37, "systems": 32, "application": 23, "office-tool": 4, "document": 5,
-            "no-system strings": 4, "processes naming a system": 153, "links": 285,
+            "no-system strings": 4, "processes with a systems field": 153,
+            "processes with a link": 150, "links": 285,
             "links waiting for a core release": 0})
 
     def test_spelling_merge(self):
@@ -64,6 +66,11 @@ class Build(unittest.TestCase):
     def test_profisee_links(self):
         self.assertEqual(set(SYSTEMS.objects(SYSTEM["profisee"], SYS.supports)),
                          {PROC["CM-1-1-2-1"], PROC["CM-1-1-2-1-8"], PROC["CM-1-1-2-2"]})
+
+
+    def test_the_map_source_is_not_redeclared(self):
+        # roles.ttl declares the process map's source node; this module only references it (Pi round 1).
+        self.assertIsNone(SYSTEMS.value(bs.MAP_SOURCE, URIRef("http://purl.org/dc/terms/title")))
 
 
 class Shapes(unittest.TestCase):
