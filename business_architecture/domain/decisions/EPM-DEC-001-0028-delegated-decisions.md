@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, and 2026-10-18 on the reviewers |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, and 2026-10-20 on merging past the approval agent |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
@@ -24,7 +24,18 @@ Unchanged: every change still goes through a pull request, the checks in AGENTS.
 
 Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, and then, under the 2026-10-13 amendment, through Steps 5 to 12, with a log of what was done. Each PR gets at least one independent review before it opens and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review. After the PR opens, one PR reviewer reviews it the way the Cursor review bot did: one agent, no subagents, one MERGE or HOLD comment, and a new review after each push until merge. The decision owner named the reviewers in the same session: the Cursor agent on Grok 4.6 for the independent review, and Pi on `glm-5.3-flash:cloud` for the PR review (Kimi K3 first, until its usage ran out). *2026-10-13:* changed by the decision owner; see the amendment of 2026-10-18 below.
 
-Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`).
+Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`). *2026-10-20, see the amendment below:* the decision owner need not be the one who merges such a pull request once the PR reviewer's MERGE is on its head and `checks` passed; Step 3c definition batches still wait for them.
+
+## Amendment, 2026-10-20: merging when the approval agent asks for a human
+
+PR #308 had the Cursor review bot's MERGE on its head and passing CI, but the Cursor approval agent withheld its approving review as "medium risk", and ruleset 25440735 requires one approving review, so the PR waited until the decision owner merged it. The decision owner then wrote: "You should not be waiting for me to merge. What made you wait for me this time?" Asked whether Claude should merge such pull requests itself with an admin merge, they chose "Yes, admin-merge on MERGE + CI (Recommended)".
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+1. **When Claude admin-merges.** Only when the PR reviewer's verdict on the current head is MERGE, the `checks` status has passed on that head, and the only unmet requirement is the approving review. Claude merges with `gh pr merge --admin --match-head-commit <head>`, through way-of-working's `merge-on-verdict.sh --admin-if-only-review` (personal-agent-skills #41), which first checks that every check on the head passed, that the head is not behind `main` where the rules require an up-to-date branch, and that no current review thread is unresolved. This ruleset does not require an up-to-date branch, so a branch behind `main` merges without admin privileges too.
+2. **Never past a HOLD or a failed check.** An admin merge is not a way round the PR reviewer, CI or the independent review; those rules are unchanged.
+3. **Each one is visible.** Claude says on the PR, and in the session log, that it merged with admin privileges and why.
+4. **APPROVAL_POLICY.md** still tells the approval agent when to ask for a human; the decision owner's answer is that, for those pull requests, they do not need to be the one who merges.
+5. **Step 3c definition batches are the exception.** Their flow says the decision owner merges them (`step3c-review-handoff.md`, "Never merge — the decision owner merges."); this amendment does not change that.
 
 ## Amendment, 2026-10-18: who gives which review
 
@@ -53,6 +64,8 @@ On merging, later in the same session (saved in `business_architecture/ontology/
 On scope and review (#207 comment 6137266851, saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-goal.md`): "go until we finish emiting the ontology and updating the ontology playbook. Keep a log of what you did. Keep using kimi for PR reviewers. Do you need independent reviewer. We should do independent reviewer at least once and at most two times"
 
 On the reviewers (#207 comment 6137449831, saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-reviewers.md`): "so let us use kimi k3 for PR review and cursor agent from here with Grok 4.6 for independent reviews. cool?"; "kimi can review the PR until we merge we dont need subagents for this. we should do review like cursor bot was doing it."; "Can you try "ollama launch pi --model glm-5.3-flash:cloud""; "it looks like the two kimi got stuck. I ran out of usgae. So we will need to siwtch those to either cursor agent or pi depending on wether ther pre-PR or PR"
+
+On merging past the approval agent, in the Claude Code session on 2026-10-20 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-20-admin-merge.md`): "You should not be waiting for me to merge. What made you wait for me this time?" and "Yes, admin-merge on MERGE + CI (Recommended)"
 
 On the extension, in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12."
 
