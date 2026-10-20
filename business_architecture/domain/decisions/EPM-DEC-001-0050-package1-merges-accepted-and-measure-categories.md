@@ -42,6 +42,6 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - While the repository is public and the ruleset is in place, no pull request merges before `checks` passes, and a pull request without an approving review waits for the decision owner.
-- The repository returns to private when the current goal is reached.
+- The repository returns to private when the current goal is reached. *2026-10-19, later:* done. After PRs #298 to #301 merged, Claude made it private again (`gh repo edit --visibility private`; the API returned `"visibility": "PRIVATE"`). Ruleset 25440735, created after this record merged, required one approving review and `checks` on #300 and #301. On the private repository GitHub again answers HTTP 403 for rulesets, so it is not enforced on the current plan.
 - EPM-DEC-001-0042's eight classes are approved; a change to the set needs the decision owner.
 - MPC-P09 can be applied.

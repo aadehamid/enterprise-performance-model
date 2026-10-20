@@ -995,7 +995,10 @@ without a dated amendment and the decision owner's explicit agreement.
   with a dated note in EPM-DEC-001-0036 and 0038. GitHub refuses the approved
   ruleset on `main` while the repository is private (HTTP 403), so the
   decision owner had the repository made public temporarily, for the current
-  goal; the ruleset is added after the record merges. MPC-P09 is unblocked and goes in its own pull
+  goal; the ruleset is added after the record merges. *Later
+  that day:* ruleset 25440735 was created and gated #300 and #301; once
+  they merged the repository went private again, and GitHub no longer
+  enforces the ruleset. MPC-P09 is unblocked and goes in its own pull
   request.
 
 ### Process-map gaps addressed (2026-10-19)
@@ -1065,7 +1068,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal (EPM-DEC-001-0050).
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050).
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words

@@ -14,7 +14,7 @@ When prepared, nothing in them was decided. Each question lists its options with
 
 Three facts the packages found that you may want first:
 
-- The GitHub repository is public and has no LICENSE file, so anyone can read the ontology even though nothing is hosted (licence package). *2026-10-18:* the repository is now private, at the decision owner's instruction. *2026-10-19:* public again temporarily, for the current goal, so the ruleset in package 1 can be enabled (EPM-DEC-001-0050).
+- The GitHub repository is public and has no LICENSE file, so anyone can read the ontology even though nothing is hosted (licence package). *2026-10-18:* the repository is now private, at the decision owner's instruction. *2026-10-19:* public again temporarily, for the current goal, so the ruleset in package 1 can be enabled (EPM-DEC-001-0050). *2026-10-19, later:* the goal was reached (PRs #298 to #301 merged), and the repository is private again (EPM-DEC-001-0050).
 - On #262, #266 and #269, the Cursor app merged 7 to 10 seconds after the bot's MERGE, before the `checks` workflow finished. CI passed afterwards on each (PR review package).
 - The domain split in #266 rests on your answer "Option 2: 1.3 Marketing; 1.1, 1.2 Commercial; 1.4 its own . This makes sesne to me. What do you think?". The PR review package asks you to confirm it was a decision.
 

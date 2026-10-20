@@ -16,7 +16,7 @@ EPM-DEC-001-0017 seeds the `kpi` module from "The decision owner's Pricing KPI c
 **The decision owner's decisions:**
 1. Their two files are the KPI answer. The pasted "KPI: B" in their Step 7 reply is not their answer.
 2. Personas stay as a notion, without the people's names. To Claude's question on persona names they answered "Use these four (Recommended)".
-3. Internal system, table and report names may be used. The GitHub repository was switched to private on 2026-10-18 for this reason (`gh repo edit --visibility private`; the API then returned `"visibility": "private"`); only the personas are generalized. *2026-10-19:* the decision owner had it made public temporarily, for the current goal, knowing it exposes these names (EPM-DEC-001-0050).
+3. Internal system, table and report names may be used. The GitHub repository was switched to private on 2026-10-18 for this reason (`gh repo edit --visibility private`; the API then returned `"visibility": "private"`); only the personas are generalized. *2026-10-19:* the decision owner had it made public temporarily, for the current goal, knowing it exposes these names (EPM-DEC-001-0050). *2026-10-19, later:* the goal was reached (PRs #298 to #301 merged), and the repository is private again (EPM-DEC-001-0050).
 4. They wrote to ignore the "DVS data pull"; the column in their files is headed DSV Data Pull, so that column is ignored.
 5. The two files are not added to the repository. The module holds the definitions built from them.
 6. The list mixes true KPIs with operational metrics, and each row is to be classified, using industry practice, external research and MPC's public information.
