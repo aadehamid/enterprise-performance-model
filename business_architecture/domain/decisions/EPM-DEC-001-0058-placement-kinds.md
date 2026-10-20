@@ -34,4 +34,4 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Consequences
 
-- The regression stands at 27 answerable, 4 partial and 13 waiting.
+- The regression stands at 26 answerable, 5 partial and 13 waiting.
