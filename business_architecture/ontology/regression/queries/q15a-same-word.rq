@@ -1,4 +1,4 @@
-# Q15 Which English words name more than one thing? (one row per word, with the IRIs it names; a different IRI is a different thing, told apart by its IRI and its module's own wording)
+# Q15 Which English words name more than one thing? (one row per word, with the IRIs it names; q15b says which of them are one thing or linked)
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT ?word (COUNT(DISTINCT ?thing) AS ?meanings) (GROUP_CONCAT(DISTINCT STR(?thing); separator=" ") AS ?things) WHERE {

@@ -963,11 +963,11 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
 ### Q15, the same-word test (2026-10-19)
-- Under the delegation (EPM-DEC-001-0028), Q15 is answerable: a word that
-  names two things names two IRIs, each with its own module's wording (a
-  definition, or a note that it is named but not described), and a link
-  such as `vs:realizes` says how two same-named things relate. 61
-  words name more than one thing across the modules.
+- Under the delegation (EPM-DEC-001-0028), Q15 is answerable: when one
+  word names more than one IRI, the graph says whether they are one thing
+  (a retired IRI's `dcterms:isReplacedBy`) or how they relate (a link such
+  as `vs:realizes`); with neither, they are different things. 61 words name
+  more than one IRI across the modules.
 
 ### Lane module (2026-10-19)
 - Under the delegation (EPM-DEC-001-0056): a new `lane` module holds the
