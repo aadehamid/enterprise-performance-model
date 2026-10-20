@@ -35,6 +35,7 @@ PR #308 had the Cursor review bot's MERGE on its head and passing CI, but the Cu
 2. **Never past a HOLD or a failed check.** An admin merge is not a way round the PR reviewer, CI or the independent review; those rules are unchanged.
 3. **Each one is visible.** Claude says on the PR, and in the session log, that it merged with admin privileges and why.
 4. **APPROVAL_POLICY.md** still tells the approval agent when to ask for a human; the decision owner's answer is that, for those pull requests, they do not need to be the one who merges.
+5. **Step 3c definition batches are the exception.** Their flow says the decision owner merges them (`step3c-review-handoff.md`, "Never merge — the decision owner merges."); this amendment does not change that.
 
 ## Amendment, 2026-10-18: who gives which review
 
