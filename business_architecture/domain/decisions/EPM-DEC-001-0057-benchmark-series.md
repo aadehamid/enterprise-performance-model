@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-19 |
-| Questions | Competency questions 31 (when two published series are the same Named KPI) and 34 (which domain concepts a measure quantifies), which waited for the Market Data definitions; Phase E of EPM-DEC-001-0052 |
+| Questions | Competency questions 31 (when two published series are the same Named KPI) and 34 (which domain concepts a measure quantifies), which waited for the Market Data definitions; Phase E of EPM-DEC-001-0052, its Step 11 item (every competency question answerable or parked by decision) |
 | Source | Claude Code session, 2026-10-19 |
 
 ## Context
