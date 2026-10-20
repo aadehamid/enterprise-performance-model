@@ -34,5 +34,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- The regression stands at 34 answerable, 0 partial and 10 waiting: question 17 waits on EPM-DEC-001-0045 and questions 19 to 26 on the Customer module (EPM-DEC-001-0004).
+- The regression stands at 33 answerable, 1 partial (Q7) and 10 waiting: question 17 waits on EPM-DEC-001-0045 and questions 19 to 26 on the Customer module (EPM-DEC-001-0004).
 - Question 28 (population) is the only Step 7 question still waiting.
