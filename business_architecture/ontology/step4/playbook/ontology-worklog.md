@@ -995,7 +995,10 @@ without a dated amendment and the decision owner's explicit agreement.
   with a dated note in EPM-DEC-001-0036 and 0038. GitHub refuses the approved
   ruleset on `main` while the repository is private (HTTP 403), so the
   decision owner had the repository made public temporarily, for the current
-  goal; the ruleset is added after the record merges. MPC-P09 is unblocked and goes in its own pull
+  goal; the ruleset is added after the record merges. *Later
+  that day:* ruleset 25440735 was created and gated #300 and #301; once
+  they merged the repository went private again, and GitHub no longer
+  enforces the ruleset. MPC-P09 is unblocked and goes in its own pull
   request.
 
 ### Process-map gaps addressed (2026-10-19)
