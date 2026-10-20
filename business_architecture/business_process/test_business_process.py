@@ -1,5 +1,5 @@
 """Integrity tests for the process authority (`business_process/` and `../schema/`): each file
-with a schema validates against it, process-map node and data product ids are unique, and these
+with a schema validates against it, process-map node ids and data product and line ids are unique, and these
 references resolve: a value stream's linkedProcessIds and gapAnalysis closestProcessIds to
 process-map nodes, its produces and consumes to data products or lines, its capabilityId to a
 capability and its flows to processes in the same file, and each process-map officeLane to a

@@ -966,7 +966,7 @@ without a dated amendment and the decision owner's explicit agreement.
 - `business_process/test_business_process.py`, run by `check.sh`, now checks
   the process authority. The data product portfolio and both value streams
   validate against their schemas. Process-map node ids (696) and data
-  product ids (67) are unique. These references resolve: a value stream's
+  product and line ids (67) are unique. These references resolve: a value stream's
   linkedProcessIds and gapAnalysis closestProcessIds to process-map nodes,
   its produces and consumes to data products or lines, its capabilityId to
   a capability and its flows to processes in the same file, and each
