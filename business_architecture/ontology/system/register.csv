@@ -1,0 +1,38 @@
+source_text,systems,rule
+XPIMS,xpims,exact
+MS Teams,ms-teams,exact
+MS Outlook,ms-outlook,exact
+DPO,dpo,exact
+Planning DB,planning-db,exact
+MS PowerPoint,ms-powerpoint,exact
+Backcasting Dashboard,backcasting-dashboard,exact
+Planning and Scheduling UI,planning-and-scheduling-ui,exact
+PPIMS,ppims,exact
+Manual,,no-system
+KittyHawk,kittyhawk,exact
+MPR,mpr,exact
+MS Excel,ms-excel,exact
+APS,aps,exact
+RightAngle,rightangle,exact
+Right Angle,rightangle,spelling
+PSR,psr,exact
+XPIMS <> DPO Integration Macro,xpims-dpo-integration-macro,exact
+Network Premise Document,network-premise-document,exact
+Refinery Premise Document,refinery-premise-document,exact
+Profisee,profisee,exact
+Market Outlook and Avails Dashboard,market-outlook-and-avails-dashboard,exact
+VALT,valt,exact
+SAP/ Hyperion,sap;hyperion,split
+RFC Hindsight Analysis Excel,rfc-hindsight-analysis-excel,exact
+Premise Document,premise-document,exact
+TopDay,topday,exact
+CargoTracker,cargotracker,exact
+To be incorporated in regional Premise solution,,no-system
+"Manual, to be incorporated in Crude Avails solution",,no-system
+Actuals Case Prep File,actuals-case-prep-file,exact
+PI,pi,exact
+TBD,,no-system
+TRR,trr,exact
+RightAngle/ TMR/ TopDay,rightangle;tmr;topday,split
+Right Angle / CargoTracker,rightangle;cargotracker,split
+APS Planning DB,aps-planning-db,exact

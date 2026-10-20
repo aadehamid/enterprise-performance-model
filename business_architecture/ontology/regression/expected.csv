@@ -4,7 +4,7 @@ question,status,queries,waits_for
 3,answerable,q03a-raci.rq;q03b-assignments-resolve.rq,
 4,answerable,q04a-no-accountable.rq;q04b-raci-has-accountable.rq,
 5,answerable,q05-roles.rq,
-6,waits:step-7,,systems (Step 7)
+6,answerable,q06a-systems-for-process.rq;q06b-processes-for-system.rq,
 7,partial,q07a-produces-consumes.rq;q07-no-owning-process.rq,Loss Control's producer (CM 1.1.3.7.13) waits for core 2.2.0 (EPM-DEC-001-0053)
 8,answerable,q08a-no-planned-flows.rq;q08b-planned-flows.rq,
 9,waits:step-7,,lanes (Step 7)

@@ -67,6 +67,8 @@ done
 (cd business_architecture/ontology/data-product && run with_deps python build_data_products.py --verify)
 # Step 7: the value-stream module must equal a fresh build from the two value streams (EPM-DEC-001-0054).
 (cd business_architecture/ontology/value-stream && run with_deps python build_value_streams.py --verify)
+# Step 7: the system module must equal a fresh build from the process map's systems fields (EPM-DEC-001-0055).
+(cd business_architecture/ontology/system && run with_deps python build_systems.py --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
 run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
@@ -81,6 +83,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/kpi/test_measures.py \
   business_architecture/ontology/data-product/test_data_products.py \
   business_architecture/ontology/value-stream/test_value_streams.py \
+  business_architecture/ontology/system/test_systems.py \
   business_architecture/business_process/test_business_process.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \

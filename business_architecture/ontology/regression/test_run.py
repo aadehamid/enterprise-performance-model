@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (18, 7, 19))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (19, 7, 18))
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
@@ -66,7 +66,7 @@ class Release(unittest.TestCase):
 
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 26)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 28)
 
     def mutated(self, change):
         g = Graph()
@@ -125,9 +125,9 @@ class Release(unittest.TestCase):
 
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
-        rows[5] = dict(rows[5], queries="q01a-children.rq")
+        rows[16] = dict(rows[16], queries="q01a-children.rq")  # Q17 waits on EPM-DEC-001-0045
         failures, _ = run.check(GRAPH, rows)
-        self.assertIn("Q6: waits but lists queries", failures)
+        self.assertIn("Q17: waits but lists queries", failures)
 
 
 if __name__ == "__main__":
