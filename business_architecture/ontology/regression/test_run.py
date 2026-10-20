@@ -125,9 +125,9 @@ class Release(unittest.TestCase):
 
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
-        rows[5] = dict(rows[5], queries="q01a-children.rq")
+        rows[16] = dict(rows[16], queries="q01a-children.rq")  # Q17 waits on EPM-DEC-001-0045
         failures, _ = run.check(GRAPH, rows)
-        self.assertIn("Q6: waits but lists queries", failures)
+        self.assertIn("Q17: waits but lists queries", failures)
 
 
 if __name__ == "__main__":
