@@ -104,6 +104,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/business_process/test_business_process.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \
+  business_architecture/ontology/validation/test_all_module_shapes.py \
   business_architecture/ontology/projection/test_pipeline.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
