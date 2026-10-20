@@ -1,0 +1,6 @@
+# Q9 Which processes sit in each office lane?
+PREFIX lane: <https://w3id.org/lsc/ontology/modules/lane/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?lane ?process WHERE {
+  ?process lane:officeLane ?lane .
+}
