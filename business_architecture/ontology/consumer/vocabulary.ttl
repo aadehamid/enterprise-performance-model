@@ -1,0 +1,99 @@
+# Rules for the graph's consumers (Step 7; EPM-DEC-001-0061): how a catalog row binds a Named
+# KPI (competency question 35), and what a graph or meaning agent may answer from the graph and
+# must refuse (questions 41 and 42). The rules name the graph terms they rely on by IRI.
+@prefix con: <https://w3id.org/lsc/ontology/modules/consumer/> .
+@prefix rule: <https://w3id.org/lsc/ontology/modules/consumer/rule/> .
+@prefix rk: <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ---- Catalog binding (question 35) ----
+
+con:publishesMeasure a owl:ObjectProperty ;
+    rdfs:label "publishes measure"@en ;
+    rdfs:domain dp:DataProduct ; rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The binding a catalog row uses to point at a Named KPI: the data product that publishes a measure's values points at the measure's IRI. Both must already be defined: the measure with its kind in the kpi module, and the data product in the data-product module. The values stay in the data product's platform."@en ;
+    dcterms:bibliographicCitation "competency question 35; EPM-DEC-001-0005, EPM-DEC-001-0061"@en .
+
+# ---- Agent rules (questions 41 and 42) ----
+
+con:Rule a owl:Class ;
+    rdfs:label "consumer rule"@en ;
+    skos:definition "A rule for an agent that answers from the graph: what it may answer without reading a table or inventing a formula, or what it must refuse."@en ;
+    dcterms:bibliographicCitation "competency questions 41 and 42; EPM-DEC-001-0061"@en .
+
+con:ruleKind a owl:ObjectProperty ;
+    rdfs:label "rule kind"@en ;
+    rdfs:domain con:Rule ; rdfs:range skos:Concept ;
+    skos:definition "Whether the rule says what the agent may answer or what it must refuse."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0061"@en .
+
+con:reliesOn a owl:ObjectProperty ;
+    rdfs:label "relies on"@en ;
+    rdfs:domain con:Rule ;
+    skos:definition "A graph term the rule rests on: the property or class an answer reads, or whose absence makes a refusal necessary."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0061"@en .
+
+con:RuleKind a skos:ConceptScheme ; rdfs:label "rule kind"@en ;
+    skos:definition "The two kinds of consumer rule."@en ;
+    dcterms:bibliographicCitation "competency questions 41 and 42"@en .
+rk:may-answer a skos:Concept ; skos:inScheme con:RuleKind ; skos:prefLabel "May answer"@en ; skos:notation "may-answer" ;
+    skos:definition "The agent may answer from the graph alone."@en .
+rk:must-refuse a skos:Concept ; skos:inScheme con:RuleKind ; skos:prefLabel "Must refuse"@en ; skos:notation "must-refuse" ;
+    skos:definition "The agent must refuse, and say where the answer lives instead."@en .
+
+rule:definitions a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a thing is"@en ;
+    skos:definition "The definition, name, aliases and kind of any concept, measure, data product, series, system or lane, read from its skos:definition, labels and kind."@en ;
+    con:reliesOn skos:definition, skos:prefLabel, skos:altLabel, kpi:measureKind ;
+    dcterms:source "competency questions 13, 16, 27 and 41"@en .
+rule:not-to-be-confused-with a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a measure is not"@en ;
+    skos:definition "The nearby measures and series a measure is not, and how they differ."@en ;
+    con:reliesOn kpi:notToBeConfusedWith, mkt:seriesOf ;
+    dcterms:source "competency questions 31, 32 and 36"@en .
+rule:placement a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Where a thing sits, and what the placement claims"@en ;
+    skos:definition "The processes, capabilities and value streams a measure or data product sits on, and whether each placement certifies or is context."@en ;
+    con:reliesOn kpi:informsProcess, vs:measureLink, vs:produces, vs:consumes, plc:placementKind ;
+    dcterms:source "competency questions 33, 37 and 38; EPM-DEC-001-0058"@en .
+rule:recipe a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a series is built from"@en ;
+    skos:definition "A series' region, legs, barrels and RIN treatment, as a recipe, never as a value."@en ;
+    con:reliesOn mkt:leg, mkt:barrels, mkt:region, mkt:excludesRINCost ;
+    dcterms:source "competency questions 31 and 34; EPM-DEC-001-0057"@en .
+rule:who-does-it a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Who is responsible"@en ;
+    skos:definition "The roles responsible, accountable, consulted and informed for a process, as the RACI assignments record them."@en ;
+    con:reliesOn orgm:forProcess ;
+    dcterms:source "competency questions 3 to 5"@en .
+rule:which-source a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Which source says so"@en ;
+    skos:definition "The sources a definition cites, and which one is authoritative when they disagree."@en ;
+    con:reliesOn dcterms:source, auth:evidenceTier ;
+    dcterms:source "competency question 44; EPM-DEC-001-0059"@en .
+
+rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute or quote a value"@en ;
+    skos:definition "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."@en ;
+    con:reliesOn kpi:basis ;
+    dcterms:source "competency question 42; EPM-DEC-001-0005"@en .
+rule:no-crack-from-legs a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Build a crack from its legs"@en ;
+    skos:definition "Calculate a crack spread from the prices of its crude and product legs. The official series is the published one; a homemade crack is a different number."@en ;
+    con:reliesOn mkt:leg, mkt:seriesOf ;
+    dcterms:source "competency questions 32 and 42; EPM-DEC-001-0057"@en .
+rule:no-report-as-kpi a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Treat a report column as the KPI"@en ;
+    skos:definition "Call a tracker, report or report column a KPI, or call a KPI candidate a KPI. A tracker has no grain, and a KPI needs a recorded decision that names its target and owner."@en ;
+    con:reliesOn kpi:measureKind, kpi:kpiCandidate ;
+    dcterms:source "competency question 42; EPM-DEC-001-0042"@en .
+rule:no-customer-without-role a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Name the customer without a role"@en ;
+    skos:definition "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."@en ;
+    con:reliesOn kpi:measureKind ;
+    dcterms:source "competency questions 25, 26 and 42; EPM-DEC-001-0004"@en .
+rule:no-context-as-ownership a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Present context as ownership"@en ;
+    skos:definition "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."@en ;
+    con:reliesOn plc:placementKind ;
+    dcterms:source "competency question 38; EPM-DEC-001-0058"@en .

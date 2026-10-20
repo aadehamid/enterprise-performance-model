@@ -1,0 +1,8 @@
+# Q35 How does a catalog row point at a Named KPI, and what must exist first? (the binding property, from a defined data product to a defined measure)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dp: <https://w3id.org/lsc/ontology/modules/data-product/>
+PREFIX kpi: <https://w3id.org/lsc/ontology/modules/kpi/>
+SELECT ?binding ?mustExistFirst WHERE {
+  ?binding rdfs:domain dp:DataProduct ; rdfs:range kpi:MeasureDefinition .
+  VALUES ?mustExistFirst { dp:DataProduct kpi:MeasureDefinition }
+}

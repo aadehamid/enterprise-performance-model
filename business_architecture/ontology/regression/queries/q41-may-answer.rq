@@ -1,0 +1,6 @@
+# Q41 What may a graph or meaning agent answer without reading a table or inventing a formula?
+PREFIX con: <https://w3id.org/lsc/ontology/modules/consumer/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?rule ?name ?reliesOn WHERE {
+  ?rule con:ruleKind <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/may-answer> ; skos:prefLabel ?name ; con:reliesOn ?reliesOn .
+}
