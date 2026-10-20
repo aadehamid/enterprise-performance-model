@@ -13,7 +13,7 @@ question,status,queries,waits_for
 12,answerable,q12-apqc-divergence.rq,
 13,answerable,q13a-measure-vs-report.rq;q13b-only-measures-have-kinds.rq,
 14,answerable,q14a-may-become-a-number.rq;q14b-processes-are-not-measures.rq,
-15,waits:step-7,,"same word, same meaning test (Step 7 bindings)"
+15,answerable,q15a-same-word.rq;q15b-same-word-linked.rq,
 16,answerable,q16-names.rq,
 17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, the decision owner's answer 7 a)"
 18,answerable,q18-identity-version.rq,
