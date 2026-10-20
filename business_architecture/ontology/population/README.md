@@ -7,6 +7,6 @@ What each measure includes and excludes, in business words, where its public sou
 | `population.csv` | Eight MPC-defined measures, each with what it includes, what it excludes where MPC says, and the evidence row |
 | `vocabulary.ttl` | `pop:includes`, `pop:excludes` and `pop:populationEvidence` |
 | `build_population.py`, `population.ttl` | The build. `--verify` fails unless `population.ttl` equals a fresh build. `scripts/check.sh` runs it |
-| `test_population.py` | Tests: the build is current, the counts, statements pinned to MPC's wording, and no planner measure carries an invented population |
+| `test_population.py` | Tests: the build is current, the counts, the eight decided measures and every statement pinned to MPC's wording, and no other measure carries a population |
 
-The 33 measures from the planning team's list have no population here: the list does not state one, and none is written in its place.
+The other 33 measures have no population here, because no source states one: 31 from the planning team's list, the R&M Margin Indicator and turnaround lost margin. None is written in its place. Crack spreads is on the planning team's list too, but MPC states what its benchmark series exclude.

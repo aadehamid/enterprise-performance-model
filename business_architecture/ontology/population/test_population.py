@@ -35,8 +35,35 @@ class Population(unittest.TestCase):
         # Regional per-barrel margin "excludes inter-refinery transfer volumes".
         self.assertIn("Inter-refinery transfer volumes", str(DATA.value(bp.MEASURE["rm-margin-per-barrel"], bp.POP.excludes)))
 
-    def test_no_planner_measure_has_an_invented_population(self):
-        self.assertIsNone(DATA.value(bp.MEASURE["unit-utilization"], bp.POP.includes))
+    def test_the_decided_eight_and_no_other(self):
+        # EPM-DEC-001-0062, item 2: these eight measures, each from the MPC evidence row named here.
+        decided = {
+            "rm-margin-per-barrel": "row 7 and finding 5", "margin-capture": "row 8",
+            "refining-opex-per-barrel": "row 14", "distribution-cost-per-barrel": "row 15",
+            "turnaround-cost-per-barrel": "row 16", "crack-spreads": "row 10",
+            "relative-refining-margin-by-region": "row 19", "relative-adjusted-ebitda-per-barrel": "row 20"}
+        rows, _ = bp.load()
+        self.assertEqual({r["measure_id"]: r["evidence"].split(", ", 1)[1] for r in rows}, decided)
+        populated = {str(s)[len(str(bp.MEASURE)):] for s in DATA.subjects(bp.POP.includes, None)}
+        self.assertEqual(populated, set(decided))
+
+    def test_every_statement_starts_as_decided(self):
+        # The opening words of each statement, copied by hand from population.csv as reviewed.
+        starts = {
+            "rm-margin-per-barrel": ("Sales revenue less the cost of refinery inputs", "Inter-refinery transfer volumes"),
+            "margin-capture": ("The company's reported R&M margin", "Regional capture"),
+            "refining-opex-per-barrel": ("Refining operating costs, driven mainly", "Planned turnaround costs"),
+            "distribution-cost-per-barrel": ("Distribution costs, mainly the long-term agreements", "Depreciation and amortization."),
+            "turnaround-cost-per-barrel": ("Planned turnaround and other major maintenance costs", None),
+            "crack-spreads": ("The crude and product benchmarks", "The market cost of RINs"),
+            "relative-refining-margin-by-region": ("Refining EBITDA per barrel of total throughput", None),
+            "relative-adjusted-ebitda-per-barrel": ("ACB Adjusted EBITDA per barrel", None)}
+        for m, (inc, exc) in starts.items():
+            self.assertTrue(str(DATA.value(bp.MEASURE[m], bp.POP.includes)).startswith(inc), m)
+            got = DATA.value(bp.MEASURE[m], bp.POP.excludes)
+            self.assertEqual(got is None, exc is None, m)
+            if exc:
+                self.assertTrue(str(got).startswith(exc), m)
 
 
 if __name__ == "__main__":

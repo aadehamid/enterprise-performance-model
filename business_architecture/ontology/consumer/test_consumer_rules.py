@@ -35,9 +35,9 @@ def conforms(extra=None):
 
 class Rules(unittest.TestCase):
     def test_counts(self):
-        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse.
+        # EPM-DEC-001-0061: six things an agent may answer, five it must refuse; EPM-DEC-001-0062 adds a seventh.
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
-        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 6)
+        self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 7)
         self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["must-refuse"]) in VOCAB]), 5)
 
     def test_each_rule_relies_on_its_decided_terms(self):
