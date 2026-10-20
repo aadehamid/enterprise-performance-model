@@ -9,7 +9,7 @@
 
 ## Context
 
-The release and the modules cite 60 sources through `dcterms:source`. 528 concepts cite more than one. `AGENTS.md` sets the evidence order: the process authority in `business_architecture/` takes precedence; then MPC's filings and public materials; then U.S. refining peers' SEC filings; then downstream-specific industry sources; generic frameworks are support only. The ontology's README says APQC is "a consistency reference". The decision owner's instruction of 2026-10-19 repeats the MPC-first order.
+The release and the modules cite 61 sources through `dcterms:source`. 528 concepts cite more than one. `AGENTS.md` sets the evidence order: the process authority in `business_architecture/` takes precedence; then MPC's filings and public materials; then U.S. refining peers' SEC filings; then downstream-specific industry sources; generic frameworks are support only. The ontology's README says APQC is "a consistency reference". The decision owner's instruction of 2026-10-19 repeats the MPC-first order.
 
 ## Decision
 

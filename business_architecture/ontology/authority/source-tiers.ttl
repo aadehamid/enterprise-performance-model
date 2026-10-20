@@ -3,6 +3,8 @@
 @prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
 @prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
 
+<https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14> auth:evidenceTier tier:industry .
+
 <https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> auth:evidenceTier tier:industry .
 
 <https://w3id.org/lsc/ontology/source/data-product-portfolio> auth:evidenceTier tier:process-authority .
