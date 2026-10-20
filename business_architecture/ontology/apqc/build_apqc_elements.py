@@ -27,11 +27,24 @@ CORE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "apqc-elements.ttl")
 SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 PCF = SRC["apqc-pcf-7.2.2"]
+# The notice and attribution the APQC/IBM licence requires on every copy (reference/README.md).
+ATTRIBUTION = ("This work is based in part on an Industry Process Classification Framework (\"PCF\"), an open "
+               "standard developed by APQC and IBM to promote benchmarking and best practices worldwide. The PCF "
+               "is intended to facilitate organizational improvement through process management and benchmarking, "
+               "regardless of industry, size, or geography. To download the full PCF or other industry-specific "
+               "versions of the PCF, as well as associated measures and benchmarking, please visit www.apqc.org/pcf. "
+               "©2025 APQC and IBM. The PCF is licensed perpetually, worldwide, royalty-free for use, copying, "
+               "publication, modification, and derivative works, provided this notice and the attribution above "
+               "travel with all copies.")
+VERSION = "7.2.2"
 ELEMENT = "https://w3id.org/lsc/ontology/source/apqc-pcf-7.2.2/element/"
 
 
 def elements():
     wb = openpyxl.load_workbook(WORKBOOK, read_only=True)
+    intro = " ".join(str(c) for r in wb["Introduction"].iter_rows(values_only=True) for c in r if c)
+    if f"VERSION NUMBER {VERSION}" not in intro.upper().replace("  ", " "):
+        sys.exit(f"the workbook does not say it is version {VERSION}")
     rows = list(wb["Combined"].iter_rows(values_only=True))
     header = rows[0]
     assert header[:3] == ("PCF ID", "Hierarchy ID", "Name"), header
@@ -70,8 +83,9 @@ def main():
     ap.add_argument("--verify", action="store_true")
     args = ap.parse_args()
     rows, referenced = load()
-    text = ("# APQC Downstream Petroleum PCF v7.2.2 elements (Step 7; EPM-DEC-001-0060). Used with attribution\n"
-            "# per the APQC/IBM licence. Built by build_apqc_elements.py from the vendored workbook. Do not edit by hand.\n"
+    text = ("# APQC Downstream Petroleum PCF v7.2.2 elements (Step 7; EPM-DEC-001-0060). Built by build_apqc_elements.py\n"
+            "# from the vendored workbook. Do not edit by hand.\n#\n"
+            + "".join(f"# {line}\n" for line in ATTRIBUTION.replace(". ", ".\n").split("\n")) + "#\n"
             + build(rows).serialize(format="turtle"))
     print(f"elements {len(rows)}; referenced by core 2.1.0 {len(referenced)}; not referenced {len(rows) - len(referenced)}")
     if args.verify:

@@ -1,6 +1,6 @@
 # apqc: the APQC element list
 
-The full element list of APQC's Process Classification Framework for Downstream Petroleum, version 7.2.2, read from the vendored workbook (`../../reference/APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx`, sheet "Combined"). `core` carries only the 251 elements its processes reference; with all 2,012, competency question 11 can list the elements with no local counterpart. Each element is described as `core` describes the ones it references, plus its name and hierarchy ID. APQC material is used with attribution per the APQC/IBM licence (`../../reference/README.md`). EPM-DEC-001-0060 records the choice.
+The full element list of APQC's Process Classification Framework for Downstream Petroleum, version 7.2.2, read from the vendored workbook (`../../reference/APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx`, sheet "Combined"). `core` carries only the 251 elements its processes reference; with all 2,012, competency question 11 can list the elements with no local counterpart. Each element is described as `core` describes the ones it references, plus its name and hierarchy ID. APQC material is used under the APQC/IBM licence: `apqc-elements.ttl` carries the licence's notice and attribution in its header, as the licence requires of every copy; `core` states the PCF node's rights (`../../reference/README.md`). EPM-DEC-001-0060 records the choice.
 
 | File | What |
 |---|---|
