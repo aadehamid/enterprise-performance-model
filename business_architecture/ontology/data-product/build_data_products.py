@@ -87,13 +87,15 @@ def load():
     ids = Counter()
     for seg in portfolio["segments"]:
         ids[seg["id"]] += 1
+        if not seg.get("description"):
+            problems.append(f"{seg['id']}: a segment has no status, so it needs a description")
         if resolve_domain(seg.get("processDomainRef") or "", by_key, by_label) is None:
             problems.append(f"{seg['id']}: processDomainRef {seg.get('processDomainRef')!r} names no single core concept")
         for line in seg["productLines"]:
             items = [line] + line.get("portfolios", [])
             for item in items:
                 ids[item["id"]] += 1
-                if item.get("status", "active") not in STATUSES:
+                if item.get("status") not in STATUSES:
                     problems.append(f"{item['id']}: status {item.get('status')!r} is not on the code list")
     problems += [f"id {i!r} appears {n} times" for i, n in ids.items() if n > 1]
     products = {p["id"] for s in portfolio["segments"] for l in s["productLines"] for p in l.get("portfolios", [])}
@@ -106,6 +108,8 @@ def load():
             problems.append(f"links.csv: {row['data_product']} -> {row['process']} cites no source")
         if not row["waits_for"] and len(by_key.get(row["process"], set())) != 1:
             problems.append(f"links.csv: process {row['process']!r} is not in core 2.1.0, and the row names no release it waits for")
+        if row["waits_for"] and row["process"] in by_key:
+            problems.append(f"links.csv: process {row['process']!r} is in core now; clear its waits_for so the link is emitted")
     for alias, target in portfolio.get("aliases", {}).items():
         if "," not in target and target not in ids:
             problems.append(f"alias {alias!r} names {target!r}, which is not in the portfolio")
@@ -140,7 +144,7 @@ def build(portfolio, links, by_key, by_label):
         if broader is not None:
             g.add((iri, SKOS.broader, broader))
         if cls != DP.PortfolioSegment:
-            g.add((iri, DP.portfolioStatus, STATUS[STATUSES[item.get("status", "active")]]))
+            g.add((iri, DP.portfolioStatus, STATUS[STATUSES[item["status"]]]))
         if item.get("description"):
             g.add((iri, SKOS.definition, Literal(item["description"], lang="en")))
         else:
@@ -171,7 +175,7 @@ def build(portfolio, links, by_key, by_label):
 def figures(portfolio, links):
     lines = [l for s in portfolio["segments"] for l in s["productLines"]]
     products = [p for l in lines for p in l.get("portfolios", [])]
-    status = Counter(p.get("status", "active") for p in products)
+    status = Counter(p["status"] for p in products)
     return {
         "segments": len(portfolio["segments"]),
         "lines": len(lines),
