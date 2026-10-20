@@ -32,7 +32,7 @@ vs:Capability a owl:Class ;
 
 vs:ValueStreamProcess a owl:Class ;
     rdfs:label "value-stream process"@en ;
-    skos:definition "A unit of work in a value-stream stage, as the value stream's source names it. It uses one capability and realizes one or more process-map processes, which it references by IRI."@en ;
+    skos:definition "A unit of work in a value-stream stage, as the value stream's source names it. It uses one capability and realizes the process-map processes its source names, which it references by IRI; the source may name none."@en ;
     dcterms:bibliographicCitation "business_architecture/schema/value_stream.schema.json, $defs.process"@en .
 
 vs:MeasureLink a owl:Class ;

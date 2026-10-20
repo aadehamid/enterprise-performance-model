@@ -965,9 +965,8 @@ without a dated amendment and the decision owner's explicit agreement.
 ### Value-stream module (2026-10-19)
 - Under the delegation (EPM-DEC-001-0054): a new `value-stream` module
   holds the two value streams, 12 stages, 21 capabilities and 58
-  value-stream processes. Each value-stream process but one realizes
-  process-map processes by IRI, without duplicating them, and carries the data
-  products it produces and consumes. The seven MPC-P09 measure links are
+  value-stream processes. 57 of the 58 realize process-map processes by
+  IRI, without duplicating them; 20 produce or consume data products. The seven MPC-P09 measure links are
   qualified links with their basis, context only. The files' domain
   "Commercial" stays as written, because `core`'s Commercial code does
   not cover Order to Cash. Q10 is answerable; Q7 stays partial until `core` 2.2.0 holds Loss Control's producer.
