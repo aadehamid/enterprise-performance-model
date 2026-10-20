@@ -12,6 +12,7 @@
 @prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
 @prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
 @prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -91,7 +92,8 @@ rule:no-report-as-kpi a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel 
     dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0042"@en .
 rule:no-customer-without-role a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Name the customer without a role"@en ;
     skos:definition "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."@en ;
-    con:reliesOn kpi:measureKind ;
+    skos:scopeNote "The roles themselves come with the Customer module (EPM-DEC-001-0004). Until then the rule rests on the core concept whose definition keeps them apart: a customer record must not collapse Sold-To, Bill-To, Payer, Ship-To and the other roles."@en ;
+    con:reliesOn proc:CM-1-3-7-1-1 ;
     dcterms:bibliographicCitation "competency questions 25, 26 and 42; EPM-DEC-001-0004"@en .
 rule:no-context-as-ownership a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Present context as ownership"@en ;
     skos:definition "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."@en ;

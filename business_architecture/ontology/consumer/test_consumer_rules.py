@@ -1,5 +1,5 @@
 """Tests for the consumer rules (Step 7; EPM-DEC-001-0061): the rules conform, each relies on
-terms the graph defines, the rule counts are the decided ones, and the catalog binding accepts
+its decided terms (pinned by hand) and on terms the graph defines, the rule counts are the decided ones, and the catalog binding accepts
 a defined data product and measure and rejects an undefined end.
 
 Run: python3 -m pytest test_consumer_rules.py (needs rdflib, pyshacl).
@@ -39,6 +39,35 @@ class Rules(unittest.TestCase):
         rules = set(VOCAB.subjects(RDF.type, CON.Rule))
         self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["may-answer"]) in VOCAB]), 6)
         self.assertEqual(len([r for r in rules if (r, CON.ruleKind, RK["must-refuse"]) in VOCAB]), 5)
+
+    def test_each_rule_relies_on_its_decided_terms(self):
+        # Pinned by hand from EPM-DEC-001-0061: a term that exists but means something else fails.
+        R = Namespace("https://w3id.org/lsc/ontology/modules/consumer/rule/")
+        KPI = Namespace("https://w3id.org/lsc/ontology/modules/kpi/")
+        MKT = Namespace("https://w3id.org/lsc/ontology/modules/market-data/")
+        VS = Namespace("https://w3id.org/lsc/ontology/modules/value-stream/")
+        PLC = Namespace("https://w3id.org/lsc/ontology/modules/placement/")
+        AUTH = Namespace("https://w3id.org/lsc/ontology/modules/authority/")
+        ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
+        SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
+        DCT = Namespace("http://purl.org/dc/terms/")
+        expected = {
+            "definitions": {SKOS.definition, SKOS.prefLabel, SKOS.altLabel, KPI.measureKind},
+            "not-to-be-confused-with": {KPI.notToBeConfusedWith, MKT.seriesOf},
+            "placement": {KPI.informsProcess, VS.measureLink, VS.produces, VS.consumes, PLC.placementKind},
+            "recipe": {MKT.leg, MKT.barrels, MKT.region, MKT.excludesRINCost},
+            "who-does-it": {ORGM.forProcess},
+            "which-source": {DCT.source, AUTH.evidenceTier},
+            "no-values": {KPI.basis},
+            "no-crack-from-legs": {MKT.leg, MKT.seriesOf},
+            "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
+            "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1")},
+            "no-context-as-ownership": {PLC.placementKind},
+        }
+        rules = set(VOCAB.subjects(RDF.type, CON.Rule))
+        self.assertEqual(rules, {R[k] for k in expected})
+        for key, terms in expected.items():
+            self.assertEqual(set(VOCAB.objects(R[key], CON.reliesOn)), terms, key)
 
     def test_rules_rely_on_defined_terms(self):
         for term in set(VOCAB.objects(None, CON.reliesOn)):
