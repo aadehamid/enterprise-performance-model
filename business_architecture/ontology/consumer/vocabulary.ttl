@@ -81,7 +81,7 @@ rule:which-source a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "Whic
 
 rule:what-a-measure-counts a con:Rule ; con:ruleKind rk:may-answer ; skos:prefLabel "What a measure counts"@en ;
     skos:definition "What a measure includes and excludes, where its source says so, and where that statement comes from."@en ;
-    con:reliesOn pop:includes, pop:excludes ;
+    con:reliesOn pop:includes, pop:excludes, pop:populationEvidence ;
     dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en .
 
 rule:no-values a con:Rule ; con:ruleKind rk:must-refuse ; skos:prefLabel "Compute or quote a value"@en ;

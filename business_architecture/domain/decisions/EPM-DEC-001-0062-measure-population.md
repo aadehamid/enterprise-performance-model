@@ -17,7 +17,7 @@ The kpi module holds each measure's definition, grain and basis, but no statemen
 1. **A small `population` module** states `pop:includes` and `pop:excludes` on the kpi module's measure IRIs, with the evidence row, without touching the released kpi tables.
 2. **Eight measures, from MPC's wording:** R&M margin per barrel, margin capture, refining operating cost per barrel, distribution cost per barrel, turnaround cost per barrel, crack spreads, relative refining margin by region, and relative adjusted EBITDA per barrel.
 3. **The other 33 measures' populations are parked.** No source states them, and a population written from the definition would be a guess. Each can be added when its owner states it.
-4. **A seventh may-answer rule** joins the consumer rules (EPM-DEC-001-0061): what a measure includes and excludes, where its source says so, relying on `pop:includes` and `pop:excludes`.
+4. **A seventh may-answer rule** joins the consumer rules (EPM-DEC-001-0061): what a measure includes and excludes, where its source says so, relying on `pop:includes`, `pop:excludes` and `pop:populationEvidence`.
 5. **Question 28 is answerable** for the measures whose source states a population, with the rest parked by this record. The next kpi release can take the statements into the kpi module.
 
 ## Alternatives considered

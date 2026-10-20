@@ -966,7 +966,8 @@ without a dated amendment and the decision owner's explicit agreement.
 - Under the delegation (EPM-DEC-001-0062): what eight MPC-defined
   measures include and exclude, from MPC's own wording, on the kpi
   module's measure IRIs. The other 33 measures' populations are parked:
-  no source states them. Q28 is answerable. Every question still
+  no source states them. A seventh may-answer rule joins the consumer
+  rules: what a measure includes and excludes. Q28 is answerable. Every question still
   waiting now waits on the decision owner (Q17, Q19 to Q26).
 
 ### Consumer rules (2026-10-19)
