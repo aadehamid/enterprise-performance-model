@@ -974,6 +974,16 @@ without a dated amendment and the decision owner's explicit agreement.
   EPM-DEC-001-0049, with their words in
   `review-evidence/decision-owner-answers/answers-2026-10-19-after-run.md`.
 
+### Process-authority integrity checks (2026-10-20)
+- `business_process/test_business_process.py`, run by `check.sh`, now checks
+  the process authority: the data product portfolio and both value streams
+  validate against their schemas, process-map node ids (696) and data
+  product ids (67) are unique, and every value-stream reference resolves to
+  a process-map node, a data product or line, or a capability in the same
+  file. Every reference resolved when the test was added. The value-stream
+  schema test moved here from `kpi/test_measures.py`. The process map has no
+  schema file, so its check is parse and id uniqueness.
+
 ### MPC-P03 coverage check closed (2026-10-19)
 - The decision owner chose to widen CM 1.2.5.1 for the quality of
   transferred intermediates (EPM-DEC-001-0051). CM 1.2.5.1 gets its first
