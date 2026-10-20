@@ -1279,7 +1279,7 @@ a piece of the scope, and each is mapped, not imported (EPM-DEC-001-0023):
 | GLEIF Level 2 ontology | Accounting consolidation between legal entities | Step 5 |
 | PIDX standards | Downstream product and terminal codes | Step 7, Customer product line |
 | Open Energy Ontology | Energy carriers and fuels | Step 7 |
-| IOF Supply Chain ontology | Supply chain and logistics | Step 7, if logistics is in scope |
+| IOF Supply Chain ontology | Supply chain and logistics | Step 7, if logistics is in scope (in EPM, parked until a logistics concept layer exists, EPM-DEC-001-0064) |
 | FIBO | Ownership and control | Only if GLEIF is not enough |
 
 **Step 8 (done early).** Seven APQC gap candidates were reviewed one at a
