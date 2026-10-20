@@ -1,0 +1,42 @@
+# The system module's vocabulary (Step 7; EPM-DEC-001-0055): the systems, tools and documents
+# the process map names, their kind, and the processes they support. Processes are concepts of
+# the core process scheme, by IRI. A system here is a name and a kind; what it does is not
+# defined, because no source in the repository defines it.
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+sys:System a owl:Class ;
+    rdfs:label "system"@en ;
+    skos:definition "An application, office tool or working document that the process map names as used by a process."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6; EPM-DEC-001-0055"@en .
+
+sys:Systems a skos:ConceptScheme ;
+    rdfs:label "systems"@en ;
+    skos:definition "The systems the process map names, one per distinct name after spelling merges."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en .
+
+sys:systemKind a owl:ObjectProperty ;
+    rdfs:label "system kind"@en ;
+    rdfs:domain sys:System ; rdfs:range skos:Concept ;
+    skos:definition "Whether the system is an application, an office tool or a working document, from the system-kind code list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en .
+
+sys:supports a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    rdfs:domain sys:System ; rdfs:range skos:Concept ;
+    skos:definition "A process the process map says uses the system. Read the other way, the process depends on the system."@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"@en .
+
+sys:SystemKind a skos:ConceptScheme ; rdfs:label "system kind"@en ;
+    skos:definition "The three kinds of thing the process map's systems field names."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en .
+kind:application a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Application"@en ; skos:notation "application" ;
+    skos:definition "A software application, database, dashboard or integration that the business runs."@en .
+kind:office-tool a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Office tool"@en ; skos:notation "office-tool" ;
+    skos:definition "General office software, such as e-mail, chat, slides or spreadsheets."@en .
+kind:document a skos:Concept ; skos:inScheme sys:SystemKind ; skos:prefLabel "Working document"@en ; skos:notation "document" ;
+    skos:definition "A named document or file that the process works from, not an application."@en .

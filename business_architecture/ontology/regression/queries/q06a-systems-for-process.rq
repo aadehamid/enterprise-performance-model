@@ -1,0 +1,6 @@
+# Q6 Which systems support process P?
+PREFIX sys: <https://w3id.org/lsc/ontology/modules/system/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?process ?system ?name WHERE {
+  ?system sys:supports ?process ; skos:prefLabel ?name .
+}

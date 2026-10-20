@@ -1,0 +1,33 @@
+slug,label,kind
+xpims,XPIMS,application
+dpo,DPO,application
+ppims,PPIMS,application
+planning-db,Planning DB,application
+aps,APS,application
+aps-planning-db,APS Planning DB,application
+planning-and-scheduling-ui,Planning and Scheduling UI,application
+backcasting-dashboard,Backcasting Dashboard,application
+market-outlook-and-avails-dashboard,Market Outlook and Avails Dashboard,application
+kittyhawk,KittyHawk,application
+mpr,MPR,application
+rightangle,RightAngle,application
+psr,PSR,application
+xpims-dpo-integration-macro,XPIMS <> DPO Integration Macro,application
+profisee,Profisee,application
+valt,VALT,application
+sap,SAP,application
+hyperion,Hyperion,application
+topday,TopDay,application
+cargotracker,CargoTracker,application
+tmr,TMR,application
+pi,PI,application
+trr,TRR,application
+ms-teams,MS Teams,office-tool
+ms-outlook,MS Outlook,office-tool
+ms-powerpoint,MS PowerPoint,office-tool
+ms-excel,MS Excel,office-tool
+network-premise-document,Network Premise Document,document
+refinery-premise-document,Refinery Premise Document,document
+premise-document,Premise Document,document
+rfc-hindsight-analysis-excel,RFC Hindsight Analysis Excel,document
+actuals-case-prep-file,Actuals Case Prep File,document

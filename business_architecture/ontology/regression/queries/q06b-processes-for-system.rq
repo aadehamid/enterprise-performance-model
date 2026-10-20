@@ -1,0 +1,6 @@
+# Q6 Which processes depend on system S? (here, RightAngle, whatever spelling the map used)
+PREFIX sys: <https://w3id.org/lsc/ontology/modules/system/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?process WHERE {
+  ?system skos:altLabel|skos:prefLabel "Right Angle"@en ; sys:supports ?process .
+}
