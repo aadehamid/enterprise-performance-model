@@ -1,0 +1,36 @@
+# Source authority (Step 9; EPM-DEC-001-0059): the evidence tier of each source the modules
+# cite, from the evidence order in AGENTS.md. When two sources of one concept disagree, the
+# source in the lower tier is authoritative (competency question 44).
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+auth:evidenceTier a owl:ObjectProperty ;
+    rdfs:label "evidence tier"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "The tier of the evidence order a source belongs to. Where two sources of one concept disagree, the source with the lower rank wins."@en ;
+    dcterms:bibliographicCitation "AGENTS.md, Working rules (evidence order); competency question 44; EPM-DEC-001-0059"@en .
+
+auth:rank a owl:DatatypeProperty ;
+    rdfs:label "rank"@en ;
+    rdfs:range xsd:integer ;
+    skos:definition "The tier's place in the evidence order, from 1 (most authoritative)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0059"@en .
+
+auth:EvidenceTier a skos:ConceptScheme ; rdfs:label "evidence tier"@en ;
+    skos:definition "The evidence order the repository applies: the process authority and the decision owner's own material, then Marathon Petroleum, then U.S. refining peers, then downstream industry and regulatory sources, then generic frameworks as support only."@en ;
+    dcterms:bibliographicCitation "AGENTS.md, Working rules; the decision owner's instruction in answers-2026-10-19-completion-search.md; EPM-DEC-001-0059"@en .
+tier:process-authority a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Process authority"@en ; skos:notation "1" ; auth:rank 1 ;
+    skos:definition "The process map, value streams, data product portfolio and office lanes in business_architecture/, the decision owner's approved definitions and measure list, and the source author's recorded answers."@en .
+tier:mpc a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Marathon Petroleum"@en ; skos:notation "2" ; auth:rank 2 ;
+    skos:definition "MPC's filings and public materials, as read into business_architecture/reference/mpc/."@en .
+tier:peers a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "U.S. refining peers"@en ; skos:notation "3" ; auth:rank 3 ;
+    skos:definition "U.S. refining peers' SEC filings, as read into business_architecture/reference/downstream-peers/."@en .
+tier:industry a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Downstream industry and regulatory sources"@en ; skos:notation "4" ; auth:rank 4 ;
+    skos:definition "Downstream-specific industry standards, exchanges and regulators, such as API, the Energy Institute, CME Group, CFTC, EIA and EPA."@en .
+tier:framework a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Generic frameworks"@en ; skos:notation "5" ; auth:rank 5 ;
+    skos:definition "Cross-industry frameworks, method standards and academic papers, such as APQC's PCF, ASCM and SKOS. Support only."@en .

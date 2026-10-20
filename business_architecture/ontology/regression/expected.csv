@@ -42,4 +42,4 @@ question,status,queries,waits_for
 41,waits:step-7,,what an agent may answer needs answer rules over the kpi module; graph part only
 42,waits:step-7,,what an agent must refuse needs refusal rules over the kpi module; graph part only
 43,partial,q43-one-definition.rq,"the Genie binding itself, outside the graph (EPM-DEC-001-0019)"
-44,partial,q44-sources.rq,marking which source is authoritative (Step 7 or 9)
+44,answerable,q44-sources.rq;q44b-authoritative-source.rq,
