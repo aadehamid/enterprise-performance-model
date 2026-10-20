@@ -9,16 +9,16 @@
 
 ## Context
 
-The release and the modules cite 61 sources through `dcterms:source`. 528 concepts cite more than one. `AGENTS.md` sets the evidence order: the process authority in `business_architecture/` takes precedence; then MPC's filings and public materials; then U.S. refining peers' SEC filings; then downstream-specific industry sources; generic frameworks are support only. The ontology's README says APQC is "a consistency reference". The decision owner's instruction of 2026-10-19 repeats the MPC-first order.
+The release and the modules, ref-mpc included, cite 63 sources through `dcterms:source`. In the graph the regression loads, 528 concepts cite more than one. `AGENTS.md` sets the evidence order: the process authority in `business_architecture/` takes precedence; then MPC's filings and public materials; then U.S. refining peers' SEC filings; then downstream-specific industry sources; generic frameworks are support only. The ontology's README says APQC is "a consistency reference". The decision owner's instruction of 2026-10-19 repeats the MPC-first order.
 
 ## Decision
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 1. **An `authority` module** gives each cited source an `auth:evidenceTier` from a five-tier code list, each tier with a rank.
 2. **Tier 1, the process authority:** the process map, the value streams, the data product portfolio, the office lanes, the Step 3c definition workbook's approved rows, the decision owner's measure list, and the source author's recorded answers on GitHub.
-3. **Tier 2, Marathon Petroleum:** the MPC evidence files in `reference/mpc/`.
+3. **Tier 2, Marathon Petroleum:** MPC's FY2025 Form 10-K as ref-mpc cites it, and the MPC evidence files in `reference/mpc/`.
 4. **Tier 3, peers:** the evidence files in `reference/downstream-peers/` that rest on peers' 10-Ks.
-5. **Tier 4, downstream industry and regulatory sources:** standards bodies, exchanges, regulators and agencies (API, the Energy Institute, CCRO, CME Group, CFTC, EIA, EPA, FASB, FERC, FTC, IRS, ISDA, NAESB, OFAC, OSHA and the others in `source-tiers.csv`).
+5. **Tier 4, industry and regulatory sources:** standards bodies, exchanges, registries, regulators and agencies (API, the Energy Institute, CCRO, CME Group, GLEIF, CFTC, EIA, EPA, FASB, FERC, FTC, IRS, ISDA, NAESB, OFAC, OSHA and the others in `source-tiers.csv`).
 6. **Tier 5, generic frameworks:** APQC's PCF, ASCM's CSCP manual, academic papers and the SKOS reference.
 7. **The best tier wins.** Where two sources of one concept disagree, a source in the lower-ranked tier is authoritative. Question 44 is answerable: 520 of the 528 multi-source concepts rest on the process authority and 8 on MPC.
 

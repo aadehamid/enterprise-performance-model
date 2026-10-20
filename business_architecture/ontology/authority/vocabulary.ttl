@@ -31,6 +31,6 @@ tier:mpc a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Mara
 tier:peers a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "U.S. refining peers"@en ; skos:notation "3" ; auth:rank 3 ;
     skos:definition "U.S. refining peers' SEC filings, as read into business_architecture/reference/downstream-peers/."@en .
 tier:industry a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Downstream industry and regulatory sources"@en ; skos:notation "4" ; auth:rank 4 ;
-    skos:definition "Downstream-specific industry standards, exchanges and regulators, such as API, the Energy Institute, CME Group, CFTC, EIA and EPA."@en .
+    skos:definition "Standards bodies, exchanges, registries, regulators and agencies, such as API, the Energy Institute, CME Group, GLEIF, CFTC, EIA, EPA and FASB."@en .
 tier:framework a skos:Concept ; skos:inScheme auth:EvidenceTier ; skos:prefLabel "Generic frameworks"@en ; skos:notation "5" ; auth:rank 5 ;
     skos:definition "Cross-industry frameworks, method standards and academic papers, such as APQC's PCF, ASCM and SKOS. Support only."@en .

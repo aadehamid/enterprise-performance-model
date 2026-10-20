@@ -11,9 +11,13 @@
 
 <https://w3id.org/lsc/ontology/source/downstream-process-map> auth:evidenceTier tier:process-authority .
 
+<https://w3id.org/lsc/ontology/source/gleif-lei> auth:evidenceTier tier:industry .
+
 <https://w3id.org/lsc/ontology/source/kpi-classification-evidence> auth:evidenceTier tier:peers .
 
 <https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/mpc-s01> auth:evidenceTier tier:mpc .
 
 <https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
 

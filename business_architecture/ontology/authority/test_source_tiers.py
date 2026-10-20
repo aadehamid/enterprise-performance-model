@@ -20,6 +20,7 @@ import run  # noqa: E402
 
 TIERS = Graph().parse(os.path.join(HERE, "source-tiers.ttl"))
 GRAPH = run.load(run.RELEASE)
+GRAPH.parse(os.path.join(HERE, "..", "ref-mpc", "ref-mpc.ttl"))  # ref-mpc cites MPC's 10-K and GLEIF (Pi round 1)
 SRC = "https://w3id.org/lsc/ontology/source/"
 
 
@@ -49,6 +50,8 @@ class Tiers(unittest.TestCase):
         self.assertEqual(tier("cme-trading-crack-spreads-2024"), "industry")
         self.assertEqual(tier("src-apqc-pcf-001"), "framework")
         self.assertEqual(tier("src-ascm-cscp-001"), "framework")
+        self.assertEqual(tier("mpc-s01"), "mpc")
+        self.assertEqual(tier("gleif-lei"), "industry")
 
 
 if __name__ == "__main__":

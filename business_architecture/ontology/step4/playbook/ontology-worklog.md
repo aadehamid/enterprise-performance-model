@@ -963,7 +963,7 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
 ### Source authority (2026-10-19)
-- Under the delegation (EPM-DEC-001-0059): every one of the 61 cited
+- Under the delegation (EPM-DEC-001-0059): every one of the 63 cited
   sources has an evidence tier, from the order in AGENTS.md (process
   authority, MPC, peers, industry and regulators, generic frameworks).
   Where two sources of a concept disagree, the best tier wins. Q44 is
