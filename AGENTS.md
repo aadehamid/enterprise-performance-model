@@ -60,7 +60,8 @@ Run these before you open a pull request, and again before you push a review fix
      the PR verdict. When the bot is not available, the Cursor agent CLI on Grok 4.6
      gives the independent review (`herdr-review.sh --kind cursor`) and Pi gives the
      PR verdict (`pi-review.sh --role pr`). The merged commit's two reviews come from
-     different tools.
+     different tools. While Cursor is out of usage, the Cursor agent CLI on Auto gives
+     the PR verdict instead (EPM-DEC-001-0028, later amendment of 2026-10-20).
    - **Rounds:** at most two per PR (EPM-DEC-001-0028). Round 1 reviews the whole
      branch. Round 2 runs only if round 1 found something, and reviews the fix
      commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
