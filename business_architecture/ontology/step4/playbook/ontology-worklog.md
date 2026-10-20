@@ -80,7 +80,7 @@ ontology; everything else points at it.
 | 3d-a | Naming Pass Closure Log — 92/92 queued renames executed across 7 batches (PR #84, #85, #89, #91, #92, #94, #96, #98, #100, #103): critical collisions, authority-risk, scope-ambiguity, directionality-missing, generic-operational, normalization-only (mechanical then judgment). Final naming state 682 concepts, 14,481 triples, 317 altLabels. | ✅ Closed 2026-09-22 |
 | 3d-b | PTC-001 Tree Remediation Log — PR #86 (Commercial Development tombstone + 2 reparented L3s + 2 Candidate L2s); PR #87 definition mini-batch; PTC-001-B confirmed as intentional strategy-ownership hold (the decision owner, 2026-09-22). PTC-001 stays open until PTC-001-B closes. | ✅ Partially resolved; hold by design |
 | 3d-c | R1 Refining Structural Reclassification — decision package approved as Candidate 2026-09-22 (tombstone re-anchor confirmed); implementation PR #108 merged 2026-09-22 (merge b75fd991). 42 concepts reparented with stable slugs/IRIs/notations; two promoted L2s (Refinery Planning and Optimization; Refinery Production Planning and Scheduling); new Candidate R&T L2; tombstone re-anchored under Planning & Scheduling; reviewed RO→Refining interface relation materialized. 683 concepts, 14,496 triples (+15), 681 broader links. | ✅ Candidate → Implemented 2026-09-22 |
-| 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. | ⏳ Open |
+| 3d-d | R2 backlog (open by design) — operating-execution layer (unit operations, line-ups, blend execution, process control); maintenance/turnaround ownership question; R2 Refinery Vocabulary and Operating-Lifecycle package (turnaround/shutdown/startup/plan/schedule distinctions); Energy & Utility Management temporary-placement review trigger. *2026-10-19:* decided, each item out with its trigger or answered for the map's scope (EPM-DEC-001-0063). | ✅ Decided 2026-10-19 (EPM-DEC-001-0063) |
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by the decision owner |
@@ -961,6 +961,13 @@ properties and retires those predicates.
 
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
+
+### R2 backlog decided (2026-10-19)
+- Under the delegation (EPM-DEC-001-0063): the operating-execution layer
+  and the R2 vocabulary package are out until the map gains an
+  operating-execution L2; turnaround ownership is answered for the map's
+  scope by RF 1.2 (P02b), with maintenance execution outside the map;
+  Energy & Utility Management stays where it is until its trigger occurs.
 
 ### Measure populations (2026-10-19)
 - Under the delegation (EPM-DEC-001-0062): what eight MPC-defined
@@ -2181,7 +2188,9 @@ inspection execution, process-safety policy, work permits, contractor
 management, capital approval, or maintenance/turnaround execution unless
 separately assigned by the enterprise operating model. Status: Candidate;
 review trigger: R2 evidence package / refinery maintenance and turnaround
-operating model.
+operating model. *2026-10-19:* the ownership question is answered for the
+map's scope (EPM-DEC-001-0063); the next `core` release reviews the Candidate
+status.
 **Terminology governance (2026-09-22):** R1 resolves terminology only to the
 minimum required for an accurate hierarchy and non-misleading labels
 (stale parent/label/path references updated mechanically). Unresolved
@@ -2245,7 +2254,7 @@ startup/restart, plan vs schedule vs unit-operation schedule, production vs
 operations management; (4) Energy & Utility Management temporary-placement
 review, triggered by the R2 Refinery Energy, Utilities, and Environmental
 Performance scope decision. PTC-001-B remains open (strategy-ownership hold);
-the R&T L2 remains Candidate until the ownership question is answered.
+the R&T L2 remains Candidate until the ownership question is answered. *2026-10-19:* the backlog is decided (EPM-DEC-001-0063): items 1 and 3 are out until the map gains an operating-execution L2; item 2 is answered for the map's scope by RF 1.2 (P02b), and the next `core` release reviews its Candidate status; item 4 waits for its trigger.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,
