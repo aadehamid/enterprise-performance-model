@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided |
 | Date | 2026-10-12 |
-| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, and 2026-10-20 on merging past the approval agent |
+| Questions | One instruction, 2026-10-12; amended 2026-10-13 to cover Steps 5 to 12, 2026-10-18 on the reviewers, and 2026-10-20 on merging past the approval agent and on the PR verdict while Cursor is out of usage |
 | Source | Claude Code session, 2026-10-12; recorded on #207 comment 6137222677 |
 
 ## Context
@@ -24,7 +24,17 @@ Unchanged: every change still goes through a pull request, the checks in AGENTS.
 
 Scope and review: the work runs until the ontology is emitted and the ontology playbook is updated, and then, under the 2026-10-13 amendment, through Steps 5 to 12, with a log of what was done. Each PR gets at least one independent review before it opens and at most two: a full review of the branch, then, if it found something, a focused review of the fix. A fix after the second round gets `scripts/check.sh` and CI, and the PR body says it had no third review. After the PR opens, one PR reviewer reviews it the way the Cursor review bot did: one agent, no subagents, one MERGE or HOLD comment, and a new review after each push until merge. The decision owner named the reviewers in the same session: the Cursor agent on Grok 4.6 for the independent review, and Pi on `glm-5.3-flash:cloud` for the PR review (Kimi K3 first, until its usage ran out). *2026-10-13:* changed by the decision owner; see the amendment of 2026-10-18 below.
 
-Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`). *2026-10-20, see the amendment below:* the decision owner need not be the one who merges such a pull request once the PR reviewer's MERGE is on its head and `checks` passed; Step 3c definition batches still wait for them.
+Merging: The decision owner asked "how do i remove the merge bock. I am going to bed and wont be around to merge". Claude answered with the steps to add the Claude Code permission rule `Bash(gh pr merge:*)`; the session then shows that rule added, and the decision owner replied "done". Claude merges a PR with a merge commit only when all of these hold for its current head: `scripts/check.sh` passes, every independent-review finding is fixed or answered, CI is green, and the PR reviewer's latest comment is MERGE. Claude records the merge on the PR. A PR that changes approval policy or routing, as this one does, still waits for the decision owner (`APPROVAL_POLICY.md`). *2026-10-20, see the amendment below on merging when the approval agent asks for a human:* the decision owner need not be the one who merges such a pull request once the PR reviewer's MERGE is on its head and `checks` passed; Step 3c definition batches still wait for them.
+
+## Amendment, 2026-10-20 (later): the PR verdict while Cursor is out of usage
+
+The decision owner said the Cursor review still matters: "But cursor still ask to merge. correct? that is important that cursor finds no issue". Later that day Cursor's on-demand usage ran out: the review bot, the approval agent and Bugbot failed to start on PR #313's new head, and the Cursor agent CLI on Grok 4.7 refused for the same reason. The decision owner first chose "Use cursor agent cli with GROK 4.7 as the reviwer." and then, when Grok was out too, "Cursor CLI on Auto". Claude Code's safety check refused a merge on a verdict posted from the decision owner's account; they chose "Allow the merge script (Recommended)" and "Allow me to post reviews (Recommended)" and added the permission rules `Bash(~/.claude/skills/way-of-working/scripts/merge-on-verdict.sh:*)` and `Bash(gh pr review:*)`.
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+1. **While the Cursor bot is out of usage, the Cursor agent CLI on Auto gives the PR verdict** (`herdr-review.sh --kind cursor --model auto`). Its report starts with MERGE or HOLD and the commit it reviewed. This replaces Pi as the PR reviewer named by the amendment of 2026-10-18 for as long as the bot is out. Pi gives the independent review, as when the bot runs, so the merged commit's two reviews still come from different tools.
+2. **Claude posts the report on the pull request word for word,** as a review comment with a line naming the reviewer, and merges on its MERGE plus passing `checks` with `merge-on-verdict.sh --bot <the decision owner's account> --admin-if-only-review`. A HOLD is fixed and the new head reviewed again.
+3. **When the bot runs again,** it gives the PR verdict as before.
+
 
 ## Amendment, 2026-10-20: merging when the approval agent asks for a human
 
@@ -39,7 +49,7 @@ PR #308 had the Cursor review bot's MERGE on its head and passing CI, but the Cu
 
 ## Amendment, 2026-10-18: who gives which review
 
-On 2026-10-13, during the Steps 5 to 12 night run, the decision owner changed the reviewers named above: "the night run now default to Cursor bot for PR review and only use PI when cursor is not available." From then on the way-of-working skill's "Who reviews" table applied: while the Cursor bot is available, Pi gives the independent review and the bot gives the PR verdict; when it is not, the Cursor agent CLI gives the independent review and Pi the verdict. This record and AGENTS.md still named the Cursor agent for the independent review, and on 2026-10-18 Claude followed that text. The decision owner asked "why are you using indepdent cursor review. are you not supposed to use PI?". AGENTS.md now points to the table. The decision owner allowed Claude to merge that routing change itself: "Yes, merge it (Recommended)". The review rounds and merge conditions above are unchanged.
+On 2026-10-13, during the Steps 5 to 12 night run, the decision owner changed the reviewers named above: "the night run now default to Cursor bot for PR review and only use PI when cursor is not available." From then on the way-of-working skill's "Who reviews" table applied: while the Cursor bot is available, Pi gives the independent review and the bot gives the PR verdict; when it is not, the Cursor agent CLI gives the independent review and Pi the verdict. *2026-10-20: while Cursor is out of usage, see the later amendment of that date above.* This record and AGENTS.md still named the Cursor agent for the independent review, and on 2026-10-18 Claude followed that text. The decision owner asked "why are you using indepdent cursor review. are you not supposed to use PI?". AGENTS.md now points to the table. The decision owner allowed Claude to merge that routing change itself: "Yes, merge it (Recommended)". The review rounds and merge conditions above are unchanged.
 
 ## Amendment, 2026-10-13: Steps 5 to 12
 
@@ -66,6 +76,8 @@ On scope and review (#207 comment 6137266851, saved in `business_architecture/on
 On the reviewers (#207 comment 6137449831, saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-reviewers.md`): "so let us use kimi k3 for PR review and cursor agent from here with Grok 4.6 for independent reviews. cool?"; "kimi can review the PR until we merge we dont need subagents for this. we should do review like cursor bot was doing it."; "Can you try "ollama launch pi --model glm-5.3-flash:cloud""; "it looks like the two kimi got stuck. I ran out of usgae. So we will need to siwtch those to either cursor agent or pi depending on wether ther pre-PR or PR"
 
 On merging past the approval agent, in the Claude Code session on 2026-10-20 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-20-admin-merge.md`): "You should not be waiting for me to merge. What made you wait for me this time?" and "Yes, admin-merge on MERGE + CI (Recommended)"
+
+On the PR verdict while Cursor is out of usage, in the Claude Code session on 2026-10-20 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-20-reviewer-cursor-out.md`): "But cursor still ask to merge. correct? that is important that cursor finds no issue"; then "Use cursor agent cli with GROK 4.7 as the reviwer."; then "Cursor CLI on Auto"; then "Allow the merge script (Recommended)" and "Allow me to post reviews (Recommended)".
 
 On the extension, in the Claude Code session on 2026-10-13 (saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/delegation-steps-5-12.md`): "yes, extend the delegation to steps 5 to 12."
 
