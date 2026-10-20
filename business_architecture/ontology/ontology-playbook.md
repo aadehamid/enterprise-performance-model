@@ -1464,7 +1464,7 @@ owner made them the source author's backlog.
   crack-spread series of one measure from MPC's 10-K and CME Group, the
   placement kinds, the source tiers, the full APQC element list, the
   consumer rules and the measure populations. Regression went from 17 to
-  35 answerable questions; the nine still waiting all wait on the owner.
+  34 answerable questions; the nine still waiting all wait on the owner.
 - *What the whole-graph gate caught* (EPM-DEC-001-0065). Every module's
   own tests passed, yet running all the shapes together found a lane shape
   that targeted every concept in any scheme and rules that gave
