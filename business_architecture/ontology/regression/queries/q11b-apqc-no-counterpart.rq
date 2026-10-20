@@ -1,0 +1,8 @@
+# Q11 Which APQC elements have no local counterpart? (elements of APQC PCF 7.2.2 that no local concept references)
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX src: <https://w3id.org/lsc/ontology/source/>
+SELECT ?element ?name WHERE {
+  ?element dcterms:isPartOf src:apqc-pcf-7.2.2 ; rdfs:label ?name .
+  FILTER NOT EXISTS { ?c dcterms:references ?element }
+}

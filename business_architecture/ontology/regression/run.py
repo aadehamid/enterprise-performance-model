@@ -27,7 +27,8 @@ MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl
     + [os.path.join(HERE, "..", "lane", n) for n in ("vocabulary.ttl", "lanes.ttl")] \
     + [os.path.join(HERE, "..", "market-data", n) for n in ("vocabulary.ttl", "market-data.ttl")] \
     + [os.path.join(HERE, "..", "placement", "vocabulary.ttl")] \
-    + [os.path.join(HERE, "..", "authority", n) for n in ("vocabulary.ttl", "source-tiers.ttl")]  # Step 7 overlays, placement kinds, source tiers
+    + [os.path.join(HERE, "..", "authority", n) for n in ("vocabulary.ttl", "source-tiers.ttl")] \
+    + [os.path.join(HERE, "..", "apqc", "apqc-elements.ttl")]  # Step 7 overlays, placement kinds, source tiers, APQC elements
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 
