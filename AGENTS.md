@@ -19,7 +19,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   Under EPM-DEC-001-0028 the PR reviewer posts MERGE or HOLD, and Claude merges
   on a MERGE for the current head. If the only unmet requirement is the approving
   review (the approval agent asked for a human), Claude merges with admin
-  privileges once `checks` has passed, and says so on the PR (amendment of 2026-10-20).
+  privileges once `checks` has passed, and says so on the PR (the 2026-10-20 admin-merge amendment).
   Address review feedback on the same branch. Don't start unrelated work while
   a PR is open.
 - **`business_architecture/` takes precedence** over other folders. The process
@@ -61,7 +61,8 @@ Run these before you open a pull request, and again before you push a review fix
      gives the independent review (`herdr-review.sh --kind cursor`) and Pi gives the
      PR verdict (`pi-review.sh --role pr`). The merged commit's two reviews come from
      different tools. While Cursor is out of usage, the Cursor agent CLI on Auto gives
-     the PR verdict instead (EPM-DEC-001-0028, later amendment of 2026-10-20).
+     the PR verdict instead and Pi the independent review (EPM-DEC-001-0028, later
+     amendment of 2026-10-20).
    - **Rounds:** at most two per PR (EPM-DEC-001-0028). Round 1 reviews the whole
      branch. Round 2 runs only if round 1 found something, and reviews the fix
      commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
