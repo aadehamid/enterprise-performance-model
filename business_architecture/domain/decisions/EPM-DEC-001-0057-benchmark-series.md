@@ -32,7 +32,7 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 
 ## Evidence
 
-`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11, and finding 3; `business_architecture/reference/downstream-peers/benchmark-series-evidence.md` (CME Group, "Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14); EPM-DEC-001-0005, 0042, 0046.
+`business_architecture/reference/mpc/mpc-performance-measures-evidence.md`, rows 10 and 11, and finding 3; `business_architecture/reference/downstream-peers/benchmark-series-evidence.md` (CME Group, "Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14); EPM-DEC-001-0005, 0042, 0046. *2026-10-20:* checked against four U.S. refining peers' FY2025 Form 10-Ks (PBF Energy, Phillips 66, HF Sinclair, Valero), recorded in the same evidence file's peers section; they support the rule in item 2 and change no series.
 
 ## Consequences
 
