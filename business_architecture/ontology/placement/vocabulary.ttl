@@ -1,0 +1,42 @@
+# Placement kinds (Step 7; EPM-DEC-001-0058): what each of twelve placing properties claims.
+# A certification link names a data product's owning process; a context link says only where
+# one thing is used or placed with another. Competency question 38 asks which one a placement
+# is. The annotations name properties of other modules by IRI.
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/placement/kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+plc:placementKind a owl:AnnotationProperty ;
+    rdfs:label "placement kind"@en ;
+    skos:definition "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."@en ;
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
+
+plc:PlacementKind a skos:ConceptScheme ; rdfs:label "placement kind"@en ;
+    skos:definition "The two things a placement can claim."@en ;
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en .
+kind:certification a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Certification"@en ; skos:notation "certification" ;
+    skos:definition "The link names a data product's owning process: the producing process, which is the subject of vs:produces and the target of dp:producedBy."@en .
+kind:context a skos:Concept ; skos:inScheme plc:PlacementKind ; skos:prefLabel "Context"@en ; skos:notation "context" ;
+    skos:definition "The link says only where one thing is used or placed with another. It does not say either end owns, computes or approves the other."@en .
+
+kpi:informsProcess plc:placementKind kind:context .
+vs:measureLink plc:placementKind kind:context .
+vs:consumes plc:placementKind kind:context .
+vs:realizes plc:placementKind kind:context .
+vs:usesCapability plc:placementKind kind:context .
+dp:anchoredIn plc:placementKind kind:context .
+dp:consumedBy plc:placementKind kind:context .
+sys:supports plc:placementKind kind:context .
+lane:officeLane plc:placementKind kind:context .
+mkt:region plc:placementKind kind:context .
+vs:produces plc:placementKind kind:certification .
+dp:producedBy plc:placementKind kind:certification .

@@ -35,9 +35,9 @@ question,status,queries,waits_for
 34,answerable,q34-quantified-concepts.rq,
 35,waits:step-7,,"catalog binding: the data products are defined (EPM-DEC-001-0053), but no source says which data product publishes which measure"
 36,answerable,q36-the-crack.rq,
-37,partial,q37-kpi-placement.rq,Named KPI candidates answer now (EPM-DEC-001-0043); concepts' placement waits for the Step 7 overlays
-38,waits:step-7,,placement certification vs context (Step 7)
-39,partial,q39-downstream.rq,processes answer now; concepts and Named KPIs wait for Step 7
+37,answerable,q37-kpi-placement.rq;q37b-concept-placement.rq,
+38,answerable,q38a-no-measure-certified.rq;q38b-placement-kinds.rq;q38c-same-name-processes.rq,
+39,answerable,q39-downstream.rq;q39b-meaning-dependents.rq,
 40,partial,q40-official-wording.rq,"where the wording is published for people, and what is only a copy (Step 10)"
 41,waits:step-7,,what an agent may answer needs answer rules over the kpi module; graph part only
 42,waits:step-7,,what an agent must refuse needs refusal rules over the kpi module; graph part only

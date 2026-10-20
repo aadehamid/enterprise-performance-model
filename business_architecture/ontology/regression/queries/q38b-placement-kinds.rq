@@ -1,0 +1,6 @@
+# Q38 What does each placement claim? (every placing link, with its kind: certification or context)
+PREFIX plc: <https://w3id.org/lsc/ontology/modules/placement/>
+SELECT ?p ?kind (COUNT(*) AS ?links) WHERE {
+  ?p plc:placementKind ?kind .
+  ?s ?p ?o .
+} GROUP BY ?p ?kind

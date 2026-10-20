@@ -1,0 +1,7 @@
+# Q38 If two processes use the same name, are they the same meaning? (process names used by more than one process: each is a different IRI with its own definition and parent)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX mod: <https://w3id.org/lsc/ontology/modules/>
+SELECT ?name (COUNT(DISTINCT ?process) AS ?processes) (COUNT(DISTINCT ?parent) AS ?parents) WHERE {
+  ?process skos:inScheme mod:core ; skos:prefLabel ?label ; skos:broader ?parent .
+  BIND(STR(?label) AS ?name)
+} GROUP BY ?name HAVING (COUNT(DISTINCT ?process) > 1)
