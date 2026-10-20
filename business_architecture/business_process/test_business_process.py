@@ -1,7 +1,9 @@
 """Integrity tests for the process authority (`business_process/` and `../schema/`): each file
-validates against its schema, process-map node ids are unique, and every reference a value
-stream makes resolves (to a process-map node, a data product or line, or a capability in the
-same file).
+with a schema validates against it, process-map node and data product ids are unique, and these
+references resolve: a value stream's linkedProcessIds and gapAnalysis closestProcessIds to
+process-map nodes, its produces and consumes to data products or lines, its capabilityId to a
+capability and its flows to processes in the same file, and each process-map officeLane to a
+lane in office_lanes.json.
 
 Run: python3 -m pytest test_business_process.py (needs jsonschema).
 """
@@ -17,6 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SCHEMA = os.path.join(HERE, "..", "schema")
 MAP = os.path.join(HERE, "downstream_process_map.json")
 PORTFOLIO = os.path.join(HERE, "data_product_portfolio.json")
+LANES = os.path.join(HERE, "office_lanes.json")
 
 
 def load(path):
@@ -107,6 +110,43 @@ class References(unittest.TestCase):
         for name, vs, p in processes():
             with self.subTest(f=name, process=p["id"]):
                 self.assertIn(p["capabilityId"], {c["id"] for c in vs.get("capabilities", [])})
+
+    def test_gap_analysis_closest_process_ids_resolve_to_process_map_nodes(self):
+        nodes = set(map_ids())
+        for name, vs in value_streams().items():
+            for gap in vs.get("gapAnalysis", []):
+                for ref in gap.get("closestProcessIds", []):
+                    with self.subTest(f=name, item=gap["item"], ref=ref):
+                        self.assertIn(ref, nodes)
+
+    def test_flows_resolve_to_processes_in_the_same_file(self):
+        for name, vs in value_streams().items():
+            own = {p["id"] for stage in vs["stages"] for p in stage["processes"]}
+            for flow in vs.get("flows", []):
+                for end in ("from", "to"):
+                    with self.subTest(f=name, end=end, ref=flow[end]):
+                        self.assertIn(flow[end], own)
+
+    def test_office_lanes_resolve_to_lanes(self):
+        lanes = set(load(LANES))
+        self.assertTrue(lanes)
+        used = []
+
+        def walk(node):
+            if isinstance(node, dict):
+                if "officeLane" in node:
+                    used.append(node["officeLane"])
+                for value in node.values():
+                    walk(value)
+            elif isinstance(node, list):
+                for value in node:
+                    walk(value)
+
+        walk(load(MAP))
+        self.assertTrue(used)
+        for lane in used:
+            with self.subTest(lane=lane):
+                self.assertIn(lane, lanes)
 
 
 if __name__ == "__main__":
