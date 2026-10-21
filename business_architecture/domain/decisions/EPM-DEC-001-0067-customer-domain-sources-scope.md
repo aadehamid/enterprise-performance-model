@@ -65,7 +65,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
    - Block 11's third answer confirms Claude's reading of COCO, CODO and DODO (company-owned company-operated, company-owned dealer-operated, dealer-owned dealer-operated).
    - "and it is EIS" (block 14) gives the spelling of a landscape system's name.
 7. **Sources for the Customer domain**, by decision 4: derived definitions go into the repository; their sources are repository information and MPC's public information, MPLX's included; peer data and the external report guide choices and do not go into the repository. Elsewhere in the repository, peer comparison stays allowed as guidance and as evidence, as before.
-8. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics (MPLX FY2025 Form 10-K, accession 0001552000-26-000009; `reference/mpc/mplx-fy2025-10k-fact-sheet.md`).
+8. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. MPLX's FY2024 Form 10-K (accession 0001552000-25-000012, Item 1, Our Operating Segments) says that in the fourth quarter of 2024 MPLX chose "to rename the Logistics and Storage segment to the Crude Oil and Products Logistics segment", and also "reclassified certain equity" investments between the segments. So L&S is close to, not the same as, today's Crude Oil and Products Logistics (`reference/mpc/mplx-fy2025-10k-fact-sheet.md` has the current names).
 9. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
 10. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. In the model, a customer account carries a delivery tier, and a brand is owned by or licensed to a party through a Brand License agreement.
 11. **Two roles are to be added**, in the `customer` module's pull request, by "add both roles": Position Holder and Loading-Authorized Party. The Loading-Authorized Party answers competency question 22. The Position Holder is the party whose product a terminal lifting draws on, which the model's terminal-rack class names. The model's own role list, as Claude read it, has twelve roles.
@@ -117,7 +117,7 @@ The readings marked as Claude's above are under the delegation: "yes, extend the
 
 - `answers-2026-10-21-customer.md`.
 - `business_architecture/reference/mpc/customer-classification-evidence.md` (C1 to C8) and `mpc-fy2025-10k-fact-sheet.md` (direct dealers).
-- MPLX FY2023 Form 10-K, https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231.htm, retrieved 2026-10-21; `reference/mpc/mplx-fy2025-10k-fact-sheet.md` (FY2025).
+- MPLX FY2023 Form 10-K, https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231.htm, retrieved 2026-10-21; MPLX FY2024 Form 10-K, https://www.sec.gov/Archives/edgar/data/1552000/000155200025000012/mplx-20241231.htm, read 2026-10-21; `reference/mpc/mplx-fy2025-10k-fact-sheet.md` (FY2025).
 - MPC FY2025 Form 10-K, Item 1, Trademarks, Patents and Licenses, https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm, read 2026-10-21; EDGAR full-text search of MPC's 10-K filings for "brand license", 2026-10-21, no hits.
 - EPM-DEC-001-0004, 0005, 0028, 0040, 0047, 0050, 0052.
 
