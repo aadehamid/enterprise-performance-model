@@ -62,8 +62,8 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
    - **ZBAID** is resolved from the inputs: the SAP MDG identification number that holds RightAngle's business associate ID (item 7).
    - **TID Nbr** is read as a terminal identifier, next to RightAngle's Site Nbr, so it describes a site. That is a reading; no MPC source states it.
    - **HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag** stay named fields without a definition. Neither MPC's filings nor the inputs define them (EDGAR full-text search of MPC's and MPLX's filings and the inputs, 2026-10-21), and the peer and vendor sources that may explain some of them are not cited in the Customer domain (EPM-DEC-001-0067).
-   - **TDS Seller ID**, which the decision owner did not ask about, is likewise unexplained.
-9. **Internal names are allowed** by EPM-DEC-001-0040, item 3. The repository is public until the goal is achieved, then private again (EPM-DEC-001-0067, decision 12).
+   - **TABS Seller ID** and **TDS Seller ID**, which the decision owner did not ask about, are likewise unexplained by MPC's filings and the inputs. Both are mapped to an external identifier of the party, as their names say. Vendor material suggests TABS is a terminal authorization service; it guides that reading and is not cited (EPM-DEC-001-0067).
+9. **Internal names are allowed** by EPM-DEC-001-0040, item 3. The repository is public until the goal is achieved (EPM-DEC-001-0067, decision 12), and private again at the end of the session or the goal (EPM-DEC-001-0067, What follows, item 12).
 
 ## Alternatives considered
 
@@ -83,6 +83,6 @@ This record is Claude's, under the delegation: "yes, extend the delegation to st
 
 ## Consequences
 
-- `customer/systems.csv`, `data-flows.csv`, `customer-sources.csv` and `attributes.csv` are the sources. `build_party.py` builds `systems.ttl` from them, and `scripts/check.sh` fails unless the file equals a fresh build. `test_party_systems.py` pins the figures and the core mappings by hand.
+- `party/systems.csv`, `data-flows.csv`, `customer-sources.csv` and `attributes.csv` are the sources. `build_party.py` builds `systems.ttl` from them, and `scripts/check.sh` fails unless the file equals a fresh build. `test_party_systems.py` pins the figures and the core mappings by hand.
 - The regression loads `systems.ttl` with the module.
-- Open for the decision owner: whether input 6's CBS is FuelFacs; whether the Terminal Margin Ranking System is the process map's TMR; and the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and TDS Seller ID, and whether TID Nbr is a terminal identifier.
+- Open for the decision owner: whether input 6's CBS is FuelFacs; whether the Terminal Margin Ranking System is the process map's TMR; and the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag, TABS Seller ID and TDS Seller ID, and whether TID Nbr is a terminal identifier.

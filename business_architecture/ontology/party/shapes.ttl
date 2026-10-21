@@ -154,15 +154,24 @@ partysh:DataFlow a sh:NodeShape ;
     sh:property [ sh:path party:fromSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
     sh:property [ sh:path party:toSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ;
                   sh:message "A data flow goes from one customer system to one other." ] ;
-    sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:message "A data flow names the inputs that show it." ] .
+    sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ;
+                  sh:message "A data flow says what it carries." ] ;
+    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
+                  sh:message "A data flow names the inputs that show it, from the seven inputs." ] .
 
 partysh:CustomerSourcing a sh:NodeShape ;
     sh:targetClass party:CustomerSourcing ;
     sh:property [ sh:path party:sourcingSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
     sh:property [ sh:path party:sourcingKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InSourcingKind ] ;
-    sh:property [ sh:path party:sourcedConcept ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ] .
+    sh:property [ sh:path party:sourcedConcept ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ;
+                  sh:or ( [ sh:path skos:inScheme ; sh:hasValue party:party-role ]
+                          [ sh:path skos:inScheme ; sh:hasValue party:customer-class ]
+                          [ sh:path skos:inScheme ; sh:hasValue party:line-of-business ]
+                          [ sh:path skos:inScheme ; sh:hasValue party:party-type ] ) ;
+                  sh:message "A customer sourcing names a party role, a customer class, a line of business or a party type." ] ;
+    sh:property [ sh:path rdfs:comment ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
+                  sh:message "A customer sourcing names the inputs that show it, from the seven inputs." ] .
 
 partysh:SystemAttribute a sh:NodeShape ;
     sh:targetClass party:SystemAttribute ;

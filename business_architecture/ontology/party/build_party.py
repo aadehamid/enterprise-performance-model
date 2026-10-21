@@ -130,6 +130,11 @@ def split(text):
     return [t for t in text.split(";") if t]
 
 
+# What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
+SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
+INPUTS = {str(i) for i in range(1, 8)}
+
+
 def load_systems(codes):
     systems, flows, sources, attrs = (read(n) for n in ("systems.csv", "data-flows.csv", "customer-sources.csv", "attributes.csv"))
     existing = {r["slug"]: r["label"] for r in read(SYSTEM_MODULE)}
@@ -147,6 +152,14 @@ def load_systems(codes):
     problems += [f"source {r['system']}: not a listed system" for r in sources if r["system"] not in slugs]
     problems += [f"source {r['system']}: kind {r['kind']!r} is not a sourcing kind" for r in sources if ("sourcing-kind", r["kind"]) not in values]
     problems += [f"source {r['system']}: {r['concept']} is not a code-list value" for r in sources if tuple(r["concept"].split("/", 1)) not in values]
+    problems += [f"source {r['system']}: {r['concept']} is not a party role, customer class, line of business or party type"
+                 for r in sources if r["concept"].split("/", 1)[0] not in SOURCED_SCHEMES]
+    problems += [f"flow {r['from']} -> {r['to']}: carries nothing" for r in flows if not r["carries"].strip()]
+    problems += [f"source {r['system']}: no note" for r in sources if not r["note"].strip()]
+    problems += [f"source {r['system']}: no input" for r in sources if not split(r["inputs"])]
+    problems += [f"{what}: input {i!r} is not one of the seven inputs" for what, r in
+                 [(f"flow {r['from']} -> {r['to']}", r) for r in flows] + [(f"source {r['system']}", r) for r in sources]
+                 for i in split(r["inputs"]) if i not in INPUTS]
     problems += [f"attribute {r['label']!r}: {r['system']} is not a listed system" for r in attrs if r["system"] not in slugs]
     problems += [f"attribute {r['label']!r}: category {r['category']!r}" for r in attrs if ("attribute-category", r["category"]) not in values]
     problems += [f"attribute {r['label']!r}: describes {r['describes']!r}, not an entity" for r in attrs if r["describes"] not in ENTITIES]

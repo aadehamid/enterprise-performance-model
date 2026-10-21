@@ -182,6 +182,26 @@ class Shapes(unittest.TestCase):
         self.assertFalse(ok)
         self.assertIn("says what it does", text)
 
+    def test_a_flow_that_carries_nothing(self):
+        ok, text = self.conforms('party:x a party:DataFlow ; party:fromSystem s:salesforce ; party:toSystem s:sap-mdg ; '
+                                 'party:carries ""@en ; party:evidenceInput "3" .')
+        self.assertFalse(ok)
+        self.assertIn("says what it carries", text)
+
+    def test_a_flow_citing_an_input_that_does_not_exist(self):
+        ok, text = self.conforms('party:x a party:DataFlow ; party:fromSystem s:salesforce ; party:toSystem s:sap-mdg ; '
+                                 'party:carries "x"@en ; party:evidenceInput "42" .')
+        self.assertFalse(ok)
+        self.assertIn("from the seven inputs", text)
+
+    def test_a_sourcing_of_something_that_is_not_a_kind_of_customer(self):
+        ok, text = self.conforms('party:n a party:CustomerSourcing ; party:sourcingSystem s:salesforce ; '
+                                 'party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ; '
+                                 'party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/transaction-kind/invoice> ; '
+                                 '<http://www.w3.org/2000/01/rdf-schema#comment> "x"@en ; party:evidenceInput "2" .')
+        self.assertFalse(ok)
+        self.assertIn("names a party role, a customer class", text)
+
 
 if __name__ == "__main__":
     unittest.main()
