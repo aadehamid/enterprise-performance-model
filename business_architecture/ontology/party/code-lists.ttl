@@ -1,4 +1,4 @@
-# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068).
+# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069).
 # Built by build_party.py from code-lists.csv. Do not edit by hand.
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
@@ -81,6 +81,20 @@
     skos:notation "throughput-storage" ;
     skos:prefLabel "Throughput / Storage"@en ;
     skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute-category/create> a skos:Concept ;
+    skos:definition "An attribute that defines the customer in the system: set when the customer is created there."@en ;
+    skos:inScheme party:attribute-category ;
+    skos:notation "create" ;
+    skos:prefLabel "Create"@en ;
+    skos:topConceptOf party:attribute-category .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> a skos:Concept ;
+    skos:definition "An attribute added to the customer in the system after it is created."@en ;
+    skos:inScheme party:attribute-category ;
+    skos:notation "enrich" ;
+    skos:prefLabel "Enrich"@en ;
+    skos:topConceptOf party:attribute-category .
 
 <https://w3id.org/lsc/ontology/modules/party/contact-type/email> a skos:Concept ;
     skos:definition "An email address."@en ;
@@ -485,6 +499,69 @@
     skos:prefLabel "supplies"@en ;
     skos:topConceptOf party:relationship-type .
 
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> a skos:Concept ;
+    skos:definition "The SAP business partner's roles and grouping, which set what the partner may do and how it is numbered."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "bp-role-group" ;
+    skos:prefLabel "Business partner role and group"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/business-associate-id> a skos:Concept ;
+    skos:definition "The ID RightAngle gives a business associate (BAID), which SAP MDG holds as an identification number."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "business-associate-id" ;
+    skos:prefLabel "Business associate ID"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/class-of-trade> a skos:Concept ;
+    skos:definition "The customer's class of trade."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "class-of-trade" ;
+    skos:prefLabel "Class of trade"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> a skos:Concept ;
+    skos:definition "The customer's credit: its limit, monitoring, blocks and roll-up."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "credit" ;
+    skos:prefLabel "Credit"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> a skos:Concept ;
+    skos:definition "The party's registered name."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "legal-name" ;
+    skos:prefLabel "Legal name"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/sap-customer-number> a skos:Concept ;
+    skos:definition "The canonical customer number SAP MDG generates; other systems carry it to point back to the MDG customer."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "sap-customer-number" ;
+    skos:prefLabel "SAP customer number"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/status> a skos:Concept ;
+    skos:definition "Whether the customer is active, blocked or inactive."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "status" ;
+    skos:prefLabel "Status"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> a skos:Concept ;
+    skos:definition "The party's tax identifier, such as its FEIN."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "tax-id" ;
+    skos:prefLabel "Tax ID"@en ;
+    skos:topConceptOf party:shared-attribute .
+
+<https://w3id.org/lsc/ontology/modules/party/shared-attribute/territory-manager> a skos:Concept ;
+    skos:definition "The company's territory manager for the customer."@en ;
+    skos:inScheme party:shared-attribute ;
+    skos:notation "territory-manager" ;
+    skos:prefLabel "Territory manager"@en ;
+    skos:topConceptOf party:shared-attribute .
+
 <https://w3id.org/lsc/ontology/modules/party/site-type/airport-location> a skos:Concept ;
     skos:definition "A fueling location at an airport."@en ;
     skos:inScheme party:site-type ;
@@ -526,6 +603,62 @@
     skos:notation "terminal" ;
     skos:prefLabel "Terminal"@en ;
     skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> a skos:Concept ;
+    skos:definition "The system a customer of this kind starts in."@en ;
+    skos:inScheme party:sourcing-kind ;
+    skos:notation "origin" ;
+    skos:prefLabel "Origin"@en ;
+    skos:topConceptOf party:sourcing-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> a skos:Concept ;
+    skos:definition "A system the customer is created or activated in for this line of business."@en ;
+    skos:inScheme party:sourcing-kind ;
+    skos:notation "setup" ;
+    skos:prefLabel "Setup"@en ;
+    skos:topConceptOf party:sourcing-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> a skos:Concept ;
+    skos:definition "A system in the landscape that is a source of customers of this kind."@en ;
+    skos:inScheme party:sourcing-kind ;
+    skos:notation "source" ;
+    skos:prefLabel "Source"@en ;
+    skos:topConceptOf party:sourcing-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/system-tier/core> a skos:Concept ;
+    skos:definition "One of the six systems the customer is created, recorded or executed in: SAP MDG, SAP S/4HANA, Salesforce, RightAngle, Polaris and Dealer Master."@en ;
+    skos:inScheme party:system-tier ;
+    skos:notation "core" ;
+    skos:prefLabel "Core system"@en ;
+    skos:topConceptOf party:system-tier .
+
+<https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> a skos:Concept ;
+    skos:definition "A system that receives and uses the customer."@en ;
+    skos:inScheme party:system-tier ;
+    skos:notation "downstream" ;
+    skos:prefLabel "Downstream"@en ;
+    skos:topConceptOf party:system-tier .
+
+<https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> a skos:Concept ;
+    skos:definition "A system or tool that adds to or checks the customer after it is created."@en ;
+    skos:inScheme party:system-tier ;
+    skos:notation "enrich" ;
+    skos:prefLabel "Enrichment"@en ;
+    skos:topConceptOf party:system-tier .
+
+<https://w3id.org/lsc/ontology/modules/party/system-tier/integration> a skos:Concept ;
+    skos:definition "An integration that moves the customer between systems."@en ;
+    skos:inScheme party:system-tier ;
+    skos:notation "integration" ;
+    skos:prefLabel "Integration"@en ;
+    skos:topConceptOf party:system-tier .
+
+<https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> a skos:Concept ;
+    skos:definition "Another system in the landscape that is a source of customers of a kind."@en ;
+    skos:inScheme party:system-tier ;
+    skos:notation "landscape" ;
+    skos:prefLabel "Landscape source"@en ;
+    skos:topConceptOf party:system-tier .
 
 <https://w3id.org/lsc/ontology/modules/party/transaction-kind/case> a skos:Concept ;
     skos:definition "A service or setup case, such as a request to create or change a customer."@en ;
@@ -597,6 +730,11 @@
     skos:prefLabel "Trading counterparties"@en ;
     skos:topConceptOf party:customer-class .
 
+party:attribute-category a skos:ConceptScheme ;
+    rdfs:label "attribute categories"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069"@en ;
+    skos:definition "The decision owner's two categories of a system's customer attributes: those that define the customer there, and those that enrich it."@en .
+
 party:party-type a skos:ConceptScheme ;
     rdfs:label "party types"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
@@ -619,6 +757,11 @@ party:operating-model a skos:ConceptScheme ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "Who owns and who operates a site."@en .
 
+party:sourcing-kind a skos:ConceptScheme ;
+    rdfs:label "customer sourcing kinds"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en ;
+    skos:definition "How a system relates to a kind of customer: where it starts, where it is set up, or a source of it."@en .
+
 party:address-usage a skos:ConceptScheme ;
     rdfs:label "address usages"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
@@ -634,6 +777,11 @@ party:relationship-type a skos:ConceptScheme ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The kinds of link from one party role to another."@en .
 
+party:system-tier a skos:ConceptScheme ;
+    rdfs:label "customer system tiers"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en ;
+    skos:definition "Where a system sits in the customer's data flow: core, integration, enrichment, downstream or landscape source."@en .
+
 party:site-type a skos:ConceptScheme ;
     rdfs:label "site types"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
@@ -648,6 +796,11 @@ party:transaction-kind a skos:ConceptScheme ;
     rdfs:label "transaction kinds"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The kinds of transaction a party or an account is associated with."@en .
+
+party:shared-attribute a skos:ConceptScheme ;
+    rdfs:label "shared attributes"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en ;
+    skos:definition "Attributes that several systems carry under different names for one thing."@en .
 
 party:line-of-business a skos:ConceptScheme ;
     rdfs:label "lines of business"@en ;

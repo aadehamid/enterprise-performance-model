@@ -1,4 +1,5 @@
-# The `party` module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068): the
+# The `party` module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068, and for the
+# systems, data flow and attributes EPM-DEC-001-0069): the
 # decision owner's conceptual data model of Customer, as classes and properties. The definitions
 # are Claude's words, derived from that model, which is not in this repository (EPM-DEC-001-0067).
 # The module holds definitions only: customer records stay in the systems (EPM-DEC-001-0005).
@@ -356,3 +357,105 @@ party:mpcClassification a owl:DatatypeProperty ;
     rdfs:label "MPC classification"@en ; rdfs:domain skos:Concept ; rdfs:range xsd:string ;
     skos:definition "The code, C1 to C8, of the class in the repository's MPC customer classification (built from MPC's filings and website, with C8 added by the decision owner), which the class corresponds to."@en ;
     dcterms:bibliographicCitation "business_architecture/reference/mpc/customer-classification-evidence.md; EPM-DEC-001-0047, What follows, item 5; EPM-DEC-001-0068"@en .
+
+# ---- Systems, data flow and attributes (EPM-DEC-001-0069) ----
+
+party:SystemRecord a owl:Class ;
+    rdfs:label "system record"@en ;
+    skos:definition "A system's own record of a customer: who created or changed it, when, and the system's notes on it. It is not an entity of the conceptual model; system attributes that describe only the record point here."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:CustomerSystem a owl:Class ;
+    rdfs:label "customer system"@en ;
+    skos:definition "A system the customer passes through: where it is created, recorded, enriched or used, or a source of customers of a kind. A customer system that the process map also names matches the system module's system (skos:exactMatch)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:systemTier a owl:ObjectProperty ;
+    rdfs:label "system tier"@en ; rdfs:domain party:CustomerSystem ; rdfs:range skos:Concept ;
+    skos:definition "Where the system sits in the customer's data flow, from the system-tier list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:customerRole a owl:DatatypeProperty ;
+    rdfs:label "customer role"@en ; rdfs:domain party:CustomerSystem ;
+    skos:definition "What the system does with the customer, in a sentence or two."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:implements a owl:ObjectProperty ;
+    rdfs:label "implements"@en ; rdfs:domain party:CustomerSystem ; rdfs:range owl:Class ;
+    skos:definition "An entity of the conceptual model the system holds records of, as the decision owner's model maps it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:DataFlow a owl:Class ;
+    rdfs:label "data flow"@en ;
+    skos:definition "A movement of customer data from one system to another, with what it carries."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:fromSystem a owl:ObjectProperty ;
+    rdfs:label "from system"@en ; rdfs:domain party:DataFlow ; rdfs:range party:CustomerSystem ;
+    skos:definition "The system the data comes from."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:toSystem a owl:ObjectProperty ;
+    rdfs:label "to system"@en ; rdfs:domain party:DataFlow ; rdfs:range party:CustomerSystem ;
+    skos:definition "The system the data goes to."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:carries a owl:DatatypeProperty ;
+    rdfs:label "carries"@en ; rdfs:domain party:DataFlow ;
+    skos:definition "What the flow carries, in a sentence."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:feeds a owl:ObjectProperty ;
+    rdfs:label "feeds"@en ; rdfs:domain party:CustomerSystem ; rdfs:range party:CustomerSystem ;
+    skos:definition "The system sends customer data to the other: the short form of a data flow."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:evidenceInput a owl:DatatypeProperty ;
+    rdfs:label "evidence input"@en ;
+    skos:definition "The numbers of the decision owner's customer inputs that show the statement, as EPM-DEC-001-0067's Context lists them. The inputs are not in this repository."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069"@en .
+
+party:CustomerSourcing a owl:Class ;
+    rdfs:label "customer sourcing"@en ;
+    skos:definition "How a system relates to a kind of customer: the kind starts there, is set up there for a line of business, or comes from there."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:sourcingSystem a owl:ObjectProperty ;
+    rdfs:label "sourcing system"@en ; rdfs:domain party:CustomerSourcing ; rdfs:range party:CustomerSystem ;
+    skos:definition "The system."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:sourcingKind a owl:ObjectProperty ;
+    rdfs:label "sourcing kind"@en ; rdfs:domain party:CustomerSourcing ; rdfs:range skos:Concept ;
+    skos:definition "Origin, setup or source, from the sourcing-kind list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:sourcedConcept a owl:ObjectProperty ;
+    rdfs:label "sourced concept"@en ; rdfs:domain party:CustomerSourcing ; rdfs:range skos:Concept ;
+    skos:definition "The kind of customer: a party role, a customer class, a line of business or a party type."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:SystemAttribute a owl:Class ;
+    rdfs:label "system attribute"@en ;
+    skos:definition "A field a system keeps for a customer, in one of the decision owner's two categories: Create, which defines the customer in the system, or Enrich, which is added afterwards. Its label is the system's field name, with spelling corrected and repeats removed."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0069"@en .
+
+party:inSystem a owl:ObjectProperty ;
+    rdfs:label "in system"@en ; rdfs:domain party:SystemAttribute ; rdfs:range party:CustomerSystem ;
+    skos:definition "The system that keeps the attribute."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:attributeCategory a owl:ObjectProperty ;
+    rdfs:label "attribute category"@en ; rdfs:domain party:SystemAttribute ; rdfs:range skos:Concept ;
+    skos:definition "Create or Enrich, from the attribute-category list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:describes a owl:ObjectProperty ;
+    rdfs:label "describes"@en ; rdfs:domain party:SystemAttribute ; rdfs:range owl:Class ;
+    skos:definition "The entity of the conceptual model the attribute is a fact about, or the system record for a field about the record itself."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+party:sharedAttribute a owl:ObjectProperty ;
+    rdfs:label "shared attribute"@en ; rdfs:domain party:SystemAttribute ; rdfs:range skos:Concept ;
+    skos:definition "The one thing several systems' attributes stand for under different names, from the shared-attribute list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .

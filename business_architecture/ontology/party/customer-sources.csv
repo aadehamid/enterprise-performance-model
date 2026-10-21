@@ -1,0 +1,25 @@
+system,kind,concept,note,inputs
+salesforce,origin,party-role/sold-to,Prospects start in Salesforce.,2;3;6
+dealer-master,origin,party-role/jobber,Jobbers start in Dealer Master and go to SAP MDG.,6
+sap-mdg,origin,customer-class/direct-dealer,Direct dealers start in SAP MDG and go to Dealer Master.,6
+rightangle,setup,line-of-business/unbranded,"The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP.",1
+rightangle,setup,line-of-business/brand,"The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP.",1
+rightangle,setup,line-of-business/asphalt,"The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP.",1
+rightangle,setup,line-of-business/petrochemicals,"The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP.",1
+rightangle,setup,line-of-business/sdp,"The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP.",1
+salesforce,setup,line-of-business/unbranded,"The customer is activated in Salesforce for Unbranded, Branded and Asphalt.",1
+salesforce,setup,line-of-business/brand,"The customer is activated in Salesforce for Unbranded, Branded and Asphalt.",1
+salesforce,setup,line-of-business/asphalt,"The customer is activated in Salesforce for Unbranded, Branded and Asphalt.",1
+polaris,setup,line-of-business/pipeline-ls,The customer is created in Polaris for Pipeline L&S.,1
+terminal-audit-system,source,customer-class/terminal-rack-customer,Terminal customers.,6
+fuelfacs,source,customer-class/terminal-rack-customer,Terminal customers (as CBS).,6
+flowcal,source,customer-class/pipeline-customer,Pipeline customers for midstream supply.,6
+eis,source,customer-class/forecast-driven-customer,Forecast-driven customers.,6
+asphalt-marketing-system,source,customer-class/asphalt-bitumen-buyer,Asphalt and bitumen customers.,6
+terminal-download,source,customer-class/exchange-trading-counterparty,Exchange customers (commercial traders); the landscape names it Terminal Download RightAngle/Kittyhawk.,6
+brand-credit-card-system,source,party-role/dealer,Dealers.,6
+terminal-margin-ranking-system,source,line-of-business/brand,Brand customers.,6
+terminal-margin-ranking-system,source,customer-class/wholesale-marketing,Wholesale customers.,6
+corp-vetting,source,party-role/vendor,Partner roles: vendor.,6
+corp-vetting,source,party-role/surety,Partner roles: surety.,6
+lenel-onguard,source,party-type/person,Employee parties.,6

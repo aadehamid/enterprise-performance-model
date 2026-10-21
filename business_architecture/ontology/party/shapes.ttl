@@ -1,7 +1,8 @@
-# SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068). They check the shape of
-# customer records that systems or examples state in these terms: each role held by one party,
-# each dated record with a start date and no end before its start, each coded value from its own
-# list, and no class other than Person and Organization made a subclass of party.
+# SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068, EPM-DEC-001-0069). They check the
+# shape of customer records that systems or examples state in these terms: each role held by one
+# party, each dated record with a start date and no end before its start, each coded value from its
+# own list, and no class other than Person and Organization made a subclass of party. They also
+# check the module's systems, data flows, sourcings and system attributes (EPM-DEC-001-0069).
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -131,6 +132,51 @@ partysh:PartyTransactionAssociation a sh:NodeShape ;
     sh:property [ sh:path party:forAccount ; sh:maxCount 1 ; sh:class party:CustomerAccount ] ;
     sh:or ( [ sh:path [ sh:inversePath party:participatesIn ] ; sh:minCount 1 ]
             [ sh:path party:forAccount ; sh:minCount 1 ] ) .
+
+# ---- Systems, data flow and attributes (EPM-DEC-001-0069) ----
+
+partysh:InSystemTier a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-tier ] .
+partysh:InAttributeCategory a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:attribute-category ] .
+partysh:InSharedAttribute a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:shared-attribute ] .
+partysh:InSourcingKind a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:sourcing-kind ] .
+
+partysh:CustomerSystem a sh:NodeShape ;
+    sh:targetClass party:CustomerSystem ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:customer-systems ] ;
+    sh:property [ sh:path party:systemTier ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InSystemTier ] ;
+    sh:property [ sh:path party:customerRole ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "A customer system says what it does with the customer." ] ;
+    sh:property [ sh:path party:feeds ; sh:class party:CustomerSystem ] .
+
+partysh:DataFlow a sh:NodeShape ;
+    sh:targetClass party:DataFlow ;
+    sh:property [ sh:path party:fromSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
+    sh:property [ sh:path party:toSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ;
+                  sh:message "A data flow goes from one customer system to one other." ] ;
+    sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:message "A data flow names the inputs that show it." ] .
+
+partysh:CustomerSourcing a sh:NodeShape ;
+    sh:targetClass party:CustomerSourcing ;
+    sh:property [ sh:path party:sourcingSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
+    sh:property [ sh:path party:sourcingKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InSourcingKind ] ;
+    sh:property [ sh:path party:sourcedConcept ; sh:minCount 1 ; sh:maxCount 1 ; sh:class skos:Concept ] .
+
+partysh:SystemAttribute a sh:NodeShape ;
+    sh:targetClass party:SystemAttribute ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path party:inSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
+    sh:property [ sh:path party:attributeCategory ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InAttributeCategory ;
+                  sh:message "A system attribute is Create or Enrich." ] ;
+    sh:property [ sh:path party:describes ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole
+                          party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness
+                          party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation
+                          party:Product party:Site party:SystemRecord ) ;
+                  sh:message "A system attribute describes one entity of the conceptual model, or the system record." ] ;
+    sh:property [ sh:path party:sharedAttribute ; sh:maxCount 1 ; sh:node partysh:InSharedAttribute ] .
 
 # ---- The vocabulary: customer is not a kind of party ----
 # Any chain of subclass links counts: a class under Person or Organization is a subclass of party too.

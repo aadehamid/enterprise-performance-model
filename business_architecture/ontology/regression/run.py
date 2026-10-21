@@ -31,7 +31,7 @@ MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl
     + [os.path.join(HERE, "..", "apqc", "apqc-elements.ttl")] \
     + [os.path.join(HERE, "..", "consumer", "vocabulary.ttl")] \
     + [os.path.join(HERE, "..", "population", n) for n in ("vocabulary.ttl", "population.ttl")] \
-    + [os.path.join(HERE, "..", "party", n) for n in ("vocabulary.ttl", "code-lists.ttl")]  # Step 7 overlays and rules; Steps 5 to 7: the `party` module
+    + [os.path.join(HERE, "..", "party", n) for n in ("vocabulary.ttl", "code-lists.ttl", "systems.ttl")]  # Step 7 overlays and rules; Steps 5 to 7: the `party` module
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 

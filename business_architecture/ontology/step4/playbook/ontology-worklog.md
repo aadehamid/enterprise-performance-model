@@ -962,6 +962,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The customer systems and attributes (2026-10-21)
+- Under the delegation (EPM-DEC-001-0069): the customer's 42 systems are
+  the module's own class, three matched to the system module; the six
+  core systems carry the entities they implement; 35 data flows and 24
+  customer sourcings record the data flow and the origin patterns; and
+  275 system attributes, 43 Create and 232 Enrich, each describe an
+  entity of the model or, for fields about a system's own record, the
+  system record; 48 of them carry one of nine shared attributes, such as
+  the SAP customer number.
+
 ### The `party` module (2026-10-21)
 - Under the delegation (EPM-DEC-001-0068): the decision owner's conceptual
   model becomes the `party` module, with fifteen entity classes, party roles as
