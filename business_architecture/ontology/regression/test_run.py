@@ -44,8 +44,10 @@ class Release(unittest.TestCase):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name.
         with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
             rows = GRAPH.query(f.read())
-        words = {str(r.word) for r in rows if r.link == SKOS.exactMatch}
-        self.assertEqual(words, {"RightAngle", "KittyHawk", "Profisee"})
+        pairs = {(str(r.word), str(r.a), str(r.b)) for r in rows if r.link == SKOS.exactMatch}
+        party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
+        self.assertEqual(pairs, {(word, party + slug, system + slug) for word, slug in
+                                 [("RightAngle", "rightangle"), ("KittyHawk", "kittyhawk"), ("Profisee", "profisee")]})
 
     def test_an_orphan_fails_q2(self):
         g = Graph()
