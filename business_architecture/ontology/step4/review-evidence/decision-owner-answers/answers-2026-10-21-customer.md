@@ -8,7 +8,7 @@ Block 6: Claude asked whether an existing file of peer data (reference/downstrea
 Block 7: sent with input 5, a table of six core systems and their customer attributes (input 4, a lifecycle diagram, came with the words "here is another one", which are not saved here).
 Block 8: answers Claude's three numbered questions about input 5: 1, whether repeated attributes are the same field; 2, the meaning of six internal codes (HOLDORDIND, Taboot, TID Nbr, ZBAID, MPA_Flag, CR_Incentive_Flag); 3, whether to correct misspelled labels.
 Block 9: continues block 8.
-Block 10: sent with input 6, a conceptual data model of Customer. The lifecycle and the other systems are in the image's right pane.
+Block 10: sent with input 6, a conceptual data model of Customer. The decision owner wrote "left pane" for the lifecycle and the other systems, and "left pane" again for the legend. In the image the legend is the left pane and the lifecycle and the other systems are the right pane, so Claude read the first "left pane" as the right pane; that reading is Claude's.
 Block 11: answers Claude's three numbered questions about input 6: 1, whether the maroon zone B entities are in scope; 2, which entities three dashed relationships connect ("scoped to product", "supplied from", "authorizes brand at site"); 3, whether COCO, CODO and DODO are company-owned company-operated, company-owned dealer-operated and dealer-owned dealer-operated, and what L&S and SDP stand for.
 Block 12: sent with input 7, an external research report.
 Block 13: answers Claude's report that SDP appears in no MPC or MPLX filing.
