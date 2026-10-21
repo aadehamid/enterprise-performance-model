@@ -62,7 +62,8 @@ class Rules(unittest.TestCase):
             "no-values": {KPI.basis},
             "no-crack-from-legs": {MKT.leg, MKT.seriesOf},
             "no-report-as-kpi": {KPI.measureKind, KPI.kpiCandidate},
-            "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1")},
+            "no-customer-without-role": {URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"),
+                                         URIRef("https://w3id.org/lsc/ontology/modules/customer/roleType")},  # EPM-DEC-001-0068
             "no-context-as-ownership": {PLC.placementKind},
             "what-a-measure-counts": {POP.includes, POP.excludes, POP.populationEvidence},  # EPM-DEC-001-0062
         }

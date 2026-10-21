@@ -1,0 +1,99 @@
+# EPM-DEC-001-0068: The customer module: the decision owner's conceptual model as classes, properties and code lists
+
+| Field | Value |
+|---|---|
+| Status | Decided (delegated under EPM-DEC-001-0028) |
+| Date | 2026-10-21 |
+| Questions | Competency questions 19 to 26 (answered in pull request 5 of EPM-DEC-001-0067's plan); MPC-P06's channel dimension (EPM-DEC-001-0047, What follows, item 5); EPM-DEC-001-0004's lubricants and marine evidence |
+| Source | Claude Code night run, 2026-10-21, pull request 2 of EPM-DEC-001-0067's plan |
+
+## Context
+
+EPM-DEC-001-0067 records the decision owner's customer information, their rules for it and a five-PR plan. Their conceptual data model of Customer has four zones:
+
+- **identity:** party, external identifier, address, contact point;
+- **customer anatomy:** party role, party relationship, customer account, customer class, line of business, brand, agreement, site brand assignment;
+- **operational context:** party transaction association, product, site;
+- **customer classes:** ten classes in four groups.
+
+Every entity is in scope ("nothing on the conceptual is out of scope", EPM-DEC-001-0067). The model is not in the repository. This record turns it into a module and records the choices the model leaves open.
+
+## Decision
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+1. **A new `customer` module**, namespace `https://w3id.org/lsc/ontology/modules/customer/`, prefix `cust:`, in `business_architecture/ontology/customer/`. It holds definitions only: no real customer, account or site (EPM-DEC-001-0005). It depends on no other module. Its five example organizations, in `examples.ttl`, are invented test fixtures and are not loaded with the module.
+2. **Fifteen classes, one per entity.** Each definition is Claude's wording of the decision owner's entity. Party has two subclasses, Person and Organization, which are disjoint. They are the only subclasses of party. Product is referred to and not modelled, because the Product domain masters it.
+3. **Party roles are dated nodes, not subclasses** (ontology-playbook.md, Step 5). A `cust:PartyRole` is held by exactly one party (`cust:plays`), has one role type from the party-role list, and is held from a start date (`cust:validFrom`) to an optional end date. So one party holds any number of roles at once, and "customer" is never a class of party. A shape rejects any other subclass of party.
+4. **The role list has fourteen types:**
+   - the model's twelve: Sold-To, Payer, Bill-To, Consignee, Jobber, Dealer, Exchange Counterparty, Throughput Holder, Carrier, Vendor, Surety and Supplier;
+   - the two the decision owner added: Position Holder and Loading-Authorized Party (EPM-DEC-001-0067, What follows, item 10).
+5. **Ship-To is a site, not a role.** The decision owner's inputs list Ship-Tos together with stations, and their role list has no Ship-To. So a ship-to is a `cust:Site`, and the party that receives product there holds the Consignee role. This is competency question 21's answer.
+6. **The customer class is a dated assignment.** The decision owner's model says a class is assigned to the account "with effective dates". So `cust:CustomerClass` is the assignment node: one account, one value from the customer-class list, and a start date. A line of business carries no dates in the model, so `cust:managedUnder` links the account to it directly.
+7. **Fourteen customer classes in four groups:**
+   - the model's ten;
+   - the four EPM-DEC-001-0067 adds from MPC's filings: independent retailer (C4), unbranded customer (C5) and spot market buyer (C6) under Wholesale and unbranded, and crude oil customer (C8) under Trading counterparties.
+   - The crude oil customer's group is this record's reading. MPC does not say who its crude buyers are (`customer-classification-evidence.md`, C8), and buyers of crude from a refiner are closest to trading counterparties of the four groups.
+   - The groups are top concepts; a class assignment must name a class, not a group.
+8. **The channel dimension (MPC-P06) is applied.** Each class that matches one of MPC's classes C1 to C8 carries its code as `cust:mpcClassification`, and each code is used exactly once:
+
+   | Code | Customer class |
+   |---|---|
+   | C1 | Branded jobber |
+   | C2 | Direct dealer |
+   | C3 | Wholesale marketing customer |
+   | C4 | Independent retailer |
+   | C5 | Unbranded customer |
+   | C6 | Spot market buyer |
+   | C7 | Export customer |
+   | C8 | Crude oil customer |
+
+   The other six classes have no MPC code. This is option A of P06, which the decision owner chose (EPM-DEC-001-0047): a channel dimension built from C1 to C8, with no process-map change.
+9. **Direct dealers sit under Fuel Supply.** The class definition names a long-term supply agreement and a site brand assignment, not a Brand License (EPM-DEC-001-0067, What follows, item 1).
+10. **Code lists, as SKOS schemes** built from `code-lists.csv`:
+    - party types (2), party roles (14), relationship types (5), agreement types (7);
+    - lines of business (10, with SDP as a label only, EPM-DEC-001-0067);
+    - customer classes (14 and 4 groups), site types (6), operating models (3: COCO, CODO, DODO);
+    - identifier types (4), address usages (4), contact types (3), transaction kinds (7).
+    - Each value has a definition in Claude's words. Agreement types overlap, so an agreement can have more than one.
+11. **Relationships follow the decision owner's labels and their two rulings** (EPM-DEC-001-0067):
+    - Agreement is scoped to Product, and Customer Account is supplied from Site.
+    - "Authorizes brand at site" runs from Agreement to Site Brand Assignment.
+    - A brand reaches a party through an agreement (`cust:coversBrand`). A party owns or operates a site through a role held at the site (`cust:atSite`), which carries the role's dates.
+12. **Account facets without values.** Brand status, contract type, product line, segment, geography and delivery tier are secondary facets of the account in the model. The module declares one property for them, `cust:accountFacet`, and defines no values: the inputs name the facets but not their values. Statuses (party, account) are likewise declared without a list.
+13. **Mappings, not imports** (EPM-DEC-001-0023). Party, Person and Organization carry `skos:closeMatch` to FOAF and W3C ORG. Nothing is imported. The PIDX and OEO mappings still wait for product concepts (EPM-DEC-001-0064): the product line is a facet with no values yet.
+14. **The lubricants and marine product-line evidence is parked.** EPM-DEC-001-0004 held this evidence check with the Customer work. None of the decision owner's inputs names lubricants or marine. The product line is a facet with no values in this module. *Trigger:* the product line's values are defined, here or in a Product domain.
+15. **SHACL** (`shapes.ttl`), run with every other module's shapes on the whole graph (EPM-DEC-001-0065). The shapes check:
+    - each party is a person or an organization, with one legal name and a matching party type;
+    - each role is held by one party, with one role type from its list, a start date, and no end before its start;
+    - each relationship links two roles;
+    - each account belongs to a party;
+    - each class assignment names a class, not a group, and has a start date;
+    - each site brand assignment names a brand and a site, and is made under an agreement;
+    - each coded value comes from its own list;
+    - no class other than person and organization is a subclass of party.
+
+## Alternatives considered
+
+- **Customer as a subclass of party, or one subclass per role.** Not chosen: a party holds several roles at once and over time (playbook Step 5). Competency questions 19 to 24 ask exactly for this.
+- **Ship-To as a role.** Not chosen: the decision owner's role list has no Ship-To, and their inputs place it with stations and sites.
+- **Customer class as a direct property of the account.** Not chosen: the model gives class assignments effective dates.
+- **Extend the `organization` module.** Not chosen: that module models the company's own roles and RACI, which are positions people hold. A customer's party role is a different thing, and keeping them apart avoids two meanings of "role" in one module.
+- **Load the example organizations with the module.** Not chosen: they would be data in the ontology (EPM-DEC-001-0005). They stay test fixtures.
+
+## The decision owner's recorded words
+
+This record is Claude's, under the delegation: "yes, extend the delegation to steps 5 to 12." (`delegation-steps-5-12.md`). It builds on the decision owner's words recorded in EPM-DEC-001-0067 (`answers-2026-10-21-customer.md`). The decision owner can reverse any item.
+
+## Evidence
+
+- EPM-DEC-001-0067, and the decision owner's words in `answers-2026-10-21-customer.md`.
+- `business_architecture/reference/mpc/customer-classification-evidence.md` (C1 to C8).
+- `ontology-playbook.md`, Step 5.
+- EPM-DEC-001-0004, 0005, 0023, 0047, 0064, 0065.
+
+## Consequences
+
+- The `customer` module is built and checked by `scripts/check.sh`: the code lists must equal a fresh build, and `test_customer.py` checks the lists, the vocabulary, the five organizations both ways and the shapes. It is loaded with the regression graph, and its shapes join the Step 9 gate.
+- The module is not released. A release needs the decision owner's approval.
+- The regression stands at 34 answerable, 1 partial and 9 waiting. Questions 19 to 26 move in pull request 5.

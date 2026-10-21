@@ -1,0 +1,114 @@
+# Five invented organizations, each holding several roles, described in the customer module's
+# terms (EPM-DEC-001-0068). They are test fixtures, not customer records: every name is made up.
+# Competency questions section VII is done when such organizations can be described both ways,
+# party to roles and role to party, without calling Customer a role. test_customer.py checks it.
+@prefix cust: <https://w3id.org/lsc/ontology/modules/customer/> .
+@prefix ex: <https://w3id.org/lsc/ontology/modules/customer/example/> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/customer/party-role/> .
+@prefix cls: <https://w3id.org/lsc/ontology/modules/customer/customer-class/> .
+@prefix lob: <https://w3id.org/lsc/ontology/modules/customer/line-of-business/> .
+@prefix agt: <https://w3id.org/lsc/ontology/modules/customer/agreement-type/> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/customer/relationship-type/> .
+@prefix pt: <https://w3id.org/lsc/ontology/modules/customer/party-type/> .
+@prefix st: <https://w3id.org/lsc/ontology/modules/customer/site-type/> .
+@prefix om: <https://w3id.org/lsc/ontology/modules/customer/operating-model/> .
+@prefix tk: <https://w3id.org/lsc/ontology/modules/customer/transaction-kind/> .
+@prefix idt: <https://w3id.org/lsc/ontology/modules/customer/identifier-type/> .
+@prefix au: <https://w3id.org/lsc/ontology/modules/customer/address-usage/> .
+@prefix ct: <https://w3id.org/lsc/ontology/modules/customer/contact-type/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- 1. A branded jobber: Jobber, Sold-To, Payer and Bill-To on one account ----
+
+ex:jobber-co a cust:Organization ; cust:partyType pt:organization ; cust:legalName "Example Jobber Co." ;
+    cust:identifiedBy ex:jobber-co-tax ; cust:locatedAt ex:jobber-co-office ; cust:reachableAt ex:jobber-co-phone ;
+    cust:plays ex:jobber-co-jobber, ex:jobber-co-sold-to, ex:jobber-co-payer, ex:jobber-co-bill-to ;
+    cust:transactsThrough ex:jobber-co-account .
+ex:jobber-co-tax a cust:ExternalIdentifier ; cust:identifierType idt:tax-identifier ; cust:issuer "tax authority" .
+ex:jobber-co-office a cust:Address ; cust:addressUsage au:registered-office, au:billing ; cust:validFrom "2020-01-01"^^xsd:date .
+ex:jobber-co-phone a cust:ContactPoint ; cust:contactType ct:telephone .
+ex:jobber-co-jobber a cust:PartyRole ; cust:roleType role:jobber ; cust:validFrom "2020-01-01"^^xsd:date ;
+    cust:governedBy ex:jobber-supply ; cust:atSite ex:station-1 .
+ex:jobber-co-sold-to a cust:PartyRole ; cust:roleType role:sold-to ; cust:validFrom "2020-01-01"^^xsd:date ;
+    cust:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-payer a cust:PartyRole ; cust:roleType role:payer ; cust:validFrom "2020-01-01"^^xsd:date ;
+    cust:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-bill-to a cust:PartyRole ; cust:roleType role:bill-to ; cust:validFrom "2020-01-01"^^xsd:date ;
+    cust:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-account a cust:CustomerAccount ; cust:validFrom "2020-01-01"^^xsd:date ;
+    cust:classifiedAs ex:jobber-co-class ; cust:managedUnder lob:brand ; cust:framedBy ex:jobber-supply ;
+    cust:suppliedFrom ex:terminal-1 .
+ex:jobber-co-class a cust:CustomerClass ; cust:classValue cls:branded-jobber ; cust:validFrom "2020-01-01"^^xsd:date .
+ex:jobber-supply a cust:Agreement ; cust:agreementType agt:fuel-supply ; cust:coversBrand ex:brand-a ;
+    cust:authorizesBrandAtSite ex:station-1-brand ; cust:validFrom "2020-01-01"^^xsd:date ; cust:validTo "2029-12-31"^^xsd:date .
+ex:brand-a a cust:Brand .
+ex:station-1 a cust:Site ; cust:siteType st:station ; cust:operatingModel om:dodo ; cust:suppliedByTerminal ex:terminal-1 .
+ex:station-1-brand a cust:SiteBrandAssignment ; cust:assignsBrand ex:brand-a ; cust:appliesTo ex:station-1 ;
+    cust:validFrom "2020-01-01"^^xsd:date .
+ex:terminal-1 a cust:Site ; cust:siteType st:terminal .
+
+# ---- 2. A trader: Sold-To on one account, Supplier and Exchange Counterparty under other agreements ----
+
+ex:trader-co a cust:Organization ; cust:partyType pt:organization ; cust:legalName "Example Trading LLC" ;
+    cust:plays ex:trader-co-sold-to, ex:trader-co-supplier, ex:trader-co-exchange ;
+    cust:transactsThrough ex:trader-co-account .
+ex:trader-co-sold-to a cust:PartyRole ; cust:roleType role:sold-to ; cust:validFrom "2022-03-01"^^xsd:date ;
+    cust:exercisedWithin ex:trader-co-account .
+ex:trader-co-supplier a cust:PartyRole ; cust:roleType role:supplier ; cust:validFrom "2022-03-01"^^xsd:date .
+ex:trader-co-exchange a cust:PartyRole ; cust:roleType role:exchange-counterparty ; cust:validFrom "2023-01-01"^^xsd:date ;
+    cust:governedBy ex:trader-exchange ; cust:participatesIn ex:trader-transfer .
+ex:trader-co-account a cust:CustomerAccount ; cust:classifiedAs ex:trader-co-class ; cust:managedUnder lob:unbranded .
+ex:trader-co-class a cust:CustomerClass ; cust:classValue cls:wholesale-marketing ; cust:validFrom "2022-03-01"^^xsd:date .
+ex:trader-exchange a cust:Agreement ; cust:agreementType agt:exchange-buy-sell .
+ex:trader-transfer a cust:PartyTransactionAssociation ; cust:transactionKind tk:transfer ; cust:transactionReference "DEAL-1" .
+
+# ---- 3. A pipeline shipper: Throughput Holder and Payer ----
+
+ex:shipper-co a cust:Organization ; cust:partyType pt:organization ; cust:legalName "Example Shipper Inc." ;
+    cust:plays ex:shipper-co-throughput, ex:shipper-co-payer ;
+    cust:transactsThrough ex:shipper-co-account .
+ex:shipper-co-throughput a cust:PartyRole ; cust:roleType role:throughput-holder ; cust:validFrom "2021-06-01"^^xsd:date ;
+    cust:governedBy ex:shipper-throughput ; cust:participatesIn ex:shipper-ticket .
+ex:shipper-co-payer a cust:PartyRole ; cust:roleType role:payer ; cust:validFrom "2021-06-01"^^xsd:date ;
+    cust:exercisedWithin ex:shipper-co-account ; cust:participatesIn ex:shipper-invoice .
+ex:shipper-co-account a cust:CustomerAccount ; cust:classifiedAs ex:shipper-co-class ; cust:managedUnder lob:pipeline-ls .
+ex:shipper-co-class a cust:CustomerClass ; cust:classValue cls:pipeline-customer ; cust:validFrom "2021-06-01"^^xsd:date .
+ex:shipper-throughput a cust:Agreement ; cust:agreementType agt:throughput-storage .
+ex:shipper-ticket a cust:PartyTransactionAssociation ; cust:transactionKind tk:ticket-bol ; cust:transactionReference "TKT-1" .
+ex:shipper-invoice a cust:PartyTransactionAssociation ; cust:transactionKind tk:invoice ; cust:transactionReference "INV-1" ;
+    cust:forAccount ex:shipper-co-account .
+
+# ---- 4. A rack buyer: Sold-To, Position Holder and Loading-Authorized Party at a terminal ----
+
+ex:rack-co a cust:Organization ; cust:partyType pt:organization ; cust:legalName "Example Rack Buyer Corp." ;
+    cust:plays ex:rack-co-sold-to, ex:rack-co-position, ex:rack-co-loading ;
+    cust:transactsThrough ex:rack-co-account .
+ex:rack-co-sold-to a cust:PartyRole ; cust:roleType role:sold-to ; cust:validFrom "2024-01-01"^^xsd:date ;
+    cust:exercisedWithin ex:rack-co-account ; cust:participatesIn ex:rack-lifting .
+ex:rack-co-position a cust:PartyRole ; cust:roleType role:position-holder ; cust:validFrom "2024-01-01"^^xsd:date ;
+    cust:atSite ex:terminal-1 .
+ex:rack-co-loading a cust:PartyRole ; cust:roleType role:loading-authorized-party ; cust:validFrom "2024-01-01"^^xsd:date ;
+    cust:validTo "2024-12-31"^^xsd:date ; cust:atSite ex:terminal-1 .
+ex:rack-co-account a cust:CustomerAccount ; cust:classifiedAs ex:rack-co-class ; cust:managedUnder lob:unbranded .
+ex:rack-co-class a cust:CustomerClass ; cust:classValue cls:terminal-rack-customer ; cust:validFrom "2024-01-01"^^xsd:date .
+ex:rack-lifting a cust:PartyTransactionAssociation ; cust:transactionKind tk:ticket-bol ; cust:transactionReference "BOL-1" ;
+    cust:forAccount ex:rack-co-account .
+
+# ---- 5. A carrier that is also a vendor and a surety, and guarantees the jobber ----
+
+ex:carrier-co a cust:Organization ; cust:partyType pt:organization ; cust:legalName "Example Carrier Ltd." ;
+    cust:plays ex:carrier-co-carrier, ex:carrier-co-vendor, ex:carrier-co-surety .
+ex:carrier-co-carrier a cust:PartyRole ; cust:roleType role:carrier ; cust:validFrom "2019-05-01"^^xsd:date ;
+    cust:participatesIn ex:rack-lifting .
+ex:carrier-co-vendor a cust:PartyRole ; cust:roleType role:vendor ; cust:validFrom "2019-05-01"^^xsd:date .
+ex:carrier-co-surety a cust:PartyRole ; cust:roleType role:surety ; cust:validFrom "2021-01-01"^^xsd:date .
+ex:surety-for-jobber a cust:PartyRelationship ; cust:fromRole ex:carrier-co-surety ; cust:toRole ex:jobber-co-payer ;
+    cust:relationshipType rel:guarantor-of ; cust:validFrom "2021-01-01"^^xsd:date .
+
+# ---- A person who is the jobber's contact ----
+
+ex:contact-person a cust:Person ; cust:partyType pt:person ; cust:legalName "Pat Example" ;
+    cust:plays ex:contact-person-vendor .
+ex:contact-person-vendor a cust:PartyRole ; cust:roleType role:vendor ; cust:validFrom "2020-01-01"^^xsd:date .
+ex:contact-for-jobber a cust:PartyRelationship ; cust:fromRole ex:contact-person-vendor ; cust:toRole ex:jobber-co-jobber ;
+    cust:relationshipType rel:contact-for ; cust:validFrom "2020-01-01"^^xsd:date .

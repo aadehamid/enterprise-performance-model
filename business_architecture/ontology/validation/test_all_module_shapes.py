@@ -19,7 +19,7 @@ import run  # noqa: E402
 SHAPE_FILES = [
     "releases/core/2.1.0/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
-    "market-data/shapes.ttl", "consumer/shapes.ttl", "validation/controlled-values.ttl",
+    "market-data/shapes.ttl", "consumer/shapes.ttl", "customer/shapes.ttl", "validation/controlled-values.ttl",
 ]
 GRAPH = run.load(run.RELEASE)
 VS = Namespace("https://w3id.org/lsc/ontology/modules/value-stream/")

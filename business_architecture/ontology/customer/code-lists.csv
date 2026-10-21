@@ -1,0 +1,84 @@
+scheme,notation,label,broader,mpc_class,definition
+party-type,person,Person,,,A party that is a natural person.
+party-type,organization,Organization,,,"A party that is an organization, such as a company, a partnership or a public body."
+party-role,sold-to,Sold-To,,,The role of the party that buys: it places the order and is the party the sale is made to.
+party-role,payer,Payer,,,The role of the party that pays the invoices of an account.
+party-role,bill-to,Bill-To,,,The role of the party that receives the invoices of an account.
+party-role,consignee,Consignee,,,The role of the party that receives the delivered product.
+party-role,jobber,Jobber,,,"The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."
+party-role,dealer,Dealer,,,The role of a party that operates a branded site under a direct agreement with the company.
+party-role,exchange-counterparty,Exchange Counterparty,,,"The role of a party that swaps product with the company, or buys and sells with it, under an exchange or buy-sell agreement."
+party-role,throughput-holder,Throughput Holder,,,"The role of a party that moves or stores volumes under a throughput, storage or transport agreement."
+party-role,carrier,Carrier,,,The role of a party that transports product for a lifting or a movement.
+party-role,vendor,Vendor,,,The role of a party that sells goods or services to the company.
+party-role,surety,Surety,,,"The role of a party that guarantees another party's obligations, such as payment."
+party-role,supplier,Supplier,,,The role of a party that supplies product to the company.
+party-role,position-holder,Position Holder,,,"The role of the party that owns the product position from which a lifting at a terminal is drawn."
+party-role,loading-authorized-party,Loading-Authorized Party,,,"The role of a party that is allowed to lift product at a terminal. The role is held for a period; the permission that grants it is a separate record."
+relationship-type,parent-of,parent of,,,"One role's party is the parent of the other's, for example a parent company and a subsidiary."
+relationship-type,guarantor-of,guarantor of,,,One role guarantees the other's obligations.
+relationship-type,supplies,supplies,,,One role supplies product to the other.
+relationship-type,credit-roll-up,credit roll-up,,,One role's credit exposure is counted under the other's for credit limits and reviews.
+relationship-type,contact-for,contact for,,,One role is the contact for the other.
+agreement-type,fuel-supply,Fuel Supply,,,"An agreement under which the company supplies fuel, as a branded jobber, direct dealer or unbranded term agreement."
+agreement-type,exchange-buy-sell,Exchange / Buy-Sell,,,An agreement to swap product barrel for barrel or to buy and sell product with a counterparty.
+agreement-type,throughput-storage,Throughput / Storage,,,"An agreement to move or store a party's volumes through pipelines, terminals or tanks."
+agreement-type,brand-license,Brand License,,,An agreement that grants a party the right to use a brand for a period.
+agreement-type,consignment-commission,Consignment / Commission,,,"An agreement under which the company keeps ownership of product held at a party's site, which sells it for a commission."
+agreement-type,fleet-card-program,Fleet Card Program,,,An agreement that lets a party's vehicles buy fuel with a fleet card.
+agreement-type,offtake,Offtake,,,An agreement to take product from a source in agreed volumes over a period.
+line-of-business,brand,Brand,,,"The line of business that sells branded fuel to jobbers, dealers and their sites."
+line-of-business,unbranded,Unbranded,,,The line of business that sells fuel without a brand.
+line-of-business,asphalt,Asphalt,,,The line of business that sells asphalt.
+line-of-business,petrochemicals,Petrochemicals,,,The line of business that sells petrochemical products.
+line-of-business,sdp,SDP,,,"A line of business named SDP. The decision owner chose to keep the label without an expansion (EPM-DEC-001-0067)."
+line-of-business,renewable-fuels,Renewable Fuels,,,The line of business that sells renewable fuels.
+line-of-business,cardlock,Cardlock,,,"The line of business that sells fuel at unattended cardlock sites, to customers who pay by card."
+line-of-business,producers,Producers,,,The line of business that serves oil and gas producers.
+line-of-business,pipeline-ls,Pipeline L&S,,,"The line of business that serves pipeline customers of the logistics and storage business. L&S is Logistics and Storage (MPLX FY2023 Form 10-K)."
+line-of-business,misc,Misc,,,The line of business for customers that fit no other line.
+customer-class,brand-attached-resellers,Brand-attached resellers,,,The customer classes that resell fuel under a company brand.
+customer-class,wholesale-unbranded,Wholesale and unbranded,,,"The customer classes that buy fuel in bulk or without a brand, for resale."
+customer-class,end-users-specialty,End-users and specialty,,,"The customer classes that use the product themselves, or buy a specialty product or service."
+customer-class,trading-counterparties,Trading counterparties,,,"The customer classes that trade with the company, product for product or on a buy or sell basis."
+customer-class,branded-jobber,Branded jobber / marketer,brand-attached-resellers,C1,"An independent reseller of branded fuel under a branded supply agreement, which owns or operates its outlets. The usual pattern is the Jobber role, a Fuel Supply agreement and sites branded through site brand assignments."
+customer-class,direct-dealer,Direct dealer,brand-attached-resellers,C2,"A dealer that operates a branded site under a long-term supply agreement with the company. The usual pattern is the Dealer role, a Fuel Supply agreement and a site brand assignment."
+customer-class,wholesale-marketing,Wholesale marketing customer,wholesale-unbranded,C3,"A customer that buys in bulk for resale, in domestic or international markets, under term or spot arrangements. The usual pattern is the Sold-To role and a Fuel Supply or Offtake agreement."
+customer-class,independent-retailer,Independent retailer,wholesale-unbranded,C4,A retailer that is not a brand jobber or direct dealer and buys refined products for its own outlets.
+customer-class,unbranded-customer,Unbranded customer,wholesale-unbranded,C5,"A customer that buys gasoline or diesel without a brand: an independent marketer, a commercial end-user, an unbranded distributor or a high-volume retailer."
+customer-class,spot-market-buyer,Spot market buyer,wholesale-unbranded,C6,"A buyer that buys refined products on the spot market, not under a term agreement."
+customer-class,export-customer,Export customer,wholesale-unbranded,C7,"A buyer overseas. Product is lifted at a coastal refinery or at terminal gates, and supply usually comes from a refinery or terminal site."
+customer-class,terminal-rack-customer,Terminal / Rack customer,wholesale-unbranded,,"A customer that lifts product at terminal racks. Each lifting records the position holder, the customer and the carrier, usually as party transaction associations."
+customer-class,forecast-driven-customer,Forecast-driven customer,wholesale-unbranded,,"A customer whose supply is planned from forecasts, not fixed orders, usually as an account facet with demand planning."
+customer-class,commercial-industrial-end-user,Commercial and industrial end-user,end-users-specialty,,"A customer that uses the product in its own operations, such as a fleet, an airline, a utility or a railroad. The usual pattern is the Sold-To role and a Fuel Supply or Fleet Card Program agreement."
+customer-class,asphalt-bitumen-buyer,Asphalt / Bitumen buyer,end-users-specialty,,"A paving or roofing buyer of asphalt or bitumen. Public bids and tax-exempt purchases are common. An agreement whose product scope is asphalt usually identifies the customer."
+customer-class,pipeline-customer,Pipeline customer,end-users-specialty,,"A customer that ships or stores volumes under a throughput, storage or transport agreement, with invoices that flow back to settlement. The usual pattern is a Throughput / Storage agreement and party transaction associations on tickets and invoices."
+customer-class,exchange-trading-counterparty,Exchange / Trading counterparty,trading-counterparties,,"A party that swaps product with the company barrel for barrel, or trades with it on a buy or sell basis, with differences settled as imbalances. It acts through the Exchange Counterparty role and is a customer only when a revenue-recognized relationship exists."
+customer-class,crude-oil-customer,Crude oil customer,trading-counterparties,C8,An external customer that buys crude oil from the company.
+site-type,station,Station,,,A retail fuel station.
+site-type,bulk-plant,Bulk plant,,,A bulk fuel storage and distribution plant.
+site-type,cardlock,Cardlock,,,An unattended fueling site that customers use with a card.
+site-type,terminal,Terminal,,,A terminal where product is stored and lifted at racks.
+site-type,airport-location,Airport location,,,A fueling location at an airport.
+site-type,pipeline-delivery-point,Pipeline delivery point,,,A point where a pipeline delivers product to a customer.
+operating-model,coco,COCO,,,A site that the company owns and operates.
+operating-model,codo,CODO,,,A site that the company owns and a dealer operates.
+operating-model,dodo,DODO,,,A site that a dealer owns and operates.
+identifier-type,tax-identifier,Tax identifier,,,"A tax identifier issued by a tax authority, such as an EIN or FEIN."
+identifier-type,public-company-identifier,Public-company identifier,,,"An identifier of a listed or registered company, such as a ticker symbol or an SEC CIK."
+identifier-type,industry-code,Industry code,,,An identifier or code issued by an industry body.
+identifier-type,legacy-identifier,Legacy identifier,,,An identifier from an earlier or another system.
+address-usage,registered-office,Registered office,,,The address of a party's registered office.
+address-usage,mailing,Mailing,,,The address a party receives mail at.
+address-usage,billing,Billing,,,The address a party's invoices go to.
+address-usage,operating-location,Operating location,,,An address where a party operates.
+contact-type,telephone,Telephone,,,A telephone number.
+contact-type,email,Email,,,An email address.
+contact-type,fax,Fax,,,A fax number.
+transaction-kind,order,Order,,,A sales or purchase order.
+transaction-kind,ticket-bol,Ticket or BOL,,,A movement ticket or a bill of lading.
+transaction-kind,invoice,Invoice,,,An invoice.
+transaction-kind,payment,Payment,,,A payment.
+transaction-kind,case,Case,,,"A service or setup case, such as a request to create or change a customer."
+transaction-kind,trade,Trade,,,"A trade captured in a deal: a buy, a sell or a storage rental."
+transaction-kind,transfer,Transfer,,,A transfer captured in a deal: an exchange of products.

@@ -1,0 +1,358 @@
+# The customer module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068): the
+# decision owner's conceptual data model of Customer, as classes and properties. The definitions
+# are Claude's words, derived from that model, which is not in this repository (EPM-DEC-001-0067).
+# The module holds definitions only: customer records stay in the systems (EPM-DEC-001-0005).
+# Its code lists are in code-lists.ttl, built from code-lists.csv.
+@prefix cust: <https://w3id.org/lsc/ontology/modules/customer/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- Identity: who the party is, independent of any role ----
+
+cust:Party a owl:Class ;
+    rdfs:label "party"@en ;
+    skos:definition "A person or an organization, as one identity, whatever roles it plays. It has a legal name, a status and a period it is valid for. Each party is a person or an organization, never both."@en ;
+    skos:scopeNote "Customer is not a kind of party. A party becomes a customer by holding a customer role exercised within a customer account."@en ;
+    skos:closeMatch <http://xmlns.com/foaf/0.1/Agent> ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en .
+
+cust:Person a owl:Class ;
+    rdfs:subClassOf cust:Party ;
+    owl:disjointWith cust:Organization ;
+    rdfs:label "person"@en ;
+    skos:definition "A party that is a natural person."@en ;
+    skos:closeMatch <http://xmlns.com/foaf/0.1/Person> ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Organization a owl:Class ;
+    rdfs:subClassOf cust:Party ;
+    rdfs:label "organization"@en ;
+    skos:definition "A party that is an organization, such as a company, a partnership or a public body."@en ;
+    skos:closeMatch <http://www.w3.org/ns/org#Organization> ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:ExternalIdentifier a owl:Class ;
+    rdfs:label "external identifier"@en ;
+    skos:definition "An identifier of a party or of one of its roles, issued by an authority, an industry body or an earlier system, such as a tax identifier, a public-company identifier, an industry code or a legacy identifier. It records its issuer and its type."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Address a owl:Class ;
+    rdfs:label "address"@en ;
+    skos:definition "A physical or postal location of a party, such as its registered office, a mailing address, a billing address or an operating location. It records its type, how it is used and the period it is valid for. A party can hold several addresses at once."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:ContactPoint a owl:Class ;
+    rdfs:label "contact point"@en ;
+    skos:definition "A telephone number, an email address or a fax number through which a party can be reached. It records its usage type and the period it is valid for."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Customer anatomy: how a party becomes a customer ----
+
+cust:PartyRole a owl:Class ;
+    rdfs:label "party role"@en ;
+    skos:definition "A function one party performs in a business context, held from a start date to an end date. Customer roles and other roles sit side by side on the same party. Its role type comes from a governed list; a new role type needs a governance decision."@en ;
+    skos:scopeNote "A role is a node, not a subclass of party: one party can hold many roles at once, each for its own period (ontology-playbook.md, Step 5)."@en ;
+    dcterms:bibliographicCitation "ontology-playbook.md, Step 5; EPM-DEC-001-0068"@en .
+
+cust:PartyRelationship a owl:Class ;
+    rdfs:label "party relationship"@en ;
+    skos:definition "A dated, typed link from one party role to another, such as parent of, guarantor of, supplies, credit roll-up or contact for."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:CustomerAccount a owl:Class ;
+    rdfs:label "customer account"@en ;
+    skos:definition "The commercial and financial container for a party's relationship with the company; the party transacts through it. It holds the account status, payment and credit terms, the company-code assignment, settlement details and the period it is valid for. The customer class is assigned at this level."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:CustomerClass a owl:Class ;
+    rdfs:label "customer class"@en ;
+    skos:definition "The assignment of a class from the customer-class list to a customer account, from a start date to an end date. A class describes how the customer buys: its role, its channel and its supply pattern."@en ;
+    skos:scopeNote "The class values are concepts of the customer-class scheme; this class is the dated assignment of one of them to one account."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0047, What follows, item 5; EPM-DEC-001-0068"@en .
+
+cust:LineOfBusiness a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "line of business"@en ;
+    skos:definition "A governed category of the company's business that a customer sits under. It decides which information is needed to set the customer up. A customer can sit under more than one."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Brand a owl:Class ;
+    rdfs:label "brand"@en ;
+    skos:definition "A trademark a product is marketed under. The network carries owned, licensed and competitor brands. A brand is owned by or licensed to a party for a period, through a Brand License agreement."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Agreement a owl:Class ;
+    rdfs:label "agreement"@en ;
+    skos:definition "The commercial frame that party roles work under. It sets terms, pricing, volume, product scope, brand, territory, exclusivity and assignment rights. Its types overlap: one agreement can have several."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:SiteBrandAssignment a owl:Class ;
+    rdfs:label "site brand assignment"@en ;
+    skos:definition "The link of a site to a brand under an agreement, from a start date to an end date. It survives a change in who owns the site. When the supply agreement expires, the site converts."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067, What follows, item 4; EPM-DEC-001-0068"@en .
+
+# ---- Operational context: where the customer operates ----
+
+cust:PartyTransactionAssociation a owl:Class ;
+    rdfs:label "party transaction association"@en ;
+    skos:definition "The link of a party role, or of an account, to one transaction, with the role it played there. A transaction can be an order, a ticket or bill of lading, an invoice, a payment or a case, or a trade or transfer captured in a deal. It records the transaction reference, the role, the account and the period it is valid for."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Product a owl:Class ;
+    rdfs:label "product"@en ;
+    skos:definition "A marketable hydrocarbon product or grade. It is mastered in the Product domain and referred to here, not modelled. Contract terms are set per product, so specialty buyers are told apart by an agreement's product scope."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:Site a owl:Class ;
+    rdfs:label "site"@en ;
+    skos:definition "A physical operating location with its own lifecycle, whoever owns it: a station, a bulk plant, a cardlock, a terminal, an airport location or a pipeline delivery point. It records its operating model, amenities, image compliance and the terminals that supply it. A party owns or operates it for a period, through a party role held at the site."@en ;
+    skos:scopeNote "A ship-to is a site, not a role: the party that receives product there holds the Consignee role (competency question 21; EPM-DEC-001-0068)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Validity, shared by the dated classes ----
+
+cust:validFrom a owl:DatatypeProperty ;
+    rdfs:label "valid from"@en ; rdfs:range xsd:date ;
+    skos:definition "The first day the record holds."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:validTo a owl:DatatypeProperty ;
+    rdfs:label "valid to"@en ; rdfs:range xsd:date ;
+    skos:definition "The last day the record holds. A record with no end date still holds."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Identity links ----
+
+cust:partyType a owl:ObjectProperty ;
+    rdfs:label "party type"@en ; rdfs:domain cust:Party ; rdfs:range skos:Concept ;
+    skos:definition "Person or organization, from the party-type list. It agrees with the party's class."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:legalName a owl:DatatypeProperty ;
+    rdfs:label "legal name"@en ; rdfs:domain cust:Party ; rdfs:range xsd:string ;
+    skos:definition "The party's name as registered."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:partyStatus a owl:DatatypeProperty ;
+    rdfs:label "party status"@en ; rdfs:domain cust:Party ; rdfs:range xsd:string ;
+    skos:definition "Whether the party is active. The list of statuses is not yet defined."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:identifiedBy a owl:ObjectProperty ;
+    rdfs:label "identified by"@en ; rdfs:domain cust:Party ; rdfs:range cust:ExternalIdentifier ;
+    skos:definition "An external identifier of the party."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:identifierType a owl:ObjectProperty ;
+    rdfs:label "identifier type"@en ; rdfs:domain cust:ExternalIdentifier ; rdfs:range skos:Concept ;
+    skos:definition "The kind of identifier, from the identifier-type list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:issuer a owl:DatatypeProperty ;
+    rdfs:label "issuer"@en ; rdfs:domain cust:ExternalIdentifier ; rdfs:range xsd:string ;
+    skos:definition "The authority, industry body or system that issued the identifier."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:locatedAt a owl:ObjectProperty ;
+    rdfs:label "located at"@en ; rdfs:domain cust:Party ; rdfs:range cust:Address ;
+    skos:definition "An address of the party."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:addressUsage a owl:ObjectProperty ;
+    rdfs:label "address usage"@en ; rdfs:domain cust:Address ; rdfs:range skos:Concept ;
+    skos:definition "How the address is used, from the address-usage list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:reachableAt a owl:ObjectProperty ;
+    rdfs:label "reachable at"@en ; rdfs:domain cust:Party ; rdfs:range cust:ContactPoint ;
+    skos:definition "A contact point of the party."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:contactType a owl:ObjectProperty ;
+    rdfs:label "contact type"@en ; rdfs:domain cust:ContactPoint ; rdfs:range skos:Concept ;
+    skos:definition "Telephone, email or fax, from the contact-type list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Roles and relationships ----
+
+cust:plays a owl:ObjectProperty ;
+    rdfs:label "plays"@en ; rdfs:domain cust:Party ; rdfs:range cust:PartyRole ;
+    skos:definition "A role the party holds. Each role is held by exactly one party."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:roleType a owl:ObjectProperty ;
+    rdfs:label "role type"@en ; rdfs:domain cust:PartyRole ; rdfs:range skos:Concept ;
+    skos:definition "The kind of role, from the party-role list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067, What follows, item 10; EPM-DEC-001-0068"@en .
+
+cust:atSite a owl:ObjectProperty ;
+    rdfs:label "at site"@en ; rdfs:domain cust:PartyRole ; rdfs:range cust:Site ;
+    skos:definition "The site where the role is held, such as the station a dealer operates or the terminal a loading-authorized party lifts at."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:fromRole a owl:ObjectProperty ;
+    rdfs:label "from role"@en ; rdfs:domain cust:PartyRelationship ; rdfs:range cust:PartyRole ;
+    skos:definition "The role the relationship starts from: the parent, the guarantor, the supplier, the role whose credit rolls up, or the contact."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:toRole a owl:ObjectProperty ;
+    rdfs:label "to role"@en ; rdfs:domain cust:PartyRelationship ; rdfs:range cust:PartyRole ;
+    skos:definition "The role the relationship points to."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:relationshipType a owl:ObjectProperty ;
+    rdfs:label "relationship type"@en ; rdfs:domain cust:PartyRelationship ; rdfs:range skos:Concept ;
+    skos:definition "The kind of relationship, from the relationship-type list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- The account ----
+
+cust:transactsThrough a owl:ObjectProperty ;
+    rdfs:label "transacts through"@en ; rdfs:domain cust:Party ; rdfs:range cust:CustomerAccount ;
+    skos:definition "An account the party transacts through."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:exercisedWithin a owl:ObjectProperty ;
+    rdfs:label "exercised within"@en ; rdfs:domain cust:PartyRole ; rdfs:range cust:CustomerAccount ;
+    skos:definition "The account a role is exercised within, such as the account a payer pays for."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:classifiedAs a owl:ObjectProperty ;
+    rdfs:label "classified as"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range cust:CustomerClass ;
+    skos:definition "A dated class assignment of the account."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:classValue a owl:ObjectProperty ;
+    rdfs:label "class value"@en ; rdfs:domain cust:CustomerClass ; rdfs:range skos:Concept ;
+    skos:definition "The class assigned, from the customer-class list. Only a class, never one of the four groups, is assigned."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:managedUnder a owl:ObjectProperty ;
+    rdfs:label "managed under"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range cust:LineOfBusiness ;
+    skos:definition "A line of business the account sits under."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:accountStatus a owl:DatatypeProperty ;
+    rdfs:label "account status"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range xsd:string ;
+    skos:definition "Whether the account is active, blocked or closed. The list of statuses is not yet defined."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:paymentTerms a owl:DatatypeProperty ;
+    rdfs:label "payment terms"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range xsd:string ;
+    skos:definition "When and how the account pays its invoices."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:creditTerms a owl:DatatypeProperty ;
+    rdfs:label "credit terms"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range xsd:string ;
+    skos:definition "The credit the company extends on the account: its limit and its conditions. Credit sits on the account; a credit roll-up relationship counts one role's exposure under another's."@en ;
+    dcterms:bibliographicCitation "competency question 23; EPM-DEC-001-0068"@en .
+
+cust:companyCode a owl:DatatypeProperty ;
+    rdfs:label "company code"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range xsd:string ;
+    skos:definition "The company code the account is assigned to in the financial system."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:settlementDetails a owl:DatatypeProperty ;
+    rdfs:label "settlement details"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range xsd:string ;
+    skos:definition "How the account settles: the method and the bank or payment details it uses."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:accountFacet a owl:ObjectProperty ;
+    rdfs:label "account facet"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range skos:Concept ;
+    skos:definition "A secondary facet of the account: its brand status, contract type, product line, segment, geography or delivery tier. The values of these facets are not yet defined."@en ;
+    skos:scopeNote "The delivery tier answers the delivery-mode candidate of the peers' filings, which is not added separately (EPM-DEC-001-0067, What follows, item 9)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Agreements, brands and sites ----
+
+cust:governedBy a owl:ObjectProperty ;
+    rdfs:label "governed by"@en ; rdfs:domain cust:PartyRole ; rdfs:range cust:Agreement ;
+    skos:definition "An agreement the role works under."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:framedBy a owl:ObjectProperty ;
+    rdfs:label "framed by"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range cust:Agreement ;
+    skos:definition "An agreement that frames the account."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:agreementType a owl:ObjectProperty ;
+    rdfs:label "agreement type"@en ; rdfs:domain cust:Agreement ; rdfs:range skos:Concept ;
+    skos:definition "A type of the agreement, from the agreement-type list. An agreement can have more than one."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:scopedToProduct a owl:ObjectProperty ;
+    rdfs:label "scoped to product"@en ; rdfs:domain cust:Agreement ; rdfs:range cust:Product ;
+    skos:definition "A product the agreement covers."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en .
+
+cust:coversBrand a owl:ObjectProperty ;
+    rdfs:label "covers brand"@en ; rdfs:domain cust:Agreement ; rdfs:range cust:Brand ;
+    skos:definition "A brand the agreement sets terms for. A Brand License agreement licenses the brand to a party for the agreement's period."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:authorizesBrandAtSite a owl:ObjectProperty ;
+    rdfs:label "authorizes brand at site"@en ; rdfs:domain cust:Agreement ; rdfs:range cust:SiteBrandAssignment ;
+    skos:definition "A site brand assignment the agreement authorizes."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067, What follows, item 4; EPM-DEC-001-0068"@en .
+
+cust:assignsBrand a owl:ObjectProperty ;
+    rdfs:label "assigns brand"@en ; rdfs:domain cust:SiteBrandAssignment ; rdfs:range cust:Brand ;
+    skos:definition "The brand the assignment gives the site."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:appliesTo a owl:ObjectProperty ;
+    rdfs:label "applies to"@en ; rdfs:domain cust:SiteBrandAssignment ; rdfs:range cust:Site ;
+    skos:definition "The site the assignment brands."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:suppliedFrom a owl:ObjectProperty ;
+    rdfs:label "supplied from"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range cust:Site ;
+    skos:definition "A site the account is supplied from, such as a refinery or a terminal."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en .
+
+cust:siteType a owl:ObjectProperty ;
+    rdfs:label "site type"@en ; rdfs:domain cust:Site ; rdfs:range skos:Concept ;
+    skos:definition "The kind of site, from the site-type list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:operatingModel a owl:ObjectProperty ;
+    rdfs:label "operating model"@en ; rdfs:domain cust:Site ; rdfs:range skos:Concept ;
+    skos:definition "Who owns and who operates the site: COCO, CODO or DODO, from the operating-model list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en .
+
+cust:suppliedByTerminal a owl:ObjectProperty ;
+    rdfs:label "supplied by terminal"@en ; rdfs:domain cust:Site ; rdfs:range cust:Site ;
+    skos:definition "A terminal that supplies the site."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- Transactions ----
+
+cust:participatesIn a owl:ObjectProperty ;
+    rdfs:label "participates in"@en ; rdfs:domain cust:PartyRole ; rdfs:range cust:PartyTransactionAssociation ;
+    skos:definition "A transaction association the role takes part in."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:forAccount a owl:ObjectProperty ;
+    rdfs:label "for account"@en ; rdfs:domain cust:PartyTransactionAssociation ; rdfs:range cust:CustomerAccount ;
+    skos:definition "The account the transaction is booked to."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:transactionKind a owl:ObjectProperty ;
+    rdfs:label "transaction kind"@en ; rdfs:domain cust:PartyTransactionAssociation ; rdfs:range skos:Concept ;
+    skos:definition "The kind of transaction, from the transaction-kind list."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+cust:transactionReference a owl:DatatypeProperty ;
+    rdfs:label "transaction reference"@en ; rdfs:domain cust:PartyTransactionAssociation ; rdfs:range xsd:string ;
+    skos:definition "The identifier of the transaction in the system that holds it."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+
+# ---- The MPC customer classification (the channel dimension, MPC-P06) ----
+
+cust:mpcClassification a owl:DatatypeProperty ;
+    rdfs:label "MPC classification"@en ; rdfs:domain skos:Concept ; rdfs:range xsd:string ;
+    skos:definition "The code, C1 to C8, of the class in the customer classification built from MPC's filings, which the class corresponds to."@en ;
+    dcterms:bibliographicCitation "business_architecture/reference/mpc/customer-classification-evidence.md; EPM-DEC-001-0047, What follows, item 5; EPM-DEC-001-0068"@en .
