@@ -40,6 +40,13 @@ class Release(unittest.TestCase):
         self.assertEqual(failures, [])
         self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (34, 1, 9))
 
+    def test_q15b_reports_the_systems_in_two_modules_as_one(self):
+        # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name.
+        with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
+            rows = GRAPH.query(f.read())
+        words = {str(r.word) for r in rows if r.link == SKOS.exactMatch}
+        self.assertEqual(words, {"RightAngle", "KittyHawk", "Profisee"})
+
     def test_an_orphan_fails_q2(self):
         g = Graph()
         g += GRAPH

@@ -1086,6 +1086,9 @@ without a dated amendment and the decision owner's explicit agreement.
   (a retired IRI's `dcterms:isReplacedBy`) or how they relate (a link such
   as `vs:realizes`); with neither, they are different things. 61 words name
   more than one IRI across the modules.
+  *2026-10-21:* `skos:exactMatch` is a link of the first kind too: the
+  `party` module's RightAngle, KittyHawk and Profisee are the system
+  module's nodes of the same name, and q15b reports them (EPM-DEC-001-0069).
 
 ### Lane module (2026-10-19)
 - Under the delegation (EPM-DEC-001-0056): a new `lane` module holds the
