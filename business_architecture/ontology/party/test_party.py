@@ -251,6 +251,16 @@ class Shapes(unittest.TestCase):
     def test_customer_as_a_subclass_of_party(self):
         self.assertRejects("party:Customer rdfs:subClassOf party:Party .", "not a subclass of party")
 
+    def test_customer_as_a_subclass_of_organization(self):
+        self.assertRejects("party:Customer rdfs:subClassOf party:Organization .", "not a subclass of party")
+
+    def test_customer_as_a_subclass_of_person(self):
+        self.assertRejects("party:Customer rdfs:subClassOf party:Person .", "not a subclass of party")
+
+    def test_customer_two_links_below_party(self):
+        self.assertRejects("party:Customer rdfs:subClassOf ex:Buyer . ex:Buyer rdfs:subClassOf party:Organization .",
+                           "not a subclass of party")
+
     def test_a_site_brand_assignment_with_no_agreement(self):
         self.assertRejects('ex:sba a party:SiteBrandAssignment ; party:assignsBrand ex:brand-a ; party:appliesTo ex:station-1 ; '
                            'party:validFrom "2020-01-01"^^xsd:date .', "made under an agreement")

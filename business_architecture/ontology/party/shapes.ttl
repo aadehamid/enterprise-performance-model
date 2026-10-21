@@ -133,6 +133,7 @@ partysh:PartyTransactionAssociation a sh:NodeShape ;
             [ sh:path party:forAccount ; sh:minCount 1 ] ) .
 
 # ---- The vocabulary: customer is not a kind of party ----
+# Any chain of subclass links counts: a class under Person or Organization is a subclass of party too.
 
 partysh:NoCustomerSubclass a sh:NodeShape ;
     sh:targetSubjectsOf rdfs:subClassOf ;
@@ -141,7 +142,8 @@ partysh:NoCustomerSubclass a sh:NodeShape ;
         sh:message "Only person and organization are kinds of party. A customer, or any role, is a party role, not a subclass of party." ;
         sh:select """
             SELECT $this WHERE {
-                $this <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/lsc/ontology/modules/party/Party> .
-                FILTER ($this NOT IN (<https://w3id.org/lsc/ontology/modules/party/Person>,
+                $this <http://www.w3.org/2000/01/rdf-schema#subClassOf>+ <https://w3id.org/lsc/ontology/modules/party/Party> .
+                FILTER ($this NOT IN (<https://w3id.org/lsc/ontology/modules/party/Party>,
+                                      <https://w3id.org/lsc/ontology/modules/party/Person>,
                                       <https://w3id.org/lsc/ontology/modules/party/Organization>))
             }""" ] .

@@ -74,7 +74,7 @@ Every entity is in scope ("nothing on the conceptual is out of scope", EPM-DEC-0
     - each class assignment names a class, not a group, and has a start date;
     - each site brand assignment names a brand and a site, and is made under an agreement;
     - each coded value comes from its own list;
-    - no class other than person and organization is a subclass of party.
+    - no class other than person and organization is a subclass of party, directly or through any chain of subclass links.
 
 ## Alternatives considered
 
