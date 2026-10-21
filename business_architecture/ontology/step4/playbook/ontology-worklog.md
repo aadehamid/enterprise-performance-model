@@ -975,7 +975,7 @@ without a dated amendment and the decision owner's explicit agreement.
   follows): four customer classes from the repository's MPC customer
   classification, making 14 with the
   ten Claude read in the decision owner's model, and the Position Holder
-  and Loading-Authorized Party roles are to be added in the `customer`
+  and Loading-Authorized Party roles are to be added in the `party`
   module's pull request; four more pull requests follow, five in all.
 
 ### Crack spread's primary source (2026-10-20)
@@ -997,7 +997,8 @@ without a dated amendment and the decision owner's explicit agreement.
 - Under the delegation (EPM-DEC-001-0064): PIDX's terms are checked
   (royalty free, for use without modification); PIDX and OEO wait for
   product concepts, from the Customer module's product-line facet or
-  another product dimension; IOF Supply Chain is parked until a concept
+  another product dimension (*2026-10-21:* that facet is in the `party`
+  module, EPM-DEC-001-0067, and its values are not yet defined); IOF Supply Chain is parked until a concept
   layer for logistics assets or movements, or a consumer that needs IOF
   terms. GLEIF and DCAT are mapped.
 
