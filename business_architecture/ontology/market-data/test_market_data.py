@@ -62,17 +62,23 @@ class Build(unittest.TestCase):
             self.assertEqual(DATA.value(SERIES[series], MKT.legsUnstated), Literal(True))
             self.assertEqual(recipe(series), set())
 
-    def test_price_master_ids(self):
-        ids = {str(DATA.value(SERIES[s], MKT.priceMasterId)) for s in
-               ("crack-mpr-43870", "crack-mpr-37438", "crack-mpr-37439", "crack-mpr-36855", "crack-mpr-37443", "crack-mpr-37471")}
-        self.assertEqual(ids, {"43870", "37438", "37439", "36855", "37443", "37471"})
-        self.assertEqual(str(DATA.value(SERIES["crack-nymex-3-2-1"], MKT.priceMasterId)), "39998")
+    def test_price_master_ids_and_regions(self):
+        # MPC Economics' definition, sections 4.1, 4.3 and 4.4: each series with its own ID and market region.
+        expected = {"crack-mpr-43870": ("43870", "usgc"), "crack-mpr-37438": ("37438", "chicago"),
+                    "crack-mpr-37439": ("37439", "group-3"), "crack-mpr-36855": ("36855", "la"),
+                    "crack-mpr-37443": ("37443", "pnw"), "crack-mpr-37471": ("37471", "slc"),
+                    "crack-mpr-37464": ("37464", None), "crack-mpr-42023": ("42023", None),
+                    "crack-nymex-3-2-1": ("39998", None)}
+        for series, (mpr, region) in expected.items():
+            self.assertEqual(str(DATA.value(SERIES[series], MKT.priceMasterId)), mpr, series)
+            self.assertEqual(DATA.value(SERIES[series], MKT.region), REGION[region] if region else None, series)
 
     def test_economics_blend(self):
         for blend in ("crack-mpr-37464", "crack-mpr-42023"):
             self.assertEqual(set(DATA.objects(SERIES[blend], MKT.blendOf)),
                              {SERIES["crack-mpr-43870"], SERIES["crack-mpr-37438"], SERIES["crack-mpr-36855"]})
-            self.assertIn("before 5 May 2024", str(DATA.value(SERIES[blend], SKOS.scopeNote)))
+            self.assertIn("USGC 0.40, Chicago 0.40 and LA 0.20 before 5 May 2024, and USGC 0.42, Chicago 0.40 and LA 0.18 after",
+                          str(DATA.value(SERIES[blend], SKOS.scopeNote)))
 
     def test_blend(self):
         self.assertEqual(set(DATA.objects(SERIES["crack-blended-3-2-1"], MKT.blendOf)),
