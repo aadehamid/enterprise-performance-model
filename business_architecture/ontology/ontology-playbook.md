@@ -1468,6 +1468,12 @@ owner made them the source author's backlog.
   treatment and blend, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14), the placement kinds, the source tiers, the full APQC element list, the
   consumer rules and the measure populations. Regression went from 17 to
   34 answerable questions; the nine still waiting all wait on the owner.
+  *2026-10-20:* the decision owner then supplied MPC Economics' own crack
+  spread definition and made it the primary source; the module grew to 13
+  series, and two planner names moved to series that deduct the RVO cost
+  (EPM-DEC-001-0066). The lesson: ask the decision owner for the
+  organization's own definition of a measure before settling it from
+  public filings.
 - *What the whole-graph gate caught* (EPM-DEC-001-0065). Every module's
   own tests passed, yet running all the shapes together found a lane shape
   that targeted every concept in any scheme and rules that gave

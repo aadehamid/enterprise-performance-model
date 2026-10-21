@@ -1,4 +1,10 @@
-slug,label,definition
-gulf-coast,Gulf Coast,"MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries."
-mid-continent,Mid-Continent,"MPC's Mid-Continent refining region: the Catlettsburg, Robinson, Detroit, El Paso, St. Paul Park, Canton, Mandan and Salt Lake City refineries."
-west-coast,West Coast,"MPC's West Coast refining region: the Los Angeles, Anacortes and Kenai refineries."
+slug,label,definition,scheme
+gulf-coast,Gulf Coast,"MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries.",refining
+mid-continent,Mid-Continent,"MPC's Mid-Continent refining region: the Catlettsburg, Robinson, Detroit, El Paso, St. Paul Park, Canton, Mandan and Salt Lake City refineries.",refining
+west-coast,West Coast,"MPC's West Coast refining region: the Los Angeles, Anacortes and Kenai refineries.",refining
+usgc,USGC,The U.S. Gulf Coast product market of MPC Economics' USGC 3-2-1 crack series.,market
+chicago,Chicago,The Chicago product market of MPC Economics' Chicago 3-2-1 crack series.,market
+group-3,Group 3 (Tulsa),"The Group 3 product market, priced at Tulsa, of MPC Economics' Group 3-2-1 crack series.",market
+la,LA,The Los Angeles product market of MPC Economics' LA 3-2-1 crack series.,market
+pnw,PNW,The Pacific Northwest product market of MPC Economics' PNW 3-2-1 crack series.,market
+slc,SLC,The Salt Lake City product market of MPC Economics' SLC 3-2-1 crack series.,market

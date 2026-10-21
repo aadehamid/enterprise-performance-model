@@ -16,7 +16,7 @@ From `../mpc/mpc-performance-measures-evidence.md`, rows 10 and 11, which quote 
 - The blended crack spread is weighted by MPC's refining capacity by region in each period.
 - MPC does not use LLS or RBOB (row 11).
 
-So "USGC 3-2-1 MEH ex-RIN" is MPC's Gulf Coast crack spread, and "Chicago WTI 3-2-1 ex-RIN" is MPC's Mid-Continent crack spread: same crude, same product markets, same ratio, same RIN treatment.
+So "USGC 3-2-1 MEH ex-RIN" is MPC's Gulf Coast crack spread, and "Chicago WTI 3-2-1 ex-RIN" is MPC's Mid-Continent crack spread: same crude, same product markets, same ratio, same RIN treatment. *2026-10-20:* Corrected by EPM-DEC-001-0066: by MPC Economics' definition, the planner's "USGC 3-2-1 MEH ex-RIN" and "Chicago WTI 3-2-1 ex-RIN" are its published series 43870 and 37438, which deduct the RVO cost; MPC's 10-K cracks do not, so they are different series.
 
 ## CME Group (industry, the exchange that lists the contracts)
 

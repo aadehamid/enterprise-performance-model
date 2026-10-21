@@ -1,13 +1,25 @@
-slug,label,kind,region,definition,source
-wti,WTI,crude-marker,mid-continent,"The WTI crude price, the crude marker of MPC's Mid-Continent crack spread.",MPC-S01
-meh,MEH,crude-marker,gulf-coast,"The MEH crude price, the crude marker of MPC's Gulf Coast crack spread.",MPC-S01
-ans,ANS,crude-marker,west-coast,"The ANS crude price, the crude marker of MPC's West Coast crack spread.",MPC-S01
-usgc-cbob,USGC CBOB,product-benchmark,gulf-coast,"The USGC CBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01
-usgc-ulsd,USGC ULSD,product-benchmark,gulf-coast,"The USGC ULSD price, a benchmark price in MPC's marketing areas.",MPC-S01
-chicago-cbob,Chicago CBOB,product-benchmark,mid-continent,"The Chicago CBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01
-chicago-ulsd,Chicago ULSD,product-benchmark,mid-continent,"The Chicago ULSD price, a benchmark price in MPC's marketing areas.",MPC-S01
-la-carbob,LA CARBOB,product-benchmark,west-coast,"The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01
-la-carb-diesel,LA CARB Diesel,product-benchmark,west-coast,"The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas.",MPC-S01
-nymex-wti,NYMEX WTI Crude Oil futures (CL),crude-marker,,"The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread.",CME-FRESH
-nymex-rbob,NYMEX RBOB Gasoline futures (RB),product-benchmark,,"The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks.",CME-FRESH
-nymex-ny-harbor-ulsd,NYMEX NY Harbor ULSD futures (HO),product-benchmark,,"The NYMEX NY Harbor ULSD futures contract, the diesel leg of the NYMEX 3:2:1 crack spread.",CME-FRESH
+slug,label,kind,region,definition,source,mpr
+wti,WTI,crude-marker,mid-continent,"The WTI crude price, the crude marker of MPC's Mid-Continent crack spread.",MPC-S01,
+meh,MEH,crude-marker,gulf-coast,"The MEH crude price, the crude marker of MPC's Gulf Coast crack spread.",MPC-S01,
+ans,ANS,crude-marker,west-coast,"The ANS crude price, the crude marker of MPC's West Coast crack spread.",MPC-S01,
+usgc-cbob,USGC CBOB,product-benchmark,gulf-coast,"The USGC CBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01,
+usgc-ulsd,USGC ULSD,product-benchmark,gulf-coast,"The USGC ULSD price, a benchmark price in MPC's marketing areas.",MPC-S01,
+chicago-cbob,Chicago CBOB,product-benchmark,mid-continent,"The Chicago CBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01,
+chicago-ulsd,Chicago ULSD,product-benchmark,mid-continent,"The Chicago ULSD price, a benchmark price in MPC's marketing areas.",MPC-S01,
+la-carbob,LA CARBOB,product-benchmark,west-coast,"The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas.",MPC-S01,
+la-carb-diesel,LA CARB Diesel,product-benchmark,west-coast,"The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas.",MPC-S01,
+nymex-wti,NYMEX WTI Crude Oil futures (CL),crude-marker,,"The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread.",CME-FRESH,
+nymex-rbob,NYMEX RBOB Gasoline futures (RB),product-benchmark,,"The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks.",CME-FRESH,
+nymex-ny-harbor-ulsd,NYMEX NY Harbor ULSD futures (HO),product-benchmark,,"The NYMEX NY Harbor ULSD futures contract (ticker HO), the diesel leg of the NYMEX 3:2:1 crack spread. MPC Economics' definition calls this leg NYMEX Heating Oil.",CME-FRESH,
+mpr-747,WTI crude input (MPR 747),crude-marker,chicago,"The crude input of MPC Economics' Chicago and Group 3 crack series, both named WTI cracks.",MPC-ECON,747
+mpr-16475,Chicago CBOB input (MPR 16475),product-benchmark,chicago,The gasoline input of MPC Economics' Chicago crack series.,MPC-ECON,16475
+mpr-16477,Chicago ULSD input (MPR 16477),product-benchmark,chicago,The diesel input of MPC Economics' Chicago crack series.,MPC-ECON,16477
+mpr-14133,MEH crude input (MPR 14133),crude-marker,usgc,"The crude input of MPC Economics' Gulf Coast crack series, named an MEH crack.",MPC-ECON,14133
+mpr-11926,Gulf Coast CBOB input (MPR 11926),product-benchmark,usgc,The gasoline input of MPC Economics' Gulf Coast crack series.,MPC-ECON,11926
+mpr-12838,Gulf Coast ULSD input (MPR 12838),product-benchmark,usgc,The diesel input of MPC Economics' Gulf Coast crack series.,MPC-ECON,12838
+mpr-13076,Group 3 CBOB input (MPR 13076),product-benchmark,group-3,The gasoline input of MPC Economics' Group 3 crack series.,MPC-ECON,13076
+mpr-9408,Group 3 ULSD input (MPR 9408),product-benchmark,group-3,The diesel input of MPC Economics' Group 3 crack series.,MPC-ECON,9408
+mpr-4055,ANS crude input (MPR 4055),crude-marker,la,"The crude input of MPC Economics' LA crack series, named an ANS crack.",MPC-ECON,4055
+mpr-9660,LA gasoline input (MPR 9660),product-benchmark,la,The gasoline input of MPC Economics' LA crack series (the CBOB column of the definition's input table).,MPC-ECON,9660
+mpr-9657,LA ULSD input (MPR 9657),product-benchmark,la,The diesel input of MPC Economics' LA crack series.,MPC-ECON,9657
+mpr-13056,RVO cost (MPR 13056),compliance-cost,,"The Renewable Volume Obligation cost per gallon, the same input in every region; an Ex-RVO series deducts it from each product barrel.",MPC-ECON,13056

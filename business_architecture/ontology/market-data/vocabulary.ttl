@@ -1,4 +1,4 @@
-# The market-data module's vocabulary (Step 7; EPM-DEC-001-0057): the published series of a
+# The market-data module's vocabulary (Step 7; EPM-DEC-001-0057, EPM-DEC-001-0066): the published series of a
 # market measure, the benchmark prices and crude markers they are built from, and the refining
 # regions they track. Market Data governs benchmark identifiers and assessment conventions
 # (EPM-DEC-001-0046). Definitions only, never prices (EPM-DEC-001-0005).
@@ -18,8 +18,8 @@ mkt:BenchmarkSeries a owl:Class ;
 
 mkt:Benchmark a owl:Class ;
     rdfs:label "benchmark price"@en ;
-    skos:definition "A published price that a series is built from: a crude marker or a refined-product benchmark at a named market."@en ;
-    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057"@en .
+    skos:definition "A published price that a series is built from: a crude marker, a refined-product benchmark at a named market, or a compliance cost such as the RVO."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057; EPM-DEC-001-0066"@en .
 
 mkt:Leg a owl:Class ;
     rdfs:label "series leg"@en ;
@@ -30,6 +30,11 @@ mkt:RefiningRegions a skos:ConceptScheme ;
     rdfs:label "refining regions"@en ;
     skos:definition "MPC's three refining regions, by the names MPC uses."@en ;
     dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 2 (mpc-performance-measures-evidence.md, finding 3)"@en .
+
+mkt:MarketRegions a skos:ConceptScheme ;
+    rdfs:label "market regions"@en ;
+    skos:definition "The product market regions of MPC Economics' published 3-2-1 crack series: USGC, Chicago, Group 3 (Tulsa), LA, PNW and SLC. They are price markets, not MPC's refining regions."@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.1; EPM-DEC-001-0066"@en .
 
 mkt:Series a skos:ConceptScheme ;
     rdfs:label "benchmark series"@en ;
@@ -45,8 +50,8 @@ mkt:seriesOf a owl:ObjectProperty ;
 mkt:region a owl:ObjectProperty ;
     rdfs:label "region"@en ;
     rdfs:range skos:Concept ;
-    skos:definition "The refining region a series tracks, or the region of a benchmark's market."@en ;
-    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057"@en .
+    skos:definition "The refining region a series tracks, or the market region of a series or a benchmark's market."@en ;
+    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057; EPM-DEC-001-0066"@en .
 
 mkt:leg a owl:ObjectProperty ;
     rdfs:label "leg"@en ;
@@ -75,19 +80,35 @@ mkt:blendOf a owl:ObjectProperty ;
 mkt:excludesRINCost a owl:DatatypeProperty ;
     rdfs:label "excludes RIN cost"@en ;
     rdfs:domain mkt:BenchmarkSeries ; rdfs:range xsd:boolean ;
-    skos:definition "True when the series does not reflect the market cost of RINs. A series with RIN costs and one without are different series."@en ;
-    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7: the crack spreads \"do not reflect the market cost of RINs\" (mpc-performance-measures-evidence.md, row 10); competency question 31"@en .
+    skos:definition "True when the series does not reflect the market cost of RINs, as MPC's 10-K crack spreads do not (MPC Economics' Inc-RVO treatment). False when the series deducts the RVO cost (MPC Economics' Ex-RVO treatment, which MPC's price data labels ex-RIN). A series with RIN costs and one without are different series."@en ;
+    skos:scopeNote "The labels run opposite to this property's name: an ex-RIN series deducts the RVO cost, so it has false here (EPM-DEC-001-0066)."@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7: the crack spreads \"do not reflect the market cost of RINs\" (mpc-performance-measures-evidence.md, row 10); MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3 (reference/internal/crack-spread-kpi-definition.md); competency question 31"@en .
+
+mkt:priceMasterId a owl:DatatypeProperty ;
+    rdfs:label "Price Master ID"@en ;
+    rdfs:range xsd:string ;
+    skos:definition "The identifier MPC's price data (MPR Price Master) gives the series or input price. An identifier, not a price."@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4; EPM-DEC-001-0066"@en .
+
+mkt:legsUnstated a owl:DatatypeProperty ;
+    rdfs:label "legs unstated"@en ;
+    rdfs:domain mkt:BenchmarkSeries ; rdfs:range xsd:boolean ;
+    skos:definition "True when the source names the published series but does not list its input legs."@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.2 note; EPM-DEC-001-0066"@en .
 
 mkt:benchmarkKind a owl:ObjectProperty ;
     rdfs:label "benchmark kind"@en ;
     rdfs:domain mkt:Benchmark ; rdfs:range skos:Concept ;
-    skos:definition "Whether the benchmark is a crude marker or a refined-product benchmark."@en ;
-    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+    skos:definition "Whether the benchmark is a crude marker, a refined-product benchmark or a compliance cost."@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
 
 mkt:BenchmarkKind a skos:ConceptScheme ; rdfs:label "benchmark kind"@en ;
-    skos:definition "The two kinds of benchmark price a series is built from."@en ;
-    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11"@en .
+    skos:definition "The kinds of benchmark price a series is built from."@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en .
 bkind:crude-marker a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Crude marker"@en ; skos:notation "crude-marker" ;
     skos:definition "A published crude oil price that a crack spread uses for its crude leg."@en .
 bkind:product-benchmark a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Product benchmark"@en ; skos:notation "product-benchmark" ;
     skos:definition "A published refined-product price at a named market, used for a crack spread's product legs."@en .
+bkind:compliance-cost a skos:Concept ; skos:inScheme mkt:BenchmarkKind ; skos:prefLabel "Compliance cost"@en ; skos:notation "compliance-cost" ;
+    skos:definition "A published per-gallon compliance cost, such as the RVO, that an Ex-RVO crack deducts from each product barrel."@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3.2; EPM-DEC-001-0066"@en .
