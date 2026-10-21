@@ -1,5 +1,5 @@
-# The `party` module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068, and for the
-# systems, data flow and attributes EPM-DEC-001-0069): the
+# The `party` module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068; for the systems,
+# data flow and attributes EPM-DEC-001-0069; for the lifecycle EPM-DEC-001-0070): the
 # decision owner's conceptual data model of Customer, as classes and properties. The definitions
 # are Claude's words, derived from that model, which is not in this repository (EPM-DEC-001-0067).
 # The module holds definitions only: customer records stay in the systems (EPM-DEC-001-0005).
@@ -459,3 +459,20 @@ party:sharedAttribute a owl:ObjectProperty ;
     rdfs:label "shared attribute"@en ; rdfs:domain party:SystemAttribute ; rdfs:range skos:Concept ;
     skos:definition "The one thing several systems' attributes stand for under different names, from the shared-attribute list."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en .
+
+# ---- The customer lifecycle (EPM-DEC-001-0070) ----
+
+party:stageProcess a owl:ObjectProperty ;
+    rdfs:label "stage process"@en ; rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "A process of the core process scheme that does the work of the lifecycle stage. A process can serve several stages."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0070"@en .
+
+party:stageSystem a owl:ObjectProperty ;
+    rdfs:label "stage system"@en ; rdfs:domain skos:Concept ; rdfs:range party:CustomerSystem ;
+    skos:definition "A customer system that holds the customer's record in the system stage."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0070"@en .
+
+party:correspondsTo a owl:ObjectProperty ;
+    rdfs:label "corresponds to"@en ; rdfs:domain skos:Concept ; rdfs:range skos:Concept ;
+    skos:definition "A system stage that the business lifecycle stage spans: the two lifecycles describe the same customer life from the business side and the system side."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0070"@en .

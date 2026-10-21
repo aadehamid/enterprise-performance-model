@@ -1,8 +1,10 @@
-# SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068, EPM-DEC-001-0069). They check the
+# SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068, EPM-DEC-001-0069, EPM-DEC-001-0070). They check the
 # shape of customer records that systems or examples state in these terms: each role held by one
 # party, each dated record with a start date and no end before its start, each coded value from its
 # own list, and no class other than Person and Organization made a subclass of party. They also
-# check the module's systems, data flows, sourcings and system attributes (EPM-DEC-001-0069).
+# check the module's systems, data flows, sourcings and system attributes (EPM-DEC-001-0069), and that
+# only a business lifecycle stage is done by processes and only a system stage is held by systems
+# (EPM-DEC-001-0070).
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -193,6 +195,22 @@ partysh:SystemAttribute a sh:NodeShape ;
                           party:Product party:Site party:SystemRecord ) ;
                   sh:message "A system attribute describes one entity of the conceptual model, or the system record." ] ;
     sh:property [ sh:path party:sharedAttribute ; sh:maxCount 1 ; sh:node partysh:InSharedAttribute ] .
+
+# ---- The customer lifecycle (EPM-DEC-001-0070) ----
+
+partysh:LifecycleStage a sh:NodeShape ;
+    sh:targetSubjectsOf party:stageProcess ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:lifecycle-stage ;
+                  sh:message "Only a business lifecycle stage is done by processes." ] ;
+    sh:property [ sh:path party:stageProcess ; sh:nodeKind sh:IRI ;
+                  sh:pattern "^https://w3id.org/lsc/ontology/process/" ] ;
+    sh:property [ sh:path party:correspondsTo ; sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-stage ] ] ] .
+
+partysh:SystemStage a sh:NodeShape ;
+    sh:targetSubjectsOf party:stageSystem ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-stage ;
+                  sh:message "Only a system stage is held by systems." ] ;
+    sh:property [ sh:path party:stageSystem ; sh:class party:CustomerSystem ] .
 
 # ---- The vocabulary: customer is not a kind of party ----
 # Any chain of subclass links counts: a class under Person or Organization is a subclass of party too.
