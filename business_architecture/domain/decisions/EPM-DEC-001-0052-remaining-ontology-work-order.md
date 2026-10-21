@@ -32,7 +32,7 @@ The ontology is complete when every competency question is answerable or parked 
 
 ## Alternatives considered
 
-- **The Customer domain first.** Not chosen: it waits for the decision owner's information, and Phases A and B need nothing from them.
+- **The Customer domain first.** Not chosen: it waits for the decision owner's information, and Phases A and B need nothing from them. *2026-10-21:* the information arrived (EPM-DEC-001-0067).
 - **A `core` release before the overlays.** Not chosen: the customer lifecycle nodes from Phase C go into the same release, so one release covers both.
 
 ## The decision owner's recorded words
