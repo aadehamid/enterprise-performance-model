@@ -1,0 +1,147 @@
+# SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068). They check the shape of
+# customer records that systems or examples state in these terms: each role held by one party,
+# each dated record with a start date and no end before its start, each coded value from its own
+# list, and no class of customer made a subclass of party.
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- A coded value comes from its own list ----
+
+partysh:InPartyType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:party-type ] .
+partysh:InPartyRole a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:party-role ] .
+partysh:InRelationshipType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:relationship-type ] .
+partysh:InAgreementType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:agreement-type ] .
+partysh:InLineOfBusiness a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:line-of-business ] .
+partysh:InSiteType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:site-type ] .
+partysh:InOperatingModel a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:operating-model ] .
+partysh:InIdentifierType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:identifier-type ] .
+partysh:InAddressUsage a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:address-usage ] .
+partysh:InContactType a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:contact-type ] .
+partysh:InTransactionKind a sh:NodeShape ; sh:property [ sh:path skos:inScheme ; sh:hasValue party:transaction-kind ] .
+# A class assignment names a class, never one of the four groups: the value has a broader group.
+partysh:InCustomerClass a sh:NodeShape ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:customer-class ] ;
+    sh:property [ sh:path skos:broader ; sh:minCount 1 ;
+                  sh:message "A customer class assignment names one of the four groups, not a class." ] .
+
+# ---- Identity ----
+
+partysh:Party a sh:NodeShape ;
+    sh:targetClass party:Party ;
+    sh:xone ( [ sh:class party:Person ] [ sh:class party:Organization ] ) ;
+    sh:property [ sh:path party:legalName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path party:partyType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InPartyType ] ;
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+partysh:PersonType a sh:NodeShape ;
+    sh:targetClass party:Person ;
+    sh:property [ sh:path party:partyType ; sh:hasValue <https://w3id.org/lsc/ontology/modules/party/party-type/person> ] .
+
+partysh:OrganizationType a sh:NodeShape ;
+    sh:targetClass party:Organization ;
+    sh:property [ sh:path party:partyType ; sh:hasValue <https://w3id.org/lsc/ontology/modules/party/party-type/organization> ] .
+
+partysh:ExternalIdentifier a sh:NodeShape ;
+    sh:targetClass party:ExternalIdentifier ;
+    sh:property [ sh:path party:identifierType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InIdentifierType ] ;
+    sh:property [ sh:path party:issuer ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+partysh:Address a sh:NodeShape ;
+    sh:targetClass party:Address ;
+    sh:property [ sh:path party:addressUsage ; sh:minCount 1 ; sh:node partysh:InAddressUsage ] ;
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+partysh:ContactPoint a sh:NodeShape ;
+    sh:targetClass party:ContactPoint ;
+    sh:property [ sh:path party:contactType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InContactType ] ;
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+# ---- Roles and relationships ----
+
+partysh:PartyRole a sh:NodeShape ;
+    sh:targetClass party:PartyRole ;
+    sh:property [ sh:path [ sh:inversePath party:plays ] ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:Party ;
+                  sh:message "A party role is held by exactly one party." ] ;
+    sh:property [ sh:path party:roleType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InPartyRole ] ;
+    sh:property [ sh:path party:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ;
+                  sh:message "A party role is held from a start date, and does not end before it starts." ] ;
+    sh:property [ sh:path party:validTo ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path party:atSite ; sh:class party:Site ] .
+
+partysh:PartyRelationship a sh:NodeShape ;
+    sh:targetClass party:PartyRelationship ;
+    sh:property [ sh:path party:fromRole ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:PartyRole ] ;
+    sh:property [ sh:path party:toRole ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:PartyRole ] ;
+    sh:property [ sh:path party:relationshipType ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InRelationshipType ] ;
+    sh:property [ sh:path party:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+# ---- The account ----
+
+partysh:CustomerAccount a sh:NodeShape ;
+    sh:targetClass party:CustomerAccount ;
+    sh:property [ sh:path [ sh:inversePath party:transactsThrough ] ; sh:minCount 1 ; sh:class party:Party ;
+                  sh:message "A customer account belongs to at least one party." ] ;
+    sh:property [ sh:path party:classifiedAs ; sh:class party:CustomerClass ] ;
+    sh:property [ sh:path party:managedUnder ; sh:node partysh:InLineOfBusiness ] ;
+    sh:property [ sh:path party:framedBy ; sh:class party:Agreement ] ;
+    sh:property [ sh:path party:suppliedFrom ; sh:class party:Site ] ;
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+partysh:CustomerClass a sh:NodeShape ;
+    sh:targetClass party:CustomerClass ;
+    sh:property [ sh:path [ sh:inversePath party:classifiedAs ] ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerAccount ] ;
+    sh:property [ sh:path party:classValue ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InCustomerClass ] ;
+    sh:property [ sh:path party:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ;
+                  sh:message "A customer class is assigned from a start date." ] .
+
+# ---- Agreements, brands and sites ----
+
+partysh:Agreement a sh:NodeShape ;
+    sh:targetClass party:Agreement ;
+    sh:property [ sh:path party:agreementType ; sh:minCount 1 ; sh:node partysh:InAgreementType ] ;
+    sh:property [ sh:path party:scopedToProduct ; sh:class party:Product ] ;
+    sh:property [ sh:path party:coversBrand ; sh:class party:Brand ] ;
+    sh:property [ sh:path party:authorizesBrandAtSite ; sh:class party:SiteBrandAssignment ] ;
+    sh:property [ sh:path party:validFrom ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+partysh:SiteBrandAssignment a sh:NodeShape ;
+    sh:targetClass party:SiteBrandAssignment ;
+    sh:property [ sh:path party:assignsBrand ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:Brand ] ;
+    sh:property [ sh:path party:appliesTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:Site ] ;
+    sh:property [ sh:path [ sh:inversePath party:authorizesBrandAtSite ] ; sh:minCount 1 ; sh:class party:Agreement ;
+                  sh:message "A site brand assignment is made under an agreement." ] ;
+    sh:property [ sh:path party:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ; sh:lessThanOrEquals party:validTo ] .
+
+partysh:Site a sh:NodeShape ;
+    sh:targetClass party:Site ;
+    sh:property [ sh:path party:siteType ; sh:maxCount 1 ; sh:node partysh:InSiteType ] ;
+    sh:property [ sh:path party:operatingModel ; sh:maxCount 1 ; sh:node partysh:InOperatingModel ] ;
+    sh:property [ sh:path party:suppliedByTerminal ; sh:class party:Site ] .
+
+# ---- Transactions ----
+
+partysh:PartyTransactionAssociation a sh:NodeShape ;
+    sh:targetClass party:PartyTransactionAssociation ;
+    sh:property [ sh:path party:transactionKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InTransactionKind ] ;
+    sh:property [ sh:path party:transactionReference ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path party:forAccount ; sh:maxCount 1 ; sh:class party:CustomerAccount ] ;
+    sh:or ( [ sh:path [ sh:inversePath party:participatesIn ] ; sh:minCount 1 ]
+            [ sh:path party:forAccount ; sh:minCount 1 ] ) .
+
+# ---- The vocabulary: customer is not a kind of party ----
+
+partysh:NoCustomerSubclass a sh:NodeShape ;
+    sh:targetSubjectsOf rdfs:subClassOf ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Only person and organization are kinds of party. A customer, or any role, is a party role, not a subclass of party." ;
+        sh:select """
+            SELECT $this WHERE {
+                $this <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/lsc/ontology/modules/party/Party> .
+                FILTER ($this NOT IN (<https://w3id.org/lsc/ontology/modules/party/Person>,
+                                      <https://w3id.org/lsc/ontology/modules/party/Organization>))
+            }""" ] .
