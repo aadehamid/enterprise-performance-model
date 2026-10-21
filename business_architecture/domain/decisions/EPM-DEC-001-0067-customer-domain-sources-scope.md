@@ -23,7 +23,7 @@ In this session the decision owner sent seven inputs, one at a time:
 
 None of these seven inputs is in the repository, by the decision owner's rule below. Input 7 is a report prepared on 2026-10-13. It is not the earlier customer report tracked at the repository root since 2026-08-21 (`Enterprise_Customer_Domain_Downstream_Oil_Gas_Report.pdf`, with `Customer Domain in Downstream Oil & Gas — Modeling Guide.html`, commit e96b7d0). Those two files predate this session, are not among the seven inputs, and the `customer` module does not cite them.
 
-Claude asked questions about each input as it arrived. The decision owner's answers are saved in `answers-2026-10-21-customer.md`, 17 blocks. Its header comment, in Claude's words, records the question each block answers, including the six recommendations block 14 answers.
+Claude asked questions about each input as it arrived. The decision owner's answers are saved in `answers-2026-10-21-customer.md`, 19 blocks. Its header comment, in Claude's words, records the question each block answers, including the six recommendations block 14 answers.
 
 ## Decision
 
@@ -70,7 +70,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 9. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
 10. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. In the model, a customer account carries a delivery tier, and a brand is owned by or licensed to a party through a Brand License agreement.
 11. **Two roles are to be added**, in the `customer` module's pull request, by "add both roles": Position Holder and Loading-Authorized Party. The Loading-Authorized Party answers competency question 22. The Position Holder is the party whose product a terminal lifting draws on, which the model's terminal-rack class names. The model's own role list, as Claude read it, has twelve roles.
-12. **The repository stays private** for the whole Customer work, by "keep it private". This narrows the standing rule of EPM-DEC-001-0050's amendment of 2026-10-19 (public while work needs it) for the Customer work. *2026-10-21, later:* by decision 12, the decision owner allowed the repository to be public until the goal is achieved, and made it public, because GitHub Actions does not run on the private repository without paid minutes. It goes back to private when the goal is achieved, as EPM-DEC-001-0050's amendment says. Ruleset 25440735 is enforced again while it is public. EPM-DEC-001-0040 item 3 lets internal system names into the repository, and its amendment notes that they are readable while the repository is public. Keeping it private keeps the Customer modules' internal system and field names unreadable from outside. GitHub does not enforce ruleset 25440735 on a private repository, so each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
+12. **The repository stays private** for the whole Customer work, by "keep it private". This narrows the standing rule of EPM-DEC-001-0050's amendment of 2026-10-19 (public while work needs it) for the Customer work. EPM-DEC-001-0040 item 3 lets internal system names into the repository, and its amendment notes that they are readable while the repository is public; keeping it private kept the Customer modules' internal system and field names unreadable from outside. While it was private, GitHub did not enforce ruleset 25440735, so each Customer pull request was to merge through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass. *2026-10-21, later:* by decision 12, the decision owner allowed the repository to be public until the goal is achieved, and made it public. The occasion, in Claude's account: GitHub Actions had stopped starting the `checks` job on the private repository ("The job was not started because recent account payments have failed or your spending limit needs to be increased", run 39561985243). While the repository is public, ruleset 25440735 is enforced and the internal names are readable. It goes back to private when the goal is achieved, as EPM-DEC-001-0050's amendment says; that return is the amendment's rule, not decision 12's words.
 13. **The plan, in five pull requests:**
     1. this record;
     2. the `customer` module, the conceptual model;
@@ -88,7 +88,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 - **Put peers' filings into the repository for the Customer domain, as `customer-classification-evidence.md` did.** Not chosen: the decision owner wrote that peer data should not go into the repo, for the Customer domain.
 - **Keep Agreement, Site, Site Brand Assignment and Party Transaction Association out of scope**, as Claude first recommended. Not chosen: the decision owner put every entity in scope.
 - **Frame direct dealers with a Brand License agreement**, as the conceptual model's class note does. Not chosen: MPC's filings describe supply contracts with direct dealers, call the ARCO trademark MPC's own, and do not mention a brand licence (item 1).
-- **Make the repository public while the pull requests merge**, as EPM-DEC-001-0050's amendment allows, so the ruleset is enforced. Not chosen: the decision owner kept it private.
+- **Make the repository public while the pull requests merge**, as EPM-DEC-001-0050's amendment allows, so the ruleset is enforced. Not chosen at first: the decision owner kept it private. *2026-10-21, later:* chosen after all, by decision 12.
 
 ## The decision owner's recorded words
 
@@ -128,4 +128,4 @@ The readings marked as Claude's above are under the delegation: "yes, extend the
 
 - EPM-DEC-001-0004's wait is over. Competency questions 19 to 26 still wait until the `customer` module answers them.
 - The regression stands at 34 answerable, 1 partial and 9 waiting.
-- The repository stays private until the Customer work is done. *2026-10-21, later:* public until the goal is achieved, then private again (decision 12).
+- The repository stays private until the Customer work is done. *2026-10-21, later:* public until the goal is achieved (decision 12), then private again under EPM-DEC-001-0050's amendment.
