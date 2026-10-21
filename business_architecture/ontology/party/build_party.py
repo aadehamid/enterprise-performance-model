@@ -1,7 +1,7 @@
 """Build the `party` module's code lists, systems and lifecycle (Steps 5 to 7; EPM-DEC-001-0067 to 0070).
 
     python3 build_party.py            # check the table and print the figures
-    python3 build_party.py --write    # also write code-lists.ttl
+    python3 build_party.py --write    # also write code-lists.ttl, systems.ttl and lifecycle.ttl
     python3 build_party.py --verify   # fail unless code-lists.ttl, systems.ttl and lifecycle.ttl equal a fresh build
 
 code-lists.csv holds every code list of the module, one row per value. The build fails unless
@@ -21,7 +21,8 @@ class, line of business or party type; and every cited input must be one of the 
 lifecycle.csv links each business lifecycle stage to the core 2.1.0 processes that do its work,
 each system stage to the customer systems that hold the record, and business stages to the system
 stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.1.0, every
-system is a customer system, every stage has a link and no link is listed twice.
+system is a customer system, only a business stage links to processes and system stages, only a
+system stage links to systems, every stage has a link and no link is listed twice.
 """
 import argparse
 import csv
@@ -201,6 +202,9 @@ def load_lifecycle(codes, systems):
     problems = [f"{r['stage']}: not a lifecycle or system stage" for r in rows
                 if tuple(r["stage"].split("/", 1)) not in values or r["stage"].split("/")[0] not in ("lifecycle-stage", "system-stage")]
     problems += [f"{r['stage']}: link {r['link']!r} is not process, system or stage" for r in rows if r["link"] not in ("process", "system", "stage")]
+    owner = {"process": "lifecycle-stage", "system": "system-stage", "stage": "lifecycle-stage"}
+    problems += [f"{r['stage']}: only a {owner[r['link']]} has a {r['link']} link" for r in rows
+                 if r["link"] in owner and r["stage"].split("/")[0] != owner[r["link"]]]
     problems += [f"{r['stage']}: process {r['target']} is not in core 2.1.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
     problems += [f"{r['stage']}: system {r['target']} is not a customer system" for r in rows if r["link"] == "system" and r["target"] not in slugs]
     problems += [f"{r['stage']}: {r['target']} is not a system stage" for r in rows

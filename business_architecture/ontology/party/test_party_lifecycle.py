@@ -4,6 +4,7 @@ processes and customer systems, and how they correspond. Expected values are wri
 Run: python3 -m pytest test_party_lifecycle.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 
 from pyshacl import validate
@@ -11,6 +12,8 @@ from rdflib import Graph, Namespace
 from rdflib.namespace import SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import build_party  # noqa: E402
 CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
 PROC = Namespace("https://w3id.org/lsc/ontology/process/")
 
@@ -89,6 +92,45 @@ class Shapes(unittest.TestCase):
                                  "<https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .")
         self.assertFalse(ok)
         self.assertIn("Only a system stage", text)
+
+    def test_a_system_stage_that_corresponds(self):
+        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:correspondsTo "
+                                 "<https://w3id.org/lsc/ontology/modules/party/system-stage/record> .")
+        self.assertFalse(ok)
+        self.assertIn("Only a business lifecycle stage corresponds", text)
+
+    def test_a_correspondence_to_a_business_stage(self):
+        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding> party:correspondsTo "
+                                 "<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect> .")
+        self.assertFalse(ok)
+        self.assertIn("corresponds only to a system stage", text)
+
+
+class Build(unittest.TestCase):
+    """The build rejects a link from the wrong kind of stage before lifecycle.ttl exists."""
+
+    def fails(self, extra_row):
+        real = build_party.read
+        build_party.read = lambda name: real(name) + [extra_row] if name == "lifecycle.csv" else real(name)
+        try:
+            rows = build_party.load()
+            with self.assertRaises(SystemExit) as caught:
+                build_party.load_lifecycle(rows, build_party.load_systems(rows)[0])
+        finally:
+            build_party.read = real
+        return str(caught.exception)
+
+    def test_a_system_stage_with_a_process(self):
+        row = {"stage": "system-stage/master", "link": "process", "target": "CM 1.3.7.1.1", "note": "x"}
+        self.assertIn("only a lifecycle-stage has a process link", self.fails(row))
+
+    def test_a_business_stage_with_a_system(self):
+        row = {"stage": "lifecycle-stage/onboarding", "link": "system", "target": "sap-mdg", "note": "x"}
+        self.assertIn("only a system-stage has a system link", self.fails(row))
+
+    def test_a_system_stage_that_corresponds(self):
+        row = {"stage": "system-stage/master", "link": "stage", "target": "system-stage/record", "note": "x"}
+        self.assertIn("only a lifecycle-stage has a stage link", self.fails(row))
 
 
 if __name__ == "__main__":

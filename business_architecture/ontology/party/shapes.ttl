@@ -3,8 +3,8 @@
 # party, each dated record with a start date and no end before its start, each coded value from its
 # own list, and no class other than Person and Organization made a subclass of party. They also
 # check the module's systems, data flows, sourcings and system attributes (EPM-DEC-001-0069), and that
-# only a business lifecycle stage is done by processes and only a system stage is held by systems
-# (EPM-DEC-001-0070).
+# only a business lifecycle stage is done by processes or corresponds to a system stage, and only a
+# system stage is held by systems (EPM-DEC-001-0070).
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -211,6 +211,13 @@ partysh:SystemStage a sh:NodeShape ;
     sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-stage ;
                   sh:message "Only a system stage is held by systems." ] ;
     sh:property [ sh:path party:stageSystem ; sh:class party:CustomerSystem ] .
+
+partysh:StageCorrespondence a sh:NodeShape ;
+    sh:targetSubjectsOf party:correspondsTo ;
+    sh:property [ sh:path skos:inScheme ; sh:hasValue party:lifecycle-stage ;
+                  sh:message "Only a business lifecycle stage corresponds to a system stage." ] ;
+    sh:property [ sh:path party:correspondsTo ; sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-stage ] ] ;
+                  sh:message "A business lifecycle stage corresponds only to a system stage." ] .
 
 # ---- The vocabulary: customer is not a kind of party ----
 # Any chain of subclass links counts: a class under Person or Organization is a subclass of party too.
