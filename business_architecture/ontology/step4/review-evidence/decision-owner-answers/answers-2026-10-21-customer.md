@@ -1,4 +1,4 @@
-<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-20 to 2026-10-21 (session 7). Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 17 blocks, separated by blank lines; numbered blocks are counted as one block each.
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-20 to 2026-10-21 (session 7). Context (Claude's words, kept in this comment so they do not enter the quote corpus). The body has 19 blocks, separated by blank lines; numbered blocks are counted as one block each.
 Block 1: Claude asked which open items the decision owner was ready to give (release approvals, customer information, Q17 and the Forecaster and PSM questions, the skill rebuild plan); this is their choice, as the tool returned it.
 Block 2: Claude asked whether to accept two candidates that four peers' filings suggested: a delivery-mode facet and a brand-licensing relationship.
 Block 3: sent with input 1, a diagram of how customer data is ingested.
@@ -16,6 +16,8 @@ Block 14: answers six recommendations Claude made after reading the report: 1, k
 Block 15: answers three questions about the plan: keep the repository private; add Position Holder and Loading-Authorized Party roles; start.
 Block 16: sets the goal for the run.
 Block 17: their approval of the run's brief, as the tool returned it.
+Block 18: later the same day, after GitHub Actions stopped running on the private repository for billing, the decision owner allowed the repository to be public; the same message asked whether CI can run faster and to check whether the Cursor review bot's usage was reset (those words are not saved here).
+Block 19: after Claude Code's safety check blocked Claude from making the repository public, the decision owner made it public themselves.
 Do not edit the body; scripts/epm_facts.py quotes checks quotes against this file. -->
 
 Customer information
@@ -60,3 +62,7 @@ Goal set: keep going until you complete the Customer domain work end to end. You
 I want you to use /night-run
 
 Approve, start the run (Recommended)
+
+feel free to turn the repo until goal is achieved.
+
+done, repo is public. carry on

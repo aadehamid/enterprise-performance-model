@@ -49,6 +49,7 @@ Claude asked questions about each input as it arrived. The decision owner's answ
     > I am okay with the rest. and it is EIS
     > bring me the plan
 11. "yes, keep it private, add both roles, go ahead" (block 15).
+12. *2026-10-21, later:* "feel free to turn the repo until goal is achieved." (block 18), then "done, repo is public. carry on" (block 19).
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
@@ -69,7 +70,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 9. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
 10. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. In the model, a customer account carries a delivery tier, and a brand is owned by or licensed to a party through a Brand License agreement.
 11. **Two roles are to be added**, in the `customer` module's pull request, by "add both roles": Position Holder and Loading-Authorized Party. The Loading-Authorized Party answers competency question 22. The Position Holder is the party whose product a terminal lifting draws on, which the model's terminal-rack class names. The model's own role list, as Claude read it, has twelve roles.
-12. **The repository stays private** for the whole Customer work, by "keep it private". This narrows the standing rule of EPM-DEC-001-0050's amendment of 2026-10-19 (public while work needs it) for the Customer work. EPM-DEC-001-0040 item 3 lets internal system names into the repository, and its amendment notes that they are readable while the repository is public. Keeping it private keeps the Customer modules' internal system and field names unreadable from outside. GitHub does not enforce ruleset 25440735 on a private repository, so each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
+12. **The repository stays private** for the whole Customer work, by "keep it private". This narrows the standing rule of EPM-DEC-001-0050's amendment of 2026-10-19 (public while work needs it) for the Customer work. *2026-10-21, later:* by decision 12, the decision owner allowed the repository to be public until the goal is achieved, and made it public, because GitHub Actions does not run on the private repository without paid minutes. It goes back to private when the goal is achieved, as EPM-DEC-001-0050's amendment says. Ruleset 25440735 is enforced again while it is public. EPM-DEC-001-0040 item 3 lets internal system names into the repository, and its amendment notes that they are readable while the repository is public. Keeping it private keeps the Customer modules' internal system and field names unreadable from outside. GitHub does not enforce ruleset 25440735 on a private repository, so each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
 13. **The plan, in five pull requests:**
     1. this record;
     2. the `customer` module, the conceptual model;
@@ -110,6 +111,8 @@ In the Claude Code session of 2026-10-20 to 2026-10-21 (saved in `business_archi
 - "nothing on the conceptual is out of scope"
 - "I am okay with the rest. and it is EIS"
 - "yes, keep it private, add both roles, go ahead"
+- "feel free to turn the repo until goal is achieved."
+- "done, repo is public. carry on"
 
 The readings marked as Claude's above are under the delegation: "yes, extend the delegation to steps 5 to 12." (`delegation-steps-5-12.md`). The decision owner can reverse any item.
 
@@ -125,4 +128,4 @@ The readings marked as Claude's above are under the delegation: "yes, extend the
 
 - EPM-DEC-001-0004's wait is over. Competency questions 19 to 26 still wait until the `customer` module answers them.
 - The regression stands at 34 answerable, 1 partial and 9 waiting.
-- The repository stays private until the Customer work is done.
+- The repository stays private until the Customer work is done. *2026-10-21, later:* public until the goal is achieved, then private again (decision 12).

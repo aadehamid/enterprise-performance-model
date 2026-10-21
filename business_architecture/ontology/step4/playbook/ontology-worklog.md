@@ -969,7 +969,8 @@ without a dated amendment and the decision owner's explicit agreement.
   information, and peer data does not go in, for the Customer domain;
   nothing in their conceptual model is out of scope; two roles are to be
   added;
-  the repository stays private; the plan goes ahead.
+  the repository stays private (later: public until the goal is
+  achieved); the plan goes ahead.
 - Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
   follows): four customer classes from the repository's MPC customer
   classification, making 14 with the
@@ -1122,7 +1123,8 @@ without a dated amendment and the decision owner's explicit agreement.
   `answers-2026-10-19-completion-order.md` and
   `answers-2026-10-19-completion-goal.md`.
   *2026-10-21:* for the Customer work the repository stays private
-  (EPM-DEC-001-0067, item 12).
+  (EPM-DEC-001-0067, item 12); later that day the decision owner made it
+  public until the goal is achieved (EPM-DEC-001-0067, decision 12).
 
 ### Process-authority integrity checks (2026-10-20)
 - `business_process/test_business_process.py`, run by `check.sh`, now checks
@@ -1176,7 +1178,7 @@ without a dated amendment and the decision owner's explicit agreement.
   enforces the ruleset. MPC-P09 is unblocked and goes in its own pull
   request. *Amended 2026-10-19:* public while work needs it, private at
   the end of each session or goal. *2026-10-21:* kept private for the
-  Customer work (EPM-DEC-001-0067).
+  Customer work, then public until the goal is achieved (EPM-DEC-001-0067).
 
 ### Process-map gaps addressed (2026-10-19)
 - The decision owner said to address the two gaps the MPC-P03 and MPC-P04 checks
@@ -1245,7 +1247,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050). *2026-10-19, amendment of EPM-DEC-001-0050:* public while work needs it, private at the end of each session or goal. *2026-10-21:* kept private for the Customer work (EPM-DEC-001-0067).
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050). *2026-10-19, amendment of EPM-DEC-001-0050:* public while work needs it, private at the end of each session or goal. *2026-10-21:* kept private for the Customer work, then public until the goal is achieved (EPM-DEC-001-0067).
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words
