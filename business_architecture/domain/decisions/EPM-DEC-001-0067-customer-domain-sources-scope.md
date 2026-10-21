@@ -21,7 +21,7 @@ In this session the decision owner sent seven inputs, one at a time:
 6. a conceptual data model of Customer: entities in four zones, their relationships, ten customer classes, and a pane showing where the customer shows up in systems;
 7. an external research report on the Customer domain in downstream oil and gas.
 
-None of these inputs is in the repository, by the decision owner's rule below.
+None of these seven inputs is in the repository, by the decision owner's rule below. Input 7 is a report prepared on 2026-10-13. It is not the earlier customer report tracked at the repository root since 2026-08-21 (`Enterprise_Customer_Domain_Downstream_Oil_Gas_Report.pdf`, with `Customer Domain in Downstream Oil & Gas — Modeling Guide.html`, commit e96b7d0). Those two files predate this session, are not among the seven inputs, and the `customer` module does not cite them.
 
 Claude asked questions about each input as it arrived. The decision owner's answers, with their full context, are saved in `answers-2026-10-21-customer.md`.
 
@@ -32,7 +32,7 @@ Claude asked questions about each input as it arrived. The decision owner's answ
 1. **Which open item they gave first:** "Customer information".
 2. **The two candidates the peers' filings suggested** (a delivery-mode facet and a brand-licensing relationship, `reference/downstream-peers/customer-classification-evidence.md`): "decide once you've seen my data".
 3. **The inputs stay out of the repository:** "all of the files and images should stay out of the repo, by the way."
-4. **What may go in, and from which sources:** "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point". Then: "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domain".
+4. **What may go in, and from which sources:** "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point". Then: "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one" (the decision owner sent the rule and "here is the next one" without a space between them).
 5. **What must be captured:** both categories of attributes ("These two categories of attrobutes must be captured"), and "both the life cycle and data flow of Customer". The conceptual data model is captured separately ("Which we want to capture separately").
 6. **The attributes:** misspelled labels are corrected ("correct them"), repeated attributes are removed ("dedup them"), and the internal codes are resolved by search ("use external MPC search and Peer to resolve these ones.").
 7. **The conceptual model's scope:** "nothing on the conceptual is out of scope".
@@ -46,7 +46,7 @@ Claude asked questions about each input as it arrived. The decision owner's answ
 These items are Claude's wording. Items 1 to 5 are the recommendations the decision owner accepted with "I am okay with the rest".
 
 1. **Direct dealers sit under a Fuel Supply agreement.** MPC's filings describe "long-term supply contracts with direct dealers who operate locations mainly under the ARCO® brand" (`reference/mpc/customer-classification-evidence.md`, C2). No MPC filing describes a brand licence for them. Their brand reaches the site through a Site Brand Assignment.
-2. **Four classes from MPC's filings are added** to the conceptual model's ten: independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). That makes 14 customer classes.
+2. **Four classes from MPC's filings are to be added**, in the `customer` module's pull request, to the conceptual model's ten: independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). That makes 14 customer classes.
 3. **The exchange or trading counterparty stays a customer class.** The conceptual model already says it becomes a customer only when a revenue-recognized relationship exists.
 4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The conceptual model defines a site brand assignment as linking a site to a brand "under an AGREEMENT". The decision owner said they did not see this relationship in their diagram. Claude showed them where it is drawn, and they did not ask for it to be removed.
 5. **MPLX's filings count as MPC's public information.** MPC consolidates MPLX.
@@ -57,7 +57,7 @@ These items are Claude's wording. Items 1 to 5 are the recommendations the decis
 7. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics.
 8. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
 9. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. A customer account carries a delivery tier. A brand is owned by or licensed to a party through a Brand License agreement.
-10. **Two roles are added** to the conceptual model's twelve, by "add both roles": Position Holder and Loading-Authorized Party. They answer competency question 22.
+10. **Two roles are to be added**, in the `customer` module's pull request, to the conceptual model's twelve, by "add both roles": Position Holder and Loading-Authorized Party. They answer competency question 22.
 11. **The repository stays private** for the whole Customer work, by "keep it private". The Customer modules hold internal system and field names, which EPM-DEC-001-0040 item 3 allows only while the repository is private. GitHub does not enforce ruleset 25440735 on a private repository. So each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
 12. **The plan, in five pull requests:**
     1. this record;
@@ -86,7 +86,7 @@ In the Claude Code session of 2026-10-20 to 2026-10-21 (saved in `business_archi
 - "decide once you've seen my data. I will share them one at a time to process"
 - "all of the files and images should stay out of the repo, by the way."
 - "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point"
-- "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domain"
+- "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one"
 - "These two categories of attrobutes must be captured"
 - "correct them", "dedup them", "use external MPC search and Peer to resolve these ones."
 - "Now make sure you have all of this captured to represent both the life cycle and data flow of Customer ."

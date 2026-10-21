@@ -966,9 +966,10 @@ without a dated amendment and the decision owner's explicit agreement.
 - The decision owner shared their customer information in seven inputs,
   which stay out of the repository; derived definitions go in, cited only
   to repository and MPC sources (EPM-DEC-001-0067). Every entity of their
-  conceptual model is in scope; 14 customer classes; Position Holder and
-  Loading-Authorized Party roles added; the repository stays private for
-  the Customer work. Five pull requests follow.
+  conceptual model is in scope; 14 customer classes and the Position Holder
+  and Loading-Authorized Party roles are to be added in the `customer`
+  module's pull request; the repository stays private for the Customer
+  work. Five pull requests follow.
 
 ### Crack spread's primary source (2026-10-20)
 - The decision owner set MPC Economics' 3-2-1 Crack Spread KPI Definition
