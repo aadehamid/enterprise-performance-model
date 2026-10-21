@@ -119,6 +119,17 @@ and the two-way volume split in the delivery-tier facet.
 8. **Restatements.** FY2022 direct-to-end-user volume is 2,355 mbpd in the FY2023
    10-K and 2,356 in the FY2024 10-K. Store each figure with its filing vintage.
 
+## 4a. Peer cross-check (secondary sources, FY2025 Form 10-Ks)
+
+Added 2026-10-21 under the decision owner's evidence order: MPC first, U.S. refining peers second. These are evidence notes; they change no class. Each source is the peer's FY2025 Form 10-K on sec.gov, read on 2026-10-20 (the same filings as `../downstream-peers/benchmark-series-evidence.md`).
+
+- **Valero:** "We sell refined petroleum products in both the wholesale rack and bulk markets." and "We sell our products on a wholesale basis through an extensive rack marketing network." This matches MPC's contract-type facet (wholesale/rack) and its delivery tier (bulk sales).
+- **Phillips 66:** "Our refined products are marketed on both a branded and unbranded basis." "In the Gulf Coast and East Coast regions, most sales are conducted via the unbranded channel of trade, which does not require a highly integrated marketing network to secure petroleum product placement for refinery pull through." "Our wholesale operations utilize a network of marketers operating approximately 5,360 outlets." This matches MPC's brand-status facet, and its marketers operating outlets play the role MPC's brand jobbers (C1) play.
+- **PBF Energy:** "Products produced at the Delaware City refinery are transferred to customers through pipelines, barges or at its truck rack." PBF names the delivery mode, which MPC's classification does not carry as a facet.
+- **HF Sinclair:** "Our principal customers for gasoline include other refiners, branded sites, convenience store chains, independent marketers and retailers." Its marketing operations include "branded fuel sales to more than 1,700 branded sites in the United States and licensing fees for the use of the Sinclair brand to more than 350 additional locations". Other refiners as customers fit MPC's bulk sales "to large unbranded resellers and other downstream companies"; brand licensing without fuel supply is a relationship MPC's classes do not list.
+
+This file's reading: the peers use the axes MPC uses (sales channel, brand status, rack against bulk), and nothing in them conflicts with C1 to C8. Two facets they add, the delivery mode (PBF) and brand licensing without supply (HF Sinclair), are candidates for the Customer work (Phase C), for the decision owner to accept or leave out.
+
 ## 5. How the ontology will carry it (Step 5, party module — proposal)
 
 In line with `../../domain/customer_domain_problem_statement_v0.1.md`
