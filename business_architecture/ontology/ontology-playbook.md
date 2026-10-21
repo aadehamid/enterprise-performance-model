@@ -1456,7 +1456,7 @@ owner made them the source author's backlog.
   gains (CM 1.1.3.7.13, merged) and renewable feedstock traceability
   (CM 1.2.5.1.5, merged). A third, the quality of transferred intermediates, was
   answered on 2026-10-19: CM 1.2.5.1's description now covers intermediates
-  received as feed from another refinery (EPM-DEC-001-0051). P06 waits for the customer work. P09 waited for
+  received as feed from another refinery (EPM-DEC-001-0051). P06 waits for the customer work. *2026-10-21:* the `party` module gives P06's channel dimension its values (EPM-DEC-001-0068). P09 waited for
   the owner's approval of the measure categories, which came on 2026-10-19
   (EPM-DEC-001-0050), and is applied: two value-stream processes name
   five measures, each with its relationship and MPC source.

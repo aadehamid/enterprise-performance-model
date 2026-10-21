@@ -1,0 +1,116 @@
+# Five invented organizations, each holding several roles, described in the `party` module's
+# terms (EPM-DEC-001-0068). They are test fixtures, not customer records: every name is made up.
+# Competency questions section VII is done when five real multi-role organisations can be described
+# both ways (party to roles and role to party) without calling Customer a role. Real customer records
+# stay out of the ontology (EPM-DEC-001-0005), so test_party.py shows the pattern on these five
+# invented ones; it does not show section VII done for real organisations.
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix ex: <https://w3id.org/lsc/ontology/modules/party/example/> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
+@prefix cls: <https://w3id.org/lsc/ontology/modules/party/customer-class/> .
+@prefix lob: <https://w3id.org/lsc/ontology/modules/party/line-of-business/> .
+@prefix agt: <https://w3id.org/lsc/ontology/modules/party/agreement-type/> .
+@prefix rel: <https://w3id.org/lsc/ontology/modules/party/relationship-type/> .
+@prefix pt: <https://w3id.org/lsc/ontology/modules/party/party-type/> .
+@prefix st: <https://w3id.org/lsc/ontology/modules/party/site-type/> .
+@prefix om: <https://w3id.org/lsc/ontology/modules/party/operating-model/> .
+@prefix tk: <https://w3id.org/lsc/ontology/modules/party/transaction-kind/> .
+@prefix idt: <https://w3id.org/lsc/ontology/modules/party/identifier-type/> .
+@prefix au: <https://w3id.org/lsc/ontology/modules/party/address-usage/> .
+@prefix ct: <https://w3id.org/lsc/ontology/modules/party/contact-type/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ---- 1. A branded jobber: Jobber, Sold-To, Payer and Bill-To on one account ----
+
+ex:jobber-co a party:Organization ; party:partyType pt:organization ; party:legalName "Example Jobber Co." ;
+    party:identifiedBy ex:jobber-co-tax ; party:locatedAt ex:jobber-co-office ; party:reachableAt ex:jobber-co-phone ;
+    party:plays ex:jobber-co-jobber, ex:jobber-co-sold-to, ex:jobber-co-payer, ex:jobber-co-bill-to ;
+    party:transactsThrough ex:jobber-co-account .
+ex:jobber-co-tax a party:ExternalIdentifier ; party:identifierType idt:tax-identifier ; party:issuer "tax authority" .
+ex:jobber-co-office a party:Address ; party:addressUsage au:registered-office, au:billing ; party:validFrom "2020-01-01"^^xsd:date .
+ex:jobber-co-phone a party:ContactPoint ; party:contactType ct:telephone .
+ex:jobber-co-jobber a party:PartyRole ; party:roleType role:jobber ; party:validFrom "2020-01-01"^^xsd:date ;
+    party:governedBy ex:jobber-supply ; party:atSite ex:station-1 .
+ex:jobber-co-sold-to a party:PartyRole ; party:roleType role:sold-to ; party:validFrom "2020-01-01"^^xsd:date ;
+    party:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-payer a party:PartyRole ; party:roleType role:payer ; party:validFrom "2020-01-01"^^xsd:date ;
+    party:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-bill-to a party:PartyRole ; party:roleType role:bill-to ; party:validFrom "2020-01-01"^^xsd:date ;
+    party:exercisedWithin ex:jobber-co-account .
+ex:jobber-co-account a party:CustomerAccount ; party:validFrom "2020-01-01"^^xsd:date ;
+    party:classifiedAs ex:jobber-co-class ; party:managedUnder lob:brand ; party:framedBy ex:jobber-supply ;
+    party:suppliedFrom ex:terminal-1 .
+ex:jobber-co-class a party:CustomerClass ; party:classValue cls:branded-jobber ; party:validFrom "2020-01-01"^^xsd:date .
+ex:jobber-supply a party:Agreement ; party:agreementType agt:fuel-supply ; party:coversBrand ex:brand-a ;
+    party:authorizesBrandAtSite ex:station-1-brand ; party:validFrom "2020-01-01"^^xsd:date ; party:validTo "2029-12-31"^^xsd:date .
+ex:brand-a a party:Brand .
+ex:station-1 a party:Site ; party:siteType st:station ; party:operatingModel om:dodo ; party:suppliedByTerminal ex:terminal-1 .
+ex:station-1-brand a party:SiteBrandAssignment ; party:assignsBrand ex:brand-a ; party:appliesTo ex:station-1 ;
+    party:validFrom "2020-01-01"^^xsd:date .
+ex:terminal-1 a party:Site ; party:siteType st:terminal .
+
+# ---- 2. A trader: Sold-To on one account, Supplier and Exchange Counterparty under other agreements ----
+
+ex:trader-co a party:Organization ; party:partyType pt:organization ; party:legalName "Example Trading LLC" ;
+    party:plays ex:trader-co-sold-to, ex:trader-co-supplier, ex:trader-co-exchange ;
+    party:transactsThrough ex:trader-co-account .
+ex:trader-co-sold-to a party:PartyRole ; party:roleType role:sold-to ; party:validFrom "2022-03-01"^^xsd:date ;
+    party:exercisedWithin ex:trader-co-account .
+ex:trader-co-supplier a party:PartyRole ; party:roleType role:supplier ; party:validFrom "2022-03-01"^^xsd:date .
+ex:trader-co-exchange a party:PartyRole ; party:roleType role:exchange-counterparty ; party:validFrom "2023-01-01"^^xsd:date ;
+    party:governedBy ex:trader-exchange ; party:participatesIn ex:trader-transfer .
+ex:trader-co-account a party:CustomerAccount ; party:classifiedAs ex:trader-co-class ; party:managedUnder lob:unbranded .
+ex:trader-co-class a party:CustomerClass ; party:classValue cls:wholesale-marketing ; party:validFrom "2022-03-01"^^xsd:date .
+ex:trader-exchange a party:Agreement ; party:agreementType agt:exchange-buy-sell .
+ex:trader-transfer a party:PartyTransactionAssociation ; party:transactionKind tk:transfer ; party:transactionReference "DEAL-1" .
+
+# ---- 3. A pipeline shipper: Throughput Holder and Payer ----
+
+ex:shipper-co a party:Organization ; party:partyType pt:organization ; party:legalName "Example Shipper Inc." ;
+    party:plays ex:shipper-co-throughput, ex:shipper-co-payer ;
+    party:transactsThrough ex:shipper-co-account .
+ex:shipper-co-throughput a party:PartyRole ; party:roleType role:throughput-holder ; party:validFrom "2021-06-01"^^xsd:date ;
+    party:governedBy ex:shipper-throughput ; party:participatesIn ex:shipper-ticket .
+ex:shipper-co-payer a party:PartyRole ; party:roleType role:payer ; party:validFrom "2021-06-01"^^xsd:date ;
+    party:exercisedWithin ex:shipper-co-account ; party:participatesIn ex:shipper-invoice .
+ex:shipper-co-account a party:CustomerAccount ; party:classifiedAs ex:shipper-co-class ; party:managedUnder lob:pipeline-ls .
+ex:shipper-co-class a party:CustomerClass ; party:classValue cls:pipeline-customer ; party:validFrom "2021-06-01"^^xsd:date .
+ex:shipper-throughput a party:Agreement ; party:agreementType agt:throughput-storage .
+ex:shipper-ticket a party:PartyTransactionAssociation ; party:transactionKind tk:ticket-bol ; party:transactionReference "TKT-1" .
+ex:shipper-invoice a party:PartyTransactionAssociation ; party:transactionKind tk:invoice ; party:transactionReference "INV-1" ;
+    party:forAccount ex:shipper-co-account .
+
+# ---- 4. A rack buyer: Sold-To, Position Holder and Loading-Authorized Party at a terminal ----
+
+ex:rack-co a party:Organization ; party:partyType pt:organization ; party:legalName "Example Rack Buyer Corp." ;
+    party:plays ex:rack-co-sold-to, ex:rack-co-position, ex:rack-co-loading ;
+    party:transactsThrough ex:rack-co-account .
+ex:rack-co-sold-to a party:PartyRole ; party:roleType role:sold-to ; party:validFrom "2024-01-01"^^xsd:date ;
+    party:exercisedWithin ex:rack-co-account ; party:participatesIn ex:rack-lifting .
+ex:rack-co-position a party:PartyRole ; party:roleType role:position-holder ; party:validFrom "2024-01-01"^^xsd:date ;
+    party:atSite ex:terminal-1 .
+ex:rack-co-loading a party:PartyRole ; party:roleType role:loading-authorized-party ; party:validFrom "2024-01-01"^^xsd:date ;
+    party:validTo "2024-12-31"^^xsd:date ; party:atSite ex:terminal-1 .
+ex:rack-co-account a party:CustomerAccount ; party:classifiedAs ex:rack-co-class ; party:managedUnder lob:unbranded .
+ex:rack-co-class a party:CustomerClass ; party:classValue cls:terminal-rack-customer ; party:validFrom "2024-01-01"^^xsd:date .
+ex:rack-lifting a party:PartyTransactionAssociation ; party:transactionKind tk:ticket-bol ; party:transactionReference "BOL-1" ;
+    party:forAccount ex:rack-co-account .
+
+# ---- 5. A carrier that is also a vendor and a surety, and guarantees the jobber ----
+
+ex:carrier-co a party:Organization ; party:partyType pt:organization ; party:legalName "Example Carrier Ltd." ;
+    party:plays ex:carrier-co-carrier, ex:carrier-co-vendor, ex:carrier-co-surety .
+ex:carrier-co-carrier a party:PartyRole ; party:roleType role:carrier ; party:validFrom "2019-05-01"^^xsd:date ;
+    party:participatesIn ex:rack-lifting .
+ex:carrier-co-vendor a party:PartyRole ; party:roleType role:vendor ; party:validFrom "2019-05-01"^^xsd:date .
+ex:carrier-co-surety a party:PartyRole ; party:roleType role:surety ; party:validFrom "2021-01-01"^^xsd:date .
+ex:surety-for-jobber a party:PartyRelationship ; party:fromRole ex:carrier-co-surety ; party:toRole ex:jobber-co-payer ;
+    party:relationshipType rel:guarantor-of ; party:validFrom "2021-01-01"^^xsd:date .
+
+# ---- A person who is the jobber's contact ----
+
+ex:contact-person a party:Person ; party:partyType pt:person ; party:legalName "Pat Example" ;
+    party:plays ex:contact-person-vendor .
+ex:contact-person-vendor a party:PartyRole ; party:roleType role:vendor ; party:validFrom "2020-01-01"^^xsd:date .
+ex:contact-for-jobber a party:PartyRelationship ; party:fromRole ex:contact-person-vendor ; party:toRole ex:jobber-co-jobber ;
+    party:relationshipType rel:contact-for ; party:validFrom "2020-01-01"^^xsd:date .

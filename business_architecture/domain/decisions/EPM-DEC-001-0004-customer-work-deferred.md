@@ -17,7 +17,7 @@ The Customer classification C1 to C8 was adopted on 2026-09-29. Three evidence i
 
 Use of C1 to C8 in Step 5 waits until the decision owner shares their additional customer information. The lubricants and marine evidence check waits with it. The 5,900 customers figure is not needed and is not verified or cited.
 
-*2026-10-21:* the decision owner shared their customer information, so the wait is over and the Customer work resumes (EPM-DEC-001-0067). None of the decision owner's inputs covers the lubricants and marine evidence, so that check stays open; the `party` module's pull request is planned to settle or park it (EPM-DEC-001-0067, What follows, item 14).
+*2026-10-21:* the decision owner shared their customer information, so the wait is over and the Customer work resumes (EPM-DEC-001-0067). None of the decision owner's inputs covers the lubricants and marine evidence, so that check stays open; the `party` module's pull request is planned to settle or park it (EPM-DEC-001-0067, What follows, item 14). It parks it, with a trigger (EPM-DEC-001-0068, item 14). The Step 5 use of C1 to C8 is done: the module's customer classes carry the codes (EPM-DEC-001-0068, item 8).
 
 ## Alternatives considered
 

@@ -18,7 +18,7 @@ from rdflib import Graph
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RELEASE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
-# The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi, data-product, value-stream, system, lane and market-data modules).
+# The module graphs loaded with the release (Step 5: roles and RACI assignments; Step 7: the kpi, data-product, value-stream, system, lane and market-data modules; Steps 5 to 7: the `party` module).
 MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl", "roles.ttl", "assignments.ttl")] \
     + [os.path.join(HERE, "..", "kpi", n) for n in ("vocabulary.ttl", "measures.ttl")] \
     + [os.path.join(HERE, "..", "data-product", n) for n in ("vocabulary.ttl", "data-products.ttl")] \
@@ -30,7 +30,8 @@ MODULES = [os.path.join(HERE, "..", "organization", n) for n in ("vocabulary.ttl
     + [os.path.join(HERE, "..", "authority", n) for n in ("vocabulary.ttl", "source-tiers.ttl")] \
     + [os.path.join(HERE, "..", "apqc", "apqc-elements.ttl")] \
     + [os.path.join(HERE, "..", "consumer", "vocabulary.ttl")] \
-    + [os.path.join(HERE, "..", "population", n) for n in ("vocabulary.ttl", "population.ttl")]  # Step 7 overlays and rules
+    + [os.path.join(HERE, "..", "population", n) for n in ("vocabulary.ttl", "population.ttl")] \
+    + [os.path.join(HERE, "..", "party", n) for n in ("vocabulary.ttl", "code-lists.ttl")]  # Step 7 overlays and rules; Steps 5 to 7: the `party` module
 QUESTIONS = os.path.join(HERE, "..", "competency-questions.md")
 
 

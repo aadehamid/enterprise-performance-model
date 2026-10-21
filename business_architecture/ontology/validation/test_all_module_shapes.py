@@ -19,7 +19,7 @@ import run  # noqa: E402
 SHAPE_FILES = [
     "releases/core/2.1.0/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
-    "market-data/shapes.ttl", "consumer/shapes.ttl", "validation/controlled-values.ttl",
+    "market-data/shapes.ttl", "consumer/shapes.ttl", "party/shapes.ttl", "validation/controlled-values.ttl",
 ]
 GRAPH = run.load(run.RELEASE)
 VS = Namespace("https://w3id.org/lsc/ontology/modules/value-stream/")
@@ -64,6 +64,15 @@ class AllModules(unittest.TestCase):
         g.add((URIRef(str(VS) + "process/deal-negotiation-capture"), VS.produces,
                URIRef("https://w3id.org/lsc/ontology/modules/data-product/product/no-such-product")))
         self.assertFalse(report(g)[0])
+
+    def test_an_indirect_customer_subclass_fails(self):
+        # Customer under Person or Organization is still a subclass of party (Codex verdict on #329).
+        party = Namespace("https://w3id.org/lsc/ontology/modules/party/")
+        for kind in (party.Person, party.Organization):
+            g = Graph()
+            g += GRAPH
+            g.add((party.Customer, URIRef("http://www.w3.org/2000/01/rdf-schema#subClassOf"), kind))
+            self.assertFalse(report(g)[0], kind)
 
 
 if __name__ == "__main__":

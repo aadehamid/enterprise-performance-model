@@ -1,0 +1,666 @@
+# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068).
+# Built by build_party.py from code-lists.csv. Do not edit by hand.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://w3id.org/lsc/ontology/modules/party/address-usage/billing> a skos:Concept ;
+    skos:definition "The address a party's invoices go to."@en ;
+    skos:inScheme party:address-usage ;
+    skos:notation "billing" ;
+    skos:prefLabel "Billing"@en ;
+    skos:topConceptOf party:address-usage .
+
+<https://w3id.org/lsc/ontology/modules/party/address-usage/mailing> a skos:Concept ;
+    skos:definition "The address a party receives mail at."@en ;
+    skos:inScheme party:address-usage ;
+    skos:notation "mailing" ;
+    skos:prefLabel "Mailing"@en ;
+    skos:topConceptOf party:address-usage .
+
+<https://w3id.org/lsc/ontology/modules/party/address-usage/operating-location> a skos:Concept ;
+    skos:definition "An address where a party operates."@en ;
+    skos:inScheme party:address-usage ;
+    skos:notation "operating-location" ;
+    skos:prefLabel "Operating location"@en ;
+    skos:topConceptOf party:address-usage .
+
+<https://w3id.org/lsc/ontology/modules/party/address-usage/registered-office> a skos:Concept ;
+    skos:definition "The address of a party's registered office."@en ;
+    skos:inScheme party:address-usage ;
+    skos:notation "registered-office" ;
+    skos:prefLabel "Registered office"@en ;
+    skos:topConceptOf party:address-usage .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/brand-license> a skos:Concept ;
+    skos:definition "An agreement that grants a party the right to use a brand for a period."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "brand-license" ;
+    skos:prefLabel "Brand License"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/consignment-commission> a skos:Concept ;
+    skos:definition "An agreement under which the company keeps ownership of product held at a party's site, which sells it for a commission."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "consignment-commission" ;
+    skos:prefLabel "Consignment / Commission"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/exchange-buy-sell> a skos:Concept ;
+    skos:definition "An agreement to swap product barrel for barrel or to buy and sell product with a counterparty."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "exchange-buy-sell" ;
+    skos:prefLabel "Exchange / Buy-Sell"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/fleet-card-program> a skos:Concept ;
+    skos:definition "An agreement that lets a party's vehicles buy fuel with a fleet card."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "fleet-card-program" ;
+    skos:prefLabel "Fleet Card Program"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/fuel-supply> a skos:Concept ;
+    skos:definition "An agreement under which the company supplies fuel, as a branded jobber, direct dealer or unbranded term agreement."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "fuel-supply" ;
+    skos:prefLabel "Fuel Supply"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/offtake> a skos:Concept ;
+    skos:definition "An agreement to take product from a source in agreed volumes over a period."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "offtake" ;
+    skos:prefLabel "Offtake"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/agreement-type/throughput-storage> a skos:Concept ;
+    skos:definition "An agreement to move or store a party's volumes through pipelines, terminals or tanks."@en ;
+    skos:inScheme party:agreement-type ;
+    skos:notation "throughput-storage" ;
+    skos:prefLabel "Throughput / Storage"@en ;
+    skos:topConceptOf party:agreement-type .
+
+<https://w3id.org/lsc/ontology/modules/party/contact-type/email> a skos:Concept ;
+    skos:definition "An email address."@en ;
+    skos:inScheme party:contact-type ;
+    skos:notation "email" ;
+    skos:prefLabel "Email"@en ;
+    skos:topConceptOf party:contact-type .
+
+<https://w3id.org/lsc/ontology/modules/party/contact-type/fax> a skos:Concept ;
+    skos:definition "A fax number."@en ;
+    skos:inScheme party:contact-type ;
+    skos:notation "fax" ;
+    skos:prefLabel "Fax"@en ;
+    skos:topConceptOf party:contact-type .
+
+<https://w3id.org/lsc/ontology/modules/party/contact-type/telephone> a skos:Concept ;
+    skos:definition "A telephone number."@en ;
+    skos:inScheme party:contact-type ;
+    skos:notation "telephone" ;
+    skos:prefLabel "Telephone"@en ;
+    skos:topConceptOf party:contact-type .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/asphalt-bitumen-buyer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> ;
+    skos:definition "A paving or roofing buyer of asphalt or bitumen. Public bids and tax-exempt purchases are common. An agreement whose product scope is asphalt usually identifies the customer."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "asphalt-bitumen-buyer" ;
+    skos:prefLabel "Asphalt / Bitumen buyer"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/branded-jobber> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/brand-attached-resellers> ;
+    skos:definition "An independent reseller of branded fuel under a branded supply agreement, which owns or operates its outlets. The usual pattern is the Jobber role, a Fuel Supply agreement and sites branded through site brand assignments."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "branded-jobber" ;
+    skos:prefLabel "Branded jobber / marketer"@en ;
+    party:mpcClassification "C1" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/commercial-industrial-end-user> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> ;
+    skos:definition "A customer that uses the product in its own operations, such as a fleet, an airline, a utility or a railroad. The usual pattern is the Sold-To role and a Fuel Supply or Fleet Card Program agreement."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "commercial-industrial-end-user" ;
+    skos:prefLabel "Commercial and industrial end-user"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/crude-oil-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/trading-counterparties> ;
+    skos:definition "An external customer that buys crude oil or refinery feedstock from the company. Part of these sales go to companies in the crude oil or refinery feedstock trading and supply business, or to other refiners."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "crude-oil-customer" ;
+    skos:prefLabel "Crude oil customer"@en ;
+    party:mpcClassification "C8" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/direct-dealer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/brand-attached-resellers> ;
+    skos:definition "A dealer that operates a branded site under a long-term supply agreement with the company. The usual pattern is the Dealer role, a Fuel Supply agreement and a site brand assignment."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "direct-dealer" ;
+    skos:prefLabel "Direct dealer"@en ;
+    party:mpcClassification "C2" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/exchange-trading-counterparty> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/trading-counterparties> ;
+    skos:definition "A party that swaps product with the company barrel for barrel, or trades with it on a buy or sell basis, with differences settled as imbalances. It acts through the Exchange Counterparty role and is a customer only when a revenue-recognized relationship exists."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "exchange-trading-counterparty" ;
+    skos:prefLabel "Exchange / Trading counterparty"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/export-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A buyer overseas. Product is lifted at a coastal refinery or at terminal gates, and supply usually comes from a refinery or terminal site."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "export-customer" ;
+    skos:prefLabel "Export customer"@en ;
+    party:mpcClassification "C7" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/forecast-driven-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A customer whose supply is planned from forecasts, not fixed orders, usually as an account facet with demand planning."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "forecast-driven-customer" ;
+    skos:prefLabel "Forecast-driven customer"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/independent-retailer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A retailer that is not a brand jobber or direct dealer and buys refined products for its own outlets."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "independent-retailer" ;
+    skos:prefLabel "Independent retailer"@en ;
+    party:mpcClassification "C4" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/pipeline-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> ;
+    skos:definition "A customer that ships or stores volumes under a throughput, storage or transport agreement, with invoices that flow back to settlement. The usual pattern is a Throughput / Storage agreement and party transaction associations on tickets and invoices."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "pipeline-customer" ;
+    skos:prefLabel "Pipeline customer"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/spot-market-buyer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/trading-counterparties> ;
+    skos:definition "A buyer that buys refined products on the spot market, not under a term agreement."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "spot-market-buyer" ;
+    skos:prefLabel "Spot market buyer"@en ;
+    party:mpcClassification "C6" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/terminal-rack-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A customer that lifts product at terminal racks. Each lifting records the position holder, the customer and the carrier, usually as party transaction associations."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "terminal-rack-customer" ;
+    skos:prefLabel "Terminal / Rack customer"@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/unbranded-customer> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A customer that buys gasoline or diesel without a brand: an independent marketer, a commercial end-user, an unbranded distributor or a high-volume retailer."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "unbranded-customer" ;
+    skos:prefLabel "Unbranded customer"@en ;
+    party:mpcClassification "C5" .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-marketing> a skos:Concept ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> ;
+    skos:definition "A customer that buys in bulk for resale, in domestic or international markets, under term or spot arrangements. The usual pattern is the Sold-To role and a Fuel Supply or Offtake agreement."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "wholesale-marketing" ;
+    skos:prefLabel "Wholesale marketing customer"@en ;
+    party:mpcClassification "C3" .
+
+<https://w3id.org/lsc/ontology/modules/party/identifier-type/industry-code> a skos:Concept ;
+    skos:definition "An identifier or code issued by an industry body."@en ;
+    skos:inScheme party:identifier-type ;
+    skos:notation "industry-code" ;
+    skos:prefLabel "Industry code"@en ;
+    skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/identifier-type/legacy-identifier> a skos:Concept ;
+    skos:definition "An identifier from an earlier or another system."@en ;
+    skos:inScheme party:identifier-type ;
+    skos:notation "legacy-identifier" ;
+    skos:prefLabel "Legacy identifier"@en ;
+    skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/identifier-type/public-company-identifier> a skos:Concept ;
+    skos:definition "An identifier of a listed or registered company, such as a ticker symbol or an SEC CIK."@en ;
+    skos:inScheme party:identifier-type ;
+    skos:notation "public-company-identifier" ;
+    skos:prefLabel "Public-company identifier"@en ;
+    skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/identifier-type/tax-identifier> a skos:Concept ;
+    skos:definition "A tax identifier issued by a tax authority, such as an EIN or FEIN."@en ;
+    skos:inScheme party:identifier-type ;
+    skos:notation "tax-identifier" ;
+    skos:prefLabel "Tax identifier"@en ;
+    skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/asphalt> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells asphalt."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "asphalt" ;
+    skos:prefLabel "Asphalt"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/brand> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells branded fuel to jobbers, dealers and their sites."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "brand" ;
+    skos:prefLabel "Brand"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/cardlock> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells fuel at unattended cardlock sites, to customers who pay by card."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "cardlock" ;
+    skos:prefLabel "Cardlock"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/misc> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business for customers that fit no other line."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "misc" ;
+    skos:prefLabel "Misc"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/petrochemicals> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells petrochemical products."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "petrochemicals" ;
+    skos:prefLabel "Petrochemicals"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/pipeline-ls> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that serves pipeline customers of the logistics and storage business. L&S is Logistics and Storage (MPLX FY2023 Form 10-K)."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "pipeline-ls" ;
+    skos:prefLabel "Pipeline L&S"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/producers> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that serves oil and gas producers."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "producers" ;
+    skos:prefLabel "Producers"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/renewable-fuels> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells renewable fuels."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "renewable-fuels" ;
+    skos:prefLabel "Renewable Fuels"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/sdp> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "A line of business named SDP. The decision owner chose to keep the label without an expansion (EPM-DEC-001-0067)."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "sdp" ;
+    skos:prefLabel "SDP"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/line-of-business/unbranded> a skos:Concept,
+        party:LineOfBusiness ;
+    skos:definition "The line of business that sells fuel without a brand."@en ;
+    skos:inScheme party:line-of-business ;
+    skos:notation "unbranded" ;
+    skos:prefLabel "Unbranded"@en ;
+    skos:topConceptOf party:line-of-business .
+
+<https://w3id.org/lsc/ontology/modules/party/operating-model/coco> a skos:Concept ;
+    skos:definition "A site that the company owns and operates."@en ;
+    skos:inScheme party:operating-model ;
+    skos:notation "coco" ;
+    skos:prefLabel "COCO"@en ;
+    skos:topConceptOf party:operating-model .
+
+<https://w3id.org/lsc/ontology/modules/party/operating-model/codo> a skos:Concept ;
+    skos:definition "A site that the company owns and a dealer operates."@en ;
+    skos:inScheme party:operating-model ;
+    skos:notation "codo" ;
+    skos:prefLabel "CODO"@en ;
+    skos:topConceptOf party:operating-model .
+
+<https://w3id.org/lsc/ontology/modules/party/operating-model/dodo> a skos:Concept ;
+    skos:definition "A site that a dealer owns and operates."@en ;
+    skos:inScheme party:operating-model ;
+    skos:notation "dodo" ;
+    skos:prefLabel "DODO"@en ;
+    skos:topConceptOf party:operating-model .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/bill-to> a skos:Concept ;
+    skos:definition "The role of the party that receives the invoices of an account."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "bill-to" ;
+    skos:prefLabel "Bill-To"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/carrier> a skos:Concept ;
+    skos:definition "The role of a party that transports product for a lifting or a movement."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "carrier" ;
+    skos:prefLabel "Carrier"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/consignee> a skos:Concept ;
+    skos:definition "The role of the party that receives the delivered product."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "consignee" ;
+    skos:prefLabel "Consignee"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/dealer> a skos:Concept ;
+    skos:definition "The role of a party that operates a branded site under a direct agreement with the company."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "dealer" ;
+    skos:prefLabel "Dealer"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/exchange-counterparty> a skos:Concept ;
+    skos:definition "The role of a party that swaps product with the company, or buys and sells with it, under an exchange or buy-sell agreement."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "exchange-counterparty" ;
+    skos:prefLabel "Exchange Counterparty"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/jobber> a skos:Concept ;
+    skos:definition "The role of an independent reseller that buys branded fuel under a supply agreement and owns or operates its outlets."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "jobber" ;
+    skos:prefLabel "Jobber"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/loading-authorized-party> a skos:Concept ;
+    skos:definition "The role of a party that is allowed to lift product at a terminal. The role is held for a period; the permission that grants it is a separate record."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "loading-authorized-party" ;
+    skos:prefLabel "Loading-Authorized Party"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/payer> a skos:Concept ;
+    skos:definition "The role of the party that pays the invoices of an account."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "payer" ;
+    skos:prefLabel "Payer"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/position-holder> a skos:Concept ;
+    skos:definition "The role of the party that owns the product position from which a lifting at a terminal is drawn."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "position-holder" ;
+    skos:prefLabel "Position Holder"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/sold-to> a skos:Concept ;
+    skos:definition "The role of the party that buys: it places the order and is the party the sale is made to."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "sold-to" ;
+    skos:prefLabel "Sold-To"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/supplier> a skos:Concept ;
+    skos:definition "The role of a party that supplies product to the company."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "supplier" ;
+    skos:prefLabel "Supplier"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/surety> a skos:Concept ;
+    skos:definition "The role of a party that guarantees another party's obligations, such as payment."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "surety" ;
+    skos:prefLabel "Surety"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/throughput-holder> a skos:Concept ;
+    skos:definition "The role of a party that moves or stores volumes under a throughput, storage or transport agreement."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "throughput-holder" ;
+    skos:prefLabel "Throughput Holder"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-role/vendor> a skos:Concept ;
+    skos:definition "The role of a party that sells goods or services to the company."@en ;
+    skos:inScheme party:party-role ;
+    skos:notation "vendor" ;
+    skos:prefLabel "Vendor"@en ;
+    skos:topConceptOf party:party-role .
+
+<https://w3id.org/lsc/ontology/modules/party/party-type/organization> a skos:Concept ;
+    skos:definition "A party that is an organization, such as a company, a partnership or a public body."@en ;
+    skos:inScheme party:party-type ;
+    skos:notation "organization" ;
+    skos:prefLabel "Organization"@en ;
+    skos:topConceptOf party:party-type .
+
+<https://w3id.org/lsc/ontology/modules/party/party-type/person> a skos:Concept ;
+    skos:definition "A party that is a natural person."@en ;
+    skos:inScheme party:party-type ;
+    skos:notation "person" ;
+    skos:prefLabel "Person"@en ;
+    skos:topConceptOf party:party-type .
+
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/contact-for> a skos:Concept ;
+    skos:definition "One role is the contact for the other."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "contact-for" ;
+    skos:prefLabel "contact for"@en ;
+    skos:topConceptOf party:relationship-type .
+
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/credit-roll-up> a skos:Concept ;
+    skos:definition "One role's credit exposure is counted under the other's for credit limits and reviews."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "credit-roll-up" ;
+    skos:prefLabel "credit roll-up"@en ;
+    skos:topConceptOf party:relationship-type .
+
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/guarantor-of> a skos:Concept ;
+    skos:definition "One role guarantees the other's obligations."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "guarantor-of" ;
+    skos:prefLabel "guarantor of"@en ;
+    skos:topConceptOf party:relationship-type .
+
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/parent-of> a skos:Concept ;
+    skos:definition "One role's party is the parent of the other's, for example a parent company and a subsidiary."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "parent-of" ;
+    skos:prefLabel "parent of"@en ;
+    skos:topConceptOf party:relationship-type .
+
+<https://w3id.org/lsc/ontology/modules/party/relationship-type/supplies> a skos:Concept ;
+    skos:definition "One role supplies product to the other."@en ;
+    skos:inScheme party:relationship-type ;
+    skos:notation "supplies" ;
+    skos:prefLabel "supplies"@en ;
+    skos:topConceptOf party:relationship-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/airport-location> a skos:Concept ;
+    skos:definition "A fueling location at an airport."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "airport-location" ;
+    skos:prefLabel "Airport location"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/bulk-plant> a skos:Concept ;
+    skos:definition "A bulk fuel storage and distribution plant."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "bulk-plant" ;
+    skos:prefLabel "Bulk plant"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/cardlock> a skos:Concept ;
+    skos:definition "An unattended fueling site that customers use with a card."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "cardlock" ;
+    skos:prefLabel "Cardlock"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/pipeline-delivery-point> a skos:Concept ;
+    skos:definition "A point where a pipeline delivers product to a customer."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "pipeline-delivery-point" ;
+    skos:prefLabel "Pipeline delivery point"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/station> a skos:Concept ;
+    skos:definition "A retail fuel station."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "station" ;
+    skos:prefLabel "Station"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/site-type/terminal> a skos:Concept ;
+    skos:definition "A terminal where product is stored and lifted at racks."@en ;
+    skos:inScheme party:site-type ;
+    skos:notation "terminal" ;
+    skos:prefLabel "Terminal"@en ;
+    skos:topConceptOf party:site-type .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/case> a skos:Concept ;
+    skos:definition "A service or setup case, such as a request to create or change a customer."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "case" ;
+    skos:prefLabel "Case"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/invoice> a skos:Concept ;
+    skos:definition "An invoice."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "invoice" ;
+    skos:prefLabel "Invoice"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/order> a skos:Concept ;
+    skos:definition "A sales or purchase order."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "order" ;
+    skos:prefLabel "Order"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/payment> a skos:Concept ;
+    skos:definition "A payment."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "payment" ;
+    skos:prefLabel "Payment"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/ticket-bol> a skos:Concept ;
+    skos:definition "A movement ticket or a bill of lading."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "ticket-bol" ;
+    skos:prefLabel "Ticket or BOL"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/trade> a skos:Concept ;
+    skos:definition "A trade captured in a deal: a buy, a sell or a storage rental."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "trade" ;
+    skos:prefLabel "Trade"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/transaction-kind/transfer> a skos:Concept ;
+    skos:definition "A transfer captured in a deal: an exchange of products."@en ;
+    skos:inScheme party:transaction-kind ;
+    skos:notation "transfer" ;
+    skos:prefLabel "Transfer"@en ;
+    skos:topConceptOf party:transaction-kind .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/brand-attached-resellers> a skos:Concept ;
+    skos:definition "The customer classes that resell fuel under a company brand."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "brand-attached-resellers" ;
+    skos:prefLabel "Brand-attached resellers"@en ;
+    skos:topConceptOf party:customer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/end-users-specialty> a skos:Concept ;
+    skos:definition "The customer classes that use the product themselves, or buy a specialty product or service."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "end-users-specialty" ;
+    skos:prefLabel "End-users and specialty"@en ;
+    skos:topConceptOf party:customer-class .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/trading-counterparties> a skos:Concept ;
+    skos:definition "The customer classes that trade with the company, product for product or on a buy or sell basis."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "trading-counterparties" ;
+    skos:prefLabel "Trading counterparties"@en ;
+    skos:topConceptOf party:customer-class .
+
+party:party-type a skos:ConceptScheme ;
+    rdfs:label "party types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "Person or organization: the two kinds of party."@en .
+
+party:contact-type a skos:ConceptScheme ;
+    rdfs:label "contact types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of contact point."@en .
+
+<https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-unbranded> a skos:Concept ;
+    skos:definition "The customer classes that buy fuel in bulk or without a brand, for resale."@en ;
+    skos:inScheme party:customer-class ;
+    skos:notation "wholesale-unbranded" ;
+    skos:prefLabel "Wholesale and unbranded"@en ;
+    skos:topConceptOf party:customer-class .
+
+party:operating-model a skos:ConceptScheme ;
+    rdfs:label "site operating models"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "Who owns and who operates a site."@en .
+
+party:address-usage a skos:ConceptScheme ;
+    rdfs:label "address usages"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "How an address is used."@en .
+
+party:identifier-type a skos:ConceptScheme ;
+    rdfs:label "identifier types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of external identifier of a party."@en .
+
+party:relationship-type a skos:ConceptScheme ;
+    rdfs:label "party relationship types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of link from one party role to another."@en .
+
+party:site-type a skos:ConceptScheme ;
+    rdfs:label "site types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of physical operating location."@en .
+
+party:agreement-type a skos:ConceptScheme ;
+    rdfs:label "agreement types"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The types of agreement. They overlap: one agreement can have several."@en .
+
+party:transaction-kind a skos:ConceptScheme ;
+    rdfs:label "transaction kinds"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of transaction a party or an account is associated with."@en .
+
+party:line-of-business a skos:ConceptScheme ;
+    rdfs:label "lines of business"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The governed categories of the company's business that a customer sits under."@en .
+
+party:customer-class a skos:ConceptScheme ;
+    rdfs:label "customer classes"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The kinds of customer, grouped by value-chain role and brand attachment. Each class is assigned to a customer account with dates. Together with MPC's classification C1 to C8 they form the channel dimension of MPC-P06."@en .
+
+party:party-role a skos:ConceptScheme ;
+    rdfs:label "party roles"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "The governed list of role types a party can hold. A new role type needs a governance decision."@en .
+
