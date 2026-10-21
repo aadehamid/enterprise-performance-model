@@ -50,7 +50,7 @@ Every entity is in scope ("nothing on the conceptual is out of scope", EPM-DEC-0
    | C7 | Export customer |
    | C8 | Crude oil customer |
 
-   The other six classes have no MPC code. This builds the values of option A of P06, which the decision owner chose (EPM-DEC-001-0047): "Channel as a dimension, built from C1 to C8", with no process-map change. An account's channel is its customer class. P06 also suggested that the channel become a dimension of Order Management or of KPIs. That is not done here. *Trigger:* a measure or process that needs a channel breakdown.
+   The other six classes have no MPC code. This builds the values of option A of P06, which the decision owner chose (EPM-DEC-001-0047): "Channel as a dimension, built from C1 to C8" (the option's wording in `decision-packages/2026-10-14/step7-rulings.md`, P06), with no process-map change. An account's channel is its customer class. P06 also suggested that the channel become a dimension of Order Management or of KPIs. That is not done here. *Trigger:* a measure or process that needs a channel breakdown.
    - The codes are a property on the module's classes, not their own SKOS scheme as `data-domain-register.md` once proposed. One class list, carrying the codes, avoids two schemes for the same customers, and the module's definitions are in Claude's words, not MPC's (EPM-DEC-001-0067).
 9. **Direct dealers sit under Fuel Supply.** The class definition names a long-term supply agreement and a site brand assignment, not a Brand License (EPM-DEC-001-0067, What follows, item 1).
 10. **Code lists, as SKOS schemes** built from `code-lists.csv`:
