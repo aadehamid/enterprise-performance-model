@@ -1,7 +1,7 @@
 # SHACL shapes for the `party` module (Step 9; EPM-DEC-001-0068). They check the shape of
 # customer records that systems or examples state in these terms: each role held by one party,
 # each dated record with a start date and no end before its start, each coded value from its own
-# list, and no class of customer made a subclass of party.
+# list, and no class other than Person and Organization made a subclass of party.
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
