@@ -1015,7 +1015,7 @@ without a dated amendment and the decision owner's explicit agreement.
   no source states them. A seventh may-answer rule joins the consumer
   rules: what a measure includes and excludes. Q28 is answerable. Every question still
   waiting now waits on the decision owner (Q17, Q19 to Q26). *2026-10-21:* Q19 to
-  Q26 now wait on the customer module's build (EPM-DEC-001-0067); only Q17 waits
+  Q26 now wait on the `party` module's build (EPM-DEC-001-0067); only Q17 waits
   on the decision owner.
 
 ### Consumer rules (2026-10-19)

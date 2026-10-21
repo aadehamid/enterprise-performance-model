@@ -1469,7 +1469,7 @@ owner made them the source author's backlog.
   consumer rules and the measure populations. Regression went from 17 to
   34 answerable questions; the nine still waiting all wait on the owner.
   *2026-10-21:* the owner then supplied their customer information, so the
-  customer questions (Q19 to Q26) wait on the customer module's build
+  customer questions (Q19 to Q26) wait on the `party` module's build
   (EPM-DEC-001-0067); only Q17 still waits on the owner.
   *2026-10-20:* the decision owner then supplied MPC Economics' own crack
   spread definition and made it the primary source; the module grew to 13
@@ -1545,7 +1545,7 @@ With the consumer rules (2026-10-19), Q35, Q41 and Q42 became answerable: 33, 1 
 With the measure populations (2026-10-19), Q28 became answerable: 34, 1 and 9. Every waiting question then waits on the decision owner.
 The waiting questions are the meaning owners (Q17) and the customer questions (Q19 to
 Q26); all wait on the decision owner. *2026-10-21:* the decision owner's customer
-information arrived, so Q19 to Q26 wait on the customer module's build (EPM-DEC-001-0067);
+information arrived, so Q19 to Q26 wait on the `party` module's build (EPM-DEC-001-0067);
 only Q17 waits on the decision owner. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.
