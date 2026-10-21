@@ -8,7 +8,7 @@ import unittest
 
 from pyshacl import validate
 from rdflib import Graph, Namespace
-from rdflib.namespace import RDF, SKOS
+from rdflib.namespace import RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
@@ -149,6 +149,13 @@ class Attributes(unittest.TestCase):
         self.assertEqual(describes("salesforce", "enrich", "credit-parent-account"), CUST.PartyRelationship)
 
 
+class OpenQuestions(unittest.TestCase):
+    def test_the_cbs_sourcing_keeps_its_open_identity(self):
+        # Whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2), so the sourcing says so.
+        note = str(G.value(CUST["sourcing/fuelfacs--source--customer-class--terminal-rack-customer"], RDFS.comment))
+        self.assertIn("is open", note)
+
+
 class Shapes(unittest.TestCase):
     def conforms(self, extra=""):
         ok, _, text = validate(parse("vocabulary.ttl", "code-lists.ttl", "systems.ttl", extra=extra),
@@ -201,6 +208,34 @@ class Shapes(unittest.TestCase):
                                  '<http://www.w3.org/2000/01/rdf-schema#comment> "x"@en ; party:evidenceInput "2" .')
         self.assertFalse(ok)
         self.assertIn("names a party role, a customer class", text)
+
+    def test_a_system_whose_role_is_blank(self):
+        ok, text = self.conforms('party:sx a party:CustomerSystem ; <http://www.w3.org/2004/02/skos/core#prefLabel> "X"@en ; '
+                                 '<http://www.w3.org/2004/02/skos/core#inScheme> party:customer-systems ; '
+                                 'party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> ; '
+                                 'party:customerRole "   "@en .')
+        self.assertFalse(ok)
+        self.assertIn("says what it does", text)
+
+    def test_a_flow_whose_carries_is_blank(self):
+        ok, text = self.conforms('party:x a party:DataFlow ; party:fromSystem s:salesforce ; party:toSystem s:sap-mdg ; '
+                                 'party:carries "   "@en ; party:evidenceInput "3" .')
+        self.assertFalse(ok)
+        self.assertIn("says what it carries", text)
+
+    def test_a_sourcing_whose_note_is_blank(self):
+        ok, text = self.conforms('party:n a party:CustomerSourcing ; party:sourcingSystem s:salesforce ; '
+                                 'party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ; '
+                                 'party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/sold-to> ; '
+                                 '<http://www.w3.org/2000/01/rdf-schema#comment> " "@en ; party:evidenceInput "2" .')
+        self.assertFalse(ok)
+        self.assertIn("has a note", text)
+
+    def test_a_system_implementing_something_outside_the_model(self):
+        for thing in ("SystemRecord", "DataFlow"):
+            ok, text = self.conforms(f"s:salesforce party:implements party:{thing} .")
+            self.assertFalse(ok, thing)
+            self.assertIn("entities of the conceptual model only", text)
 
 
 if __name__ == "__main__":

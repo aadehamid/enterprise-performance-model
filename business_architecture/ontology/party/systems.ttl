@@ -1963,7 +1963,7 @@
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/flowcal> .
 
 <https://w3id.org/lsc/ontology/modules/party/sourcing/fuelfacs--source--customer-class--terminal-rack-customer> a party:CustomerSourcing ;
-    rdfs:comment "Terminal customers (as CBS)."@en ;
+    rdfs:comment "Terminal customers, from input 6's CBS. Placing them on FuelFacs is a reading: whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2)."@en ;
     party:evidenceInput "6" ;
     party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/terminal-rack-customer> ;
     party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;

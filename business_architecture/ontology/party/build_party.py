@@ -36,6 +36,7 @@ SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
 ENTITIES = ("Party", "ExternalIdentifier", "Address", "ContactPoint", "PartyRole", "PartyRelationship",
             "CustomerAccount", "CustomerClass", "LineOfBusiness", "Brand", "Agreement", "SiteBrandAssignment",
             "PartyTransactionAssociation", "Product", "Site", "SystemRecord")
+MODEL_ENTITIES = tuple(e for e in ENTITIES if e != "SystemRecord")  # what a system can implement: the conceptual model only
 CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
 MPC_CLASSES = {f"C{n}" for n in range(1, 9)}
 
@@ -146,8 +147,9 @@ def load_systems(codes):
     problems += [f"{r['slug']}: the system module calls it {existing[r['slug']]!r}, not {r['label']!r}"
                  for r in systems if r["slug"] in existing and existing[r["slug"]].lower() != r["label"].lower()]
     problems += [f"{r['slug']}: tier {r['tier']!r} is not a system tier" for r in systems if ("system-tier", r["tier"]) not in values]
-    problems += [f"{r['slug']}: implements {e!r}, not an entity" for r in systems for e in split(r["implements"]) if e not in ENTITIES]
-    problems += [f"{r['slug']}: no role" for r in systems if not r["role"]]
+    problems += [f"{r['slug']}: implements {e!r}, not an entity of the conceptual model"
+                 for r in systems for e in split(r["implements"]) if e not in MODEL_ENTITIES]
+    problems += [f"{r['slug']}: no role" for r in systems if not r["role"].strip()]
     problems += [f"flow {r['from']} -> {r['to']}: {e} is not a listed system" for r in flows for e in (r["from"], r["to"]) if e not in slugs]
     problems += [f"flow {f} -> {t} is listed {n} times" for (f, t), n in Counter((r["from"], r["to"]) for r in flows).items() if n > 1]
     problems += [f"flow {r['from']} -> {r['to']}: no input" for r in flows if not split(r["inputs"])]

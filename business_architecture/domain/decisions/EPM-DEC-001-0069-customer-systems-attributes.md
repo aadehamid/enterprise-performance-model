@@ -44,6 +44,7 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
    - **origin** (input 6): prospects start in Salesforce; jobbers in Dealer Master; direct dealers in SAP MDG.
    - **setup** (input 1): the lines of business the customer is created for in RightAngle, Salesforce and Polaris.
    - **source** (input 6's landscape list).
+   - Input 6 lists CBS as a source of terminal customers. That sourcing is placed on FuelFacs as a reading, and its note says so, because whether input 6's CBS is FuelFacs is open (item 2).
    - "Customer" in input 6's Corp_Vetting line is not a role in the list, so only vendor and surety are taken.
 6. **275 system attributes, 43 Create and 232 Enrich**, from input 5 after the corrections and deduplication the decision owner asked for ("correct them", "dedup them"; EPM-DEC-001-0067).
    - Six labels are corrected: Sales Manager, Address_Line_1, Joint_Tariff_Flag, Broker Reconcile Method, SAP Net Out Profit Cntr, and Inactive_Indicator_Flag, which merges two spellings.

@@ -145,8 +145,14 @@ partysh:CustomerSystem a sh:NodeShape ;
     sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path skos:inScheme ; sh:hasValue party:customer-systems ] ;
     sh:property [ sh:path party:systemTier ; sh:minCount 1 ; sh:maxCount 1 ; sh:node partysh:InSystemTier ] ;
-    sh:property [ sh:path party:customerRole ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:property [ sh:path party:customerRole ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "\\S" ;
                   sh:message "A customer system says what it does with the customer." ] ;
+    sh:property [ sh:path party:implements ;
+                  sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole
+                          party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness
+                          party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation
+                          party:Product party:Site ) ;
+                  sh:message "A customer system implements entities of the conceptual model only." ] ;
     sh:property [ sh:path party:feeds ; sh:class party:CustomerSystem ] .
 
 partysh:DataFlow a sh:NodeShape ;
@@ -154,7 +160,7 @@ partysh:DataFlow a sh:NodeShape ;
     sh:property [ sh:path party:fromSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ] ;
     sh:property [ sh:path party:toSystem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class party:CustomerSystem ;
                   sh:message "A data flow goes from one customer system to one other." ] ;
-    sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ;
+    sh:property [ sh:path party:carries ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "\\S" ;
                   sh:message "A data flow says what it carries." ] ;
     sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
                   sh:message "A data flow names the inputs that show it, from the seven inputs." ] .
@@ -169,7 +175,8 @@ partysh:CustomerSourcing a sh:NodeShape ;
                           [ sh:path skos:inScheme ; sh:hasValue party:line-of-business ]
                           [ sh:path skos:inScheme ; sh:hasValue party:party-type ] ) ;
                   sh:message "A customer sourcing names a party role, a customer class, a line of business or a party type." ] ;
-    sh:property [ sh:path rdfs:comment ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+    sh:property [ sh:path rdfs:comment ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "\\S" ;
+                  sh:message "A customer sourcing has a note." ] ;
     sh:property [ sh:path party:evidenceInput ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[1-7](, [1-7])*$" ;
                   sh:message "A customer sourcing names the inputs that show it, from the seven inputs." ] .
 
