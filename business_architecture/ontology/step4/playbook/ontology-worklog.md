@@ -84,7 +84,7 @@ ontology; everything else points at it.
 | 4 | Process-definition ontology (ProcessDefinition/ProcessType; systems, variants, lanes, flags, capabilities, value streams) | PROMOTED 2026-09-30 |
 | P1 | Phase 1: source-workbook corrections for the held Step 4 rows (G3 Section B, G1b pairs, S&T, triggers, precedes/follows, governed-by). One GitHub issue per backlog section; batches of about 12 rows grouped by target process (EPM-DEC-001-0003) | ✅ Done 2026-10-13: six sweep batches merged (#239, #241, #243, #244, #247, #248); 51 rows stay held with reasons |
 | R1 | `core` 1.0.0 release, after Phase 1: canonical facts to Turtle, zero `intake:`, fresh attestation, SHACL release slice, LPG design Rules 1, 2, 3 and 5 (EPM-DEC-001-0013, 0014, 0020). MPC-P02 IDs proposed before it (EPM-DEC-001-0011, 0012) | ✅ Released 2026-10-13 (#249, tag `core-v1.0.0`), approved by the decision owner |
-| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by the decision owner to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (the decision owner), carried by core 2.0.0 (approved by the decision owner 2026-10-13) (EPM-DEC-001-0038); the decision owner's role answers in organization 2.0.0, 2026-10-18 (EPM-DEC-001-0045) |
+| 5 | ORG + RACI (roles as `org:Role`; explicit n-ary ResponsibilityAssignment); `ref-mpc` reference module; MPLX control relation as a qualified-relation node (EPM-DEC-001-0015). Customer roles wait (EPM-DEC-001-0004); *2026-10-21:* the Customer work resumes (EPM-DEC-001-0067) | Started 2026-10-13: vocabulary and shapes (EPM-DEC-001-0030), the role register (EPM-DEC-001-0031) and the RACI assignments (EPM-DEC-001-0032) in `organization/`, with the RACI scope set by the decision owner to the 153 processes with source RACI; `ref-mpc` reference instances (EPM-DEC-001-0033); the `core:responsibleDomain` values are business domains (the decision owner), carried by core 2.0.0 (approved by the decision owner 2026-10-13) (EPM-DEC-001-0038); the decision owner's role answers in organization 2.0.0, 2026-10-18 (EPM-DEC-001-0045) |
 | 6 | Interfaces and PROV-O (planned inputs/outputs vs observed executions; `prov:Activity` only for occurrences); P-Plan bridge; occurrences held by consumers (EPM-DEC-001-0016) | Started 2026-10-13: the definition-to-run pattern in `provenance/` (EPM-DEC-001-0034); planned inputs and outputs from the SIPOC field (the decision owner confirmed) in core 2.0.0 (approved by the decision owner 2026-10-13) (EPM-DEC-001-0038) |
 | 7 | Cross-model integration (link processes, value streams, capabilities, systems, data products; resolve empty O2C outputs, Loss Control ownership). Order: Pricing KPI definitions (seeded from the decision owner's planner measure list since 2026-10-18, EPM-DEC-001-0040), Market Data and Commercial Risk, data products, MPC-P01 and P03 to P09 (EPM-DEC-001-0017, 0010, 0011); external mappings (EPM-DEC-001-0023) | Started 2026-10-18: the `kpi` module, 41 measure definitions classified by kind, released as `kpi` 1.0.0 on 2026-10-19 with the decision owner's approval (EPM-DEC-001-0040, 0042, 0043). 2026-10-19: the `data-product` module, 48 data products from the portfolio, 15 defined and 33 parked for lack of a description; Loss Control's owning process is CM 1.1.3.7.13, its link waiting for `core` 2.2.0 (EPM-DEC-001-0053); not released. 2026-10-19: the `value-stream` module, the Commercial Hydrocarbon Lifecycle and Order to Cash, with 58 value-stream processes, their capabilities, data product links and the MPC-P09 measure links (EPM-DEC-001-0054); not released. 2026-10-19: the `system` module, 32 systems from the map's 37 system strings, merged on spelling, linked to 150 processes (EPM-DEC-001-0055); not released. 2026-10-19: the `lane` module, the four office lanes and the seven processes the map places in them (EPM-DEC-001-0056); not released. 2026-10-19: the `market-data` module, five crack-spread series of one measure, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14) (EPM-DEC-001-0057); not released. 2026-10-20: MPC Economics' definition made the primary source; the module now has 13 series, adding its six regional ex-RIN series, the NYMEX 3-2-1's ID and two MPC-weighted blends (EPM-DEC-001-0066); not released. 2026-10-19: the placement kinds, which say what each placing property claims (EPM-DEC-001-0058); not released. 2026-10-19: the external mappings decided (EPM-DEC-001-0064): GLEIF and DCAT mapped; PIDX and OEO wait for a product dimension; IOF Supply Chain parked |
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
@@ -962,6 +962,22 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Customer domain resumes (2026-10-21)
+- The decision owner shared their customer information in seven inputs.
+  By their decisions (EPM-DEC-001-0067): the inputs stay out of the
+  repository; derived definitions go in, from repository and MPC public
+  information, and peer data does not go in, for the Customer domain;
+  nothing in their conceptual model is out of scope; two roles are to be
+  added;
+  the repository stays private (later: public until the goal is
+  achieved); the plan goes ahead.
+- Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
+  follows): four customer classes from the repository's MPC customer
+  classification, making 14 with the
+  ten Claude read in the decision owner's model, and the Position Holder
+  and Loading-Authorized Party roles are to be added in the `party`
+  module's pull request; four more pull requests follow, five in all.
+
 ### Crack spread's primary source (2026-10-20)
 - The decision owner set MPC Economics' 3-2-1 Crack Spread KPI Definition
   as the primary source, then MPC's public filings, peers and other
@@ -981,7 +997,8 @@ without a dated amendment and the decision owner's explicit agreement.
 - Under the delegation (EPM-DEC-001-0064): PIDX's terms are checked
   (royalty free, for use without modification); PIDX and OEO wait for
   product concepts, from the Customer module's product-line facet or
-  another product dimension; IOF Supply Chain is parked until a concept
+  another product dimension (*2026-10-21:* that facet is in the `party`
+  module, EPM-DEC-001-0067, and its values are not yet defined); IOF Supply Chain is parked until a concept
   layer for logistics assets or movements, or a consumer that needs IOF
   terms. GLEIF and DCAT are mapped.
 
@@ -998,7 +1015,9 @@ without a dated amendment and the decision owner's explicit agreement.
   module's measure IRIs. The other 33 measures' populations are parked:
   no source states them. A seventh may-answer rule joins the consumer
   rules: what a measure includes and excludes. Q28 is answerable. Every question still
-  waiting now waits on the decision owner (Q17, Q19 to Q26).
+  waiting now waits on the decision owner (Q17, Q19 to Q26). *2026-10-21:* Q19 to
+  Q26 now wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13); only Q17 waits
+  on the decision owner.
 
 ### Consumer rules (2026-10-19)
 - Under the delegation (EPM-DEC-001-0061): the catalog binding
@@ -1091,7 +1110,8 @@ without a dated amendment and the decision owner's explicit agreement.
 - The decision owner chose Claude's recommended order for completing the
   ontology (EPM-DEC-001-0052): Phase A data products, Phase B the
   Commercial Lifecycle and Order to Cash value streams, Phase C the
-  Customer domain (waits for their customer information), Phase D a
+  Customer domain (waits for their customer information; *2026-10-21:* it
+  arrived, EPM-DEC-001-0067), Phase D a
   `core` release, Phase E the remaining steps, and Phase F the `ontology`
   skill rebuilt. Ambiguity is resolved by external search, MPC first and
   the downstream peers second.
@@ -1103,6 +1123,9 @@ without a dated amendment and the decision owner's explicit agreement.
   an amendment to EPM-DEC-001-0050. Their words are saved in
   `answers-2026-10-19-completion-order.md` and
   `answers-2026-10-19-completion-goal.md`.
+  *2026-10-21:* for the Customer work the repository stays private
+  (EPM-DEC-001-0067, item 12); later that day the decision owner made it
+  public until the goal is achieved (EPM-DEC-001-0067, decision 12).
 
 ### Process-authority integrity checks (2026-10-20)
 - `business_process/test_business_process.py`, run by `check.sh`, now checks
@@ -1155,7 +1178,8 @@ without a dated amendment and the decision owner's explicit agreement.
   they merged the repository went private again, and GitHub no longer
   enforces the ruleset. MPC-P09 is unblocked and goes in its own pull
   request. *Amended 2026-10-19:* public while work needs it, private at
-  the end of each session or goal.
+  the end of each session or goal. *2026-10-21:* kept private for the
+  Customer work, then public until the goal is achieved (EPM-DEC-001-0067).
 
 ### Process-map gaps addressed (2026-10-19)
 - The decision owner said to address the two gaps the MPC-P03 and MPC-P04 checks
@@ -1224,7 +1248,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Licence and KPI seed (2026-10-18)
 - The decision owner decided the ontology stays proprietary, all rights reserved
-  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050). *2026-10-19, amendment of EPM-DEC-001-0050:* public while work needs it, private at the end of each session or goal.
+  (EPM-DEC-001-0041). The GitHub repository is private since 2026-10-18. *2026-10-19:* public temporarily, for the current goal, and private again once PRs #298 to #301 merged (EPM-DEC-001-0050). *2026-10-19, amendment of EPM-DEC-001-0050:* public while work needs it, private at the end of each session or goal. *2026-10-21:* kept private for the Customer work, then public until the goal is achieved (EPM-DEC-001-0067).
 - The `kpi` module is seeded from the decision owner's planner measure list, with
   personas as planning roles and no person's name; their files stay out
   of the repo (EPM-DEC-001-0040, amending EPM-DEC-001-0017). Their words

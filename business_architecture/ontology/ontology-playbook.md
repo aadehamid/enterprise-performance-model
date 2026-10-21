@@ -1468,6 +1468,10 @@ owner made them the source author's backlog.
   treatment and blend, from MPC's FY2025 Form 10-K, Item 7, and CME Group ("Trading Crack Spreads", 2024; "Introduction to Crack Spreads", 2017; "Fresh from the Trading Room", 2026-07-14), the placement kinds, the source tiers, the full APQC element list, the
   consumer rules and the measure populations. Regression went from 17 to
   34 answerable questions; the nine still waiting all wait on the owner.
+  *2026-10-21:* the owner then supplied their customer information, so the
+  customer questions (Q19 to Q26) wait on the plan's pull request 5, which
+  answers them after the `party` module and its data (pull requests 2 to 4;
+  EPM-DEC-001-0067, item 13); only Q17 still waits on the owner.
   *2026-10-20:* the decision owner then supplied MPC Economics' own crack
   spread definition and made it the primary source; the module grew to 13
   series, and two planner names moved to series that deduct the RVO cost
@@ -1541,7 +1545,9 @@ With the full APQC element list (2026-10-19), Q11 became answerable, and Q40 and
 With the consumer rules (2026-10-19), Q35, Q41 and Q42 became answerable: 33, 1 and 10.
 With the measure populations (2026-10-19), Q28 became answerable: 34, 1 and 9. Every waiting question then waits on the decision owner.
 The waiting questions are the meaning owners (Q17) and the customer questions (Q19 to
-Q26); all wait on the decision owner. The first query for Q8 filtered on the "process"
+Q26); all wait on the decision owner. *2026-10-21:* the decision owner's customer
+information arrived, so Q19 to Q26 wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13);
+only Q17 waits on the decision owner. The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.
 Counting the query's population against the whole caught it.

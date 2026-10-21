@@ -21,7 +21,7 @@ The order is Claude's recommendation. Each phase is one or more pull requests, o
 
 1. **Phase A, data products (Step 7, item 3 of EPM-DEC-001-0017).** Each data product in `business_architecture/business_process/data_product_portfolio.json` is modelled as a definition, linked to the processes that produce and consume it, or parked with a reason. Loss Control ownership is settled. The competency questions this answers move in the regression.
 2. **Phase B, the two value streams (Step 7).** Commercial Lifecycle and Order to Cash, with their stages, capabilities and process links, the `kpi` measure links MPC-P09 added, and the systems and lanes overlays.
-3. **Phase C, the Customer domain (Steps 5 to 7).** It waits for the decision owner's customer information (EPM-DEC-001-0004). Scope: a conceptual data model of Customer, the customer lifecycle from onboarding as proposed process-map nodes, and the channel dimension of MPC-P06 (EPM-DEC-001-0047).
+3. **Phase C, the Customer domain (Steps 5 to 7).** It waits for the decision owner's customer information (EPM-DEC-001-0004). *2026-10-21:* it arrived (EPM-DEC-001-0067). Scope: a conceptual data model of Customer, the customer lifecycle from onboarding as proposed process-map nodes, and the channel dimension of MPC-P06 (EPM-DEC-001-0047).
 4. **Phase D, a `core` release with the process-map changes.** Identity, definitions and the release build. Each release needs the decision owner's approval.
 5. **Phase E, the remaining steps.** SHACL shapes for the new modules (Step 9), DCAT records (Step 10), every competency question answerable or parked by decision (Step 11), the projection on the final releases (Step 12), the 3d-d backlog, the external mappings (EPM-DEC-001-0023) and the partial questions.
 6. **Phase F, the `ontology` skill rebuilt** from the playbook and the work done, after phases A to E. It starts only after the decision owner approves the plan.
@@ -32,7 +32,7 @@ The ontology is complete when every competency question is answerable or parked 
 
 ## Alternatives considered
 
-- **The Customer domain first.** Not chosen: it waits for the decision owner's information, and Phases A and B need nothing from them.
+- **The Customer domain first.** Not chosen: it waits for the decision owner's information, and Phases A and B need nothing from them. *2026-10-21:* the information arrived (EPM-DEC-001-0067).
 - **A `core` release before the overlays.** Not chosen: the customer lifecycle nodes from Phase C go into the same release, so one release covers both.
 
 ## The decision owner's recorded words
@@ -45,5 +45,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- Work runs phase by phase. A phase that waits on the decision owner (C, the release in D, F) does not stop the phases that do not depend on it.
-- EPM-DEC-001-0004 still holds: the Customer domain work waits for the decision owner's details.
+- Work runs phase by phase. A phase that waits on the decision owner (C, the release in D, F) does not stop the phases that do not depend on it. *2026-10-21:* Phase C no longer waits: the decision owner's customer information arrived (EPM-DEC-001-0067).
+- EPM-DEC-001-0004 still holds: the Customer domain work waits for the decision owner's details. *2026-10-21:* the details arrived, and Phase C runs as EPM-DEC-001-0067 plans it.

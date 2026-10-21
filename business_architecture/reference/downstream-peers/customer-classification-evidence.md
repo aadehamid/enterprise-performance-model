@@ -20,7 +20,7 @@ The decision owner's evidence order puts MPC first and U.S. refining peers secon
 
 ## This file's reading
 
-These are not the filings' words. The peers sort customers on the axes MPC uses (sales channel, brand status, rack against bulk), and nothing in the quotes conflicts with C1 to C8. Two additions are candidates for the Customer work (Phase C), for the decision owner to accept or leave out:
+These are not the filings' words. The peers sort customers on the axes MPC uses (sales channel, brand status, rack against bulk), and nothing in the quotes conflicts with C1 to C8. Two additions are candidates for the Customer work (Phase C), for the decision owner to accept or leave out: *2026-10-21:* both are covered by the decision owner's own model and are not added separately (EPM-DEC-001-0067, What follows, item 10).
 
 - **A facet: delivery mode** (pipeline, barge, truck rack), from PBF.
 - **A relationship: brand licensing.** Phillips 66 and HF Sinclair both report brand-licensing agreements. HF Sinclair counts its licensed locations apart from the branded sites it sells fuel to; reading those as sites it does not supply is this file's inference. MPC's classes do not list a licensing relationship.

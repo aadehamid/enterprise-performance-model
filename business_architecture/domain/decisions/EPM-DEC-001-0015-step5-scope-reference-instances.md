@@ -13,7 +13,7 @@ Step 5 builds ORG and RACI. The question was whether MPC itself (segments, refin
 
 ## Decision
 
-Step 5 models the classes and relations (role, organization, site, the RACI assignment pattern) and adds MPC reference instances where appropriate, under EPM-DEC-001-0005. Reference instances live in a separate module (`ref-mpc`); the core modules stay company-neutral. MPLX is an Organization. MPC controls and consolidates MPLX through a control relation separate from `org:subOrganizationOf`. The ownership share, as-of date and source sit on a qualified-relation node (EPM-DEC-001-0020). The Midstream segment is a separate concept that MPLX's operations roll up into. Customer roles wait (EPM-DEC-001-0004).
+Step 5 models the classes and relations (role, organization, site, the RACI assignment pattern) and adds MPC reference instances where appropriate, under EPM-DEC-001-0005. Reference instances live in a separate module (`ref-mpc`); the core modules stay company-neutral. MPLX is an Organization. MPC controls and consolidates MPLX through a control relation separate from `org:subOrganizationOf`. The ownership share, as-of date and source sit on a qualified-relation node (EPM-DEC-001-0020). The Midstream segment is a separate concept that MPLX's operations roll up into. Customer roles wait (EPM-DEC-001-0004). *2026-10-21:* the Customer work resumed (EPM-DEC-001-0067).
 
 ## Alternatives considered
 
