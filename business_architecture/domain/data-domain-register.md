@@ -80,7 +80,7 @@ The pricing split above (D1 to D4) was decided on 2026-10-05
 ## Open items
 
 - Define the Market Data and Commercial Risk domains (scope, owners, entities) at Step 7 (EPM-DEC-001-0010). Draft definitions for the decision owner's decision: `market-data-and-commercial-risk-draft.md` (2026-10-13). *2026-10-18:* scope and owners decided by the decision owner (EPM-DEC-001-0046); the key entities are still open.
-- Customer: Step 5 use of C1 to C8, and the lubricants and marine product-line evidence, wait for the decision owner's additional customer details (EPM-DEC-001-0004). *2026-10-21:* the details arrived and the Customer work resumes (EPM-DEC-001-0067).
+- Customer: Step 5 use of C1 to C8, and the lubricants and marine product-line evidence, wait for the decision owner's additional customer details (EPM-DEC-001-0004). *2026-10-21:* the details arrived and the Customer work resumes (EPM-DEC-001-0067). They do not cover the lubricants and marine evidence, which stays open.
 - Reconcile the proposed pricing data products with the existing Master
   Pricing and Rack Pricing data products.
 - Confirm the capacity-utilization basis and regional per-barrel margins

@@ -963,13 +963,16 @@ Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
 ### Customer domain resumes (2026-10-21)
-- The decision owner shared their customer information in seven inputs,
-  which stay out of the repository; derived definitions go in, cited only
-  to repository and MPC sources (EPM-DEC-001-0067). Every entity of their
-  conceptual model is in scope; 14 customer classes and the Position Holder
-  and Loading-Authorized Party roles are to be added in the `customer`
-  module's pull request; the repository stays private for the Customer
-  work. Five pull requests follow.
+- The decision owner shared their customer information in seven inputs.
+  By their decisions (EPM-DEC-001-0067): the inputs stay out of the
+  repository; derived definitions go in, from repository and MPC public
+  information, and peer data does not go in, for the Customer domain;
+  nothing in their conceptual model is out of scope; two roles are added;
+  the repository stays private; the plan goes ahead.
+- Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
+  follows): 14 customer classes and the Position Holder and
+  Loading-Authorized Party roles are to be added in the `customer`
+  module's pull request; five pull requests follow.
 
 ### Crack spread's primary source (2026-10-20)
 - The decision owner set MPC Economics' 3-2-1 Crack Spread KPI Definition
@@ -1007,7 +1010,9 @@ without a dated amendment and the decision owner's explicit agreement.
   module's measure IRIs. The other 33 measures' populations are parked:
   no source states them. A seventh may-answer rule joins the consumer
   rules: what a measure includes and excludes. Q28 is answerable. Every question still
-  waiting now waits on the decision owner (Q17, Q19 to Q26).
+  waiting now waits on the decision owner (Q17, Q19 to Q26). *2026-10-21:* Q19 to
+  Q26 now wait on the customer module's build (EPM-DEC-001-0067); only Q17 waits
+  on the decision owner.
 
 ### Consumer rules (2026-10-19)
 - Under the delegation (EPM-DEC-001-0061): the catalog binding

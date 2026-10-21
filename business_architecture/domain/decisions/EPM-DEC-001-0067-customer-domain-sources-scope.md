@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (the decision owner, 2026-10-20 to 2026-10-21, for the sources, the scope, the five accepted recommendations, the two new roles, the visibility and the plan; the readings marked as Claude's delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-21 |
-| Questions | Competency questions 19 to 26; EPM-DEC-001-0004 (Customer work waits for the decision owner's details); Phase C of EPM-DEC-001-0052; MPC-P06's channel dimension (EPM-DEC-001-0047, What follows, item 5) |
+| Questions | Competency questions 19 to 26; EPM-DEC-001-0004, whose wait for the decision owner's details this record ends; Phase C of EPM-DEC-001-0052; MPC-P06's channel dimension (EPM-DEC-001-0047, What follows, item 5) |
 | Source | Claude Code session, 2026-10-20 to 2026-10-21 |
 
 ## Context
@@ -23,43 +23,54 @@ In this session the decision owner sent seven inputs, one at a time:
 
 None of these seven inputs is in the repository, by the decision owner's rule below. Input 7 is a report prepared on 2026-10-13. It is not the earlier customer report tracked at the repository root since 2026-08-21 (`Enterprise_Customer_Domain_Downstream_Oil_Gas_Report.pdf`, with `Customer Domain in Downstream Oil & Gas — Modeling Guide.html`, commit e96b7d0). Those two files predate this session, are not among the seven inputs, and the `customer` module does not cite them.
 
-Claude asked questions about each input as it arrived. The decision owner's answers, with their full context, are saved in `answers-2026-10-21-customer.md`.
+Claude asked questions about each input as it arrived. The decision owner's answers are saved in `answers-2026-10-21-customer.md`, 17 blocks. Its header comment, in Claude's words, records the question each block answers, including the six recommendations block 14 answers.
 
 ## Decision
 
-**The decision owner's decisions:**
+**The decision owner's decisions** (their words, with the block of `answers-2026-10-21-customer.md` each is in; the question each answers is in that file's header comment):
 
-1. **Which open item they gave first:** "Customer information".
-2. **The two candidates the peers' filings suggested** (a delivery-mode facet and a brand-licensing relationship, `reference/downstream-peers/customer-classification-evidence.md`): "decide once you've seen my data".
-3. **The inputs stay out of the repository:** "all of the files and images should stay out of the repo, by the way."
-4. **What may go in, and from which sources:** "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point". Then: "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one" (the decision owner sent the rule and "here is the next one" without a space between them).
-5. **What must be captured:** both categories of attributes ("These two categories of attrobutes must be captured"), and "both the life cycle and data flow of Customer". The conceptual data model is captured separately ("Which we want to capture separately").
-6. **The attributes:** misspelled labels are corrected ("correct them"), repeated attributes are removed ("dedup them"), and the internal codes are resolved by search ("use external MPC search and Peer to resolve these ones.").
-7. **The conceptual model's scope:** "nothing on the conceptual is out of scope".
-8. **Two relationships:** "scoped to product connects to product from agreement" and "customer account connects to site throuhg" the relationship labelled supplied from.
-9. **Abbreviations:** COCO, CODO and DODO as Claude read them ("correct."); "L&S is probably logistic and storage"; and for SDP, "let us just call it SDP for now?". A landscape system's name: "it is EIS".
-10. **Claude's other recommendations on the research report:** "I am okay with the rest." These are items 1 to 5 under What follows.
-11. **The plan, the visibility and the two roles:** "yes, keep it private, add both roles, go ahead".
+1. "Customer information" (block 1).
+2. "decide once you've seen my data. I will share them one at a time to process" (block 2).
+3. "all of the files and images should stay out of the repo, by the way." (block 4).
+4. "yes, derived definitions can go in the repo. We will use repo information, MPC publickly published information for this. We can use Peer data to guide and resolve ambuiguity but peer data should not go into the repo at this point" (block 5), then "Actually Peer comparison is fine to use as guidance. This rule is specifically for Customer domainhere is the next one" (block 6).
+5. "Now here are the core system and attributes that defines a customer in each system. And also attributes used to enrich customer in each system. These two categories of attrobutes must be captured" (block 7).
+6. Block 8, in full:
+   > 3. correct them
+   > 1. dedup them
+   > 2. use external MPC search and Peer to resolve these ones.
+7. "Now make sure you have all of this captured to represent both the life cycle and data flow of Customer ." and "I will share the conceptual data model for customer next. Which we want to capture separately." (block 9).
+8. Block 11, in full:
+   > 1. they are in scope
+   > 2. scoped to product connects to product from agreement, customer account connects to site throuhg "supplied from". I did not see "authorizes brand at site
+   > 3. correct. L&S is probably logistic and storage. can you confrim that and SDP through an external search when you are ready.
+9. "let us just call it SDP for now?" (block 13).
+10. Block 14, in full:
+    > 1. nothing on the conceptual is out of scope
+    > I am okay with the rest. and it is EIS
+    > bring me the plan
+11. "yes, keep it private, add both roles, go ahead" (block 15).
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-These items are Claude's wording. Items 1 to 5 are the recommendations the decision owner accepted with "I am okay with the rest".
+These items are Claude's wording and Claude's reading of the decision owner's answers. Items 1 to 5 restate recommendations 2 to 6 of block 14's question (the answers file's header comment), which the decision owner accepted with "I am okay with the rest"; they rejected recommendation 1 with "nothing on the conceptual is out of scope".
 
 1. **Direct dealers sit under a Fuel Supply agreement.** MPC's filings describe "long-term supply contracts with direct dealers who operate locations mainly under the ARCO® brand" (`reference/mpc/customer-classification-evidence.md`, C2). No MPC filing describes a brand licence for them. Their brand reaches the site through a Site Brand Assignment.
-2. **Four classes from MPC's filings are to be added**, in the `customer` module's pull request, to the conceptual model's ten: independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). That makes 14 customer classes.
-3. **The exchange or trading counterparty stays a customer class.** The conceptual model already says it becomes a customer only when a revenue-recognized relationship exists.
-4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The conceptual model defines a site brand assignment as linking a site to a brand "under an AGREEMENT". The decision owner said they did not see this relationship in their diagram. Claude showed them where it is drawn, and they did not ask for it to be removed.
+2. **Four classes from MPC's filings are to be added**, in the `customer` module's pull request: independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). With the ten classes Claude read in the decision owner's model, that makes 14.
+3. **The exchange or trading counterparty stays a customer class.** The decision owner's model says it becomes a customer only when a revenue-recognized relationship exists.
+4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The model defines a site brand assignment as the link of a site to a brand under an agreement. The decision owner wrote that they did not see this relationship (block 11). Claude then showed where the image draws it. The decision owner has not answered on it since, so this item rests on their acceptance of recommendation 5 in block 14, and stays open to them.
 5. **MPLX's filings count as MPC's public information.** MPC consolidates MPLX.
-6. **Sources for the Customer domain**, by item 4 of the decision owner's decisions:
-   - The repository cites only repository information and MPC's public information, MPLX's included.
-   - Peer filings and the external report guide choices but are not cited.
-   - Elsewhere in the repository, peer comparison stays allowed as guidance and as evidence, as before.
-7. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics.
-8. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
-9. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. A customer account carries a delivery tier. A brand is owned by or licensed to a party through a Brand License agreement.
-10. **Two roles are to be added**, in the `customer` module's pull request, to the conceptual model's twelve, by "add both roles": Position Holder and Loading-Authorized Party. They answer competency question 22.
-11. **The repository stays private** for the whole Customer work, by "keep it private". The Customer modules hold internal system and field names, which EPM-DEC-001-0040 item 3 allows only while the repository is private. GitHub does not enforce ruleset 25440735 on a private repository. So each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
-12. **The plan, in five pull requests:**
+6. **Claude's reading of the decision owner's answers:**
+   - Block 2 answers whether to accept two candidates that four peers' filings suggested: a delivery-mode facet and a brand-licensing relationship.
+   - Block 8's three answers are, in their numbering: correct the misspelled labels (3), remove repeated attributes (1), and search for the meaning of six internal codes (2).
+   - Block 11's third answer confirms Claude's reading of COCO, CODO and DODO (company-owned company-operated, company-owned dealer-operated, dealer-owned dealer-operated).
+   - "and it is EIS" (block 14) gives the spelling of a landscape system's name.
+7. **Sources for the Customer domain**, by decision 4: derived definitions go into the repository; their sources are repository information and MPC's public information, MPLX's included; peer data and the external report guide choices and do not go into the repository. Elsewhere in the repository, peer comparison stays allowed as guidance and as evidence, as before.
+8. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics.
+9. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
+10. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. In the model, a customer account carries a delivery tier, and a brand is owned by or licensed to a party through a Brand License agreement.
+11. **Two roles are to be added**, in the `customer` module's pull request, by "add both roles": Position Holder and Loading-Authorized Party. The Loading-Authorized Party answers competency question 22. The Position Holder is the party whose product a terminal lifting draws on, which the model's terminal-rack class names. The model's own role list, as Claude read it, has twelve roles.
+12. **The repository stays private** for the whole Customer work, by "keep it private". EPM-DEC-001-0040 item 3 lets internal system names into the repository, and its amendment notes that they are readable while the repository is public. Keeping it private keeps the Customer modules' internal system and field names unreadable from outside. GitHub does not enforce ruleset 25440735 on a private repository, so each Customer pull request merges through `merge-on-verdict.sh`, which waits for a MERGE verdict on the current head and for `checks` to pass.
+13. **The plan, in five pull requests:**
     1. this record;
     2. the `customer` module, the conceptual model;
     3. the systems, the data flow and the attributes;
@@ -68,12 +79,12 @@ These items are Claude's wording. Items 1 to 5 are the recommendations the decis
     - MPC-P06's channel dimension is applied in pull request 2.
     - The process map changes only after the decision owner approves the proposal.
     - `customer` 1.0.0 is released only with their approval.
-13. **Still open from EPM-DEC-001-0004:** the lubricants and marine product-line evidence. None of the inputs covers it. It is settled or parked in pull request 2.
+14. **Still open from EPM-DEC-001-0004:** the lubricants and marine product-line evidence. None of the inputs covers it, so it stays open. The `customer` module's pull request is planned to settle or park it.
 
 ## Alternatives considered
 
 - **Commit the decision owner's diagrams and table as reference files.** Not chosen: they asked for the files to stay out.
-- **Cite peers' filings for the Customer domain, as `customer-classification-evidence.md` did.** Not chosen: the decision owner limited the Customer domain to repository and MPC sources.
+- **Put peers' filings into the repository for the Customer domain, as `customer-classification-evidence.md` did.** Not chosen: the decision owner wrote that peer data should not go into the repo, for the Customer domain.
 - **Keep Agreement, Site, Site Brand Assignment and Party Transaction Association out of scope**, as Claude first recommended. Not chosen: the decision owner put every entity in scope.
 - **Frame direct dealers with a Brand License agreement**, as the conceptual model's class note does. Not chosen: MPC's filings describe supply contracts and no licence.
 - **Make the repository public while the pull requests merge**, as EPM-DEC-001-0050's amendment allows, so the ruleset is enforced. Not chosen: the decision owner kept it private.
@@ -90,9 +101,10 @@ In the Claude Code session of 2026-10-20 to 2026-10-21 (saved in `business_archi
 - "These two categories of attrobutes must be captured"
 - "correct them", "dedup them", "use external MPC search and Peer to resolve these ones."
 - "Now make sure you have all of this captured to represent both the life cycle and data flow of Customer ."
+- "Now here are the core system and attributes that defines a customer in each system."
 - "Which we want to capture separately."
 - "they are in scope"
-- "scoped to product connects to product from agreement", "customer account connects to site throuhg" and "I did not see"
+- "scoped to product connects to product from agreement", "customer account connects to site throuhg" and "I did not see" (block 11)
 - "correct. L&S is probably logistic and storage."
 - "let us just call it SDP for now?"
 - "nothing on the conceptual is out of scope"
