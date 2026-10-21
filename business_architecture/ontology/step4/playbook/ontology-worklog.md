@@ -962,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Customer domain resumes (2026-10-21)
+- The decision owner shared their customer information in seven inputs,
+  which stay out of the repository; derived definitions go in, cited only
+  to repository and MPC sources (EPM-DEC-001-0067). Every entity of their
+  conceptual model is in scope; 14 customer classes; Position Holder and
+  Loading-Authorized Party roles added; the repository stays private for
+  the Customer work. Five pull requests follow.
+
 ### Crack spread's primary source (2026-10-20)
 - The decision owner set MPC Economics' 3-2-1 Crack Spread KPI Definition
   as the primary source, then MPC's public filings, peers and other
