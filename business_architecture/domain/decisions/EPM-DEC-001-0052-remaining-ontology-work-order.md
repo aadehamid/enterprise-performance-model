@@ -45,5 +45,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- Work runs phase by phase. A phase that waits on the decision owner (C, the release in D, F) does not stop the phases that do not depend on it.
+- Work runs phase by phase. A phase that waits on the decision owner (C, the release in D, F) does not stop the phases that do not depend on it. *2026-10-21:* Phase C no longer waits: the decision owner's customer information arrived (EPM-DEC-001-0067).
 - EPM-DEC-001-0004 still holds: the Customer domain work waits for the decision owner's details. *2026-10-21:* the details arrived, and Phase C runs as EPM-DEC-001-0067 plans it.
