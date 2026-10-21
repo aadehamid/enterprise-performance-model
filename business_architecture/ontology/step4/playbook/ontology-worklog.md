@@ -970,8 +970,9 @@ without a dated amendment and the decision owner's explicit agreement.
   nothing in their conceptual model is out of scope; two roles are added;
   the repository stays private; the plan goes ahead.
 - Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
-  follows): 14 customer classes and the Position Holder and
-  Loading-Authorized Party roles are to be added in the `customer`
+  follows): four customer classes from MPC's filings, making 14 with the
+  ten Claude read in the decision owner's model, and the Position Holder
+  and Loading-Authorized Party roles are to be added in the `customer`
   module's pull request; five pull requests follow.
 
 ### Crack spread's primary source (2026-10-20)
