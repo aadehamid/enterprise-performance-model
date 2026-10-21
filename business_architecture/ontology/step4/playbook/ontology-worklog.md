@@ -967,7 +967,8 @@ without a dated amendment and the decision owner's explicit agreement.
   By their decisions (EPM-DEC-001-0067): the inputs stay out of the
   repository; derived definitions go in, from repository and MPC public
   information, and peer data does not go in, for the Customer domain;
-  nothing in their conceptual model is out of scope; two roles are added;
+  nothing in their conceptual model is out of scope; two roles are to be
+  added;
   the repository stays private; the plan goes ahead.
 - Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
   follows): four customer classes from MPC's filings, making 14 with the
