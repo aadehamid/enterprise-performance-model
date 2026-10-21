@@ -12,10 +12,10 @@ MPC's classes C1 to C8 exactly once.
 systems.csv, data-flows.csv, customer-sources.csv and attributes.csv hold the systems the
 customer passes through, the flows between them, the systems each kind of customer starts in or
 comes from, and each system's Create and Enrich attributes (EPM-DEC-001-0069). The build fails
-unless every system is listed once, a system the system module already has keeps its label
-there, every flow and source names listed systems and code-list values, and every attribute
+unless every system is listed once, has a role that is not blank and implements only entities
+of the conceptual model, a system the system module already has keeps its label there, every flow and source names listed systems and code-list values, and every attribute
 names a listed system, a category, an entity of the module and, if any, a shared attribute.
-Each flow must carry something; each source must have a note and name a party role, customer
+Each flow must carry something; each source must have a note (blank text counts as none) and name a party role, customer
 class, line of business or party type; and every cited input must be one of the seven.
 """
 import argparse
