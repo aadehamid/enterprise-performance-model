@@ -1,0 +1,2502 @@
+# The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py
+# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/create/mdg-sap-customer-id> a party:SystemAttribute ;
+    skos:prefLabel "MDG SAP Customer ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/sap-customer-number> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/create/territory-manager> a party:SystemAttribute ;
+    skos:prefLabel "Territory Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/territory-manager> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/businessassociateid> a party:SystemAttribute ;
+    skos:prefLabel "businessAssociateID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/business-associate-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/corporationname> a party:SystemAttribute ;
+    skos:prefLabel "corporationName"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/createdatetime> a party:SystemAttribute ;
+    skos:prefLabel "createDateTime"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/createuserid> a party:SystemAttribute ;
+    skos:prefLabel "createUserID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/dbaname> a party:SystemAttribute ;
+    skos:prefLabel "dbaName"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/housenumber> a party:SystemAttribute ;
+    skos:prefLabel "houseNumber"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/legacycustomernumber> a party:SystemAttribute ;
+    skos:prefLabel "legacyCustomerNumber"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/mailingaddrline1> a party:SystemAttribute ;
+    skos:prefLabel "mailingAddrLine1"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/mailingaddrline2> a party:SystemAttribute ;
+    skos:prefLabel "mailingAddrLine2"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/mailingcity> a party:SystemAttribute ;
+    skos:prefLabel "mailingCity"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/mailingstate> a party:SystemAttribute ;
+    skos:prefLabel "mailingState"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/mailingzipcode> a party:SystemAttribute ;
+    skos:prefLabel "mailingZipCode"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/newcustomer> a party:SystemAttribute ;
+    skos:prefLabel "newCustomer"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/repcustmasterid> a party:SystemAttribute ;
+    skos:prefLabel "repCustMasterID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/taxid> a party:SystemAttribute ;
+    skos:prefLabel "taxID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/updatedatetime> a party:SystemAttribute ;
+    skos:prefLabel "updateDateTime"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/dealer-master/enrich/updateuserid> a party:SystemAttribute ;
+    skos:prefLabel "updateUserID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/address-line-1> a party:SystemAttribute ;
+    skos:prefLabel "Address_Line_1"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/address-line-2> a party:SystemAttribute ;
+    skos:prefLabel "Address_Line_2"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/address-line-3> a party:SystemAttribute ;
+    skos:prefLabel "Address_Line_3"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/city> a party:SystemAttribute ;
+    skos:prefLabel "City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/description> a party:SystemAttribute ;
+    skos:prefLabel "Description"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/fax> a party:SystemAttribute ;
+    skos:prefLabel "Fax"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/inactive-indicator-flag> a party:SystemAttribute ;
+    skos:prefLabel "Inactive_Indicator_Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/status> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/sap-customer-no> a party:SystemAttribute ;
+    skos:prefLabel "SAP_Customer_No"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/sap-customer-number> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/state-province-id> a party:SystemAttribute ;
+    skos:prefLabel "State_Province_ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/tax-identification> a party:SystemAttribute ;
+    skos:prefLabel "Tax_Identification"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/work-phone> a party:SystemAttribute ;
+    skos:prefLabel "Work_Phone"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/create/zip-code> a party:SystemAttribute ;
+    skos:prefLabel "Zip_Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/affiliate-company-flag> a party:SystemAttribute ;
+    skos:prefLabel "Affiliate_Company_Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/alias> a party:SystemAttribute ;
+    skos:prefLabel "Alias"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/cr-incentive-flag> a party:SystemAttribute ;
+    skos:prefLabel "CR_Incentive_Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/credit-limit> a party:SystemAttribute ;
+    skos:prefLabel "Credit_Limit"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/entity-identification> a party:SystemAttribute ;
+    skos:prefLabel "Entity_Identification"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/id> a party:SystemAttribute ;
+    skos:prefLabel "ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/joint-tariff-flag> a party:SystemAttribute ;
+    skos:prefLabel "Joint_Tariff_Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/mpa-flag> a party:SystemAttribute ;
+    skos:prefLabel "MPA_Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/name-legal-name> a party:SystemAttribute ;
+    skos:prefLabel "Name (Legal Name)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/user-id> a party:SystemAttribute ;
+    skos:prefLabel "User_ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/user-note> a party:SystemAttribute ;
+    skos:prefLabel "User_Note"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/user-update-date> a party:SystemAttribute ;
+    skos:prefLabel "User_Update_Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/polaris/enrich/vendor-number> a party:SystemAttribute ;
+    skos:prefLabel "Vendor_Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/abbreviation> a party:SystemAttribute ;
+    skos:prefLabel "Abbreviation"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/address> a party:SystemAttribute ;
+    skos:prefLabel "Address"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/alpha-code> a party:SystemAttribute ;
+    skos:prefLabel "ALPHA Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/contract-display-name> a party:SystemAttribute ;
+    skos:prefLabel "Contract Display Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/fein> a party:SystemAttribute ;
+    skos:prefLabel "FEIN"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/invoice-display-name> a party:SystemAttribute ;
+    skos:prefLabel "Invoice Display Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/name> a party:SystemAttribute ;
+    skos:prefLabel "Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/office-name> a party:SystemAttribute ;
+    skos:prefLabel "Office Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/create/sap-customer-number> a party:SystemAttribute ;
+    skos:prefLabel "SAP Customer Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/sap-customer-number> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/abbreviation-extension> a party:SystemAttribute ;
+    skos:prefLabel "Abbreviation Extension"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/account-code> a party:SystemAttribute ;
+    skos:prefLabel "Account Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/accounts-payable-contact> a party:SystemAttribute ;
+    skos:prefLabel "Accounts Payable Contact"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/action> a party:SystemAttribute ;
+    skos:prefLabel "Action"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/annual-license-number> a party:SystemAttribute ;
+    skos:prefLabel "Annual License Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/ar-number> a party:SystemAttribute ;
+    skos:prefLabel "AR Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/banking-details> a party:SystemAttribute ;
+    skos:prefLabel "Banking Details"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/basis> a party:SystemAttribute ;
+    skos:prefLabel "Basis"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/broker-account-number> a party:SystemAttribute ;
+    skos:prefLabel "Broker Account Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/broker-fee-in-usd> a party:SystemAttribute ;
+    skos:prefLabel "Broker Fee in USD"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/broker-fee-uom> a party:SystemAttribute ;
+    skos:prefLabel "Broker Fee UOM"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/broker-reconcile-method> a party:SystemAttribute ;
+    skos:prefLabel "Broker Reconcile Method"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/building-name> a party:SystemAttribute ;
+    skos:prefLabel "Building Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/business-associate-id> a party:SystemAttribute ;
+    skos:prefLabel "Business Associate ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/business-associate-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/business-associate-name> a party:SystemAttribute ;
+    skos:prefLabel "Business Associate Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/calculation-date> a party:SystemAttribute ;
+    skos:prefLabel "Calculation Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/class-of-trade> a party:SystemAttribute ;
+    skos:prefLabel "Class of Trade"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/class-of-trade> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/comments> a party:SystemAttribute ;
+    skos:prefLabel "Comments"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/commodities> a party:SystemAttribute ;
+    skos:prefLabel "Commodities"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Product ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/contract-administrator> a party:SystemAttribute ;
+    skos:prefLabel "Contract Administrator"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/contract-coversheet> a party:SystemAttribute ;
+    skos:prefLabel "Contract Coversheet"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/correspondence-tab> a party:SystemAttribute ;
+    skos:prefLabel "Correspondence Tab"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/currency> a party:SystemAttribute ;
+    skos:prefLabel "Currency"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/customer-portal-setup> a party:SystemAttribute ;
+    skos:prefLabel "Customer Portal Setup"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/customer-status> a party:SystemAttribute ;
+    skos:prefLabel "Customer Status"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/status> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/data-profile> a party:SystemAttribute ;
+    skos:prefLabel "Data Profile"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/days-after-the-invoice-frequency-and-date> a party:SystemAttribute ;
+    skos:prefLabel "Days after the Invoice Frequency and Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/deal> a party:SystemAttribute ;
+    skos:prefLabel "Deal"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/deal-type> a party:SystemAttribute ;
+    skos:prefLabel "Deal Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/deferred> a party:SystemAttribute ;
+    skos:prefLabel "Deferred"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/delivery-method> a party:SystemAttribute ;
+    skos:prefLabel "Delivery Method"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/department> a party:SystemAttribute ;
+    skos:prefLabel "Department"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/description> a party:SystemAttribute ;
+    skos:prefLabel "Description"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/domestic-foreign> a party:SystemAttribute ;
+    skos:prefLabel "Domestic Foreign"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/ecofirm-batch-id> a party:SystemAttribute ;
+    skos:prefLabel "Ecofirm Batch ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/email> a party:SystemAttribute ;
+    skos:prefLabel "Email"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/exclude-from-inhouse-rules> a party:SystemAttribute ;
+    skos:prefLabel "Exclude from Inhouse Rules"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/exempt-type> a party:SystemAttribute ;
+    skos:prefLabel "Exempt Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/exemption> a party:SystemAttribute ;
+    skos:prefLabel "Exemption"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/fax-number> a party:SystemAttribute ;
+    skos:prefLabel "Fax Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/financial-uom> a party:SystemAttribute ;
+    skos:prefLabel "Financial UOM"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/first-name-middle-initial> a party:SystemAttribute ;
+    skos:prefLabel "First Name - Middle Initial"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/follow-up-method> a party:SystemAttribute ;
+    skos:prefLabel "Follow-up Method"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/from-date-to-date> a party:SystemAttribute ;
+    skos:prefLabel "From Date - To Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/invoice-frequency> a party:SystemAttribute ;
+    skos:prefLabel "Invoice Frequency"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/invoice-type> a party:SystemAttribute ;
+    skos:prefLabel "Invoice Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/invoicing-configuration> a party:SystemAttribute ;
+    skos:prefLabel "Invoicing Configuration"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/is-cash-broker> a party:SystemAttribute ;
+    skos:prefLabel "Is Cash Broker"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/last-legal-name> a party:SystemAttribute ;
+    skos:prefLabel "Last Legal Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/last-name> a party:SystemAttribute ;
+    skos:prefLabel "Last Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/legacy-id> a party:SystemAttribute ;
+    skos:prefLabel "Legacy ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/license> a party:SystemAttribute ;
+    skos:prefLabel "License"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/license-type> a party:SystemAttribute ;
+    skos:prefLabel "License Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/limit-bol> a party:SystemAttribute ;
+    skos:prefLabel "Limit BOL"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/line-of-business> a party:SystemAttribute ;
+    skos:prefLabel "Line of Business"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:LineOfBusiness ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/locale-id> a party:SystemAttribute ;
+    skos:prefLabel "Locale ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/maximum-of-bol> a party:SystemAttribute ;
+    skos:prefLabel "Maximum # of BOL"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/movement-type> a party:SystemAttribute ;
+    skos:prefLabel "Movement Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyTransactionAssociation ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/multiple-internal-ba-s> a party:SystemAttribute ;
+    skos:prefLabel "Multiple Internal BA's"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/name-2-legal-name> a party:SystemAttribute ;
+    skos:prefLabel "Name 2 (Legal Name)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/net-out-contact> a party:SystemAttribute ;
+    skos:prefLabel "Net-Out Contact"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/net-out-customer> a party:SystemAttribute ;
+    skos:prefLabel "Net-Out Customer"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/net-out-frequency-calculation-date> a party:SystemAttribute ;
+    skos:prefLabel "Net-Out Frequency Calculation Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-abbreviation> a party:SystemAttribute ;
+    skos:prefLabel "Office Abbreviation"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-address-line-1-2> a party:SystemAttribute ;
+    skos:prefLabel "Office Address Line 1&2"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-address-type> a party:SystemAttribute ;
+    skos:prefLabel "Office Address Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-city> a party:SystemAttribute ;
+    skos:prefLabel "Office City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-country> a party:SystemAttribute ;
+    skos:prefLabel "Office Country"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-name> a party:SystemAttribute ;
+    skos:prefLabel "Office Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-postal-code> a party:SystemAttribute ;
+    skos:prefLabel "Office Postal Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/office-state> a party:SystemAttribute ;
+    skos:prefLabel "Office State"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/origin-location-destination-location> a party:SystemAttribute ;
+    skos:prefLabel "Origin Location & Destination Location"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Site ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/pager> a party:SystemAttribute ;
+    skos:prefLabel "Pager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/parent-business-associate-creation> a party:SystemAttribute ;
+    skos:prefLabel "Parent Business Associate Creation"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/payment-term> a party:SystemAttribute ;
+    skos:prefLabel "Payment Term"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/payment-type> a party:SystemAttribute ;
+    skos:prefLabel "Payment Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/per-carrier> a party:SystemAttribute ;
+    skos:prefLabel "Per Carrier"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyTransactionAssociation ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/per-load> a party:SystemAttribute ;
+    skos:prefLabel "Per Load"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyTransactionAssociation ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/per-movement> a party:SystemAttribute ;
+    skos:prefLabel "Per Movement"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyTransactionAssociation ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/permanent-license-number> a party:SystemAttribute ;
+    skos:prefLabel "Permanent License Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/phone-number> a party:SystemAttribute ;
+    skos:prefLabel "Phone Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/pidx-supplier-id> a party:SystemAttribute ;
+    skos:prefLabel "PIDX Supplier ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/postal-code-range> a party:SystemAttribute ;
+    skos:prefLabel "Postal Code Range"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/postal-route> a party:SystemAttribute ;
+    skos:prefLabel "Postal Route"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/primary-contact> a party:SystemAttribute ;
+    skos:prefLabel "Primary Contact"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/print> a party:SystemAttribute ;
+    skos:prefLabel "Print"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/print-frequency> a party:SystemAttribute ;
+    skos:prefLabel "Print Frequency"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/print-hold-status> a party:SystemAttribute ;
+    skos:prefLabel "Print Hold Status"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/status> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/printing-frequency-type> a party:SystemAttribute ;
+    skos:prefLabel "Printing Frequency Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/product> a party:SystemAttribute ;
+    skos:prefLabel "Product"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Product ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/provision-currency> a party:SystemAttribute ;
+    skos:prefLabel "Provision Currency"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/provision-precision> a party:SystemAttribute ;
+    skos:prefLabel "Provision Precision"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/provision-uom> a party:SystemAttribute ;
+    skos:prefLabel "Provision UOM"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/relationship> a party:SystemAttribute ;
+    skos:prefLabel "Relationship"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/relationships> a party:SystemAttribute ;
+    skos:prefLabel "Relationships"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/removal-of-special-characters-w-n-abbr> a party:SystemAttribute ;
+    skos:prefLabel "Removal of Special Characters w/n Abbr"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/revision-date> a party:SystemAttribute ;
+    skos:prefLabel "Revision Date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/revision-user> a party:SystemAttribute ;
+    skos:prefLabel "Revision User"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/rfs-accountant> a party:SystemAttribute ;
+    skos:prefLabel "RFS Accountant"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/sap-net-out-profit-cntr> a party:SystemAttribute ;
+    skos:prefLabel "SAP Net Out Profit Cntr"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/sap-vendor> a party:SystemAttribute ;
+    skos:prefLabel "SAP Vendor"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/scac> a party:SystemAttribute ;
+    skos:prefLabel "SCAC"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/single-acct-period> a party:SystemAttribute ;
+    skos:prefLabel "Single Acct Period"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/site-nbr> a party:SystemAttribute ;
+    skos:prefLabel "Site Nbr"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Site ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/supplier-id> a party:SystemAttribute ;
+    skos:prefLabel "Supplier ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/taboot> a party:SystemAttribute ;
+    skos:prefLabel "Taboot"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/tabs-seller-id> a party:SystemAttribute ;
+    skos:prefLabel "TABS Seller ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/tax-class-attribute> a party:SystemAttribute ;
+    skos:prefLabel "Tax Class Attribute"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/tax-entity> a party:SystemAttribute ;
+    skos:prefLabel "Tax Entity"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/tds-seller-id> a party:SystemAttribute ;
+    skos:prefLabel "TDS Seller ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/term> a party:SystemAttribute ;
+    skos:prefLabel "Term"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/territory-manager-code-attribute> a party:SystemAttribute ;
+    skos:prefLabel "Territory Manager Code Attribute"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/territory-manager> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/tid-nbr> a party:SystemAttribute ;
+    skos:prefLabel "TID Nbr"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Site ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/title> a party:SystemAttribute ;
+    skos:prefLabel "Title"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trader-contact> a party:SystemAttribute ;
+    skos:prefLabel "Trader Contact"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trader-manager> a party:SystemAttribute ;
+    skos:prefLabel "Trader Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trading-qty-term> a party:SystemAttribute ;
+    skos:prefLabel "Trading Qty Term"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trading-schd-qty-term> a party:SystemAttribute ;
+    skos:prefLabel "Trading Schd Qty Term"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trading-uom> a party:SystemAttribute ;
+    skos:prefLabel "Trading UOM"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Agreement ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/trans-id> a party:SystemAttribute ;
+    skos:prefLabel "Trans ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/transaction-type> a party:SystemAttribute ;
+    skos:prefLabel "Transaction Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyTransactionAssociation ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/update-parent-ba-on-trading-ba> a party:SystemAttribute ;
+    skos:prefLabel "Update parent BA on trading BA"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/rightangle/enrich/use-regards> a party:SystemAttribute ;
+    skos:prefLabel "Use Regards"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/account-manager> a party:SystemAttribute ;
+    skos:prefLabel "Account Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/account-name> a party:SystemAttribute ;
+    skos:prefLabel "Account Name"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/business-segment> a party:SystemAttribute ;
+    skos:prefLabel "Business Segment"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/collection-specialist> a party:SystemAttribute ;
+    skos:prefLabel "Collection Specialist"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/company-type> a party:SystemAttribute ;
+    skos:prefLabel "Company Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/credit-block> a party:SystemAttribute ;
+    skos:prefLabel "Credit Block"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/credit-monitor-desk-code> a party:SystemAttribute ;
+    skos:prefLabel "Credit Monitor Desk Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/credit-type> a party:SystemAttribute ;
+    skos:prefLabel "Credit Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/create/financial-statement-request-frequency> a party:SystemAttribute ;
+    skos:prefLabel "Financial Statement Request Frequency"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/account-status> a party:SystemAttribute ;
+    skos:prefLabel "Account Status"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/status> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/accounttype> a party:SystemAttribute ;
+    skos:prefLabel "AccountType"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/address-search> a party:SystemAttribute ;
+    skos:prefLabel "Address Search"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/alternative-phone> a party:SystemAttribute ;
+    skos:prefLabel "alternative Phone"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/approved-customer-id> a party:SystemAttribute ;
+    skos:prefLabel "Approved Customer ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/bad-debt> a party:SystemAttribute ;
+    skos:prefLabel "Bad Debt"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/bloomberg-api-flag> a party:SystemAttribute ;
+    skos:prefLabel "Bloomberg API Flag"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/bloomberg-api-last-updated-start-finish> a party:SystemAttribute ;
+    skos:prefLabel "Bloomberg API Last Updated (start/finish)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:SystemRecord ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/business-type> a party:SystemAttribute ;
+    skos:prefLabel "Business Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/cik> a party:SystemAttribute ;
+    skos:prefLabel "CIK#"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/class-of-trade> a party:SystemAttribute ;
+    skos:prefLabel "Class of Trade"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/class-of-trade> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/community-access> a party:SystemAttribute ;
+    skos:prefLabel "Community Access"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/credit-company-description> a party:SystemAttribute ;
+    skos:prefLabel "Credit Company Description"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/credit-monitor> a party:SystemAttribute ;
+    skos:prefLabel "Credit Monitor"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/credit-monitor-old> a party:SystemAttribute ;
+    skos:prefLabel "Credit Monitor Old"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/credit-parent-account> a party:SystemAttribute ;
+    skos:prefLabel "Credit Parent Account"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/customer-class> a party:SystemAttribute ;
+    skos:prefLabel "Customer Class"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/established-date> a party:SystemAttribute ;
+    skos:prefLabel "established date"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/holdordind> a party:SystemAttribute ;
+    skos:prefLabel "HOLDORDIND"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/industry> a party:SystemAttribute ;
+    skos:prefLabel "Industry"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mailing-city> a party:SystemAttribute ;
+    skos:prefLabel "Mailing City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mailing-country> a party:SystemAttribute ;
+    skos:prefLabel "Mailing Country"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mailing-state-province> a party:SystemAttribute ;
+    skos:prefLabel "Mailing State/Province"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mailing-street> a party:SystemAttribute ;
+    skos:prefLabel "Mailing street"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mailing-zip-postal-code> a party:SystemAttribute ;
+    skos:prefLabel "Mailing Zip/Postal Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mktg-director-manager> a party:SystemAttribute ;
+    skos:prefLabel "MKTG. Director/Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mpc-diesel-volume> a party:SystemAttribute ;
+    skos:prefLabel "MPC Diesel Volume"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/mpc-gas-volume> a party:SystemAttribute ;
+    skos:prefLabel "MPC Gas Volume"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/peer-group> a party:SystemAttribute ;
+    skos:prefLabel "Peer Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/phone> a party:SystemAttribute ;
+    skos:prefLabel "Phone"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/physical-city> a party:SystemAttribute ;
+    skos:prefLabel "Physical City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/physical-search> a party:SystemAttribute ;
+    skos:prefLabel "Physical Search"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/physical-state-province> a party:SystemAttribute ;
+    skos:prefLabel "Physical State/Province"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/physical-street> a party:SystemAttribute ;
+    skos:prefLabel "Physical Street"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/physical-zip-postal-code> a party:SystemAttribute ;
+    skos:prefLabel "Physical Zip/Postal Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/private-equity> a party:SystemAttribute ;
+    skos:prefLabel "Private Equity"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/product-description> a party:SystemAttribute ;
+    skos:prefLabel "Product Description"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Product ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/region> a party:SystemAttribute ;
+    skos:prefLabel "Region"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/region-manager> a party:SystemAttribute ;
+    skos:prefLabel "Region Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/sales-manager> a party:SystemAttribute ;
+    skos:prefLabel "Sales Manager"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/ticker-symbol> a party:SystemAttribute ;
+    skos:prefLabel "Ticker Symbol"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/watch-list> a party:SystemAttribute ;
+    skos:prefLabel "Watch List"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/website> a party:SystemAttribute ;
+    skos:prefLabel "Website"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/salesforce/enrich/year-started> a party:SystemAttribute ;
+    skos:prefLabel "Year started"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/authorization-group> a party:SystemAttribute ;
+    skos:prefLabel "Authorization Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:LineOfBusiness ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/bp-role-auth-group> a party:SystemAttribute ;
+    skos:prefLabel "BP Role (Auth Group)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/business-partner-id-group> a party:SystemAttribute ;
+    skos:prefLabel "Business Partner ID-Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/city> a party:SystemAttribute ;
+    skos:prefLabel "City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/identification-number> a party:SystemAttribute ;
+    skos:prefLabel "Identification Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/name-legal-name> a party:SystemAttribute ;
+    skos:prefLabel "Name (Legal Name)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/postal-code> a party:SystemAttribute ;
+    skos:prefLabel "Postal Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/region> a party:SystemAttribute ;
+    skos:prefLabel "Region"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/create/tax-number> a party:SystemAttribute ;
+    skos:prefLabel "Tax Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/address> a party:SystemAttribute ;
+    skos:prefLabel "Address"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/address-usage> a party:SystemAttribute ;
+    skos:prefLabel "Address Usage"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/authorization-group> a party:SystemAttribute ;
+    skos:prefLabel "Authorization Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:LineOfBusiness ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/bp-role-collections-management> a party:SystemAttribute ;
+    skos:prefLabel "BP Role: Collections management"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/bp-role-customer> a party:SystemAttribute ;
+    skos:prefLabel "BP Role: Customer"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/bp-role-fi-customer> a party:SystemAttribute ;
+    skos:prefLabel "BP Role: FI Customer"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/bp-role-sap-credit-management> a party:SystemAttribute ;
+    skos:prefLabel "BP Role: SAP Credit Management"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/credit> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/bp-type> a party:SystemAttribute ;
+    skos:prefLabel "BP Type"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/common-data> a party:SystemAttribute ;
+    skos:prefLabel "Common Data"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/contact-person> a party:SystemAttribute ;
+    skos:prefLabel "Contact Person"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/date-founded> a party:SystemAttribute ;
+    skos:prefLabel "Date Founded"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/district> a party:SystemAttribute ;
+    skos:prefLabel "District"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/erp-customer> a party:SystemAttribute ;
+    skos:prefLabel "ERP Customer"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/sap-customer-number> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/fax> a party:SystemAttribute ;
+    skos:prefLabel "Fax"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/financial-service-data> a party:SystemAttribute ;
+    skos:prefLabel "Financial Service Data"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/identification-numbers-zbaid> a party:SystemAttribute ;
+    skos:prefLabel "Identification Numbers: ZBAID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/business-associate-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/language> a party:SystemAttribute ;
+    skos:prefLabel "Language"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/legal-entity> a party:SystemAttribute ;
+    skos:prefLabel "Legal Entity"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/organization-data> a party:SystemAttribute ;
+    skos:prefLabel "Organization Data"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerAccount ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/partner-description> a party:SystemAttribute ;
+    skos:prefLabel "Partner Description"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/partner-id> a party:SystemAttribute ;
+    skos:prefLabel "Partner ID"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/relationship-category> a party:SystemAttribute ;
+    skos:prefLabel "Relationship Category"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRelationship ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/street-3> a party:SystemAttribute ;
+    skos:prefLabel "Street 3"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/tax-numbers> a party:SystemAttribute ;
+    skos:prefLabel "Tax Numbers"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/telephone> a party:SystemAttribute ;
+    skos:prefLabel "Telephone"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ContactPoint ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-mdg/enrich/title> a party:SystemAttribute ;
+    skos:prefLabel "Title"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/create/business-partner-group> a party:SystemAttribute ;
+    skos:prefLabel "Business Partner Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/create/business-partner-role> a party:SystemAttribute ;
+    skos:prefLabel "Business Partner Role"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/create> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/authorization-group> a party:SystemAttribute ;
+    skos:prefLabel "Authorization Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:LineOfBusiness ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/bp-role-auth-group> a party:SystemAttribute ;
+    skos:prefLabel "BP Role (Auth Group)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:PartyRole ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/bp-role-group> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/city> a party:SystemAttribute ;
+    skos:prefLabel "City"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/customer-group> a party:SystemAttribute ;
+    skos:prefLabel "Customer Group"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:CustomerClass ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/identification-number> a party:SystemAttribute ;
+    skos:prefLabel "Identification Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/name-legal-name> a party:SystemAttribute ;
+    skos:prefLabel "Name (Legal Name)"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Party ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/legal-name> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/postal-code> a party:SystemAttribute ;
+    skos:prefLabel "Postal Code"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/region> a party:SystemAttribute ;
+    skos:prefLabel "Region"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:Address ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/attribute/sap-s4hana/enrich/tax-number> a party:SystemAttribute ;
+    skos:prefLabel "Tax Number"@en ;
+    party:attributeCategory <https://w3id.org/lsc/ontology/modules/party/attribute-category/enrich> ;
+    party:describes party:ExternalIdentifier ;
+    party:inSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:sharedAttribute <https://w3id.org/lsc/ontology/modules/party/shared-attribute/tax-id> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/customer-portal--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/customer-portal> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--salesforce> a party:DataFlow ;
+    party:carries "Customer data; the inputs do not say which."@en ;
+    party:evidenceInput "3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--sap-mdg> a party:DataFlow ;
+    party:carries "Jobbers, which start in Dealer Master."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dealer-master--sap-s4hana> a party:DataFlow ;
+    party:carries "Bank details and payment information."@en ;
+    party:evidenceInput "6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/drop-tank--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/drop-tank> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/dtn-file-server--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/emk3--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/emk3> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/federal-health--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/federal-health> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/gas-buddy--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/kittyhawk--gravitate> a party:DataFlow ;
+    party:carries "The customer, for the gathering and processing portal."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/gravitate> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/kittyhawk--magic> a party:DataFlow ;
+    party:carries "The territory manager."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/magic> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/kittyhawk--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/magic--salesforce> a party:DataFlow ;
+    party:carries "The SAP customer number and the territory manager, and the daily sync of name, address, FEIN, status and credit monitor; the prospect becomes a customer account."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/magic> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/polaris--sap-s4hana> a party:DataFlow ;
+    party:carries "The transport invoices Polaris generates."@en ;
+    party:evidenceInput "6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/profisee--data-products-idp> a party:DataFlow ;
+    party:carries "Customer ID mappings, customer roll-ups and cross-references."@en ;
+    party:evidenceInput "2" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/quorum--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/quorum> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--allocation-manager> a party:DataFlow ;
+    party:carries "The customer, for operational locks and limits."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--kittyhawk> a party:DataFlow ;
+    party:carries "The new customer, for transport and logistics."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/rightangle--sap-mdg> a party:DataFlow ;
+    party:carries "The business associate ID and locale."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/salesforce--dealer-master> a party:DataFlow ;
+    party:carries "Customer data; the inputs do not say which."@en ;
+    party:evidenceInput "3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/salesforce--sap-mdg> a party:DataFlow ;
+    party:carries "The prospect, which triggers the customer's creation in SAP MDG."@en ;
+    party:evidenceInput "3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--dealer-master> a party:DataFlow ;
+    party:carries "Direct dealers, which start in SAP MDG."@en ;
+    party:evidenceInput "6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--magic> a party:DataFlow ;
+    party:carries "The created customer, for the new customer account integration."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/magic> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--polaris> a party:DataFlow ;
+    party:carries "The SAP customer number and basic attributes."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--quorum> a party:DataFlow ;
+    party:carries "The customer."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/quorum> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--rightangle> a party:DataFlow ;
+    party:carries "Basic customer data, with the tax ID mapped to FEIN."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--sap-s4hana> a party:DataFlow ;
+    party:carries "The business partner, with company codes, sales areas and partner roles."@en ;
+    party:evidenceInput "1, 2, 3, 6" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--sirion> a party:DataFlow ;
+    party:carries "The customer, for enrichment before contract assignment."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/sirion> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--star> a party:DataFlow ;
+    party:carries "The customer."@en ;
+    party:evidenceInput "2, 3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/star> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/sap-mdg--terminal-download> a party:DataFlow ;
+    party:carries "The customer."@en ;
+    party:evidenceInput "3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/tax-image-silo--rightangle> a party:DataFlow ;
+    party:carries "The customer's sales tax exemption certificates."@en ;
+    party:evidenceInput "3" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/terminal-download--fuelfacs> a party:DataFlow ;
+    party:carries "Customer data for loading at terminals."@en ;
+    party:evidenceInput "2" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/terminal-upload--kittyhawk> a party:DataFlow ;
+    party:carries "Cross-reference customer ID mappings."@en ;
+    party:evidenceInput "2" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-upload> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/tfr--tmis> a party:DataFlow ;
+    party:carries "Freight data for carrier contracts and rates."@en ;
+    party:evidenceInput "2" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/tfr> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/tmis> .
+
+<https://w3id.org/lsc/ontology/modules/party/flow/tmt--profisee> a party:DataFlow ;
+    party:carries "Customer data."@en ;
+    party:evidenceInput "1" ;
+    party:fromSystem <https://w3id.org/lsc/ontology/modules/party/system/tmt> ;
+    party:toSystem <https://w3id.org/lsc/ontology/modules/party/system/profisee> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/asphalt-marketing-system--source--customer-class--asphalt-bitumen-buyer> a party:CustomerSourcing ;
+    rdfs:comment "Asphalt and bitumen customers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/asphalt-bitumen-buyer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/asphalt-marketing-system> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/brand-credit-card-system--source--party-role--dealer> a party:CustomerSourcing ;
+    rdfs:comment "Dealers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/dealer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/corp-vetting--source--party-role--surety> a party:CustomerSourcing ;
+    rdfs:comment "Partner roles: surety."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/surety> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/corp-vetting--source--party-role--vendor> a party:CustomerSourcing ;
+    rdfs:comment "Partner roles: vendor."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/vendor> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/corp-vetting> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/dealer-master--origin--party-role--jobber> a party:CustomerSourcing ;
+    rdfs:comment "Jobbers start in Dealer Master and go to SAP MDG."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/jobber> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/eis--source--customer-class--forecast-driven-customer> a party:CustomerSourcing ;
+    rdfs:comment "Forecast-driven customers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/forecast-driven-customer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/eis> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/flowcal--source--customer-class--pipeline-customer> a party:CustomerSourcing ;
+    rdfs:comment "Pipeline customers for midstream supply."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/pipeline-customer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/flowcal> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/fuelfacs--source--customer-class--terminal-rack-customer> a party:CustomerSourcing ;
+    rdfs:comment "Terminal customers, from input 6's CBS. Placing them on FuelFacs is a reading: whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2)."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/terminal-rack-customer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/lenel-onguard--source--party-type--person> a party:CustomerSourcing ;
+    rdfs:comment "Employee parties."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-type/person> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/polaris--setup--line-of-business--pipeline-ls> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in Polaris for Pipeline L&S."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/pipeline-ls> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/polaris> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/rightangle--setup--line-of-business--asphalt> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/asphalt> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/rightangle--setup--line-of-business--brand> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/brand> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/rightangle--setup--line-of-business--petrochemicals> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/petrochemicals> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/rightangle--setup--line-of-business--sdp> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/sdp> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/rightangle--setup--line-of-business--unbranded> a party:CustomerSourcing ;
+    rdfs:comment "The customer is created in RightAngle for Unbranded, Branded and Asphalt, Petrochemical and SDP."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/unbranded> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/rightangle> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/salesforce--origin--party-role--sold-to> a party:CustomerSourcing ;
+    rdfs:comment "Prospects start in Salesforce."@en ;
+    party:evidenceInput "2, 3, 6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/party-role/sold-to> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/salesforce--setup--line-of-business--asphalt> a party:CustomerSourcing ;
+    rdfs:comment "The customer is activated in Salesforce for Unbranded, Branded and Asphalt."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/asphalt> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/salesforce--setup--line-of-business--brand> a party:CustomerSourcing ;
+    rdfs:comment "The customer is activated in Salesforce for Unbranded, Branded and Asphalt."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/brand> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/salesforce--setup--line-of-business--unbranded> a party:CustomerSourcing ;
+    rdfs:comment "The customer is activated in Salesforce for Unbranded, Branded and Asphalt."@en ;
+    party:evidenceInput "1" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/unbranded> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/setup> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/salesforce> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/sap-mdg--origin--customer-class--direct-dealer> a party:CustomerSourcing ;
+    rdfs:comment "Direct dealers start in SAP MDG and go to Dealer Master."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/direct-dealer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/origin> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/terminal-audit-system--source--customer-class--terminal-rack-customer> a party:CustomerSourcing ;
+    rdfs:comment "Terminal customers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/terminal-rack-customer> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/terminal-download--source--customer-class--exchange-trading-counterparty> a party:CustomerSourcing ;
+    rdfs:comment "Exchange customers (commercial traders); the landscape names it Terminal Download RightAngle/Kittyhawk."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/exchange-trading-counterparty> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/terminal-margin-ranking-system--source--customer-class--wholesale-marketing> a party:CustomerSourcing ;
+    rdfs:comment "Wholesale customers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/wholesale-marketing> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> .
+
+<https://w3id.org/lsc/ontology/modules/party/sourcing/terminal-margin-ranking-system--source--line-of-business--brand> a party:CustomerSourcing ;
+    rdfs:comment "Brand customers."@en ;
+    party:evidenceInput "6" ;
+    party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/line-of-business/brand> ;
+    party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
+    party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/bridger-insight> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Bridger"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "bridger-insight" ;
+    skos:prefLabel "Bridger Insight"@en ;
+    party:customerRole "The compliance check of a customer against government watchlists."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/information-steward> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "information-steward" ;
+    skos:prefLabel "Information Steward"@en ;
+    party:customerRole "Monitors customer data quality."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/onesource> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "onesource" ;
+    skos:prefLabel "OneSource"@en ;
+    party:customerRole "Calculates tax and supports tax compliance and reporting, for RightAngle and SAP S/4HANA invoices."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/rcms> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Renewable Compliance Management System"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "rcms" ;
+    skos:prefLabel "RCMS"@en ;
+    party:customerRole "The renewable compliance system: a reference ID tied to a fuel movement or a RIN trade."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tasdm> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Terminal Automation System Data Manager"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tasdm" ;
+    skos:prefLabel "TASDM"@en ;
+    party:customerRole "Creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/xref> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Cross Reference System"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "xref" ;
+    skos:prefLabel "XREF"@en ;
+    party:customerRole "The cross-reference on the Salesforce to RightAngle interface that excludes specific customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/asphalt-marketing-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "asphalt-marketing-system" ;
+    skos:prefLabel "Asphalt Marketing System"@en ;
+    party:customerRole "A source of asphalt and bitumen customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/brand-credit-card-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "brand-credit-card-system" ;
+    skos:prefLabel "Brand Credit Card System"@en ;
+    party:customerRole "A source of dealers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/customer-portal> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "MyMPC Customer Portal"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "customer-portal" ;
+    skos:prefLabel "Customer Portal"@en ;
+    party:customerRole "The customer portal; it sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/drop-tank> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "drop-tank" ;
+    skos:prefLabel "Drop Tank"@en ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/dtn-file-server> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "dtn-file-server" ;
+    skos:prefLabel "DTN File Server"@en ;
+    party:customerRole "A file server downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/eis> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "eis" ;
+    skos:prefLabel "EIS"@en ;
+    party:customerRole "A source of forecast-driven customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/emk3> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "emk3" ;
+    skos:prefLabel "EMK3"@en ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/federal-health> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "federal-health" ;
+    skos:prefLabel "Federal Health"@en ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/flowcal> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "flowcal" ;
+    skos:prefLabel "FlowCal"@en ;
+    party:customerRole "A source of pipeline customers for midstream supply."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/gas-buddy> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "gas-buddy" ;
+    skos:prefLabel "Gas Buddy"@en ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/lenel-onguard> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "lenel-onguard" ;
+    skos:prefLabel "Lenel Onguard"@en ;
+    party:customerRole "A source of employee parties."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tax-image-silo> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Tax"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tax-image-silo" ;
+    skos:prefLabel "Tax Image Silo"@en ;
+    party:customerRole "Holds the customer's state sales tax exemption certificates."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/rightangle> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-audit-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "TAS"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-audit-system" ;
+    skos:prefLabel "Terminal Audit System"@en ;
+    party:customerRole "A source of terminal customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-upload> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-upload" ;
+    skos:prefLabel "Terminal Upload"@en ;
+    party:customerRole "Enriches the customer through cross-reference customer ID mapping."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tfr> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tfr" ;
+    skos:prefLabel "TFR"@en ;
+    party:customerRole "Calculates and processes freight."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/tmis> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tmt> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tmt" ;
+    skos:prefLabel "TMT"@en ;
+    party:customerRole "A system downstream of MAGIC that sends customer data to Profisee."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/allocation-manager> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "allocation-manager" ;
+    skos:prefLabel "Allocation Manager"@en ;
+    party:customerRole "Derives operational decisions for a customer, such as locks and limits."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/corp-vetting> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "corp-vetting" ;
+    skos:prefLabel "Corp_Vetting"@en ;
+    party:customerRole "A source of partner roles: vendor, surety and customer."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/data-products-idp> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "IDP"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "data-products-idp" ;
+    skos:prefLabel "Data Products IDP"@en ;
+    party:customerRole "Data products on the customer master, sales, credit exposure and delinquency."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/gravitate> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "gravitate" ;
+    skos:prefLabel "Gravitate"@en ;
+    party:customerRole "The gathering and processing customer portal."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/sirion> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "sirion" ;
+    skos:prefLabel "Sirion"@en ;
+    party:customerRole "Enriches the customer before the customer is assigned to a contract."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/enrich> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/star> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "star" ;
+    skos:prefLabel "Star"@en ;
+    party:customerRole "Records crude movement tickets."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-margin-ranking-system" ;
+    skos:prefLabel "Terminal Margin Ranking System"@en ;
+    party:customerRole "A source of brand and wholesale customers."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/landscape> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/tmis> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "tmis" ;
+    skos:prefLabel "TMIS"@en ;
+    party:customerRole "The master data repository of carrier contracts and rates."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "CBS"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "fuelfacs" ;
+    skos:prefLabel "FuelFacs"@en ;
+    party:customerRole "Terminal data on suppliers, products and carriers; it receives customer data from Terminal download."@en ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/quorum> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "quorum" ;
+    skos:prefLabel "Quorum"@en ;
+    party:customerRole "Records gathering and processing movements and settlements; it receives customers from SAP MDG and enriches them through the contract or relationship."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/terminal-download> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Terminal Download"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "terminal-download" ;
+    skos:prefLabel "Terminal download"@en ;
+    party:customerRole "Sends customer data to terminals so the customer can load there."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/fuelfacs> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/magic> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Marketing Applications Graphical Interface for Clients"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "magic" ;
+    skos:prefLabel "MAGIC"@en ;
+    party:customerRole "The new customer account integration: it assigns the SAP MDG customer number and the Kittyhawk territory manager to Salesforce, converts the prospect into a customer account, and syncs the customer number, name, address, FEIN, status, credit monitor and territory manager every day."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/integration> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/kittyhawk> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "KH"@en,
+        "Kittyhawk"@en ;
+    skos:exactMatch system:kittyhawk ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "kittyhawk" ;
+    skos:prefLabel "KittyHawk"@en ;
+    party:customerRole "Records physical product movements. It receives customers from RightAngle, holds the territory manager, and feeds Gravitate and MAGIC."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/gravitate>,
+        <https://w3id.org/lsc/ontology/modules/party/system/magic>,
+        <https://w3id.org/lsc/ontology/modules/party/system/profisee> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "S/4"@en,
+        "S4"@en,
+        "SAP S/4"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "sap-s4hana" ;
+    skos:prefLabel "SAP S/4HANA"@en ;
+    party:customerRole "The financial system of record. It receives the business partner from SAP MDG, with company codes, sales areas and partner roles, adds credit and collection data, and takes transaction postings and invoices from the execution systems."@en ;
+    party:implements party:CustomerAccount,
+        party:Party,
+        party:PartyRole ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/profisee> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "Profisee Data Storage"@en ;
+    skos:exactMatch system:profisee ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "profisee" ;
+    skos:prefLabel "Profisee"@en ;
+    party:customerRole "Customer data storage and mastering used by IDP, for customer ID mapping, customer roll-ups and cross-references."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/data-products-idp> ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/dealer-master> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "dealer-master" ;
+    skos:prefLabel "Dealer Master"@en ;
+    party:customerRole "The system of record for the branded dealer network: brand customers and their stations and ship-tos. It is built on Salesforce and aggregates station point-of-sale transactions executed in other systems. Jobbers start here and go to SAP MDG; direct dealers start in SAP MDG and come here. It sends bank and payment details to SAP S/4HANA."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/salesforce>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:implements party:Agreement,
+        party:PartyRole,
+        party:Site,
+        party:SiteBrandAssignment ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/polaris> a skos:Concept,
+        party:CustomerSystem ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "polaris" ;
+    skos:prefLabel "Polaris"@en ;
+    party:customerRole "The pipeline operations and invoicing system. It takes the SAP customer number and basic attributes from SAP MDG, adds operational data, records pipeline movements and revenue, and sends the transport invoices it generates to SAP S/4HANA."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ;
+    party:implements party:CustomerAccount,
+        party:PartyTransactionAssociation,
+        party:Site ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+party:customer-systems a skos:ConceptScheme ;
+    rdfs:label "customer systems"@en ;
+    skos:definition "The systems the customer passes through, from the decision owner's customer inputs (EPM-DEC-001-0069)."@en .
+
+<https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "MDG"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "sap-mdg" ;
+    skos:prefLabel "SAP MDG"@en ;
+    party:customerRole "The point of control for customer creation and governance: every commercial customer is created here. It runs duplicate checks on identifiers, validates addresses, applies authorization groups by line of business and generates the canonical SAP customer number. It is the system of record for the customer and holds the tax ID and bank data."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/magic>,
+        <https://w3id.org/lsc/ontology/modules/party/system/polaris>,
+        <https://w3id.org/lsc/ontology/modules/party/system/quorum>,
+        <https://w3id.org/lsc/ontology/modules/party/system/rightangle>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sirion>,
+        <https://w3id.org/lsc/ontology/modules/party/system/star>,
+        <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> ;
+    party:implements party:ExternalIdentifier,
+        party:Party ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/salesforce> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "SF"@en,
+        "Salesforce CRM"@en ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "salesforce" ;
+    skos:prefLabel "Salesforce"@en ;
+    party:customerRole "Where a prospect is first captured and a new customer setup and credit check start, on two tracks: Trade (the commodity trading desk) and CRM/Basic (goods and products). It triggers creation in SAP MDG, receives the SAP customer number back, and serves the customer portal."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/dealer-master>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:implements party:Address,
+        party:ContactPoint,
+        party:Party ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+
+<https://w3id.org/lsc/ontology/modules/party/system/rightangle> a skos:Concept,
+        party:CustomerSystem ;
+    skos:altLabel "RA"@en,
+        "Right Angle"@en ;
+    skos:exactMatch system:rightangle ;
+    skos:inScheme party:customer-systems ;
+    skos:notation "rightangle" ;
+    skos:prefLabel "RightAngle"@en ;
+    party:customerRole "The commercial and logistics system for trading, deals, scheduling and financial exposure. It takes basic customer data from SAP MDG, creates the business associate and its locations, sends the business associate ID and locale back to SAP MDG, and shares data with Kittyhawk and the trading desks."@en ;
+    party:feeds <https://w3id.org/lsc/ontology/modules/party/system/allocation-manager>,
+        <https://w3id.org/lsc/ontology/modules/party/system/kittyhawk>,
+        <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ;
+    party:implements party:Agreement,
+        party:ContactPoint,
+        party:Party,
+        party:PartyRole ;
+    party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/core> .
+

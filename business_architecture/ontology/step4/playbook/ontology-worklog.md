@@ -962,6 +962,16 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The customer systems and attributes (2026-10-21)
+- Under the delegation (EPM-DEC-001-0069): the customer's 42 systems are
+  the module's own class, three matched to the system module; the six
+  core systems carry the entities they implement; 35 data flows and 24
+  customer sourcings record the data flow and the origin patterns; and
+  275 system attributes, 43 Create and 232 Enrich, each describe an
+  entity of the model or, for fields about a system's own record, the
+  system record; 48 of them carry one of nine shared attributes, such as
+  the SAP customer number.
+
 ### The `party` module (2026-10-21)
 - Under the delegation (EPM-DEC-001-0068): the decision owner's conceptual
   model becomes the `party` module, with fifteen entity classes, party roles as
@@ -1076,6 +1086,9 @@ without a dated amendment and the decision owner's explicit agreement.
   (a retired IRI's `dcterms:isReplacedBy`) or how they relate (a link such
   as `vs:realizes`); with neither, they are different things. 61 words name
   more than one IRI across the modules.
+  *2026-10-21:* `skos:exactMatch` is a link of the first kind too: the
+  `party` module's RightAngle, KittyHawk and Profisee are the system
+  module's nodes of the same name, and q15b reports them (EPM-DEC-001-0069).
 
 ### Lane module (2026-10-19)
 - Under the delegation (EPM-DEC-001-0056): a new `lane` module holds the

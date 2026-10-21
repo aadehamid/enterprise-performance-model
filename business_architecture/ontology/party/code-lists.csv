@@ -82,3 +82,22 @@ transaction-kind,payment,Payment,,,A payment.
 transaction-kind,case,Case,,,"A service or setup case, such as a request to create or change a customer."
 transaction-kind,trade,Trade,,,"A trade captured in a deal: a buy, a sell or a storage rental."
 transaction-kind,transfer,Transfer,,,A transfer captured in a deal: an exchange of products.
+system-tier,core,Core system,,,"One of the six systems the customer is created, recorded or executed in: SAP MDG, SAP S/4HANA, Salesforce, RightAngle, Polaris and Dealer Master."
+system-tier,integration,Integration,,,An integration that moves the customer between systems.
+system-tier,enrich,Enrichment,,,A system or tool that adds to or checks the customer after it is created.
+system-tier,downstream,Downstream,,,A system that receives and uses the customer.
+system-tier,landscape,Landscape source,,,Another system in the landscape that is a source of customers of a kind.
+attribute-category,create,Create,,,An attribute that defines the customer in the system: set when the customer is created there.
+attribute-category,enrich,Enrich,,,An attribute added to the customer in the system after it is created.
+shared-attribute,sap-customer-number,SAP customer number,,,The canonical customer number SAP MDG generates; other systems carry it to point back to the MDG customer.
+shared-attribute,business-associate-id,Business associate ID,,,"The ID RightAngle gives a business associate (BAID), which SAP MDG holds as an identification number."
+shared-attribute,tax-id,Tax ID,,,"The party's tax identifier, such as its FEIN."
+shared-attribute,legal-name,Legal name,,,The party's registered name.
+shared-attribute,territory-manager,Territory manager,,,The company's territory manager for the customer.
+shared-attribute,class-of-trade,Class of trade,,,The customer's class of trade.
+shared-attribute,credit,Credit,,,"The customer's credit: its limit, monitoring, blocks and roll-up."
+shared-attribute,status,Status,,,"Whether the customer is active, blocked or inactive."
+shared-attribute,bp-role-group,Business partner role and group,,,"The SAP business partner's roles and grouping, which set what the partner may do and how it is numbered."
+sourcing-kind,origin,Origin,,,The system a customer of this kind starts in.
+sourcing-kind,setup,Setup,,,A system the customer is created or activated in for this line of business.
+sourcing-kind,source,Source,,,A system in the landscape that is a source of customers of this kind.

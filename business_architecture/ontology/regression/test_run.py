@@ -40,6 +40,15 @@ class Release(unittest.TestCase):
         self.assertEqual(failures, [])
         self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (34, 1, 9))
 
+    def test_q15b_reports_the_systems_in_two_modules_as_one(self):
+        # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name.
+        with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
+            rows = GRAPH.query(f.read())
+        pairs = {(str(r.word), str(r.a), str(r.b)) for r in rows if r.link == SKOS.exactMatch}
+        party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
+        self.assertEqual(pairs, {(word, party + slug, system + slug) for word, slug in
+                                 [("RightAngle", "rightangle"), ("KittyHawk", "kittyhawk"), ("Profisee", "profisee")]})
+
     def test_an_orphan_fails_q2(self):
         g = Graph()
         g += GRAPH
