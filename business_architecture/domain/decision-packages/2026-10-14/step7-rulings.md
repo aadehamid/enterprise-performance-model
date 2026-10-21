@@ -212,7 +212,7 @@ Proposal: make the sales channel explicit, either as a dimension or as channel-s
 
 Evidence for: MPC sells through 7,882 brand jobber outlets in 40 states, DC and Mexico, and 1,162 direct-dealer locations, mainly in Southern California (`mpc-fy2025-10k-fact-sheet.md` §5). The words "jobber" and "dealer" appear nowhere in the map. The customer classification C1 to C8 already names these channels (`data-domain-register.md` line 35).
 
-Evidence against channel-specific steps: the map stays company-neutral (`process-map-suggestions.md`, "Not suggested"). The use of C1 to C8 waits for your customer details (EPM-DEC-001-0004).
+Evidence against channel-specific steps: the map stays company-neutral (`process-map-suggestions.md`, "Not suggested"). The use of C1 to C8 waits for your customer details (EPM-DEC-001-0004). *2026-10-21:* the details arrived (EPM-DEC-001-0067).
 
 | Option | What happens |
 |---|---|
