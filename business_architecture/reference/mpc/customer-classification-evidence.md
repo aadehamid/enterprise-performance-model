@@ -119,6 +119,10 @@ and the two-way volume split in the delivery-tier facet.
 8. **Restatements.** FY2022 direct-to-end-user volume is 2,355 mbpd in the FY2023
    10-K and 2,356 in the FY2024 10-K. Store each figure with its filing vintage.
 
+## 4a. Peer cross-check
+
+The check against U.S. refining peers' FY2025 Form 10-Ks is in `../downstream-peers/customer-classification-evidence.md` (2026-10-21). It changes no class.
+
 ## 5. How the ontology will carry it (Step 5, party module — proposal)
 
 In line with `../../domain/customer_domain_problem_statement_v0.1.md`

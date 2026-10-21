@@ -34,7 +34,7 @@ instances, KPIs and definitions against.
 | `source-register.md` | Every MPC / MPLX source used, with accession number, URL and retrieval date |
 | `mpc-fy2025-10k-fact-sheet.md` | Structured facts extracted from the FY2025 10-K (segments, sites, products, channels, KPI definitions) |
 | `mplx-fy2025-10k-fact-sheet.md` | MPLX's FY2025 10-K: its two segments, how it serves MPC (48 percent of its total revenues and other income, fee-based minimum volumes), assets; read for MPC-P01 (EPM-DEC-001-0011) |
-| `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C8 + facets), each class cited to filings or MPC materials |
+| `customer-classification-evidence.md` | Adopted MPC customer classification (C1–C8 + facets), each class cited to filings or MPC materials; the peer check is in `../downstream-peers/customer-classification-evidence.md` |
 | `pricing-domain-evidence.md` | Evidence for Pricing as a candidate data domain (MPC filings + EIA definitions) |
 | `mpc-performance-measures-evidence.md` | MPC's publicly defined performance measures (30, one of them read only in a not-confirmed copy, in a 33-row table that also lists 3 it does not publish), their grain, which drive the annual cash bonus, and a peer comparison; used for the `kpi` module's classification |
 | `loss-gain-and-feedstock-evidence.md` | MPC and MPLX statements on movement losses and gains and on renewable feedstock traceability (EPM-DEC-001-0048) |
