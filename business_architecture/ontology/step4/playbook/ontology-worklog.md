@@ -971,7 +971,8 @@ without a dated amendment and the decision owner's explicit agreement.
   added;
   the repository stays private; the plan goes ahead.
 - Claude's follow-through, under the delegation (EPM-DEC-001-0067, What
-  follows): four customer classes from MPC's filings, making 14 with the
+  follows): four customer classes from the repository's MPC customer
+  classification, making 14 with the
   ten Claude read in the decision owner's model, and the Position Holder
   and Loading-Authorized Party roles are to be added in the `customer`
   module's pull request; four more pull requests follow, five in all.

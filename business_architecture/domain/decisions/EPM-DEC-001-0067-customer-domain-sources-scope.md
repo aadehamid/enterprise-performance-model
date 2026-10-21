@@ -54,8 +54,8 @@ Claude asked questions about each input as it arrived. The decision owner's answ
 
 These items are Claude's wording and Claude's reading of the decision owner's answers. Items 1 to 5 restate recommendations 2 to 6 of block 14's question (the answers file's header comment), which the decision owner accepted with "I am okay with the rest"; they rejected recommendation 1 with "nothing on the conceptual is out of scope".
 
-1. **Direct dealers sit under a Fuel Supply agreement.** MPC's filings describe "long-term supply contracts with direct dealers who operate locations mainly under the ARCO® brand" (`reference/mpc/customer-classification-evidence.md`, C2). No MPC filing describes a brand licence for them. Their brand reaches the site through a Site Brand Assignment.
-2. **Four classes from MPC's filings are to be added**, in the `customer` module's pull request: independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). With the ten classes Claude read in the decision owner's model, that makes 14.
+1. **Direct dealers sit under a Fuel Supply agreement.** MPC's filings describe "long-term supply contracts with direct dealers who operate locations mainly under the ARCO® brand" (`reference/mpc/customer-classification-evidence.md`, C2). MPC's FY2025 Form 10-K calls the brand its own ("Our Marathon and ARCO trademarks are material to the conduct of our refining and marketing operations", Item 1, Trademarks, Patents and Licenses), and a full-text search of MPC's 10-K filings on EDGAR on 2026-10-21 found no "brand license". Their brand reaches the site through a Site Brand Assignment.
+2. **Four classes from the repository's MPC customer classification are to be added**, in the `customer` module's pull request (`reference/mpc/customer-classification-evidence.md`: C4 and C6 from MPC's Form 10-K, C5 from MPC's Unbranded Marketing page, and C8, which the decision owner added on 2026-09-29 for the crude oil revenue MPC reports): independent retailer (C4), unbranded customer (C5), spot market buyer (C6) and crude oil customer (C8). With the ten classes Claude read in the decision owner's model, that makes 14.
 3. **The exchange or trading counterparty stays a customer class.** The decision owner's model says it becomes a customer only when a revenue-recognized relationship exists.
 4. **"Authorizes brand at site" points to Site Brand Assignment,** not to Site. The model defines a site brand assignment as the link of a site to a brand under an agreement. The decision owner wrote that they did not see this relationship (block 11). Claude then showed where the image draws it. The decision owner has not answered on it since, so this item rests on their acceptance of recommendation 5 in block 14, and stays open to them.
 5. **MPLX's filings count as MPC's public information.** MPC consolidates MPLX.
@@ -65,7 +65,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
    - Block 11's third answer confirms Claude's reading of COCO, CODO and DODO (company-owned company-operated, company-owned dealer-operated, dealer-owned dealer-operated).
    - "and it is EIS" (block 14) gives the spelling of a landscape system's name.
 7. **Sources for the Customer domain**, by decision 4: derived definitions go into the repository; their sources are repository information and MPC's public information, MPLX's included; peer data and the external report guide choices and do not go into the repository. Elsewhere in the repository, peer comparison stays allowed as guidance and as evidence, as before.
-8. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics.
+8. **L&S is Logistics and Storage.** MPLX's FY2023 Form 10-K, filed 2024-02-28 (accession 0001552000-24-000007), names "Logistics and Storage (“L&S”)" as one of its two segments. By FY2025 MPLX calls that segment Crude Oil and Products Logistics (MPLX FY2025 Form 10-K, accession 0001552000-26-000009; `reference/mpc/mplx-fy2025-10k-fact-sheet.md`).
 9. **SDP stays a label without an expansion.** No MPC or MPLX filing contains it, by EDGAR full-text search on 2026-10-21.
 10. **The two peer candidates are covered by the decision owner's own model,** so neither is added separately. In the model, a customer account carries a delivery tier, and a brand is owned by or licensed to a party through a Brand License agreement.
 11. **Two roles are to be added**, in the `customer` module's pull request, by "add both roles": Position Holder and Loading-Authorized Party. The Loading-Authorized Party answers competency question 22. The Position Holder is the party whose product a terminal lifting draws on, which the model's terminal-rack class names. The model's own role list, as Claude read it, has twelve roles.
@@ -86,7 +86,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
 - **Commit the decision owner's diagrams and table as reference files.** Not chosen: they asked for the files to stay out.
 - **Put peers' filings into the repository for the Customer domain, as `customer-classification-evidence.md` did.** Not chosen: the decision owner wrote that peer data should not go into the repo, for the Customer domain.
 - **Keep Agreement, Site, Site Brand Assignment and Party Transaction Association out of scope**, as Claude first recommended. Not chosen: the decision owner put every entity in scope.
-- **Frame direct dealers with a Brand License agreement**, as the conceptual model's class note does. Not chosen: MPC's filings describe supply contracts and no licence.
+- **Frame direct dealers with a Brand License agreement**, as the conceptual model's class note does. Not chosen: MPC's filings describe supply contracts with direct dealers, call the ARCO trademark MPC's own, and do not mention a brand licence (item 1).
 - **Make the repository public while the pull requests merge**, as EPM-DEC-001-0050's amendment allows, so the ruleset is enforced. Not chosen: the decision owner kept it private.
 
 ## The decision owner's recorded words
@@ -117,7 +117,8 @@ The readings marked as Claude's above are under the delegation: "yes, extend the
 
 - `answers-2026-10-21-customer.md`.
 - `business_architecture/reference/mpc/customer-classification-evidence.md` (C1 to C8) and `mpc-fy2025-10k-fact-sheet.md` (direct dealers).
-- MPLX FY2023 Form 10-K, https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231.htm, retrieved 2026-10-21.
+- MPLX FY2023 Form 10-K, https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231.htm, retrieved 2026-10-21; `reference/mpc/mplx-fy2025-10k-fact-sheet.md` (FY2025).
+- MPC FY2025 Form 10-K, Item 1, Trademarks, Patents and Licenses, https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm, read 2026-10-21; EDGAR full-text search of MPC's 10-K filings for "brand license", 2026-10-21, no hits.
 - EPM-DEC-001-0004, 0005, 0028, 0040, 0047, 0050, 0052.
 
 ## Consequences
