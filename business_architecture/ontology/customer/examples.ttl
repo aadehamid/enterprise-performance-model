@@ -1,7 +1,9 @@
 # Five invented organizations, each holding several roles, described in the customer module's
 # terms (EPM-DEC-001-0068). They are test fixtures, not customer records: every name is made up.
-# Competency questions section VII is done when such organizations can be described both ways,
-# party to roles and role to party, without calling Customer a role. test_customer.py checks it.
+# Competency questions section VII is done when five real multi-role organisations can be described
+# both ways (party to roles and role to party) without calling Customer a role. Real customer records
+# stay out of the ontology (EPM-DEC-001-0005), so test_customer.py shows the pattern on these five
+# invented ones; it does not show section VII done for real organisations.
 @prefix cust: <https://w3id.org/lsc/ontology/modules/customer/> .
 @prefix ex: <https://w3id.org/lsc/ontology/modules/customer/example/> .
 @prefix role: <https://w3id.org/lsc/ontology/modules/customer/party-role/> .

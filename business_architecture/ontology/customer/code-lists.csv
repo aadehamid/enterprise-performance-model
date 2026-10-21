@@ -46,7 +46,7 @@ customer-class,direct-dealer,Direct dealer,brand-attached-resellers,C2,"A dealer
 customer-class,wholesale-marketing,Wholesale marketing customer,wholesale-unbranded,C3,"A customer that buys in bulk for resale, in domestic or international markets, under term or spot arrangements. The usual pattern is the Sold-To role and a Fuel Supply or Offtake agreement."
 customer-class,independent-retailer,Independent retailer,wholesale-unbranded,C4,A retailer that is not a brand jobber or direct dealer and buys refined products for its own outlets.
 customer-class,unbranded-customer,Unbranded customer,wholesale-unbranded,C5,"A customer that buys gasoline or diesel without a brand: an independent marketer, a commercial end-user, an unbranded distributor or a high-volume retailer."
-customer-class,spot-market-buyer,Spot market buyer,wholesale-unbranded,C6,"A buyer that buys refined products on the spot market, not under a term agreement."
+customer-class,spot-market-buyer,Spot market buyer,trading-counterparties,C6,"A buyer that buys refined products on the spot market, not under a term agreement."
 customer-class,export-customer,Export customer,wholesale-unbranded,C7,"A buyer overseas. Product is lifted at a coastal refinery or at terminal gates, and supply usually comes from a refinery or terminal site."
 customer-class,terminal-rack-customer,Terminal / Rack customer,wholesale-unbranded,,"A customer that lifts product at terminal racks. Each lifting records the position holder, the customer and the carrier, usually as party transaction associations."
 customer-class,forecast-driven-customer,Forecast-driven customer,wholesale-unbranded,,"A customer whose supply is planned from forecasts, not fixed orders, usually as an account facet with demand planning."
@@ -54,7 +54,7 @@ customer-class,commercial-industrial-end-user,Commercial and industrial end-user
 customer-class,asphalt-bitumen-buyer,Asphalt / Bitumen buyer,end-users-specialty,,"A paving or roofing buyer of asphalt or bitumen. Public bids and tax-exempt purchases are common. An agreement whose product scope is asphalt usually identifies the customer."
 customer-class,pipeline-customer,Pipeline customer,end-users-specialty,,"A customer that ships or stores volumes under a throughput, storage or transport agreement, with invoices that flow back to settlement. The usual pattern is a Throughput / Storage agreement and party transaction associations on tickets and invoices."
 customer-class,exchange-trading-counterparty,Exchange / Trading counterparty,trading-counterparties,,"A party that swaps product with the company barrel for barrel, or trades with it on a buy or sell basis, with differences settled as imbalances. It acts through the Exchange Counterparty role and is a customer only when a revenue-recognized relationship exists."
-customer-class,crude-oil-customer,Crude oil customer,trading-counterparties,C8,An external customer that buys crude oil from the company.
+customer-class,crude-oil-customer,Crude oil customer,trading-counterparties,C8,"An external customer that buys crude oil or refinery feedstock from the company, typically a company in the crude oil or refinery feedstock trading and supply business, or another refiner."
 site-type,station,Station,,,A retail fuel station.
 site-type,bulk-plant,Bulk plant,,,A bulk fuel storage and distribution plant.
 site-type,cardlock,Cardlock,,,An unattended fueling site that customers use with a card.

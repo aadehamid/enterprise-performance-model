@@ -103,7 +103,7 @@ cust:PartyTransactionAssociation a owl:Class ;
 
 cust:Product a owl:Class ;
     rdfs:label "product"@en ;
-    skos:definition "A marketable hydrocarbon product or grade. It is mastered in the Product domain and referred to here, not modelled. Contract terms are set per product, so specialty buyers are told apart by an agreement's product scope."@en ;
+    skos:definition "A marketable hydrocarbon product or grade. The class stands in for a Product domain that this repository does not model yet; the module gives products no properties or values. Contract terms are set per product, so specialty buyers are told apart by an agreement's product scope."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
 
 cust:Site a owl:Class ;
@@ -263,7 +263,7 @@ cust:settlementDetails a owl:DatatypeProperty ;
 cust:accountFacet a owl:ObjectProperty ;
     rdfs:label "account facet"@en ; rdfs:domain cust:CustomerAccount ; rdfs:range skos:Concept ;
     skos:definition "A secondary facet of the account: its brand status, contract type, product line, segment, geography or delivery tier. The values of these facets are not yet defined."@en ;
-    skos:scopeNote "The delivery tier answers the delivery-mode candidate of the peers' filings, which is not added separately (EPM-DEC-001-0067, What follows, item 9)."@en ;
+    skos:scopeNote "The delivery tier covers the delivery-mode candidate, which is not added separately (EPM-DEC-001-0067, What follows, item 9)."@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
 
 # ---- Agreements, brands and sites ----

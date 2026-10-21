@@ -127,7 +127,7 @@
 
 <https://w3id.org/lsc/ontology/modules/customer/customer-class/crude-oil-customer> a skos:Concept ;
     skos:broader <https://w3id.org/lsc/ontology/modules/customer/customer-class/trading-counterparties> ;
-    skos:definition "An external customer that buys crude oil from the company."@en ;
+    skos:definition "An external customer that buys crude oil or refinery feedstock from the company, typically a company in the crude oil or refinery feedstock trading and supply business, or another refiner."@en ;
     skos:inScheme cust:customer-class ;
     skos:notation "crude-oil-customer" ;
     skos:prefLabel "Crude oil customer"@en ;
@@ -179,7 +179,7 @@
     skos:prefLabel "Pipeline customer"@en .
 
 <https://w3id.org/lsc/ontology/modules/customer/customer-class/spot-market-buyer> a skos:Concept ;
-    skos:broader <https://w3id.org/lsc/ontology/modules/customer/customer-class/wholesale-unbranded> ;
+    skos:broader <https://w3id.org/lsc/ontology/modules/customer/customer-class/trading-counterparties> ;
     skos:definition "A buyer that buys refined products on the spot market, not under a term agreement."@en ;
     skos:inScheme cust:customer-class ;
     skos:notation "spot-market-buyer" ;
@@ -583,18 +583,18 @@
     skos:prefLabel "Brand-attached resellers"@en ;
     skos:topConceptOf cust:customer-class .
 
-<https://w3id.org/lsc/ontology/modules/customer/customer-class/trading-counterparties> a skos:Concept ;
-    skos:definition "The customer classes that trade with the company, product for product or on a buy or sell basis."@en ;
-    skos:inScheme cust:customer-class ;
-    skos:notation "trading-counterparties" ;
-    skos:prefLabel "Trading counterparties"@en ;
-    skos:topConceptOf cust:customer-class .
-
 <https://w3id.org/lsc/ontology/modules/customer/customer-class/end-users-specialty> a skos:Concept ;
     skos:definition "The customer classes that use the product themselves, or buy a specialty product or service."@en ;
     skos:inScheme cust:customer-class ;
     skos:notation "end-users-specialty" ;
     skos:prefLabel "End-users and specialty"@en ;
+    skos:topConceptOf cust:customer-class .
+
+<https://w3id.org/lsc/ontology/modules/customer/customer-class/trading-counterparties> a skos:Concept ;
+    skos:definition "The customer classes that trade with the company, product for product or on a buy or sell basis."@en ;
+    skos:inScheme cust:customer-class ;
+    skos:notation "trading-counterparties" ;
+    skos:prefLabel "Trading counterparties"@en ;
     skos:topConceptOf cust:customer-class .
 
 cust:party-type a skos:ConceptScheme ;
@@ -607,17 +607,17 @@ cust:contact-type a skos:ConceptScheme ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The kinds of contact point."@en .
 
-cust:operating-model a skos:ConceptScheme ;
-    rdfs:label "site operating models"@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
-    skos:definition "Who owns and who operates a site."@en .
-
 <https://w3id.org/lsc/ontology/modules/customer/customer-class/wholesale-unbranded> a skos:Concept ;
     skos:definition "The customer classes that buy fuel in bulk or without a brand, for resale."@en ;
     skos:inScheme cust:customer-class ;
     skos:notation "wholesale-unbranded" ;
     skos:prefLabel "Wholesale and unbranded"@en ;
     skos:topConceptOf cust:customer-class .
+
+cust:operating-model a skos:ConceptScheme ;
+    rdfs:label "site operating models"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "Who owns and who operates a site."@en .
 
 cust:address-usage a skos:ConceptScheme ;
     rdfs:label "address usages"@en ;

@@ -88,6 +88,17 @@ class CodeLists(unittest.TestCase):
         self.assertEqual(CODES.value(sdp, SKOS.prefLabel), Literal("SDP", lang="en"))
         self.assertIn((sdp, RDF.type, CUST.LineOfBusiness), CODES)
 
+    def test_the_classes_by_group(self):
+        def members(group):
+            return {str(v).rsplit("/", 1)[1] for v in CODES.subjects(SKOS.broader, CLS[group])}
+        self.assertEqual(members("brand-attached-resellers"), {"branded-jobber", "direct-dealer"})
+        self.assertEqual(members("wholesale-unbranded"), {"wholesale-marketing", "independent-retailer", "unbranded-customer",
+                                                          "export-customer", "terminal-rack-customer", "forecast-driven-customer"})
+        self.assertEqual(members("end-users-specialty"), {"commercial-industrial-end-user", "asphalt-bitumen-buyer",
+                                                          "pipeline-customer"})
+        self.assertEqual(members("trading-counterparties"), {"exchange-trading-counterparty", "crude-oil-customer",
+                                                             "spot-market-buyer"})
+
     def test_fourteen_classes_in_four_groups(self):
         groups = {"brand-attached-resellers", "wholesale-unbranded", "end-users-specialty", "trading-counterparties"}
         self.assertEqual(len(notations("customer-class")), 18)
@@ -106,7 +117,7 @@ class CodeLists(unittest.TestCase):
     def test_the_four_added_classes_sit_in_the_decided_groups(self):
         self.assertEqual(CODES.value(CLS["independent-retailer"], SKOS.broader), CLS["wholesale-unbranded"])
         self.assertEqual(CODES.value(CLS["unbranded-customer"], SKOS.broader), CLS["wholesale-unbranded"])
-        self.assertEqual(CODES.value(CLS["spot-market-buyer"], SKOS.broader), CLS["wholesale-unbranded"])
+        self.assertEqual(CODES.value(CLS["spot-market-buyer"], SKOS.broader), CLS["trading-counterparties"])
         self.assertEqual(CODES.value(CLS["crude-oil-customer"], SKOS.broader), CLS["trading-counterparties"])
 
     def test_direct_dealers_sit_under_fuel_supply(self):
@@ -213,7 +224,26 @@ class Shapes(unittest.TestCase):
                            "assigned from a start date")
 
     def test_a_group_assigned_as_a_class(self):
-        self.assertRejects('ex:jobber-co-class cust:classValue cls:brand-attached-resellers .')
+        # A fresh assignment with one value, a date and an account, so only the group rule can fire (Pi, PR 2 round 1).
+        self.assertRejects('ex:a2 a cust:CustomerAccount ; cust:classifiedAs ex:c2 . ex:jobber-co cust:transactsThrough ex:a2 . '
+                           'ex:c2 a cust:CustomerClass ; cust:classValue cls:brand-attached-resellers ; '
+                           'cust:validFrom "2020-01-01"^^xsd:date .', "names one of the four groups")
+
+    # Each off-list test uses a fresh node, so only the list's own shape can fire.
+    def test_a_site_type_off_its_list(self):
+        self.assertRejects('ex:s9 a cust:Site ; cust:siteType <https://w3id.org/lsc/ontology/modules/customer/operating-model/coco> .',
+                           "InSiteType")
+
+    def test_an_operating_model_off_its_list(self):
+        self.assertRejects('ex:s9 a cust:Site ; cust:operatingModel <https://w3id.org/lsc/ontology/modules/customer/site-type/station> .',
+                           "InOperatingModel")
+
+    def test_a_transaction_kind_off_its_list(self):
+        self.assertRejects('ex:t9 a cust:PartyTransactionAssociation ; cust:transactionKind agt:offtake ; '
+                           'cust:transactionReference "X" ; cust:forAccount ex:shipper-co-account .', "InTransactionKind")
+
+    def test_an_agreement_type_off_its_list(self):
+        self.assertRejects("ex:g9 a cust:Agreement ; cust:agreementType role:carrier .", "InAgreementType")
 
     def test_a_party_that_is_both_person_and_organization(self):
         self.assertRejects("ex:jobber-co a cust:Person .")
