@@ -110,5 +110,5 @@ lifecycle-stage,offboarding,Offboarding,,,The customer is suspended or closed an
 system-stage,prospect,Prospect,,,"Salesforce holds the first record of a prospect, on the Trade or the CRM/Basic track. Jobbers start in Dealer Master and direct dealers in SAP MDG."
 system-stage,master,Master,,,"SAP MDG creates the customer, runs duplicate checks, applies authorization groups and generates the canonical SAP customer number."
 system-stage,record,Record,,,SAP S/4HANA holds the customer's company codes and sales areas and serves as the accounts payable and receivable skeleton.
-system-stage,execute,Execute,,,"The execution systems transact with the customer: RightAngle, Polaris, Dealer Master, and the terminal and card systems."
+system-stage,execute,Execute,,,"The systems that hold the customer's record while its orders, movements, loadings and station sales are carried out: RightAngle, Polaris, Dealer Master, Terminal download and the card systems. Dealer Master aggregates station sales that other systems execute."
 system-stage,settle,Settle,,,Invoices and postings from the execution systems return to SAP S/4HANA.

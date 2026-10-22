@@ -72,46 +72,89 @@ class Lifecycle(unittest.TestCase):
 class Shapes(unittest.TestCase):
     SHAPES = parse("shapes.ttl")
 
-    def conforms(self, extra=""):
-        ok, _, text = validate(parse("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl", extra=extra),
-                               shacl_graph=self.SHAPES, advanced=True)
+    def conforms(self, extra="", remove=()):
+        g = parse("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl", extra=extra)
+        for triple in remove:
+            g.remove(triple)
+        ok, _, text = validate(g, shacl_graph=self.SHAPES, advanced=True)
         return ok, text
+
+    def violates(self, focus, message, extra="", remove=()):
+        """The graph fails, and one result is a violation on this focus node with this message."""
+        g = parse("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl", extra=extra)
+        for triple in remove:
+            g.remove(triple)
+        ok, results, _ = validate(g, shacl_graph=self.SHAPES, advanced=True)
+        self.assertFalse(ok)
+        found = {(r.focus, str(r.message)) for r in results.query(
+            "PREFIX sh: <http://www.w3.org/ns/shacl#> SELECT ?focus ?message WHERE { "
+            "?r a sh:ValidationResult ; sh:focusNode ?focus ; sh:resultMessage ?message ; sh:resultSeverity sh:Violation }")}
+        self.assertIn((focus, message), found)
 
     def test_the_lifecycle_conforms(self):
         ok, text = self.conforms()
         self.assertTrue(ok, text[:3000])
 
     def test_a_system_stage_done_by_a_process(self):
-        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:stageProcess "
-                                 "<https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> .")
-        self.assertFalse(ok)
-        self.assertIn("Only a business lifecycle stage", text)
+        self.violates(CUST["system-stage/master"], "Only a business lifecycle stage is done by processes.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:stageProcess "
+                            "<https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> .")
 
     def test_a_business_stage_held_by_a_system(self):
-        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding> party:stageSystem "
-                                 "<https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .")
-        self.assertFalse(ok)
-        self.assertIn("Only a system stage", text)
+        self.violates(CUST["lifecycle-stage/onboarding"], "Only a system stage is held by systems.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding> party:stageSystem "
+                            "<https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> .")
 
     def test_a_system_stage_that_corresponds(self):
-        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:correspondsTo "
-                                 "<https://w3id.org/lsc/ontology/modules/party/system-stage/record> .")
-        self.assertFalse(ok)
-        self.assertIn("Only a business lifecycle stage corresponds", text)
+        self.violates(CUST["system-stage/master"], "Only a business lifecycle stage corresponds to a system stage.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:correspondsTo "
+                            "<https://w3id.org/lsc/ontology/modules/party/system-stage/record> .")
 
     def test_a_correspondence_to_a_business_stage(self):
-        ok, text = self.conforms("<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding> party:correspondsTo "
-                                 "<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect> .")
-        self.assertFalse(ok)
-        self.assertIn("corresponds only to a system stage", text)
+        self.violates(CUST["lifecycle-stage/offboarding"], "A business lifecycle stage corresponds only to a system stage.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding> party:correspondsTo "
+                            "<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect> .")
+
+    # EPM-DEC-001-0070 decides each stage's links: a real target on the wrong stage fails, and so does a missing one.
+    def test_a_real_system_on_the_wrong_stage(self):
+        master = CUST["system-stage/master"]
+        self.violates(master, "system-stage/master has exactly the systems EPM-DEC-001-0070 decides.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/system-stage/master> party:stageSystem "
+                            "<https://w3id.org/lsc/ontology/modules/party/system/salesforce> .",
+                      remove=[(master, CUST.stageSystem, CUST["system/sap-mdg"])])
+
+    def test_a_real_process_on_the_wrong_stage(self):
+        prospect = CUST["lifecycle-stage/prospect"]
+        self.violates(prospect, "lifecycle-stage/prospect has exactly the processes EPM-DEC-001-0070 decides.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect> party:stageProcess "
+                            "<https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1> .",
+                      remove=[(prospect, CUST.stageProcess, PROC["CM-1-3-6-2-1"])])
+
+    def test_a_correspondence_the_record_does_not_grant(self):
+        self.violates(CUST["lifecycle-stage/offboarding"],
+                      "lifecycle-stage/offboarding corresponds to no system stage (EPM-DEC-001-0070, item 4).",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding> party:correspondsTo "
+                            "<https://w3id.org/lsc/ontology/modules/party/system-stage/settle> .")
+
+    def test_a_process_that_does_not_exist(self):
+        self.violates(CUST["lifecycle-stage/risk-management"],
+                      "lifecycle-stage/risk-management has exactly the processes EPM-DEC-001-0070 decides.",
+                      extra="<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/risk-management> party:stageProcess "
+                            "<https://w3id.org/lsc/ontology/process/DOES-NOT-EXIST> .")
 
 
 class Build(unittest.TestCase):
     """The build rejects a link from the wrong kind of stage before lifecycle.ttl exists."""
 
-    def fails(self, extra_row):
+    def fails(self, extra_row, drop=None):
         real = build_party.read
-        build_party.read = lambda name: real(name) + [extra_row] if name == "lifecycle.csv" else real(name)
+
+        def read(name):
+            rows = real(name)
+            if name != "lifecycle.csv":
+                return rows
+            return [r for r in rows if (r["stage"], r["link"], r["target"]) != drop] + [extra_row]
+        build_party.read = read
         try:
             rows = build_party.load()
             with self.assertRaises(SystemExit) as caught:
@@ -131,6 +174,21 @@ class Build(unittest.TestCase):
     def test_a_system_stage_that_corresponds(self):
         row = {"stage": "system-stage/master", "link": "stage", "target": "system-stage/record", "note": "x"}
         self.assertIn("only a lifecycle-stage has a stage link", self.fails(row))
+
+    def test_a_real_system_on_the_wrong_stage(self):
+        row = {"stage": "system-stage/master", "link": "system", "target": "salesforce", "note": ""}
+        self.assertIn("system-stage/master system links ['salesforce'], not the decided ['sap-mdg']",
+                      self.fails(row, drop=("system-stage/master", "system", "sap-mdg")))
+
+    def test_a_real_process_on_the_wrong_stage(self):
+        row = {"stage": "lifecycle-stage/prospect", "link": "process", "target": "CM 1.3.8.2.1", "note": "x"}
+        self.assertIn("lifecycle-stage/prospect process links ['CM 1.3.6.6.1', 'CM 1.3.7.4.2', 'CM 1.3.8.2.1'], "
+                      "not the decided ['CM 1.3.6.2.1', 'CM 1.3.6.6.1', 'CM 1.3.7.4.2']",
+                      self.fails(row, drop=("lifecycle-stage/prospect", "process", "CM 1.3.6.2.1")))
+
+    def test_a_correspondence_the_record_does_not_grant(self):
+        row = {"stage": "lifecycle-stage/offboarding", "link": "stage", "target": "system-stage/settle", "note": ""}
+        self.assertIn("lifecycle-stage/offboarding stage links ['system-stage/settle'], not the decided []", self.fails(row))
 
 
 if __name__ == "__main__":

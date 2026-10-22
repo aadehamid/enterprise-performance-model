@@ -22,7 +22,8 @@ lifecycle.csv links each business lifecycle stage to the core 2.1.0 processes th
 each system stage to the customer systems that hold the record, and business stages to the system
 stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.1.0, every
 system is a customer system, only a business stage links to processes and system stages, only a
-system stage links to systems, every stage has a link and no link is listed twice.
+system stage links to systems, every stage has a link, no link is listed twice, and each stage has
+exactly the links EPM-DEC-001-0070 decides, written out in DECIDED_LIFECYCLE.
 """
 import argparse
 import csv
@@ -146,6 +147,25 @@ def split(text):
 # What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
 SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
 INPUTS = {str(i) for i in range(1, 8)}
+DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage"s links, and no others
+    ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
+    ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1"},
+    ("lifecycle-stage/payment-management", "process"): {"CM 1.3.8.2.1", "CM 1.3.8.2.3", "CM 1.3.8.3.2"},
+    ("lifecycle-stage/risk-management", "process"): {"CM 1.3.7.4.3", "CM 1.3.7.4.4"},
+    ("lifecycle-stage/relationship-management", "process"): {"CM 1.3.6.2.2", "CM 1.3.7.5.5", "CM 1.3.7.2.6", "CM 1.3.7.4.2"},
+    ("lifecycle-stage/offboarding", "process"): {"CM 1.3.7.4.5", "CM 1.3.7.1.1"},
+    ("system-stage/prospect", "system"): {"salesforce"},
+    ("system-stage/master", "system"): {"sap-mdg"},
+    ("system-stage/record", "system"): {"sap-s4hana"},
+    ("system-stage/execute", "system"): {"rightangle", "polaris", "dealer-master", "terminal-download"},
+    ("system-stage/settle", "system"): {"sap-s4hana"},
+    ("lifecycle-stage/prospect", "stage"): {"system-stage/prospect"},
+    ("lifecycle-stage/onboarding", "stage"): {"system-stage/master", "system-stage/record"},
+    ("lifecycle-stage/payment-management", "stage"): {"system-stage/settle"},
+    ("lifecycle-stage/risk-management", "stage"): set(),
+    ("lifecycle-stage/relationship-management", "stage"): set(),
+    ("lifecycle-stage/offboarding", "stage"): set(),
+}
 
 
 def load_systems(codes):
@@ -211,6 +231,12 @@ def load_lifecycle(codes, systems):
                  if r["link"] == "stage" and (not r["target"].startswith("system-stage/") or tuple(r["target"].split("/", 1)) not in values)]
     keys = Counter((r["stage"], r["link"], r["target"]) for r in rows)
     problems += [f"{k} is listed {n} times" for k, n in keys.items() if n > 1]
+    found = {}
+    for r in rows:
+        found.setdefault((r["stage"], r["link"]), set()).add(r["target"])
+    problems += [f"{s} {l} links {sorted(found.get((s, l), set()))}, not the decided {sorted(t)}"
+                 for (s, l), t in DECIDED_LIFECYCLE.items() if found.get((s, l), set()) != t]
+    problems += [f"{s} has {l} links, and EPM-DEC-001-0070 gives it none" for s, l in found if (s, l) not in DECIDED_LIFECYCLE]
     staged = {r["stage"] for r in rows}
     problems += [f"{s}/{n} has no link" for s, n in sorted(values) if s in ("lifecycle-stage", "system-stage") and f"{s}/{n}" not in staged]
     if problems:
