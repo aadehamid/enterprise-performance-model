@@ -1,0 +1,26 @@
+{
+  "module": "lane",
+  "version": "1.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/lane",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/lane/1.0.0",
+  "depends_on": {
+    "core": "2.2.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0056",
+    "EPM-DEC-001-0077"
+  ],
+  "triples": 59,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md"
+  },
+  "files": {
+    "CHANGELOG.md": "c2d1d50b632fc797111b2c0b01359ab8030145f86966f9d2163f309d0a077e5a",
+    "catalog.ttl": "d37c618fc5e72e72231c6896781759b9bd6d6c1e742695fdad1c17210eaedd02",
+    "lane.jsonld": "77755152afdca137a2756c551827b8e31c5ef46c8bb31cdc0d480ed5f7bb42dd",
+    "lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
+    "shapes.ttl": "f1afea34b3232b1c07eb66667981d8c22bd6eaab5351e2570ad1af97f3626b94"
+  }
+}

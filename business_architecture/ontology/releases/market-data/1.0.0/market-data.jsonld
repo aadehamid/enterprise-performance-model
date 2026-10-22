@@ -1,0 +1,3521 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/1.0.1"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Market Data Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/1.0.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.0.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/Benchmark",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark price"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A published price that a series is built from: a crude marker, a refined-product benchmark at a named market, or a compliance cost such as the RVO."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkKind",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark kind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The kinds of benchmark price a series is built from."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 31; EPM-DEC-001-0046, EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One published series of a market measure, identified by what it is built from: its region, its crude and product legs and their ratio, and what it leaves out. Two series of the same measure are different series when any of these differ."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/Leg",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "series leg"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One part of a series' recipe: a benchmark and the number of barrels of it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.1; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "market regions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The product market regions of MPC Economics' published 3-2-1 crack series: USGC, Chicago, Group 3 (Tulsa), LA, PNW and SLC. They are price markets, not MPC's refining regions."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/RefiningRegions",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC FY2025 Form 10-K, Item 2 (mpc-performance-measures-evidence.md, finding 3)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "refining regions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's three refining regions, by the names MPC uses."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The benchmark series and benchmark prices the market-data module defines."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/barrels",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "barrels"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The number of barrels of the benchmark in the recipe, as in the 3 and 2 and 1 of a 3-2-1 crack spread. A ratio, not a price."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The benchmark price the leg uses."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/compliance-cost",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3.2; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A published per-gallon compliance cost, such as the RVO, that an Ex-RVO crack deducts from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "compliance-cost"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Compliance cost"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A published crude oil price that a crack spread uses for its crude leg."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "crude-marker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Crude marker"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A published refined-product price at a named market, used for a crack spread's product legs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "product-benchmark"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Product benchmark"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/ans",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The ANS crude price, the crude marker of MPC's West Coast crack spread."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ans"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "ANS"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/west-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/chicago-cbob",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Chicago CBOB gasoline price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "chicago-cbob"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago CBOB"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/mid-continent"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/chicago-ulsd",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Chicago ULSD price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "chicago-ulsd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago ULSD"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/mid-continent"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/la-carb-diesel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "la-carb-diesel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA CARB Diesel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/west-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/la-carbob",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "la-carbob"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA CARBOB"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/west-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/meh",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The MEH crude price, the crude marker of MPC's Gulf Coast crack spread."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "meh"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MEH"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/gulf-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-11926",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The gasoline input of MPC Economics' Gulf Coast crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-11926"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gulf Coast CBOB input (MPR 11926)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "11926"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/usgc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-12838",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The diesel input of MPC Economics' Gulf Coast crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-12838"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gulf Coast ULSD input (MPR 12838)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "12838"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/usgc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13056",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Renewable Volume Obligation cost per gallon, the same input in every region; an Ex-RVO series deducts it from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-13056"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "RVO cost (MPR 13056)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/compliance-cost"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "13056"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13076",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The gasoline input of MPC Economics' Group 3 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-13076"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Group 3 CBOB input (MPR 13076)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "13076"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/group-3"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-14133",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The crude input of MPC Economics' Gulf Coast crack series, named an MEH crack."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-14133"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MEH crude input (MPR 14133)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "14133"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/usgc"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-16475",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The gasoline input of MPC Economics' Chicago crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-16475"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago CBOB input (MPR 16475)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "16475"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/chicago"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-16477",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The diesel input of MPC Economics' Chicago crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-16477"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago ULSD input (MPR 16477)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "16477"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/chicago"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-4055",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The crude input of MPC Economics' LA crack series, named an ANS crack."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-4055"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "ANS crude input (MPR 4055)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "4055"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/la"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-747",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The crude input of MPC Economics' Chicago and Group 3 crack series, both named WTI cracks."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-747"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "WTI crude input (MPR 747)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "747"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/chicago"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9408",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The diesel input of MPC Economics' Group 3 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-9408"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Group 3 ULSD input (MPR 9408)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "9408"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/group-3"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9657",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The diesel input of MPC Economics' LA crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-9657"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA ULSD input (MPR 9657)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "9657"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/la"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9660",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The gasoline input of MPC Economics' LA crack series (the CBOB column of the definition's input table)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr-9660"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA gasoline input (MPR 9660)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "9660"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/la"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-ny-harbor-ulsd",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The NYMEX NY Harbor ULSD futures contract (ticker HO), the diesel leg of the NYMEX 3:2:1 crack spread. MPC Economics' definition calls this leg NYMEX Heating Oil."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "nymex-ny-harbor-ulsd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NYMEX NY Harbor ULSD futures (HO)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-rbob",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "nymex-rbob"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NYMEX RBOB Gasoline futures (RB)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-wti",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "nymex-wti"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NYMEX WTI Crude Oil futures (CL)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/usgc-cbob",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The USGC CBOB gasoline price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "usgc-cbob"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "USGC CBOB"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/gulf-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/usgc-ulsd",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The USGC ULSD price, a benchmark price in MPC's marketing areas."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "usgc-ulsd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "USGC ULSD"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/product-benchmark"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/gulf-coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/wti",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The WTI crude price, the crude marker of MPC's Mid-Continent crack spread."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "wti"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "WTI"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/crude-marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/mid-continent"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmarkKind",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Benchmark"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "benchmark kind"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Whether the benchmark is a crude marker, a refined-product benchmark or a compliance cost."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/blendOf",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC FY2025 Form 10-K, Item 7 (mpc-performance-measures-evidence.md, row 10)"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "blend of"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A series the blended series is weighted from. The weights are stated in the series' scope note, with their source and period, because they change."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC FY2025 Form 10-K, Item 7: the crack spreads \"do not reflect the market cost of RINs\" (mpc-performance-measures-evidence.md, row 10); MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3 (reference/internal/crack-spread-kpi-definition.md); competency question 31"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "excludes RIN cost"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "True when the series does not reflect the market cost of RINs, as MPC's 10-K crack spreads do not (MPC Economics' Inc-RVO treatment). False when the series deducts the RVO cost (MPC Economics' Ex-RVO treatment, which MPC's price data labels ex-RIN). A series with RIN costs and one without are different series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "The labels run opposite to this property's name: an ex-RIN series deducts the RVO cost, so it has false here (EPM-DEC-001-0066)."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "leg"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One leg of the series' recipe."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--meh",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/meh"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--usgc-cbob",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/usgc-cbob"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--usgc-ulsd",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/usgc-ulsd"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--chicago-cbob",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/chicago-cbob"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--chicago-ulsd",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/chicago-ulsd"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--wti",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/wti"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-13056",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13056"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-4055",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-4055"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-9657",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9657"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-9660",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9660"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-13056",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13056"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-16475",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-16475"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-16477",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-16477"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-747",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-747"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-13056",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13056"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-13076",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13076"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-747",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-747"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-9408",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-9408"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-11926",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-11926"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-12838",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-12838"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-13056",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-13056"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-14133",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/mpr-14133"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-ny-harbor-ulsd",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-ny-harbor-ulsd"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-rbob",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-rbob"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-wti",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/nymex-wti"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--ans",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/ans"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--la-carb-diesel",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/la-carb-diesel"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--la-carbob",
+  "@type": [
+   "https://w3id.org/lsc/ontology/modules/market-data/Leg"
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/barrels": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/benchmark": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/benchmark/la-carbob"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/legsUnstated",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.2 note; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "legs unstated"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "True when the source names the published series but does not list its input legs."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "Price Master ID"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The identifier MPC's price data (MPR Price Master) gives the series or input price. An identifier, not a price."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 34; EPM-DEC-001-0057; EPM-DEC-001-0066"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "region"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The refining region a series tracks, or the market region of a series or a benchmark's market."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/chicago",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Chicago product market of MPC Economics' Chicago 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "chicago"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/group-3",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Group 3 product market, priced at Tulsa, of MPC Economics' Group 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "group-3"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Group 3 (Tulsa)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/gulf-coast",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/RefiningRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "gulf-coast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gulf Coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/la",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Los Angeles product market of MPC Economics' LA 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "la"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/mid-continent",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Mid-Continent refining region: the Catlettsburg, Robinson, Detroit, El Paso, St. Paul Park, Canton, Mandan and Salt Lake City refineries."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/RefiningRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mid-continent"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Mid-Continent"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/pnw",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Pacific Northwest product market of MPC Economics' PNW 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "pnw"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "PNW"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/slc",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The Salt Lake City product market of MPC Economics' SLC 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "slc"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "SLC"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/usgc",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The U.S. Gulf Coast product market of MPC Economics' USGC 3-2-1 crack series."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/MarketRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "usgc"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "USGC"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/west-coast",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's West Coast refining region: the Los Angeles, Anacortes and Kenai refineries."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/RefiningRegions"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "west-coast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "West Coast"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-blended-3-2-1",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's blended crack spread: the Gulf Coast, Mid-Continent and West Coast crack spreads, weighted by MPC's refining capacity by region in each period."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-blended-3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Blended 3-2-1 crack spread"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Beginning in the second quarter of 2024, MPC weighted the blended crack spread 42 percent Gulf Coast, 40 percent Mid-Continent and 18 percent West Coast, based on its refining capacity by region in each period (MPC FY2025 Form 10-K, Item 7). The weights for 2026 are in the Q2 2026 Form 10-Q (MPC-S03; mpc-performance-measures-evidence.md, row 10)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/blendOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-gulf-coast-3-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mid-continent-3-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-west-coast-3-2-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-gulf-coast-3-2-1",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Gulf Coast crack spread: three barrels of MEH crude producing two barrels of USGC CBOB gasoline and one barrel of USGC ULSD."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-gulf-coast-3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gulf Coast 3-2-1 crack spread"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--meh"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--usgc-cbob"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-gulf-coast-3-2-1--usgc-ulsd"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/gulf-coast"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mid-continent-3-2-1",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Mid-Continent crack spread: three barrels of WTI crude producing two barrels of Chicago CBOB gasoline and one barrel of Chicago ULSD."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mid-continent-3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Mid-Continent 3-2-1 crack spread"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--chicago-cbob"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--chicago-ulsd"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mid-continent-3-2-1--wti"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/mid-continent"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-36855",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published LA 3-2-1 crack: three barrels of ANS crude against two barrels of LA gasoline and one of LA ULSD, with the RVO cost deducted from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-36855"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "LA 3-2-1 Crack ANS, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-13056"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-4055"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-9657"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-36855--mpr-9660"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "36855"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/la"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37438",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "Chicago WTI 3-2-1 ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published Chicago 3-2-1 crack: three barrels of WTI crude against two barrels of Chicago CBOB and one of Chicago ULSD, with the RVO cost deducted from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-37438"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "CHI 3-2-1 Crack WTI, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-13056"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-16475"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-16477"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37438--mpr-747"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "37438"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/chicago"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37439",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published Group 3 (Tulsa) 3-2-1 crack: three barrels of WTI crude against two barrels of Group 3 CBOB and one of Group 3 ULSD, with the RVO cost deducted from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-37439"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Group 3-2-1 Crack WTI, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-13056"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-13076"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-747"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-37439--mpr-9408"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "37439"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/group-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37443",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published PNW 3-2-1 crack, an ANS crack by its MIPS group, with the RVO cost deducted. The definition does not list its input legs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-37443"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "PNW 3-2-1 Crack, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/legsUnstated": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "37443"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/pnw"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37464",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' MPC-weighted 3-2-1: the USGC, Chicago and LA ex-RIN cracks weighted to approximate a realized MPC 3-2-1."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-37464"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Blended 3-2-1 Crack, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics weights the three ex-RIN cracks USGC 0.40, Chicago 0.40 and LA 0.20 before 5 May 2024, and USGC 0.42, Chicago 0.40 and LA 0.18 after (crack-spread-kpi-definition.md, section 4.4)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/blendOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-36855"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37438"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-43870"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "37464"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37471",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published SLC 3-2-1 crack, a WTI crack, with the RVO cost deducted. The definition does not list its input legs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-37471"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "SLC 3-2-1 Crack WTI, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/legsUnstated": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "37471"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/slc"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-42023",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The second published result of MPC Economics' MPC-weighted 3-2-1, from the same three ex-RIN cracks. The definition does not say how it differs from the Blended 3-2-1 Crack, ex-RIN."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-42023"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MPC Internal Blended 3-2-1 Crack, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics weights the three ex-RIN cracks USGC 0.40, Chicago 0.40 and LA 0.20 before 5 May 2024, and USGC 0.42, Chicago 0.40 and LA 0.18 after (crack-spread-kpi-definition.md, section 4.4)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/blendOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-36855"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-37438"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-43870"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "42023"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-mpr-43870",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "USGC 3-2-1 MEH ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics' published USGC 3-2-1 crack: three barrels of MEH crude against two barrels of Gulf Coast CBOB and one of Gulf Coast ULSD, with the RVO cost deducted from each product barrel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-mpr-43870"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "USGC 3-2-1 MEH Crack, ex-RIN"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-11926"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-12838"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-13056"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-mpr-43870--mpr-14133"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "43870"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/usgc"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-nymex-3-2-1",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "NYMEX 3-2-1 Crack"
+   },
+   {
+    "@language": "en",
+    "@value": "NYMEX 3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The exchange-traded crack spread: three NYMEX WTI crude oil futures against two RBOB gasoline futures and one NY Harbor ULSD futures. Not one of MPC's benchmarks."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-nymex-3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NYMEX 3:2:1 crack spread"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Shares the name 3-2-1 with MPC's regional crack spreads but is a different series: its legs are exchange futures, and its gasoline leg is RBOB, which MPC's benchmarks do not use. MPC Economics publishes it as NYMEX 3-2-1 Crack (Price Master 39998) and calls the diesel leg NYMEX Heating Oil (crack-spread-kpi-definition.md, section 4.3)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-ny-harbor-ulsd"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-rbob"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-nymex-3-2-1--nymex-wti"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/priceMasterId": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "39998"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/series/crack-west-coast-3-2-1",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's West Coast crack spread: three barrels of ANS crude producing two barrels of LA CARBOB and one barrel of LA CARB Diesel."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/Series"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-west-coast-3-2-1"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "West Coast 3-2-1 crack spread"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/excludesRINCost": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/leg": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--ans"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--la-carb-diesel"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/leg/crack-west-coast-3-2-1--la-carbob"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/region": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/region/west-coast"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/market-data/seriesOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/market-data/seriesOf",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 31; EPM-DEC-001-0057"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/market-data/BenchmarkSeries"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "series of"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The measure of the kpi module that the series is one published form of."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "CME Group, Fresh from the Trading Room: Papering over the cracks (2026-07-14), https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html, retrieved 2026-10-19"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, retrieved 2026-10-19"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "MPC Economics, 3-2-1 Crack Spread KPI Definition, provided by the decision owner on 2026-10-20, business_architecture/reference/internal/crack-spread-kpi-definition.md"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"
+   }
+  ]
+ }
+]

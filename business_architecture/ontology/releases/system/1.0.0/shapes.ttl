@@ -1,0 +1,48 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/system/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:System a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A system has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path sys:supports ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:hasValue sys:Systems ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:message "A system says why it has no definition." ;
+            sh:minCount 1 ;
+            sh:path skos:editorialNote ],
+        [ sh:maxCount 0 ;
+            sh:message "No source defines the systems, so none carries a definition (EPM-DEC-001-0055)." ;
+            sh:path skos:definition ],
+        [ sh:in ( kind:application kind:office-tool kind:document ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path sys:systemKind ] ;
+    sh:targetClass sys:System .
+

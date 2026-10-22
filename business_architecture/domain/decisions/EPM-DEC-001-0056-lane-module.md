@@ -36,4 +36,4 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 ## Consequences
 
 - The regression stands at 20 answerable, 7 partial and 17 waiting.
-- The module is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval.
+- The module is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077).

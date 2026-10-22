@@ -1,0 +1,5 @@
+# data-product changelog
+
+## 1.0.0 (2026-10-22)
+
+The module's first release, a major. Approved by the decision owner with the release plan ("release plan approved", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md`; EPM-DEC-001-0077). It holds the portfolio's 3 segments, 19 product lines and 48 data products as definitions, never data values (EPM-DEC-001-0005, 0053). The 15 Commercial data products are defined from the portfolio's descriptions; the 33 Midstream and Corporate data products are in the package as parked items, each with a note that its definition waits for its data owners, because the portfolio names them without a description. Loss Control is produced by CM 1.1.3.7.13 (EPM-DEC-001-0048). `dp:DataProduct` is mapped to `dcat:Dataset`, not imported. It requires core 2.2.0.

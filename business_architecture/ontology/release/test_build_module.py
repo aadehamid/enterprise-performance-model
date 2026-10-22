@@ -26,6 +26,10 @@ APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
                      "You have my approval to keep going and release things as needed. while I am out"),
              "party": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md",
                        "You have my permission to release the stable version when you are done.")}
+# The Step 7 modules' first releases, approved with the release plan (EPM-DEC-001-0077).
+PLAN = ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved")
+STEP7 = ("data-product", "value-stream", "system", "lane", "market-data")
+APPROVALS.update({name: PLAN for name in STEP7})
 
 
 def approval_holds(name, m):
@@ -147,6 +151,39 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
+        # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
+        self.assertEqual(bm.dependencies("data-product"), {"core": "2.2.0"})
+        self.assertEqual(bm.dependencies("value-stream"), {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
+        self.assertEqual(bm.dependencies("system"), {"core": "2.2.0"})
+        self.assertEqual(bm.dependencies("lane"), {"core": "2.2.0"})
+        self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.0.1"})
+
+    def test_a_check_loads_one_release_of_each_module(self):
+        # value-stream reaches core twice: directly at 2.2.0 and through kpi 1.0.1 at 2.1.0. Only 2.2.0 loads.
+        self.assertEqual(bm.released_closure("value-stream"), {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
+        self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
+        self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "core": "2.1.0"})
+
+    def test_each_step7_package_holds_its_two_source_files(self):
+        # EPM-DEC-001-0077: each package is its module's vocabulary and instance file, nothing else.
+        files = {"data-product": "data-products.ttl", "value-stream": "value-streams.ttl", "system": "systems.ttl",
+                 "lane": "lanes.ttl", "market-data": "market-data.ttl"}
+        for name, instances in files.items():
+            with self.subTest(module=name):
+                released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0", f"{name}.ttl"))
+                header = URIRef(bm.MODULES_NS + name)
+                released.remove((header, None, None))
+                sources = Graph()
+                for part in ("vocabulary.ttl", instances):
+                    sources.parse(os.path.join(bm.ONTOLOGY, name, part))
+                sources.remove((header, None, None))
+                self.assertEqual(set(released), set(sources))
+
+    def test_the_step7_releases_carry_the_release_plan_approval(self):
+        for name in STEP7:
+            self.assertEqual(bm.MODULES[name]["approval"], PLAN)
+            self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
+                             ("1.0.0", None, "2026-10-22"))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,28 @@
+{
+  "module": "market-data",
+  "version": "1.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/market-data",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/market-data/1.0.0",
+  "depends_on": {
+    "kpi": "1.0.1"
+  },
+  "decisions": [
+    "EPM-DEC-001-0046",
+    "EPM-DEC-001-0057",
+    "EPM-DEC-001-0066",
+    "EPM-DEC-001-0077"
+  ],
+  "triples": 668,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md"
+  },
+  "files": {
+    "CHANGELOG.md": "e84fe03e92b76f83b8982aeb503350c0d2ee45ce2df281ceba8e61e64d610cd0",
+    "catalog.ttl": "ab6edd424b70ace6eeb6476a1f1b07a6480e1646d87bb9f32ff516233b12bc4f",
+    "market-data.jsonld": "57b3134781ff11a35c6429fd8c450ecd50d0445689a9af8449a5236f22ac1c27",
+    "market-data.ttl": "7dae8ac0768cf230495a827b85e2e9e91a3125aaa97e7f9237d6146048b0ed6b",
+    "shapes.ttl": "6d377fb7cf400d6c627027bb5de29c1141157ace54185046c8819d8aedee4535"
+  }
+}

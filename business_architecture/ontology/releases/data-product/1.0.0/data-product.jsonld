@@ -1,0 +1,3660 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.2.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC Data Product Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/1.0.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.0.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProduct",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/data_product_portfolio.json; W3C Data Catalog Vocabulary (DCAT) Version 3, W3C Recommendation, 22 August 2024; EPM-DEC-001-0053"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "data product"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#closeMatch": [
+   {
+    "@id": "http://www.w3.org/ns/dcat#Dataset"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A named, governed set of data that a business area publishes for others to use, defined by what it covers. A definition, never the data: the platforms that hold the data product hold its records."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Mapped to DCAT 3's dcat:Dataset with skos:closeMatch, not imported (EPM-DEC-001-0023). A data product here is the business definition; a DCAT dataset record of it would describe one published release of its data."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "data product line"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A group of related data products in one segment of the portfolio, such as Energy Trading & Risk Management."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/data_product_portfolio.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "data product portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The portfolio's segments, data product lines and data products, as one hierarchy: a data product's skos:broader is its line, and a line's is its segment."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioSegment",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/data_product_portfolio.json; EPM-DEC-001-0053"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "portfolio segment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "One of the portfolio's top-level groups of data product lines: Commercial, Midstream or Corporate. Each is anchored in a part of the process map."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioStatus",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/data_product_portfolio.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "portfolio status"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The three statuses the portfolio schema allows a data product or line. The portfolio uses two of them."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/anchoredIn",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/data_product_portfolio.json, processDomainRef"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioSegment"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "anchored in"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The part of the process map a segment's data products serve, from the portfolio's process-domain reference. Context, not ownership."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/consumedBy",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 7; EPM-DEC-001-0053"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "consumed by"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process that uses the data product's data as an input. Context for where the data is used, not ownership."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/data-platforms",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-data-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Data Platforms"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/energy-trading-risk-management",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Data products supporting physical/financial trading and commercial risk management (ETRM domain)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-energy-trading-risk-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Energy Trading & Risk Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ess-law",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-ess-law"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "ES&S / Law"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/finance",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-finance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Finance"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/hr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-hr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "HR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/infrastructure-platforms",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-infrastructure-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Infrastructure Platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Platform product line; not expected to map to business process nodes."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/it",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-it"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "IT"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Pricing structures, logistics execution, margin and external market data products."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market Structure & Logistics Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/marketing-sales",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Customer-facing marketing and sales data products."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-marketing-sales"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marketing & Sales"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-back-office",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-midstream-back-office"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Back Office"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-logistics",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-midstream-logistics"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Logistics"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ng-ngl",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-ng-ngl"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NG & NGL"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/pipelines",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-pipelines"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pipelines"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "P&O"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Value chain planning and optimization data products. Referenced as 'P&O' (a product line, not a portfolio item)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-planning-optimization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Planning & Optimization"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/reliability",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-reliability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Reliability"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/sbd",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-sbd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "S&BD"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/software-development-platforms",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-software-development-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Software Development Platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Platform product line; not expected to map to business process nodes."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/supply-chain",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-supply-chain"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "SC"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/terminals",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProductLine"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product line but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpl-terminals"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminals"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/schema/data_product_portfolio.schema.json"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "portfolio status"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Whether the portfolio describes the data product or line (active), only names it (defined only), or leaves a decision about it open, from the portfolio status code list."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/producedBy",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 7; EPM-DEC-001-0048, EPM-DEC-001-0053"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "produced by"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The process whose work creates the data product's data, named by a recorded decision or the process authority. A data product with no producing process has no owning process (competency question 7)."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/backcasting-refining-ci",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Backcast results vs plan/perfect-foresight, value leakage, and continuous improvement data."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-backcasting-refining-ci"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Backcasting & Refining Continuous Improvement"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/bpa",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/finance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-bpa"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "BP&A"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Closest LSC anchor: Enabling Functions > Finance (stub)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/brand-data-integration",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/marketing-sales"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Brand, branded-site, and brand-partner data integration."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-brand-data-integration"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Brand Data & Integration"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/commercial-risk",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "Risk"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/energy-trading-risk-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Commodity trading risk data: positions, exposures, P&L, VaR, limits, counterparty credit in the trading context. Distinct from Order-to-Cash customer AR credit."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-commercial-risk"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Commercial Risk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/devsecops",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/software-development-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-devsecops"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "DevSecOps"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ess",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ess-law"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "ES&S"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Closest LSC anchor: Enabling Functions > EHS & Gov Reporting (stub)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/external-market-data",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Third-party market feeds: price assessments, indices, market intelligence inputs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-external-market-data"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "External Market Data"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/field-operations",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/reliability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-field-operations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Field Operations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/gathering-compression",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ng-ngl"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-gathering-compression"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gathering & Compression"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/gis",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/data-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-gis"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "GIS"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/hess",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-back-office"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-hess"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "HES&S"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/hr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/hr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-hr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "HR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/it",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/it"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-it"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "IT"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Closest LSC anchors: Enabling Functions > Process Excellence & IT; CM 1.4 IT Services (both stubs)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/legal",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ess-law"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-legal"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Legal"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Closest LSC anchor: Enabling Functions > Legal & Corp Comm (stub)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/local-production-planning-crude-scheduling",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Refinery/local production planning and crude scheduling data."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-local-production-planning-crude-scheduling"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Local Production Planning & Crude Scheduling"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/logistic-execution",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Nominations, scheduling, and physical movement execution data (pipeline, marine, rail, truck from the commercial view)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-logistic-execution"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Logistic Execution"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/loss-control",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Custody transfer, gain/loss, and shrinkage data across movements and terminal operations."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-loss-control"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Loss Control"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Produced by CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048)."
+   },
+   {
+    "@language": "en",
+    "@value": "Product line placement provisional; confirm with data owners."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/producedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7-13"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/marine-rail-ops",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-logistics"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-marine-rail-ops"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marine & Rail Ops"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/master-pricing",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Validated price system of record: official product prices derived from market data and internal assessment."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-master-pricing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Master Pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/measurement-lab",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ng-ngl"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-measurement-lab"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Measurement & Lab"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/midstream-quality-assurance",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/software-development-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-midstream-quality-assurance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Quality Assurance (Software)"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Software QA; distinct from Commercial product Quality Assurance (dp-quality-assurance)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/operational-margin",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Margin measurement data across commercial operations (supply, logistics, channel)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-operational-margin"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Operational Margin"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/operations-administration",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/reliability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-operations-administration"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Operations & Administration"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ops-intel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/data-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ops-intel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Ops Intel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ops-support",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-back-office"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ops-support"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Ops Support"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ot-communication-platform",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/infrastructure-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ot-communication-platform"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "OT Communication Platform"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ot-compute-platforms",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/infrastructure-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ot-compute-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "OT Compute Platforms"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ot-platform-development",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/infrastructure-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ot-platform-development"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "OT Platform Development"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/ot-windows-platforms",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/infrastructure-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-ot-windows-platforms"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "OT Windows Platforms"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/physical-trading",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/energy-trading-risk-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Deal/trade facts for physical commodity transactions: trade capture, contracts, positions, movements context."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-physical-trading"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Physical Trading"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/pipeline-ops-integrity",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/pipelines"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-pipeline-ops-integrity"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pipeline Ops & Integrity"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/pipeline-ot",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/pipelines"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-pipeline-ot"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pipeline OT"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/pipeline-ras",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/pipelines"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-pipeline-ras"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pipeline RA&S"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/processing-fractionation",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ng-ngl"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-processing-fractionation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Processing & Fractionation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/product-availability-allocations",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/marketing-sales"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Product avails and allocation decisions data supporting order validation and channel supply."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-product-availability-allocations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Product Availability & Allocations"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/quality-assurance",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "QA (Commercial)"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/energy-trading-risk-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Product/crude quality data: assays, lab results, specifications, blending quality outcomes."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-quality-assurance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Quality Assurance"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/rack-pricing",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/market-structure-logistics-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Wholesale rack price data: calculated, approved, published rack prices per sales cycle. Distinct portfolio from Master Pricing."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-rack-pricing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Rack Pricing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Product line placement provisional; confirm with data owners."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/regional-production-distribution-planning",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/planning-optimization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Regional optimization and distribution planning data."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-regional-production-distribution-planning"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Regional Production & Distribution Planning"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/reliability-center",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/reliability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-reliability-center"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Reliability Center"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/retail-payments",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "Retail Payment"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/marketing-sales"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Retail transaction and payment data captured at branded retail sites (tender, cards, loyalty-linked payment)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-retail-payments"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Retail Payments"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Applicability: at a brand owner that runs no retail sites (MPC since 2021), the sites are operated by independent jobbers and dealers (MPC FY2025 Form 10-K, Item 1). Which retail transactions reach the brand owner is not stated in the sources; the scope note is Claude's, under the delegation (EPM-DEC-001-0047, MPC-P07)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/revenue-accounting-scheduling",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/ng-ngl"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-revenue-accounting-scheduling"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Revenue Accounting & Scheduling"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/sbd",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/sbd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-sbd"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "S&BD"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "No LSC anchor; Strategy & Business Development absent from Enabling Functions."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/service-management",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/reliability"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-service-management"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Service Management"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/supply-chain",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/supply-chain"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-supply-chain"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "SC"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Closest LSC anchor: Enabling Functions > Supply Chain Mgmt. (stub)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/terminal-automation",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/terminals"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-terminal-automation"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminal Automation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/terminal-ops-it",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/terminals"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-terminal-ops-it"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminal Ops (IT)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/terminal-ot",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/terminals"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-terminal-ot"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Terminal OT"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/product/truck-ops",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/DataProduct"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#broader": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/line/midstream-logistics"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names this data product but does not describe it (status defined_only). Its definition waits for its data owners (EPM-DEC-001-0053)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dp-truck-ops"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Truck Ops"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/portfolioStatus": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/commercial",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/PortfolioSegment"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Commercial hydrocarbon data domains: trading, marketing & sales, market structure & logistics, planning & optimization."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "seg-commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Commercial"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/anchoredIn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/corporate",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/PortfolioSegment"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Corporate/enabling function data domains. Maps loosely to the Enabling Functions L0 in the LSC map (all L1 stubs)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "seg-corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Corporate"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/anchoredIn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/L0-enabling-functions"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/segment/midstream",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/data-product/PortfolioSegment"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Midstream operations data domains. Since 2026-10-18 the map decomposes Midstream as fuels logistics (MS 1: pipeline, terminal, marine and storage services, EPM-DEC-001-0047); the portfolios below are not yet linked to those processes."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "seg-midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Midstream"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#topConceptOf": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/DataProducts"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/data-product/anchoredIn": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/L1-midstream"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/active",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The portfolio describes the data product or line, and it is in use."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioStatus"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "active"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Active"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/defined-only",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The portfolio names the data product or line but does not describe it. Its definition waits for its data owners."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioStatus"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "defined_only"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Defined only"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/data-product/status/open-decision",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A decision about the data product or line is open."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/data-product/PortfolioStatus"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "open_decision"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Open decision"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/data-product-portfolio",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "Data product portfolio, business_architecture/business_process/data_product_portfolio.json, generated 2026-08-05, from: Data Product Lines & Data Portfolio slide (Commercial / Midstream / Corporate); Commercial Business Process Lifecycle slide (Rack Pricing, Loss Control additions); EPM_Integrated_Architecture_Handbook_Complete_Visuals_V2.html (term: Data Product Portfolio)"
+   }
+  ]
+ }
+]

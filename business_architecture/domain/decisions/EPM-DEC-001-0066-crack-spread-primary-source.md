@@ -43,6 +43,6 @@ In the Claude Code session on 2026-10-20 (saved in `business_architecture/ontolo
 
 ## Consequences
 
-- The `market-data` module has 13 series, 24 benchmarks and 9 regions (3 refining, 6 market). It is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval.
+- The `market-data` module has 13 series, 24 benchmarks and 9 regions (3 refining, 6 market). It is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077).
 - The source tiers hold 64 sources, 10 in tier 1. *2026-10-21:* 65, with MPLX's FY2025 Form 10-K in tier 2 (EPM-DEC-001-0071).
 - The regression stands at 34 answerable, 1 partial and 9 waiting; questions 31 and 34 stay answerable. *2026-10-21:* the `party` module made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071).

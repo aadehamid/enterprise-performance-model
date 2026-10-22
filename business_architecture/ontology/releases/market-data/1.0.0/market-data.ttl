@@ -1,0 +1,782 @@
+@prefix benchmark: <https://w3id.org/lsc/ontology/modules/market-data/benchmark/> .
+@prefix bkind: <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix leg: <https://w3id.org/lsc/ontology/modules/market-data/leg/> .
+@prefix measure: <https://w3id.org/lsc/ontology/modules/kpi/measure/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix region: <https://w3id.org/lsc/ontology/modules/market-data/region/> .
+@prefix series: <https://w3id.org/lsc/ontology/modules/market-data/series/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/market-data> a owl:Ontology ;
+    dcterms:description "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices."@en ;
+    dcterms:issued "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22"^^xsd:date ;
+    dcterms:requires kpi:1.0.1 ;
+    dcterms:title "LSC Market Data Module"@en ;
+    owl:versionIRI mkt:1.0.0 ;
+    owl:versionInfo "1.0.0" .
+
+mkt:barrels a owl:DatatypeProperty ;
+    rdfs:label "barrels"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
+    rdfs:domain mkt:Leg ;
+    rdfs:range xsd:integer ;
+    skos:definition "The number of barrels of the benchmark in the recipe, as in the 3 and 2 and 1 of a 3-2-1 crack spread. A ratio, not a price."@en .
+
+mkt:benchmark a owl:ObjectProperty ;
+    rdfs:label "benchmark"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
+    rdfs:domain mkt:Leg ;
+    rdfs:range mkt:Benchmark ;
+    skos:definition "The benchmark price the leg uses."@en .
+
+mkt:benchmarkKind a owl:ObjectProperty ;
+    rdfs:label "benchmark kind"@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en ;
+    rdfs:domain mkt:Benchmark ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the benchmark is a crude marker, a refined-product benchmark or a compliance cost."@en .
+
+mkt:blendOf a owl:ObjectProperty ;
+    rdfs:label "blend of"@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (mpc-performance-measures-evidence.md, row 10)"@en ;
+    rdfs:domain mkt:BenchmarkSeries ;
+    rdfs:range mkt:BenchmarkSeries ;
+    skos:definition "A series the blended series is weighted from. The weights are stated in the series' scope note, with their source and period, because they change."@en .
+
+mkt:excludesRINCost a owl:DatatypeProperty ;
+    rdfs:label "excludes RIN cost"@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7: the crack spreads \"do not reflect the market cost of RINs\" (mpc-performance-measures-evidence.md, row 10); MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3 (reference/internal/crack-spread-kpi-definition.md); competency question 31"@en ;
+    rdfs:domain mkt:BenchmarkSeries ;
+    rdfs:range xsd:boolean ;
+    skos:definition "True when the series does not reflect the market cost of RINs, as MPC's 10-K crack spreads do not (MPC Economics' Inc-RVO treatment). False when the series deducts the RVO cost (MPC Economics' Ex-RVO treatment, which MPC's price data labels ex-RIN). A series with RIN costs and one without are different series."@en ;
+    skos:scopeNote "The labels run opposite to this property's name: an ex-RIN series deducts the RVO cost, so it has false here (EPM-DEC-001-0066)."@en .
+
+mkt:leg a owl:ObjectProperty ;
+    rdfs:label "leg"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
+    rdfs:domain mkt:BenchmarkSeries ;
+    rdfs:range mkt:Leg ;
+    skos:definition "One leg of the series' recipe."@en .
+
+mkt:legsUnstated a owl:DatatypeProperty ;
+    rdfs:label "legs unstated"@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.2 note; EPM-DEC-001-0066"@en ;
+    rdfs:domain mkt:BenchmarkSeries ;
+    rdfs:range xsd:boolean ;
+    skos:definition "True when the source names the published series but does not list its input legs."@en .
+
+mkt:priceMasterId a owl:DatatypeProperty ;
+    rdfs:label "Price Master ID"@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4; EPM-DEC-001-0066"@en ;
+    rdfs:range xsd:string ;
+    skos:definition "The identifier MPC's price data (MPR Price Master) gives the series or input price. An identifier, not a price."@en .
+
+mkt:region a owl:ObjectProperty ;
+    rdfs:label "region"@en ;
+    dcterms:bibliographicCitation "competency question 34; EPM-DEC-001-0057; EPM-DEC-001-0066"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "The refining region a series tracks, or the market region of a series or a benchmark's market."@en .
+
+series:crack-blended-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's blended crack spread: the Gulf Coast, Mid-Continent and West Coast crack spreads, weighted by MPC's refining capacity by region in each period."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-blended-3-2-1"^^xsd:string ;
+    skos:prefLabel "Blended 3-2-1 crack spread"@en ;
+    skos:scopeNote "Beginning in the second quarter of 2024, MPC weighted the blended crack spread 42 percent Gulf Coast, 40 percent Mid-Continent and 18 percent West Coast, based on its refining capacity by region in each period (MPC FY2025 Form 10-K, Item 7). The weights for 2026 are in the Q2 2026 Form 10-Q (MPC-S03; mpc-performance-measures-evidence.md, row 10)."@en ;
+    mkt:blendOf series:crack-gulf-coast-3-2-1,
+        series:crack-mid-continent-3-2-1,
+        series:crack-west-coast-3-2-1 ;
+    mkt:excludesRINCost true ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-37439 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "MPC Economics' published Group 3 (Tulsa) 3-2-1 crack: three barrels of WTI crude against two barrels of Group 3 CBOB and one of Group 3 ULSD, with the RVO cost deducted from each product barrel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-37439"^^xsd:string ;
+    skos:prefLabel "Group 3-2-1 Crack WTI, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:leg leg:crack-mpr-37439--mpr-13056,
+        leg:crack-mpr-37439--mpr-13076,
+        leg:crack-mpr-37439--mpr-747,
+        leg:crack-mpr-37439--mpr-9408 ;
+    mkt:priceMasterId "37439"^^xsd:string ;
+    mkt:region region:group-3 ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-37443 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "MPC Economics' published PNW 3-2-1 crack, an ANS crack by its MIPS group, with the RVO cost deducted. The definition does not list its input legs."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-37443"^^xsd:string ;
+    skos:prefLabel "PNW 3-2-1 Crack, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:legsUnstated true ;
+    mkt:priceMasterId "37443"^^xsd:string ;
+    mkt:region region:pnw ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-37464 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "MPC Economics' MPC-weighted 3-2-1: the USGC, Chicago and LA ex-RIN cracks weighted to approximate a realized MPC 3-2-1."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-37464"^^xsd:string ;
+    skos:prefLabel "Blended 3-2-1 Crack, ex-RIN"@en ;
+    skos:scopeNote "MPC Economics weights the three ex-RIN cracks USGC 0.40, Chicago 0.40 and LA 0.20 before 5 May 2024, and USGC 0.42, Chicago 0.40 and LA 0.18 after (crack-spread-kpi-definition.md, section 4.4)."@en ;
+    mkt:blendOf series:crack-mpr-36855,
+        series:crack-mpr-37438,
+        series:crack-mpr-43870 ;
+    mkt:excludesRINCost false ;
+    mkt:priceMasterId "37464"^^xsd:string ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-37471 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "MPC Economics' published SLC 3-2-1 crack, a WTI crack, with the RVO cost deducted. The definition does not list its input legs."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-37471"^^xsd:string ;
+    skos:prefLabel "SLC 3-2-1 Crack WTI, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:legsUnstated true ;
+    mkt:priceMasterId "37471"^^xsd:string ;
+    mkt:region region:slc ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-42023 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The second published result of MPC Economics' MPC-weighted 3-2-1, from the same three ex-RIN cracks. The definition does not say how it differs from the Blended 3-2-1 Crack, ex-RIN."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-42023"^^xsd:string ;
+    skos:prefLabel "MPC Internal Blended 3-2-1 Crack, ex-RIN"@en ;
+    skos:scopeNote "MPC Economics weights the three ex-RIN cracks USGC 0.40, Chicago 0.40 and LA 0.20 before 5 May 2024, and USGC 0.42, Chicago 0.40 and LA 0.18 after (crack-spread-kpi-definition.md, section 4.4)."@en ;
+    mkt:blendOf series:crack-mpr-36855,
+        series:crack-mpr-37438,
+        series:crack-mpr-43870 ;
+    mkt:excludesRINCost false ;
+    mkt:priceMasterId "42023"^^xsd:string ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-nymex-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:cme-trading-crack-spreads-2024 ;
+    skos:altLabel "NYMEX 3-2-1"@en,
+        "NYMEX 3-2-1 Crack"@en ;
+    skos:definition "The exchange-traded crack spread: three NYMEX WTI crude oil futures against two RBOB gasoline futures and one NY Harbor ULSD futures. Not one of MPC's benchmarks."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-nymex-3-2-1"^^xsd:string ;
+    skos:prefLabel "NYMEX 3:2:1 crack spread"@en ;
+    skos:scopeNote "Shares the name 3-2-1 with MPC's regional crack spreads but is a different series: its legs are exchange futures, and its gasoline leg is RBOB, which MPC's benchmarks do not use. MPC Economics publishes it as NYMEX 3-2-1 Crack (Price Master 39998) and calls the diesel leg NYMEX Heating Oil (crack-spread-kpi-definition.md, section 4.3)."@en ;
+    mkt:leg leg:crack-nymex-3-2-1--nymex-ny-harbor-ulsd,
+        leg:crack-nymex-3-2-1--nymex-rbob,
+        leg:crack-nymex-3-2-1--nymex-wti ;
+    mkt:priceMasterId "39998"^^xsd:string ;
+    mkt:seriesOf measure:crack-spreads .
+
+mkt:seriesOf a owl:ObjectProperty ;
+    rdfs:label "series of"@en ;
+    dcterms:bibliographicCitation "competency question 31; EPM-DEC-001-0057"@en ;
+    rdfs:domain mkt:BenchmarkSeries ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The measure of the kpi module that the series is one published form of."@en .
+
+bkind:compliance-cost a skos:Concept ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 3.2; EPM-DEC-001-0066"@en ;
+    skos:definition "A published per-gallon compliance cost, such as the RVO, that an Ex-RVO crack deducts from each product barrel."@en ;
+    skos:inScheme mkt:BenchmarkKind ;
+    skos:notation "compliance-cost" ;
+    skos:prefLabel "Compliance cost"@en .
+
+benchmark:ans a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The ANS crude price, the crude marker of MPC's West Coast crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "ans"^^xsd:string ;
+    skos:prefLabel "ANS"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:west-coast .
+
+benchmark:chicago-cbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Chicago CBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "chicago-cbob"^^xsd:string ;
+    skos:prefLabel "Chicago CBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:mid-continent .
+
+benchmark:chicago-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Chicago ULSD price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "chicago-ulsd"^^xsd:string ;
+    skos:prefLabel "Chicago ULSD"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:mid-continent .
+
+benchmark:la-carb-diesel a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Los Angeles CARB diesel price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "la-carb-diesel"^^xsd:string ;
+    skos:prefLabel "LA CARB Diesel"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:west-coast .
+
+benchmark:la-carbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The Los Angeles CARBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "la-carbob"^^xsd:string ;
+    skos:prefLabel "LA CARBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:west-coast .
+
+benchmark:meh a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The MEH crude price, the crude marker of MPC's Gulf Coast crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "meh"^^xsd:string ;
+    skos:prefLabel "MEH"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:gulf-coast .
+
+benchmark:mpr-11926 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The gasoline input of MPC Economics' Gulf Coast crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-11926"^^xsd:string ;
+    skos:prefLabel "Gulf Coast CBOB input (MPR 11926)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "11926"^^xsd:string ;
+    mkt:region region:usgc .
+
+benchmark:mpr-12838 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The diesel input of MPC Economics' Gulf Coast crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-12838"^^xsd:string ;
+    skos:prefLabel "Gulf Coast ULSD input (MPR 12838)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "12838"^^xsd:string ;
+    mkt:region region:usgc .
+
+benchmark:mpr-13076 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The gasoline input of MPC Economics' Group 3 crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-13076"^^xsd:string ;
+    skos:prefLabel "Group 3 CBOB input (MPR 13076)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "13076"^^xsd:string ;
+    mkt:region region:group-3 .
+
+benchmark:mpr-14133 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The crude input of MPC Economics' Gulf Coast crack series, named an MEH crack."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-14133"^^xsd:string ;
+    skos:prefLabel "MEH crude input (MPR 14133)"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:priceMasterId "14133"^^xsd:string ;
+    mkt:region region:usgc .
+
+benchmark:mpr-16475 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The gasoline input of MPC Economics' Chicago crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-16475"^^xsd:string ;
+    skos:prefLabel "Chicago CBOB input (MPR 16475)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "16475"^^xsd:string ;
+    mkt:region region:chicago .
+
+benchmark:mpr-16477 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The diesel input of MPC Economics' Chicago crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-16477"^^xsd:string ;
+    skos:prefLabel "Chicago ULSD input (MPR 16477)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "16477"^^xsd:string ;
+    mkt:region region:chicago .
+
+benchmark:mpr-4055 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The crude input of MPC Economics' LA crack series, named an ANS crack."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-4055"^^xsd:string ;
+    skos:prefLabel "ANS crude input (MPR 4055)"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:priceMasterId "4055"^^xsd:string ;
+    mkt:region region:la .
+
+benchmark:mpr-9408 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The diesel input of MPC Economics' Group 3 crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-9408"^^xsd:string ;
+    skos:prefLabel "Group 3 ULSD input (MPR 9408)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "9408"^^xsd:string ;
+    mkt:region region:group-3 .
+
+benchmark:mpr-9657 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The diesel input of MPC Economics' LA crack series."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-9657"^^xsd:string ;
+    skos:prefLabel "LA ULSD input (MPR 9657)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "9657"^^xsd:string ;
+    mkt:region region:la .
+
+benchmark:mpr-9660 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The gasoline input of MPC Economics' LA crack series (the CBOB column of the definition's input table)."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-9660"^^xsd:string ;
+    skos:prefLabel "LA gasoline input (MPR 9660)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:priceMasterId "9660"^^xsd:string ;
+    mkt:region region:la .
+
+benchmark:nymex-ny-harbor-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
+    skos:definition "The NYMEX NY Harbor ULSD futures contract (ticker HO), the diesel leg of the NYMEX 3:2:1 crack spread. MPC Economics' definition calls this leg NYMEX Heating Oil."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-ny-harbor-ulsd"^^xsd:string ;
+    skos:prefLabel "NYMEX NY Harbor ULSD futures (HO)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark .
+
+benchmark:nymex-rbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
+    skos:definition "The NYMEX RBOB Gasoline futures contract, a gasoline leg of the NYMEX 3:2:1 crack spread. MPC does not use RBOB in its benchmarks."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-rbob"^^xsd:string ;
+    skos:prefLabel "NYMEX RBOB Gasoline futures (RB)"@en ;
+    mkt:benchmarkKind bkind:product-benchmark .
+
+benchmark:nymex-wti a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:cme-fresh-from-the-trading-room-2026-07-14 ;
+    skos:definition "The NYMEX WTI Crude Oil futures contract, the crude leg of the NYMEX 3:2:1 crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "nymex-wti"^^xsd:string ;
+    skos:prefLabel "NYMEX WTI Crude Oil futures (CL)"@en ;
+    mkt:benchmarkKind bkind:crude-marker .
+
+benchmark:usgc-cbob a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The USGC CBOB gasoline price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "usgc-cbob"^^xsd:string ;
+    skos:prefLabel "USGC CBOB"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:gulf-coast .
+
+benchmark:usgc-ulsd a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The USGC ULSD price, a benchmark price in MPC's marketing areas."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "usgc-ulsd"^^xsd:string ;
+    skos:prefLabel "USGC ULSD"@en ;
+    mkt:benchmarkKind bkind:product-benchmark ;
+    mkt:region region:gulf-coast .
+
+benchmark:wti a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "The WTI crude price, the crude marker of MPC's Mid-Continent crack spread."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "wti"^^xsd:string ;
+    skos:prefLabel "WTI"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:region region:mid-continent .
+
+leg:crack-gulf-coast-3-2-1--meh a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:meh .
+
+leg:crack-gulf-coast-3-2-1--usgc-cbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:usgc-cbob .
+
+leg:crack-gulf-coast-3-2-1--usgc-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:usgc-ulsd .
+
+leg:crack-mid-continent-3-2-1--chicago-cbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:chicago-cbob .
+
+leg:crack-mid-continent-3-2-1--chicago-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:chicago-ulsd .
+
+leg:crack-mid-continent-3-2-1--wti a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:wti .
+
+leg:crack-mpr-36855--mpr-13056 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-13056 .
+
+leg:crack-mpr-36855--mpr-4055 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-4055 .
+
+leg:crack-mpr-36855--mpr-9657 a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:mpr-9657 .
+
+leg:crack-mpr-36855--mpr-9660 a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:mpr-9660 .
+
+leg:crack-mpr-37438--mpr-13056 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-13056 .
+
+leg:crack-mpr-37438--mpr-16475 a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:mpr-16475 .
+
+leg:crack-mpr-37438--mpr-16477 a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:mpr-16477 .
+
+leg:crack-mpr-37438--mpr-747 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-747 .
+
+leg:crack-mpr-37439--mpr-13056 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-13056 .
+
+leg:crack-mpr-37439--mpr-13076 a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:mpr-13076 .
+
+leg:crack-mpr-37439--mpr-747 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-747 .
+
+leg:crack-mpr-37439--mpr-9408 a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:mpr-9408 .
+
+leg:crack-mpr-43870--mpr-11926 a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:mpr-11926 .
+
+leg:crack-mpr-43870--mpr-12838 a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:mpr-12838 .
+
+leg:crack-mpr-43870--mpr-13056 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-13056 .
+
+leg:crack-mpr-43870--mpr-14133 a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:mpr-14133 .
+
+leg:crack-nymex-3-2-1--nymex-ny-harbor-ulsd a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:nymex-ny-harbor-ulsd .
+
+leg:crack-nymex-3-2-1--nymex-rbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:nymex-rbob .
+
+leg:crack-nymex-3-2-1--nymex-wti a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:nymex-wti .
+
+leg:crack-west-coast-3-2-1--ans a mkt:Leg ;
+    mkt:barrels 3 ;
+    mkt:benchmark benchmark:ans .
+
+leg:crack-west-coast-3-2-1--la-carb-diesel a mkt:Leg ;
+    mkt:barrels 1 ;
+    mkt:benchmark benchmark:la-carb-diesel .
+
+leg:crack-west-coast-3-2-1--la-carbob a mkt:Leg ;
+    mkt:barrels 2 ;
+    mkt:benchmark benchmark:la-carbob .
+
+region:pnw a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Pacific Northwest product market of MPC Economics' PNW 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "pnw"^^xsd:string ;
+    skos:prefLabel "PNW"@en .
+
+region:slc a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Salt Lake City product market of MPC Economics' SLC 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "slc"^^xsd:string ;
+    skos:prefLabel "SLC"@en .
+
+series:crack-gulf-coast-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Gulf Coast crack spread: three barrels of MEH crude producing two barrels of USGC CBOB gasoline and one barrel of USGC ULSD."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-gulf-coast-3-2-1"^^xsd:string ;
+    skos:prefLabel "Gulf Coast 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-gulf-coast-3-2-1--meh,
+        leg:crack-gulf-coast-3-2-1--usgc-cbob,
+        leg:crack-gulf-coast-3-2-1--usgc-ulsd ;
+    mkt:region region:gulf-coast ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mid-continent-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Mid-Continent crack spread: three barrels of WTI crude producing two barrels of Chicago CBOB gasoline and one barrel of Chicago ULSD."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mid-continent-3-2-1"^^xsd:string ;
+    skos:prefLabel "Mid-Continent 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-mid-continent-3-2-1--chicago-cbob,
+        leg:crack-mid-continent-3-2-1--chicago-ulsd,
+        leg:crack-mid-continent-3-2-1--wti ;
+    mkt:region region:mid-continent ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-west-coast-3-2-1 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's West Coast crack spread: three barrels of ANS crude producing two barrels of LA CARBOB and one barrel of LA CARB Diesel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-west-coast-3-2-1"^^xsd:string ;
+    skos:prefLabel "West Coast 3-2-1 crack spread"@en ;
+    mkt:excludesRINCost true ;
+    mkt:leg leg:crack-west-coast-3-2-1--ans,
+        leg:crack-west-coast-3-2-1--la-carb-diesel,
+        leg:crack-west-coast-3-2-1--la-carbob ;
+    mkt:region region:west-coast ;
+    mkt:seriesOf measure:crack-spreads .
+
+src:cme-trading-crack-spreads-2024 a dcterms:BibliographicResource ;
+    dcterms:title "CME Group, Trading Crack Spreads (2024), https://www.cmegroup.com/articles/2024/trading-crack-spreads.html, retrieved 2026-10-19"@en .
+
+benchmark:mpr-747 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The crude input of MPC Economics' Chicago and Group 3 crack series, both named WTI cracks."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-747"^^xsd:string ;
+    skos:prefLabel "WTI crude input (MPR 747)"@en ;
+    mkt:benchmarkKind bkind:crude-marker ;
+    mkt:priceMasterId "747"^^xsd:string ;
+    mkt:region region:chicago .
+
+series:crack-mpr-36855 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "MPC Economics' published LA 3-2-1 crack: three barrels of ANS crude against two barrels of LA gasoline and one of LA ULSD, with the RVO cost deducted from each product barrel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-36855"^^xsd:string ;
+    skos:prefLabel "LA 3-2-1 Crack ANS, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:leg leg:crack-mpr-36855--mpr-13056,
+        leg:crack-mpr-36855--mpr-4055,
+        leg:crack-mpr-36855--mpr-9657,
+        leg:crack-mpr-36855--mpr-9660 ;
+    mkt:priceMasterId "36855"^^xsd:string ;
+    mkt:region region:la ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-37438 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:altLabel "Chicago WTI 3-2-1 ex-RIN"@en ;
+    skos:definition "MPC Economics' published Chicago 3-2-1 crack: three barrels of WTI crude against two barrels of Chicago CBOB and one of Chicago ULSD, with the RVO cost deducted from each product barrel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-37438"^^xsd:string ;
+    skos:prefLabel "CHI 3-2-1 Crack WTI, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:leg leg:crack-mpr-37438--mpr-13056,
+        leg:crack-mpr-37438--mpr-16475,
+        leg:crack-mpr-37438--mpr-16477,
+        leg:crack-mpr-37438--mpr-747 ;
+    mkt:priceMasterId "37438"^^xsd:string ;
+    mkt:region region:chicago ;
+    mkt:seriesOf measure:crack-spreads .
+
+series:crack-mpr-43870 a skos:Concept,
+        mkt:BenchmarkSeries ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:altLabel "USGC 3-2-1 MEH ex-RIN"@en ;
+    skos:definition "MPC Economics' published USGC 3-2-1 crack: three barrels of MEH crude against two barrels of Gulf Coast CBOB and one of Gulf Coast ULSD, with the RVO cost deducted from each product barrel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "crack-mpr-43870"^^xsd:string ;
+    skos:prefLabel "USGC 3-2-1 MEH Crack, ex-RIN"@en ;
+    skos:scopeNote "Computed daily by MPC Economics' Ex-RVO formula, ((CBOB x 42 x 2) + (ULSD x 42 x 1)) / 3 - Crude - (RVO x 42), with product prices in dollars per gallon and crude in dollars per barrel; the monthly series is the mean of the daily published values (crack-spread-kpi-definition.md, sections 3.2 and 5.3). MPC's price data labels this treatment ex-RIN."@en ;
+    mkt:excludesRINCost false ;
+    mkt:leg leg:crack-mpr-43870--mpr-11926,
+        leg:crack-mpr-43870--mpr-12838,
+        leg:crack-mpr-43870--mpr-13056,
+        leg:crack-mpr-43870--mpr-14133 ;
+    mkt:priceMasterId "43870"^^xsd:string ;
+    mkt:region region:usgc ;
+    mkt:seriesOf measure:crack-spreads .
+
+mkt:BenchmarkKind a skos:ConceptScheme ;
+    rdfs:label "benchmark kind"@en ;
+    dcterms:bibliographicCitation "mpc-performance-measures-evidence.md, row 11; EPM-DEC-001-0066"@en ;
+    skos:definition "The kinds of benchmark price a series is built from."@en .
+
+mkt:RefiningRegions a skos:ConceptScheme ;
+    rdfs:label "refining regions"@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 2 (mpc-performance-measures-evidence.md, finding 3)"@en ;
+    skos:definition "MPC's three refining regions, by the names MPC uses."@en .
+
+region:group-3 a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Group 3 product market, priced at Tulsa, of MPC Economics' Group 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "group-3"^^xsd:string ;
+    skos:prefLabel "Group 3 (Tulsa)"@en .
+
+src:cme-fresh-from-the-trading-room-2026-07-14 a dcterms:BibliographicResource ;
+    dcterms:title "CME Group, Fresh from the Trading Room: Papering over the cracks (2026-07-14), https://www.cmegroup.com/newsletters/fresh-from-the-trading-room/2026-07-14.html, retrieved 2026-10-19"@en .
+
+benchmark:mpr-13056 a skos:Concept,
+        mkt:Benchmark ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Renewable Volume Obligation cost per gallon, the same input in every region; an Ex-RVO series deducts it from each product barrel."@en ;
+    skos:inScheme mkt:Series ;
+    skos:notation "mpr-13056"^^xsd:string ;
+    skos:prefLabel "RVO cost (MPR 13056)"@en ;
+    mkt:benchmarkKind bkind:compliance-cost ;
+    mkt:priceMasterId "13056"^^xsd:string .
+
+region:chicago a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Chicago product market of MPC Economics' Chicago 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "chicago"^^xsd:string ;
+    skos:prefLabel "Chicago"@en .
+
+region:gulf-coast a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Gulf Coast refining region: the Galveston Bay (Texas City, Texas) and Garyville, Louisiana refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "gulf-coast"^^xsd:string ;
+    skos:prefLabel "Gulf Coast"@en .
+
+region:la a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The Los Angeles product market of MPC Economics' LA 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "la"^^xsd:string ;
+    skos:prefLabel "LA"@en .
+
+region:mid-continent a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's Mid-Continent refining region: the Catlettsburg, Robinson, Detroit, El Paso, St. Paul Park, Canton, Mandan and Salt Lake City refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "mid-continent"^^xsd:string ;
+    skos:prefLabel "Mid-Continent"@en .
+
+region:usgc a skos:Concept ;
+    dcterms:source src:mpc-economics-crack-spread-kpi-definition ;
+    skos:definition "The U.S. Gulf Coast product market of MPC Economics' USGC 3-2-1 crack series."@en ;
+    skos:inScheme mkt:MarketRegions ;
+    skos:notation "usgc"^^xsd:string ;
+    skos:prefLabel "USGC"@en .
+
+region:west-coast a skos:Concept ;
+    dcterms:source src:mpc-performance-measures-evidence ;
+    skos:definition "MPC's West Coast refining region: the Los Angeles, Anacortes and Kenai refineries."@en ;
+    skos:inScheme mkt:RefiningRegions ;
+    skos:notation "west-coast"^^xsd:string ;
+    skos:prefLabel "West Coast"@en .
+
+mkt:MarketRegions a skos:ConceptScheme ;
+    rdfs:label "market regions"@en ;
+    dcterms:bibliographicCitation "MPC Economics, 3-2-1 Crack Spread KPI Definition, section 4.1; EPM-DEC-001-0066"@en ;
+    skos:definition "The product market regions of MPC Economics' published 3-2-1 crack series: USGC, Chicago, Group 3 (Tulsa), LA, PNW and SLC. They are price markets, not MPC's refining regions."@en .
+
+bkind:crude-marker a skos:Concept ;
+    skos:definition "A published crude oil price that a crack spread uses for its crude leg."@en ;
+    skos:inScheme mkt:BenchmarkKind ;
+    skos:notation "crude-marker" ;
+    skos:prefLabel "Crude marker"@en .
+
+bkind:product-benchmark a skos:Concept ;
+    skos:definition "A published refined-product price at a named market, used for a crack spread's product legs."@en ;
+    skos:inScheme mkt:BenchmarkKind ;
+    skos:notation "product-benchmark" ;
+    skos:prefLabel "Product benchmark"@en .
+
+src:mpc-performance-measures-evidence a dcterms:BibliographicResource ;
+    dcterms:title "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"@en .
+
+mkt:BenchmarkSeries a owl:Class ;
+    rdfs:label "benchmark series"@en ;
+    dcterms:bibliographicCitation "competency question 31; EPM-DEC-001-0046, EPM-DEC-001-0057"@en ;
+    skos:definition "One published series of a market measure, identified by what it is built from: its region, its crude and product legs and their ratio, and what it leaves out. Two series of the same measure are different series when any of these differ."@en .
+
+mkt:Benchmark a owl:Class ;
+    rdfs:label "benchmark price"@en ;
+    dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 7 (business_architecture/reference/mpc/mpc-performance-measures-evidence.md, row 11); EPM-DEC-001-0057; EPM-DEC-001-0066"@en ;
+    skos:definition "A published price that a series is built from: a crude marker, a refined-product benchmark at a named market, or a compliance cost such as the RVO."@en .
+
+src:mpc-economics-crack-spread-kpi-definition a dcterms:BibliographicResource ;
+    dcterms:title "MPC Economics, 3-2-1 Crack Spread KPI Definition, provided by the decision owner on 2026-10-20, business_architecture/reference/internal/crack-spread-kpi-definition.md"@en .
+
+mkt:Leg a owl:Class ;
+    rdfs:label "series leg"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
+    skos:definition "One part of a series' recipe: a benchmark and the number of barrels of it."@en .
+
+mkt:Series a skos:ConceptScheme ;
+    rdfs:label "benchmark series"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0057"@en ;
+    skos:definition "The benchmark series and benchmark prices the market-data module defines."@en .
+
