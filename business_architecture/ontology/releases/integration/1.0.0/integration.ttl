@@ -1,0 +1,411 @@
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix con: <https://w3id.org/lsc/ontology/modules/consumer/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/placement/kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rk: <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/> .
+@prefix rule: <https://w3id.org/lsc/ontology/modules/consumer/rule/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix tier: <https://w3id.org/lsc/ontology/modules/authority/tier/> .
+@prefix vs: <https://w3id.org/lsc/ontology/modules/value-stream/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+auth:rank a owl:DatatypeProperty ;
+    rdfs:label "rank"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0059"@en ;
+    rdfs:range xsd:integer ;
+    skos:definition "The tier's place in the evidence order, from 1 (most authoritative)."@en .
+
+con:publishesMeasure a owl:ObjectProperty ;
+    rdfs:label "publishes measure"@en ;
+    dcterms:bibliographicCitation "competency question 35; EPM-DEC-001-0005, EPM-DEC-001-0061"@en ;
+    rdfs:domain dp:DataProduct ;
+    rdfs:range kpi:MeasureDefinition ;
+    skos:definition "The binding a catalog row uses to point at a Named KPI: the data product that publishes a measure's values points at the measure's IRI. Both must already be defined: the measure with its kind in the kpi module, and the data product in the data-product module. The values stay in the data product's platform."@en .
+
+con:reliesOn a owl:ObjectProperty ;
+    rdfs:label "relies on"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0061"@en ;
+    rdfs:domain con:Rule ;
+    skos:definition "A graph term the rule rests on: the property or class an answer reads, or whose absence makes a refusal necessary."@en .
+
+rule:definitions a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 13, 16, 27 and 41"@en ;
+    skos:definition "The definition, name, aliases and kind of any concept, measure, data product, series, system or lane, read from its skos:definition, labels and kind."@en ;
+    skos:prefLabel "What a thing is"@en ;
+    con:reliesOn skos:altLabel,
+        skos:definition,
+        skos:prefLabel,
+        kpi:measureKind ;
+    con:ruleKind rk:may-answer .
+
+rule:no-context-as-ownership a con:Rule ;
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en ;
+    skos:definition "Say a process owns, computes or approves a measure because the measure is placed on it. Only a certification placement says that."@en ;
+    skos:prefLabel "Present context as ownership"@en ;
+    con:reliesOn plc:placementKind ;
+    con:ruleKind rk:must-refuse .
+
+rule:no-crack-from-legs a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 32 and 42; EPM-DEC-001-0057"@en ;
+    skos:definition "Calculate a crack spread from the prices of its crude and product legs. The official series is the published one; a homemade crack is a different number."@en ;
+    skos:prefLabel "Build a crack from its legs"@en ;
+    con:reliesOn mkt:leg,
+        mkt:seriesOf ;
+    con:ruleKind rk:must-refuse .
+
+rule:no-customer-without-role a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 25, 26 and 42; EPM-DEC-001-0004; EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
+    skos:definition "Answer \"who is the customer\" without naming a role: sold-to, bill-to, payer or another. Customer is not a role or a KPI; the answer resolves to one role."@en ;
+    skos:prefLabel "Name the customer without a role"@en ;
+    skos:scopeNote "The roles are the `party` module's party-role list, which a party role names through party:roleType (EPM-DEC-001-0068). The core concept CM 1.3.7.1.1 keeps them apart too: a customer record must not collapse Sold-To, Bill-To, Payer and the other roles. A ship-to is a site, and the party that receives product there holds the Consignee role."@en ;
+    con:reliesOn <https://w3id.org/lsc/ontology/modules/party/roleType>,
+        proc:CM-1-3-7-1-1 ;
+    con:ruleKind rk:must-refuse .
+
+rule:no-report-as-kpi a con:Rule ;
+    dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0042"@en ;
+    skos:definition "Call a tracker, report or report column a KPI, or call a KPI candidate a KPI. A tracker has no grain, and a KPI needs a recorded decision that names its target and owner."@en ;
+    skos:prefLabel "Treat a report column as the KPI"@en ;
+    con:reliesOn kpi:kpiCandidate,
+        kpi:measureKind ;
+    con:ruleKind rk:must-refuse .
+
+rule:no-values a con:Rule ;
+    dcterms:bibliographicCitation "competency question 42; EPM-DEC-001-0005"@en ;
+    skos:definition "Calculate a measure's value, or quote one, from the graph. The graph holds definitions; the values are in the systems that compute them. A basis is a description, not a formula."@en ;
+    skos:prefLabel "Compute or quote a value"@en ;
+    con:reliesOn kpi:basis ;
+    con:ruleKind rk:must-refuse .
+
+rule:not-to-be-confused-with a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 31, 32 and 36"@en ;
+    skos:definition "The nearby measures and series a measure is not, and how they differ."@en ;
+    skos:prefLabel "What a measure is not"@en ;
+    con:reliesOn kpi:notToBeConfusedWith,
+        mkt:seriesOf ;
+    con:ruleKind rk:may-answer .
+
+rule:placement a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 33, 37 and 38; EPM-DEC-001-0058"@en ;
+    skos:definition "The processes, capabilities and value streams a measure or data product sits on, and whether each placement certifies or is context."@en ;
+    skos:prefLabel "Where a thing sits, and what the placement claims"@en ;
+    con:reliesOn kpi:informsProcess,
+        plc:placementKind,
+        vs:consumes,
+        vs:measureLink,
+        vs:produces ;
+    con:ruleKind rk:may-answer .
+
+rule:recipe a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 31 and 34; EPM-DEC-001-0057"@en ;
+    skos:definition "A series' region, legs, barrels and RIN treatment, as a recipe, never as a value."@en ;
+    skos:prefLabel "What a series is built from"@en ;
+    con:reliesOn mkt:barrels,
+        mkt:excludesRINCost,
+        mkt:leg,
+        mkt:region ;
+    con:ruleKind rk:may-answer .
+
+rule:what-a-measure-counts a con:Rule ;
+    dcterms:bibliographicCitation "competency question 28; EPM-DEC-001-0062"@en ;
+    skos:definition "What a measure includes and excludes, where its source says so, and where that statement comes from."@en ;
+    skos:prefLabel "What a measure counts"@en ;
+    con:reliesOn pop:excludes,
+        pop:includes,
+        pop:populationEvidence ;
+    con:ruleKind rk:may-answer .
+
+rule:which-source a con:Rule ;
+    dcterms:bibliographicCitation "competency question 44; EPM-DEC-001-0059"@en ;
+    skos:definition "The sources a definition cites, and which one is authoritative when they disagree."@en ;
+    skos:prefLabel "Which source says so"@en ;
+    con:reliesOn dcterms:source,
+        auth:evidenceTier ;
+    con:ruleKind rk:may-answer .
+
+rule:who-does-it a con:Rule ;
+    dcterms:bibliographicCitation "competency questions 3 to 5"@en ;
+    skos:definition "The roles responsible, accountable, consulted and informed for a process, as the RACI assignments record them."@en ;
+    skos:prefLabel "Who is responsible"@en ;
+    con:reliesOn orgm:forProcess ;
+    con:ruleKind rk:may-answer .
+
+con:ruleKind a owl:ObjectProperty ;
+    rdfs:label "rule kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0061"@en ;
+    rdfs:domain con:Rule ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the rule says what the agent may answer or what it must refuse."@en .
+
+dp:anchoredIn plc:placementKind kind:context .
+
+dp:consumedBy plc:placementKind kind:context .
+
+dp:producedBy plc:placementKind kind:certification .
+
+<https://w3id.org/lsc/ontology/modules/integration> a owl:Ontology ;
+    dcterms:description "The rules that tie the modules together: which placing properties certify and which give context (placement), the evidence tier of every cited source (authority), and what a consumer may bind, answer and must refuse (consumer). Each vocabulary keeps its own namespace (Steps 7, 9 and 11)."@en ;
+    dcterms:issued "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.2.0>,
+        dp:1.0.0,
+        kpi:1.0.1,
+        lane:1.0.0,
+        mkt:1.0.0,
+        orgm:2.0.0,
+        <https://w3id.org/lsc/ontology/modules/party/1.0.0>,
+        sys:1.0.0,
+        vs:1.0.0 ;
+    dcterms:title "LSC Integration Vocabularies"@en ;
+    owl:versionIRI <https://w3id.org/lsc/ontology/modules/integration/1.0.0> ;
+    owl:versionInfo "1.0.0" .
+
+lane:officeLane plc:placementKind kind:context .
+
+sys:supports plc:placementKind kind:context .
+
+vs:realizes plc:placementKind kind:context .
+
+vs:usesCapability plc:placementKind kind:context .
+
+<https://w3id.org/lsc/ontology/source/cme-fresh-from-the-trading-room-2026-07-14> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/cme-trading-crack-spreads-2024> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/data-product-portfolio> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/downstream-process-map> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/gleif-lei> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/kpi-classification-evidence> auth:evidenceTier tier:peers .
+
+<https://w3id.org/lsc/ontology/source/mpc-economics-crack-spread-kpi-definition> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/mpc-s01> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/mplx-s01> auth:evidenceTier tier:mpc .
+
+<https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/src-api-653-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-api-mpms-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-apqc-pcf-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-ascm-cscp-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-bimco-ld-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-bjce-refps-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-002a> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ccro-002b> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-gloss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-p180-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cftc-p45-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-cmu-refplan-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-doe-rppl-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-doe-sprassay-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ei-hm31-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ei-hm32-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-gloss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-lfmm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-pmm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-eia-steo-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-emtr-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-emts-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-er-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-ff-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-rec-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-epa-rfs-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc326-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc606-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fasb-asc815-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ferc-rto-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-fmcsa-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ftc-adm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ftc-rp-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-iea-omr-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-irs-p510-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-isda-ma-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-lnl-t2s-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-naesb-wgq-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-ofac-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-orp-dpsc-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-osha-psm-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-pci-dss-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-pmpa-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-reg-b-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-snf-refps-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/src-uspto-001> auth:evidenceTier tier:industry .
+
+<https://w3id.org/lsc/ontology/source/src-w3c-skos-001> auth:evidenceTier tier:framework .
+
+<https://w3id.org/lsc/ontology/source/step3c-definition-workbook> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/value-stream-commercial-lifecycle> auth:evidenceTier tier:process-authority .
+
+<https://w3id.org/lsc/ontology/source/value-stream-order-to-cash> auth:evidenceTier tier:process-authority .
+
+<urn:epm:issue:205:comment:6115309253> auth:evidenceTier tier:process-authority .
+
+<urn:epm:issue:205:comment:6116668059> auth:evidenceTier tier:process-authority .
+
+auth:evidenceTier a owl:ObjectProperty ;
+    rdfs:label "evidence tier"@en ;
+    dcterms:bibliographicCitation "AGENTS.md, Working rules (evidence order); competency question 44; EPM-DEC-001-0059"@en ;
+    rdfs:range skos:Concept ;
+    skos:definition "The tier of the evidence order a source belongs to. Where two sources of one concept disagree, the source with the lower rank wins."@en .
+
+tier:peers a skos:Concept ;
+    skos:definition "U.S. refining peers' SEC filings, as read into business_architecture/reference/downstream-peers/."@en ;
+    skos:inScheme auth:EvidenceTier ;
+    skos:notation "3" ;
+    skos:prefLabel "U.S. refining peers"@en ;
+    auth:rank 3 .
+
+kpi:informsProcess plc:placementKind kind:context .
+
+mkt:region plc:placementKind kind:context .
+
+vs:consumes plc:placementKind kind:context .
+
+vs:measureLink plc:placementKind kind:context .
+
+vs:produces plc:placementKind kind:certification .
+
+con:RuleKind a skos:ConceptScheme ;
+    rdfs:label "rule kind"@en ;
+    dcterms:bibliographicCitation "competency questions 41 and 42"@en ;
+    skos:definition "The two kinds of consumer rule."@en .
+
+plc:PlacementKind a skos:ConceptScheme ;
+    rdfs:label "placement kind"@en ;
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en ;
+    skos:definition "The two things a placement can claim."@en .
+
+kind:certification a skos:Concept ;
+    skos:definition "The link names a data product's owning process: the producing process, which is the subject of vs:produces and the target of dp:producedBy."@en ;
+    skos:inScheme plc:PlacementKind ;
+    skos:notation "certification" ;
+    skos:prefLabel "Certification"@en .
+
+plc:placementKind a owl:AnnotationProperty ;
+    rdfs:label "placement kind"@en ;
+    dcterms:bibliographicCitation "competency question 38; EPM-DEC-001-0058"@en ;
+    skos:definition "What a placing property claims: certification (the link names the owning process of a data product) or context (the link says only where one thing is used or placed with another)."@en .
+
+tier:mpc a skos:Concept ;
+    skos:definition "MPC's filings and public materials, as read into business_architecture/reference/mpc/."@en ;
+    skos:inScheme auth:EvidenceTier ;
+    skos:notation "2" ;
+    skos:prefLabel "Marathon Petroleum"@en ;
+    auth:rank 2 .
+
+auth:EvidenceTier a skos:ConceptScheme ;
+    rdfs:label "evidence tier"@en ;
+    dcterms:bibliographicCitation "AGENTS.md, Working rules; the decision owner's instruction in answers-2026-10-19-completion-search.md; EPM-DEC-001-0059"@en ;
+    skos:definition "The evidence order the repository applies: the process authority and the decision owner's own material, then Marathon Petroleum, then U.S. refining peers, then industry and regulatory sources, then generic frameworks as support only."@en .
+
+rk:must-refuse a skos:Concept ;
+    skos:definition "The agent must refuse, and say where the answer lives instead."@en ;
+    skos:inScheme con:RuleKind ;
+    skos:notation "must-refuse" ;
+    skos:prefLabel "Must refuse"@en .
+
+rk:may-answer a skos:Concept ;
+    skos:definition "The agent may answer from the graph alone."@en ;
+    skos:inScheme con:RuleKind ;
+    skos:notation "may-answer" ;
+    skos:prefLabel "May answer"@en .
+
+tier:framework a skos:Concept ;
+    skos:definition "Cross-industry frameworks, method standards and academic papers, such as APQC's PCF, ASCM and SKOS. Support only."@en ;
+    skos:inScheme auth:EvidenceTier ;
+    skos:notation "5" ;
+    skos:prefLabel "Generic frameworks"@en ;
+    auth:rank 5 .
+
+tier:process-authority a skos:Concept ;
+    skos:definition "The process map, value streams, data product portfolio and office lanes in business_architecture/, the decision owner's approved definitions and measure list, and the source author's recorded answers."@en ;
+    skos:inScheme auth:EvidenceTier ;
+    skos:notation "1" ;
+    skos:prefLabel "Process authority"@en ;
+    auth:rank 1 .
+
+kind:context a skos:Concept ;
+    skos:definition "The link says only where one thing is used or placed with another. It does not say either end owns, computes or approves the other."@en ;
+    skos:inScheme plc:PlacementKind ;
+    skos:notation "context" ;
+    skos:prefLabel "Context"@en .
+
+con:Rule a owl:Class ;
+    rdfs:label "consumer rule"@en ;
+    dcterms:bibliographicCitation "competency questions 41 and 42; EPM-DEC-001-0061"@en ;
+    skos:definition "A rule for an agent that answers from the graph: what it may answer without reading a table or inventing a formula, or what it must refuse."@en .
+
+tier:industry a skos:Concept ;
+    skos:definition "Standards bodies, exchanges, registries, regulators and agencies, such as API, the Energy Institute, CME Group, GLEIF, CFTC, EIA, EPA and FASB."@en ;
+    skos:inScheme auth:EvidenceTier ;
+    skos:notation "4" ;
+    skos:prefLabel "Industry and regulatory sources"@en ;
+    auth:rank 4 .
+

@@ -8,3 +8,5 @@ The full element list of APQC's Process Classification Framework for Downstream 
 | `test_apqc_elements.py` | Tests: the build is current, the count, every referenced element is listed, two pinned elements |
 
 APQC is a consistency reference, not the process authority (tier 5, EPM-DEC-001-0059). An element without a counterpart is not a gap by itself: the scope decisions in `../apqc-scope-decisions.md` put whole areas out of scope.
+
+The list is a reference file, in no release package: a package drops the Turtle comment that carries APQC's notice, which the licence requires on every copy (EPM-DEC-001-0078).
