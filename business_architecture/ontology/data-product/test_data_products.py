@@ -57,12 +57,13 @@ class Build(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_figures(self):
-        # Counted by hand from data_product_portfolio.json on 2026-10-19.
+        # Counted by hand from data_product_portfolio.json on 2026-10-19; Loss Control's link is
+        # emitted since core 2.2.0 (2026-10-22, EPM-DEC-001-0076).
         portfolio, links, *_ = bd.load()
         self.assertEqual(bd.figures(portfolio, links), {
             "segments": 3, "lines": 19, "data products": 48, "active products": 15,
             "defined_only products": 33, "open_decision products": 0, "parked without a description": 33,
-            "process links": 0, "links waiting for a core release": 1})
+            "process links": 1, "links waiting for a core release": 0})
         self.assertEqual(len(set(PRODUCTS.subjects(RDF.type, DP.DataProduct))), 48)
         self.assertEqual(len(set(PRODUCTS.subjects(RDF.type, DP.DataProductLine))), 19)
 
