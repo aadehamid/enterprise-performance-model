@@ -8,7 +8,7 @@ The `data-product` module defines the data products in the portfolio (`../../bus
 | `shapes.ttl` | SHACL shapes, with a stated cardinality on every property: each item is defined or parked with its reason, never both; an active item is defined; a data product sits in one line and a line in one segment; a data product carries no data values |
 | `links.csv` | The process links a recorded decision names, with the release each waits for when its process is not yet in `core` |
 | `build_data_products.py`, `data-products.ttl` | The build: the portfolio and `links.csv` in, 3 segments, 19 lines and 48 data products out. `python3 build_data_products.py` prints the figures; `--verify` fails unless `data-products.ttl` equals a fresh build. `scripts/check.sh` runs it |
-| `test_data_products.py` | Tests: the vocabulary is well formed, the build is current and its figures match a hand count, each item keeps the portfolio's status and place, segment anchors, aliases, Loss Control's waiting link, and SHACL accepts the module and rejects broken items |
+| `test_data_products.py` | Tests: the vocabulary is well formed, the build is current and its figures match a hand count, each item keeps the portfolio's status and place, segment anchors, aliases, Loss Control's link to its producing process, and SHACL accepts the module and rejects broken items |
 
 The module is not released yet. A release needs the decision owner's approval.
 
@@ -16,5 +16,5 @@ The module is not released yet. A release needs the decision owner's approval.
 
 - **Defined (15 data products):** every active data product in the Commercial segment, from the portfolio's description.
 - **Parked (33 data products):** every Midstream and Corporate data product. The portfolio names each one with status `defined_only` and gives no description, so each carries a `skos:editorialNote` saying its definition waits for its data owners. Nothing is written in their place.
-- **Process links:** a data product's producing and consuming processes come from the value streams' `produces` and `consumes`, in the `value-stream` module (EPM-DEC-001-0054). The one link a decision names directly, Loss Control produced by CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048), waits for `core` 2.2.0, because CM 1.1.3.7.13 was added to the map after `core` 2.1.0.
+- **Process links:** a data product's producing and consuming processes come from the value streams' `produces` and `consumes`, in the `value-stream` module (EPM-DEC-001-0054). The one link a decision names directly, Loss Control produced by CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048), waited for `core` 2.2.0, because CM 1.1.3.7.13 was added to the map after `core` 2.1.0. *2026-10-22:* `core` 2.2.0 adds the process (EPM-DEC-001-0076), so the link is emitted; the build reads `core` 2.2.0.
 - **Aliases:** an alias in the portfolio that names one item becomes its `skos:altLabel`. "Master & Rack Pricing" names two data products, so it labels neither.

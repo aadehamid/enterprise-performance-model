@@ -90,8 +90,8 @@ ontology; everything else points at it.
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; `core` 2.1.0 carries the controlled-value shapes and one evidence node per canonical fact, with the evidence-link shapes (EPM-DEC-001-0044), 2026-10-18; every module's shapes run together on the whole graph with zero violations (EPM-DEC-001-0065), 2026-10-19 |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with the decision owner's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by the decision owner (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by the decision owner, and kpi 1.0.1, a patch naming the list's source VCO DSV (EPM-DEC-001-0043); not hosted, the namespace a placeholder (the decision owner, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (the decision owner, EPM-DEC-001-0041, 2026-10-18); *2026-10-22:* `party` 1.0.0, the module's first release, approved by the decision owner (EPM-DEC-001-0074) |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18); with the data-product module, 17 answerable, 7 partial, 20 waiting (2026-10-19); with the value-stream module, 18 answerable, 7 partial, 19 waiting (2026-10-19); with the system module, 19 answerable, 7 partial, 18 waiting (2026-10-19); with the lane module, 20 answerable, 7 partial, 17 waiting (2026-10-19); with Q15 answerable, 21 answerable, 7 partial, 16 waiting (2026-10-19); with the market-data module, 23 answerable, 7 partial, 14 waiting (2026-10-19); with the placement kinds, 26 answerable, 5 partial, 13 waiting (2026-10-19); with the source tiers, 27 answerable, 4 partial, 13 waiting (2026-10-19); with the APQC element list, 30 answerable, 1 partial (Q7), 13 waiting (2026-10-19); with the consumer rules, 33 answerable, 1 partial (Q7), 10 waiting (2026-10-19); with the measure populations, 34 answerable, 1 partial (Q7), 9 waiting (2026-10-19); *2026-10-21:* the `party` module made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071). |
-| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with organization 2.0.0 and the ref-mpc module, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18); with the data-product module, 17 answerable, 7 partial, 20 waiting (2026-10-19); with the value-stream module, 18 answerable, 7 partial, 19 waiting (2026-10-19); with the system module, 19 answerable, 7 partial, 18 waiting (2026-10-19); with the lane module, 20 answerable, 7 partial, 17 waiting (2026-10-19); with Q15 answerable, 21 answerable, 7 partial, 16 waiting (2026-10-19); with the market-data module, 23 answerable, 7 partial, 14 waiting (2026-10-19); with the placement kinds, 26 answerable, 5 partial, 13 waiting (2026-10-19); with the source tiers, 27 answerable, 4 partial, 13 waiting (2026-10-19); with the APQC element list, 30 answerable, 1 partial (Q7), 13 waiting (2026-10-19); with the consumer rules, 33 answerable, 1 partial (Q7), 10 waiting (2026-10-19); with the measure populations, 34 answerable, 1 partial (Q7), 9 waiting (2026-10-19); *2026-10-21:* the `party` module made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071); *2026-10-22:* on core 2.2.0, Loss Control's producer is linked and Q7 is answerable: 43 answerable, 0 partial, 1 waiting (Q17) (EPM-DEC-001-0076). |
+| 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with organization 2.0.0 and the ref-mpc module, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps); *2026-10-22:* rerun on core 2.2.0: 2,834 nodes, 14,934 relationships, no in-graph violation, empty round-trip diff, equal determinism hashes |
 
 Note: Step 8 was completed early (it was originally sequenced after
 integration) because the scope decisions shape the foundations. The plan
@@ -962,6 +962,15 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Everything that reads core moves to 2.2.0 (2026-10-22)
+- Following the release (EPM-DEC-001-0076, item 8): the regression, the
+  Step 9 gate, the projection and the builds of the apqc, data-product,
+  value-stream, system and lane modules read `core` 2.2.0. The released
+  `kpi` and `party` builds stay on 2.1.0 until their next release. The
+  data-product module emits Loss Control's link to CM 1.1.3.7.13
+  (EPM-DEC-001-0048), and Q7 is answerable: 43 answerable, 0 partial,
+  1 waiting (Q17). The projection reran on 2.2.0 and passed.
+
 ### `core` 2.2.0 (2026-10-22)
 - With the decision owner's approval of the release plan (EPM-DEC-001-0076),
   `core` 2.2.0 is released, a minor built from 2.1.0 and the process map at
@@ -1180,7 +1189,7 @@ without a dated amendment and the decision owner's explicit agreement.
   IRI, without duplicating them; 20 produce or consume data products. The seven MPC-P09 measure links are
   qualified links with their basis, context only. The files' domain
   "Commercial" stays as written, because `core`'s Commercial code does
-  not cover Order to Cash. Q10 is answerable; Q7 stays partial until `core` 2.2.0 holds Loss Control's producer.
+  not cover Order to Cash. Q10 is answerable; Q7 stays partial until `core` 2.2.0 holds Loss Control's producer. *2026-10-22:* it does, and Q7 is answerable (EPM-DEC-001-0076).
 
 ### Data-product module (2026-10-19)
 - Step 7 item 3 (EPM-DEC-001-0017), under the delegation (EPM-DEC-001-0053):
@@ -1191,7 +1200,8 @@ without a dated amendment and the decision owner's explicit agreement.
   `dp:DataProduct` is mapped to `dcat:Dataset`, not imported. Loss Control
   ownership is settled: CM 1.1.3.7.13 produces it (EPM-DEC-001-0048); the
   link waits for `core` 2.2.0. Process links from the value streams come
-  with Phase B. Q7 is partial.
+  with Phase B. Q7 is partial. *2026-10-22:* `core` 2.2.0 adds CM 1.1.3.7.13,
+  the link is emitted, and Q7 is answerable (EPM-DEC-001-0076).
 
 ### Order of the remaining work (2026-10-19)
 - The decision owner chose Claude's recommended order for completing the

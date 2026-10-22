@@ -35,10 +35,21 @@ class Coverage(unittest.TestCase):
 
 
 class Release(unittest.TestCase):
+    def test_q7_lists_loss_control_produced_by_its_process(self):
+        # EPM-DEC-001-0048: CM 1.1.3.7.13 produces Loss Control, a link core 2.2.0 made possible (EPM-DEC-001-0076).
+        with open(os.path.join(HERE, "queries", "q07a-produces-consumes.rq")) as f:
+            rows = {(str(r.process), str(r.relation), str(r.item)) for r in GRAPH.query(f.read())}
+        self.assertIn(("https://w3id.org/lsc/ontology/process/CM-1-1-3-7-13",
+                       "https://w3id.org/lsc/ontology/modules/value-stream/produces",
+                       "https://w3id.org/lsc/ontology/modules/data-product/product/loss-control"), rows)
+        with open(os.path.join(HERE, "queries", "q07-no-owning-process.rq")) as f:
+            orphans = {str(r.product).rsplit("/", 1)[1] for r in GRAPH.query(f.read())}
+        self.assertNotIn("loss-control", orphans)
+
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (42, 1, 1))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (43, 0, 1))
 
     def test_q15b_reports_the_systems_in_two_modules_as_one(self):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;

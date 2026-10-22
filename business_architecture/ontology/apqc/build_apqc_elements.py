@@ -8,7 +8,7 @@ Reads the "Combined" sheet of the vendored APQC Downstream Petroleum PCF v7.2.2 
 (business_architecture/reference/) and writes one resource per element, described the way the
 core release describes the elements it references (identifier, part of the PCF, title), plus
 the element's name and hierarchy ID. The build fails unless every PCF ID is unique and every
-element core 2.1.0 references is in the workbook. APQC material is used with attribution per
+element core 2.2.0 references is in the workbook. APQC material is used with attribution per
 the APQC/IBM licence (business_architecture/reference/README.md).
 """
 import argparse
@@ -23,7 +23,7 @@ from rdflib.namespace import DCTERMS, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 WORKBOOK = os.path.join(REPO, "business_architecture", "reference", "APQC-PCF-Downstream-Petroleum-v7.2.2.xlsx")
-CORE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.2.0", "core.ttl")
 OUTPUT = os.path.join(HERE, "apqc-elements.ttl")
 SRC = Namespace("https://w3id.org/lsc/ontology/source/")
 PCF = SRC["apqc-pcf-7.2.2"]
@@ -87,7 +87,7 @@ def main():
             "# from the vendored workbook. Do not edit by hand.\n#\n"
             + "".join(f"# {line}\n" for line in ATTRIBUTION.replace(". ", ".\n").split("\n")) + "#\n"
             + build(rows).serialize(format="turtle"))
-    print(f"elements {len(rows)}; referenced by core 2.1.0 {len(referenced)}; not referenced {len(rows) - len(referenced)}")
+    print(f"elements {len(rows)}; referenced by core 2.2.0 {len(referenced)}; not referenced {len(rows) - len(referenced)}")
     if args.verify:
         if not (os.path.exists(OUTPUT) and open(OUTPUT).read() == text):
             sys.exit("apqc-elements.ttl is not current: run build_apqc_elements.py --write")

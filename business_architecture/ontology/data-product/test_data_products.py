@@ -85,13 +85,15 @@ class Build(unittest.TestCase):
                     self.assertEqual(PRODUCTS.value(iri, DP.portfolioStatus), STATUS[bd.STATUSES[p["status"]]], p["id"])
                     self.assertEqual(str(PRODUCTS.value(iri, SKOS.notation)), p["id"])
 
-    def test_loss_control_waits_for_its_producer(self):
-        # CM 1.1.3.7.13 produces Loss Control (EPM-DEC-001-0048); it is not in core 2.1.0.
-        self.assertIsNone(PRODUCTS.value(PRODUCT["loss-control"], DP.producedBy))
+    def test_loss_control_is_produced_by_its_process(self):
+        # CM 1.1.3.7.13 produces Loss Control (EPM-DEC-001-0048). It waited for core 2.2.0, which
+        # added the process (EPM-DEC-001-0076), so the link is now emitted.
+        self.assertEqual(PRODUCTS.value(PRODUCT["loss-control"], DP.producedBy),
+                         URIRef("https://w3id.org/lsc/ontology/process/CM-1-1-3-7-13"))
         _, links, by_key, _ = bd.load()
         self.assertEqual([(r["data_product"], r["process"], r["waits_for"]) for r in links],
-                         [("dp-loss-control", "CM 1.1.3.7.13", "core 2.2.0")])
-        self.assertNotIn("CM 1.1.3.7.13", by_key)
+                         [("dp-loss-control", "CM 1.1.3.7.13", "")])
+        self.assertIn("CM 1.1.3.7.13", by_key)
 
     def test_aliases(self):
         self.assertIn((PRODUCT["commercial-risk"], SKOS.altLabel, Literal("Risk", lang="en")), PRODUCTS)
