@@ -157,7 +157,9 @@ class RealParties(unittest.TestCase):
         # EPM-DEC-001-0075: the roles and the agreement moved from the party namespace to ref-mpc's.
         for s in set(self.PARTIES.subjects()):
             self.assertTrue(str(s).startswith(str(REF)) or str(s).startswith(str(SRC)), s)
-        self.assertIn(REF["party/mpc-payer"], set(self.PARTIES.subjects()))
+        described = set(self.PARTIES.subjects())
+        for local in ("mpc-throughput-holder", "mpc-payer", "mplx-carrier", "mplx-vendor", "mplx-mpc-services"):
+            self.assertIn(REF["party/" + local], described, local)
 
     def test_the_file_left_the_party_module(self):
         self.assertFalse(os.path.exists(os.path.join(PARTY, "reference-parties.ttl")))
