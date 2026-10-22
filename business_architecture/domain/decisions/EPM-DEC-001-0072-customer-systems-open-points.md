@@ -5,7 +5,7 @@
 | Status | Decided (the decision owner's recorded words, 2026-10-21) |
 | Date | 2026-10-21 |
 | Questions | Three of the five points EPM-DEC-001-0069 left open for the decision owner: whether input 6's CBS is FuelFacs, whether the Terminal Margin Ranking System is the process map's TMR, and the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and TDS Seller ID |
-| Source | Claude Code session of 2026-10-21 (session 7); `answers-2026-10-21-open-codes.md` |
+| Source | Claude Code session of 2026-10-21 (session 7); `answers-2026-10-21-open-codes.md`; amended 2026-10-22 (`answers-2026-10-22-morning.md`) |
 
 ## Context
 
@@ -28,6 +28,21 @@ EPM-DEC-001-0069 built the customer's systems, data flow and attributes in the `
 - Question 15's `q15b` compares a node's alternative labels as well as its preferred label, so the TMR pair is reported as one system in two modules. The only rows this adds are `skos:exactMatch` rows: the TMR pair, and the RightAngle and KittyHawk pairs under their alternative spellings.
 - EPM-DEC-001-0069 keeps its text, with dated notes pointing here.
 
+## Amendment, 2026-10-22: the four codes and TID Nbr wait for the business; TABS Seller ID confirmed
+
+The session 7 morning summary asked the decision owner about the two points this record left open, and about the four codes again. They answered on 2026-10-22.
+
+**The decision owner's answers:**
+
+1. **HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr stay as they are** until the ontology is shared for use: "let us keep the code this way. We wont settle it until finish the ontology and start sharing for consumption at which point we will confirm what these means from the business".
+2. **The reading of TABS Seller ID is confirmed:** "I confirm".
+
+**What follows (Claude, under EPM-DEC-001-0028):**
+
+- The four codes stay named fields without a definition, and TID Nbr stays read as a terminal identifier that describes a site. Each stays open, with a trigger: when the ontology is first shared for consumption, the business confirms what each one means, and the answer is recorded as an amendment here.
+- TABS Seller ID keeps the reading in EPM-DEC-001-0069, item 8: the party's seller identifier in a terminal lifting-control service, mapped to an external identifier of the party. It is now the decision owner's confirmed reading, not only Claude's.
+- No file in the `party` module changes: the attributes carry no definition or note for these codes.
+
 ## Alternatives considered
 
 - **Keep CBS open until a source confirms it.** Not chosen: the decision owner decided to assume it for this model.
@@ -42,6 +57,11 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 - "CBS is potentially FuelFac. Let us assume it is in this case given If you saw CBS on a downstream terminal or fuel-distribution architecture diagram, FuelFACS Central Business System is a concrete possibility. Its documented role is an enterprise-wide terminal integration and business-information system—not simply customer relationship management."
 - "Terminal Margin Ranking System = TMR"
 
+For the amendment of 2026-10-22, from `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md`:
+
+- "let us keep the code this way. We wont settle it until finish the ontology and start sharing for consumption at which point we will confirm what these means from the business"
+- "I confirm"
+
 ## Evidence
 
 - EPM-DEC-001-0067, 0068, 0069.
@@ -50,4 +70,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 ## Consequences
 
 - `party/systems.csv`, `customer-sources.csv` and `build_party.py` carry the answers; `systems.ttl` is rebuilt. `test_party_systems.py` pins the four matches, the build's rejection of a hand-held match that does not hold, and the CBS sourcing's note, and `regression/test_run.py` pins q15b's four cross-module pairs.
-- Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier.
+- Still open for the decision owner: the meaning of HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag, which they will define later; whether TABS Seller ID is read rightly; whether TID Nbr is a terminal identifier. *2026-10-22:* TABS Seller ID's reading is confirmed; the four codes and TID Nbr wait until the ontology is shared for consumption, when the business confirms them (amendment of 2026-10-22 above).
