@@ -22,7 +22,7 @@ EPM-DEC-001-0071 described MPC and MPLX in the `party` module's terms, so that c
 3. **The content is unchanged otherwise:** the same roles, dates, agreement type and source, each sourced to MPLX's FY2025 Form 10-K.
 4. **The tests move with the file.** `ref-mpc/test_ref_mpc.py` reads the parties both ways, checks the dates and the source, checks every described node is in ref-mpc's namespace, checks the file left `party/`, and validates the parties against the party module's shapes. The regression loads the file from its new place.
 5. **No `party` release is needed:** the `party` 1.0.0 package does not hold the file, and no file in it changes.
-6. **The move will ship in `ref-mpc` 1.2.0,** a minor release: it adds instances and changes no released IRI (`references/versioning.md` in the ontology skill). The release follows in its own pull request, and requires `party` 1.0.0 beside `organization` 2.0.0. The release plan the decision owner approved on 2026-10-22 does not list `ref-mpc` 1.2.0, so its release record cites the decision owner's own approval of it.
+6. **The move will ship in `ref-mpc` 1.2.0,** a minor release: it adds instances and changes no released IRI (`references/versioning.md` in the ontology skill). The release follows in its own pull request, and requires `party` 1.0.0 beside `organization` 2.0.0. The release plan the decision owner approved on 2026-10-22 does not list `ref-mpc` 1.2.0, so its release record cites the decision owner's own approval of it. *2026-10-22:* they approved it; EPM-DEC-001-0080 records the release.
 
 ## Alternatives considered
 
@@ -41,4 +41,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 ## Consequences
 
 - `party/README.md`, `ref-mpc/README.md`, `party/examples.ttl`, `release/build_module.py` and `release/test_build_module.py` point to the new place; EPM-DEC-001-0071 and 0074 carry dated notes.
-- `ref-mpc` 1.2.0 is pending, in its own pull request.
+- `ref-mpc` 1.2.0 is pending, in its own pull request. *2026-10-22:* released, with the decision owner's approval (EPM-DEC-001-0080).

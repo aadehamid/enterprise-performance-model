@@ -1,5 +1,9 @@
 # ref-mpc changelog
 
+## 1.2.0 (2026-10-22)
+
+Minor. Approved by the decision owner ("Approve ref-mpc 1.2.0 (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md`; EPM-DEC-001-0080). MPC and MPLX as parties, in the `party` module's terms, join the module (`reference-parties.ttl`, moved from `party/`; EPM-DEC-001-0071, 0075): MPC holds the Throughput Holder and Payer roles and MPLX the Carrier and Vendor roles under MPLX's fee-based services agreements, each held since 2012-10-31 and sourced to MPLX's FY2025 Form 10-K. The roles and the agreement are on this module's namespace. No released IRI changes. It requires organization 2.0.0, as 1.1.0 did, and party 1.0.0; the parties conform to the party module's shapes.
+
 ## 1.1.0 (2026-10-19)
 
 Minor. Approved by the decision owner ("Approve the ref-mpc release too if needed", and "You have my approval to keep going and release things as needed. while I am out", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-mpc.md` and `answers-2026-10-19-releases.md`). The module now requires organization 2.0.0 in place of 1.0.0 (EPM-DEC-001-0045). Its facts, shapes and IRIs are unchanged: it uses only the control relationship, which organization 2.0.0 keeps as it was.

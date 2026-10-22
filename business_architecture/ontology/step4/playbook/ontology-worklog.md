@@ -962,6 +962,11 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### `ref-mpc` 1.2.0 (2026-10-22)
+- With the decision owner's own approval (EPM-DEC-001-0080), `ref-mpc`
+  1.2.0 is released, a minor: MPC and MPLX as parties join the reference
+  module, 180 triples, requiring organization 2.0.0 and party 1.0.0.
+
 ### `kpi` 1.1.0 (2026-10-22)
 - With the decision owner's approval of the release plan (EPM-DEC-001-0079),
   `kpi` 1.1.0 is released, a minor requiring core 2.2.0: the eight measure
@@ -1006,7 +1011,8 @@ without a dated amendment and the decision owner's explicit agreement.
   move from `party/` to `ref-mpc/reference-parties.ttl`. Under the
   delegation, their roles and agreement take ref-mpc's namespace, and no
   `party` release is needed. The `ref-mpc` 1.2.0 release that will carry
-  the move is pending, in its own pull request.
+  the move is pending, in its own pull request. *2026-10-22:* released
+  (EPM-DEC-001-0080).
 
 ### The decision owner's answers on the codes and TABS Seller ID (2026-10-22)
 - HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr

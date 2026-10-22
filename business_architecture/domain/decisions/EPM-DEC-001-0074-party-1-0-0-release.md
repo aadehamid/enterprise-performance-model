@@ -40,4 +40,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - `releases/party/1.0.0/` is written; `scripts/check.sh` fails unless it equals a fresh build.
 - The records and READMEs that said the module is not released carry dated notes.
-- Open for the decision owner: whether to move the reference parties into `ref-mpc` in its next release. *2026-10-22:* answered: they move into their own reference module, `ref-mpc` (EPM-DEC-001-0075). The `ref-mpc` release that will carry them is pending.
+- Open for the decision owner: whether to move the reference parties into `ref-mpc` in its next release. *2026-10-22:* answered: they move into their own reference module, `ref-mpc` (EPM-DEC-001-0075). The `ref-mpc` release that will carry them is pending. *2026-10-22, later:* released as `ref-mpc` 1.2.0, with the decision owner's approval (EPM-DEC-001-0080).

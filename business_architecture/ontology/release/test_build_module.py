@@ -20,8 +20,9 @@ DCAT = bm.DCAT
 SESSION2 = "step4/review-evidence/decision-owner-answers/answers-2026-10-13-session2.md"
 NIGHT = "step4/review-evidence/decision-owner-answers/answers-2026-10-18-night.md"
 RELEASES = "step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-mpc.md"
+REF_MPC_1_2 = "step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md"
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
-             "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
+             "ref-mpc": (REF_MPC_1_2, "Approve ref-mpc 1.2.0 (Recommended)"),  # 1.2.0, EPM-DEC-001-0080
              "kpi": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md",
                      "You have my approval to keep going and release things as needed. while I am out"),
              "party": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md",
@@ -149,7 +150,7 @@ class EarlierReleases(unittest.TestCase):
             self.assertFalse(set(outside) & set(released), path)
 
     def test_the_new_releases_require_the_current_ones(self):
-        self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
+        self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.2.0"})  # since 1.1.0 (EPM-DEC-001-0079)
         self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
@@ -168,7 +169,7 @@ class EarlierReleases(unittest.TestCase):
         # value-stream reaches core twice: directly at 2.2.0 and through kpi 1.0.1 at 2.1.0. Only 2.2.0 loads.
         self.assertEqual(bm.released_closure("value-stream"), {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
         self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
-        self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "core": "2.1.0"})
+        self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0", "core": "2.1.0"})
 
     def test_the_validated_graph_holds_one_core_release(self):
         # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
@@ -243,6 +244,28 @@ class EarlierReleases(unittest.TestCase):
                     sources.parse(os.path.join(bm.ONTOLOGY, name, part))
                 sources.remove((header, None, None))
                 self.assertEqual(set(released), set(sources))
+
+    def test_ref_mpc_1_1_0_is_untouched(self):
+        # ref-mpc 1.2.0 is built now; the released 1.1.0 package must still match its own manifest.
+        out = os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.1.0")
+        with open(os.path.join(out, "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertEqual(manifest["version"], "1.1.0")
+        for fname, digest in manifest["files"].items():
+            with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
+                self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
+
+    def test_ref_mpc_1_2_0_holds_the_companies_and_the_parties(self):
+        # EPM-DEC-001-0080: ref-mpc.ttl and the reference parties moved from party/ (EPM-DEC-001-0075).
+        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "ref-mpc", "1.2.0", "ref-mpc.ttl"))
+        header = URIRef(bm.MODULES_NS + "ref-mpc")
+        released.remove((header, None, None))
+        sources = Graph()
+        for part in ("ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"):
+            sources.parse(os.path.join(bm.ONTOLOGY, part))
+        sources.remove((header, None, None))
+        self.assertEqual(set(released), set(sources))
+        self.assertIn((URIRef(bm.MODULES_NS + "ref-mpc/party/mpc-payer"), None, None), released)
 
     def test_kpi_1_0_1_is_untouched(self):
         # kpi 1.1.0 is built now; the released 1.0.1 package must still match its own manifest.

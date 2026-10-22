@@ -45,12 +45,15 @@ MODULES = {
         "title": "LSC Reference Instances: Marathon Petroleum Corporation",
         "description": "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5).",
         # 1.1.0 requires organization 2.0.0; its own content is unchanged (EPM-DEC-001-0045).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-mpc.md", "Approve the ref-mpc release too if needed"),
-        "parts": ["ref-mpc/ref-mpc.ttl"],
-        "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl"],
-        "depends_on": ["organization"],
-        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033"],
+        # 1.2.0 adds MPC and MPLX as parties in the party module's terms, moved from party/, and requires
+        # party 1.0.0; the decision owner approved it on its own (EPM-DEC-001-0075, EPM-DEC-001-0080).
+        "version": "1.2.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md", "Approve ref-mpc 1.2.0 (Recommended)"),
+        "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"],
+        "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl", "party/shapes.ttl"],
+        "depends_on": ["organization", "party"],
+        "pins": {"organization": "2.0.0", "party": "1.0.0"},
+        "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080"],
     },
     "kpi": {
         "title": "LSC KPI Module",
