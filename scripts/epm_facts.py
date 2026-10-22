@@ -489,15 +489,17 @@ DATED = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
 
 
 def changed_phrases(diff):
-    """The old wording a unified diff (-U0) replaced or deleted: for each run of changed words, those words
+    """The old wording a unified diff (-U1) replaced or deleted: for each run of changed words, those words
     with one word of context on each side, kept when that makes at least two words and eight characters,
-    so "at 34 answerable" is searched, not "34" alone. An addition has no old wording and gives none."""
+    so "at 34 answerable" is searched, not "34" alone. The context may come from an unchanged neighbouring
+    line, which -U1 supplies. An addition has no old wording and gives none."""
     phrases = []
     for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
         # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
         body = re.split(r"^diff --git ", hunk, maxsplit=1, flags=re.M)[0]
-        old = [l[1:] for l in body.split("\n") if l.startswith("-")]
-        new = [l[1:] for l in body.split("\n") if l.startswith("+")]
+        # Unchanged lines (" ") belong to both sides, so a word on one can be the context of a change.
+        old = [l[1:] for l in body.split("\n") if l[:1] in (" ", "-")]
+        new = [l[1:] for l in body.split("\n") if l[:1] in (" ", "+")]
         a, b = " ".join(old).split(), " ".join(new).split()
         for op, i1, i2, _, _ in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
             if op not in ("replace", "delete"):
@@ -513,7 +515,7 @@ def sweep(base, root=ROOT):
     """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
     still holds it, each marked "dated" when its line holds a date (DATED) and "live" otherwise."""
     try:
-        diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD"],
+        diff = subprocess.check_output(["git", "-C", root, "diff", "-U1", "--no-color", f"{base}...HEAD"],
                                        text=True, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         raise SystemExit(f"sweep: cannot diff {base}...HEAD: {e.stderr.strip()}")
