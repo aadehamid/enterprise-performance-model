@@ -1547,13 +1547,13 @@ owner made them the source author's backlog.
   states, "oils and fats" where the filing names soybean oil). Each was cut
   back to what the source says.
 
-**The Customer domain, Steps 5 to 7** (EPM-DEC-001-0067 to 0072). The
+**The Customer domain, Steps 5 to 7 and 11** (EPM-DEC-001-0067 to 0072). The
 owner's seven customer inputs stayed out of the repository; the `party`
 module holds what was derived from them: fifteen entity classes, roles as
 dated nodes, 42 customer systems with their data flows and attributes, and a
 lifecycle linked to existing core processes. Each reading is marked as one,
-and the codes nobody could define stay named and open. Four rules of this
-playbook came from its reviews. A shape checked only a direct subclass of
+and the codes nobody could define stay named and open. Its reviews produced
+rules of this playbook. A shape checked only a direct subclass of
 party, so a role two steps down passed (Step 9, item 11). A query that tells
 same-named IRIs apart ignored `skos:exactMatch`, and its first test pinned
 only the shared word (Step 11, item 9). The lifecycle's guards accepted a

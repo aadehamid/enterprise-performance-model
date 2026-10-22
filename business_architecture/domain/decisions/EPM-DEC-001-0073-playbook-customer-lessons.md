@@ -9,7 +9,7 @@
 
 ## Context
 
-The Customer domain went through six pull requests (EPM-DEC-001-0067 to 0072). Their reviews held them for defects of a few recurring kinds, and the playbook did not yet name a rule that would have prevented each. The decision owner asked for the session's approaches to go into the playbook and reminded Claude of its role. The playbook is the company-neutral method; project decisions go in decision records and the worklog, and the playbook changes only when the method changes (EPM-DEC-001-0024).
+The Customer domain went through six pull requests, #327 and #329 to #333, with records EPM-DEC-001-0067 to 0072. Their reviews held them for defects of a few recurring kinds, and the playbook did not yet name a rule that would have prevented each. The decision owner asked for the session's approaches to go into the playbook and reminded Claude of its role. The playbook is the company-neutral method; project decisions go in decision records and the worklog, and the playbook changes only when the method changes (EPM-DEC-001-0024).
 
 ## Decision
 

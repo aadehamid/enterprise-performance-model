@@ -962,6 +962,11 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The playbook's Customer domain lessons (2026-10-21)
+- At the decision owner's request (EPM-DEC-001-0073), the playbook takes the
+  method lessons of the Customer domain's reviews: in Steps 5, 9 and 11, in
+  §2 and §5.6, and a §7 paragraph naming the findings behind them.
+
 ### Competency questions 19 to 26 (2026-10-21)
 - Under the delegation (EPM-DEC-001-0071): the `party` module answers
   questions 19 to 26, each with a query. A customer-grained measure binds
@@ -980,11 +985,6 @@ without a dated amendment and the decision owner's explicit agreement.
   go to the decision owner as proposal MPC-P10: onboarding coordination
   for every customer, the Order to Cash credit review's missing link, and
   a customer master data product.
-
-### The playbook's Customer domain lessons (2026-10-21)
-- At the decision owner's request (EPM-DEC-001-0073), the playbook takes the
-  method lessons of the Customer domain's reviews: in Steps 5, 9 and 11, in
-  §2 and §5.6, and a §7 paragraph naming the findings behind them.
 
 ### The decision owner's answers on the customer systems (2026-10-21)
 - The decision owner gave four answers on three of EPM-DEC-001-0069's five
