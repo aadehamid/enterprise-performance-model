@@ -4,6 +4,7 @@ values are written out by hand from the decision owner's inputs as EPM-DEC-001-0
 Run: python3 -m pytest test_party_systems.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 
 from pyshacl import validate
@@ -11,6 +12,8 @@ from rdflib import Graph, Namespace
 from rdflib.namespace import RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import build_party  # noqa: E402
 CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
 S = Namespace("https://w3id.org/lsc/ontology/modules/party/system/")
 SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
@@ -152,12 +155,34 @@ class Attributes(unittest.TestCase):
         self.assertEqual(describes("salesforce", "enrich", "credit-parent-account"), CUST.PartyRelationship)
 
 
+class SameSystem(unittest.TestCase):
+    """The build rejects a hand-held match to the system module that does not hold (EPM-DEC-001-0072)."""
+
+    def fails(self, same):
+        real = build_party.SAME_SYSTEM
+        build_party.SAME_SYSTEM = same
+        try:
+            with self.assertRaises(SystemExit) as caught:
+                build_party.load_systems(build_party.load())
+        finally:
+            build_party.SAME_SYSTEM = real
+        return str(caught.exception)
+
+    def test_a_node_the_system_module_lacks(self):
+        self.assertIn("terminal-margin-ranking-system: not a listed customer system, or no-such-node not in the system module",
+                      self.fails({"terminal-margin-ranking-system": "no-such-node"}))
+
+    def test_a_node_with_another_label(self):
+        self.assertIn("terminal-margin-ranking-system: the system module calls sap 'SAP', which is not one of its labels",
+                      self.fails({"terminal-margin-ranking-system": "sap"}))
+
+
 class DecisionOwnerAnswers(unittest.TestCase):
     def test_the_cbs_sourcing_cites_the_decision_owner(self):
-        # The decision owner takes input 6's CBS to be FuelFacs (EPM-DEC-001-0072), so the sourcing says so.
+        # The decision owner assumes input 6's CBS is FuelFacs (EPM-DEC-001-0072), so the sourcing says so.
         note = str(G.value(CUST["sourcing/fuelfacs--source--customer-class--terminal-rack-customer"], RDFS.comment))
-        self.assertEqual(note, "Terminal customers, from input 6's CBS, which the decision owner takes to be FuelFacs "
-                               "(EPM-DEC-001-0072).")
+        self.assertEqual(note, "Terminal customers, from input 6's CBS, which the decision owner assumes, for this model, "
+                               "is FuelFacs (EPM-DEC-001-0072).")
 
 
 class Shapes(unittest.TestCase):

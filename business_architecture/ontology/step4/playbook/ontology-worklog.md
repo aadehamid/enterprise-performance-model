@@ -972,7 +972,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### The decision owner's answers on the customer systems (2026-10-21)
 - The decision owner answered four of EPM-DEC-001-0069's open points
-  (EPM-DEC-001-0072): input 6's CBS is taken to be FuelFacs; the Terminal
+  (EPM-DEC-001-0072): input 6's CBS is assumed to be FuelFacs; the Terminal
   Margin Ranking System is the process map's TMR, a fourth customer system
   matched to the system module; TDS Seller ID is the seller's ID; and
   HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag stay undefined until
