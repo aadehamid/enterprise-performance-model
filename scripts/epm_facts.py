@@ -434,22 +434,23 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
-TEXT_FILES = (".md", ".csv", ".py", ".ttl", ".json", ".txt", ".yaml", ".yml", ".html", ".rq", ".sh")
-
-
 def find_hits(needle, root=ROOT):
-    """Hits for needle in the tracked text files under root: (file, line, kind, text), kind "line" or
-    "split" (the text runs across two lines)."""
+    """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
+    "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
+    whatever its extension (.sql, .jsonld and .page files included)."""
     files = subprocess.check_output(["git", "-C", root, "ls-files"], text=True).split("\n")
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
-        if not name or not name.endswith(TEXT_FILES):
+        if not name:
             continue
         path = os.path.join(root, name)
         try:
-            with open(path, encoding="utf-8") as f:
-                text = f.read()
+            with open(path, "rb") as f:
+                data = f.read()
+            if b"\0" in data:
+                continue
+            text = data.decode("utf-8")
         except (OSError, UnicodeDecodeError):
             continue
         lines = text.split("\n")
@@ -480,12 +481,15 @@ def cmd_find(args):
 
 # ---------- sweep ----------
 
-DATED = re.compile(r"\*20\d\d-\d\d-\d\d")
+# A dated note in any of the repository's forms: *2026-10-21:*, *Note 2026-10-14:*, *Phase 1 sweep, #210
+# (2026-10-12):*, or (Superseded 2026-10-13: ...).
+DATED = re.compile(r"\*[^*\n]{0,60}?\b20\d\d-\d\d-\d\d\b|\([A-Z][A-Za-z ]{0,30}20\d\d-\d\d-\d\d")
 
 
 def changed_phrases(diff):
-    """The old wording a unified diff (-U0) replaced: for each changed line, the words that changed with one
-    word of context on each side, so "34 answerable" or "three matched" is searched, not "34" alone."""
+    """The old wording a unified diff (-U0) replaced or deleted: for each run of changed words, those words
+    with one word of context on each side, kept when that makes at least two words and eight characters,
+    so "at 34 answerable" is searched, not "34" alone. An addition has no old wording and gives none."""
     phrases = []
     for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
         # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
@@ -504,11 +508,11 @@ def changed_phrases(diff):
 
 
 def sweep(base, root=ROOT):
-    """For each phrase the branch changed since base, every place in the tree that still holds it, each marked
-    "dated" when its line carries a dated note (*YYYY-MM-DD) and "live" otherwise."""
+    """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
+    still holds it, each marked "dated" when its line carries a dated note (DATED) and "live" otherwise."""
     try:
-        diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD", "--"]
-                                       + [f"*{ext}" for ext in TEXT_FILES], text=True, stderr=subprocess.PIPE)
+        diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD"],
+                                       text=True, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         raise SystemExit(f"sweep: cannot diff {base}...HEAD: {e.stderr.strip()}")
     report = []
@@ -525,7 +529,7 @@ def cmd_sweep(args):
             {"phrase": p, "hits": [dict(zip(("file", "line", "state", "text"), h)) for h in hits]} for p, hits in report]}, indent=2))
         return 0
     found = [(p, hits) for p, hits in report if hits]
-    places = sum(len(h) for _, h in found)
+    places = len({(name, i) for _, hits in found for name, i, _, _ in hits})
     print(f"commit {commit()}: {len(report)} replaced or deleted phrase(s) since {args.base}; {len(found)} still found, "
           f"in {places} place(s). A dated note on a line does not show which clause it covers: read each place.")
     for phrase, hits in found:
@@ -1057,7 +1061,7 @@ def main(argv=None):
     p.add_argument("issue", type=int)
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
-    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE (two or more words) still stands")
+    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file")
     p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
