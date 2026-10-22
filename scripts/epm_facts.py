@@ -10,6 +10,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
+    python3 scripts/epm_facts.py sweep main        # where the wording this branch changed still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
     add --json for machine-readable output
@@ -36,6 +37,7 @@ import argparse
 import collections
 import contextlib
 import csv
+import difflib
 import glob
 import io
 import json
@@ -432,16 +434,19 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
-def cmd_find(args):
-    """Search tracked text files; also match text split across lines."""
-    files = subprocess.check_output(["git", "-C", ROOT, "ls-files"], text=True).split("\n")
-    needle = args.text
+TEXT_FILES = (".md", ".csv", ".py", ".ttl", ".json", ".txt", ".yaml", ".yml", ".html", ".rq", ".sh")
+
+
+def find_hits(needle, root=ROOT):
+    """Hits for needle in the tracked text files under root: (file, line, kind, text), kind "line" or
+    "split" (the text runs across two lines)."""
+    files = subprocess.check_output(["git", "-C", root, "ls-files"], text=True).split("\n")
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
-        if not name or not name.endswith((".md", ".csv", ".py", ".ttl", ".json", ".txt", ".yaml", ".yml", ".html")):
+        if not name or not name.endswith(TEXT_FILES):
             continue
-        path = os.path.join(ROOT, name)
+        path = os.path.join(root, name)
         try:
             with open(path, encoding="utf-8") as f:
                 text = f.read()
@@ -456,6 +461,13 @@ def cmd_find(args):
             joined = re.sub(r"\s+", " ", lines[i] + " " + lines[i + 1]).lower()
             if flat_needle in joined and flat_needle not in lines[i].lower() and flat_needle not in lines[i + 1].lower():
                 hits.append((name, i + 1, "split", (lines[i].strip() + " / " + lines[i + 1].strip())))
+    return hits
+
+
+def cmd_find(args):
+    """Search tracked text files; also match text split across lines."""
+    needle = args.text
+    hits = find_hits(needle)
     if args.json:
         print(json.dumps({"commit": commit(), "text": needle, "hits": [dict(zip(("file", "line", "kind", "text"), h)) for h in hits]}, indent=2))
         return 0
@@ -464,6 +476,59 @@ def cmd_find(args):
         print(f"{name}:{i}: [{kind}] {line[:200]}")
     return 0
 
+
+
+# ---------- sweep ----------
+
+DATED = re.compile(r"\*20\d\d-\d\d-\d\d")
+
+
+def changed_phrases(diff):
+    """The old wording a unified diff (-U0) replaced: for each changed line, the words that changed with one
+    word of context on each side, so "34 answerable" or "three matched" is searched, not "34" alone."""
+    phrases = []
+    for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
+        old = [l[1:] for l in hunk.split("\n") if l.startswith("-") and not l.startswith("---")]
+        new = [l[1:] for l in hunk.split("\n") if l.startswith("+") and not l.startswith("+++")]
+        a, b = " ".join(old).split(), " ".join(new).split()
+        for op, i1, i2, _, _ in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+            if op not in ("replace", "delete"):
+                continue
+            words = a[max(0, i1 - 1):min(len(a), i2 + 1)]
+            phrase = " ".join(words).strip(" .,;:()|*`\"'")
+            if len(words) >= 2 and len(phrase) >= 8 and phrase not in phrases:
+                phrases.append(phrase)
+    return phrases
+
+
+def sweep(base, root=ROOT):
+    """For each phrase the branch changed since base, every place in the tree that still holds it, each marked
+    "dated" when its line carries a dated note (*YYYY-MM-DD) and "live" otherwise."""
+    diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD", "--"]
+                                   + [f"*{ext}" for ext in TEXT_FILES], text=True)
+    report = []
+    for phrase in changed_phrases(diff):
+        hits = [(name, i, "dated" if DATED.search(text) else "live", text) for name, i, _, text in find_hits(phrase, root)]
+        report.append((phrase, hits))
+    return report
+
+
+def cmd_sweep(args):
+    report = sweep(args.base)
+    if args.json:
+        print(json.dumps({"commit": commit(), "base": args.base, "phrases": [
+            {"phrase": p, "hits": [dict(zip(("file", "line", "state", "text"), h)) for h in hits]} for p, hits in report]}, indent=2))
+        return 0
+    live = [(p, hits) for p, hits in report if any(h[2] == "live" for h in hits)]
+    print(f"commit {commit()}: {len(report)} changed phrase(s) since {args.base}; {len(live)} still found without a dated note")
+    for phrase, hits in live:
+        shown = [h for h in hits if h[2] == "live"]
+        print(f"\n{phrase!r}: {len(shown)} live, {len(hits) - len(shown)} dated")
+        for name, i, state, text in shown[:5]:
+            print(f"  {name}:{i}: {text[:160]}")
+        if len(shown) > 5:
+            print(f"  ... and {len(shown) - 5} more (--json lists them all)")
+    return 0
 
 
 # ---------- decision records ----------
@@ -985,12 +1050,14 @@ def main(argv=None):
     p.add_argument("issue", type=int)
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
+    p = sub.add_parser("sweep", help="where the old wording of every line changed since BASE still stands")
+    p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep}[args.cmd](args)
 
 
 if __name__ == "__main__":

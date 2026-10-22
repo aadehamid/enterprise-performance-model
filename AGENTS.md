@@ -50,7 +50,7 @@ Run these before you open a pull request, and again before you push a review fix
 1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, the check that no tracked file names the decision owner (`epm_facts.py names`, EPM-DEC-001-0049), and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
 3. **External facts cite a primary source**: release notes, a changelog, a specification or a filing, with version and date. A version claim names the first release with full support, not a preview.
-4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change; it also finds text split across lines. When you change a rule, walk every section that depends on it. When a change adds a value to a set (a ledger bucket, a status, a route) or replaces an instruction, also search the bare old figure (`686`, not `686 held`), the set's other members (`structured flow`), and the old instruction's words (`#226`, `waits for`). Review rounds on PR #231 found statements of each kind that the change had missed. When you add a dated note to a statement, also search each record ID that statement cites, in its full, short and range forms (`EPM-DEC-001-0040`, `0040`, `0040 to 0043`): on #299 another copy of the sentence, citing the same record, was missed by the sweep by wording.
+4. **A change reaches every place it applies.** Run `python3 scripts/epm_facts.py sweep main`: for every line the branch changed, it lists the places that still hold the old wording, and marks those with a dated note. Then run `python3 scripts/epm_facts.py find "<text>"` for every status, rule, term or figure you change in other words; it also finds text split across lines. When you change a rule, walk every section that depends on it. When a change adds a value to a set (a ledger bucket, a status, a route) or replaces an instruction, also search the bare old figure (`686`, not `686 held`), the set's other members (`structured flow`), and the old instruction's words (`#226`, `waits for`). Review rounds on PR #231 found statements of each kind that the change had missed. When you add a dated note to a statement, also search each record ID that statement cites, in its full, short and range forms (`EPM-DEC-001-0040`, `0040`, `0040 to 0043`): on #299 another copy of the sentence, citing the same record, was missed by the sweep by wording.
 5. **A different model reviews the diff, and every finding is fixed or answered.**
    Commit first; the review reads committed work only.
    - **Who reviews:** the `way-of-working` skill's "Who reviews" table
@@ -72,7 +72,7 @@ Run these before you open a pull request, and again before you push a review fix
 
    Record any disagreement on a judgement call in the PR body.
 
-Say in the PR body that these ran and what the review found.
+Say in the PR body that these ran and what the review found. The body has a "Sweep" section: what `sweep main` reported and what the `find` searches covered, and why each place it left unchanged is right as it stands.
 
 ## Agent skills
 

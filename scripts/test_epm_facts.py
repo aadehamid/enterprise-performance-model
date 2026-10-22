@@ -118,6 +118,30 @@ def test_find_catches_text_split_across_lines():
     assert any(h["kind"] == "split" for h in hits)
 
 
+def test_sweep_takes_the_changed_words_with_their_context():
+    diff = ("@@ -1 +1 @@\n-The regression stands at 34 answerable and 9 waiting.\n"
+            "+The regression stands at 42 answerable and 1 waiting.\n")
+    assert epm_facts.changed_phrases(diff) == ["at 34 answerable", "and 9 waiting"]
+
+
+def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path):
+    def git(*a):
+        subprocess.check_call(["git", "-C", str(tmp_path), *a], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    (tmp_path / "a.md").write_text("Three systems are matched.\n")
+    (tmp_path / "b.md").write_text("Here three\nsystems are matched, split across lines.\n")
+    (tmp_path / "c.md").write_text("Three systems are matched *2026-10-21:* four.\n")
+    git("add", ".")
+    git("commit", "-q", "-m", "base")
+    (tmp_path / "a.md").write_text("Four systems are matched.\n")
+    git("commit", "-q", "-am", "change")
+    report = dict(epm_facts.sweep("HEAD~1", root=str(tmp_path)))
+    states = {(name, state) for name, _, state, _ in report["Three systems"]}
+    assert states == {("b.md", "live"), ("c.md", "dated")}
+
+
 def _backlog():
     with open(epm_facts.BACKLOG) as f:
         return f.read()
