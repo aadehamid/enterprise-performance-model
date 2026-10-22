@@ -785,12 +785,14 @@ the method improves, by a dated amendment with the owner's agreement.
   ontology has a real hook (a RACI feed, a data-product dependency).
 - **Rank evidence and cite every fact.** Use the evidence order from Step 1.
   A fact without a citation stays out.
-- **When the owner's material cannot be published, publish what you derive
-  from it.** Definitions, tables and mappings built from it go in; the
-  material stays out. Mark each derived claim as what the material shows or
-  as the builder's reading, and list what stays open in the decision record.
-  Reason: a reviewer cannot re-check the material, so the marking is the
-  only signal of which claims rest on a reading.
+- **When the owner's material cannot be published, ask whether what you
+  derive from it can be.** Withholding the material does not by itself
+  permit publishing definitions, tables or mappings built from it. With the
+  owner's recorded permission, those go in and the material stays out. Mark
+  each derived claim as what the material shows or as the builder's reading,
+  and list what stays open in the decision record. Reason: a reviewer cannot
+  re-check the material, so the marking is the only signal of which claims
+  rest on a reading.
 - **A source outside the evidence order may guide a reading, not support
   it.** A vendor page or an excluded peer can suggest what a code means. The
   record cites only admissible sources and says the reading is the

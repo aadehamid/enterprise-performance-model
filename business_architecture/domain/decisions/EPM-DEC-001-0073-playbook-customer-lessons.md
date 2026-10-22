@@ -20,7 +20,7 @@ The Customer domain went through six pull requests, #327 and #329 to #333, with 
 1. **Step 5, item 2:** a role held for a period is a node of its own, with a start date, the party and the kind of role.
 2. **Step 9, items 8 to 11:** a negative test asserts the violation it means; when a decision fixes a set, the build and the shapes guard the set itself; each guard's reach is stated exactly; a rule over a hierarchy follows the whole chain.
 3. **Step 11, items 9 and 10:** every identity link reaches every identity query, and its test pins both IRIs of each pair; the whole check suite runs before a review.
-4. **§2, Source of truth and scope:** what is derived from material that cannot be published is marked as fact or reading; a source outside the evidence order guides a reading without supporting it; an uncertain identity is not settled in the data, and an owner's "assume" is recorded as an assumption.
+4. **§2, Source of truth and scope:** what is derived from material that cannot be published goes in only with the owner's permission, and is marked as fact or reading; a source outside the evidence order guides a reading without supporting it; an uncertain identity is not settled in the data, and an owner's "assume" is recorded as an assumption.
 5. **§2, Modules:** two modules that hold the same thing are linked, not merged, with a hand-held match checked by the build where the IRIs differ.
 6. **§5.6, Counts:** a sweep searches for the claim, not for the words the change used.
 7. **§7:** one paragraph on how the Customer domain ran, naming the review findings that produced these rules.
