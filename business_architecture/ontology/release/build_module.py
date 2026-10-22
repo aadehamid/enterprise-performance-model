@@ -220,8 +220,14 @@ def released_closure(name):
     """Every released package this module's check loads: its dependencies at the versions it names,
     and theirs (from each selected release's manifest), down to core. Where two paths name different
     versions of one module, the highest is loaded, so a graph never holds two releases of one module."""
+    return closure(dependencies(name))
+
+
+def closure(depends_on):
+    """The released packages that the given dependencies load, by the rule of released_closure. A
+    written package's closure starts from its own manifest: closure(released_requires(name, version))."""
     found = {}
-    todo = list(dependencies(name).items())
+    todo = list(depends_on.items())
     while todo:
         dep, version = todo.pop()
         if dep in found and tuple(map(int, found[dep].split("."))) >= tuple(map(int, version.split("."))):
