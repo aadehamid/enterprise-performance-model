@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 export PYTHONDONTWRITEBYTECODE=1
 run() { echo "--- $*"; "$@"; }
-with_deps() { uv run -q --with pytest --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" "$@"; }
+with_deps() { uv run -q --with pytest --with pytest-xdist --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" "$@"; }
 
 # Snapshot the tree: status lines plus the content of every modified or untracked
 # file, so a check that rewrites a file that was already modified is caught too.
@@ -83,7 +83,10 @@ done
 (cd business_architecture/ontology/party && run with_deps python build_party.py --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
-run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py scripts/test_published_figures.py \
+# The test files run in parallel, each test on whichever worker is free (pytest-xdist): the same tests and
+# assertions as a serial run, in about a third of the time. CHECK_WORKERS overrides the worker count;
+# CHECK_WORKERS=0 runs them serially.
+run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}" --maxprocesses=8 --dist load scripts/test_epm_facts.py scripts/test_published_figures.py \
   "$step4/scoped-sequence/test_scoped_sequences.py" business_architecture/ontology/release/test_build_core.py \
   business_architecture/ontology/release/test_build_module.py \
   business_architecture/ontology/release/test_build_core_next.py \
