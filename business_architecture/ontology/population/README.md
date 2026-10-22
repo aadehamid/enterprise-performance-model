@@ -1,6 +1,6 @@
 # population: what a measure counts
 
-What each measure includes and excludes, in business words, where its public source states it (competency question 28). The statements hang on the kpi module's measure IRIs, so the released kpi package stays as it is. EPM-DEC-001-0062 records the choice.
+What each measure includes and excludes, in business words, where its public source states it (competency question 28). The statements hang on the kpi module's measure IRIs, so the released kpi package stays as it is. *2026-10-22:* `kpi` 1.1.0 carries these files in its package (EPM-DEC-001-0079). EPM-DEC-001-0062 records the choice.
 
 | File | What |
 |---|---|

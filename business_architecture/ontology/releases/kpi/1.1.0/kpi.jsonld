@@ -1,0 +1,5619 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.2.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC KPI Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/1.1.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.1.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "ontology-playbook.md, Step 7 (measures are definitions, never values); EPM-DEC-001-0005, EPM-DEC-001-0043"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure definition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What a measure is, before anyone computes it: its meaning, kind, grain, basis and the processes it informs. A definition, never a value: the systems that compute the measure hold its values."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042; business_architecture/reference/downstream-peers/kpi-classification-evidence.md"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure kind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The eight kinds a measure in the kpi module can be, assigned by EPM-DEC-001-0042's five tests."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0040, EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The measures the kpi module defines: the planning team's measures and the measures MPC publishes."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/basis",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042, decision 8"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "basis"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "How the measure is formed, in words: its numerator, its denominator and its unit. A description, not a formula the ontology computes."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/classificationReason",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "classification reason"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Why the measure has its kind, in one or two sentences."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/classificationTest",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "classification test"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The number of the test, from 1 to 5, in EPM-DEC-001-0042's rule that assigned the measure's kind."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 30; EPM-DEC-001-0042, decision 7"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "compared against"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The references the measure is asked against: plans, forecasts, plan versions or history. For a plan-variance diagnostic the comparison is part of the measure. For any other kind it is a way of asking for the same measure, not a second measure."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/grain",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 29"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "grain"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The time and dimension the measure is stated at, for example daily by refinery."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/informsProcess",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 33, 37 and 38; EPM-DEC-001-0043"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "informs process"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process the measure informs. The link is context for where the measure is used, not a certification that the process owns or computes it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "KPI candidate"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "True when industry practice and public information make the measure a strong KPI candidate. It becomes a KPI only by a recorded decision that names its target and owner."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/alert",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An event raised when a condition is met, for someone to notice or act on."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "alert"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Alert"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/decision-support-indicator",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A value computed from market prices and the planning model to start or rank a decision, with no performance target."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "decision-support-indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Decision-support indicator"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/kpi",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "key performance indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A measure the business names as one of the few measures of a stated objective, with a target and an accountable owner."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "kpi"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "KPI"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An external price, spread or benchmark that the region cannot influence."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "market-indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market indicator"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/not-a-measure",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A capability request on the measure list that is not a measure, parked for a later phase."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "not-a-measure"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Not a measure"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A recurring performance measure of a unit, asset or flow, watched by exception."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "operational-metric"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Operational metric"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Actual results against a plan, forecast, plan version or history, for one period."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "plan-variance-diagnostic"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Plan-variance diagnostic"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A list, status or schedule of activities and dates, with no formula, unit or time grain."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "tracker-or-report"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Tracker or report"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/ad-hoc-plan-trends",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A future capability for ad hoc trends of plan data and a chatbot over the planning database."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ad-hoc-plan-trends"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Business Planning Data Trends (Ad Hoc / Chatbot)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A future capability: ad hoc trends and a chatbot over the planning database. Parked for a later phase."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/not-a-measure"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/additional-market-prices",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 51; KI-27"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Further benchmark, crude, renewables and NGL prices used in planning."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "additional-market-prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Additional Market Prices (Benchmark, Crude, Renewables, NGLs)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "as published"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Further benchmark, crude, renewables and NGL prices. External market observations."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 11"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/capital-project-evaluations",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23; KI-02"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Open capital project evaluations against their due dates."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "capital-project-evaluations"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Capital Projects Evaluation"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "completion date against due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Open project evaluations against due dates. Its linked alert (missed deadline, X days) is an alert; a count of late evaluations would be an operational metric."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/clean-product-make",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 53; DP-01 p. 42"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "clean products production"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Total clean product output by refinery over the plan horizon."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "clean-product-make"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Production Make (Clean Products)"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not a yield: it is a volume."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "clean products production (bbl/d)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Clean product output by refinery. Phillips 66 sets a clean product yield target, which would make a yield ratio a candidate at that company, but the list's measure is a volume with no target."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; prior forecast"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 5 (yields); Phillips 66 clean product yield target"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 Item 7 pp. 46, 51; KI-27; KI-28"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "3-2-1 crack"
+   },
+   {
+    "@language": "en",
+    "@value": "crack spread"
+   },
+   {
+    "@language": "en",
+    "@value": "the crack"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Benchmark crack spreads: the market value of products made from a set ratio of crude, less the crude's price."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crack-spreads"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Crack Spreads Pricing"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not realized refinery margin, not margin capture, and not MPC's R&M Margin Indicator. A 3-2-1 built from separate product and crude legs is not the published series."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "products price - crude price, for a stated crude:product ratio (for example 3-2-1)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC files crack spreads under market indicators and calls margins dependent on factors beyond its control. The list's cracks (NYMEX 3-2-1, USGC 3-2-1 MEH ex-RIN, Chicago WTI 3-2-1 ex-RIN) are benchmarks, not performance."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "30-day trend; 5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by market hub"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/margin-capture"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-indicator"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 10 (Gulf Coast, Mid-Continent, West Coast and blended 3-2-1 cracks)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/excludes": [
+   {
+    "@language": "en",
+    "@value": "The market cost of RINs, in MPC's 10-K regional and blended crack spreads."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "The crude and product benchmarks of each series' recipe (the market-data module's series)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 10"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crude-prices",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 pp. 46, 51; KI-27"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "crude markers"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Crude oil benchmark prices and differentials, with related futures (natural gas, heating oil, RBOB)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crude-prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Crude Market Pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "$/bbl, $/MMBtu or cents/gal as published"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Crude benchmarks and differentials (Brent, WTI, Bakken at Patoka vs WTI CMA, natural gas, heating oil, RBOB). External market observations."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "30-day trend; % change threshold"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by marker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 11, 12 (crude markers; sweet and sour differentials)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crude-utilization",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 53; MPC-S16; KI-13; KI-14; KI-16; DP-01"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "crude capacity utilization"
+   },
+   {
+    "@language": "en",
+    "@value": "refinery utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Fresh crude charged to the crude units as a share of crude capacity, for one refinery and month."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crude-utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Crude Utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not unit utilization: it covers only the fresh crude charged to the crude units. Also not MPC's published figure, which is company-wide and uses average calendar-day capacity."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crude throughput (bbl/d) / constrained crude capacity (bbl/d); MPC divides by average calendar-day capacity"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Crude unit utilization is the headline refining measure that MPC, EIA and Solomon report and that Phillips 66 targets, so it is the strongest candidate. It stays an operational metric until a target and owner are recorded. The planner's denominator (constrained capacity) differs from MPC's (average calendar-day capacity)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "submitted mid-term plan; same month in prior years (2 to 5 years)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "monthly, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/unit-utilization"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 2 (crude oil capacity utilization, average calendar-day capacity)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crude-value-to-breakeven",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "VT-01; VT-02; VT-04; VT-09; VT-12; VT-20"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "V2Be"
+   },
+   {
+    "@language": "en",
+    "@value": "incremental crude value"
+   },
+   {
+    "@language": "en",
+    "@value": "variance to breakeven"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A screen of each crude's breakeven value from the planning model against its delivered price, by refinery, to pick incremental barrels for a full evaluation."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "crude-value-to-breakeven"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Crude Value to Breakeven"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not a measure of how well crude was bought: that is margin capture or a backcast."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "breakeven value ($/bbl) against delivered price ($/bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A crude-selection screen: each crude's breakeven value from the LP model against its delivered price, flagging incremental barrels for a full LP evaluation. It moves with the market and starts a decision; it has no target. The decision owner asked for this to be researched (Part B, Q8)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "delivered crude price"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "monthly, by refinery and crude"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/decision-support-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/margin-capture"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none (MPC names crude selection as a lever; margin capture is its after-the-fact counterpart)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/demand-vs-forecast",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-25; KI-26; KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "sales vs forecast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Actual sales less forecast sales for the period, against the plan version named."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "demand-vs-forecast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Demand vs. Forecast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not forecast accuracy over many periods, which would be a separate measure."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "actual demand - forecast demand (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Actual sales less forecast for one period. A single-period gap is a diagnostic (Gartner Correct tier). Forecast accuracy over many periods, with a target, could be a KPI (Gartner puts it top-tier as a driver); that would be a separate measure."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; short-term LP plan; mid-term vs short-term plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by product and region"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 18 (refined product sales volumes)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/distillate-prices",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 51; KI-27"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "ULSD prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Benchmark distillate and jet spot prices at named hubs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distillate-prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Distillate Market Pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "$/gal as published"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Benchmark distillate prices (NYH, USGC and Chicago ULSD; USGC jet). External market observations."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "30-day trend; 5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by hub"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 11 (benchmark spot prices)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/distillate-yield",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 53; KI-04"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "diesel yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Distillate produced (ULSD, kerosene, jet) as a share of crude and feed charged."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distillate-yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Distillate Yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not distillate sales: it counts production."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distillate production (bbl) / total crude and feed charged (bbl) x 100"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Distillate output as a share of crude and feed charged. MPC reports yields as operating statistics, not as key measures; no target or owner is recorded."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "opening forecast plan; latest weekly schedule; short-term LP plan; distribution plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 5 (distillates, mbpd)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/distribution-cost-per-barrel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 pp. 46, 51, 52"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Distribution costs, excluding depreciation and amortization, per barrel of net refinery throughput; mostly long-term agreements with MPLX."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution-cost-per-barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Distribution Costs per Barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not a contract tariff: a disclosed aggregate cost per barrel."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution costs ($) / net refinery throughput (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Mostly MPLX agreements with minimum commitments, so largely contracted rather than managed day to day."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prior periods"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly and annual, company"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 15"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/excludes": [
+   {
+    "@language": "en",
+    "@value": "Depreciation and amortization."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "Distribution costs, mainly the long-term agreements with MPLX, including their minimum commitments."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 15"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/dpo-input-variance-alert",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-31; KI-04"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An alert raised when a distribution-plan input table changes by more than a set share from the week before."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpo-input-variance-alert"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "WoW Variances on DPO Input Tables"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "week-on-week change above X%"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Raised when an input table changes by more than X% week on week. It fires on a condition, so it is an alert, not a series."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prior week's input tables"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "weekly, by input table"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/alert"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/gasoline-prices",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 51; KI-27"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "CBOB prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Benchmark gasoline spot prices at named hubs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "gasoline-prices"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gasoline Market Pricing"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "$/gal as published"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Benchmark gasoline prices (NYH, USGC and Chicago CBOB). External market observations."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "30-day trend; 5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by hub"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 11 (benchmark spot prices)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/gasoline-yield",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 53; KI-04"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "gas yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Gasoline produced (finished and blendstock) as a share of crude and feed charged."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "gasoline-yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Gasoline Yield"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not gasoline sales: it counts production."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "gasoline production (bbl) / total crude and feed charged (bbl) x 100"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Gasoline output as a share of crude and feed charged. Same reasoning as Distillate Yield."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "opening forecast plan; latest weekly schedule; short-term LP plan; distribution plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 5 (gasoline, mbpd)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/interregional-volumes",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "interregional movements"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Total product moved between regions on named segments, by product and mode."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "interregional-volumes"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Interregional Volume Totals"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "volume transferred between regions (bbl) per period"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Volume moved between regions per period, by product and mode. A descriptive activity measure (SCOR) used to see when movements must change."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; 5 years of history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by segment, product and mode"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/key-activity-tracker",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Critical planning activities and meetings against their due dates."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "key-activity-tracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Key Activity Tracker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "completion date against due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Critical activities and meetings against due dates."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/margin-capture",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S07 p. 5; MPC-S16"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "capture"
+   },
+   {
+    "@language": "en",
+    "@value": "refining margin capture"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Reported R&M margin as a share of the R&M Margin Indicator: how much of the benchmark margin was realized."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "margin-capture"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Margin Capture"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not the crack spread and not the indicator: it is the ratio of realized margin to the indicator."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "R&M margin / R&M Margin Indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Reported R&M margin divided by the R&M Margin Indicator. MPC calls it \"an operations metric\" and highlights it in the proxy, but sets no bonus target on it. It is the controllable measure built on the market indicators."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "R&M Margin Indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly and annual, company"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 8"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/excludes": [
+   {
+    "@language": "en",
+    "@value": "Regional capture, which MPC does not publish."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "The company's reported R&M margin as a share of the R&M Margin Indicator."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 8"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/marine-utilization",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPLX-S01 p. 56; KI-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Volume moved by barge and vessel as a share of available marine capacity."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "marine-utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marine Utilization"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "volume moved by marine (bbl) / available marine capacity (bbl) x 100"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Share of available barge and vessel capacity used. Actuals are not yet available in the prompt month."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; mid-term vs short-term plan; 5 years of history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by node and material"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 31 (barge and towboat counts; no utilization published)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/marketing-performance-vs-plan",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Marketing's results against the marketing plan."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "marketing-performance-vs-plan"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Marketing Performance vs. Plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Marketing's results against its plan. Everything else about it is TBD in the list; the class follows the name."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "marketing plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-5-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/mtp-submission-tracker",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "MTP submission"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Mid-term plan submissions against their due dates."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mtp-submission-tracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MTP: Plan Submission"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "completion date against due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Mid-term plan submissions against due dates."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "due date"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/ngl-balance",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "NGL commodities"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Each NGL product's balance at the refinery (opening, production, consumption, transfers) compared with planned purchases and make."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ngl-balance"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "NGL Commodities (Plan, Consumption, Transfers)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ending balance = opening + production - consumption +/- transfers"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "An NGL balance (opening plus production less consumption, plus or minus transfers) compared with planned purchases and make for the month."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "opening schedule forecast plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by refinery and NGL product"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/opening-inventory-vs-plan",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Actual opening inventory against the planned opening level for the next month."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "opening-inventory-vs-plan"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Opening Inventory vs. Plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "actual opening inventory (bbl) against planned opening inventory (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Actual opening inventory against the planned level, to judge what must change to stay within plan."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan for M+1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "monthly, by node and product"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-7"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/pipeline-utilization",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 54; MPLX-S01 p. 56; KI-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "line utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Pipeline throughput as a share of pipeline capacity, by distribution node and material."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "pipeline-utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Pipeline Utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not pipeline throughput, which MPC and MPLX publish: it is a share of capacity."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "actual throughput (bbl/d) / planned capacity (bbl/d) x 100"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Share of pipeline capacity used. MPC and MPLX publish throughput, not utilization, and no target or owner is recorded. The mid-term view also communicates constraints to MPLX."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; mid-term vs short-term plan; 3 to 5 years of history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by pipeline segment, node and material"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 28, 29 (pipeline throughput; no utilization published)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/plan-overview-key-changes",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23; KI-06"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A summary of the largest plan changes and the economic drivers behind them."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "plan-overview-key-changes"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Plan Overview and Key Changes"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "top changes by economic impact"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A summary of the top changes and their economic drivers. It has no single formula, unit or grain."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prior plan version"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/plan-vs-historical-averages",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-26; KI-04"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "historical product make vs MTP"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The submitted mid-term plan for a month compared with the same month's average over prior years, by product (crude, gasoline, diesel, jet)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "plan-vs-historical-averages"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Current Plan vs. Historical Averages (Crude, Gas, Diesel, Jet)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "plan volume against the same-month average of 2 to 5 prior years"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "The submitted plan compared with history for the same month. A comparison of a plan with a reference, used to test the plan, not to score performance."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "same-month average over prior years"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "monthly, by refinery and product"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-6-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 5 (refined product yields by group)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/price-comparison",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 46; KI-27"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "spread"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The difference between two chosen market markers over time."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "price-comparison"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Price Comparison"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "price A - price B"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "The difference between two chosen markers. A spread of two market prices is still a market observation."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "any second marker; 5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily, by marker pair"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 12 (differentials)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/production-rate-record",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-31"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "rate records"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A notification when a refinery sets a new clean products production rate record."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "production-rate-record"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Production Rate Records"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "current rate > previous record"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A notification when a refinery sets a new clean products rate record. An event notification rather than an alarm, because a record is not an abnormal condition."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 2
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "previous record"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "event"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/alert"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/refining-opex-per-barrel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 51"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "opex per barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Refining operating costs, excluding planned turnaround and depreciation and amortization, per barrel of throughput."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "refining-opex-per-barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Refining Operating Costs per Barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Excludes planned turnaround costs, which have their own measure."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "refining operating costs ($) / throughput (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Excludes turnaround and D&A. A cost measure with quarterly guidance; not a named bonus metric."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly guidance; prior periods"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly and annual, company (net throughput) and region (gross throughput)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/turnaround-cost-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 14"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/excludes": [
+   {
+    "@language": "en",
+    "@value": "Planned turnaround costs, and depreciation and amortization."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "Refining operating costs, driven mainly by the energy the refineries use and the level of maintenance. The company figure is per barrel of net throughput; the regional figure is per barrel of gross throughput, which includes inter-refinery transfer volumes."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 14"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/regional-site-monitoring",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A future view of plant status across the region, combining operations notes with unit performance."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "regional-site-monitoring"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Regional / Site Monitoring"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A future capability: one view of plant status with operations notes. Parked for a later phase."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/not-a-measure"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/relative-adjusted-ebitda-per-barrel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S16 p. 49; MPC-S18"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's annual cash bonus Adjusted EBITDA per barrel of total throughput, as a percentile against a peer group."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "relative-adjusted-ebitda-per-barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Relative Adjusted EBITDA per Barrel of Total Throughput"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ACB Adjusted EBITDA ($) / total throughput (bbl), percentile"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "An annual cash bonus metric (30%) with a target: MPC has designated it."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "peer percentile"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "annual, company against peers"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/kpi"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 20"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "ACB Adjusted EBITDA per barrel of total throughput, against the applicable reporting segments of Chevron, Exxon Mobil, HF Sinclair, PBF Energy, Phillips 66 and Valero Energy."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 20"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/relative-refining-margin-by-region",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S16 p. 49; MPC-S18"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Refining EBITDA per barrel of total throughput for each region, ranked against the same regions of Phillips 66 and Valero."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "relative-refining-margin-by-region"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Relative Refining Margin per Barrel by Region"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not R&M margin per barrel: it is built on Refining EBITDA."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "regional Refining EBITDA ($) / total throughput (bbl), ranked"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "An annual cash bonus metric (10%) with a target and accountable executives: MPC has designated it, so it passes test 5 on public evidence."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Phillips 66 and Valero regions"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "annual, by region against peers"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/kpi"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 19"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "Refining EBITDA per barrel of total throughput for MPC's Gulf Coast, Mid-Continent and West Coast regions, against the corresponding regions of Phillips 66 and Valero Energy."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 19"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-indicator",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S07 p. 5"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "R&M Margin Indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's hypothetical R&M margin built from market data and operational guidance, posted monthly."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "rm-margin-indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "R&M Margin Indicator"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not realized margin."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "not published"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A hypothetical margin built from market data and MPC's operational guidance, posted monthly. Its formula is not published."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 3
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "monthly, company"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-7-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/market-indicator"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 9"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/rm-margin-per-barrel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 51; MPC-S17; KI-01"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "R&M margin per barrel"
+   },
+   {
+    "@language": "en",
+    "@value": "refining margin per barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "MPC's Refining & Marketing margin (sales revenue less the cost of refinery inputs and purchased products) per barrel of net refinery throughput."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "rm-margin-per-barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "R&M Margin per Barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not a crack spread: it is realized, not a market benchmark."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "R&M margin ($) / net refinery throughput (bbl); from 2026 the margin includes impacts from derivative activity"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC's non-GAAP realized margin per barrel of net refinery throughput, by region. A financial result measure (Parmenter's RI); MPC's bonus uses a related EBITDA measure instead. The definition changed in 2026 to include derivatives, so it is versioned."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "R&M Margin Indicator; prior periods"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly and annual, company and region"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-3-5-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crack-spreads"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 7"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/excludes": [
+   {
+    "@language": "en",
+    "@value": "Inter-refinery transfer volumes, which the regional per-barrel figures leave out of net refinery throughput."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "Sales revenue less the cost of refinery inputs and purchased products, per barrel of net refinery throughput. From 2026 the margin includes impacts from derivative activity."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 7 and finding 5"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/sales-purchase-status",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A trend of rack sales and purchase statuses from marketing, showing statuses held for more than a week."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "sales-purchase-status"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Sales/Purchases Status Control"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A trend of rack sales and purchase statuses that stay in place for over a week. A status view, not a quantity with a target."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/supply-vs-forecast",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-26; KI-23"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "purchases vs forecast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Actual purchases less forecast purchases for the period, against the plan version named."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "supply-vs-forecast"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Supply vs. Forecast"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "actual supply - forecast supply (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Actual purchases less forecast for one period. Same reasoning as Demand vs. Forecast."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 4
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan; short-term LP plan; mid-term vs short-term plan"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by product and region"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/plan-variance-diagnostic"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/swing-stream-disposition",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-04"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The volume of swing streams and where they are routed, as they shift distillate and gasoline make."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "swing-stream-disposition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Swing Stream Disposition"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "volume (bbl) by stream and routing; calculation not yet set"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A volume of swing streams that shape distillate and gasoline make. The calculation is still TBD in the list; the class holds if it is a volume per period."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none (no plan comparison wanted); 5-year history"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "daily and month to date, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/tar-activities-tracker",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "VT-16; VT-20; VT-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "TAR tracker"
+   },
+   {
+    "@language": "en",
+    "@value": "turnaround tracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A list of turnaround activities planned for the next four months, by refinery."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "tar-activities-tracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "TAR Activities Tracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not a turnaround optimization: it tracks the activities already planned."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A list of turnaround activities for the next four months. The Mid-Term Planner's turnaround work is optimization of windows and sequence, not tracking (Part B, Q9); its measures are listed separately below."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 1
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "next 4 months"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/L2-refinery-asset-reliability-and-turnaround-coordination"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/tracker-or-report"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 16 (planned turnaround costs)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/turnaround-cost-per-barrel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC-S01 p. 85; VT-26; VT-28"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "turnaround cost per barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Planned turnaround and major maintenance costs, expensed as incurred, per barrel of net refinery throughput."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "turnaround-cost-per-barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Planned Turnaround Costs per Barrel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not refining operating costs per barrel, which exclude planned turnaround costs. Also not an annualized turnaround cost: MPC expenses turnarounds when incurred, so the figure rises in heavy turnaround years."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "planned turnaround costs ($) / throughput (bbl)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "Expensed as incurred, so it rises in heavy turnaround years; an annualized cost (Solomon) compares years and peers more fairly. A turnaround outcome the Mid-Term Planner's sequencing affects (Part B, Q9)."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly guidance; prior periods"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "quarterly and annual, company and region"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/L2-refinery-asset-reliability-and-turnaround-coordination"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/refining-opex-per-barrel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 16"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/includes": [
+   {
+    "@language": "en",
+    "@value": "Planned turnaround and other major maintenance costs, expensed in the period incurred: contractor repair services, materials and supplies, equipment rentals and MPC's labor costs."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/population/populationEvidence": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpc-performance-measures-evidence.md, row 16"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/turnaround-lost-margin",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "VT-18; VT-26"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "lost profit opportunity"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The margin given up because of planned turnaround downtime."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "turnaround-lost-margin"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Lost Margin from Turnarounds"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "margin of the throughput lost to planned downtime ($)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "The margin given up for planned downtime: the quantity a mid-term turnaround optimization minimizes. Named in academic and benchmarking practice, not by MPC."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "per turnaround and annual, by refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/L2-refinery-asset-reliability-and-turnaround-coordination"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": true
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "none (MPC does not publish it)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/unit-utilization",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "KI-04; KI-26; KI-13; MPC-S01"
+   }
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "unit rates"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process unit's throughput as a share of its constrained capacity, for one refinery."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/Measures"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "unit-utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Unit Utilization"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#scopeNote": [
+   {
+    "@language": "en",
+    "@value": "Not crude utilization: it covers every unit, not only the crude unit, and uses constrained capacity."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/basis": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "unit throughput (bbl/d) / constrained unit capacity (bbl/d), averaged over the period"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationReason": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "A unit-level ratio of throughput to constrained capacity, watched by exception for units missing plan. Unit-level plant utilization sits in Gartner's Correct tier; no target or owner is recorded."
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/classificationTest": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#integer",
+    "@value": 5
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/comparedAgainst": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "plan (prompt schedule; short-term LP handover); prior plan version (mid-term vs short-term); last hour and last 24 hours"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/grain": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "hourly and daily, by unit and refinery"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/informsProcess": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-7-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/kpiCandidate": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "@value": false
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/measureKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure-kind/operational-metric"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/measure/crude-utilization"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "MPC 2 (company crude utilization only; no unit figure published)"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/usedBy": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/measureKind",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0042"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "measure kind"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The kind of measure, from the measure-kind code list. Being a KPI is one kind: a designation with a target and an owner, not a property of the formula."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/notToBeConfusedWith",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency questions 32 and 36"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "not to be confused with"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A nearby measure that people take for this one but that means something else. The skos:scopeNote says how they differ."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/distribution-planner",
+  "@type": [
+   "http://www.w3.org/ns/org#Role"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Plans product supply, demand, transport and inventory across the distribution network."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Distribution Planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planHorizon": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prompt to M+3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planType": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "distribution plan (DPO)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/mid-term-planner",
+  "@type": [
+   "http://www.w3.org/ns/org#Role"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Builds and submits the mid-term plan, compares it with the short-term plans and history, and sequences turnarounds and capital evaluations."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Mid-Term Planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planHorizon": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "M+4 to M+36"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planType": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mid-term plan (MTP)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/prompt-planner",
+  "@type": [
+   "http://www.w3.org/ns/org#Role"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Plans the prompt month for the region's refineries from the latest schedule, and watches hourly and daily execution against it."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Prompt Planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planHorizon": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prompt month"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planType": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "prompt-month refinery schedule (APS)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/persona/short-term-planner",
+  "@type": [
+   "http://www.w3.org/ns/org#Role"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Builds the short-term refinery LP plan and hands it to refinery planning, and checks month-to-date performance against it."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Short-Term Planner"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planHorizon": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "M+1 to M+3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/kpi/planType": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "short-term refinery LP plan (XPIMS)"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/planHorizon",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0040"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "http://www.w3.org/ns/org#Role"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "plan horizon"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The months a planning persona plans for, counted from the current month M."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/planType",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0040"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "http://www.w3.org/ns/org#Role"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "plan type"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The plan a planning persona builds or works from."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/publicCounterpart",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/reference/mpc/mpc-performance-measures-evidence.md"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "public counterpart"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2001/XMLSchema#string"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The measure MPC publishes that is closest to this one, by its number in mpc-performance-measures-evidence.md, or none."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/kpi/usedBy",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0040"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "used by"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/ns/org#Role"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A planning persona that uses the measure. A persona is a role, not a person."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/population/excludes",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 28; EPM-DEC-001-0062"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "excludes"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What the measure leaves out, in business words, as its source states it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/population/includes",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "competency question 28; EPM-DEC-001-0062"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "includes"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "What the measure counts, in business words, as its source states it."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/population/populationEvidence",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#DatatypeProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0062"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/kpi/MeasureDefinition"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "population evidence"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Where the population statements come from."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/kpi-classification-evidence",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "KPI or operational metric, business_architecture/reference/downstream-peers/kpi-classification-evidence.md"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/mpc-performance-measures-evidence",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "MPC performance measures, business_architecture/reference/mpc/mpc-performance-measures-evidence.md"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18",
+  "@type": [
+   "http://purl.org/dc/terms/BibliographicResource"
+  ],
+  "http://purl.org/dc/terms/alternative": [
+   {
+    "@language": "en",
+    "@value": "VCO DSV"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "Value Chain Optimization Decision Support and Visualization (VCO DSV): the planning team's measure list, as the decision owner sent it on 2026-10-18; held outside the repository (EPM-DEC-001-0040)"
+   }
+  ]
+ }
+]

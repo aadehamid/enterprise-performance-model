@@ -1,0 +1,152 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/kpi/measure-kind/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/kpi/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:CandidateIsOperational a sh:NodeShape ;
+    sh:message "Only an operational metric can be a KPI candidate." ;
+    sh:or ( [ sh:hasValue false ;
+                sh:path kpi:kpiCandidate ] [ sh:hasValue kind:operational-metric ;
+                sh:path kpi:measureKind ] ) ;
+    sh:targetClass kpi:MeasureDefinition .
+
+shp:KindOnlyOnMeasures a sh:NodeShape ;
+    sh:class kpi:MeasureDefinition ;
+    sh:message "Only a measure definition has a measure kind." ;
+    sh:targetSubjectsOf kpi:measureKind .
+
+shp:Measure a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A measure has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kpi:kpiCandidate ],
+        [ sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 5 ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:path kpi:classificationTest ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kpi:classificationReason ],
+        [ sh:class org:Role ;
+            sh:minCount 0 ;
+            sh:path kpi:usedBy ],
+        [ sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path kpi:informsProcess ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path kpi:comparedAgainst ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path kpi:grain ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path kpi:basis ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path kpi:publicCounterpart ],
+        [ sh:class kpi:MeasureDefinition ;
+            sh:minCount 0 ;
+            sh:path kpi:notToBeConfusedWith ],
+        [ sh:message "A measure cites its source." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path dcterms:bibliographicCitation ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path pop:includes ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:message "A measure has exactly one definition." ;
+            sh:minCount 1 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path pop:excludes ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path pop:populationEvidence ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:hasValue kpi:Measures ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:in ( kind:kpi kind:operational-metric kind:plan-variance-diagnostic kind:market-indicator kind:decision-support-indicator kind:tracker-or-report kind:alert kind:not-a-measure ) ;
+            sh:maxCount 1 ;
+            sh:message "A measure has exactly one kind from the measure-kind list." ;
+            sh:minCount 1 ;
+            sh:path kpi:measureKind ] ;
+    sh:targetClass kpi:MeasureDefinition .
+
+shp:NoGrainWithoutAMeasure a sh:NodeShape ;
+    sh:message "A tracker, report or non-measure has no grain." ;
+    sh:or ( [ sh:maxCount 0 ;
+                sh:path kpi:grain ] [ sh:not [ sh:in ( kind:tracker-or-report kind:not-a-measure ) ;
+                        sh:path kpi:measureKind ] ] ) ;
+    sh:targetClass kpi:MeasureDefinition .
+
+shp:NoValuesOnMeasures a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:altLabel skos:definition skos:scopeNote skos:notation skos:inScheme kpi:measureKind kpi:kpiCandidate kpi:classificationTest kpi:classificationReason kpi:usedBy kpi:informsProcess kpi:comparedAgainst kpi:grain kpi:basis kpi:publicCounterpart kpi:notToBeConfusedWith dcterms:source dcterms:bibliographicCitation pop:includes pop:excludes pop:populationEvidence ) ;
+    sh:message "A measure carries its definition, classification, links and population, never a value (EPM-DEC-001-0005)." ;
+    sh:targetClass kpi:MeasureDefinition .
+
+shp:Persona a sh:NodeShape ;
+    sh:class org:Role ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:definition ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kpi:planType ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path kpi:planHorizon ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ] ;
+    sh:targetSubjectsOf kpi:planType .
+

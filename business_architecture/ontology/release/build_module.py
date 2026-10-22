@@ -57,13 +57,15 @@ MODULES = {
         "description": "Measure definitions, classified by kind, with the planning personas who use them and the core processes they inform (Step 7). Definitions only, never values.",
         # 1.0.0 was the module's first release, a major approved by the decision owner (EPM-DEC-001-0043).
         # 1.0.1 is a patch: the planner list's source names VCO DSV (EPM-DEC-001-0040).
-        "version": "1.0.1", "stage": None, "issued": "2026-10-19",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md", "You have my approval to keep going and release things as needed. while I am out"),
-        "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl"],
+        # 1.1.0 is a minor approved with the release plan: the eight measure populations join the package,
+        # the measure shape is closed, and it requires core 2.2.0 (EPM-DEC-001-0079).
+        "version": "1.1.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl", "population/vocabulary.ttl", "population/population.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.1.0"},
-        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043"],
+        "pins": {"core": "2.2.0"},
+        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043", "EPM-DEC-001-0062", "EPM-DEC-001-0079"],
     },
     "party": {
         "title": "LSC Party Module",
