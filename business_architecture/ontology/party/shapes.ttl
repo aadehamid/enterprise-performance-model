@@ -4,7 +4,8 @@
 # own list, and no class other than Person and Organization made a subclass of party. They also
 # check the module's systems, data flows, sourcings and system attributes (EPM-DEC-001-0069), and that
 # only a business lifecycle stage is done by processes or corresponds to a system stage, only a
-# system stage is held by systems, and each stage has exactly the links EPM-DEC-001-0070 decides.
+# system stage is held by systems, and each of the eleven decided stages that holds at least one
+# lifecycle link has exactly the links EPM-DEC-001-0070 decides. The build checks the rest.
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -221,10 +222,12 @@ partysh:StageCorrespondence a sh:NodeShape ;
     sh:property [ sh:path party:correspondsTo ; sh:node [ sh:property [ sh:path skos:inScheme ; sh:hasValue party:system-stage ] ] ;
                   sh:message "A business lifecycle stage corresponds only to a system stage." ] .
 
-# Each stage with lifecycle links has exactly the links EPM-DEC-001-0070 decides (items 2 to 4), no
-# more and no fewer: a process or system that exists but belongs to another stage fails, and so does
-# one that does not exist. A graph without the lifecycle (records or examples alone) is not checked
-# here; build_party.py fails if a stage has no link.
+# Each of the eleven stages EPM-DEC-001-0070 names, when it holds at least one stageProcess,
+# stageSystem or correspondsTo link, has exactly the links items 2 to 4 decide, no more and no fewer:
+# a process or system that exists but belongs to another stage fails, and so does one that does not
+# exist. A stage is not checked here when it holds none of those links (a graph of records or examples
+# alone, or a lifecycle with every link of one stage removed), nor is a link under another predicate
+# or a stage the record does not name. build_party.py rejects each of those in lifecycle.csv.
 
 partysh:Decided-lifecycle-stage-prospect a sh:NodeShape ;
     sh:target [ a sh:SPARQLTarget ; sh:prefixes partysh: ;

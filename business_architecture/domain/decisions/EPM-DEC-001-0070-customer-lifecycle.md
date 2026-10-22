@@ -55,6 +55,6 @@ This record is Claude's, under the delegation: "yes, extend the delegation to st
 
 ## Consequences
 
-- `party/lifecycle.csv` is the source of the links. `build_party.py` builds `lifecycle.ttl` from it, and fails unless each process is in core 2.1.0, each system is a customer system, each stage has a link, and each stage has exactly the links items 2 to 4 decide. The module's shapes check the same decided links at graph level, so a real process or system on the wrong stage, a process that does not exist, or a correspondence these items do not grant fails. `scripts/check.sh` checks the file is current, and `test_party_lifecycle.py` pins the links by hand.
+- `party/lifecycle.csv` is the source of the links. `build_party.py` builds `lifecycle.ttl` from it, and fails unless each process is in core 2.1.0, each system is a customer system, each stage has a link, and each stage has exactly the links items 2 to 4 decide. The module's shapes check the decided links at graph level for each of the eleven stages that holds at least one lifecycle link, so there a real process or system on the wrong stage, a process that does not exist, or a correspondence these items do not grant fails. A stage with no link, a link under another predicate and a stage these items do not name are rejected by the build only. `scripts/check.sh` checks the file is current, and `test_party_lifecycle.py` pins the links by hand.
 - The regression loads `lifecycle.ttl` with the module.
 - MPC-P10 waits for the decision owner.

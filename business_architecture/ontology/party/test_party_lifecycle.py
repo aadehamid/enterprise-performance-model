@@ -146,14 +146,14 @@ class Shapes(unittest.TestCase):
 class Build(unittest.TestCase):
     """The build rejects a link from the wrong kind of stage before lifecycle.ttl exists."""
 
-    def fails(self, extra_row, drop=None):
+    def fails(self, extra_row=None, drop=None):
         real = build_party.read
 
         def read(name):
             rows = real(name)
             if name != "lifecycle.csv":
                 return rows
-            return [r for r in rows if (r["stage"], r["link"], r["target"]) != drop] + [extra_row]
+            return [r for r in rows if (r["stage"], r["link"], r["target"]) != drop] + ([extra_row] if extra_row else [])
         build_party.read = read
         try:
             rows = build_party.load()
@@ -189,6 +189,10 @@ class Build(unittest.TestCase):
     def test_a_correspondence_the_record_does_not_grant(self):
         row = {"stage": "lifecycle-stage/offboarding", "link": "stage", "target": "system-stage/settle", "note": ""}
         self.assertIn("lifecycle-stage/offboarding stage links ['system-stage/settle'], not the decided []", self.fails(row))
+
+    def test_a_stage_with_every_link_removed(self):
+        # The shapes do not target a stage with no lifecycle link, so the build must reject it.
+        self.assertIn("system-stage/master has no link", self.fails(drop=("system-stage/master", "system", "sap-mdg")))
 
 
 if __name__ == "__main__":
