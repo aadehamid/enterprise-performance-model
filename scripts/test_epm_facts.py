@@ -124,6 +124,12 @@ def test_sweep_takes_the_changed_words_with_their_context():
     assert epm_facts.changed_phrases(diff) == ["at 34 answerable", "and 9 waiting"]
 
 
+def test_sweep_reads_a_deleted_line_that_starts_with_dashes():
+    diff = ("diff --git a/x.md b/x.md\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n"
+            "--- the ledger holds 686 rows\n+-- the ledger holds 409 rows\n")
+    assert epm_facts.changed_phrases(diff) == ["holds 686 rows"]
+
+
 def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path):
     def git(*a):
         subprocess.check_call(["git", "-C", str(tmp_path), *a], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

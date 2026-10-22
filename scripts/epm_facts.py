@@ -10,7 +10,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
-    python3 scripts/epm_facts.py sweep main        # where the wording this branch changed still stands
+    python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
     add --json for machine-readable output
@@ -488,8 +488,10 @@ def changed_phrases(diff):
     word of context on each side, so "34 answerable" or "three matched" is searched, not "34" alone."""
     phrases = []
     for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
-        old = [l[1:] for l in hunk.split("\n") if l.startswith("-") and not l.startswith("---")]
-        new = [l[1:] for l in hunk.split("\n") if l.startswith("+") and not l.startswith("+++")]
+        # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
+        body = re.split(r"^diff --git ", hunk, maxsplit=1, flags=re.M)[0]
+        old = [l[1:] for l in body.split("\n") if l.startswith("-")]
+        new = [l[1:] for l in body.split("\n") if l.startswith("+")]
         a, b = " ".join(old).split(), " ".join(new).split()
         for op, i1, i2, _, _ in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
             if op not in ("replace", "delete"):
@@ -504,8 +506,11 @@ def changed_phrases(diff):
 def sweep(base, root=ROOT):
     """For each phrase the branch changed since base, every place in the tree that still holds it, each marked
     "dated" when its line carries a dated note (*YYYY-MM-DD) and "live" otherwise."""
-    diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD", "--"]
-                                   + [f"*{ext}" for ext in TEXT_FILES], text=True)
+    try:
+        diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD", "--"]
+                                       + [f"*{ext}" for ext in TEXT_FILES], text=True, stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        raise SystemExit(f"sweep: cannot diff {base}...HEAD: {e.stderr.strip()}")
     report = []
     for phrase in changed_phrases(diff):
         hits = [(name, i, "dated" if DATED.search(text) else "live", text) for name, i, _, text in find_hits(phrase, root)]
@@ -519,15 +524,17 @@ def cmd_sweep(args):
         print(json.dumps({"commit": commit(), "base": args.base, "phrases": [
             {"phrase": p, "hits": [dict(zip(("file", "line", "state", "text"), h)) for h in hits]} for p, hits in report]}, indent=2))
         return 0
-    live = [(p, hits) for p, hits in report if any(h[2] == "live" for h in hits)]
-    print(f"commit {commit()}: {len(report)} changed phrase(s) since {args.base}; {len(live)} still found without a dated note")
-    for phrase, hits in live:
-        shown = [h for h in hits if h[2] == "live"]
-        print(f"\n{phrase!r}: {len(shown)} live, {len(hits) - len(shown)} dated")
-        for name, i, state, text in shown[:5]:
-            print(f"  {name}:{i}: {text[:160]}")
-        if len(shown) > 5:
-            print(f"  ... and {len(shown) - 5} more (--json lists them all)")
+    found = [(p, hits) for p, hits in report if hits]
+    places = sum(len(h) for _, h in found)
+    print(f"commit {commit()}: {len(report)} replaced or deleted phrase(s) since {args.base}; {len(found)} still found, "
+          f"in {places} place(s). A dated note on a line does not show which clause it covers: read each place.")
+    for phrase, hits in found:
+        live = sum(1 for h in hits if h[2] == "live")
+        print(f"\n{phrase!r}: {live} without a dated note on the line, {len(hits) - live} with one")
+        for name, i, state, text in sorted(hits, key=lambda h: h[2] != "live")[:5]:
+            print(f"  {name}:{i}: [{'no dated note' if state == 'live' else 'dated note on line'}] {text[:150]}")
+        if len(hits) > 5:
+            print(f"  ... and {len(hits) - 5} more (epm_facts.py --json sweep {args.base} lists them all)")
     return 0
 
 
@@ -1050,7 +1057,7 @@ def main(argv=None):
     p.add_argument("issue", type=int)
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
-    p = sub.add_parser("sweep", help="where the old wording of every line changed since BASE still stands")
+    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE (two or more words) still stands")
     p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
