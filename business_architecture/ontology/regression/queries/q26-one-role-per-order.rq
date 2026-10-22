@@ -1,0 +1,10 @@
+# Q26 Which questions about "who is the customer on this order?" must resolve to one role? (a transaction association names the role; the agent must refuse an answer without one)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX con: <https://w3id.org/lsc/ontology/modules/consumer/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?association ?rule WHERE {
+  party:participatesIn rdfs:domain party:PartyRole ; rdfs:range party:PartyTransactionAssociation .
+  party:PartyTransactionAssociation skos:definition ?association .
+  <https://w3id.org/lsc/ontology/modules/consumer/rule/no-customer-without-role> con:reliesOn party:roleType ; skos:definition ?rule .
+}

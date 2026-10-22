@@ -1,0 +1,7 @@
+# Q21 (must be none) a Ship-To role in the party-role list
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?role WHERE {
+  ?role skos:inScheme party:party-role ; skos:prefLabel ?label .
+  FILTER(CONTAINS(LCASE(STR(?label)), "ship"))
+}

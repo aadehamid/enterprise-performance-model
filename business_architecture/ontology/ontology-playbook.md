@@ -1472,6 +1472,8 @@ owner made them the source author's backlog.
   customer questions (Q19 to Q26) wait on the plan's pull request 5, which
   answers them after the `party` module and its data (pull requests 2 to 4;
   EPM-DEC-001-0067, item 13); only Q17 still waits on the owner.
+  The plan's pull request 5 then made them answerable: 42, 1 and 1
+  (EPM-DEC-001-0071).
   *2026-10-20:* the decision owner then supplied MPC Economics' own crack
   spread definition and made it the primary source; the module grew to 13
   series, and two planner names moved to series that deduct the RVO cost
@@ -1547,7 +1549,8 @@ With the measure populations (2026-10-19), Q28 became answerable: 34, 1 and 9. E
 The waiting questions are the meaning owners (Q17) and the customer questions (Q19 to
 Q26); all wait on the decision owner. *2026-10-21:* the decision owner's customer
 information arrived, so Q19 to Q26 wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13);
-only Q17 waits on the decision owner. The first query for Q8 filtered on the "process"
+only Q17 waits on the decision owner. The plan's pull request 5 (2026-10-21) then made Q19 to Q26
+answerable: 42, 1 and 1 (EPM-DEC-001-0071). The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.
 Counting the query's population against the whole caught it.

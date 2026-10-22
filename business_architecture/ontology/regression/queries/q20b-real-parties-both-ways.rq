@@ -1,0 +1,9 @@
+# Q20 and section VII's done-when: real multi-role organisations, MPC and MPLX, read party to roles and role to party
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/>
+SELECT ?party ?role ?type WHERE {
+  VALUES ?party { refmpc:mpc refmpc:mplx }
+  ?party party:plays ?role .
+  ?role party:roleType ?type .
+  FILTER NOT EXISTS { ?other party:plays ?role . FILTER(?other != ?party) }
+}

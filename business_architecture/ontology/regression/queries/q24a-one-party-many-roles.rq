@@ -1,0 +1,7 @@
+# Q24 Can the same organisation be a customer in one deal and a supplier or exchange counterparty in another? (yes: the roles are in one list a party plays)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?sold ?supplier ?exchange WHERE {
+  <https://w3id.org/lsc/ontology/modules/party/party-role/sold-to> skos:prefLabel ?sold .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/supplier> skos:prefLabel ?supplier .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/exchange-counterparty> skos:prefLabel ?exchange .
+}

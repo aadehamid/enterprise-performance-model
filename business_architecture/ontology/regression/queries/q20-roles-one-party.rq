@@ -1,0 +1,8 @@
+# Q20 Which roles can the same Party hold at the same time? (the role list; a party plays any number of roles)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?role ?label WHERE {
+  party:plays rdfs:domain party:Party ; rdfs:range party:PartyRole .
+  ?role skos:inScheme party:party-role ; skos:prefLabel ?label .
+}

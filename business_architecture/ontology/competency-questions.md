@@ -75,6 +75,13 @@ verbatim.
     to one role, not a blob?
 - *Done when:* five real multi-role organisations can be described both
   ways (Party→roles and role→Party) without calling Customer a role.
+  *2026-10-21:* the `party` module answers questions 19 to 26 from its
+  definitions, and its tests describe five invented multi-role
+  organisations both ways. Customer records stay out of the ontology
+  (EPM-DEC-001-0005), and the decision owner's customer data is not in the
+  repository (EPM-DEC-001-0067). The decision owner chose MPC and MPLX as
+  the real organisations; the module describes both ways their public roles
+  from MPLX's FY2025 Form 10-K (EPM-DEC-001-0071).
 
 ## VIII. Named KPI — the bind to the Store
 *The ontology answers what a Named KPI is. It does not calculate it.*
