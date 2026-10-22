@@ -8,6 +8,10 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+# Git sets GIT_DIR and others when it runs the pre-push hook. Inherited, they point any test that makes
+# its own temporary repository at this one instead: on #337 a test's git init, config and commit set
+# core.bare and a test user here and committed on the branch. Every check below works from $ROOT.
+while IFS= read -r var; do unset "$var"; done < <(compgen -e | grep '^GIT_' || true)
 export PYTHONDONTWRITEBYTECODE=1
 run() { echo "--- $*"; "$@"; }
 with_deps() { uv run -q --with pytest --with pytest-xdist --with rdflib --with pyshacl --with openpyxl --with jsonschema --with "markdown-it-py>=4,<5" "$@"; }
