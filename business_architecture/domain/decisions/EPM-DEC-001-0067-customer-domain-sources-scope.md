@@ -79,7 +79,7 @@ These items are Claude's wording and Claude's reading of the decision owner's an
     5. competency questions 19 to 26.
     - MPC-P06's channel dimension is applied in pull request 2. *2026-10-21:* done there, as the values of the dimension (EPM-DEC-001-0068, item 8).
     - The process map changes only after the decision owner approves the proposal.
-    - `party` 1.0.0 is released only with their approval.
+    - `party` 1.0.0 is released only with their approval. *2026-10-22:* released with it (EPM-DEC-001-0074).
 14. **Still open from EPM-DEC-001-0004:** the lubricants and marine product-line evidence. None of the inputs covers it, so it stays open. The `party` module's pull request is planned to settle or park it. *2026-10-21:* it parks it (EPM-DEC-001-0068, item 14).
 
 ## Alternatives considered

@@ -1,0 +1,552 @@
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix partysh: <https://w3id.org/lsc/ontology/modules/party/shapes/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+partysh:Address a sh:NodeShape ;
+    sh:property [ sh:minCount 1 ;
+            sh:node partysh:InAddressUsage ;
+            sh:path party:addressUsage ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:Address .
+
+partysh:Agreement a sh:NodeShape ;
+    sh:property [ sh:minCount 1 ;
+            sh:node partysh:InAgreementType ;
+            sh:path party:agreementType ],
+        [ sh:class party:Product ;
+            sh:path party:scopedToProduct ],
+        [ sh:class party:Brand ;
+            sh:path party:coversBrand ],
+        [ sh:class party:SiteBrandAssignment ;
+            sh:path party:authorizesBrandAtSite ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:Agreement .
+
+partysh:ContactPoint a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InContactType ;
+            sh:path party:contactType ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:ContactPoint .
+
+partysh:CustomerAccount a sh:NodeShape ;
+    sh:property [ sh:class party:Party ;
+            sh:message "A customer account belongs to at least one party." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath party:transactsThrough ] ],
+        [ sh:class party:CustomerClass ;
+            sh:path party:classifiedAs ],
+        [ sh:node partysh:InLineOfBusiness ;
+            sh:path party:managedUnder ],
+        [ sh:class party:Agreement ;
+            sh:path party:framedBy ],
+        [ sh:class party:Site ;
+            sh:path party:suppliedFrom ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:CustomerAccount .
+
+partysh:CustomerClass a sh:NodeShape ;
+    sh:property [ sh:class party:CustomerAccount ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath party:classifiedAs ] ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InCustomerClass ;
+            sh:path party:classValue ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:message "A customer class is assigned from a start date." ;
+            sh:minCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:CustomerClass .
+
+partysh:CustomerSourcing a sh:NodeShape ;
+    sh:property [ sh:class party:CustomerSystem ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:sourcingSystem ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InSourcingKind ;
+            sh:path party:sourcingKind ],
+        [ sh:class skos:Concept ;
+            sh:maxCount 1 ;
+            sh:message "A customer sourcing names a party role, a customer class, a line of business or a party type." ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:hasValue party:party-role ;
+                        sh:path skos:inScheme ] [ sh:hasValue party:customer-class ;
+                        sh:path skos:inScheme ] [ sh:hasValue party:line-of-business ;
+                        sh:path skos:inScheme ] [ sh:hasValue party:party-type ;
+                        sh:path skos:inScheme ] ) ;
+            sh:path party:sourcedConcept ],
+        [ sh:maxCount 1 ;
+            sh:message "A customer sourcing has a note." ;
+            sh:minCount 1 ;
+            sh:path rdfs:comment ;
+            sh:pattern "\\S" ],
+        [ sh:maxCount 1 ;
+            sh:message "A customer sourcing names the inputs that show it, from the seven inputs." ;
+            sh:minCount 1 ;
+            sh:path party:evidenceInput ;
+            sh:pattern "^[1-7](, [1-7])*$" ] ;
+    sh:targetClass party:CustomerSourcing .
+
+partysh:CustomerSystem a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:hasValue party:customer-systems ;
+            sh:path skos:inScheme ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InSystemTier ;
+            sh:path party:systemTier ],
+        [ sh:maxCount 1 ;
+            sh:message "A customer system says what it does with the customer." ;
+            sh:minCount 1 ;
+            sh:path party:customerRole ;
+            sh:pattern "\\S" ],
+        [ sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation party:Product party:Site ) ;
+            sh:message "A customer system implements entities of the conceptual model only." ;
+            sh:path party:implements ],
+        [ sh:class party:CustomerSystem ;
+            sh:path party:feeds ] ;
+    sh:targetClass party:CustomerSystem .
+
+partysh:DataFlow a sh:NodeShape ;
+    sh:property [ sh:class party:CustomerSystem ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:fromSystem ],
+        [ sh:class party:CustomerSystem ;
+            sh:maxCount 1 ;
+            sh:message "A data flow goes from one customer system to one other." ;
+            sh:minCount 1 ;
+            sh:path party:toSystem ],
+        [ sh:maxCount 1 ;
+            sh:message "A data flow says what it carries." ;
+            sh:minCount 1 ;
+            sh:path party:carries ;
+            sh:pattern "\\S" ],
+        [ sh:maxCount 1 ;
+            sh:message "A data flow names the inputs that show it, from the seven inputs." ;
+            sh:minCount 1 ;
+            sh:path party:evidenceInput ;
+            sh:pattern "^[1-7](, [1-7])*$" ] ;
+    sh:targetClass party:DataFlow .
+
+partysh:Decided-lifecycle-stage-offboarding a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-5> <https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> ) ;
+            sh:maxCount 2 ;
+            sh:message "lifecycle-stage/offboarding has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 2 ;
+            sh:path party:stageProcess ],
+        [ sh:maxCount 0 ;
+            sh:message "lifecycle-stage/offboarding corresponds to no system stage (EPM-DEC-001-0070, item 4)." ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding>) }" ] .
+
+partysh:Decided-lifecycle-stage-onboarding a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-6> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2> <https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1> <https://w3id.org/lsc/ontology/process/CM-1-3-7-2-1> ) ;
+            sh:maxCount 4 ;
+            sh:message "lifecycle-stage/onboarding has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 4 ;
+            sh:path party:stageProcess ],
+        [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system-stage/master> <https://w3id.org/lsc/ontology/modules/party/system-stage/record> ) ;
+            sh:maxCount 2 ;
+            sh:message "lifecycle-stage/onboarding has exactly the system stages EPM-DEC-001-0070 decides." ;
+            sh:minCount 2 ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding>) }" ] .
+
+partysh:Decided-lifecycle-stage-payment-management a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-8-2-1> <https://w3id.org/lsc/ontology/process/CM-1-3-8-2-3> <https://w3id.org/lsc/ontology/process/CM-1-3-8-3-2> ) ;
+            sh:maxCount 3 ;
+            sh:message "lifecycle-stage/payment-management has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 3 ;
+            sh:path party:stageProcess ],
+        [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system-stage/settle> ) ;
+            sh:maxCount 1 ;
+            sh:message "lifecycle-stage/payment-management has exactly the system stages EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/payment-management>) }" ] .
+
+partysh:Decided-lifecycle-stage-prospect a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-6-2-1> <https://w3id.org/lsc/ontology/process/CM-1-3-6-6-1> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2> ) ;
+            sh:maxCount 3 ;
+            sh:message "lifecycle-stage/prospect has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 3 ;
+            sh:path party:stageProcess ],
+        [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system-stage/prospect> ) ;
+            sh:maxCount 1 ;
+            sh:message "lifecycle-stage/prospect has exactly the system stages EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect>) }" ] .
+
+partysh:Decided-lifecycle-stage-relationship-management a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-6-2-2> <https://w3id.org/lsc/ontology/process/CM-1-3-7-5-5> <https://w3id.org/lsc/ontology/process/CM-1-3-7-2-6> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-2> ) ;
+            sh:maxCount 4 ;
+            sh:message "lifecycle-stage/relationship-management has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 4 ;
+            sh:path party:stageProcess ],
+        [ sh:maxCount 0 ;
+            sh:message "lifecycle-stage/relationship-management corresponds to no system stage (EPM-DEC-001-0070, item 4)." ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/relationship-management>) }" ] .
+
+partysh:Decided-lifecycle-stage-risk-management a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-3> <https://w3id.org/lsc/ontology/process/CM-1-3-7-4-4> ) ;
+            sh:maxCount 2 ;
+            sh:message "lifecycle-stage/risk-management has exactly the processes EPM-DEC-001-0070 decides." ;
+            sh:minCount 2 ;
+            sh:path party:stageProcess ],
+        [ sh:maxCount 0 ;
+            sh:message "lifecycle-stage/risk-management corresponds to no system stage (EPM-DEC-001-0070, item 4)." ;
+            sh:path party:correspondsTo ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/risk-management>) }" ] .
+
+partysh:Decided-system-stage-execute a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/rightangle> <https://w3id.org/lsc/ontology/modules/party/system/polaris> <https://w3id.org/lsc/ontology/modules/party/system/dealer-master> <https://w3id.org/lsc/ontology/modules/party/system/terminal-download> ) ;
+            sh:maxCount 4 ;
+            sh:message "system-stage/execute has exactly the systems EPM-DEC-001-0070 decides." ;
+            sh:minCount 4 ;
+            sh:path party:stageSystem ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/execute>) }" ] .
+
+partysh:Decided-system-stage-master a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-mdg> ) ;
+            sh:maxCount 1 ;
+            sh:message "system-stage/master has exactly the systems EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:stageSystem ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/master>) }" ] .
+
+partysh:Decided-system-stage-prospect a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/salesforce> ) ;
+            sh:maxCount 1 ;
+            sh:message "system-stage/prospect has exactly the systems EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:stageSystem ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/prospect>) }" ] .
+
+partysh:Decided-system-stage-record a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ) ;
+            sh:maxCount 1 ;
+            sh:message "system-stage/record has exactly the systems EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:stageSystem ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/record>) }" ] .
+
+partysh:Decided-system-stage-settle a sh:NodeShape ;
+    sh:property [ sh:in ( <https://w3id.org/lsc/ontology/modules/party/system/sap-s4hana> ) ;
+            sh:maxCount 1 ;
+            sh:message "system-stage/settle has exactly the systems EPM-DEC-001-0070 decides." ;
+            sh:minCount 1 ;
+            sh:path party:stageSystem ] ;
+    sh:target [ a sh:SPARQLTarget ;
+            sh:prefixes partysh: ;
+            sh:select "SELECT ?this WHERE { ?this party:stageProcess|party:stageSystem|party:correspondsTo ?x . FILTER (?this = <https://w3id.org/lsc/ontology/modules/party/system-stage/settle>) }" ] .
+
+partysh:ExternalIdentifier a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InIdentifierType ;
+            sh:path party:identifierType ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:path party:issuer ] ;
+    sh:targetClass party:ExternalIdentifier .
+
+partysh:LifecycleStage a sh:NodeShape ;
+    sh:property [ sh:hasValue party:lifecycle-stage ;
+            sh:message "Only a business lifecycle stage is done by processes." ;
+            sh:path skos:inScheme ],
+        [ sh:nodeKind sh:IRI ;
+            sh:path party:stageProcess ;
+            sh:pattern "^https://w3id.org/lsc/ontology/process/" ],
+        [ sh:node [ sh:property [ sh:hasValue party:system-stage ;
+                            sh:path skos:inScheme ] ] ;
+            sh:path party:correspondsTo ] ;
+    sh:targetSubjectsOf party:stageProcess .
+
+partysh:NoCustomerSubclass a sh:NodeShape ;
+    sh:sparql [ a sh:SPARQLConstraint ;
+            sh:message "Only person and organization are kinds of party. A customer, or any role, is a party role, not a subclass of party." ;
+            sh:select """
+            SELECT $this WHERE {
+                $this <http://www.w3.org/2000/01/rdf-schema#subClassOf>+ <https://w3id.org/lsc/ontology/modules/party/Party> .
+                FILTER ($this NOT IN (<https://w3id.org/lsc/ontology/modules/party/Party>,
+                                      <https://w3id.org/lsc/ontology/modules/party/Person>,
+                                      <https://w3id.org/lsc/ontology/modules/party/Organization>))
+            }""" ] ;
+    sh:targetSubjectsOf rdfs:subClassOf .
+
+partysh:OrganizationType a sh:NodeShape ;
+    sh:property [ sh:hasValue <https://w3id.org/lsc/ontology/modules/party/party-type/organization> ;
+            sh:path party:partyType ] ;
+    sh:targetClass party:Organization .
+
+partysh:Party a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:legalName ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InPartyType ;
+            sh:path party:partyType ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:Party ;
+    sh:xone ( [ sh:class party:Person ] [ sh:class party:Organization ] ) .
+
+partysh:PartyRelationship a sh:NodeShape ;
+    sh:property [ sh:class party:PartyRole ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:fromRole ],
+        [ sh:class party:PartyRole ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:toRole ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InRelationshipType ;
+            sh:path party:relationshipType ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:PartyRelationship .
+
+partysh:PartyRole a sh:NodeShape ;
+    sh:property [ sh:class party:Party ;
+            sh:maxCount 1 ;
+            sh:message "A party role is held by exactly one party." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath party:plays ] ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InPartyRole ;
+            sh:path party:roleType ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:message "A party role is held from a start date, and does not end before it starts." ;
+            sh:minCount 1 ;
+            sh:path party:validFrom ],
+        [ sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:path party:validTo ],
+        [ sh:class party:Site ;
+            sh:path party:atSite ] ;
+    sh:targetClass party:PartyRole .
+
+partysh:PartyTransactionAssociation a sh:NodeShape ;
+    sh:or ( [ sh:minCount 1 ;
+                sh:path [ sh:inversePath party:participatesIn ] ] [ sh:minCount 1 ;
+                sh:path party:forAccount ] ) ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node partysh:InTransactionKind ;
+            sh:path party:transactionKind ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:transactionReference ],
+        [ sh:class party:CustomerAccount ;
+            sh:maxCount 1 ;
+            sh:path party:forAccount ] ;
+    sh:targetClass party:PartyTransactionAssociation .
+
+partysh:PersonType a sh:NodeShape ;
+    sh:property [ sh:hasValue <https://w3id.org/lsc/ontology/modules/party/party-type/person> ;
+            sh:path party:partyType ] ;
+    sh:targetClass party:Person .
+
+partysh:Site a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:node partysh:InSiteType ;
+            sh:path party:siteType ],
+        [ sh:maxCount 1 ;
+            sh:node partysh:InOperatingModel ;
+            sh:path party:operatingModel ],
+        [ sh:class party:Site ;
+            sh:path party:suppliedByTerminal ] ;
+    sh:targetClass party:Site .
+
+partysh:SiteBrandAssignment a sh:NodeShape ;
+    sh:property [ sh:class party:Brand ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:assignsBrand ],
+        [ sh:class party:Site ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:appliesTo ],
+        [ sh:class party:Agreement ;
+            sh:message "A site brand assignment is made under an agreement." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath party:authorizesBrandAtSite ] ],
+        [ sh:datatype xsd:date ;
+            sh:lessThanOrEquals party:validTo ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:validFrom ] ;
+    sh:targetClass party:SiteBrandAssignment .
+
+partysh:StageCorrespondence a sh:NodeShape ;
+    sh:property [ sh:hasValue party:lifecycle-stage ;
+            sh:message "Only a business lifecycle stage corresponds to a system stage." ;
+            sh:path skos:inScheme ],
+        [ sh:message "A business lifecycle stage corresponds only to a system stage." ;
+            sh:node [ sh:property [ sh:hasValue party:system-stage ;
+                            sh:path skos:inScheme ] ] ;
+            sh:path party:correspondsTo ] ;
+    sh:targetSubjectsOf party:correspondsTo .
+
+partysh:SystemAttribute a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:class party:CustomerSystem ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path party:inSystem ],
+        [ sh:maxCount 1 ;
+            sh:message "A system attribute is Create or Enrich." ;
+            sh:minCount 1 ;
+            sh:node partysh:InAttributeCategory ;
+            sh:path party:attributeCategory ],
+        [ sh:in ( party:Party party:ExternalIdentifier party:Address party:ContactPoint party:PartyRole party:PartyRelationship party:CustomerAccount party:CustomerClass party:LineOfBusiness party:Brand party:Agreement party:SiteBrandAssignment party:PartyTransactionAssociation party:Product party:Site party:SystemRecord ) ;
+            sh:maxCount 1 ;
+            sh:message "A system attribute describes one entity of the conceptual model, or the system record." ;
+            sh:minCount 1 ;
+            sh:path party:describes ],
+        [ sh:maxCount 1 ;
+            sh:node partysh:InSharedAttribute ;
+            sh:path party:sharedAttribute ] ;
+    sh:targetClass party:SystemAttribute .
+
+partysh:SystemStage a sh:NodeShape ;
+    sh:property [ sh:hasValue party:system-stage ;
+            sh:message "Only a system stage is held by systems." ;
+            sh:path skos:inScheme ],
+        [ sh:class party:CustomerSystem ;
+            sh:path party:stageSystem ] ;
+    sh:targetSubjectsOf party:stageSystem .
+
+partysh:InAddressUsage a sh:NodeShape ;
+    sh:property [ sh:hasValue party:address-usage ;
+            sh:path skos:inScheme ] .
+
+partysh:InAgreementType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:agreement-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InAttributeCategory a sh:NodeShape ;
+    sh:property [ sh:hasValue party:attribute-category ;
+            sh:path skos:inScheme ] .
+
+partysh:InContactType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:contact-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InCustomerClass a sh:NodeShape ;
+    sh:property [ sh:hasValue party:customer-class ;
+            sh:path skos:inScheme ],
+        [ sh:message "A customer class assignment names one of the four groups, not a class." ;
+            sh:minCount 1 ;
+            sh:path skos:broader ] .
+
+partysh:InIdentifierType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:identifier-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InLineOfBusiness a sh:NodeShape ;
+    sh:property [ sh:hasValue party:line-of-business ;
+            sh:path skos:inScheme ] .
+
+partysh:InOperatingModel a sh:NodeShape ;
+    sh:property [ sh:hasValue party:operating-model ;
+            sh:path skos:inScheme ] .
+
+partysh:InPartyRole a sh:NodeShape ;
+    sh:property [ sh:hasValue party:party-role ;
+            sh:path skos:inScheme ] .
+
+partysh:InPartyType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:party-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InRelationshipType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:relationship-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InSharedAttribute a sh:NodeShape ;
+    sh:property [ sh:hasValue party:shared-attribute ;
+            sh:path skos:inScheme ] .
+
+partysh:InSiteType a sh:NodeShape ;
+    sh:property [ sh:hasValue party:site-type ;
+            sh:path skos:inScheme ] .
+
+partysh:InSourcingKind a sh:NodeShape ;
+    sh:property [ sh:hasValue party:sourcing-kind ;
+            sh:path skos:inScheme ] .
+
+partysh:InSystemTier a sh:NodeShape ;
+    sh:property [ sh:hasValue party:system-tier ;
+            sh:path skos:inScheme ] .
+
+partysh:InTransactionKind a sh:NodeShape ;
+    sh:property [ sh:hasValue party:transaction-kind ;
+            sh:path skos:inScheme ] .
+
+partysh: sh:declare [ sh:namespace "https://w3id.org/lsc/ontology/modules/party/"^^xsd:anyURI ;
+            sh:prefix "party" ] .
+

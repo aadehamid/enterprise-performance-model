@@ -31,7 +31,7 @@ EPM-DEC-001-0069 built the customer's systems, data flow and attributes in the `
 ## Alternatives considered
 
 - **Keep CBS open until a source confirms it.** Not chosen: the decision owner decided to assume it for this model.
-- **Rename the Terminal Margin Ranking System's slug to `tmr`.** Not chosen: the module is not released, but the slug is cited in two sourcings, and a hand-held match states the decision where it is made.
+- **Rename the Terminal Margin Ranking System's slug to `tmr`.** Not chosen: the module is not released, but the slug is cited in two sourcings, and a hand-held match states the decision where it is made. *2026-10-22:* the module is now released as 1.0.0, so the slug is part of a released identity (EPM-DEC-001-0074).
 
 ## The decision owner's recorded words
 

@@ -23,7 +23,9 @@ RELEASES = "step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
              "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
              "kpi": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md",
-                     "You have my approval to keep going and release things as needed. while I am out")}
+                     "You have my approval to keep going and release things as needed. while I am out"),
+             "party": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md",
+                       "You have my permission to release the stable version when you are done.")}
 
 
 def approval_holds(name, m):
@@ -125,10 +127,26 @@ class EarlierReleases(unittest.TestCase):
                 with self.subTest(module=name, file=fname), open(os.path.join(out, fname), "rb") as f:
                     self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
 
+    def test_party_holds_its_four_source_files_and_nothing_else(self):
+        # EPM-DEC-001-0074, item 2: the vocabulary, code lists, systems and lifecycle, read here from the
+        # source files rather than from the builder's list; the reference parties and examples stay out.
+        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "party", "1.0.0", "party.ttl"))
+        header = URIRef(bm.MODULES_NS + "party")
+        released.remove((header, None, None))
+        sources = Graph()
+        for name in ("vocabulary.ttl", "code-lists.ttl", "systems.ttl", "lifecycle.ttl"):
+            sources.parse(os.path.join(bm.ONTOLOGY, "party", name))
+        sources.remove((header, None, None))
+        self.assertEqual(set(released), set(sources))
+        for name in ("reference-parties.ttl", "examples.ttl"):
+            outside = Graph().parse(os.path.join(bm.ONTOLOGY, "party", name))
+            self.assertFalse(set(outside) & set(released), name)
+
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.1.0"})
+        self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
 
 
 if __name__ == "__main__":
