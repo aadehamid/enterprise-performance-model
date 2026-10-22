@@ -164,6 +164,7 @@ dp:producedBy plc:placementKind kind:certification .
         lane:1.0.0,
         mkt:1.0.0,
         orgm:2.0.0,
+        <https://w3id.org/lsc/ontology/modules/party/1.0.0>,
         sys:1.0.0,
         vs:1.0.0 ;
     dcterms:title "LSC Integration Vocabularies"@en ;

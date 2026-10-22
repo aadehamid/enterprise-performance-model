@@ -984,6 +984,9 @@
     "@id": "https://w3id.org/lsc/ontology/modules/organization/2.0.0"
    },
    {
+    "@id": "https://w3id.org/lsc/ontology/modules/party/1.0.0"
+   },
+   {
     "@id": "https://w3id.org/lsc/ontology/modules/system/1.0.0"
    },
    {

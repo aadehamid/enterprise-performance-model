@@ -12,7 +12,8 @@
     "value-stream": "1.0.0",
     "system": "1.0.0",
     "lane": "1.0.0",
-    "market-data": "1.0.0"
+    "market-data": "1.0.0",
+    "party": "1.0.0"
   },
   "decisions": [
     "EPM-DEC-001-0058",
@@ -20,16 +21,16 @@
     "EPM-DEC-001-0061",
     "EPM-DEC-001-0078"
   ],
-  "triples": 279,
+  "triples": 280,
   "approved_by": {
     "who": "The decision owner",
     "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md"
   },
   "files": {
-    "CHANGELOG.md": "ed19459fba8fb9a8b8641822004ea7f8048ddd98cfb08edf60d81e0b1ba6c81b",
+    "CHANGELOG.md": "521eebeaa18c2829d6e4dc140da91636f657d483e6f9b1de62da5e0a0748f97e",
     "catalog.ttl": "f3c32fab1ee33ab762d1c5fcb5d6f49f38cfa8d8d84e4f524cdb5d2d42c3f064",
-    "integration.jsonld": "80e737c3349443e01d80219b7cb4ac53ab12abfb64c614f7470a525496c4a802",
-    "integration.ttl": "1c7ba8be558feb8eec4265e9fd9c1180c30dcd6af5fc537b35c9b71fdaddb73e",
+    "integration.jsonld": "9b768fed3c7deb72e83c7c8e3d97708c77d87d3a596512925572ba7d48358d8c",
+    "integration.ttl": "31d20746aa6dd644fe9f53156aa4a63a6b45e0ba5f929a66469128f2a89ea729",
     "shapes.ttl": "b5dfd186039c40dc96abedd646ccd9cbbd92f4c932ce8bfb5a6e57702202491d"
   }
 }

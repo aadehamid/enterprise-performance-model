@@ -17,7 +17,7 @@ Four small folders came out of the Phase E work on the competency questions: `pl
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **`integration` 1.0.0, issued 2026-10-22,** built by `release/build_module.py` as the other modules' packages are: Turtle and JSON-LD, the consumer shapes, a DCAT record, a changelog and a manifest with each file's SHA-256. 279 triples.
+1. **`integration` 1.0.0, issued 2026-10-22,** built by `release/build_module.py` as the other modules' packages are: Turtle and JSON-LD, the consumer shapes, a DCAT record, a changelog and a manifest with each file's SHA-256. 280 triples.
 2. **It holds three vocabularies, each in its own namespace:** `placement/vocabulary.ttl`, `authority/vocabulary.ttl` with `authority/source-tiers.ttl`, and `consumer/vocabulary.ttl`. No IRI changes. The package IRI, `https://w3id.org/lsc/ontology/modules/integration`, names the release only; no term is minted under it.
 3. **The population statements ship in `kpi` 1.1.0, not here.** The release plan puts them in both places. Section 3 is the specific one: it folds them into kpi, and EPM-DEC-001-0062, item 5, says the next kpi release can take them. They hang on the kpi module's measure IRIs, so they belong with the measures, and shipping them twice would put the same triples in two packages.
 4. **The APQC element list stays a reference file, outside any package.**
@@ -25,7 +25,7 @@ Four small folders came out of the Phase E work on the competency questions: `pl
    - The APQC/IBM licence lets the list be copied and published only if its notice and attribution "travel with all copies" (`business_architecture/reference/README.md`). The file carries the notice as a Turtle comment in its header. A package is a serialised graph, which drops comments, and the graph holds no rights statement, so a package would ship APQC's content without its notice.
    - Consumers need what they already have. `core` carries the 251 elements its processes reference, with the PCF's rights statement. Question 11 needs the full list, and the regression loads the file from the repository.
    - A later release can package it with a rights statement in the graph, if a consumer needs it outside the repository.
-5. **Dependencies follow the terms the vocabularies name.** The package requires `core` 2.2.0 and `organization` 2.0.0, `kpi` 1.0.1, and `data-product`, `value-stream`, `system`, `lane` and `market-data` 1.0.0. `placement` annotates their properties, `consumer`'s rules rely on their terms, and `authority` tiers the sources they cite. The consumer shapes conform with those packages loaded. The seventh may-answer rule relies on the population terms, which ship in `kpi` 1.1.0, after this package. A later minor release can require `kpi` 1.1.0.
+5. **Dependencies follow the terms the vocabularies name.** The package requires `core` 2.2.0 and `organization` 2.0.0, `kpi` 1.0.1, `data-product`, `value-stream`, `system`, `lane` and `market-data` 1.0.0, and `party` 1.0.0. `placement` annotates their properties, `consumer`'s rules rely on their terms (the rule that no customer exists without a role relies on `party:roleType`), and `authority` tiers the sources they cite. The consumer shapes conform with those packages loaded. The seventh may-answer rule relies on the population terms, which ship in `kpi` 1.1.0, after this package. A later minor release can require `kpi` 1.1.0.
 6. **Tag** `integration-v1.0.0` follows the merge.
 
 ## Alternatives considered

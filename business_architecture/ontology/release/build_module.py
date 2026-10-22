@@ -151,9 +151,10 @@ MODULES = {
         "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
                   "consumer/vocabulary.ttl"],
         "shapes": ["consumer/shapes.ttl"],
-        "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data"],
+        "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data",
+                       "party"],
         "pins": {"core": "2.2.0", "organization": "2.0.0", "kpi": "1.0.1", "data-product": "1.0.0", "value-stream": "1.0.0",
-                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0"},
+                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.0.0"},
         "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078"],
     },
 }
