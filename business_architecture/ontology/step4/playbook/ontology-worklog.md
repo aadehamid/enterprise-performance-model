@@ -980,7 +980,8 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### The customer systems and attributes (2026-10-21)
 - Under the delegation (EPM-DEC-001-0069): the customer's 42 systems are
-  the module's own class, three matched to the system module; the six
+  the module's own class, three matched to the system module (*2026-10-21:*
+  four, EPM-DEC-001-0072); the six
   core systems carry the entities they implement; 35 data flows and 24
   customer sourcings record the data flow and the origin patterns; and
   275 system attributes, 43 Create and 232 Enrich, each describe an
