@@ -187,7 +187,8 @@ product:loss-control a skos:Concept,
     skos:prefLabel "Loss Control"@en ;
     skos:scopeNote "Produced by CM 1.1.3.7.13 Reconcile Movement Losses and Gains (EPM-DEC-001-0048)."@en,
         "Product line placement provisional; confirm with data owners."@en ;
-    dp:portfolioStatus status:active .
+    dp:portfolioStatus status:active ;
+    dp:producedBy proc:CM-1-1-3-7-13 .
 
 product:marine-rail-ops a skos:Concept,
         dp:DataProduct ;

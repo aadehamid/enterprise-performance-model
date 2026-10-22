@@ -29,11 +29,11 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
-INPUTS = ["releases/core/2.1.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
+INPUTS = ["releases/core/2.2.0/core.ttl", "organization/vocabulary.ttl", "organization/roles.ttl",
           "organization/assignments.ttl", "ref-mpc/ref-mpc.ttl"]
-# core 2.1.0's release shapes carry the controlled-value shapes (EPM-DEC-001-0044), so
+# core 2.2.0's release shapes, as 2.1.0's, carry the controlled-value shapes (EPM-DEC-001-0044), so
 # validation/controlled-values.ttl is not listed again.
-SHAPES = ["releases/core/2.1.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
+SHAPES = ["releases/core/2.2.0/shapes.ttl", "step4/scoped-sequence/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl",
           "provenance/run-shapes.ttl"]
 LOADABLE = os.path.join(HERE, "loadable.nt")
 INFERRED = os.path.join(HERE, "inferred.nt")

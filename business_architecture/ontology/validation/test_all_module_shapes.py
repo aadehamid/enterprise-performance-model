@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.join(ONTOLOGY, "regression"))
 import run  # noqa: E402
 
 SHAPE_FILES = [
-    "releases/core/2.1.0/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
+    "releases/core/2.2.0/shapes.ttl", "organization/shapes.ttl", "ref-mpc/shapes.ttl", "kpi/shapes.ttl",
     "data-product/shapes.ttl", "value-stream/shapes.ttl", "system/shapes.ttl", "lane/shapes.ttl",
     "market-data/shapes.ttl", "consumer/shapes.ttl", "party/shapes.ttl", "validation/controlled-values.ttl",
 ]

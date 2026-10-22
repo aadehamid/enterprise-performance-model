@@ -21,7 +21,7 @@ The data product portfolio (`business_architecture/business_process/data_product
 5. **Process links come from the value streams.** The value streams name, sparsely, the data products their processes produce and consume; those links enter the ontology with the value streams (Phase B). Segment anchors come from the portfolio's `processDomainRef`: Commercial in CM 1, Midstream in MS 1 (IRI `L1-midstream`, EPM-DEC-001-0047), Corporate in Enabling Functions. An anchor is context, not ownership.
 6. **Loss Control ownership is settled.** Its owning process is CM 1.1.3.7.13 (EPM-DEC-001-0048). `links.csv` records the link, and the build emits it once a `core` release holds the process (2.2.0, Phase D). The portfolio's other note, that Loss Control's product-line placement is provisional, stays with the process authority.
 7. **No new data product for receivables.** The worklog records that no AR credit, receivables or collections portfolio exists and that `dp-commercial-risk` must not be reused. No source defines one, so the Order to Cash processes' empty `produces` stay a gap for Phase B to record.
-8. **Competency question 7 becomes partial.** Its graph part, which data products have no owning process, answers now. What each process produces or consumes waits for Phase B and `core` 2.2.0.
+8. **Competency question 7 becomes partial.** Its graph part, which data products have no owning process, answers now. What each process produces or consumes waits for Phase B and `core` 2.2.0. *2026-10-22:* both have landed; the Loss Control link is emitted, the Q7 query also reads direct data-product links, and Q7 is answerable (EPM-DEC-001-0076).
 
 ## Alternatives considered
 
