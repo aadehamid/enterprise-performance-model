@@ -36,8 +36,8 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
   EPM-DEC-001-0028 delegates the open questions of emitting the ontology and
   updating its playbook to Claude, and since 2026-10-13 those of Steps 5 to 12: a decision in that scope made from the
   evidence order above and recorded as "delegated under EPM-DEC-001-0028"
-  counts as Decided. It also sets the independent review at one or two rounds
-  per PR, and names the reviewers.
+  counts as Decided. It also sets the independent review at one or two full rounds
+  per PR, then a quick check of each later fix, and names the reviewers.
 - **Reviewing a pull request?** Apply `REVIEW_STANDARDS.md` (what blocks a merge) and
   `APPROVAL_POLICY.md` (when a human must review). Authors can read it before pushing.
 - Before modeling the ontology, start at `business_architecture/ontology/README.md`.
@@ -45,7 +45,7 @@ this file via `CLAUDE.md`; Codex and Cursor read it directly). Start with
 
 ## Before every push
 
-Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes, except that the independent review in item 5 runs at most twice per PR (EPM-DEC-001-0028).
+Run these before you open a pull request, and again before you push a review fix. Fixes get the same checks as first pushes, except that the independent review in item 5 runs in full at most twice per PR, and each later fix gets a quick check (EPM-DEC-001-0028, amendment of 2026-10-22).
 
 1. **`scripts/check.sh` passes.** It runs the Step 4 gate, every test (including the check that published figures match the source), `epm_facts.py counts`, the decision-record and quote checks, the check that no tracked file names the decision owner (`epm_facts.py names`, EPM-DEC-001-0049), and a check that the Step 4 pin is in the branch's history. CI and the pre-push hook (`git config core.hooksPath scripts/hooks`) run it too.
 2. **Figures come from `python3 scripts/epm_facts.py`** (`counts`, `row REL-xxxxx`, `section <issue>`), never from memory or a summary. Quote its commit line in the PR body.
@@ -62,11 +62,15 @@ Run these before you open a pull request, and again before you push a review fix
      PR verdict (`pi-review.sh --role pr`). The merged commit's two reviews come from
      different tools. While Cursor is out of usage, the Cursor agent CLI on Auto gives
      the PR verdict instead and Pi the independent review (EPM-DEC-001-0028, later
-     amendment of 2026-10-20).
-   - **Rounds:** at most two per PR (EPM-DEC-001-0028). Round 1 reviews the whole
-     branch. Round 2 runs only if round 1 found something, and reviews the fix
-     commit. A fix after round 2 gets item 1 and CI, and the PR body says it had
-     no third review.
+     amendment of 2026-10-20). Since 2026-10-22 the Cursor bot gives the PR verdict
+     again; when it has not started 8 minutes after a push, or given no verdict by
+     9 minutes, the Cursor agent CLI on Auto stands in, and Pi gives the
+     independent review either way (EPM-DEC-001-0028, amendment of 2026-10-22).
+   - **Rounds:** at most two full rounds per PR (EPM-DEC-001-0028). Round 1 reviews
+     the whole branch. Round 2 runs only if round 1 found something, and reviews
+     the fix commit. Each fix after round 2 gets a Pi quick check of that commit,
+     plus item 1 and CI, and the PR body says which checks ran (amendment of
+     2026-10-22). PR verdict rounds are uncapped.
    - **If the independent reviewer the row names cannot run**, Claude Code runs `node ~/.claude/plugins/cache/openai-codex/codex/<version>/scripts/codex-companion.mjs adversarial-review --base main "<claims to verify>"`,
      and Codex CLI runs `codex review --base main` (it rejects a prompt combined with `--base`).
 
