@@ -31,7 +31,7 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 # Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
-# kpi is 1.1.0, though value-stream and market-data were released against 1.0.1; their own release
+# kpi is 1.1.0, though value-stream, market-data and integration were released against 1.0.1; their own release
 # checks still test those pinned versions.
 PACKAGES = [("core", "2.2.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
             ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
