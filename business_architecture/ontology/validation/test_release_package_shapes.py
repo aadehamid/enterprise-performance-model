@@ -53,14 +53,17 @@ def conforms(name, version, data):
 
 class ReleasePackages(unittest.TestCase):
     def test_every_package_is_listed(self):
-        found = {tuple(p.split(os.sep)[-3:-1]) for p in glob.glob(package_file("*", "*", "manifest.json"))}
+        # Keyed on folders, not manifests, so a package written without its manifest is not missed.
+        found = {tuple(p.rstrip(os.sep).split(os.sep)[-2:]) for p in glob.glob(package_file("*", "*", ""))}
         self.assertEqual(found, set(PACKAGES))
 
     def test_the_closure_is_loaded(self):
         # value-stream 1.0.0 links to data products and measures in other packages; alone, its shapes fail.
         self.assertEqual(build_module.closure(build_module.released_requires("value-stream", "1.0.0")),
                          {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
-        self.assertFalse(conforms("value-stream", "1.0.0", package_graph("value-stream", "1.0.0"))[0])
+        ok, text = conforms("value-stream", "1.0.0", package_graph("value-stream", "1.0.0"))
+        self.assertFalse(ok)
+        self.assertIn("A measure link names exactly one measure of the kpi module.", text)
 
     def test_a_broken_package_fails(self):
         # An office lane without its notation breaks the lane package's own shapes.
