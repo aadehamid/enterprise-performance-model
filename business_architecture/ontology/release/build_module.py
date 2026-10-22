@@ -102,7 +102,8 @@ MODULES = {
         "parts": ["value-stream/vocabulary.ttl", "value-stream/value-streams.ttl"],
         "shapes": ["value-stream/shapes.ttl"],
         "depends_on": ["core", "data-product", "kpi"],
-        "pins": {"core": "2.2.0"},
+        # Every dependency pinned: a later kpi or data-product release must not change this package.
+        "pins": {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"},
         "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077"],
     },
     "system": {
@@ -135,6 +136,7 @@ MODULES = {
         "parts": ["market-data/vocabulary.ttl", "market-data/market-data.ttl"],
         "shapes": ["market-data/shapes.ttl"],
         "depends_on": ["kpi"],
+        "pins": {"kpi": "1.0.1"},
         "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077"],
     },
 }
@@ -184,10 +186,17 @@ def build(name):
     return g
 
 
+def released_requires(dep, version):
+    """What a released package requires, read from its own manifest on disk, never from this builder's
+    current table: a later release of that module must not change what an earlier package loads."""
+    with open(os.path.join(ONTOLOGY, "releases", dep, version, "manifest.json")) as f:
+        return json.load(f).get("depends_on") or {}
+
+
 def released_closure(name):
     """Every released package this module's check loads: its dependencies at the versions it names,
-    and theirs, down to core. Where two paths name different versions of one module, the highest is
-    loaded, so a graph never holds two releases of the same module."""
+    and theirs (from each selected release's manifest), down to core. Where two paths name different
+    versions of one module, the highest is loaded, so a graph never holds two releases of one module."""
     found = {}
     todo = list(dependencies(name).items())
     while todo:
@@ -195,21 +204,24 @@ def released_closure(name):
         if dep in found and tuple(map(int, found[dep].split("."))) >= tuple(map(int, version.split("."))):
             continue
         found[dep] = version
-        if dep in MODULES:
-            todo += list(dependencies(dep).items())
+        todo += list(released_requires(dep, version).items())
     return found
+
+
+def validation_graph(name, g):
+    """The data the module's shapes run over: the module, with the released packages of its closure."""
+    data = Graph()
+    data += g
+    for dep, version in sorted(released_closure(name).items()):
+        data.parse(os.path.join(ONTOLOGY, "releases", dep, version, f"{dep}.ttl"))
+    return data
 
 
 def check(name, g):
     """The module's shapes over the module, with the released packages it depends on loaded: core for
     the concepts a module refers to, the pinned organization release for ref-mpc, and the released
     data-product and kpi packages for value-stream and market-data."""
-    m = MODULES[name]
-    data = Graph()
-    data += g
-    for dep, version in sorted(released_closure(name).items()):
-        data.parse(os.path.join(ONTOLOGY, "releases", dep, version, f"{dep}.ttl"))
-    conforms, _, text = validate(data, shacl_graph=parse(m["shapes"]))
+    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]))
     return conforms, text
 
 

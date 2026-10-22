@@ -164,6 +164,40 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
         self.assertEqual(bm.released_closure("ref-mpc"), {"organization": "2.0.0", "core": "2.1.0"})
 
+    def test_the_validated_graph_holds_one_core_release(self):
+        # Codex round 1 on EPM-DEC-001-0077, item 3: the graph the shapes see, not only the version table.
+        core = URIRef(bm.MODULES_NS + "core")
+        expected = {"value-stream": "2.2.0", "market-data": "2.1.0", "ref-mpc": "2.1.0"}
+        for name, version in expected.items():
+            with self.subTest(module=name):
+                data = bm.validation_graph(name, bm.build(name))
+                self.assertEqual({str(v) for v in data.objects(core, OWL.versionInfo)}, {version})
+        # core 2.2.0 corrected two 19948 decisions; the superseded 2.1.0 triples must not come back.
+        data = bm.validation_graph("value-stream", bm.build("value-stream"))
+        review = URIRef(bm.MODULES_NS + "core/apqc-mapping-decision/review-link")
+        decision = URIRef(bm.MODULES_NS + "core/apqcMappingDecision")
+        for slug in ("CM-1-2-6-3", "L0-downstream-operations"):
+            self.assertNotIn((URIRef("https://w3id.org/lsc/ontology/process/" + slug), decision, review), data)
+
+    def test_a_later_dependency_release_leaves_the_released_packages_unchanged(self):
+        # Codex round 1: kpi 1.1.0 and a later data-product must not change value-stream or market-data 1.0.0,
+        # nor what their checks load (closures come from each selected release's own manifest).
+        saved = {n: dict(bm.MODULES[n]) for n in ("kpi", "data-product")}
+        try:
+            bm.MODULES["kpi"].update(version="1.1.0", pins={"core": "2.2.0"})
+            bm.MODULES["data-product"].update(version="1.1.0")
+            self.assertEqual(bm.released_closure("value-stream"), {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"})
+            self.assertEqual(bm.released_closure("market-data"), {"kpi": "1.0.1", "core": "2.1.0"})
+            for name in ("value-stream", "market-data"):
+                with self.subTest(module=name):
+                    for fname, text in bm.package(name, bm.build(name)).items():
+                        with open(os.path.join(bm.release_dir(name), fname)) as f:
+                            self.assertEqual(f.read(), text, fname)
+        finally:
+            for n, m in saved.items():
+                bm.MODULES[n].clear()
+                bm.MODULES[n].update(m)
+
     def test_each_step7_package_holds_its_two_source_files(self):
         # EPM-DEC-001-0077: each package is its module's vocabulary and instance file, nothing else.
         files = {"data-product": "data-products.ttl", "value-stream": "value-streams.ttl", "system": "systems.ttl",
