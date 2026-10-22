@@ -130,6 +130,26 @@ def test_sweep_takes_context_from_an_unchanged_neighbouring_line():
     assert epm_facts.changed_phrases(diff) == ["At 686 answerable"]
 
 
+def test_sweep_finds_a_phrase_whose_context_is_on_an_unchanged_line(tmp_path, monkeypatch):
+    # End to end, so the diff's context flag is tested too: with -U0 the sweep returns nothing here.
+    for key in [k for k in os.environ if k.startswith("GIT_")]:
+        monkeypatch.delenv(key)
+
+    def git(*a):
+        subprocess.check_call(["git", "-C", str(tmp_path), *a], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    (tmp_path / "source.md").write_text("At 686\nanswerable.\n")
+    (tmp_path / "stale.md").write_text("At 686 answerable.\n")
+    git("add", ".")
+    git("commit", "-q", "-m", "base")
+    (tmp_path / "source.md").write_text("At 409\nanswerable.\n")
+    git("commit", "-q", "-am", "change")
+    report = dict(epm_facts.sweep("HEAD~1", root=str(tmp_path)))
+    assert [(name, i) for name, i, _, _ in report["At 686 answerable"]] == [("stale.md", 1)]
+
+
 def test_sweep_reads_a_deleted_line_that_starts_with_dashes():
     diff = ("diff --git a/x.md b/x.md\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n"
             "--- the ledger holds 686 rows\n+-- the ledger holds 409 rows\n")
