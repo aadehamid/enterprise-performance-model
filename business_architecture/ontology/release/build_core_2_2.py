@@ -19,7 +19,7 @@ under EPM-DEC-001-0047, 0048 and 0051), read from the map at a pinned commit:
    extends it, the added text becomes a scope note; otherwise the map's new description is added as
    a scope note. Definitions from the definition workbook stay as approved.
 4. Two checks from earlier records. The APQC element 19948 references (EPM-DEC-001-0060) and RF 1.2's
-   Candidate status (EPM-DEC-001-0063), each settled in CHECKED below.
+   Candidate status (EPM-DEC-001-0063), settled in REJECT_19948 and CHANGE_NOTES below.
 
 It adds concepts and notes and removes no IRI, so it is a minor release; the decision owner approved the
 release plan (APPROVAL below).
