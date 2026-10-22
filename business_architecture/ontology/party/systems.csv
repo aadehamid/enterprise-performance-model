@@ -21,7 +21,7 @@ tmis,TMIS,,downstream,,The master data repository of carrier contracts and rates
 onesource,OneSource,,downstream,,"Calculates tax and supports tax compliance and reporting, for RightAngle and SAP S/4HANA invoices."
 rcms,RCMS,Renewable Compliance Management System,downstream,,The renewable compliance system: a reference ID tied to a fuel movement or a RIN trade.
 data-products-idp,Data Products IDP,IDP,downstream,,"Data products on the customer master, sales, credit exposure and delinquency."
-fuelfacs,FuelFacs,CBS,downstream,,"Terminal data on suppliers, products and carriers; it receives customer data from Terminal download."
+fuelfacs,FuelFacs,CBS,downstream,,"The enterprise-wide terminal integration and business-information system (EPM-DEC-001-0072): it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."
 tasdm,TASDM,Terminal Automation System Data Manager,downstream,,"Creates the customers and destinations of MPLX's third-party suppliers in the terminal automation system."
 terminal-upload,Terminal Upload,,enrich,,Enriches the customer through cross-reference customer ID mapping.
 xref,XREF,Cross Reference System,enrich,,The cross-reference on the Salesforce to RightAngle interface that excludes specific customers.
@@ -38,6 +38,6 @@ flowcal,FlowCal,,landscape,,A source of pipeline customers for midstream supply.
 eis,EIS,,landscape,,A source of forecast-driven customers.
 asphalt-marketing-system,Asphalt Marketing System,,landscape,,A source of asphalt and bitumen customers.
 brand-credit-card-system,Brand Credit Card System,,landscape,,A source of dealers.
-terminal-margin-ranking-system,Terminal Margin Ranking System,,landscape,,A source of brand and wholesale customers.
+terminal-margin-ranking-system,Terminal Margin Ranking System,TMR,landscape,,A source of brand and wholesale customers.
 corp-vetting,Corp_Vetting,,landscape,,"A source of partner roles: vendor, surety and customer."
 lenel-onguard,Lenel Onguard,,landscape,,A source of employee parties.

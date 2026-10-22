@@ -12,7 +12,7 @@ salesforce,setup,line-of-business/brand,"The customer is activated in Salesforce
 salesforce,setup,line-of-business/asphalt,"The customer is activated in Salesforce for Unbranded, Branded and Asphalt.",1
 polaris,setup,line-of-business/pipeline-ls,The customer is created in Polaris for Pipeline L&S.,1
 terminal-audit-system,source,customer-class/terminal-rack-customer,Terminal customers.,6
-fuelfacs,source,customer-class/terminal-rack-customer,"Terminal customers, from input 6's CBS. Placing them on FuelFacs is a reading: whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2).",6
+fuelfacs,source,customer-class/terminal-rack-customer,"Terminal customers, from input 6's CBS, which the decision owner takes to be FuelFacs (EPM-DEC-001-0072).",6
 flowcal,source,customer-class/pipeline-customer,Pipeline customers for midstream supply.,6
 eis,source,customer-class/forecast-driven-customer,Forecast-driven customers.,6
 asphalt-marketing-system,source,customer-class/asphalt-bitumen-buyer,Asphalt and bitumen customers.,6

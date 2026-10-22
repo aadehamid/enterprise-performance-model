@@ -79,10 +79,13 @@ class Systems(unittest.TestCase):
         for slug, entities in expected.items():
             self.assertEqual(slugs(G.objects(S[slug], CUST.implements)), entities, slug)
 
-    def test_three_systems_match_the_system_module(self):
-        matched = {str(o).rsplit("/", 1)[1] for o in G.objects(None, SKOS.exactMatch)}
-        self.assertEqual(matched, {"rightangle", "kittyhawk", "profisee"})
+    def test_four_systems_match_the_system_module(self):
+        # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072).
+        pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)}
+        self.assertEqual(pairs, {("rightangle", "rightangle"), ("kittyhawk", "kittyhawk"), ("profisee", "profisee"),
+                                 ("terminal-margin-ranking-system", "tmr")})
         self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
+        self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
 
     def test_the_origin_patterns(self):
         def origin(concept):
@@ -149,11 +152,12 @@ class Attributes(unittest.TestCase):
         self.assertEqual(describes("salesforce", "enrich", "credit-parent-account"), CUST.PartyRelationship)
 
 
-class OpenQuestions(unittest.TestCase):
-    def test_the_cbs_sourcing_keeps_its_open_identity(self):
-        # Whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2), so the sourcing says so.
+class DecisionOwnerAnswers(unittest.TestCase):
+    def test_the_cbs_sourcing_cites_the_decision_owner(self):
+        # The decision owner takes input 6's CBS to be FuelFacs (EPM-DEC-001-0072), so the sourcing says so.
         note = str(G.value(CUST["sourcing/fuelfacs--source--customer-class--terminal-rack-customer"], RDFS.comment))
-        self.assertIn("is open", note)
+        self.assertEqual(note, "Terminal customers, from input 6's CBS, which the decision owner takes to be FuelFacs "
+                               "(EPM-DEC-001-0072).")
 
 
 class Shapes(unittest.TestCase):

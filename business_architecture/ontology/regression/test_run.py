@@ -41,13 +41,15 @@ class Release(unittest.TestCase):
         self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (34, 1, 9))
 
     def test_q15b_reports_the_systems_in_two_modules_as_one(self):
-        # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name.
+        # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
+        # EPM-DEC-001-0072: the Terminal Margin Ranking System is its TMR, which the party node carries as an alternative label.
         with open(os.path.join(HERE, "queries", "q15b-same-word-linked.rq")) as f:
-            rows = GRAPH.query(f.read())
-        pairs = {(str(r.word), str(r.a), str(r.b)) for r in rows if r.link == SKOS.exactMatch}
+            rows = [r for r in GRAPH.query(f.read()) if r.link == SKOS.exactMatch]
         party, system = "https://w3id.org/lsc/ontology/modules/party/system/", "https://w3id.org/lsc/ontology/modules/system/system/"
-        self.assertEqual(pairs, {(word, party + slug, system + slug) for word, slug in
-                                 [("RightAngle", "rightangle"), ("KittyHawk", "kittyhawk"), ("Profisee", "profisee")]})
+        self.assertEqual({(str(r.a), str(r.b)) for r in rows},
+                         {(party + "rightangle", system + "rightangle"), (party + "kittyhawk", system + "kittyhawk"),
+                          (party + "profisee", system + "profisee"), (party + "terminal-margin-ranking-system", system + "tmr")})
+        self.assertEqual({str(r.word) for r in rows if str(r.a) == party + "terminal-margin-ranking-system"}, {"TMR"})
 
     def test_an_orphan_fails_q2(self):
         g = Graph()

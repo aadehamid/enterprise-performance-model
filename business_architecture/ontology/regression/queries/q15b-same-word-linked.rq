@@ -8,7 +8,7 @@ SELECT ?word ?a ?link ?b WHERE {
   UNION { ?a dp:anchoredIn ?b . BIND(dp:anchoredIn AS ?link) }
   UNION { ?a dcterms:isReplacedBy ?b . BIND(dcterms:isReplacedBy AS ?link) }
   UNION { ?a skos:exactMatch ?b . BIND(skos:exactMatch AS ?link) }
-  ?a skos:prefLabel ?la .
+  ?a skos:prefLabel|skos:altLabel ?la .
   ?b skos:prefLabel|skos:altLabel ?lb .
   FILTER(LCASE(STR(?la)) = LCASE(STR(?lb)))
   BIND(STR(?la) AS ?word)
