@@ -213,6 +213,14 @@ class RealParties(unittest.TestCase):
             for r in self.G.objects(self.REF[party], CUST.plays):
                 self.assertEqual(set(self.G.objects(r, DCTERMS.source)), {filing}, r)
 
+    def test_each_role_holds_from_the_first_agreements(self):
+        # MPLX's FY2025 Form 10-K, exhibit index: the Omnibus Agreement (10.1) and the first Transportation
+        # Services Agreement (10.2) are "dated as of October 31, 2012" (EPM-DEC-001-0071).
+        for party in self.EXPECTED:
+            for r in self.G.objects(self.REF[party], CUST.plays):
+                self.assertEqual(str(self.G.value(r, CUST.validFrom)), "2012-10-31", r)
+                self.assertIsNone(self.G.value(r, CUST.validTo), r)
+
     def test_they_conform(self):
         ok, text = conforms(self.G)
         self.assertTrue(ok, text[:3000])

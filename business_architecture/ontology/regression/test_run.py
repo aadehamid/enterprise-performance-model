@@ -152,6 +152,13 @@ class Release(unittest.TestCase):
                                                  URIRef("http://www.w3.org/2000/01/rdf-schema#subClassOf"), URIRef(cust + "Party"))))
         self.assertIn("Q24 q24b-no-customer-class.rq: 1 rows, expected none", failures)
 
+    def test_the_role_labels_alone_fail_q24(self):
+        # Q24 asks how one party holds several roles: keeping the three role labels but removing every
+        # role a party plays must fail it (Codex HOLD on #333).
+        plays = URIRef("https://w3id.org/lsc/ontology/modules/party/plays")
+        failures = self.mutated(lambda g: g.remove((None, plays, None)))
+        self.assertTrue(any(f.startswith("Q24 q24a-one-party-many-roles.rq") for f in failures), failures)
+
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
         rows[16] = dict(rows[16], queries="q01a-children.rq")  # Q17 waits on EPM-DEC-001-0045
