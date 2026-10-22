@@ -8,3 +8,5 @@ Public reference facts about Marathon Petroleum Corporation, kept apart from the
 - `test_ref_mpc.py`: SHACL, the facts against the filing, broken instances that must fail, and MPC and MPLX as parties read both ways, held since 2012-10-31, citing MPLX's 10-K and conforming to the party module's shapes. `scripts/check.sh` runs it.
 
 The module uses the organization module's terms, the party module's terms and W3C ORG terms by IRI and defines none of its own. Refinery capacity is not here yet: it is a dated quantity, which waits for the measure pattern in Step 7.
+
+Released as 1.0.0 and 1.1.0 (EPM-DEC-001-0037, 0045), and as 1.2.0 on 2026-10-22, which adds `reference-parties.ttl` and requires organization 2.0.0 and party 1.0.0 (EPM-DEC-001-0080): `../releases/ref-mpc/1.2.0/`.

@@ -1,0 +1,68 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/ref-mpc/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:ReferenceInstance a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:languageIn ( "en" ) ;
+            sh:maxCount 1 ;
+            sh:message "A reference instance has exactly one English name." ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:note ],
+        [ sh:message "A reference instance cites a described source." ;
+            sh:minCount 1 ;
+            sh:node shp:Source ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:message "A reference instance states the date its facts held." ;
+            sh:minCount 1 ;
+            sh:path dcterms:date ] ;
+    sh:targetClass org:FormalOrganization,
+        org:OrganizationalUnit,
+        org:Site .
+
+shp:Site a sh:NodeShape ;
+    sh:property [ sh:class org:FormalOrganization ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path org:siteOf ] ;
+    sh:targetClass org:Site .
+
+shp:Unit a sh:NodeShape ;
+    sh:property [ sh:class org:FormalOrganization ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path org:unitOf ] ;
+    sh:targetClass org:OrganizationalUnit .
+
+shp:Source a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:title ],
+        [ sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:issued ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:identifier ] .
+

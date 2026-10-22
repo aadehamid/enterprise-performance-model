@@ -1,0 +1,223 @@
+@prefix agt: <https://w3id.org/lsc/ontology/modules/party/agreement-type/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix orgm: <https://w3id.org/lsc/ontology/modules/organization/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix pt: <https://w3id.org/lsc/ontology/modules/party/party-type/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
+@prefix rp: <https://w3id.org/lsc/ontology/modules/ref-mpc/party/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/ref-mpc> a owl:Ontology ;
+    dcterms:description "Public reference facts about MPC and MPLX, each with a source and an as-of date (Step 5)."@en ;
+    dcterms:issued "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22"^^xsd:date ;
+    dcterms:requires orgm:2.0.0,
+        party:1.0.0 ;
+    dcterms:title "LSC Reference Instances: Marathon Petroleum Corporation"@en ;
+    owl:versionIRI refmpc:1.2.0 ;
+    owl:versionInfo "1.2.0" .
+
+refmpc:mpc-controls-mplx a orgm:ControlRelationship ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "The filing states the share as approximate: \"As of December 31, 2025, we owned the general partner of MPLX and approximately 64 percent of the outstanding MPLX common units.\" MPC controls and consolidates MPLX (Item 1, Overview; Item 7)."@en ;
+    orgm:asOf "2025-12-31"^^xsd:date ;
+    orgm:controlledEntity refmpc:mplx ;
+    orgm:controllingEntity refmpc:mpc ;
+    orgm:ownershipShare 0.64 .
+
+refmpc:refinery-anacortes a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Anacortes, Washington; in MPC's West Coast refining region."@en ;
+    skos:prefLabel "Anacortes refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-canton a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Canton, Ohio; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Canton refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-catlettsburg a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Catlettsburg, Kentucky; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Catlettsburg refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-detroit a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Detroit, Michigan; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Detroit refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-el-paso a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in El Paso, Texas; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "El Paso refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-galveston-bay a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Texas City, Texas; in MPC's Gulf Coast refining region."@en ;
+    skos:prefLabel "Galveston Bay refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-garyville a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Garyville, Louisiana; in MPC's Gulf Coast refining region."@en ;
+    skos:prefLabel "Garyville refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-kenai a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Kenai, Alaska; in MPC's West Coast refining region."@en ;
+    skos:prefLabel "Kenai refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-los-angeles a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Los Angeles, California; in MPC's West Coast refining region."@en ;
+    skos:prefLabel "Los Angeles refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-mandan a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Mandan, North Dakota; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Mandan refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-robinson a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Robinson, Illinois; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Robinson refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-salt-lake-city a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in Salt Lake City, Utah; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "Salt Lake City refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:refinery-st-paul-park a org:Site ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:note "Located in St. Paul Park, Minnesota; in MPC's Mid-Continent refining region."@en ;
+    skos:prefLabel "St. Paul Park refinery"@en ;
+    org:siteOf refmpc:mpc .
+
+refmpc:segment-midstream a org:OrganizationalUnit ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:definition "MPC's reportable segment that gathers, transports, stores and distributes crude oil, refined products and natural gas liquids, and processes natural gas. It is primarily MPLX."@en ;
+    skos:prefLabel "Midstream"@en ;
+    skos:scopeNote "A reporting segment of MPC, separate from the legal entity MPLX whose operations roll up into it (EPM-DEC-001-0015)."@en ;
+    org:unitOf refmpc:mpc .
+
+refmpc:segment-refining-and-marketing a org:OrganizationalUnit ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:definition "MPC's reportable segment that refines crude oil and other feedstocks at its refineries and sells refined products."@en ;
+    skos:prefLabel "Refining & Marketing"@en ;
+    org:unitOf refmpc:mpc .
+
+refmpc:segment-renewable-diesel a org:OrganizationalUnit ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:mpc-s01 ;
+    skos:definition "MPC's reportable segment that processes renewable feedstocks into renewable diesel."@en ;
+    skos:prefLabel "Renewable Diesel"@en ;
+    org:unitOf refmpc:mpc .
+
+refmpc:mplx a org:FormalOrganization,
+        party:Organization ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:gleif-lei,
+        src:mpc-s01 ;
+    rdfs:seeAlso <https://api.gleif.org/api/v1/lei-records/5493000CZJ19CK4P3G36> ;
+    skos:altLabel "MPLX"@en ;
+    skos:note "GLEIF lists this LEI's registration as LAPSED (last updated 2023-08-04) and records no accounting-consolidation parent (reporting exception NO_KNOWN_PERSON), so the control relationship below has no GLEIF Level 2 counterpart."@en ;
+    skos:prefLabel "MPLX LP"@en ;
+    skos:scopeNote "A master limited partnership that MPC sponsors. A separate legal entity, not a unit of MPC: MPC's control of it is the control relationship below, not org:subOrganizationOf."@en ;
+    org:identifier "5493000CZJ19CK4P3G36" ;
+    party:legalName "MPLX LP" ;
+    party:partyType pt:organization ;
+    party:plays rp:mplx-carrier,
+        rp:mplx-vendor .
+
+rp:mpc-payer a party:PartyRole ;
+    dcterms:source src:mplx-s01 ;
+    party:governedBy rp:mplx-mpc-services ;
+    party:roleType role:payer ;
+    party:validFrom "2012-10-31"^^xsd:date .
+
+rp:mpc-throughput-holder a party:PartyRole ;
+    dcterms:source src:mplx-s01 ;
+    party:governedBy rp:mplx-mpc-services ;
+    party:roleType role:throughput-holder ;
+    party:validFrom "2012-10-31"^^xsd:date .
+
+rp:mplx-carrier a party:PartyRole ;
+    dcterms:source src:mplx-s01 ;
+    party:governedBy rp:mplx-mpc-services ;
+    party:roleType role:carrier ;
+    party:validFrom "2012-10-31"^^xsd:date .
+
+rp:mplx-vendor a party:PartyRole ;
+    dcterms:source src:mplx-s01 ;
+    party:governedBy rp:mplx-mpc-services ;
+    party:roleType role:vendor ;
+    party:validFrom "2012-10-31"^^xsd:date .
+
+src:gleif-lei a dcterms:BibliographicResource ;
+    dcterms:bibliographicCitation "https://api.gleif.org/api/v1/lei-records"@en ;
+    dcterms:identifier "GLEIF API v1, lei-records" ;
+    dcterms:issued "2026-10-13"^^xsd:date ;
+    dcterms:title "GLEIF LEI records (Level 1 and Level 2), golden copy published 2026-10-13"@en .
+
+rp:mplx-mpc-services a party:Agreement ;
+    dcterms:source src:mplx-s01 ;
+    party:agreementType agt:throughput-storage ;
+    party:validFrom "2012-10-31"^^xsd:date .
+
+src:mplx-s01 a dcterms:BibliographicResource ;
+    dcterms:bibliographicCitation "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm"@en ;
+    dcterms:identifier "0001552000-26-000009" ;
+    dcterms:issued "2026-02-26"^^xsd:date ;
+    dcterms:title "MPLX LP, Form 10-K for the fiscal year ended 2025-12-31"@en .
+
+refmpc:mpc a org:FormalOrganization,
+        party:Organization ;
+    dcterms:date "2025-12-31"^^xsd:date ;
+    dcterms:source src:gleif-lei,
+        src:mpc-s01 ;
+    rdfs:seeAlso <https://api.gleif.org/api/v1/lei-records/3BNYRYQHD39K4LCKQF12> ;
+    skos:altLabel "MPC"@en ;
+    skos:prefLabel "Marathon Petroleum Corporation"@en ;
+    org:identifier "3BNYRYQHD39K4LCKQF12" ;
+    party:legalName "Marathon Petroleum Corporation" ;
+    party:partyType pt:organization ;
+    party:plays rp:mpc-payer,
+        rp:mpc-throughput-holder .
+
+src:mpc-s01 a dcterms:BibliographicResource ;
+    dcterms:bibliographicCitation "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm"@en ;
+    dcterms:identifier "0001510295-26-000009" ;
+    dcterms:issued "2026-02-26"^^xsd:date ;
+    dcterms:title "Marathon Petroleum Corporation, Form 10-K for the fiscal year ended 2025-12-31"@en .
+

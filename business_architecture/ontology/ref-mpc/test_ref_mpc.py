@@ -46,6 +46,11 @@ class Facts(unittest.TestCase):
         core_shapes = Graph().parse(os.path.join(HERE, "..", "releases", "core", "1.0.0", "shapes.ttl"))
         ok, _, text = validate(MODULE, shacl_graph=core_shapes)
         self.assertTrue(ok, text)
+        # The reference parties cite MPLX's 10-K, src:mplx-s01, which meets the same shape (Pi on #341).
+        parties = Graph().parse(os.path.join(HERE, "reference-parties.ttl"))
+        ok, _, text = validate(parties, shacl_graph=core_shapes)
+        self.assertTrue(ok, text)
+        self.assertIsNotNone(parties.value(SRC["mplx-s01"], DCTERMS.title))
 
     def test_three_reportable_segments_of_mpc(self):
         # 10-K: "Our operations consist of three reportable operating segments: Refining &
