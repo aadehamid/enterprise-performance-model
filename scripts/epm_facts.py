@@ -491,9 +491,10 @@ DATED = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
 def changed_phrases(diff):
     """The old wording a unified diff (-U1) replaced or deleted: each run of changed words on one line, with
     one unchanged word of context on each side, kept when that makes at least two words and eight characters,
-    so "at 34 answerable" is searched, not "34" alone. The context may come from an unchanged word on the
-    next or previous line, which -U1 supplies, but not from another change or across a blank line. An
-    addition has no old wording and gives none."""
+    so "at 34 answerable" is searched, not "34" alone. Lines are matched first and words only within a
+    replaced line and its replacement, so a word moved to another line still counts as changed there. The
+    context may come from an unchanged word on the next or previous line, which -U1 supplies, but not from
+    another change or across a blank line. An addition has no old wording and gives none."""
     phrases = []
     for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
         # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
@@ -502,11 +503,27 @@ def changed_phrases(diff):
         old = [l[1:] for l in body.split("\n") if l[:1] in (" ", "-")]
         new = [l[1:] for l in body.split("\n") if l[:1] in (" ", "+")]
         a = [(n, w) for n, line in enumerate(old) for w in line.split()]   # each old word with its line
-        b = " ".join(new).split()
+        start = [0]                                                         # index in a of each old line's first word
+        for line in old:
+            start.append(start[-1] + len(line.split()))
         changed = set()
-        for op, i1, i2, _, _ in difflib.SequenceMatcher(None, [w for _, w in a], b, autojunk=False).get_opcodes():
-            if op in ("replace", "delete"):
-                changed.update(range(i1, i2))
+
+        def word_changes(i1, i2, j1, j2):
+            # The old words of lines i1..i2 that their replacement, lines j1..j2, does not keep.
+            ow = [w for _, w in a[start[i1]:start[i2]]]
+            nw = " ".join(new[j1:j2]).split()
+            for op, k1, k2, _, _ in difflib.SequenceMatcher(None, ow, nw, autojunk=False).get_opcodes():
+                if op in ("replace", "delete"):
+                    changed.update(range(start[i1] + k1, start[i1] + k2))
+
+        for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes():
+            if op == "delete":
+                changed.update(range(start[i1], start[i2]))
+            elif op == "replace" and i2 - i1 == j2 - j1:
+                for k in range(i2 - i1):          # line by line, so a word cannot match its twin on another line
+                    word_changes(i1 + k, i1 + k + 1, j1 + k, j1 + k + 1)
+            elif op == "replace":
+                word_changes(i1, i2, j1, j2)
         i = 0
         while i < len(a):
             if i not in changed:

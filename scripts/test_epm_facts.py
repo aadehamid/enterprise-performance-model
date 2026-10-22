@@ -141,6 +141,12 @@ def test_sweep_does_not_take_context_across_a_blank_line():
     assert epm_facts.changed_phrases(diff) == ["holds 34", "9 waiting"]
 
 
+def test_sweep_counts_a_word_moved_to_another_line_as_changed():
+    # Codex's example on #337: two lines swap their values; each line's old value is still searched.
+    diff = "@@ -1,2 +1,2 @@\n-the ledger holds 34\n-9 waiting\n+the ledger holds 9\n+34 waiting\n"
+    assert epm_facts.changed_phrases(diff) == ["holds 34", "9 waiting"]
+
+
 def test_sweep_finds_a_phrase_whose_context_is_on_an_unchanged_line(tmp_path, monkeypatch):
     # End to end, so the diff's context flag is tested too: with -U0 the sweep returns nothing here.
     for key in [k for k in os.environ if k.startswith("GIT_")]:
@@ -159,6 +165,27 @@ def test_sweep_finds_a_phrase_whose_context_is_on_an_unchanged_line(tmp_path, mo
     git("commit", "-q", "-am", "change")
     report = dict(epm_facts.sweep("HEAD~1", root=str(tmp_path)))
     assert [(name, i) for name, i, _, _ in report["At 686 answerable"]] == [("stale.md", 1)]
+
+
+def test_sweep_finds_both_old_values_of_two_swapped_lines(tmp_path, monkeypatch):
+    for key in [k for k in os.environ if k.startswith("GIT_")]:
+        monkeypatch.delenv(key)
+
+    def git(*a):
+        subprocess.check_call(["git", "-C", str(tmp_path), *a], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    git("init", "-q", "-b", "main")
+    git("config", "user.email", "t@example.com")
+    git("config", "user.name", "t")
+    (tmp_path / "source.md").write_text("the ledger holds 34\n9 waiting\n")
+    (tmp_path / "stale-one.md").write_text("the ledger holds 34\n")
+    (tmp_path / "stale-two.md").write_text("9 waiting\n")
+    git("add", ".")
+    git("commit", "-q", "-m", "base")
+    (tmp_path / "source.md").write_text("the ledger holds 9\n34 waiting\n")
+    git("commit", "-q", "-am", "swap")
+    report = dict(epm_facts.sweep("HEAD~1", root=str(tmp_path)))
+    assert [name for name, *_ in report["holds 34"]] == ["stale-one.md"]
+    assert [name for name, *_ in report["9 waiting"]] == ["stale-two.md"]
 
 
 def test_sweep_reads_a_deleted_line_that_starts_with_dashes():
