@@ -1,7 +1,8 @@
 """Tests for the `party` module (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068): the build is
 current, the code lists hold the decided values, the vocabulary holds the fifteen entities of the
-decision owner's conceptual model, the five example organizations read both ways, and SHACL accepts
-the examples and rejects each kind of break. Expected values are written out by hand.
+decision owner's conceptual model, the five example organizations read both ways, MPC and MPLX as real
+parties read both ways and cite MPLX's 10-K (EPM-DEC-001-0071), and SHACL accepts the examples and
+rejects each kind of break. Expected values are written out by hand.
 
 Run: python3 -m pytest test_party.py (needs rdflib, pyshacl).
 """
