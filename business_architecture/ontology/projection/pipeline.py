@@ -30,9 +30,9 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
-# Every released package, at the version the graph loads: where two packages require different
-# versions of one module, the highest (kpi 1.1.0 over the 1.0.1 that value-stream and market-data
-# name), as release/build_module.py's closure does (EPM-DEC-001-0036, amendment of 2026-10-22).
+# Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
+# kpi is 1.1.0, though value-stream and market-data were released against 1.0.1; their own release
+# checks still test those pinned versions.
 PACKAGES = [("core", "2.2.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.0.0"),
             ("data-product", "1.0.0"), ("value-stream", "1.0.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
             ("market-data", "1.0.0"), ("integration", "1.0.0")]
@@ -436,7 +436,7 @@ def load_verify(bolt, password, import_dir):
                            "RETURN focusNode, propertyShape, resultMessage").data()
         out = roundtrip(s)
         # The in-graph check must be able to fail: remove one role's name, which every role must
-        # have exactly once (organization/shapes.ttl), and count the violations n10s reports.
+        # have exactly once (the organization package's shapes.ttl), and count the violations n10s reports.
         shapes_loaded = s.run("CALL n10s.validation.shacl.listShapes() YIELD target RETURN count(*) AS n").single()["n"]
         s.run("MATCH (r:org__Role) WITH r ORDER BY r.uri LIMIT 1 REMOVE r.skos__prefLabel").consume()
         caught = len(s.run("CALL n10s.validation.shacl.validate() YIELD focusNode RETURN focusNode").data())
