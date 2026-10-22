@@ -6,9 +6,10 @@
 # price or volume is recorded. Each role holds from 2012-10-31, the date of the first agreements the
 # filing's exhibit index lists: the Omnibus Agreement among MPC, MPLX and their subsidiaries
 # (Exhibit 10.1) and the first Transportation Services Agreement (Exhibit 10.2), both "dated as of
-# October 31, 2012". Those agreements are between subsidiaries of each company (Marathon Petroleum
-# Company LP and Marathon Pipe Line LLC); the roles are stated at the parent level, as ref-mpc states
-# its facts. The roles still hold: the filing describes the agreements as current.
+# October 31, 2012". The Omnibus Agreement's parties include both parents, MPC and MPLX LP; the
+# Transportation Services Agreement is between their subsidiaries (Marathon Petroleum Company LP and
+# Marathon Pipe Line LLC). The roles are stated at the parent level, as Item 1 states the services and
+# as ref-mpc states its facts. The roles still hold: the filing describes the agreements as current.
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
 @prefix role: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
