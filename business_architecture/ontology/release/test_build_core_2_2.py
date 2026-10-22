@@ -83,6 +83,46 @@ class Release(unittest.TestCase):
         self.assertIsNone(G.value(c("MS-1-1-1"), SKOS.scopeNote))
         self.assertIn("MPC-P01", str(G.value(c("MS-1-1-1"), DCTERMS.provenance)))
 
+    def test_the_new_and_changed_text_is_the_reviewed_text(self):
+        # Codex round 1: every label, definition and scope note of the 23 new concepts, and the notes added to
+        # the eight changed ones, compared in full with the reviewed text in core-2-2-0-expected-text.json.
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "core-2-2-0-expected-text.json")) as f:
+            expected = json.load(f)
+        self.assertEqual(set(expected["new"]), set(NEW))
+        self.assertEqual(set(expected["changed_added_notes"]), CHANGED)
+        for slug, want in expected["new"].items():
+            with self.subTest(slug):
+                s = c(slug)
+                self.assertEqual([str(x) for x in G.objects(s, SKOS.prefLabel)], [want["prefLabel"]])
+                self.assertEqual([str(x) for x in G.objects(s, SKOS.definition)], [want["definition"]])
+                self.assertEqual(sorted(str(x) for x in G.objects(s, SKOS.scopeNote)), want["scopeNotes"])
+        for slug, notes in expected["changed_added_notes"].items():
+            with self.subTest(slug):
+                added = set(G.objects(c(slug), SKOS.scopeNote)) - set(BASE.objects(c(slug), SKOS.scopeNote))
+                self.assertEqual(sorted(str(x) for x in added), notes)
+
+    def test_the_reviewed_text_is_the_maps_own_wording(self):
+        # Read the pinned map here, not through the builder: each new concept's label is the node's name, and its
+        # definition and scope note together are the node's description, word for word.
+        import subprocess
+        raw = subprocess.check_output(["git", "show", f"{b.SOURCE_COMMIT}:{b.SOURCE_PATH}"], cwd=b.REPO)
+        by_id = {}
+
+        def walk(node):
+            if node.get("id"):
+                by_id[node["id"]] = node
+            for child in node.get("children", []):
+                walk(child)
+        for root in json.loads(raw):
+            walk(root)
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "core-2-2-0-expected-text.json")) as f:
+            expected = json.load(f)
+        for slug, (notation, _, _) in NEW.items():
+            with self.subTest(slug):
+                node, want = by_id[notation], expected["new"][slug]
+                self.assertEqual(want["prefLabel"], node["name"])
+                self.assertEqual(" ".join([want["definition"]] + want["scopeNotes"]), node["description"])
+
     def test_the_split_keeps_bracketed_full_stops(self):
         self.assertEqual(b.split_description("Do A (see Item 1. Note 2). Then B."), ("Do A (see Item 1. Note 2).", "Then B."))
         self.assertEqual(b.split_description("One sentence only."), ("One sentence only.", ""))
