@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-21 |
-| Questions | Pull request 3 of EPM-DEC-001-0067's plan; it extends competency question 6 ("Which systems ... support process P, and which processes depend on system S?") to the customer's systems through the three systems the system module also holds |
+| Questions | Pull request 3 of EPM-DEC-001-0067's plan; it extends competency question 6 ("Which systems ... support process P, and which processes depend on system S?") to the customer's systems through the three systems the system module also holds (*2026-10-21:* four, with the Terminal Margin Ranking System as TMR, EPM-DEC-001-0072) |
 | Source | Claude Code night run, 2026-10-21 |
 
 ## Context
