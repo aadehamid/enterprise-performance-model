@@ -489,10 +489,11 @@ DATED = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
 
 
 def changed_phrases(diff):
-    """The old wording a unified diff (-U1) replaced or deleted: for each run of changed words, those words
-    with one word of context on each side, kept when that makes at least two words and eight characters,
-    so "at 34 answerable" is searched, not "34" alone. The context may come from an unchanged neighbouring
-    line, which -U1 supplies. An addition has no old wording and gives none."""
+    """The old wording a unified diff (-U1) replaced or deleted: each run of changed words on one line, with
+    one unchanged word of context on each side, kept when that makes at least two words and eight characters,
+    so "at 34 answerable" is searched, not "34" alone. The context may come from an unchanged word on the
+    next or previous line, which -U1 supplies, but not from another change or across a blank line. An
+    addition has no old wording and gives none."""
     phrases = []
     for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
         # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
@@ -500,14 +501,30 @@ def changed_phrases(diff):
         # Unchanged lines (" ") belong to both sides, so a word on one can be the context of a change.
         old = [l[1:] for l in body.split("\n") if l[:1] in (" ", "-")]
         new = [l[1:] for l in body.split("\n") if l[:1] in (" ", "+")]
-        a, b = " ".join(old).split(), " ".join(new).split()
-        for op, i1, i2, _, _ in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
-            if op not in ("replace", "delete"):
+        a = [(n, w) for n, line in enumerate(old) for w in line.split()]   # each old word with its line
+        b = " ".join(new).split()
+        changed = set()
+        for op, i1, i2, _, _ in difflib.SequenceMatcher(None, [w for _, w in a], b, autojunk=False).get_opcodes():
+            if op in ("replace", "delete"):
+                changed.update(range(i1, i2))
+        i = 0
+        while i < len(a):
+            if i not in changed:
+                i += 1
                 continue
-            words = a[max(0, i1 - 1):min(len(a), i2 + 1)]
+            j = i
+            while j + 1 in changed and a[j + 1][0] == a[i][0]:   # one run: changed words on one line
+                j += 1
+            words = [w for _, w in a[i:j + 1]]
+            # Context: an unchanged word on this line or the one next to it; a blank line breaks adjacency.
+            if i > 0 and i - 1 not in changed and a[i][0] - a[i - 1][0] <= 1:
+                words.insert(0, a[i - 1][1])
+            if j + 1 < len(a) and j + 1 not in changed and a[j + 1][0] - a[j][0] <= 1:
+                words.append(a[j + 1][1])
             phrase = " ".join(words).strip(" .,;:()|*`\"'")
             if len(words) >= 2 and len(phrase) >= 8 and phrase not in phrases:
                 phrases.append(phrase)
+            i = j + 1
     return phrases
 
 

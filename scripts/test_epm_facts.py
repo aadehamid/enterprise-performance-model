@@ -130,6 +130,17 @@ def test_sweep_takes_context_from_an_unchanged_neighbouring_line():
     assert epm_facts.changed_phrases(diff) == ["At 686 answerable"]
 
 
+def test_sweep_does_not_take_context_from_another_change():
+    # Cursor's example on #337: two nearby changes in one -U1 hunk keep their own context.
+    diff = "@@ -1,2 +1,2 @@\n-the ledger holds 34\n+the ledger holds 42\n-9 waiting\n+1 waiting\n"
+    assert epm_facts.changed_phrases(diff) == ["holds 34", "9 waiting"]
+
+
+def test_sweep_does_not_take_context_across_a_blank_line():
+    diff = "@@ -1,3 +1,3 @@\n-the ledger holds 34\n+the ledger holds 42\n \n-9 waiting\n+1 waiting\n"
+    assert epm_facts.changed_phrases(diff) == ["holds 34", "9 waiting"]
+
+
 def test_sweep_finds_a_phrase_whose_context_is_on_an_unchanged_line(tmp_path, monkeypatch):
     # End to end, so the diff's context flag is tested too: with -U0 the sweep returns nothing here.
     for key in [k for k in os.environ if k.startswith("GIT_")]:
