@@ -10,6 +10,7 @@ Usage (from anywhere in the repo):
     python3 scripts/epm_facts.py row REL-00436     # where one row stands
     python3 scripts/epm_facts.py section 201       # row IDs for one Phase 1 issue
     python3 scripts/epm_facts.py find "0024"       # repo-wide search, including text split across lines
+    python3 scripts/epm_facts.py sweep main        # where wording this branch replaced or deleted still stands
     python3 scripts/epm_facts.py decisions         # check the EPM-DEC-001 records against their index
     python3 scripts/epm_facts.py names             # no tracked file names the decision owner (EPM-DEC-001-0049)
     add --json for machine-readable output
@@ -36,6 +37,7 @@ import argparse
 import collections
 import contextlib
 import csv
+import difflib
 import glob
 import io
 import json
@@ -432,19 +434,24 @@ def cmd_section(args):
     return 0 if ids else 1
 
 
-def cmd_find(args):
-    """Search tracked text files; also match text split across lines."""
-    files = subprocess.check_output(["git", "-C", ROOT, "ls-files"], text=True).split("\n")
-    needle = args.text
+def find_hits(needle, root=ROOT):
+    """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
+    "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
+    whatever its extension (.sql, .jsonld and .page files included)."""
+    # -z: git quotes paths with non-ASCII characters otherwise, and a quoted path cannot be opened.
+    files = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], text=True).split("\0")
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
-        if not name or not name.endswith((".md", ".csv", ".py", ".ttl", ".json", ".txt", ".yaml", ".yml", ".html")):
+        if not name:
             continue
-        path = os.path.join(ROOT, name)
+        path = os.path.join(root, name)
         try:
-            with open(path, encoding="utf-8") as f:
-                text = f.read()
+            with open(path, "rb") as f:
+                data = f.read()
+            if b"\0" in data:
+                continue
+            text = data.decode("utf-8")
         except (OSError, UnicodeDecodeError):
             continue
         lines = text.split("\n")
@@ -456,6 +463,13 @@ def cmd_find(args):
             joined = re.sub(r"\s+", " ", lines[i] + " " + lines[i + 1]).lower()
             if flat_needle in joined and flat_needle not in lines[i].lower() and flat_needle not in lines[i + 1].lower():
                 hits.append((name, i + 1, "split", (lines[i].strip() + " / " + lines[i + 1].strip())))
+    return hits
+
+
+def cmd_find(args):
+    """Search tracked text files; also match text split across lines."""
+    needle = args.text
+    hits = find_hits(needle)
     if args.json:
         print(json.dumps({"commit": commit(), "text": needle, "hits": [dict(zip(("file", "line", "kind", "text"), h)) for h in hits]}, indent=2))
         return 0
@@ -464,6 +478,106 @@ def cmd_find(args):
         print(f"{name}:{i}: [{kind}] {line[:200]}")
     return 0
 
+
+
+# ---------- sweep ----------
+
+# A date on the line (YYYY-MM-DD). The repository writes dated notes in many forms (*2026-10-21:*,
+# (Superseded 2026-10-13: ...), Added 2026-10-20 ...), so the sweep marks any line that holds a date
+# and leaves it to the reader to see whether the date notes the clause in question.
+DATED = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
+
+
+def changed_phrases(diff):
+    """The old wording a unified diff (-U1) replaced or deleted: each run of changed words on one line, with
+    one unchanged word of context on each side, kept when that makes at least two words and eight characters,
+    so "at 34 answerable" is searched, not "34" alone. Lines are matched first and words only within a
+    replaced line and its replacement, so a word moved to another line still counts as changed there. The
+    context may come from an unchanged word on the next or previous line, which -U1 supplies, but not from
+    another change or across a blank line. An addition has no old wording and gives none."""
+    phrases = []
+    for hunk in re.split(r"^@@[^\n]*@@[^\n]*\n", diff, flags=re.M)[1:]:
+        # A hunk ends where the next file's header begins; its "--- a/..." and "+++ b/..." lines are not text.
+        body = re.split(r"^diff --git ", hunk, maxsplit=1, flags=re.M)[0]
+        # Unchanged lines (" ") belong to both sides, so a word on one can be the context of a change.
+        old = [l[1:] for l in body.split("\n") if l[:1] in (" ", "-")]
+        new = [l[1:] for l in body.split("\n") if l[:1] in (" ", "+")]
+        a = [(n, w) for n, line in enumerate(old) for w in line.split()]   # each old word with its line
+        start = [0]                                                         # index in a of each old line's first word
+        for line in old:
+            start.append(start[-1] + len(line.split()))
+        changed = set()
+
+        def word_changes(i1, i2, j1, j2):
+            # The old words of lines i1..i2 that their replacement, lines j1..j2, does not keep.
+            ow = [w for _, w in a[start[i1]:start[i2]]]
+            nw = " ".join(new[j1:j2]).split()
+            for op, k1, k2, _, _ in difflib.SequenceMatcher(None, ow, nw, autojunk=False).get_opcodes():
+                if op in ("replace", "delete"):
+                    changed.update(range(start[i1] + k1, start[i1] + k2))
+
+        for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes():
+            if op == "delete":
+                changed.update(range(start[i1], start[i2]))
+            elif op == "replace" and i2 - i1 == j2 - j1:
+                for k in range(i2 - i1):          # line by line, so a word cannot match its twin on another line
+                    word_changes(i1 + k, i1 + k + 1, j1 + k, j1 + k + 1)
+            elif op == "replace":
+                word_changes(i1, i2, j1, j2)
+        i = 0
+        while i < len(a):
+            if i not in changed:
+                i += 1
+                continue
+            j = i
+            while j + 1 in changed and a[j + 1][0] == a[i][0]:   # one run: changed words on one line
+                j += 1
+            words = [w for _, w in a[i:j + 1]]
+            # Context: an unchanged word on this line or the one next to it; a blank line breaks adjacency.
+            if i > 0 and i - 1 not in changed and a[i][0] - a[i - 1][0] <= 1:
+                words.insert(0, a[i - 1][1])
+            if j + 1 < len(a) and j + 1 not in changed and a[j + 1][0] - a[j][0] <= 1:
+                words.append(a[j + 1][1])
+            phrase = " ".join(words).strip(" .,;:()|*`\"'")
+            if len(words) >= 2 and len(phrase) >= 8 and phrase not in phrases:
+                phrases.append(phrase)
+            i = j + 1
+    return phrases
+
+
+def sweep(base, root=ROOT):
+    """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
+    still holds it, each marked "dated" when its line holds a date (DATED) and "live" otherwise."""
+    try:
+        diff = subprocess.check_output(["git", "-C", root, "diff", "-U1", "--no-color", f"{base}...HEAD"],
+                                       text=True, stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        raise SystemExit(f"sweep: cannot diff {base}...HEAD: {e.stderr.strip()}")
+    report = []
+    for phrase in changed_phrases(diff):
+        hits = [(name, i, "dated" if DATED.search(text) else "live", text) for name, i, _, text in find_hits(phrase, root)]
+        report.append((phrase, hits))
+    return report
+
+
+def cmd_sweep(args):
+    report = sweep(args.base)
+    if args.json:
+        print(json.dumps({"commit": commit(), "base": args.base, "phrases": [
+            {"phrase": p, "hits": [dict(zip(("file", "line", "state", "text"), h)) for h in hits]} for p, hits in report]}, indent=2))
+        return 0
+    found = [(p, hits) for p, hits in report if hits]
+    places = len({(name, i) for _, hits in found for name, i, _, _ in hits})
+    print(f"commit {commit()}: {len(report)} replaced or deleted phrase(s) since {args.base}; {len(found)} still found, "
+          f"in {places} place(s). A date on a line may note another clause, or none: read each place.")
+    for phrase, hits in found:
+        live = sum(1 for h in hits if h[2] == "live")
+        print(f"\n{phrase!r}: {live} on a line without a date, {len(hits) - live} on a line with one")
+        for name, i, state, text in sorted(hits, key=lambda h: h[2] != "live")[:5]:
+            print(f"  {name}:{i}: [{'no date on line' if state == 'live' else 'date on line'}] {text[:150]}")
+        if len(hits) > 5:
+            print(f"  ... and {len(hits) - 5} more (epm_facts.py --json sweep {args.base} lists them all)")
+    return 0
 
 
 # ---------- decision records ----------
@@ -985,12 +1099,14 @@ def main(argv=None):
     p.add_argument("issue", type=int)
     p = sub.add_parser("find", help="repo-wide search, including text split across lines")
     p.add_argument("text")
+    p = sub.add_parser("sweep", help="where wording the branch replaced or deleted since BASE still stands, in every tracked text file")
+    p.add_argument("base")
     sub.add_parser("decisions", help="check EPM-DEC-001 records against their index (exit 1 on problems)")
     sub.add_parser("quotes", help="check text attributed to the decision owner against their saved answers (exit 1 on problems)")
     sub.add_parser("names", help="check that no tracked file names the decision owner (exit 1 on problems)")
     args = parser.parse_args(argv)
     return {"counts": cmd_counts, "row": cmd_row, "section": cmd_section, "find": cmd_find, "decisions": cmd_decisions,
-            "quotes": cmd_quotes, "names": cmd_names}[args.cmd](args)
+            "quotes": cmd_quotes, "names": cmd_names, "sweep": cmd_sweep}[args.cmd](args)
 
 
 if __name__ == "__main__":
