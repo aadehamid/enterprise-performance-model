@@ -130,7 +130,12 @@ def test_sweep_reads_a_deleted_line_that_starts_with_dashes():
     assert epm_facts.changed_phrases(diff) == ["holds 686 rows"]
 
 
-def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path):
+def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path, monkeypatch):
+    # A clean environment, for this test's git calls and the sweep's: in a pre-push hook git sets GIT_DIR,
+    # and an inherited GIT_DIR would point every call at the real repository instead of tmp_path.
+    for key in [k for k in os.environ if k.startswith("GIT_")]:
+        monkeypatch.delenv(key)
+
     def git(*a):
         subprocess.check_call(["git", "-C", str(tmp_path), *a], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     git("init", "-q", "-b", "main")
