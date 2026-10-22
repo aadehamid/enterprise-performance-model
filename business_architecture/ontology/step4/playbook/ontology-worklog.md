@@ -964,9 +964,10 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### The reference parties move into ref-mpc (2026-10-22)
 - At the decision owner's word (EPM-DEC-001-0075), MPC and MPLX as parties
-  move from `party/` to `ref-mpc/reference-parties.ttl`; their roles and
-  agreement take ref-mpc's namespace. No `party` release is needed; the
-  move ships in `ref-mpc` 1.2.0.
+  move from `party/` to `ref-mpc/reference-parties.ttl`. Under the
+  delegation, their roles and agreement take ref-mpc's namespace, and no
+  `party` release is needed. The `ref-mpc` 1.2.0 release that will carry
+  the move is pending, in its own pull request.
 
 ### The decision owner's answers on the codes and TABS Seller ID (2026-10-22)
 - HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr
