@@ -179,6 +179,31 @@ class EarlierReleases(unittest.TestCase):
         for slug in ("CM-1-2-6-3", "L0-downstream-operations"):
             self.assertNotIn((URIRef("https://w3id.org/lsc/ontology/process/" + slug), decision, review), data)
 
+    def test_check_hands_the_validator_one_core_release(self):
+        # Codex round 2: observe the graph check() passes to SHACL itself, not only the helper's result.
+        core = URIRef(bm.MODULES_NS + "core")
+        review = URIRef(bm.MODULES_NS + "core/apqc-mapping-decision/review-link")
+        decision = URIRef(bm.MODULES_NS + "core/apqcMappingDecision")
+        seen, real = [], bm.validate
+
+        def capture(data, **kwargs):
+            seen.append(data)
+            return real(data, **kwargs)
+        bm.validate = capture
+        try:
+            expected = {"value-stream": "2.2.0", "market-data": "2.1.0", "ref-mpc": "2.1.0"}
+            for name, version in expected.items():
+                with self.subTest(module=name):
+                    seen.clear()
+                    self.assertTrue(bm.check(name, bm.build(name))[0])
+                    self.assertEqual(len(seen), 1)
+                    self.assertEqual({str(v) for v in seen[0].objects(core, OWL.versionInfo)}, {version})
+                    if version == "2.2.0":
+                        for slug in ("CM-1-2-6-3", "L0-downstream-operations"):
+                            self.assertNotIn((URIRef("https://w3id.org/lsc/ontology/process/" + slug), decision, review), seen[0])
+        finally:
+            bm.validate = real
+
     def test_a_later_dependency_release_leaves_the_released_packages_unchanged(self):
         # Codex round 1: kpi 1.1.0 and a later data-product must not change value-stream or market-data 1.0.0,
         # nor what their checks load (closures come from each selected release's own manifest).
