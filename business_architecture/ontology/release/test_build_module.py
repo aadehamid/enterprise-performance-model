@@ -23,7 +23,9 @@ RELEASES = "step4/review-evidence/decision-owner-answers/answers-2026-10-19-ref-
 APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
              "ref-mpc": (RELEASES, "Approve the ref-mpc release too if needed"),
              "kpi": ("step4/review-evidence/decision-owner-answers/answers-2026-10-19-releases.md",
-                     "You have my approval to keep going and release things as needed. while I am out")}
+                     "You have my approval to keep going and release things as needed. while I am out"),
+             "party": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md",
+                       "You have my permission to release the stable version when you are done.")}
 
 
 def approval_holds(name, m):
@@ -129,6 +131,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
         self.assertEqual(bm.dependencies("kpi"), {"core": "2.1.0"})
+        self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
 
 
 if __name__ == "__main__":

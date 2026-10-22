@@ -1,0 +1,5 @@
+# party changelog
+
+## 1.0.0 (2026-10-22)
+
+The module's first release, a major. Approved by the decision owner ("You have my permission to release the stable version when you are done.", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md`; EPM-DEC-001-0074). It holds the Customer domain's concepts: the decision owner's conceptual model as fifteen entity classes (seventeen with Person and Organization, the two kinds of party), with party roles as dated nodes, and eighteen code lists (EPM-DEC-001-0068); 42 customer systems in five tiers, 35 data flows, 24 customer sourcings and 275 system attributes, four systems matched to the system module (EPM-DEC-001-0069, 0072); and the customer lifecycle, six business stages linked to core processes and five system stages linked to customer systems (EPM-DEC-001-0070). Competency questions 19 to 26 are answerable on it (EPM-DEC-001-0071). Definitions only, never records (EPM-DEC-001-0005): the reference parties MPC and MPLX stay outside the package. It requires core 2.1.0.
