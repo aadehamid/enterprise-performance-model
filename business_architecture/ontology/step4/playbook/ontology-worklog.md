@@ -1084,7 +1084,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Source authority (2026-10-19)
 - Under the delegation (EPM-DEC-001-0059): every one of the 63 cited
-  sources (64 since 2026-10-20, EPM-DEC-001-0066) has an evidence tier, from the order in AGENTS.md (process
+  sources (64 since 2026-10-20, EPM-DEC-001-0066; 65 since 2026-10-21, EPM-DEC-001-0071) has an evidence tier, from the order in AGENTS.md (process
   authority, MPC, peers, industry and regulators, generic frameworks).
   Where two sources of a concept disagree, the best tier wins. Q44 is
   answerable.

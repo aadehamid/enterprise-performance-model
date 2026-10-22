@@ -52,6 +52,7 @@ class Tiers(unittest.TestCase):
         self.assertEqual(tier("src-apqc-pcf-001"), "framework")
         self.assertEqual(tier("src-ascm-cscp-001"), "framework")
         self.assertEqual(tier("mpc-s01"), "mpc")
+        self.assertEqual(tier("mplx-s01"), "mpc")  # EPM-DEC-001-0071
         self.assertEqual(tier("gleif-lei"), "industry")
 
 
