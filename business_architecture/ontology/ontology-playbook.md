@@ -408,7 +408,11 @@ person can be Accountable for one process and only Informed on another.
    carry a three-way binding. RACI is design-time responsibility.
 2. Model party roles (customer, supplier, carrier) on the relationship or
    account, not as subclasses of the party. The same organization can be a
-   customer in one deal and a supplier in another.
+   customer in one deal and a supplier in another. A role held for a period
+   is a node of its own, with a start date, the party that holds it and the
+   kind of role from a code list, so one party holds several roles at once
+   and each can end without touching the others. Step 9 checks that no role
+   becomes a subclass of party at any depth.
 3. Put public reference instances of real organizations and sites in their
    own module (for example `ref-<company>`). Cite a source and an as-of date
    for each fact.
@@ -590,6 +594,22 @@ revival trigger.
    shape that targets too broadly (every subject of `skos:inScheme`), or a
    value one module's shape forbids in another module, passes each module's
    own tests and fails only there.
+8. Make each negative test assert the violation it means: the focus node,
+   the message and the severity. A test that only checks that validation
+   fails still passes when an unrelated shape is the one that fires.
+9. When a decision fixes a set, guard the set itself. If a record decides
+   exactly which processes a lifecycle stage links to, the build and the
+   shapes hold that set, written out by hand, and reject a real value on the
+   wrong item, a missing value and a value that does not exist. Checking
+   only the kind of value, or that it exists, lets a valid value on the
+   wrong item through.
+10. State each guard's reach exactly. A shape that targets only nodes that
+   hold a link cannot see a node whose links were all removed; say so where
+   the shape is described, and make the build reject what the shape cannot
+   see.
+11. Follow the whole chain in a rule over a hierarchy. "No role is a
+   subclass of party" is checked with `rdfs:subClassOf+`, not one step;
+   otherwise a class two steps down passes.
 
 **Done when:** the shapes run against the data with zero unexplained
 violations.
@@ -643,6 +663,15 @@ versioned distributions.
    to change them. A test that pins how many queries fail on an empty
    graph, or which question serves as the example of a waiting one, must
    move with every module that adds a query or answers that question.
+9. Make every identity link reach every identity query. When a module adds
+   a link that says two IRIs are one thing (`skos:exactMatch`,
+   `owl:sameAs`), each query that tells same-named things apart must follow
+   it and compare alternative labels as well as preferred ones. Its test
+   pins each linked pair's two IRIs, not only the word they share: a query
+   that paired each node with itself returns the same words.
+10. Run the whole check suite, not only the module's tests, before a review.
+   A new source, value or node can break a check in another module, such as
+   the rule that every cited source has an evidence tier.
 
 **Done when:** every competency question passes on the published release,
 or is parked by a recorded decision.
@@ -756,6 +785,21 @@ the method improves, by a dated amendment with the owner's agreement.
   ontology has a real hook (a RACI feed, a data-product dependency).
 - **Rank evidence and cite every fact.** Use the evidence order from Step 1.
   A fact without a citation stays out.
+- **When the owner's material cannot be published, publish what you derive
+  from it.** Definitions, tables and mappings built from it go in; the
+  material stays out. Mark each derived claim as what the material shows or
+  as the builder's reading, and list what stays open in the decision record.
+  Reason: a reviewer cannot re-check the material, so the marking is the
+  only signal of which claims rest on a reading.
+- **A source outside the evidence order may guide a reading, not support
+  it.** A vendor page or an excluded peer can suggest what a code means. The
+  record cites only admissible sources and says the reading is the
+  builder's, until the owner confirms it.
+- **Do not settle an uncertain identity in the data.** Where two sources may
+  name one thing, keep both names and place facts on one only as a marked
+  reading, with the open question in the record. When the owner answers,
+  record their exact words, including "assume": an assumption is not a
+  confirmation.
 
 ### Identity
 
@@ -800,6 +844,12 @@ the method improves, by a dated amendment with the owner's agreement.
   companies, sites and assets out of the core modules. Reason: the core then
   stays company-neutral and reusable, and the reference module can be
   versioned as filings change.
+- **When two modules hold the same thing, link them; do not merge them.** A
+  domain module's own record of a system that a register module also holds
+  gets `skos:exactMatch` to the register's node, and the register stays
+  built from its own source. Where the two IRIs differ, hold the match by
+  hand in the build, and fail the build if the target is missing or shares
+  no label with it.
 
 ### Modeling discipline
 
@@ -1175,6 +1225,10 @@ Nothing merges on assumption.
 - When a figure is wrong in one place, assume it is wrong in others. Search
   every governed document for the old number, and recompute every table
   total.
+- Search for the claim, not for the words your change used. Search the old
+  figure in its other phrasings, across line breaks, and in record metadata
+  rows. A sweep with the change's own words finds only the places the
+  change already touched.
 - If the figures do not reconcile, report the gap and stop. Never adjust a
   number to make the arithmetic work.
 
@@ -1492,6 +1546,21 @@ owner made them the source author's backlog.
   to third parties, a "physical or apparent" analysis no cited standard
   states, "oils and fats" where the filing names soybean oil). Each was cut
   back to what the source says.
+
+**The Customer domain, Steps 5 to 7** (EPM-DEC-001-0067 to 0072). The
+owner's seven customer inputs stayed out of the repository; the `party`
+module holds what was derived from them: fifteen entity classes, roles as
+dated nodes, 42 customer systems with their data flows and attributes, and a
+lifecycle linked to existing core processes. Each reading is marked as one,
+and the codes nobody could define stay named and open. Four rules of this
+playbook came from its reviews. A shape checked only a direct subclass of
+party, so a role two steps down passed (Step 9, item 11). A query that tells
+same-named IRIs apart ignored `skos:exactMatch`, and its first test pinned
+only the shared word (Step 11, item 9). The lifecycle's guards accepted a
+real process on the wrong stage, and their description overstated what the
+shapes check (Step 9, items 9 and 10). The owner's "let us assume" about one
+system's identity was first written as "takes to be" (§2, uncertain
+identity).
 
 **Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
 `core` 1.0.0 checked `conceptKind` against its own list and the other

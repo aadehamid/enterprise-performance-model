@@ -981,6 +981,11 @@ without a dated amendment and the decision owner's explicit agreement.
   for every customer, the Order to Cash credit review's missing link, and
   a customer master data product.
 
+### The playbook's Customer domain lessons (2026-10-21)
+- At the decision owner's request (EPM-DEC-001-0073), the playbook takes the
+  method lessons of the Customer domain's reviews: in Steps 5, 9 and 11, in
+  §2 and §5.6, and a §7 paragraph naming the findings behind them.
+
 ### The decision owner's answers on the customer systems (2026-10-21)
 - The decision owner gave four answers on three of EPM-DEC-001-0069's five
   open points (EPM-DEC-001-0072): input 6's CBS is assumed to be FuelFacs; the Terminal
