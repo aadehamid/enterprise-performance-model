@@ -1,6 +1,6 @@
 # kpi: measure definitions
 
-The `kpi` module defines the measures that the decision owner's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.1.0 for process IRIs and uses W3C ORG's `org:Role` by IRI.
+The `kpi` module defines the measures that the decision owner's planning team uses and that MPC publishes. It holds definitions only, never values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/kpi/`; it depends on `core` 2.2.0 for process IRIs (2.1.0 until 1.1.0, EPM-DEC-001-0079) and uses W3C ORG's `org:Role` by IRI.
 
 | File | What |
 |---|---|
@@ -11,7 +11,7 @@ The `kpi` module defines the measures that the decision owner's planning team us
 | `build_measures.py`, `measures.ttl` | The build: three tables in, 41 measure definitions and 4 personas out. `python3 build_measures.py` prints the figures; `--verify` fails unless `measures.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_measures.py` | Tests: the vocabulary is well formed, every value stream names only measures this module defines (MPC-P09; schema validation is in `business_process/test_business_process.py`), the build is current and reconciles, SHACL accepts the module and rejects broken measures, and no person's name from the measure list is in any tracked text file (every extension; binary files skipped), in any case, hyphenated, CamelCase or accented spelling |
 
-The module is released as 1.0.0 (`../releases/kpi/1.0.0/`), approved by the decision owner, and 1.0.1 (`../releases/kpi/1.0.1/`), a patch that names the measure list's source. Both require core 2.1.0.
+The module is released as 1.0.0 (`../releases/kpi/1.0.0/`), approved by the decision owner, and 1.0.1 (`../releases/kpi/1.0.1/`), a patch that names the measure list's source. Both require core 2.1.0. *2026-10-22:* released as 1.1.0 (`../releases/kpi/1.1.0/`), a minor approved with the release plan: the package carries the eight measure populations from `../population/`, the measure shape is closed so no value hangs off a measure, and it requires core 2.2.0 (EPM-DEC-001-0079).
 
 Where the rows come from: the planning team's measure list for Value Chain Optimization Decision Support and Visualization (VCO DSV), as the decision owner sent it on 2026-10-18, which stays outside the repository (EPM-DEC-001-0040), and MPC's public measures (`../../reference/mpc/mpc-performance-measures-evidence.md`).
 

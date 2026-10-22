@@ -40,10 +40,17 @@ NAME_HASHES = {"db42328112177c2d", "326b6af3d84957a1", "6bf3d7f77d878d88", "d095
                "c35d6aaf3b3885df"}
 
 
+POPULATION = Graph()
+for _name in ("vocabulary.ttl", "population.ttl"):
+    POPULATION.parse(os.path.join(HERE, "..", "population", _name))
+
+
 def module_graph():
+    # Since 1.1.0 the package carries the measure populations too (EPM-DEC-001-0079).
     g = Graph()
     g += VOCAB
     g += MEASURES
+    g += POPULATION
     g += CORE
     return g
 
@@ -168,6 +175,18 @@ class Shapes(unittest.TestCase):
 
     def test_a_measure_without_a_definition_fails(self):
         self.assertFalse(self.broken(lambda g: g.remove((MEASURE["margin-capture"], SKOS.definition, None))))
+
+    def test_a_value_on_a_measure_fails(self):
+        # The closed measure shape (EPM-DEC-001-0079): a target or an actual cannot hang off a definition.
+        self.assertFalse(self.broken(lambda g: g.add((MEASURE["margin-capture"], URIRef("https://example.org/actual"),
+                                                      Literal(0.94)))))
+        self.assertFalse(self.broken(lambda g: g.add((MEASURE["margin-capture"], RDF.value, Literal(0.94)))))
+
+    def test_the_populations_conform_and_a_second_one_fails(self):
+        pop = Namespace("https://w3id.org/lsc/ontology/modules/population/")
+        self.assertIsNotNone(module_graph().value(MEASURE["crack-spreads"], pop.excludes))
+        self.assertFalse(self.broken(lambda g: g.add((MEASURE["crack-spreads"], pop.excludes,
+                                                      Literal("A second exclusion.", lang="en")))))
 
 
 def name_tokens(text):

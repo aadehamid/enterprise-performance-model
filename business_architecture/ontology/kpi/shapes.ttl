@@ -9,6 +9,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix shp: <https://w3id.org/lsc/ontology/modules/kpi/shapes/> .
+@prefix pop: <https://w3id.org/lsc/ontology/modules/population/> .
 
 shp:Measure a sh:NodeShape ;
     sh:targetClass kpi:MeasureDefinition ;
@@ -37,7 +38,24 @@ shp:Measure a sh:NodeShape ;
     sh:property [ sh:path kpi:notToBeConfusedWith ; sh:minCount 0 ; sh:class kpi:MeasureDefinition ] ;
     sh:property [ sh:path dcterms:source ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
                   sh:message "A measure cites its source." ] ;
-    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+    sh:property [ sh:path dcterms:bibliographicCitation ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    # What a measure counts, where its source states it (EPM-DEC-001-0062; in the kpi package since 1.1.0, EPM-DEC-001-0079).
+    sh:property [ sh:path pop:includes ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path pop:excludes ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype rdf:langString ] ;
+    sh:property [ sh:path pop:populationEvidence ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+# A measure is a definition, never data: only its definition, classification, links and population hang
+# off it, so no value, target or actual can be stated on a measure (EPM-DEC-001-0005; closed in 1.1.0,
+# EPM-DEC-001-0079).
+shp:NoValuesOnMeasures a sh:NodeShape ;
+    sh:targetClass kpi:MeasureDefinition ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:altLabel skos:definition skos:scopeNote skos:notation skos:inScheme
+                           kpi:measureKind kpi:kpiCandidate kpi:classificationTest kpi:classificationReason kpi:usedBy
+                           kpi:informsProcess kpi:comparedAgainst kpi:grain kpi:basis kpi:publicCounterpart
+                           kpi:notToBeConfusedWith dcterms:source dcterms:bibliographicCitation
+                           pop:includes pop:excludes pop:populationEvidence ) ;
+    sh:message "A measure carries its definition, classification, links and population, never a value (EPM-DEC-001-0005)." .
 
 # Only a measure definition carries a measure kind, so a domain concept such as Customer
 # cannot be classified as a KPI (competency question 13, "done when").

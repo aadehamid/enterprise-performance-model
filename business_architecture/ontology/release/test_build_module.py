@@ -31,6 +31,7 @@ PLAN = ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning
 STEP7 = ("data-product", "value-stream", "system", "lane", "market-data")
 APPROVALS.update({name: PLAN for name in STEP7})
 APPROVALS["integration"] = PLAN  # EPM-DEC-001-0078
+APPROVALS["kpi"] = PLAN  # kpi 1.1.0, EPM-DEC-001-0079
 
 
 def approval_holds(name, m):
@@ -150,7 +151,7 @@ class EarlierReleases(unittest.TestCase):
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
-        self.assertEqual(bm.dependencies("kpi"), {"core": "2.1.0"})
+        self.assertEqual(bm.dependencies("kpi"), {"core": "2.2.0"})  # since 1.1.0 (EPM-DEC-001-0079)
         self.assertEqual(bm.dependencies("party"), {"core": "2.1.0"})
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.2.0"})
@@ -242,6 +243,34 @@ class EarlierReleases(unittest.TestCase):
                     sources.parse(os.path.join(bm.ONTOLOGY, name, part))
                 sources.remove((header, None, None))
                 self.assertEqual(set(released), set(sources))
+
+    def test_kpi_1_0_1_is_untouched(self):
+        # kpi 1.1.0 is built now; the released 1.0.1 package must still match its own manifest.
+        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.0.1")
+        with open(os.path.join(out, "manifest.json")) as f:
+            manifest = json.load(f)
+        self.assertEqual(manifest["version"], "1.0.1")
+        for fname, digest in manifest["files"].items():
+            with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
+                self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
+
+    def test_kpi_1_1_0_holds_the_measures_and_the_populations(self):
+        # EPM-DEC-001-0079: the kpi vocabulary and measures, and the population vocabulary and statements.
+        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.1.0", "kpi.ttl"))
+        header = URIRef(bm.MODULES_NS + "kpi")
+        released.remove((header, None, None))
+        sources = Graph()
+        for part in ("kpi/vocabulary.ttl", "kpi/measures.ttl", "population/vocabulary.ttl", "population/population.ttl"):
+            sources.parse(os.path.join(bm.ONTOLOGY, part))
+        sources.remove((header, None, None))
+        self.assertEqual(set(released), set(sources))
+        pop = URIRef(bm.MODULES_NS + "population/includes")
+        self.assertEqual(len(list(released.subject_objects(pop))), 8)
+
+    def test_released_dependents_stay_on_kpi_1_0_1(self):
+        # value-stream, market-data and integration were released against kpi 1.0.1 and keep naming it.
+        for name in ("value-stream", "market-data", "integration"):
+            self.assertEqual(bm.dependencies(name)["kpi"], "1.0.1", name)
 
     def test_integration_holds_three_vocabularies_and_neither_population_nor_apqc(self):
         # EPM-DEC-001-0078: placement, authority (vocabulary and source tiers) and consumer, read from the

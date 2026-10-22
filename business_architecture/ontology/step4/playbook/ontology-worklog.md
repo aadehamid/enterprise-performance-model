@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### `kpi` 1.1.0 (2026-10-22)
+- With the decision owner's approval of the release plan (EPM-DEC-001-0079),
+  `kpi` 1.1.0 is released, a minor requiring core 2.2.0: the eight measure
+  populations join the package with their `pop:` IRIs, and the measure
+  shape is closed, so no value hangs off a measure. The released
+  value-stream, market-data and integration packages stay on 1.0.1.
+
 ### `integration` 1.0.0 (2026-10-22)
 - With the decision owner's approval of the release plan (EPM-DEC-001-0078),
   `integration` 1.0.0 is released: the placement, authority and consumer
