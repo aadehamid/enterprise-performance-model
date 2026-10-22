@@ -2,7 +2,7 @@
 Claude had listed what stayed open from EPM-DEC-001-0069: the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and TDS Seller ID; whether input 6's CBS is FuelFacs; and whether the Terminal Margin Ranking System is the process map's TMR.
 Block 1: the four undefined codes stay in the model; the decision owner will define them later.
 Block 2: TDS Seller ID.
-Block 3: input 6's CBS is taken to be FuelFacs for this model.
+Block 3: input 6's CBS is assumed, for this model, to be FuelFacs.
 Block 4: the Terminal Margin Ranking System is TMR. -->
 
 leave HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag in . I can define later
