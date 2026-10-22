@@ -962,6 +962,12 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The reference parties move into ref-mpc (2026-10-22)
+- At the decision owner's word (EPM-DEC-001-0075), MPC and MPLX as parties
+  move from `party/` to `ref-mpc/reference-parties.ttl`; their roles and
+  agreement take ref-mpc's namespace. No `party` release is needed; the
+  move ships in `ref-mpc` 1.2.0.
+
 ### The decision owner's answers on the codes and TABS Seller ID (2026-10-22)
 - HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr
   stay as they are until the ontology is shared for consumption, when the

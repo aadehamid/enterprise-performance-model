@@ -3,7 +3,7 @@
 # Competency questions section VII is done when five real multi-role organisations can be described
 # both ways (party to roles and role to party) without calling Customer a role. Real customer records
 # stay out of the ontology (EPM-DEC-001-0005), so test_party.py shows the pattern on these five
-# invented ones. The real organisations of section VII are MPC and MPLX, in reference-parties.ttl,
+# invented ones. The real organisations of section VII are MPC and MPLX, in ../ref-mpc/reference-parties.ttl,
 # as the decision owner chose (EPM-DEC-001-0071).
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
 @prefix ex: <https://w3id.org/lsc/ontology/modules/party/example/> .

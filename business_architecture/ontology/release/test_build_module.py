@@ -138,9 +138,9 @@ class EarlierReleases(unittest.TestCase):
             sources.parse(os.path.join(bm.ONTOLOGY, "party", name))
         sources.remove((header, None, None))
         self.assertEqual(set(released), set(sources))
-        for name in ("reference-parties.ttl", "examples.ttl"):
-            outside = Graph().parse(os.path.join(bm.ONTOLOGY, "party", name))
-            self.assertFalse(set(outside) & set(released), name)
+        for path in ("ref-mpc/reference-parties.ttl", "party/examples.ttl"):
+            outside = Graph().parse(os.path.join(bm.ONTOLOGY, path))
+            self.assertFalse(set(outside) & set(released), path)
 
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0"})
