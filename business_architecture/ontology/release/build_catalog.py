@@ -22,6 +22,9 @@ RELEASES = os.path.join(HERE, "..", "releases")
 OUT = os.path.join(RELEASES, "catalog.ttl")
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 CATALOG = URIRef("https://w3id.org/lsc/ontology/catalog")
+TITLE = Literal("LSC Ontology Release Catalog", lang="en")
+DESCRIPTION = Literal("Every release of the LSC ontology modules, one dataset per release, read from each package's own "
+                      "catalog record.", lang="en")
 
 
 def package_catalogs():
@@ -35,10 +38,8 @@ def build():
     for path in package_catalogs():
         g.parse(path)
     g.add((CATALOG, RDF.type, DCAT.Catalog))
-    g.add((CATALOG, DCTERMS.title, Literal("LSC Ontology Release Catalog", lang="en")))
-    g.add((CATALOG, DCTERMS.description, Literal(
-        "Every release of the LSC ontology modules, one dataset per release, read from each package's own "
-        "catalog record.", lang="en")))
+    g.add((CATALOG, DCTERMS.title, TITLE))
+    g.add((CATALOG, DCTERMS.description, DESCRIPTION))
     return g
 
 

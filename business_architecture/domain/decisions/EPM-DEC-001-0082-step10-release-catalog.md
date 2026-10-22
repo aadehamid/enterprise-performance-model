@@ -16,7 +16,7 @@ Each release package carries its own `catalog.ttl`: one `dcat:Dataset` for that 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 1. **One catalog file.** `releases/catalog.ttl` is the union of the 19 packages' `catalog.ttl` files, plus the catalog's title and description. It says nothing about a release that the release's own record does not. `release/build_catalog.py` builds it from the packages on disk.
-2. **Checked in `scripts/check.sh`.** `build_catalog.py --verify` fails unless the written catalog equals a fresh build, so a new release that is not in the catalog fails the check. `release/test_build_catalog.py` checks one dataset per package folder, that every distribution names a file in its package, and that the catalog adds only its own title and description.
+2. **Checked in `scripts/check.sh`.** `build_catalog.py --verify` fails unless the written catalog equals a fresh build, so a new release that is not in the catalog fails the check. `release/test_build_catalog.py` checks one dataset per package folder; that every distribution a dataset links to is described, and names a file in its package; and that the catalog adds only its own title and description.
 3. **No new package and no release.** The catalog is a file beside the packages, not a module, so it needs no version or approval. The packages are unchanged.
 4. **The Step 10 row lists every release.** "Catalog resolves" stays parked: the namespace is not hosted (EPM-DEC-001-0039).
 

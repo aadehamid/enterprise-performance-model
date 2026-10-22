@@ -1,6 +1,6 @@
 """Tests for build_catalog.py (Step 10; EPM-DEC-001-0082): the written catalog equals a fresh build, it
-lists one dataset per release package, every distribution names a file in that package, and it says
-nothing about a release that the package's own catalog record does not.
+lists one dataset per release package, every distribution a dataset links to is described and names a
+file in that package, and it says nothing about a release that the package's own catalog record does not.
 
 Run: python3 -m pytest test_build_catalog.py (needs rdflib).
 """
@@ -36,21 +36,31 @@ class Catalog(unittest.TestCase):
             self.assertIn((d, RDF.type, bc.DCAT.Dataset), self.g)
 
     def test_every_distribution_is_a_file_in_its_package(self):
-        count = 0
-        for dist in self.g.subjects(RDF.type, bc.DCAT.Distribution):
+        # Read from each dataset's dcat:distribution links, so a link to an undescribed distribution fails.
+        linked = set(self.g.objects(None, bc.DCAT.distribution))
+        self.assertEqual(len(linked), 60)
+        for dist in linked:
+            self.assertIn((dist, RDF.type, bc.DCAT.Distribution), self.g)
+            self.assertEqual(list(self.g.objects(dist, bc.DCAT.downloadURL)), [dist])
             module, rest = str(dist)[len(MODULES_NS):].split("/releases/")
             version, fname = rest.split("/")
             self.assertTrue(os.path.exists(os.path.join(bc.RELEASES, module, version, fname)), dist)
-            self.assertEqual(self.g.value(dist, bc.DCAT.downloadURL), dist)
-            count += 1
-        self.assertGreater(count, 0)
+        # And every described distribution belongs to a dataset.
+        self.assertEqual(set(self.g.subjects(RDF.type, bc.DCAT.Distribution)), linked)
+
+    def test_a_link_to_an_undescribed_distribution_fails(self):
+        dataset = URIRef(MODULES_NS + "lane/1.0.0")
+        dist = next(self.g.objects(dataset, bc.DCAT.distribution))
+        self.g.remove((dist, None, None))
+        with self.assertRaises(AssertionError):
+            self.test_every_distribution_is_a_file_in_its_package()
 
     def test_the_catalog_adds_only_its_own_title_and_description(self):
         union = Graph()
         for path in bc.package_catalogs():
             union.parse(path)
         extra = set(self.g) - set(union)
-        self.assertEqual({(s, p) for s, p, _ in extra}, {(bc.CATALOG, DCTERMS.title), (bc.CATALOG, DCTERMS.description)})
+        self.assertEqual(extra, {(bc.CATALOG, DCTERMS.title, bc.TITLE), (bc.CATALOG, DCTERMS.description, bc.DESCRIPTION)})
         self.assertEqual(set(union) - set(self.g), set())
 
     def test_a_package_left_out_makes_the_catalog_stale(self):
