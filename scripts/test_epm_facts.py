@@ -141,20 +141,21 @@ def test_sweep_finds_the_old_wording_left_elsewhere(tmp_path):
     (tmp_path / "c.md").write_text("Three systems are matched *2026-10-21:* four.\n")
     (tmp_path / "d.sql").write_text("-- Three systems feed this view (Superseded 2026-10-22: four).\n")
     (tmp_path / "e.page").write_text("Three systems, as the page says.\n")
+    (tmp_path / "f — guide.md").write_text("Three systems, in a file whose name git quotes.\n")
     git("add", ".")
     git("commit", "-q", "-m", "base")
     (tmp_path / "a.md").write_text("Four systems are matched.\n")
     git("commit", "-q", "-am", "change")
     report = dict(epm_facts.sweep("HEAD~1", root=str(tmp_path)))
     states = {(name, state) for name, _, state, _ in report["Three systems"]}
-    assert states == {("b.md", "live"), ("c.md", "dated"), ("d.sql", "dated"), ("e.page", "live")}
+    assert states == {("b.md", "live"), ("c.md", "dated"), ("d.sql", "dated"), ("e.page", "live"), ("f — guide.md", "live")}
 
 
-def test_sweep_knows_each_form_of_dated_note():
-    for line in ["x *2026-10-21:* four", "*Note 2026-10-14:* v2.2", "*Phase 1 sweep, #210 (2026-10-12):* x",
-                 "(Superseded 2026-10-13: by 0030)"]:
+def test_sweep_marks_a_line_that_holds_a_date():
+    for line in ["x *2026-10-21:* four", "*Note 2026-10-14:* v2.2", "(Superseded 2026-10-13: by 0030)",
+                 "Added 2026-10-20 to check", "(updated 2026-07-20): x"]:
         assert epm_facts.DATED.search(line), line
-    assert not epm_facts.DATED.search("the release of 2026-10-21 holds three")
+    assert not epm_facts.DATED.search("three systems, 42 in all, EPM-DEC-001-0069")
 
 
 def _backlog():

@@ -438,7 +438,8 @@ def find_hits(needle, root=ROOT):
     """Hits for needle in every tracked text file under root: (file, line, kind, text), kind "line" or
     "split" (the text runs across two lines). A file is text when it is UTF-8 with no NUL byte,
     whatever its extension (.sql, .jsonld and .page files included)."""
-    files = subprocess.check_output(["git", "-C", root, "ls-files"], text=True).split("\n")
+    # -z: git quotes paths with non-ASCII characters otherwise, and a quoted path cannot be opened.
+    files = subprocess.check_output(["git", "-C", root, "ls-files", "-z"], text=True).split("\0")
     flat_needle = re.sub(r"\s+", " ", needle).strip().lower()
     hits = []
     for name in files:
@@ -481,9 +482,10 @@ def cmd_find(args):
 
 # ---------- sweep ----------
 
-# A dated note in any of the repository's forms: *2026-10-21:*, *Note 2026-10-14:*, *Phase 1 sweep, #210
-# (2026-10-12):*, or (Superseded 2026-10-13: ...).
-DATED = re.compile(r"\*[^*\n]{0,60}?\b20\d\d-\d\d-\d\d\b|\([A-Z][A-Za-z ]{0,30}20\d\d-\d\d-\d\d")
+# A date on the line (YYYY-MM-DD). The repository writes dated notes in many forms (*2026-10-21:*,
+# (Superseded 2026-10-13: ...), Added 2026-10-20 ...), so the sweep marks any line that holds a date
+# and leaves it to the reader to see whether the date notes the clause in question.
+DATED = re.compile(r"\b(19|20)\d\d-\d\d-\d\d\b")
 
 
 def changed_phrases(diff):
@@ -509,7 +511,7 @@ def changed_phrases(diff):
 
 def sweep(base, root=ROOT):
     """For each phrase the branch replaced or deleted since base, every place in the tracked text files that
-    still holds it, each marked "dated" when its line carries a dated note (DATED) and "live" otherwise."""
+    still holds it, each marked "dated" when its line holds a date (DATED) and "live" otherwise."""
     try:
         diff = subprocess.check_output(["git", "-C", root, "diff", "-U0", "--no-color", f"{base}...HEAD"],
                                        text=True, stderr=subprocess.PIPE)
@@ -531,12 +533,12 @@ def cmd_sweep(args):
     found = [(p, hits) for p, hits in report if hits]
     places = len({(name, i) for _, hits in found for name, i, _, _ in hits})
     print(f"commit {commit()}: {len(report)} replaced or deleted phrase(s) since {args.base}; {len(found)} still found, "
-          f"in {places} place(s). A dated note on a line does not show which clause it covers: read each place.")
+          f"in {places} place(s). A date on a line may note another clause, or none: read each place.")
     for phrase, hits in found:
         live = sum(1 for h in hits if h[2] == "live")
-        print(f"\n{phrase!r}: {live} without a dated note on the line, {len(hits) - live} with one")
+        print(f"\n{phrase!r}: {live} on a line without a date, {len(hits) - live} on a line with one")
         for name, i, state, text in sorted(hits, key=lambda h: h[2] != "live")[:5]:
-            print(f"  {name}:{i}: [{'no dated note' if state == 'live' else 'dated note on line'}] {text[:150]}")
+            print(f"  {name}:{i}: [{'no date on line' if state == 'live' else 'date on line'}] {text[:150]}")
         if len(hits) > 5:
             print(f"  ... and {len(hits) - 5} more (epm_facts.py --json sweep {args.base} lists them all)")
     return 0
