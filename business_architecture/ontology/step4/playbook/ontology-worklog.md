@@ -962,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### `core` 2.2.0 (2026-10-22)
+- With the decision owner's approval of the release plan (EPM-DEC-001-0076),
+  `core` 2.2.0 is released, a minor built from 2.1.0 and the process map at
+  8259354: 23 new concepts, IDs on four stubs, eight changed descriptions as
+  scope notes; 19,810 triples, 706 process concepts. The APQC 19948
+  references are checked (14 confirmed, 2 corrected to Rejected) and RF 1.2
+  is no longer a Candidate node.
+
 ### The reference parties move into ref-mpc (2026-10-22)
 - At the decision owner's word (EPM-DEC-001-0075), MPC and MPLX as parties
   move from `party/` to `ref-mpc/reference-parties.ttl`. Under the
