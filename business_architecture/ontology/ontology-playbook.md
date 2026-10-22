@@ -1560,7 +1560,10 @@ only the shared word (Step 11, item 9). The lifecycle's guards accepted a
 real process on the wrong stage, and their description overstated what the
 shapes check (Step 9, items 9 and 10). The owner's "let us assume" about one
 system's identity was first written as "takes to be" (§2, uncertain
-identity).
+identity). A new source cited by the reference parties had no evidence tier,
+which only the full check suite, not the module's tests, caught (Step 11,
+item 10). A count split across two lines escaped a sweep that searched the
+change's own words (§5.6).
 
 **Step 9, controlled values** (EPM-DEC-001-0035). The release slice in
 `core` 1.0.0 checked `conceptKind` against its own list and the other
