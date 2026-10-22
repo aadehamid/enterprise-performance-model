@@ -277,7 +277,9 @@ class EarlierReleases(unittest.TestCase):
         relies = set(data.objects(None, URIRef(con + "reliesOn")))
         local = {t for t in relies if str(t).startswith("https://w3id.org/lsc/")}
         self.assertIn(URIRef(bm.MODULES_NS + "party/roleType"), local)
-        undefined = {str(t) for t in local if not str(t).startswith(pop) and (t, None, None) not in data}
+        # Declared, not merely mentioned: placement annotates other modules' properties, which makes them
+        # subjects here without defining them (Codex round 2).
+        undefined = {str(t) for t in local if not str(t).startswith(pop) and (t, RDF.type, None) not in data}
         self.assertEqual(undefined, set())
 
     def test_the_step7_releases_carry_the_release_plan_approval(self):
