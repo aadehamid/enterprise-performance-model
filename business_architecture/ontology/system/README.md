@@ -10,6 +10,6 @@ The `system` module holds the systems, office tools and working documents that t
 | `build_systems.py`, `systems.ttl` | The build: 32 systems and 285 links to 150 processes. 153 processes have a `systems` field; three of them name only Manual, TBD or a plan. `--verify` fails unless `systems.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_systems.py` | Tests: the build is current, the figures, the spelling merge, a split, Manual creating no system, kinds, pinned links, and SHACL accepting the module and rejecting an invented definition, two kinds, a kind off the list and a missing note |
 
-The module is not released yet. A release needs the decision owner's approval.
+The module is not released yet. A release needs the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077). The package is in `../releases/system/1.0.0/`.
 
 No source in the repository says what each system does, so no system has a definition; each carries a note saying so. These are internal system names, which EPM-DEC-001-0040 item 3 allows in this repository.

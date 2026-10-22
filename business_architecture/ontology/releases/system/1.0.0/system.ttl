@@ -1,0 +1,641 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kind: <https://w3id.org/lsc/ontology/modules/system/kind/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix sys: <https://w3id.org/lsc/ontology/modules/system/> .
+@prefix system: <https://w3id.org/lsc/ontology/modules/system/system/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/system> a owl:Ontology ;
+    dcterms:description "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7)."@en ;
+    dcterms:issued "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.2.0> ;
+    dcterms:title "LSC System Module"@en ;
+    owl:versionIRI sys:1.0.0 ;
+    owl:versionInfo "1.0.0" .
+
+sys:supports a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range skos:Concept ;
+    skos:definition "A process the process map says uses the system. Read the other way, the process depends on the system."@en .
+
+system:actuals-case-prep-file a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "actuals-case-prep-file"^^xsd:string ;
+    skos:prefLabel "Actuals Case Prep File"@en ;
+    sys:supports proc:CM-1-1-5-1 ;
+    sys:systemKind kind:document .
+
+system:aps a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "aps"^^xsd:string ;
+    skos:prefLabel "APS"@en ;
+    sys:supports proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-1,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-5 ;
+    sys:systemKind kind:application .
+
+system:aps-planning-db a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "aps-planning-db"^^xsd:string ;
+    skos:prefLabel "APS Planning DB"@en ;
+    sys:supports proc:CM-1-1-4-4 ;
+    sys:systemKind kind:application .
+
+system:backcasting-dashboard a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "backcasting-dashboard"^^xsd:string ;
+    skos:prefLabel "Backcasting Dashboard"@en ;
+    sys:supports proc:CM-1-1-5-3,
+        proc:CM-1-1-5-4,
+        proc:CM-1-1-5-4-2,
+        proc:CM-1-1-5-5-8,
+        proc:CM-1-1-5-6-10,
+        proc:CM-1-1-5-7,
+        proc:CM-1-1-5-7-1,
+        proc:CM-1-1-5-7-2,
+        proc:CM-1-1-5-7-3,
+        proc:CM-1-1-5-7-4,
+        proc:CM-1-1-5-7-5,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-1,
+        proc:CM-1-1-5-8-2,
+        proc:CM-1-1-5-8-3,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-6 ;
+    sys:systemKind kind:application .
+
+system:cargotracker a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "cargotracker"^^xsd:string ;
+    skos:prefLabel "CargoTracker"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:dpo a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "dpo"^^xsd:string ;
+    skos:prefLabel "DPO"@en ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-4,
+        proc:CM-1-1-2-1-5,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-4,
+        proc:CM-1-1-2-5-6,
+        proc:CM-1-1-2-5-6-1,
+        proc:CM-1-1-3-2,
+        proc:CM-1-1-3-2-1,
+        proc:CM-1-1-3-2-2,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-2,
+        proc:CM-1-1-3-4,
+        proc:CM-1-1-6-1,
+        proc:CM-1-1-6-1-1,
+        proc:CM-1-1-6-2,
+        proc:CM-1-1-6-3 ;
+    sys:systemKind kind:application .
+
+system:hyperion a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "hyperion"^^xsd:string ;
+    skos:prefLabel "Hyperion"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:kittyhawk a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "kittyhawk"^^xsd:string ;
+    skos:prefLabel "KittyHawk"@en ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-2-1,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-1,
+        proc:CM-1-1-2-2-3-2,
+        proc:CM-1-1-2-2-3-3,
+        proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1 ;
+    sys:systemKind kind:application .
+
+system:market-outlook-and-avails-dashboard a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "market-outlook-and-avails-dashboard"^^xsd:string ;
+    skos:prefLabel "Market Outlook and Avails Dashboard"@en ;
+    sys:supports proc:CM-1-1-2-2-5-1,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-1 ;
+    sys:systemKind kind:application .
+
+system:mpr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "mpr"^^xsd:string ;
+    skos:prefLabel "MPR"@en ;
+    sys:supports proc:CM-1-1-2-1-7,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-4,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:ms-excel a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-excel"^^xsd:string ;
+    skos:prefLabel "MS Excel"@en ;
+    sys:supports proc:CM-1-1-2-2-7,
+        proc:CM-1-1-2-3-4,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-2,
+        proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-1,
+        proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-1 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-outlook a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-outlook"^^xsd:string ;
+    skos:prefLabel "MS Outlook"@en ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-2-5-9,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-2,
+        proc:CM-1-1-2-8-4,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-1,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-5,
+        proc:CM-1-1-5-9,
+        proc:CM-1-1-5-9-1,
+        proc:CM-1-1-5-9-2,
+        proc:CM-1-1-5-9-3 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-powerpoint a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-powerpoint"^^xsd:string ;
+    skos:prefLabel "MS PowerPoint"@en ;
+    sys:supports proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-5-7,
+        proc:CM-1-1-5-7-1,
+        proc:CM-1-1-5-7-2,
+        proc:CM-1-1-5-7-3,
+        proc:CM-1-1-5-7-4,
+        proc:CM-1-1-5-7-5,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-1,
+        proc:CM-1-1-5-8-2,
+        proc:CM-1-1-5-8-3,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-6,
+        proc:CM-1-1-5-9-3 ;
+    sys:systemKind kind:office-tool .
+
+system:ms-teams a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ms-teams"^^xsd:string ;
+    skos:prefLabel "MS Teams"@en ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-3,
+        proc:CM-1-1-2-3-2,
+        proc:CM-1-1-2-3-3,
+        proc:CM-1-1-2-3-4,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-2-5-9,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-2,
+        proc:CM-1-1-2-8-4,
+        proc:CM-1-1-3-1-2,
+        proc:CM-1-1-3-3,
+        proc:CM-1-1-3-3-1,
+        proc:CM-1-1-4-1-2,
+        proc:CM-1-1-5-8,
+        proc:CM-1-1-5-8-4,
+        proc:CM-1-1-5-8-5,
+        proc:CM-1-1-5-9,
+        proc:CM-1-1-5-9-1,
+        proc:CM-1-1-5-9-2 ;
+    sys:systemKind kind:office-tool .
+
+system:network-premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "network-premise-document"^^xsd:string ;
+    skos:prefLabel "Network Premise Document"@en ;
+    sys:supports proc:CM-1-1-3-1,
+        proc:CM-1-1-3-1-2,
+        proc:CM-1-1-3-1-3,
+        proc:CM-1-1-3-1-4 ;
+    sys:systemKind kind:document .
+
+system:pi a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "pi"^^xsd:string ;
+    skos:prefLabel "PI"@en ;
+    sys:supports proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:planning-and-scheduling-ui a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "planning-and-scheduling-ui"^^xsd:string ;
+    skos:prefLabel "Planning and Scheduling UI"@en ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-1,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-1,
+        proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2,
+        proc:CM-1-1-2-2-2,
+        proc:CM-1-1-2-2-3-6,
+        proc:CM-1-1-2-2-5,
+        proc:CM-1-1-2-2-5-1,
+        proc:CM-1-1-2-2-5-2,
+        proc:CM-1-1-2-2-6,
+        proc:CM-1-1-2-2-6-1,
+        proc:CM-1-1-2-2-6-2,
+        proc:CM-1-1-2-2-8,
+        proc:CM-1-1-5-1-1 ;
+    sys:systemKind kind:application .
+
+system:planning-db a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "planning-db"^^xsd:string ;
+    skos:prefLabel "Planning DB"@en ;
+    sys:supports proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-1,
+        proc:CM-1-1-2-5-3,
+        proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-4,
+        proc:CM-1-1-2-7-5,
+        proc:CM-1-1-2-8,
+        proc:CM-1-1-2-8-1,
+        proc:CM-1-1-2-8-3,
+        proc:CM-1-1-2-9,
+        proc:CM-1-1-2-9-1,
+        proc:CM-1-1-2-9-2,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-4-3 ;
+    sys:systemKind kind:application .
+
+system:ppims a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "ppims"^^xsd:string ;
+    skos:prefLabel "PPIMS"@en ;
+    sys:supports proc:CM-1-1-2-1-6,
+        proc:CM-1-1-2-4,
+        proc:CM-1-1-2-4-1,
+        proc:CM-1-1-2-5-7,
+        proc:CM-1-1-4-2,
+        proc:CM-1-1-4-2-1,
+        proc:CM-1-1-4-2-2,
+        proc:CM-1-1-4-3,
+        proc:CM-1-1-4-4,
+        proc:CM-1-1-4-4-1,
+        proc:CM-1-1-4-4-2,
+        proc:CM-1-1-4-4-3,
+        proc:CM-1-1-4-5 ;
+    sys:systemKind kind:application .
+
+system:premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "premise-document"^^xsd:string ;
+    skos:prefLabel "Premise Document"@en ;
+    sys:supports proc:CM-1-1-2-2-1-1,
+        proc:CM-1-1-2-2-1-2 ;
+    sys:systemKind kind:document .
+
+system:profisee a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "profisee"^^xsd:string ;
+    skos:prefLabel "Profisee"@en ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-8,
+        proc:CM-1-1-2-2 ;
+    sys:systemKind kind:application .
+
+system:psr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "psr"^^xsd:string ;
+    skos:prefLabel "PSR"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1,
+        proc:CM-1-1-5-1-2-2,
+        proc:CM-1-1-5-1-2-5 ;
+    sys:systemKind kind:application .
+
+system:refinery-premise-document a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "refinery-premise-document"^^xsd:string ;
+    skos:prefLabel "Refinery Premise Document"@en ;
+    sys:supports proc:CM-1-1-4-1,
+        proc:CM-1-1-4-1-2,
+        proc:CM-1-1-4-1-3,
+        proc:CM-1-1-4-1-4 ;
+    sys:systemKind kind:document .
+
+system:rfc-hindsight-analysis-excel a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "rfc-hindsight-analysis-excel"^^xsd:string ;
+    skos:prefLabel "RFC Hindsight Analysis Excel"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-1 ;
+    sys:systemKind kind:document .
+
+system:rightangle a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:altLabel "Right Angle"@en ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "rightangle"^^xsd:string ;
+    skos:prefLabel "RightAngle"@en ;
+    sys:supports proc:CM-1-1-2-2,
+        proc:CM-1-1-2-2-2-1,
+        proc:CM-1-1-2-2-3,
+        proc:CM-1-1-2-2-3-1,
+        proc:CM-1-1-2-2-3-2,
+        proc:CM-1-1-2-2-3-3,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-2,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:sap a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "sap"^^xsd:string ;
+    skos:prefLabel "SAP"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-3 ;
+    sys:systemKind kind:application .
+
+system:tmr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "tmr"^^xsd:string ;
+    skos:prefLabel "TMR"@en ;
+    sys:supports proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:topday a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "topday"^^xsd:string ;
+    skos:prefLabel "TopDay"@en ;
+    sys:supports proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2,
+        proc:CM-1-1-5-1-2-6 ;
+    sys:systemKind kind:application .
+
+system:trr a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "trr"^^xsd:string ;
+    skos:prefLabel "TRR"@en ;
+    sys:supports proc:CM-1-1-5-1-2-5 ;
+    sys:systemKind kind:application .
+
+system:valt a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "valt"^^xsd:string ;
+    skos:prefLabel "VALT"@en ;
+    sys:supports proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6 ;
+    sys:systemKind kind:application .
+
+system:xpims a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "xpims"^^xsd:string ;
+    skos:prefLabel "XPIMS"@en ;
+    sys:supports proc:CM-1-1-2-1,
+        proc:CM-1-1-2-1-2,
+        proc:CM-1-1-2-1-3,
+        proc:CM-1-1-2-2,
+        proc:CM-1-1-2-4,
+        proc:CM-1-1-2-4-2,
+        proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-1,
+        proc:CM-1-1-2-5-2,
+        proc:CM-1-1-2-5-4,
+        proc:CM-1-1-2-5-6,
+        proc:CM-1-1-2-5-6-2,
+        proc:CM-1-1-2-5-7,
+        proc:CM-1-1-2-5-8,
+        proc:CM-1-1-2-6,
+        proc:CM-1-1-2-6-1,
+        proc:CM-1-1-2-6-2,
+        proc:CM-1-1-2-6-3,
+        proc:CM-1-1-2-6-4,
+        proc:CM-1-1-2-6-5,
+        proc:CM-1-1-2-6-6,
+        proc:CM-1-1-2-7,
+        proc:CM-1-1-2-7-1,
+        proc:CM-1-1-2-7-3,
+        proc:CM-1-1-2-7-4,
+        proc:CM-1-1-5-1,
+        proc:CM-1-1-5-1-2-5,
+        proc:CM-1-1-5-2,
+        proc:CM-1-1-5-4,
+        proc:CM-1-1-5-4-1,
+        proc:CM-1-1-5-5,
+        proc:CM-1-1-5-5-1,
+        proc:CM-1-1-5-5-2,
+        proc:CM-1-1-5-5-3,
+        proc:CM-1-1-5-5-4,
+        proc:CM-1-1-5-5-5,
+        proc:CM-1-1-5-5-6,
+        proc:CM-1-1-5-5-7,
+        proc:CM-1-1-5-6,
+        proc:CM-1-1-5-6-1,
+        proc:CM-1-1-5-6-2,
+        proc:CM-1-1-5-6-3,
+        proc:CM-1-1-5-6-4,
+        proc:CM-1-1-5-6-5,
+        proc:CM-1-1-5-6-6,
+        proc:CM-1-1-5-6-7,
+        proc:CM-1-1-5-6-8,
+        proc:CM-1-1-5-6-9 ;
+    sys:systemKind kind:application .
+
+system:xpims-dpo-integration-macro a skos:Concept,
+        sys:System ;
+    dcterms:source src:downstream-process-map ;
+    skos:editorialNote "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."@en ;
+    skos:inScheme sys:Systems ;
+    skos:notation "xpims-dpo-integration-macro"^^xsd:string ;
+    skos:prefLabel "XPIMS <> DPO Integration Macro"@en ;
+    sys:supports proc:CM-1-1-2-5,
+        proc:CM-1-1-2-5-5,
+        proc:CM-1-1-3-2,
+        proc:CM-1-1-3-2-2 ;
+    sys:systemKind kind:application .
+
+sys:systemKind a owl:ObjectProperty ;
+    rdfs:label "system kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    rdfs:domain sys:System ;
+    rdfs:range skos:Concept ;
+    skos:definition "Whether the system is an application, an office tool or a working document, from the system-kind code list."@en .
+
+sys:SystemKind a skos:ConceptScheme ;
+    rdfs:label "system kind"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    skos:definition "The three kinds of thing the process map's systems field names."@en .
+
+kind:office-tool a skos:Concept ;
+    skos:definition "General office software, such as e-mail, chat, slides or spreadsheets."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "office-tool" ;
+    skos:prefLabel "Office tool"@en .
+
+kind:document a skos:Concept ;
+    skos:definition "A named document or file that the process works from, not an application."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "document" ;
+    skos:prefLabel "Working document"@en .
+
+kind:application a skos:Concept ;
+    skos:definition "A software application, database, dashboard or integration that the business runs."@en ;
+    skos:inScheme sys:SystemKind ;
+    skos:notation "application" ;
+    skos:prefLabel "Application"@en .
+
+sys:Systems a skos:ConceptScheme ;
+    rdfs:label "systems"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0055"@en ;
+    skos:definition "The systems the process map names, one per distinct name after spelling merges."@en .
+
+sys:System a owl:Class ;
+    rdfs:label "system"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, systems; competency question 6; EPM-DEC-001-0055"@en ;
+    skos:definition "An application, office tool or working document that the process map names as used by a process."@en .
+

@@ -9,6 +9,6 @@ The `value-stream` module brings the value-stream overlay into the ontology: the
 | `build_value_streams.py`, `value-streams.ttl` | The build: 2 value streams, 12 stages, 21 capabilities, 58 value-stream processes, 72 links to core processes, 9 produces and 37 consumes links, 7 measure links and 4 flows. `--verify` fails unless `value-streams.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_value_streams.py` | Tests: the vocabulary, the build is current and its figures match a hand count, every link keeps the source's target and relationship, pinned examples, gap notes create nothing, and SHACL accepts the module and rejects broken items |
 
-The module is not released yet. A release needs the decision owner's approval.
+The module is not released yet. A release needs the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077). The package is in `../releases/value-stream/1.0.0/`.
 
 Not carried over, by the schema's rule or EPM-DEC-001-0054: the `gapAnalysis` entries (documentation only), a flow's free-text note, each process's slide letter, and the files' domain as a core business-domain code (kept as written in `vs:sourceDomain`).

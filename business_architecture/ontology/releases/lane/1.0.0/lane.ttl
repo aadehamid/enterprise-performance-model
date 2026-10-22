@@ -1,0 +1,85 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix lanev: <https://w3id.org/lsc/ontology/modules/lane/lane/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix proc: <https://w3id.org/lsc/ontology/process/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/lsc/ontology/modules/lane> a owl:Ontology ;
+    dcterms:description "The four office lanes as a code list, and the processes the process map places in them (Step 7)."@en ;
+    dcterms:issued "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22"^^xsd:date ;
+    dcterms:requires <https://w3id.org/lsc/ontology/modules/core/2.2.0> ;
+    dcterms:title "LSC Lane Module"@en ;
+    owl:versionIRI lane:1.0.0 ;
+    owl:versionInfo "1.0.0" .
+
+lane:officeLane a owl:ObjectProperty ;
+    rdfs:label "office lane"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/downstream_process_map.json, officeLane; competency question 9; EPM-DEC-001-0056"@en ;
+    rdfs:domain skos:Concept ;
+    rdfs:range skos:Concept ;
+    skos:definition "The office lane the process map places a process in. Only the node that names a lane has one; its children do not inherit it."@en .
+
+proc:CM-1-2-1 lane:officeLane lanev:front-office .
+
+proc:CM-1-2-2 lane:officeLane lanev:middle-office .
+
+proc:CM-1-2-3 lane:officeLane lanev:operations .
+
+proc:CM-1-2-4 lane:officeLane lanev:back-office .
+
+proc:CM-1-2-5 lane:officeLane lanev:operations .
+
+proc:CM-1-2-6 lane:officeLane lanev:operations .
+
+proc:CM-1-2-7 lane:officeLane lanev:operations .
+
+lanev:back-office a skos:Concept,
+        lane:OfficeLane ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Administrative and operational completion of the trade lifecycle: settlements, invoicing and netting, accounting and sub-ledger management, regulatory reporting, dispute resolution, and record-keeping."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "back_office"^^xsd:string ;
+    skos:prefLabel "Back Office"@en .
+
+lanev:front-office a skos:Concept,
+        lane:OfficeLane ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Revenue-generating, market-facing functions of the trading organization: trading and deal execution, forecasting, pre-trade analysis, bidding strategy, and customer/counterparty engagement."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "front_office"^^xsd:string ;
+    skos:prefLabel "Front Office"@en .
+
+lanev:middle-office a skos:Concept,
+        lane:OfficeLane ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Control and analytical layer between front and back office: monitors market and credit risk and exposure, validates captured trades, calculates P&L, manages confirmations and scenario modelling, and enforces risk limits, controls, and compliance."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "middle_office"^^xsd:string ;
+    skos:prefLabel "Middle Office"@en .
+
+lane:OfficeLane a owl:Class ;
+    rdfs:label "office lane"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/office_lanes.json; EPM-DEC-001-0056"@en ;
+    skos:definition "One of the four office lanes of the trading organization."@en .
+
+lane:OfficeLanes a skos:ConceptScheme ;
+    rdfs:label "office lanes"@en ;
+    dcterms:bibliographicCitation "business_architecture/business_process/office_lanes.json; EPM-DEC-001-0056"@en ;
+    skos:definition "The four office lanes of the trading organization: front office, middle office, back office and operations. The lanes are not declared disjoint."@en .
+
+lanev:operations a skos:Concept,
+        lane:OfficeLane ;
+    dcterms:source src:office-lanes ;
+    skos:definition "Physical supply chain execution supporting the traded book: scheduling, movement actualization, feedstock and product inventory management, transportation, and terminal operations."@en ;
+    skos:inScheme lane:OfficeLanes ;
+    skos:notation "operations"^^xsd:string ;
+    skos:prefLabel "Operations"@en .
+
+src:office-lanes a dcterms:BibliographicResource ;
+    dcterms:title "Office lanes, business_architecture/business_process/office_lanes.json"@en .
+

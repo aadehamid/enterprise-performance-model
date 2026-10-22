@@ -1,0 +1,2476 @@
+[
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Ontology"
+  ],
+  "http://purl.org/dc/terms/description": [
+   {
+    "@language": "en",
+    "@value": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7)."
+   }
+  ],
+  "http://purl.org/dc/terms/issued": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/modified": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#date",
+    "@value": "2026-10-22"
+   }
+  ],
+  "http://purl.org/dc/terms/requires": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/core/2.2.0"
+   }
+  ],
+  "http://purl.org/dc/terms/title": [
+   {
+    "@language": "en",
+    "@value": "LSC System Module"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionIRI": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/1.0.0"
+   }
+  ],
+  "http://www.w3.org/2002/07/owl#versionInfo": [
+   {
+    "@value": "1.0.0"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/System",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#Class"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/downstream_process_map.json, systems; competency question 6; EPM-DEC-001-0055"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "system"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "An application, office tool or working document that the process map names as used by a process."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/SystemKind",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0055"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "system kind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The three kinds of thing the process map's systems field names."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/Systems",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0055"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "The systems the process map names, one per distinct name after spelling merges."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A software application, database, dashboard or integration that the business runs."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/SystemKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "application"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A named document or file that the process works from, not an application."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/SystemKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "document"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Working document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/kind/office-tool",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept"
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "General office software, such as e-mail, chat, slides or spreadsheets."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/SystemKind"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@value": "office-tool"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Office tool"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/supports",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "business_architecture/business_process/downstream_process_map.json, systems; competency question 6"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/System"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "supports"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "A process the process map says uses the system. Read the other way, the process depends on the system."
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/actuals-case-prep-file",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "actuals-case-prep-file"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Actuals Case Prep File"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/aps",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "aps"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "APS"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/aps-planning-db",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "aps-planning-db"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "APS Planning DB"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/backcasting-dashboard",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "backcasting-dashboard"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Backcasting Dashboard"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-10"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/cargotracker",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "cargotracker"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "CargoTracker"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/dpo",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "dpo"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "DPO"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-6-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/hyperion",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "hyperion"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Hyperion"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/kittyhawk",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "kittyhawk"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "KittyHawk"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/market-outlook-and-avails-dashboard",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "market-outlook-and-avails-dashboard"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Market Outlook and Avails Dashboard"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/mpr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "mpr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MPR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/ms-excel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ms-excel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MS Excel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/office-tool"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/ms-outlook",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ms-outlook"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MS Outlook"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-9"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/office-tool"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/ms-powerpoint",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ms-powerpoint"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MS PowerPoint"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-7-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/office-tool"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/ms-teams",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ms-teams"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "MS Teams"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-3-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-9"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-8-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-9-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/office-tool"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/network-premise-document",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "network-premise-document"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Network Premise Document"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/pi",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "pi"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "PI"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/planning-and-scheduling-ui",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "planning-and-scheduling-ui"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Planning and Scheduling UI"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-5-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-6-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/planning-db",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "planning-db"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Planning DB"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-8-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-9-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/ppims",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "ppims"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "PPIMS"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-4-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/premise-document",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "premise-document"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Premise Document"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-1-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/profisee",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "profisee"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Profisee"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/psr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "psr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "PSR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/refinery-premise-document",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "refinery-premise-document"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "Refinery Premise Document"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-4-1-4"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/rfc-hindsight-analysis-excel",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "rfc-hindsight-analysis-excel"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "RFC Hindsight Analysis Excel"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-1"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/document"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/rightangle",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#altLabel": [
+   {
+    "@language": "en",
+    "@value": "Right Angle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "rightangle"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "RightAngle"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2-3-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/sap",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "sap"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "SAP"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-3"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/tmr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "tmr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "TMR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/topday",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "topday"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "TopDay"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/trr",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "trr"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "TRR"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/valt",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "valt"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "VALT"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-6"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/xpims",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "xpims"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "XPIMS"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-1-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-4-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-6-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-6-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-7-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-4-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-5-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-1"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-3"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-4"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-6"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-7"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-8"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-5-6-9"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/system/xpims-dpo-integration-macro",
+  "@type": [
+   "http://www.w3.org/2004/02/skos/core#Concept",
+   "https://w3id.org/lsc/ontology/modules/system/System"
+  ],
+  "http://purl.org/dc/terms/source": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/source/downstream-process-map"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#editorialNote": [
+   {
+    "@language": "en",
+    "@value": "The process map names this system but no source in the repository says what it does. Its definition waits for its owners (EPM-DEC-001-0055)."
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#inScheme": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/Systems"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#notation": [
+   {
+    "@type": "http://www.w3.org/2001/XMLSchema#string",
+    "@value": "xpims-dpo-integration-macro"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#prefLabel": [
+   {
+    "@language": "en",
+    "@value": "XPIMS <> DPO Integration Macro"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/supports": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-2-5-5"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2"
+   },
+   {
+    "@id": "https://w3id.org/lsc/ontology/process/CM-1-1-3-2-2"
+   }
+  ],
+  "https://w3id.org/lsc/ontology/modules/system/systemKind": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/kind/application"
+   }
+  ]
+ },
+ {
+  "@id": "https://w3id.org/lsc/ontology/modules/system/systemKind",
+  "@type": [
+   "http://www.w3.org/2002/07/owl#ObjectProperty"
+  ],
+  "http://purl.org/dc/terms/bibliographicCitation": [
+   {
+    "@language": "en",
+    "@value": "EPM-DEC-001-0055"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#domain": [
+   {
+    "@id": "https://w3id.org/lsc/ontology/modules/system/System"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#label": [
+   {
+    "@language": "en",
+    "@value": "system kind"
+   }
+  ],
+  "http://www.w3.org/2000/01/rdf-schema#range": [
+   {
+    "@id": "http://www.w3.org/2004/02/skos/core#Concept"
+   }
+  ],
+  "http://www.w3.org/2004/02/skos/core#definition": [
+   {
+    "@language": "en",
+    "@value": "Whether the system is an application, an office tool or a working document, from the system-kind code list."
+   }
+  ]
+ }
+]

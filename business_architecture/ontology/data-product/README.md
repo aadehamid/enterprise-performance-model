@@ -10,7 +10,7 @@ The `data-product` module defines the data products in the portfolio (`../../bus
 | `build_data_products.py`, `data-products.ttl` | The build: the portfolio and `links.csv` in, 3 segments, 19 lines and 48 data products out. `python3 build_data_products.py` prints the figures; `--verify` fails unless `data-products.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_data_products.py` | Tests: the vocabulary is well formed, the build is current and its figures match a hand count, each item keeps the portfolio's status and place, segment anchors, aliases, Loss Control's link to its producing process, and SHACL accepts the module and rejects broken items |
 
-The module is not released yet. A release needs the decision owner's approval.
+The module is not released yet. A release needs the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077). The package is in `../releases/data-product/1.0.0/`.
 
 ## What is defined and what is parked
 

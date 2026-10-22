@@ -81,6 +81,64 @@ MODULES = {
         "decisions": ["EPM-DEC-001-0067", "EPM-DEC-001-0068", "EPM-DEC-001-0069", "EPM-DEC-001-0070",
                       "EPM-DEC-001-0071", "EPM-DEC-001-0072", "EPM-DEC-001-0074"],
     },
+    # The Step 7 modules' first releases, majors the decision owner approved with the release plan
+    # (EPM-DEC-001-0077). Each requires core 2.2.0, the release that holds every process they link.
+    "data-product": {
+        "title": "LSC Data Product Module",
+        "description": "The data products of the portfolio, the product lines and segments that group them, and the processes that produce them (Step 7). Definitions only, never data values; mapped to DCAT, not imported.",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["data-product/vocabulary.ttl", "data-product/data-products.ttl"],
+        "shapes": ["data-product/shapes.ttl"],
+        "depends_on": ["core"],
+        "pins": {"core": "2.2.0"},
+        "decisions": ["EPM-DEC-001-0005", "EPM-DEC-001-0048", "EPM-DEC-001-0053", "EPM-DEC-001-0077"],
+    },
+    "value-stream": {
+        "title": "LSC Value Stream Module",
+        "description": "The Commercial Hydrocarbon Lifecycle and Order to Cash value streams: their stages, capabilities and value-stream processes, which realize core processes, produce and consume data products and carry cited measure links (Step 7).",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["value-stream/vocabulary.ttl", "value-stream/value-streams.ttl"],
+        "shapes": ["value-stream/shapes.ttl"],
+        "depends_on": ["core", "data-product", "kpi"],
+        # Every dependency pinned: a later kpi or data-product release must not change this package.
+        "pins": {"core": "2.2.0", "data-product": "1.0.0", "kpi": "1.0.1"},
+        "decisions": ["EPM-DEC-001-0054", "EPM-DEC-001-0077"],
+    },
+    "system": {
+        "title": "LSC System Module",
+        "description": "The systems, office tools and working documents the process map names, with their kind and the processes that use them (Step 7).",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["system/vocabulary.ttl", "system/systems.ttl"],
+        "shapes": ["system/shapes.ttl"],
+        "depends_on": ["core"],
+        "pins": {"core": "2.2.0"},
+        "decisions": ["EPM-DEC-001-0055", "EPM-DEC-001-0077"],
+    },
+    "lane": {
+        "title": "LSC Lane Module",
+        "description": "The four office lanes as a code list, and the processes the process map places in them (Step 7).",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["lane/vocabulary.ttl", "lane/lanes.ttl"],
+        "shapes": ["lane/shapes.ttl"],
+        "depends_on": ["core"],
+        "pins": {"core": "2.2.0"},
+        "decisions": ["EPM-DEC-001-0056", "EPM-DEC-001-0077"],
+    },
+    "market-data": {
+        "title": "LSC Market Data Module",
+        "description": "The published series of the crack-spreads measure, from MPC Economics' definition first, with their benchmarks, regions, legs and RIN treatment (Step 7). Definitions only, never prices.",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["market-data/vocabulary.ttl", "market-data/market-data.ttl"],
+        "shapes": ["market-data/shapes.ttl"],
+        "depends_on": ["kpi"],
+        "pins": {"kpi": "1.0.1"},
+        "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077"],
+    },
 }
 
 
@@ -128,19 +186,42 @@ def build(name):
     return g
 
 
-def check(name, g):
-    """The module's shapes over the module, with the released packages it depends on loaded: core for
-    the concepts organization refers to, and the pinned organization release for ref-mpc."""
-    m = MODULES[name]
+def released_requires(dep, version):
+    """What a released package requires, read from its own manifest on disk, never from this builder's
+    current table: a later release of that module must not change what an earlier package loads."""
+    with open(os.path.join(ONTOLOGY, "releases", dep, version, "manifest.json")) as f:
+        return json.load(f).get("depends_on") or {}
+
+
+def released_closure(name):
+    """Every released package this module's check loads: its dependencies at the versions it names,
+    and theirs (from each selected release's manifest), down to core. Where two paths name different
+    versions of one module, the highest is loaded, so a graph never holds two releases of one module."""
+    found = {}
+    todo = list(dependencies(name).items())
+    while todo:
+        dep, version = todo.pop()
+        if dep in found and tuple(map(int, found[dep].split("."))) >= tuple(map(int, version.split("."))):
+            continue
+        found[dep] = version
+        todo += list(released_requires(dep, version).items())
+    return found
+
+
+def validation_graph(name, g):
+    """The data the module's shapes run over: the module, with the released packages of its closure."""
     data = Graph()
     data += g
-    deps = dependencies(name)
-    if "core" in deps:
-        data.parse(os.path.join(ONTOLOGY, "releases", "core", deps["core"], "core.ttl"))
-    if "organization" in deps:
-        data.parse(os.path.join(ONTOLOGY, "releases", "organization", deps["organization"], "organization.ttl"))
-        data.parse(os.path.join(ONTOLOGY, "releases", "core", dependencies("organization")["core"], "core.ttl"))
-    conforms, _, text = validate(data, shacl_graph=parse(m["shapes"]))
+    for dep, version in sorted(released_closure(name).items()):
+        data.parse(os.path.join(ONTOLOGY, "releases", dep, version, f"{dep}.ttl"))
+    return data
+
+
+def check(name, g):
+    """The module's shapes over the module, with the released packages it depends on loaded: core for
+    the concepts a module refers to, the pinned organization release for ref-mpc, and the released
+    data-product and kpi packages for value-stream and market-data."""
+    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]))
     return conforms, text
 
 

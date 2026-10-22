@@ -37,4 +37,4 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 ## Consequences
 
 - The regression stands at 23 answerable, 7 partial and 14 waiting. *2026-10-20:* the module now has 13 series, from MPC Economics' definition as the primary source (EPM-DEC-001-0066).
-- The module is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval.
+- The module is built and checked by `scripts/check.sh`; it is released only with the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077).

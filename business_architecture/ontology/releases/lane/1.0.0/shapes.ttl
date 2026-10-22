@@ -1,0 +1,39 @@
+@prefix lane: <https://w3id.org/lsc/ontology/modules/lane/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/lane/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:Lane a sh:NodeShape ;
+    sh:class lane:OfficeLane ;
+    sh:message "A process's lane is one of the four office lanes." ;
+    sh:targetObjectsOf lane:officeLane .
+
+shp:LaneConcept a sh:NodeShape ;
+    sh:property [ sh:hasValue lane:OfficeLanes ;
+            sh:maxCount 1 ;
+            sh:message "A lane is one of the four office lanes." ;
+            sh:minCount 1 ;
+            sh:path skos:inScheme ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:definition ] ;
+    sh:targetClass lane:OfficeLane .
+
+shp:LanedProcess a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "A process sits in at most one office lane." ;
+            sh:minCount 1 ;
+            sh:path lane:officeLane ] ;
+    sh:targetSubjectsOf lane:officeLane .
+

@@ -8,4 +8,4 @@ The `lane` module holds the four office lanes of the trading organization (`../.
 | `build_lanes.py`, `lanes.ttl` | The build: 4 lanes and 7 placed processes (CM 1.2.1 to CM 1.2.7). `--verify` fails unless `lanes.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_lanes.py` | Tests: the build is current, the seven placements pinned by hand, nothing inherited, and SHACL rejecting two lanes or a lane off the list |
 
-The module is not released yet. A release needs the decision owner's approval.
+The module is not released yet. A release needs the decision owner's approval. *2026-10-22:* released as 1.0.0, with the decision owner's approval of the release plan (EPM-DEC-001-0077). The package is in `../releases/lane/1.0.0/`.

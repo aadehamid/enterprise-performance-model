@@ -1,0 +1,116 @@
+@prefix bkind: <https://w3id.org/lsc/ontology/modules/market-data/benchmark-kind/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix mkt: <https://w3id.org/lsc/ontology/modules/market-data/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/market-data/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:Benchmark a sh:NodeShape ;
+    sh:property [ sh:in ( bkind:crude-marker bkind:product-benchmark bkind:compliance-cost ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path mkt:benchmarkKind ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path mkt:priceMasterId ] ;
+    sh:targetClass mkt:Benchmark .
+
+shp:Defined a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path dcterms:source ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:notation ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:definition ],
+        [ sh:datatype rdf:langString ;
+            sh:minCount 0 ;
+            sh:path skos:altLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path skos:scopeNote ],
+        [ sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:node [ sh:or ( [ sh:property [ sh:hasValue mkt:RefiningRegions ;
+                                        sh:path skos:inScheme ] ] [ sh:property [ sh:hasValue mkt:MarketRegions ;
+                                        sh:path skos:inScheme ] ] ) ] ;
+            sh:path mkt:region ] ;
+    sh:targetClass mkt:Benchmark,
+        mkt:BenchmarkSeries .
+
+shp:Leg a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type mkt:benchmark mkt:barrels ) ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath mkt:leg ] ],
+        [ sh:class mkt:Benchmark ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path mkt:benchmark ],
+        [ sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:path mkt:barrels ] ;
+    sh:targetClass mkt:Leg .
+
+shp:NoPrices a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:altLabel skos:scopeNote skos:inScheme dcterms:source mkt:region mkt:seriesOf mkt:excludesRINCost mkt:leg mkt:blendOf mkt:benchmarkKind mkt:priceMasterId mkt:legsUnstated ) ;
+    sh:message "A series or benchmark carries its definition, never a price." ;
+    sh:targetClass mkt:Benchmark,
+        mkt:BenchmarkSeries .
+
+shp:Region a sh:NodeShape ;
+    sh:message "A refining or market region carries its definition, never a value." ;
+    sh:or ( [ sh:not [ sh:or ( [ sh:hasValue mkt:RefiningRegions ;
+                                    sh:path skos:inScheme ] [ sh:hasValue mkt:MarketRegions ;
+                                    sh:path skos:inScheme ] ) ] ] [ sh:closed true ;
+                sh:ignoredProperties ( rdf:type skos:prefLabel skos:notation skos:definition skos:inScheme dcterms:source ) ] ) ;
+    sh:targetSubjectsOf skos:inScheme .
+
+shp:Series a sh:NodeShape ;
+    sh:message "A series has legs, blends other series, or is marked legs unstated: exactly one." ;
+    sh:property [ sh:class kpi:MeasureDefinition ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path mkt:seriesOf ],
+        [ sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path mkt:excludesRINCost ],
+        [ sh:class mkt:Leg ;
+            sh:minCount 0 ;
+            sh:path mkt:leg ],
+        [ sh:class mkt:BenchmarkSeries ;
+            sh:minCount 0 ;
+            sh:path mkt:blendOf ],
+        [ sh:in ( true ) ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path mkt:legsUnstated ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:path mkt:priceMasterId ] ;
+    sh:targetClass mkt:BenchmarkSeries ;
+    sh:xone ( [ sh:minCount 1 ;
+                sh:path mkt:leg ] [ sh:minCount 1 ;
+                sh:path mkt:blendOf ] [ sh:minCount 1 ;
+                sh:path mkt:legsUnstated ] ) .
+
