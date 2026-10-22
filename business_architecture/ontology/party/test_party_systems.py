@@ -4,6 +4,7 @@ values are written out by hand from the decision owner's inputs as EPM-DEC-001-0
 Run: python3 -m pytest test_party_systems.py (needs rdflib, pyshacl).
 """
 import os
+import sys
 import unittest
 
 from pyshacl import validate
@@ -11,6 +12,8 @@ from rdflib import Graph, Namespace
 from rdflib.namespace import RDF, RDFS, SKOS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import build_party  # noqa: E402
 CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
 S = Namespace("https://w3id.org/lsc/ontology/modules/party/system/")
 SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
@@ -79,10 +82,13 @@ class Systems(unittest.TestCase):
         for slug, entities in expected.items():
             self.assertEqual(slugs(G.objects(S[slug], CUST.implements)), entities, slug)
 
-    def test_three_systems_match_the_system_module(self):
-        matched = {str(o).rsplit("/", 1)[1] for o in G.objects(None, SKOS.exactMatch)}
-        self.assertEqual(matched, {"rightangle", "kittyhawk", "profisee"})
+    def test_four_systems_match_the_system_module(self):
+        # Three share a slug with the system module; the Terminal Margin Ranking System is its TMR (EPM-DEC-001-0072).
+        pairs = {(str(s).rsplit("/", 1)[1], str(o).rsplit("/", 1)[1]) for s, o in G.subject_objects(SKOS.exactMatch)}
+        self.assertEqual(pairs, {("rightangle", "rightangle"), ("kittyhawk", "kittyhawk"), ("profisee", "profisee"),
+                                 ("terminal-margin-ranking-system", "tmr")})
         self.assertIn((S.rightangle, SKOS.exactMatch, SYSTEM.rightangle), G)
+        self.assertIn((S["terminal-margin-ranking-system"], SKOS.exactMatch, SYSTEM.tmr), G)
 
     def test_the_origin_patterns(self):
         def origin(concept):
@@ -149,11 +155,34 @@ class Attributes(unittest.TestCase):
         self.assertEqual(describes("salesforce", "enrich", "credit-parent-account"), CUST.PartyRelationship)
 
 
-class OpenQuestions(unittest.TestCase):
-    def test_the_cbs_sourcing_keeps_its_open_identity(self):
-        # Whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2), so the sourcing says so.
+class SameSystem(unittest.TestCase):
+    """The build rejects a hand-held match to the system module that does not hold (EPM-DEC-001-0072)."""
+
+    def fails(self, same):
+        real = build_party.SAME_SYSTEM
+        build_party.SAME_SYSTEM = same
+        try:
+            with self.assertRaises(SystemExit) as caught:
+                build_party.load_systems(build_party.load())
+        finally:
+            build_party.SAME_SYSTEM = real
+        return str(caught.exception)
+
+    def test_a_node_the_system_module_lacks(self):
+        self.assertIn("terminal-margin-ranking-system: not a listed customer system, or no-such-node not in the system module",
+                      self.fails({"terminal-margin-ranking-system": "no-such-node"}))
+
+    def test_a_node_with_another_label(self):
+        self.assertIn("terminal-margin-ranking-system: the system module calls sap 'SAP', which is not one of its labels",
+                      self.fails({"terminal-margin-ranking-system": "sap"}))
+
+
+class DecisionOwnerAnswers(unittest.TestCase):
+    def test_the_cbs_sourcing_cites_the_decision_owner(self):
+        # The decision owner assumes input 6's CBS is FuelFacs (EPM-DEC-001-0072), so the sourcing says so.
         note = str(G.value(CUST["sourcing/fuelfacs--source--customer-class--terminal-rack-customer"], RDFS.comment))
-        self.assertIn("is open", note)
+        self.assertEqual(note, "Terminal customers, from input 6's CBS, which the decision owner assumes, for this model, "
+                               "is FuelFacs (EPM-DEC-001-0072).")
 
 
 class Shapes(unittest.TestCase):

@@ -1963,7 +1963,7 @@
     party:sourcingSystem <https://w3id.org/lsc/ontology/modules/party/system/flowcal> .
 
 <https://w3id.org/lsc/ontology/modules/party/sourcing/fuelfacs--source--customer-class--terminal-rack-customer> a party:CustomerSourcing ;
-    rdfs:comment "Terminal customers, from input 6's CBS. Placing them on FuelFacs is a reading: whether input 6's CBS is FuelFacs is open (EPM-DEC-001-0069, item 2)."@en ;
+    rdfs:comment "Terminal customers, from input 6's CBS, which the decision owner assumes, for this model, is FuelFacs (EPM-DEC-001-0072)."@en ;
     party:evidenceInput "6" ;
     party:sourcedConcept <https://w3id.org/lsc/ontology/modules/party/customer-class/terminal-rack-customer> ;
     party:sourcingKind <https://w3id.org/lsc/ontology/modules/party/sourcing-kind/source> ;
@@ -2325,6 +2325,8 @@
 
 <https://w3id.org/lsc/ontology/modules/party/system/terminal-margin-ranking-system> a skos:Concept,
         party:CustomerSystem ;
+    skos:altLabel "TMR"@en ;
+    skos:exactMatch system:tmr ;
     skos:inScheme party:customer-systems ;
     skos:notation "terminal-margin-ranking-system" ;
     skos:prefLabel "Terminal Margin Ranking System"@en ;
@@ -2345,7 +2347,7 @@
     skos:inScheme party:customer-systems ;
     skos:notation "fuelfacs" ;
     skos:prefLabel "FuelFacs"@en ;
-    party:customerRole "Terminal data on suppliers, products and carriers; it receives customer data from Terminal download."@en ;
+    party:customerRole "The enterprise-wide terminal integration and business-information system (EPM-DEC-001-0072): it holds terminal data on suppliers, products and carriers, and receives customer data from Terminal download."@en ;
     party:systemTier <https://w3id.org/lsc/ontology/modules/party/system-tier/downstream> .
 
 <https://w3id.org/lsc/ontology/modules/party/system/quorum> a skos:Concept,

@@ -4,7 +4,7 @@
 |---|---|
 | Status | Decided (delegated under EPM-DEC-001-0028) |
 | Date | 2026-10-21 |
-| Questions | Pull request 3 of EPM-DEC-001-0067's plan; it extends competency question 6 ("Which systems ... support process P, and which processes depend on system S?") to the customer's systems through the three systems the system module also holds |
+| Questions | Pull request 3 of EPM-DEC-001-0067's plan; it extends competency question 6 ("Which systems ... support process P, and which processes depend on system S?") to the customer's systems through the three systems the system module also holds (*2026-10-21:* four, with the Terminal Margin Ranking System as TMR, EPM-DEC-001-0072) |
 | Source | Claude Code night run, 2026-10-21 |
 
 ## Context
@@ -15,7 +15,7 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
-1. **Customer systems are the module's own class, `party:CustomerSystem`, not new members of the system module.** The system module is built only from the process map's `systems` fields. Its shapes require each system to sit in that module's scheme with the process map as its source (EPM-DEC-001-0055). Claude's plan for this pull request, shown to the decision owner but not in the repository, put them in the system module's register. This record changes that, for that reason. Three systems are in both: RightAngle, KittyHawk and Profisee. Their customer-system node carries `skos:exactMatch` to the system module's node, so the customer data flow joins the processes those systems support. Question 15's same-word test reads that link as one thing in two modules (`q15b`). The system module's `sap` is the process map's generic "SAP". It is not matched to SAP MDG or SAP S/4HANA, because the map does not say which it means.
+1. **Customer systems are the module's own class, `party:CustomerSystem`, not new members of the system module.** The system module is built only from the process map's `systems` fields. Its shapes require each system to sit in that module's scheme with the process map as its source (EPM-DEC-001-0055). Claude's plan for this pull request, shown to the decision owner but not in the repository, put them in the system module's register. This record changes that, for that reason. Three systems are in both: RightAngle, KittyHawk and Profisee. Their customer-system node carries `skos:exactMatch` to the system module's node, so the customer data flow joins the processes those systems support. *2026-10-21:* a fourth, the Terminal Margin Ranking System, is the system module's TMR (EPM-DEC-001-0072). Question 15's same-word test reads that link as one thing in two modules (`q15b`). The system module's `sap` is the process map's generic "SAP". It is not matched to SAP MDG or SAP S/4HANA, because the map does not say which it means.
 2. **42 systems, in five tiers:**
    - **core** (6): SAP MDG, SAP S/4HANA, Salesforce, RightAngle, Polaris, Dealer Master;
    - **integration** (1): MAGIC;
@@ -24,7 +24,7 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
    - **landscape:** the eight other sources in input 6's pane (Terminal Audit System, FlowCal, EIS, Asphalt Marketing System, Brand Credit Card System, Terminal Margin Ranking System, Corp_Vetting and Lenel Onguard).
    - Each system has one or two sentences on what it does with the customer, in Claude's words from the inputs.
    - Three names in the inputs are not systems and are left out: MPLX, a company, where input 1 shows the customer activated for Producers; Marketing Users, a user group; and Bloomberg and news, sources of risk information.
-   - FuelFacs carries CBS as an alternative label, because input 2 labels FuelFacs "CBS". Whether input 6's "CBS" is the same system is open.
+   - FuelFacs carries CBS as an alternative label, because input 2 labels FuelFacs "CBS". Whether input 6's "CBS" is the same system is open. *2026-10-21:* the decision owner assumes, for this model, that it is FuelFacs (EPM-DEC-001-0072).
 3. **What the six core systems implement** is input 6's mapping, entity for entity:
 
    | System | Entities |
@@ -44,7 +44,7 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
    - **origin** (input 6): prospects start in Salesforce; jobbers in Dealer Master; direct dealers in SAP MDG.
    - **setup** (input 1): the lines of business the customer is created for in RightAngle, Salesforce and Polaris.
    - **source** (input 6's landscape list).
-   - Input 6 lists CBS as a source of terminal customers. That sourcing is placed on FuelFacs as a reading, and its note says so, because whether input 6's CBS is FuelFacs is open (item 2).
+   - Input 6 lists CBS as a source of terminal customers. That sourcing is placed on FuelFacs as a reading, and its note says so, because whether input 6's CBS is FuelFacs is open (item 2). *2026-10-21:* the decision owner assumes, for this model, that it is FuelFacs, and the note says so (EPM-DEC-001-0072).
    - "Customer" in input 6's Corp_Vetting line is not a role in the list, so only vendor and surety are taken.
 6. **275 system attributes, 43 Create and 232 Enrich**, from input 5 after the corrections and deduplication the decision owner asked for ("correct them", "dedup them"; EPM-DEC-001-0067).
    - Six labels are corrected: Sales Manager, Address_Line_1, Joint_Tariff_Flag, Broker Reconcile Method, SAP Net Out Profit Cntr, and Inactive_Indicator_Flag, which merges two spellings.
@@ -62,9 +62,9 @@ EPM-DEC-001-0067 lists the decision owner's seven customer inputs. Inputs 1 to 3
 8. **The six internal codes the decision owner asked about** ("use external MPC search and Peer to resolve these ones."; EPM-DEC-001-0067):
    - **ZBAID** is resolved from the inputs: the SAP MDG identification number that holds RightAngle's business associate ID (item 7).
    - **TID Nbr** is read as a terminal identifier, next to RightAngle's Site Nbr, so it describes a site. That is a reading; no MPC source states it.
-   - **HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag** stay named fields without a definition. Neither MPC's filings nor the inputs define them (EDGAR full-text search of MPC's and MPLX's filings and the inputs, 2026-10-21), and the peer and vendor sources that may explain some of them are not cited in the Customer domain (EPM-DEC-001-0067).
+   - **HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag** stay named fields without a definition. Neither MPC's filings nor the inputs define them (EDGAR full-text search of MPC's and MPLX's filings and the inputs, 2026-10-21), and the peer and vendor sources that may explain some of them are not cited in the Customer domain (EPM-DEC-001-0067). *2026-10-21:* the decision owner keeps them in and will define them later (EPM-DEC-001-0072).
    - **TABS Seller ID** is read as the party's seller identifier in a terminal lifting-control service: the system that authorizes or denies a lifting at the rack against the seller's allocations and the customer's credit, and passes on the bill of lading. It is mapped to an external identifier of the party. Neither MPC's filings nor the inputs name it (EDGAR full-text search, 2026-10-21). The repository already names DTN TABS as one example of a Terminal Automation System, the system that owns the gate, bay, meter and bill of lading in the Order to Cash landscape (`O2C/index.html`, reference R14; its vendor names are illustrative), and the O2C demo's ontology gives the Loading-Authorized Party the label "TABS customer" (`demos/o2c-unbilled-databricks-free-cv-map/o2c-unbilled-databricks-free/ontology/o2c-meaning.ttl`). The reading comes from industry and vendor material, which guides it and is not cited (EPM-DEC-001-0067). The decision owner asked for that search and took this recommendation, keeping the vendor material out ("I will take your recommendation", `answers-2026-10-21-tabs.md`). Lifting authorization is what the Loading-Authorized Party role names (item 4 of EPM-DEC-001-0068).
-   - **TDS Seller ID**, which the decision owner did not ask about, stays unexplained. It is mapped to an external identifier of the party, as its name says.
+   - **TDS Seller ID**, which the decision owner did not ask about, stays unexplained. It is mapped to an external identifier of the party, as its name says. *2026-10-21:* the decision owner: "the ID of the seller" (EPM-DEC-001-0072).
 9. **Internal names are allowed** by EPM-DEC-001-0040, item 3. The repository is public until the goal is achieved (EPM-DEC-001-0067, decision 12), and private again at the end of the session or the goal (EPM-DEC-001-0067, What follows, item 12).
 
 ## Alternatives considered
@@ -87,4 +87,4 @@ This record is Claude's, under the delegation: "yes, extend the delegation to st
 
 - `party/systems.csv`, `data-flows.csv`, `customer-sources.csv` and `attributes.csv` are the sources. `build_party.py` builds `systems.ttl` from them, and `scripts/check.sh` fails unless the file equals a fresh build. `test_party_systems.py` pins the figures and the core mappings by hand.
 - The regression loads `systems.ttl` with the module.
-- Open for the decision owner: whether input 6's CBS is FuelFacs; whether the Terminal Margin Ranking System is the process map's TMR; and the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and TDS Seller ID, whether TABS Seller ID is read rightly, and whether TID Nbr is a terminal identifier.
+- Open for the decision owner (*2026-10-21:* EPM-DEC-001-0072 answers CBS, TMR, TDS Seller ID and keeps the four codes for later): whether input 6's CBS is FuelFacs; whether the Terminal Margin Ranking System is the process map's TMR; and the meaning of HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and TDS Seller ID, whether TABS Seller ID is read rightly, and whether TID Nbr is a terminal identifier.

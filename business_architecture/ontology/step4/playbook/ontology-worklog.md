@@ -970,9 +970,18 @@ without a dated amendment and the decision owner's explicit agreement.
   for every customer, the Order to Cash credit review's missing link, and
   a customer master data product.
 
+### The decision owner's answers on the customer systems (2026-10-21)
+- The decision owner gave four answers on three of EPM-DEC-001-0069's five
+  open points (EPM-DEC-001-0072): input 6's CBS is assumed to be FuelFacs; the Terminal
+  Margin Ranking System is the process map's TMR, a fourth customer system
+  matched to the system module; TDS Seller ID is the seller's ID; and
+  HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag stay undefined until
+  they define them.
+
 ### The customer systems and attributes (2026-10-21)
 - Under the delegation (EPM-DEC-001-0069): the customer's 42 systems are
-  the module's own class, three matched to the system module; the six
+  the module's own class, three matched to the system module (*2026-10-21:*
+  four, EPM-DEC-001-0072); the six
   core systems carry the entities they implement; 35 data flows and 24
   customer sourcings record the data flow and the origin patterns; and
   275 system attributes, 43 Create and 232 Enrich, each describe an
@@ -1097,6 +1106,9 @@ without a dated amendment and the decision owner's explicit agreement.
   *2026-10-21:* `skos:exactMatch` is a link of the first kind too: the
   `party` module's RightAngle, KittyHawk and Profisee are the system
   module's nodes of the same name, and q15b reports them (EPM-DEC-001-0069).
+  *2026-10-21:* a fourth pair, the Terminal Margin Ranking System and the
+  system module's TMR; q15b now compares alternative labels on both sides
+  (EPM-DEC-001-0072).
 
 ### Lane module (2026-10-19)
 - Under the delegation (EPM-DEC-001-0056): a new `lane` module holds the

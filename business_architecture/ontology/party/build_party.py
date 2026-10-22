@@ -147,6 +147,9 @@ def split(text):
 # What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
 SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
 INPUTS = {str(i) for i in range(1, 8)}
+# Customer systems that are a system-module node under another slug, as the decision owner said
+# ("Terminal Margin Ranking System = TMR", EPM-DEC-001-0072). Same slugs match without an entry here.
+SAME_SYSTEM = {"terminal-margin-ranking-system": "tmr"}
 DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage's links, and no others
     ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
     ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1"},
@@ -176,6 +179,12 @@ def load_systems(codes):
     problems = [f"systems.csv lists {s} {n} times" for s, n in Counter(r["slug"] for r in systems).items() if n > 1]
     problems += [f"{r['slug']}: the system module calls it {existing[r['slug']]!r}, not {r['label']!r}"
                  for r in systems if r["slug"] in existing and existing[r["slug"]].lower() != r["label"].lower()]
+    by_slug = {r["slug"]: r for r in systems}
+    problems += [f"{slug}: not a listed customer system, or {node} not in the system module" for slug, node in SAME_SYSTEM.items()
+                 if slug not in by_slug or node not in existing]
+    problems += [f"{slug}: the system module calls {node} {existing[node]!r}, which is not one of its labels"
+                 for slug, node in SAME_SYSTEM.items() if slug in by_slug and node in existing
+                 and existing[node].lower() not in {t.lower() for t in [by_slug[slug]["label"]] + split(by_slug[slug]["alt_labels"])}]
     problems += [f"{r['slug']}: tier {r['tier']!r} is not a system tier" for r in systems if ("system-tier", r["tier"]) not in values]
     problems += [f"{r['slug']}: implements {e!r}, not an entity of the conceptual model"
                  for r in systems for e in split(r["implements"]) if e not in MODEL_ENTITIES]
@@ -279,8 +288,9 @@ def build_systems(systems, flows, sources, attrs, existing):
         g.add((s, SKOS.prefLabel, Literal(r["label"], lang="en")))
         g.add((s, SKOS.notation, Literal(r["slug"])))
         g.add((s, SKOS.inScheme, scheme))
-        if r["slug"] in existing:  # the same system as the system module's, which the process map names
-            g.add((s, SKOS.exactMatch, SYSTEM[r["slug"]]))
+        match = r["slug"] if r["slug"] in existing else SAME_SYSTEM.get(r["slug"])
+        if match:  # the same system as the system module's, which the process map names
+            g.add((s, SKOS.exactMatch, SYSTEM[match]))
         for alt in split(r["alt_labels"]):
             g.add((s, SKOS.altLabel, Literal(alt, lang="en")))
         g.add((s, CUST.systemTier, CUST[f"system-tier/{r['tier']}"]))
@@ -335,7 +345,7 @@ def main():
     counts = Counter(r["scheme"] for r in rows)
     print("code lists " + ", ".join(f"{s} {counts[s]}" for s in SCHEMES))
     cat = Counter(r["category"] for r in attrs)
-    print(f"systems {len(systems)} ({sum(1 for r in systems if r['slug'] in existing)} already in the system module); "
+    print(f"systems {len(systems)} ({sum(1 for r in systems if r['slug'] in existing or r['slug'] in SAME_SYSTEM)} already in the system module); "
           f"flows {len(flows)}; sourcings {len(sources)}; attributes {len(attrs)} (create {cat['create']}, enrich {cat['enrich']}); "
           f"lifecycle links {len(lrows)}")
     if args.verify:
