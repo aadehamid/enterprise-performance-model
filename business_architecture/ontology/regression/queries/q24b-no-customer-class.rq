@@ -1,0 +1,7 @@
+# Q24 (must be none) a class of party other than person and organization, such as a second "Customer" class
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?class WHERE {
+  ?class rdfs:subClassOf party:Party .
+  FILTER(?class NOT IN (party:Person, party:Organization))
+}

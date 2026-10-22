@@ -21,6 +21,8 @@
 
 <https://w3id.org/lsc/ontology/source/mpc-s01> auth:evidenceTier tier:mpc .
 
+<https://w3id.org/lsc/ontology/source/mplx-s01> auth:evidenceTier tier:mpc .
+
 <https://w3id.org/lsc/ontology/source/office-lanes> auth:evidenceTier tier:process-authority .
 
 <https://w3id.org/lsc/ontology/source/planner-measure-list-2026-10-18> auth:evidenceTier tier:process-authority .

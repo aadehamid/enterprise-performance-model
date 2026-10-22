@@ -17,14 +17,14 @@ question,status,queries,waits_for
 16,answerable,q16-names.rq,
 17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, the decision owner's answer 7 a)"
 18,answerable,q18-identity-version.rq,
-19,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-20,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-21,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-22,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-23,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-24,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-25,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
-26,waits:EPM-DEC-001-0067,,Answered in plan pull request 5 after the party module (the Customer domain's concepts) and its data are built in plan pull requests 2 to 4 from the decision owner's customer information
+19,answerable,q19-party-vs-account.rq,
+20,answerable,q20-roles-one-party.rq;q20b-real-parties-both-ways.rq,
+21,answerable,q21a-roles-are-dated.rq;q21b-ship-to-is-a-site.rq;q21c-no-ship-to-role.rq,
+22,answerable,q22-loading-authorized-party.rq,
+23,answerable,q23-where-credit-sits.rq,
+24,answerable,q24a-one-party-many-roles.rq;q24b-no-customer-class.rq,
+25,answerable,q25-measure-binding.rq,
+26,answerable,q26-one-role-per-order.rq,
 27,answerable,q27-measure-definitions.rq,
 28,answerable,q28-population.rq,
 29,answerable,q29-grain.rq,

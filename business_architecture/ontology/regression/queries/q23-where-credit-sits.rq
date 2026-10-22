@@ -1,0 +1,8 @@
+# Q23 Where does credit sit: on the Party, the account, or the Payer? (on the account; a credit roll-up relationship counts one role's exposure under another's)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?credit ?rollup WHERE {
+  party:creditTerms rdfs:domain party:CustomerAccount ; skos:definition ?credit .
+  <https://w3id.org/lsc/ontology/modules/party/relationship-type/credit-roll-up> skos:definition ?rollup .
+}

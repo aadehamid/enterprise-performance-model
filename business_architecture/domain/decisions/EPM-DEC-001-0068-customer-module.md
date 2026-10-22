@@ -100,4 +100,4 @@ This record is Claude's, under the delegation: "yes, extend the delegation to st
 
 - The `party` module is built and checked by `scripts/check.sh`: the code lists must equal a fresh build, and `test_party.py` checks the lists, the vocabulary, the five organizations both ways and the shapes. It is loaded with the regression graph, and its shapes join the Step 9 gate.
 - The module is not released. A release needs the decision owner's approval.
-- The regression stands at 34 answerable, 1 partial and 9 waiting. Questions 19 to 26 move in pull request 5.
+- The regression stands at 34 answerable, 1 partial and 9 waiting. Questions 19 to 26 move in pull request 5. *2026-10-21:* the `party` module made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071).

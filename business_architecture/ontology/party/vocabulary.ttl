@@ -1,5 +1,5 @@
 # The `party` module's vocabulary (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068; for the systems,
-# data flow and attributes EPM-DEC-001-0069; for the lifecycle EPM-DEC-001-0070): the
+# data flow and attributes EPM-DEC-001-0069; for the lifecycle EPM-DEC-001-0070; for question 25's binding rule EPM-DEC-001-0071): the
 # decision owner's conceptual data model of Customer, as classes and properties. The definitions
 # are Claude's words, derived from that model, which is not in this repository (EPM-DEC-001-0067).
 # The module holds definitions only: customer records stay in the systems (EPM-DEC-001-0005).
@@ -66,7 +66,8 @@ party:PartyRelationship a owl:Class ;
 party:CustomerAccount a owl:Class ;
     rdfs:label "customer account"@en ;
     skos:definition "The commercial and financial container for a party's relationship with the company; the party transacts through it. It holds the account status, payment and credit terms, the company-code assignment, settlement details and the period it is valid for. The customer class is assigned at this level."@en ;
-    dcterms:bibliographicCitation "EPM-DEC-001-0068"@en .
+    skos:scopeNote "A customer-grained measure binds to the customer account by default, because credit terms and the class sit here and exposure aggregates from it. A measure about one role binds to that role, such as the payer for receivables or the sold-to for sales volume, and a measure about a location binds to the site. None binds to the bare word customer, which names no single thing (competency question 25; EPM-DEC-001-0071)."@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0068; EPM-DEC-001-0071"@en .
 
 party:CustomerClass a owl:Class ;
     rdfs:label "customer class"@en ;

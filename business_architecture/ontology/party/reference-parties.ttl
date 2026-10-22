@@ -1,0 +1,57 @@
+# Two real organizations described in the `party` module's terms, to meet competency questions
+# section VII's done-when with real parties, as the decision owner chose ("use MPC and MPLX as the
+# real organisations"; EPM-DEC-001-0071). They are public reference facts (EPM-DEC-001-0005), on the
+# IRIs of the ref-mpc module, each role sourced to MPLX's FY2025 Form 10-K
+# (business_architecture/reference/mpc/mplx-fy2025-10k-fact-sheet.md, section 3). No transaction,
+# price or volume is recorded. Each role holds from 2012-10-31, the date of the first agreements the
+# filing's exhibit index lists: the Omnibus Agreement among MPC, MPLX and their subsidiaries
+# (Exhibit 10.1) and the first Transportation Services Agreement (Exhibit 10.2), both "dated as of
+# October 31, 2012". The Omnibus Agreement's parties include both parents, MPC and MPLX LP; the
+# Transportation Services Agreement is between their subsidiaries (Marathon Petroleum Company LP and
+# Marathon Pipe Line LLC). The roles are stated at the parent level, as Item 1 states the services and
+# as ref-mpc states its facts. The roles still hold: the filing describes the agreements as current.
+@prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
+@prefix refmpc: <https://w3id.org/lsc/ontology/modules/ref-mpc/> .
+@prefix role: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
+@prefix agt: <https://w3id.org/lsc/ontology/modules/party/agreement-type/> .
+@prefix pt: <https://w3id.org/lsc/ontology/modules/party/party-type/> .
+@prefix rp: <https://w3id.org/lsc/ontology/modules/party/reference/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix src: <https://w3id.org/lsc/ontology/source/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# The filing every role below rests on, described as ref-mpc describes MPC's 10-K (src:mpc-s01);
+# the repository's fact sheet calls it MPLX-S01.
+src:mplx-s01 a dcterms:BibliographicResource ;
+    dcterms:title "MPLX LP, Form 10-K for the fiscal year ended 2025-12-31"@en ;
+    dcterms:identifier "0001552000-26-000009" ;
+    dcterms:issued "2026-02-26"^^xsd:date ;
+    dcterms:bibliographicCitation "https://www.sec.gov/Archives/edgar/data/1552000/000155200026000009/mplx-20251231.htm"@en .
+
+refmpc:mpc a party:Organization ; party:partyType pt:organization ; party:legalName "Marathon Petroleum Corporation" ;
+    party:plays rp:mpc-throughput-holder, rp:mpc-payer .
+refmpc:mplx a party:Organization ; party:partyType pt:organization ; party:legalName "MPLX LP" ;
+    party:plays rp:mplx-carrier, rp:mplx-vendor .
+
+# MPC moves volumes on MPLX's assets under fee-based agreements with minimum volume commitments,
+# and pays the fees: "we provide transportation, terminal and storage services to MPC and most of these
+# agreements include minimum committed volumes from MPC." and "In 2025, MPC accounted for 48 percent of
+# our total revenues and other income" (Item 1; the fact sheet's section 3).
+rp:mpc-throughput-holder a party:PartyRole ; party:roleType role:throughput-holder ; party:validFrom "2012-10-31"^^xsd:date ;
+    party:governedBy rp:mplx-mpc-services ;
+    dcterms:source src:mplx-s01 .
+rp:mpc-payer a party:PartyRole ; party:roleType role:payer ; party:validFrom "2012-10-31"^^xsd:date ;
+    party:governedBy rp:mplx-mpc-services ;
+    dcterms:source src:mplx-s01 .
+
+# MPLX carries and stores MPC's product and sells it the services, under "fee-based agreements with
+# minimum volume commitments with MPC" (Item 1; the fact sheet's section 3).
+rp:mplx-carrier a party:PartyRole ; party:roleType role:carrier ; party:validFrom "2012-10-31"^^xsd:date ;
+    party:governedBy rp:mplx-mpc-services ;
+    dcterms:source src:mplx-s01 .
+rp:mplx-vendor a party:PartyRole ; party:roleType role:vendor ; party:validFrom "2012-10-31"^^xsd:date ;
+    party:governedBy rp:mplx-mpc-services ;
+    dcterms:source src:mplx-s01 .
+
+rp:mplx-mpc-services a party:Agreement ; party:agreementType agt:throughput-storage ; party:validFrom "2012-10-31"^^xsd:date ;
+    dcterms:source src:mplx-s01 .

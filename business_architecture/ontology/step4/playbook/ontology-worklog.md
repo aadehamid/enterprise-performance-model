@@ -90,7 +90,7 @@ ontology; everything else points at it.
 | 8 | APQC scope review (seven candidates, one at a time) | ✅ Done 2026-09-17 |
 | 9 | SHACL (labels, identifier policy, hierarchy integrity, controlled values, references, profiles) | Started: the release slice ships in `core` 1.0.0 (EPM-DEC-001-0014); controlled values in `validation/` (EPM-DEC-001-0035), 2026-10-13; `core` 2.1.0 carries the controlled-value shapes and one evidence node per canonical fact, with the evidence-link shapes (EPM-DEC-001-0044), 2026-10-18; every module's shapes run together on the whole graph with zero violations (EPM-DEC-001-0065), 2026-10-19 |
 | 10 | DCAT publication (catalog → versioned dataset → distributions) | Started: `core` 1.0.0 packaged with its DCAT record (EPM-DEC-001-0029); organization 1.0.0 and ref-mpc 1.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0037); `core` 2.0.0, approved by the decision owner and issued 2026-10-13 (EPM-DEC-001-0038); `core` 2.1.0, issued 2026-10-18 with the decision owner's approval (EPM-DEC-001-0044); organization 2.0.0 (2026-10-18) and ref-mpc 1.1.0 (2026-10-19), approved by the decision owner (EPM-DEC-001-0045); kpi 1.0.0 (2026-10-19), approved by the decision owner, and kpi 1.0.1, a patch naming the list's source VCO DSV (EPM-DEC-001-0043); not hosted, the namespace a placeholder (the decision owner, EPM-DEC-001-0039); under the delegation, no w3id registration, so the gate's "catalog resolves" is parked until a domain is decided; the licence is proprietary (the decision owner, EPM-DEC-001-0041, 2026-10-18) |
-| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18); with the data-product module, 17 answerable, 7 partial, 20 waiting (2026-10-19); with the value-stream module, 18 answerable, 7 partial, 19 waiting (2026-10-19); with the system module, 19 answerable, 7 partial, 18 waiting (2026-10-19); with the lane module, 20 answerable, 7 partial, 17 waiting (2026-10-19); with Q15 answerable, 21 answerable, 7 partial, 16 waiting (2026-10-19); with the market-data module, 23 answerable, 7 partial, 14 waiting (2026-10-19); with the placement kinds, 26 answerable, 5 partial, 13 waiting (2026-10-19); with the source tiers, 27 answerable, 4 partial, 13 waiting (2026-10-19); with the APQC element list, 30 answerable, 1 partial (Q7), 13 waiting (2026-10-19); with the consumer rules, 33 answerable, 1 partial (Q7), 10 waiting (2026-10-19); with the measure populations, 34 answerable, 1 partial (Q7), 9 waiting (2026-10-19) |
+| 11 | SPARQL regression tests (missing RACI, systems, products, orphans, lanes, ownership); coverage re-run after each module (EPM-DEC-001-0019) | Started 2026-10-13: harness in `regression/`, run by `check.sh`; on core 2.1.0 with the organization and kpi modules, 17 answerable, 6 partial, 21 waiting (2026-10-18); with the data-product module, 17 answerable, 7 partial, 20 waiting (2026-10-19); with the value-stream module, 18 answerable, 7 partial, 19 waiting (2026-10-19); with the system module, 19 answerable, 7 partial, 18 waiting (2026-10-19); with the lane module, 20 answerable, 7 partial, 17 waiting (2026-10-19); with Q15 answerable, 21 answerable, 7 partial, 16 waiting (2026-10-19); with the market-data module, 23 answerable, 7 partial, 14 waiting (2026-10-19); with the placement kinds, 26 answerable, 5 partial, 13 waiting (2026-10-19); with the source tiers, 27 answerable, 4 partial, 13 waiting (2026-10-19); with the APQC element list, 30 answerable, 1 partial (Q7), 13 waiting (2026-10-19); with the consumer rules, 33 answerable, 1 partial (Q7), 10 waiting (2026-10-19); with the measure populations, 34 answerable, 1 partial (Q7), 9 waiting (2026-10-19); *2026-10-21:* the `party` module made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071). |
 | 12 | LPG projection to Neo4j after the build, per `lpg-projection/` with the qualified-relation deviation (EPM-DEC-001-0020) | Started 2026-10-13: the pipeline in `projection/` (EPM-DEC-001-0036) passes on core 2.1.0 with organization 2.0.0 and the ref-mpc module, with no listed release gap (2.0.0 closed core 1.0.0's two Rule 1 gaps) |
 
 Note: Step 8 was completed early (it was originally sequenced after
@@ -962,6 +962,17 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Competency questions 19 to 26 (2026-10-21)
+- Under the delegation (EPM-DEC-001-0071): the `party` module answers
+  questions 19 to 26, each with a query. A customer-grained measure binds
+  to the customer account by default; core 2.1.0's wording (the scope
+  notes of CM 1.3.7.4.2 and CM 1.3.7.4.3, the definition of CM 1.3.7.2.5)
+  rules out the collapsed customer, and the default is Claude's choice.
+  For section VII's done-when the decision owner chose MPC and MPLX as the
+  real organisations: their public roles toward each other, from MPLX's
+  FY2025 Form 10-K, are described both ways. The regression stands at 42 answerable, 1 partial (Q7) and
+  1 waiting (Q17).
+
 ### The customer lifecycle (2026-10-21)
 - Under the delegation (EPM-DEC-001-0070): the six business stages of the
   customer lifecycle link to the core processes that do their work, and
@@ -1052,7 +1063,8 @@ without a dated amendment and the decision owner's explicit agreement.
   rules: what a measure includes and excludes. Q28 is answerable. Every question still
   waiting now waits on the decision owner (Q17, Q19 to Q26). *2026-10-21:* Q19 to
   Q26 now wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13); only Q17 waits
-  on the decision owner.
+  on the decision owner. The plan's pull request 5
+  then answered them (EPM-DEC-001-0071).
 
 ### Consumer rules (2026-10-19)
 - Under the delegation (EPM-DEC-001-0061): the catalog binding
@@ -1072,7 +1084,7 @@ without a dated amendment and the decision owner's explicit agreement.
 
 ### Source authority (2026-10-19)
 - Under the delegation (EPM-DEC-001-0059): every one of the 63 cited
-  sources (64 since 2026-10-20, EPM-DEC-001-0066) has an evidence tier, from the order in AGENTS.md (process
+  sources (64 since 2026-10-20, EPM-DEC-001-0066; 65 since 2026-10-21, EPM-DEC-001-0071) has an evidence tier, from the order in AGENTS.md (process
   authority, MPC, peers, industry and regulators, generic frameworks).
   Where two sources of a concept disagree, the best tier wins. Q44 is
   answerable.

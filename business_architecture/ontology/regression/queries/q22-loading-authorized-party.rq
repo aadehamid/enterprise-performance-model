@@ -1,0 +1,7 @@
+# Q22 What is a Loading-Authorized Party, and how is it different from an Authorization object? (a role held for a period; the permission is a separate record)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?definition WHERE {
+  <https://w3id.org/lsc/ontology/modules/party/party-role/loading-authorized-party> skos:definition ?definition .
+  FILTER(CONTAINS(STR(?definition), "allowed to lift product at a terminal") && CONTAINS(STR(?definition), "held for a period")
+         && CONTAINS(STR(?definition), "the permission that grants it is a separate record"))
+}

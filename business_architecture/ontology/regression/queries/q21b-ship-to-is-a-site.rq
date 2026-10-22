@@ -1,0 +1,8 @@
+# Q21 Is Ship-to a role or a location? (a site: the site's note says so, and the receiving party holds the Consignee role)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?note WHERE {
+  party:Site skos:scopeNote ?note .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/consignee> skos:inScheme party:party-role .
+  FILTER(CONTAINS(LCASE(STR(?note)), "ship-to is a site"))
+}

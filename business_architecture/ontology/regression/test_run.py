@@ -38,7 +38,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (34, 1, 9))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (42, 1, 1))
 
     def test_q15b_reports_the_systems_in_two_modules_as_one(self):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
@@ -83,7 +83,7 @@ class Release(unittest.TestCase):
 
     def test_an_empty_graph_fails_every_query(self):
         failures, _ = run.check(Graph(), run.load_expected())
-        self.assertEqual(len([f for f in failures if "no rows" in f]), 45)
+        self.assertEqual(len([f for f in failures if "no rows" in f]), 55)  # 45 before the `party` module, plus its 10 row-returning queries
 
     def mutated(self, change):
         g = Graph()
@@ -139,6 +139,25 @@ class Release(unittest.TestCase):
         a = next(GRAPH.subjects(URIRef(orgm + "forProcess"), None))
         failures = self.mutated(lambda g: g.set((a, URIRef(orgm + "forProcess"), anchor)))
         self.assertTrue(any(f.startswith("Q3 q03b") for f in failures), failures)
+
+    def test_a_ship_to_role_fails_q21(self):
+        role = URIRef("https://w3id.org/lsc/ontology/modules/party/party-role/ship-to")
+        failures = self.mutated(lambda g: (g.add((role, SKOS.inScheme, URIRef("https://w3id.org/lsc/ontology/modules/party/party-role"))),
+                                           g.add((role, SKOS.prefLabel, Literal("Ship-To", lang="en")))))
+        self.assertIn("Q21 q21c-no-ship-to-role.rq: 1 rows, expected none", failures)
+
+    def test_a_customer_class_of_party_fails_q24(self):
+        cust = "https://w3id.org/lsc/ontology/modules/party/"
+        failures = self.mutated(lambda g: g.add((URIRef(cust + "Customer"),
+                                                 URIRef("http://www.w3.org/2000/01/rdf-schema#subClassOf"), URIRef(cust + "Party"))))
+        self.assertIn("Q24 q24b-no-customer-class.rq: 1 rows, expected none", failures)
+
+    def test_the_role_labels_alone_fail_q24(self):
+        # Q24 asks how one party holds several roles: keeping the three role labels but removing every
+        # role a party plays must fail it (Codex HOLD on #333).
+        plays = URIRef("https://w3id.org/lsc/ontology/modules/party/plays")
+        failures = self.mutated(lambda g: g.remove((None, plays, None)))
+        self.assertTrue(any(f.startswith("Q24 q24a-one-party-many-roles.rq") for f in failures), failures)
 
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()

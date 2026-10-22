@@ -1,7 +1,8 @@
 """Tests for the `party` module (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068): the build is
 current, the code lists hold the decided values, the vocabulary holds the fifteen entities of the
-decision owner's conceptual model, the five example organizations read both ways, and SHACL accepts
-the examples and rejects each kind of break. Expected values are written out by hand.
+decision owner's conceptual model, the five example organizations read both ways, MPC and MPLX as real
+parties read both ways and cite MPLX's 10-K (EPM-DEC-001-0071), and SHACL accepts the examples and
+rejects each kind of break. Expected values are written out by hand.
 
 Run: python3 -m pytest test_party.py (needs rdflib, pyshacl).
 """
@@ -186,6 +187,43 @@ class BothWays(unittest.TestCase):
     def test_each_organization_holds_several_roles(self):
         for party in self.EXPECTED:
             self.assertGreaterEqual(len(self.roles_of(party)), 2, party)
+
+
+class RealParties(unittest.TestCase):
+    """Section VII's done-when with real organisations, as the decision owner chose (EPM-DEC-001-0071)."""
+    G = parse("vocabulary.ttl", "code-lists.ttl", "reference-parties.ttl")
+    REF = Namespace("https://w3id.org/lsc/ontology/modules/ref-mpc/")
+    EXPECTED = {"mpc": {"throughput-holder", "payer"}, "mplx": {"carrier", "vendor"}}
+
+    def test_party_to_roles(self):
+        for party, roles in self.EXPECTED.items():
+            found = {str(self.G.value(r, CUST.roleType)).rsplit("/", 1)[1] for r in self.G.objects(self.REF[party], CUST.plays)}
+            self.assertEqual(found, roles, party)
+
+    def test_role_to_party(self):
+        for party in self.EXPECTED:
+            for r in self.G.objects(self.REF[party], CUST.plays):
+                self.assertEqual(set(self.G.subjects(CUST.plays, r)), {self.REF[party]}, r)
+
+    def test_every_role_cites_the_mplx_filing(self):
+        from rdflib.namespace import DCTERMS
+        filing = URIRef("https://w3id.org/lsc/ontology/source/mplx-s01")
+        self.assertEqual(str(self.G.value(filing, DCTERMS.identifier)), "0001552000-26-000009")
+        for party in self.EXPECTED:
+            for r in self.G.objects(self.REF[party], CUST.plays):
+                self.assertEqual(set(self.G.objects(r, DCTERMS.source)), {filing}, r)
+
+    def test_each_role_holds_from_the_first_agreements(self):
+        # MPLX's FY2025 Form 10-K, exhibit index: the Omnibus Agreement (10.1) and the first Transportation
+        # Services Agreement (10.2) are "dated as of October 31, 2012" (EPM-DEC-001-0071).
+        for party in self.EXPECTED:
+            for r in self.G.objects(self.REF[party], CUST.plays):
+                self.assertEqual(str(self.G.value(r, CUST.validFrom)), "2012-10-31", r)
+                self.assertIsNone(self.G.value(r, CUST.validTo), r)
+
+    def test_they_conform(self):
+        ok, text = conforms(self.G)
+        self.assertTrue(ok, text[:3000])
 
 
 class Shapes(unittest.TestCase):

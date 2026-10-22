@@ -1,0 +1,8 @@
+# Q25 Which concept should a customer-grained KPI bind to, and why not the bare word "Customer"? (the account by default, a named role or a site when the measure is about one)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+SELECT ?rule WHERE {
+  party:CustomerAccount skos:scopeNote ?rule .
+  FILTER(CONTAINS(STR(?rule), "customer-grained measure binds to the customer account") && CONTAINS(STR(?rule), "by default")
+         && CONTAINS(STR(?rule), "measure about one role binds to that role") && CONTAINS(STR(?rule), "measure about a location binds to the site") && CONTAINS(STR(?rule), "None binds to the bare word customer"))
+}

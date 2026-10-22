@@ -1,0 +1,3 @@
+<!-- The decision owner's words, verbatim from the Claude Code session of 2026-10-21 (session 7). Context (Claude's words, kept in this comment so they do not enter the quote corpus): Claude reported that competency questions section VII's done-when asks for five real multi-role organisations described both ways, that the customer module's tests use five invented ones, and that real ones could be MPC and MPLX from the ref-mpc module with their public roles. This is their answer. Do not edit; scripts/epm_facts.py quotes checks quotes against this file. -->
+
+use MPC and MPLX as the real organisations

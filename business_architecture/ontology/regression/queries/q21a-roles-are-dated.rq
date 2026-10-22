@@ -1,0 +1,9 @@
+# Q21 Are roles permanent types or time-bounded holds? (a party role is a node held from a date, not a subclass of party)
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?definition ?note WHERE {
+  party:PartyRole skos:definition ?definition ; skos:scopeNote ?note .
+  party:validFrom rdfs:range <http://www.w3.org/2001/XMLSchema#date> .
+  FILTER NOT EXISTS { party:PartyRole rdfs:subClassOf* party:Party }
+}

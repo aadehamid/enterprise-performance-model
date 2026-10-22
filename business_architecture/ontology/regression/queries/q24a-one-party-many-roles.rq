@@ -1,0 +1,17 @@
+# Q24 Can the same organisation be a customer in one deal and a supplier or exchange counterparty in another, and how? (yes: a party plays several role nodes, each with its kind from the one party-role list and the agreement it works under; a real party holds roles of different kinds)
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX party: <https://w3id.org/lsc/ontology/modules/party/>
+SELECT ?sold ?supplier ?exchange ?party ?kindA ?kindB WHERE {
+  party:plays rdfs:domain party:Party ; rdfs:range party:PartyRole .
+  party:roleType rdfs:domain party:PartyRole .
+  party:governedBy rdfs:domain party:PartyRole ; rdfs:range party:Agreement .
+  party:validFrom rdfs:range ?date .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/sold-to> skos:inScheme party:party-role ; skos:prefLabel ?sold .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/supplier> skos:inScheme party:party-role ; skos:prefLabel ?supplier .
+  <https://w3id.org/lsc/ontology/modules/party/party-role/exchange-counterparty> skos:inScheme party:party-role ; skos:prefLabel ?exchange .
+  ?party party:plays ?a, ?b .
+  ?a party:roleType ?kindA . ?b party:roleType ?kindB .
+  ?kindA skos:inScheme party:party-role . ?kindB skos:inScheme party:party-role .
+  FILTER (?kindA != ?kindB)
+} LIMIT 1
