@@ -1,7 +1,8 @@
 """Tests for the ref-mpc module (Step 5, slice 4; EPM-DEC-001-0033): every reference instance
 cites a source and an as-of date, the facts match the FY2025 10-K as recorded in the fact sheet,
 MPC's control of MPLX is a control relationship and not a sub-organization, and the module
-defines no terms of its own.
+defines no terms of its own; and MPC and MPLX described in the party module's terms, moved here
+from party/ (EPM-DEC-001-0075).
 
 Run: python3 -m pytest test_ref_mpc.py (needs rdflib, pyshacl).
 """
@@ -111,6 +112,61 @@ class BrokenInstancesFail(unittest.TestCase):
 
     def test_a_second_name_fails(self):
         self.assertFalse(self.broken(lambda g: g.add((REF.mpc, SKOS.prefLabel, Literal("Marathon", lang="en")))))
+
+
+PARTY = os.path.join(HERE, "..", "party")
+CUST = Namespace("https://w3id.org/lsc/ontology/modules/party/")
+
+
+class RealParties(unittest.TestCase):
+    """MPC and MPLX in the party module's terms: section VII's done-when with real organisations, as
+    the decision owner chose (EPM-DEC-001-0071), kept in this reference module since EPM-DEC-001-0075."""
+    G = Graph()
+    for n in ("vocabulary.ttl", "code-lists.ttl"):
+        G.parse(os.path.join(PARTY, n))
+    PARTIES = Graph().parse(os.path.join(HERE, "reference-parties.ttl"))
+    G += PARTIES
+    EXPECTED = {"mpc": {"throughput-holder", "payer"}, "mplx": {"carrier", "vendor"}}
+
+    def test_party_to_roles(self):
+        for party, roles in self.EXPECTED.items():
+            found = {str(self.G.value(r, CUST.roleType)).rsplit("/", 1)[1] for r in self.G.objects(REF[party], CUST.plays)}
+            self.assertEqual(found, roles, party)
+
+    def test_role_to_party(self):
+        for party in self.EXPECTED:
+            for r in self.G.objects(REF[party], CUST.plays):
+                self.assertEqual(set(self.G.subjects(CUST.plays, r)), {REF[party]}, r)
+
+    def test_every_role_cites_the_mplx_filing(self):
+        filing = SRC["mplx-s01"]
+        self.assertEqual(str(self.G.value(filing, DCTERMS.identifier)), "0001552000-26-000009")
+        for party in self.EXPECTED:
+            for r in self.G.objects(REF[party], CUST.plays):
+                self.assertEqual(set(self.G.objects(r, DCTERMS.source)), {filing}, r)
+
+    def test_each_role_holds_from_the_first_agreements(self):
+        # MPLX's FY2025 Form 10-K, exhibit index: the Omnibus Agreement (10.1) and the first Transportation
+        # Services Agreement (10.2) are "dated as of October 31, 2012" (EPM-DEC-001-0071).
+        for party in self.EXPECTED:
+            for r in self.G.objects(REF[party], CUST.plays):
+                self.assertEqual(str(self.G.value(r, CUST.validFrom)), "2012-10-31", r)
+                self.assertIsNone(self.G.value(r, CUST.validTo), r)
+
+    def test_every_node_described_here_is_in_this_modules_namespace_or_a_source(self):
+        # EPM-DEC-001-0075: the roles and the agreement moved from the party namespace to ref-mpc's.
+        for s in set(self.PARTIES.subjects()):
+            self.assertTrue(str(s).startswith(str(REF)) or str(s).startswith(str(SRC)), s)
+        described = set(self.PARTIES.subjects())
+        for local in ("mpc-throughput-holder", "mpc-payer", "mplx-carrier", "mplx-vendor", "mplx-mpc-services"):
+            self.assertIn(REF["party/" + local], described, local)
+
+    def test_the_file_left_the_party_module(self):
+        self.assertFalse(os.path.exists(os.path.join(PARTY, "reference-parties.ttl")))
+
+    def test_they_conform_to_the_party_shapes(self):
+        ok, _, text = validate(self.G, shacl_graph=Graph().parse(os.path.join(PARTY, "shapes.ttl")))
+        self.assertTrue(ok, text[:3000])
 
 
 if __name__ == "__main__":

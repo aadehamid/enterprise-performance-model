@@ -962,6 +962,21 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### `core` 2.2.0 (2026-10-22)
+- With the decision owner's approval of the release plan (EPM-DEC-001-0076),
+  `core` 2.2.0 is released, a minor built from 2.1.0 and the process map at
+  8259354: 23 new concepts, IDs on four stubs, eight changed descriptions as
+  scope notes; 19,810 triples, 706 process concepts. The APQC 19948
+  references are checked (14 confirmed, 2 corrected to Rejected) and RF 1.2
+  is no longer a Candidate node.
+
+### The reference parties move into ref-mpc (2026-10-22)
+- At the decision owner's word (EPM-DEC-001-0075), MPC and MPLX as parties
+  move from `party/` to `ref-mpc/reference-parties.ttl`. Under the
+  delegation, their roles and agreement take ref-mpc's namespace, and no
+  `party` release is needed. The `ref-mpc` 1.2.0 release that will carry
+  the move is pending, in its own pull request.
+
 ### The decision owner's answers on the codes and TABS Seller ID (2026-10-22)
 - HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr
   stay as they are until the ontology is shared for consumption, when the
@@ -1098,7 +1113,8 @@ without a dated amendment and the decision owner's explicit agreement.
   Q40 and Q43 are answerable by their graph part (EPM-DEC-001-0019). In
   core 2.1.0, 16 concepts reference element 19948, among them CM 1.2.4.1.10
   and CM 1.2.4.1.18, whose notes say no APQC candidate; the next core
-  release checks them.
+  release checks them. *2026-10-22:* checked in core 2.2.0: 14 confirmed,
+  2 corrected to Rejected (EPM-DEC-001-0076).
 
 ### Source authority (2026-10-19)
 - Under the delegation (EPM-DEC-001-0059): every one of the 63 cited
@@ -2313,7 +2329,8 @@ separately assigned by the enterprise operating model. Status: Candidate;
 review trigger: R2 evidence package / refinery maintenance and turnaround
 operating model. *2026-10-19:* the ownership question is answered for the
 map's scope (EPM-DEC-001-0063); the next `core` release reviews the Candidate
-status.
+status. *2026-10-22:* reviewed in `core` 2.2.0: no longer a Candidate node
+(EPM-DEC-001-0076).
 **Terminology governance (2026-09-22):** R1 resolves terminology only to the
 minimum required for an accurate hierarchy and non-misleading labels
 (stale parent/label/path references updated mechanically). Unresolved
@@ -2377,7 +2394,7 @@ startup/restart, plan vs schedule vs unit-operation schedule, production vs
 operations management; (4) Energy & Utility Management temporary-placement
 review, triggered by the R2 Refinery Energy, Utilities, and Environmental
 Performance scope decision. PTC-001-B remains open (strategy-ownership hold);
-the R&T L2 remains Candidate until the ownership question is answered. *2026-10-19:* the backlog is decided (EPM-DEC-001-0063): items 1 and 3 are out until the map gains an operating-execution L2; item 2 is answered for the map's scope by RF 1.2 (P02b), and the next `core` release reviews its Candidate status; item 4 waits for its trigger.
+the R&T L2 remains Candidate until the ownership question is answered. *2026-10-19:* the backlog is decided (EPM-DEC-001-0063): items 1 and 3 are out until the map gains an operating-execution L2; item 2 is answered for the map's scope by RF 1.2 (P02b), and the next `core` release reviews its Candidate status (*2026-10-22:* done in `core` 2.2.0, EPM-DEC-001-0076); item 4 waits for its trigger.
 
 ### Dublin Core Terms — describing the sources
 **What:** `dcterms:title`, `dcterms:references`, `dcterms:license`,

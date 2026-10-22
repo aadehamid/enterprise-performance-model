@@ -1,7 +1,9 @@
-# Two real organizations described in the `party` module's terms, to meet competency questions
-# section VII's done-when with real parties, as the decision owner chose ("use MPC and MPLX as the
-# real organisations"; EPM-DEC-001-0071). They are public reference facts (EPM-DEC-001-0005), on the
-# IRIs of the ref-mpc module, each role sourced to MPLX's FY2025 Form 10-K
+# MPC and MPLX described in the `party` module's terms, to meet competency questions section VII's
+# done-when with real parties, as the decision owner chose ("use MPC and MPLX as the real
+# organisations"; EPM-DEC-001-0071). Moved here from party/ on 2026-10-22, because these are reference
+# instances of real companies and the decision owner split them into their own reference module
+# (EPM-DEC-001-0075). They are public reference facts (EPM-DEC-001-0005), on ref-mpc's IRIs, each role
+# sourced to MPLX's FY2025 Form 10-K
 # (business_architecture/reference/mpc/mplx-fy2025-10k-fact-sheet.md, section 3). No transaction,
 # price or volume is recorded. Each role holds from 2012-10-31, the date of the first agreements the
 # filing's exhibit index lists: the Omnibus Agreement among MPC, MPLX and their subsidiaries
@@ -15,7 +17,7 @@
 @prefix role: <https://w3id.org/lsc/ontology/modules/party/party-role/> .
 @prefix agt: <https://w3id.org/lsc/ontology/modules/party/agreement-type/> .
 @prefix pt: <https://w3id.org/lsc/ontology/modules/party/party-type/> .
-@prefix rp: <https://w3id.org/lsc/ontology/modules/party/reference/> .
+@prefix rp: <https://w3id.org/lsc/ontology/modules/ref-mpc/party/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix src: <https://w3id.org/lsc/ontology/source/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .

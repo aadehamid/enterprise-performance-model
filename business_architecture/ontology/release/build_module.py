@@ -69,9 +69,9 @@ MODULES = {
         "title": "LSC Party Module",
         "description": "The Customer domain's concepts: parties, the roles they hold for a period, accounts, agreements and sites; the customer's systems, data flow and attributes; and the customer lifecycle linked to core processes (Steps 5 to 7). Definitions only, never records.",
         # 1.0.0 is the module's first release, a major approved by the decision owner (EPM-DEC-001-0074).
-        # The reference parties (party/reference-parties.ttl) are reference instances of real companies, which the
-        # playbook's module policy puts in their own module, so they are not part of this package. They stay in
-        # party/ for the regression until the decision owner decides on moving them to ref-mpc.
+        # The reference parties are reference instances of real companies, which the playbook's module policy
+        # puts in their own module, so they are not part of this package. Since 2026-10-22 they are in
+        # ref-mpc/reference-parties.ttl (EPM-DEC-001-0075).
         "version": "1.0.0", "stage": None, "issued": "2026-10-22",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-21-release-playbook.md", "You have my permission to release the stable version when you are done."),
         "parts": ["party/vocabulary.ttl", "party/code-lists.ttl", "party/systems.ttl", "party/lifecycle.ttl"],

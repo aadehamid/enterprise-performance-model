@@ -19,7 +19,7 @@ The `party` module holds the Customer domain's concepts (EPM-DEC-001-0068), the 
 
 1. **"The stable version" is `party` 1.0.0**, the module's first release, issued 2026-10-22. No `core` release was pending: the process-map changes of MPC-P10 wait for the decision owner, so no `core` version is cut.
 2. **The package holds** `vocabulary.ttl`, `code-lists.ttl`, `systems.ttl` and `lifecycle.ttl` (3,405 triples), with the module's shapes, a DCAT record, a changelog and a manifest, built by `release/build_module.py` as the other modules' packages are. It requires core 2.1.0, and the shapes conform with core 2.1.0 loaded.
-3. **The reference parties stay outside the package.** `party/reference-parties.ttl` describes MPC and MPLX, real companies; the playbook's module policy puts reference instances in their own module. The regression keeps loading the file. Moving it into `ref-mpc` would be a `ref-mpc` release, which needs its own approval.
+3. **The reference parties stay outside the package.** `party/reference-parties.ttl` describes MPC and MPLX, real companies; the playbook's module policy puts reference instances in their own module. The regression keeps loading the file. Moving it into `ref-mpc` would be a `ref-mpc` release, which needs its own approval. *2026-10-22:* the decision owner split them into their own reference module; the file is now `ref-mpc/reference-parties.ttl` (EPM-DEC-001-0075).
 4. **The examples stay outside too:** `examples.ttl` holds invented test fixtures.
 
 ## Alternatives considered
@@ -40,4 +40,4 @@ From `business_architecture/ontology/step4/review-evidence/decision-owner-answer
 
 - `releases/party/1.0.0/` is written; `scripts/check.sh` fails unless it equals a fresh build.
 - The records and READMEs that said the module is not released carry dated notes.
-- Open for the decision owner: whether to move the reference parties into `ref-mpc` in its next release.
+- Open for the decision owner: whether to move the reference parties into `ref-mpc` in its next release. *2026-10-22:* answered: they move into their own reference module, `ref-mpc` (EPM-DEC-001-0075). The `ref-mpc` release that will carry them is pending.
