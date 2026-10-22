@@ -1550,8 +1550,8 @@ owner made them the source author's backlog.
   back to what the source says.
 
 **The Customer domain, Steps 5 to 7 and 11** (EPM-DEC-001-0067 to 0072). The
-owner's seven customer inputs stayed out of the repository; the `party`
-module holds what was derived from them: fifteen entity classes, roles as
+owner's seven customer inputs stayed out of the repository; with the owner's
+permission, the `party` module holds what was derived from them: fifteen entity classes, roles as
 dated nodes, 42 customer systems with their data flows and attributes, and a
 lifecycle linked to existing core processes. Each reading is marked as one,
 and the codes nobody could define stay named and open. Its reviews produced
