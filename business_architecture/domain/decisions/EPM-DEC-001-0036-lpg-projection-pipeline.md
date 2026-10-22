@@ -34,11 +34,22 @@ The first run found a defect in `ref-mpc`, fixed in #261 (merged as d5eb311): it
 
 ### For the decision owner
 
+*2026-10-22:* the 16 release gaps listed in the amendment of 2026-10-22 close at the next release of value-stream, kpi, party and integration. Each fix adds a range or a cardinality shape and changes no released IRI, so each fits a patch or minor release, which needs the decision owner's approval.
+
 The next `core` release should add `rdfs:range skos:Concept` to `core:earlierProcess` and `core:laterProcess`. The pipeline then fails until the two listed gaps are removed.
 
 *Note 2026-10-14:* guideline v2.2 (enterprise-people-graph PR #3, `8ce9ada`) adopts the choices above (SHORTEN, the in-graph subset, the declaration filter, the round-trip value rules, the CI report check), so they are no longer deviations from the guideline. `lpg-projection/` is re-pinned to it (EPM-DEC-001-0021).
 
 *Amendment 2026-10-13:* done. `core` 2.0.0 (EPM-DEC-001-0038) adds both ranges. The pipeline now projects 2.0.0, and its list of release gaps is empty.
+
+*Amendment 2026-10-22 (Phase E, delegated under EPM-DEC-001-0028):* the pipeline projects every released package, each at its newest version: `core` 2.2.0, organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.0.0, data-product, value-stream, system, lane and market-data 1.0.0, and integration 1.0.0. It reads the packages under `releases/`, not the source files, and runs each package's own `shapes.ttl` with the scoped-sequence and run shapes. kpi 1.1.0 is loaded where value-stream and market-data name 1.0.1, the highest version, as `release/build_module.py` does. Under the delegation:
+
+1. **The rules cover every module's namespace.** Rules 1 and 2 apply to the predicates of the 13 module namespaces, and each has a fixed prefix (Rule 3), the prefix its package uses where it has one.
+2. **Rule 4a knows five more qualified-relation classes:** value-stream's measure link (EPM-DEC-001-0054), market-data's leg (EPM-DEC-001-0057, 0066), and party's role, data flow and customer sourcing (EPM-DEC-001-0068, 0069). The measure link, the leg and the role are reached from one end by an inverse link (`vs:measureLink`, `mkt:leg`, `party:plays`), which the guideline allows; the rule checks that exactly one such link points to each node.
+3. **16 release gaps are listed, each with its fix.** Eight own properties declare no single concrete range (Rule 1), and eight have no shape stating their cardinality (Rule 2), in value-stream 1.0.0, kpi 1.1.0, party 1.0.0 and integration 1.0.0. Only a new release of each module can close them, so the pipeline names each with its fix, as it named core 1.0.0's two gaps.
+4. **Two more constraints stay out of the graph.** n10s matches `sh:pattern` against the whole string, where SHACL searches it. Its `SHACLValidator` (in the n10s 2025.06.1 jar) tests each value with Cypher's `=~`, and the Cypher Manual's examples of `=~` ("String operators", https://neo4j.com/docs/cypher-manual/current/expressions/predicates/string-operators/) need a leading or trailing `.*` to match part of a string (`'.*@company.com'`). In the run, party's `"\S"` failed on 101 values longer than one character, while the anchored `^[1-7](, [1-7])*$` passed. n10s also did not match a loaded `true` against market-data's `sh:in (true)`, which failed on 2 series. So `sh:pattern`, and an `sh:in` list that holds a literal, join the subset left to Step 1's pySHACL check. An `sh:in` list of IRIs still runs in the graph.
+
+The run: 33,742 triples, no inferences, 3,925 nodes and 19,692 relationships, no SHACL violation in the graph over 588 in-graph constraints (the mutant still caught), an empty round-trip diff, and equal hashes for the sorted and shuffled loads.
 
 ## Alternatives considered
 

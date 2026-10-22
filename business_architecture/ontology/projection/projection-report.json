@@ -1,11 +1,11 @@
 {
-  "determinism_hash_shuffled": "406d2a809071fbabf0bc9bb53d23d41da0c5ba635576c067bc039581de8be880",
-  "determinism_hash_sorted": "406d2a809071fbabf0bc9bb53d23d41da0c5ba635576c067bc039581de8be880",
+  "determinism_hash_shuffled": "cef6de7a4d46e9424b9fd5c6f1e63ea61eab11a68453994fb3027bc65dadd93c",
+  "determinism_hash_sorted": "cef6de7a4d46e9424b9fd5c6f1e63ea61eab11a68453994fb3027bc65dadd93c",
   "in_graph_mutant_violations": 1,
-  "in_graph_shape_constraints": 133,
-  "input_fingerprint": "c39e8f8cc0d335cbb365360bfea1916bbf08f73ac13b52826b2753024bd8754a",
-  "nodes": 2834,
-  "relationships": 14934,
+  "in_graph_shape_constraints": 588,
+  "input_fingerprint": "9a1555576e827ec4ecd402657689e8ca5adb0dfc228a2b7dea465e2055ee32c7",
+  "nodes": 3925,
+  "relationships": 19692,
   "roundtrip_added": 0,
   "roundtrip_lost": 0,
   "samples": {
@@ -14,7 +14,7 @@
     "violations": []
   },
   "shacl_violations_in_graph": 0,
-  "shapes_fingerprint": "eb4c696862a753629ed9f99b5492e08ae3ff4340c7b71a349c60e2bca4915e74",
+  "shapes_fingerprint": "bd09dad5c62026dc42e74ef2089e2ae1e7667b8e0d10a5672f4df7f0fec74e94",
   "versions": {
     "apoc": "bundled with neo4j:2025.06.2",
     "guideline": "v2.2 (lpg-projection/, pin 8ce9ada)",
