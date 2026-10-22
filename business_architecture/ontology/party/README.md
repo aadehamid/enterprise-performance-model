@@ -12,6 +12,6 @@ The `party` module turns the decision owner's conceptual data model of Customer 
 | `examples.ttl` | Five invented organizations, each holding several roles, plus a contact person. Test fixtures only; not loaded with the module |
 | `test_party.py` | Tests: the build is current, the decided values of each list, the fifteen entity classes, the five organizations read both ways (party to roles, role to party), and SHACL accepting the examples and rejecting each kind of break |
 | `test_party_systems.py` | Tests: the figures, the core systems' entities, the three matches to the system module, the origin patterns, key flows, the shared identifiers, the corrected labels, sample mappings, that the CBS sourcing keeps its open identity, and the shapes |
-| `test_party_lifecycle.py` | Tests: the two lifecycles, each stage's processes and systems, the correspondences, and the shapes |
+| `test_party_lifecycle.py` | Tests: the two lifecycles, each stage's processes and systems, the correspondences, the shapes (each rejection asserted on its stage, with its message), and the build (a link from the wrong kind of stage, a real target on the wrong stage, a correspondence the record does not grant, and a stage with every link removed) |
 
 The regression loads `vocabulary.ttl`, `code-lists.ttl`, `systems.ttl` and `lifecycle.ttl` with the release. The module is not released yet; a release needs the decision owner's approval.
