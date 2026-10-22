@@ -34,4 +34,4 @@ None for these choices. The delegation: "yes, extend the delegation to steps 5 t
 ## Consequences
 
 - The regression stands at 30 answerable, 1 partial (Q7) and 13 waiting.
-- In `core` 2.1.0, 16 concepts reference element 19948 ("Analyze internal operations"), among them CM 1.2.4.1.10 and CM 1.2.4.1.18, whose notes say "APQC: no meaningful candidate". The released package stays fixed; the next `core` release should check those references.
+- In `core` 2.1.0, 16 concepts reference element 19948 ("Analyze internal operations"), among them CM 1.2.4.1.10 and CM 1.2.4.1.18, whose notes say "APQC: no meaningful candidate". The released package stays fixed; the next `core` release should check those references. *2026-10-22:* checked in `core` 2.2.0: the 14 "No candidate" references confirmed, and CM 1.2.6.3 and Downstream Operations corrected from "Review link" to "Rejected" (EPM-DEC-001-0076).

@@ -1,0 +1,167 @@
+{
+ "new": {
+  "CM-1-1-3-7-13": {
+   "prefLabel": "Reconcile Movement Losses and Gains",
+   "definition": "Compare the quantities measured at each end of a movement or held in storage, find the losses and gains, and settle the imbalances, for every movement by pipeline, marine, rail, truck and storage, including transfers of intermediates between refineries.",
+   "scopeNotes": [
+    "Gains and losses come from pressure and temperature changes, evaporation and differences between meter readings and other measurement methods; until settled, an imbalance is carried as an asset or a payable, and it is settled in cash, by physical delivery of volumes from another source, or tracked and settled later (MPLX FY2025 Form 10-K, Note 2, Imbalances). API MPMS Chapter 17.5 (marine cargo quantity differences) and Chapter 23 (loss and gain on non-marine systems) are the industry standards for this work. Produces the Loss Control data product (EPM-DEC-001-0048)."
+   ]
+  },
+  "CM-1-2-4-3-8": {
+   "prefLabel": "Manage Environmental Credits and Clean-Fuel Incentives",
+   "definition": "Govern the environmental compliance credits a company generates, buys, holds and uses, and the clean-fuel tax credits it earns and claims, under one set of controls: provenance, eligibility evidence, valuation, reconciliation and audit.",
+   "scopeNotes": [
+    "The instruments are not interchangeable. Compliance credits (RINs under the Renewable Fuel Standard, LCFS credits) are obtained and used against a compliance obligation; the clean-fuel production credit (Section 45Z) is a federal income tax credit claimed on a tax return, so it has its own lifecycle. MPC's renewable diesel generates RINs, 45Z tax credits and LCFS credits (MPC FY2025 Form 10-K, Item 1). EPM-DEC-001-0047, MPC-P05."
+   ]
+  },
+  "CM-1-2-4-3-8-1": {
+   "prefLabel": "Manage Environmental Compliance Credits",
+   "definition": "Run the lifecycle of compliance credits for each program: determine the obligation (a Renewable Volume Obligation under the RFS; deficits under LCFS), generate credits from qualifying fuel, buy and sell credits with integrity checks on the counterparty and the credit (MPC runs a RIN integrity program to vet the RINs it buys, MPC FY2025 Form 10-K, Item 1), transfer them between accounts, and retire them to show compliance.",
+   "scopeNotes": [
+    "RINs are generated with renewable fuel, traded assigned or separated, and retired by obligated parties for compliance (U.S. EPA, \"Renewable Identification Numbers (RINs) under the Renewable Fuel Standard Program\"). LCFS fuels below the carbon-intensity benchmark generate credits and fuels above it generate deficits, which a deficit generator meets with credits it earns or acquires (California Air Resources Board, \"Low Carbon Fuel Standard\", About page). RIN actualization (CM 1.2.3.1.7) and RIN reporting (CM 1.2.4.3.6) are steps of this lifecycle."
+   ]
+  },
+  "CM-1-2-4-3-8-2": {
+   "prefLabel": "Manage Clean-Fuel Production Tax Credits",
+   "definition": "Run the lifecycle of the Section 45Z clean fuel production credit: register as a producer of clean fuel before production (Form 637), document that each fuel qualifies (qualified facility, qualified sale, emissions factor, and from 2026 feedstock from the United States, Mexico or Canada), determine the credit for the taxable year, and claim it with the income tax return (Form 7218).",
+   "scopeNotes": [
+    "The credit is not retired against an obligation (Internal Revenue Service, \"Clean Fuel Production Credit\")."
+   ]
+  },
+  "CM-1-2-5-1-5": {
+   "prefLabel": "Manage Renewable Feedstock Traceability and Carbon-Intensity Evidence",
+   "definition": "Collect and keep, for each renewable feedstock lot, the evidence its credits depend on: supplier certifications, source location, feedstock type and quantity, and the carbon-intensity data of the pathway it supports, and check it before the lot is used.",
+   "scopeNotes": [
+    "MPC requires its distillers corn oil and sorghum oil suppliers to adhere to a supplier feedstock information compliance commitment that includes renewable biomass certifications and source locations (MPC CDP Climate Change 2023 response). The rules set the minimum: feedstock type and quantity, and for waste oils, fats and greases the amounts purchased and where they were collected (40 CFR 80.1454(b)(3)(vi) and (j)); LCFS feedstock sustainability attestations and chain-of-custody documentation (CARB, section 95488.9(g)); and, for the Section 45Z credit, feedstock produced or grown in the United States, Mexico or Canada and records of the primary feedstock (proposed section 1.45Z-4(f)(1) and (g)(1)). Feeds environmental credit and clean-fuel incentive management (CM 1.2.4.3.8); EPM-DEC-001-0048."
+   ]
+  },
+  "MS-1-1": {
+   "prefLabel": "Pipeline Transportation Services",
+   "definition": "Provide pipeline transportation of crude oil, refined products and other hydrocarbons to shippers under transportation agreements and tariffs.",
+   "scopeNotes": [
+    "The shipper's side is CM 1.2.7.1.2 Manage Product Transport Agreements, CM 1.1.3.6.1 Plan & Execute Nominations, CM 1.2.3.1.1 Perform Pipeline Actualization and CM 1.2.4.1.12 Settle Pipelines."
+   ]
+  },
+  "MS-1-1-1": {
+   "prefLabel": "Manage Pipeline Service Agreements and Tariffs",
+   "definition": "Set up and maintain the transportation service agreements, committed volumes and tariff rates the provider offers affiliated and third-party shippers.",
+   "scopeNotes": []
+  },
+  "MS-1-1-2": {
+   "prefLabel": "Schedule and Operate Pipeline Movements",
+   "definition": "Accept shipper nominations, schedule batches and run the movements through the pipeline system.",
+   "scopeNotes": []
+  },
+  "MS-1-1-3": {
+   "prefLabel": "Measure Pipeline Throughput and Bill Transportation",
+   "definition": "Measure the barrels received and delivered, apply the tariff, and bill each shipper for the throughput and any shortfall against committed volumes.",
+   "scopeNotes": []
+  },
+  "MS-1-2": {
+   "prefLabel": "Terminal Services",
+   "definition": "Provide the receipt, storage, throughput, blending and delivery of products at terminals for affiliated and third-party customers.",
+   "scopeNotes": [
+    "This is the provider's service; running a terminal site (safety, fleet, tanks and racks) is CM 1.2.7.2 Terminal Operations Management, and customer loading and allocation is CM 1.3.10 Terminal Loading, so neither is repeated here."
+   ]
+  },
+  "MS-1-2-1": {
+   "prefLabel": "Manage Terminal Service Agreements",
+   "definition": "Set up and maintain the terminal service agreements, committed throughput and fees the provider offers its customers.",
+   "scopeNotes": []
+  },
+  "MS-1-2-2": {
+   "prefLabel": "Account for Terminal Throughput and Bill Services",
+   "definition": "Record each customer's receipts, deliveries and blending at the terminal and bill the fees due under its agreement.",
+   "scopeNotes": []
+  },
+  "MS-1-3": {
+   "prefLabel": "Marine Transportation Services",
+   "definition": "Provide marine transportation of crude oil and products with towboats and barges for refineries and terminals.",
+   "scopeNotes": [
+    "The customer's side is CM 1.2.3.1.4 Perform Vessel & Barge Actualization and CM 1.2.4.1.5 Settle Vessels & Barge."
+   ]
+  },
+  "MS-1-3-1": {
+   "prefLabel": "Manage Marine Fleet Availability",
+   "definition": "Keep the towboat and barge fleet available for the planned voyages: deployment, maintenance windows and charters in or out.",
+   "scopeNotes": []
+  },
+  "MS-1-3-2": {
+   "prefLabel": "Manage Marine Service Agreements and Billing",
+   "definition": "Set up and maintain the marine transportation agreements and bill the voyages and fees due under them.",
+   "scopeNotes": []
+  },
+  "MS-1-4": {
+   "prefLabel": "Storage Services",
+   "definition": "Provide tank storage for crude oil and products to affiliated and third-party customers.",
+   "scopeNotes": [
+    "The customer's side is CM 1.2.7.1.3 Negotiate Storage / Throughput Agreements, CM 1.1.3.7.11 Manage Third Party Storage, CM 1.2.3.1.5 Perform Terminal/Storage Actualization and CM 1.2.4.1.14 Settle Terminal/Storage."
+   ]
+  },
+  "MS-1-4-1": {
+   "prefLabel": "Manage Storage Agreements and Capacity",
+   "definition": "Allocate tank capacity to customers under their storage agreements and track capacity committed and available.",
+   "scopeNotes": []
+  },
+  "MS-1-4-2": {
+   "prefLabel": "Bill Storage Services",
+   "definition": "Bill each customer the storage fees and any throughput or excess charges due under its agreement.",
+   "scopeNotes": []
+  },
+  "RF-1-2-1": {
+   "prefLabel": "Define Turnaround Scope and Business Impacts",
+   "definition": "Agree which units come down, for how long, and what the outage does to throughput, yields, product supply and margin.",
+   "scopeNotes": [
+    "This is the commercial and planning view of the scope; the maintenance work list belongs to maintenance."
+   ]
+  },
+  "RF-1-2-2": {
+   "prefLabel": "Coordinate Turnaround Schedule and Commercial Plan",
+   "definition": "Fit each turnaround window into the plan across refineries and units: its timing and sequence, the supply cover and inventory builds around it, and the moves of intermediate products to units that keep running.",
+   "scopeNotes": []
+  },
+  "RF-1-2-3": {
+   "prefLabel": "Monitor Execution and Manage Commercial Impacts",
+   "definition": "Track the turnaround against its planned dates and duration, and adjust supply, sales and the plan when it runs long or short.",
+   "scopeNotes": [
+    "The maintenance work itself is not part of this process."
+   ]
+  },
+  "RF-1-2-4": {
+   "prefLabel": "Coordinate Restart and Return-to-Service Assumptions",
+   "definition": "Agree the restart date, ramp-up rates and time to on-specification product that the plan and the schedule use, and update them as the restart proceeds.",
+   "scopeNotes": []
+  },
+  "RF-1-2-5": {
+   "prefLabel": "Reconcile Turnaround Costs and Review Performance",
+   "definition": "Compare the turnaround's cost, duration and lost margin with plan, and feed the lessons into the next turnaround plan.",
+   "scopeNotes": []
+  }
+ },
+ "changed_added_notes": {
+  "CM-1-1-7": [
+   "Inter-refinery transfers of intermediate products (IRT) run through existing steps, not a separate process: regional targets that include refinery transfers (CM 1.1.2.9.1); the IRT optimization case (CM 1.1.5.5.4); physical distribution scheduling, which nominates, loads, tracks, discharges and reconciles each movement (CM 1.1.3.6.1 to CM 1.1.3.6.4); inventory measurement and reconciliation (CM 1.1.3.7.4, CM 1.1.3.7.5); actual transfer volumes and costs for backcasting (CM 1.1.5.1.2.1, CM 1.1.5.1.2.5); and settlement of intermediates (CM 1.2.4.1.18). Losses and gains on each transfer are reconciled in CM 1.1.3.7.13 (EPM-DEC-001-0048). The quality of a transferred intermediate is managed as feed to the receiving refinery (CM 1.2.5.1, EPM-DEC-001-0051); MPC-P03 coverage check, business_architecture/business_process/proposals/MPC-P03-transfer-coverage-gaps.md (EPM-DEC-001-0047)."
+  ],
+  "CM-1-2-4-3-6": [
+   "Report RIN generation, transactions and retirements. A step of environmental compliance credit management (CM 1.2.4.3.8.1)."
+  ],
+  "CM-1-2-5": [
+   "Renewable feedstocks for renewable diesel, such as refined soybean oil (MPC FY2025 Form 10-K, renewable diesel section), run through the same processes as other feedstocks; the one control they add is the traceability and carbon-intensity evidence their credits depend on (CM 1.2.5.1.5, EPM-DEC-001-0048). Renewable fuel production stays outside the current scope (EPM-DEC-001-0047, MPC-P04)."
+  ],
+  "CM-1-2-5-1": [
+   "Manage the quality of the crude oil and other feedstocks a refinery runs, including intermediate products it receives as feed from another refinery. MPC's refineries are integrated with each other through pipelines, terminals and barges, and intermediate products move between them to optimize operations, including during partial shutdowns (MPC FY2025 Form 10-K, Item 1). MPC-P03 coverage check, EPM-DEC-001-0051."
+  ],
+  "CM-1-3-3-4": [
+   "Design the retail site network: target locations, operating alternatives and network size. Applicability depends on whether the company operates retail sites. A company whose branded sites are run by jobbers and dealers performs this with its partners, as brand network planning. MPC runs no company-operated retail since it sold Speedway in 2021 (MPC FY2025 Form 10-K, Item 1); it also sells wholesale and spot. Kept for companies that operate their own sites (EPM-DEC-001-0047, MPC-P07)."
+  ],
+  "CM-1-3-8-4-6": [
+   "Invoice, reconcile and settle charges between affiliated legal entities, including fees for logistics services that an affiliate provides under long-term fee-based agreements (pipeline transportation, terminals, storage and marine). Each charge has three perspectives. The affiliate that provides the service bills it through its order-to-cash steps: billing, receipts and cash application, receivables and settlement. The entity that receives the service verifies the service, validates the invoice and pays it through procure-to-pay, which the map does not yet hold as processes. The consolidating entity reconciles the intercompany balances and eliminates them. The rates are terms of the agreements. A disclosed figure, such as the per-barrel fees MPC's Refining & Marketing segment paid MPLX ($3.69 per barrel in 2025, MPC FY2025 Form 10-K, Item 7), is an aggregate expense for a period, not a tariff (EPM-DEC-001-0047, MPC-P08)."
+  ],
+  "L1-midstream": [
+   "Scope: Fuels Logistics supporting Refining and Marketing. Pipeline transportation, terminal, marine and storage services that move and hold crude oil, refined products and other hydrocarbons. Pipeline, terminal and storage services run for MPC under fee-based agreements, most of which include minimum committed volumes from MPC, and for third parties under their own agreements (MPLX FY2025 Form 10-K, Items 1 and 2). The towboat and barge fleet serves refineries and terminals owned by MPC in the Mid-Continent and Gulf Coast regions (MPLX FY2025 Form 10-K, Item 2). Under the delegation (EPM-DEC-001-0047), four roles stay separate, and one party can hold several: the service provider, the asset operator, the asset owner and the service customer. The customer side of these services is in Commercial & Marketing: transport, storage and exchange agreements (CM 1.2.7.1), terminal operations management (CM 1.2.7.2), terminal loading (CM 1.3.10), physical distribution scheduling (CM 1.1.3.6), third-party storage in inventory management (CM 1.1.3.7), actualization (CM 1.2.3.1) and settlement (CM 1.2.4.1). Gas gathering, gas processing and NGL fractionation belong to midstream businesses such as MPLX's Natural Gas and NGL Services segment; they are outside the current model scope, not absent from the business (MPLX FY2025 Form 10-K, Items 1 and 2; EPM-DEC-001-0047, MPC-P01)."
+  ],
+  "L2-refinery-asset-reliability-and-turnaround-coordination": [
+   "Coordinate the commercial and planning side of planned maintenance and turnarounds across the refining system: what goes down and when, how supply, inventory and the plan cover it, how the restart is assumed, and what it cost against plan. Physical maintenance execution is outside the current scope unless separately approved (EPM-DEC-001-0047, MPC-P02b)."
+  ]
+ }
+}

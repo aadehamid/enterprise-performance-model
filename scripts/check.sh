@@ -60,6 +60,8 @@ done
 (cd business_architecture/ontology/release && run with_deps python build_core_next.py --verify)
 # Step 9: core 2.1.0, with one evidence node per canonical fact, must equal a fresh build from 2.0.0 (EPM-DEC-001-0044).
 (cd business_architecture/ontology/release && run with_deps python build_core_2_1.py --verify)
+# core 2.2.0, built from 2.1.0 and the process map at its pinned commit (EPM-DEC-001-0076).
+(cd business_architecture/ontology/release && run with_deps python build_core_2_2.py --verify)
 # Step 11: the competency questions the release can answer must still answer (EPM-DEC-001-0019).
 (cd business_architecture/ontology/regression && run with_deps python run.py)
 # Step 5: the role register must reconcile with the process map's RACI strings (EPM-DEC-001-0031).
@@ -96,6 +98,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/release/test_build_module.py \
   business_architecture/ontology/release/test_build_core_next.py \
   business_architecture/ontology/release/test_build_core_2_1.py \
+  business_architecture/ontology/release/test_build_core_2_2.py \
   business_architecture/ontology/regression/test_run.py business_architecture/ontology/organization/test_vocabulary.py \
   business_architecture/ontology/organization/test_roles.py \
   business_architecture/ontology/organization/test_assignments.py \
