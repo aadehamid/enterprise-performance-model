@@ -127,6 +127,7 @@ run with_deps python -m pytest -q -p no:cacheprovider -n "${CHECK_WORKERS:-auto}
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \
   business_architecture/ontology/validation/test_all_module_shapes.py \
+  business_architecture/ontology/validation/test_release_package_shapes.py \
   business_architecture/ontology/projection/test_pipeline.py
 run python3 scripts/epm_facts.py decisions
 run with_deps python scripts/epm_facts.py quotes
