@@ -8,3 +8,5 @@ Competency question 44 asks which definition is authoritative when two sources d
 | `source-tiers.csv` | The 65 cited sources of the release and the modules, ref-mpc included, each with its tier: 10 in tier 1, 3 in tier 2, 1 in tier 3, 43 in tier 4 and 8 in tier 5. MPC Economics' crack spread definition joined tier 1 on 2026-10-20 (EPM-DEC-001-0066), and MPLX's FY2025 Form 10-K, which the `party` module's reference parties cite, joined tier 2 on 2026-10-21 (EPM-DEC-001-0071) |
 | `build_source_tiers.py`, `source-tiers.ttl` | The build. `--verify` fails unless `source-tiers.ttl` equals a fresh build. `scripts/check.sh` runs it |
 | `test_source_tiers.py` | Tests: the build is current, every source the release and modules cite has a tier, and sample tiers match the record |
+
+Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `consumer` (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`.

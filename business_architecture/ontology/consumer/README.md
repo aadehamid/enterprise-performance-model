@@ -9,3 +9,5 @@ How a catalog row binds a Named KPI (competency question 35), and what a graph o
 | `test_consumer_rules.py` | Tests: the rule counts, each rule's relied-on terms pinned by hand from EPM-DEC-001-0061, every term a rule relies on exists in the graph, the rules conform, and the binding accepts defined ends and rejects undefined ones |
 
 No catalog row binds a measure yet: no source says which data product publishes which measure. The binding is the pattern a catalog uses when it does.
+
+Released in `integration` 1.0.0 on 2026-10-22, with `placement` and `authority`, the shapes included (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`.

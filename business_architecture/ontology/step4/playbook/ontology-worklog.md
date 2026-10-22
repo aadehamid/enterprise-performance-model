@@ -962,6 +962,14 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### `integration` 1.0.0 (2026-10-22)
+- With the decision owner's approval of the release plan (EPM-DEC-001-0078),
+  `integration` 1.0.0 is released: the placement, authority and consumer
+  vocabularies, 279 triples, each in its own namespace. Under the
+  delegation, the population statements ship in `kpi` 1.1.0, and the APQC
+  element list stays a reference file, since a package would drop the
+  licence notice that must travel with every copy.
+
 ### The Step 7 modules' first releases (2026-10-22)
 - With the decision owner's approval of the release plan (EPM-DEC-001-0077),
   `data-product`, `value-stream`, `system`, `lane` and `market-data` are

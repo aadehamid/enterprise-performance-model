@@ -30,6 +30,7 @@ APPROVALS = {"organization": (NIGHT, "Yes, approve 2.0.0 (Recommended)"),
 PLAN = ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved")
 STEP7 = ("data-product", "value-stream", "system", "lane", "market-data")
 APPROVALS.update({name: PLAN for name in STEP7})
+APPROVALS["integration"] = PLAN  # EPM-DEC-001-0078
 
 
 def approval_holds(name, m):
@@ -157,6 +158,10 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("system"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("lane"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.0.1"})
+        # EPM-DEC-001-0078: integration names terms of each of these releases.
+        self.assertEqual(bm.dependencies("integration"), {
+            "core": "2.2.0", "organization": "2.0.0", "kpi": "1.0.1", "data-product": "1.0.0",
+            "value-stream": "1.0.0", "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0"})
 
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core twice: directly at 2.2.0 and through kpi 1.0.1 at 2.1.0. Only 2.2.0 loads.
@@ -238,8 +243,25 @@ class EarlierReleases(unittest.TestCase):
                 sources.remove((header, None, None))
                 self.assertEqual(set(released), set(sources))
 
+    def test_integration_holds_three_vocabularies_and_neither_population_nor_apqc(self):
+        # EPM-DEC-001-0078: placement, authority (vocabulary and source tiers) and consumer, read from the
+        # source files; the population statements ship in kpi 1.1.0 and the APQC list stays a reference file.
+        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "integration", "1.0.0", "integration.ttl"))
+        header = URIRef(bm.MODULES_NS + "integration")
+        released.remove((header, None, None))
+        sources = Graph()
+        for part in ("placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
+                     "consumer/vocabulary.ttl"):
+            sources.parse(os.path.join(bm.ONTOLOGY, part))
+        self.assertEqual(set(released), set(sources))
+        for part in ("population/vocabulary.ttl", "population/population.ttl", "apqc/apqc-elements.ttl"):
+            outside = Graph().parse(os.path.join(bm.ONTOLOGY, part))
+            self.assertFalse(set(outside) & set(released), part)
+        # Each vocabulary keeps its own namespace: no term is minted under the package IRI.
+        self.assertFalse([s for s in released.subjects() if str(s).startswith(bm.MODULES_NS + "integration")])
+
     def test_the_step7_releases_carry_the_release_plan_approval(self):
-        for name in STEP7:
+        for name in STEP7 + ("integration",):
             self.assertEqual(bm.MODULES[name]["approval"], PLAN)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              ("1.0.0", None, "2026-10-22"))

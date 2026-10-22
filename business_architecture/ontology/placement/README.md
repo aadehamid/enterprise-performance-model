@@ -6,3 +6,5 @@ Competency question 38 asks whether a measure's or concept's placement on a proc
 |---|---|
 | `vocabulary.ttl` | The `placementKind` annotation, the two kinds, and the annotations on twelve properties of the kpi, value-stream, data-product, system, lane and market-data modules |
 | `test_placement.py` | Tests: the kinds are the decided ones, one per property, every annotated property exists in its module, and q38a sees a measure certified as an object |
+
+Released in `integration` 1.0.0 on 2026-10-22, with `authority` and `consumer` (EPM-DEC-001-0078): the package in `../releases/integration/1.0.0/`.

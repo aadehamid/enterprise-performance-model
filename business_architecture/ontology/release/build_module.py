@@ -139,6 +139,23 @@ MODULES = {
         "pins": {"kpi": "1.0.1"},
         "decisions": ["EPM-DEC-001-0046", "EPM-DEC-001-0057", "EPM-DEC-001-0066", "EPM-DEC-001-0077"],
     },
+    # The integration package's first release, a major the decision owner approved with the release plan
+    # (EPM-DEC-001-0078). It packages three small vocabularies, each keeping its own namespace; the package
+    # IRI names the release only. The population statements ship in kpi 1.1.0, and the APQC element list
+    # stays a reference file (EPM-DEC-001-0078).
+    "integration": {
+        "title": "LSC Integration Vocabularies",
+        "description": "The rules that tie the modules together: which placing properties certify and which give context (placement), the evidence tier of every cited source (authority), and what a consumer may bind, answer and must refuse (consumer). Each vocabulary keeps its own namespace (Steps 7, 9 and 11).",
+        "version": "1.0.0", "stage": None, "issued": "2026-10-22",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        "parts": ["placement/vocabulary.ttl", "authority/vocabulary.ttl", "authority/source-tiers.ttl",
+                  "consumer/vocabulary.ttl"],
+        "shapes": ["consumer/shapes.ttl"],
+        "depends_on": ["core", "organization", "kpi", "data-product", "value-stream", "system", "lane", "market-data"],
+        "pins": {"core": "2.2.0", "organization": "2.0.0", "kpi": "1.0.1", "data-product": "1.0.0", "value-stream": "1.0.0",
+                 "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0"},
+        "decisions": ["EPM-DEC-001-0058", "EPM-DEC-001-0059", "EPM-DEC-001-0061", "EPM-DEC-001-0078"],
+    },
 }
 
 

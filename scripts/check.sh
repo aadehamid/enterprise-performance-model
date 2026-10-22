@@ -61,6 +61,7 @@ done
 (cd business_architecture/ontology/release && run with_deps python build_module.py system --verify)
 (cd business_architecture/ontology/release && run with_deps python build_module.py lane --verify)
 (cd business_architecture/ontology/release && run with_deps python build_module.py market-data --verify)
+(cd business_architecture/ontology/release && run with_deps python build_module.py integration --verify)
 # The core 2.0.0 release must equal a fresh build from core 1.0.0 (EPM-DEC-001-0038).
 (cd business_architecture/ontology/release && run with_deps python build_core_next.py --verify)
 # Step 9: core 2.1.0, with one evidence node per canonical fact, must equal a fresh build from 2.0.0 (EPM-DEC-001-0044).

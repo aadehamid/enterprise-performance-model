@@ -1,0 +1,42 @@
+@prefix con: <https://w3id.org/lsc/ontology/modules/consumer/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dp: <https://w3id.org/lsc/ontology/modules/data-product/> .
+@prefix kpi: <https://w3id.org/lsc/ontology/modules/kpi/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rk: <https://w3id.org/lsc/ontology/modules/consumer/rule-kind/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shp: <https://w3id.org/lsc/ontology/modules/consumer/shapes/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+shp:Binding a sh:NodeShape ;
+    sh:class dp:DataProduct ;
+    sh:message "Only a defined data product publishes a measure." ;
+    sh:property [ sh:class kpi:MeasureDefinition ;
+            sh:message "A catalog binding points at a defined measure." ;
+            sh:minCount 1 ;
+            sh:path con:publishesMeasure ] ;
+    sh:targetSubjectsOf con:publishesMeasure .
+
+shp:Rule a sh:NodeShape ;
+    sh:property [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:prefLabel ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path skos:definition ],
+        [ sh:in ( rk:may-answer rk:must-refuse ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path con:ruleKind ],
+        [ sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:path con:reliesOn ],
+        [ sh:datatype rdf:langString ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:bibliographicCitation ] ;
+    sh:targetClass con:Rule .
+

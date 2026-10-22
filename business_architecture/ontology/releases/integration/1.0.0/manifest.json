@@ -1,0 +1,35 @@
+{
+  "module": "integration",
+  "version": "1.0.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/integration",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/integration/1.0.0",
+  "depends_on": {
+    "core": "2.2.0",
+    "organization": "2.0.0",
+    "kpi": "1.0.1",
+    "data-product": "1.0.0",
+    "value-stream": "1.0.0",
+    "system": "1.0.0",
+    "lane": "1.0.0",
+    "market-data": "1.0.0"
+  },
+  "decisions": [
+    "EPM-DEC-001-0058",
+    "EPM-DEC-001-0059",
+    "EPM-DEC-001-0061",
+    "EPM-DEC-001-0078"
+  ],
+  "triples": 279,
+  "approved_by": {
+    "who": "The decision owner",
+    "recorded_in": "step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md"
+  },
+  "files": {
+    "CHANGELOG.md": "ed19459fba8fb9a8b8641822004ea7f8048ddd98cfb08edf60d81e0b1ba6c81b",
+    "catalog.ttl": "f3c32fab1ee33ab762d1c5fcb5d6f49f38cfa8d8d84e4f524cdb5d2d42c3f064",
+    "integration.jsonld": "80e737c3349443e01d80219b7cb4ac53ab12abfb64c614f7470a525496c4a802",
+    "integration.ttl": "1c7ba8be558feb8eec4265e9fd9c1180c30dcd6af5fc537b35c9b71fdaddb73e",
+    "shapes.ttl": "b5dfd186039c40dc96abedd646ccd9cbbd92f4c932ce8bfb5a6e57702202491d"
+  }
+}
