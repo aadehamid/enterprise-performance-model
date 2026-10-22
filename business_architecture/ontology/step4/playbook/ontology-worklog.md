@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### The decision owner's answers on the codes and TABS Seller ID (2026-10-22)
+- HOLDORDIND, Taboot, MPA_Flag, CR_Incentive_Flag and the reading of TID Nbr
+  stay as they are until the ontology is shared for consumption, when the
+  business confirms what each means; the decision owner confirmed the
+  reading of TABS Seller ID (EPM-DEC-001-0072, amendment of 2026-10-22).
+  No module file changes.
+
 ### The `party` module's first release (2026-10-22)
 - With the decision owner's approval (EPM-DEC-001-0074), `party` 1.0.0 is
   released: the vocabulary, code lists, systems and lifecycle, 3,405
