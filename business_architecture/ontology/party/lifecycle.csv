@@ -1,0 +1,31 @@
+stage,link,target,note
+lifecycle-stage/prospect,process,CM 1.3.6.2.1,Manage Sales Pipeline: prospects and opportunities.
+lifecycle-stage/prospect,process,CM 1.3.6.6.1,"Set Up Prospect: today only for loyalty and card programs (MPC-P10.1)."
+lifecycle-stage/prospect,process,CM 1.3.7.4.2,Establish Credit Limit & Risk Code: the credit assessment of the application.
+lifecycle-stage/onboarding,process,CM 1.3.7.4.6,Perform KYC Due Diligence: identity checks and watchlist screening.
+lifecycle-stage/onboarding,process,CM 1.3.7.4.2,Establish Credit Limit & Risk Code: the credit decision.
+lifecycle-stage/onboarding,process,CM 1.3.7.1.1,"Maintain Customer and Commercial Account Master Data: create, validate and enrich the governed customer records."
+lifecycle-stage/onboarding,process,CM 1.3.7.2.1,Establish Commercial Terms & Contracts: the agreements the customer is assigned to.
+lifecycle-stage/payment-management,process,CM 1.3.8.2.1,Record Customer Receipts and Payment Notifications.
+lifecycle-stage/payment-management,process,CM 1.3.8.2.3,Apply Receipts.
+lifecycle-stage/payment-management,process,CM 1.3.8.3.2,Manage Receivables Collections: past-due collections.
+lifecycle-stage/risk-management,process,CM 1.3.7.4.3,Monitor Credit Against Limit.
+lifecycle-stage/risk-management,process,CM 1.3.7.4.4,Analyze Portfolio Credit Risk.
+lifecycle-stage/relationship-management,process,CM 1.3.6.2.2,Manage Key Accounts.
+lifecycle-stage/relationship-management,process,CM 1.3.7.5.5,Conduct Customer Service Reviews.
+lifecycle-stage/relationship-management,process,CM 1.3.7.2.6,Manage Customer Portal.
+lifecycle-stage/relationship-management,process,CM 1.3.7.4.2,Establish Credit Limit & Risk Code: its periodic reviews include the annual credit limit review.
+lifecycle-stage/offboarding,process,CM 1.3.7.4.5,Perform Credit-Driven Customer Closure and Reinstatement.
+lifecycle-stage/offboarding,process,CM 1.3.7.1.1,Maintain Customer and Commercial Account Master Data: retire the records.
+system-stage/prospect,system,salesforce,
+system-stage/master,system,sap-mdg,
+system-stage/record,system,sap-s4hana,
+system-stage/execute,system,rightangle,
+system-stage/execute,system,polaris,
+system-stage/execute,system,dealer-master,
+system-stage/execute,system,terminal-download,
+system-stage/settle,system,sap-s4hana,
+lifecycle-stage/prospect,stage,system-stage/prospect,
+lifecycle-stage/onboarding,stage,system-stage/master,
+lifecycle-stage/onboarding,stage,system-stage/record,
+lifecycle-stage/payment-management,stage,system-stage/settle,

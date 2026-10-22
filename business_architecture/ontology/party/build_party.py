@@ -1,8 +1,8 @@
-"""Build the `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, EPM-DEC-001-0068).
+"""Build the `party` module's code lists, systems and lifecycle (Steps 5 to 7; EPM-DEC-001-0067 to 0070).
 
     python3 build_party.py            # check the table and print the figures
-    python3 build_party.py --write    # also write code-lists.ttl
-    python3 build_party.py --verify   # fail unless code-lists.ttl and systems.ttl equal a fresh build
+    python3 build_party.py --write    # also write code-lists.ttl, systems.ttl and lifecycle.ttl
+    python3 build_party.py --verify   # fail unless code-lists.ttl, systems.ttl and lifecycle.ttl equal a fresh build
 
 code-lists.csv holds every code list of the module, one row per value. The build fails unless
 every row names a known scheme, has a definition, is unique in its scheme, and points its
@@ -17,6 +17,13 @@ of the conceptual model, a system the system module already has keeps its label 
 names a listed system, a category, an entity of the module and, if any, a shared attribute.
 Each flow must carry something; each source must have a note (blank text counts as none) and name a party role, customer
 class, line of business or party type; and every cited input must be one of the seven.
+
+lifecycle.csv links each business lifecycle stage to the core 2.1.0 processes that do its work,
+each system stage to the customer systems that hold the record, and business stages to the system
+stages they span (EPM-DEC-001-0070). The build fails unless every process is in core 2.1.0, every
+system is a customer system, only a business stage links to processes and system stages, only a
+system stage links to systems, every stage has a link, no link is listed twice, and each stage has
+exactly the links EPM-DEC-001-0070 decides, written out in DECIDED_LIFECYCLE.
 """
 import argparse
 import csv
@@ -31,6 +38,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TABLE = os.path.join(HERE, "code-lists.csv")
 OUTPUT = os.path.join(HERE, "code-lists.ttl")
 SYSTEMS_OUTPUT = os.path.join(HERE, "systems.ttl")
+LIFECYCLE_OUTPUT = os.path.join(HERE, "lifecycle.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.1.0", "core.ttl")
 SYSTEM_MODULE = os.path.join(HERE, "..", "system", "systems.csv")
 SYSTEM = Namespace("https://w3id.org/lsc/ontology/modules/system/system/")
 ENTITIES = ("Party", "ExternalIdentifier", "Address", "ContactPoint", "PartyRole", "PartyRelationship",
@@ -57,6 +66,8 @@ SCHEMES = {
     "system-tier": ("customer system tiers", "Where a system sits in the customer's data flow: core, integration, enrichment, downstream or landscape source.", "EPM-DEC-001-0069"),
     "attribute-category": ("attribute categories", "The decision owner's two categories of a system's customer attributes: those that define the customer there, and those that enrich it.", "EPM-DEC-001-0067; EPM-DEC-001-0069"),
     "shared-attribute": ("shared attributes", "Attributes that several systems carry under different names for one thing.", "EPM-DEC-001-0069"),
+    "lifecycle-stage": ("customer lifecycle stages", "The six business stages of a customer's life with the company, from prospect to offboarding.", "EPM-DEC-001-0070"),
+    "system-stage": ("customer system stages", "The five stages of a customer's record across the systems, from the first record to settlement.", "EPM-DEC-001-0070"),
     "sourcing-kind": ("customer sourcing kinds", "How a system relates to a kind of customer: where it starts, where it is set up, or a source of it.", "EPM-DEC-001-0069"),
 }
 
@@ -136,6 +147,25 @@ def split(text):
 # What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
 SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
 INPUTS = {str(i) for i in range(1, 8)}
+DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage's links, and no others
+    ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
+    ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1"},
+    ("lifecycle-stage/payment-management", "process"): {"CM 1.3.8.2.1", "CM 1.3.8.2.3", "CM 1.3.8.3.2"},
+    ("lifecycle-stage/risk-management", "process"): {"CM 1.3.7.4.3", "CM 1.3.7.4.4"},
+    ("lifecycle-stage/relationship-management", "process"): {"CM 1.3.6.2.2", "CM 1.3.7.5.5", "CM 1.3.7.2.6", "CM 1.3.7.4.2"},
+    ("lifecycle-stage/offboarding", "process"): {"CM 1.3.7.4.5", "CM 1.3.7.1.1"},
+    ("system-stage/prospect", "system"): {"salesforce"},
+    ("system-stage/master", "system"): {"sap-mdg"},
+    ("system-stage/record", "system"): {"sap-s4hana"},
+    ("system-stage/execute", "system"): {"rightangle", "polaris", "dealer-master", "terminal-download"},
+    ("system-stage/settle", "system"): {"sap-s4hana"},
+    ("lifecycle-stage/prospect", "stage"): {"system-stage/prospect"},
+    ("lifecycle-stage/onboarding", "stage"): {"system-stage/master", "system-stage/record"},
+    ("lifecycle-stage/payment-management", "stage"): {"system-stage/settle"},
+    ("lifecycle-stage/risk-management", "stage"): set(),
+    ("lifecycle-stage/relationship-management", "stage"): set(),
+    ("lifecycle-stage/offboarding", "stage"): set(),
+}
 
 
 def load_systems(codes):
@@ -176,6 +206,58 @@ def load_systems(codes):
     if problems:
         sys.exit("the customer systems tables do not reconcile:\n  " + "\n  ".join(problems))
     return systems, flows, sources, attrs, existing
+
+
+def core_processes():
+    g = Graph().parse(CORE)
+    return {str(n): s for s, n in g.subject_objects(SKOS.notation)
+            if str(s).startswith("https://w3id.org/lsc/ontology/process/")}
+
+
+def load_lifecycle(codes, systems):
+    rows = read("lifecycle.csv")
+    values = {(r["scheme"], r["notation"]) for r in codes}
+    slugs = {r["slug"] for r in systems}
+    procs = core_processes()
+    problems = [f"{r['stage']}: not a lifecycle or system stage" for r in rows
+                if tuple(r["stage"].split("/", 1)) not in values or r["stage"].split("/")[0] not in ("lifecycle-stage", "system-stage")]
+    problems += [f"{r['stage']}: link {r['link']!r} is not process, system or stage" for r in rows if r["link"] not in ("process", "system", "stage")]
+    owner = {"process": "lifecycle-stage", "system": "system-stage", "stage": "lifecycle-stage"}
+    problems += [f"{r['stage']}: only a {owner[r['link']]} has a {r['link']} link" for r in rows
+                 if r["link"] in owner and r["stage"].split("/")[0] != owner[r["link"]]]
+    problems += [f"{r['stage']}: process {r['target']} is not in core 2.1.0" for r in rows if r["link"] == "process" and r["target"] not in procs]
+    problems += [f"{r['stage']}: system {r['target']} is not a customer system" for r in rows if r["link"] == "system" and r["target"] not in slugs]
+    problems += [f"{r['stage']}: {r['target']} is not a system stage" for r in rows
+                 if r["link"] == "stage" and (not r["target"].startswith("system-stage/") or tuple(r["target"].split("/", 1)) not in values)]
+    keys = Counter((r["stage"], r["link"], r["target"]) for r in rows)
+    problems += [f"{k} is listed {n} times" for k, n in keys.items() if n > 1]
+    found = {}
+    for r in rows:
+        found.setdefault((r["stage"], r["link"]), set()).add(r["target"])
+    problems += [f"{s} {l} links {sorted(found.get((s, l), set()))}, not the decided {sorted(t)}"
+                 for (s, l), t in DECIDED_LIFECYCLE.items() if found.get((s, l), set()) != t]
+    problems += [f"{s} has {l} links, and EPM-DEC-001-0070 gives it none" for s, l in found if (s, l) not in DECIDED_LIFECYCLE]
+    staged = {r["stage"] for r in rows}
+    problems += [f"{s}/{n} has no link" for s, n in sorted(values) if s in ("lifecycle-stage", "system-stage") and f"{s}/{n}" not in staged]
+    if problems:
+        sys.exit("lifecycle.csv does not reconcile:\n  " + "\n  ".join(problems))
+    return rows, procs
+
+
+def build_lifecycle(rows, procs):
+    g = Graph()
+    for prefix, ns in (("party", CUST), ("skos", SKOS)):
+        g.bind(prefix, ns)
+    g.bind("proc", Namespace("https://w3id.org/lsc/ontology/process/"))
+    for r in rows:
+        stage = CUST[r["stage"]]
+        if r["link"] == "process":
+            g.add((stage, CUST.stageProcess, procs[r["target"]]))
+        elif r["link"] == "system":
+            g.add((stage, CUST.stageSystem, node(r["target"])))
+        else:
+            g.add((stage, CUST.correspondsTo, CUST[r["target"]]))
+    return g
 
 
 def node(slug):
@@ -240,29 +322,38 @@ def main():
     args = ap.parse_args()
     rows = load()
     systems, flows, sources, attrs, existing = load_systems(rows)
+    lrows, procs = load_lifecycle(rows, systems)
+    ltext = ("# The customer lifecycle's links to processes, systems and system stages (EPM-DEC-001-0070).\n"
+             "# Built by build_party.py from lifecycle.csv and core 2.1.0. Do not edit by hand.\n"
+             + build_lifecycle(lrows, procs).serialize(format="turtle"))
     stext = ("# The customer systems, data flows and attributes (EPM-DEC-001-0069). Built by build_party.py\n"
              "# from systems.csv, data-flows.csv, customer-sources.csv and attributes.csv. Do not edit by hand.\n"
              + build_systems(systems, flows, sources, attrs, existing).serialize(format="turtle"))
-    text = ("# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069).\n"
+    text = ("# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).\n"
             "# Built by build_party.py from code-lists.csv. Do not edit by hand.\n"
             + build(rows).serialize(format="turtle"))
     counts = Counter(r["scheme"] for r in rows)
     print("code lists " + ", ".join(f"{s} {counts[s]}" for s in SCHEMES))
     cat = Counter(r["category"] for r in attrs)
     print(f"systems {len(systems)} ({sum(1 for r in systems if r['slug'] in existing)} already in the system module); "
-          f"flows {len(flows)}; sourcings {len(sources)}; attributes {len(attrs)} (create {cat['create']}, enrich {cat['enrich']})")
+          f"flows {len(flows)}; sourcings {len(sources)}; attributes {len(attrs)} (create {cat['create']}, enrich {cat['enrich']}); "
+          f"lifecycle links {len(lrows)}")
     if args.verify:
         if not (os.path.exists(OUTPUT) and open(OUTPUT).read() == text):
             sys.exit("code-lists.ttl is not current: run build_party.py --write")
         if not (os.path.exists(SYSTEMS_OUTPUT) and open(SYSTEMS_OUTPUT).read() == stext):
             sys.exit("systems.ttl is not current: run build_party.py --write")
-        print("code-lists.ttl and systems.ttl are current")
+        if not (os.path.exists(LIFECYCLE_OUTPUT) and open(LIFECYCLE_OUTPUT).read() == ltext):
+            sys.exit("lifecycle.ttl is not current: run build_party.py --write")
+        print("code-lists.ttl, systems.ttl and lifecycle.ttl are current")
     if args.write:
         with open(OUTPUT, "w") as f:
             f.write(text)
         with open(SYSTEMS_OUTPUT, "w") as f:
             f.write(stext)
-        print(f"wrote {OUTPUT} and {SYSTEMS_OUTPUT}")
+        with open(LIFECYCLE_OUTPUT, "w") as f:
+            f.write(ltext)
+        print(f"wrote {OUTPUT}, {SYSTEMS_OUTPUT} and {LIFECYCLE_OUTPUT}")
 
 
 if __name__ == "__main__":

@@ -79,7 +79,7 @@ done
 (cd business_architecture/ontology/apqc && run with_deps python build_apqc_elements.py --verify)
 # Step 7: the measure populations must equal a fresh build from their table (EPM-DEC-001-0062).
 (cd business_architecture/ontology/population && run with_deps python build_population.py --verify)
-# Steps 5 to 7: the `party` module's code lists and systems must equal a fresh build from their tables (EPM-DEC-001-0068, 0069).
+# Steps 5 to 7: the `party` module's code lists, systems and lifecycle must equal a fresh build from their tables (EPM-DEC-001-0068, 0069, 0070).
 (cd business_architecture/ontology/party && run with_deps python build_party.py --verify)
 # Step 12: the projection's checked, serialised inputs must match the committed manifest (EPM-DEC-001-0036).
 (cd business_architecture/ontology/projection && run with_deps python pipeline.py build --verify)
@@ -105,6 +105,7 @@ run with_deps python -m pytest -q -p no:cacheprovider scripts/test_epm_facts.py 
   business_architecture/ontology/population/test_population.py \
   business_architecture/ontology/party/test_party.py \
   business_architecture/ontology/party/test_party_systems.py \
+  business_architecture/ontology/party/test_party_lifecycle.py \
   business_architecture/business_process/test_business_process.py \
   business_architecture/ontology/provenance/test_run_shapes.py \
   business_architecture/ontology/validation/test_controlled_values.py \

@@ -1,4 +1,4 @@
-# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069).
+# The `party` module's code lists (Steps 5 to 7; EPM-DEC-001-0067, 0068, 0069, 0070).
 # Built by build_party.py from code-lists.csv. Do not edit by hand.
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix party: <https://w3id.org/lsc/ontology/modules/party/> .
@@ -250,6 +250,48 @@
     skos:notation "tax-identifier" ;
     skos:prefLabel "Tax identifier"@en ;
     skos:topConceptOf party:identifier-type .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/offboarding> a skos:Concept ;
+    skos:definition "The customer is suspended or closed and made inactive in the company's systems."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "offboarding" ;
+    skos:prefLabel "Offboarding"@en ;
+    skos:topConceptOf party:lifecycle-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/onboarding> a skos:Concept ;
+    skos:definition "The customer passes the credit and compliance checks and is set up in the company's systems: created and governed in the customer master, then replicated, enriched and activated in the systems that use it."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "onboarding" ;
+    skos:prefLabel "Onboarding"@en ;
+    skos:topConceptOf party:lifecycle-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/payment-management> a skos:Concept ;
+    skos:definition "The customer's payments are received and applied, and past-due amounts are collected."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "payment-management" ;
+    skos:prefLabel "Payment management"@en ;
+    skos:topConceptOf party:lifecycle-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/prospect> a skos:Concept ;
+    skos:definition "The company qualifies a prospective customer: it captures the prospect and collects its credit application, financial statements, bank information and tax ID."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "prospect" ;
+    skos:prefLabel "Prospect"@en ;
+    skos:topConceptOf party:lifecycle-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/relationship-management> a skos:Concept ;
+    skos:definition "The company manages the relationship: account reviews, the annual credit limit review, the customer portal and the territory manager."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "relationship-management" ;
+    skos:prefLabel "Relationship management"@en ;
+    skos:topConceptOf party:lifecycle-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/lifecycle-stage/risk-management> a skos:Concept ;
+    skos:definition "The customer's credit exposure is watched against its limit, with news and ratings, and holds are applied when policy says so."@en ;
+    skos:inScheme party:lifecycle-stage ;
+    skos:notation "risk-management" ;
+    skos:prefLabel "Risk management"@en ;
+    skos:topConceptOf party:lifecycle-stage .
 
 <https://w3id.org/lsc/ontology/modules/party/line-of-business/asphalt> a skos:Concept,
         party:LineOfBusiness ;
@@ -625,6 +667,41 @@
     skos:prefLabel "Source"@en ;
     skos:topConceptOf party:sourcing-kind .
 
+<https://w3id.org/lsc/ontology/modules/party/system-stage/execute> a skos:Concept ;
+    skos:definition "The systems that hold the customer's record while its orders, movements, loadings and station sales are carried out: RightAngle, Polaris, Dealer Master and Terminal download. Dealer Master aggregates station sales that other systems execute. Input 6 also names card systems here; none of the customer systems executes card transactions, so none is linked (EPM-DEC-001-0070, item 3)."@en ;
+    skos:inScheme party:system-stage ;
+    skos:notation "execute" ;
+    skos:prefLabel "Execute"@en ;
+    skos:topConceptOf party:system-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/system-stage/master> a skos:Concept ;
+    skos:definition "SAP MDG creates the customer, runs duplicate checks, applies authorization groups and generates the canonical SAP customer number."@en ;
+    skos:inScheme party:system-stage ;
+    skos:notation "master" ;
+    skos:prefLabel "Master"@en ;
+    skos:topConceptOf party:system-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/system-stage/prospect> a skos:Concept ;
+    skos:definition "Salesforce holds the first record of a prospect, on the Trade or the CRM/Basic track. Jobbers start in Dealer Master and direct dealers in SAP MDG."@en ;
+    skos:inScheme party:system-stage ;
+    skos:notation "prospect" ;
+    skos:prefLabel "Prospect"@en ;
+    skos:topConceptOf party:system-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/system-stage/record> a skos:Concept ;
+    skos:definition "SAP S/4HANA holds the customer's company codes and sales areas and serves as the accounts payable and receivable skeleton."@en ;
+    skos:inScheme party:system-stage ;
+    skos:notation "record" ;
+    skos:prefLabel "Record"@en ;
+    skos:topConceptOf party:system-stage .
+
+<https://w3id.org/lsc/ontology/modules/party/system-stage/settle> a skos:Concept ;
+    skos:definition "Invoices and postings from the execution systems return to SAP S/4HANA."@en ;
+    skos:inScheme party:system-stage ;
+    skos:notation "settle" ;
+    skos:prefLabel "Settle"@en ;
+    skos:topConceptOf party:system-stage .
+
 <https://w3id.org/lsc/ontology/modules/party/system-tier/core> a skos:Concept ;
     skos:definition "One of the six systems the customer is created, recorded or executed in: SAP MDG, SAP S/4HANA, Salesforce, RightAngle, Polaris and Dealer Master."@en ;
     skos:inScheme party:system-tier ;
@@ -777,10 +854,20 @@ party:relationship-type a skos:ConceptScheme ;
     dcterms:bibliographicCitation "EPM-DEC-001-0067; EPM-DEC-001-0068"@en ;
     skos:definition "The kinds of link from one party role to another."@en .
 
+party:system-stage a skos:ConceptScheme ;
+    rdfs:label "customer system stages"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0070"@en ;
+    skos:definition "The five stages of a customer's record across the systems, from the first record to settlement."@en .
+
 party:system-tier a skos:ConceptScheme ;
     rdfs:label "customer system tiers"@en ;
     dcterms:bibliographicCitation "EPM-DEC-001-0069"@en ;
     skos:definition "Where a system sits in the customer's data flow: core, integration, enrichment, downstream or landscape source."@en .
+
+party:lifecycle-stage a skos:ConceptScheme ;
+    rdfs:label "customer lifecycle stages"@en ;
+    dcterms:bibliographicCitation "EPM-DEC-001-0070"@en ;
+    skos:definition "The six business stages of a customer's life with the company, from prospect to offboarding."@en .
 
 party:site-type a skos:ConceptScheme ;
     rdfs:label "site types"@en ;

@@ -16,6 +16,8 @@ Compared against the map on `main` at `1b3105e`.
 
 MPC-P02 is raised as a proposal: `business_process/proposals/MPC-P02-refining-ids.md` (2026-10-13).
 
+MPC-P10, the customer lifecycle, is raised from the decision owner's customer inputs, not from MPC material: `business_process/proposals/MPC-P10-customer-lifecycle.md` (2026-10-21, EPM-DEC-001-0070).
+
 | ID | Where in the map | What MPC shows (source) | Suggestion | Ontology impact | Ruling (2026-10-18) |
 |---|---|---|---|---|---|
 | MPC-P01 | `Midstream` (L1 under Downstream Operations) has **no child processes** | Midstream is one of three reportable segments. It serves R&M through pipelines, terminals, towboats and barges under fee-based agreements (MPC-S01 Item 1, Item 2) | Decide scope first. Recommended: model the **fuels-logistics** part that serves R&M (pipeline transport, terminal operations, marine, storage). Treat gas gathering/processing and NGL fractionation as out of scope unless a KPI needs them | New L2/L3 processes; terminals become sites. Relates to CM 1.2.7 Products Distribution Management and CM 1.3.10 Terminal Loading | Accepted (A): fuels logistics only. Claude, under the delegation, labels the scope "Fuels Logistics supporting Refining and Marketing" (EPM-DEC-001-0047). Applied: Midstream is `MS 1` with four service processes (pipeline, terminal, marine, storage; `MS 1.1` to `MS 1.4`) and nine steps; the customer side stays in CM 1.2.7, CM 1.3.10, CM 1.1.3.6, CM 1.1.3.7, CM 1.2.3.1 and CM 1.2.4.1; gas gathering, processing and NGL fractionation recorded as out of scope |
