@@ -668,7 +668,7 @@
     skos:topConceptOf party:sourcing-kind .
 
 <https://w3id.org/lsc/ontology/modules/party/system-stage/execute> a skos:Concept ;
-    skos:definition "The systems that hold the customer's record while its orders, movements, loadings and station sales are carried out: RightAngle, Polaris, Dealer Master, Terminal download and the card systems. Dealer Master aggregates station sales that other systems execute."@en ;
+    skos:definition "The systems that hold the customer's record while its orders, movements, loadings and station sales are carried out: RightAngle, Polaris, Dealer Master and Terminal download. Dealer Master aggregates station sales that other systems execute. Input 6 also names card systems here; none of the customer systems executes card transactions, so none is linked (EPM-DEC-001-0070, item 3)."@en ;
     skos:inScheme party:system-stage ;
     skos:notation "execute" ;
     skos:prefLabel "Execute"@en ;

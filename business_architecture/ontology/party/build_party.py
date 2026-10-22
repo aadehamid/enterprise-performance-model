@@ -147,7 +147,7 @@ def split(text):
 # What a customer sourcing may name (party:sourcedConcept), and the decision owner's seven inputs (EPM-DEC-001-0067).
 SOURCED_SCHEMES = {"party-role", "customer-class", "line-of-business", "party-type"}
 INPUTS = {str(i) for i in range(1, 8)}
-DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage"s links, and no others
+DECIDED_LIFECYCLE = {  # EPM-DEC-001-0070, items 2 to 4, written out by hand: each stage's links, and no others
     ("lifecycle-stage/prospect", "process"): {"CM 1.3.6.2.1", "CM 1.3.6.6.1", "CM 1.3.7.4.2"},
     ("lifecycle-stage/onboarding", "process"): {"CM 1.3.7.4.6", "CM 1.3.7.4.2", "CM 1.3.7.1.1", "CM 1.3.7.2.1"},
     ("lifecycle-stage/payment-management", "process"): {"CM 1.3.8.2.1", "CM 1.3.8.2.3", "CM 1.3.8.3.2"},
