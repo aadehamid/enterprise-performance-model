@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### core 2.3.0 is released (2026-10-23)
+- `core` 2.3.0 adds CM 1.3.7.1.7 Coordinate Customer Onboarding
+  (MPC-P10.1) to 2.2.0, built from the map at c351ef0 (EPM-DEC-001-0089).
+  The regression, the checks, the projection and the apqc, data-product,
+  kpi, lane, system and value-stream builds read 2.3.0; the regression
+  stands at 43 answerable, 0 waiting, 1 parked.
+
 ### The decision owner's close-out answers (2026-10-23)
 - Q17 is parked until the ontology is first shared with business
   consumers, and `ontology/business-closeout.md` lists every point the

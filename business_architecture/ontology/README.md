@@ -94,9 +94,9 @@ authoritative for step status. As of 2026-10-22, Phase E is closed
 (EPM-DEC-001-0083): Steps 0 to 12 are done or stand as recorded, each with
 its listed exceptions.
 
-- **Releases:** 19 packages under `releases/`, listed in
+- **Releases:** 20 packages under `releases/`, listed in
   `releases/catalog.ttl` (EPM-DEC-001-0082). The newest of each module:
-  `core` 2.2.0, organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.0.0,
+  `core` 2.3.0 (EPM-DEC-001-0089), organization 2.0.0, ref-mpc 1.2.0, kpi 1.1.0, party 1.0.0,
   data-product, value-stream, system, lane and market-data 1.0.0, and
   integration 1.0.0.
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);

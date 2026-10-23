@@ -1,0 +1,29 @@
+{
+  "module": "core",
+  "version": "2.3.0",
+  "release_candidate": false,
+  "ontology_iri": "https://w3id.org/lsc/ontology/modules/core",
+  "version_iri": "https://w3id.org/lsc/ontology/modules/core/2.3.0",
+  "built_from": {
+    "core 2.2.0 manifest": "7b5a006de360c0489c7b6af12d73dc7023cfaed064891d9cc991e916a1dc68ca",
+    "process map": "business_architecture/business_process/downstream_process_map.json at c351ef0ecb1e3cbe6af38f46f66065499c73442f"
+  },
+  "decisions": [
+    "EPM-DEC-001-0087",
+    "EPM-DEC-001-0088",
+    "EPM-DEC-001-0089"
+  ],
+  "approval": {
+    "file": "step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md",
+    "words": "Approve all six (Recommended)"
+  },
+  "files": {
+    "CHANGELOG.md": "c8a767caf414aa0f58cd28bf565bbf11f5213589eb3def2caa66fafcaaa30e3e",
+    "canonical-facts.csv": "6c8a68e3c23ab8cd6e45b624fe0352f0e643a27ad1a5a4b0d850acba8cf87a7a",
+    "catalog.ttl": "533b7e757a999348232dd06106a0d1450f01daccdf82e612c5759e36b51db709",
+    "core.jsonld": "e832fcb8e842693de423478f53d264e00656b4448c3f0dda898f3173987981d0",
+    "core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
+    "counts.json": "0f8020cafb9b599ec4072aaf931a6690aad55afc0d32fdd4731ec7bec17d15ca",
+    "shapes.ttl": "c6ea5af973af13a9bc4c988906c78685a048e0dc8f8f10bcbbc2510599c31680"
+  }
+}

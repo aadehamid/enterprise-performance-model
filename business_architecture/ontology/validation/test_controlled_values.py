@@ -19,7 +19,7 @@ ORGM = Namespace("https://w3id.org/lsc/ontology/modules/organization/")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
 DATA = Graph()
-RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.2.0")
+RELEASE = os.path.join(ONTOLOGY, "releases", "core", "2.3.0")
 DATA.parse(os.path.join(RELEASE, "core.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "vocabulary.ttl"))
 DATA.parse(os.path.join(ONTOLOGY, "organization", "assignments.ttl"))

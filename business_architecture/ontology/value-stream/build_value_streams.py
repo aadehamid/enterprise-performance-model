@@ -6,7 +6,7 @@
 
 The two value streams in business_process/ give the stages, capabilities, value-stream
 processes, flows and measure links. The build fails unless every id is unique across both
-files, every linked process and process group is in core 2.2.0, every data product or line
+files, every linked process and process group is in core 2.3.0, every data product or line
 is in the data-product module, every measure is in the kpi module, and every flow and
 capability reference names something in the same file. gapAnalysis entries are
 documentation only and create nothing (the schema's rule).
@@ -24,7 +24,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 STREAMS = [os.path.join(REPO, "business_architecture", "business_process", f)
            for f in ("value_stream_commercial_lifecycle.json", "value_stream_order_to_cash.json")]
-CORE = os.path.join(HERE, "..", "releases", "core", "2.2.0", "core.ttl")
+CORE = os.path.join(HERE, "..", "releases", "core", "2.3.0", "core.ttl")
 DATA_PRODUCTS = os.path.join(HERE, "..", "data-product", "data-products.ttl")
 MEASURES = os.path.join(HERE, "..", "kpi", "measures.ttl")
 OUTPUT = os.path.join(HERE, "value-streams.ttl")
@@ -81,7 +81,7 @@ def load():
         ids[d["id"]] += 1
         for c in d["capabilities"]:
             ids[c["id"]] += 1
-            problems += [f"{name} {c['id']}: process group {p!r} is not in core 2.2.0"
+            problems += [f"{name} {c['id']}: process group {p!r} is not in core 2.3.0"
                          for p in c.get("alignsToProcessGroups", []) if len(procs.get(p, ())) != 1]
         vsps = set()
         for s in d["stages"]:
@@ -91,7 +91,7 @@ def load():
                 vsps.add(p["id"])
                 if p["capabilityId"] not in local:
                     problems.append(f"{name} {p['id']}: capability {p['capabilityId']!r} is not in this value stream")
-                problems += [f"{name} {p['id']}: process {x!r} is not in core 2.2.0"
+                problems += [f"{name} {p['id']}: process {x!r} is not in core 2.3.0"
                              for x in p["linkedProcessIds"] if len(procs.get(x, ())) != 1]
                 problems += [f"{name} {p['id']}: {x!r} is not in the data-product module"
                              for x in p["produces"] + p["consumes"] if x not in items]
