@@ -103,6 +103,20 @@ class Build(unittest.TestCase):
                          URIRef("https://w3id.org/lsc/ontology/process/CM-1-3-7-1-1"))
         self.assertEqual(PRODUCTS.value(PRODUCT["customer-master"], SKOS.broader), LINE["marketing-sales"])
 
+    def test_customer_master_is_active_with_its_approved_description(self):
+        # EPM-DEC-001-0091, item 2: status active, with Claude's description, in source and output. Written out by
+        # hand, so a valid but wrong status or another product's text on this item fails (Codex round 1).
+        portfolio, *_ = bd.load()
+        items = {p["id"]: p for s in portfolio["segments"] for l in s["productLines"] for p in l["portfolios"]}
+        cm = items["dp-customer-master"]
+        description = ("The governed customer master: the customer records, accounts and their attributes that the "
+                       "systems which serve customers share.")
+        self.assertEqual((cm["status"], cm["description"]), ("active", description))
+        self.assertEqual(PRODUCTS.value(PRODUCT["customer-master"], DP.portfolioStatus), bd.STATUS["active"])
+        self.assertEqual(PRODUCTS.value(PRODUCT["customer-master"], SKOS.definition), Literal(description, lang="en"))
+        self.assertIn("the description is Claude's words", " ".join(cm["notes"]))
+        self.assertNotEqual(PRODUCTS.value(PRODUCT["terminal-ot"], DP.portfolioStatus), bd.STATUS["active"])
+
     def test_aliases(self):
         self.assertIn((PRODUCT["commercial-risk"], SKOS.altLabel, Literal("Risk", lang="en")), PRODUCTS)
         self.assertIn((LINE["planning-optimization"], SKOS.altLabel, Literal("P&O", lang="en")), PRODUCTS)
