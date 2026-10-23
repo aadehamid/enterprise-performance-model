@@ -62,13 +62,16 @@ MODULES = {
         # 1.0.1 is a patch: the planner list's source names VCO DSV (EPM-DEC-001-0040).
         # 1.1.0 is a minor approved with the release plan: the eight measure populations join the package,
         # the measure shape is closed, and it requires core 2.2.0 (EPM-DEC-001-0079).
-        "version": "1.1.0", "stage": None, "issued": "2026-10-22",
-        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md", "release plan approved"),
+        # 1.1.1 is a patch approved with the close-out releases: pop:populationEvidence gains rdfs:range xsd:string,
+        # closing its projection gap; it requires core 2.3.0, the current release (EPM-DEC-001-0088, 0093).
+        "version": "1.1.1", "stage": None, "issued": "2026-10-23",
+        "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md", "Approve all six (Recommended)"),
         "parts": ["kpi/vocabulary.ttl", "kpi/measures.ttl", "population/vocabulary.ttl", "population/population.ttl"],
         "shapes": ["kpi/shapes.ttl"],
         "depends_on": ["core"],
-        "pins": {"core": "2.2.0"},
-        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043", "EPM-DEC-001-0062", "EPM-DEC-001-0079"],
+        "pins": {"core": "2.3.0"},
+        "decisions": ["EPM-DEC-001-0040", "EPM-DEC-001-0042", "EPM-DEC-001-0043", "EPM-DEC-001-0062", "EPM-DEC-001-0079",
+                      "EPM-DEC-001-0088", "EPM-DEC-001-0093"],
     },
     "party": {
         "title": "LSC Party Module",

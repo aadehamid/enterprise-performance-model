@@ -38,6 +38,7 @@ CLOSEOUT = ("step4/review-evidence/decision-owner-answers/answers-2026-10-23-clo
 APPROVALS["value-stream"] = CLOSEOUT  # value-stream 1.1.0, EPM-DEC-001-0090
 APPROVALS["data-product"] = CLOSEOUT  # data-product 1.1.0, EPM-DEC-001-0091
 APPROVALS["party"] = CLOSEOUT  # party 1.1.0, EPM-DEC-001-0092
+APPROVALS["kpi"] = CLOSEOUT  # kpi 1.1.1, EPM-DEC-001-0093
 
 
 def approval_holds(name, m):
@@ -157,7 +158,7 @@ class EarlierReleases(unittest.TestCase):
     def test_the_new_releases_require_the_current_ones(self):
         self.assertEqual(bm.dependencies("ref-mpc"), {"organization": "2.0.0", "party": "1.0.0"})  # 1.2.0, EPM-DEC-001-0080
         self.assertEqual(bm.dependencies("organization"), {"core": "2.1.0"})
-        self.assertEqual(bm.dependencies("kpi"), {"core": "2.2.0"})  # since 1.1.0 (EPM-DEC-001-0079)
+        self.assertEqual(bm.dependencies("kpi"), {"core": "2.3.0"})  # since 1.1.1 (EPM-DEC-001-0093); 2.2.0 in 1.1.0
         self.assertEqual(bm.dependencies("party"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0092)
         # EPM-DEC-001-0077: the Step 7 modules require core 2.2.0, and the modules whose IRIs they use.
         self.assertEqual(bm.dependencies("data-product"), {"core": "2.3.0"})  # since 1.1.0 (EPM-DEC-001-0091)
@@ -284,9 +285,10 @@ class EarlierReleases(unittest.TestCase):
             with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
                 self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
 
-    def test_kpi_1_1_0_holds_the_measures_and_the_populations(self):
-        # EPM-DEC-001-0079: the kpi vocabulary and measures, and the population vocabulary and statements.
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.1.0", "kpi.ttl"))
+    def test_kpi_holds_the_measures_and_the_populations(self):
+        # EPM-DEC-001-0079: the kpi vocabulary and measures, and the population vocabulary and statements, in the newest
+        # release (1.1.1 since EPM-DEC-001-0093, which adds pop:populationEvidence's range).
+        released = Graph().parse(os.path.join(bm.release_dir("kpi"), "kpi.ttl"))
         header = URIRef(bm.MODULES_NS + "kpi")
         released.remove((header, None, None))
         sources = Graph()
@@ -296,6 +298,18 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(set(released), set(sources))
         pop = URIRef(bm.MODULES_NS + "population/includes")
         self.assertEqual(len(list(released.subject_objects(pop))), 8)
+        xsd_string = URIRef("http://www.w3.org/2001/XMLSchema#string")
+        rng = URIRef("http://www.w3.org/2000/01/rdf-schema#range")
+        self.assertEqual(set(released.objects(URIRef(bm.MODULES_NS + "population/populationEvidence"), rng)), {xsd_string})
+
+    def test_kpi_1_1_0_is_untouched(self):
+        # kpi 1.1.1 is built now; the released 1.1.0 package must still match its own manifest.
+        out = os.path.join(bm.ONTOLOGY, "releases", "kpi", "1.1.0")
+        with open(os.path.join(out, "manifest.json")) as f:
+            manifest = json.load(f)
+        for fname, digest in manifest["files"].items():
+            with self.subTest(file=fname), open(os.path.join(out, fname), "rb") as f:
+                self.assertEqual(hashlib.sha256(f.read()).hexdigest(), digest)
 
     def test_released_dependents_stay_on_kpi_1_0_1(self):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
@@ -352,7 +366,7 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together.
-        for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0"), ("party", "1.1.0")):
+        for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0"), ("party", "1.1.0"), ("kpi", "1.1.1")):
             self.assertEqual(bm.MODULES[name]["approval"], CLOSEOUT)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-23"))

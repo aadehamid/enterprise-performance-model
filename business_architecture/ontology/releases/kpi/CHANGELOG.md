@@ -1,5 +1,12 @@
 # kpi changelog
 
+## 1.1.1 (2026-10-23)
+
+A patch: one range, and no IRI changes. Approved by the decision owner with the close-out releases ("Approve all six (Recommended)", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`; EPM-DEC-001-0088, 0093).
+
+- [patch] `pop:populationEvidence` gains `rdfs:range xsd:string`, the datatype every value already has, closing its projection gap (EPM-DEC-001-0036).
+- It requires core 2.3.0, the current release.
+
 ## 1.1.0 (2026-10-22)
 
 Minor. Approved by the decision owner with the release plan ("release plan approved", saved in `step4/review-evidence/decision-owner-answers/answers-2026-10-22-morning.md`; EPM-DEC-001-0079). No IRI changes and nothing is removed.

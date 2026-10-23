@@ -31,9 +31,9 @@ from rdflib.namespace import OWL, RDF, RDFS, SKOS, XSD
 HERE = os.path.dirname(os.path.abspath(__file__))
 ONTOLOGY = os.path.join(HERE, "..")
 # Every released module once, at its newest release (EPM-DEC-001-0036, amendment of 2026-10-22). So
-# kpi is 1.1.0, though market-data and integration were released against 1.0.1 (as was value-stream 1.0.0;
+# kpi is 1.1.1 (EPM-DEC-001-0093), though market-data and integration were released against 1.0.1 (as was value-stream 1.0.0;
 # value-stream 1.1.0 requires kpi 1.1.0, EPM-DEC-001-0090); their own release checks still test those pinned versions.
-PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.0"), ("party", "1.1.0"),
+PACKAGES = [("core", "2.3.0"), ("organization", "2.0.0"), ("ref-mpc", "1.2.0"), ("kpi", "1.1.1"), ("party", "1.1.0"),
             ("data-product", "1.1.0"), ("value-stream", "1.1.0"), ("system", "1.0.0"), ("lane", "1.0.0"),
             ("market-data", "1.0.0"), ("integration", "1.0.0")]
 INPUTS = [f"releases/{m}/{v}/{m}.ttl" for m, v in PACKAGES]
@@ -88,8 +88,6 @@ QUALIFIED_RELATIONS = [
 # named here with its fix target; the build fails on any gap not listed, and on a listed gap
 # that no longer occurs, so the list cannot go stale (EPM-DEC-001-0036).
 RELEASE_EXCEPTIONS = {
-    "Rule 1: https://w3id.org/lsc/ontology/modules/population/populationEvidence has no single concrete range":
-        "kpi 1.1.0 declares no rdfs:range; the next kpi release adds rdfs:range xsd:string",
     "Rule 1: https://w3id.org/lsc/ontology/modules/placement/placementKind has no single concrete range":
         "integration 1.0.0 declares no rdfs:range; the next integration release adds rdfs:range skos:Concept",
     "Rule 1: https://w3id.org/lsc/ontology/modules/consumer/reliesOn has no single concrete range":
