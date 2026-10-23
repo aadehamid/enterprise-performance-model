@@ -6,7 +6,7 @@ Projects the ontology into a Neo4j labelled property graph, following the guidel
 |---|---|
 | `pipeline.py` | The five steps: `build` (check the rules, validate, serialise), `reason` (ELK through ROBOT), `load-verify` (load with n10s, then SHACL in the graph, round trip, determinism) |
 | `inferred.nt` | The reasoner's inferences about the domain (empty today: the ontology is SKOS-first) |
-| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none from core 2.0.0 to 2026-10-21; since 2026-10-22, 16 in value-stream, kpi, party and integration, each with its fix) |
+| `projection-manifest.json` | Input and shape hashes, triple counts, the input fingerprint, the pinned versions, the listed release gaps (none from core 2.0.0 to 2026-10-21; since 2026-10-22, 16 in value-stream, kpi, party and integration, each with its fix; *2026-10-23:* 14, in kpi, party and integration, since `value-stream` 1.1.0 closed two, EPM-DEC-001-0090) |
 | `projection-report.json` | The last Step 5 result for the fingerprint it names |
 | `test_pipeline.py` | The rule checks, the build, the round-trip comparison rules, and that the report is current and passed |
 
