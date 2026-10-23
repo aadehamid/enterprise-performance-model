@@ -1,6 +1,6 @@
 # data-product: data product definitions
 
-The `data-product` module defines the data products in the portfolio (`../../business_process/data_product_portfolio.json`), the product lines and segments that group them, and their links to core processes. It holds definitions only, never data values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/data-product/`; it depends on `core` 2.2.0 for process IRIs (2.1.0 until 2026-10-22, EPM-DEC-001-0076). EPM-DEC-001-0053 records the design.
+The `data-product` module defines the data products in the portfolio (`../../business_process/data_product_portfolio.json`), the product lines and segments that group them, and their links to core processes. It holds definitions only, never data values (EPM-DEC-001-0005). Its namespace is `https://w3id.org/lsc/ontology/modules/data-product/`; its build reads `core` 2.3.0 for process IRIs (2.2.0 until 2026-10-23, EPM-DEC-001-0089; 2.1.0 until 2026-10-22, EPM-DEC-001-0076); its released 1.0.0 package requires `core` 2.2.0. EPM-DEC-001-0053 records the design.
 
 | File | What |
 |---|---|
