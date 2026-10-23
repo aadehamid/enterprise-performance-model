@@ -50,7 +50,9 @@ MODULES = {
         "version": "1.2.0", "stage": None, "issued": "2026-10-22",
         "approval": ("step4/review-evidence/decision-owner-answers/answers-2026-10-22-ref-mpc-release.md", "Approve ref-mpc 1.2.0 (Recommended)"),
         "parts": ["ref-mpc/ref-mpc.ttl", "ref-mpc/reference-parties.ttl"],
-        "shapes": ["ref-mpc/shapes.ttl", "organization/shapes.ttl", "party/shapes.ttl"],
+        # Its own shapes, then the released shapes of the versions it pins, so a later party or organization
+        # release cannot change what this released package is checked against (EPM-DEC-001-0094).
+        "shapes": ["ref-mpc/shapes.ttl", "releases/organization/2.0.0/shapes.ttl", "releases/party/1.0.0/shapes.ttl"],
         "depends_on": ["organization", "party"],
         "pins": {"organization": "2.0.0", "party": "1.0.0"},
         "decisions": ["EPM-DEC-001-0015", "EPM-DEC-001-0033", "EPM-DEC-001-0071", "EPM-DEC-001-0075", "EPM-DEC-001-0080"],
@@ -269,7 +271,8 @@ def check(name, g):
     """The module's shapes over the module, with the released packages it depends on loaded: core for
     the concepts a module refers to, the pinned organization release for ref-mpc, and the released
     data-product and kpi packages for value-stream and market-data."""
-    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]))
+    # advanced=True: SHACL-AF targets such as sh:SPARQLTarget run, as in every other check (EPM-DEC-001-0094).
+    conforms, _, text = validate(validation_graph(name, g), shacl_graph=parse(MODULES[name]["shapes"]), advanced=True)
     return conforms, text
 
 

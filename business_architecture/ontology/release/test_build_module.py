@@ -378,5 +378,18 @@ class EarlierReleases(unittest.TestCase):
                              (version, None, "2026-10-23"))
 
 
+class BuilderGate(unittest.TestCase):
+    def test_the_builder_runs_sparql_targets(self):
+        # Codex round 2 on EPM-DEC-001-0094: integration's tier shape uses a SPARQL target, so the builder's own
+        # check must run SHACL-AF; a tier without its rank fails there.
+        g = bm.build("integration")
+        self.assertTrue(bm.check("integration", g)[0])
+        mpc = URIRef(bm.MODULES_NS + "authority/tier/mpc")
+        g.remove((mpc, URIRef(bm.MODULES_NS + "authority/rank"), None))
+        ok, text = bm.check("integration", g)
+        self.assertFalse(ok)
+        self.assertIn("MinCountConstraintComponent", text)
+
+
 if __name__ == "__main__":
     unittest.main()
