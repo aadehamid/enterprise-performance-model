@@ -19,7 +19,7 @@ The decision owner accepted MPC-P10.1 (EPM-DEC-001-0087), and the map gained CM 
 
 1. **A minor release, 2.3.0, issued 2026-10-23,** built by `release/build_core_2_3.py` from the released 2.2.0 graph and the map at commit c351ef0, the merge that added CM 1.3.7.1.7. It adds one concept and removes no IRI.
 2. **The new concept is shaped as 2.2.0's new concepts are:** preferred label, notation, definition (the first sentence of the map's description), scope note (the rest), parent CM 1.3.7.1, scheme, taxonomy level 5 and a provenance note naming the map commit and EPM-DEC-001-0087. It carries no concept kind, domain or planned flows, because the map gives none.
-3. **The builder stops on any other map change since 2.2.0,** so nothing else enters the release unreviewed.
+3. **The builder stops on any other map change since 2.2.0,** and on any field of the new node other than its approved ID, level, name, parent and description, so nothing else enters the release unreviewed. The tests pin the whole definition and scope note, the source commit, the issue date and the version IRI.
 4. **The package** holds `core.ttl`, `core.jsonld`, the shapes and canonical-fact mapping of 2.2.0 unchanged, a DCAT record, counts, the changelog and a manifest with each file's SHA-256: 19,819 triples and 707 process concepts. The shapes conform.
 5. **Repointing in the same pull request:** the regression, the controlled-value and module-shape checks, the projection and the builds of the apqc, data-product, kpi, lane, system and value-stream modules read 2.3.0. The `party` build stays on 2.1.0 until its 1.1.0 release, which links the onboarding stage to the new process. The released module packages keep the core version they were released against.
 

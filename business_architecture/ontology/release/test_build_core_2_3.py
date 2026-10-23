@@ -12,7 +12,7 @@ import unittest
 from unittest import mock
 
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, OWL, RDF, SKOS
+from rdflib.namespace import DCTERMS, OWL, RDF, SKOS, XSD
 
 import build_core_2_3 as b
 
@@ -42,9 +42,15 @@ class Release(unittest.TestCase):
         self.assertEqual(G.value(NEW, SKOS.definition), Literal(
             "Coordinate the onboarding of a new customer of any type, from the setup request to a customer that is "
             "set up in every system that uses it.", lang="en"))
-        scope = str(G.value(NEW, SKOS.scopeNote))
-        self.assertTrue(scope.startswith("It captures the setup request, starts the credit, KYC and contract checks"), scope)
-        self.assertTrue(scope.endswith("MPC-P10.1 (EPM-DEC-001-0087)."), scope)
+        # The whole approved scope note, written out by hand (EPM-DEC-001-0087, item 1).
+        self.assertEqual(G.value(NEW, SKOS.scopeNote), Literal(
+            "It captures the setup request, starts the credit, KYC and contract checks through the processes that own "
+            "them (Establish Credit Limit & Risk Code, CM 1.3.7.4.2; KYC Process, CM 1.3.7.4.6; Establish Commercial "
+            "Terms & Contracts, CM 1.3.7.2.1), requests the governed master record from Maintain Customer Master Data "
+            "(CM 1.3.7.1.1), and confirms that the customer is set up in the systems that use it. It decides none of "
+            "those outcomes: each owning process decides its own. Setup Prospect (CM 1.3.6.6.1) stays the onboarding of "
+            "card-program members, and Create New Counterparty (CM 1.2.1.2.1) that of trading counterparties. "
+            "MPC-P10.1 (EPM-DEC-001-0087).", lang="en"))
         self.assertIn("EPM-DEC-001-0087", str(G.value(NEW, DCTERMS.provenance)))
 
     def test_the_new_concept_gains_nothing_the_map_does_not_give(self):
@@ -61,7 +67,9 @@ class Release(unittest.TestCase):
     def test_the_header(self):
         self.assertEqual(str(G.value(b.ONTOLOGY_IRI, OWL.versionInfo)), "2.3.0")
         self.assertEqual(G.value(b.ONTOLOGY_IRI, OWL.priorVersion), URIRef(f"{b.ONTOLOGY_IRI}/2.2.0"))
-        self.assertEqual(G.value(b.ONTOLOGY_IRI, DCTERMS.issued), G.value(b.ONTOLOGY_IRI, DCTERMS.modified))
+        self.assertEqual(G.value(b.ONTOLOGY_IRI, OWL.versionIRI), URIRef("https://w3id.org/lsc/ontology/modules/core/2.3.0"))
+        for p in (DCTERMS.issued, DCTERMS.modified):
+            self.assertEqual(G.value(b.ONTOLOGY_IRI, p), Literal("2026-10-23", datatype=XSD.date))
 
 
 class Package(unittest.TestCase):
@@ -89,7 +97,8 @@ class Package(unittest.TestCase):
 
     def test_the_map_is_read_at_its_pinned_commit(self):
         self.assertEqual(b.EARLIER_COMMIT, "82593547cc1672cbcf35e13d54244830671dd009")
-        self.assertRegex(b.SOURCE_COMMIT, r"^[0-9a-f]{40}$")
+        # The merge of #356, which added CM 1.3.7.1.7 to the map (EPM-DEC-001-0089, item 1).
+        self.assertEqual(b.SOURCE_COMMIT, "c351ef0ecb1e3cbe6af38f46f66065499c73442f")
         manifest = json.loads(self.FILES["manifest.json"])
         self.assertEqual(manifest["built_from"]["process map"], f"{b.SOURCE_PATH} at {b.SOURCE_COMMIT}")
 
@@ -110,6 +119,25 @@ class Guards(unittest.TestCase):
         extra = dict(current, **{"CM-1-3-7-1-8": (dict(node, id="CM 1.3.7.1.8"), parent)})
         real = b.prev.map_nodes
         with mock.patch.object(b.prev, "map_nodes", lambda commit: extra if commit == b.SOURCE_COMMIT else real(commit)):
+            with self.assertRaises(SystemExit):
+                b.build()
+
+    def test_an_extra_field_on_the_new_node_stops_the_build(self):
+        # Codex round 1: a field the approved node does not have (here, a system) must stop the build.
+        current = b.prev.map_nodes(b.SOURCE_COMMIT)
+        node, parent = current["CM-1-3-7-1-7"]
+        extra = dict(current, **{"CM-1-3-7-1-7": (dict(node, systems=["Unapproved system"]), parent)})
+        real = b.prev.map_nodes
+        with mock.patch.object(b.prev, "map_nodes", lambda commit: extra if commit == b.SOURCE_COMMIT else real(commit)):
+            with self.assertRaises(SystemExit):
+                b.build()
+
+    def test_a_changed_name_on_the_new_node_stops_the_build(self):
+        current = b.prev.map_nodes(b.SOURCE_COMMIT)
+        node, parent = current["CM-1-3-7-1-7"]
+        renamed = dict(current, **{"CM-1-3-7-1-7": (dict(node, name="Onboard Customers"), parent)})
+        real = b.prev.map_nodes
+        with mock.patch.object(b.prev, "map_nodes", lambda commit: renamed if commit == b.SOURCE_COMMIT else real(commit)):
             with self.assertRaises(SystemExit):
                 b.build()
 

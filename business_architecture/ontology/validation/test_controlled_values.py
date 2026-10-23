@@ -1,5 +1,5 @@
 """Tests for the Step 9 controlled-value shapes (EPM-DEC-001-0014, EPM-DEC-001-0035, EPM-DEC-001-0044):
-the core release (2.2.0, which carries these shapes in its release shapes, as 2.1.0 did) and the organization module
+the core release (2.3.0, which carries these shapes in its release shapes, as 2.2.0 and 2.1.0 did) and the organization module
 conform, a value from the wrong list fails, and every code-list property of core has a shape.
 
 Run: python3 -m pytest test_controlled_values.py (needs rdflib, pyshacl).

@@ -8,7 +8,8 @@ core 2.2.0 stays as it was released (build_core_2_2.py). This builder starts fro
 applies the one process-map change merged since 2.2.0 was built: MPC-P10.1, CM 1.3.7.1.7 Coordinate
 Customer Onboarding (EPM-DEC-001-0087), read from the map at a pinned commit. The new concept is
 shaped as 2.2.0's new concepts are (build_core_2_2.py, item 1). Any other map change since 2.2.0
-stops the build.
+stops the build, and so does any field of the new node other than its approved ID, level, name,
+parent and description.
 
 It adds a concept and removes no IRI, so it is a minor release; the decision owner approved it
 (APPROVAL below; EPM-DEC-001-0088).
@@ -43,6 +44,8 @@ RELEASE_DIR = os.path.join(ONTOLOGY, "releases", "core", VERSION)
 CORE, PROC, ONTOLOGY_IRI, SCHEME = prev.CORE, prev.PROC, prev.ONTOLOGY_IRI, prev.SCHEME
 # The one node this release adds, and the record that added it.
 ADDED_BY = {"CM 1.3.7.1.7": "EPM-DEC-001-0087 (MPC-P10.1, customer onboarding)"}
+# Its approved map fields, beyond the description (EPM-DEC-001-0087): any other field, or another value, stops the build.
+APPROVED_NODE = {"CM 1.3.7.1.7": ({"id": "CM 1.3.7.1.7", "level": 5, "name": "Coordinate Customer Onboarding"}, "CM-1-3-7-1")}
 
 
 def en(text):
@@ -59,8 +62,10 @@ def build():
                  f"IDs {ids}, descriptions {[d[0] for d in descriptions]}")
     for slug, node, parent in new:
         s = URIRef(PROC + slug)
-        if node.get("sioc"):
-            sys.exit(f"{node['id']}: a SIPOC field on a new node needs the 2.0.0 planned-flow mapping")
+        fields, approved_parent = APPROVED_NODE[node["id"]]
+        if {k: v for k, v in node.items() if k != "description"} != fields or parent != approved_parent \
+                or not node.get("description"):
+            sys.exit(f"{node['id']}: its map fields or parent differ from the approved node: {node}, parent {parent}")
         if (URIRef(PROC + parent), RDF.type, SKOS.Concept) not in g:
             sys.exit(f"{slug}: its parent {parent} is not a concept")
         definition, scope = prev.split_description(node["description"])
