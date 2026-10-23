@@ -39,6 +39,7 @@ APPROVALS["value-stream"] = CLOSEOUT  # value-stream 1.1.0, EPM-DEC-001-0090
 APPROVALS["data-product"] = CLOSEOUT  # data-product 1.1.0, EPM-DEC-001-0091
 APPROVALS["party"] = CLOSEOUT  # party 1.1.0, EPM-DEC-001-0092
 APPROVALS["kpi"] = CLOSEOUT  # kpi 1.1.1, EPM-DEC-001-0093
+APPROVALS["integration"] = CLOSEOUT  # integration 1.0.1, EPM-DEC-001-0094
 
 
 def approval_holds(name, m):
@@ -131,7 +132,7 @@ class EarlierReleases(unittest.TestCase):
     def test_earlier_packages_are_untouched(self):
         # The builder now builds organization 2.0.0 and ref-mpc 1.1.0; each released 1.0.0 package
         # must still match its own manifest.
-        for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party"):
+        for name in ("organization", "ref-mpc", "kpi", "value-stream", "data-product", "party", "integration"):
             out = os.path.join(bm.ONTOLOGY, "releases", name, "1.0.0")
             with open(os.path.join(out, "manifest.json")) as f:
                 manifest = json.load(f)
@@ -167,10 +168,10 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(bm.dependencies("system"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("lane"), {"core": "2.2.0"})
         self.assertEqual(bm.dependencies("market-data"), {"kpi": "1.0.1"})
-        # EPM-DEC-001-0078: integration names terms of each of these releases.
+        # EPM-DEC-001-0078: integration names terms of each of these releases; 1.0.1 requires the current ones (0094).
         self.assertEqual(bm.dependencies("integration"), {
-            "core": "2.2.0", "organization": "2.0.0", "kpi": "1.0.1", "data-product": "1.0.0",
-            "value-stream": "1.0.0", "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.0.0"})
+            "core": "2.3.0", "organization": "2.0.0", "kpi": "1.1.1", "data-product": "1.1.0",
+            "value-stream": "1.1.0", "system": "1.0.0", "lane": "1.0.0", "market-data": "1.0.0", "party": "1.1.0"})
 
     def test_a_check_loads_one_release_of_each_module(self):
         # value-stream reaches core twice: directly at 2.3.0 and through kpi 1.1.0 at 2.2.0. Only 2.3.0 loads.
@@ -314,14 +315,15 @@ class EarlierReleases(unittest.TestCase):
     def test_released_dependents_stay_on_kpi_1_0_1(self):
         # value-stream 1.0.0, market-data and integration were released against kpi 1.0.1 and keep naming it;
         # value-stream 1.1.0 requires kpi 1.1.0 (EPM-DEC-001-0090), and its 1.0.0 manifest is unchanged.
-        for name in ("market-data", "integration"):
-            self.assertEqual(bm.dependencies(name)["kpi"], "1.0.1", name)
+        # integration 1.0.1 requires kpi 1.1.1 (EPM-DEC-001-0094); its 1.0.0 manifest still names 1.0.1.
+        self.assertEqual(bm.dependencies("market-data")["kpi"], "1.0.1")
+        self.assertEqual(bm.released_requires("integration", "1.0.0")["kpi"], "1.0.1")
         self.assertEqual(bm.released_requires("value-stream", "1.0.0")["kpi"], "1.0.1")
 
     def test_integration_holds_three_vocabularies_and_neither_population_nor_apqc(self):
         # EPM-DEC-001-0078: placement, authority (vocabulary and source tiers) and consumer, read from the
         # source files; the population statements ship in kpi 1.1.0 and the APQC list stays a reference file.
-        released = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "integration", "1.0.0", "integration.ttl"))
+        released = Graph().parse(os.path.join(bm.release_dir("integration"), "integration.ttl"))
         header = URIRef(bm.MODULES_NS + "integration")
         released.remove((header, None, None))
         sources = Graph()
@@ -335,10 +337,13 @@ class EarlierReleases(unittest.TestCase):
         # Each vocabulary keeps its own namespace: no term is minted under the package IRI.
         self.assertFalse([s for s in released.subjects() if str(s).startswith(bm.MODULES_NS + "integration")])
 
-    def test_integration_ships_the_consumer_shapes(self):
-        # Codex round 1: the package's shapes are the consumer module's own, not whatever the builder names.
-        packaged = Graph().parse(os.path.join(bm.ONTOLOGY, "releases", "integration", "1.0.0", "shapes.ttl"))
-        source = Graph().parse(os.path.join(bm.ONTOLOGY, "consumer", "shapes.ttl"))
+    def test_integration_ships_its_own_shapes(self):
+        # Codex round 1: the package's shapes are the module's own, not whatever the builder names. Since 1.0.1 they
+        # are the consumer, placement and authority shapes together (EPM-DEC-001-0094); 1.0.0 shipped consumer's only.
+        packaged = Graph().parse(os.path.join(bm.release_dir("integration"), "shapes.ttl"))
+        source = Graph()
+        for part in ("consumer/shapes.ttl", "placement/shapes.ttl", "authority/shapes.ttl"):
+            source.parse(os.path.join(bm.ONTOLOGY, part))
         from rdflib.compare import isomorphic
         self.assertTrue(isomorphic(packaged, source))
         self.assertFalse(isomorphic(packaged, Graph().parse(os.path.join(bm.ONTOLOGY, "data-product", "shapes.ttl"))))
@@ -358,7 +363,7 @@ class EarlierReleases(unittest.TestCase):
         self.assertEqual(undefined, set())
 
     def test_the_step7_releases_carry_the_release_plan_approval(self):
-        for name in tuple(n for n in STEP7 if n not in ("value-stream", "data-product")) + ("integration",):
+        for name in tuple(n for n in STEP7 if n not in ("value-stream", "data-product")):
             self.assertEqual(bm.MODULES[name]["approval"], PLAN)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              ("1.0.0", None, "2026-10-22"))
@@ -366,7 +371,8 @@ class EarlierReleases(unittest.TestCase):
 
     def test_the_close_out_releases_carry_the_close_out_approval(self):
         # EPM-DEC-001-0088: the decision owner approved the six close-out releases together.
-        for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0"), ("party", "1.1.0"), ("kpi", "1.1.1")):
+        for name, version in (("value-stream", "1.1.0"), ("data-product", "1.1.0"), ("party", "1.1.0"), ("kpi", "1.1.1"),
+                              ("integration", "1.0.1")):
             self.assertEqual(bm.MODULES[name]["approval"], CLOSEOUT)
             self.assertEqual((bm.MODULES[name]["version"], bm.MODULES[name]["stage"], bm.MODULES[name]["issued"]),
                              (version, None, "2026-10-23"))

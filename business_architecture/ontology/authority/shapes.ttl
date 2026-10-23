@@ -1,0 +1,18 @@
+# SHACL shapes for the authority vocabulary (EPM-DEC-001-0059). Added in integration 1.0.1 to state the
+# cardinality of auth:rank and auth:evidenceTier (EPM-DEC-001-0036, 0094).
+@prefix auth: <https://w3id.org/lsc/ontology/modules/authority/> .
+@prefix authsh: <https://w3id.org/lsc/ontology/modules/authority/shapes/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Each evidence tier has exactly one rank, from 1.
+authsh:Tier a sh:NodeShape ;
+    sh:targetSubjectsOf auth:rank ;
+    sh:property [ sh:path auth:rank ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+                  sh:message "An evidence tier has exactly one rank, from 1." ] .
+
+# Each cited source belongs to exactly one tier.
+authsh:TieredSource a sh:NodeShape ;
+    sh:targetSubjectsOf auth:evidenceTier ;
+    sh:property [ sh:path auth:evidenceTier ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A source belongs to exactly one evidence tier." ] .

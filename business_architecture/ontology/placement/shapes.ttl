@@ -1,0 +1,12 @@
+# SHACL shapes for the placement vocabulary (EPM-DEC-001-0058). Added in integration 1.0.1 to state
+# plc:placementKind's cardinality (EPM-DEC-001-0036, 0094).
+@prefix plc: <https://w3id.org/lsc/ontology/modules/placement/> .
+@prefix plcsh: <https://w3id.org/lsc/ontology/modules/placement/shapes/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# Every placing property has exactly one placement kind, a value of the placement-kind list.
+plcsh:PlacingProperty a sh:NodeShape ;
+    sh:targetSubjectsOf plc:placementKind ;
+    sh:property [ sh:path plc:placementKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:message "A placing property has exactly one placement kind." ] .
