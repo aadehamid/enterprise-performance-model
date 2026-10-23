@@ -107,9 +107,12 @@ its listed exceptions.
 - **Held rows:** 462, each held with its reason: 51 Phase 1 rows and 411
   outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
   held by design.
-- **Waiting on the decision owner:** Q17, meaning ownership; Forecaster
-  versus Local Refinery Forecaster, and PSM (EPM-DEC-001-0045); MPC-P10
-  (EPM-DEC-001-0070); a product code list for the PIDX and OEO mappings
-  (EPM-DEC-001-0064); the releases that close the 16 projection gaps; and
-  Phase F, the `ontology` skill. The four codes and TID Nbr wait for the
-  business (EPM-DEC-001-0072).
+- **Waiting on the decision owner:** Q17, meaning ownership
+  (EPM-DEC-001-0045); MPC-P10 (EPM-DEC-001-0070); a product code list for
+  the PIDX and OEO mappings (EPM-DEC-001-0064); and Phase F, the
+  `ontology` skill.
+- **Waiting on others:** Forecaster, on the refinery Economics and
+  Planning process owner (EPM-DEC-001-0045, decision 2); the four codes
+  and TID Nbr, on the business (EPM-DEC-001-0072); the 16 projection
+  gaps, on the modules' next releases (EPM-DEC-001-0036). PSM stays
+  unresolved (EPM-DEC-001-0045, decision 6).

@@ -16,7 +16,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
 **What follows (Claude, under EPM-DEC-001-0028):**
 
 1. **Steps 5, 6, 7, 9, 10, 11 and 12 are done.** The worklog's plan table marks each one, with its exceptions:
-   - Step 5: Forecaster versus Local Refinery Forecaster, and PSM, wait on the decision owner (EPM-DEC-001-0045, decisions 2 and 6).
+   - Step 5: Forecaster stays apart from the Local Refinery Forecaster until the refinery Economics and Planning process owner confirms they are the same (EPM-DEC-001-0045, decision 2), and PSM stays unresolved (decision 6).
    - Step 6: runs stay with the consumers, by design (EPM-DEC-001-0016); `provenance/run-shapes.ttl` checks them there (EPM-DEC-001-0034).
    - Step 7: PIDX and OEO wait for product values, and IOF Supply Chain is parked, each with its trigger (EPM-DEC-001-0064). MPC-P10 is the decision owner's (EPM-DEC-001-0070). The four codes and TID Nbr wait for the business to confirm them when the ontology is shared (EPM-DEC-001-0072).
    - Step 9: the run shapes stay with the consumers, by design (EPM-DEC-001-0081).
@@ -25,18 +25,20 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
    - Step 12: 16 rule gaps in released modules are listed, each to close at that module's next release (EPM-DEC-001-0036, amendment of 2026-10-22).
 2. **Steps 0 to 4 and 8 stand as recorded.** Step 3d is complete with its open exceptions; its sub-step 3d-b holds PTC-001-B by design (the decision owner, 2026-09-22). Step 4 is promoted.
 3. **The held rows stay held, each with its reason.** `python3 scripts/epm_facts.py counts` gives 462 held rows: 51 Phase 1 rows (EPM-DEC-001-0025), and 411 outside Phase 1: 167 context-pass holds, 114 uses-input holds, 80 informed-by holds, 40 uses-input G1a holds, 9 governed-by holds and 1 property-rule hold. None blocks completion. A held row gets a fresh verdict only if its source is corrected, through the source-correction backlog (EPM-DEC-001-0025).
-4. **Phase E is complete, except for the decision owner's items.** These wait on the decision owner, not on this work:
-   - Q17, meaning ownership (EPM-DEC-001-0045, decision 7);
-   - Forecaster versus Local Refinery Forecaster, and PSM (EPM-DEC-001-0045, decisions 2 and 6);
-   - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`);
-   - the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072);
-   - a product code list, which would let PIDX and OEO be mapped (EPM-DEC-001-0064);
-   - the releases that close the 16 projection gaps (EPM-DEC-001-0036);
-   - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6).
+4. **Phase E is complete, except for items that wait on others.** None waits on this work.
+   - **On the decision owner:**
+     - Q17, meaning ownership (EPM-DEC-001-0045, decision 7);
+     - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`);
+     - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064);
+     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6).
+   - **On a process owner:** Forecaster, until the refinery Economics and Planning process owner confirms it is the Local Refinery Forecaster (EPM-DEC-001-0045, decision 2).
+   - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072).
+   - **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).
+   - **On the next releases:** the 16 projection gaps close at the next release of value-stream, kpi, party and integration. Each is a patch or minor, the module owner's under the module policy; Claude asks the decision owner before building any (EPM-DEC-001-0036).
 
 ## Alternatives considered
 
-- **Keep the steps "Started" until every exception closes.** Not chosen: the exceptions are recorded decisions or the decision owner's items, and EPM-DEC-001-0052 counts a question parked by a recorded decision as done.
+- **Keep the steps "Started" until every exception closes.** Not chosen: each exception is a recorded decision, or an item that waits on the decision owner, a process owner, the business or a later release, and EPM-DEC-001-0052 counts a question parked by a recorded decision as done.
 
 ## The decision owner's recorded words
 
@@ -49,5 +51,5 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- The ontology README's Status section names where the build stands and what waits on the decision owner.
+- The ontology README's Status section names where the build stands, and what waits on whom.
 - Phase F waits for the decision owner's yes.
