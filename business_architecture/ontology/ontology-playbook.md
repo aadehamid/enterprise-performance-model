@@ -1626,7 +1626,7 @@ The waiting questions are the meaning owners (Q17) and the customer questions (Q
 Q26); all wait on the decision owner. *2026-10-21:* the decision owner's customer
 information arrived, so Q19 to Q26 wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13);
 only Q17 waits on the decision owner. The plan's pull request 5 (2026-10-21) then made Q19 to Q26
-answerable: 42, 1 and 1 (EPM-DEC-001-0071). The first query for Q8 filtered on the "process"
+answerable: 42, 1 and 1 (EPM-DEC-001-0071). *2026-10-23:* the decision owner parked Q17 until the ontology is first shared with business consumers, so none waits: 43 answerable, 0 partial, 0 waiting and 1 parked (EPM-DEC-001-0086). The first query for Q8 filtered on the "process"
 kind. It reported all 463 process-kind concepts as having no inputs or
 outputs, because the 153 processes that do have them carry no kind.
 Counting the query's population against the whole caught it.

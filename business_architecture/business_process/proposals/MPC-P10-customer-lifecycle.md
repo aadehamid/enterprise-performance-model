@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Proposed, for the decision owner's decision. Nothing in the process map, the value streams or the data-product portfolio changes until they decide |
+| Status | Accepted (the decision owner, 2026-10-23, EPM-DEC-001-0087): P10.1 option A, P10.2 option A and P10.3. Each lands in a release: `core` 2.3.0, `value-stream` 1.1.0 and `data-product` 1.1.0 (EPM-DEC-001-0088) |
 | Date | 2026-10-21 |
 | Decision | EPM-DEC-001-0067, What follows, item 13 (the plan): "the lifecycle, with a process-map proposal for the stages the map lacks"; EPM-DEC-001-0070 records the lifecycle's mapping |
 | Source | The decision owner's customer lifecycle and data-flow inputs (EPM-DEC-001-0067; not in the repository), mapped to `downstream_process_map.json`, `value_stream_order_to_cash.json`, `data_product_portfolio.json` and core 2.1.0's definitions |

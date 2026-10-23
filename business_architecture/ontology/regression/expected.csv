@@ -15,7 +15,7 @@ question,status,queries,waits_for
 14,answerable,q14a-may-become-a-number.rq;q14b-processes-are-not-measures.rq,
 15,answerable,q15a-same-word.rq;q15b-same-word-linked.rq,
 16,answerable,q16-names.rq,
-17,waits:EPM-DEC-001-0045,,"meaning owner vs data steward: a separate governance decision (EPM-DEC-001-0045, the decision owner's answer 7 a)"
+17,parked:EPM-DEC-001-0086,,"meaning owner vs data steward: parked until the ontology is first shared with business consumers (EPM-DEC-001-0086, the decision owner's answer of 2026-10-23); a separate governance decision (EPM-DEC-001-0045, answer 7 a)"
 18,answerable,q18-identity-version.rq,
 19,answerable,q19-party-vs-account.rq,
 20,answerable,q20-roles-one-party.rq;q20b-real-parties-both-ways.rq,

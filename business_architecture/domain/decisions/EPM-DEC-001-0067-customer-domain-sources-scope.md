@@ -127,5 +127,5 @@ The readings marked as Claude's above are under the delegation: "yes, extend the
 ## Consequences
 
 - EPM-DEC-001-0004's wait is over. Competency questions 19 to 26 still wait: the plan's pull request 5 answers them, after the `party` module and its data (pull requests 2 to 4, item 13). *2026-10-21:* the plan's pull request 5 answered them (EPM-DEC-001-0071).
-- The regression stands at 34 answerable, 1 partial and 9 waiting. *2026-10-21:* the plan's pull request 5 made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071).
+- The regression stands at 34 answerable, 1 partial and 9 waiting. *2026-10-21:* the plan's pull request 5 made Q19 to Q26 answerable: 42 answerable, 1 partial (Q7), 1 waiting (Q17) (EPM-DEC-001-0071). *2026-10-23:* the decision owner parked Q17 until the ontology is first shared with business consumers: 43 answerable, 0 partial, 0 waiting and 1 parked (EPM-DEC-001-0086).
 - The repository stays private until the Customer work is done. *2026-10-21, later:* public until the goal is achieved (decision 12), then private again under EPM-DEC-001-0050's amendment.

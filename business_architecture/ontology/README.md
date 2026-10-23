@@ -100,21 +100,22 @@ its listed exceptions.
   data-product, value-stream, system, lane and market-data 1.0.0, and
   integration 1.0.0.
 - **Checks:** every package conforms to its own shapes (EPM-DEC-001-0081);
-  the competency regression has 43 questions answerable, 0 partial and
-  1 waiting (Q17); the Neo4j projection of every released package passes,
+  the competency regression has 43 questions answerable, 0 partial,
+  0 waiting and 1 parked (Q17, EPM-DEC-001-0086); the Neo4j projection of every released package passes,
   with 16 rule gaps listed for the modules' next releases
   (EPM-DEC-001-0036).
 - **Held rows:** 462, each held with its reason: 51 Phase 1 rows and 411
   outside Phase 1 (`python3 scripts/epm_facts.py counts`). PTC-001-B is
   held by design.
-- **Waiting on the decision owner:** Q17, meaning ownership
-  (EPM-DEC-001-0045); MPC-P10 (EPM-DEC-001-0070); a product code list for
-  the PIDX and OEO mappings (EPM-DEC-001-0064); and Phase F, the
-  `ontology` skill (*2026-10-22:* approved, EPM-DEC-001-0084).
-- **Waiting on others:** Forecaster, on the refinery Economics and
-  Planning process owner (EPM-DEC-001-0045, decision 2); the four codes
-  and TID Nbr, on the business (EPM-DEC-001-0072); the 16 projection
-  gaps, on the modules' next releases (EPM-DEC-001-0036); and the reading
-  of Crude RFC as Refinery Feedstock Coordinator, pending confirmation
-  (EPM-DEC-001-0045, decision 5).
-- **Unresolved by decision:** PSM (EPM-DEC-001-0045, decision 6).
+- **Decided by the decision owner on 2026-10-23:** Q17 is parked until
+  the ontology is first shared with business consumers (EPM-DEC-001-0086);
+  MPC-P10 is accepted (EPM-DEC-001-0087); product values from MPC's FY2025
+  Form 10-K, and six releases that carry these and close the 16 projection
+  gaps, are approved (EPM-DEC-001-0088). The releases are not yet built.
+  Phase F, the `ontology` skill, was approved on 2026-10-22
+  (EPM-DEC-001-0084) and is done.
+- **Waiting on the business:** every point only the business can settle
+  is in `business-closeout.md`, with the record each answer goes to:
+  Q17, Market Data's accountable group, the four codes and TID Nbr, the
+  product list, Forecaster, Crude RFC, PSM, four working role definitions
+  and 33 measure populations.

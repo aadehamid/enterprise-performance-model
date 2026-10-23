@@ -49,7 +49,7 @@ class Release(unittest.TestCase):
     def test_the_release_passes(self):
         failures, statuses = run.check(GRAPH, run.load_expected())
         self.assertEqual(failures, [])
-        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"]), (43, 0, 1))
+        self.assertEqual((statuses["answerable"], statuses["partial"], statuses["waits"], statuses["parked"]), (43, 0, 0, 1))
 
     def test_q15b_reports_the_systems_in_two_modules_as_one(self):
         # EPM-DEC-001-0069 item 1: three party systems are the system module's nodes of the same name;
@@ -172,9 +172,16 @@ class Release(unittest.TestCase):
 
     def test_a_waiting_question_with_a_query_fails(self):
         rows = run.load_expected()
-        rows[16] = dict(rows[16], queries="q01a-children.rq")  # Q17 waits on EPM-DEC-001-0045
+        rows[16] = dict(rows[16], status="waits:EPM-DEC-001-0045", queries="q01a-children.rq")
         failures, _ = run.check(GRAPH, rows)
         self.assertIn("Q17: waits but lists queries", failures)
+
+    def test_a_parked_question_with_a_query_fails(self):
+        rows = run.load_expected()
+        self.assertEqual(rows[16]["status"], "parked:EPM-DEC-001-0086")  # Q17, parked by the decision owner
+        rows[16] = dict(rows[16], queries="q01a-children.rq")
+        failures, _ = run.check(GRAPH, rows)
+        self.assertIn("Q17: parked but lists queries", failures)
 
 
 if __name__ == "__main__":
