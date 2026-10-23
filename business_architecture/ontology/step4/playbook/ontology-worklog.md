@@ -1186,7 +1186,8 @@ without a dated amendment and the decision owner's explicit agreement.
   waiting now waits on the decision owner (Q17, Q19 to Q26). *2026-10-21:* Q19 to
   Q26 now wait on the plan's pull request 5, which answers them after the `party` module and its data (pull requests 2 to 4; EPM-DEC-001-0067, item 13); only Q17 waits
   on the decision owner. The plan's pull request 5
-  then answered them (EPM-DEC-001-0071).
+  then answered them (EPM-DEC-001-0071). *2026-10-23:* the decision owner parked Q17
+  (EPM-DEC-001-0086).
 
 ### Consumer rules (2026-10-19)
 - Under the delegation (EPM-DEC-001-0061): the catalog binding
