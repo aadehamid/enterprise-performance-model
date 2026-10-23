@@ -14,7 +14,7 @@ The decision owner's inputs give two views of a customer's life (EPM-DEC-001-006
 - **Six business stages:** prospect, onboarding, payment management, risk management, relationship management and offboarding.
 - **Five system stages**, from input 6's pane on where the customer shows up in systems: prospect (Salesforce), master (SAP MDG), record (SAP S/4HANA), execute (the execution systems) and settle (invoices and postings back to SAP S/4HANA).
 
-They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cycle and data flow of Customer"). EPM-DEC-001-0052 says the lifecycle's process nodes are proposed, not applied, under the process-map rule (AGENTS.md).
+They asked for the lifecycle to be captured (EPM-DEC-001-0067, "both the life cycle and data flow of Customer"). EPM-DEC-001-0052 says the lifecycle's process nodes are proposed, not applied, under the process-map rule (AGENTS.md). *2026-10-23:* no longer: MPC-P10 is accepted (EPM-DEC-001-0087) and applied in `core` 2.3.0, `value-stream` 1.1.0, `data-product` 1.1.0 and `party` 1.1.0 (EPM-DEC-001-0089 to 0092).
 
 ## Decision
 
