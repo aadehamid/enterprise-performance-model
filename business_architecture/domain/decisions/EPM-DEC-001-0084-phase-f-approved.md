@@ -9,7 +9,7 @@
 
 ## Context
 
-EPM-DEC-001-0052, item 6, says Phase F rebuilds the `ontology` skill from the playbook and the work done, after phases A to E, and starts only after the decision owner approves the plan. The plan is kept outside this repository, with the session handoffs, as `phase-f-skill-plan.md`. On 2026-10-22 it gained an item 6: proposals from Neo4j's Going Meta series and from the `neo4j-ontology-skill` in `neo4j-contrib/neo4j-skills`, which the decision owner asked Claude to read, with the sources documented beside the plan. The skill lives in the `personal-agent-skills` repository, which is public, while this ontology is proprietary (EPM-DEC-001-0041).
+EPM-DEC-001-0052, item 6, says Phase F rebuilds the `ontology` skill from the playbook and the work done, after phases A to E, and starts only after the decision owner approves the plan. The plan is kept outside this repository, with the session handoffs, as `phase-f-skill-plan.md`. On 2026-10-22 it gained an item 6: proposals from Neo4j's Going Meta series and from the `neo4j-ontology-skill` in `neo4j-contrib/neo4j-skills`, which the decision owner asked Claude to read and to include in the plan (blocks 6 to 9 of the answers file, quoted below), with the sources documented beside the plan. The skill lives in the `personal-agent-skills` repository, which is public, while this ontology is proprietary (EPM-DEC-001-0041).
 
 ## Decision
 
@@ -28,7 +28,7 @@ EPM-DEC-001-0052, item 6, says Phase F rebuilds the `ontology` skill from the pl
 
 ## The decision owner's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-22-phase-f.md`: "Yes, rebuild as planned (Recommended)", "Neutral examples + public MPC facts (Recommended)", "PRs in personal-agent-skills (Recommended)", and "I agree with 1. But makkes sure you use high quality evdence internal or external to make your decision".
+Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-22-phase-f.md`: "Yes, rebuild as planned (Recommended)", "Neutral examples + public MPC facts (Recommended)", "PRs in personal-agent-skills (Recommended)", and "I agree with 1. But makkes sure you use high quality evdence internal or external to make your decision". Earlier in the same session, on the outside sources: "go ahead and read them all I can read both before drafting the Phase F proposals. We can apply it in phase F in addition to everything we have done ourselves building the ontology. Also document the sources we use." and "can you also include the below in the Phase F plan".
 
 ## Evidence
 
