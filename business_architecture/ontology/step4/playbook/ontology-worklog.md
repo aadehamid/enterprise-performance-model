@@ -962,6 +962,13 @@ properties and retires those predicates.
 Locked decisions. Newest first within each group. Nothing here changes
 without a dated amendment and the decision owner's explicit agreement.
 
+### Phase F is approved (2026-10-22)
+- The decision owner approved the Phase F plan (EPM-DEC-001-0084): the
+  `ontology` skill is rebuilt as planned, with neutral examples and public
+  MPC facts only, through pull requests in `personal-agent-skills`; Claude
+  makes and logs the design choices on high-quality evidence. The same
+  answers give the go-ahead for queue item 9, the open-ontologies trial.
+
 ### Phase E is closed (2026-10-22)
 - Under the delegation (EPM-DEC-001-0083), Steps 5, 6, 7, 9, 10, 11
   and 12 are marked done, each with its listed exceptions. 462 held rows
