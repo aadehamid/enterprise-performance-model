@@ -988,6 +988,8 @@ without a dated amendment and the decision owner's explicit agreement.
   MPC facts only, through pull requests in `personal-agent-skills`; Claude
   makes and logs the design choices on high-quality evidence. The same
   answers give the go-ahead for queue item 9, the open-ontologies trial.
+  *2026-10-23:* done: the rebuilt skill merged in personal-agent-skills
+  pull request #45.
 
 ### Phase E is closed (2026-10-22)
 - Under the delegation (EPM-DEC-001-0083), Steps 5, 6, 7, 9, 10, 11

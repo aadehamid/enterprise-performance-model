@@ -25,7 +25,7 @@
    - `integration` 1.0.1: its 5 projection fixes.
 3. **Codex gives the independent review** and the Cursor bot the PR verdict, while Pi has no usage.
 
-The question put to the decision owner said 7 fixes for party and 3 for integration. `projection/pipeline.py` lists 8 and 5: party's ranges for `evidenceInput`, `customerRole` and `carries` and cardinality for `plays`, `mpcClassification`, `implements`, `governedBy` and `feeds`; integration's range and cardinality for `placementKind`, a range for `reliesOn`, and cardinality for `authority:rank` and `authority:evidenceTier`. Claude told the decision owner straight after the answer. The modules and the kind of fix are as asked.
+The question put to the decision owner said 7 fixes for party and 3 for integration. `projection/pipeline.py` lists 8 and 5: party's ranges for `evidenceInput`, `customerRole` and `carries` and cardinality for `plays`, `mpcClassification`, `implements`, `governedBy` and `feeds`; integration's range and cardinality for `placementKind`, a range for `reliesOn`, and cardinality for `authority:rank` and `authority:evidenceTier`. Claude told the decision owner straight after the answer, and later asked them to approve the corrected counts; they did: "Approve 8 and 5 (Recommended)".
 
 **What follows (Claude, under EPM-DEC-001-0028):**
 
@@ -41,7 +41,7 @@ The question put to the decision owner said 7 fixes for party and 3 for integrat
 
 ## The decision owner's recorded words
 
-Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`: "10-K slate in party (Recommended)", "Approve all six (Recommended)" and "Keep Codex (Recommended)". The session goal: "aligned. keep gooing until the ontology is done after addressing all the outstanding question. stop the goal gracefully when you are completely done".
+Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-answers/answers-2026-10-23-closeout.md`: "10-K slate in party (Recommended)", "Approve all six (Recommended)", "Approve 8 and 5 (Recommended)" and "Keep Codex (Recommended)". The session goal: "aligned. keep gooing until the ontology is done after addressing all the outstanding question. stop the goal gracefully when you are completely done".
 
 ## Evidence
 

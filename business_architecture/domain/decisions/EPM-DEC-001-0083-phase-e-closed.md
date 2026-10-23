@@ -30,7 +30,7 @@ EPM-DEC-001-0052 orders the remaining work in phases A to F, and says the ontolo
      - Q17, meaning ownership (EPM-DEC-001-0045, decision 7); *2026-10-23:* parked until the ontology is first shared with business consumers (EPM-DEC-001-0086);
      - MPC-P10 (EPM-DEC-001-0070; `business_process/proposals/MPC-P10-customer-lifecycle.md`); *2026-10-23:* accepted (EPM-DEC-001-0087);
      - a product code list, which would let PIDX and OEO be mapped; Claude asks the decision owner before building it (EPM-DEC-001-0064); *2026-10-23:* approved, from MPC's FY2025 Form 10-K, in `party` (EPM-DEC-001-0088);
-     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6). *2026-10-22:* approved (EPM-DEC-001-0084).
+     - Phase F, rebuilding the `ontology` skill, which starts only on the decision owner's yes (EPM-DEC-001-0052, item 6). *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.
    - **On a process owner:** Forecaster, until the refinery Economics and Planning process owner confirms it is the Local Refinery Forecaster (EPM-DEC-001-0045, decision 2).
    - **Pending confirmation, no confirmer named:** the reading of Crude RFC as Refinery Feedstock Coordinator, a contextual reading pending confirmation (EPM-DEC-001-0045, decision 5); `organization/roles.csv` says it is to be confirmed with the process owner.
    - **On the business:** the four codes and TID Nbr, which the business confirms when the ontology is shared (EPM-DEC-001-0072). *2026-10-23:* this item, Forecaster, Crude RFC, PSM and Q17 are in the business close-out package, `ontology/business-closeout.md` (EPM-DEC-001-0086).
@@ -53,4 +53,4 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 ## Consequences
 
 - The ontology README's Status section names where the build stands, and what waits on whom.
-- Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084).
+- Phase F waits for the decision owner's yes. *2026-10-22:* approved (EPM-DEC-001-0084). *2026-10-23:* done: personal-agent-skills pull request #45 merged.

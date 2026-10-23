@@ -36,6 +36,6 @@ Saved in `business_architecture/ontology/step4/review-evidence/decision-owner-an
 
 ## Consequences
 
-- Phase F starts. Its pull requests are in `personal-agent-skills`, not here.
+- Phase F starts. Its pull requests are in `personal-agent-skills`, not here. *2026-10-23:* done: the rebuilt skill merged in personal-agent-skills pull request #45.
 - EPM-DEC-001-0052's Phase F item, and the Phase F lines of EPM-DEC-001-0083 and the ontology README's Status section, carry dated notes.
 - Later in the same session the decision owner also gave the go-ahead for queue item 9, the open-ontologies trial (block 5 of the answers file). The trial's result gets its own decision record.

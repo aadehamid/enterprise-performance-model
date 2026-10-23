@@ -113,7 +113,8 @@ its listed exceptions.
   Form 10-K, and six releases that carry these and close the 16 projection
   gaps, are approved (EPM-DEC-001-0088). The releases are not yet built.
   Phase F, the `ontology` skill, was approved on 2026-10-22
-  (EPM-DEC-001-0084) and is done.
+  (EPM-DEC-001-0084) and is done: personal-agent-skills pull request #45,
+  merged on 2026-10-23.
 - **Waiting on the business:** every point only the business can settle
   is in `business-closeout.md`, with the record each answer goes to:
   Q17, Market Data's accountable group, the four codes and TID Nbr, the
