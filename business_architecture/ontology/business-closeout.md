@@ -1,6 +1,6 @@
 # Business close-out package
 
-The ontology is complete except for the points below, which only the business can settle. The decision owner asked for this package on 2026-10-23, so that it goes with the ontology and lists what to close out with the business (EPM-DEC-001-0086). Each point is settled when the ontology is first shared with business consumers, unless a row says otherwise.
+This package lists the points about the ontology that only the business can settle. The decision owner asked for this package on 2026-10-23, so that it goes with the ontology and lists what to close out with the business (EPM-DEC-001-0086). Each point is settled when the ontology is first shared with business consumers, unless a row says otherwise. The work that does not wait on the business is in EPM-DEC-001-0088: six approved releases, which carry MPC-P10 and the product values and close the 16 projection gaps. Until they merge, the README's Status section says which have landed.
 
 Each row gives the point, what the ontology holds today, what the business needs to say, and the record that holds the answer. Settling a point changes no released IRI unless the row says so. The answer is recorded as an amendment to the named record, in the business's own words, and goes into the next release of the module named.
 
@@ -17,7 +17,7 @@ Each row gives the point, what the ontology holds today, what the business needs
 |---|---|---|---|---|---|
 | 3 | HOLDORDIND, Taboot, MPA_Flag and CR_Incentive_Flag | Named fields with no definition (EPM-DEC-001-0072, amendment of 2026-10-22) | What each code means, in one sentence | The owners of the systems that hold them | EPM-DEC-001-0072; `party` |
 | 4 | TID Nbr | Read as a terminal identifier that describes a site; no MPC source states it (EPM-DEC-001-0069) | Confirm the reading, or give the meaning | The same system owners | EPM-DEC-001-0069, 0072; `party` |
-| 5 | The product list | Product values taken from the refined-product categories in MPC's FY2025 Form 10-K, mapped to PIDX and OEO (EPM-DEC-001-0088) | Confirm the public categories, or supply MPC's own product list. A finer list would add values and mappings in a minor release; a changed category would retire the old one (deprecated, never deleted) in a major | Commercial product owners | EPM-DEC-001-0064, 0088; `party` |
+| 5 | The product list | `party` 1.0.0 has no product values. The decision owner approved values from the refined-product categories in MPC's FY2025 Form 10-K, mapped to PIDX and OEO, for `party` 1.1.0 (EPM-DEC-001-0088), which is not yet released | Confirm the public categories, or supply MPC's own product list. A finer list would add values and mappings in a minor release; a changed category would retire the old one (deprecated, never deleted) in a major | Commercial product owners | EPM-DEC-001-0064, 0088; `party` |
 
 ## Roles
 
