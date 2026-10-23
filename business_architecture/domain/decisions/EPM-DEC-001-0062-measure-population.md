@@ -22,7 +22,7 @@ The kpi module holds each measure's definition, grain and basis, but no statemen
 
 ## Alternatives considered
 
-- **Add a population column to the kpi tables.** Not chosen now: the released package's check rebuilds from those tables, so the change belongs in the next kpi release, which needs the decision owner's approval.
+- **Add a population column to the kpi tables.** Not chosen now: the released package's check rebuilds from those tables, so the change belongs in the next kpi release, which needs the decision owner's approval. *2026-10-22:* under the module policy (worklog, "Who approves a release"; EPM-DEC-001-0037), a minor or patch release is the module owner's and a major the decision owner's; Claude has asked the decision owner before every release (EPM-DEC-001-0074, and 0076 to 0080). The populations shipped in kpi 1.1.0, a minor (EPM-DEC-001-0079).
 - **Write populations for the other measures from their definitions.** Not chosen, for the reason in item 3.
 
 ## The decision owner's recorded words
