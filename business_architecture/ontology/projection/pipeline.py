@@ -47,7 +47,7 @@ MANIFEST = os.path.join(HERE, "projection-manifest.json")
 REPORT = os.path.join(HERE, "projection-report.json")
 SH = Namespace("http://www.w3.org/ns/shacl#")
 MODULES_NS = "https://w3id.org/lsc/ontology/modules/"
-# Our own namespaces: core and organization first (Rule 4a reads them by position), then the rest.
+# Our own namespaces, one per module.
 OWN = tuple(MODULES_NS + m + "/" for m in ("core", "organization", "kpi", "population", "party", "data-product",
                                            "value-stream", "system", "lane", "market-data", "placement",
                                            "authority", "consumer"))
