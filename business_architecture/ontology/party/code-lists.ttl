@@ -577,7 +577,7 @@
         party:Product ;
     dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
     skos:broader <https://w3id.org/lsc/ontology/modules/party/product/asphalt> ;
-    skos:definition "Asphalt dispersed in water as an emulsion."@en ;
+    skos:definition "Asphalt the company sells in emulsified form."@en ;
     skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
     skos:inScheme party:product ;
     skos:notation "emulsified-asphalt" ;
@@ -644,7 +644,7 @@
         party:Product ;
     dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
     skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
-    skos:definition "The lighter distillate fuel oil grade, No. 1."@en ;
+    skos:definition "The distillate fuel oil grade the company sells as No. 1 fuel oil."@en ;
     skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
     skos:inScheme party:product ;
     skos:notation "no-1-fuel-oil" ;
@@ -657,7 +657,7 @@
     dcterms:bibliographicCitation "MPC FY2025 Form 10-K, Item 1"@en ;
     skos:broader <https://w3id.org/lsc/ontology/modules/party/product/distillates> ;
     skos:closeMatch oeo:OEO_00000211 ;
-    skos:definition "The distillate fuel oil grade No. 2, used mainly for heating."@en ;
+    skos:definition "The distillate fuel oil grade the company sells as No. 2 fuel oil."@en ;
     skos:editorialNote "Named in MPC's FY2025 Form 10-K; the definition is Claude's words (EPM-DEC-001-0092)."@en ;
     skos:inScheme party:product ;
     skos:notation "no-2-fuel-oil" ;

@@ -324,6 +324,18 @@ class Products(unittest.TestCase):
         self.assertIn("Use of this copyrighted material is subject to the PIDX End User License Agreement", note)
         self.assertIn("2015-09-29", note)
 
+    def test_a_third_pidx_family_fails(self):
+        # EPM-DEC-001-0092, item 4: at most two families per product (Codex round 1).
+        g = Graph() + SCHEMA
+        for letter in ("A", "B"):
+            g.add((PROD["kerosene"], CUST.pidxProductFamily, Literal(letter)))
+        ok, report, _ = validate(g, shacl_graph=SHAPES, advanced=True)
+        self.assertFalse(ok)
+        SH = Namespace("http://www.w3.org/ns/shacl#")
+        results = [(report.value(r, SH.focusNode), report.value(r, SH.sourceConstraintComponent), report.value(r, SH.resultSeverity))
+                   for r in report.subjects(RDF.type, SH.ValidationResult)]
+        self.assertIn((PROD["kerosene"], SH.MaxCountConstraintComponent, SH.Violation), results)
+
     def test_a_bad_pidx_family_fails(self):
         g = Graph() + SCHEMA
         g.add((PROD["kerosene"], CUST.pidxProductFamily, Literal("HK")))
@@ -343,10 +355,16 @@ class Products(unittest.TestCase):
     def test_the_shapes_state_the_projection_cardinalities(self):
         # The five Rule 2 gaps of party 1.0.0 (EPM-DEC-001-0036; closed by 1.1.0, EPM-DEC-001-0092).
         SH = Namespace("http://www.w3.org/ns/shacl#")
-        stated = {SHAPES.value(n, SH.path) for n in SHAPES.subjects(SH.path, None)
-                  if (n, SH.minCount, None) in SHAPES or (n, SH.maxCount, None) in SHAPES}
-        for p in ("plays", "mpcClassification", "implements", "governedBy", "feeds", "pidxProductFamily"):
-            self.assertIn(CUST[p], stated, p)
+        # The exact bounds decided (EPM-DEC-001-0092, items 4 and 6), on the shape each belongs to; None is no bound.
+        shp = Namespace("https://w3id.org/lsc/ontology/modules/party/shapes/")
+        expected = {"plays": (shp.Party, 0, None), "governedBy": (shp.PartyRole, 0, None),
+                    "implements": (shp.CustomerSystem, 0, None), "feeds": (shp.CustomerSystem, 0, None),
+                    "mpcClassification": (shp.MpcClassification, 1, 1), "pidxProductFamily": (shp.Product, 0, 2)}
+        for name, (node, lo, hi) in expected.items():
+            props = [ps for ps in SHAPES.objects(node, SH.property) if SHAPES.value(ps, SH.path) == CUST[name]]
+            self.assertEqual(len(props), 1, name)
+            got = tuple(None if v is None else int(v) for v in (SHAPES.value(props[0], SH.minCount), SHAPES.value(props[0], SH.maxCount)))
+            self.assertEqual(got, (lo, hi), name)
 
 
 if __name__ == "__main__":

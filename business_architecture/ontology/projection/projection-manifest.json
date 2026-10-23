@@ -1,6 +1,6 @@
 {
   "inferred_triples": 0,
-  "input_fingerprint": "bd155b6445b54e486dd1987cdc6f5d654dc1d4bb48496ef74ba8fec71f513531",
+  "input_fingerprint": "a0680b8a8be21e949b619d0b7b622c0652f8bfaa44b89f18882138ba1ed5dadd",
   "inputs": {
     "releases/core/2.3.0/core.ttl": "ebf7be2b6e65df2fc16e6af79af55f4d6a6b36ae652cf3823153b6082625c01e",
     "releases/data-product/1.1.0/data-product.ttl": "1aba055c2e2e53c33e857b0ed5e65de8df5cab9f039dabc863f8c6e11f4d8af8",
@@ -9,7 +9,7 @@
     "releases/lane/1.0.0/lane.ttl": "fbd5fb5f14cb7fa700bcc1c517af55fdf1b18cc46e6a959ff8d28c72b6395e7e",
     "releases/market-data/1.0.0/market-data.ttl": "7dae8ac0768cf230495a827b85e2e9e91a3125aaa97e7f9237d6146048b0ed6b",
     "releases/organization/2.0.0/organization.ttl": "3b951fbe287d42f4c52e6c85cf498b1113d6a5b9280b45c010fde17fc7e52439",
-    "releases/party/1.1.0/party.ttl": "98e5725f0be9533cb05aaa47666f788928e2dad4f7770ba365257e6f8c270718",
+    "releases/party/1.1.0/party.ttl": "6a37b932b7010d642c536bb4fb87b497913053e4c0552eecd3251e2a49d5f852",
     "releases/ref-mpc/1.2.0/ref-mpc.ttl": "75078639bfc5d5284bb204dc9c202a27acb8767f4097700d97878b0be5fd9867",
     "releases/system/1.0.0/system.ttl": "b9dea5ded1a3f1f41069354cdfac692ab200635278971b242bed2fdf9af665b5",
     "releases/value-stream/1.1.0/value-stream.ttl": "89c952bf76b12d916b7ca583e78354d197b6bb8596b6519f00917804a3f0a5db"

@@ -13997,7 +13997,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "Asphalt dispersed in water as an emulsion."
+    "@value": "Asphalt the company sells in emulsified form."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
@@ -14403,7 +14403,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The lighter distillate fuel oil grade, No. 1."
+    "@value": "The distillate fuel oil grade the company sells as No. 1 fuel oil."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
@@ -14462,7 +14462,7 @@
   "http://www.w3.org/2004/02/skos/core#definition": [
    {
     "@language": "en",
-    "@value": "The distillate fuel oil grade No. 2, used mainly for heating."
+    "@value": "The distillate fuel oil grade the company sells as No. 2 fuel oil."
    }
   ],
   "http://www.w3.org/2004/02/skos/core#editorialNote": [
